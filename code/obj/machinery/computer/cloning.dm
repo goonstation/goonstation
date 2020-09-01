@@ -15,9 +15,10 @@
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
 	var/datum/data/record/active_record = null
+	var/datum/data/record/selected_record = null
 	var/obj/item/disk/data/floppy/diskette = null //Mostly so the geneticist can steal somebody's identity while pretending to give them a handy backup profile.
 	var/held_credit = 5000 // one free clone
-
+	var/hasimplant
 	var/allow_dead_scanning = 0 //Can the dead be scanned in the cloner?
 	var/portable = 0 //override new() proc and proximity check, for port-a-clones
 	var/currenthealth = ""
@@ -178,276 +179,182 @@
 		src.attack_hand(user)
 	return
 
-/obj/machinery/computer/cloning/attack_ai(mob/user as mob)
-	return attack_hand(user)
+/obj/machinery/computer/cloning/ui_act(action, params)
+	//if(..())
+	//	return
+	switch(action)
+		if("delete")
+			var/selected_record =	find_record(params["ckey"])
+			if(selected_record)
+				logTheThing("combat", usr, null, "deletes the cloning record [selected_record["fields"]["name"]] for player [selected_record["fields"]["ckey"]] at [log_loc(src)].")
+				src.records.Remove(selected_record)
+				qdel(selected_record)
+				selected_record = null
+				src.temp = "Record deleted."
+				. = true
+		if("scan")
+			if(!isnull(src.scanner))
+				src.scan_mob(src.scanner.occupant)
+				. = true
+		if("clone")
+			var/ckey = params["ckey"]
+			if(ckey)
+				clone_record(find_record(ckey))
+				. = true
+		if("ToggleGeneticAnalysis")
+			if(pod1 && !pod1.operating)
+				pod1.gen_analysis = !pod1.gen_analysis
+				. = true
+			else
+				src.temp = "Cannot toggle any modules while cloner is active."
+				. = true
+		if("SaveToDisk")
+			var/ckey = params["ckey"]
+			var/selected_record = find_record(ckey)
+			if ((isnull(src.diskette)) || (src.diskette.read_only) || (isnull(selected_record)))
+				src.temp = "Save error."
+				return
 
+			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
+				if (R.fields["ckey"] == selected_record["fields"]["ckey"])
+					src.temp = "Record already exists on disk."
+					src.updateUsrDialog()
+					return
+
+			var/datum/computer/file/clone/cloneFile = new
+			cloneFile.name = "CloneRecord-[ckey(selected_record["fields"]["name"])]"
+			cloneFile.fields = selected_record["fields"]
+			src.temp = src.diskette.root.add_file(cloneFile) ? "Save successful." : "Save error."
+			. = true
+
+		if("eject")
+			if (!isnull(src.diskette))
+				src.diskette.set_loc(src.loc)
+				usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
+				src.diskette = null
+				. = true
+		if("load")
+			if (src.diskette.read_only)
+				// The file needs to be deleted from the disk after loading the record
+				src.temp = "Load error - cannot transfer clone records from a disk in read only mode."
+				src.updateUsrDialog()
+				return
+
+			var/loaded = 0
+
+			for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
+				if (!find_record(cloneRecord.fields["ckey"]))
+					var/datum/data/record/R = new
+					R.fields = cloneRecord.fields
+					src.records += R
+					loaded++
+					src.temp = "Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred."
+					src.diskette.root.remove_file(cloneRecord)
+					. = true
+
+			if(!loaded)
+				src.temp = "Load error."
+				src.updateUsrDialog()
+				return
+		if("ToggleLock")
+			if (!isnull(src.scanner))
+				if ((!src.scanner.locked) && (src.scanner.occupant))
+					src.scanner.locked = 1
+				else
+					src.scanner.locked = 0
+		if("MindWipeToggle")
+			if(!pod1.operating && src.allow_mind_erasure)
+				pod1.mindwipe = !pod1.mindwipe
+			else
+				src.temp = "Cannot toggle any modules while cloner is active."
+			. = true
 
 
 /obj/machinery/computer/cloning/ui_data(mob/user)
-	. = list()
-	.["clone_records"] = list()
-	for (var/datum/data/r in records)
+	var/list/data = list()
+	var/list/recordstemp = list()
+	var/saved = false
+	data["ScannerGone"] = isnull(src.scanner)
+	data["OccupantScanned"] = false
+	data["PodGone"] = isnull(src.pod1)
+	if(!isnull(src.pod1))
+		data["MindWipe"] = pod1.mindwipe
+		data["MeatLevels"] = pod1.meat_level
+		data["cloneslave"] = pod1.cloneslave
+		data["GeneticAnalysis"] = pod1.gen_analysis
+		if(!isnull(pod1.occupant))
+			data["Completion"] = (100 * ((pod1.occupant.health + 100) / (pod1.heal_level + 100)))
+		else
+			data["Completion"] = 0
+	if(!isnull(src.scanner))
+		data["ScannerOccupied"] = src.scanner.occupant
+		data["ScannerLocked"] = src.scanner.locked
+		if(src.scanner.occupant)
+			if (!isnull(find_record(ckey(src.scanner.occupant.mind.key))))
+				data["OccupantScanned"] = true
+	data["Message"] = src.temp
+	if(!isnull(src.diskette))
+		data["DiskReadOnly"] = src.diskette.read_only
+		data["Disk"] = src.diskette
+	data["AllowMindErasure"] = src.allow_mind_erasure
+	data["MindWipeActive"] = src.mindwipe
+	data["clones_for_cash"] = wagesystem.clones_for_cash
+	data["balance"] = src.held_credit
+
+
+	for (var/r in records)
 		var/obj/item/implant/health/H = locate(r["fields"]["imp"])
 		if ((H) && (istype(H)))
-			currenthealth = H.sensehealth()
+			currenthealth = H.GetHealthList()
+			hasimplant = true
 		else
-			currenthealth = "Unable to locate implant"
-		var/list/data = list(
+			currenthealth = H.GetHealthList()
+			hasimplant = false
+		if(src.diskette) // checks if saved to disk
+			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
+				if (F.fields["ckey"] == r["fields"]["ckey"])
+					saved = true
+
+		recordstemp.Add(list(list(
 			name = r["fields"]["name"],
 			id = r["fields"]["id"],
-			health = currenthealth
-			//max_amount = R.max_amount,
-			//ref = REF(R),
-			//premium = TRUE
-		)
-		.["clone_records"] += list(data)
+			ckey = r["fields"]["ckey"],
+			health = currenthealth,
+			implant = hasimplant,
+			saved = saved
+		)))
+
+	data["clone_records"] = recordstemp
+
+	return data
 
 /obj/machinery/computer/cloning/ui_state(mob/user)
 	return tgui_default_state
 
-/* /obj/machinery/computer/cloning/ui_status(mob/user, datum/ui_state/state)
+/obj/machinery/computer/cloning/ui_status(mob/user, datum/ui_state/state)
 	return min(
 		state.can_use_topic(src, user),
 		tgui_broken_state.can_use_topic(src, user),
 		tgui_not_incapacitated_state.can_use_topic(src, user)
-	) */
+	)
 
+
+/* for debugging
+/obj/machinery/computer/cloning/ui_state(mob/user)
+	return tgui_always_state
+
+/obj/machinery/computer/cloning/ui_status(mob/user, datum/ui_state/state)
+	return min(
+		//state.can_use_topic(src, user),
+		tgui_always_state.can_use_topic(src, user)
+		//tgui_not_incapacitated_state.can_use_topic(src, user)
+	) */
 
 /obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CloningConsole", src.name)
 		ui.open()
-
-/obj/machinery/computer/cloning/attack_hand(mob/user as mob)
-	src.add_dialog(user)
-	add_fingerprint(user)
-	ui_interact(user)
-	if(status & (BROKEN|NOPOWER))
-		return
-
-	var/dat = {"<h3>Cloning System Control</h3>
-	<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>
-	<br><tt>[temp]</tt><br><hr>"}
-
-	switch(src.menu)
-		if(1) //Scan someone
-			dat += "<h4>Scanner Functions</h4>"
-
-			if (isnull(src.scanner))
-				dat += "No scanner connected!"
-			else
-				if (src.scanner.occupant)
-					dat += "<a href='byond://?src=\ref[src];scan=1'>Scan - [src.scanner.occupant]</a>"
-				else
-					dat += "Scanner unoccupied"
-
-				dat += "<br>Lock status: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Locked" : "Unlocked"]</a><BR>"
-
-			dat += {"<h4>Cloning Pod Functions</h4>
-					<a href='byond://?src=\ref[src];menu=5'>Genetic Analysis Mode</a><br>
-					Status: <B>[pod1 && pod1.gen_analysis ? "Enabled" : "Disabled"]</B>
-					<h4>Database Functions</h4>
-					<a href='byond://?src=\ref[src];menu=2'>View Records</a><br>"}
-			if (src.diskette)
-				dat += {"<a href='byond://?src=\ref[src];disk=load'>Load from disk</a><br>
-				<a href='byond://?src=\ref[src];disk=eject'>Eject disk</a><br>"}
-
-			if (pod1 && pod1.BE)
-				dat += "<br><b>Gene power module active</b><br>"
-
-			if(src.allow_mind_erasure)
-				dat += "<a href='byond://?src=\ref[src];menu=6'>Criminal rehabilitation controls</a>"
-
-
-		if(2) //Viewing records
-			dat += {"<h4>Current records</h4>
-					<a href='byond://?src=\ref[src];menu=1'>Back</a><br><br>"}
-			for(var/datum/data/record/R in src.records)
-				dat += "<a href='byond://?src=\ref[src];view_rec=\ref[R]'>[R.fields["id"]]-[R.fields["name"]]</a><br>"
-
-		if(3) //Viewing details of record
-			dat += {"<h4>Selected Record</h4>
-					<a href='byond://?src=\ref[src];menu=2'>Back</a><br>"}
-
-			if (!src.active_record)
-				dat += "<font color=red>ERROR: Record not found.</font>"
-			else
-				dat += {"<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>
-						<b>Name:</b> [src.active_record.fields["name"]]<br>"}
-
-				var/obj/item/implant/health/H = locate(src.active_record.fields["imp"])
-
-				if ((H) && (istype(H)))
-					dat += "<b>Health:</b> [H.sensehealth()]<br>"
-				else
-					dat += "<font color=red>Unable to locate implant.</font><br>"
-
-				if (!isnull(src.diskette))
-					dat += {"<a href='byond://?src=\ref[src];save_disk=holder'>Save to disk</a><br>"}
-				else
-					dat += "<br>" //Keeping a line empty for appearances I guess.
-
-				if (wagesystem.clones_for_cash)
-					dat += "Current machine credit: [src.held_credit]<br>"
-				dat += {"<a href='byond://?src=\ref[src];clone=\ref[src.active_record]'>Clone</a><br>"}
-
-		if(4) //Deleting a record
-			if (!src.active_record)
-				src.menu = 2
-			dat = {"[src.temp]<br>
-					<h4>Confirm Record Deletion</h4>
-					<b><a href='byond://?src=\ref[src];del_rec=1'>Yes</a></b><br>
-					<b><a href='byond://?src=\ref[src];menu=3'>No</a></b>"}
-
-		if(5) //Advanced genetics analysis
-			dat += {"<h4>Advanced Genetic Analysis</h4>
-					<a href='byond://?src=\ref[src];menu=1'>Back</a><br>
-					<B>Notice:</B> Enabling this feature will prompt the attached clone pod to transfer active genetic mutations from the genetic record to the subject during cloning.
-					The cloning process will be slightly slower as a result.<BR><BR>"}
-
-			if(pod1 && !pod1.operating)
-				if(pod1.gen_analysis)
-					dat += {"Enabled<BR>
-							<a href='byond://?src=\ref[src];set_analysis=0'>Disable</A><BR>"}
-				else
-					dat += {"<a href='byond://?src=\ref[src];set_analysis=1'>Enable</A><BR>
-							Disabled<BR>"}
-			else
-				dat += {"Cannot toggle while cloning pod is active. <BR>
-						AGA: <B>[pod1.gen_analysis ? "Enabled" : "Disabled"]</B>"}
-
-		if(6) // Mind erasure controls
-			dat += {"<h4>Criminal rehabilitation controls</h4>
-					<a href='byond://?src=\ref[src];menu=1'>Back</a><br>
-					<B>Notice:</B> Enabling this feature will enable an experimental criminal rehabilitation routine.<BR><B>Human use is specifically forbidden by the space geneva convention.<B><BR>"}
-			if(!pod1.operating)
-				if(pod1.mindwipe)
-					dat += {"Enabled<BR>
-							<a href='byond://?src=\ref[src];set_mindwipe=0'>Disable</A><BR>"}
-				else
-					dat += {"<a href='byond://?src=\ref[src];set_mindwipe=1'>Enable</A><BR>
-							Disabled<BR>"}
-			else
-				dat += {"Cannot toggle while cloning pod is active. <BR>"}
-
-	user.Browse(dat, "window=cloning")
-	onclose(user, "cloning")
-	return
-
-/obj/machinery/computer/cloning/Topic(href, href_list)
-	if(..())
-		return
-
-	if ((href_list["scan"]) && (!isnull(src.scanner)))
-		src.scan_mob(src.scanner.occupant)
-
-		//No locking an open scanner.
-	else if ((href_list["lock"]) && (!isnull(src.scanner)))
-		if ((!src.scanner.locked) && (src.scanner.occupant))
-			src.scanner.locked = 1
-		else
-			src.scanner.locked = 0
-
-	else if (href_list["view_rec"])
-		src.active_record = locate(href_list["view_rec"]) in records
-		if ((isnull(src.active_record.fields["ckey"])) || (src.active_record.fields["ckey"] == ""))
-			qdel(src.active_record)
-			src.active_record = null
-			src.temp = "ERROR: Record Corrupt"
-		else
-			src.menu = 3
-
-	else if (href_list["del_rec"])
-		if ((!src.active_record) || (src.menu < 3))
-			return
-		if (src.menu == 3) //If we are viewing a record, confirm deletion
-			src.temp = "Delete record?"
-			src.menu = 4
-
-		else if (src.menu == 4)
-			logTheThing("combat", usr, null, "deletes the cloning record [src.active_record.fields["name"]] for player [src.active_record.fields["ckey"]] at [log_loc(src)].")
-			src.records.Remove(src.active_record)
-			qdel(src.active_record)
-			src.active_record = null
-			src.temp = "Record deleted."
-			src.menu = 2
-/*
-			var/obj/item/card/id/C = usr.equipped()
-			if (istype(C))
-				if(src.check_access(C))
-					src.records.Remove(src.active_record)
-					qdel(src.active_record)
-					src.active_record = null
-					src.temp = "Record deleted."
-					src.menu = 2
-				else
-					src.temp = "Access Denied."
-*/
-	else if (href_list["disk"]) //Load or eject.
-		switch(href_list["disk"])
-			if("load")
-				if (src.diskette.read_only)
-					// The file needs to be deleted from the disk after loading the record
-					src.temp = "Load error - cannot transfer clone records from a disk in read only mode."
-					src.updateUsrDialog()
-					return
-
-				var/loaded = 0
-
-				for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
-					if (!find_record(cloneRecord.fields["ckey"]))
-						var/datum/data/record/R = new
-						R.fields = cloneRecord.fields
-						src.records += R
-						loaded++
-						src.temp = "Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred."
-						src.diskette.root.remove_file(cloneRecord)
-
-				if(!loaded)
-					src.temp = "Load error."
-					src.updateUsrDialog()
-					return
-
-			if("eject")
-				if (!isnull(src.diskette))
-					src.diskette.set_loc(src.loc)
-					usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
-					src.diskette = null
-
-	else if (href_list["save_disk"]) //Save to disk!
-		if ((isnull(src.diskette)) || (src.diskette.read_only) || (isnull(src.active_record)))
-			src.temp = "Save error."
-			src.updateUsrDialog()
-			return
-
-		for (var/datum/computer/file/clone/R in src.diskette.root.contents)
-			if (R.fields["ckey"] == src.active_record.fields["ckey"])
-				src.temp = "Record already exists on disk."
-				src.updateUsrDialog()
-				return
-
-		var/datum/computer/file/clone/cloneFile = new
-		cloneFile.name = "CloneRecord-[ckey(src.active_record.fields["name"])]"
-		cloneFile.fields = src.active_record.fields
-		src.temp = src.diskette.root.add_file(cloneFile) ? "Save successful." : "Save error."
-
-	else if (href_list["refresh"])
-		src.updateUsrDialog()
-
-	else if (href_list["clone"])
-		src.clone_record(locate(href_list["clone"]))
-
-	else if (href_list["menu"])
-		src.menu = text2num(href_list["menu"])
-	else if (href_list["set_analysis"])
-		pod1.gen_analysis = text2num(href_list["set_analysis"])
-		logTheThing("combat", usr, null, "toggles advanced genetic analysis [pod1.gen_analysis ? "on" : "off"] at [log_loc(src)].")
-	else if (href_list["set_mindwipe"])
-		pod1.mindwipe = text2num(href_list["set_mindwipe"])
-
-	src.updateUsrDialog()
-	return
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
 	if ((isnull(subject)) || (!ishuman(subject)))
@@ -676,7 +583,7 @@
 		eject_occupant(user)
 
 	disposing()
-		connected.scanner = null
+		connected?.scanner = null
 		connected = null
 		pods = null
 		occupant = null

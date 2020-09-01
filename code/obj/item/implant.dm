@@ -151,7 +151,7 @@ THROWING DARTS
 	impcolor = "b"
 	//life_tick_energy = 0.1
 	var/healthstring = ""
-
+	var/healthlist = list()
 	var/message = null
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 	var/net_id = null
@@ -174,6 +174,22 @@ THROWING DARTS
 		..()
 		if (!isdead(M) && M.client)
 			JOB_XP(I, "Medical Doctor", 5)
+
+	proc/GetHealthList()
+		if (!src.implanted)
+			src.healthlist["OXY"] = 0
+			src.healthlist["TOX"] = 0
+			src.healthlist["BURN"] = 0
+			src.healthlist["BRUTE"] = 0
+		else
+			var/mob/living/L
+			if (isliving(src.owner))
+				L = src.owner
+				src.healthlist["OXY"] = round(L.get_oxygen_deprivation())
+				src.healthlist["TOX"] = round(L.get_toxin_damage())
+				src.healthlist["BURN"] = round(L.get_burn_damage())
+				src.healthlist["BRUTE"] = round(L.get_brute_damage())
+		return src.healthlist
 
 	proc/sensehealth()
 		if (!src.implanted)
