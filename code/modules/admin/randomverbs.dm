@@ -351,8 +351,8 @@
 			ticker.centralized_ai_laws.supplied += line
 	logTheThing("admin", usr, null, "has set the AI laws to [input]")
 	logTheThing("diary", usr, null, "has set the AI laws to [input]", "admin")
-	logTheThing("admin", null, null, "Resulting AI Lawset:[ticker.centralized_ai_laws.format_for_logs()]")
-	logTheThing("diary", null, null, "Resulting AI Lawset:[ticker.centralized_ai_laws.format_for_logs()]", "admin")
+	logTheThing("admin", usr, null, "Resulting AI Lawset:[ticker.centralized_ai_laws.format_for_logs()]")
+	logTheThing("diary", usr, null, "Resulting AI Lawset:[ticker.centralized_ai_laws.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has adjusted all of the AI's laws!")
 
 	for (var/mob/living/silicon/O in mobs)
