@@ -428,6 +428,9 @@
 					if(IN_CABINET && src.cabinet_banned)
 						boutput(usr,"<span class='alert'>[src] is not allowed in component housings.</span>")
 						return
+					if(IN_CABINET && src.one_per_tile)
+						boutput(usr,"<span class='alert'>[src] is not allowed in component housings.</span>")
+						return
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
 					logTheThing("station", usr, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
