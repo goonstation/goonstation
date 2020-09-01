@@ -714,7 +714,7 @@
 obj/trait/pilot
 	name = "Pilot (+1) \[Background\]"
 	cleanName = "Pilot"
-	desc = "You spawn in a pod off-station with a Space GPS and proper protection but without an ID and PDA."
+	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank and proper protection but without a PDA."
 	id = "pilot"
 	icon_state = "pilot"
 	category = "background"

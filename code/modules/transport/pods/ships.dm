@@ -130,10 +130,15 @@
 obj/machinery/vehicle/miniputt/pilot
 	New()
 		. = ..()
+		qdel(src.engine)
+		qdel(src.com_system)
+		src.components -= src.engine
+		src.components -= src.com_system
 		src.engine = new /obj/item/shipcomponent/engine/zero
 		src.engine.ship = src
 		src.components += src.engine
-		
+		src.engine.activate()
+		src.com_system.deactivate()
 		myhud.update_systems()
 		myhud.update_states()
 		return

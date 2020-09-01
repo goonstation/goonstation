@@ -397,50 +397,36 @@
 					src.set_loc(pick(SL))
 
 			if (src.traitHolder && src.traitHolder.hasTrait("pilot"))							//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
-				boutput(world, "<span class='notice'>Pilot protocol engaged.</span>")			//Debug message. Future me, delete this.
 				var/list/turf/SL = list()
 				#ifdef UNDERWATER_MAP															//This part of the code executes only if the map is an underwater one.
-				boutput(world, "<span class='notice'>The map is underwater.</span>")			//Debug message. Future me, delete this.
 				for(var/obj/critter/gunbot/drone/S in critters)
-					boutput(world, "<span class='notice'>Drone found.</span>")					//Debug message. Future me, delete this.
 					if(S.z == 5)
-						boutput(world, "<span class='notice'>Drone location valid.</span>")		//Debug message. Future me, delete this.
 						var/turf/T = get_turf(S)
 						SL.Add(T)
 				var/turf/TF = pick(SL)
 				if (TF)																			//Sanity check.
-					boutput(world, "<span class='notice'>Sanity check passed.</span>")			//Debug message. Future me, delete this.
 					src.set_loc(TF)
 				TF = src.loc
 				for(var/obj/critter/gunbot/drone/SD in TF)
-					boutput(world, "<span class='notice'>Spawn location cleared.</span>")		//Debug message. Future me, delete this.
 					qdel(SD)
 				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(src.loc)
 				V.finish_board_pod(src)
-				boutput(world, "<span class='notice'>Pilot relocated successfully.</span>")		//Debug message. Future me, delete this.
 
 				#else 																			//This part of the code executes only if the map is a space one.
-				boutput(world, "<span class='notice'>The map is in space.</span>")				//Debug message. Future me, delete this.
 				for(var/obj/critter/gunbot/drone/S in critters)
-					boutput(world, "<span class='notice'>Drone found.</span>")					//Debug message. Future me, delete this.
 					if(S.z != 1 && !isrestrictedz(S.z))
-						boutput(world, "<span class='notice'>Drone location valid.</span>")		//Debug message. Future me, delete this.
 						var/turf/T = get_turf(S)
 						SL.Add(T)
 				var/turf/TF = pick(SL)
 				if (TF)																			//Sanity check.
-					boutput(world, "<span class='notice'>Sanity check passed.</span>")			//Debug message. Future me, delete this.
 					src.set_loc(TF)
 				TF = src.loc
 				for(var/obj/critter/gunbot/drone/SD in TF)
-					boutput(world, "<span class='notice'>Spawn location cleared.</span>")		//Debug message. Future me, delete this.
 					qdel(SD)
 				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(src.loc)
-				qdel(V.engine)
-				V.engine = new/obj/item/shipcomponent/engine/zero
 				V.finish_board_pod(src)
-				boutput(world, "<span class='notice'>Pilot relocated successfully.</span>")		//Debug message. Future me, delete this.
 				#endif
+				src:spawnId(rank)
 
 			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
@@ -525,8 +511,9 @@
 			src.equip_new_if_possible(JOB.slot_belt, slot_in_backpack)
 		else
 			src.equip_new_if_possible(JOB.slot_belt, slot_belt)
-			if (src.traitHolder && src.traitHolder.hasTrait("immigrant") && istype(src.belt, /obj/item/device/pda2))
-				del(src.belt) //UGHUGHUGHUGUUUUUUUU
+			if (src.traitHolder && istype(src.belt, /obj/item/device/pda2))
+				if (src.traitHolder.hasTrait("immigrant") || src.traitHolder.hasTrait("pilot"))
+					del(src.belt)
 		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
 			for (var/X in JOB.items_in_belt)
 				if(ispath(X))

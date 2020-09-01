@@ -301,8 +301,6 @@
 					boutput(usr, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
 					master.lock.show_lock_panel(usr)
 			if ("return_to_station")
-				if(master.engine.returnAllowed == 0)
-					boutput(usr, "[master.ship_message("SYSTEM OUTDATED")]")
 				if(master.com_system)
 					if(master.com_system.active)
 						master.going_home = 1
