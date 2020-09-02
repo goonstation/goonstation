@@ -86,3 +86,30 @@ ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based/confirmation)
 		src.do_it(user)
 	else
 		system.reply("Command cancelled.", user)
+
+// TODO document the rest
+// short version: some additional stuff to make commands that operate just with a target mob easier to write
+
+ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based/confirmation/mob_targeting)
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	argument_types = list(/datum/command_argument/string="ckey")
+	var/action_name
+	var/actt
+	var/ckey
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/prepare(user, ckey)
+	src.ckey = ckey
+	var/mob/M = whois_ckey_to_mob_reference(ckey)
+	if(!M)
+		system.reply("Ckey not found.", user)
+		return null
+	return "You are about to [src.action_name] [M] ([ckey])[isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""]."
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/do_it(user)
+	var/mob/M = whois_ckey_to_mob_reference(ckey)
+	var/success_msg = "Done: [src.action_name] [M] ([ckey])[isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""]."
+	if(src.perform_action(user, M))
+		system.reply(success_msg, user)
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/proc/perform_action(user, mob/target)

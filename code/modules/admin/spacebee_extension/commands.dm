@@ -99,23 +99,77 @@
 			message += "cancel\n\tCancels an in-progress multi-part command."
 			system.reply(message.Join("\n"), user)
 
-/datum/spacebee_extension_command/state_based/confirmation/gib
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/gib
 	name = "gib"
-	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
 	help_message = "Gibs a given ckey on a server."
-	argument_types = list(/datum/command_argument/string="ckey")
+	action_name = "gib"
 
-	var/ckey
-	prepare(user, ckey)
-		src.ckey = ckey
-		var/mob/M = whois_ckey_to_mob_reference(ckey)
-		if(!M)
-			system.reply("Ckey not found.", user)
-			return null
-		return "You are about to gib [M] ([ckey])[isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""]."
+	perform_action(user, mob/target)
+		logTheThing("admin", "[user] (Discord)", target, "gibbed [constructTarget(target,"admin")]")
+		logTheThing("diary", "[user] (Discord)", target, "gibbed [constructTarget(target,"diary")].", "admin")
+		message_admins("[user] (Discord) gibbed [key_name(target)].")
+		target.transforming = 1
+		target.gib()
+		return TRUE
 
-	do_it(user)
-		var/mob/M = whois_ckey_to_mob_reference(ckey)
-		system.reply("Gibbing [M] ([ckey])[isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""].", user)
-		M.transforming = 1
-		M.gib()
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/send_to_arrivals
+	name = "send_to_arrivals"
+	help_message = "Sends a given ckey to arrivals."
+	action_name = "send to arrivals"
+
+	perform_action(user, mob/target)
+		logTheThing("admin", "[user] (Discord)", target, "sent [constructTarget(target,"admin")] to arrivals")
+		logTheThing("diary", "[user] (Discord)", target, "sent [constructTarget(target,"diary")] to arrivals.", "admin")
+		message_admins("[user] (Discord) sent [key_name(target)] to arrivals.")
+		target.set_loc(pick_landmark(LANDMARK_LATEJOIN, locate(150, 150, 1)))
+		return TRUE
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/respawn
+	name = "respawn"
+	help_message = "Respawns a given ckey."
+	action_name = "respawn"
+
+	perform_action(user, mob/target)
+		logTheThing("admin", "[user] (Discord)", target, "respawned [constructTarget(target,"admin")]")
+		logTheThing("diary", "[user] (Discord)", target, "respawned [constructTarget(target,"diary")].", "admin")
+		message_admins("[user] (Discord) respawned [key_name(target)].")
+
+		var/mob/new_player/newM = new()
+		newM.adminspawned = 1
+
+		newM.key = target.key
+		if (target.mind)
+			target.mind.damned = 0
+			target.mind.transfer_to(newM)
+		newM.Login()
+		newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
+		qdel(target)
+
+		boutput(newM, "<b>You have been respawned.</b>")
+
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/heal
+	name = "heal"
+	help_message = "Heal / revive a given ckey."
+	action_name = "heal"
+
+	perform_action(user, mob/target)
+		if(!config.allow_admin_rev)
+			system.reply("Healing disabled.", "user")
+			return FALSE
+		if(isobserver(target))
+			var/mob/dead/observer/observer = target
+			target = observer.corpse
+			observer.reenter_corpse()
+		if(!target)
+			system.reply("Valid mob not found.", "user")
+			return FALSE
+		target.revive()
+		message_admins("<span class='alert'>Admin [user] (Discord) healed / revived [key_name(target)]!</span>")
+		logTheThing("admin", "[user] (Discord)", target, "healed / revived [constructTarget(target,"admin")]")
+		logTheThing("diary", "[user] (Discord)", target, "healed / revived [constructTarget(target,"diary")]", "admin")
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/heal/revive
+	name = "revive"
+	help_message = "Heal / revive a given ckey. (alias of ;;heal)"
+	action_name = "revive"
