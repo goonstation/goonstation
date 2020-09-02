@@ -49,8 +49,8 @@
 		ircmsg["msg"] = "Added a note for [ckey]: [note]"
 		ircbot.export("admin", ircmsg)
 
-/datum/spacebee_extension_command/announcement
-	name = "announcement"
+/datum/spacebee_extension_command/announce
+	name = "announce"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
 	help_message = "Creates a command report on a given server."
 	argument_types = list(/datum/command_argument/string="headline", /datum/command_argument/the_rest="body")
