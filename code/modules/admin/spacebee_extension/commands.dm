@@ -20,7 +20,7 @@
 	help_message = "Locates a given ckey on all servers."
 	argument_types = list(/datum/command_argument/string="ckey")
 	execute(user, ckey)
-		var/mob/M = whois_ckey_to_mob_reference(ckey)
+		var/mob/M = whois_ckey_to_mob_reference(ckey, exact=FALSE)
 		if(!M)
 			return
 		var/list/result = list()
