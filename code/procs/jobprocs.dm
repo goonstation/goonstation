@@ -422,7 +422,7 @@
 				var/pilotZ = rand(2, world.maxz)
 				var/validZ = FALSE
 				while (!validZ)
-					if (isrestrictedz(pilotZ) || pilotZ == 6)
+					if (isrestrictedz(pilotZ))
 						pilotZ = ++pilotZ % world.maxz
 						continue
 					validZ = TRUE
