@@ -56,7 +56,7 @@
 		interrupt(INTERRUPT_ALWAYS)
 		return
 		
-/datum/action/bar/icon/claw_machine/onUpdate()
+/datum/action/bar/icon/claw_machine/onResume()
 	..()
 	onUpdate()
 
