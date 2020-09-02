@@ -3914,15 +3914,15 @@
 
 		return
 
-	Bumped(M as mob|obj)
+	hitby(M as mob|obj)
 		if (src.density)
 			for (var/obj/item/I in src.loc.contents)
-				I.Bumped(M)
+				I.hitby(M)
 				if (istype(I.artifact,/datum/artifact/) && isitem(M))
 					var/obj/item/ITM = M
 					var/obj/ART = I
 					src.impactpad_senseforce(ART, ITM)
-				return
+		..()
 
 	bullet_act(var/obj/projectile/P)
 		if (src.density)
@@ -3937,7 +3937,6 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = M.throwforce
-			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 			if (src.sensed[2] != 0 && ARTDATA.faults.len)
@@ -3956,7 +3955,6 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = P.power
-			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 

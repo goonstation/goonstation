@@ -17,6 +17,10 @@
 		src.create_reagents(capacity)
 		..()
 
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
+
 	is_open_container()
 		return 1
 

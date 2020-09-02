@@ -96,7 +96,7 @@ var/global/mutable_appearance/elecflash_ma = null
 		for(var/atom in elecs)
 			var/atom/A = atom
 			qdel(A)
-
+		elecs.Cut()
 		elecs = null
 	chain_to = null
 	fluid_groups_touched = null

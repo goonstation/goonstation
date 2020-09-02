@@ -15,7 +15,7 @@ emotes@=burp@,scream@,twitch@,clap@,fart@,snap@,dance@,whistle
 deadguy@=Oh damn, there goes@,Let's smoke a fat one fer@,Light one up fer@,Take a shot fer@,That's what happens out here@,Aw naw, they've done in@,Shit, man, too soon fer@,Friggin', the mean streets got@,Hope you're hangin with my juicers in the sky@,Wow, gone right before out eyes! Poor
 murraycompliment@=fine@,okay@,neato@,decent@,allright@,juicy
 grilladvice@=you're gonna wanna flip that@,you got a nice sear going on that@,you really gotta seal in the juices on a grilled@,all you want is salt and pepper on that@,gonna need a few more minutes on that@,I ever tell you how to grill a@,lemme show you how to grill a real@,let me at that@,what a mouthwatering@,I can already taste that@,oh man, now THAT is a good, juicy
-stories1@=
+stories@=
 	that time i got a New York strip fer four bucks and change
 	the time I got fined fer tax evasion
 	the time I stole a bus

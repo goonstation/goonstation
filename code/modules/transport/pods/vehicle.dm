@@ -104,6 +104,8 @@
 			checkhealth()
 			src.add_fingerprint(user)
 			src.visible_message("<span class='alert'>[user] has fixed some of the dents on [src]!</span>")
+			if(health >= maxhealth)
+				src.visible_message("<span class='alert'>[src] is fully repaired!</span>")
 			return
 
 		if (istype(W, /obj/item/shipcomponent))
