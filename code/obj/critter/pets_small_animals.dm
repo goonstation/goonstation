@@ -1796,9 +1796,9 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			// maybe later make it ambient play a short chiptune here later or at least some new sound effect
 			if (emagged)
 				SPAWN_DBG(0.5 SECONDS)
-					LAGCHECK(LAG_MED)
 					for (var/mob/living/carbon/human/responseMonkey in orange(2, src)) // they don't have to be monkeys, but it's signifying monkey code
-						if (responseMonkey.stat || responseMonkey.getStatusDuration("paralysis") || responseMonkey.sleeping || responseMonkey.getStatusDuration("stunned"))
+						LAGCHECK(LAG_MED)
+						if (!can_act(responseMonkey, 0))
 							continue
 						responseMonkey.emote("dance")
 			SPAWN_DBG(20 SECONDS)
