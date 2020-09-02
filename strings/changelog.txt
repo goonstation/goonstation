@@ -1,4 +1,9 @@
 
+(t)wed sep 02 20
+(u)Kubius
+(p)2038
+(e)🗺|mapping
+(+)Horizon's quartermasters now have access to a small set of cameras for jam detection.
 (t)tue sep 01 20
 (u)Jawns
 (p)2015
