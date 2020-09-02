@@ -45,6 +45,7 @@
 #include "defines\shuttle.dm"
 #include "defines\sight.dm"
 #include "defines\sound.dm"
+#include "defines\spacebee_extension.dm"
 #include "defines\speed.dm"
 #include "defines\stamina.dm"
 #include "defines\status_effects.dm"
