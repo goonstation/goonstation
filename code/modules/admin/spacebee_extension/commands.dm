@@ -21,6 +21,8 @@
 	argument_types = list(/datum/command_argument/string="ckey")
 	execute(user, ckey)
 		var/mob/M = whois_ckey_to_mob_reference(ckey)
+		if(!M)
+			return
 		var/list/result = list()
 		var/role = getRole(M, 1)
 		if (M.name) result += M.name
