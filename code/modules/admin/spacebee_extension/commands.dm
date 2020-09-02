@@ -40,6 +40,15 @@
 	execute(user, ckey, note)
 		addPlayerNote(ckey, user + " (Discord)", note)
 
+		logTheThing("admin", "[user] (Discord)", null, "added a note for [ckey]: [note]")
+		logTheThing("diary", "[user] (Discord)", null, "added a note for [ckey]: [note]", "admin")
+		message_admins("<span class='internal'>[user] (Discord) added a note for [ckey]: [the_note]</span>")
+
+		var/ircmsg[] = new()
+		ircmsg["name"] = user
+		ircmsg["msg"] = "Added a note for [ckey]: [note]"
+		ircbot.export("admin", ircmsg)
+
 /datum/spacebee_extension_command/announcement
 	name = "announcement"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
