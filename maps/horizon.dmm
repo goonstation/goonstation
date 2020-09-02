@@ -31493,6 +31493,12 @@
 /area/station/hangar/qm)
 "bsI" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/qm_horizontal/vertical,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/qm)
 "bsJ" = (
