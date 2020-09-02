@@ -1,5 +1,9 @@
 
 (t)wed sep 02 20
+(u)Nebulacrity
+(p)1859
+(e)🆕|feature
+(*)Added Party Hard medal for dying while drunk either near neon lining or with a glowstick in your pocket.
 (u)Flaborized
 (p)2026
 (e)🎨|sprites

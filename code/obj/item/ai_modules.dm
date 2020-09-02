@@ -46,19 +46,19 @@ AI MODULES
 		return "This law does not exist."
 
 
-	proc/install(obj/machinery/computer/aiupload/comp)
+	proc/install(obj/machinery/computer/aiupload/comp, user)
 		if (comp.status & NOPOWER)
-			boutput(usr, "\The [comp] has no power!")
+			boutput(user, "\The [comp] has no power!")
 			return
 		if (comp.status & BROKEN)
-			boutput(usr, "\The [comp] computer is broken!")
+			boutput(user, "\The [comp] computer is broken!")
 			return
 		if(ON_COOLDOWN(global, "ai_law_change", 10 SECONDS))
-			boutput(usr, "Centralized AI law database is still processing the last request. Wait [ON_COOLDOWN(global, "ai_law_change", 0)/10] seconds.")
+			boutput(user, "Centralized AI law database is still processing the last request. Wait [ON_COOLDOWN(global, "ai_law_change", 0)/10] seconds.")
 			return
 
-		src.transmitInstructions(usr)
-		boutput(usr, "Upload complete. AI and silicon laws have been modified.")
+		src.transmitInstructions(user)
+		boutput(user, "Upload complete. AI and silicon laws have been modified.")
 
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
@@ -93,6 +93,8 @@ AI MODULES
 		message_admins("[M.name] ([key_name(M)]) used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
 		logTheThing("admin", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
 		logTheThing("diary", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".", "admin")
+		logTheThing("admin", M, null, "AI and silicon laws have been modified:[ticker.centralized_ai_laws.format_for_logs()]")
+		logTheThing("diary", M, null, "AI and silicon laws have been modified:[ticker.centralized_ai_laws.format_for_logs()]", "admin")
 
 
 /******************** Modules ********************/
@@ -409,7 +411,7 @@ AI MODULES
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/aiModule) && !isghostdrone(user))
 			var/obj/item/aiModule/AIM = I
-			AIM.install(src)
+			AIM.install(src, user)
 		else if (isscrewingtool(I))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			if(do_after(user, 20))
