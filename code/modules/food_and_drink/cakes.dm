@@ -137,8 +137,8 @@
 		for(var/i=1,i<=slices,i++) //generating child slices of the parent template
 			var/obj/item/reagent_containers/food/snacks/cake/custom/schild = new /obj/item/reagent_containers/food/snacks/cake/custom
 			schild.icon_state = "slice-overlay"
-			for(var/i2=1,i2<=s.overlays.len,i2++) //looping through parent overlays and copying them over to the children
-				schild.UpdateOverlays(s.GetOverlayImage("[s.overlay_refs[i2]]"),"[s.overlay_refs[i2]]")
+			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
+				schild.UpdateOverlays(s.GetOverlayImage(overlay_ref), overlay_ref)
 			if(slice_candle) //making sure there's only one candle :)
 				if(slice_candle == 1)
 					schild.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"),"slice-candle")
@@ -390,15 +390,12 @@
 			if (!(src in processing_items))
 				processing_items.Add(src)
 
-			for(var/i=1,i<=src.overlays.len,i++) //searching for an unlit candle overlay, updating it, the enabling the light
-				if(src.sliced && ("[src.overlay_refs[i]]" == "slice-candle"))
-					src.ClearSpecificOverlays("[src.overlay_refs[i]]")
-					src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"), "slice-candle_lit")
-					break
-				if("[src.overlay_refs[i]]" == "cake[src.clayer]-candle")
-					src.ClearSpecificOverlays("[src.overlay_refs[i]]")
-					src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle_lit"), "cake[src.clayer]-candle_lit")
-					break
+      if(src.sliced && src.GetOverlayImage("slice-candle"))
+        src.ClearSpecificOverlays("slice-candle")
+        src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"), "slice-candle_lit")
+      else if(src.GetOverlayImage("cake[src.clayer]-candle"))
+        src.ClearSpecificOverlays("cake[src.clayer]-candle")
+        src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle_lit"), "cake[src.clayer]-candle_lit")
 		return
 
 
@@ -457,10 +454,10 @@
 			var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom
 
 			src.reagents.trans_to(s,(src.reagents.total_volume/3))
-			for(var/i=1,i<=src.food_effects.len,i++)
-				if(src.food_effects[i] in s.food_effects)
+			for(var/food_effect in src.food_effects)
+				if(food_effect in s.food_effects)
 					continue
-				s.food_effects += src.food_effects[i]
+				s.food_effects += food_effect
 			s.quality = src.quality
 			s.food_color = src.food_color
 
