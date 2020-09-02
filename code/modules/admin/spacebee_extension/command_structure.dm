@@ -1,0 +1,88 @@
+ABSTRACT_TYPE(/datum/spacebee_extension_command)
+/// A command for the Spacebee extension thing
+/datum/spacebee_extension_command
+	/// how the command is actually called
+	var/name
+	/// help message shown in the ;;help command
+	var/help_message
+	/// a list of subtypes of /datum/command_argument of the form list(type = name), name used only for help messages
+	var/list/argument_types
+	/// how is the server processing this command chosen, see COMMAND_TARGETING_ defines
+	var/server_targeting
+	/// if TRUE a new copy is created for each call of the command, useful for /datum/spacebee_extension_command/state_based
+	var/instantiated = FALSE
+
+	/// instantiated arguments (singletons of the types)
+	var/list/datum/command_argument/argument_instances
+	/// the spacebee extension system this command is bound to
+	var/datum/spacebee_extension_system/system
+
+/datum/spacebee_extension_command/New(datum/spacebee_extension_system/system)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	src.system = system
+	src.argument_instances = list()
+	for(var/arg_type in src.argument_types)
+		src.argument_instances[get_singleton(arg_type)] = src.argument_types[arg_type]
+
+/// the actual command code
+/datum/spacebee_extension_command/proc/execute(user, ...)
+
+
+
+ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based)
+/**
+	For commands with multiple states (several stages of entering inputs, confirmation dialogs etc.).
+	Define a proc for each state and use `go_to_state(new_state)` to go to that state. When the
+	user inputs their next command instead of being processed by the Spacebee extension system it will
+	get processed by said state of this command.
+*/
+/datum/spacebee_extension_command/state_based
+	instantiated = TRUE
+	var/user
+	var/state
+
+/datum/spacebee_extension_command/state_based/execute(user, ...)
+	SHOULD_CALL_PARENT(TRUE)
+	src.user = user
+	. = ..()
+
+/datum/spacebee_extension_command/state_based/proc/go_to_state(new_state)
+	if(!istext(new_state))
+		state = null
+		return
+	state = new_state
+	system.register_callback(src.user, "callback", src)
+
+/datum/spacebee_extension_command/state_based/proc/callback(user, msg)
+	if(!src.state)
+		CRASH("Invalid command state in callback.")
+	return call(src, src.state)(user, msg)
+
+
+
+ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based/confirmation)
+/**
+	For dangerous commands that the user should really doublecheck. Override
+	prepare to check the validity of the vars and return a message (or null to cancel).
+	User will need to reply with ;;yes to continue at which point do_it gets called.
+*/
+/datum/spacebee_extension_command/state_based/confirmation
+
+/datum/spacebee_extension_command/state_based/confirmation/execute(user, ...)
+	. = ..()
+	var/warning_msg = src.prepare(arglist(args))
+	if(!warning_msg)
+		return
+	system.reply("[warning_msg]\nType in \';;yes\' to continue.")
+	src.go_to_state("confirm")
+
+/datum/spacebee_extension_command/state_based/confirmation/proc/prepare(user, ...)
+
+/datum/spacebee_extension_command/state_based/confirmation/proc/do_it(user)
+
+/datum/spacebee_extension_command/state_based/confirmation/proc/confirm(user, msg)
+	if(msg == "yes")
+		src.do_it(user)
+	else
+		system.reply("Command cancelled.", user)
