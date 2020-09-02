@@ -132,6 +132,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/pellets_to_fire = 15
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
+	var/pellet_shot_volume = 100
 	nomsg = 1
 	// 0 = on spawn
 	// 1 = on impact
@@ -148,6 +149,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(split_type) //don't multihit on pointblank unless we'd be splitting on launch
 			return
 		var/datum/projectile/F = new spread_projectile_type()
+		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(O)
 		var/pellets = pellets_to_fire
 		while (pellets > 0)
@@ -161,6 +163,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	proc/split(var/obj/projectile/P)
 		var/datum/projectile/F = new spread_projectile_type()
+		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(P)
 		var/pellets = pellets_to_fire
 		while (pellets > 0)
@@ -177,7 +180,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/initial_angle_offset_mult = 0.5
 
 	on_launch(var/obj/projectile/P)
-		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
+		angle_adjust_per_pellet = ((spread_angle) / pellets_to_fire)
 		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
 		..()
 
@@ -905,9 +908,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(istype(W))
 			W.throw_impact(get_turf(O))
 
-
-
-
 /datum/projectile/special/spawner/beepsky
 	name = "Beepsky"
 	window_pass = 0
@@ -938,3 +938,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/machinery/bot/secbot/beepsky = ..()
 		if(istype(beepsky))
 			beepsky.emagged = 1
+
+/datum/projectile/special/spawner/battlecrate
+	name = "Battlecrate"
+	power = 100
+	cost = 0
+	shot_sound = 'sound/weapons/rocket.ogg'
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "attachecase"
+	typetospawn = /obj/lootbox
+	var/explosion_power = 15
+
+	on_hit(atom/hit, direction, projectile)
+		explosion_new(projectile, get_turf(hit), explosion_power, 1)
+		..()
