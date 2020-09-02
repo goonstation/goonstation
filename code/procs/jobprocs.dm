@@ -526,6 +526,10 @@
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src)
 		src.equip_if_possible(SHS, slot_in_backpack)
 		#endif
+		var/obj/item/clothing/mask/breath/MSK = new /obj/item/clothing/mask/breath(src)
+		src.equip_if_possible(MSK, slot_in_backpack)
+		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src)
+		src.equip_if_possible(GPSDEVICE, slot_in_backpack)
 
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
