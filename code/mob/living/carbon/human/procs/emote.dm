@@ -2153,6 +2153,8 @@
 	src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 
 /mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/H)
+	if(PROC_ON_COOLDOWN(2 SECONDS))
+		return
 	H.render_target = "*\ref[H]"
 	var/image/left_arm = image(null, H)
 	left_arm.render_source = H.render_target
