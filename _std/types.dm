@@ -102,3 +102,23 @@ proc/get_singleton(type)
 		singletons[type] = new type
 	return singletons[type]
 var/global/list/singletons
+
+//by_type and by_cat stuff
+
+#ifdef SPACEMAN_DMM // just don't ask
+#define START_TRACKING
+#define STOP_TRACKING
+#else
+// sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
+// to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/storage/bible] to access the list of things
+#define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1 //we use an assoc list here because removing from one is a lot faster
+#define STOP_TRACKING by_type[.....].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ...... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
+#endif
+
+// sometimes we want to have a list of objects of multiple types, without having to traverse multiple lists
+// to do that add START_TRACKING_CAT("category") to New, unpooled, or whatever proc you want to start tracking the objects in (eg: tracking dead humans, put start tracking in death())
+// and add STOP_TRACKING_CAT("category") to disposing, or whatever proc you want to stop tracking the objects in (eg: tracking live humans, put stop tracking in death())
+// and to traverse the list, use by_type_cat["category"] to get the list of objects in that category
+// also ideally youd use defines for by_cat categories!
+#define START_TRACKING_CAT(x) if(!by_cat[x]) { by_cat[x] = list() }; by_cat[x][src] = 1
+#define STOP_TRACKING_CAT(x) by_cat[x].Remove(src)

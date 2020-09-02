@@ -33,6 +33,7 @@ var/global
 	turf/buzztile = null
 
 	list/list/by_type = list() // contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
+	list/list/by_cat = list() // contains lists of objects indexed by a category string based on START_TRACKING_CAT / STOP_TRACKING_CAT
 
 	obj/screen/renderSourceHolder
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
