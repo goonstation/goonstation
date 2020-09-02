@@ -105,5 +105,6 @@
 
 	do_it(user)
 		var/mob/M = whois_ckey_to_mob_reference(ckey)
+		system.reply("Gibbing [M] ([ckey])[isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""].", user)
 		M.transforming = 1
 		M.gib()
