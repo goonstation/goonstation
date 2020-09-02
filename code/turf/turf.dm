@@ -58,7 +58,8 @@
 	Del()
 		if (cameras && cameras.len)
 			for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
-				C.coveredTiles -= src
+				if(C.coveredTiles)
+					C.coveredTiles -= src
 		cameras = null
 		..()
 
@@ -405,6 +406,13 @@
 		edge_step(A, 0, world.maxy - 2)
 	else if (A.y >= (world.maxy - 1))
 		edge_step(A, 0, 3)
+
+/turf/hitby(atom/movable/AM)
+	. = ..()
+	if(src.density)
+		if(AM.throwforce >= 80)
+			src.meteorhit(AM)
+		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
@@ -817,7 +825,11 @@
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
+#ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
+#else
+	plane = PLANE_FLOOR
+#endif
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"

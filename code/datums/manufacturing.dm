@@ -66,21 +66,21 @@
 /datum/manufacture/mechanics/clonepod
 	name = "cloning pod"
 	item_amounts = list(6,5,4)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonepod
 
 /datum/manufacture/mechanics/clonegrinder
 	name = "enzymatic reclaimer"
 	item_amounts = list(3,3,4)
-	time = 18
+	time = 18 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonegrinder
 
 /datum/manufacture/mechanics/clone_scanner
 	name = "cloning machine scanner"
 	item_amounts = list(5,6,4)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clone_scanner
 
@@ -90,7 +90,7 @@
 /datum/manufacture/mechanics/loafer
 	name = "loafer (deploy on plating)"
 	item_amounts = list(5,6,4)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/disposalpipe/loafer
 
@@ -102,7 +102,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list("reagent-iron")
-	time = 1
+	time = 1 SECONDS
 	create = 10
 	category = "Resource"
 */
@@ -113,7 +113,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/crowbar)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -123,7 +123,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/screwdriver)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -133,7 +133,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/wirecutters)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -143,7 +143,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/wrench)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -153,7 +153,7 @@
 	item_names = list("Metal","Conductive Material","Crystal")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/device/light/flashlight)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -163,7 +163,7 @@
 	item_names = list("Any Material")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/instrument/vuvuzela)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -173,7 +173,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/instrument/harmonica)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -183,7 +183,7 @@
 	item_names = list("Crystal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/reagent_containers/food/drinks/bottle)
-	time = 4
+	time = 4 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -193,7 +193,7 @@
 	item_names = list("Any Material")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/instrument/bikehorn)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -203,7 +203,7 @@
 	item_names = list("Metal","Conductive Material", "Crystal")
 	item_amounts = list(3,2,2)
 	item_outputs = list(/obj/item/ammo/bullets/a38/stun)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -213,7 +213,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(30,24)
 	item_outputs = list(/obj/item/ammo/bullets/bullet_22)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -223,7 +223,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(40,30)
 	item_outputs = list(/obj/item/ammo/bullets/nails)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -233,7 +233,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(30,25)
 	item_outputs = list(/obj/item/ammo/bullets/smoke)
-	time = 35
+	time = 35 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -243,7 +243,7 @@
 	item_names = list("Sturdy Metal","Crystal")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/extinguisher)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -253,7 +253,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/weldingtool)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -263,7 +263,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(1,2)
 	item_outputs = list(/obj/item/electronics/soldering)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -273,7 +273,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(2,1)
 	item_outputs = list(/obj/item/staple_gun)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -283,7 +283,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/device/multitool)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -293,7 +293,7 @@
 	item_names = list("Sturdy Metal","Crystal")
 	item_amounts = list(2,2)
 	item_outputs = list(/obj/item/clothing/head/helmet/welding)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -303,7 +303,7 @@
 	item_names = list("Crystal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs)
-	time = 4
+	time = 4 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -313,7 +313,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/red)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -323,7 +323,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/yellow)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -333,7 +333,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/green)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -343,7 +343,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/cyan)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -353,7 +353,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/blue)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -363,7 +363,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/purple)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -373,7 +373,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/blacklight)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -383,7 +383,7 @@
 	item_names = list("Crystal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes)
-	time = 4
+	time = 4 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -393,7 +393,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/red)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -403,7 +403,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/yellow)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -413,7 +413,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/green)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -423,7 +423,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/cyan)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -433,7 +433,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/blue)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -443,7 +443,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/purple)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -453,7 +453,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/blacklight)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -463,7 +463,7 @@
 	item_names = list("Metal","Any Material")
 	item_amounts = list(1,2)
 	item_outputs = list(/obj/item/furniture_parts/table/folding)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -473,7 +473,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/sheet)
-	time = 2
+	time = 2 SECONDS
 	create = 1
 	category = "Resource"
 	apply_material = 1
@@ -484,7 +484,7 @@
 	item_names = list("Metal")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/sheet)
-	time = 12
+	time = 12 SECONDS
 	create = 1
 	category = "Resource"
 	apply_material = 1
@@ -500,7 +500,7 @@
 	item_names = list("Crystal")
 	item_amounts = list(5)
 	item_outputs = list(/obj/item/sheet)
-	time = 8
+	time = 8 SECONDS
 	create = 5
 	category = "Resource"
 	apply_material = 1
@@ -511,7 +511,7 @@
 	item_names = list("Crystal","Sturdy Metal")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/sheet/glass/reinforced)
-	time = 12
+	time = 12 SECONDS
 	create = 1
 	category = "Resource"
 	apply_material = 1
@@ -527,7 +527,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/rods)
-	time = 3
+	time = 3 SECONDS
 	category = "Resource"
 	apply_material = 1
 
@@ -543,7 +543,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(3)
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -553,7 +553,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(15)
 	item_outputs = list(/obj/machinery/fluid_canister)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -565,7 +565,7 @@
 	item_names = list("Sturdy Metal","Molitz","Viscerite")
 	item_amounts = list(3,10,30)
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/air/large)
-	time = 100
+	time = 100 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -575,7 +575,7 @@
 	item_names = list("Sturdy Metal","Char")
 	item_amounts = list(3,10)
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
-	time = 100
+	time = 100 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -585,7 +585,7 @@
 	item_names = list("Sturdy Metal","Molitz")
 	item_amounts = list(3,10)
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/oxygen)
-	time = 100
+	time = 100 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -595,7 +595,7 @@
 	item_names = list("Sturdy Metal","Plasmastone")
 	item_amounts = list(3,10)
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/toxins)
-	time = 100
+	time = 100 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -605,7 +605,7 @@
 	item_names = list("Sturdy Metal","Viscerite")
 	item_amounts = list(3,10)
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/nitrogen)
-	time = 100
+	time = 100 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -615,7 +615,7 @@
 	item_names = list("Sturdy Metal","Koshmarite")
 	item_amounts = list(3,10)
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/sleeping_agent)
-	time = 100
+	time = 100 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -627,7 +627,7 @@
 	item_names = list("Conductive Material")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/electronics/board)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Component"
 
@@ -637,7 +637,7 @@
 	item_names = list("Insulative Material", "Conductive Material")
 	item_amounts = list(10, 10)
 	item_outputs = list(/obj/item/cable_coil)
-	time = 3
+	time = 3 SECONDS
 	create = 1
 	category = "Resource"
 	apply_material = 0
@@ -669,7 +669,7 @@
 	item_names = list("Heavy Metal","High Density Crystalline Material","Conductive Material")
 	item_amounts = list(5,1,10)
 	item_outputs = list(/obj/item/rcd)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -679,7 +679,7 @@
 	item_names = list("High Density Crystalline Material")
 	item_amounts = list(5)
 	item_outputs = list(/obj/item/rcd_ammo)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -689,7 +689,7 @@
 	item_names = list("High Density Crystalline Material")
 	item_amounts = list(45)
 	item_outputs = list(/obj/item/rcd_ammo/big)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -699,7 +699,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/color/grey)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -709,7 +709,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(3)
 	item_outputs = list(/obj/item/clothing/shoes/black)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -719,7 +719,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(3)
 	item_outputs = list(/obj/item/clothing/shoes/white)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -731,7 +731,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/scalpel)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -741,7 +741,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/circular_saw)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -751,7 +751,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/scissors/surgical_scissors)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -761,7 +761,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/hemostat)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -771,7 +771,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/surgical_spoon)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -781,7 +781,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/suture)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -791,7 +791,7 @@
 	item_names = list("Conductive Material","Crystal")
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/device/radio/headset/deaf)
-	time = 40
+	time = 40 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -801,7 +801,7 @@
 	item_names = list("Conductive Material","Crystal")
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/clothing/glasses/visor)
-	time = 40
+	time = 40 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -811,7 +811,7 @@
 	item_names = list("Metal","Crystal")
 	item_amounts = list(1,2)
 	item_outputs = list(/obj/item/clothing/glasses/regular)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -821,7 +821,7 @@
 	item_names = list("Metal","Conductive Material","Crystal")
 	item_amounts = list(2,2,2)
 	item_outputs = list(/obj/item/reagent_containers/hypospray)
-	time = 40
+	time = 40 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -831,7 +831,7 @@
 	item_names = list("Metal","Crystal")
 	item_amounts = list(1,2)
 	item_outputs = list(/obj/item/clothing/glasses/healthgoggles)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -841,7 +841,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/clothing/gloves/latex)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -851,7 +851,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(3)
 	item_outputs = list(/obj/item/body_bag)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -861,7 +861,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(3,3,2)
 	item_outputs = list(/obj/item/organ/heart/cyber)
-	time = 25
+	time = 25 SECONDS
 	create = 1
 	category = "Component"
 
@@ -871,7 +871,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(2,2,2)
 	item_outputs = list(/obj/item/clothing/head/butt/cyberbutt)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -881,7 +881,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/organ/appendix/cyber)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -891,7 +891,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/organ/pancreas/cyber)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -901,7 +901,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/organ/spleen/cyber)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -911,7 +911,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/organ/intestines/cyber)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -921,7 +921,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/organ/stomach/cyber)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -931,7 +931,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/organ/kidney/cyber)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -941,7 +941,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/organ/liver/cyber)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -951,7 +951,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/organ/lung/cyber/left)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -961,7 +961,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/organ/lung/cyber/right)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -971,7 +971,7 @@
 	item_names = list("Crystal","Metal","Conductive Material","Insulative Material")
 	item_amounts = list(2,1,2,1)
 	item_outputs = list(/obj/item/organ/eye/cyber)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Component"
 
@@ -981,7 +981,7 @@
 	item_names = list("Crystal","Metal","Conductive Material","Insulative Material")
 	item_amounts = list(3,1,2,1)
 	item_outputs = list(/obj/item/organ/eye/cyber/sunglass)
-	time = 25
+	time = 25 SECONDS
 	create = 1
 	category = "Component"
 
@@ -991,7 +991,7 @@
 	item_names = list("Crystal","Metal","Conductive Material","Insulative Material")
 	item_amounts = list(3,1,2,1)
 	item_outputs = list(/obj/item/organ/eye/cyber/sechud)
-	time = 25
+	time = 25 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1001,7 +1001,7 @@
 	item_names = list("Crystal","Metal","Conductive Material","Insulative Material")
 	item_amounts = list(3,1,2,1)
 	item_outputs = list(/obj/item/organ/eye/cyber/thermal)
-	time = 25
+	time = 25 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1011,7 +1011,7 @@
 	item_names = list("Crystal","Metal","Conductive Material","Insulative Material")
 	item_amounts = list(3,1,2,1)
 	item_outputs = list(/obj/item/organ/eye/cyber/meson)
-	time = 25
+	time = 25 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1021,7 +1021,7 @@
 	item_names = list("Crystal","Metal","Conductive Material","Insulative Material")
 	item_amounts = list(3,1,2,1)
 	item_outputs = list(/obj/item/organ/eye/cyber/spectro)
-	time = 25
+	time = 25 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1031,7 +1031,7 @@
 	item_names = list("Crystal","Metal","Conductive Material","Insulative Material")
 	item_amounts = list(3,1,2,1)
 	item_outputs = list(/obj/item/organ/eye/cyber/prodoc)
-	time = 25
+	time = 25 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1041,7 +1041,7 @@
 	item_names = list("Crystal","Metal","Conductive Material","Insulative Material")
 	item_amounts = list(3,1,2,1)
 	item_outputs = list(/obj/item/organ/eye/cyber/camera)
-	time = 25
+	time = 25 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1051,7 +1051,7 @@
 	item_names = list("Crystal","Metal","Conductive Material","Insulative Material","Erebite")
 	item_amounts = list(3,1,2,1,1)
 	item_outputs = list(/obj/item/organ/eye/cyber/laser)
-	time = 40
+	time = 40 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1061,7 +1061,7 @@
 	item_names = list("Conductive Material","Crystal")
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/implantcase/health)
-	time = 40
+	time = 40 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1073,7 +1073,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(18)
 	item_outputs = list(/obj/item/parts/robot_parts/robot_frame)
-	time = 45
+	time = 45 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1085,7 +1085,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/chest,/obj/item/parts/robot_parts/head,
 /obj/item/parts/robot_parts/arm/right,/obj/item/parts/robot_parts/arm/left,
 /obj/item/parts/robot_parts/leg/right,/obj/item/parts/robot_parts/leg/left)
-	time = 120
+	time = 120 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1097,7 +1097,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/chest/light,/obj/item/parts/robot_parts/head/light,
 /obj/item/parts/robot_parts/arm/right/light,/obj/item/parts/robot_parts/arm/left/light,
 /obj/item/parts/robot_parts/leg/right/light,/obj/item/parts/robot_parts/leg/left/light)
-	time = 62
+	time = 62 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1107,7 +1107,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(12)
 	item_outputs = list(/obj/item/parts/robot_parts/chest)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1117,7 +1117,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(6)
 	item_outputs = list(/obj/item/parts/robot_parts/chest/light)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1127,7 +1127,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(12)
 	item_outputs = list(/obj/item/parts/robot_parts/head)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1137,7 +1137,7 @@
 	item_names = list("Metal")
 	item_amounts = list(6)
 	item_outputs = list(/obj/item/parts/robot_parts/head/light)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1147,7 +1147,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(6)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/right)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1157,7 +1157,7 @@
 	item_names = list("Metal")
 	item_amounts = list(3)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/right/light)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1167,7 +1167,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(6)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/left)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1177,7 +1177,7 @@
 	item_names = list("Metal")
 	item_amounts = list(3)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/left/light)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1187,7 +1187,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(6)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1197,7 +1197,7 @@
 	item_names = list("Metal")
 	item_amounts = list(3)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/light)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1207,7 +1207,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(6)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1217,7 +1217,7 @@
 	item_names = list("Metal")
 	item_amounts = list(3)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/light)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1227,7 +1227,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(12,6)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)//list(/obj/item/parts/robot_parts/leg/treads)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1237,7 +1237,7 @@
 	item_names = list("Conductive Material","Any Material")
 	item_amounts = list(2,3)
 	item_outputs = list(/obj/item/robot_module)
-	time = 40
+	time = 40 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1247,7 +1247,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(4,4,4)
 	item_outputs = list(/obj/item/cell/supercell)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1257,7 +1257,7 @@
 	item_names = list("Metal","Any Material","Erebite")
 	item_amounts = list(4,4,2)
 	item_outputs = list(/obj/item/cell/erebite)
-	time = 45
+	time = 45 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1267,7 +1267,7 @@
 	item_names = list("Metal","Any Material","Cerenkite")
 	item_amounts = list(4,4,2)
 	item_outputs = list(/obj/item/cell/cerenkite)
-	time = 45
+	time = 45 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1277,7 +1277,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(20)
 	item_outputs = list(/obj/ai_core_frame)
-	time = 50
+	time = 50 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1287,7 +1287,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(12)
 	item_outputs = list(/obj/item/shell_frame)
-	time = 25
+	time = 25 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1297,7 +1297,7 @@
 	item_names = list("Sturdy Metal","Conductive Material","Crystal")
 	item_amounts = list(3,5,2)
 	item_outputs = list(/obj/item/ai_interface)
-	time = 35
+	time = 35 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1307,7 +1307,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(6,5,3)
 	item_outputs = list(/obj/item/organ/brain/latejoin)
-	time = 35
+	time = 35 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1317,7 +1317,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(2,2,1)
 	item_outputs = list(/obj/item/cell/shell_cell)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1327,7 +1327,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(2,2)
 	item_outputs = list(/obj/item/device/flash)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -1339,7 +1339,7 @@
 	item_names = list("Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/implanter)
-	time = 3
+	time = 3 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -1349,7 +1349,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(10,5,5)
 	item_outputs = list(/obj/machinery/bot/secbot)
-	time = 60
+	time = 60 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -1359,7 +1359,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(10,5,5)
 	item_outputs = list(/obj/machinery/bot/floorbot)
-	time = 60
+	time = 60 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -1369,7 +1369,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(10,5,5)
 	item_outputs = list(/obj/machinery/bot/medbot)
-	time = 60
+	time = 60 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -1379,7 +1379,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(10,5,5)
 	item_outputs = list(/obj/machinery/bot/firebot)
-	time = 60
+	time = 60 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -1389,7 +1389,7 @@
 	item_names = list("Metal","Conductive Material","Any Material")
 	item_amounts = list(10,5,5)
 	item_outputs = list(/obj/machinery/bot/cleanbot)
-	time = 60
+	time = 60 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -1399,7 +1399,7 @@
 	item_names = list("Conductive Material","Sturdy Metal")
 	item_amounts = list(3,5)
 	item_outputs = list(/obj/item/roboupgrade/jetpack)
-	time = 60
+	time = 60 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1409,7 +1409,7 @@
 	item_names = list("Conductive Material","Crystal")
 	item_amounts = list(3,5)
 	item_outputs = list(/obj/item/roboupgrade/speed)
-	time = 60
+	time = 60 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1419,7 +1419,7 @@
 	item_names = list("Conductive Material")
 	item_amounts = list(5)
 	item_outputs = list(/obj/item/roboupgrade/rechargepack)
-	time = 60
+	time = 60 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1429,7 +1429,7 @@
 	item_names = list("Conductive Material")
 	item_amounts = list(5)
 	item_outputs = list(/obj/item/roboupgrade/repairpack)
-	time = 60
+	time = 60 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1439,7 +1439,7 @@
 	item_names = list("High Energy Conductor","Sturdy Metal","Significant Power Source")
 	item_amounts = list(2,10,2)
 	item_outputs = list(/obj/item/roboupgrade/physshield)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1449,7 +1449,7 @@
 	item_names = list("High Energy Conductor","Crystal")
 	item_amounts = list(2,10)
 	item_outputs = list(/obj/item/roboupgrade/fireshield)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1459,7 +1459,7 @@
 	item_names = list("High Energy Conductor","Crystal","Conductive Material")
 	item_amounts = list(2,5,5)
 	item_outputs = list(/obj/item/roboupgrade/aware)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1469,7 +1469,7 @@
 	item_names = list("High Density Crystalline Matter","High Energy Conductor")
 	item_amounts = list(3,10)
 	item_outputs = list(/obj/item/roboupgrade/efficiency)
-	time = 120
+	time = 120 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1479,7 +1479,7 @@
 	item_names = list("High Density Crystalline Matter","Dense Metal")
 	item_amounts = list(3,10)
 	item_outputs = list(/obj/item/roboupgrade/repair)
-	time = 120
+	time = 120 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1489,7 +1489,7 @@
 	item_names = list("Conductive Material","High Density Crystalline Matter", "Significant Power Source")
 	item_amounts = list(10,1, 10)
 	item_outputs = list(/obj/item/roboupgrade/teleport)
-	time = 120
+	time = 120 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1499,7 +1499,7 @@
 	item_names = list("Extraordinarily Dense Crystalline Matter","Extreme Power Source")
 	item_amounts = list(3,1)
 	item_outputs = list(/obj/item/roboupgrade/expand)
-	time = 120
+	time = 120 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1509,7 +1509,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(2,4)
 	item_outputs = list(/obj/item/roboupgrade/opticmeson)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Component"
 /* shit done be broked
@@ -1519,7 +1519,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(4,8)
 	item_outputs = list(/obj/item/roboupgrade/opticthermal)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Component"
 */
@@ -1529,7 +1529,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(4,6)
 	item_outputs = list(/obj/item/roboupgrade/healthgoggles)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1539,7 +1539,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(4,6)
 	item_outputs = list(/obj/item/roboupgrade/spectro)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1549,7 +1549,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(4,6)
 	item_outputs = list(/obj/item/roboupgrade/visualizer)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1559,7 +1559,7 @@
 	item_names = list("Conductive Material","Crystal")
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/implantcase/robotalk)
-	time = 40
+	time = 40 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1570,7 +1570,7 @@
 	item_names = list("Conductive Material","Crystal")
 	item_amounts = list(2,2)
 	item_outputs = list(/obj/item/device/radio)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1580,7 +1580,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(50)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/thruster,/obj/item/parts/robot_parts/leg/left/thruster)
-	time = 120
+	time = 120 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1596,7 +1596,7 @@
 	item_names = list("High Density Crystalline Matter","Dense Metal","High Energy Conductor")
 	item_amounts = list(5,30,30)
 	item_outputs = list(/obj/item/magnet_parts)
-	time = 120
+	time = 120 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1606,7 +1606,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/mining_tool)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -1616,7 +1616,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(2,5)
 	item_outputs = list(/obj/item/mining_tool/power_pick)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -1626,7 +1626,7 @@
 	item_names = list("Metal","Crystal","Conductive Material")
 	item_amounts = list(3,3,7)
 	item_outputs = list(/obj/item/breaching_charge/mining/light)
-	time = 40
+	time = 40 SECONDS
 	create = 5
 	category = "Resource"
 
@@ -1636,7 +1636,7 @@
 	item_names = list("Metal","Crystal","Conductive Material")
 	item_amounts = list(7,7,15)
 	item_outputs = list(/obj/item/breaching_charge/mining)
-	time = 60
+	time = 60 SECONDS
 	create = 5
 	category = "Resource"
 
@@ -1646,7 +1646,7 @@
 	item_names = list("High Density Crystalline Matter","Conductive Material")
 	item_amounts = list(1,8)
 	item_outputs = list(/obj/item/mining_tool/powerhammer)
-	time = 70
+	time = 70 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -1656,7 +1656,7 @@
 	item_names = list("Sturdy Metal","Dense Metal","High Energy Conductor")
 	item_amounts = list(15,7,10)
 	item_outputs = list(/obj/item/mining_tool/drill)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -1666,7 +1666,7 @@
 	item_names = list("Dense Metal","High Energy Conductor","Power Source")
 	item_amounts = list(15,15,2)
 	item_outputs = list(/obj/item/clothing/gloves/concussive)
-	time = 120
+	time = 120 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -1676,7 +1676,7 @@
 	item_names = list("Sturdy Metal","High Energy Conductor","High Density Crystalline Matter")
 	item_amounts = list(25,15,2)
 	item_outputs = list(/obj/machinery/oreaccumulator)
-	time = 120
+	time = 120 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -1686,7 +1686,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(3,2)
 	item_outputs = list(/obj/item/clothing/glasses/meson)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1696,7 +1696,7 @@
 	item_names = list("Metal","Conductive Material","Crystal")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/oreprospector)
-	time = 8
+	time = 8 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -1706,7 +1706,7 @@
 	item_names = list("Dense Metal","High Energy Conductor","Very High Density Crystalline Matter")
 	item_amounts = list(15,7,3)
 	item_outputs = list(/obj/item/clothing/suit/space/industrial,/obj/item/clothing/head/helmet/space/industrial)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1716,7 +1716,7 @@
 	item_names = list("Sturdy Metal","High Energy Conductor","Power Source")
 	item_amounts = list(15,7,3)
 	item_outputs = list(/obj/item/clothing/shoes/industrial)
-	time = 40
+	time = 40 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1726,7 +1726,7 @@
 	item_names = list("Sturdy Metal","High Energy Conductor","Power Source")
 	item_amounts = list(15,10,5)
 	item_outputs = list(/obj/item/tank/jetpack/jetpackmk2)
-	time = 40
+	time = 40 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1736,7 +1736,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/clothing/mask/breath)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1746,7 +1746,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/reagent_containers/patch)
-	time = 5
+	time = 5 SECONDS
 	create = 2
 	category = "Resource"
 
@@ -1756,7 +1756,7 @@
 	item_names = list("Metal","Crystal")
 	item_amounts = list(3,4)
 	item_outputs = list(/obj/item/reagent_containers/mender)
-	time = 10
+	time = 10 SECONDS
 	create = 2
 	category = "Resource"
 
@@ -1766,7 +1766,7 @@
 	item_names = list("Fabric","Metal","Crystal")
 	item_amounts = list(3,3,2)
 	item_outputs = list(/obj/item/clothing/suit/space,/obj/item/clothing/head/helmet/space)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1776,7 +1776,7 @@
 	item_names = list("Fabric","Metal","Crystal")
 	item_amounts = list(3,3,2)
 	item_outputs = list(/obj/item/clothing/suit/space/engineer,/obj/item/clothing/head/helmet/space/engineer)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1786,7 +1786,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(5)
 	item_outputs = list(/obj/item/satchel/mining)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -1796,7 +1796,7 @@
 	item_names = list("Fabric","Dense Metal")
 	item_amounts = list(25,3)
 	item_outputs = list(/obj/item/satchel/mining/large)
-	time = 15
+	time = 15 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -1806,7 +1806,7 @@
 	item_names = list("Dense Metal","Conductive Material")
 	item_amounts = list(2,10)
 	item_outputs = list(/obj/item/tank/jetpack)
-	time = 60
+	time = 60 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1818,7 +1818,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(3,5)
 	item_outputs = list(/obj/item/shipcomponent/engine)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1828,7 +1828,7 @@
 	item_names = list("Sturdy Metal","Dense Metal","High Energy Conductor")
 	item_amounts = list(20,10,15)
 	item_outputs = list(/obj/item/shipcomponent/engine/helios)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1838,7 +1838,7 @@
 	item_names = list("Dense Metal","High Energy Conductor","Power Source")
 	item_amounts = list(20,20,5)
 	item_outputs = list(/obj/item/shipcomponent/engine/hermes)
-	time = 120
+	time = 120 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1849,7 +1849,7 @@
 	item_names = list("Metal")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/gps)
-	time = 12
+	time = 12 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1859,7 +1859,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(20)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/cargo)
-	time = 12
+	time = 12 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1869,7 +1869,7 @@
 	item_names = list("Sturdy Metal", "Conductive Material")
 	item_amounts = list(20, 10)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/orescoop)
-	time = 12
+	time = 12 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1879,7 +1879,7 @@
 	item_names = list("Sturdy Metal", "Conductive Material")
 	item_amounts = list(10, 20)
 	item_outputs = list(/obj/item/shipcomponent/communications/mining)
-	time = 12
+	time = 12 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1889,7 +1889,7 @@
 	item_names = list("Power Source","Crystal","High Energy Conductor")
 	item_amounts = list(1,5,2)
 	item_outputs = list(/obj/item/shipcomponent/sensor/mining)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1899,7 +1899,7 @@
 	item_names = list("Dense Metal","High Density Crystalline Matter","Conductive Material")
 	item_amounts = list(5,1,10)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/cargo)
-	time = 90
+	time = 90 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -1911,7 +1911,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(8)
 	item_outputs = list(/obj/item/storage/backpack)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1921,7 +1921,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(8)
 	item_outputs = list(/obj/item/storage/backpack/satchel)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1931,7 +1931,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/clothing/shoes/brown)
-	time = 2
+	time = 2 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1941,7 +1941,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/clothing/head/white)
-	time = 2
+	time = 2 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1951,7 +1951,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/clothing/head/black)
-	time = 2
+	time = 2 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1961,7 +1961,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/clothing/head/blue)
-	time = 2
+	time = 2 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1971,7 +1971,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/clothing/head/red)
-	time = 2
+	time = 2 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1981,7 +1981,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/clothing/head/green)
-	time = 2
+	time = 2 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1991,7 +1991,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/clothing/head/yellow)
-	time = 2
+	time = 2 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2001,7 +2001,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(3)
 	item_outputs = list(/obj/item/clothing/head/that)
-	time = 3
+	time = 3 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2011,7 +2011,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/color/white)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2021,7 +2021,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/color/red)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2031,7 +2031,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/color/yellow)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2041,7 +2041,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/color/green)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2051,7 +2051,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/color/pink)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2061,7 +2061,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/color/blue)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2071,7 +2071,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/color/brown)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2081,7 +2081,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/color)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2091,7 +2091,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/color/orange)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2101,7 +2101,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/suit)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2111,7 +2111,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/suit/dress)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2121,7 +2121,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/suit/labcoat)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2131,7 +2131,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2141,7 +2141,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/teal)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2151,7 +2151,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/maroon)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2161,7 +2161,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/blue)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2171,7 +2171,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/purple)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2181,7 +2181,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/orange)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2191,7 +2191,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/pink)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2201,7 +2201,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/patient_gown)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2211,7 +2211,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/clothing/mask/surgical)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2221,7 +2221,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/clothing/mask/surgical_shield)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2231,7 +2231,7 @@
 	item_names = list("Fabric")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/glasses/blindfold)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2241,7 +2241,7 @@
 	item_names = list("Fabric", "Metal")
 	item_amounts = list(4, 2)
 	item_outputs = list(/obj/item/clothing/mask/muzzle)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2263,7 +2263,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(30)
 	item_outputs = list(/obj/item/pod/frame_box)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Component"
 
@@ -2273,7 +2273,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(10,5)
 	item_outputs = list(/obj/item/pod/engine)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Component"
 
@@ -2283,7 +2283,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(5,5)
 	item_outputs = list(/obj/item/pod/boards)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Component"
 
@@ -2293,7 +2293,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(30,20)
 	item_outputs = list(/obj/item/pod/armor_light)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Component"
 
@@ -2303,7 +2303,7 @@
 	item_names = list("Sturdy Metal","Dense Metal")
 	item_amounts = list(30,20)
 	item_outputs = list(/obj/item/pod/armor_heavy)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	category = "Component"
 
@@ -2313,7 +2313,7 @@
 	item_names = list("Dense Metal","High Energy Conductor","High Density Crystalline Matter")
 	item_amounts = list(25,10,5)
 	item_outputs = list(/obj/item/pod/armor_industrial)
-	time = 50
+	time = 50 SECONDS
 	create = 1
 	category = "Component"
 
@@ -2323,7 +2323,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(10,10)
 	item_outputs = list(/obj/item/pod/control)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Component"
 
@@ -2333,7 +2333,7 @@
 	item_names = list("Sturdy Metal")
 	item_amounts = list(15)
 	item_outputs = list(/obj/item/putt/frame_box)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Component"
 
@@ -2343,7 +2343,7 @@
 	item_names = list("Sturdy Metal","Conductive Material")
 	item_amounts = list(5,2)
 	item_outputs = list(/obj/item/putt/engine)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Component"
 
@@ -2353,7 +2353,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(2,2)
 	item_outputs = list(/obj/item/putt/boards)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Component"
 
@@ -2363,7 +2363,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(5,5)
 	item_outputs = list(/obj/item/putt/control)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Component"
 
@@ -2375,7 +2375,7 @@
 	item_names = list("Power Source","Dense Metal")
 	item_amounts = list(10,10)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/mining)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -2385,7 +2385,7 @@
 	item_names = list("Power Source","Dense Metal", "Extraordinarily Dense Crystalline Matter")
 	item_amounts = list(10,10,20)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/rockdrills)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -2395,7 +2395,7 @@
 	item_names = list("Sturdy Metal","Conductive Material","Crystal")
 	item_amounts = list(15,15,15)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/phaser)
-	time = 20
+	time = 20 SECONDS
 	create  = 1
 	category = "Tool"
 
@@ -2405,7 +2405,7 @@
 	item_names = list("Crystal","Conductive Material")
 	item_amounts = list(5,10)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/lock)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -2418,7 +2418,7 @@
 	item_names = list("Conductive Material","Crystal")
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/card/id)
-	time = 5
+	time = 5 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -2428,7 +2428,7 @@
 	item_names = list("Reflective Material", "High Energy Conductor","Crystal")
 	item_amounts = list(5,4,3)
 	item_outputs = list(/obj/item/card/id/gold)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -2438,7 +2438,7 @@
 	item_names = list("Conductive Material","Crystal")
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/implantcase/access)
-	time = 20
+	time = 20 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -2448,7 +2448,7 @@
 	item_names = list("Conductive Material","Crystal")
 	item_amounts = list(9,15)
 	item_outputs = list(/obj/item/implantcase/access/unlimited)
-	time = 60
+	time = 60 SECONDS
 	create = 1
 	category = "Resource"
 
@@ -2460,7 +2460,7 @@
 	item_names = list("Metal")
 	item_amounts = list(5)
 	item_outputs = list(/obj/storage/crate)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -2470,7 +2470,7 @@
 	item_names = list("Metal")
 	item_amounts = list(5)
 	item_outputs = list(/obj/storage/crate/packing)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -2480,7 +2480,7 @@
 	item_names = list("Metal")
 	item_amounts = list(5)
 	item_outputs = list(/obj/storage/crate/pizza)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -2490,7 +2490,7 @@
 	item_names = list("Metal")
 	item_amounts = list(5)
 	item_outputs = list(/obj/storage/crate/wooden)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -2500,7 +2500,7 @@
 	item_names = list("Metal")
 	item_amounts = list(5)
 	item_outputs = list(/obj/storage/crate/medical)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -2510,7 +2510,7 @@
 	item_names = list("Metal")
 	item_amounts = list(5)
 	item_outputs = list(/obj/storage/crate/biohazard)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -2520,7 +2520,7 @@
 	item_names = list("Metal")
 	item_amounts = list(5)
 	item_outputs = list(/obj/storage/crate/classcrate)
-	time = 10
+	time = 10 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -2532,6 +2532,6 @@
 	item_names = list("High Density Crystalline Matter","Dense Metal","Conductive Material","Crystal")
 	item_amounts = list(1,10,20,20)
 	item_outputs = list(/obj/item/gun/energy/alastor)
-	time = 30
+	time = 30 SECONDS
 	create = 1
 	category = "Tool"

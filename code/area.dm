@@ -533,10 +533,7 @@
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
-	//sanctuary = 1//waka waka bang bang
 	teleport_blocked = 2
-	//blocked = 1
-	//blocked_waypoint = /obj/landmark/block_waypoint/shuttle
 
 /area/shuttle/arrival/pre_game
 	icon_state = "shuttle2"
@@ -681,9 +678,8 @@
 		if (!isobserver(Obj) && !isintangible(Obj) && !iswraith(Obj) && !istype(Obj,/obj/machinery/vehicle/escape_pod))
 			var/atom/target = get_edge_target_turf(src, src.throw_dir)
 			if (OldLoc && isturf(OldLoc))
-				SPAWN_DBG(0)
-					if (target && Obj)
-						Obj.throw_at(target, 1, 1)
+				if (target && Obj)
+					Obj?.throw_at(target, 1, 1)
 
 	Exited(atom/movable/Obj)
 		..()

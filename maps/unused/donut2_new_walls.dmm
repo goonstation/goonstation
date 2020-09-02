@@ -925,7 +925,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/telepad,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/engine,
@@ -1373,7 +1373,7 @@
 	},
 /area/station/chemistry)
 "adw" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /mob/living/carbon/human/monkey,
@@ -5071,7 +5071,7 @@
 	},
 /area/station/medical/cdc)
 "akW" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{
@@ -5189,7 +5189,7 @@
 	dir = 8;
 	icon_state = "tube1"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{
@@ -8113,7 +8113,7 @@
 /turf/simulated/floor/scorched,
 /area/station/maintenance/north)
 "arE" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor,
@@ -14745,7 +14745,7 @@
 /turf/simulated/floor/greenwhite,
 /area/station/crew_quarters/pool)
 "aGF" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor/greenwhite,
@@ -26119,7 +26119,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor,
@@ -27091,7 +27091,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "bfc" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light{
@@ -27105,7 +27105,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/research)
 "bfe" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/random,
@@ -27499,7 +27499,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bfU" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/grime,
@@ -30737,7 +30737,7 @@
 	},
 /area/station/crew_quarters/bar)
 "bmU" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -32718,7 +32718,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "brd" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/wood,
@@ -36004,7 +36004,7 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics)
 "byj" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/grass{
@@ -40076,9 +40076,7 @@
 	dir = 5;
 	icon_state = "catwalk"
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /obj/cable{
 	icon_state = "2-8"
 	},

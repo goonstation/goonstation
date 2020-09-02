@@ -64,6 +64,10 @@ CONTAINS:
 				src.reagents.trans_to(M,5)
 			return
 
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
+
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -142,6 +146,10 @@ CONTAINS:
 				user.suiciding = 0
 		return 1
 
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
+
 /obj/item/circular_saw/vr
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "saw"
@@ -205,6 +213,10 @@ CONTAINS:
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 /* ==================================================== */
 /* -------------------- Staple Gun -------------------- */
@@ -484,14 +496,14 @@ CONTAINS:
 
 		else
 
-			if ((HAS_MOB_PROPERTY(patient, PROP_DEFIBRILLATED) && prob(90)) || prob(75)) // it was a 100% chance before... probably
+			if ((patient.hasStatus("defibbed") && prob(90)) || prob(75)) // it was a 100% chance before... probably
 				patient.cure_disease_by_path(/datum/ailment/malady/flatline)
 			if (!patient.find_ailment_by_type(/datum/ailment/malady/flatline))
 				speak("Normal cardiac rhythm restored.")
 			else
 				speak("Lethal dysrhythmia detected. Patient is still in cardiac arrest!")
 			patient.Virus_ShockCure(35)	// so it doesnt have a 100% chance to cure roboTF
-			src.setStatus("defibbed", user == patient ? 6 : 12 )
+			patient.setStatus("defibbed", user == patient ? 6 SECONDS : 12 SECONDS)
 
 			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
 				var/mob/living/carbon/human/H = patient
@@ -511,7 +523,7 @@ CONTAINS:
 						patient.take_oxygen_deprivation(-50)
 						if (H.organHolder && H.organHolder.heart)
 							H.get_organ("heart").heal_damage(10,10,10)
-					else if (HAS_MOB_PROPERTY(patient, PROP_DEFIBRILLATED)) // Always gonna get *something* if you keep shocking them
+					else if (patient.hasStatus("defibbed")) // Always gonna get *something* if you keep shocking them
 						patient.visible_message("<span class='notice'><b>[patient]</b> inhales sharply!</span>")
 						patient.take_oxygen_deprivation(-10)
 						if (H.organHolder && H.organHolder.heart)
@@ -523,29 +535,22 @@ CONTAINS:
 				var/adjust = cell.charge
 				if (adjust <= 0) // bwuh??
 					adjust = 1000 // fu
-				patient.changeStatus("paralysis", min(0.001 * adjust, 10) * 10)
-				patient.changeStatus("stunned", min(0.002 * adjust, 10) * 10)
-				patient.changeStatus("weakened", min(0.002 * adjust, 10) * 10)
+				patient.changeStatus("paralysis", min(0.002 * adjust, 10) * 10)
 				patient.stuttering += min(0.005 * adjust, 25)
 				//DEBUG_MESSAGE("[src]'s defibrillate(): adjust = [adjust], paralysis + [min(0.001 * adjust, 5)], stunned + [min(0.002 * adjust, 10)], weakened + [min(0.002 * adjust, 10)], stuttering + [min(0.005 * adjust, 25)]")
 
 			else if (faulty)
-				patient.changeStatus("paralysis", 1 SECOND)
-				patient.changeStatus("stunned", 2 SECONDS)
-				patient.changeStatus("weakened", 2 SECONDS)
+				patient.changeStatus("paralysis", 1.5 SECONDS)
 				patient.stuttering += 5
 			else
 #ifdef USE_STAMINA_DISORIENT
 				if (emagged)
 					patient.do_disorient(130, weakened = 50, stunned = 50, paralysis = 40, disorient = 60, remove_stamina_below_zero = 0)
 				else
-					patient.changeStatus("paralysis", 40)
-					patient.changeStatus("stunned", 50)
-					patient.changeStatus("weakened", 5 SECONDS)
+					patient.changeStatus("paralysis", 50)
 #else
-				patient.changeStatus("paralysis", 40)
-				patient.changeStatus("stunned", 50)
-				patient.changeStatus("weakened", 5 SECONDS)
+				patient.changeStatus("paralysis", 50)
+
 #endif
 				patient.stuttering += 10
 
@@ -1550,9 +1555,7 @@ keeping this here because I want to make something else with it eventually
 				var/target = get_offset_target_turf(get_turf(src), rand(5)-rand(5), rand(5)-rand(5))
 				falling.set_loc(get_turf(src))
 
-				SPAWN_DBG(1 DECI SECOND)
-					if(falling)
-						falling.throw_at(target, 1, 1)
+				falling?.throw_at(target, 1, 1)
 
 
 	attackby(obj/item/W as obj, mob/user as mob, params)
@@ -1657,3 +1660,7 @@ keeping this here because I want to make something else with it eventually
 		handle = null
 		Poisoner = null
 		..()
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)

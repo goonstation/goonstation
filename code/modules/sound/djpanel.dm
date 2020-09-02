@@ -25,7 +25,7 @@ client/proc/open_dj_panel()
 	return tgui_always_state
 
 /datum/dj_panel/ui_status(mob/user)
-  return min(
+  return max(
 		tgui_admin_state.can_use_topic(src, user),
 		src.dj_access_check(user)
 	)

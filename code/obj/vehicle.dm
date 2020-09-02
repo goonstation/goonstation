@@ -360,7 +360,7 @@ Contains:
 					T.u_equip(hat)
 					hat.set_loc(T.loc)
 					hat.dropped(T)
-					SPAWN_DBG(0) hat.throw_at(get_edge_target_turf(T, S.dir), 50, 1)
+					hat.throw_at(get_edge_target_turf(T, S.dir), 50, 1)
 
 			else if (istype(joustingTool, /obj/item/experimental/melee/spear)) // don't need custom attackResults here, just use the spear attack, that's deadly enough
 				T.attackby(joustingTool, R)
@@ -1787,8 +1787,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			M.changeStatus("stunned", 80)
 			M.changeStatus("weakened", 5 SECONDS)
 			var/turf/target = get_edge_target_turf(src, src.dir)
-			SPAWN_DBG(0)
-				M.throw_at(target, 10, 2)
+			M.throw_at(target, 10, 2)
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		in_bump = 0
@@ -1988,6 +1987,125 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	src.verbs -= /client/proc/toggle_gib_onhit
 	src.verbs -= /client/proc/toggle_dark_adminbus
 	return
+
+//////////////////////////////////////////////////////////////// Battle Bus //////////////////////////
+
+/obj/vehicle/adminbus/battlebus
+	name = "Battle Bus"
+	desc = "A bus made for war."
+	var/datum/projectile/P = new/datum/projectile/special/spawner/battlecrate
+	var/datum/projectile/special/spreader/uniform_burst/circle/P2 = new
+	var/power_hotwheels = FALSE
+	var/power_staticcharge = FALSE
+	var/power_bomberbus = FALSE
+	var/power_bomberbus_chance = 25
+	var/power_bomberbus_type = /obj/bomberman
+
+	New()
+		..()
+
+		P2.spread_projectile_type = /datum/projectile/fireball
+		P2.pellets_to_fire = 10
+		P2.pellet_shot_volume = P2.pellets_to_fire / 100
+
+		if (!islist(src.ability_buttons))
+			ability_buttons = list()
+		ability_buttons += new/obj/ability_button/battlecannon
+		ability_buttons += new/obj/ability_button/omnicannon
+		ability_buttons += new/obj/ability_button/bombchute
+		ability_buttons += new/obj/ability_button/hotwheels
+		ability_buttons += new/obj/ability_button/staticcharge
+
+	relaymove(mob/user, dir)
+		if(src.power_hotwheels)
+			tfireflash(get_turf(src), 0, 100)
+		if(src.power_staticcharge)
+			elecflash(get_turf(src),radius=0, power=2, exclude_center = 0)
+		if(src.power_bomberbus && prob(power_bomberbus_chance))
+			new src.power_bomberbus_type(get_turf(src))
+		. = ..()
+
+
+/obj/ability_button/battlecannon
+	name = "Battle Cannon"
+	icon = 'icons/misc/buildmode.dmi'
+	icon_state = "buildmode4"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			shoot_projectile_DIR(bus, bus.P, the_mob.dir)
+
+/obj/ability_button/omnicannon
+	name = "Omni Cannon"
+	icon = 'icons/mob/spell_buttons.dmi'
+	icon_state = "pandemonium"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			var/targetx = bus.y - rand(-5,5)
+			var/targety = bus.y - rand(-5,5)
+			var/turf/newtarget = locate(targetx, targety, bus.z)
+
+			shoot_projectile_ST(bus, bus.P2, newtarget)
+
+/obj/ability_button/hotwheels
+	name = "Hot Wheels"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "fire_e_sprint"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			bus.power_hotwheels = !bus.power_hotwheels
+			if (bus.power_hotwheels)
+				boutput( the_mob, "<span class='alert'>Hot wheels engaged!</span>" )
+			else
+				boutput( the_mob, "<span class='alert'>Your tires begin to cooldown.</span>" )
+
+/obj/ability_button/staticcharge
+	name = "Static Charge"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "zzzap"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			bus.power_staticcharge = !bus.power_staticcharge
+			if (bus.power_staticcharge)
+				boutput( the_mob, "<span class='alert'>The bus begins to tingle with static!</span>" )
+			else
+				boutput( the_mob, "<span class='alert'>The static charge disipates.</span>" )
+
+/obj/ability_button/bombchute
+	name = "Bomb Chute"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "fire_e_flamethrower"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			bus.power_bomberbus = !bus.power_bomberbus
+			if (bus.power_bomberbus)
+				boutput( the_mob, "<span class='alert'>The bomb chute springs open!</span>" )
+			else
+				boutput( the_mob, "<span class='alert'>The bomb chute seals tightly shut.</span>" )
 
 //////////////////////////////////////////////////////////////// Forklift //////////////////////////
 

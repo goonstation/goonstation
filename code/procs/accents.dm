@@ -2172,16 +2172,6 @@ var/list/zalgo_mid = list(
 				used = 1
 
 		if("l")
-			if(R.prev_char == "" && R.next_char == "")			// i
-				new_string = "rhi"
-				used = 3
-			else if(R.prev_char == "" && R.next_char == "'")	// i'm
-				new_string = "rhi"
-				used = 3
-			else if(R.prev_char == "" && R.next_char != "")		// First "i" in a word, and it ain't "i" or "i'm"
-				new_string = "rhy"
-				used = 3
-		if("l")
 			if(lowertext(R.next_char) == "l")		// "ll" - hello = herghlo
 				new_string = "rghl"
 				used = 4
@@ -2224,7 +2214,7 @@ var/list/zalgo_mid = list(
 			if(lowertext(R.next_char) == "o")	// "oo"
 				new_string = "rooh"				// oops = roohps
 				used = 4
-			if(lowertext(R.next_char) == "h")	// "oh"
+			else if(lowertext(R.next_char) == "h")	// "oh"
 				new_string = "roh"				// oh = roh
 				used = 3			
 			else								// all other "o"
@@ -2234,7 +2224,7 @@ var/list/zalgo_mid = list(
 			if(lowertext(R.next_char) == "o")	// "Oo"
 				new_string = "Rooh"				// Oops = Roohps
 				used = 4
-			if(lowertext(R.next_char) == "h")	// "Oh"
+			else if(lowertext(R.next_char) == "h")	// "Oh"
 				new_string = "Roh"				// Oh = Roh
 				used = 3			
 			else								// all other "O"

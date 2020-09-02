@@ -161,7 +161,7 @@
 			src.reagents.add_reagent(src.initial_reagent, 5)
 
 	equipped(var/mob/user, var/slot)
-		if (slot == SLOT_WEAR_MASM && istype(user))
+		if (slot == SLOT_WEAR_MASK && istype(user))
 			src.chewer = user
 			if (!(src in processing_items))
 				processing_items.Add(src)
