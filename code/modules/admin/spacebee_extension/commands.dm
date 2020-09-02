@@ -146,6 +146,7 @@
 		qdel(target)
 
 		boutput(newM, "<b>You have been respawned.</b>")
+		return TRUE
 
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/heal
@@ -168,6 +169,7 @@
 		message_admins("<span class='alert'>Admin [user] (Discord) healed / revived [key_name(target)]!</span>")
 		logTheThing("admin", "[user] (Discord)", target, "healed / revived [constructTarget(target,"admin")]")
 		logTheThing("diary", "[user] (Discord)", target, "healed / revived [constructTarget(target,"diary")]", "admin")
+		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/heal/revive
 	name = "revive"
