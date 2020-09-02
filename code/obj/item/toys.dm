@@ -58,7 +58,7 @@
 		
 /datum/action/bar/icon/claw_machine/onResume()
 	..()
-	onUpdate()
+	state = ACTIONSTATE_DELETE
 
 /datum/action/bar/icon/claw_machine/onInterrupt()
 	..()
