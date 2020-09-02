@@ -78,12 +78,12 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 	// check if we're on the right server
 	switch(command.server_targeting)
 		if(COMMAND_TARGETING_SINGLE_SERVER)
-			if(global.config.server_key != server_key)
+			if(global.serverKey != server_key)
 				return
 		if(COMMAND_TARGETING_MAIN_SERVER)
 			if(!server_key && global.config.server_id != SPACEBEE_EXTENSION_MAIN_SERVER)
 				return
-			else if(server_key && global.config.server_id != server_key) // allow server override
+			else if(server_key && global.serverKey != server_key) // allow server override
 				return
 		if(COMMAND_TARGETING_ALL_SERVERS)
 			if(server_key)
