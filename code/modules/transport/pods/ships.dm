@@ -126,6 +126,13 @@
 		return */
 
 ////////armed civ putt
+	updateSpeed()
+		if(istype(src.movement_controller, /datum/movement_controller/pod))
+			var/datum/movement_controller/pod/MC = src.movement_controller
+			// accel scales from 4 (fastest) to 2 (slowest) with 3 being default
+			MC.accel = 5-src.engine.speedmod
+			// max speed scales from 12 (fastest) to 4 (slowest) with 6 being default
+			MC.velocity_max = 12/src.engine.speedmod
 
 /obj/machinery/vehicle/miniputt/armed
 	New()
@@ -865,6 +872,14 @@
 		myhud.update_systems()
 		myhud.update_states()
 		return
+
+	updateSpeed()
+		if(istype(src.movement_controller, /datum/movement_controller/pod))
+			var/datum/movement_controller/pod/MC = src.movement_controller
+			// accel scales from 4 (fastest) to 2 (slowest) with 3 being default
+			MC.accel = 5-src.engine.speedmod
+			// max speed scales from 12 (fastest) to 4 (slowest) with 6 being default
+			MC.velocity_max = 12/src.engine.speedmod
 
 	AmmoPerShot()
 		return 2

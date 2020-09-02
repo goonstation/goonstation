@@ -61,6 +61,7 @@
 
 		. = ..()
 		START_TRACKING
+		src.updateSpeed()
 
 
 	remove_air(amount as num)
@@ -749,6 +750,7 @@
 		if("Engine")
 			if(!src.engine)
 				src.engine = S
+				src.updateSpeed()
 			else
 				boutput(usr, "That system already has a part!")
 				return
@@ -1646,7 +1648,8 @@
 	else
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
-
+/obj/machinery/vehicle/proc/updateSpeed()
+	return
 
 
 //TODO
