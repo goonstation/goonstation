@@ -14,7 +14,7 @@ export const PowerTransmissionLaser = (props, context) => {
   const { data } = useBackend(context);
   const {
     lifetimeEarnings,
-    name,
+    name = 'Power Transmission Laser',
   } = data;
   return (
     <Window
