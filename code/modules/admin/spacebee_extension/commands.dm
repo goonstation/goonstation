@@ -62,6 +62,7 @@
 		logTheThing("diary", "[user] (Discord)", null, "has created a command report: [body]", "admin")
 		message_admins("[user] (Discord) has created a command report")
 		system.reply("Command report created.", user)
+		global.cooldowns["transmit_centcom"] = 0 // reset cooldown for reply
 
 /datum/spacebee_extension_command/help
 	name = "help"
