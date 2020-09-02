@@ -53246,6 +53246,10 @@
 /turf/simulated/floor/yellow/side,
 /area/station/maintenance/SEmaint)
 "crp" = (
+/obj/storage/secure/closet/engineering/cargo,
+/obj/item/device/camera_viewer{
+	network = "Cargo"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
