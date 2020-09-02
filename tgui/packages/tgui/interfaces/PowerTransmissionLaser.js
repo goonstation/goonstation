@@ -77,7 +77,7 @@ const Status = (props, context) => {
 const InputControls = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    chargingEnabled,
+    isChargingEnabled,
     excessPower,
     isCharging,
     inputLevel,
@@ -93,16 +93,16 @@ const InputControls = (props, context) => {
           buttons={
             <Button
               icon="power-off"
-              content={chargingEnabled ? 'Enabled' : 'Disabled'}
-              color={chargingEnabled ? 'green' : 'red'}
+              content={isChargingEnabled ? 'Enabled' : 'Disabled'}
+              color={isChargingEnabled ? 'green' : 'red'}
               onClick={() => act('toggleInput')} />
           } >
           <Box
             color={(isCharging && 'good')
-              || (chargingEnabled && 'average')
+              || (isChargingEnabled && 'average')
               || 'bad'}>
             {(isCharging && 'Online')
-              || (chargingEnabled && 'Idle')
+              || (isChargingEnabled && 'Idle')
               || 'Offline'}
           </Box>
         </LabeledList.Item>
@@ -122,6 +122,7 @@ const InputControls = (props, context) => {
           size={1.25}
           inline
           step={5}
+          stepPixelSize={2}
           minValue={0}
           maxValue={999}
           value={inputNumber}
@@ -155,7 +156,7 @@ const OutputControls = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     isFiring,
-    laserEnabled,
+    isLaserEnabled,
     outputLevel,
     outputNumber,
     outputMultiplier,
@@ -168,16 +169,16 @@ const OutputControls = (props, context) => {
           buttons={
             <Button
               icon="power-off"
-              content={laserEnabled ? 'Enabled' : 'Disabled'}
-              color={laserEnabled ? 'green' : 'red'}
+              content={isLaserEnabled ? 'Enabled' : 'Disabled'}
+              color={isLaserEnabled ? 'green' : 'red'}
               onClick={() => act('toggleOutput')} />
           } >
           <Box
             color={(isFiring && 'good')
-              || (laserEnabled && 'average')
+              || (isLaserEnabled && 'average')
               || 'bad'}>
             {(isFiring && 'Online')
-              || (laserEnabled && 'Idle')
+              || (isLaserEnabled && 'Idle')
               || 'Offline'}
           </Box>
         </LabeledList.Item>

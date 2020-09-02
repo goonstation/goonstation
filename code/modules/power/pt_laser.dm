@@ -357,21 +357,21 @@
 	var/list/data = list()
 	data["capacity"] = src.capacity
 	data["charge"] = src.charge
-	data["chargingEnabled"] = src.charging
+	data["isChargingEnabled"] = src.charging
 	data["excessPower"] = src.excess
-	data["gridLoad"] = src.terminal.powernet.load
+	data["gridLoad"] = src.terminal?.powernet.load
 	data["inputLevel"] = src.chargelevel
 	data["inputMultiplier"] = src.input_multi
 	data["inputNumber"] = src.input_number
 	data["isCharging"] = src.is_charging
 	data["isFiring"] = src.firing
-	data["laserEnabled"] = src.online
+	data["isLaserEnabled"] = src.online
 	data["lifetimeEarnings"] = src.lifetime_earnings
 	data["name"] = src.name
 	data["outputLevel"] = src.output
 	data["outputMultiplier"] = src.output_multi
 	data["outputNumber"] = src.output_number
-	data["totalGridPower"] = src.terminal.powernet.avail
+	data["totalGridPower"] = src.terminal?.powernet.avail
 	return data
 
 /obj/machinery/power/pt_laser/ui_act(action, params)
