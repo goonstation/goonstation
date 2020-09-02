@@ -1,9 +1,3 @@
-/**
- * @file
- * @copyright 2020 Aleksej Komarov
- * @license MIT
- */
-
 import { sendMessage } from 'tgui/backend';
 import { storage } from 'common/storage';
 import { createLogger } from 'tgui/logging';

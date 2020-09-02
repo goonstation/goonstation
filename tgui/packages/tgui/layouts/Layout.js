@@ -5,8 +5,8 @@
  */
 
 import { classes } from 'common/react';
+import { Component, createRef } from 'inferno';
 import { computeBoxClassName, computeBoxProps } from '../components/Box';
-import { addScrollableNode, removeScrollableNode } from '../events';
 
 export const Layout = props => {
   const {
@@ -30,30 +30,48 @@ export const Layout = props => {
   );
 };
 
-const LayoutContent = props => {
-  const {
-    className,
-    scrollable,
-    children,
-    ...rest
-  } = props;
-  return (
-    <div
-      className={classes([
-        'Layout__content',
-        scrollable && 'Layout__content--scrollable',
-        className,
-        ...computeBoxClassName(rest),
-      ])}
-      {...computeBoxProps(rest)}>
-      {children}
-    </div>
-  );
-};
+class LayoutContent extends Component {
+  constructor() {
+    super();
+    this.ref = createRef();
+    this.refocusLayout = () => {
+      this.ref.current.focus();
+    };
+  }
 
-LayoutContent.defaultHooks = {
-  onComponentDidMount: node => addScrollableNode(node),
-  onComponentWillUnmount: node => removeScrollableNode(node),
-};
+  componentDidMount() {
+    const node = this.ref.current;
+    node.addEventListener('mouseenter', this.refocusLayout);
+    node.addEventListener('click', this.refocusLayout);
+  }
+
+  componentWillUnmount() {
+    const node = this.ref.current;
+    node.removeEventListener('mouseenter', this.refocusLayout);
+    node.removeEventListener('click', this.refocusLayout);
+  }
+
+  render() {
+    const {
+      className,
+      scrollable,
+      children,
+      ...rest
+    } = this.props;
+    return (
+      <div
+        ref={this.ref}
+        className={classes([
+          'Layout__content',
+          scrollable && 'Layout__content--scrollable',
+          className,
+          ...computeBoxClassName(rest),
+        ])}
+        {...computeBoxProps(rest)}>
+        {children}
+      </div>
+    );
+  }
+}
 
 Layout.Content = LayoutContent;

@@ -8,7 +8,7 @@
 @use '../functions.scss' as *;
 @use './Input.scss';
 
-$text-color: Input.$text-color !default;
+$text-color: base.$color-fg !default;
 $background-color: Input.$background-color !default;
 $border-color: Input.$border-color !default;
 $border-radius: Input.$border-radius !default;

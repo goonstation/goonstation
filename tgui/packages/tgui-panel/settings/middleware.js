@@ -1,20 +1,12 @@
-/**
- * @file
- * @copyright 2020 Aleksej Komarov
- * @license MIT
- */
-
 import { storage } from 'common/storage';
-import { setClientTheme } from '../themes';
-import { loadSettings, updateSettings } from './actions';
+import { sendMessage } from 'tgui/backend';
+import { loadSettings } from './actions';
 import { selectSettings } from './selectors';
 
-const setGlobalFontSize = fontSize => {
-  document.documentElement.style
-    .setProperty('font-size', fontSize + 'px');
-  document.body.style
-    .setProperty('font-size', fontSize + 'px');
-};
+export const sendChangeTheme = name => sendMessage({
+  type: 'changeTheme',
+  payload: { name },
+});
 
 export const settingsMiddleware = store => {
   let initialized = false;
@@ -23,22 +15,33 @@ export const settingsMiddleware = store => {
     if (!initialized) {
       initialized = true;
       storage.get('panel-settings').then(settings => {
+        if (!settings) {
+          return;
+        }
+        if (!settings.version) {
+          // Ignore previous settings, start clean.
+          storage.clear();
+          return;
+        }
+        // Set client theme
+        const { theme } = settings;
+        if (theme) {
+          sendChangeTheme(theme);
+        }
         store.dispatch(loadSettings(settings));
       });
+      return next(action);
     }
-    if (type === updateSettings.type || type === loadSettings.type) {
+    if (type === 'settings/update') {
       // Set client theme
-      const theme = payload?.theme;
+      const { theme } = payload;
       if (theme) {
-        setClientTheme(theme);
+        sendChangeTheme(theme);
       }
       // Pass action to get an updated state
       next(action);
-      const settings = selectSettings(store.getState());
-      // Update global UI font size
-      setGlobalFontSize(settings.fontSize);
       // Save settings to the web storage
-      storage.set('panel-settings', settings);
+      storage.set('panel-settings', selectSettings(store.getState()));
       return;
     }
     return next(action);

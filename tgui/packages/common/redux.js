@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { Component } from 'inferno';
 import { compose } from './fp';
 
 /**
@@ -27,9 +26,7 @@ export const createStore = (reducer, enhancer) => {
 
   const dispatch = action => {
     currentState = reducer(currentState, action);
-    for (let i = 0; i < listeners.length; i++) {
-      listeners[i]();
-    }
+    listeners.forEach(fn => fn());
   };
 
   // This creates the initial store by causing each reducer to be called
@@ -139,16 +136,4 @@ export const createAction = (type, prepare) => {
   actionCreator.type = type;
   actionCreator.match = action => action.type === type;
   return actionCreator;
-};
-
-
-// Implementation specific
-// --------------------------------------------------------
-
-export const useDispatch = context => {
-  return context.store.dispatch;
-};
-
-export const useSelector = (context, selector) => {
-  return selector(context.store.getState());
 };

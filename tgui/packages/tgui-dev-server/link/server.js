@@ -104,9 +104,6 @@ class LinkServer {
 
   broadcastMessage(msg) {
     const clients = [...this.wss.clients];
-    if (clients.length === 0) {
-      return;
-    }
     logger.log(`broadcasting ${msg.type} to ${clients.length} clients`);
     for (let client of clients) {
       const json = JSON.stringify(msg);

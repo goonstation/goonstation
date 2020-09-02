@@ -1,9 +1,3 @@
-/**
- * @file
- * @copyright 2020 Aleksej Komarov
- * @license MIT
- */
-
 import { createLogger } from 'tgui/logging';
 
 const logger = createLogger('AudioPlayer');
@@ -102,16 +96,10 @@ export class AudioPlayer {
   }
 
   onPlay(subscriber) {
-    if (!this.node) {
-      return;
-    }
     this.onPlaySubscribers.push(subscriber);
   }
 
   onStop(subscriber) {
-    if (!this.node) {
-      return;
-    }
     this.onStopSubscribers.push(subscriber);
   }
 }

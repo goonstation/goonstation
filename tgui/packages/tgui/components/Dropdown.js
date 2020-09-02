@@ -49,14 +49,14 @@ export class Dropdown extends Component {
   buildMenu() {
     const { options = [] } = this.props;
     const ops = options.map(option => (
-      <Box
+      <div
         key={option}
         className="Dropdown__menuentry"
         onClick={() => {
           this.setSelected(option);
         }}>
         {option}
-      </Box>
+      </div>
     ));
     return ops.length ? ops : 'No Options Found';
   }

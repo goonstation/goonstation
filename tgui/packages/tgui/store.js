@@ -4,13 +4,14 @@
  * @license MIT
  */
 
-import { flow } from 'common/fp';
 import { applyMiddleware, combineReducers, createStore } from 'common/redux';
 import { Component } from 'inferno';
 import { assetMiddleware } from './assets';
 import { backendMiddleware, backendReducer } from './backend';
-import { debugMiddleware, debugReducer, relayMiddleware } from './debug';
+import { debugReducer, relayMiddleware } from './debug';
+import { hotKeyMiddleware } from './hotkeys';
 import { createLogger } from './logging';
+import { flow } from 'common/fp';
 
 const logger = createLogger('store');
 
@@ -25,18 +26,16 @@ export const configureStore = (options = {}) => {
   const middleware = [
     ...(options.middleware?.pre || []),
     assetMiddleware,
+    hotKeyMiddleware,
     backendMiddleware,
     ...(options.middleware?.post || []),
   ];
   if (process.env.NODE_ENV !== 'production') {
-    middleware.unshift(
-      loggingMiddleware,
-      debugMiddleware,
-      relayMiddleware);
+    middleware.unshift(loggingMiddleware);
+    middleware.unshift(relayMiddleware);
   }
   const enhancer = applyMiddleware(...middleware);
   const store = createStore(reducer, enhancer);
-  // Globals
   window.__store__ = store;
   window.__augmentStack__ = createStackAugmentor(store);
   return store;
@@ -58,29 +57,21 @@ const loggingMiddleware = store => next => action => {
  * to augment reported stack traces with useful data for debugging.
  */
 const createStackAugmentor = store => (stack, error) => {
-  if (!error) {
-    error = new Error(stack.split('\n')[0]);
+  if (error && typeof error === 'object' && !error.stack) {
     error.stack = stack;
   }
-  else if (typeof error === 'object' && !error.stack) {
-    error.stack = stack;
-  }
-  logger.log('FatalError:', error);
+  logger.log('FatalError:', error || stack);
   const state = store.getState();
-  const config = state?.backend?.config;
   let augmentedStack = stack;
   augmentedStack += '\nUser Agent: ' + navigator.userAgent;
   augmentedStack += '\nState: ' + JSON.stringify({
-    ckey: config?.client?.ckey,
-    interface: config?.interface,
-    window: config?.window,
+    config: state?.backend?.config,
+    suspended: state?.backend?.suspended,
+    suspending: state?.backend?.suspending,
   });
   return augmentedStack;
 };
 
-/**
- * Store provider for Inferno apps.
- */
 export class StoreProvider extends Component {
   getChildContext() {
     const { store } = this.props;
@@ -91,3 +82,11 @@ export class StoreProvider extends Component {
     return this.props.children;
   }
 }
+
+export const useDispatch = context => {
+  return context.store.dispatch;
+};
+
+export const useSelector = (context, selector) => {
+  return selector(context.store.getState());
+};
