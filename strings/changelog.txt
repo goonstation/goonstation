@@ -1,5 +1,9 @@
 
 (t)wed sep 02 20
+(u)Flaborized
+(p)2026
+(e)🎨|sprites
+(*)New sprites for all kinds of crates
 (u)ThePotato97
 (p)2034
 (e)📄|tgui
