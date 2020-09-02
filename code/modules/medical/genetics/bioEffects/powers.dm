@@ -1606,8 +1606,10 @@
 			return 1
 		owner.visible_message("<span class='alert'><b>[owner.name] makes a weird noise!</b></span>")
 		playsound(owner.loc, 'sound/musical_instruments/WeirdHorn_0.ogg', 50, 0)
+		var/count = 0
 		for (var/mob/living/L in range(7,owner))
 			if (L.hearing_check(1))
+				if(count++ > (src.linked_power.power ? 10 : 7)) break
 				if(locate(/obj/item/storage/bible) in get_turf(L))
 					owner.visible_message("<span class='alert'><b>A mysterious force smites [owner.name] for inciting blasphemy!</b></span>")
 					owner.gib()
