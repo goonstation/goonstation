@@ -57,7 +57,7 @@ var/datum/mechanic_controller/mechanic_controls
 			var/datum/manufacture/mechanics/M = new /datum/manufacture/mechanics(manuf_controls)
 			manuf_controls.custom_schematics += M
 			M.name = src.name
-			M.time = mats_number * 2
+			M.time = mats_number * 1.5 SECONDS
 			M.frame_path = src.item_type
 
 			if (mats_number > 3)

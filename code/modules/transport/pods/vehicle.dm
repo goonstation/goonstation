@@ -104,6 +104,8 @@
 			checkhealth()
 			src.add_fingerprint(user)
 			src.visible_message("<span class='alert'>[user] has fixed some of the dents on [src]!</span>")
+			if(health >= maxhealth)
+				src.visible_message("<span class='alert'>[src] is fully repaired!</span>")
 			return
 
 		if (istype(W, /obj/item/shipcomponent))
@@ -580,8 +582,7 @@
 				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
-				SPAWN_DBG(0)
-					M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
+				M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
 				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 				SPAWN_DBG(2.5 SECONDS)
 					if(M.health > 0)

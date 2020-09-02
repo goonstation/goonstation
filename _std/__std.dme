@@ -7,6 +7,7 @@
 
 #include "__build.dm" //this controls how a lot of our defines and macros and code is compiled, so it absolutely needs to be the first
 #include "macros\_metamacros.dm" //this has some structural helpers that a lot of other macros/defines use, so it needs to be near the start
+#include "mapDefines.dm" // knowing if we're underwater is important for some later macros
 #include "setup.dm" // initializes important stuff for later macros
 #include "defines\_units.dm" //this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
 #include "defines\access.dm"
@@ -30,6 +31,7 @@
 #include "defines\item.dm"
 #include "defines\jobs.dm"
 #include "defines\lag.dm"
+#include "defines\landmarks.dm"
 #include "defines\logic.dm"
 #include "defines\message_lengths.dm"
 #include "defines\mob.dm"
@@ -43,6 +45,7 @@
 #include "defines\shuttle.dm"
 #include "defines\sight.dm"
 #include "defines\sound.dm"
+#include "defines\spacebee_extension.dm"
 #include "defines\speed.dm"
 #include "defines\stamina.dm"
 #include "defines\status_effects.dm"
@@ -80,7 +83,6 @@
 #include "datum.dm"
 #include "machinery.dm"
 #include "map.dm"
-#include "mapDefines.dm"
 #include "math.dm"
 #include "pathfinding.dm"
 #include "text.dm"

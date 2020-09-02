@@ -1,6 +1,10 @@
 /obj/item/device/radio/intercom
 	name = "Station Intercom (Radio)"
+#ifndef IN_MAP_EDITOR
 	icon_state = "intercom"
+#else
+	icon_state = "intercom-map"
+#endif
 	anchored = 1.0
 	plane = PLANE_NOSHADOW_ABOVE
 	mats = 0

@@ -54,7 +54,7 @@
 					bdna = affected_mob.bioHolder.Uid
 					btype = affected_mob.bioHolder.bloodType
 
-				var/turf/T = find_loc(affected_mob)
+				var/turf/T = get_turf(affected_mob)
 
 				if (ismonkey(affected_mob) || jobban_isbanned(affected_mob, "Cyborg") || isvirtual(affected_mob))
 					//affected_mob.ghostize()
@@ -218,6 +218,7 @@
 							return
 						else
 							var/obj/item/clothing/head/butt/cyberbutt/new_organ = new
+							affected_mob.organHolder.drop_organ("butt")
 							affected_mob.organHolder.receive_organ(new_organ,"butt")
 							boutput(affected_mob, "<span class='alert'>You butt fall off!</span>")
 							affected_mob.emote("scream")

@@ -35,11 +35,12 @@
 		// ensuring that its location is actually the center of the damn thing
 		// this keeps it from needing to move mobs one over,
 		// and stops the "decompression" from coming out the left side
-		rp_latejoin += src
+		START_TRACKING
 		processing_items += src
 		x += 1
 
 	disposing()
+		STOP_TRACKING
 		var/turf/T = get_turf(src)
 		for (var/mob/M in src)
 			M.set_loc(T)
@@ -97,7 +98,7 @@
 		var/datum/job/job = their_jobs[1]
 		their_jobs.Cut(1,2)
 		var/be_loud = job ? job.radio_announcement : 1
-		if (!istype(thePerson))
+		if (!istype(thePerson) || thePerson.loc != src)
 			busy = 0
 			return (folks_to_spawn.len != 0)
 
@@ -106,7 +107,7 @@
 
 		//sleep(1.9 SECONDS)
 		SPAWN_DBG(1.9 SECONDS)
-			if (!thePerson)
+			if (!thePerson || thePerson.loc != src)
 				busy = 0
 				return (folks_to_spawn.len != 0)
 			var/turf/firstLoc = locate(src.x, src.y, src.z)
