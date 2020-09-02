@@ -419,11 +419,11 @@
 					src.set_loc(pilotSpawnLocation)
 				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
 				#else														//This part of the code executes only if the map is a space one.
-				var/pilotZ = rand(2, world.maxz)
+				var/pilotZ = rand(2, (world.maxz - 1))
 				var/validZ = FALSE
 				while (!validZ)
 					if (isrestrictedz(pilotZ))
-						pilotZ = ++pilotZ % world.maxz
+						pilotZ = ++pilotZ % (world.maxz - 1)
 						continue
 					validZ = TRUE
 

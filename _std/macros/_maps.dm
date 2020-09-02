@@ -2,10 +2,10 @@
 #define ismap(x) (map_setting == x)
 
 #ifdef UNDERWATER_MAP
-#define isrestrictedz(z) ((z) == 2 || (z) == 3  || (z) == 4 || (Z) == world.maxz)
+#define isrestrictedz(z) ((z) == 2 || (z) == 3  || (z) == 4)
 #define isghostrestrictedz(z) (isrestrictedz(z) || (z) == 5)
 #else
-#define isrestrictedz(z) ((z) == 2 || (z) == 4 || (Z) == world.maxz)
+#define isrestrictedz(z) ((z) == 2 || (z) == 4)
 #define isghostrestrictedz(z) (isrestrictedz(z))
 #endif
 
