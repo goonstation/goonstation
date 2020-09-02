@@ -1983,7 +1983,7 @@ proc/countJob(rank)
   * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
   */
 /proc/whois(target, limit = 0, admin)
-	target = trim(lowertext(target))
+	target = trim(ckey(target))
 	if (!target) return 0
 	var/list/found = list()
 	for (var/mob/M in mobs)

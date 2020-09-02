@@ -38,6 +38,7 @@
 	help_message = "Adds a note to a given ckey."
 	argument_types = list(/datum/command_argument/string="ckey", /datum/command_argument/the_rest="note")
 	execute(user, ckey, note)
+		ckey = ckey(ckey)
 		addPlayerNote(ckey, user + " (Discord)", note)
 
 		logTheThing("admin", "[user] (Discord)", null, "added a note for [ckey]: [note]")
