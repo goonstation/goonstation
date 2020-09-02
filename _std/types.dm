@@ -91,3 +91,14 @@ proc/filtered_concrete_typesof(type, filter)
 	if(!(type in cached_filtered_types))
 		cached_filtered_types[type] = list()
 	cached_filtered_types[type][filter] = .
+
+/**
+	* Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
+*/
+proc/get_singleton(type)
+	if(!singletons)
+		singletons = list()
+	if(!(type in singletons))
+		singletons[type] = new type
+	return singletons[type]
+var/global/list/singletons
