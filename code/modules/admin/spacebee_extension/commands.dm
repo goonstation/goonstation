@@ -42,7 +42,7 @@
 
 		logTheThing("admin", "[user] (Discord)", null, "added a note for [ckey]: [note]")
 		logTheThing("diary", "[user] (Discord)", null, "added a note for [ckey]: [note]", "admin")
-		message_admins("<span class='internal'>[user] (Discord) added a note for [ckey]: [the_note]</span>")
+		message_admins("<span class='internal'>[user] (Discord) added a note for [ckey]: [note]</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["name"] = user
