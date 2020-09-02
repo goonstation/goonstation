@@ -27,8 +27,12 @@ module.exports = (env = {}, argv) => {
     mode: argv.mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname, '../..'),
     entry: {
-      'tgui': ['tgui'],
-      'tgui-panel': ['tgui-panel'],
+      tgui: [
+        path.resolve(__dirname, './index.js'),
+      ],
+      'tgui-panel': [
+        path.resolve(__dirname, '../tgui-panel/index.js'),
+      ],
     },
     output: {
       path: argv.useTmpFolder
@@ -53,7 +57,7 @@ module.exports = (env = {}, argv) => {
                   ['@babel/preset-env', {
                     modules: 'commonjs',
                     useBuiltIns: 'entry',
-                    corejs: '3.6',
+                    corejs: '3',
                     spec: false,
                     loose: true,
                     targets: {
