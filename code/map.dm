@@ -541,6 +541,14 @@ var/global/list/mapNames = list(
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	auto_walls = 1
 
+	job_limits_from_landmarks = 1
+	job_limits_override = list(
+		/datum/job/special/atmospheric_technician = 1,
+		/datum/job/special/barber = 1,
+		/datum/job/special/research_assistant = 2,
+		/datum/job/special/medical_assistant = 2
+	)
+
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
 	rwindows = /obj/window/auto/reinforced
