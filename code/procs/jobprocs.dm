@@ -306,6 +306,19 @@
 		picks = FindOccupationCandidates(staff,JOB.name,3)
 	return picks
 
+/proc/pilotSpawnVerif(var/turf/checkedTurf)				//Just roll with it.
+	if (isnull(checkedTurf))							//Sanity check.
+		return false
+	#ifdef UNDERWATER_MAP
+	if (istype(checkedTurf, /turf/space/fluid))
+		return true
+	#else
+	if (istype(checkedTurf, /turf/space))
+		return true
+	#endif
+	else
+		return false
+
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
 
@@ -396,28 +409,33 @@
 				if(SL.len > 0)
 					src.set_loc(pick(SL))
 
-			if (src.traitHolder && src.traitHolder.hasTrait("pilot"))							//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
-				var/list/turf/SL = list()
-				#ifdef UNDERWATER_MAP
-				for(var/obj/critter/gunbot/drone/S in critters)
-					if(S.z == 5)
-						var/turf/T = get_turf(S)
-						SL.Add(T)
-				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(src.loc)
-				#else																			//This part of the code executes only if the map is a space one.
-				for(var/obj/critter/gunbot/drone/S in critters)
-					if(S.z != 1 && !isrestrictedz(S.z))
-						var/turf/T = get_turf(S)
-						SL.Add(T)
-				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(src.loc)
+			if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
+				var/turf/pilotSpawnLocation = null
+				
+				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
+				while(!pilotSpawnVerif(pilotSpawnLocation))					//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), 5)
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
+				#else														//This part of the code executes only if the map is a space one.
+				var/pilotZ = rand(2, world.maxz)
+				var/validZ = FALSE
+				while (!validZ)
+					if (isrestrictedz(pilotZ) || pilotZ == 6)
+						pilotZ = ++pilotZ % world.maxz
+						continue
+					validZ = TRUE
+
+				while(!pilotSpawnVerif(pilotSpawnLocation))					//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pilotZ)
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
 				#endif
-				if (SL.len > 0)
-					var/turf/TF = pick(SL)																	//Sanity check.
-					src.set_loc(TF)
-				for(var/obj/critter/gunbot/drone/SD in src.loc)
-					qdel(SD)
+				for(var/obj/critter/gunbot/drone/snappedDrone in src.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+					qdel(snappedDrone)
 				V.finish_board_pod(src)
-				src:spawnId(rank)
 
 			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)

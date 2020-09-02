@@ -1731,6 +1731,7 @@
 
 	New()
 		..()
+		src.com_system.deactivate()
 		qdel(src.engine)
 		qdel(src.com_system)
 		src.components -= src.engine
@@ -1739,7 +1740,7 @@
 		src.engine.ship = src
 		src.components += src.engine
 		src.engine.activate()
-		src.com_system.deactivate()
+		src.com_system = null
 		myhud.update_systems()
 		myhud.update_states()
 
