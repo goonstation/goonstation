@@ -27,13 +27,14 @@
 	module_research = list("tools" = 4, "metals" = 1, "fuels" = 5)
 	rand_pos = 1
 	inventory_counter_enabled = 1
+	var/capacity = 20
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(20)
+		var/datum/reagents/R = new/datum/reagents(capacity)
 		reagents = R
 		R.my_atom = src
-		R.add_reagent("fuel", 20)
+		R.add_reagent("fuel", capacity)
 		src.inventory_counter.update_number(get_fuel())
 
 		src.setItemSpecial(/datum/item_special/flame)
@@ -144,7 +145,7 @@
 	afterattack(obj/O as obj, mob/user as mob)
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && get_dist(src,O) <= 1)
 			if (O.reagents.total_volume)
-				O.reagents.trans_to(src, 20)
+				O.reagents.trans_to(src, capacity)
 				src.inventory_counter.update_number(get_fuel())
 				boutput(user, "<span class='notice'>Welder refueled</span>")
 				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
@@ -338,10 +339,4 @@
 
 /obj/item/weldingtool/high_cap
 	name = "high-capacity weldingtool"
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("fuel", 100)
-		return
+	capacity = 100
