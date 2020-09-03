@@ -1,5 +1,9 @@
 
 (t)thu sep 03 20
+(u)BatElite
+(p)2033
+(e)🆕|feature
+(+)You can now emag boogiebots!
 (u)pali
 (+)Mulebots are now a bit faster
 (u)Walter-Lin
