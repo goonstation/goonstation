@@ -28,6 +28,8 @@ export const TEG = (props, context) => {
   } = data;
   const historyData = history.map((value, i) => [i, value]);
   const historyMax = Math.max(...history);
+  const formatTemperature = temperature =>
+    `${temperature >= 1000 ? temperature.toExponential(3) : temperature} K`;
   return (
     <Window
       height="520"
@@ -80,14 +82,12 @@ export const TEG = (props, context) => {
             <LabeledList.Item
               label="Inlet Temp"
               textAlign="right" >
-              {(hotInletTemp >= 1000 && hotInletTemp.toExponential(3) + ' K')
-                || hotInletTemp + ' K'}
+              {formatTemperature(hotInletTemp)}
             </LabeledList.Item>
             <LabeledList.Item
               label="Outlet Temp"
               textAlign="right" >
-              {(hotOutletTemp >= 1000 && hotOutletTemp.toExponential(3) + ' K')
-                || hotOutletTemp + ' K'}
+              {formatTemperature(hotOutletTemp)}
             </LabeledList.Item>
             <LabeledList.Divider />
             <LabeledList.Item
@@ -107,14 +107,12 @@ export const TEG = (props, context) => {
             <LabeledList.Item
               label="Inlet Temp"
               textAlign="right" >
-              {(coldInletTemp >= 1000 && coldInletTemp.toExponential(3) + ' K')
-                || coldInletTemp + ' K'}
+              {formatTemperature(coldInletTemp)}
             </LabeledList.Item>
             <LabeledList.Item
               label="Outlet Temp"
               textAlign="right" >
-              {(coldOutletTemp >= 1000 && coldOutletTemp.toExponential(3) + ' K')
-                || coldOutletTemp + ' K'}
+              {formatTemperature(coldOutletTemp)}
             </LabeledList.Item>
             <LabeledList.Divider />
             <LabeledList.Item
