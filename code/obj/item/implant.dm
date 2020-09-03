@@ -175,7 +175,7 @@ THROWING DARTS
 		if (!isdead(M) && M.client)
 			JOB_XP(I, "Medical Doctor", 5)
 
-	proc/GetHealthList()
+	proc/getHealthList()
 		if (!src.implanted)
 			src.healthlist["OXY"] = 0
 			src.healthlist["TOX"] = 0
