@@ -319,7 +319,7 @@
 	data["cloneRecords"] = recordsTemp
 
 	return data
-/*
+
 /obj/machinery/computer/cloning/ui_state(mob/user)
 	return tgui_default_state
 
@@ -329,10 +329,10 @@
 		tgui_broken_state.can_use_topic(src, user),
 		tgui_not_incapacitated_state.can_use_topic(src, user)
 	)
-*/
+
 
 /* for debugging*/
-/obj/machinery/computer/cloning/ui_state(mob/user)
+/* /obj/machinery/computer/cloning/ui_state(mob/user)
 	return tgui_always_state
 
 /obj/machinery/computer/cloning/ui_status(mob/user, datum/ui_state/state)
@@ -341,7 +341,7 @@
 		tgui_always_state.can_use_topic(src, user)
 		//tgui_not_incapacitated_state.can_use_topic(src, user)
 )
-
+ */
 /obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
@@ -379,9 +379,9 @@
 		else
 			src.temp = "Error: Mental interface failure."
 			return
-	//if (!isnull(find_record(ckey(subjMind.key))))
-	//	src.temp = "Subject already in database."
-	//	return
+	if (!isnull(find_record(ckey(subjMind.key))))
+		src.temp = "Subject already in database."
+		return
 
 	var/datum/data/record/R = new /datum/data/record(  )
 	R.fields["ckey"] = ckey(subjMind.key)
