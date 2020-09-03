@@ -539,8 +539,6 @@
 			//Same shit here with update_icon
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			var/do_update_overlays = FALSE
-
 			fluid_ma.name = src.master_reagent_name //maybe obscure later?
 
 			F.finalalpha = targetalpha
@@ -565,7 +563,7 @@
 							F.ClearAllOverlays()
 
 				if (((color_changed || last_icon != F.icon_state) && F.last_spread_was_blocked) || depth_changed)
-					do_update_overlays = TRUE
+					F.update_perspective_overlays()
 			else
 				fluid_ma.icon_state = "airborne" //HACKY! BAD! BAD! WARNING!
 
@@ -575,9 +573,8 @@
 
 			//air specific (messy)
 			fluid_ma.opacity = master_opacity
+			fluid_ma.overlays = F.overlays // gross, needed because of perspective overlays
 			F.appearance = fluid_ma
-			if(do_update_overlays)
-				F.update_perspective_overlays()
 
 
 		src.last_contained_amt = src.contained_amt
