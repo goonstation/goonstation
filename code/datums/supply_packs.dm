@@ -411,7 +411,7 @@
 	category = "Security Department"
 	contains = list(/obj/item/gun/kinetic/clock_188,
 					/obj/item/storage/box/QM_grenadekit_security,
-					/obj/item/storage/box/QM_grenadekit_experimentalweapons
+					/obj/item/storage/box/QM_grenadekit_experimentalweapons,
 					/obj/item/clothing/head/helmet/hardhat/security/improved)
 	cost = 15000
 	containertype = /obj/storage/secure/crate/weapon
