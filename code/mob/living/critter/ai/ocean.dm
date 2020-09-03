@@ -97,7 +97,7 @@
 /datum/aiTask/timed/targeted/trilobite/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
 				holder.current_task = src.escape
@@ -145,7 +145,7 @@
 /datum/aiTask/timed/targeted/escape_vehicles/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, target_range))
 				targets += A
@@ -226,7 +226,7 @@
 /datum/aiTask/timed/targeted/flee_and_shoot/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
 				targets += A
@@ -352,7 +352,7 @@
 /datum/aiTask/timed/targeted/pikaia/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
 				targets += A

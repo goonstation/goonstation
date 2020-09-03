@@ -192,4 +192,8 @@
 		safety = 1
 	return
 
+/obj/item/extinguisher/move_trigger(var/mob/M, kindof)
+	if (..() && reagents)
+		reagents.move_trigger(M, kindof)
+
 /obj/item/extinguisher/abilities = list(/obj/ability_button/extinguisher_ab)

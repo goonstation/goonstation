@@ -189,7 +189,7 @@
 	var/m_blocked = 0
 
 
-	for (var/atom in teleport_jammers)
+	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
 		var/atom/A = atom
 		if (get_dist(tmploc,A) <= 5)
 			if (istype(atom, /obj/machinery/telejam))

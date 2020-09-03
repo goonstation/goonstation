@@ -98,10 +98,10 @@ var/list/xp_archive = list()
 				actual = (XP_ROUND_CAP - xp_earned[key])
 
 		if(actual >= 0)
-			SPAWN_DBG(0)
-				add_xp(key, field_name, actual)
-				add_xp_throttle_entry(key, actual)
-				archive_xp(key, field_name, actual)
+			// SPAWN_DBG(0)
+				// add_xp(key, field_name, actual)
+			add_xp_throttle_entry(key, actual)
+			archive_xp(key, field_name, actual)
 	return
 //Wrapper for awarding exp without actually adding it to the byond medals database
 /proc/award_xp_and_archive(var/key = null, var/field_name="debug", var/amount = 0, var/ignore_caps=0)

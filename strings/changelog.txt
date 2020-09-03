@@ -1,5 +1,22 @@
 
+(t)thu sep 03 20
+(u)Walter-Lin
+(p)2013
+(e)|
+(+)Fixed the flying critter running sound.
+(u)Shroopy
+(p)1733
+(e)🆕|feature
+(*)Added an option in Game->Effects to enable or disable view tinting from glasses, masks, etc.
 (t)wed sep 02 20
+(u)Sovexe
+(p)1965
+(e)🆕📄|feature, tgui
+(+)Converted TEG interface to TGUI
+(u)Sovexe
+(p)1844
+(e)🆕📄|feature, tgui
+(+)Converted disposal and mailchute to TGUI
 (u)Nebulacrity
 (p)1859
 (e)🆕|feature

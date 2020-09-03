@@ -555,7 +555,8 @@
 								B.dir = newdir
 							bloodiness--
 
-						var/moved = step_towards(src, next)	// attempt to move
+						step_towards(src, next)	// attempt to move
+						var/moved = src.loc == next // step_towards return value is unreliable at best and always false at worst
 						if(cell) cell.use(1)
 						if(moved)	// successful move
 							//boutput(world, "Successful move.")

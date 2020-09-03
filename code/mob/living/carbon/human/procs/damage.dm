@@ -62,7 +62,7 @@
 	if (!P.proj_data.silentshot && !P.proj_data.nomsg)
 		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name]!</span>")
 
-	for (var/mob/V in nervous_mobs)
+	for (var/mob/V in by_cat[TR_CAT_NERVOUS_MOBS])
 		if (get_dist(src,V) > 6)
 			continue
 		if(prob(8) && src)

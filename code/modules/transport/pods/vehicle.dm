@@ -681,7 +681,7 @@
 		fire_overlay = null
 		damage_overlay = null
 		ion_trail = null
-		pods_and_cruisers -= src
+		STOP_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 		STOP_TRACKING
 
 		..()
@@ -1410,7 +1410,7 @@
 	src.lights.ship = src
 	src.components += src.lights
 
-	pods_and_cruisers += src
+	START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 /obj/machinery/vehicle/get_movement_controller()
 	return movement_controller
