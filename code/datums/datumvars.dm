@@ -141,7 +141,7 @@
 	names = sortList(names)
 	if(D == "GLOB")
 		for (var/V in names)
-			body += debug_variable(V, global.vars[V], D, 0)
+			body += debug_variable(V, global.vars[V], D, 0, 10)
 	else
 		for (var/V in names)
 			body += debug_variable(V, D.vars[V], D, 0)
@@ -303,7 +303,7 @@
 		}
 </style>"}
 
-/client/proc/debug_variable(name, value, var/fullvar, level)
+/client/proc/debug_variable(name, value, var/fullvar, level, max_list_len=1500)
 	var/html = ""
 	html += "<tr>"
 	if (level == 0)
@@ -377,12 +377,12 @@
 					assoc = !isnum(L[1]) && L[L[1]]
 				catch
 					DEBUG_MESSAGE("bad assoc list var [name] [L] [1] [L[1]]")
-			for (var/index = 1, index <= min(L.len, 1500), index++)
+			for (var/index = 1, index <= min(L.len, max_list_len), index++)
 				if (name != "contents" && name != "screen" && name != "vis_contents" && name != "vis_locs" && assoc)
-					html += debug_variable(L[index], L[L[index]], value, level + 1)
+					html += debug_variable(L[index], L[L[index]], value, level + 1, max_list_len)
 				else
-					html += debug_variable("[index]", L[index], value, level + 1)
-			if(L.len > 1500)
+					html += debug_variable("[index]", L[index], value, level + 1, max_list_len)
+			if(L.len > max_list_len)
 				html += "<tr><th>\[...\]</th><td><em class='value'>...</em></td>"
 
 			html += "</tbody></table>"

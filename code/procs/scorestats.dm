@@ -231,7 +231,7 @@ var/datum/score_tracker/score_tracker
 		command_pets_escaped = list()
 		pets_escaped = list()
 
-		for (var/pet in pets)
+		for (var/pet in by_cat[TR_CAT_PETS])
 			if(iscritter(pet))
 				var/obj/critter/P = pet
 				if (in_centcom(P) && P.alive)
@@ -271,7 +271,7 @@ var/datum/score_tracker/score_tracker
 		. += "<B>Heisenbee's hat:</B> "
 		var/found_hb = 0
 		var/tier = world.load_intra_round_value("heisenbee_tier")
-		for(var/obj/critter/domestic_bee/heisenbee/HB in pets)
+		for(var/obj/critter/domestic_bee/heisenbee/HB in by_cat[TR_CAT_PETS])
 			var/obj/item/hat = locate(HB.original_hat_ref)
 			if(hat)
 				if(hat.loc != HB)

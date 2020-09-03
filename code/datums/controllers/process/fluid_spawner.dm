@@ -10,13 +10,15 @@ datum/controller/process/fluid_turfs
 	var/add_reagent_amount = 500
 	var/do_light_gen = 1
 
-	proc/handle_light_generating_turfs(var/lagcheck_at = LAG_REALTIME)
+	proc/handle_light_generating_turfs(lagcheck_at = LAG_REALTIME)
 		if (do_light_gen)
-			for (var/turf/space/fluid/F in light_generating_fluid_turfs)
+			for (var/_F in by_cat[TR_CAT_LIGHT_GENERATING_TURFS])
+				var/turf/space/fluid/F = _F
 				F.make_light()
-				LAGCHECK(LAG_REALTIME)
+				LAGCHECK(lagcheck_at)
 
-			light_generating_fluid_turfs.len = 0
+			if(TR_CAT_LIGHT_GENERATING_TURFS in by_cat)
+				by_cat[TR_CAT_LIGHT_GENERATING_TURFS].len = 0
 
 		/*
 		for (var/turf/space/fluid/F in light_generating_fluid_turfs)

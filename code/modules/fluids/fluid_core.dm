@@ -313,7 +313,7 @@ var/mutable_appearance/fluid_ma
 
 		for(var/A in src.loc)
 			var/atom/atom = A
-			if (atom && atom & FLUID_SUBMERGE)
+			if (atom && atom.flags & FLUID_SUBMERGE)
 				var/mob/living/M = A
 				var/obj/O = A
 				if (istype(M))

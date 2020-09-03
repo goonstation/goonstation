@@ -24,7 +24,7 @@
   @include meta.load-css('../components/Button.scss', $with: (
     'color-default': colors.$primary,
     'color-disabled': #363636,
-    'color-selected': #1e5880,
+    'color-selected': #1e5881,
     'color-caution': #be6209,
     'color-danger': #9a9d00,
   ));

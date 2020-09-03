@@ -918,11 +918,11 @@
 
 	onAdd(var/mob/owner)
 		..()
-		nervous_mobs += owner
+		OTHER_START_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 	onRemove(var/mob/owner)
 		..()
-		nervous_mobs -= owner
+		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 /obj/trait/burning
 	name = "Human Torch (+1)"

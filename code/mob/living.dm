@@ -66,6 +66,7 @@
 	var/last_voice_sound = 0
 	var/speechbubble_enabled = 1
 	var/speechpopupstyle = null
+	var/isFlying = 0 // for player controled flying critters
 
 	var/caneat = 1
 	var/candrink = 1
@@ -1455,10 +1456,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
 				sustained_moves += steps
 			else
-				if (sustained_moves >= SUSTAINED_RUN_REQ+1)
+				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !isFlying)
 					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
-				else if (move_dir == turn(last_move_dir,180))
+				else if (move_dir == turn(last_move_dir,180) && !isFlying)
 					sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
 					if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
@@ -1633,6 +1634,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/proc/start_sprint()
 	if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 		return
+	if (SEND_SIGNAL(src, COMSIG_LIVING_SPRINT_START) & RETURN_SPRINT_OVERRIDDEN)
+		return
 	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
 			spell_batpoof(src, cloak = 0)
@@ -1659,7 +1662,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
 					sprint_particle(src, last)
-					playsound(src.loc,"sound/effects/sprint_puff.ogg", 29, 1,extrarange = -4)
+					if (!isFlying)
+						playsound(src.loc,"sound/effects/sprint_puff.ogg", 29, 1,extrarange = -4)
 
 // cogwerks - fix for soulguard and revive
 /mob/living/proc/remove_ailments()

@@ -81,8 +81,8 @@
 	disposing()
 		mailgroups.len = 0
 		radio_controller.remove_object(src, "[pdafrequency]")
-		genResearch.clonepods.Remove(src) //Bye bye
-		connected.pod1 = null
+		genResearch?.clonepods?.Remove(src) //Bye bye
+		connected?.pod1 = null
 		connected?.scanner?.pods -= src
 		connected = null
 		if(occupant)
@@ -732,7 +732,7 @@
 		if (!src.emagged)
 			if (user)
 				boutput(user, "<span class='notice'>You override the reclaimer's safety mechanism.</span>")
-			logTheThing("combat", user, "emagged [src] at [log_loc(src)].")
+			logTheThing("combat", user, null, "emagged [src] at [log_loc(src)].")
 			emagged = 1
 			return 1
 		else

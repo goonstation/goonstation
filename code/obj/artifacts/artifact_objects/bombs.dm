@@ -48,12 +48,13 @@
 				playsound(T, alarm_final, 100, 1, -1)
 			animate_flash_color_fill(O,flascustomization_first_color,10,3)
 
-			SPAWN_DBG(3 SECONDS)
-				T = get_turf(O)
-				if (src.activated)
-					deploy_payload(O)
-				else
-					T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
+			sleep(3 SECONDS)
+
+			T = get_turf(O)
+			if (src.activated)
+				deploy_payload(O)
+			else
+				T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
 
 	proc/deploy_payload(var/obj/O)
 		if (!O)

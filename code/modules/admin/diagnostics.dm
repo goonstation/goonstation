@@ -46,7 +46,7 @@ proc/debug_color_of(var/thing)
 
 		var/output = {"<B>GENERAL SYSTEMS REPORT</B><HR>
 <B>General Processing Data</B><BR>
-<B># of Machines:</B> [length(all_processing_machines()) + atmos_machines.len]<BR>
+<B># of Machines:</B> [length(all_processing_machines()) + by_cat[TR_CAT_ATMOS_MACHINES].len]<BR>
 <B># of Pipe Networks:</B> [pipe_networks.len]<BR>
 <B># of Processing Items:</B> [processing_items.len]<BR>
 <B># of Power Nets:</B> [powernets.len]<BR>

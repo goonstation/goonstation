@@ -1511,9 +1511,9 @@
 						if (src.traitHolder && src.traitHolder.hasTrait("happyfeet"))
 							if (prob(33))
 								SPAWN_DBG(0.5 SECONDS)
-									LAGCHECK(LAG_MED)
-									for (var/mob/living/carbon/human/responseMonkey in range(1, src)) // they don't have to be monkeys, but it's signifying monkey code
-										if (responseMonkey.stat || responseMonkey.getStatusDuration("paralysis") || responseMonkey.sleeping || responseMonkey.getStatusDuration("stunned") || (responseMonkey == src))
+									for (var/mob/living/carbon/human/responseMonkey in orange(1, src)) // they don't have to be monkeys, but it's signifying monkey code
+										LAGCHECK(LAG_MED)
+										if (!can_act(responseMonkey, 0))
 											continue
 										responseMonkey.emote("dance")
 
@@ -1998,7 +1998,7 @@
 						I = P.ID_card
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm))
 					src.show_text("You can't do that without arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || ASS_JAM || istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || ASS_JAM || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
@@ -2059,7 +2059,7 @@
 								if(dab_id)
 									dab_id.arm_count++
 							H.emote("scream")
-					if(!istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate) && (!istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/biggest)) || (!src.reagents.has_reagent("puredabs")))
+					if(!(istype(src.head, /obj/item/clothing/head/bighat/syndicate) || src.reagents.has_reagent("puredabs")))
 						src.take_brain_damage(10)
 						if(dab_id)
 							dab_id.brain_damage_count += 10
@@ -2153,6 +2153,8 @@
 	src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 
 /mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/H)
+	if(PROC_ON_COOLDOWN(2 SECONDS))
+		return
 	H.render_target = "*\ref[H]"
 	var/image/left_arm = image(null, H)
 	left_arm.render_source = H.render_target
