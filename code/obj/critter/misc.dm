@@ -599,6 +599,7 @@
 	generic = 0
 	atk_text = "bashes against"
 	atk_brute_amt = 7
+	is_pet = FALSE
 	var/reagent_id = null
 
 	New()
@@ -834,6 +835,7 @@
 	seekrange = 5
 	invisibility = 1
 	flying = 1
+	is_pet = FALSE
 
 	generic = 0
 

@@ -222,7 +222,7 @@
 			src:vis_contents += light
 			continue
 		var/turf/T = get_step(get_turf(src), light.dir)
-		if(T.opacity || T.opaque_atom_count)
+		if(T?.opacity || T?.opaque_atom_count)
 			src:vis_contents -= light
 		else
 			src:vis_contents += light

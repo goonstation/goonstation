@@ -800,7 +800,8 @@
 			if (R.product_amount <= 0) //Try to use a record that actually has something to dump.
 				continue
 			valid_products.Add(R)
-		thrown = throw_item_act(pick(valid_products), target)
+		if (valid_products.len)
+			thrown = throw_item_act(pick(valid_products), target)
 	return thrown
 
 /obj/machinery/vending/proc/throw_item_act(var/datum/data/vending_product/R, var/mob/living/target)

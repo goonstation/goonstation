@@ -171,6 +171,7 @@
 	var/weight = 15
 	target_range = 7
 	frustration_threshold = 3
+	var/last_seek
 
 /datum/aiTask/timed/targeted/flee_and_shoot/frustration_check()
 	.= 0
@@ -188,7 +189,8 @@
 	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE))
 		return
 
-	if(!holder.target)
+	if(!holder.target && world.time > last_seek + 5 SECONDS)
+		last_seek = world.time
 		var/list/possible = get_targets()
 		if (possible.len)
 			holder.target = pick(possible)
