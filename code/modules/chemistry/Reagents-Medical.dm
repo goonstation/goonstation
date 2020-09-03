@@ -271,6 +271,7 @@ datum
 			fluid_b = 202
 			transparency = 180
 			depletion_rate = 0.1
+			penetrates_skin = 1
 			value = 2 // I think this is correct?
 			hygiene_value = 1
 
@@ -374,13 +375,7 @@ datum
 				if(!volume_passed)
 					return
 				if(method == TOUCH)
-					for(var/A in M.organs)
-						var/obj/item/affecting = null
-						if(!M.organs[A])    continue
-						affecting = M.organs[A]
-						if(!isitem(affecting))
-							continue
-						affecting.heal_damage(volume_passed*1.5, volume_passed*1.5)
+					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
 						if (H.bleeding)
@@ -449,7 +444,9 @@ datum
 				if(!M) M = holder.my_atom
 				M.drowsyness = max(M.drowsyness-5, 0)
 				if(M.sleeping) M.sleeping = 0
-				if(M.get_brain_damage() && prob(50)) M.take_brain_damage(-1 * mult)
+				if (M.get_brain_damage() <= 90)
+					if (prob(50)) M.take_brain_damage(-1 * mult)
+				else M.take_brain_damage(-10 * mult) // Zine those synapses into not dying *yet*
 				..()
 				return
 
@@ -467,9 +464,9 @@ datum
 						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
 						M.vomit()
 					else if (effect <= 5)
-						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes crazed and bloodshot!</span>")
 						M.dizziness += 8
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 50 * mult))
+						M.reagents.add_reagent("madness_toxin", rand(1,2) * mult)
 					if (effect <= 15)
 						M.take_toxin_damage(1 * mult)
 
@@ -627,6 +624,19 @@ datum
 			on_mob_life(var/mob/M, var/method=INGEST, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
+				if(holder.has_reagent("neurotoxin"))
+					holder.remove_reagent("neurotoxin", 3 * mult)
+				if(holder.has_reagent("capulettium"))
+					holder.remove_reagent("capulettium", 3 * mult)
+				if(holder.has_reagent("sulfonal"))
+					holder.remove_reagent("sulfonal", 3 * mult)
+				if(holder.has_reagent("ketamine"))
+					holder.remove_reagent("ketamine", 3 * mult)
+				if(holder.has_reagent("sodium_thiopental"))
+					holder.remove_reagent("sodium_thiopental", 3 * mult)
+				if(holder.has_reagent("pancuronium"))
+					holder.remove_reagent("pancuronium", 3 * mult)
+
 
 				if(method == INGEST)
 					if (M.health < -5 && M.health > -30)
@@ -881,7 +891,7 @@ datum
 					M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
-					repair_bleeding_damage(H, 5, 1 * mult)
+					repair_bleeding_damage(H, 90, 1 * mult)
 					if (prob(2))
 						H.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
 				..()
@@ -978,13 +988,7 @@ datum
 					return
 
 				if (method == TOUCH)
-					for(var/A in M.organs)
-						var/obj/item/affecting = null
-						if(!M.organs[A])    continue
-						affecting = M.organs[A]
-						if (!isitem(affecting))
-							continue
-						affecting.heal_damage(0, volume_passed)
+					M.HealDamage("All", 0, volume_passed)
 
 					var/silent = 0
 					if (paramslist && paramslist.len)
@@ -1225,8 +1229,10 @@ datum
 						affecting.heal_damage(volume_passed, 0)*/
 
 					var/mob/living/L = M
-					if (L.bleeding)
-						repair_bleeding_damage(L, 90, rand(1,3))
+					if (L.bleeding == 1)
+						repair_bleeding_damage(L, 50, 1)
+					else
+						repair_bleeding_damage(L, 5, 1)
 						//H.bleeding = min(H.bleeding, rand(0,5))
 
 					var/silent = 0
@@ -1279,7 +1285,7 @@ datum
 					if (M.get_brain_damage())
 						M.take_brain_damage(-2 * mult)
 					M.HealDamage("All", 12 * mult, 12 * mult)
-
+					M.updatehealth() //I hate this, but we actually need the health on time here.
 					if(M.health > health_before)
 						var/increase = min((M.health - health_before)/37*25,25) //12+12+3+10 = 37 health healed possible, 25 max temp increase possible
 						M.bodytemperature = min(M.bodytemperature+increase,M.base_body_temp)

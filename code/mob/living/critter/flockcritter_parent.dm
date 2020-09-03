@@ -183,7 +183,7 @@
 				src.decal = unpool(/obj/decal/flock_build_wall)
 				flick_anim = "spawn-wall"
 			if(src.decal)
-				src.decal.loc = target
+				src.decal.set_loc(target)
 				flick(flick_anim, src.decal)
 
 			var/mob/living/critter/flock/drone/F = owner
@@ -256,7 +256,7 @@
 			var/flick_anim = "spawn-wall"
 			src.decal = unpool(/obj/decal/flock_build_wall)
 			if(src.decal)
-				src.decal.loc = target
+				src.decal.set_loc(target)
 				flick(flick_anim, src.decal)
 
 	onInterrupt(var/flag)
@@ -421,7 +421,7 @@
 				// do effect
 				src.decal = unpool(/obj/decal/flock_build_wall)
 				if(src.decal)
-					src.decal.loc = target
+					src.decal.set_loc(target)
 					flick("spawn-wall", src.decal)
 				playsound(get_turf(target), "sound/misc/flockmind/flockdrone_build.ogg", 50, 1)
 

@@ -34,6 +34,9 @@ Finally Sutures on the head heal these back to op_stage 0.0 in a speicifc order:
 limbs are their own thing not included here.
 */
 
+// chest item whitelist, because some things are more important than being reasonable
+var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gnomechompski/elf, /obj/item/gnomechompski/mummified)
+
 // ~make procs 4 everything~
 /proc/surgeryCheck(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob)
 	if (!patient) // did we not get passed a patient?
@@ -176,6 +179,10 @@ limbs are their own thing not included here.
 		if (patient.chest_item == null)
 			// If no item in chest, get surgeon's equipped item
 			var/obj/item/chest_item = surgeon.equipped()
+
+			if(chest_item.w_class > 3 && !(chest_item.type in chestitem_whitelist))
+				surgeon.show_text("<span class='alert'>[chest_item] is too big to fit into [patient]'s chest cavity.</span>")
+				return 1
 
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest.</span>",\
 			surgeon, "<span class='notice'>You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest.</span>",\
@@ -634,8 +641,10 @@ limbs are their own thing not included here.
 				// This is kinda important (Convair880).
 				if (istype(I, /obj/item/implant/mindslave))
 					if (patient.mind && (patient.mind.special_role == "mindslave"))
+						if(surgeon == patient) continue
 						remove_mindslave_status(patient, "mslave", "surgery")
 					else if (patient.mind && patient.mind.master)
+						if(surgeon == patient) continue
 						remove_mindslave_status(patient, "otherslave", "surgery")
 
 				patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
@@ -747,7 +756,7 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					logTheThing("combat", surgeon, patient, "removed %target%'s liver with [src].")
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s liver with [src].")
 					patient.organHolder.drop_organ("liver")
 
 					return 1
@@ -775,7 +784,7 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					logTheThing("combat", surgeon, patient, "removed %target%'s intestines with [src].")
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s intestines with [src].")
 					patient.organHolder.drop_organ("intestines")
 
 					return 1
@@ -829,7 +838,7 @@ limbs are their own thing not included here.
 						else
 							surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
 
-						logTheThing("combat", surgeon, patient, "removed %target%'s spleen with [src].")
+						logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s spleen with [src].")
 						patient.organHolder.drop_organ("spleen")
 
 						return 1
@@ -966,7 +975,7 @@ limbs are their own thing not included here.
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
 				if (patient.organHolder.brain)
-					logTheThing("combat", surgeon, patient, "removed %target%'s head and brain with [src].")
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s head and brain with [src].")
 					patient.death()
 				patient.organHolder.drop_organ("head")
 				return 1
@@ -1028,7 +1037,7 @@ limbs are their own thing not included here.
 					take_bleeding_damage(patient, surgeon, damage_low)
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				logTheThing("combat", surgeon, patient, "removed %target%'s brain with [src].")
+				logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s brain with [src].")
 				patient.death()
 				patient.organHolder.head.scalp_op_stage = 4.0
 				return 1
@@ -1115,7 +1124,7 @@ limbs are their own thing not included here.
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
 				patient.butt_op_stage = 4.0
-				logTheThing("combat", surgeon, patient, "removed %target%'s butt with [src].")
+				logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s butt with [src].")
 				patient.organHolder.drop_organ("butt")
 				return 1
 
@@ -1191,7 +1200,7 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					logTheThing("combat", surgeon, patient, "removed %target%'s heart with [src].")
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s heart with [src].")
 					//patient.contract_disease(/datum/ailment/disease/noheart,null,null,1)
 
 					patient.organHolder.drop_organ("heart")
@@ -1626,7 +1635,7 @@ limbs are their own thing not included here.
 				take_bleeding_damage(patient, surgeon, damage_low)
 			else
 				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-			logTheThing("combat", surgeon, patient, "removed %target%'s [target_side] eye with [src].")
+			logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s [target_side] eye with [src].")
 
 			if (target_eye == patient.organHolder.right_eye)
 				patient.organHolder.drop_organ("right_eye")
@@ -1758,7 +1767,7 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					logTheThing("combat", surgeon, patient, "removed %target%'s [target_side] lung with [src].")
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s [target_side] lung with [src].")
 
 					if (target_organ == patient.organHolder.left_lung)
 						patient.organHolder.drop_organ("left_lung")
@@ -1792,7 +1801,7 @@ limbs are their own thing not included here.
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
 
-					logTheThing("combat", surgeon, patient, "removed %target%'s appendix with [src].")
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s appendix with [src].")
 					patient.organHolder.drop_organ("appendix")
 					return 1
 
@@ -1820,7 +1829,7 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					logTheThing("combat", surgeon, patient, "removed %target%'s stomach with [src].")
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s stomach with [src].")
 					patient.organHolder.drop_organ("stomach")
 
 					return 1
@@ -1873,7 +1882,7 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					logTheThing("combat", surgeon, patient, "removed %target%'s pancreas with [src].")
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s pancreas with [src].")
 					patient.organHolder.drop_organ("pancreas")
 
 					return 1
@@ -1910,7 +1919,7 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					logTheThing("combat", surgeon, patient, "removed %target%'s [target_side] kidney with [src].")
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s [target_side] kidney with [src].")
 
 					if (target_organ == patient.organHolder.left_kidney)
 						patient.organHolder.drop_organ("left_kidney")

@@ -6,7 +6,7 @@ datum/controller/process/kudzu
 
 	setup()
 		name = "Kudzu"
-		schedule_interval = 5 SECONDS
+		schedule_interval = 3 SECONDS
 
 		detailed_count = new
 
@@ -27,9 +27,6 @@ datum/controller/process/kudzu
 
 
 /mob/living/carbon/human/proc/infect_kudzu()
-	if (src.mutantrace && istype(src.mutantrace, /datum/mutantrace/kudzu))
-		return
-
 	var/obj/icecube/kudzu/cube = new /obj/icecube/kudzu(get_turf(src), src)
 	src.set_loc(cube)
 	cube.visible_message("<span class='alert'><B>[src] is covered by the vines!</span>")

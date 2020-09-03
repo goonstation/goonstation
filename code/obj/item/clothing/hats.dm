@@ -855,7 +855,7 @@
 	contraband = 10 //let's set off some alarms, boys
 	is_syndicate = 1 //no easy replication thanks
 	cant_self_remove = 1
-	var/datum/light/light
+	var/datum/component/holdertargeting/sm_light/light_c
 
 	setupProperties()
 		..()
@@ -863,26 +863,12 @@
 
 	New()
 		..()
-		light = new /datum/light/point // glows red, good idea mordent
-		light.set_brightness(1.2)
-		light.set_height(1.8)
-		light.set_color(0.94, 0.27, 0.27)
-		light.attach(src)
-		light.enable(1)
+		light_c = src.AddComponent(/datum/component/holdertargeting/sm_light, 0.94 * 255, 0.27 * 255, 0.27 * 255, 240)
+		light_c.update(1)
 
 		if (prob(10))
 			SPAWN_DBG( rand(300, 900) )
 				src.visible_message("<b>[src]</b> <i>says, \"I'm the boss.\"</i>")
-
-	pickup(mob/user)
-		..()
-		light.attach(user)
-
-	dropped(mob/user)
-		..()
-		SPAWN_DBG(0)
-			if (src.loc != user)
-				light.attach(src)
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -1008,6 +994,12 @@
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
 
+	stunhatr
+		stunready = 1
+		uses = 1
+		icon_state = "sunhatr-stun"
+		item_state = "sunhatr-stun"
+
 	examine()
 		. = ..()
 		if (src.stunready)
@@ -1027,7 +1019,7 @@
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
 			var/obj/item/cell/C = W
 
-			if (C.charge < 2500)
+			if (C.charge < 1500)
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
@@ -1041,7 +1033,7 @@
 			if (src.uses < 0)
 				src.uses = 0
 			src.uses = min(src.uses + 1, src.max_uses)
-			C.use(2500)
+			C.use(1500)
 			src.icon_state = text("[]-stun",src.icon_state)
 			src.item_state = text("[]-stun",src.item_state)
 			C.updateicon()
@@ -1192,3 +1184,9 @@
 	desc = "Hey, kid. You did it. Despite everything, you persevered. I'm proud of you."
 	icon_state = "graduation_cap"
 	item_state = "graduation_cap"
+
+/obj/item/clothing/head/danberet
+	name = "Discount Dan's beret"
+	desc = "A highly advanced textile experience!"
+	icon_state = "danberet"
+	item_state = "danberet"

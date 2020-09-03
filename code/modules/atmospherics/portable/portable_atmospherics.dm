@@ -100,6 +100,14 @@
 
 			return 1
 
+/obj/machinery/portable_atmospherics/proc/eject_tank()
+	if(holding)
+		holding.set_loc(loc)
+		usr.put_in_hand_or_eject(holding) // try to eject it into the users hand, if we can
+		holding = null
+		update_icon()
+	return
+
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/tank))
 		if(!src.holding)
@@ -108,6 +116,7 @@
 			W.set_loc(src)
 			src.holding = W
 			update_icon()
+			tgui_process.update_uis(src) //update UI immediately
 
 	else if (iswrenchingtool(W))
 		if ((istype(src, /obj/machinery/portable_atmospherics/canister))) //No messing with anchored canbombs. -ZeWaka
@@ -120,6 +129,7 @@
 			disconnect()
 			boutput(user, "<span class='notice'>You disconnect [name] from the port.</span>")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			tgui_process.update_uis(src)
 			return
 		else
 			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
@@ -128,6 +138,7 @@
 					logTheThing("station", user, null, "has connected \the [src] [log_atmos(src)] to the port at [log_loc(src)].")
 					boutput(user, "<span class='notice'>You connect [name] to the port.</span>")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					tgui_process.update_uis(src)
 					return
 				else
 					boutput(user, "<span class='notice'>[name] failed to connect to the port.</span>")

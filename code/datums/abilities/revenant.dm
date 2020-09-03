@@ -40,7 +40,7 @@
 	name = "Revenant"
 	desc = "The subject appears to be possessed by a wraith."
 	id = "revenant"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	isBad = 0 // depends on who you ask really
 	can_copy = 0
 	var/isDying = 0

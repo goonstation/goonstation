@@ -22,7 +22,6 @@
 	var/only_local_looc = 0
 	var/deadchatoff = 0
 	var/local_deadchat = 0
-	var/last_adminhelp = 0
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
@@ -56,12 +55,15 @@
 	var/antag_tokens //Number of antagonist tokens available to the player
 	var/using_antag_token = 0 //Set when the player readies up at round start, and opts to redeem a token.
 
+	var/persistent_bank_valid = FALSE
 	var/persistent_bank = 0 //cross-round persistent cash value (is increased as a function of job paycheck + station score)
 	var/persistent_bank_item = 0 //Name of a bank item that may have persisted from a previous round. (Using name because I'm assuming saving a string is better than saving a whole datum)
 
 	var/datum/reputations/reputations = null
 
 	var/list/datum/compid_info_list = list()
+
+	var/login_success = 0
 
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
@@ -98,6 +100,8 @@
 
 	var/admin_intent = 0
 
+	var/hand_ghosts = 1 //pickup ghosts inhand
+
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
 		logTheThing("audit", src, target, message)
@@ -116,6 +120,9 @@
 	return
 
 /client/Del()
+	if (player_capa && src.login_success)
+		player_cap_grace[src.ckey] = TIME + 2 MINUTES
+
 	if (current_state < GAME_STATE_FINISHED)
 		ircbot.event("logout", src.key)
 
@@ -137,68 +144,13 @@
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
 	logTheThing("diary", null, src, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
 
+	login_success = 0
+
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "Sorry, this game does not support Telnet.")
 		sleep(5 SECONDS)
 		del(src)
 		return
-
-	if (IsGuestKey(src.key))
-		if(!src.address || src.address == world.host)
-			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
-		SPAWN_DBG(0)//so, the below will only show if they're ingame so the spawn isn't a guarantee; for dev purposes shove an alert to solve some confusion. hence the above
-			var/gueststring = {"
-							<!doctype html>
-							<html>
-								<head>
-									<title>No guest logins allowed!</title>
-									<style>
-										h1, .banreason {
-											font-color:#F00;
-										}
-
-									</style>
-								</head>
-								<body>
-									<h1>No guest logins.</h1>
-									Don't forget to log in to your byond account prior to connecting to this server.
-								</body>
-							</html>
-						"}
-			src.Browse(gueststring, "window=getout")
-			if (src)
-				del(src)
-			return
-
-
-
-	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
-	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
-		//Key not in whitelist, show them a vaguely sassy message and boot them
-		if (!(src.ckey in whitelistCkeys))
-			SPAWN_DBG(0)
-				var/whitelistString = {"
-								<!doctype html>
-								<html>
-									<head>
-										<title>Server Whitelist Enabled</title>
-										<style>
-											h1, .banreason {
-												font-color:#F00;
-											}
-
-										</style>
-									</head>
-									<body>
-										<h1>Server whitelist enabled</h1>
-										This server is currently limiting connections to specific players, and you aren't one of them. Goodbye!
-									</body>
-								</html>
-							"}
-				src.Browse(whitelistString, "window=whiteout")
-				if (src)
-					del(src)
-				return
 
 	logTheThing("admin", src, null, " has connected.")
 
@@ -230,53 +182,120 @@
 		)
 		src.loadResourcesFromList(chuiResources)
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
-	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
-
-	if (isbanned)
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		logTheThing("diary", null, src, "Failed Login: %target% - Banned", "access")
-		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
-		SPAWN_DBG(0)
-			var/banstring = {"
-								<!doctype html>
-								<html>
-									<head>
-										<title>BANNED!</title>
-										<style>
-											h1, .banreason {
-												font-color:#F00;
-											}
-
-										</style>
-									</head>
-									<body>
-										<h1>You have been banned.</h1>
-										<span class='banreason'>Reason: [isbanned].</span><br>
-										If you believe you were unjustly banned, head to <a href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
-									</body>
-								</html>
-							"}
-			src.mob.Browse(banstring, "window=ripyou")
-
-			if (src)
-				del(src)
-			return
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
-
 	if (!istype(src.mob, /mob/new_player))
 		src.loadResources()
 
 /*
 	SPAWN_DBG(rand(4,18))
 		if(proxy_check(src.address))
-			logTheThing("diary", null, src, "Failed Login: %target% - Using a Tor Proxy Exit Node", "access")
+			logTheThing("diary", null, src, "Failed Login: [constructTarget(src,"diary")] - Using a Tor Proxy Exit Node", "access")
 			if (announce_banlogin) message_admins("<span class='internal'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
 			boutput(src, "You may not connect through TOR.")
 			SPAWN_DBG(0) del(src)
 			return
 */
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
+
+	..()
+
+	if (join_motd)
+		boutput(src, "<div class=\"motd\">[join_motd]</div>")
+
+	if (IsGuestKey(src.key))
+		if(!src.address || src.address == world.host)
+			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
+		var/gueststring = {"
+						<!doctype html>
+						<html>
+							<head>
+								<title>No guest logins allowed!</title>
+								<style>
+									h1, .banreason {
+										font-color:#F00;
+									}
+
+								</style>
+							</head>
+							<body>
+								<h1>Guest Login Denied</h1>
+								Don't forget to log in to your byond account prior to connecting to this server.
+							</body>
+						</html>
+					"}
+		src.mob.Browse(gueststring, "window=getout")
+		sleep(10)
+		if (src)
+			del(src)
+		return
+
+	if (world.time < 7 SECONDS)
+		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+			if (!(src.ckey in whitelistCkeys))
+				sleep(3 SECONDS) //silly wait period bandaid so clients arent booted before whitelist load (probably)
+
+	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
+	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+		//Key not in whitelist, show them a vaguely sassy message and boot them
+		if (!(src.ckey in whitelistCkeys))
+			var/whitelistString = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>Server Whitelist Enabled</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
+
+									</style>
+								</head>
+								<body>
+									<h1>Server whitelist enabled</h1>
+									This server has a player whitelist ON. You are not on the whitelist and will now be forcibly disconnected.
+								</body>
+							</html>
+						"}
+			src.mob.Browse(whitelistString, "window=whiteout")
+			sleep(10)
+			if (src)
+				del(src)
+			return
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
+	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
+
+	if (isbanned)
+		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
+		logTheThing("diary", null, src, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
+		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
+		var/banstring = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>BANNED!</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
+
+									</style>
+								</head>
+								<body>
+									<h1>You have been banned.</h1>
+									<span class='banreason'>Reason: [isbanned].</span><br>
+									If you believe you were unjustly banned, head to <a href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
+								</body>
+							</html>
+						"}
+		src.mob.Browse(banstring, "window=ripyou")
+		sleep(10)
+		if (src)
+			del(src)
+		return
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
+
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
@@ -284,20 +303,16 @@
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
 			src.verbs += /client/proc/toggle_mentorhelps
-	else if (player_capa && (total_clients() >= player_cap) && (src.ckey in bypassCapCkeys))
-		boutput(src, "<span class='ooc mentorooc'>The server is full, but you are allowed to bypass the player cap!</span>")
-	else if(player_capa && (total_clients() >= player_cap) && !src.holder)
-		alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && (src.ckey in bypassCapCkeys))
+		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
+		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
+	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
+		boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
+		alert(src.mob,"I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
 		del(src)
 		return
 
-	if (join_motd)
-		boutput(src, "<div class=\"motd\">[join_motd]</div>")
-
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
-
-	..()
 	// moved preferences from new_player so it's accessible in the client scope
 	if (!preferences)
 		preferences = new
@@ -366,10 +381,10 @@
 			if (src.holder && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
 				admin_changes()
 #endif
-			if (it_is_ass_day)
+#if ASS_JAM
 				src.verbs += /client/proc/cmd_ass_day_rules
 				src.cmd_ass_day_rules()
-
+#endif
 
 			if (src.byond_version < 513 || src.byond_build < 1526)
 				if (alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", "Yes", "No") == "Yes")
@@ -404,23 +419,24 @@
 			src.cmd_rp_rules()
 #endif
 		//Cloud data
-		var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
-		if( !http )
-			logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
+		if (cdn)
+			var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
+			if( !http )
+				logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
 
-		var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
-		if( ret["status"] == "error" )
-			logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
-		else
-			cloudsaves = ret["saves"]
-			clouddata = ret["cdata"]
-			load_antag_tokens()
-			load_persistent_bank()
-			var/decoded = cloud_get("audio_volume")
-			if(decoded)
-				var/cur = volumes.len
-				volumes = json_decode(decoded)
-				volumes.len = cur
+			var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
+			if( ret["status"] == "error" )
+				logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
+			else
+				cloudsaves = ret["saves"]
+				clouddata = ret["cdata"]
+				load_antag_tokens()
+				load_persistent_bank()
+				var/decoded = cloud_get("audio_volume")
+				if(decoded)
+					var/cur = volumes.len
+					volumes = json_decode(decoded)
+					volumes.len = cur
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
 			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
@@ -428,11 +444,6 @@
 		if(istype(src.mob, /mob/new_player))
 			var/mob/new_player/M = src.mob
 			M.new_player_panel() // update if tokens available
-
-
-/*	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/sandbox))
-		if(src.holder  && (src.holder.level >= 3))
-			src.verbs += /mob/proc/Delete*/
 
 	if(do_compid_analysis)
 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
@@ -504,6 +515,9 @@
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
+	//game stuf
+	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
+
 	//sound
 	if (winget( src, "menu.speech_sounds", "is-checked" ) == "true")
 		ignore_sound_flags |= SOUND_SPEECH
@@ -516,9 +530,14 @@
 
 	if(src.holder && src.holder.level >= LEVEL_CODER)
 		src.control_freak = 0
+
+	if (browse_item_initial_done)
+		SPAWN_DBG(0)
+			sendItemIcons(src)
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
-
+	login_success = 1
 /*
 /client/proc/write_gauntlet_matches()
 	return
@@ -604,6 +623,9 @@
 	//var/bank = 0
 	//PB[ckey] >> bank
 	//if (!bank)
+
+	persistent_bank_valid = cloud_available()
+
 	persistent_bank = cloud_get( "persistent_bank" ) ? text2num(cloud_get( "persistent_bank" )) : 0
 	//	return
 	//else
@@ -652,6 +674,10 @@
 
 //MBC TODO : DO SOME LOGGING ON ADD_TO_BANK() AND TRY_BANK_PURCHASE()
 /client/proc/add_to_bank(amt as num)
+	if(!persistent_bank_valid)
+		load_persistent_bank()
+		if(!persistent_bank_valid)
+			return
 	var/new_bank_value = persistent_bank + amt
 	src.set_persistent_bank(new_bank_value)
 
@@ -669,7 +695,7 @@
 	return player.mentor
 
 /client/proc/can_see_mentor_pms()
-	return (player.mentor || src.holder) && player.see_mentor_pms
+	return (src.player?.mentor || src.holder) && src.player?.see_mentor_pms
 
 var/global/curr_year = null
 var/global/curr_month = null
@@ -758,6 +784,30 @@ var/global/curr_day = null
 	set name = "Ping"
 	boutput(usr, "Pong")
 
+/client/verb/changeServer(var/server as text)
+	set name = "Change Server"
+	set hidden = 1
+	var/serverURL
+	var/serverName
+	switch (server)
+		if (1, "rp")
+			serverName = "Goonstation Roleplay"
+			serverURL = "byond://goon1.goonhub.com:26100"
+		if (2, "main")
+			serverName = "Goonstation"
+			serverURL = "byond://goon2.goonhub.com:26200"
+		if (3, "main2")
+			serverName = "Goonstation Roleplay Overflow"
+			serverURL = "byond://goon3.goonhub.com:26300"
+		if (4, "main3")
+			serverName = "Goonstation Overflow"
+			serverURL = "byond://goon4.goonhub.com:26400"
+
+	if (serverURL)
+		boutput(usr, "You are being redirected to [serverName]...")
+		usr << link(serverURL)
+
+
 /*
 /client/verb/Newcastcycle()
 	set hidden = 1
@@ -788,6 +838,10 @@ var/global/curr_day = null
 	if (!usr || isnull(usr.client))
 		return
 
+	// Tgui Topic middleware
+	if(tgui_Topic(href_list))
+		return
+
 	var/mob/M
 	if (href_list["target"])
 		var/targetCkey = href_list["target"]
@@ -803,7 +857,7 @@ var/global/curr_day = null
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span class='notice' class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
+			boutput(src.mob, "<span class='ahelp' class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
 			logTheThing("admin_help", src, null, "<b>PM'd [target]</b>: [t]")
 			logTheThing("diary", src, null, "PM'd [target]: [t]", "ahelp")
 
@@ -823,7 +877,7 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<span class='internal'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
+						boutput(K, "<span class='ahelp'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -850,6 +904,7 @@ var/global/curr_day = null
 			ircbot.export("mentorpm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
+			var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>"
 			for (var/client/C)
 				if (C.can_see_mentor_pms() && C.key != usr.key)
 					if (C.holder)
@@ -858,7 +913,7 @@ var/global/curr_day = null
 						else //Message admins
 							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 					else //Message mentors
-						boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+						boutput(C, mentormsg)
 
 		if ("mentor_msg")
 			if (M)
@@ -887,8 +942,8 @@ var/global/curr_day = null
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
-				logTheThing("mentor_help", src.mob, M, "Mentor PM'd %target%: [t]")
-				logTheThing("diary", src.mob, M, "Mentor PM'd %target%: [t]", "admin")
+				logTheThing("mentor_help", src.mob, M, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
+				logTheThing("diary", src.mob, M, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.mob && src ? src.key : ""
@@ -898,6 +953,7 @@ var/global/curr_day = null
 				ircmsg["msg"] = html_decode(t)
 				ircbot.export("mentorpm", ircmsg)
 
+				var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>"
 				for (var/client/C)
 					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
 						if (C.holder)
@@ -906,7 +962,7 @@ var/global/curr_day = null
 							else
 								boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 						else
-							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+							boutput(C, mentormsg)
 
 		if ("mach_close")
 			var/window = href_list["window"]
@@ -1205,6 +1261,12 @@ var/global/curr_day = null
 		src.ignore_sound_flags &= ~SOUND_VOX
 	else
 		src.ignore_sound_flags |= SOUND_VOX
+
+
+/client/verb/set_hand_ghosts()
+	set hidden = 1
+	set name = "set-hand-ghosts"
+	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
 
 //These size helpers are invisible browser windows that help with getting client screen dimensions
 /client/proc/initSizeHelpers()

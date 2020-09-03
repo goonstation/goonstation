@@ -19,22 +19,22 @@ proc/is_teleportation_allowed(var/turf/T)
 			var/obj/machinery/telejam/TJ = atom
 			if (!TJ.active)
 				continue
-			if(DIST_CHECK(TJ, T, TJ.range))
+			if(IN_RANGE(TJ, T, TJ.range))
 				return 0
 		if (istype(atom, /obj/item/device/flockblocker))
 			var/obj/item/device/flockblocker/F = atom
 			if (!F.active)
 				continue
-			if(DIST_CHECK(F, T, F.range))
+			if(IN_RANGE(F, T, F.range))
 				return 0
 
 	for (var/X in by_type[/obj/blob/nucleus])
 		var/obj/blob/nucleus/N = X
-		if(DIST_CHECK(N, T, 3))
+		if(IN_RANGE(N, T, 3))
 			return 0
 
 	// first check the always allowed turfs from map landmarks
-	if (T in telesci)
+	if (T in landmarks[LANDMARK_TELESCI])
 		return 1
 
 	if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))
@@ -488,7 +488,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "sent %target% to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, which, "sent [constructTarget(which,"station")] to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
 			which.set_loc(target)
 
 		showswirl(src.loc)
@@ -518,7 +518,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "received %target% from [showCoords(which.x, which.y, which.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, which, "received [constructTarget(which,"station")] from [showCoords(which.x, which.y, which.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
 			which.set_loc(src.loc)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
@@ -550,11 +550,11 @@ proc/is_teleportation_allowed(var/turf/T)
 		for(var/atom/movable/O in send)
 			O.set_loc(target)
 			if(ismob(O))
-				logTheThing("station", usr, O, "sent %target% to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, O, "sent [constructTarget(O,"station")] to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
 
 		for(var/atom/movable/O in receive)
 			if(ismob(O))
-				logTheThing("station", usr, O, "received %target% from [showCoords(O.x, O.y, O.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, O, "received [constructTarget(O,"station")] from [showCoords(O.x, O.y, O.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
 			O.set_loc(src.loc)
 		showswirl(src.loc)
 		showswirl(target)
@@ -1055,7 +1055,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			return
 
 		src.add_dialog(usr)
-		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, 5)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 
 		if (href_list["scan"])
 			if (!host_id)
@@ -1126,7 +1126,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			bm.z = ztarget
 			bookmarks.Add(bm)
 			src.updateUsrDialog()
-			playsound(src.loc, "keyboard", 50, 1, 5)
+			playsound(src.loc, "keyboard", 50, 1, -15)
 			return
 
 		if (href_list["setpad"])

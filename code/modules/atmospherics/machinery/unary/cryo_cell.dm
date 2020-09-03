@@ -90,7 +90,7 @@
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -279,7 +279,7 @@
 		if (src.occupant)
 			user.show_text("The cryo tube is already occupied.", "red")
 			return
-		logTheThing("combat", user, G.affecting, "shoves %target% into [src] at [log_loc(src)].") // Ditto (Convair880).
+		logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")] into [src] at [log_loc(src)].") // Ditto (Convair880).
 		var/mob/M = G.affecting
 		M.set_loc(src)
 		src.occupant = M

@@ -69,8 +69,9 @@ var/global/list/objects_using_dialogs
 
 /obj/proc/updateDialog()
 	if (clients_operating && clients_operating.len)
+		var/client/C = null
 		for(var/x in clients_operating)
-			var/client/C = x
+			C = x
 			if (C?.mob)
 				if (get_dist(C.mob,src) <= 1)
 					src.attack_hand(C.mob)
@@ -85,7 +86,7 @@ var/global/list/objects_using_dialogs
 			if (C.mob && get_dist(C.mob,src) <= 1)
 				src.attack_self(C.mob)
 
-		for(var/mob/living/silicon/ai/M in AIs)
+		for(var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
 			var/mob/AI = M
 			if (M.deployed_to_eyecam)
 				AI = M.eyecam
@@ -107,7 +108,7 @@ var/global/list/objects_using_dialogs
 /proc/AutoUpdateAI(obj/subject)
 	if (!subject)
 		return
-	for(var/mob/living/silicon/ai/M in AIs)
+	for(var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
 		var/mob/AI = M
 		if (M.deployed_to_eyecam)
 			AI = M.eyecam

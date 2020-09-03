@@ -8,9 +8,12 @@ datum/controller/process/mob_ai
 		for(var/X in ai_mobs)
 			var/mob/M = X
 
+			if (!M)
+				continue
+
 			if (M.mob_flags & LIGHTWEIGHT_AI_MOB) //call life() with a slowed update rate on mobs we manage that arent part of the standard mobs list
 				if( M.z == 4 && !Z4_ACTIVE ) continue
-				if ((ticks % 4) == 0)
+				if ((ticks % 5) == 0)
 					if (istype(X, /mob/living))
 						var/mob/living/L = X
 						L.Life(src)
@@ -29,13 +32,17 @@ datum/controller/process/mob_ai
 					scheck()
 
 			var/mob/living/L = M
-			if(istype(X, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = X
-				H.ai_process()
-				scheck()
-			else if(M.ai && (isliving(M) && L.is_npc || !isliving(M)))
-				M.ai.tick()
-				scheck()
+			if((isliving(M) && L.is_npc || !isliving(M)))
+				if(istype(X, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = X
+					if(H.uses_mobai && H.ai)
+						H.ai.tick()
+					else
+						H.ai_process()
+					scheck()
+				else if(M.ai)
+					M.ai.tick()
+					scheck()
 
 		//we actually remove fish from Mobs list to save on some server load. sorry. commenting this out for now
 		/*

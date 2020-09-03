@@ -173,7 +173,7 @@ var/list/clients_move_scheduled = list()
 		if(findtext( control, "viewport" ))
 			var/datum/viewport/vp = getViewportById(control)
 			if(vp && vp.clickToMove && object && isturf(object) && (mob.type == /mob/living/intangible/blob_overmind || mob.type == /mob/dead/aieye))//NYI: Replace the typechecks with something Better.
-				mob.loc = object
+				mob.set_loc(object)
 				return
 		//In case we receive a dollop of modifier keys with the Click() we should force a keydown immediately.
 		if(parameters["ctrl"])
@@ -351,5 +351,12 @@ var/list/clients_move_scheduled = list()
 				if(C?.mob && C.mob.move_scheduled_ticks-- <= 0 && /*decrease the countdown, check if we reached 0*/ \
 							!C.mob.internal_process_move(C.key_state)) /* deschedule only if internal_process_move tells us to */
 					clients_move_scheduled -= C
+
+			for(var/X in ai_move_scheduled)
+				if (X)
+					var/datum/aiHolder/ai = X
+					if (ai.move_target)
+						ai.move_step()
+
 
 			sleep(world.tick_lag - (world.time - start_time))

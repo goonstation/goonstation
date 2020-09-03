@@ -18,6 +18,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	contraband = 4
 	hide_attack = 2 //Point blanking... gross
 	pickup_sfx = "sound/items/pickup_gun.ogg"
+	inventory_counter_enabled = 1
 
 	var/continuous = 0 //If 1, fire pixel based while button is held.
 	var/c_interval = 3 //Interval between shots while button is held.
@@ -45,6 +46,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	var/charge_up = 0 //Does this gun have a charge up time and how long is it? 0 = normal instant shots.
 	var/shoot_delay = 4
+
+	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 
 	buildTooltipContent()
 		. = ..()
@@ -297,6 +300,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!process_ammo(user))
 		return
 
+	if (src.muzzle_flash)
+		if (isturf(user.loc))
+			muzzle_flash_attack_particle(user, user.loc, M, src.muzzle_flash)
+
+
 	if(slowdown)
 		SPAWN_DBG(-1)
 			user.movement_delay_modifier += slowdown
@@ -364,6 +372,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return
 	if (!istype(src.current_projectile,/datum/projectile/))
 		return
+
+	if (src.muzzle_flash)
+		if (isturf(user.loc))
+			var/turf/origin = user.loc
+			muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
 	if (ismob(user))
 		var/mob/M = user
@@ -464,6 +477,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 1
 
 /obj/item/gun/on_spin_emote(var/mob/living/carbon/human/user as mob)
+	. = ..(user)
 	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
 		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
 		src.shoot_point_blank(user, user)

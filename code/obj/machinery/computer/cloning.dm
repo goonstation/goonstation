@@ -72,19 +72,22 @@
 
 /obj/machinery/computer/cloning/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN_DBG(0.7 SECONDS)
 		if(portable) return
 		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
 
 		src.temp = ""
+		var/hookup_error = FALSE
 		if (isnull(src.scanner))
 			src.temp += " <font color=red>SCNR-ERROR</font>"
+			hookup_error = TRUE
 		if (isnull(src.pod1))
 			src.temp += " <font color=red>POD1-ERROR</font>"
-		else
-			src.pod1.connected = src
-			src.scanner.connected = src
+			hookup_error = TRUE
+		if (!hookup_error)
+			src.pod1?.connected = src
+			src.scanner?.connected = src
 
 		if (src.temp == "")
 			src.temp = "System ready."
@@ -644,7 +647,7 @@
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -691,7 +694,7 @@
 		src.icon_state = "scanner_1"
 
 		for(var/obj/O in src)
-			O.loc = src.loc
+			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
 

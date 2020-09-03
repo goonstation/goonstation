@@ -231,6 +231,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/laser/blaster/blast
 	shot_sound = 'sound/weapons/laser_f.ogg'
 
+
+/datum/projectile/special/spreader/uniform_burst/spikes
+	name = "spike wave"
+	sname = "spike wave"
+	spread_angle = 65
+	cost = 200
+	pellets_to_fire = 7
+	spread_projectile_type = /datum/projectile/bullet/spike
+	shot_sound = 'sound/weapons/radxbow.ogg'
+
+
+
 // Really crazy shit
 
 /datum/projectile/special/shock_orb
@@ -371,9 +383,40 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(prob(50))
 			world << sound('sound/effects/creaking_metal1.ogg', volume = 60)
 
+// A weapon by Sovexe
+/datum/projectile/special/meowitzer //what have I done
+	shot_sound = 'sound/misc/boing/6.ogg'
+	name  = "meowitzer"
+	sname  = "meowitzer"
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "cat1"
+	dissipation_delay = 75
+	dissipation_rate = 300
+	projectile_speed = 20
+	cost = 1
 
+	var/explosive_hits = 1
+	var/explosion_power = 30
+	var/hit_sound = 'sound/voice/animal/cat.ogg'
+	var/last_sound_time = 0 // anti-ear destruction
+	var/max_bounce_count = 50
 
+	on_hit(atom/A, direction, projectile)
+		shoot_reflected_bounce(projectile, A, max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
+		var/turf/T = get_turf(A)
 
+		//prevent playing all 50 sounds at once on rapid bounce
+		if(world.time >= last_sound_time + 1 DECI SECOND)
+			last_sound_time = world.time
+			playsound(A, hit_sound, 60, 1)
+
+		if (explosive_hits)
+			SPAWN_DBG(0)
+				explosion_new(projectile, T, explosion_power, 1)
+		return
+
+/datum/projectile/special/meowitzer/inert
+	explosive_hits = 0
 
 /datum/projectile/special/spewer
 	name = "volatile bolt"
@@ -676,6 +719,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	rotate_proj = 0
 	face_desired_dir = 1
 	goes_through_walls = 1
+	is_magical = 1
 
 	shot_sound = 0
 	hit_mob_sound = 'sound/effects/mag_iceburstimpact_high.ogg'
@@ -712,10 +756,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			else
 				targetTurf = get_edge_target_turf(hit, P.dir)
 
-			SPAWN_DBG(0)
-				L.changeStatus("weakened", 2 SECONDS)
-				L.force_laydown_standup()
-				L.throw_at(targetTurf, rand(5,7), rand(1,2), throw_type = THROW_GUNIMPACT)
+			L.changeStatus("weakened", 2 SECONDS)
+			L.force_laydown_standup()
+			L.throw_at(targetTurf, rand(5,7), rand(1,2), throw_type = THROW_GUNIMPACT)
 
 	on_canpass(var/obj/projectile/P, atom/movable/passing_thing)
 		if (P != passing_thing)
@@ -811,14 +854,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(ismob(hit) && typetospawn)
 			hasspawned = 1
 			. = new typetospawn(get_turf(hit))
-		return 
+		return
 
 
 	on_end(obj/projectile/O)
 		if(!hasspawned && typetospawn)
 			. = new typetospawn(get_turf(O))
 		hasspawned = null
-		return 
+		return
 
 /datum/projectile/special/spawner/gun //shoot guns
 	name = "gun"
@@ -861,7 +904,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
 		if(istype(W))
 			W.throw_impact(get_turf(O))
-		
+
 
 
 

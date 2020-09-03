@@ -179,7 +179,9 @@
 	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
-	/obj/item/storage/belt/wrestling = 2)
+	/obj/item/storage/belt/wrestling = 2,
+	/obj/item/storage/box/kendo_box = 1,
+	/obj/item/storage/box/kendo_box/hakama = 1)
 
 /obj/storage/closet/thunderdome/green
 	icon_state = "syndicate1"
@@ -191,7 +193,9 @@
 	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
-	/obj/item/storage/belt/wrestling = 2)
+	/obj/item/storage/belt/wrestling = 2,
+	/obj/item/storage/box/kendo_box = 1,
+	/obj/item/storage/box/kendo_box/hakama = 1)
 
 /obj/storage/closet/electrical_supply
 	name = "electrical supplies closet"
@@ -261,6 +265,10 @@
 			var/obj/item/stamp/B8 = new /obj/item/stamp(src)
 			B8.pixel_y = 6
 			B8.pixel_x = 0
+
+			var/obj/item/folder/B9 = new /obj/item/folder(src)
+			B9.pixel_y = 0
+			B9.pixel_x = 6
 
 			return 1
 
@@ -360,7 +368,7 @@
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
-				for (var/obj/storage/O in lockers_and_crates)
+				for (var/obj/storage/O in by_type[/obj/storage])
 					LAGCHECK(LAG_LOW)
 					if (O.z != src.z || O.open || !O.can_open())
 						continue

@@ -58,6 +58,7 @@
 		/obj/item/reagent_containers/glass/bucket, // TODO: make large version
 		/obj/item/spraybottle/cleaner,
 		/obj/item/mop,
+		/obj/item/lamp_manufacturer,
 		/obj/item/device/camera_viewer,
 		// TODO: some sort of nutrient dispenser?
 		/obj/item/kitchen/utensil/knife/bread,
@@ -69,10 +70,10 @@
 /datum/robot/module_tool_creator/recursive/module/common
 	definitions = list(
 		/obj/item/device/light/flashlight,
-		/obj/item/tool/omnitool,
+		/obj/item/tool/omnitool/silicon,
 		/obj/item/device/analyzer/healthanalyzer/borg,
 		/obj/item/device/reagentscanner,
-		/obj/item/device/analyzer/atmospheric,
+		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/robojumper,
 	)
 
@@ -95,6 +96,7 @@
 		/obj/item/room_marker,
 		/obj/item/extinguisher,
 		/obj/item/rcd,
+		/obj/item/deconstructor/borg,
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
 		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
@@ -111,6 +113,8 @@
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
 		/obj/item/rcd,
+		/obj/item/lamp_manufacturer,
+		/obj/item/deconstructor/borg,
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
 		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,

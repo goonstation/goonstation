@@ -11,7 +11,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	seekrange = 6
 	density = 0
 	butcherable = 1
@@ -305,8 +305,8 @@
 				new /obj/decal/skeleton(M.loc)
 				M.gib()
 				src.target = null
-			else if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			else if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 
 		SPAWN_DBG(attack_delay)

@@ -3,7 +3,6 @@
 	var/breathtimer = 0
 	var/breathstate = 0
 
-
 	//consider these temporary...hopefully
 	proc/update_oxy(var/on)
 		if (human_owner)
@@ -20,6 +19,7 @@
 	process(var/datum/gas_mixture/environment)
 		if(isdead(owner))
 			return ..()
+
 		//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
 		if (manualbreathing && human_owner)
 			breathtimer++
@@ -84,10 +84,11 @@
 			return // no breathing inside possessed objects
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return
+
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
 		if (owner.reagents)
-			if (owner.reagents.has_reagent("lexorin")) return
+			if (owner.reagents.has_reagent("lexorin") || HAS_MOB_PROPERTY(owner, PROP_REBREATHING)) return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.
 		// And because they're excluded from the breathing procs, said damage didn't heal
@@ -273,7 +274,6 @@
 					owner.take_oxygen_deprivation(7 * mult)
 			if (prob(20)) // Lets give them some chance to know somethings not right though I guess.
 				owner.emote("cough")
-
 		else
 			owner.co2overloadtime = 0
 

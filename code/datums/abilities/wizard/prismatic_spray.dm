@@ -30,13 +30,14 @@
 		..()
 		for (var/X in filtered_concrete_typesof(/datum/projectile, .proc/filter_projectile))
 			var/datum/projectile/A = new X
+			A.is_magical = 1
 			proj_types += A
 
 	proc/filter_projectile(proj_type)
 		return !(proj_type in src.blacklist)
 
 	cast(atom/target)
-		if (holder.owner.wizard_spellpower() || istype(src, /datum/targetable/spell/prismatic_spray/admin))
+		if (holder.owner.wizard_spellpower(src) || istype(src, /datum/targetable/spell/prismatic_spray/admin))
 			holder.owner.say("PROJEHK TUL IHNFERNUS") //incantation credit to Grifflez
 			//var/mob/living/carbon/human/O = holder.owner
 			if(!istype(src, /datum/targetable/spell/prismatic_spray/admin))

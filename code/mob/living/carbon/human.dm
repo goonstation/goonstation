@@ -413,7 +413,7 @@
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
 				if (user)
-					logTheThing("admin", user, src.holder, "replaced %target%'s left arm with [new_type]")
+					logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s left arm with [new_type]")
 				. ++
 
 			if (target == "both_arms" || target == "r_arm")
@@ -429,7 +429,7 @@
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
 				if (user)
-					logTheThing("admin", user, src.holder, "replaced %target%'s right arm with [new_type]")
+					logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s right arm with [new_type]")
 				. ++
 
 			if (target == "both_legs" || target == "l_leg")
@@ -440,7 +440,7 @@
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
-						logTheThing("admin", user, src.holder, "replaced %target%'s left leg with [new_type]")
+						logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s left leg with [new_type]")
 					. ++
 
 			if (target == "both_legs" || target == "r_leg")
@@ -451,7 +451,7 @@
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
-						logTheThing("admin", user, src.holder, "replaced %target%'s right leg with [new_type]")
+						logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s right leg with [new_type]")
 					. ++
 			if (.)
 				src.holder.set_body_icon_dirty()
@@ -696,7 +696,7 @@
 	//src.icon_state = "dead"
 
 	if (!src.suiciding)
-		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+		if (emergency_shuttle?.location == SHUTTLE_LOC_STATION)
 			src.unlock_medal("HUMANOID MUST NOT ESCAPE", 1)
 
 		if (src.hasStatus("handcuffed"))
@@ -755,7 +755,11 @@
 
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
-		reappear_turf = pick(wizardstart)
+		//soulguard ring puts you in the same spot
+		if(istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
+			reappear_turf = get_turf(src)
+		else
+			reappear_turf = pick(job_start_locations["wizard"])
 
 	////////////////Set up the new body./////////////////
 
@@ -852,15 +856,19 @@
 		if ("help")
 			src.a_intent = INTENT_HELP
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("disarm")
 			src.a_intent = INTENT_DISARM
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("grab")
 			src.a_intent = INTENT_GRAB
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("harm")
 			src.a_intent = INTENT_HARM
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("drop")
 			src.drop_item()
 		if ("swaphand")
@@ -870,7 +878,7 @@
 			if (W)
 				src.click(W, list())
 		if ("equip")
-			src.hud.clicked("invtoggle", list()) // this is incredibly dumb, it's also just as dumb as what was here previously
+			src.hud.clicked("invtoggle", src, list()) // this is incredibly dumb, it's also just as dumb as what was here previously
 		if ("togglethrow")
 			src.toggle_throw_mode()
 		if ("walk")
@@ -935,7 +943,7 @@
 /mob/living/carbon/human/proc/throw_item(atom/target, list/params)
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
-	if (usr.stat)
+	if (src.stat)
 		return
 #if ASS_JAM //no throwing while in timestop
 	if (paused)
@@ -947,6 +955,8 @@
 	//	return
 
 	var/obj/item/I = src.equipped()
+	if("npc_throw" in params)
+		I = src.r_hand
 
 	if (!I || !isitem(I) || I.cant_drop) return
 
@@ -967,13 +977,13 @@
 		attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
-
-		if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
-			yeet_chance = 1
-		if(src.mind.karma < 0) //you come and go, you come and go.
-			yeet_chance = 0
-		if(src.mind.karma < 50 && src.mind.karma >= 0)
-			yeet_chance = 0.1
+		if(src.mind)
+			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
+				yeet_chance = 1
+			if(src.mind.karma < 0) //you come and go, you come and go.
+				yeet_chance = 0
+			if(src.mind.karma < 50 && src.mind.karma >= 0)
+				yeet_chance = 0.1
 
 		if(prob(yeet_chance))
 			src.visible_message("<span class='alert'>[src] yeets [I].</span>")
@@ -983,7 +993,7 @@
 			src.visible_message("<span class='alert'>[src] throws [I].</span>")
 		if (iscarbon(I))
 			var/mob/living/carbon/C = I
-			logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
+			logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
 			if ( ishuman(C) && !C.getStatusDuration("weakened"))
 				C.changeStatus("weakened", 1 SECOND)
 		else
@@ -998,16 +1008,16 @@
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
-		SPAWN_DBG(I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from))
-			if(yeet)
-				new/obj/effect/supplyexplosion(I.loc)
+		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from)
+		if(yeet)
+			new/obj/effect/supplyexplosion(I.loc)
 #if ASS_JAM
-				explosion_new(I,get_turf(I),20,1)
+			explosion_new(I,get_turf(I),20,1)
 #else
-				playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+			playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 #endif
-				for(var/mob/M in view(7, I.loc))
-					shake_camera(M, 20, 1)
+			for(var/mob/M in view(7, I.loc))
+				shake_camera(M, 20, 1)
 
 		if (mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in grabbed_by)
@@ -1119,6 +1129,8 @@
 	for (var/obj/O in contents)
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
+	if(reagents)
+		reagents.move_trigger(src, ev)
 	for (var/atom in statusEffects)
 		var/datum/statusEffect/S = atom
 		if (S && S.move_triggered)
@@ -2188,6 +2200,8 @@
 	else
 		src.hand = !src.hand
 	hud.update_hands()
+	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER) && !src.equipped().two_handed)
+		src.equipped().intent_switch_trigger(src)
 
 /mob/living/carbon/human/emp_act()
 	boutput(src, "<span class='alert'><B>Your equipment malfunctions.</B></span>")
@@ -2256,7 +2270,7 @@
 	for (var/organ_slot in src.organHolder.organ_list)
 		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
 		if(istype(O))
-			O.broken = 0
+			O.unbreakme()
 	if (!src.organHolder)
 		src.organHolder = new(src)
 	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye"))
@@ -2275,7 +2289,7 @@
 	..()
 
 	if (src.bioHolder)
-		bioHolder.RemoveAllEffects(effectTypeDisability)
+		bioHolder.RemoveAllEffects(EFFECT_TYPE_DISABILITY)
 
 	if (src.sims)
 		for (var/name in sims.motives)
@@ -2359,104 +2373,6 @@
 	if (!(P.pathogen_uid in src.immunities))
 		src.immunities += P.pathogen_uid
 		logTheThing("pathology", src, null, "gains immunity to pathogen [P].")
-
-/mob/living/carbon/human/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
-	if (!wattage)
-		return 0
-	var/prot = 1
-	var/obj/item/clothing/gloves/G = src.gloves
-	if (G && !ignore_gloves)
-		prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
-	if (src.limbs.l_arm)
-		prot = min(prot,src.limbs.l_arm.siemens_coefficient)
-	if (src.limbs.r_arm)
-		prot = min(prot,src.limbs.r_arm.siemens_coefficient)
-	if (prot <= 0.29)
-		return 0
-
-	var/shock_damage = 0
-	if (wattage > 7500)
-		shock_damage = (max(rand(10,20), round(wattage * 0.00004)))*prot
-	else if (wattage > 5000)
-		shock_damage = 15 * prot
-	else if (wattage > 2500)
-		shock_damage = 5 * prot
-	else
-		shock_damage = 1 * prot
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		shock_damage = P.onshocked(shock_damage, wattage)
-		if (!shock_damage)
-			return 0
-
-	if (src.bioHolder.HasEffect("resist_electric") == 2)
-		var/healing = 0
-		healing = shock_damage / 3
-		src.HealDamage("All", healing, healing)
-		src.take_toxin_damage(0 - healing)
-		boutput(src, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
-		return 0
-	else if (src.bioHolder.HasEffect("resist_electric") == 1)
-		boutput(src, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
-		return 0
-
-	switch(shock_damage)
-		if (0 to 25)
-			playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 1)
-		if (26 to 59)
-			playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50, 1)
-		if (60 to 99)
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)  // begin the fun arcflash
-			boutput(src, "<span class='alert'><b>[origin] discharges a violent arc of electricity!</b></span>")
-			src.apply_flash(60, 0, 10)
-			if (ishuman(src))
-				var/mob/living/carbon/human/H = src
-				H.cust_one_state = pick("xcom","bart","zapped")
-				H.set_face_icon_dirty()
-		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)
-			playsound(src.loc, "explosion", 50, 1)
-			src.flash(60)
-			if (ishuman(src))
-				var/mob/living/carbon/human/H = src
-				H.cust_one_state = pick("xcom","bart","zapped")
-				H.set_face_icon_dirty()
-
-			var/turf/T = get_turf(src)
-			if (T)
-				T.hotspot_expose(5000,125)
-				explosion(origin, T, -1,-1,1,2)
-			if (ishuman(src))
-				if (prob(20))
-					boutput(src, "<span class='alert'><b>[origin] vaporizes you with a lethal arc of electricity!</b></span>")
-					if (src.shoes)
-						src.drop_from_slot(src.shoes)
-					make_cleanable(/obj/decal/cleanable/ash,src.loc)
-					SPAWN_DBG(1 DECI SECOND)
-						src.elecgib()
-				else
-					boutput(src, "<span class='alert'><b>[origin] blasts you with an arc flash!</b></span>")
-					if (src.shoes)
-						src.drop_from_slot(src.shoes)
-					var/atom/targetTurf = get_edge_target_turf(src, get_dir(src, get_step_away(src, origin)))
-					src.throw_at(targetTurf, 200, 4)
-	shock_cyberheart(shock_damage)
-	TakeDamage(zone, 0, shock_damage, 0, DAMAGE_BURN)
-	boutput(src, "<span class='alert'><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
-	src.unlock_medal("HIGH VOLTAGE", 1)
-	src.Virus_ShockCure(min(wattage / 500, 100))
-	sleep(0.1 SECONDS)
-
-#ifdef USE_STAMINA_DISORIENT
-	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
-	src.do_disorient(100 + stun, weakened = stun, stunned = stun, disorient = stun + 40, remove_stamina_below_zero = 1)
-#else
-	src.changeStatus("stunned", (min((shock_damage/5), 12) * stun_multiplier)* 10)
-	src.changeStatus("weakened", (min((shock_damage/5), 12) * stun_multiplier)* 10)
-#endif
-
-	return shock_damage
 
 /mob/living/carbon/human/emag_act(mob/user, obj/item/card/emag/E)
 
@@ -2862,36 +2778,18 @@
 			return 0
 	.=..()
 
-/mob/living/carbon/human/bullet_act(var/obj/projectile/P)
-	if (P.mob_shooter)
-		src.was_harmed(P.mob_shooter)
-	..()
-
-/mob/living/carbon/human/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
-	return
-
 /mob/living/carbon/human/attack_hand(mob/M)
 	..()
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
-	if (M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB))
-		src.was_harmed(M)
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
 	if (isghostcritter(M) && src.health < 80) //there's another one of these in attack_hand(). Same file. see, the quality of my code doens't matter as long as i leave a very helpful comment!!!
 		boutput(M, "Your spectral conscience refuses to damage this human any further.")
 		return
-	var/oldbloss = get_brute_damage()
-	var/oldfloss = get_burn_damage()
 	..()
-	var/newbloss = get_brute_damage()
-	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
-	if (reagents)
-		reagents.physical_shock((newbloss - oldbloss) * 0.15)
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
-	if ((damage > 0) || W.force)
-		src.was_harmed(M, W)
 
 /mob/living/carbon/human/understands_language(var/langname)
 	if (mutantrace)
@@ -3154,7 +3052,7 @@
 	set category = "Local"
 
 	if (usr == src)
-		src.hud.clicked("invtoggle", list()) // ha i copy the dumb thing
+		src.hud.clicked("invtoggle", src, list()) // ha i copy the dumb thing
 		return
 	if (!src.can_strip(src, 1)) return
 	if (LinkBlocked(src.loc,usr.loc)) return
@@ -3204,14 +3102,14 @@
 					else
 						src.footstep += steps
 					if (src.footstep == 0)
-						playsound(NewLoc, NewLoc.active_liquid.step_sound, 50, 1)
+						playsound(NewLoc, NewLoc.active_liquid.step_sound, 50, 1, extrarange = footstep_extrarange)
 				else
 					if (src.footstep >= 2)
 						src.footstep = 0
 					else
 						src.footstep += steps
 					if (src.footstep == 0)
-						playsound(NewLoc, NewLoc.active_liquid.step_sound, 20, 1)
+						playsound(NewLoc, NewLoc.active_liquid.step_sound, 20, 1, extrarange = footstep_extrarange)
 		else if (src.shoes && src.shoes.step_sound && src.shoes.step_lots)
 			if (src.m_intent == "run")
 				if (src.footstep >= 2)
@@ -3219,9 +3117,9 @@
 				else
 					src.footstep += steps
 				if (src.footstep == 0)
-					playsound(NewLoc, src.shoes.step_sound, 50, 1)
+					playsound(NewLoc, src.shoes.step_sound, 50, 1, extrarange = footstep_extrarange)
 			else
-				playsound(NewLoc, src.shoes.step_sound, 20, 1)
+				playsound(NewLoc, src.shoes.step_sound, 20, 1, extrarange = footstep_extrarange)
 
 		else
 			src.footstep += steps
@@ -3335,3 +3233,60 @@
 					. += T.active_liquid.movement_speed_mod
 				else if (istype(T,/turf/space/fluid))
 					. += 3
+
+/mob/living/carbon/human/proc/check_for_intent_trigger()
+	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER))
+		src.equipped().intent_switch_trigger(src)
+
+/mob/living/carbon/human/hitby(atom/movable/AM)
+	. = ..()
+
+	if(isobj(AM) && src.juggling())
+		if (prob(40))
+			src.visible_message("<span class='alert'><b>[src]<b> gets hit in the face by [AM]!</span>")
+			src.TakeDamageAccountArmor("head", AM.throwforce, 0)
+		else
+			if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
+				src.drop_juggle()
+			else
+				src.add_juggle(AM)
+		return
+
+	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
+		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (throw_traveled <= 1 && last_throw_x == AM.x && last_throw_y == AM.y))
+			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+			random_brute_damage(src, AM.throwforce,1)
+
+			#ifdef DATALOGGER
+			game_stats.Increment("violence")
+			#endif
+
+			if(AM.throwforce >= 40)
+				src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
+				src.changeStatus("stunned", 3 SECONDS)
+
+		else
+			AM.attack_hand(src)	// nice catch, hayes. don't ever fuckin do it again
+			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
+			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+			src.throw_mode_off()
+			#ifdef DATALOGGER
+			game_stats.Increment("catches")
+			#endif
+
+	else  //normmal thingy hit me
+		if (AM.throwing & THROW_CHAIRFLIP)
+			src.visible_message("<span class='alert'>[AM] slams into [src] midair!</span>")
+		else
+			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+			random_brute_damage(src, AM.throwforce,1)
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+
+		#ifdef DATALOGGER
+		game_stats.Increment("violence")
+		#endif
+
+		if(AM.throwforce >= 40)
+			src.throw_at(get_edge_target_turf(src, get_dir(AM, src)), 10, 1)
+			src.changeStatus("stunned", 3 SECONDS)

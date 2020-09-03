@@ -244,7 +244,7 @@ var/reverse_mode = 0
 
 /proc/reverse_text(var/string)
 	var/new_string=""
-	for(var/i=lentext(string)+1, i>0, i--)
+	for(var/i=length(string)+1, i>0, i--)
 		new_string += copytext(string,i,i+1)
 	return new_string
 
@@ -470,9 +470,7 @@ var/reverse_mode = 0
 	proc/sparks()
 		var/area/A = get_area(src)
 		if (A.active)
-			var/datum/effects/system/spark_spread/E = unpool(/datum/effects/system/spark_spread)
-			E.set_up(3,0,get_turf(src))
-			E.start()
+			elecflash(src)
 		SPAWN_DBG(rand(10,300))
 			src.sparks()
 

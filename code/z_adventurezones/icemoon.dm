@@ -21,24 +21,22 @@ Contents:
 	ex_act(severity)
 		return
 
-	Entered(atom/A as mob|obj)
+	Entered(atom/movable/A as mob|obj)
 		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 			return ..()
-		if (iceelefall.len)
-			var/turf/T = pick(iceelefall)
-			if (isturf(T))
-				visible_message("<span class='alert'>[A] falls down [src]!</span>")
-				if (ismob(A))
-					var/mob/M = A
-					if(!M.stat && ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch())
-						else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch())
-					random_brute_damage(M, 33)
-					M.changeStatus("stunned", 10 SECONDS)
-				T.contents += A
-				T.Entered(A)
-				return
+		var/turf/T = pick_landmark(LANDMARK_FALL_ICE_ELE)
+		if (isturf(T))
+			visible_message("<span class='alert'>[A] falls down [src]!</span>")
+			if (ismob(A))
+				var/mob/M = A
+				if(!M.stat && ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch())
+					else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch())
+				random_brute_damage(M, 33)
+				M.changeStatus("stunned", 10 SECONDS)
+			A.set_loc(T)
+			return
 		else ..()
 
 /turf/unsimulated/floor/arctic/snow
@@ -105,8 +103,8 @@ Contents:
 		if (isobserver(A) || isintangible(A))
 			return ..()
 
-		if (icefall.len)
-			var/turf/T = pick(icefall)
+		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
+		if(T)
 			fall_to(T, A)
 			return
 		else ..()

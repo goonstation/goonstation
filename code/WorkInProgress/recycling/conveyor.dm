@@ -409,7 +409,7 @@
 
 /obj/machinery/conveyor_switch/New()
 	..()
-	conveyor_switches += src
+	START_TRACKING
 	update()
 
 	SPAWN_DBG(0.5 SECONDS)		// allow map load
@@ -419,12 +419,11 @@
 				conveyors += C
 				C.owner = src
 
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("trigger", "trigger")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
 
 /obj/machinery/conveyor_switch/disposing()
-	conveyor_switches -= src
+	STOP_TRACKING
 	for(var/obj/machinery/conveyor/C in conveyors)
 		C.owner = null
 	conveyors = null
@@ -475,13 +474,13 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
+	for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
 		if(S.id == src.id)
 			S.position = position
 			S.update()
 		LAGCHECK(LAG_MED)
 
-	if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("switchTriggered"))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
 
 
 //silly proc for corners that can be flippies
@@ -607,7 +606,7 @@
 			update_icon()
 
 	proc/update_belts()
-		for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
+		for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
 			if(S.id == "carousel")
 				for(var/obj/machinery/conveyor/C in S.conveyors)
 					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)

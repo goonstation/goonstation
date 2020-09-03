@@ -691,11 +691,11 @@ Code:
 		var/mailgroup
 		switch (round(mailgroupNum))
 			if (-INFINITY to 1)
-				mailgroup = "medbay"
+				mailgroup = MGD_MEDBAY
 			if (2)
 				mailgroup = "engineer"
 			if (3 to INFINITY)
-				mailgroup = "security"
+				mailgroup = MGD_SECURITY
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.master
@@ -1124,7 +1124,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
 				pdaSignal.transmission_method = TRANSMISSION_RADIO
 				if(transmit_connection != null)
 					transmit_connection.post_signal(src, pdaSignal)

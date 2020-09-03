@@ -266,17 +266,6 @@ Returns:
 
 	return
 
-var/list/electiles = list()
-
-/proc/electile(numb as num)
-	for(var/X in electiles)
-		del(X)
-	for(var/turf/T in view())
-		var/obj/overlay/O = new(T)
-		O.icon = icon('icons/effects/electile.dmi')
-		O.icon_state = "v[numb][pick("a","b","c")]"
-		electiles.Add(O)
-
 /proc/testburning()
 	for(var/i=0, i<5, i++)
 		var/atom/A = null
@@ -459,8 +448,8 @@ var/list/electiles = list()
 	if(trgX && trgY && trgZ)
 		var/startTime = world.timeofday
 		var/dmm_suite/D = new/dmm_suite()
-		if(loaded && lentext(loaded))
-			usr.loc = locate(trgX,trgY,trgZ)
+		if(loaded && length(loaded))
+			usr.set_loc(locate(trgX,trgY,trgZ))
 			D.read_map(loaded,trgX,trgY,trgZ)
 			boutput(usr, "<span class='alert'>LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC</span>")
 		else
@@ -641,7 +630,7 @@ var/list/electiles = list()
 
 	outer:
 		for(var/area/A as area in world) //Might want to do this manually instead.
-			if(A.type == /area)
+			if(area_space_nopower(A))
 				continue
 
 			for(var/X in ignoreAreas)
@@ -901,7 +890,7 @@ var/list/electiles = list()
 			source_loc = source.loc
 			client = source.client
 			if(remove_source)
-				source.loc = src
+				source.set_loc(src)
 			if(freeze_source)
 				source.nodamage = 1
 				source.canmove = 0
@@ -909,7 +898,7 @@ var/list/electiles = list()
 		return
 
 	proc/stop()
-		source.loc = source_loc
+		source.set_loc(source_loc)
 		source.client = client
 		source.client.pixel_x = 0
 		source.client.pixel_y = 0
@@ -1024,7 +1013,7 @@ var/list/electiles = list()
 	icon_state = "sabre"
 	anchored = 1
 	New(var/obj/item/experimental/melee/spear/S,var/atom/location)
-		src.loc = location
+		src.set_loc(location)
 		var/image/I = image(S)
 		I.appearance_flags = 0
 		src.overlays += image(S)
@@ -1051,7 +1040,7 @@ var/list/electiles = list()
 			if(beam)
 				if(last != get_turf(over_object))
 					last = get_turf(over_object)
-					beam.loc = get_turf(src)
+					beam.set_loc(get_turf(src))
 					animate(beam, transform=beam.transform, time=1)//, flags=ANIMATION_LINEAR_TRANSFORM)
 					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-get_dist(get_turf(src),get_turf(over_object)), 2))
 		return
@@ -1648,7 +1637,7 @@ var/list/electiles = list()
 				var/actX = A.pixel_x + x - 1
 				var/actY = A.pixel_y + y - 1
 				var/obj/apixel/P = unpool(/obj/apixel)
-				P.loc = A.loc
+				P.set_loc(A.loc)
 				P.pixel_x = actX
 				P.pixel_y = actY
 				P.color = color
@@ -2365,7 +2354,7 @@ var/list/electiles = list()
 
 /proc/gobuzz()
 	if(buzztile)
-		usr.loc = buzztile
+		usr.set_loc(buzztile)
 	return
 
 /obj/item/beamtest
@@ -2869,9 +2858,6 @@ var/list/electiles = list()
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "boomerang"
 
-	density = 0
-	opacity = 0
-	anchored = 1
 	contraband = 4
 
 	icon = 'icons/obj/items/weapons.dmi'
@@ -3461,6 +3447,7 @@ var/list/lag_list = new/list()
 		break_it()
 
 	hitby(atom/movable/AM as mob|obj)
+		. = ..()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		break_it()
 
@@ -3923,7 +3910,7 @@ var/list/lag_list = new/list()
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
 				user.loc.loc.Exited(user)
-				user.set_loc(pick(latejoin))
+				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			if("No")
 				return
 
@@ -4052,7 +4039,7 @@ var/list/lag_list = new/list()
 
 	if(high_range)
 	//Uses all cameras within viewrange + camera range, significantly slower
-		for(var/obj/machinery/camera/C in cameras)
+		for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 			if(C.z != src.z || get_dist(src, C) > (src.client.view + CAM_RANGE)) continue
 			visible = (visible | view(CAM_RANGE, C))
 	else

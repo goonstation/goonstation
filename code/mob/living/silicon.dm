@@ -357,7 +357,7 @@ td {
 }
 </style></head><body><h2>Module editor</h2><h3>Current items</h3><table style='width:100%'><tr><td style='width:80%'><b>Module</b></td><td style='width:10%'>&nbsp;</td><td style='width:10%'>&nbsp;</td></tr>"}
 
-		for (var/obj/item/I in D.modules)
+		for (var/obj/item/I in D.tools)
 			output += "<tr><td><b>[I.name]</b> ([I.type])</td><td><a href='?src=\ref[src];edit=\ref[I];mod=\ref[D]'>(EDIT)</a><a href='?src=\ref[src];del=\ref[I];mod=\ref[D]'>(DEL)</a></td></tr>"
 
 		output += "</table><br><br><h3>Add new item</h3>"
@@ -379,7 +379,7 @@ td {
 				boutput(usr, "<span class='alert'>Item no longer exists!</span>")
 				show_interface(usr.client, D)
 				return
-			if (!(I in D.modules))
+			if (!(I in D.tools))
 				boutput(usr, "<span class='alert'>Item no longer in module!</span>")
 				show_interface(usr.client, D)
 				return
@@ -390,11 +390,11 @@ td {
 				boutput(usr, "<span class='alert'>Item no longer exists!</span>")
 				show_interface(usr.client, D)
 				return
-			if (!(I in D.modules))
+			if (!(I in D.tools))
 				boutput(usr, "<span class='alert'>Item no longer in module!</span>")
 				show_interface(usr.client, D)
 				return
-			D.modules -= I
+			D.tools -= I
 			qdel(I)
 		if (href_list["edcurr"])
 			if (!current)
@@ -414,8 +414,8 @@ td {
 			if (!current)
 				show_interface(usr.client, D)
 				return
-			D.modules += current
-			current.loc = D
+			D.tools += current
+			current.set_loc(D)
 			current = null
 			boutput(usr, "<span class='notice'>Added item to module!</span>")
 		show_interface(usr.client, D)
@@ -564,11 +564,11 @@ var/global/list/module_editors = list()
 
 			switch (action)
 				if ("brain_removed")
-					logTheThing("combat", src, M ? M : null, "'s brain was removed, ending [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M ? M : null, "'s brain was removed, ending [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
 				if ("death")
-					logTheThing("combat", src, M ? M : null, "was destroyed, removing [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M ? M : null, "was destroyed, removing [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
 				else
-					logTheThing("combat", src, M ? M : null, "'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M ? M : null, "'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
 
 			// Shouldn't happen, but you never know.
 			if (src.mainframe && src != src.mainframe)
@@ -596,15 +596,15 @@ var/global/list/module_editors = list()
 
 			switch (action)
 				if ("emagged")
-					logTheThing("combat", src, M2 ? M2 : null, "was emagged, removing all laws.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was emagged, removing all laws.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("brain_added")
-					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into an emagged robot.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("activated")
-					logTheThing("combat", src, M2 ? M2 : null, "was activated as an emagged robot.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was activated as an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("admin")
-					logTheThing("combat", src, M2 ? M2 : null, "was emagged by an admin.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was emagged by an admin.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				else
-					logTheThing("combat", src, M2 ? M2 : null, "was made an emagged robot.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was made an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
 				src.mind.special_role = "emagged robot"
@@ -619,13 +619,13 @@ var/global/list/module_editors = list()
 
 			switch (action)
 				if ("brain_added")
-					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into a Syndicate robot at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("activated")
-					logTheThing("combat", src, M2 ? M2 : null, "was activated as a Syndicate robot at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was activated as a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("admin")
-					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by an admin at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by an admin at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				else
-					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
 				src.mind.special_role = "syndicate robot"
@@ -682,3 +682,29 @@ var/global/list/module_editors = list()
 				R.show_laws()
 
 	return
+
+
+/mob/living/silicon/is_cold_resistant()
+	.= 1
+
+/mob/living/silicon/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
+	return 0
+
+/mob/living/silicon/electric_expose(var/power = 1)
+	return 0
+
+/mob/living/silicon/hitby(atom/movable/AM)
+	. = ..()
+
+	src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+	logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+	random_brute_damage(src, AM.throwforce,1)
+
+	#ifdef DATALOGGER
+	game_stats.Increment("violence")
+	#endif
+
+	if(AM.throwforce >= 40)
+		src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
+
+	. = 'sound/impact_sounds/Metal_Clang_3.ogg'

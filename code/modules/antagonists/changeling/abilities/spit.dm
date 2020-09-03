@@ -21,9 +21,9 @@
 			return 1
 		var/mob/MT = target
 		holder.owner.visible_message(__red("<b>[holder.owner] spits acid towards [target]!</b>"))
-		logTheThing("combat", holder.owner, MT, "spits acid at %target% as a changeling [log_loc(holder.owner)].")
+		logTheThing("combat", holder.owner, MT, "spits acid at [constructTarget(MT,"combat")] as a changeling [log_loc(holder.owner)].")
 
-		if (ishuman(MT))
+		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")
 
 		SPAWN_DBG(0)
@@ -48,7 +48,7 @@
 			B.layer = OBJ_LAYER
 
 			for(var/i=0, i<20, i++)
-				B.loc = A.loc
+				B.set_loc(A.loc)
 
 				step_to(A,MT,0)
 				if (get_dist(A,MT) == 0)

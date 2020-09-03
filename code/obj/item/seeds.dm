@@ -32,6 +32,14 @@
 		// Colors in the seed packet, if we want to do that. Any seed that doesn't use the
 		// standard seed packet sprite shouldn't do this or it'll end up looking stupid.
 
+	//kudzumen can analyze seeds via ezamine when close.
+	get_desc(dist, mob/user)
+		if (dist >= 2)
+			return
+
+		if (iskudzuman(user))
+			. = scan_plant(src, user, visible = 0) // Replaced with global proc (Convair880).
+
 	proc/docolor() //bleh, used when unpooling
 		src.plant_seed_color(src.seedcolor)
 
@@ -55,8 +63,6 @@
 		planttype = 0
 		plantgenes = 0
 		seedcolor = "#000000"
-
-
 
 	proc/generic_seed_setup(var/datum/plant/P)
 		// This proc is pretty much entirely for regular seeds you find from the vendor

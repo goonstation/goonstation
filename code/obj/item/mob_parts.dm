@@ -107,7 +107,7 @@
 			object.cant_drop = initial(object.cant_drop)
 		else
 			remove_stage = 3
-		object.loc = src.holder.loc
+		object.set_loc(src.holder.loc)
 		if(hasvar(object,"skin_tone"))
 			object:skin_tone = holder.bioHolder.mobAppearance.s_tone
 
@@ -152,7 +152,7 @@
 			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
 		if (user)
-			logTheThing("admin", user, src.holder, "severed %target%'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
+			logTheThing("admin", user, src.holder, "severed [constructTarget(src.holder,"admin")]'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
 
 		var/obj/item/object = src
 		if(remove_object)
@@ -162,7 +162,7 @@
 		else
 			remove_stage = 3
 
-		object.loc = src.holder.loc
+		object.set_loc(src.holder.loc)
 		var/direction = src.holder.dir
 		if(hasvar(object,"skin_tone"))
 			object:skin_tone = holder.bioHolder.mobAppearance.s_tone

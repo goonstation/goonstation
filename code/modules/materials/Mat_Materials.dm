@@ -959,7 +959,7 @@
 	name = "chitin"
 	desc = "Chitin is an organic material found in the exoskeletons of insects."
 	color = "#118800"
-	material_flags = MATERIAL_ORGANIC
+	material_flags = MATERIAL_ORGANIC | MATERIAL_METAL
 
 	New()
 		setProperty("density", 25)
@@ -1019,6 +1019,7 @@
 		setProperty("density", 5)
 		setProperty("hard", 50)
 		return ..()
+
 
 // Fabrics
 

@@ -291,7 +291,7 @@
 		TO.ghostize()
 
 	for(var/mob/m in src) //just in case...
-		m.loc = src.loc
+		m.set_loc(src.loc)
 		m.ghostize()
 
 	if (ghost && ghost.corpse == src)
@@ -399,7 +399,7 @@
 
 	src.client.mouse_pointer_icon = src.cursor
 
-	logTheThing("diary", null, src, "Login: %target% from [src.client.address]", "access")
+	logTheThing("diary", null, src, "Login: [constructTarget(src,"diary")] from [src.client.address]", "access")
 	src.lastKnownIP = src.client.address
 	src.computer_id = src.client.computer_id
 	if (config.log_access)
@@ -409,24 +409,24 @@
 				continue
 			else if (M && M.client && M.client.address == src.client.address)
 				if(!src.client.holder && !M.client.holder)
-					logTheThing("admin", src, M, "has same IP address as %target%")
-					logTheThing("diary", src, M, "has same IP address as %target%", "access")
+					logTheThing("admin", src, M, "has same IP address as [constructTarget(M,"admin")]")
+					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")]", "access")
 					if (IP_alerts)
 						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)]</span>")
 			else if (M && M.lastKnownIP && M.lastKnownIP == src.client.address && M.ckey != src.ckey && M.key)
 				if(!src.client.holder && !M.client.holder)
-					logTheThing("diary", src, M, "has same IP address as %target% did (%target% is no longer logged in).", "access")
+					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", "access")
 					if (IP_alerts)
 						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
 			if (M && M.client && M.client.computer_id == src.client.computer_id)
-				logTheThing("admin", src, M, "has same computer ID as %target%")
-				logTheThing("diary", src, M, "has same computer ID as %target%", "access")
+				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
+				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font color='blue'> as [key_name(M)]</span>")
 				SPAWN_DBG(0)
 					if(M.lastKnownIP == src.client.address)
 						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 			else if (M && M.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
-				logTheThing("diary", src, M, "has same computer ID as %target% did (%target% is no longer logged in).", null, "access")
+				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
 				logTheThing("admin", M, null, "is no longer logged in.")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
 				SPAWN_DBG(0)
@@ -478,18 +478,24 @@
 	src.need_update_item_abilities = 1
 	src.antagonist_overlay_refresh(1, 0)
 
-	if (ass_day)
-		ass_day_popup(src)
+#if ASS_JAM
+	ass_day_popup(src)
+#endif
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
+
+	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
+		src.client?.color = list(MATRIX_PROTANOPIA)
 
 	return
 
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
+
+	tgui_process?.on_logout(src)
 
 	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
@@ -553,7 +559,7 @@
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
-			if(tmob.reagents.get_reagent_amount("flubber") + src.reagents.get_reagent_amount("flubber") > 0)
+			if(tmob.reagents && tmob.reagents.get_reagent_amount("flubber") + src.reagents.get_reagent_amount("flubber") > 0)
 				if(src.next_spammable_chem_reaction_time > world.time || tmob.next_spammable_chem_reaction_time > world.time)
 					src.now_pushing = 0
 					return
@@ -624,9 +630,9 @@
 				tmob.set_loc(oldloc)
 
 				if (istype(tmob.loc, /turf/space))
-					logTheThing("combat", src, tmob, "trades places with (Help Intent) %target%, pushing them into space.")
+					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
 				else if (locate(/obj/hotspot) in tmob.loc)
-					logTheThing("combat", src, tmob, "trades places with (Help Intent) %target%, pushing them into a fire.")
+					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
 				deliver_move_trigger("swap")
 				tmob.deliver_move_trigger("swap")
 				src.now_pushing = 0
@@ -654,9 +660,9 @@
 			if (victim.buckled && !victim.buckled.anchored)
 				step(victim.buckled, t)
 			if (istype(victim.loc, /turf/space))
-				logTheThing("combat", src, victim, "pushes %target% into space.")
+				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into space.")
 			else if (locate(/obj/hotspot) in victim.loc)
-				logTheThing("combat", src, victim, "pushes %target% into a fire.")
+				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into a fire.")
 
 		step(src,t)
 		AM.OnMove(src)
@@ -723,6 +729,10 @@
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
+
+	if(istype(src.loc, /obj/machinery/vehicle/) && src.loc != new_loc)
+		var/obj/machinery/vehicle/V = src.loc
+		V.eject(src)
 
 	. = ..(new_loc)
 	src.loc_pixel_x = new_pixel_x
@@ -902,8 +912,7 @@
 			return I
 
 /mob/dead/unequip_all(var/delete_stuff=0)
-	var/obj/ecto = new/obj/item/reagent_containers/food/snacks/ectoplasm
-	ecto.loc = src.loc
+	new/obj/item/reagent_containers/food/snacks/ectoplasm(src.loc)
 
 /mob/proc/get_unequippable()
 	return
@@ -919,7 +928,7 @@
 			continue
 		LI += W
 
-	return LI
+	.= LI
 
 /mob/living/carbon/human/get_unequippable()
 	var/list/obj/item/LI = list()
@@ -967,18 +976,17 @@
 			continue
 
 		LI += W
-	return LI
+	.= LI
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mobs)
 		if (M.real_name == text("[]", msg))
-			return M
-	return 0
+			.= M
+	.= 0
 
 /mob/proc/movement_delay(var/atom/move_target = 0)
 	.= 2 + movement_delay_modifier
-	if (src.pushing)
-		. *= max (src.pushing.p_class, 1)
+	. *= max(src?.pushing.p_class, 1)
 
 /mob/proc/Life(datum/controller/process/mobs/parent)
 	return
@@ -997,7 +1005,7 @@
 		src.health -= max(0, burn)
 
 /mob/proc/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
-	TakeDamage(zone, brute-get_melee_protection(zone,damage_type), burn-get_melee_protection(zone,damage_type))
+	TakeDamage(zone, brute - get_melee_protection(zone,damage_type), burn - get_melee_protection(zone,damage_type))
 
 /mob/proc/HealDamage(zone, brute, burn, tox)
 	health += max(0, brute)
@@ -1167,8 +1175,6 @@
 			if (W)
 				W.layer = initial(W.layer)
 
-			var/turf/T = get_turf(src.loc)
-			T.Entered(W)
 			u_equip(W)
 			.= 1
 		else
@@ -1556,8 +1562,6 @@
 	if (istype(src, /mob/dead/observer) || istype(src, /mob/dead/target_observer))
 		return
 
-	// I removed the sending mob to observer_start part because ghostize() takes care of it
-
 	src.death()
 	src.transforming = 1
 	src.canmove = 0
@@ -1825,9 +1829,7 @@
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(2, 1, src.loc)
-	s.start()
+	elecflash(src.loc,exclude_center = 0)
 
 	if (animation)
 		animation.delaydispose()
@@ -2218,20 +2220,18 @@
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
 
-/mob/proc/throw_impacted(var/atom/hit) //Called when mob hits something after being thrown.
+/mob/throw_impact(atom/hit, list/params)
+	if(!isturf(hit) || hit.density)
+		if (throw_traveled <= 410)
+			if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
+				random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+				if (!src.hasStatus("weakened"))
+					src.changeStatus("weakened", 2 SECONDS)
+					src.force_laydown_standup()
+		else
+			src.gib()
 
-	if (throw_traveled <= 410)
-		if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
-			random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
-			if (!src.hasStatus("weakened"))
-				src.changeStatus("weakened", 2 SECONDS)
-				src.force_laydown_standup()
-	else
-		if (src.gib_flag) return
-		src.gib_flag = 1
-		src.gib()
-
-	return
+	return ..()
 
 /mob/proc/full_heal()
 	src.HealDamage("All", 100000, 100000)
@@ -2604,11 +2604,11 @@
 /proc/random_name(var/gen = MALE)
 	var/return_name
 	if (gen == MALE)
-		return_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_male.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	else if (gen == FEMALE)
-		return_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_female.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	else
-		return_name = capitalize(pick(first_names_male + first_names_female) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_[prob(50)?"fe":""]male.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	return return_name
 
 /mob/OnMove(source = null)
@@ -2846,9 +2846,15 @@
 	.=0
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in view(1))
-	set name = "Pull"
+	set name = "Pull / Unpull"
 	set category = "Local"
-	A.pull()
+
+	if (src.pulling && src.pulling == A)
+		unpull_particle(src,src.pulling)
+		src.set_pulling(null)
+	else
+		A.pull()
+
 
 /mob/verb/examine_verb(atom/A as mob|obj|turf in view())
 	set name = "Examine"
@@ -2858,7 +2864,7 @@
 
 
 /mob/living/verb/interact_verb(obj/A as obj in view(1))
-	set name = "Pick Up / Interact"
+	set name = "Pick Up / Left Click"
 	set category = "Local"
 	A.interact(src)
 
@@ -2873,3 +2879,6 @@
 	if (items.len)
 		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
 		A.interact(src)
+
+/mob/proc/add_karma(how_much)
+	src?.mind.add_karma(how_much)

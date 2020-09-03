@@ -9,7 +9,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0
@@ -53,29 +53,28 @@
 		task = "chasing"
 
 	Bump(atom/movable/AM)
-		..()
-		if(!smashes_shit) return
+		if(smashes_shit)
+			if(isobj(AM))
+				for(var/type in do_not_smash)
+					if(istype(AM, type)) return
+				var/smashed_shit = 1
 
-		if(isobj(AM))
-			for(var/type in do_not_smash)
-				if(istype(AM, type)) return
-			var/smashed_shit = 1
+				if(istype(AM, /obj/window))
+					AM:health = 0
+					AM:smash()
+				else if(istype(AM,/obj/grille))
+					AM:damage_blunt(30)
+				else if(istype(AM, /obj/table))
+					AM.meteorhit()
+				else if(istype(AM, /obj/foamedmetal))
+					AM.dispose()
+				else
+					AM.meteorhit()
 
-			if(istype(AM, /obj/window))
-				AM:health = 0
-				AM:smash()
-			else if(istype(AM,/obj/grille))
-				AM:damage_blunt(30)
-			else if(istype(AM, /obj/table))
-				AM.meteorhit()
-			else if(istype(AM, /obj/foamedmetal))
-				AM.dispose()
-			else
-				AM.meteorhit()
-
-			if(smashed_shit)
-				playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-				src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
+				if(smashed_shit)
+					playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
+					src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
+			..()
 
 
 	seek_target()
@@ -574,6 +573,7 @@
 		droploot = /obj/item/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
 		attack_cooldown = 50
 		smashes_shit = 1
+		mats = 96
 
 		Shoot(var/atom/target, var/start, var/user, var/bullet = 0)
 			if(target == start)
@@ -1222,7 +1222,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0

@@ -120,7 +120,7 @@
 /obj/machinery/camera/New()
 	..()
 
-	cameras.Add(src)
+	START_TRACKING
 	SPAWN_DBG(1 SECOND)
 		addToNetwork()
 		updateCoverage() //Make sure coverage is updated. (must happen in spawn!)
@@ -153,6 +153,7 @@
 
 
 /obj/machinery/camera/disposing()
+	STOP_TRACKING
 	if (coveredTiles) //ZeWaka: Fix for null.Copy()
 		for(var/turf/O in coveredTiles.Copy()) //Remove all coverage
 			O.removeCameraCoverage(src)
@@ -162,8 +163,6 @@
 
 	if(camnets && camnets[network])
 		camnets[network].Remove(src)
-
-	cameras.Remove(src)
 
 
 	if (c_north)
@@ -307,14 +306,14 @@
 			if (isAI(O))
 				boutput(O, "[user] holds a paper up to one of your cameras ...")
 				O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
-				logTheThing("station", user, O, "holds up a paper to a camera at [log_loc(src)], forcing %target% to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
+				logTheThing("station", user, O, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 			else
 				var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
 				if (S)
 					if (S.current == src)
 						boutput(O, "[user] holds a paper up to one of the cameras ...")
 						O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
-						logTheThing("station", user, O, "holds up a paper to a camera at [log_loc(src)], forcing %target% to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
+						logTheThing("station", user, O, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 
 //Return a working camera that can see a given mob
 //or null if none
@@ -400,7 +399,7 @@
 /proc/name_autoname_cameras()
 	var/list/counts_by_area = list()
 	var/list/obj/machinery/camera/first_cam_by_area = list()
-	for(var/X in cameras)
+	for(var/X in by_type[/obj/machinery/camera])
 		var/obj/machinery/camera/C = X
 		if(!istype(C)) continue
 		if (dd_hasprefix(C.name, "autoname"))
@@ -421,7 +420,7 @@
 
 /proc/build_camera_network()
 	name_autoname_cameras()
-	connect_camera_list(cameras)
+	connect_camera_list(by_type[/obj/machinery/camera])
 
 /proc/rebuild_camera_network()
 	if(defer_camnet_rebuild || !camnet_needs_rebuild) return
@@ -431,7 +430,7 @@
 	camnet_needs_rebuild = 0
 
 /proc/disconnect_camera_network()
-	for(var/obj/machinery/camera/C in cameras)
+	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		C.c_north = null
 		C.c_east = null
 		C.c_south = null

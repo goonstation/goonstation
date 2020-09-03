@@ -813,7 +813,7 @@ obj/critter/madnessowl
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1
@@ -977,7 +977,7 @@ obj/critter/madnessowl/switchblade
 	density = 1
 	health = 500
 	maxhealth = 500
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	firevuln = 1.5
 	brutevuln = 1
 	flying = 1
@@ -1021,7 +1021,7 @@ obj/critter/madnessowl/switchblade
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	seekrange = 6
 	density = 1
 	butcherable = 1
@@ -1110,10 +1110,9 @@ obj/critter/madnessowl/switchblade
 			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 			var/turf/T = get_edge_target_turf(user, get_dir(user, get_step_away(user, src)))
 			if (T && isturf(T))
-				SPAWN_DBG(0)
-					user.throw_at(T, 3, 2)
-					user.changeStatus("weakened", 5)
-					user.changeStatus("stunned", 5)
+				user.throw_at(T, 3, 2)
+				user.changeStatus("weakened", 5)
+				user.changeStatus("stunned", 5)
 
 
 		if (src.alive && src.health <= 0) src.CritterDeath()

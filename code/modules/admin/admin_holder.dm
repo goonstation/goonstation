@@ -66,6 +66,8 @@
 			"Check Health",\
 			"Heal",\
 
+			"Manage Bioeffects",\
+			"Manage Abilities",\
 			"Add Reagents",\
 			"Check Reagents",\
 			"View Variables",\

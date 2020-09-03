@@ -55,6 +55,13 @@
 		return (calcTotal() >= 0)
 
 	proc/updateTraits(var/mob/user)
+
+		// Not passed a user, try to gracefully recover.
+		if (!user)
+			user = usr
+			if (!user)
+				return
+
 		if(!winexists(user, "traitssetup_[user.ckey]"))
 			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
 
@@ -543,6 +550,15 @@
 	isPositive = 1
 	category = "trinkets"
 
+/obj/trait/lunchbox
+	name = "Lunchbox (-1) \[Trinkets\]"
+	cleanName = "Lunchbox"
+	desc = "Start your shift with a cute little lunchbox, packed with all your favourite foods!"
+	id = "lunchbox"
+	points = -1
+	isPositive = 1
+	category = "trinkets"
+
 // Skill - Undetermined Border
 
 /obj/trait/smoothtalker
@@ -655,15 +671,14 @@
 			var/mob/living/carbon/human/H = owner
 			H.max_health = 150
 			H.health = 150
-			H.brainloss = 60
+			H.take_brain_damage(60)
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.max_health = 150
-			if(H.brainloss < 60)
-				H.brainloss = 60
+			if(H.get_brain_damage() < 60)
+				H.take_brain_damage(60-H.get_brain_damage())
 		return
 
 /obj/trait/athletic
@@ -979,22 +994,6 @@
 	points = 1
 	isPositive = 0
 
-/obj/trait/bigbutt
-	name = "Dummy Thick (-2)"
-	desc = "Your buttocks are stubbornly chunky, and they clap together even when sneaking around."
-	id = "bigbutt"
-	icon_state = "bigbutt"
-	points = -2
-	isPositive = 0
-	isMoveTrait = 1
-
-	onMove(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if(H.footstep >= 3)
-				playsound(H.loc, "sound/impact_sounds/Slap.ogg", 40, 1)
-		return
-
 /obj/trait/allears
 	name = "All Ears (+1) \[Trinkets\]"
 	cleanName="All ears"
@@ -1003,5 +1002,4 @@
 	id = "allears"
 	points = 1
 	isPositive = 0
-
 

@@ -11,9 +11,7 @@
 	if(powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+	elecflash(src)
 
 	return user.shock(src, PN ? PN.avail : 0, user.hand == 1 ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)
 
@@ -73,7 +71,7 @@
 	//var/image/cableimg = null
 	//^ is unnecessary, i think
 	layer = CABLE_LAYER
-	plane = PLANE_DEFAULT
+	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
 	text = ""
 
@@ -148,7 +146,7 @@
 	else
 		applyCableMaterials(src, getMaterial(insulator_default), getMaterial(condcutor_default))
 
-	allcables += src
+	START_TRACKING
 
 /obj/cable/disposing()		// called when a cable is deleted
 
@@ -158,7 +156,6 @@
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
-		if(Debug) diary << "Defered cable deletion at [x],[y]: #[netnum]"
 		defer_powernet_rebuild = 2
 
 		if(netnum && powernets && powernets.len >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
@@ -167,7 +164,7 @@
 	insulator.owner = null
 	conductor.owner = null
 
-	allcables -= src
+	STOP_TRACKING
 
 	..()													// then go ahead and delete the cable
 
@@ -405,5 +402,10 @@
 	if (PN && istype(PN) && (PN.avail > 0))
 		powered = 1
 
-	logTheThing("station", user, null, "[cut == 0 ? "lays" : "cuts"] a cable[powered == 1 ? " (powered when [cut == 0 ? "connected" : "cut"])" : ""] at [log_loc(src)].")
+
+	if (cut) //avoid some slower string builds lol
+		logTheThing("station", user, null, "cuts a cable[powered == 1 ? " (powered when cut)" : ""] at [log_loc(src)].")
+	else
+		logTheThing("station", user, null, "lays a cable[powered == 1 ? " (powered when connected)" : ""] at [log_loc(src)].")
+
 	return

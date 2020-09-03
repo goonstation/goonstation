@@ -176,6 +176,8 @@
 						if(2 to 6)
 							items += /obj/item/gun/energy/phaser_gun
 							item_amounts += 1
+							items += /obj/item/storage/firstaid/crit
+							item_amounts += 1
 						if(7 to 10)
 							for (var/i = 1, i < rand(4,10), i++)
 								items += pick(/obj/item/chem_grenade/incendiary, /obj/item/chem_grenade/cryo, /obj/item/chem_grenade/shock, /obj/item/chem_grenade/pepper, prob(10); /obj/item/chem_grenade/sarin)
@@ -383,13 +385,12 @@
 	update_icon()
 		if(open) icon_state = icon_opened
 		else icon_state = icon_closed
-		src.overlays = null
 
 		if (src.locked)
 			light.color = "#FF0000"
 		else
 			light.color = "#00FF00"
-		src.overlays += src.light
+		src.UpdateOverlays(src.light, "light")
 
 		switch(tier)
 			if(2)
@@ -398,7 +399,7 @@
 				stripes.color = "#C00000"
 			else
 				stripes.color = "#00C000"
-		src.overlays += src.stripes
+		src.UpdateOverlays(src.stripes, "stripes")
 
 // LOCKS
 

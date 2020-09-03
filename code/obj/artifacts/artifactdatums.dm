@@ -4,6 +4,8 @@
 	var/associated_object = null
 	var/rarity_class = 0
 	//Bigger rarity means its less likely to show up. Thanks for documenting this, guys. - Azungar
+	// Also note that rarity 0 means the artifact does not randomly spawn.
+	// Tweaked rarity 1 to contain all the uninteresting garbage artifacts. Explosion artifacts still appear at 3/4 because explodey is not boring - Phyvo
 
 	var/datum/artifact_origin/artitype = null
 	var/list/validtypes = list("ancient","martian","wizard","eldritch","precursor",/*"reliquary"*/)
@@ -182,6 +184,7 @@
 
 // for use with the wizard spell prismatic_spray
 /datum/projectile/artifact/prismatic_projectile
+	is_magical = 1
 
 	New()
 		..()

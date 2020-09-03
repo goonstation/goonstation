@@ -1767,10 +1767,10 @@
 
 			var/obj/portal/P = unpool(/obj/portal)
 			P.set_loc(get_turf(src))
-			var/obj/landmark/L = pick(escape_pod_success)
-			src.dir = L.dir
-			P.target = L.loc
-			src.set_loc(L.loc)
+			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
+			src.dir = landmarks[LANDMARK_ESCAPE_POD_SUCCESS][T]
+			P.target = T
+			src.set_loc(T)
 
 			logTheThing("station", src, null, "creates an escape portal at [log_loc(src)].")
 
@@ -1794,7 +1794,7 @@
 						make_cleanable(/obj/decal/cleanable/robot_debris/gib, src.loc)
 					if(prob(20) && pilot)
 						boutput(pilot, "<span class='alert'>You fall out of the rapidly disintegrating escape pod!</span>")
-						src.eject(pilot)
+						src.leave_pod(pilot)
 					if(prob(10)) shipdeath()
 					sleep(0.4 SECONDS)
 			if(4) //flies off course
@@ -1819,7 +1819,7 @@
 						if(prob(40))
 							SPAWN_DBG(rand(0,5))
 								H.bioHolder.AddEffect(effect)
-				src.eject(pilot)
+				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"
 				while(src)
 					var/loc = src.loc

@@ -92,6 +92,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_COGMAP			// Cogmap
 //#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
 //#define MAP_OVERRIDE_DONUT2			// Updated Donut2
+//#define MAP_OVERRIDE_DONUT3			// Donut3 by Ryumi
 //#define MAP_OVERRIDE_LINEMAP			// Linemap by pgoat
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
 //#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
@@ -103,6 +104,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_MANTA			// manta map
 //#define MAP_OVERRIDE_DENSITY
 //#define MAP_OVERRIDE_KONDARU
+//#define MAP_OVERRIDE_OZYMANDIAS
 //#define MAP_OVERRIDE_FLEET
 //#define MAP_OVERRIDE_ICARUS
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
@@ -117,7 +119,8 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define XMAS 1
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
-// see below for ASS_JAM
+
+//#define ASS_JAM_ENABLED 1 // BUT YOU ALSO GOTTA SET BUILD_TIME_DAY TO 13 BELOW!!!
 
 
 var/global/vcs_revision = "1"

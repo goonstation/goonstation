@@ -287,10 +287,10 @@
 
 			while(primaries > 0)
 				primaries--
-				src.reagents.add_reagent(pick(CYBERPUNK_drug_primaries), 6)
+				src.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_primaries"), 6)
 			while(adulterants > 0)
 				adulterants--
-				src.reagents.add_reagent(pick(CYBERPUNK_drug_adulterants), 3)
+				src.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), 3)
 
 
 	custom_suicide = 1
@@ -446,7 +446,9 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/oranges,
 /datum/figure_info/sam,
 /datum/figure_info/beebo,
-/datum/figure_info/romillybartlesby)
+/datum/figure_info/romillybartlesby,
+/datum/figure_info/dillbehrt,
+/datum/figure_info/listelsheerfield)
 
 /datum/figure_info
 	var/name = "staff assistant"
@@ -798,6 +800,14 @@ var/list/figure_patreon_rarity = list(\
 	romillybartlesby
 		name = "\improper Romilly Bartlesby"
 		icon_state = "romillybartlesby"
+
+	dillbehrt
+		name = "\improper Dill Behrt"
+		icon_state = "dillbehrt"
+
+	listelsheerfield
+		name = "\improper Listel Sheerfield"
+		icon_state = "listelsheerfield"
 
 #ifdef XMAS
 	santa

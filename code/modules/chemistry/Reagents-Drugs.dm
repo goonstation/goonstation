@@ -80,7 +80,7 @@ datum
 							else if(prob(50))
 								fake_attackEx(M, 'icons/misc/critter.dmi', "mimicface", "smiling thing")
 								boutput(M, "<span class='alert'><b>The smiling thing</b> laughs!</span>")
-								M.playsound_local(M.loc, pick("sound/voice/cluwnelaugh1.ogg", "sound/voice/cluwnelaugh2.ogg", "sound/voice/cluwnelaugh3.ogg"), 50, 1)
+								M.playsound_local(M.loc, pick("sound/voice/cluwnelaugh1.ogg", "sound/voice/cluwnelaugh2.ogg", "sound/voice/cluwnelaugh3.ogg"), 35, 1)
 							else
 								M.playsound_local(M.loc, pick('sound/machines/ArtifactEld1.ogg', 'sound/machines/ArtifactEld2.ogg'), 50, 1)
 								boutput(M, "<span class='alert'><b>You hear something strange behind you...</b></span>")
@@ -326,7 +326,7 @@ datum
 				if(prob(9))
 					M.playsound_local(M.loc, pick("explosion", "punch", 'sound/vox/poo-vox.ogg', "clownstep", 'sound/weapons/armbomb.ogg', 'sound/weapons/Gunshot.ogg'), 50, 1)
 				if(prob(8))
-					boutput(M, "<b>You hear a voice in your head... <i>[pick(loggedsay)]</i></b>")
+					boutput(M, "<b>You hear a voice in your head... <i>[pick_string_autokey("loggedsay.txt")]</i></b>")
 				..()
 				return
 
@@ -634,7 +634,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 15)
 				if(prob(8))
-					boutput(M, "<b>You hear a voice in your head... <i>[pick(loggedsay)]</i></b>")
+					boutput(M, "<b>You hear a voice in your head... <i>[pick_string_autokey("loggedsay.txt")]</i></b>")
 				if(prob(8))
 					M.emote(pick("scream","cry","laugh","moan","shiver"))
 				if(prob(3))

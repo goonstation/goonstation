@@ -192,16 +192,16 @@ var/global/list/playersSeen = list()
 
 		if (expiry == 0)
 			if (targetC) boutput(targetC, "<span class='alert'>This is a permanent ban.</span>")
-			logTheThing("admin", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.")
-			logTheThing("diary", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.", "admin")
+			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.")
+			logTheThing("diary", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.", "admin")
 			var/adminMsg = "<span class='notice'>"
 			adminMsg += (isclient(adminC) ? key_name(adminC) : adminC)
 			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]<br>This is a permanent ban.</span>"
 			message_admins(adminMsg)
 		else
 			if (targetC) boutput(targetC, "<span class='alert'>This is a temporary ban, it will be removed in [expiry].</span>")
-			logTheThing("admin", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].")
-			logTheThing("diary", adminC, targetC, "has banned [targetC ? "%target%" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].", "admin")
+			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].")
+			logTheThing("diary", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].", "admin")
 			var/adminMsg = "<span class='notice'>"
 			adminMsg += (isclient(adminC) ? key_name(adminC) : adminC)
 			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]<br>This will be removed in [expiry].</span>"
@@ -293,13 +293,17 @@ var/global/list/playersSeen = list()
 			return
 		data["reason"] = reason
 
-		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "Roleplay", "Main")
+		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "Roleplay", "Main", "Roleplay Overflow", "Main Overflow")
 		var/server = null
 		switch (server_nice)
 			if ("Roleplay")
 				server = "rp"
 			if ("Main")
 				server = "main"
+			if ("Roleplay Overflow")
+				server = "main2"
+			if ("Main Overflow")
+				server = "main3"
 		data["server"] = server
 
 		var/ban_time = input(usr,"How long will the ban be?","Ban") as null|anything in list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Permanent","Custom")
@@ -378,8 +382,8 @@ var/global/list/playersSeen = list()
 
 		var/serverLogSnippet = row["server"] ? "Server: [row["server"]]" : "Server: all"
 
-		logTheThing("admin", adminC, target, "edited %target%'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]")
-		logTheThing("diary", adminC, target, "edited %target%'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]", "admin")
+		logTheThing("admin", adminC, target, "edited [constructTarget(target,"admin")]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]")
+		logTheThing("diary", adminC, target, "edited [constructTarget(target,"diary")]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]", "admin")
 		message_admins("<span class='internal'>[key_name(adminC)] edited [target]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]</span>")
 
 		var/ircmsg[] = new()
@@ -437,6 +441,10 @@ var/global/list/playersSeen = list()
 				server = "rp"
 			if ("Main")
 				server = "main"
+			if ("Roleplay Overflow")
+				server = "main2"
+			if ("Main Overflow")
+				server = "main3"
 		data["server"] = server
 
 		var/ban_time = input(usr,"How long will the ban be? (select Custom to alter existing duration)","Ban") as null|anything in list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Permanent","Custom")

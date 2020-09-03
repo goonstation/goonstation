@@ -604,14 +604,12 @@ datum
 			taste = "moving"
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (prob(15 * mult))
+				if (prob(percentmult(15, mult)))
 					if (isrestrictedz(M.z))
 						boutput(M, "<span class='notice'>You feel strange. Almost a sense of guilt.</span>")
 						return
 					var/telerange = 10
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(4, 1, M)
-					s.start()
+					elecflash(M,power=2)
 					var/list/randomturfs = new/list()
 					for(var/turf/T in orange(M, telerange))
 						if(istype(T, /turf/space) || T.density) continue
@@ -1760,7 +1758,7 @@ datum
 			fluid_r = 255
 			fluid_g = 0
 			fluid_b = 0
-			transparency = 20
+			transparency = 77
 			taste = "hot"
 			addiction_prob = 1 // heh
 			addiction_prob2 = 10
@@ -1919,10 +1917,11 @@ datum
 			viscosity = 0.5
 			minimum_reaction_temperature = -INFINITY
 
+#if ASS_JAM
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(it_is_ass_day)
-					if (exposed_temperature > (T0C + 50))
-						holder.add_reagent("chemilin", 10, donotreact = 1)
+				if (exposed_temperature > (T0C + 50))
+					holder.add_reagent("chemilin", 10, donotreact = 1)
+#endif
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
@@ -2198,11 +2197,11 @@ datum
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				for (var/datum/ailment_data/disease/virus in M.ailments)
-					if (prob(5 * mult) && istype(virus.master,/datum/ailment/disease/cold))
+					if (prob(percentmult(5, mult)) && istype(virus.master,/datum/ailment/disease/cold))
 						M.cure_disease(virus)
-					if (prob(3 * mult) && istype(virus.master,/datum/ailment/disease/flu))
+					if (prob(percentmult(3, mult)) && istype(virus.master,/datum/ailment/disease/flu))
 						M.cure_disease(virus)
-					if (prob(3 * mult) && istype(virus.master,/datum/ailment/disease/food_poisoning))
+					if (prob(percentmult(3, mult)) && istype(virus.master,/datum/ailment/disease/food_poisoning))
 						M.cure_disease(virus)
 				if (prob(11))
 					M.show_text("You feel calm and relaxed.", "blue")
@@ -2411,8 +2410,8 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if ( (method==TOUCH && prob(33)) || method==INGEST)
-					if(M.bioHolder.HasAnyEffect(effectTypePower) && prob(4))
-						M.bioHolder.RemoveAllEffects(effectTypePower)
+					if(M.bioHolder.HasAnyEffect(EFFECT_TYPE_POWER) && prob(4))
+						M.bioHolder.RemoveAllEffects(EFFECT_TYPE_POWER)
 						boutput(M, "You feel plain.")
 				return
 
@@ -2693,6 +2692,12 @@ datum
 				if(!M) M = holder.my_atom
 				M.reagents.add_reagent("sugar", 1.2 * mult)
 				..()
+
+			glaucogen
+				name = "glaucogen"
+				id = "glaucogen"
+				description = "A synthetically generated polysaccharide structure that mimics the main storage form of glucose in the body."
+				depletion_rate = 1
 
 		fooddrink/VHFCS
 			name = "very-high-fructose corn syrup"
@@ -3751,11 +3756,69 @@ datum
 					M.reagents.add_reagent("ethanol", (alch_counter + (rand(2,3))))
 
 		fooddrink/alcoholic/hottoddy
-			name = "Hot Toddy"
+			name = "hot Toddy"
 			id = "hottoddy"
 			fluid_r = 255
 			fluid_g = 220
 			fluid_b = 95
 			alch_strength = 0.4
 			description = "A warm, late night drink, usually enjoyed during long winter nights."
+			reagent_state = LIQUID
+
+		fooddrink/grenadine
+			name = "grenadine"
+			id = "grenadine"
+			fluid_r = 234
+			fluid_g = 19
+			fluid_b = 19
+			description = "A sticky, sweet and tart non-alcoholic bar syrup, used in cocktails for it's distinct bright red colour."
+			reagent_state = LIQUID
+
+		fooddrink/lemonade/pinklemonade
+			name = "pink lemonade"
+			id = "pinklemonade"
+			fluid_r = 253
+			fluid_g = 230
+			fluid_b = 237
+			description = "A popular twist on cloudy lemonade, this soft drink has been dyed pink. How colourful."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/duckfart
+			name = "Duck Fart"
+			id = "duckfart"
+			fluid_r = 253
+			fluid_g = 245
+			fluid_b = 230
+			alch_strength = 0.6
+			description = "An eccentric 'trio cocktail', in which the 3 ingredients have been layed on top on another."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/philcollins
+			name = "Phil Collins"
+			id = "philcollins"
+			fluid_r = 240
+			fluid_g = 248
+			fluid_b = 255
+			alch_strength = 0.3
+			description = "A variation on a well known drink, paying tribute to a well known drummer."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/spicedrum
+			name = "spiced rum"
+			id = "spicedrum"
+			fluid_r = 205
+			fluid_g = 149
+			fluid_b = 12
+			alch_strength = 0.6
+			description = "An egregious and disgusting misinterpretation of some perfectly good rum."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/beesknees
+			name = "Bee's Knees"
+			id = "beesknees"
+			fluid_r = 255
+			fluid_g = 236
+			fluid_b = 139
+			alch_strength = 0.3
+			description = "A cocktail from the prohibition era, named after a popular expression."
 			reagent_state = LIQUID

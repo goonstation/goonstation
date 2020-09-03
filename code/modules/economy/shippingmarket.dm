@@ -17,29 +17,15 @@
 	var/points_per_crate = 10
 
 	New()
-		add_commodity(new /datum/commodity/produce(src))
-		add_commodity(new /datum/commodity/meat(src))
-		add_commodity(new /datum/commodity/herbs(src))
-		add_commodity(new /datum/commodity/honey(src))
-		add_commodity(new /datum/commodity/sheet(src))
-		add_commodity(new /datum/commodity/robotics(src))
-		add_commodity(new /datum/commodity/electronics(src))
-		add_commodity(new /datum/commodity/ore/mauxite(src))
-		add_commodity(new /datum/commodity/ore/pharosium(src))
-		add_commodity(new /datum/commodity/ore/molitz(src))
-		add_commodity(new /datum/commodity/ore/char(src))
-		add_commodity(new /datum/commodity/ore/cobryl(src))
-		add_commodity(new /datum/commodity/ore/bohrum(src))
-		add_commodity(new /datum/commodity/ore/claretine(src))
-		add_commodity(new /datum/commodity/ore/erebite(src))
-		add_commodity(new /datum/commodity/ore/cerenkite(src))
-		add_commodity(new /datum/commodity/ore/plasmastone(src))
-		add_commodity(new /datum/commodity/ore/syreline(src))
-		add_commodity(new /datum/commodity/ore/uqill(src))
-		add_commodity(new /datum/commodity/ore/telecrystal(src))
-		add_commodity(new /datum/commodity/ore/fibrilith(src))
-		add_commodity(new /datum/commodity/synthmodule(src))
+
 		add_commodity(new /datum/commodity/goldbar(src))
+
+		for (var/commodity_path in (typesof(/datum/commodity) - /datum/commodity/goldbar))
+			var/datum/commodity/C = new commodity_path(src)
+			if(C.onmarket)
+				add_commodity(C)
+			else
+				qdel(C)
 
 		var/list/unique_traders = list(/datum/trader/gragg,/datum/trader/josh,/datum/trader/pianzi_hundan,
 		/datum/trader/vurdalak,/datum/trader/buford)
@@ -182,10 +168,10 @@
 		if(scan && account)
 			wagesystem.shipping_budget += duckets / 2
 			account.fields["current_money"] += duckets / 2
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
 
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
@@ -215,7 +201,7 @@
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 
@@ -231,7 +217,7 @@
 				heavenly_spawn(S)
 				return
 #endif
-		for(var/obj/machinery/door/poddoor/P in doors)
+		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
 				SPAWN_DBG(SUPPLY_OPEN_TIME)

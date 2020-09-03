@@ -8,6 +8,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Sad" = "ai_sad",\
 	"Mad" = "ai_mad",\
 	"BSOD" = "ai_bsod",\
+	"Text" = "ai_text",\
 	"Blank" = "ai_off")
 
 /mob/living/silicon/ai
@@ -145,12 +146,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	return 0
 
 /mob/living/silicon/ai/disposing()
+	STOP_TRACKING
 	..()
-	AIs.Remove(src)
 
 /mob/living/silicon/ai/New(loc, var/empty = 0)
 	..(loc)
-	AIs.Add(src)
+	START_TRACKING
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
@@ -240,6 +241,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (deployed_to_eyecam && src.eyecam)
 		src.eyecam.show_text(message, color, 0, sight_check, allow_corruption, group)
 	return
+
+
+
+///mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
+//sound.dm
+
 
 /mob/living/silicon/ai/attackby(obj/item/W as obj, mob/user as mob)
 	if (isscrewingtool(W))
@@ -357,6 +364,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_radio
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
+				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"
@@ -427,7 +435,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.dismantle_stage = 4
 	if (user)
 		src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU unit!</span>")
-		logTheThing("combat", user, src, "removes %target%'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
+		logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 	else
 		src.visible_message("<span class='alert'><b>[src.name]'s</b> CPU unit is launched out of its core!</span>")
 
@@ -435,12 +443,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.death()
 	if (src.mind)
 		var/mob/dead/observer/newmob = src.ghostize()
-		if (!newmob || !istype(newmob, /mob/dead/observer))
-			return
-		newmob.corpse = null //Otherwise they could return to a brainless body.  And that is weird.
-		newmob.mind.brain = src.brain
-		src.brain.owner = newmob.mind
-
+		if (newmob && istype(newmob, /mob/dead/observer))
+			newmob.corpse = null //Otherwise they could return to a brainless body.  And that is weird.
+			newmob.mind.brain = src.brain
+			src.brain.owner = newmob.mind
 	if (user)
 		user.put_in_hand_or_drop(src.brain)
 	else
@@ -472,12 +478,15 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 
 /mob/living/silicon/ai/proc/turn_it_back_on()
-	if (src.health >= 50 && isdead(src))
+	if (src.health >= 50 && isdead(src) && src.brain)
 		setalive(src)
-		if (src.ghost && src.ghost.mind)
-			src.ghost.show_text("<span class='alert'><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
-			src.ghost.mind.transfer_to(src)
-			qdel(src.ghost)
+		if (src.brain.owner && src.brain.owner.current)
+			if (!isobserver(src.brain.owner.current))
+				return
+			var/mob/ghost = src.brain.owner.current
+			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
+			ghost.mind.transfer_to(src)
+			qdel(ghost)
 		return 1
 	return 0
 
@@ -522,7 +531,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1)
 			if(INTENT_HARM)
 				user.visible_message("<span class='alert'><b>[user.name]</b> kicks [src.name].</span>")
-				logTheThing("combat", user, src, "kicks %target%")
+				logTheThing("combat", user, src, "kicks [constructTarget(src,"combat")]")
 				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
 				if (prob(20))
 					src.bruteloss += 1
@@ -988,10 +997,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					message = "<B>[src]</B> kicks [M]!"
 					var/turf/T = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 					if (T && isturf(T))
-						SPAWN_DBG(0)
-							M.throw_at(T, 100, 2)
-							M.changeStatus("weakened", 1 SECOND)
-							M.changeStatus("stunned", 2 SECONDS)
+						M.throw_at(T, 100, 2)
+						M.changeStatus("weakened", 1 SECOND)
+						M.changeStatus("stunned", 2 SECONDS)
 					break
 
 		if ("scream")
@@ -1612,7 +1620,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
-		for(var/obj/machinery/door/airlock/D in doors)
+		for(var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door])
 			if (D.z == 1 && D.canAIControl() && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
 				count++
@@ -1634,7 +1642,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
-		for(var/obj/machinery/door/airlock/D in doors)
+		for(var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door])
 			if (D.z == 1 && D.canAIControl() && D.locked && D.arePowerSystemsOn())
 				D.locked = 0
 				D.update_icon()
@@ -2066,7 +2074,7 @@ proc/get_mobs_trackable_by_AI()
 		message_admins("[key_name(src)] has created an AI intercom announcement: \"[output]\"")
 
 
-/mob/living/silicon/ai/verb/ai_station_announcement()
+/mob/living/silicon/ai/proc/ai_station_announcement()
 	set name = "AI Station Announcement"
 	set desc = "Makes a station announcement."
 	set category = "AI Commands"
@@ -2110,7 +2118,7 @@ proc/get_mobs_trackable_by_AI()
 	vox_help(src)
 
 /mob/living/silicon/ai/choose_name(var/retries = 3)
-	var/randomname = pick(ai_names)
+	var/randomname = pick_string_autokey("names/ai.txt")
 	var/newname
 	for (retries, retries > 0, retries--)
 		newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", randomname) as null|text

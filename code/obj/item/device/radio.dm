@@ -30,7 +30,7 @@
 	w_class = 2.0
 	mats = 3
 
-	var/bicon_override = 0
+	var/icon_override = 0
 
 	var/const
 		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
@@ -234,51 +234,18 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		real_name = new_name
 		voice_name = new_name
 
-/obj/item/device/radio/proc/radio_bicon(var/mob/user)
-	.= 0
+/obj/item/device/radio/proc/radio_icon(var/mob/user)
 	if (isAI(user))
-		.= bicon(aiIcon)
+		.= "ai"
 	else if (isrobot(user))
-		.= bicon(roboIcon)
-	else if (bicon_override)
-		if (bicon_override == "head")
-			.= bicon(headIcon)
-		else if (bicon_override == "sci")
-			.= bicon(sciIcon)
-		else if (bicon_override == "med")
-			.= bicon(medIcon)
-		else if (bicon_override == "eng")
-			.= bicon(engIcon)
-		else if (bicon_override == "sec")
-			.= bicon(secIcon)
-		else if (bicon_override == "qm")
-			.= bicon(qmIcon)
-		else if (bicon_override == "ai")
-			.= bicon(aiIcon)
-		else if (bicon_override == "syndie")
-			.= bicon(syndieIcon)
-		else if (bicon_override == "syndieboss")
-			.= bicon(syndiebossIcon)
-		else if (bicon_override == "cap")
-			.= bicon(capIcon)
-		else if (bicon_override == "rd")
-			.= bicon(rdIcon)
-		else if (bicon_override == "md")
-			.= bicon(mdIcon)
-		else if (bicon_override == "ce")
-			.= bicon(ceIcon)
-		else if (bicon_override == "hop")
-			.= bicon(hopIcon)
-		else if (bicon_override == "hos")
-			.= bicon(hosIcon)
-		else if (bicon_override == "clown")
-			.= bicon(clownIcon)
-		else if (bicon_override == "nt")
-			.= bicon(ntIcon)
-		else
-			.= bicon(civIcon)
+		.= "robo"
+	else if (icon_override)
+		.= icon_override
+
+	if(.)
+		. = {"<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon misc\" src="[resource("images/radio_icons/[.].png")]">"}
 	else
-		.= bicon(src)
+		return bicon(src)
 
 /obj/item/device/radio/talk_into(mob/M as mob, messages, secure, real_name, lang_id)
 	// According to a pair of DEBUG calls set up for testing, no radio jammer check for the src radio was performed.
@@ -290,6 +257,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 //	if (last_transmission && world.time < (last_transmission + TRANSMISSION_DELAY))
 //		return
 
+	var/ai_sender = 0
 	var/eqjobname
 
 	if (iscarbon(M))
@@ -300,6 +268,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				eqjobname = "No ID"
 	else if (isAI(M))
 		eqjobname = "AI"
+		ai_sender = 1
 	else if (isrobot(M))
 		eqjobname = "Cyborg"
 	else if (istype(M, /obj/machinery/computer)) // :v
@@ -336,12 +305,20 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
 							var/mob/rmob = i
-							rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+
+							if (ai_sender)
+								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+							else
+								rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 
 				else
 					for (var/i in R.send_hear())
 						if (!(i in receive))
 							receive += i
+
+							if (ai_sender)
+								var/mob/rmob = i
+								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 
 		else if (istype(I, /obj/item/mechanics/radioscanner)) //MechComp radio scanner
 			var/obj/item/mechanics/radioscanner/R = I
@@ -424,9 +401,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			css_style = " style='color: [textColor]'"
 		var/part_a
 		if (ismob(M) && M.mind)
-			part_a = "[radio_bicon(M)]<span class='radio[classes]'[css_style]><span class='name' data-ctx='\ref[M.mind]'>"
+			part_a = "[radio_icon(M)]<span class='radio[classes]'[css_style]><span class='name' data-ctx='\ref[M.mind]'>"
 		else
-			part_a = "[radio_bicon(M)]<span class='radio[classes]'[css_style]><span class='name'>"
+			part_a = "[radio_icon(M)]<span class='radio[classes]'[css_style]><span class='name'>"
 		var/part_b = "</span><b> \[[format_frequency(display_freq)]\]</b> <span class='message'>"
 		var/part_c = "</span></span>"
 
@@ -623,9 +600,6 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		if (radio_controller && istype(radio_controller) && radio_controller.active_jammers.Find(src))
 			radio_controller.active_jammers.Remove(src)
 		..()
-
-var/global/list/tracking_beacons = list() // things were looping through world to find these so let's just stop doing that and have this shit add itself to a global list instead maybe
-
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -635,14 +609,10 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 
 /obj/item/device/radio/beacon/New()
 	..()
-	SPAWN_DBG(0)
-		if (!islist(tracking_beacons))
-			tracking_beacons = list()
-		tracking_beacons.Add(src)
+	START_TRACKING
 
 /obj/item/device/radio/beacon/disposing()
-	if (islist(tracking_beacons))
-		tracking_beacons.Remove(src)
+	STOP_TRACKING
 	..()
 
 /obj/item/device/radio/beacon/hear_talk()
@@ -748,7 +718,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 		var/mob/M = src.loc
 		if (src == M.back)
 			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
-			logTheThing("signalers", usr, M, "signalled an electropack worn by %target% at [log_loc(M)].") // Added (Convair880).
+			logTheThing("signalers", usr, M, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
 			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
 					ticker.mode:remove_revolutionary(M.mind)
@@ -1070,6 +1040,19 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
+
+	New()
+		//..()
+		if(src.pixel_x == 0 && src.pixel_y == 0)
+			switch(src.dir)
+				if(NORTH)
+					pixel_y = -14
+				if(SOUTH)
+					pixel_y = 32
+				if(EAST)
+					pixel_x = -21
+				if(WEST)
+					pixel_x = 21
 
 	north
 		dir = NORTH

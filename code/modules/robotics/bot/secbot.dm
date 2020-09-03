@@ -1,3 +1,9 @@
+#define IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON 0				// Just some everyday bot on the beat
+#define IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON 1						// Full-assed Beepsky
+#define IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON 2				// A Beepsky brand secboton
+#define IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON 3						// A generic-ass shitcurity baton
+#define IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON 4	// A generic, non-Beepsky brand secboton
+
 /obj/machinery/bot/secbot
 	name = "Securitron"
 #ifdef HALLOWEEN
@@ -32,11 +38,11 @@
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
 	var/report_arrests = 0 //If true, report arrests over PDA messages.
-
+	var/is_beepsky = IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON	// How Beepsky are we?
 	var/botcard_access = "Head of Security" //Job access for doors.
 	var/hat = null //Add an overlay from bots/aibots.dmi with this state.  hats.
 	var/our_baton_type = /obj/item/baton/secbot
-	var/loot_baton_type = /obj/item/baton
+	var/loot_baton_type = /obj/item/scrap
 	var/stun_type = "stun"
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -71,6 +77,9 @@
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
+	var/last_attack = 0
+	var/attack_per_step = 0 // Tries to attack every step. 1 = 75% chance to attack, 2 = 25% chance to attack
+
 	disposing()
 		if(mover)
 			mover.dispose()
@@ -93,7 +102,10 @@
 	idcheck = 1
 	auto_patrol = 1
 	report_arrests = 1
+	loot_baton_type = /obj/item/baton/beepsky
+	is_beepsky = IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON
 	hat = "nt"
+	attack_per_step = 1
 
 	New()
 		. = ..()
@@ -102,6 +114,18 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	explode()
+		//////PDA NOTIFY/////
+		var/bot_location = get_area(src)
+		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: [src] destroyed in [bot_location]! Officer down!")
+		pdaSignal.transmission_method = TRANSMISSION_RADIO
+		if(transmit_connection != null)
+			transmit_connection.post_signal(src, pdaSignal)
+
+		..()
 
 /obj/machinery/bot/secbot/warden
 	name = "Warden Jack"
@@ -151,6 +175,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
+	var/is_dead_beepsky = 0
 	var/build_step = 0
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 	var/beacon_freq = 1445 //If it's running on another beacon circuit I guess
@@ -361,6 +386,54 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 		return 0
 
+	proc/baton_attack(var/mob/living/carbon/M)
+		src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
+		var/maxstuns = 4
+		var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
+
+		last_attack = world.time
+
+		while (stuncount > 0 && src.target)
+			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
+			if (src.our_baton && istype(src.our_baton))
+				if (src.our_baton.uses_electricity == 0)
+					src.our_baton.uses_electricity = 1
+				if (src.our_baton.uses_charges != 0)
+					src.our_baton.uses_charges = 0
+			else
+				src.our_baton = new our_baton_type(src)
+
+			stuncount--
+			src.our_baton.do_stun(src, M, src.stun_type, 2)
+			if (!stuncount && maxstuns-- <= 0)
+				target = null
+			if (stuncount > 0)
+				sleep(0.3 SECONDS)
+
+		SPAWN_DBG(0.2 SECONDS)
+			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
+		if (src.target.getStatusDuration("weakened"))
+			mode = SECBOT_PREP_ARREST
+			src.anchored = 1
+			src.target_lastloc = M.loc
+			moving = 0
+
+			//qdel(src.mover)
+			if (src.mover)
+				src.mover.master = null
+				src.mover = null
+			src.frustration = 0
+		return
+
+	Move(var/turf/NewLoc, direct)
+		var/oldloc = src.loc
+		..()
+		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
+			if (oldloc != NewLoc && world.time != last_attack)
+				if (mode == SECBOT_HUNT && target)
+					if (get_dist(src, src.target) <= 1)
+						src.baton_attack(src.target)
+
 	process()
 		if (!src.on)
 			return
@@ -393,43 +466,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 				if (target)		// make sure target exists
 					if (get_dist(src, src.target) <= 1)		// if right next to perp
-						src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
-						var/mob/living/carbon/M = src.target
-						var/maxstuns = 4
-						var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
-
-						while (stuncount > 0 && src.target)
-							// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
-							if (src.our_baton && istype(src.our_baton))
-								if (src.our_baton.uses_electricity == 0)
-									src.our_baton.uses_electricity = 1
-								if (src.our_baton.uses_charges != 0)
-									src.our_baton.uses_charges = 0
-							else
-								src.our_baton = new our_baton_type(src)
-
-							stuncount--
-							src.our_baton.do_stun(src, M, src.stun_type, 2)
-							if (!stuncount && maxstuns-- <= 0)
-								target = null
-							if (stuncount > 0)
-								sleep(0.3 SECONDS)
-
-						SPAWN_DBG(0.2 SECONDS)
-							src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
-						if (src.target.getStatusDuration("weakened"))
-							mode = SECBOT_PREP_ARREST
-							src.anchored = 1
-							src.target_lastloc = M.loc
-							moving = 0
-
-							//qdel(src.mover)
-							if (src.mover)
-								src.mover.master = null
-								src.mover = null
-							src.frustration = 0
-						return
-
+						src.baton_attack(src.target)
 					else								// not next to perp
 						if(!(src.target in view(7,src)) || !moving)
 							//qdel(src.mover)
@@ -504,7 +541,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 									//////PDA NOTIFY/////
 								var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 								var/datum/signal/pdaSignal = get_free_signal()
-								pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"="security", "sender"="00000000", "message"="Notification: [last_target] detained by [src] in [bot_location].")
+								pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: [last_target] detained by [src] in [bot_location].")
 								pdaSignal.transmission_method = TRANSMISSION_RADIO
 								if(transmit_connection != null)
 									transmit_connection.post_signal(src, pdaSignal)
@@ -1016,7 +1053,8 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		return
 
 	explode()
-
+		if(src.exploding) return
+		src.exploding = 1
 		walk_to(src,0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
@@ -1028,19 +1066,25 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		Sa.created_name = src.name
 		Sa.beacon_freq = src.beacon_freq
 		Sa.hat = src.hat
+		if (src.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || src.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON)	// Being Beepsky doesnt give you his baton, but it does mean you're him
+			Sa.is_dead_beepsky = 1
 		new /obj/item/device/prox_sensor(Tsec)
 
 		// Not charged when dropped (ran on Beepsky's internal battery or whatever).
-		var/obj/item/baton/B = new loot_baton_type(Tsec)
-		B.status = 0
-		B.process_charges(-INFINITY)
+		if (istype(loot_baton_type, /obj/item/baton)) // Now we can drop *any* baton!
+			var/obj/item/baton/B = new loot_baton_type(Tsec)
+			B.status = 0
+			B.process_charges(-INFINITY)
+			if (src.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || src.is_beepsky == IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON)	// Holding Beepsky's baton doesnt make you him, but it does mean you're holding his baton
+				B.name = "Beepsky's stun baton"
+				B.beepsky_held_this = 1 // Just as a flag so we can know if this baton used to be Beepsky's. Maybe secbots just dont like people walking around with his sidearm vOv
+		else
+			new loot_baton_type(Tsec)
 
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(Tsec)
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)
 
 
@@ -1099,7 +1143,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					master.frustration++
 					sleep(delay)
 					continue
-				master.path -= master.path[1]
+				master?.path -= master?.path[1]
 				sleep(delay)
 
 			if (master)
@@ -1139,7 +1183,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_hole")
 			boutput(user, "You weld a hole in [src]!")
 
-	else if ((istype(W, /obj/item/device/prox_sensor)) && (src.build_step == 1))
+	else if (istype(W, /obj/item/device/prox_sensor) && src.build_step == 1)
 		src.build_step++
 		boutput(user, "You add the prox sensor to [src]!")
 		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_eye")
@@ -1151,17 +1195,88 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		boutput(user, "You add the robot arm to [src]!")
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
 		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_arm")
+		user.u_equip(W)
 		qdel(W)
 
-	else if ((istype(W, /obj/item/baton)) && (src.build_step >= 3))
-		src.build_step++
-		boutput(user, "You complete the Securitron! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-		S.beacon_freq = src.beacon_freq
-		S.hat = src.hat
-		S.name = src.created_name
-		qdel(W)
-		qdel(src)
+	else if (istype(W, /obj/item/baton/) && src.build_step >= 3)
+		if (istype(W, /obj/item/baton/beepsky))	// If we used Beepsky's dropped baton
+			var/obj/item/baton/Y = W
+			if (src.is_dead_beepsky)							// on Beepsky's corpse
+				boutput(user, "You return Officer Beepsky his trusty baton, reassembling the Securitron! Beep boop.")
+				new /obj/machinery/bot/secbot/beepsky(get_turf(src))
+				qdel(src)
+				user.u_equip(W)
+				qdel(W)
+			else												// On any other securitron assembly?
+				boutput(user, "You give the [src] [W] and connect a cable in the arm to the baton's parallel port, completing the Securitron! Beep boop.")
+				var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
+				S.beacon_freq = src.beacon_freq
+				S.hat = src.hat
+				S.name = src.created_name		// We get an upgraded securitron
+				S.attack_per_step = 2				// 25% chance to attack_on_move, as opposed to 75%
+				S.loot_baton_type = W.type	// So we can drop it all over again.
+				if (Y.beepsky_held_this == 1)
+					S.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON	// So we drop Beepsky's baton, and not just some generic secbot one
+				else
+					S.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON // So we drop some generic secboton
+				qdel(src)
+				user.u_equip(W)
+				qdel(W)
+		else												// If we used any old stun baton
+			if (src.is_dead_beepsky)	// On Beepsky's corpse
+				boutput(user, "You give Officer Beepsky a stun baton, reassembling the Securitron! Beep boop.")
+				var/obj/machinery/bot/secbot/beepsky/S = new /obj/machinery/bot/secbot/beepsky(get_turf(src))
+				S.attack_per_step = 0		// We just get a surly head of robosecurity
+				S.is_beepsky = IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON // So Beepsky's corpse is his corpse
+				S.loot_baton_type = W.type	// Our baton isn't special
+				qdel(src)
+				user.u_equip(W)
+				qdel(W)
+			else											// On any other securitron assembly?
+				boutput(user, "You give the [src] a stun baton, completing the Securitron! Beep boop.")
+				var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
+				S.beacon_freq = src.beacon_freq
+				S.hat = src.hat
+				S.name = src.created_name
+				S.attack_per_step = 0		// We get a loot pinata
+				S.is_beepsky = IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON // You're still not Beepsky
+				S.loot_baton_type = W.type	// Our baton isn't special either
+				qdel(src)
+				user.u_equip(W)
+				qdel(W)
+
+	else if (istype(W, /obj/item/rods) && src.build_step == 3)
+		if (W.amount < 1)
+			boutput(user, "You need a non-zero amount of rods. How did you even do that?")
+		else
+			src.build_step++
+			boutput(user, "You add a rod to [src]'s robot arm!")
+			src.name = "helmet/signaler/prox sensor/robot arm/rod assembly"
+			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_rod")
+			W.amount -= 1
+			if (W.amount < 1)
+				user.u_equip(W)
+				qdel(W)
+
+	else if (istype(W, /obj/item/cable_coil) && src.build_step >= 4)
+		var/obj/item/cable_coil/C = W
+		if (!C.use(5))
+			boutput(user, "You need a longer length of cable! A length of five should be enough.")
+		else if (src.is_dead_beepsky)	// On Beepsky's corpse
+			boutput(user, "You add wires to Officer Beepsky, reassembling the Securitron! Beep boop.")
+			var/obj/machinery/bot/secbot/beepsky/S = new /obj/machinery/bot/secbot/beepsky(get_turf(src))
+			S.attack_per_step = 0		// We just get a surly head of robosecurity
+			S.is_beepsky = IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON	// So Beepsky's corpse is his corpse
+			S.loot_baton_type = /obj/item/scrap	// our baton's a hunk of junk!
+			qdel(src)
+		else
+			src.build_step++
+			boutput(user, "You add the wires to the rod, completing the Securitron! Beep boop.")
+			var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
+			S.beacon_freq = src.beacon_freq
+			S.hat = src.hat
+			S.name = src.created_name
+			qdel(src)
 
 	else if (istype(W, /obj/item/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
@@ -1173,3 +1288,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			return
 
 		src.created_name = t
+
+#undef IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON
+#undef IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON
+#undef IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON
+#undef IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON
+#undef IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON

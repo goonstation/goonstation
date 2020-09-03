@@ -4,9 +4,11 @@
 	icon = 'icons/obj/wizard.dmi'
 	shot_sound = 'sound/effects/mag_fireballlaunch.ogg'
 
+	is_magical = 1
+
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		var/turf/T = get_turf(hit)
-		if (projectile.mob_shooter && projectile.mob_shooter:wizard_spellpower())
+		if (projectile.mob_shooter && projectile.mob_shooter:wizard_spellpower(projectile.mob_shooter:abilityHolder:getAbility(/datum/targetable/spell/fireball)))
 			explosion(projectile, T, -1, -1, 2, 2)
 		else if(projectile.mob_shooter)
 			if(prob(50))

@@ -220,7 +220,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mobAppearance.parentHolder = src
 
 		if(owner)
-			reg_dna[Uid] = owner:real_name
 			ownerName = owner:real_name
 
 		BuildEffectPool()
@@ -261,7 +260,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (grant_research)
 			if (global_BE.research_level < 2)
 				genResearch.mutations_researched++
-			global_BE.research_level = max(global_BE.research_level,3)
+			global_BE.research_level = max(global_BE.research_level, EFFECT_RESEARCH_ACTIVATED)
 
 		//AddEffect(E.id)
 		//effectPool.Remove(E)
@@ -273,7 +272,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.holder = src
 		E.activated_from_pool = 1
 		E.OnAdd()
-		if(lentext(E.msgGain) > 0)
+		if(length(E.msgGain) > 0)
 			if (E.isBad)
 				boutput(owner, "<span class='alert'>[E.msgGain]</span>")
 			else
@@ -503,7 +502,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if(istype(newEffect))
 			for(var/datum/bioEffect/curr_id in effects)
 				var/datum/bioEffect/curr = effects[curr_id]
-				if(curr && curr.type == effectTypeMutantRace && newEffect.type == effectTypeMutantRace)
+				if(curr && curr.type == EFFECT_TYPE_MUTANTRACE && newEffect.type == EFFECT_TYPE_MUTANTRACE)
 					//Can only have one mutant race.
 					RemoveEffect(curr.id)
 					break //Since this cleaning is always done we just ousted the only mutantrace in effects
@@ -515,6 +514,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				newEffect.stability_loss = 0
 				newEffect.can_scramble = 0
 				newEffect.can_reclaim = 0
+				newEffect.degrade_to = null
 
 			effects[newEffect.id] = newEffect
 			newEffect.owner = owner
@@ -524,7 +524,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if (do_stability)
 				src.genetic_stability -= newEffect.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
-			if(owner && lentext(newEffect.msgGain) > 0)
+			if(owner && length(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
 					boutput(owner, "<span class='alert'>[newEffect.msgGain]</span>")
 				else
@@ -547,7 +547,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (do_stability)
 			src.genetic_stability -= BE.stability_loss
 			src.genetic_stability = max(0,src.genetic_stability)
-		if(lentext(BE.msgGain) > 0)
+		if(length(BE.msgGain) > 0)
 			if (BE.isBad)
 				boutput(owner, "<span class='alert'>[BE.msgGain]</span>")
 			else
@@ -567,7 +567,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				src.genetic_stability = max(0,src.genetic_stability)
 			D.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
 
-			if(owner && lentext(D.msgLose) > 0)
+			if(owner && length(D.msgLose) > 0)
 				if (D.isBad)
 					boutput(owner, "<span class='notice'>[D.msgLose]</span>")
 				else

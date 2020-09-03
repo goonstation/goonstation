@@ -30,7 +30,7 @@
 	var/aggressive = 0
 	var/defensive = 0
 	var/wanderer = 1
-	var/opensdoors = 0
+	var/opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	var/frustration = 0
 	var/last_found = null
 	var/target = null
@@ -100,6 +100,7 @@
 	var/mob/living/corpse_target = null
 
 	var/area/registered_area = null //the area this critter is registered in
+	var/parent = null			//the mob or obj/critter that is the progenitor of this critter. Currently only set via hatched eggs
 #if ASS_JAM //timestop stuff
 	var/paused = FALSE
 #endif
@@ -108,7 +109,7 @@
 		if (!message || !length(message))
 			return
 		var/msg = replacetext(message, "%src%", "<b>[src]</b>")
-		msg = replacetext(msg, "%target%", "[target]")
+		msg = replacetext(msg, "[constructTarget(target,"combat")]", "[target]")
 		src.visible_message("<span class='alert'>[msg]</span>")
 
 	proc/report_spawn()
@@ -313,11 +314,11 @@
 #endif
 		switch(damage_type)
 			if("fire")
-				src.health -= attack_force * (src.firevuln + W.getProperty("piercing")) //Extremely half assed piercing for critters
+				src.health -= attack_force * max(1,(src.firevuln + W.getProperty("piercing")/100)) //Extremely half assed piercing for critters
 			if("brute")
-				src.health -= attack_force * (src.brutevuln + W.getProperty("piercing"))
+				src.health -= attack_force * max(1,(src.brutevuln + W.getProperty("piercing")/100))
 			else
-				src.health -= attack_force * (src.miscvuln + W.getProperty("piercing"))
+				src.health -= attack_force * max(1,(src.miscvuln + W.getProperty("piercing")/100))
 
 		if (src.alive && src.health <= 0) src.CritterDeath()
 
@@ -709,6 +710,7 @@
 							walk_to(src, current_target,1,4)
 							if ((get_dist(src, current_target)) >= (olddist))
 								src.frustration++
+								step_towards(src, current_target, 4)
 							else
 								src.frustration = 0
 						else
@@ -756,7 +758,7 @@
 						if (food_target.reagents && food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
 							food_target.reagents.trans_to(src, 5)
 					if (src.food_target != null && src.food_target.amount <= 0)
-						src.food_target.loc = null
+						src.food_target.set_loc(null)
 						SPAWN_DBG(1 SECOND)
 							qdel(src.food_target)
 						src.task = "thinking"
@@ -972,8 +974,8 @@
 			return
 #endif
 		src.visible_message("<span class='combat'><B>[src]</B> [src.chase_text] [src.target]!</span>")
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 
@@ -985,8 +987,8 @@
 			src.visible_message("<span class='combat'><B>[src]</B> [src.atk_text] [src.target]!</span>")
 			random_brute_damage(src.target, src.atk_brute_amt,1)
 			random_burn_damage(src.target, src.atk_burn_amt)
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN_DBG(src.atk_delay)
 			src.attacking = 0
@@ -1070,6 +1072,7 @@
 	var/critter_type = null
 	var/warm_count = 10 // how many times you gotta warm it before it hatches
 	var/critter_reagent = null
+	var/parent = null
 	rand_pos = 1
 
 	New()
@@ -1119,7 +1122,8 @@
 		src.warm_count = max(src.warm_count, 0)
 		src.hatch_check(0, user)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		//..() <- Fuck off mom, I'm 25 and I do what I want =I
 		src.hatch_check(1, null, T)
 
@@ -1159,13 +1163,19 @@
 						qdel(src)
 						return
 
-				var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src))
+				var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src), src.parent)
 
 				if (critter_name)
 					newCritter.name = critter_name
 
 				if (shouldThrow && T)
 					newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
+
+				//hack. Clownspider queens keep track of their babies.
+				if (istype(src.parent, /mob/living/critter/spider/clownqueen))
+					var/mob/living/critter/spider/clownqueen/queen = src.parent
+					if (islist(queen.babies))
+						queen.babies += newCritter
 
 				sleep(0.1 SECONDS)
 				qdel(src)

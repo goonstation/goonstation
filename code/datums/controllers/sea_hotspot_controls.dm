@@ -69,7 +69,7 @@
 
 			for (var/beacon in warp_beacons)
 				if (istype(beacon, /obj/warp_beacon/miningasteroidbelt))
-					var/turf/T = get_turf_loc(beacon)
+					var/turf/T = get_turf(beacon)
 					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
 
 			Z_LOG_DEBUG("Hotspot Map", "Map generation complete")
@@ -228,9 +228,7 @@
 			LAGCHECK(LAG_HIGH)
 
 		if (tally)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(4, 1, T)
-			s.start()
+			elecflash(T)
 
 	proc/stomp_turf(var/turf/T) //Move hotspot 1 tile and set its dir to the difference between stomp loc and hotspot center
 		.= 0
@@ -1143,6 +1141,10 @@
 			return list()
 		else
 			return ..()
+
+	attack_self(mob/user)
+		. = ..()
+		src.examine(user)
 
 	attack_hand(mob/user as mob)
 		if (!src.anchored)

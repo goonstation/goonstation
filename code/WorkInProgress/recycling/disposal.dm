@@ -49,7 +49,7 @@
 	proc/init(var/obj/machinery/disposal/D)
 		gas = D.air_contents.remove_ratio(1)	// transfer gas resv. into holder object
 
-		// loc = null makes some stuff grumpy, ok?
+		// set_loc(null makes some stuff grumpy, ok?)
 		if(D.trunk)
 			src.set_loc(D.trunk)
 		else
@@ -74,7 +74,7 @@
 			D.expel(src)	// no trunk connected, so expel immediately
 			return
 
-		loc = D.trunk
+		set_loc(D.trunk)
 		active = 1
 		dir = DOWN
 		SPAWN_DBG(1 DECI SECOND)
@@ -203,6 +203,7 @@
 	dir = 0				// dir will contain dominant direction for junction pipes
 	var/health = 10 	// health points 0-10
 	layer = DISPOSAL_PIPE_LAYER
+	plane = PLANE_FLOOR
 	var/base_icon_state	// initial icon state on map
 	var/list/mail_tag = null // Tag of mail group for switching pipes
 
@@ -325,9 +326,7 @@
 			for(var/atom/movable/AM in H)
 				AM.set_loc(T)
 				AM.pipe_eject(direction)
-				SPAWN_DBG(1 DECI SECOND)
-					if(AM)
-						AM.throw_at(target, 100, 1)
+				AM?.throw_at(target, 100, 1)
 			H.vent_gas(T)
 			pool(H)
 
@@ -339,9 +338,7 @@
 
 				AM.set_loc(T)
 				AM.pipe_eject(0)
-				SPAWN_DBG(1 DECI SECOND)
-					if(AM)
-						AM.throw_at(target, 5, 1)
+				AM?.throw_at(target, 5, 1)
 
 			H.vent_gas(T)	// all gas vent to turf
 			pool(H)
@@ -993,7 +990,7 @@
 						newLoaf.loaf_factor++
 
 					H.contents -= newIngredient
-					newIngredient.loc = null
+					newIngredient.set_loc(null)
 					newIngredient = null
 
 					//LAGCHECK(LAG_MED)
@@ -1210,8 +1207,7 @@
 			return
 		if(src.loc == get_turf(src))
 			var/edge = get_edge_target_turf(src, pick(alldirs))
-			SPAWN_DBG(0)
-				src.throw_at(edge, 100, 1)
+			src.throw_at(edge, 100, 1)
 		if (istype(src.loc,/obj/))
 			if (prob(33))
 				var/obj/container = src.loc
@@ -1242,11 +1238,10 @@
 	New()
 		..()
 
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("toggle", "toggleactivation")
-		mechanics.addInput("on", "activate")
-		mechanics.addInput("off", "deactivate")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleactivation")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", "activate")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", "deactivate")
 
 		SPAWN_DBG (10)
 			switch_dir = turn(dir, 90)
@@ -1288,11 +1283,6 @@
 		C.ptype = 11
 		C.dir = dir
 		C.update()
-
-		if (src.mechanics)
-			src.mechanics.wipeIncoming()
-			src.mechanics.wipeOutgoing()
-
 		qdel(src)
 
 //<Jewel>:
@@ -1403,8 +1393,7 @@
 			for(var/atom/movable/AM in H)
 				AM.set_loc(src.loc)
 				AM.pipe_eject(dir)
-				SPAWN_DBG(1 DECI SECOND)
-					AM.throw_at(stuff_chucking_target, 3, 1)
+				AM.throw_at(stuff_chucking_target, 3, 1)
 			H.vent_gas(src.loc)
 			pool(H)
 
@@ -1474,8 +1463,7 @@
 			for (var/atom/movable/AM in things_to_dump)
 				AM.set_loc(src.loc)
 				AM.pipe_eject(dir)
-				SPAWN_DBG(1 DECI SECOND)
-					AM.throw_at(stuff_chucking_target, 3, 1)
+				AM.throw_at(stuff_chucking_target, 3, 1)
 			if (H.contents.len < 1)
 				H.vent_gas(src.loc)
 				pool(H)
@@ -1518,8 +1506,7 @@
 	New()
 		..()
 
-		mechanics = new(src)
-		mechanics.master = src
+		AddComponent(/datum/component/mechanics_holder)
 
 		dpdir = dir | turn(dir, 180)
 
@@ -1562,18 +1549,18 @@
 			boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
 			return
 
-		mechanics.dropConnect(O, null, src_location, control_orig, control_new, params)
+		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
 		return ..()
 
 	transfer(var/obj/disposalholder/H)
 		if (sense_mode == SENSE_TAG)
 			if (cmptext(H.mail_tag, sense_tag_filter))
-				mechanics.fireOutgoing(mechanics.newSignal(ckey(H.mail_tag)))
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,ckey(H.mail_tag))
 				flick("pipe-mechsense-detect", src)
 
 		else if (sense_mode == SENSE_OBJECT)
 			if (H.contents.len)
-				mechanics.fireOutgoing(mechanics.newSignal("1"))
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
 				flick("pipe-mechsense-detect", src)
 
 		else
@@ -1585,7 +1572,7 @@
 							if (isdead(M))
 								continue
 
-						mechanics.fireOutgoing(mechanics.newSignal("1"))
+						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
 						flick("pipe-mechsense-detect", src)
 						break
 
@@ -1596,11 +1583,7 @@
 		C.ptype = 12
 		C.dir = dir
 		C.update()
-
-		if (src.mechanics)
-			src.mechanics.wipeIncoming()
-			src.mechanics.wipeOutgoing()
-
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		qdel(src)
 
 #undef SENSE_LIVING
@@ -1763,7 +1746,7 @@
 
 	var/message = null
 	var/mailgroup = null
-	var/mailgroup2 = null
+	var/mailgroup2 = null //Do not refactor into a list, maps override these properties
 	var/net_id = null
 	var/frequency = 1149
 	var/datum/radio_frequency/radio_connection
@@ -1848,8 +1831,7 @@
 		for(var/atom/movable/AM in H)
 			AM.set_loc(src.loc)
 			AM.pipe_eject(dir)
-			SPAWN_DBG(1 DECI SECOND)
-				AM.throw_at(target, src.throw_range, 1)
+			AM.throw_at(target, src.throw_range, 1)
 		H.vent_gas(src.loc)
 		pool(H)
 
@@ -1928,8 +1910,7 @@
 		for(var/atom/movable/AM in H)
 			AM.set_loc(src.loc)
 			AM.pipe_eject(dir)
-			SPAWN_DBG(1 DECI SECOND)
-				AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
+			AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
 		H.vent_gas(src.loc)
 		pool(H)
 

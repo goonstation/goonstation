@@ -54,7 +54,7 @@
 
 			SPAWN_DBG(0)
 				var/obj/machinery/door/poddoor/door = null
-				for(var/obj/machinery/door/poddoor/P in doors)
+				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 					if (P.id == driver.id)
 						door = P
 						SPAWN_DBG(0)
@@ -410,6 +410,10 @@
 
 	destinations = list("North","South")
 
+/obj/machinery/computer/barcode/qm/donut3
+	name = "Barcode Computer"
+	desc = "Used to print barcode stickers for the off-station merchants."
+	destinations = list()
 
 /obj/item/sticker/barcode
 	name = "barcode sticker"

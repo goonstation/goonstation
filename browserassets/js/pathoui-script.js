@@ -83,6 +83,11 @@
 		$("#spliceActions .button").click(function() {handlePushButtonClick(this, handleSpliceActionClick);});
 		$("#btnSpliceFinish").click(function() {handlePushButtonClick(this, handleSpliceFinishClick);});
 
+		$("#btnSpliceFinish").click(function() {handlePushButtonClick(this, handleSpliceFinishClick);});
+
+		$(".helpTextItem").mouseenter(function() {displayHelpText(this);});
+		$(".helpTextItem").mouseleave(function() {clearHelpText();});
+
 
 		/* INITIALIZATION STUFF*/
 		setActivePage(0);
@@ -96,6 +101,76 @@
 		//debug_createDNAbuttons();
 	}
 
+	function clearHelpText()
+	{
+		$("#manipHelp").html("");
+		$("#analyzerHelp").html("");
+	}
+
+	function displayHelpText(element)
+	{
+		switch(element.id)
+		{
+			case "helpMutativeness":
+				$("#manipHelp").html("Mutativeness determines the probability that your pathogen will mutate. The rolls for this happen when the pathogens stats are manipulated, or every time it infects a new person. Suggested range: 0-100");
+				break;
+			case "helpMutSpeed":
+				$("#manipHelp").html("Mutation Speed determines how many different mutations your pathogen will undergo whenever it mutates. This scales very diminishingly the higher you go. Suggested range: 0-50");
+				break;
+			case "helpAdvSpeed":
+				$("#manipHelp").html("Advance Speed determines how quickly your pathogen will advance through its stages. Beware, this also makes it go down more quickly when suppressed or remissive. It is capped at 4 when advancing, but uncapped when receding. Suggested range: 0-10");
+				break;
+			case "helpMaliciousness":
+				$("#manipHelp").html("Maliciousness determines what kind of mutations will occur. Higher values will lead to things like gaining symptoms or even stages while negative ones will lead to things like losing symptoms or stages. High values on this will make the manipulator take longer to adjust stats! Suggested range: 0-40");
+				break;
+			case "helpSupThreshold":
+				$("#manipHelp").html("Suppression Threshold determines how hard your pathogen is to suppress. Higher values will require more of the suppressant chem or higher external suppression factors. This is capped at 50 for most purposes. Suggested range: 0-50");
+				break;
+			case "helpStages":
+				$("#manipHelp").html("This determines how many stages your pathogen can go through. This largely depends on the microbody, though rarely a pathogen can mutate to have less or more stages. This ranges from 1-5. At higher stages a pathogen's symptoms will generally have stronger effects. Different microbody types also trigger their symptoms at different rates depending on the stage.");
+				break;
+			case "helpSymptomaticity":
+				$("#manipHelp").html("If this is 0 your pathogen will not trigger its symptoms. Pathogens start out with this as 1, but it can sometimes mutate to become 0. If this happens, you may be able to get it back to 1 by making your pathogen mutate some more.");
+				break;
+			case "helpSupCode":
+				$("#manipHelp").html("This code determines what the pathogen is supressed by. If you see two pathogens with the same code, you know that they will have the same suppressant.");
+				break;
+			case "helpCapacity":
+				$("#manipHelp").html("This determines how many symptom segments you can splice onto a pathogen without it collapsing. For instance, a tier 5 symptom would cost 5 capacity, since it is made of 5 segments.");
+				break;
+			case "btnClrAnalysisCurr":
+				$("#analyzerHelp").html("Clear the currently assembled sequence of segments in Current Analysis");
+				break;
+			case "annStableLb":
+			case "annStableYes":
+			case "annStableNo":
+				$("#analyzerHelp").html("Shows if the last tested sequence of segments is stable. If it is stable, that means that it is a valid symptom that you can use in a pathogen!");
+				break;
+			case "annTransLb":
+			case "annTransYes":
+			case "annTransNo":
+				$("#analyzerHelp").html("Shows if the last tested sequence of segments is transient. If it is transient, that means that there is at least one valid symptom that starts with this sequence, but you will need to add more segments at the end to find it!");
+				break;
+			case "transTypesGood":
+				$("#analyzerHelp").html("If the last analyzed sequence of segments was transient, this shows you how many of the symptoms that start with it are considered beneficial to humans.");
+				break;
+			case "transTypesBad":
+				$("#analyzerHelp").html("If the last analyzed sequence of segments was transient, this shows you how many of the symptoms that start with it are considered harmful to humans.");
+				break;
+			case "stableType":
+				$("#analyzerHelp").html("If the last analyzed sequence of segments was stable, this shows you if it was a symptom that is considered beneficial or harmful to humans.");
+				break;
+			case "btnAnalysisLoad":
+				$("#analyzerHelp").html("This will destroy your currently loaded pathogen and give you its symptom segments to use for building sequences and analyzing them. Probably do not do this if you do not have a backup of your pathogen!");
+				break;
+			case "btnAnalysisDoTest":
+				$("#analyzerHelp").html("Test the currently assembled sequence of segments to find out if it is stable and/or transient. If it turns out to be stable, you will keep it and can experiment further, but if not those segments will be lost.");
+				break;
+			case "knownAnalyzer":
+				$("#analyzerHelp").html("Shows a list of sequences of segments you have already tried and whether or not they were stable and/or transient.");
+				break;
+		}
+	}
 
 	function setActivePage(page) {
 		$(".dataPage").hide();
@@ -582,6 +657,7 @@
 			dnaDetails[index] = new dnaSlotInfo();
 			updateLoadedDependents();
 		}
+		doExposeSlot(0);
 	}
 
 	function doSaveDna(slot) {
@@ -610,6 +686,22 @@
 				}
 				updateLoadedDependents(true);
 				updateDnaSlot(slot);
+				doExposeSlot(0);
+	}
+
+	function loadHelp(slot) {
+		var dna = dnaDetails[slot -1].seq;
+			if(loadedDna && dna) {
+				doExchangeDna(slot);
+			}
+			else if(loadedDna)
+			{
+				doSaveDna(slot);
+			}
+			else if(dna)
+			{
+				doLoadDna(slot);
+			}
 	}
 
 	function doClearDna(slot) {
@@ -659,44 +751,27 @@
 			tempObj = $("<div></div>", {
 									'class':'noborder'
 									}).appendTo(finalObj);
-			//Slot counter
-			$("<div>", {
-				'class':"text-field tf-narrow"
-			}).appendTo(tempObj).text(i.toString());
-			//Annunciators
-			$("<div>", {
-				id: 'annDnaEmp' + i,
-				'class':'annunciator a-red'
-			}).appendTo(tempObj).text("EMPTY");
-			$("<div>", {
-				id: 'annDnaExp' + i,
-				'class':'annunciator a-yellow'
-			}).appendTo(tempObj).text("EXPOSED");
-			$("<div>", {
-				id: 'btnDnaLoad' + i,
-				'class':'button btn-small',
-			}).appendTo(tempObj).text("LOAD");
-			$("<div>", {
-				id: 'btnDnaSave' + i,
-				'class':'button btn-small',
-			}).appendTo(tempObj).text("SAVE");
 			$("<div>", {
 				id: 'btnDnaXchg' + i,
 				'class':'button btn-small',
-			}).appendTo(tempObj).text("XCHG");
+			}).appendTo(tempObj).text("LOAD");
 			$("<div>", {
 				id: 'btnDnaClear' + i,
 				'class':'button btn-small',
-			}).appendTo(tempObj).text("CLEAR");
+			}).appendTo(tempObj).text("DISCARD");
 			$("<div>", {
-				id: 'btnDnaSlotExpose' + i,
+				id: 'btnDnaEject' + i,
 				'class':'button btn-small',
-			}).appendTo(tempObj).text("EXPOSE");
+			}).appendTo(tempObj).text("EJECT");
+
+			$("<div>", {
+				id: 'btnSpliceSource' + i,
+				'class':'button btn-small',
+			}).appendTo(tempObj).text("SPLICE");
 			//new tempObj for the next row
 			tempObj = $("<div></div>", {
 									'class':'noborder'
 									}).appendTo(finalObj);
-			$("<span>", {'class':'label'}).appendTo(tempObj).text("Seq:");
 			$("<div>", {id: 'dnaSequence' + i, 'class':"text-field tf-long"}).appendTo(tempObj);
 
 			//Append finalObj to the holder
@@ -743,21 +818,21 @@
 
 		var detClick = id.slice(0, id.length - slot.toString().length);
 		switch(detClick) {
-			case "btnDnaLoad":
-				doLoadDna(slot);
-				break;
-			case "btnDnaSave":
-				doSaveDna(slot);
-				break;
 			case "btnDnaXchg":
-				doExchangeDna(slot);
+				loadHelp(slot);
 				break;
 			case "btnDnaClear":
 				doClearDna(slot);
 				break;
-
-			case "btnDnaSlotExpose":
+			case "btnDnaEject":
 				doExposeSlot(slot);
+				doEjectSample();
+				doExposeSlot(0);
+				break;
+			case "btnSpliceSource":
+				setSpliceSource(slot);
+				doExposeSlot(0);
+				beginSplice();
 				break;
 		}
 	}
@@ -769,10 +844,18 @@
 			$("#txtPName").text(loadedDna.pathogenName);
 			$("#txtPType").text(loadedDna.pathogenType);
 			$("#txtPSeq").text(loadedDna.seq);
+			$("#txtStag").text(loadedDna.pathogenStages);
+			$("#txtSymp").text(loadedDna.pathogenSymptomaticity);
+			$("#txtSupCode").text(loadedDna.pathogenSupCode);
+			$("#txtCap").text(loadedDna.pathogenCap==-1?"∞":loadedDna.pathogenCap);
 		} else {
 			$("#txtPName").text("");
 			$("#txtPType").text("");
 			$("#txtPSeq").text("");
+			$("#txtStag").text("");
+			$("#txtSymp").text("");
+			$("#txtSupCode").text("");
+			$("#txtCap").text("");
 		}
 		annunciatorHolder.setLoadAnn(loadedDna);
 		if(!cancGlobalUpdate) {
@@ -801,19 +884,7 @@
 			setButtonEnabled("#btnDnaClear" + slot, true);
 		}
 
-		if(loadedDna || dna.seq === null) {
-			setButtonEnabled("#btnDnaLoad" + slot, false);
-		} else {
-			setButtonEnabled("#btnDnaLoad" + slot, true);
-		}
-
-		if(loadedDna && dna.seq === null && !loadedDna.isSplicing){
-			setButtonEnabled("#btnDnaSave" + slot, true);
-		} else {
-			setButtonEnabled("#btnDnaSave" + slot, false);
-		}
-
-		if( loadedDna && dna.seq !== null && !loadedDna.isSplicing) {
+		if( dna.seq !== null || (loadedDna && !loadedDna.isSplicing)) {
 			setButtonEnabled("#btnDnaXchg" + slot, true);
 		} else {
 			setButtonEnabled("#btnDnaXchg" + slot, false);
@@ -984,47 +1055,24 @@
 
 			//ROW OF ANNUNCIATORS + BUTTONS
 
+			//SEQUENCE LISTING
 			var tempObj = $("<div></div>", {
 				'class':'noborder'
 			}).appendTo(finalObj);
-			//Slot field
-			$("<div></div>", {
-				'class':'text-field tf-narrow'
-				}).appendTo(tempObj).text(i);
-			/*
-			//Target annunciator
-			$("<div></div>", {
-				id:'annSpliceTarget' + i,
-				'class':'annunciator a-green'
-			}).appendTo(tempObj).text("TARGET");
-			*/
-			//Source annunciator
-			$("<div></div>", {
-				id:'annSpliceSource' + i,
-				'class':'annunciator a-green'
-			}).appendTo(tempObj).text("SOURCE");
-
-			//Load button
-			$("<div></div>", {
-				id:'btnSpliceLoad' + i,
-				'class':'button btn-small'
-			}).appendTo(tempObj).text("LOAD");
-			//Splice button
-			$("<div></div>", {
-				id:'btnSpliceSource' + i,
-				'class':'button btn-small'
-			}).appendTo(tempObj).text("SOURCE");
-
-			//SEQUENCE LISTING
-			tempObj = $("<div></div>", {
-				'class':'noborder'
-			}).appendTo(finalObj);
-			$("<span></span>", {
-				'class':'label'}).appendTo(tempObj).text("Seq:");
 			$("<div></div>", {
 				id:'txtSpliceSeq' +i,
 				'class':'text-field tf-long'
 				}).appendTo(tempObj);
+			tempObj = $("<div></div>", {
+				'class':'noborder'
+			}).appendTo(finalObj);
+			//Splice button
+			/*
+			$("<div></div>", {
+				id:'btnSpliceSource' + i,
+				'class':'button btn-small'
+			}).appendTo(tempObj).text("SPLICE");
+			*/
 		}
 		//Bind listeners
 		$("#spliceSlots .button").click(function() {handlePushButtonClick(this, handleSpliceSelectionClick);});
@@ -1171,15 +1219,10 @@
 		if (slot == null) return;
 		var id = clicked.id.slice(0, clicked.id.length - slot.toString().length);
 		switch(id)  {
-			case "btnSpliceLoad":
-				if (loadedDna) {
-					doExchangeDna(slot);
-				} else {
-					doLoadDna(slot);
-				}
-				break;
 			case "btnSpliceSource":
 				setSpliceSource(slot);
+				doExposeSlot(0);
+				beginSplice();
 				break;
 		}
 	}
@@ -1262,7 +1305,7 @@
 		//Clear source slot
 		dnaDetails[selectedSpliceSource - 1] = new dnaSlotInfo();
 		selectedSpliceSource = 0;
-		setActivePage(3); //Go back to splice selection page when finished
+		setActivePage(1); //Go back to splice selection page when finished
 		updateLoadedDependents();
 		updateMainMenuButtons();
 
@@ -1399,7 +1442,6 @@
 
 		if (data.hasOwnProperty("analysis")) {
 			var a = data.analysis;
-			// { "curr":"ABCDEF..." "prev":{analysisCallback(see below)}, "buttons":'ABCDEF'}
 			if(a.hasOwnProperty("curr")) {
 				clearAnalysisBuffer(true);
 				for(var i = 0; i < a.curr.length && i < 15; i+=3) {
@@ -1412,13 +1454,6 @@
 			if(a.hasOwnProperty("buttons"))
 				updateAnalysisButtonsFromString(a.buttons);
 			if(a.hasOwnProperty("prev")) {
-				/*
-				{valid:true/false,
-					stable:1,0,-1,
-					trans,1,0,-1,
-					seqs:["123", "456" ...]
-					conf:[25, 100 ...]}
-				*/
 				a.prev.noclear = true;
 				handleAnalysisTestCallback(a.prev);
 
@@ -1433,29 +1468,19 @@
 		if(bSuppressXmit || !typeof(data) == 'object' ) {
 			return;
 		}
-		/*
-		if(callbackHandler) {
-			data.callbackHandler = callbackHandler;
-			setTimeout(function () {receiveData(callbackHandler, debug_getCallbackDummyData(callbackHandler)) }, Math.random() * 4000);
-			setAnnunciator("#annSynch", true);
-		}
-		*/
 		var params = [];
 		for(var k in data) {
 			params.push(encodeURI(k) + "=" + encodeURI(data[k]));
 		}
 
 		var target = "?src=" + src + ";" + params.join(";");
-		//console.log(target);
 		window.location = target;
-		//alert(target);
 	}
 
 	/* DATA RECEIPT */
 
 	function receiveData(handler, data) {
 		setAnnunciator("#annSynch", false);
-		//alert("Received data: " + data + "\nProcessing with: " + handler);
 		if(remoteHandlers[handler]) {
 				data = JSON.parse(data);
 				remoteHandlers[handler](data);
@@ -1488,17 +1513,12 @@
 		if($("#" + id).hasClass("button-disabled")) {return;}
 
 		if(!isSplicing()) {	//Not splicing, everything's fine + dandy with the world.
-		/*
-			$("#mainMenu > .button").removeClass("button-selected");
-			$("#" + id).addClass("button-selected");
-			*/
 			switch(id) {
 				case "btnManip":
 					setActivePage(2);
 					break;
 				case "btnSplice":
 					setActivePage(3);
-
 					break;
 				case "btnTester":
 					setActivePage(5);
@@ -1518,7 +1538,9 @@
 				doExposeSlot(0);
 				break;
 			case "btnEjectSample":
+				doExposeSlot(0);
 				doEjectSample();
+				doExposeSlot(0);
 				break;
 		}
 	}
@@ -1651,17 +1673,6 @@
 			}
 		};
 		setUIState(dataObject);
-		//new (seq, pathogenName, pathogenType, exposed, isSplicing)
-		/*
-		dnaDetails.push(new dnaSlotInfo("00020006FFFDFFF60000FFF53142E||FCB055|6A86A8|0F4CC6CC6", "ABC1", "virus", false));
-		dnaDetails.push(new dnaSlotInfo("00020006000500000000FFFB3142E||055", "ABC2", "bacteria", false));
-		dnaDetails.push(new dnaSlotInfo("00040003FFED0005FFF3FFEF51B8E||FCB", "ABC3", "parasite", false));
-		updateLoadedSection();
-		for(var i = 1; i <= 3; i++){
-			updateDnaSlot(i);
-		}
-		doExposeSlot(0);
-		*/
 	}
 
 	function debug_createDNAbuttons() {

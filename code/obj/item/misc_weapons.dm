@@ -77,43 +77,33 @@
 		switch(src.bladecolor)
 			if("R")
 				r = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/red(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/red(src)
 			if("O")
 				r = 255; g = 127
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/orange(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/orange(src)
 			if("Y")
 				r = 255; g = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/yellow(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/yellow(src)
 			if("G")
 				g = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick(src)
 			if("C")
 				b = 255; g = 200
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/cyan(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/cyan(src)
 			if("B")
 				b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/blue(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/blue(src)
 			if("P")
 				r = 153; b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/purple(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/purple(src)
 			if("Pi")
 				r = 255; g = 121; b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/pink(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/pink(src)
 			if("W")
 				r = 255; g = 255; b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
-
-		if (!src.loaded_glowstick && use_glowstick) //the glowstick needs to be on!
-			src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src) // rainbow is basicall diffracted white light
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
+			else
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
 		src.loaded_glowstick.turnon()
 
 		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
@@ -123,28 +113,30 @@
 		BLOCK_SWORD
 
 /obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
-	if(ishuman(user))
-		if(active)
-			if (handle_parry(target, user))
-				return 1
+	if(active)
+		if (handle_parry(target, user))
+			return 1
+		if (do_stun)
+			target.do_disorient(150, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
 
-			if (do_stun)
-				target.do_disorient(150, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
+		var/age_modifier = 0
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			age_modifier = 30 - H.bioHolder.age
 
-			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
-			..()
+		if(user.gender == MALE) playsound(get_turf(user), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.2, 1.0 + age_modifier/60)))
+		else playsound(get_turf(user), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.4, 1.0 + age_modifier/50)))
+		..()
+	else
+		if (user.a_intent == INTENT_HELP)
+			user.visible_message("<span class='combat bold'>[user] [pick_string("descriptors.txt", pick("mopey", "borg_shake"))] baps [target] on the [pick("nose", "forehead", "wrist", "chest")] with \the [src]'s handle!</span>")
+			if(prob(3))
+				SPAWN_DBG(0.2 SECONDS)
+					target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
+					target.changeStatus("stunned", 50)
+					target.changeStatus("weakened", 5 SECONDS)
 		else
-			if (user.a_intent == INTENT_HELP)
-				user.visible_message("<span class='combat bold'>[user] [pick_string("descriptors.txt", pick("mopey", "borg_shake"))] baps [target] on the [pick("nose", "forehead", "wrist", "chest")] with \the [src]'s handle!</span>")
-				if(prob(3))
-					SPAWN_DBG(0.2 SECONDS)
-						target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
-						target.changeStatus("stunned", 50)
-						target.changeStatus("weakened", 5 SECONDS)
-			else
-				..()
+			..()
 
 /obj/item/sword/proc/get_hex_color_from_blade(var/C as text)
 	switch(C)
@@ -190,8 +182,8 @@
 			S = H.find_type_in_hand(/obj/item/sword, "left")
 		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
 			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
-			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
-			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
+			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 			C.setup(H.loc)
 			var/matrix/m = matrix()
 			m.Turn(rand(0,360))
@@ -241,8 +233,8 @@
 		stamina_damage = active_stamina_dmg
 		if(ishuman(user))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordstart.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U),"sound/weapons/female_cswordturnon.ogg" , 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordstart.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+			else playsound(get_turf(U),"sound/weapons/female_cswordturnon.ogg" , 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		if (src.bladecolor)
@@ -260,8 +252,8 @@
 		stamina_damage = inactive_stamina_dmg
 		if(ishuman(user))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U),"sound/weapons/female_cswordturnoff.ogg", 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+			else playsound(get_turf(U),"sound/weapons/female_cswordturnoff.ogg", 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = inactive_force
 		src.stamina_cost = inactive_stamina_cost
 		src.icon_state = "[state_name]0"
@@ -296,6 +288,10 @@
 			return
 
 		if (!src.open)
+			if (!src.bladecolor) //rainbow
+				boutput(user, "<span class='alert'>This sword cannot be modified.</span>")
+				return
+
 			user.visible_message("<b>[user]</b> unscrews and opens [src].")
 			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
 			src.open = 1
@@ -357,7 +353,7 @@
 
 /obj/item/sword/attack_hand(mob/user as mob)
 	if (src.open && src.loc == user)
-		if (src.loaded_glowstick)
+		if (src.loaded_glowstick && src.use_glowstick)
 			user.put_in_hand(loaded_glowstick)
 			src.loaded_glowstick = null
 			src.bladecolor = null
@@ -856,7 +852,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
-	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
+	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items to 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
 	click_delay = 10
@@ -1462,8 +1458,7 @@ obj/item/whetstone
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(istype (M) | !isdead(M))
 			var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
-			SPAWN_DBG(0)
-				M.throw_at(throw_target, 2, 2)
+			M.throw_at(throw_target, 2, 2)
 			if(force <= maximum_force)
 				force += 5
 				boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")

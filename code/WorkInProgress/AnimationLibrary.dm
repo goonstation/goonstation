@@ -166,8 +166,25 @@
 		layer = MOB_LAYER_BASE - 0.1
 		appearance_flags = TILE_BOUND
 
+	muzzleflash
+		icon = 'icons/mob/mob.dmi'
+		alpha = 255
+		plane = PLANE_OVERLAY_EFFECTS
+
+		unpooled()
+			..()
+			src.alpha = 255
+
+		pooled()
+			..()
+
+
+
 /mob/var/obj/particle/attack/attack_particle
 /mob/var/obj/particle/attack/sprint/sprint_particle
+
+
+
 
 ///obj/attackby(var/obj/item/I as obj, mob/user as mob)
 //	attack_particle(user,src)
@@ -429,56 +446,56 @@ proc/fuckup_attack_particle(var/mob/M)
 		y *= 22
 		animate(M.attack_particle, pixel_x = M.attack_particle.pixel_x + x , pixel_y = M.attack_particle.pixel_y + y, time = 5, easing = BOUNCE_EASING, flags = ANIMATION_END_NOW)
 
-proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim)
-	if (!M || !M.attack_particle || !origin || !target || !muzzle_anim) return
+var/global/obj/overlay/simple_light/muzzle_simple_light = new	/obj/overlay/simple_light{appearance_flags = RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART}
 
-	var/offset = 22 //amt of pixels the muzzle flash sprite is offset the shooting mob by
+var/global/list/default_muzzle_flash_colors = list(
+	"muzzle_flash" = "#FFEE9980",
+	"muzzle_flash_laser" = "#FF333380",
+	"muzzle_flash_elec" = "#FFC80080",
+	"muzzle_flash_bluezap" = "#00FFFF80",
+	"muzzle_flash_plaser" = "#00A9FB80",
+	"muzzle_flash_phaser" = "#F41C2080",
+	"muzzle_flash_launch" = "#FFFFFF50",
+	"muzzle_flash_wavep" = "#B3234E80",
+	"muzzle_flash_waveg" = "#33CC0080",
+	"muzzle_flash_waveb" = "#87BBE380"
+)
+
+proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim, var/muzzle_light_color=null, var/offset=25)
+	if (!M || !origin || !target || !muzzle_anim) return
 	var/firing_angle = get_angle(origin, target)
-	var/firing_dir = angle_to_dir(firing_angle)
-	switch(firing_dir) //so we apply the correct offset
-		if (NORTH)
-			M.attack_particle.pixel_y = 32
-		if (SOUTH)
-			M.attack_particle.pixel_y = -32
-		if (EAST)
-			M.attack_particle.pixel_x = offset
-		if (WEST)
-			M.attack_particle.pixel_x = -offset
-		if (NORTHEAST) //diags look a little weird but what can you do
-			M.attack_particle.pixel_y = offset
-			M.attack_particle.pixel_x = offset
-		if (NORTHWEST)
-			M.attack_particle.pixel_y = offset
-			M.attack_particle.pixel_x = -offset
-		if (SOUTHEAST)
-			M.attack_particle.pixel_y = -offset
-			M.attack_particle.pixel_x = offset
-		if (SOUTHWEST)
-			M.attack_particle.pixel_y = -offset
-			M.attack_particle.pixel_x = -offset
+	muzzle_flash_any(M, firing_angle, muzzle_anim, muzzle_light_color, offset)
 
-	var/matrix/start = matrix()
-	M.attack_particle.transform = start
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
+	if (!A || firing_angle == null || !muzzle_anim) return
 
-	M.attack_particle.Turn(firing_angle)
-	M.attack_particle.layer = MOB_INHAND_LAYER //so it looks like its from the weapon maybe??
+	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
 
-	M.attack_particle.set_loc(M) //so it doesnt linger when we move part 1
-	M.vis_contents.Add(M.attack_particle) //so it doesnt linger when we move part 2
-	M.attack_particle.invisibility = M.invisibility
-	M.last_interact_particle = world.time
-	M.attack_particle.alpha = 255
-	M.attack_particle.icon = 'icons/mob/mob.dmi'
-	if (M.attack_particle.icon_state == muzzle_anim)
-		flick(muzzle_anim,M.attack_particle)
-	M.attack_particle.icon_state = muzzle_anim
+	if(isnull(muzzle_light_color))
+		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
+	muzzleflash.overlays.Cut()
+	if(muzzle_light_color)
+		muzzle_simple_light.color = muzzle_light_color
+		muzzleflash.overlays += muzzle_simple_light
 
-	SPAWN_DBG(1.7 DECI SECONDS) //clears all the bs we had to do
-		M.attack_particle.alpha = 0
-		M.attack_particle.pixel_x = 0
-		M.attack_particle.pixel_y = 0
-		M.vis_contents.Remove(M.attack_particle)
-		M.attack_particle.layer = EFFECTS_LAYER_BASE
+	var/matrix/mat = new
+	mat.Translate(0, offset)
+	mat.Turn(firing_angle)
+	muzzleflash.transform = mat
+	muzzleflash.layer = A.layer
+	muzzleflash.set_loc(A)
+	A.vis_contents.Add(muzzleflash)
+	if (muzzleflash.icon_state == muzzle_anim)
+		flick(muzzle_anim,muzzleflash)
+	muzzleflash.icon_state = muzzle_anim
+
+	animate(muzzleflash, time=0.4 SECONDS)
+	animate(alpha=0, easing=SINE_EASING, time=0.2 SECONDS)
+
+	SPAWN_DBG(0.6 SECONDS)
+		A.vis_contents.Remove(muzzleflash)
+		pool(muzzleflash)
+
 
 
 /proc/sprint_particle(var/mob/M, var/turf/T = null)

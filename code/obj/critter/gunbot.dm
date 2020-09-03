@@ -8,7 +8,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 0
 	atcritter = 1
@@ -91,7 +91,5 @@
 			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
 
 		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+			elecflash(src,2)
 			qdel(src)

@@ -76,7 +76,7 @@
 
 		contextLayout = new /datum/contextLayout/flexdefault(4, 32, 32)
 
-		genetics_computers += src
+		START_TRACKING
 		screenoverlay = SafeGetOverlayImage("screen", 'icons/obj/64x64.dmi', "genebooth_screen")
 		screenoverlay.blend_mode = BLEND_MULTIPLY
 		screenoverlay.layer = src.layer + 0.2
@@ -95,7 +95,7 @@
 		workingoverlay.layer = src.layer + 0.1
 
 	disposing()
-		genetics_computers -= src
+		STOP_TRACKING
 		..()
 
 
@@ -164,7 +164,7 @@
 		updateicon()
 
 		usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
-		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, pitch = 0.60)
+		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.60)
 
 	proc/just_pick_anything()
 		for (var/datum/geneboothproduct/P in offered_genes)
@@ -284,7 +284,7 @@
 		if (split_with)
 			string += "Splitting half of profits with [split_with]."
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"="medresearch", "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"=MGD_MEDRESEACH, "sender"="00000000", "message"=string)
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(src, pdaSignal)
@@ -297,7 +297,7 @@
 
 		var/string = "Notification: [GBP.name] has sold out!"
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"="medresearch", "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"=MGD_MEDRESEACH, "sender"="00000000", "message"=string)
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(src, pdaSignal)

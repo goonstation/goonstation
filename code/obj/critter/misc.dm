@@ -7,7 +7,7 @@
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	generic = 0
@@ -36,7 +36,7 @@
 		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
 		SPAWN_DBG (100) //Give time for people to butcher it if they want.
 			if (!src.disposed && src.loc && original_object)
-				original_object.loc = src.loc
+				original_object.set_loc(src.loc)
 				original_object = null
 				qdel(src)
 		return ..()
@@ -64,7 +64,7 @@
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 2
@@ -308,7 +308,7 @@
 	atkcarbon = 1
 	atksilicon = 1
 	brutevuln = 0.5
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	seekrange = 5
 	density = 0
 	angertext = "suddenly materializes and lunges at"
@@ -394,7 +394,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1
@@ -438,7 +438,7 @@
 		if (M.reagents)
 			M.reagents.add_reagent("histamine", 12)
 			M.reagents.add_reagent("toxin", 2)
-			karma_update(1, "SAINT", M)
+			M.add_karma(1)
 
 /obj/critter/spacebee/angry
 	name = "angry space wasp"
@@ -465,7 +465,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -541,8 +541,8 @@
 	CritterAttack(mob/M)
 		if (!src.alive) return
 		src.attacking = 1
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		if(!M.stat)
 			M.visible_message("<span class='combat'><B>[src]</B> pummels [src.target] mercilessly!</span>")
@@ -590,7 +590,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0 // don't bother!
@@ -694,7 +694,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -795,8 +795,8 @@
 			random_brute_damage(src.target, rand(4,8),1)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		return
 
@@ -825,7 +825,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 0
 	atcritter = 0
@@ -918,7 +918,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -951,7 +951,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -1063,7 +1063,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 0
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	seekrange = 5
 	density = 1
 	var/boredom_countdown = 0
@@ -1170,8 +1170,8 @@
 			src.visible_message("<span class='combat'><B>[src]</B> grabs at [M]'s arm!</span>")
 			boutput(M, "<span class='combat'><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN_DBG(6 SECONDS)
 			src.attacking = 0
@@ -1243,7 +1243,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0 // don't bother!

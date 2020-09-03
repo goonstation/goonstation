@@ -309,7 +309,7 @@
 				else
 					boutput(usr, "[master.ship_message("System not installed in ship!")]")
 			if ("leave")
-				master.eject(usr)
+				master.leave_pod(usr)
 			if ("wormhole") //HEY THIS DOES SAMETHING AS CLIENT WORMHOLE PROC IN VEHICLE.DM
 				if(master.engine && !istype(master,/obj/machinery/vehicle/tank/car))
 					if(master.engine.active)

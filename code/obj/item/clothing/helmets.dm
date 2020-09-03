@@ -68,7 +68,7 @@
 	item_state = "s_helmet"
 	var/on = 0
 
-	var/datum/component/holdertargeting/simple_light/light_dir
+	var/datum/component/holdertargeting/medium_directional_light/light_dir
 
 	New()
 		..()
@@ -195,6 +195,8 @@
 		wear_image_icon = 'icons/mob/fruithat.dmi'
 		icon_state = "commissar_cap"
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
+		seal_hair = 0
+		see_face = 1
 
 	specialist
 		name = "specialist combat helmet"

@@ -168,13 +168,8 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 			return ..()
 
-		if (isHemera && moonfall_hemera.len)
-			var/turf/T = pick(moonfall_hemera)
-			fall_to(T, A)
-			return
-
-		else if (!isHemera && moonfall_museum.len)
-			var/turf/T = pick(moonfall_museum)
+		var/turf/T = pick_landmark(isHemera ? LANDMARK_FALL_MOON_HEMERA : LANDMARK_FALL_MOON_MUSEUM)
+		if (T)
 			fall_to(T, A)
 			return
 
@@ -976,10 +971,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			sleep (2)
 			src.opacity = 0
 			sleep(0.6 SECONDS)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
-			pool(s)
+			elecflash(src,power=2,exclude_center = 0)
 
 		for (var/obj/machinery/door/airlock/otherDoor in view(7, src))
 			if (777 in otherDoor.req_access)
@@ -1115,7 +1107,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	aggressive = 0
 	defensive = 1
 	wanderer = 0
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0
@@ -1145,9 +1137,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		..()
 
 		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+			elecflash(src,power=2,exclude_center = 0)
 			qdel(src)
 
 

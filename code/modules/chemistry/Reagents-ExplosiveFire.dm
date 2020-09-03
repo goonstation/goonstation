@@ -374,9 +374,7 @@ datum
 				reacting = 1
 				var/list/covered = holder.covered_turf()
 				var/location = covered.len ? covered[1] : 0
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, location)
-				s.start()
+				elecflash(location)
 
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
@@ -796,9 +794,7 @@ datum
 						if (prob(min(covered.len/3,85)))
 							continue
 
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(2, 1, location)
-					s.start()
+					elecflash(location)
 					SPAWN_DBG(rand(5,15))
 						if(!holder || !holder.my_atom) return // runtime error fix
 						switch(our_amt)
@@ -892,9 +888,7 @@ datum
 					smoke.set_up(1, 0, holder.my_atom.loc)
 					smoke.start()
 
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(5, 1, holder.my_atom.loc, ,"#cb5e97")
-					s.start()
+					elecflash(holder.my_atom.loc)
 
 					var/max_dev = min(round(1 * (volume/300)), 1)
 					var/max_heavy = min(round(3 * (volume/300)), 3)
@@ -944,6 +938,7 @@ datum
 			unpooled()
 				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
 					dry()
+				..()
 
 
 
@@ -962,6 +957,7 @@ datum
 			unpooled()
 				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
 					bang()
+				..()
 
 			reaction_turf(var/turf/T, var/volume)
 				var/obj/decal/cleanable/nitrotriiodide/NT = ..()

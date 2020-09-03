@@ -338,10 +338,10 @@ Contains:
 			msgs.played_sound = joustingTool.hitsound
 			msgs.affecting = pick("chest", "head")
 			msgs.logs = list()
-			msgs.logc("jousts %target% with a [joustingTool]")
+			msgs.logc("jousts [constructTarget(T,"combat")] with a [joustingTool]")
 			msgs.damage_type = DAMAGE_BLUNT
 
-			//logTheThing("combat", R, T, " jousts %target% with a [joustingTool]")
+			//logTheThing("combat", R, T, " jousts [constructTarget(src,"diary")] with a [joustingTool]")
 
 			if (S) // they were on a segway, diiiiis-MOUNT!
 				S.eject_rider(2)
@@ -360,7 +360,7 @@ Contains:
 					T.u_equip(hat)
 					hat.set_loc(T.loc)
 					hat.dropped(T)
-					SPAWN_DBG(0) hat.throw_at(get_edge_target_turf(T, S.dir), 50, 1)
+					hat.throw_at(get_edge_target_turf(T, S.dir), 50, 1)
 
 			else if (istype(joustingTool, /obj/item/experimental/melee/spear)) // don't need custom attackResults here, just use the spear attack, that's deadly enough
 				T.attackby(joustingTool, R)
@@ -505,11 +505,11 @@ Contains:
 	switch (action)
 		if ("impact")
 			if (ismob(rider) && ismob(other_dude))
-				logTheThing("vehicle", rider, other_dude, "driving [src] crashes into %target%[immune_to_impact != 0 ? " (immune to impact)" : ""] at [log_loc(src)].")
+				logTheThing("vehicle", rider, other_dude, "driving [src] crashes into [constructTarget(other_dude,"vehicle")][immune_to_impact != 0 ? " (immune to impact)" : ""] at [log_loc(src)].")
 
 		if ("shoved_off")
 			if (ismob(rider) && ismob(other_dude))
-				logTheThing("vehicle", other_dude, rider, "shoves %target% off of a [src] at [log_loc(src)].")
+				logTheThing("vehicle", other_dude, rider, "shoves [constructTarget(rider,"vehicle")] off of a [src] at [log_loc(src)].")
 
 	return
 
@@ -1232,7 +1232,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 		if ("pax_enter", "pax_exit")
 			if (pax && ismob(pax))
-				logTheThing("vehicle", pax, rider && ismob(rider) ? rider : null, "[action == "pax_enter" ? "is stuffed into" : "is ejected from"] [src.name] ([forced_in == 1 ? "Forced by" : "Driven by"]: [rider && ismob(rider) ? "%target%" : "N/A or unknown"]) at [log_loc(src)].")
+				var/logtarget = (rider && ismob(rider) ? rider : null)
+				logTheThing("vehicle", pax, logtarget, "[action == "pax_enter" ? "is stuffed into" : "is ejected from"] [src.name] ([forced_in == 1 ? "Forced by" : "Driven by"]: [rider && ismob(rider) ? "[constructTarget(logtarget,"vehicle")]" : "N/A or unknown"]) at [log_loc(src)].")
 
 	return
 
@@ -1786,8 +1787,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			M.changeStatus("stunned", 80)
 			M.changeStatus("weakened", 5 SECONDS)
 			var/turf/target = get_edge_target_turf(src, src.dir)
-			SPAWN_DBG(0)
-				M.throw_at(target, 10, 2)
+			M.throw_at(target, 10, 2)
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		in_bump = 0
@@ -2153,7 +2153,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 	//pick up crates with forklift
 	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart)) && get_dist(A, src) <= 1 && src.rider == usr && helditems.len != helditems_maximum && !broken)
-		A.loc = src
+		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()
 		boutput(usr, "<span class='notice'><B>You pick up the [A.name].</B></span>")
@@ -2222,7 +2222,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			boutput(usr, "<span class='notice'><B>You leave [helditems.len] crates on [src.loc].</B></span>")
 
 		for (var/obj/HI in helditems)
-			HI.loc = src.loc
+			HI.set_loc(src.loc)
 
 		helditems.len = 0
 		update_overlays()

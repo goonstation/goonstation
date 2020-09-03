@@ -97,10 +97,10 @@
 				return
 		//oh boy time to move
 		playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
-		var/obj/crate = lockers_and_crates[rand(lockers_and_crates.len + 1)]
+		var/obj/crate = pick(by_type[/obj/storage])
 		while(crate.z != 1)
-			crate = lockers_and_crates[rand(lockers_and_crates.len + 1)]
-		src.loc = crate
+			crate = pick(by_type[/obj/storage])
+		src.set_loc(crate)
 
 
 
@@ -360,12 +360,12 @@
 
 
 		if (istype(ghost_to_toss))
-			ghost_to_toss.loc = soul_stuff
+			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(., 10, 1)
 		SPAWN_DBG (10)
 			if (soul_stuff && ghost_to_toss)
-				ghost_to_toss.loc = soul_stuff.loc
+				ghost_to_toss.set_loc(soul_stuff.loc)
 
 		some_poor_fucker.throw_at(., 1, 1)
 		some_poor_fucker.weakened += 2
@@ -834,8 +834,7 @@
 		if(world.time - pickup_time >= 300)
 			boutput(owner, "<h3><span class='alert'>You have held [src.name] long enough! Good job!</span></h3>")
 			if(owner && owner.client)
-				var/obj/landmark/ass_arena_spawn/place = pick(ass_arena_spawn)
-				src.set_loc(place.loc)
+				src.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 				owner.client.respawn_target(owner,1)
 				DEBUG_MESSAGE("[owner.name] has been ass arena respawned!")
 				owner.gib()
@@ -848,7 +847,89 @@
 		DEBUG_MESSAGE("Heck someone broke the artifact")
 		var/obj/item/ass_day_artifact/next_artifact
 		next_artifact = new /obj/item/ass_day_artifact
-		var/obj/landmark/ass_arena_spawn/place = pick(ass_arena_spawn)
-		next_artifact.set_loc(place.loc)
+		next_artifact.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 		processing_items.Remove(src)
 		..()
+
+/obj/item/scpgnome
+	name = "strange sarcophagus"
+	desc = "A sarcophagus bound by magical chains."
+	icon = 'icons/obj/junk.dmi'
+	icon_state = "sarc_0"
+	density = 1
+	var/gnome = 1
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/scpgnome_lid) && ((src.icon_state == "sarc_2")||(src.icon_state == "sarc_3")))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_1"
+		else if(istype(W,/obj/item/gnomechompski/mummified) && (src.icon_state == "sarc_3"))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_2"
+			src.gnome = 1
+		else if(istype(W,/obj/item/device/key/chompskey) && (src.icon_state == "sarc_0"))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_key"
+		else
+			..()
+
+	attack_hand(mob/user as mob)
+		if(src.icon_state == "sarc_key")
+			src.icon_state = "opening"
+			animate(src, time = 2.3 SECONDS)
+			animate(icon_state = "sarc_1")
+		else if(src.icon_state == "sarc_1")
+			if(src.gnome)
+				src.icon_state = "sarc_2"
+			else
+				src.icon_state = "sarc_3"
+			user.put_in_hand_or_drop(new /obj/item/scpgnome_lid)
+		else if(src.icon_state == "sarc_2")
+			src.gnome = 0
+			src.icon_state = "sarc_3"
+			user.put_in_hand_or_drop(new /obj/item/gnomechompski/mummified)
+
+/obj/item/scpgnome_lid
+	name = "strange sarcophagus lid"
+	desc = "The lid to some sort of sarcophagus"
+	icon = 'icons/obj/junk.dmi'
+	icon_state = "sarc_1"
+
+/obj/item/gnomechompski/mummified
+	name = "mummified object"
+	icon_state = "mummified"
+	var/list/gnomes = list("gnelf","chome-gnompski","chrome-chompski","gnuigi-chompini","usagi-tsukinompski","sans-undertaleski","gnoctor-florpski","gnos-secureski","crime-chompski","antignome-negachompski")
+
+	attack_self(mob/user as mob)
+		user.u_equip(src)
+		src.set_loc(user)
+		var/obj/item/gnomechompski/g = new /obj/item/gnomechompski
+		if(prob(30))
+			g.icon_state = pick(gnomes)
+			switch(g.icon_state)
+				if("gnelf")
+					g.name = "Gnelf Chompski"
+				if("chome-gnompski")
+					g.name = "Chome Gnompski"
+				if("chrome-chompski")
+					g.name = "Chrome Chompski"
+				if("gnuigi-chompini")
+					g.name = "Gnuigi Chompini"
+				if("usagi-tsukinompski")
+					g.name = "Usagi Tsukinompski"
+				if("sans-undertaleski")
+					g.name = "Boss Musicski"
+				if("gnoctor-florpski")
+					g.name = "Gnoctor Florpski"
+				if("gnos-secureski")
+					g.name = "Gnos Secureski"
+				if("crime-chompski")
+					g.name = "Crime Chompski"
+				if("antignome-negachompski")
+					g.name = "Ikspmohc-Emong"
+		user.put_in_hand_or_drop(g)
+		user.visible_message("<span style=\"color:red\">[user.name] unwraps [g]!</span>")
+		qdel(src)

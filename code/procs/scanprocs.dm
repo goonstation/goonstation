@@ -125,23 +125,11 @@
 			var/mob/living/carbon/human/H = M
 			if (H.pathogens.len)
 				pathogen_data = "<span class='alert'>Scans indicate the presence of [H.pathogens.len > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
-				var/list/therapy = list()
-				var/remissive = 0
 				for (var/uid in H.pathogens)
 					var/datum/pathogen/P = H.pathogens[uid]
+					pathogen_data += "<br>&emsp;<span class='alert'>Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].</span>."
 					if (P.in_remission)
-						remissive ++
-					if (!(P.suppressant.therapy in therapy))
-						therapy += P.suppressant.therapy
-				var/count_part
-				if (!remissive)
-					count_part = "None of them appear"
-				else if (remissive == 1)
-					count_part = "One pathogen appears"
-				else
-					count_part = "[remissive] of them appear"
-				pathogen_data += "<br>&emsp;<span class='alert'>[count_part] to be in a remissive state.</span>"
-				pathogen_data += "<br><span style='font-weight:bold'>Suggested pathogen suppression therapies: [jointext(therapy, ", ")]."
+						pathogen_data += "<br>&emsp;&emsp;<span class='alert'>It appears to be in remission.</span>."
 
 			if (H.get_organ("brain"))
 				if (H.get_brain_damage() >= 100)
@@ -581,10 +569,10 @@
 		var/obj/item/assembly/proximity_bomb/PB = A
 		if (PB.part3)
 			check_me = PB.part3.air_contents
-	if (istype(A, /obj/item/flamethrower/))
-		var/obj/item/flamethrower/FT = A
-		if (FT.part4)
-			check_me = FT.part4.air_contents
+	if (istype(A, /obj/item/flamethrower/assembled/))
+		var/obj/item/flamethrower/assembled/FT = A
+		if (FT.gastank)
+			check_me = FT.gastank.air_contents
 
 	if (!check_me || !istype(check_me, /datum/gas_mixture/))
 		if (pda_readout == 1)

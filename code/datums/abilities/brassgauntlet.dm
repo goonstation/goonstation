@@ -28,7 +28,7 @@
 			for(var/obj/item/I in oview(5, usr)) //No longer brings your organs to life, killing you as they desperately try to attack you from the inside!
 				if (I.anchored || I.invisibility) continue
 				var/obj/critter/livingobj/L = new/obj/critter/livingobj(I.loc)
-				I.loc = L
+				I.set_loc(L)
 				L.name = "Living [I.name]"
 				L.desc = "[I.desc]. It appears to be alive!"
 				L.overlays += I
@@ -319,8 +319,6 @@ proc/timeywimey(var/time)
 		boutput(L, "<span class='alert'><B>You suddenly feel yourself pulled violently back in time!</B></span>")
 		L.set_loc(positions[L])
 		L.changeStatus("stunned", 6 SECONDS)
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(4, 1, L)
-		s.start()
+		elecflash(L,power = 2)
 		playsound(L.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 	return 1

@@ -97,7 +97,8 @@
 	plant_reagent = "juice_tomato"
 	validforhat = 1
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		..()
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
@@ -513,7 +514,7 @@
 			hitMob.do_disorient(stamina_damage = 35, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 		throw_unlimited = 1
 		if(target.x > src.x || (target.x == src.x && target.y > src.y))
 			src.icon_state = "[base_icon_state]-spin-right"
@@ -584,8 +585,7 @@
 					slice.Eat(dork, dork)
 				else
 					var/target = get_turf(pick(orange(4, src)))
-					SPAWN_DBG(0)
-						slice.throw_at(target, rand(0, 10), rand(1, 4))
+					slice.throw_at(target, rand(0, 10), rand(1, 4))
 				n_slices--
 			sleep(0.1 SECONDS)
 			qdel(src)

@@ -40,6 +40,8 @@ mob
 			src.update_cursor()
 
 	process_move(keys)
+		set waitfor = 0
+
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 			if (controller)
@@ -54,7 +56,7 @@ mob
 		if (src.move_dir)
 			var/running = 0
 			var/mob/living/carbon/human/H = src
-			if ((keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT)
+			if ((keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 				running = 1
 			if (H.pushing && get_dir(H,H.pushing) != H.move_dir) //Stop pushing before calculating move_delay if we've changed direction
 				H.pushing = 0

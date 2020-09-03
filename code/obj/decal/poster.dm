@@ -11,7 +11,7 @@
 	var/imgh = 400
 	var/popup_win = 1
 	layer = EFFECTS_LAYER_BASE
-	plane = PLANE_NOSHADOW_BELOW
+	plane = PLANE_NOSHADOW_ABOVE
 
 	examine()
 		if (usr.client && src.popup_win)
@@ -656,6 +656,12 @@
 						src.desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
 						src.icon_state = "fuckII"
 
+		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
+			name = "\proper fuck"
+			desc = "No... it can't be... the original?! This is a vintage!!"
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "fuckI"
+
 		fuck2
 			name = "\proper fuck II"
 			desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
@@ -683,6 +689,14 @@
 			icon = 'icons/effects/96x32.dmi' //Maybe not the best place but it was the only ready 96x32 dmi
 			icon_state = "garbagegarbs"
 			bound_width  = 96
+
+		fuq3
+			desc = "Our premier line of clothing is so diverse, you'll be sure to cry 'What le fuq?'"
+			name = "Fuq III"
+			icon = 'icons/effects/96x32.dmi'
+			icon_state = "fuq3"
+			bound_width  = 96
+			plane = -99
 
 ///////////////////////////////////////
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS

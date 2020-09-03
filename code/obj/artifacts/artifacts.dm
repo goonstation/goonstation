@@ -29,6 +29,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	attack_hand(mob/user as mob)
+		user.lastattacked = src
 		src.ArtifactTouched(user)
 		return
 
@@ -36,6 +37,7 @@
 		return attack_hand(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		user.lastattacked = src
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -79,7 +81,7 @@
 			if("uranium")
 				src.ArtifactStimulus("radiate", round(volume / 2))
 			if("dna_mutagen","mutagen","omega_mutagen")
-				if (A.artitype == "martian")
+				if (A.artitype.name == "martian")
 					ArtifactDevelopFault(80)
 			if("phlogiston","dbreath","el_diablo","thermite","thalmerite","argine")
 				src.ArtifactStimulus("heat", 310 + (volume * 5))
@@ -229,7 +231,7 @@
 			if("uranium")
 				src.ArtifactStimulus("radiate", round(volume / 2))
 			if("dna_mutagen","mutagen","omega_mutagen")
-				if (A.artitype == "martian")
+				if (A.artitype.name == "martian")
 					ArtifactDevelopFault(80)
 			if("phlogiston","dbreath","el_diablo")
 				src.ArtifactStimulus("heat", 310 + (volume * 5))

@@ -17,6 +17,9 @@
 #elif defined(MAP_OVERRIDE_DONUT2)
 #include "donut2.dm"
 
+#elif defined(MAP_OVERRIDE_DONUT3)
+#include "donut3.dm"
+
 #elif defined(MAP_OVERRIDE_LINEMAP)
 #include "linemap.dm"
 
@@ -49,6 +52,9 @@
 
 #elif defined(MAP_OVERRIDE_KONDARU)
 #include "kondaru.dm"
+
+#elif defined(MAP_OVERRIDE_OZYMANDIAS)
+#include "ozymandias.dm"
 
 #elif defined(MAP_OVERRIDE_FLEET)
 #include "fleet.dm"

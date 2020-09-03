@@ -238,6 +238,8 @@
   * * sig_typeor_types Signal string key or list of signal keys to stop listening to specifically
   */
 /datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
+	if (!target)
+		return
 	var/list/lookup = target.comp_lookup
 	if(!signal_procs || !signal_procs[target] || !lookup)
 		return
@@ -566,9 +568,9 @@
 		switch(child)
 			if(/datum)
 				return null
-			if(/obj || /mob)
+			if(/obj, /mob)
 				return /atom/movable
-			if(/area || /turf)
+			if(/area, /turf)
 				return /atom
 			else
 				return /datum

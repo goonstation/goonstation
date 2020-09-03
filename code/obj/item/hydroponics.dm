@@ -12,7 +12,7 @@
 
 /obj/item/saw
 	name = "chainsaw"
-	desc = "A chainsaw used to chop up harmful plants. Despite its appearance, it's not extremely dangerous to humans."
+	desc = "A chainsaw used to chop up harmful plants."
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
@@ -21,7 +21,7 @@
 	var/active = 0.0
 	hit_type = DAMAGE_CUT
 	force = 3.0
-	var/active_force = 10.0
+	var/active_force = 12.0
 	var/off_force = 3.0
 	var/how_dangerous_is_this_thing = 1
 	var/takes_damage = 1
@@ -176,6 +176,8 @@
 		src.set_loc(user.loc)
 		user.gib()
 		return 1
+
+/obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
 /obj/item/saw/syndie
 	name = "red chainsaw"
@@ -355,29 +357,14 @@
 	desc = "A tool for cyborgs used to create plant seeds."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "forensic0"
-	var/list/available = list()
 	var/datum/plant/selected = null
 
-	New()
-		..()
-		for (var/A in typesof(/datum/plant)) src.available += new A(src)
-
-		/*for (var/datum/plant/P in src.available)
-			if (!P.vending || P.type == /datum/plant)
-				del P
-				continue*/
 
 	attack_self(var/mob/user as mob)
-/*		var/hacked = 0
-		if (isrobot(user))
-			var/mob/living/silicon/robot/R = user
-			if (R.emagged)
-				hacked = 1
-*/
 		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
 		var/list/usable = list()
 		for(var/datum/plant/A in hydro_controls.plant_species)
-			if (!A.vending/* || (A.vending == 2 && !hacked)*/)
+			if (!A.vending)
 				continue
 			usable += A
 
@@ -387,11 +374,21 @@
 	afterattack(atom/target as obj|mob|turf, mob/user as mob, flag)
 		if (isturf(target) && selected)
 			var/obj/item/seed/S
+			// if (selected.unique_seed)
+			// 	S = new selected.unique_seed(src.loc)
+			// else
+			// 	S = new /obj/item/seed(src.loc,0)
+			// S.generic_seed_setup(selected)
 			if (selected.unique_seed)
-				S = new selected.unique_seed(src.loc)
+				S = unpool(selected.unique_seed)
+				S.set_loc(src.loc)
 			else
-				S = new /obj/item/seed(src.loc,0)
+				S = unpool(/obj/item/seed)
+				S.set_loc(src.loc)
+				S.removecolor()
 			S.generic_seed_setup(selected)
+
+
 
 /obj/item/seedplanter/hidden
 	desc = "This is supposed to be a cyborg part. You're not quite sure what it's doing here."

@@ -106,7 +106,6 @@
 
 	disposing()
 		if (effect_overlay)
-			effect_overlay.loc = null
 			qdel(effect_overlay)
 			effect_overlay = null
 		..()
@@ -118,8 +117,8 @@
 
 	New(var/L)
 		..()
-		set_dir(dir)
 		effect_overlay = new/obj/overlay/tile_effect/secondary/bookcase(loc)
+		set_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
 		if (varname == "dir")
