@@ -2,18 +2,15 @@
 datum/controller/process/critters
 	var/tmp/list/detailed_count
 	var/tmp/tick_counter
-	var/tmp/list/critters
 
 	setup()
 		name = "Critter"
 		schedule_interval = 16 // 1.6 seconds
 
 		detailed_count = new
-		src.critters = global.critters
-
 	doWork()
 		var/i
-		for(var/datum/c in global.critters)
+		for(var/datum/c in by_cat[TR_CAT_CRITTERS])
 			if(c:z == 4 && !Z4_ACTIVE) continue
 			c:process()
 			if (!(i++ % 10))

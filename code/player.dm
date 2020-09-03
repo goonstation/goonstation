@@ -1,7 +1,9 @@
 /// for client variables and stuff that has to persist between connections
 /datum/player
-	/// the ckey of the client object that this datum is attached to
+	/// the key of the client object that this datum is attached to
 	var/key
+	/// the ckey of the client object that this datum is attached to
+	var/ckey
 	/// the client object that this datum is attached to
 	var/client/client
 	/// are they a mentor?
@@ -16,11 +18,14 @@
 	var/rounds_seen = null
 	/// a list of cooldowns that has to persist between connections
 	var/list/cooldowns = null
+	/// position of client in in global.clients
+	var/clients_pos = null
 
 	/// sets up vars and caches player stats
 	New(key)
 		src.key = key
-		src.tag = "player-[ckey(key)]"
+		src.ckey = ckey(key)
+		src.tag = "player-[src.ckey]"
 		src.cooldowns = list()
 
 		if (mentors.Find(ckey(src.key)))
@@ -33,7 +38,7 @@
 	proc/cache_round_stats()
 		var/list/response = null
 		try
-			response = apiHandler.queryAPI("playerInfo/get", list("ckey" = ckey(src.key)), forceResponse = 1)
+			response = apiHandler.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
 		catch
 			return 0
 		if (!response)
@@ -68,6 +73,7 @@
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
+	RETURN_TYPE(/datum/player)
 	var/datum/player/player = locate("player-[ckey(key)]")
 	return player
 

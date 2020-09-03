@@ -14,7 +14,7 @@
 var/telesci_modifiers_set = 0
 
 proc/is_teleportation_allowed(var/turf/T)
-	for (var/atom in teleport_jammers)
+	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
 		if (istype(atom, /obj/machinery/telejam))
 			var/obj/machinery/telejam/TJ = atom
 			if (!TJ.active)
@@ -34,7 +34,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			return 0
 
 	// first check the always allowed turfs from map landmarks
-	if (T in telesci)
+	if (T in landmarks[LANDMARK_TELESCI])
 		return 1
 
 	if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))

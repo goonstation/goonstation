@@ -199,7 +199,11 @@
 		shield_obj = new(src.loc)
 		var/matrix/mtx = new
 		var/scale = 0.75
-		var/turf/center = get_turf(locate(/obj/landmark/cruiser_entrance) in interior_area)
+		var/turf/center
+		for(var/turf/T in landmarks[LANDMARK_CRUISER_ENTRANCE])
+			if(T.loc == interior_area)
+				center = T
+				break
 		var/turf/wow
 		for(var/turf/t in interior_area.contents)
 			if(!wow || (t.x < wow.x || t.y < wow.y))
@@ -237,10 +241,10 @@
 		engine = new/obj/item/shipcomponent/engine(src)
 		life_support = new/obj/item/shipcomponent/life_support(src)
 
-		pods_and_cruisers += src
+		START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 	disposing()
-		pods_and_cruisers -= src
+		STOP_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 		del(camera)
 		if(interior_area)
@@ -781,7 +785,11 @@
 
 	proc/enterShip(atom/movable/O as obj, mob/user as mob)
 		if(!interior_area || O == src) return
-		var/entrance = get_turf(locate(/obj/landmark/cruiser_entrance) in interior_area)
+		var/turf/entrance
+		for(var/turf/T in landmarks[LANDMARK_CRUISER_ENTRANCE])
+			if(T.loc == interior_area)
+				entrance = T
+				break
 
 		if(entrance)
 			if(get_dist(O, getExitLoc()) <= 1)

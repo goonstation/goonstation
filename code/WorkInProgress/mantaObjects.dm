@@ -9,7 +9,6 @@
 
 //******************************************** MANTA COMPATIBLE LISTS HERE ********************************************
 
-var/list/mantaTiles = list()
 var/list/mantaPushList = list()
 var/mantaMoving = 1
 var/MagneticTether = 1
@@ -164,11 +163,8 @@ var/obj/manta_speed_lever/mantaLever = null
 			var/mob/M = C.mob
 			if(M && M.z == 1) shake_camera(M, 5, 15, 0.2)
 
-	for(var/A in mantaTiles)
+	for(var/A in by_cat[TR_CAT_MANTA_TILES])
 		var/turf/space/fluid/manta/T = A
-		if (!istype(T))
-			mantaTiles.Remove(T)
-			continue
 		T.setScroll(moving)
 	for(var/A in by_type[/obj/decal/mantaBubbles])
 		var/obj/O = A
@@ -927,7 +923,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/list/L = list()
 
 	New()
-		mantaTiles.Add(src)
+		START_TRACKING_CAT(TR_CAT_MANTA_TILES)
 		. = ..()
 		stateOff = "manta_sand"
 		stateOn = "[stateOff]_scroll"
@@ -936,7 +932,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return .
 
 	Del()
-		mantaTiles.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_MANTA_TILES)
 		return ..()
 
 	ex_act(severity)
@@ -957,7 +953,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
 					L+=T
 
-			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/wraith) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced))
+			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/wraith) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced) || istype(Obj, /obj/arrival_missile))
 				return
 
 			return_if_overlay_or_effect(Obj)
@@ -1331,14 +1327,6 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	event_effect()
 		..()
-		var/list/EV = list()
-		//var/delay = rand(2000,3000) hissssss
-		//var/obj/effect/boommarker/B = /obj/effect/boommarker
-		for(var/obj/landmark/S in landmarks)//world)
-			if (S.name == "bigboom")
-				EV.Add(S.loc)
-		var/bigboommark = pick(EV)
-
 		var/list/eligible = by_type[/obj/machinery/mantapropulsion].Copy()
 		for(var/i=0, i<3, i++)
 			var/obj/machinery/mantapropulsion/big/P = pick(eligible)
@@ -1346,7 +1334,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			eligible.Remove(P)
 			sleep(1 SECOND)
 
-		new /obj/effect/boommarker(bigboommark)
+		new /obj/effect/boommarker(pick_landmark(LANDMARK_BIGBOOM))
 #endif
 
 
@@ -1628,9 +1616,13 @@ var/obj/manta_speed_lever/mantaLever = null
 	Entered(atom/A as mob|obj)
 		if (isobserver(A) || isintangible(A))
 			return ..()
+		if(ismovable(A))
+			var/atom/movable/AM = A
+			if(AM.anchored)
+				return ..()
 
-		if (polarisfall.len)
-			var/turf/T = pick(polarisfall)
+		var/turf/T = pick_landmark(LANDMARK_FALL_POLARIS)
+		if(T)
 			fall_to(T, A)
 			return
 		else ..()

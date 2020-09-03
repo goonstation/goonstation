@@ -135,11 +135,8 @@ rcd light flash thingy on matter drain
 	uses = 1
 
 /client/proc/attack_shuttle()
-	for (var/obj/landmark/A in landmarks)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "AIgunbotshuttle")
-			new /obj/critter/gunbot(A.loc)
-			A.dispose()
+	for(var/turf/T in landmarks[LANDMARK_AI_GUNBOT_SHUTTLE])
+		new /obj/critter/gunbot(T)
 	usr.verbs -= /client/proc/attack_shuttle
 
 

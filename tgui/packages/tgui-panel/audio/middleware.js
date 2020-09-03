@@ -1,19 +1,21 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { AudioPlayer } from './player';
 
 export const audioMiddleware = store => {
-  let initialized = false;
   const player = new AudioPlayer();
+  player.onPlay(() => {
+    store.dispatch({ type: 'audio/playing' });
+  });
+  player.onStop(() => {
+    store.dispatch({ type: 'audio/stopped' });
+  });
   return next => action => {
     const { type, payload } = action;
-    if (!initialized) {
-      initialized = true;
-      player.onPlay(() => {
-        store.dispatch({ type: 'audio/playing' });
-      });
-      player.onStop(() => {
-        store.dispatch({ type: 'audio/stopped' });
-      });
-    }
     if (type === 'audio/playMusic') {
       const { url, ...options } = payload;
       player.play(url, options);
@@ -24,9 +26,9 @@ export const audioMiddleware = store => {
       return next(action);
     }
     if (type === 'settings/update' || type === 'settings/load') {
-      const { adminMusicVolume } = payload;
-      if (typeof adminMusicVolume === 'number') {
-        player.setVolume(adminMusicVolume);
+      const volume = payload?.adminMusicVolume;
+      if (typeof volume === 'number') {
+        player.setVolume(volume);
       }
       return next(action);
     }

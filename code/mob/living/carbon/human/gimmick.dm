@@ -339,7 +339,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	New()
 		..()
-		shittybills += src
+		START_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 		SPAWN_DBG(0)
 			bioHolder.mobAppearance.customization_second = "Tramp"
 			bioHolder.age = 62
@@ -365,14 +365,14 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.chest_item_sewn = 1
 
 	disposing()
-		shittybills -= src
+		STOP_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 		..()
 
 	// Shitty Bill always goes to the afterlife bar unless he has a client
 	death(gibbed)
 		..(gibbed)
 
-		shittybills -= src
+		STOP_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 
 		if (!src.client && src.z != 2)
 			var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
@@ -419,11 +419,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 							twitch_mob = C.mob
 
 				if (twitch_mob && isdead(twitch_mob))
-					var/mob/living/carbon/human/biker/newbody = 0
-					if (!billspawn.len)
-						newbody = new/mob/living/carbon/human/biker(get_turf(twitch_mob))
-					else
-						newbody = new/mob/living/carbon/human/biker(pick(billspawn))
+					var/mob/living/carbon/human/biker/newbody =  = new(pick_landmark(LANDMARK_TWITCHY_BILL_RESPAWN, get_turf(twitch_mob)))
 
 					if (newbody)
 						twitch_mob.mind.transfer_to(newbody)
@@ -576,9 +572,9 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 											BT.say("Nah.")
 */
 
-					if (johnbills.len > 0 && prob(25))
+					if (length(by_cat[TR_CAT_JOHNBILLS]) && prob(25))
 						SPAWN_DBG(4 SECONDS)
-							var/mob/living/carbon/human/john/MJ = pick(johnbills)
+							var/mob/living/carbon/human/john/MJ = pick(by_cat[TR_CAT_JOHNBILLS])
 							switch (speech_type)
 								if (4)
 									MJ.say("You're a big boy now brud, find one yourself.")
@@ -639,7 +635,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.a_intent = INTENT_HARM
 			src.ai_set_active(1)
 
-		for (var/mob/JB in johnbills)
+		for (var/mob/JB in by_cat[TR_CAT_JOHNBILLS])
 			var/mob/living/carbon/human/john/J = JB
 			if (get_dist(J,src) <= 7)
 				if((!J.ai_active) || prob(25))

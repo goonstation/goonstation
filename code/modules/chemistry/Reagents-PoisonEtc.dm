@@ -214,7 +214,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(rand(10,30) * mult)
-				if(prob(30 * mult))
+				if(prob(percentmult(30, mult)))
 					var/atom/my_atom = holder.my_atom
 					var/turf/location = 0
 					if (my_atom)
@@ -1556,6 +1556,8 @@ datum
 						boutput(M, "<span class='notice'>You feel a little [pick("unlike yourself", "out of it", "different", "strange")].</span>")
 					if (progress_timer > 10)
 						M.real_name = M.bioHolder.ownerName
+						if (M.bioHolder?.mobAppearance?.mutant_race)
+							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race)
 						M.UpdateName()
 
 				..()
@@ -1662,6 +1664,7 @@ datum
 					ai_was_active = H.ai_active
 					H.ai_init() //:getin:
 					H.ai_aggressive = 1 //Fak
+					H.ai_calm_down = 0
 					logTheThing("combat", H, null, "has their AI enabled by [src.id]")
 					H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 50, 1)
 					lastSpook = world.time
@@ -1742,6 +1745,7 @@ datum
 					//if(!ai_was_active)
 					H.ai_stop()
 					H.ai_aggressive = initial(H.ai_aggressive)
+					H.ai_calm_down = initial(H.ai_calm_down)
 					H.ai_suicidal = 0
 					if (data >= 30)
 						H.remove_stam_mod_regen(src.id) //Not so buff

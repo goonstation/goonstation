@@ -9,9 +9,8 @@
 		..()
 
 		if (!istype(T,/turf/))
-			if (blobstart.len > 0) // Erik: Fix for pick() from empty list.
-				T = pick(blobstart)
-			else
+			T = pick_landmark(LANDMARK_BLOBSTART)
+			if(!T)
 				message_admins("The black hole event failed to spawn a black hole (no blobstart landmark found)")
 				return
 

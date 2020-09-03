@@ -1,6 +1,7 @@
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	icon = 'icons/obj/atmospherics/atmos.dmi'
+	icon_state = "empty"
 	density = 1
 	var/health = 100.0
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
@@ -10,7 +11,7 @@
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
 
-	var/casecolor = "blue"
+	var/casecolor = "empty"
 	var/filled = 0.5
 	pressure_resistance = 7*ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
@@ -55,6 +56,7 @@
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
+	casecolor = "blue"
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
 	icon_state = "orange"

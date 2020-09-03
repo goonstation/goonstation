@@ -1562,8 +1562,6 @@
 	if (istype(src, /mob/dead/observer) || istype(src, /mob/dead/target_observer))
 		return
 
-	// I removed the sending mob to observer_start part because ghostize() takes care of it
-
 	src.death()
 	src.transforming = 1
 	src.canmove = 0
