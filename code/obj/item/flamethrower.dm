@@ -672,8 +672,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		spray_turf(currentturf,reagentperturf, reagsource)
 		reagentperturf += increment
 		if(lit)
-			//currentturf.hotspot_expose(spray_temperature,2)
-			currentturf.reagents.set_reagent_temp(spray_temperature, TRUE)
+			currentturf?.reagents?.set_reagent_temp(spray_temperature, TRUE)
 			spray_temperature = max(0,min(spray_temperature - temp_loss_per_tile, 700))
 
 		var/logString = log_reagents(reagsource)

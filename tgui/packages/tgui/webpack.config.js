@@ -57,7 +57,7 @@ module.exports = (env = {}, argv) => {
                   ['@babel/preset-env', {
                     modules: 'commonjs',
                     useBuiltIns: 'entry',
-                    corejs: '3',
+                    corejs: '3.6',
                     spec: false,
                     loose: true,
                     targets: {

@@ -1,6 +1,6 @@
 // human equipment slots
 #define SLOT_BACK 1
-#define SLOT_WEAR_MASM 2
+#define SLOT_WEAR_MASK 2
 #define SLOT_L_HAND 4
 #define SLOT_R_HAND 5
 #define SLOT_BELT 6

@@ -1,7 +1,13 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { toFixed } from 'common/math';
+import { useDispatch, useSelector } from 'common/redux';
 import { Fragment } from 'inferno';
-import { Button, Flex, Slider, Knob } from 'tgui/components';
-import { useDispatch, useSelector } from 'tgui/store';
+import { Button, Flex, Knob } from 'tgui/components';
 import { useSettings } from '../settings';
 import { selectAudio } from './selectors';
 
@@ -11,7 +17,7 @@ export const NowPlayingWidget = (props, context) => {
   const settings = useSettings(context);
   const title = audio.meta?.title;
   return (
-    <Flex mx={-0.5} align="center">
+    <Flex align="center">
       {audio.playing && (
         <Fragment>
           <Flex.Item

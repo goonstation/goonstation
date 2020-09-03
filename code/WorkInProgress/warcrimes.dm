@@ -319,7 +319,7 @@ var/fartcount = 0
 								say("Man, I sure don't miss [JOHN_PICK("dontmiss")].")
 
 						if(11)
-							say("I think my [JOHN_PICK("friends")] [JOHN_PICK("friendactions")].")
+							say("I think my [JOHN_PICK("friends")] [JOHN_PICK("friendsactions")].")
 
 					if (prob(25) && shittybills.len > 0)
 						SPAWN_DBG(3.5 SECONDS)

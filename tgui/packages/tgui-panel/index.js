@@ -10,11 +10,11 @@ import 'core-js/web/immediate';
 import 'core-js/web/queue-microtask';
 import 'core-js/web/timers';
 import 'regenerator-runtime/runtime';
-import 'tgui/polyfills/html5shiv';
-import 'tgui/polyfills/ie8';
-import 'tgui/polyfills/dom4';
-import 'tgui/polyfills/css-om';
-import 'tgui/polyfills/inferno';
+import 'tgui-polyfill/html5shiv';
+import 'tgui-polyfill/ie8';
+import 'tgui-polyfill/dom4';
+import 'tgui-polyfill/css-om';
+import 'tgui-polyfill/inferno';
 
 // Themes
 import './styles/main.scss';
@@ -23,14 +23,17 @@ import './styles/themes/light.scss';
 import { perf } from 'common/perf';
 import { combineReducers } from 'common/redux';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
+import { setupGlobalEvents } from 'tgui/events';
+import { captureExternalLinks } from 'tgui/links';
 import { createRenderer } from 'tgui/renderer';
 import { configureStore, StoreProvider } from 'tgui/store';
 import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
+import { gameMiddleware, gameReducer } from './game';
+import { setupPanelFocusHacks } from './panelFocus';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
-import { setupExternalLinkCapturing } from 'tgui/external-links';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -39,6 +42,7 @@ const store = configureStore({
   reducer: combineReducers({
     audio: audioReducer,
     chat: chatReducer,
+    game: gameReducer,
     ping: pingReducer,
     settings: settingsReducer,
   }),
@@ -49,6 +53,7 @@ const store = configureStore({
       telemetryMiddleware,
       settingsMiddleware,
       audioMiddleware,
+      gameMiddleware,
     ],
   },
 });
@@ -69,11 +74,14 @@ const setupApp = () => {
     return;
   }
 
+  setupGlobalEvents({
+    ignoreWindowFocus: true,
+  });
+  setupPanelFocusHacks();
+  captureExternalLinks();
+
   // Subscribe for Redux state updates
   store.subscribe(renderApp);
-
-  // Capture external links
-  setupExternalLinkCapturing();
 
   // Subscribe for bankend updates
   window.update = msg => store.dispatch(Byond.parseJson(msg));
@@ -104,6 +112,8 @@ const setupApp = () => {
     module.hot.accept([
       './audio',
       './chat',
+      './game',
+      './Notifications',
       './Panel',
       './ping',
       './settings',
