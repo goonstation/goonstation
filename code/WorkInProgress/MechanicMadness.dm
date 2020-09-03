@@ -983,7 +983,6 @@
 	cooldown_time = 1 SECOND
 	cabinet_banned = true
 	one_per_tile = true
-	own_id = "/obj/item/mechanics/zapper"
 	var/zap_power = 2
 
 	New()
