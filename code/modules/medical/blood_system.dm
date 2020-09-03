@@ -403,11 +403,11 @@ this is already used where it needs to be used, you can probably ignore it.
 			B = locate(/obj/decal/cleanable/blood/dynamic) in T
 		var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
 
-		if (H.blood_id && (H.blood_id != "blood" && H.blood_id != "bloodc"))
-			var/datum/reagent/current_reagent= reagents_cache[H.blood_id]
+		if (some_idiot.blood_id && (some_idiot.blood_id != "blood" && some_idiot.blood_id != "bloodc"))
+			var/datum/reagent/current_reagent= reagents_cache[some_idiot.blood_id]
 			blood_color_to_pass = rgb(current_reagent.fluid_r, current_reagent.fluid_g, current_reagent.fluid_b, max(current_reagent.transparency,255))
 
-		if (H.blood_color)
+		if (istype(H))
 			blood_color_to_pass = H.blood_color
 
 		if (!B) // look for an existing dynamic blood decal and add to it if you find one
@@ -417,18 +417,18 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (ischangeling(H))
 			B.ling_blood = 1
 
-		if (H.bioHolder)
-			B.blood_DNA = H.bioHolder.Uid
-			B.blood_type = H.bioHolder.bloodType
+		if (some_idiot.bioHolder)
+			B.blood_DNA = some_idiot.bioHolder.Uid
+			B.blood_type = some_idiot.bioHolder.bloodType
 
 		else
 			B.blood_DNA = "--unidentified substance--"
 			B.blood_type = "--unidentified substance--"
 
-		B.add_volume(blood_color_to_pass, H.blood_id, num_amount, vis_amount)
+		B.add_volume(blood_color_to_pass, some_idiot.blood_id, num_amount, vis_amount)
 		return
 
-	BLOOD_DEBUG("[H] begins bleed")
+	BLOOD_DEBUG("[some_idiot] begins bleed")
 
 	if (!isliving(some_idiot))
 		return

@@ -451,7 +451,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			B = new /obj/decal/bloodtrace(src.loc)
 			B.blood_DNA = src.blood_DNA
 			B.blood_type = src.blood_type
-			B.color = src.color
 			B.icon = src.icon
 			B.icon_state = src.icon_state
 		var/image/working_image
