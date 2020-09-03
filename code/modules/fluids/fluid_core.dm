@@ -607,8 +607,6 @@ var/mutable_appearance/fluid_ma
 			src.update_perspective_overlays()
 
 	proc/update_perspective_overlays() // fancy perspective overlaying
-		return //TEMPORARILY DISABLED as it is causing shittons of runtimes ( ithink byond bug broke somethin??)
-		/*
 		if (icon_state != "15") return
 		var/blocked = 0
 		for( var/dir in cardinal )
@@ -636,7 +634,6 @@ var/mutable_appearance/fluid_ma
 				display_overlay("5",32,32) //northwest
 			else
 				clear_overlay("5") //northwest
-		*/
 
 	//perspective overlays
 	proc/display_overlay(var/overlay_key, var/pox, var/poy)
