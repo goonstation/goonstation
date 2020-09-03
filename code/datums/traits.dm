@@ -727,7 +727,7 @@ obj/trait/pilot
 	id = "pilot"
 	icon_state = "pilot"
 	category = "background"
-	points = 1
+	points = 0
 	isPositive = 0
 
 // NO CATEGORY - Grey Border
