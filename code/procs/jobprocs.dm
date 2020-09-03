@@ -476,22 +476,22 @@
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
 		var/obj/item/tank/emergency_oxygen/E = new /obj/item/tank/emergency_oxygen(src.loc)
-		src.equip_if_possible(E, slot_in_backpack)
+		src.force_equip(E, slot_in_backpack)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
-		src.equip_if_possible(SSW, slot_in_backpack)
+		src.force_equip(SSW, slot_in_backpack)
 		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
-		src.equip_if_possible(SHW, slot_in_backpack)
+		src.force_equip(SHW, slot_in_backpack)
 		#else
 		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
-		src.equip_if_possible(SSS, slot_in_backpack)
+		src.force_equip(SSS, slot_in_backpack)
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
-		src.equip_if_possible(SHS, slot_in_backpack)
+		src.force_equip(SHS, slot_in_backpack)
 		#endif
 		var/obj/item/clothing/mask/breath/MSK = new /obj/item/clothing/mask/breath(src.loc)
-		src.equip_if_possible(MSK, slot_in_backpack)
+		src.force_equip(MSK, slot_in_backpack)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
-		src.equip_if_possible(GPSDEVICE, slot_in_backpack)
+		src.force_equip(GPSDEVICE, slot_in_backpack)
 
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
