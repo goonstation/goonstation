@@ -479,7 +479,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	round_end_data(1) //Export round end packet (normal completion)
 
 	var/pets_rescued = 0
-	for(var/pet in pets)
+	for(var/pet in by_cat[TR_CAT_PETS])
 		if(iscritter(pet))
 			var/obj/critter/P = pet
 			if(P.alive && in_centcom(P)) pets_rescued++

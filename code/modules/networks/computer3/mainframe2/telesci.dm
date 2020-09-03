@@ -14,7 +14,7 @@
 var/telesci_modifiers_set = 0
 
 proc/is_teleportation_allowed(var/turf/T)
-	for (var/atom in teleport_jammers)
+	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
 		if (istype(atom, /obj/machinery/telejam))
 			var/obj/machinery/telejam/TJ = atom
 			if (!TJ.active)

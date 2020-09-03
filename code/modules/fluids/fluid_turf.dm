@@ -93,7 +93,12 @@
 						break
 
 		if (generateLight)
-			light_generating_fluid_turfs.Add(src)
+			START_TRACKING_CAT(TR_CAT_LIGHT_GENERATING_TURFS)
+
+	Del()
+		. = ..()
+		if (generateLight)
+			STOP_TRACKING_CAT(TR_CAT_LIGHT_GENERATING_TURFS)
 
 	make_light()
 		if (!light)

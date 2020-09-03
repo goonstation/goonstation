@@ -12,11 +12,13 @@ datum/controller/process/fluid_turfs
 
 	proc/handle_light_generating_turfs(lagcheck_at = LAG_REALTIME)
 		if (do_light_gen)
-			for (var/turf/space/fluid/F in light_generating_fluid_turfs)
+			for (var/_F in by_cat[TR_CAT_LIGHT_GENERATING_TURFS])
+				var/turf/space/fluid/F = _F
 				F.make_light()
 				LAGCHECK(lagcheck_at)
 
-			light_generating_fluid_turfs.len = 0
+			if(TR_CAT_LIGHT_GENERATING_TURFS in by_cat)
+				by_cat[TR_CAT_LIGHT_GENERATING_TURFS].len = 0
 
 		/*
 		for (var/turf/space/fluid/F in light_generating_fluid_turfs)
