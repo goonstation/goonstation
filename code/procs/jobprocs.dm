@@ -381,7 +381,7 @@
 
 			if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 				var/turf/pilotSpawnLocation = null
-				
+
 				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
 				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
 					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
@@ -395,7 +395,7 @@
 					src.set_loc(pilotSpawnLocation)
 				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
 				#endif
-				for(var/obj/critter/gunbot/drone/snappedDrone in src.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+				for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
 					qdel(snappedDrone)
 				V.finish_board_pod(src)
 
