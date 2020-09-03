@@ -1,5 +1,9 @@
 
 (t)thu sep 03 20
+(u)Shroopy
+(p)1733
+(e)🆕|feature
+(*)Added an option in Game->Effects to enable or disable view tinting from glasses, masks, etc.
 (t)wed sep 02 20
 (u)Sovexe
 (p)1965

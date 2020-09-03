@@ -146,13 +146,13 @@
 						<a href='byond://?src=\ref[src];message_mode=2'>Groups</a><br>
 
 						<font size=2><a href='byond://?src=\ref[src];message_func=scan'>Scan</a></font><br>
-						<b>Detected PDAs</b><br>
+						<b>Detected PDAs</b><br>"}
 
-						<ul>"}
-
-						var/count = 0
-
-						if (src.message_on)
+						if (!src.message_on)
+							. += "Please turn on Send/Receive to use the scan function."
+						else
+							. += "<ul>"
+							var/count = 0
 							if(expand_departments_list)
 								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Collapse DEPT list*</a>"
 								for (var/department_id in page_departments)
@@ -181,11 +181,10 @@
 
 								</li>"}
 								count++
+							. += "</ul>"
 
-						. += "</ul>"
-
-						if (count == 0 && !page_departments.len)
-							. += "None detected.<br>"
+							if (count == 0 && !page_departments.len)
+								. += "None detected.<br>"
 
 					else if (src.message_mode == 1)
 						. += {"<a href='byond://?src=\ref[src];message_func=clear'>Clear</a> | 
