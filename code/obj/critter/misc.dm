@@ -686,7 +686,7 @@
 		smoke_reaction(src.reagents, 12, T)
 		classic_smoke_reaction(temporary_holder, 10, T)
 		invisibility = 100
-		sleep(5 SECONDS)
+		SPAWN_DBG(5 SECONDS)
 			qdel(src)
 
 /obj/critter/townguard
