@@ -1,6 +1,10 @@
 
 (t)wed sep 02 20
 (u)Sovexe
+(p)1965
+(e)🆕📄|feature, tgui
+(+)Converted TEG interface to TGUI
+(u)Sovexe
 (p)1844
 (e)🆕📄|feature, tgui
 (+)Converted disposal and mailchute to TGUI
