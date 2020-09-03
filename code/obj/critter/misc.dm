@@ -680,10 +680,13 @@
 		..()
 
 		src.visible_message("<span class='combat'><b>[src]</b> bursts into a puff of smoke!</span>")
-		var/datum/chemical_reaction/smoke/thesmoke = new
-		thesmoke.on_reaction(src.reagents, 12)
+		var/datum/reagents/temporary_holder = new/datum/reagents(1000)
+		src.reagents.copy_to(temporary_holder)
+		var/turf/T = get_turf(src)
+		smoke_reaction(src.reagents, 12, T)
+		classic_smoke_reaction(temporary_holder, 10, T)
 		invisibility = 100
-		SPAWN_DBG(5 SECONDS)
+		sleep(5 SECONDS)
 			qdel(src)
 
 /obj/critter/townguard
