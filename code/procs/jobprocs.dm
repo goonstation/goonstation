@@ -306,7 +306,7 @@
 		picks = FindOccupationCandidates(staff,JOB.name,3)
 	return picks
 
-/proc/pilotSpawnVerif(var/turf/checkedTurf)				//Just roll with it.
+/proc/pilotSpawnVerif(turf/checkedTurf)					//Just roll with it.
 	if (isnull(checkedTurf))							//Sanity check.
 		return false
 	#ifdef UNDERWATER_MAP
@@ -513,22 +513,22 @@
 				B.badge_owner_job = src.job
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
-		var/obj/item/tank/emergency_oxygen/E = new /obj/item/tank/emergency_oxygen(src)
+		var/obj/item/tank/emergency_oxygen/E = new /obj/item/tank/emergency_oxygen(src.loc)
 		src.equip_if_possible(E, slot_in_backpack)
 		#ifdef UNDERWATER_MAP
-		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src)
+		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
 		src.equip_if_possible(SSW, slot_in_backpack)
-		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src)
+		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
 		src.equip_if_possible(SHW, slot_in_backpack)
 		#else
-		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src)
+		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
 		src.equip_if_possible(SSS, slot_in_backpack)
-		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src)
+		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
 		src.equip_if_possible(SHS, slot_in_backpack)
 		#endif
-		var/obj/item/clothing/mask/breath/MSK = new /obj/item/clothing/mask/breath(src)
+		var/obj/item/clothing/mask/breath/MSK = new /obj/item/clothing/mask/breath(src.loc)
 		src.equip_if_possible(MSK, slot_in_backpack)
-		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src)
+		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.equip_if_possible(GPSDEVICE, slot_in_backpack)
 
 	if (JOB.slot_jump)
