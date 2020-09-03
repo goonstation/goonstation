@@ -33,6 +33,7 @@ var/global
 	turf/buzztile = null
 
 	list/list/by_type = list() // contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
+	list/list/by_cat = list() // contains lists of objects indexed by a category string based on START_TRACKING_CAT / STOP_TRACKING_CAT
 
 	obj/screen/renderSourceHolder
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
@@ -737,9 +738,15 @@ var/global
 // The worst part of this is that client latency impacts this, so someone who is running slow
 // is probably gonna break everything.
 /proc/sendItemIcons(var/client/C)
+	var/start_time = TIME
+	var/showed_message= FALSE
 	for (var/key in browse_item_icons)
 		getItemIcon(key = key, C = C)
-		LAGCHECK(LAG_HIGH)
+		if(!showed_message && TIME - start_time > 1 SECOND)
+			boutput(C, "<span class='notice'>Sending resources... (windows might become unresponsibe for a moment)</span>")
+			showed_message = TRUE
+	if(showed_message)
+		boutput(C, "<span class='notice'>Resources sent.</span>")
 
 /// Sends all item icons to all clients. Used at world startup to preload things.
 /proc/sendItemIconsToAll()

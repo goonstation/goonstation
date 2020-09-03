@@ -632,6 +632,9 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
 	initialize_worldgen()
 
+	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
+	map_settings.init()
+
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")
@@ -650,7 +653,6 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Init() complete")
 	TgsInitializationComplete()
 	//sleep_offline = 1
-
 
 	// Biodome elevator accident stats
 	bioele_load_stats()
@@ -1237,6 +1239,14 @@ var/f_color_selector_handler/F_Color_Selector
 
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
+
+				if(copytext(msg, 1, 2) == SPACEBEE_EXTENSION_ASAY_PREFIX)
+					spacebee_extension_system?.process_asay(msg, nick)
+					var/ircmsg[] = new()
+					ircmsg["key"] = nick
+					ircmsg["msg"] = msg
+					return ircbot.response(ircmsg)
+
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 				logTheThing("admin", null, null, "Discord ASAY: [nick]: [msg]")

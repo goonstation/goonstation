@@ -495,7 +495,7 @@
 	cast()
 		var/mob/owner = holder?.owner
 		if (!istype(owner))
-			logTheThing("debug", "no owner for this kudzu ability. [src]")
+			logTheThing("debug", null, null, "no owner for this kudzu ability. [src]")
 			return 1
 		//turn on
 		if (!active)
