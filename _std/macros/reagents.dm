@@ -1,0 +1,1 @@
+#define probmult(x) (prob(percentmult((x), mult))) //assumes lag-compensation multiplier is always called mult
