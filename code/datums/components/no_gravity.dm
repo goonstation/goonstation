@@ -12,9 +12,9 @@
 /datum/component/holdertargeting/no_gravity/on_dropped(datum/source, mob/user)
 	. = ..()
 	var/obj/item/I = parent
-	if (I.loc != curent_user)
-		curent_user.no_gravity = 0
-		for (var/thing in curent_user)
+	if (I.loc != current_user)
+		current_user.no_gravity = 0
+		for (var/thing in current_user)
 			var/atom/movable/A = thing
 			if (A.no_gravity)
-				curent_user.no_gravity = 1 //keep on if we are still holdin stuff
+				current_user.no_gravity = 1 //keep on if we are still holdin stuff
