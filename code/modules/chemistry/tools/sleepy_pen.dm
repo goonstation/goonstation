@@ -27,6 +27,9 @@
 			user.show_text("The sleepy pen is empty.", "red")
 		return
 
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 /obj/item/pen/sleepypen/discount
 	name = "greasy pen"
 	icon_state = "pen-greasy"

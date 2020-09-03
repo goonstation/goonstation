@@ -293,7 +293,7 @@
 	if (!input)
 		return
 
-	var/law_num = input(usr, "If you don't know what this is you should probably just leave it be. (10 is the freeform slot)", "Enter law number", 99) as null|num
+	var/law_num = input(usr, "If you don't know what this is you should probably just leave it be. (14 is the freeform slot)", "Enter law number", 99) as null|num
 	if (isnull(law_num))
 		return
 	if (law_num == 0)
@@ -315,6 +315,8 @@
 
 	logTheThing("admin", usr, null, "has added a new AI law - [input] (law # [law_num])")
 	logTheThing("diary", usr, null, "has added a new AI law - [input] (law # [law_num])", "admin")
+	logTheThing("admin", null, null, "Resulting AI Lawset:[ticker.centralized_ai_laws.format_for_logs()]")
+	logTheThing("diary", null, null, "Resulting AI Lawset:[ticker.centralized_ai_laws.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has added a new AI law - [input] (law # [law_num])")
 
 //badcode from Somepotato, pls no nerf its very bad AAA
@@ -349,6 +351,8 @@
 			ticker.centralized_ai_laws.supplied += line
 	logTheThing("admin", usr, null, "has set the AI laws to [input]")
 	logTheThing("diary", usr, null, "has set the AI laws to [input]", "admin")
+	logTheThing("admin", usr, null, "Resulting AI Lawset:[ticker.centralized_ai_laws.format_for_logs()]")
+	logTheThing("diary", usr, null, "Resulting AI Lawset:[ticker.centralized_ai_laws.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has adjusted all of the AI's laws!")
 
 	for (var/mob/living/silicon/O in mobs)

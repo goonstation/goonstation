@@ -146,7 +146,7 @@
 /datum/action/bar/icon/railing_jump
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "railing_deconstruct"
+	id = "railing_jump"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "railing_jump"
 	var/mob/ownerMob
@@ -154,6 +154,7 @@
 	var/turf/jump_target //where the mob will move to when they complete the jump!
 	var/is_athletic_jump //if the user has the athletic trait, and therefore does the BEEG HARDCORE PARKOUR YUMP
 	var/no_no_zone //if the user is trying to jump over railing onto somewhere they couldn't otherwise move through...
+	var/do_bunp = TRUE
 
 	New(The_Owner, The_Railing)
 		..()
@@ -193,6 +194,12 @@
 
 	onEnd()
 		..()
+		if(do_bunp())
+			return
+		// otherwise, the user jumps over without issue!
+		sendOwner()
+
+	proc/do_bunp()
 		var/bunp //the name of the thing we have bunp'd into when trying to jump the railing
 		var/list/bunp_whitelist = list(/obj/railing, /obj/decal/stage_edge) // things that we cannot bunp into
 		if (jump_target.density)
@@ -231,11 +238,8 @@
 					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
 					for(var/mob/O in AIviewers(ownerMob))
 						O.show_text("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [bunp].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
-
-			return
-
-		// otherwise, the user jumps over without issue!
-		sendOwner()
+			return TRUE
+		return FALSE
 
 	proc/sendOwner()
 		ownerMob.set_loc(jump_target)

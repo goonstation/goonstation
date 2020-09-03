@@ -1,19 +1,21 @@
-import { toArray } from 'common/collections';
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+import { map } from 'common/collections';
 
 export const selectChat = state => state.chat;
 
 export const selectChatPages = state => (
-  toArray(state.chat.pageById)
+  map(id => state.chat.pageById[id])(state.chat.pages)
 );
 
 export const selectCurrentChatPage = state => (
-  state.chat.pageById[state.chat.currentPage]
+  state.chat.pageById[state.chat.currentPageId]
 );
 
 export const selectChatPageById = id => state => (
   state.chat.pageById[id]
-);
-
-export const canPageAcceptType = (page, type) => (
-  page.acceptedTypes[type]
 );

@@ -50,7 +50,7 @@ NOT OKAY: var/list/hats = concrete_typesof(/obj/item/clothing/head)
           hats -= /obj/item/clothing/head/hosberet
 */
 var/global/list/cached_concrete_types
-proc/concrete_typesof(type)
+proc/concrete_typesof(type, cache=TRUE)
 	if(isnull(cached_concrete_types))
 		cached_concrete_types = list()
 	if(type in cached_concrete_types)
@@ -59,7 +59,8 @@ proc/concrete_typesof(type)
 	for(var/subtype in typesof(type))
 		if(!IS_ABSTRACT(subtype))
 			. += subtype
-	cached_concrete_types[type] = .
+	if(cache)
+		cached_concrete_types[type] = .
 
 /*
 The same thing but now you can filter the types using a proc. Also cached.
@@ -90,3 +91,14 @@ proc/filtered_concrete_typesof(type, filter)
 	if(!(type in cached_filtered_types))
 		cached_filtered_types[type] = list()
 	cached_filtered_types[type][filter] = .
+
+/**
+	* Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
+*/
+proc/get_singleton(type)
+	if(!singletons)
+		singletons = list()
+	if(!(type in singletons))
+		singletons[type] = new type
+	return singletons[type]
+var/global/list/singletons

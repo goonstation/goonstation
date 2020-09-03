@@ -147,6 +147,11 @@
 		C.real_name = target_name
 		C.bioHolder.RemoveEffect("husk")
 		C.organHolder.head.update_icon()
+		if (C.bioHolder?.mobAppearance?.mutant_race)
+			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race)
+		else
+			C.set_mutantrace(null)
+
 		C.update_face()
 		C.update_body()
 		C.update_clothing()

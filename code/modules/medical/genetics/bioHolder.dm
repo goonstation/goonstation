@@ -92,6 +92,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/mob/owner = null
 	var/datum/bioHolder/parentHolder = null
 
+	var/datum/mutantrace/mutant_race = null
+
 	var/gender = MALE
 	var/pronouns = 0		//1 if using neutral pronouns (they/their);  0 if using gendered pronouns matching their gender var
 	var/screamsound = "male"
@@ -182,6 +184,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		gender = toCopy.gender
 		pronouns = toCopy.pronouns
+		mutant_race = toCopy.mutant_race
 
 		screamsound = toCopy.screamsound
 		fartsound = toCopy.fartsound
@@ -224,6 +227,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (progress > 7 || prob(progress * 10))
 			gender = toCopy.gender
 			pronouns = toCopy.pronouns
+			mutant_race = toCopy.mutant_race
 
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
 			src.CopyOther(toCopy)
