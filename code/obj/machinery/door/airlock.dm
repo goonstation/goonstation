@@ -39,16 +39,11 @@
 /obj/machinery/door/airlock/ui_data()
 
 	var/list/data = list()
-
-	var/list/power = list()
-
-	power["main_timeleft"] = secondsMainPowerLost
-	power["backup_timeleft"] = secondsBackupPowerLost
-	data["power"] = power
-
-	data["shock"] = secondsElectrified == 0 ? 1 : 2
-	data["shock_timeleft"] = secondsElectrified
-	data["id_scanner"] = !aiDisabledIdScanner
+	data["name"] = src.name
+	data["mainTimeleft"] = secondsMainPowerLost
+	data["backupTimeleft"] = secondsBackupPowerLost
+	data["shockTimeleft"] = secondsElectrified
+	data["idScanner"] = !aiDisabledIdScanner
 	data["locked"] = locked // bolted
 	data["welded"] = welded // welded
 	data["opened"] = !density // opened
@@ -59,7 +54,7 @@
 	wire["backup_1"] = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1)
 	wire["backup_2"] = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2)
 	wire["shock"] = !src.isWireCut(AIRLOCK_WIRE_ELECTRIFY)
-	wire["id_scanner"] = !src.isWireCut(AIRLOCK_WIRE_IDSCAN)
+	wire["idScanner"] = !src.isWireCut(AIRLOCK_WIRE_IDSCAN)
 	wire["bolts"] = !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS)
 	wire["safe"] = !src.isWireCut(AIRLOCK_WIRE_SAFETY)
 
@@ -89,36 +84,36 @@
 		boutput(usr, "<span class='alert'>Airlock power is currently offline.</span>")
 		return
 	switch(action)
-		if("disrupt-main")
+		if("disruptMain")
 			if(!secondsMainPowerLost)
 				loseMainPower()
 				update_icon()
 			else
 				boutput(usr, "<span class='alert'>Main power is already offline.</span>")
 			. = TRUE
-		if("disrupt-backup")
+		if("disruptBackup")
 			if(!secondsBackupPowerLost)
 				loseBackupPower()
 				update_icon()
 			else
 				boutput(usr, "<span class='alert'>Backup power is already offline.</span>")
 			. = TRUE
-		if("shock-restore")
+		if("shockRestore")
 			shock_restore(usr)
 			. = TRUE
-		if("shock-temp")
+		if("shockTemp")
 			shock_temp(usr)
 			. = TRUE
-		if("shock-perm")
+		if("shockPerm")
 			shock_perm(usr)
 			. = TRUE
-		if("idscan-toggle")
+		if("idscanToggle")
 			idscantoggle(usr)
 			. = TRUE
-		if("bolt-toggle")
+		if("boltToggle")
 			toggle_bolt(usr)
 			. = TRUE
-		if("open-close")
+		if("openClose")
 			user_toggle_open(usr)
 			. = TRUE
 

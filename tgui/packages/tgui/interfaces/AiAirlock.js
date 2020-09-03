@@ -1,52 +1,20 @@
-import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Modal, Flex, Icon, Box, NoticeBox } from '../components';
-import { Window } from '../layouts';
-
-const dangerMap = {
-  0: {
-    color: 'bad',
-    localStatusText: 'Offline',
-  },
-  1: {
-    color: 'good',
-    localStatusText: 'Optimal',
-  },
-  2: {
-    color: 'average',
-    localStatusText: 'Caution',
-  },
-};
+import { Fragment } from "inferno";
+import { useBackend } from "../backend";
+import { Button, LabeledList, Section, Modal, Flex, Icon, Box, NoticeBox } from "../components";
+import { Window } from "../layouts";
 
 
 export const AiAirlock = (props, context) => {
-  const { act, data, config } = useBackend(context);
-  const MainPower = (data.power.main_timeleft === 0);
-  const BackupPower = (data.power.backup_timeleft === 0);
-  const isDisabled = (config.status === 3 || config.status === 1);
+  const { data } = useBackend(context);
+  const {
+    name,
+  } = data;
   return (
     <Window
-      width={500}
-      height={365}>
-      {!!isDisabled && (
-        <Modal
-          fontSize="20px"
-          fontFamily="Times New Roman"
-          mr={2}
-          pt={1}>
-          <Flex align="center">
-            <Flex.Item mr={2} mt={2}>
-              <Icon
-                size="2"
-                name="bolt"
-              />
-            </Flex.Item>
-            <Flex.Item mr={2}>
-              {'TermOS McDoor is shutting down'}
-            </Flex.Item>
-          </Flex>
-        </Modal>
-      )}
+      width={314}
+      height={335}
+      theme="ntos"
+      title={"Airlock - " + name}>
       <Window.Content>
         <PowerStatus />
         <AccessAndDoorControl />
@@ -58,52 +26,57 @@ export const AiAirlock = (props, context) => {
 
 const PowerStatus = (props, context) => {
   const { act, data } = useBackend(context);
-  const MainPower = (data.power.main_timeleft === 0);
-  const BackupPower = (data.power.backup_timeleft === 0);
-  const shocked = (data.shock === 1);
-  const statusElectrify = dangerMap[data.shock]
-  || dangerMap[0];
-  const statusMain = dangerMap[Number((data.power.main_timeleft === 0))]
-  || dangerMap[0];
-  const statusBackup = dangerMap[Number((data.power.backup_timeleft === 0))]
-  || dangerMap[0];
+  const {
+    mainTimeleft,
+    backupTimeleft,
+    wires,
+  } = data;
 
   return (
     <Section title="Power Status">
       <LabeledList>
         <LabeledList.Item
           label="Main"
-          color={statusMain.color}
+          color={mainTimeleft ? "bad" : "good"}
           buttons={(
             <Button
-              icon="lightbulb-o"
-              disabled={!MainPower}
-              content="Disrupt"
-              onClick={() => act('disrupt-main')} />
+              width={6.7}
+              align="center"
+              color="bad"
+              icon="plug"
+              disabled={!!mainTimeleft}
+              onClick={() => act("disruptMain")}>
+              Disrupt
+            </Button>
           )}>
-          {MainPower ? 'Online' : 'Offline'}
-          {' '}
-          {(!data.wires.main_1 || !data.wires.main_2)
-            && '[Wires have been cut!]'
-            || (data.power.main_timeleft > 0
-              && `[${data.power.main_timeleft}s]`)}
+          {mainTimeleft ? "Offline" : "Online"}
+          {" "}
+          {(!wires.main_1 || !wires.main_2)
+            && "[Wires have been cut!]"
+            || (mainTimeleft > 0
+              && `[${mainTimeleft}s]`)}
         </LabeledList.Item>
         <LabeledList.Item
           label="Backup"
-          color={statusBackup.color}
+          color={backupTimeleft ? "bad": "good"}
           buttons={(
             <Button
-              icon="lightbulb-o"
-              disabled={!BackupPower}
-              content="Disrupt"
-              onClick={() => act('disrupt-backup')} />
+              width={6.7}
+              align="center"
+              mt={0.5}
+              color="bad"
+              icon="plug"
+              disabled={!!backupTimeleft}
+              onClick={() => act("disruptBackup")}>
+              Disrupt
+            </Button>
           )}>
-          {BackupPower ? 'Online' : 'Offline'}
-          {' '}
-          {(!data.wires.backup_1 || !data.wires.backup_2)
-            && '[Wires have been cut!]'
-            || (data.power.backup_timeleft > 0
-              && `[${data.power.backup_timeleft}s]`)}
+          {backupTimeleft ? "Offline" : "Online"}
+          {" "}
+          {(!wires.backup_1 || !wires.backup_2)
+            && "[Wires have been cut!]"
+            || (backupTimeleft > 0
+              && `[${backupTimeleft}s]`)}
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -112,9 +85,17 @@ const PowerStatus = (props, context) => {
 
 const AccessAndDoorControl = (props, context) => {
   const { act, data } = useBackend(context);
-  const MainPower = (data.power.main_timeleft === 0);
-  const BackupPower = (data.power.backup_timeleft === 0);
-  const DisabledStatus = (data.status === 2);
+  const {
+    mainTimeleft,
+    backupTimeleft,
+    wires,
+    idScanner,
+    locked,
+    opened,
+    welded,
+  } = data;
+
+  const isDisabled = (data.status === 2);
 
   return (
     <Section title="Access and Door Control">
@@ -124,48 +105,57 @@ const AccessAndDoorControl = (props, context) => {
           color="bad"
           buttons={(
             <Button
-              icon={data.id_scanner ? 'power-off' : 'times'}
-              content={data.id_scanner ? 'Enabled' : 'Disabled'}
-              selected={data.id_scanner}
-              disabled={!data.wires.id_scanner
-                || (!MainPower && !BackupPower) || (DisabledStatus)}
-              onClick={() => act('idscan-toggle')} />
+              width={6.7}
+              align="center"
+              color={idScanner ? "good" : "bad"}
+              icon={idScanner ? "power-off" : "times"}
+              disabled={!wires.idScanner
+                || (mainTimeleft && backupTimeleft)}
+              onClick={() => act("idscanToggle")}>
+              {idScanner ? "Enabled" : "Disabled"}
+            </Button>
           )}>
-          {!data.wires.id_scanner && '[Wires have been cut!]'}
+          {!wires.idScanner && "[Wires have been cut!]"}
         </LabeledList.Item>
-        <LabeledList.Divider />
         <LabeledList.Item
           label="Door Bolts"
           color="bad"
           buttons={(
             <Button
-              icon={data.locked ? 'lock' : 'unlock'}
-              content={data.locked ? 'Lowered' : 'Raised'}
-              selected={data.locked}
-              disabled={!data.wires.bolts
-                || (!MainPower && !BackupPower) || (DisabledStatus)}
-              onClick={() => act('bolt-toggle')} />
+              mt={0.5}
+              width={6.7}
+              align="center"
+              color={locked ? "bad" : "good"}
+              icon={locked ? "unlock" : "lock"}
+              disabled={!wires.bolts
+                || (mainTimeleft && backupTimeleft) || (isDisabled)}
+              onClick={() => act("boltToggle")}>
+              {locked ? "Lowered" : "Raised"}
+            </Button>
           )}>
-          {!data.wires.bolts && '[Wires have been cut!]'}
+          {!wires.bolts && "[Wires have been cut!]"}
         </LabeledList.Item>
-        <LabeledList.Divider />
         <LabeledList.Item
           label="Door Control"
           color="bad"
           buttons={(
             <Button
-              icon={data.opened ? 'sign-out-alt' : 'sign-in-alt'}
-              content={data.opened ? 'Open' : 'Closed'}
-              selected={data.opened}
-              disabled={(data.locked || data.welded)
-                || (!MainPower && !BackupPower) || (DisabledStatus)}
-              onClick={() => act('open-close')} />
+              width={6.7}
+              align="center"
+              mt={0.5}
+              color={opened ? "bad" : "good"}
+              icon={opened ? "sign-out-alt" : "sign-in-alt"}
+              disabled={(locked || welded)
+                || (mainTimeleft && backupTimeleft) || (isDisabled)}
+              onClick={() => act("openClose")}>
+              {opened ? "Open" : "Closed"}
+            </Button>
           )}>
-          {!!(data.locked || data.welded) && (
+          {!!(locked || welded) && (
             <span>
-              [Door is {data.locked ? 'bolted' : ''}
-              {(data.locked && data.welded) ? ' and ' : ''}
-              {data.welded ? 'welded' : ''}!]
+              [Door is {locked ? "bolted" : ""}
+              {(locked && welded) ? " and " : ""}
+              {welded ? "welded" : ""}!]
             </span>
           )}
         </LabeledList.Item>
@@ -177,53 +167,60 @@ const AccessAndDoorControl = (props, context) => {
 
 const Electrify = (props, context) => {
   const { act, data } = useBackend(context);
-  const MainPower = (data.power.main_timeleft === 0);
-  const BackupPower = (data.power.backup_timeleft === 0);
-  const shocked = (data.shock === 1);
-  const statusElectrify = dangerMap[data.shock]
-  || dangerMap[0];
-  const statusMain = dangerMap[Number((data.power.main_timeleft === 0))]
-  || dangerMap[0];
-  const statusBackup = dangerMap[Number((data.power.backup_timeleft === 0))]
-  || dangerMap[0];
+  const {
+    mainTimeleft,
+    backupTimeleft,
+    wires,
+    shockTimeleft,
+  } = data;
 
   return (
     <NoticeBox danger>
-      <Section title="Danger Zone" m={-1}>
+      <Section m={-1}>
         <LabeledList>
           <LabeledList.Item
-            label="Electrify"
-            color={statusElectrify.color}
-            buttons={(
-              <Fragment>
-                <Button
-                  icon="wrench"
-                  disabled={(!data.wires.shock) || (shocked)
-                  || (!MainPower && !BackupPower)}
-                  content="Restore"
-                  onClick={() => act('shock-restore')} />
-                <Button
-                  icon="bolt"
-                  disabled={(!data.wires.shock) || (!shocked)
-                  || (!MainPower && !BackupPower)}
-                  content="Temporary"
-                  onClick={() => act('shock-temp')} />
-                <Button
-                  icon="bolt"
-                  disabled={(!data.wires.shock) || (!shocked)
-                  || (!MainPower && !BackupPower)}
-                  content="Permanent"
-                  onClick={() => act('shock-perm')} />
-              </Fragment>
-            )}>
-            {data.shock === 1 ? 'Safe' : 'Electrified'}
-            {' '}
-            {!data.wires.shock
-          && '[Wires have been cut!]'
-          || (data.shock_timeleft > 0
-          && `[${data.shock_timeleft}s]`)
-          || (data.shock_timeleft === -1
-          && '[Permanent]')}
+            color={shockTimeleft ? "average" : "good"}
+            label="Electrify">
+            {!shockTimeleft ? "Safe" : "Electrified"}
+            {" "}
+            {!wires.shock
+            && <Box>[Wires have been cut!]</Box>
+            || (shockTimeleft > 0
+            && `[${shockTimeleft}s]`)
+            || (shockTimeleft === -1
+            && "[Permanent]")}
+          </LabeledList.Item>
+          <LabeledList.Item
+            color={!shockTimeleft ? "Average" : "Bad"}>
+            <Box
+              ml={-12}
+              mt={1}
+              pb={1}>
+              <Button
+                color="good"
+                icon="wrench"
+                disabled={(!wires.shock) || (!shockTimeleft)
+                || (mainTimeleft && backupTimeleft)}
+                onClick={() => act("shockRestore")}>
+                Restore
+              </Button>
+              <Button
+                color="average"
+                icon="bolt"
+                disabled={(!wires.shock) || (shockTimeleft)
+                  || (mainTimeleft && backupTimeleft)}
+                onClick={() => act("shockTemp")}>
+                Temporary
+              </Button>
+              <Button
+                color="bad"
+                icon="bolt"
+                disabled={(!wires.shock) || (shockTimeleft)
+                || (mainTimeleft && backupTimeleft)}
+                onClick={() => act("shockPerm")}>
+                Permanent
+              </Button>
+            </Box>
           </LabeledList.Item>
         </LabeledList>
       </Section>
