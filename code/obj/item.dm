@@ -1172,7 +1172,7 @@
 
 	user.violate_hippocratic_oath()
 
-	for (var/mob/V in nervous_mobs)
+	for (var/mob/V in by_cat[TR_CAT_NERVOUS_MOBS])
 		if (get_dist(user,V) > 6)
 			continue
 		if (prob(8) && user)

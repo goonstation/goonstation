@@ -37,7 +37,7 @@
 	if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
 		src.is_pet = 0
 	if(src.is_pet)
-		pets += src
+		START_TRACKING_CAT(TR_CAT_PETS)
 	src.update_water_status(loc)
 	..()
 
@@ -46,7 +46,7 @@
 		ai.dispose()
 	ai = null
 	if(src.is_pet)
-		pets -= src
+		STOP_TRACKING_CAT(TR_CAT_PETS)
 	..()
 
 /mob/living/critter/aquatic/setup_healths()

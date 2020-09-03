@@ -1,4 +1,33 @@
 
+(t)thu sep 03 20
+(u)adharainspace
+(p)2006
+(e)🆕🎨|feature, sprites
+(+)batons now flip around when held on harm intent
+(u)Nebulacrity
+(p)2035
+(e)🆕🎨|feature, sprites
+(*)Added a new trait: Pilot. There has been an increased amount of reports of NanoTrasen employees getting lost off-station before their shifts.
+(*)Added a new pod component: Warp-0 Engine. An older sibling of the Warp-1 Engine, this engine is slightly worse power-wise while also lacking the ability to generate wormholes.
+(+)Added Pilot and Stowaway trait sprites.
+(u)Superlagg
+(p)2047
+(e)🐛🆕|bug, feature
+(+)Barber tools can cut 200% more hair than they used to, as they can now affect all three hair layers.
+(u)BatElite
+(p)2033
+(e)🆕|feature
+(+)You can now emag boogiebots!
+(u)pali
+(+)Mulebots are now a bit faster
+(u)Walter-Lin
+(p)2013
+(e)|
+(+)Fixed the flying critter running sound.
+(u)Shroopy
+(p)1733
+(e)🆕|feature
+(*)Added an option in Game->Effects to enable or disable view tinting from glasses, masks, etc.
 (t)wed sep 02 20
 (u)Sovexe
 (p)1965

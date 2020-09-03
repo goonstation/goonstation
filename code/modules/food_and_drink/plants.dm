@@ -250,7 +250,8 @@
 			user.put_in_hand_or_drop(P)
 			var/datum/plantgenes/DNA = src.plantgenes
 			var/datum/plantgenes/PDNA = P.plantgenes
-			HYPpassplantgenes(DNA,PDNA)
+			if(DNA)
+				HYPpassplantgenes(DNA,PDNA)
 			qdel(W)
 			pool(src)
 		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher) && !istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
@@ -266,7 +267,8 @@
 				P.transform = src.transform
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				makeslices -= 1
 			pool (src)
 		..()
@@ -352,7 +354,8 @@
 				var/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge/P = new(T)
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				makeslices -= 1
 			pool (src)
 		..()
@@ -407,7 +410,8 @@
 				P.name = "[src.name] slice"
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				if(src.reagents)
 					P.reagents = new
 					P.reagents.inert = 1 // no stacking of potassium + water explosions on cutting
@@ -457,7 +461,8 @@
 				P.name = "[src.name] slice"
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				if(src.reagents)
 					P.reagents = new
 					P.reagents.inert = 1 // no stacking of potassium + water explosions on cutting
@@ -578,7 +583,8 @@
 					slice.reagents.inert = 0
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = slice.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				if(istype(hit_atom, /mob/living) && prob(1))
 					var/mob/living/dork = hit_atom
 					boutput(slice, "A [slice.name] hits [dork] right in the mouth!")
@@ -934,7 +940,8 @@
 				P.transform = src.transform
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				makeslices -= 1
 			pool (src)
 		..()
@@ -977,7 +984,8 @@
 				P.name = "[src.name] wedge"
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				makeslices -= 1
 			pool (src)
 		..()
@@ -1186,7 +1194,8 @@
 				P.transform = src.transform
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				makeslices -= 1
 			new /obj/item/reagent_containers/food/drinks/coconut(T)
 			pool (src)
@@ -1231,7 +1240,8 @@
 				P.transform = src.transform
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 			pool (src)
 		..()
 

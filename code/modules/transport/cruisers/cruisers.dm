@@ -241,10 +241,10 @@
 		engine = new/obj/item/shipcomponent/engine(src)
 		life_support = new/obj/item/shipcomponent/life_support(src)
 
-		pods_and_cruisers += src
+		START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 	disposing()
-		pods_and_cruisers -= src
+		STOP_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 		del(camera)
 		if(interior_area)
