@@ -36,7 +36,16 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 	if (src.connected_ai)
 		return UI_UPDATE
 
-	return UI_DISABLED // Otherwise they can keep the UI open.
+/mob/living/silicon/hivebot/eyebot/default_can_use_topic(src_object)
+	. = shared_ui_interaction(src_object)
+	if(. <= UI_DISABLED)
+		return
+
+	// Robots can interact with anything they can see.
+	if(get_dist(src, src_object) <= SQUARE_TILE_WIDTH)
+		return UI_INTERACTIVE
+
+	return UI_UPDATE // AI eyebots can recieve updates from anything that the AI can see.
 
 /mob/dead/aieye/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
