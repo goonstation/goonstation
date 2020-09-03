@@ -27,7 +27,7 @@ export const Airlock = (props, context) => {
       width={370}>
       <Window.Content>
         <Section
-          title="Access panel">
+          title="Access Panel">
           <Box>
             {"An identifier is engraved under the airlock's card sensors:"} <Box inline italic>{netId}</Box>
           </Box>
