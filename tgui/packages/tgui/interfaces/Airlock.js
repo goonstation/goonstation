@@ -53,7 +53,7 @@ export const Airlock = (props, context) => {
                           onClick={() => handleWireInteract(i, "pulse")} />
                         <Button
                           icon="broadcast-tower"
-                          width={10}
+                          width={10.5}
                           className="airlock-wires-btn"
                           selected={!!(signalers[i])}
                           content={!(signalers[i]) ? "Attach Signaler" : "Detach Signaler"}
