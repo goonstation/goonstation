@@ -117,7 +117,7 @@
 	var/sound_warningbuzzer = 'sound/machines/warning-buzzer.ogg'
 
 	var/list/history = list()
-	var/history_max = 50
+	var/const/history_max = 50
 
 	New()
 		..()
