@@ -986,7 +986,7 @@ var/global/curr_day = null
 			src.Browse(null, "window=resourcePreload")
 			return
 
-	..()
+	. = ..()
 	return
 
 /client/proc/mute(len = -1)
