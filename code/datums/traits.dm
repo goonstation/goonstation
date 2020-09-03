@@ -721,7 +721,7 @@
 	isPositive = 0
 
 obj/trait/pilot
-	name = "Pilot (+1) \[Background\]"
+	name = "Pilot (0) \[Background\]"
 	cleanName = "Pilot"
 	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection but without a PDA."
 	id = "pilot"
