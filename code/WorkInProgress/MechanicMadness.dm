@@ -345,7 +345,6 @@
 	level = 2
 	var/cabinet_banned = false // whether or not this component is prevented from being anchored in cabinets
 	var/one_per_tile = false // if true makes it so that only one component can be wrenched on the tile
-	var/own_id = "/obj/item/mechanics" // im bad at BYOND code okay? (used for one_per_tile, no need to use otherwise)
 	var/under_floor = 0
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
