@@ -1840,7 +1840,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			if(user)
 				boutput(user, "<span class='alert'>You short out the [src]'s dancing intensity setting to 'flashmob'.</span>")
 			src.visible_message("<span class='alert'><b>[src] lights up with determination!</b></span>")
-			src.emagged = 1
+			src.emagged = TRUE
 			return 1
 		return 0
 
