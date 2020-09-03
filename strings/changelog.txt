@@ -1,5 +1,9 @@
 
 (t)thu sep 03 20
+(u)adharainspace
+(p)2006
+(e)🆕🎨|feature, sprites
+(+)batons now flip around when held on harm intent
 (u)Nebulacrity
 (p)2035
 (e)🆕🎨|feature, sprites
