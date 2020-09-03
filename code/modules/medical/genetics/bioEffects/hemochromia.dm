@@ -3,7 +3,7 @@
 	desc = "A volatile mutation with 12 known stable alternatives. Will quickly break down into one of them if the subject exits the scanner."
 	id = "hemochromia_unknown"
 	probability = 111
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel like you're out of breath."
 	msgLose = "You feel more stable."
 	reclaim_fail = 10
@@ -82,7 +82,7 @@
 	name = "Hemochromia Type-R"
 	desc = "Causes the subject's blood cells to take on a scarlet coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_rust"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -120,7 +120,7 @@
 	name = "Hemochromia Type-B"
 	desc = "Causes the subject's blood cells to take on a copper coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_bronze"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -158,7 +158,7 @@
 	name = "Hemochromia Type-G"
 	desc = "Causes the subject's blood cells to take on a brass coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_gold"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -196,7 +196,7 @@
 	name = "Hemochromia Type-L"
 	desc = "Causes the subject's blood cells to take on a chartreuse coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_lime"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -234,7 +234,7 @@
 	name = "Hemochromia Type-O"
 	desc = "Causes the subject's blood cells to take on a verdant coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_olive"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -272,7 +272,7 @@
 	name = "Hemochromia Type-J"
 	desc = "Causes the subject's blood cells to take on an emerald coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_jade"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -310,7 +310,7 @@
 	name = "Hemochromia Type-T"
 	desc = "Causes the subject's blood cells to take on a cyan coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_teal"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -348,7 +348,7 @@
 	name = "Hemochromia Type-C"
 	desc = "Causes the subject's blood cells to take on a cerulean coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_cobalt"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -386,7 +386,7 @@
 	name = "Hemochromia Type-I"
 	desc = "Causes the subject's blood cells to take on an azure coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_indigo"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -424,7 +424,7 @@
 	name = "Hemochromia Type-P"
 	desc = "Causes the subject's blood cells to take on a lavander coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_purple"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -462,7 +462,7 @@
 	name = "Hemochromia Type-V"
 	desc = "Causes the subject's blood cells to take on a plum coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_violet"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -500,7 +500,7 @@
 	name = "Hemochromia Type-F"
 	desc = "Causes the subject's blood cells to take on a magenta coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_fuschia"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
