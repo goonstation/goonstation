@@ -36,7 +36,7 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 	if (src.connected_ai)
 		return UI_UPDATE
 
-	return UI_DISABLED
+	return UI_DISABLED // Otherwise they can keep the UI open.
 
 /mob/living/silicon/hivebot/eyebot/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
