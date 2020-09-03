@@ -306,19 +306,6 @@
 		picks = FindOccupationCandidates(staff,JOB.name,3)
 	return picks
 
-/proc/pilotSpawnVerif(turf/checkedTurf)					//Just roll with it.
-	if (isnull(checkedTurf))							//Sanity check.
-		return false
-	#ifdef UNDERWATER_MAP
-	if (istype(checkedTurf, /turf/space/fluid))
-		return true
-	#else
-	if (istype(checkedTurf, /turf/space))
-		return true
-	#endif
-	else
-		return false
-
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
 
@@ -413,22 +400,14 @@
 				var/turf/pilotSpawnLocation = null
 				
 				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
-				while(!pilotSpawnVerif(pilotSpawnLocation))					//Trying to find a valid spawn location.
-					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), 5)
+				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
 				if (pilotSpawnLocation)										//Sanity check.
 					src.set_loc(pilotSpawnLocation)
 				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
 				#else														//This part of the code executes only if the map is a space one.
-				var/pilotZ = rand(2, (world.maxz - 1))
-				var/validZ = FALSE
-				while (!validZ)
-					if (isrestrictedz(pilotZ))
-						pilotZ = ++pilotZ % (world.maxz - 1)
-						continue
-					validZ = TRUE
-
-				while(!pilotSpawnVerif(pilotSpawnLocation))					//Trying to find a valid spawn location.
-					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pilotZ)
+				while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
 				if (pilotSpawnLocation)										//Sanity check.
 					src.set_loc(pilotSpawnLocation)
 				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
