@@ -1,5 +1,9 @@
 
 (t)thu sep 03 20
+(u)Superlagg
+(p)2047
+(e)🐛🆕|bug, feature
+(+)Barber tools can cut 200% more hair than they used to, as they can now affect all three hair layers.
 (u)BatElite
 (p)2033
 (e)🆕|feature
