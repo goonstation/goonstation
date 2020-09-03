@@ -637,7 +637,7 @@
 		eject_occupant(user)
 
 	disposing()
-		connected.scanner = null
+		connected?.scanner = null
 		connected = null
 		pods = null
 		occupant = null
