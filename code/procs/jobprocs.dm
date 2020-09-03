@@ -365,7 +365,7 @@
 		if (ishuman(src))
 			if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
 				src:spawnId(rank)
-			else if (src.traitHolder)
+			if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
 				//Has the immigrant trait - they're hiding in a random locker
 				var/list/obj/storage/SL = list()
 				for(var/obj/storage/S in by_type[/obj/storage])
@@ -378,6 +378,26 @@
 
 				if(SL.len > 0)
 					src.set_loc(pick(SL))
+
+			if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
+				var/turf/pilotSpawnLocation = null
+				
+				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
+				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
+				#else														//This part of the code executes only if the map is a space one.
+				while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
+				#endif
+				for(var/obj/critter/gunbot/drone/snappedDrone in src.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+					qdel(snappedDrone)
+				V.finish_board_pod(src)
 
 			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
@@ -454,6 +474,25 @@
 				B.badge_owner_name = src.real_name
 				B.badge_owner_job = src.job
 
+	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
+		var/obj/item/tank/emergency_oxygen/E = new /obj/item/tank/emergency_oxygen(src.loc)
+		src.equip_if_possible(E, slot_in_backpack)
+		#ifdef UNDERWATER_MAP
+		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
+		src.equip_if_possible(SSW, slot_in_backpack)
+		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
+		src.equip_if_possible(SHW, slot_in_backpack)
+		#else
+		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
+		src.equip_if_possible(SSS, slot_in_backpack)
+		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
+		src.equip_if_possible(SHS, slot_in_backpack)
+		#endif
+		var/obj/item/clothing/mask/breath/MSK = new /obj/item/clothing/mask/breath(src.loc)
+		src.equip_if_possible(MSK, slot_in_backpack)
+		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
+		src.equip_if_possible(GPSDEVICE, slot_in_backpack)
+
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 
@@ -462,8 +501,9 @@
 			src.equip_new_if_possible(JOB.slot_belt, slot_in_backpack)
 		else
 			src.equip_new_if_possible(JOB.slot_belt, slot_belt)
-			if (src.traitHolder && src.traitHolder.hasTrait("immigrant") && istype(src.belt, /obj/item/device/pda2))
-				del(src.belt) //UGHUGHUGHUGUUUUUUUU
+			if (src.traitHolder && istype(src.belt, /obj/item/device/pda2))
+				if (src.traitHolder.hasTrait("immigrant") || src.traitHolder.hasTrait("pilot"))
+					del(src.belt)
 		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
 			for (var/X in JOB.items_in_belt)
 				if(ispath(X))
