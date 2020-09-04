@@ -1,14 +1,14 @@
 /obj/machinery/bot/mining
 	name = "Digbot"
 	desc = "A little robot with a pickaxe. He looks so jazzed to go hit some rocks!"
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "digbot"
 	layer = 5.0
 	density = 0
 	anchored = 0
-	var/on = 0
+	on = 0
 	var/digging = 0
-	var/health = 25
+	health = 25
 	locked = 1
 	var/diglevel = 2
 	var/digsuspicious = 0
@@ -16,10 +16,11 @@
 	var/turf/target
 	var/turf/oldtarget
 	var/oldloc = null
-	var/emagged = 0
 	req_access = list(access_engineering)
 	var/list/path = null
 	var/list/digbottargets = list()
+	var/lumlevel = 0.2
+	var/use_medium_light = 1
 
 	New()
 		..()
@@ -33,8 +34,9 @@
 
 /obj/machinery/bot/mining/New()
 	..()
-	spawn(5)
-		src.sd_SetLuminosity(src.on ? 2 : 0)
+	sleep(5)
+	if(on)
+		src.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
 
 /obj/machinery/bot/mining/attack_hand(user as mob)
 	var/dat
@@ -50,7 +52,7 @@ Dig up to hardness level: []"},
 text("<A href='?src=\ref[src];operation=suspicious'>[src.digsuspicious ? "Yes" : "No"]</A>"),
 text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 
-	user << browse("<HEAD><TITLE>Repairbot v1.0 controls</TITLE></HEAD>[dat]", "window=autorepair")
+	boutput(user,  browse("<HEAD><TITLE>Repairbot v1.0 controls</TITLE></HEAD>[dat]", "window=autorepair"))
 	onclose(user, "autorepair")
 	return
 
@@ -59,18 +61,18 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 	if(istype(W, /obj/item/card/id))
 		if(src.allowed(usr))
 			src.locked = !src.locked
-			user << "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls."
+			boutput(user,  "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.")
 		else
-			user << "The [src] doesn't seem to accept your authority."
+			boutput(user,  "The [src] doesn't seem to accept your authority.")
 		src.updateUsrDialog()
 	//////////////////////
 	///Emagged code///////
 	//////////////////////
 	if ((istype(W, /obj/item/card/emag)) && (!src.emagged))
-		user << "\red You short out [src]. It.. didn't really seem to affect anything, though."
+		boutput(user,  "<span class='alert'>You short out [src]. It.. didn't really seem to affect anything, though.</span>")
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+				O.show_message("<span class='alert bold'><B>[src] buzzes oddly!</span>", 1)
 		src.target = null
 		src.oldtarget = null
 		src.anchored = 0
@@ -80,12 +82,12 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 /obj/machinery/bot/mining/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
 			src.on = !src.on
-			src.sd_SetLuminosity(src.on ? 2 : 0)
+			if(on)
+				src.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
 			src.target = null
 			src.oldtarget = null
 			src.oldloc = null
@@ -113,7 +115,7 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 	//checks if already targeting something
 	digbottargets = list()
 	if(!src.target)
-		for(var/obj/machinery/bot/mining/bot in machines)
+		for(var/obj/machinery/bot/mining/bot in machine_registry[MACHINES_BOTS])
 			if(bot != src) digbottargets += bot.target
 	/////////Search for target code
 	if(!src.target)
@@ -161,9 +163,9 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 
 	src.anchored = 1
 
-	src.visible_message("\red [src] starts digging!")
-	if (src.diglevel > 2) playsound(src.loc, 'welder.ogg', 100, 1)
-	else playsound(src.loc, 'pickaxe.ogg', 100, 1)
+	src.visible_message("<span class='alert'>[src] starts digging!</span>")
+	if (src.diglevel > 2) playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
+	else playsound(src.loc, 'sound/impact_sounds/Stone_Cut_1.ogg', 100, 1)
 	src.digging = 1
 
 	var/cuttime = 3
@@ -193,7 +195,7 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 			src.anchored = 0
 			src.target = null
 		else
-			src.visible_message("\red [src] fails to dig the asteroid!")
+			src.visible_message("<span class='alert'>[src] fails to dig the asteroid!</span>")
 			src.digging = 0
 
 //////////////////////////////////////
@@ -203,7 +205,7 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 /obj/item/digbotassembly
 	name = "hard hat/sensor assembly"
 	desc = "You need to add a robot arm next."
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "helmet_signaler"
 	w_class = 3.0
 	var/build_step = 0
@@ -216,49 +218,42 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 				qdel(T)
 				src.build_step = 1
 				src.name = "hard hat/sensor/robot arm assembly"
-				user << "You add the robot arm to the assembly. Now you need to add a mining tool."
+				boutput(user, "You add the robot arm to the assembly. Now you need to add a mining tool.")
 			else
-				user << "You already added that part!"
+				boutput(user,  "You already added that part!")
 				return
 		else if (istype(T, /obj/item/mining_tool/))
 			if (src.build_step == 1)
 				if (user.r_hand == T) user.u_equip(T)
 				else user.u_equip(T)
-				user << "You add [T.name]. Now you have a finished mining bot! Hooray!"
+				boutput(user,  "You add [T.name]. Now you have a finished mining bot! Hooray!")
 				qdel(T)
 				new /obj/machinery/bot/mining(user.loc)
 				qdel(src)
 			else
-				user << "It's not ready for that part yet."
+				boutput(user,  "It's not ready for that part yet.")
 				return
 		else if (istype(T, /obj/item/mining_tool/drill))
 			if (src.build_step == 1)
 				if (user.r_hand == T) user.u_equip(T)
 				else user.u_equip(T)
-				user << "You add [T.name]. Now you have a finished mining bot! Hooray!"
+				boutput(user,  "You add [T.name]. Now you have a finished mining bot! Hooray!")
 				qdel(T)
 				new /obj/machinery/bot/mining/drill(user.loc)
 				qdel(src)
 			else
-				user << "It's not ready for that part yet."
+				boutput(user,  "It's not ready for that part yet.")
 				return
-		else ..()
-
-/obj/item/clothing/head/helmet/hardhat/attackby(var/obj/item/T, mob/user as mob)
+		else 
+			..()
+/*
+/obj/item/clothing/head/helmet/hardhat/proc/attackby(var/obj/item/T, mob/user as mob)
 	if(istype(T, /obj/item/device/prox_sensor))
-		user << "You attach the proximity sensor to the hard hat. Now you need to add a robot arm."
-		new /obj/item/digbotassembly(user.loc)
+		boutput(user,  "You attach the proximity sensor to the hard hat. Now you need to add a robot arm.")
+		new /obj/item/digbotassembly(get_turf(user))
 		qdel(T)
 		qdel(src)
 		return
-	else ..()
-
-/obj/machinery/bot/mining/proc/explode()
-	src.on = 0
-	for(var/mob/O in hearers(src, null))
-		O.show_message("\red <B>[src] blows apart!</B>", 1)
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
-	qdel(src)
-	return
+	else 
+		..()
+		*/
