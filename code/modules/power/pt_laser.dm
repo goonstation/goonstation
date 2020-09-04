@@ -104,6 +104,8 @@
 		overlays += image('icons/obj/pt_laser.dmi', "charge_[clevel]")
 
 /obj/machinery/power/pt_laser/proc/chargedisplay()
+	if(!output)
+		return 0
 	return min(round((charge/abs(output))*6),6) //how close it is to firing power, not to capacity.
 
 /obj/machinery/power/pt_laser/process()
