@@ -39,6 +39,7 @@
 	if(src.is_pet)
 		START_TRACKING_CAT(TR_CAT_PETS)
 	src.update_water_status(loc)
+	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
 	..()
 
 /mob/living/critter/aquatic/disposing()
