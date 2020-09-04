@@ -43,10 +43,6 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 		src.add_dialog(user)
 		add_fingerprint(user)
 
-		//Other resources are loaded in the files like <link rel="stylesheet" type="text/css" href="{{resource("css/telescope.css")}}">
-		//Couldn't get this to work for sounds inside .js file.
-		user << browse_rsc(file("browserassets/sounds/sweep.mp3"))
-		user << browse_rsc(file("browserassets/sounds/found.mp3"))
 		user.Browse(grabResource("html/telescope.html"), "window=qtelescope;size=974x560;title=Quantum Telescope;can_resize=0", 1)
 
 		onclose(user, "telescope", src)
