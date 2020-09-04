@@ -1,5 +1,11 @@
 
 (t)fri sep 04 20
+(u)Superlagg
+(p)1904
+(e)🆕|feature
+(+)Securitrons are now much more dutiful when patrolling and responding to summons
+(+)Securitrons also show a progress bar when cuffing someone. Careful, they don't like to be interrupted!
+(+)Upgraded the Hos' secbot PDA program to be able to summon every active securitron or force it to stun whoever its chasing.
 (u)Sovexe
 (p)1879
 (e)🆕📄|feature, tgui
