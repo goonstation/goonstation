@@ -169,6 +169,7 @@
 	heal_amt = 2
 	food_effects = list("food_sweaty_big","food_refreshed")
 	New()
+		..()
 		if(prob(10))
 			name = pick("fart pie","butt pie","mud pie","piesterior","ham pie","dump cake","derri-eclaire")
 

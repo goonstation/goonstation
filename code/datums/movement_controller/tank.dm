@@ -32,6 +32,7 @@
 		turn_delay = 2
 
 	New(owner)
+		..()
 		src.owner = owner
 
 	disposing()

@@ -142,6 +142,7 @@
 	var/area/wizard_place/wizard_area
 
 	New()
+		..()
 		ensure_wizard_area()
 
 	proc/ensure_wizard_area()

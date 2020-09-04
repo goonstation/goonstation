@@ -3,6 +3,7 @@
 	var/procname = null
 
 	New(var/datum/D, var/name)
+		..()
 		owner = D
 		procname = name
 ///

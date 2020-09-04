@@ -39,6 +39,7 @@
 
 
 	New(var/mob/M)
+		..()
 		owner = M
 		hud = new()
 		if(owner)
@@ -828,6 +829,7 @@
 
 	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
 	New(datum/abilityHolder/holder)
+		SHOULD_CALL_PARENT(FALSE) // I hate this but refactoring /datum/targetable is a big project I'll do some other time
 		..()
 		src.holder = holder
 		if (src.icon && src.icon_state)

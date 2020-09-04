@@ -22,19 +22,16 @@ WET FLOOR SIGN
 	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
 
 /obj/item/spraybottle/New()
-	var/datum/reagents/R = new/datum/reagents(100) // cogwerks - lowered from 1000 (what the hell) to 100
-	reagents = R
-	R.my_atom = src
+	..()
+	create_reagents(100)
 
 /obj/item/spraybottle/detective
 	name = "luminol bottle"
 	desc = "A spray bottle labeled 'Luminol - Blood Detection Agent'. That's what those fancy detectives use to see blood!"
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("luminol", 100)
+		..()
+		reagents.add_reagent("luminol", 100)
 
 	examine()
 		. = ..()
@@ -45,10 +42,8 @@ WET FLOOR SIGN
 	desc = "A spray bottle labeled 'Poo-b-Gone Space Cleaner'."
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cleaner", 100)
+		..()
+		reagents.add_reagent("cleaner", 100)
 
 /obj/janitorTsunamiWave
 	name = "chemicals"
@@ -58,6 +53,7 @@ WET FLOOR SIGN
 	anchored = 1
 
 	New(var/_loc, var/atom/target)
+		..()
 		set_loc(_loc)
 		create_reagents(10)
 		reagents.add_reagent("cleaner", 10)
@@ -166,12 +162,6 @@ WET FLOOR SIGN
 		new/obj/janitorTsunamiWave(get_turf(src), A)
 		playsound(src.loc, 'sound/effects/bigwave.ogg', 70, 1)
 
-	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cleaner", 100)
-
 /obj/item/spraybottle/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
@@ -248,9 +238,7 @@ WET FLOOR SIGN
 
 /obj/item/mop/New()
 	..()
-	var/datum/reagents/R = new/datum/reagents(20)
-	reagents = R
-	R.my_atom = src
+	src.create_reagents(20)
 	src.setItemSpecial(/datum/item_special/rangestab)
 	START_TRACKING
 	BLOCK_ROD
@@ -416,9 +404,8 @@ WET FLOOR SIGN
 	var/spam_flag = 0 // people spammed snapping their fucking fingers, so this is probably necessary
 
 /obj/item/sponge/New()
-	var/datum/reagents/sponge/R = new/datum/reagents/sponge(50)
-	reagents = R
-	R.my_atom = src
+	..()
+	src.create_reagents(50)
 	if (!(src in processing_items))
 		processing_items.Add(src)
 

@@ -9,10 +9,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
-		return
+		src.create_reagents(3000)
 
 	process()
 		if(reagents.has_reagent("radium"))
@@ -106,10 +103,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(500)
-		reagents = R
-		R.my_atom = src
-		return
+		src.create_reagents(500)
 
 
 	get_desc(dist, mob/user)

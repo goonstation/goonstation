@@ -155,9 +155,7 @@
 	image_cust_two = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 	image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 
-	var/datum/reagents/R = new/datum/reagents(330)
-	reagents = R
-	R.my_atom = src
+	src.create_reagents(330)
 
 	hud = new(src)
 	src.attach_hud(hud)

@@ -299,6 +299,7 @@
 	var/associated_datum = /datum/artifact/art
 
 	New(var/loc, var/forceartitype)
+		..()
 		var/datum/artifact/AS = new src.associated_datum(src)
 		if (forceartitype)
 			AS.validtypes = list("[forceartitype]")
@@ -337,6 +338,7 @@
 /obj/artifact_spawner
 	// pretty much entirely for debugging/gimmick use
 	New(var/loc,var/forceartitype = null,var/cinematic = 0)
+		..()
 		var/turf/T = get_turf(src)
 		if (cinematic)
 			T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")

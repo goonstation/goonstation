@@ -35,7 +35,7 @@
 	var/open = 0
 	var/use_glowstick = 1
 	var/obj/item/device/light/glowstick/loaded_glowstick = null
-	var/bladecolor = "G"
+	var/bladecolor = "invalid"
 	var/list/valid_colors = list("R","O","Y","G","C","B","P","Pi","W")
 	hit_type = DAMAGE_BLUNT
 	force = 1
@@ -68,7 +68,8 @@
 
 	New()
 		..()
-		src.bladecolor = pick(valid_colors)
+		if(src.bladecolor == "invalid")
+			src.bladecolor = pick(valid_colors)
 		var/r = 0
 		var/g = 0
 		var/b = 0
@@ -362,54 +363,34 @@
 	..()
 
 /obj/item/sword/red
-	New()
-		..()
-		src.bladecolor = "R"
+	bladecolor = "R"
 
 /obj/item/sword/orange
-	New()
-		..()
-		src.bladecolor = "O"
+	bladecolor = "O"
 
 /obj/item/sword/yellow
-	New()
-		..()
-		src.bladecolor = "Y"
+	bladecolor = "Y"
 
 /obj/item/sword/green
-	New()
-		..()
-		src.bladecolor = "G"
+	bladecolor = "G"
 
 /obj/item/sword/cyan
-	New()
-		..()
-		src.bladecolor = "C"
+	bladecolor = "C"
 
 /obj/item/sword/blue
-	New()
-		..()
-		src.bladecolor = "B"
+	bladecolor = "B"
 
 /obj/item/sword/purple
-	New()
-		..()
-		src.bladecolor = "P"
+	bladecolor = "P"
 
 /obj/item/sword/pink
-	New()
-		..()
-		src.bladecolor = "Pi"
+	bladecolor = "Pi"
 
 /obj/item/sword/white
-	New()
-		..()
-		src.bladecolor = "W"
+	bladecolor = "W"
 
 /obj/item/sword/rainbow
-	New()
-		..()
-		src.bladecolor = null
+	bladecolor = null
 
 /obj/item/sword/vr
 	icon = 'icons/effects/VR.dmi'

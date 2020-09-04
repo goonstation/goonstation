@@ -97,7 +97,8 @@
 		SPAWN_DBG(0)
 			var/key = src.ckey
 			recently_dead += key
-			SPAWN_DBG(recently_time) recently_dead -= key
+			sleep(recently_time)
+			recently_dead -= key
 */
 	if(src.mind)
 		src.mind.register_death()

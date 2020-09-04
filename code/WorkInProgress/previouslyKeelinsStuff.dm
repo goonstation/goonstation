@@ -311,8 +311,8 @@ var/reverse_mode = 0
 	var/beingUsed = 0
 
 	New()
+		..()
 		loop()
-		return
 
 	proc/loop()
 		if (!active)
@@ -577,6 +577,7 @@ var/reverse_mode = 0
 				boutput(O, "<span class='alert'><B>[my_target] stumbles around.</B></span>")
 
 /obj/fake_attacker/New(location, target)
+	..()
 	SPAWN_DBG(30 SECONDS)	qdel(src)
 	src.my_target = target
 	step_away(src,my_target,2)

@@ -819,6 +819,7 @@
 	var/force_stamina_target = null
 
 	New(var/mob/M)
+		..()
 		owner = M
 
 	proc/clear(var/mob/M)

@@ -721,17 +721,16 @@ var/sound/iomoon_alarm_sound = null
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "takeout"
 	heal_amt = 1
+	initial_volume = 60
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(60)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("chickensoup", 10)
-		R.add_reagent("salt", 10)
-		R.add_reagent("grease", 5)
-		R.add_reagent("msg", 2)
-		R.add_reagent("VHFCS", 8)
-		R.add_reagent("egg",5)
+		..()
+		reagents.add_reagent("chickensoup", 10)
+		reagents.add_reagent("salt", 10)
+		reagents.add_reagent("grease", 5)
+		reagents.add_reagent("msg", 2)
+		reagents.add_reagent("VHFCS", 8)
+		reagents.add_reagent("egg",5)
 
 /obj/item/yoyo
 	name = "Atomic Yo-Yo"

@@ -12,6 +12,7 @@
 	layer = 2.6
 	anchored = 1
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
 
@@ -70,11 +71,11 @@
 
 				SPAWN_DBG(door ? 55 : 20) driver_operating = 0
 
-				SPAWN_DBG(door ? 20 : 10)
-					if (driver)
-						for(var/obj/machinery/mass_driver/D in machine_registry[MACHINES_MASSDRIVERS])
-							if(D.id == driver.id)
-								D.drive()
+				sleep(door ? 20 : 10)
+				if (driver)
+					for(var/obj/machinery/mass_driver/D in machine_registry[MACHINES_MASSDRIVERS])
+						if(D.id == driver.id)
+							D.drive()
 	process()
 		if(!operating && !driver_operating)
 			var/drive = 0
@@ -111,6 +112,7 @@
 	opacity = 0
 	anchored = 1
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/default_direction = NORTH //The direction things get sent into when the router does not have a destination for the given barcode or when there is none attached.
 	var/list/destinations = new/list() //List of tags and the associated directions.
@@ -160,13 +162,12 @@
 			driver_operating = 1
 
 			SPAWN_DBG(0)
-				SPAWN_DBG(2 SECONDS)
-					driver_operating = 0
-					driver = null
-
-				SPAWN_DBG(1 SECOND)
-					if (driver)
-						driver.drive()
+				sleep(1 SECOND)
+				if (driver)
+					driver.drive()
+				sleep(1 SECOND)
+				driver_operating = 0
+				driver = null
 
 	process()
 		if(!operating && !driver_operating)

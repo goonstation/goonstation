@@ -135,6 +135,7 @@ var/datum/explosion_controller/explosions
 	var/brisance
 
 	New(atom/source, turf/epicenter, power, brisance)
+		..()
 		src.source = source
 		src.epicenter = epicenter
 		src.power = power

@@ -15,6 +15,7 @@
 	var/apply_material = 0
 
 	New()
+		..()
 		if (!sanity_check_exemption)
 			src.sanity_check()
 

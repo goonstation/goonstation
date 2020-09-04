@@ -92,7 +92,7 @@
 	New()
 		..()
 		ammo.amount_left = 30
-		AddComponent(/datum/component/holdertargeting/smartgun)
+		AddComponent(/datum/component/holdertargeting/smartgun, 3)
 
 /datum/component/holdertargeting/smartgun
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
@@ -103,14 +103,15 @@
 	var/list/targets = list()
 	var/targetting = 0
 	var/shooting = 0
-	var/maxlocks = 3
+	var/maxlocks
 	var/obj/item/gun/G
 
-	Initialize()
+	Initialize(_maxlocks = 3)
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
 			return COMPONENT_INCOMPATIBLE
 		else
 			G = parent
+		maxlocks = _maxlocks
 
 	on_dropped(datum/source, mob/user)
 		. = ..()
@@ -148,11 +149,11 @@
 	while(targetting)
 		sleep(1 SECOND)
 		ding = 0
-		for(var/mob/M in view(7, user))
+		for(var/mob/M in mobs)
 			if(!G || !(user?.client.check_key(KEY_RUN)))
 				targetting = 0
 				break
-			if(in_cone_of_vision(user, M) && !(targets[M] >= 3 || istype(M.get_id(), /obj/item/card/id/syndicate)) && shotcount < checkshots(G))
+			if(IN_RANGE(user, M, 7) && in_cone_of_vision(user, M) && !(targets[M] >= maxlocks || istype(M.get_id(), /obj/item/card/id/syndicate)) && shotcount < checkshots(G))
 				targets[M] = targets[M] ? targets[M] + 1 : 1
 				ding = 1
 				shotcount++
