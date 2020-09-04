@@ -184,7 +184,7 @@
 				var/area/place = get_area(P)
 				t += copytext(add_tspace(place.name, 30), 1, 30)
 
-				t += "[add_lspace(round(100.0*P.charge/P.output, 0.1), 5)]% |      [P.charging ? "Yes" : " No"] | [add_lspace(P.chargelevel,7)] | [add_lspace(P.output,7)] |    [P.online ? "Yes" : " No"] | N/A<BR>"
+				t += "[P.output ? add_lspace(round(100.0*P.charge/P.output, 0.1), 5) : 0]% |      [P.charging ? "Yes" : " No"] | [add_lspace(P.chargelevel,7)] | [add_lspace(P.output,7)] |    [P.online ? "Yes" : " No"] | N/A<BR>"
 
 		t += "</FONT></PRE>"
 
