@@ -488,8 +488,7 @@
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
 		src.force_equip(SHS, slot_in_backpack)
 		#endif
-		var/obj/item/clothing/mask/breath/MSK = new /obj/item/clothing/mask/breath(src.loc)
-		src.force_equip(MSK, slot_in_backpack)
+		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, slot_in_backpack)
 
