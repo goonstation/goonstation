@@ -818,10 +818,15 @@
 	var/no_dirs = 0 //ignore directional
 
 	New()
-		SPAWN_DBG(1 DECI SECOND)
-			src.set_up()
-			SPAWN_DBG(1 SECOND)
-				qdel(src)
+		..()
+		if(current_state >= GAME_STATE_WORLD_INIT)
+			SPAWN_DBG(0)
+				initialize()
+
+	initialize()
+		. = ..()
+		src.set_up()
+		qdel(src)
 
 	proc/set_up()
 		if (!locate(text2path(src.grille_path)) in get_turf(src))
@@ -922,7 +927,7 @@
 	shattersound = 'sound/impact_sounds/Metal_Hit_Light_1.ogg'
 
 	New()
-		return
+		SHOULD_CALL_PARENT(FALSE) // I hate this but I don't feel lik refactoring cubicle panels, fuck that
 
 	smash()
 		if(health <= 0)

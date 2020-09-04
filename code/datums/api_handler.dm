@@ -11,6 +11,7 @@ var/global/datum/apiHandler/apiHandler
 	var/apiRetryDelay = 10 //base delay between query attempts, gets multiplied by attempt number
 
 	New()
+		..()
 		if (!config.goonhub_api_endpoint)
 			src.enabled = 0
 			logTheThing("debug", null, null, "Goonhub endpoint doesn't exist, disabled api handler")

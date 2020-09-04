@@ -21,6 +21,7 @@
 	var/flags
 
 	New(var/id, var/file, var/flags)
+		..()
 		src.id = id
 		src.ogg = file
 		src.flags = flags

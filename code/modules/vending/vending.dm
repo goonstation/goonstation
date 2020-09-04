@@ -9,6 +9,7 @@
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
 	New(productpath, amount=0, cost=0, hidden=0)
+		..()
 		if (istext(productpath))
 			productpath = text2path(productpath)
 		if (!ispath(productpath))

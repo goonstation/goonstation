@@ -3,6 +3,7 @@
 	var/obj/screen/intent
 
 	New(M)
+		..()
 		master = M
 		var/obj/screen/S = create_screen("release", "release", 'icons/mob/screen1.dmi', "x", "NORTH,EAST", HUD_LAYER)
 		S.underlays += "block"

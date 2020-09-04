@@ -32,6 +32,7 @@
 	var/tre = 0
 
 	New(M)
+		..()
 		master = M
 
 		var/hand_s = -round((master.hands.len - 1) / 2)

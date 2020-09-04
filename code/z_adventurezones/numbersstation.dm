@@ -246,6 +246,7 @@ Nanotrasen, Inc.<br>
 	var/next_play = 0
 
 	New()
+		..()
 		if (!(src in processing_items))
 			processing_items.Add(src)
 		if (ticker)

@@ -1855,6 +1855,7 @@
 
  	//TODO : pooling i guess cause other paper does
 	New(var/loc,var/schematic = null)
+		..()
 		if(istype(schematic, /datum/manufacture))
 			src.blueprint = schematic
 		else if (!schematic)

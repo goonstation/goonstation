@@ -41,6 +41,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	plane = PLANE_NOSHADOW_BELOW
 
 	New(var/loc,var/list/viral_list)
+		..()
 		if (!pooled)
 			setup(loc,viral_list)
 
@@ -1463,6 +1464,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	stain = "azure-stained"
 
 	New()
+		..()
 		var/datum/reagents/R = new/datum/reagents(10) // 9u is the max since we wanna leave at least 1u of blood in the blood puddle
 		reagents = R
 		R.my_atom = src

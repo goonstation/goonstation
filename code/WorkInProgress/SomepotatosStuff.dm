@@ -291,7 +291,6 @@ world/proc/updateCameraVisibility()
 	desc = "To avoid arousing too much suspicion, this fella converts single-phase power to three-phase. Sure, that power is passed down via a 24 AWG USB cable, but it's probably fine."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "vfd"
-	New()
 /obj/somepotato/billiards
 	name = "Billiards Table"
 	desc = "Who in God's name would get enjoyment at beating polyester spheres with wooden sticks???"

@@ -24,6 +24,7 @@
  * required id string A unique window identifier.
  */
 /datum/tgui_window/New(client/client, id, tgui_pooled = FALSE)
+	..()
 	src.id = id
 	src.client = client
 	src.tgui_pooled = tgui_pooled

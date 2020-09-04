@@ -1975,6 +1975,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	//blend_mode = BLEND_MULTIPLY
 
 	New()
+		..()
 		src.Scale(9,9)
 
 /mob/proc/add_adminbus_powers()

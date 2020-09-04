@@ -100,6 +100,7 @@
 	var/time_to_die = 0
 
 	New(var/loc,duration, move_prob = -1)
+		..()
 		if (duration < 1)
 			duration = rand(5 SECONDS,30 SECONDS)
 

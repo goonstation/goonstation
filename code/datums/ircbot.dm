@@ -14,6 +14,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	var/debugging = 0
 
 	New()
+		..()
 		if (!src.load())
 			SPAWN_DBG(1 SECOND)
 				if (!src.loaded)

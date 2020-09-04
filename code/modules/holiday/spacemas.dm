@@ -442,6 +442,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	var/image/fire_image = null
 
 	New()
+		..()
 		src.fire_image = image('icons/effects/160x160.dmi', "")
 
 	attack_hand(mob/user as mob)

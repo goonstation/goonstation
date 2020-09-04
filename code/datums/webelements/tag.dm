@@ -8,6 +8,7 @@
 	var/tmp/innerHtml
 
 	New(var/_tagName as text)
+		..()
 		tagName = _tagName
 
 	proc/addChildElement(var/datum/tag/child)
@@ -23,7 +24,7 @@
 
 	proc/setAttribute(var/attribute as text, var/value as text)
 		attributes[attribute] = "[attribute]=\"[value]\""
-		
+
 	proc/setStyle(var/attribute as text, var/value as text)
 		styles[attribute] = "[attribute]:[value];"
 
@@ -36,13 +37,13 @@
 		if(classes.len)
 			var/cls = kText.list2text(classes, " ")
 			setAttribute("class", cls)
-		
+
 		if(styles.len)
 			var/st = ""
 			for(var/atr in styles)
 				st += styles[atr]
 			setAttribute("style", st)
-			
+
 		if(attributes.len)
 			for(var/atr in attributes)
 				html += " "
@@ -71,7 +72,7 @@
 
 	proc/addJavascriptEvent(var/event as text, var/js as text)
 		setAttribute(event, js)
-		
+
 	proc/sendAssets()
 		for(var/datum/tag/child in children)
 			child.sendAssets()

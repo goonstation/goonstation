@@ -12,6 +12,7 @@
 	var/mob/living/silicon/hivebot/master
 
 	New(M)
+		..()
 		master = M
 
 		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_bg", "CENTER-3:16, SOUTH to CENTER+2:16, SOUTH", HUD_LAYER)

@@ -32,6 +32,7 @@ var/global/goonhub/goonhub
 
 /goonhub
 	New()
+		..()
 		SPAWN_DBG(0)
 			Connect()
 	proc/Connect()

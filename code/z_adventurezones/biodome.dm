@@ -466,6 +466,7 @@ SYNDICATE DRONE FACTORY AREAS
 	opacity = 0
 
 	New(var/atom/sloc)
+		..()
 		src.set_loc(sloc)
 		SPAWN_DBG(0) go()
 
@@ -818,18 +819,21 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/paper/alchemy/north
 	name = "notebook page 2"
 	New()
+		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... [alchemy_symbols["north"]] stands above all else ..."
 
 /obj/item/paper/alchemy/southeast
 	name = "notebook page 3"
 	New()
+		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... in the place the sun rises, [alchemy_symbols["southeast"]] is required ..."
 
 /obj/item/paper/alchemy/southwest
 	name = "notebook page 4"
 	New()
+		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... [alchemy_symbols["southwest"]] where light fades ..."
 
@@ -972,6 +976,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 
 	New(var/location)
+		..()
 		var/list/types = new/list()
 		var/obj/item/alchemy/symbol/S = null
 

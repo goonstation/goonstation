@@ -17,6 +17,7 @@
 		extension = "PSCAN"
 
 	New(obj/holding as obj)
+		..()
 		if(holding)
 			src.holder = holding
 

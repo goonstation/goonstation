@@ -303,6 +303,7 @@ Returns:
 		src.filters += filter(type="layer", render_source="*portaltrg")
 
 	New()
+		..()
 		SPAWN_DBG(50) setup()
 
 /atom/proc/cabinetGlassIcon(var/atom/A, var/targetWidth = 12, var/targetHeight= 10, var/iconSize = 32)
@@ -1127,6 +1128,7 @@ Returns:
 	icon_y_off = 29
 
 	New(var/obj/item/experimental/melee/dagger/D, var/mob/U, var/atom/T)
+		..()
 		if(!D || !U || !T)
 			interrupt(INTERRUPT_ALWAYS)
 		else
@@ -1545,6 +1547,7 @@ Returns:
 	density = 1
 
 	New()
+		..()
 		setMaterial(getMaterial("slag"))
 		name = "Statue of Dr.Floorpills"
 
@@ -3131,6 +3134,7 @@ Returns:
 	icon_state = "r_wall"
 
 	New()
+		..()
 		update()
 
 	proc/update()
@@ -3420,6 +3424,7 @@ var/list/lag_list = new/list()
 		sleep(3 SECONDS)
 
 	New()
+		..()
 		build_base()
 		update()
 
@@ -3891,6 +3896,7 @@ var/list/lag_list = new/list()
 		return
 
 	New()
+		..()
 		for(var/D in typesof(/datum/engibox_mode) - /datum/engibox_mode)
 			modes += new D
 

@@ -42,6 +42,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps
 
 
 	New(w,h,cs,z)
+		..()
 		cols = w / cs
 		rows = h / cs
 

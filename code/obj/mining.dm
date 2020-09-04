@@ -1976,6 +1976,7 @@ obj/item/clothing/gloves/concussive
 	var/list/possible_targets = list()
 
 	New()
+		..()
 		for(var/turf/T in world) //hate to do this but it's only once per spawn vOv
 			LAGCHECK(LAG_LOW)
 			if(istype(T,/turf/space) && T.z != 1 && !isrestrictedz(T.z))
