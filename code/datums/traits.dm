@@ -708,6 +708,28 @@
 	points = -2
 	isPositive = 1
 
+//Category: Background.
+
+/obj/trait/immigrant
+	name = "Stowaway (+1) \[Background\]"
+	cleanName = "Stowaway"
+	desc = "You spawn hidden away on-station without an ID or PDA."
+	id = "immigrant"
+	icon_state = "stowaway"
+	category = "background"
+	points = 1
+	isPositive = 0
+
+obj/trait/pilot
+	name = "Pilot (0) \[Background\]"
+	cleanName = "Pilot"
+	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection but without a PDA."
+	id = "pilot"
+	icon_state = "pilot"
+	category = "background"
+	points = 0
+	isPositive = 0
+
 // NO CATEGORY - Grey Border
 
 /obj/trait/hemo
@@ -899,14 +921,6 @@
 	points = -1
 	isPositive = 1
 
-/obj/trait/immigrant
-	name = "Stowaway (+1)"
-	cleanName = "Stowaway"
-	desc = "You spawn hidden away on-station without an ID or PDA."
-	id = "immigrant"
-	points = 1
-	isPositive = 0
-
 /obj/trait/nervous
 	name = "Nervous (+1)"
 	cleanName = "Nervous"
@@ -918,11 +932,11 @@
 
 	onAdd(var/mob/owner)
 		..()
-		nervous_mobs += owner
+		OTHER_START_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 	onRemove(var/mob/owner)
 		..()
-		nervous_mobs -= owner
+		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 /obj/trait/burning
 	name = "Human Torch (+1)"

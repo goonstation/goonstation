@@ -287,6 +287,8 @@
 	var/malfunctioning = 0
 	var/rarity_mod = 0
 
+	var/uses_global_controls = TRUE
+
 	var/image/active_overlay = null
 	var/list/damage_overlays = list()
 	var/sound_activate = 'sound/machines/ArtifactAnc1.ogg'
@@ -306,6 +308,7 @@
 		var/marker_type = /obj/magnet_target_marker
 		var/obj/magnet_target_marker/target = null
 		var/list/wall_bits = list()
+		uses_global_controls = FALSE
 
 		get_magnetic_center()
 			if (target)
@@ -720,7 +723,7 @@
 			src.generate_interface(usr)
 
 		else if (href_list["show_selectable"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -736,7 +739,7 @@
 			return
 
 		else if (href_list["activate_selectable"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -747,7 +750,7 @@
 					if (src) src.pull_new_source(href_list["activate_selectable"])
 
 		else if (href_list["activate_magnet"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 

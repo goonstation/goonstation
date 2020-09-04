@@ -1122,7 +1122,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					last_noise_time = ticker.round_elapsed_ticks
 					last_noise_length = 80
 
-				critters += src
+				START_TRACKING_CAT(TR_CAT_CRITTERS)
 
 			process()
 				if (last_noise_time + last_noise_length < ticker.round_elapsed_ticks)
@@ -1192,7 +1192,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				if (active == -1)
 					return
 
-				critters -= src
+				STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 
 				active = -1
 				if (src.zapMarker)

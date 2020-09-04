@@ -395,7 +395,8 @@
 	src.last_client = src.client
 	src.apply_camera(src.client)
 	src.update_cursor()
-	src.reset_keymap()
+	if(src.client.preferences)
+		src.reset_keymap()
 
 	src.client.mouse_pointer_icon = src.cursor
 

@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/initial_angle_offset_mult = 0.5
 
 	on_launch(var/obj/projectile/P)
-		angle_adjust_per_pellet = ((spread_angle) / pellets_to_fire)
+		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
 		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
 		..()
 
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/uniform_burst/circle
 	name = "circular spread"
 	sname = "circular spread"
-	spread_angle = 360
+	spread_angle = 180
 	pellets_to_fire = 20
 
 /datum/projectile/special/spreader/uniform_burst/blaster
