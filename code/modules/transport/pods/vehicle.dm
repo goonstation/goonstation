@@ -1724,6 +1724,27 @@
 		..()
 		Install(new /obj/item/shipcomponent/locomotion/treads(src))
 
+/obj/machinery/vehicle/tank/minisub/pilot
+	body_type = "minisub"
+	health = 150
+	maxhealth = 150
+
+
+	New()
+		..()
+		src.com_system.deactivate()
+		qdel(src.engine)
+		qdel(src.com_system)
+		src.components -= src.engine
+		src.components -= src.com_system
+		src.engine = new /obj/item/shipcomponent/engine/zero(src)
+		src.engine.ship = src
+		src.components += src.engine
+		src.engine.activate()
+		src.com_system = null
+		myhud.update_systems()
+		myhud.update_states()
+
 /obj/machinery/vehicle/tank/minisub/secsub
 	body_type = "minisub"
 	icon_state = "secsub_body"

@@ -342,9 +342,6 @@ Contains:
 				return 0.5
 			else
 				return 0
-		//G = null
-		qdel(G)
-		return
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 
