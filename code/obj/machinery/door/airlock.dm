@@ -67,11 +67,12 @@
 
 
 /obj/machinery/door/airlock/ui_state(mob/user)
-	return tgui_default_state
+	return tgui_silicon_state
 
 /obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
 	return min(
 		state.can_use_topic(src, user),
+		tgui_broken_state.can_use_topic(src, user),
 		tgui_silicon_state.can_use_topic(src, user)
 	)
 

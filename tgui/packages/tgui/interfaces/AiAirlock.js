@@ -12,7 +12,7 @@ export const AiAirlock = (props, context) => {
   return (
     <Window
       width={314}
-      height={335}
+      height={320}
       theme="ntos"
       title={"Airlock - " + name}>
       <Window.Content>
@@ -52,7 +52,7 @@ const PowerStatus = (props, context) => {
           {mainTimeleft ? "Offline" : "Online"}
           {" "}
           {(!wires.main_1 || !wires.main_2)
-            && "[Wires have been cut!]"
+            && "[Wires cut!]"
             || (mainTimeleft > 0
               && `[${mainTimeleft}s]`)}
         </LabeledList.Item>
@@ -74,7 +74,7 @@ const PowerStatus = (props, context) => {
           {backupTimeleft ? "Offline" : "Online"}
           {" "}
           {(!wires.backup_1 || !wires.backup_2)
-            && "[Wires have been cut!]"
+            && "[Wires cut!]"
             || (backupTimeleft > 0
               && `[${backupTimeleft}s]`)}
         </LabeledList.Item>
@@ -115,7 +115,7 @@ const AccessAndDoorControl = (props, context) => {
               {idScanner ? "Enabled" : "Disabled"}
             </Button>
           )}>
-          {!wires.idScanner && "[Wires have been cut!]"}
+          {!wires.idScanner && "[Wires cut!]"}
         </LabeledList.Item>
         <LabeledList.Item
           label="Door Bolts"
@@ -133,7 +133,7 @@ const AccessAndDoorControl = (props, context) => {
               {locked ? "Lowered" : "Raised"}
             </Button>
           )}>
-          {!wires.bolts && "[Wires have been cut!]"}
+          {!wires.bolts && "[Wires cut!]"}
         </LabeledList.Item>
         <LabeledList.Item
           label="Door Control"
@@ -184,7 +184,7 @@ const Electrify = (props, context) => {
             {!shockTimeleft ? "Safe" : "Electrified"}
             {" "}
             {!wires.shock
-            && <Box>[Wires have been cut!]</Box>
+            && "[Wires cut!]"
             || (shockTimeleft > 0
             && `[${shockTimeleft}s]`)
             || (shockTimeleft === -1
@@ -193,32 +193,27 @@ const Electrify = (props, context) => {
           <LabeledList.Item
             color={!shockTimeleft ? "Average" : "Bad"}>
             <Box
-              ml={-12}
-              mt={1}
-              pb={1}>
-              <Button
-                color="good"
-                icon="wrench"
-                disabled={(!wires.shock) || (!shockTimeleft)
+              pl={shockTimeleft ? 21 : 0}
+              pb={0}
+              pt={0.5}>
+              {(!shockTimeleft &&(
+                <Button
+                  color="average"
+                  icon="bolt"
+                  disabled={(!wires.shock) || shockTimeleft === -1
                 || (mainTimeleft && backupTimeleft)}
-                onClick={() => act("shockRestore")}>
-                Restore
-              </Button>
+                  onClick={(() => act("shockTemp"))}>
+                  Temporary
+                </Button>
+              ))}
               <Button
-                color="average"
+                color={shockTimeleft ? "bad" : "good"}
                 icon="bolt"
-                disabled={(!wires.shock) || (shockTimeleft)
-                  || (mainTimeleft && backupTimeleft)}
-                onClick={() => act("shockTemp")}>
-                Temporary
-              </Button>
-              <Button
-                color="bad"
-                icon="bolt"
-                disabled={(!wires.shock) || (shockTimeleft)
+                disabled={(!wires.shock)
                 || (mainTimeleft && backupTimeleft)}
-                onClick={() => act("shockPerm")}>
-                Permanent
+                onClick={shockTimeleft ? (() => act("shockRestore"))
+                  : (() => act("shockPerm"))}>
+                {shockTimeleft ? "Restore" : "Permanent"}
               </Button>
             </Box>
           </LabeledList.Item>
