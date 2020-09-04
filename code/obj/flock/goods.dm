@@ -24,10 +24,8 @@
 
 /obj/item/reagent_containers/gnesis/New()
 	..()
-	var/datum/reagents/R = new/datum/reagents(50)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("flockdrone_fluid", 50)
+	src.create_reagents(50)
+	reagents.add_reagent("flockdrone_fluid", 50)
 	src.setMaterial(getMaterial("gnesis"))
 
 ////////////////

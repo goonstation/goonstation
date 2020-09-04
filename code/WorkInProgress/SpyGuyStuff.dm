@@ -93,9 +93,10 @@ Fibre wire
 				else //How the fuck did we even get here??
 					H.ghostize()
 
-			SPAWN_DBG(1.5 SECONDS) playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
 			flick("skull_ominous_explode", src)
-			sleep(3 SECONDS)
+			sleep(1.5 SECONDS)
+			playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
+			sleep(1.5 SECONDS)
 			qdel(src)
 
 //////////////////////////////

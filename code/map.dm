@@ -43,6 +43,7 @@ var/global/list/mapNames = list(
 /obj/landmark/map
 	name = "map_setting"
 	icon_state = "x3"
+	add_to_landmarks = FALSE
 
 	New()
 		if (src.name != "map_setting")
@@ -61,8 +62,7 @@ var/global/list/mapNames = list(
 			if (!map_settings)
 				map_settings = new /datum/map_settings
 				CRASH("A mapName entry for '[src.name]' wasn't found!")
-
-		qdel(src)
+		..()
 
 //Setting maps to be underwater is handled in the map config file, aka [mapname].dm
 
@@ -560,6 +560,14 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	auto_walls = 1
+
+	job_limits_from_landmarks = 1
+	job_limits_override = list(
+		/datum/job/special/atmospheric_technician = 1,
+		/datum/job/special/barber = 1,
+		/datum/job/special/research_assistant = 2,
+		/datum/job/special/medical_assistant = 2
+	)
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro

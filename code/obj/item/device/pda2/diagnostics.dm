@@ -78,10 +78,9 @@
 				mode = 1
 				if(result) result.Cut()
 				master.updateSelfDialog()
-				SPAWN_DBG(2 SECONDS)
-					mode = 0
-					master.updateSelfDialog()
-				return
+				sleep(2 SECONDS)
+				mode = 0
+				master.updateSelfDialog()
 
 		else if (href_list["range"])
 			var/rd = text2num(href_list["range"])
@@ -440,9 +439,9 @@
 
 				src.post_signal(signal,"[send_freq]")
 				master.updateSelfDialog()
-				SPAWN_DBG(1 SECOND)
-					mode = 0
-					master.updateSelfDialog()
+				sleep(1 SECOND)
+				mode = 0
+				master.updateSelfDialog()
 
 
 

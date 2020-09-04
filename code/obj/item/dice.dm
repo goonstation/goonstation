@@ -32,6 +32,7 @@ var/list/rollList = list()
 	var/initialDesc = "A six-sided die."
 
 	New()
+		..()
 		SPAWN_DBG(0)
 			initialName = name
 			initialDesc = desc

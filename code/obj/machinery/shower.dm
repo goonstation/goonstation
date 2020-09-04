@@ -19,10 +19,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(320)
-		reagents = R
-		R.my_atom = src
-		return
+		src.create_reagents(320)
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)

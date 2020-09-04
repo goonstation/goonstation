@@ -19,6 +19,7 @@
 #define KELVIN *1
 #define MOLES *1
 #define CANDELAS *1
+#define PASCALS *1
 
 #define WATT WATTS
 #define METER METERS
@@ -28,6 +29,7 @@
 #define AMPS AMPERES
 #define MOLE MOLES
 #define CANDELA CANDELAS
+#define PASCAL PASCALS
 
 #define YOTTA *(10**24)
 #define ZETTA *(10**21)

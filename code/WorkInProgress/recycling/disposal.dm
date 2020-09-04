@@ -1059,12 +1059,10 @@
 	icon_state = "eloaf"
 	force = 0
 	throwforce = 0
+	initial_volume = 1000
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
 		src.reagents.add_reagent("liquid spacetime",11)
 		src.setMaterial(getMaterial("negativematter"), appearance = 0, setname = 0)
 
@@ -1075,15 +1073,13 @@
 	icon_state = "ploaf0"
 	force = 0
 	throwforce = 0
+	initial_volume = 1000
 	var/loaf_factor = 1
 	var/loaf_recursion = 1
 	var/processing = 0
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
 		src.reagents.add_reagent("gravy",10)
 		src.reagents.add_reagent("refried_beans",10)
 		src.reagents.add_reagent("fakecheese",10)

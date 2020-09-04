@@ -9,6 +9,7 @@
 	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(obj/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 
 	New(M)
+		..()
 		master = M
 		charge = create_screen("health", "Condition", icon_hud, "health5", "NORTH, EAST", HUD_LAYER+1)
 		charge = create_screen("charge", "Battery", icon_hud, "charge4", "NORTH, EAST-1", HUD_LAYER+1)

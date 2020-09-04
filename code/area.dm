@@ -393,6 +393,7 @@
 		if (light_manager)
 			light_manager.lights -= L
 	New()
+		..()
 		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
 
@@ -3156,6 +3157,7 @@ area/station/security/visitation
 	* Called when an area first loads
   */
 /area/New()
+	..()
 	src.icon = 'icons/effects/alert.dmi'
 	src.layer = EFFECTS_LAYER_BASE
 //Halloween is all about darkspace

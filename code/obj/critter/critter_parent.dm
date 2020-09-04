@@ -856,14 +856,14 @@
 	New(loc)
 		if(!src.reagents) src.create_reagents(100)
 		wander_check = rand(5,20)
-		critters += src
+		START_TRACKING_CAT(TR_CAT_CRITTERS)
 		report_spawn()
 		if(isnull(src.is_pet))
 			src.is_pet = !generic && (copytext(src.name, 1, 2) in uppercase_letters)
 		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
 			src.is_pet = 0
 		if(src.is_pet)
-			pets += src
+			START_TRACKING_CAT(TR_CAT_PETS)
 		if(generic)
 			src.quality = rand(min_quality,max_quality)
 			var/nickname = getCritterQuality(src.quality)
@@ -873,11 +873,11 @@
 		..()
 
 	disposing()
-		critters -= src
+		STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 		if(registered_area)
 			registered_area.registered_critters -= src
 		if(src.is_pet)
-			pets -= src
+			STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
 	proc/seek_target()

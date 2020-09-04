@@ -192,6 +192,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 		return html.Join()
 
 /datum/changelog/New()
+	..()
 //<img alt="Goon Station 13" src="[resource("images/changelog/postcardsmall.jpg")]" class="postcard" />
 
 	html = {"

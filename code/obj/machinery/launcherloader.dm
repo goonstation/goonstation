@@ -70,11 +70,11 @@
 
 				SPAWN_DBG(door ? 55 : 20) driver_operating = 0
 
-				SPAWN_DBG(door ? 20 : 10)
-					if (driver)
-						for(var/obj/machinery/mass_driver/D in machine_registry[MACHINES_MASSDRIVERS])
-							if(D.id == driver.id)
-								D.drive()
+				sleep(door ? 20 : 10)
+				if (driver)
+					for(var/obj/machinery/mass_driver/D in machine_registry[MACHINES_MASSDRIVERS])
+						if(D.id == driver.id)
+							D.drive()
 	process()
 		if(!operating && !driver_operating)
 			var/drive = 0
@@ -160,13 +160,12 @@
 			driver_operating = 1
 
 			SPAWN_DBG(0)
-				SPAWN_DBG(2 SECONDS)
-					driver_operating = 0
-					driver = null
-
-				SPAWN_DBG(1 SECOND)
-					if (driver)
-						driver.drive()
+				sleep(1 SECOND)
+				if (driver)
+					driver.drive()
+				sleep(1 SECOND)
+				driver_operating = 0
+				driver = null
 
 	process()
 		if(!operating && !driver_operating)

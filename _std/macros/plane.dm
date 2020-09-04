@@ -40,6 +40,7 @@
 		src.render_target = "[name]"
 #endif
 		src.is_screen = is_screen
+		..()
 
 	proc/add_depth_shadow()
 		src.filters += filter(type="drop_shadow", x=2, y=-2, color=rgb(4, 8, 16, 150), size=4, offset=1)

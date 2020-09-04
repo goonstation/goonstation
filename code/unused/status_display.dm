@@ -434,4 +434,5 @@
 // I blame Flourish
 /obj/machinery/ai_status_display
 	New()
+		..()
 		qdel(src)

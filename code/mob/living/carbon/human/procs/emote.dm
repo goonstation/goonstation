@@ -1511,9 +1511,9 @@
 						if (src.traitHolder && src.traitHolder.hasTrait("happyfeet"))
 							if (prob(33))
 								SPAWN_DBG(0.5 SECONDS)
-									LAGCHECK(LAG_MED)
-									for (var/mob/living/carbon/human/responseMonkey in range(1, src)) // they don't have to be monkeys, but it's signifying monkey code
-										if (responseMonkey.stat || responseMonkey.getStatusDuration("paralysis") || responseMonkey.sleeping || responseMonkey.getStatusDuration("stunned") || (responseMonkey == src))
+									for (var/mob/living/carbon/human/responseMonkey in orange(1, src)) // they don't have to be monkeys, but it's signifying monkey code
+										LAGCHECK(LAG_MED)
+										if (!can_act(responseMonkey, 0))
 											continue
 										responseMonkey.emote("dance")
 
@@ -1667,8 +1667,8 @@
 
 
 														G.affecting.force_laydown_standup()
-														SPAWN_DBG(1 SECOND) //let us do that combo shit people like with throwing
-															src.force_laydown_standup()
+														sleep(1 SECOND) //let us do that combo shit people like with throwing
+														src.force_laydown_standup()
 
 								if (G && G.state < 1) //ZeWaka: Fix for null.state
 									var/turf/oldloc = src.loc

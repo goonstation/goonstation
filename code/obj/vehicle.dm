@@ -535,14 +535,12 @@ Contains:
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(1250)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(1250)
 		if(zamboni)
-			R.add_reagent("cryostylane", 1000)
+			reagents.add_reagent("cryostylane", 1000)
 		else
-			R.add_reagent("water", 1000)
-			//R.add_reagent("cleaner", 250) //don't even need this now that we have fluid, probably. If you want it, add it yer self
+			reagents.add_reagent("water", 1000)
+			//reagents.add_reagent("cleaner", 250) //don't even need this now that we have fluid, probably. If you want it, add it yer self
 
 		if (!islist(src.ability_buttons))
 			ability_buttons = list()
@@ -1975,6 +1973,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	//blend_mode = BLEND_MULTIPLY
 
 	New()
+		..()
 		src.Scale(9,9)
 
 /mob/proc/add_adminbus_powers()
@@ -2006,7 +2005,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 		P2.spread_projectile_type = /datum/projectile/fireball
 		P2.pellets_to_fire = 10
-		P2.pellet_shot_volume = P2.pellets_to_fire / 100
+		P2.pellet_shot_volume = 75 / P2.pellets_to_fire //anti-ear destruction
 
 		if (!islist(src.ability_buttons))
 			ability_buttons = list()
@@ -2050,11 +2049,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			return
 		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
 			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
-			var/targetx = bus.y - rand(-5,5)
-			var/targety = bus.y - rand(-5,5)
-			var/turf/newtarget = locate(targetx, targety, bus.z)
 
-			shoot_projectile_ST(bus, bus.P2, newtarget)
+			shoot_projectile_DIR(bus, bus.P2, NORTH)
 
 /obj/ability_button/hotwheels
 	name = "Hot Wheels"

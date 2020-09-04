@@ -237,12 +237,11 @@
 	splash_all_contents = 0
 	w_class = 3.0
 	rc_flags = RC_FULLNESS
+	initial_volume = 120
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(120)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("oil", 60)
+		..()
+		reagents.add_reagent("oil", 60)
 
 /*
 Jucier container.

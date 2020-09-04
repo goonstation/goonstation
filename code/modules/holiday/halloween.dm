@@ -184,13 +184,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker0"
 	item_state = "beaker"
+	initial_volume = 50
 
 	New()
-		..() // CALL YOUR GODDAMN PARENTS GODDAMNIT JESUS FUCKING CHRIST
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("strange_reagent", 50)
+		..()
+		reagents.add_reagent("strange_reagent", 50)
 
 /obj/item/storage/secure/ssafe/hjam
 	name = "Gun Storage"

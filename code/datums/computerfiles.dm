@@ -22,8 +22,6 @@
 		..()
 		metadata = list("date" = world.realtime, "owner"=null,"group"=null, "permission"=COMP_ALLACC)
 
-		return
-
 	folder
 		name = "Folder"
 		size = 0

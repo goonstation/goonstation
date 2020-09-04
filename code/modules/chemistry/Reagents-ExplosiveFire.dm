@@ -873,13 +873,6 @@ datum
 				..()
 				is_dry = 0
 
-			unpooled()
-				..()
-				bang()
-
-			New()
-				bang()
-
 			proc/bang()
 				if(holder && holder.my_atom)
 					holder.my_atom.visible_message("<b>The powder detonates!</b>")
@@ -931,6 +924,7 @@ datum
 			viscosity = 0.3
 
 			New()
+				..()
 				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
 					dry()
 
@@ -951,10 +945,12 @@ datum
 			minimum_reaction_temperature = -INFINITY
 
 			New()
+				..()
 				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
 					bang()
 
 			unpooled()
+				is_dry = 1
 				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
 					bang()
 				..()

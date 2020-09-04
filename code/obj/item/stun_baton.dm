@@ -26,9 +26,12 @@
 	stamina_damage = 15
 	stamina_cost = 21
 	stamina_crit_chance = 5
+	item_function_flags = USE_INTENT_SWITCH_TRIGGER
 
 	var/icon_on = "stunbaton_active"
 	var/icon_off = "stunbaton"
+	var/item_on = "baton-A"
+	var/item_off = "baton-D"
 	var/flick_baton_active = "baton_active"
 	var/wait_cycle = 0 // Update sprite periodically if we're using a self-charging cell.
 
@@ -38,7 +41,7 @@
 	var/cost_cyborg = 500 // Battery charge to drain when user is a cyborg.
 	var/uses_charges = 1 // Does it deduct charges when used? Distinct from...
 	var/uses_electricity = 1 // Does it use electricity? Certain interactions don't work with a wooden baton.
-	var/status = 1
+	var/status = 1 //1 is on, 0 is off
 
 	var/stun_normal_weakened = 20
 	var/stun_normal_stuttering = 20
@@ -52,7 +55,7 @@
 	var/stamina_based_stun_amount = 130 // Amount of stamina drained.
 	var/can_swap_cell = 1
 	var/beepsky_held_this = 0 // Did a certain validhunter hold this?
-
+	var/flipped = false //is it currently rotated so that youre grabbing it by the head?
 
 	New()
 		..()
@@ -113,11 +116,12 @@
 			return
 
 		if (src.status)
-			set_icon_state(src.icon_on)
+			src.set_icon_state("[src.icon_on][src.flipped ? "-f" : ""]") //if flipped is true, attach -f to the icon state. otherwise leave it as normal
+			src.item_state = "[src.item_on][src.flipped ? "-f" : ""]"
 		else
-			set_icon_state(src.icon_off)
-
-		return
+			src.set_icon_state("[src.icon_off][src.flipped ? "-f" : ""]")
+			src.item_state = "[src.item_off][src.flipped ? "-f" : ""]"
+			return
 
 	proc/can_stun(var/requires_electricity = 0, var/amount = 1, var/mob/user)
 		if (!src || !istype(src))
@@ -186,12 +190,10 @@
 							user.show_text("The [src.name] is now out of charge!", "red")
 							src.stamina_damage = initial(src.stamina_damage)
 							src.status = 0
-							src.item_state = "baton-D"
 							use_stamina_stun() //set stam damage amount
 							if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
 								var/obj/item/baton/ntso/B = src
 								B.state = OPEN_AND_OFF
-								B.item_state = "ntso-baton-d"
 				else if (amount > 0)
 					src.cell.charge(src.cost_normal * amount)
 
@@ -338,11 +340,9 @@
 
 		if (src.status)
 			boutput(user, "<span class='notice'>The [src.name] is now on.</span>")
-			src.item_state = "baton-A"
 			playsound(get_turf(src), "sparks", 75, 1, -1)
 		else
 			boutput(user, "<span class='notice'>The [src.name] is now off.</span>")
-			src.item_state = "baton-D"
 			playsound(get_turf(src), "sparks", 75, 1, -1)
 
 		src.update_icon()
@@ -419,6 +419,50 @@
 		logTheThing("combat", user, null, "swaps the power cell (<b>Cell type:</b> <i>[C.type]</i>) of [src] at [log_loc(user)].")
 		return
 
+	intent_switch_trigger(var/mob/user)
+		src.do_flip_stuff(user, user.a_intent)
+
+	attack_hand(var/mob/user)
+		if (src.flipped && user.a_intent != INTENT_HARM)
+			user.show_text("You flip \the [src] the right way around as you grab it.")
+			src.flipped = false
+			src.update_icon()
+			user.update_inhands()
+		else if (user.a_intent == INTENT_HARM)
+			src.do_flip_stuff(user, INTENT_HARM)
+		..()
+
+	proc/do_flip_stuff(var/mob/user, var/intent)
+		if (intent == INTENT_HARM)
+			if (src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
+				return
+			src.flipped = true
+			animate(src, transform = turn(matrix(), 120), time = 0.07 SECONDS) //turn partially
+			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
+			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
+			src.transform = null //clear it before updating icon
+			src.update_icon()
+			user.update_inhands()
+			user.show_text("<B>You flip \the [src] and grab it by the head! [src.status ? "It seems pretty unsafe to hold it like this while it's on!" : "At least its off!"]</B>", "red")
+		else //not already flipped
+			if (!src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
+				return
+			src.flipped = false
+			animate(src, transform = turn(matrix(), 120), time = 0.07 SECONDS) //turn partially
+			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
+			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
+			src.transform = null //clear it before updating icon
+			src.update_icon()
+			user.update_inhands()
+			user.show_text("<B>You flip \the [src] and grab it by the base!", "red")
+
+	dropped(mob/user)
+		if (src.flipped)
+			src.flipped = false
+			src.update_icon()
+			user.update_inhands()
+		..()
+
 /////////////////////////////////////////////// Subtypes //////////////////////////////////////////////////////
 
 /obj/item/baton/secbot
@@ -438,6 +482,8 @@
 	item_state = "cane"
 	icon_on = "stuncane_active"
 	icon_off = "stuncane"
+	item_on = "cane"
+	item_off = "cane"
 	cell_type = /obj/item/ammo/power_cell
 
 /obj/item/baton/classic
@@ -456,6 +502,7 @@
 	stun_normal_stuttering = 8
 	instant_harmbaton_stun = 1
 	stamina_based_stun_amount = 90
+	item_function_flags = null
 
 	New()
 		..()
@@ -470,15 +517,17 @@
 	icon_on = "ntso-baton-a-1"
 	icon_off = "ntso-baton-c"
 	var/icon_off_open = "ntso-baton-a-0"
+	item_on = "ntso-baton-a"
+	item_off = "ntso-baton-c"
+	var/item_off_open = "ntso-baton-d"
 	flick_baton_active = "ntso-baton-a-1"
-	w_class = 2				//2 when closed, 4 when extended
+	w_class = 2	//2 when closed, 4 when extended
 	can_swap_cell = 0
 	status = 0
 	// stamina_based_stun_amount = 110
-
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
-
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
+	item_function_flags = null
 	//bascially overriding status, but it's kinda hacky in that they both are used jointly
 	var/state = CLOSED_AND_OFF
 
@@ -512,7 +561,6 @@
 					boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
 					src.state = OPEN_AND_OFF
 					src.status = 0
-					src.item_state = "ntso-baton-d"
 					src.w_class = 4
 					src.force = 7
 					playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
@@ -526,14 +574,12 @@
 				src.state = OPEN_AND_ON
 				src.status = 1
 				boutput(user, "<span class='notice'>The [src.name] is now open and on.</span>")
-				src.item_state = "ntso-baton-a"
 				src.w_class = 4
 				src.force = 7
 				playsound(get_turf(src), "sparks", 75, 1, -1)
 			if (OPEN_AND_ON)		//move to open/off state
 				src.state = OPEN_AND_OFF
 				src.status = 0
-				src.item_state = "ntso-baton-d"
 				src.w_class = 4
 				src.force = 7
 				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
@@ -542,7 +588,6 @@
 			if (OPEN_AND_OFF)		//move to closed/off state
 				src.state = CLOSED_AND_OFF
 				src.status = 0
-				src.item_state = "ntso-baton-c"
 				src.w_class = 2
 				src.force = 1
 				boutput(user, "<span class='notice'>The [src.name] is now closed.</span>")
@@ -557,14 +602,16 @@
 	update_icon()
 		if (!src || !istype(src))
 			return
-		switch (state)
+		switch (src.state)
 			if (CLOSED_AND_OFF)
-				set_icon_state(src.icon_off)
+				src.set_icon_state(src.icon_off)
+				src.item_state = src.item_off
 			if (OPEN_AND_ON)
-				set_icon_state(src.icon_on)
+				src.set_icon_state(src.icon_on)
+				src.item_state = src.item_on
 			if (OPEN_AND_OFF)
-				set_icon_state(src.icon_off_open)
-
+				src.set_icon_state(src.icon_off_open)
+				src.item_state = src.item_off_open
 		return
 
 	throw_impact(atom/A)

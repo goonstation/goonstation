@@ -15,6 +15,7 @@
 	//above : ORDER IS IMPORANT
 
 	New()
+		..()
 		//-1 indicates a blank space to be inserted (These are set in update() but for ease of reading I have labeled the spacers here)
 		//this shit is kind of messy to read but it is Quicker than repopulating the list each update()
 		stats["Map:"] = 0

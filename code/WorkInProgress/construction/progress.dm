@@ -28,6 +28,7 @@
 	var/turf/completed_origin = null
 
 	New()
+		..()
 		for (var/objt in required)
 			var/obj/O = locate(objt)
 			var/needs_deletion = 0

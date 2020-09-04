@@ -954,6 +954,7 @@
 		pixelaction(atom/target, params, mob/user, reach)
 			if(!isturf(target.loc) && !isturf(target)) return
 			if(!usable(user)) return
+			if(user.a_intent != INTENT_DISARM) return //only want this to deploy on disarm intent
 			if(master && istype(master, /obj/item/baton) && !master:can_stun())
 				playsound(get_turf(master), 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
 				return
@@ -2006,6 +2007,7 @@
 	duration = -1
 
 	New(var/datum/item_special/rush/D, var/mob/U, var/atom/T)
+		..()
 		if(!istype(D, /datum/item_special/rush))
 			interrupt(INTERRUPT_ALWAYS)
 		if(!D || !U || !T)
