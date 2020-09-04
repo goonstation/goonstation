@@ -190,6 +190,7 @@
 		#if ASS_JAM
 		src.emag_stages = 3
 		src.tacticool = 1
+		src.report_arrests = 1
 		#endif
 
 		if (src.tacticool)
