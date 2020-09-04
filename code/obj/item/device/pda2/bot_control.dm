@@ -146,6 +146,127 @@
 
 		return
 
+/datum/computer/file/pda_program/bot_control/secbotpro
+	name = "Securitron Access PRO"
+	size = 8.0
+
+	return_text()
+		if(..())
+			return
+
+		. = src.return_text_header()
+
+		. += "<h4>Securitron Interlink PRO</h4>"
+
+		if(!src.active)
+			// list of bots
+			if(!src.botlist || (src.botlist && src.botlist.len==0))
+				. += "No bots found.<BR>"
+
+			else
+				for(var/obj/machinery/bot/secbot/B in src.botlist)
+					. += "<A href='byond://?src=\ref[src];op=control;bot=\ref[B]'>[B] at [get_area(B)]</A><BR>"
+
+			. += "<BR><A href='byond://?src=\ref[src];op=scanbots'>Scan for active bots</A><BR>"
+
+			. += "<BR><A href='byond://?src=\ref[src];op=summonall'>Summon all active bots</A><BR>"
+
+		else	// bot selected, control it
+
+
+			. += "<B>[src.active]</B><BR> Status: (<A href='byond://?src=\ref[src];op=control;bot=\ref[src.active]'><i>refresh</i></A>)<BR>"
+
+			if(!src.botstatus)
+				. += "Waiting for response...<BR>"
+			else
+
+				. += "Location: [src.botstatus["loca"] ]<BR>"
+				. += "Mode: "
+
+				switch(src.botstatus["mode"])
+					if(0)
+						. += "Ready"
+					if(1)
+						. += "Apprehending target"
+					if(2,3)
+						. += "Arresting target"
+					if(4)
+						. += "Starting patrol"
+					if(5)
+						. += "On patrol"
+					if(6)
+						. += "Responding to summons"
+
+				. += "<BR>\[<A href='byond://?src=\ref[src];op=stop'>Stop Patrol</A>\] "
+				. += "\[<A href='byond://?src=\ref[src];op=go'>Start Patrol</A>\] "
+				. += "\[<A href='byond://?src=\ref[src];op=summon'>Summon Bot</A>\]<BR>"
+				. += "<HR><A href='byond://?src=\ref[src];op=botlist'>Return to bot list</A>"
+
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		var/obj/item/device/pda2/PDA = src.master
+		var/turf/summon_turf = get_turf(PDA)
+		if (isAIeye(usr))
+			summon_turf = get_turf(usr)
+			if (!(summon_turf.cameras && summon_turf.cameras.len))
+				summon_turf = get_turf(PDA)
+
+		switch(href_list["op"])
+
+			if("control")
+				active = locate(href_list["bot"])
+				post_status(control_freq, "command", "bot_status", "active", active)
+
+			if("scanbots")		// find all bots
+				botlist = null
+				post_status(control_freq, "command", "bot_status")
+
+			if("botlist")
+				active = null
+				PDA.updateSelfDialog()
+
+			if("stop", "go")
+				post_status(control_freq, "command", href_list["op"], "active", active)
+				post_status(control_freq, "command", "bot_status", "active", active)
+
+			if("summon")
+				post_status(control_freq, "command", "summon", "active", active, "target", summon_turf )
+				post_status(control_freq, "command", "bot_status", "active", active)
+
+			if("summonall")
+				if (!botlist.len)
+					return
+				for(var/obj/machinery/bot/secbot/bot in src.botlist)
+					post_status(control_freq, "command", "summon", "active", bot, "target", summon_turf )
+					post_status(control_freq, "command", "bot_status", "active", bot)
+
+		return
+
+	receive_signal(datum/signal/signal)
+		if(..())
+			return
+/*
+		boutput(world, "recvd:[src.master] : [signal.source]")
+		for(var/d in signal.data)
+			boutput(world, "- [d] = [signal.data[d]]")
+*/
+		if(signal.data["type"] == "secbot")
+			if(!botlist)
+				botlist = new()
+
+			if(!(signal.source in botlist))
+				botlist += signal.source
+
+			if(active == signal.source)
+				var/list/b = signal.data
+				botstatus = b.Copy()
+
+			src.master.updateSelfDialog()
+
+		return
 
 /datum/computer/file/pda_program/bot_control/mulebot
 	name = "MULE Bot Control"

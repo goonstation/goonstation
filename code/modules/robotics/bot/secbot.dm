@@ -53,6 +53,10 @@
 #define SECBOT_PATROL		5		// patrolling
 #define SECBOT_SUMMON		6		// summoned by PDA
 
+#define PATROL_SPEED 6
+#define SUMMON_SPEED 3
+#define ARREST_SPEED 2.5
+
 	var/auto_patrol = 0		// set to make bot automatically patrol
 
 	var/beacon_freq = 1445		// navigation beacon frequency
@@ -68,7 +72,9 @@
 	var/moving = 0 //Are we currently ON THE MOVE?
 	var/current_movepath = 0
 	var/datum/secbot_mover/mover = null
-	var/arrest_move_delay = 2.5
+	var/move_patrol_delay_mult = 1	// multiplies how slowly the bot moves on patrol
+	var/move_summon_delay_mult = 1	// same, but for summons. Lower is faster.
+	var/move_arrest_delay_mult = 1
 	var/emag_stages = 2 //number of times we can emag this thing
 
 	var/blockcount = 0		//number of times retried a blocked path
@@ -297,10 +303,15 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			mode = SECBOT_IDLE
 			src.target = null
 
-			#if ASS_JAM
+			#if ASS_JAM // triple-emagged bots move REALLY FUCKING FAST
 			if(src.emagged >= 3)
 				src.stun_type = "harm_classic"
-				arrest_move_delay = 1.5
+				move_arrest_delay_mult = 0.5
+				move_patrol_delay_mult = 0.1
+				move_summon_delay_mult = 0.1
+				processing_bucket = 1
+				processing_tier = PROCESSING_FULL
+				current_processing_tier = PROCESSING_FULL
 				playsound(src.loc, 'sound/effects/elec_bzzz.ogg', 99, 1, 0.1, 0.7)
 			#endif
 
@@ -363,7 +374,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			..()
 
 	proc/navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0)
-		if(src.moving) return 1
+		if(src.moving)
+			var/imhere = src.loc
+			SPAWN_DBG(10)
+				if (imhere == src.loc)
+					src.moving = 0 // we most certainly are not moving
+			return 1
 		src.moving = 1
 		src.frustration = 0
 		if(src.mover)
@@ -382,7 +398,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		// Because master_move can delete the mover
 
 		if (!isnull(src.mover))
-			src.mover.delay = max(min(move_delay,5),2)
+			src.mover.delay = move_delay
 
 		return 0
 
@@ -451,8 +467,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 				// if can't reach perp for long enough, go idle
 				if (src.frustration >= 8)
-			//		for(var/mob/O in hearers(src, null))
-			//			boutput(O, "<span class='game say'><span class='name'>[src]</span> beeps, \"Backup requested! Suspect has evaded arrest.\"")
 					src.target = null
 					src.last_found = world.time
 					src.frustration = 0
@@ -474,16 +488,8 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 								src.mover.master = null
 								src.mover = null
 							src.moving = 0
-							navigate_to(src.target,(src.emagged >= 2) ? (arrest_move_delay/2) : arrest_move_delay)
+							navigate_to(src.target,(src.emagged >= 2) ? (ARREST_SPEED/2 * move_arrest_delay_mult) : (ARREST_SPEED * move_arrest_delay_mult))
 							return
-					/*
-						var/turf/olddist = get_dist(src, src.target)
-						walk_to(src, src.target,1,4)
-						if ((get_dist(src, src.target)) >= (olddist))
-							src.frustration++
-						else
-							src.frustration = 0
-					*/
 
 			if(SECBOT_PREP_ARREST)		// preparing to arrest target
 
@@ -495,56 +501,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 						src.moving = 0
 						navigate_to(src.target)
 					return
-/*
-				if (ishuman(src.target))
-					var/mob/living/carbon/human/H = src.target
-					if(isabomination(H))
-						return
-*/
+
 				if (!src.target.hasStatus("handcuffed") && !src.arrest_type)
-					playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -2)
-					mode = SECBOT_ARREST
-					src.visible_message("<span class='alert'><B>[src] is trying to put handcuffs on [src.target]!</B></span>")
-
-					SPAWN_DBG(6 SECONDS)
-						if (get_dist(src, src.target) <= 1)
-							if (!src.target || src.target.hasStatus("handcuffed"))
-								return
-
-							var/uncuffable = 0
-							if (ishuman(src.target))
-								var/mob/living/carbon/human/H = src.target
-								//if(H.bioHolder.HasEffect("lost_left_arm") || H.bioHolder.HasEffect("lost_right_arm"))
-								if(!H.limbs.l_arm || !H.limbs.r_arm)
-									uncuffable = 1
-
-							if (!isturf(src.target.loc))
-								uncuffable = 1
-
-							if(ishuman(src.target) && !uncuffable)
-								src.target.handcuffs = new /obj/item/handcuffs(src.target)
-								src.target.setStatus("handcuffed", duration = INFINITE_STATUS)
-
-							var/last_target = target
-
-							mode = SECBOT_IDLE
-							src.target = null
-							src.anchored = 0
-							src.last_found = world.time
-							src.frustration = 0
-
-							if(!uncuffable) playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0, 0, 1)
-			//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
-			//					src.speak(arrest_message)
-							if (src.report_arrests && !uncuffable)
-								var/bot_location = get_area(src)
-									//////PDA NOTIFY/////
-								var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
-								var/datum/signal/pdaSignal = get_free_signal()
-								pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: [last_target] detained by [src] in [bot_location].")
-								pdaSignal.transmission_method = TRANSMISSION_RADIO
-								if(transmit_connection != null)
-									transmit_connection.post_signal(src, pdaSignal)
+					actions.start(new/datum/action/bar/icon/secbot_cuff(src, src.target, src), src)
 
 			if(SECBOT_ARREST)		// arresting
 
@@ -595,75 +554,55 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 							return
 						mode = SECBOT_PATROL
 
-
 				else					// no patrol target, so need a new one
 					find_patrol_target()
 						//speak("Engaging patrol mode.")
 
-
 			if(SECBOT_PATROL)		// patrol mode
-
-				patrol_step()
-				SPAWN_DBG(0.5 SECONDS)
-					if(mode == SECBOT_PATROL)
-						patrol_step()
+				move_the_bot(0, (PATROL_SPEED * move_patrol_delay_mult))
 
 			if(SECBOT_SUMMON)		// summoned to PDA
-				patrol_step()
-				SPAWN_DBG(0.4 SECONDS)
-					if(mode == SECBOT_SUMMON)
-						patrol_step()
-						sleep(0.4 SECONDS)
-						patrol_step()
-
+				move_the_bot(0, (SUMMON_SPEED * move_summon_delay_mult))
 		return
 
-
-	// perform a single patrol step
-
-	proc/patrol_step()
+	proc/move_the_bot(var/justastep = 0, var/delay = 3)
 
 		if(loc == patrol_target)		// reached target
 			at_patrol_target()
 			return
 
 		else if (path && path.len && patrol_target) // valid path
-
-			var/turf/next = path[1]
-			if(next == loc)
-				path -= next
-				return
-
-
-			if(istype( next, /turf/simulated))
-
-				var/moved = step_towards(src, next)	// attempt to move
-				if(moved)	// successful move
-					blockcount = 0
-					path -= loc
-
-					look_for_perp()
-				else		// failed to move
-
-					blockcount++
-
-					if(blockcount > 5)	// attempt 5 times before recomputing
-						// find new path excluding blocked turf
-
-						SPAWN_DBG(0.2 SECONDS)
-							calc_path(next)
-							if (!path)
-								find_patrol_target()
-							else
-								blockcount = 0
-
-						return
-
+			if(justastep)
+				var/turf/next = path[1]
+				if(next == loc)
+					path -= next
 					return
 
-			else	// not a valid turf
-				mode = SECBOT_IDLE
-				return
+				if(istype( next, /turf/simulated))
+					var/moved = step_towards(src, next)	// attempt to move
+					if(moved)	// successful move
+						blockcount = 0
+						path -= loc
+						look_for_perp()
+
+					else		// failed to move
+						blockcount++
+						if(blockcount > 5)	// attempt 5 times before recomputing
+							// find new path excluding blocked turf
+							SPAWN_DBG(0.2 SECONDS)
+								calc_path(next)
+								if (!path)
+									find_patrol_target()
+								else
+									blockcount = 0
+							return
+						return
+
+				else	// not a valid turf
+					mode = SECBOT_IDLE
+					return
+			else
+				navigate_to(patrol_target, delay)
 
 		else	// no path, so calculate new one
 			mode = SECBOT_START_PATROL
@@ -728,11 +667,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if(!on)
 			return
 
-		/*
-		boutput(world, "rec signal: [signal.source]")
-		for(var/x in signal.data)
-			boutput(world, "* [x] = [signal.data[x]]")
-		*/
 
 		var/recv = signal.data["command"]
 		// process all-bot input
@@ -746,11 +680,13 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				if("stop")
 					mode = SECBOT_IDLE
 					auto_patrol = 0
+					process()
 					return
 
 				if("go")
 					mode = SECBOT_IDLE
 					auto_patrol = 1
+					process()
 					return
 
 				if("summon")
@@ -759,8 +695,8 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					destination = null
 					awaiting_beacon = 0
 					mode = SECBOT_SUMMON
-					calc_path()
 					speak("Responding.")
+					process()
 
 					return
 
@@ -1119,13 +1055,10 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if (!master)
 				return
 			var/compare_movepath = current_movepath
-			master.path = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 60, master.botcard)
+			master.path = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 600, master.botcard)
 			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target)
-				//if(master.task)
-				//	master.task.task_input("path_error")
-
 				master.frustration = INFINITY
 				master.mover = null
 				master = null
@@ -1133,7 +1066,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				return 1
 
 			while(master && master.path && master.path.len && target_turf && master.moving)
-//				boutput(world, "[compare_movepath] : [current_movepath]")
 				if(compare_movepath != current_movepath) break
 				if(!master.on)
 					master.frustration = 0
@@ -1156,7 +1088,77 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 		return
 
+//secbot handcuff bar thing
+/datum/action/bar/icon/secbot_cuff
+	duration = 60
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "secbot_cuff"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "handcuff"
+	var/obj/machinery/bot/secbot/master
 
+	New(var/the_bot)
+		src.master = the_bot
+		..()
+
+	onUpdate()
+		..()
+		if (get_dist(master, master.target) <= 1 || !master.target || master.target.hasStatus("handcuffed"))
+			interrupt(INTERRUPT_ALWAYS)
+			master.process()
+			return
+
+	onStart()
+		..()
+		if (get_dist(master, master.target) <= 1 || !master.target || master.target.hasStatus("handcuffed"))
+			interrupt(INTERRUPT_ALWAYS)
+			master.process()
+			return
+
+		playsound(master, "sound/weapons/handcuffs.ogg", 30, 1, -2)
+		master.mode = SECBOT_ARREST
+		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [master.target]!</B></span>")
+
+	onEnd()
+		..()
+
+		if (get_dist(master, master.target) <= 1)
+			if (!master.target || master.target.hasStatus("handcuffed"))
+				return
+
+			var/uncuffable = 0
+			if (ishuman(master.target))
+				var/mob/living/carbon/human/H = master.target
+				if(!H.limbs.l_arm || !H.limbs.r_arm)
+					uncuffable = 1
+
+			if (!isturf(master.target.loc))
+				uncuffable = 1
+
+			if(ishuman(master.target) && !uncuffable)
+				master.target.handcuffs = new /obj/item/handcuffs(master.target)
+				master.target.setStatus("handcuffed", duration = INFINITE_STATUS)
+
+			var/last_target = master.target
+
+			master.mode = SECBOT_IDLE
+			master.target = null
+			master.anchored = 0
+			master.last_found = world.time
+			master.frustration = 0
+
+			if(!uncuffable)
+				playsound(master.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0, 0, 1)
+			if (master.report_arrests && !uncuffable)
+				var/bot_location = get_area(master)
+					//////PDA NOTIFY/////
+				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+				var/datum/signal/pdaSignal = get_free_signal()
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: [last_target] detained by [master] in [bot_location].")
+				pdaSignal.transmission_method = TRANSMISSION_RADIO
+				if(transmit_connection != null)
+					transmit_connection.post_signal(master, pdaSignal)
+		return
 
 //Secbot Construction
 
@@ -1294,3 +1296,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 #undef IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON
 #undef IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON
 #undef IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON
+#undef PATROL_SPEED
+#undef SUMMON_SPEED
+#undef ARREST_SPEED
