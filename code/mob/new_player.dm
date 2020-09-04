@@ -93,7 +93,7 @@ mob/new_player
 			qdel(src)
 
 		// Given below call, not much reason to do this if pregameHTML wasn't set
-		if (pregameHTML && src.last_client)
+		if (pregameHTML && isclient(src.last_client))
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
