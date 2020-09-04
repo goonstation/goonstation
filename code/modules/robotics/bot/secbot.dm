@@ -1043,13 +1043,16 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				if(!master.target && master?.path.len % 7 == 1) // Every 7 tiles, look for someone to kill
 					master.look_for_perp()
 
-				step_to(master, master.path[1])
-				if(master.loc != master.path[1])
-					master.frustration++
+				if(master?.path)
+					step_to(master, master.path[1])
+					if(master.loc != master.path[1])
+						master.frustration++
+						sleep(delay)
+						continue
+					master?.path -= master?.path[1]
 					sleep(delay)
-					continue
-				master?.path -= master?.path[1]
-				sleep(delay)
+				else
+					break // i dunno, it runtimes
 
 			if (master)
 				master.moving = 0
@@ -1112,18 +1115,14 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				master.target.handcuffs = new /obj/item/handcuffs(master.target)
 				master.target.setStatus("handcuffed", duration = INFINITE_STATUS)
 
-			master.mode = SECBOT_IDLE
-			master.target = null
-			master.anchored = 0
-			master.last_found = world.time
-			master.frustration = 0
-
 			if(!uncuffable)
 				playsound(master.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0, 0, 1)
 			if (master.report_arrests && !uncuffable)
 				var/bot_location = get_area(master)
 				var/last_target = master.target
 				var/turf/LT_loc = get_turf(last_target)
+				if(!LT_loc)
+					LT_loc = get_turf(master)
 
 					//////PDA NOTIFY/////
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
@@ -1136,10 +1135,17 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				else
 					message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
 				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000",\
-				"message"="Notification: [last_target] detained by [master] in [bot_location] at grid [LT_loc.x] mark [LT_loc.y]. Unit requesting law enforcement personnel for further suspect prosecution. Over and out.")
+				"message"="[message2send]")
 				pdaSignal.transmission_method = TRANSMISSION_RADIO
 				if(transmit_connection != null)
 					transmit_connection.post_signal(master, pdaSignal)
+
+			master.mode = SECBOT_IDLE
+			master.target = null
+			master.anchored = 0
+			master.last_found = world.time
+			master.frustration = 0
+
 		return
 
 //Secbot Construction
