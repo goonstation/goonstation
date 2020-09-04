@@ -93,7 +93,12 @@
 						break
 
 		if (generateLight)
-			light_generating_fluid_turfs.Add(src)
+			START_TRACKING_CAT(TR_CAT_LIGHT_GENERATING_TURFS)
+
+	Del()
+		. = ..()
+		if (generateLight)
+			STOP_TRACKING_CAT(TR_CAT_LIGHT_GENERATING_TURFS)
 
 	make_light()
 		if (!light)
@@ -223,10 +228,10 @@
 		//	if(O.burning && prob(40))
 		//		O.burning = 0
 
-	proc/force_mob_to_ingest(var/mob/M)//called when mob is drowning
+	proc/force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning
 		if (!M) return
 
-		var/react_volume = 50
+		var/react_volume = 50 * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 			M.reagents.add_reagent(ocean_reagent_id, react_volume) //todo : maybe add temp var here too

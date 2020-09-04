@@ -63,7 +63,7 @@ var/global/list/objects_using_dialogs
 					src.attack_hand(C.mob)
 				else
 					if (C.mob.mob_flags & USR_DIALOG_UPDATES_RANGE)
-						src.attack_ai(usr)
+						src.attack_ai(C.mob)
 					else
 						src.remove_dialog(C.mob)
 

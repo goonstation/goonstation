@@ -1511,9 +1511,9 @@
 						if (src.traitHolder && src.traitHolder.hasTrait("happyfeet"))
 							if (prob(33))
 								SPAWN_DBG(0.5 SECONDS)
-									LAGCHECK(LAG_MED)
-									for (var/mob/living/carbon/human/responseMonkey in range(1, src)) // they don't have to be monkeys, but it's signifying monkey code
-										if (responseMonkey.stat || responseMonkey.getStatusDuration("paralysis") || responseMonkey.sleeping || responseMonkey.getStatusDuration("stunned") || (responseMonkey == src))
+									for (var/mob/living/carbon/human/responseMonkey in orange(1, src)) // they don't have to be monkeys, but it's signifying monkey code
+										LAGCHECK(LAG_MED)
+										if (!can_act(responseMonkey, 0))
 											continue
 										responseMonkey.emote("dance")
 
@@ -2153,6 +2153,8 @@
 	src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 
 /mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/H)
+	if(PROC_ON_COOLDOWN(2 SECONDS))
+		return
 	H.render_target = "*\ref[H]"
 	var/image/left_arm = image(null, H)
 	left_arm.render_source = H.render_target

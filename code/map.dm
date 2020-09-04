@@ -359,6 +359,26 @@ var/global/list/mapNames = list(
 		"the main medical bay room" = list(/area/station/medical/medbay),
 		"the research artifact lounge" = list(/area/station/science/artifact))
 
+	job_limits_override = list(
+		/datum/job/civilian/clown = 2,
+		/datum/job/security/security_officer = 6,
+		/datum/job/security/detective = 3,
+		/datum/job/research/geneticist = 3,
+		/datum/job/research/roboticist = 3,
+		/datum/job/research/scientist = 6,
+		/datum/job/research/medical_doctor = 7,
+		/datum/job/engineering/mechanic = 4,
+		/datum/job/engineering/miner = 4,
+		/datum/job/engineering/engineer = 6,
+		/datum/job/civilian/chef = 2,
+		/datum/job/civilian/barman = 2,
+		/datum/job/civilian/janitor = 3,
+		/datum/job/civilian/chaplain = 2,
+		/datum/job/special/lawyer = 1,
+		/datum/job/special/vice_officer = 1,
+		/datum/job/special/atmospheric_technician = 1,
+	)
+
 /datum/map_settings/manta
 	name = "MANTA"
 	display_name = "NSS Manta"
@@ -540,6 +560,14 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	auto_walls = 1
+
+	job_limits_from_landmarks = 1
+	job_limits_override = list(
+		/datum/job/special/atmospheric_technician = 1,
+		/datum/job/special/barber = 1,
+		/datum/job/special/research_assistant = 2,
+		/datum/job/special/medical_assistant = 2
+	)
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro

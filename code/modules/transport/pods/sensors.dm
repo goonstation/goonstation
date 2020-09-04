@@ -312,7 +312,7 @@
 				lifeforms++
 				lifelist += C.name
 
-		for (var/obj/machinery/vehicle/V in pods_and_cruisers) //ignoring cruisers, they barely exist, sue me.
+		for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS]) //ignoring cruisers, they barely exist, sue me.
 			if(V != ship)
 				if ((ship.z == V.z) && get_dist(ship.loc, V) <= src.seekrange)
 					ships++

@@ -504,7 +504,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		medal_name = "It's frickin' freezing in here, Mr. Bigglesworth"
 		check_completion()
 			var/cryocount = 0
-			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in atmos_machines)
+			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in by_cat[TR_CAT_ATMOS_MACHINES])
 				if(C.on && C.air_contents.temperature < 225)
 					cryocount ++
 			if(cryocount > 1) return 1
@@ -584,7 +584,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldoctor)
 		medal_name = "It's frickin' freezing in here, Mr. Bigglesworth"
 		check_completion()
 			var/cryocount = 0
-			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in atmos_machines)
+			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in by_cat[TR_CAT_ATMOS_MACHINES])
 				if(C.on && C.air_contents.temperature < 225)
 					cryocount ++
 			if(cryocount > 1) return 1
