@@ -16,6 +16,7 @@
 	var/list/random_icons = list()
 
 	New()
+		..()
 		if (islist(src.random_icons) && src.random_icons.len)
 			src.icon_state = pick(src.random_icons)
 		pixel_y = rand(-8, 8)

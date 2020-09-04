@@ -44,21 +44,17 @@
 	var/sealed = 0 //Can you write on this with a pen?
 
 /obj/item/paper/New()
-
 	..()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("paper", 10)
+	src.create_reagents(10)
+	reagents.add_reagent("paper", 10)
+	SPAWN_DBG(0)
+		if (src.info && src.icon_state == "paper_blank")
+			icon_state = "paper"
 	if (!src.rand_pos)
 		return
 	else
 		src.pixel_y = rand(-8, 8)
 		src.pixel_x = rand(-9, 9)
-	SPAWN_DBG(0)
-		if (src.info && src.icon_state == "paper_blank")
-			icon_state = "paper"
-	return
 
 
 /obj/item/paper/pooled()
@@ -81,10 +77,8 @@
 		src.reagents.clear_reagents()
 		src.reagents.add_reagent("paper", 10)
 	else
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("paper", 10)
+		src.create_reagents(10)
+		reagents.add_reagent("paper", 10)
 
 	if (!src.offset)
 		return
@@ -847,7 +841,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	var/list/sol = list("He plunged into the sea.", "Follow the NSS Polaris.", "Across the Channel.", "It's in the Void.")
 
 	New()
-
 		var/randme = rand(1,10)
 		var/fortune = "Blah."
 
@@ -865,6 +858,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		info = {"<font face='System' size='3'><center>YOUR FORTUNE</center><br><br>
 		Discount Dan's is the proud sponsor of your magical fortune. Whether good or bad, delightful or alarming, know it to be true.<br><br>
 		[fortune]</font>"}
+		..()
 
 
 /obj/item/paper/thermal/fortune

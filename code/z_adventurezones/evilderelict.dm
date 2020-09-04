@@ -80,9 +80,9 @@ var/maniac_previous_victim = "Unknown"
 			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
-					qdel(src)
+				sleep(rand(100,400))
+				if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
+				qdel(src)
 		..()
 
 
@@ -319,8 +319,8 @@ var/maniac_previous_victim = "Unknown"
 			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
-					qdel(src)
+				sleep(rand(100,400))
+				if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
+				qdel(src)
 		..()
 

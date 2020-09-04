@@ -44,6 +44,7 @@
 	preferred_holder_type = /datum/abilityHolder/critter
 
 	New()
+		..()
 		var/obj/screen/ability/topBar/critter/B = new /obj/screen/ability/topBar/critter(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

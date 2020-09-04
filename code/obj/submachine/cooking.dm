@@ -1003,6 +1003,7 @@ var/list/mixer_recipes = list()
 	var/working = 0
 
 	New()
+		..()
 		src.recipes = mixer_recipes
 		if (!src.recipes)
 			src.recipes = list()

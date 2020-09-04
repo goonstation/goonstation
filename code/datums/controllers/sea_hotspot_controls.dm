@@ -451,6 +451,7 @@
 	var/z = 0
 
 	New(x=0,y=0,z=0)
+		..()
 		src.x = x
 		src.y = y
 		src.z = z

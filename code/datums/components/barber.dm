@@ -86,17 +86,21 @@
 			return 0
 
 	SPAWN_DBG(0)
-		var/new_style = input(user, "Please select style", "Style")  as null|anything in customization_styles + customization_styles_gimmick
+		var/list/region = list("First Hairea" = 1, "Second Hairea" = 2, "Third Hairea" = 3)
 
-		if (new_style)
-			if(M.bioHolder.mobAppearance.customization_first == "Balding" && new_style != "None")
-				boutput(user, "<span class='alert'>Not enough hair!</span>")
-				return
-		else
+		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
+
+		if (!which_part)
 			boutput(user, "Never mind.")
 			return
 
-		actions.start(new/datum/action/bar/haircut(M, user, get_barbery_conditions(M, user), new_style), user)
+		var/new_style = input(user, "Please select style", "Style")  as null|anything in customization_styles + customization_styles_gimmick
+
+		if (!new_style) // I'd prefer not to go through all of the hair styles and rank them based on hairiness
+			boutput(user, "Never mind.") // So I guess it'll be on the honor system for now not to give balding folk rockin' 'fros
+			return
+
+		actions.start(new/datum/action/bar/haircut(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
 	return ATTACK_PRE_DONT_ATTACK
 
 /datum/component/barber/proc/do_shave(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
@@ -149,24 +153,24 @@
 			return 0
 
 	SPAWN_DBG(0)
-		var/list/mustaches =list("Watson", "Chaplin", "Selleck", "Van Dyke", "Hogan")
-		var/list/beards  = list("Neckbeard", "Elvis", "Abe", "Chinstrap", "Hipster", "Wizard")
-		var/list/full = list("Goatee", "Full Beard", "Long Beard")
-		var/new_style = input(user, "Please select facial style", "Facial Style")  as null|anything in mustaches + beards + full
-		if (new_style)
-			if((new_style in full) && (!(M.bioHolder.mobAppearance.customization_second in full)))
-				boutput(user, "<span class='alert'>[M] doesn't have enough facial hair!</span>")
-				return
-			if((new_style in beards) && (M.bioHolder.mobAppearance.customization_second in mustaches))
-				boutput(user, "<span class='alert'>[M] doesn't have a beard!</span>")
-				return
-			if((new_style in mustaches) && (M.bioHolder.mobAppearance.customization_second in beards))
-				boutput(user, "<span class='alert'>[M] doesn't have a mustache!</span>")
-				return
-		else
+
+		var/list/region = list("First Hairea" = 1, "Second Hairea" = 2, "Third Hairea" = 3)
+
+		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
+
+		if (!which_part)
 			boutput(user, "Never mind.")
 			return
-		actions.start(new/datum/action/bar/shave(M, user, get_barbery_conditions(M, user), new_style), user)
+
+		var/list/facehair = list("none", "Watson", "Chaplin", "Selleck", "Van Dyke", "Hogan",\
+		"Neckbeard", "Elvis", "Abe", "Chinstrap", "Hipster", "Wizard",\
+		"Goatee", "Full Beard", "Long Beard")
+		var/new_style = input(user, "Please select facial style", "Facial Style")  as null|anything in facehair
+
+		if (!new_style) // otherwise it alternates between non-functional and fucking useless
+			boutput(user, "Never mind.")
+			return
+		actions.start(new/datum/action/bar/shave(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
 
 	return ATTACK_PRE_DONT_ATTACK
 
@@ -437,13 +441,15 @@
 	var/mob/living/carbon/human/user
 	var/degree_of_success
 	var/new_style
+	var/which_part
 
 
-	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle)
-		M = barbee
-		user = barber
-		degree_of_success = succ
-		new_style = nustyle
+	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle, var/whichp)
+		src.M = barbee
+		src.user = barber
+		src.degree_of_success = succ
+		src.new_style = nustyle
+		src.which_part = whichp
 		user.tri_message("[user] begins cutting [M]'s hair.",\
 		user, "<span class='notice'>You begin cutting [M]'s hair.</span>",\
 		M, "<span class='notice'>[user] begins cutting your hair.</span>")
@@ -500,13 +506,24 @@
 			if (3) // you did it !!
 				if (new_style == "None")
 					var/obj/item/wig = M.create_wig()
-					wig.set_loc(user.loc)
+					wig.set_loc(M.loc)
+					M.bioHolder.mobAppearance.customization_first = "None"
+					M.bioHolder.mobAppearance.customization_second = "None"
+					M.bioHolder.mobAppearance.customization_third = "None"
 				else
 					user.tri_message("[user] cuts [M]'s hair.",\
 					M, "<span class='notice'>[user] cuts your hair.</span>",\
 					user, "<span class='notice'>You cut [M]'s hair.</span>")
-					M.cust_one_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
-					M.bioHolder.mobAppearance.customization_first = new_style
+					switch(which_part)
+						if (1)
+							M.cust_one_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
+							M.bioHolder.mobAppearance.customization_first = new_style
+						if (2)
+							M.cust_two_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
+							M.bioHolder.mobAppearance.customization_second = new_style
+						if (3)
+							M.cust_three_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
+							M.bioHolder.mobAppearance.customization_third = new_style
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
 		..()
@@ -523,12 +540,14 @@
 	var/mob/living/carbon/human/user
 	var/degree_of_success
 	var/new_style
+	var/which_part
 
-	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle)
-		M = barbee
-		user = barber
-		degree_of_success = succ
-		new_style = nustyle
+	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle, var/whichp)
+		src.M = barbee
+		src.user = barber
+		src.degree_of_success = succ
+		src.new_style = nustyle
+		src.which_part = whichp
 		user.tri_message("[user] begins shaving [M].",\
 		user, "<span class='notice'>You begin shaving [M].</span>",\
 		M, "<span class='notice'>[user] begins shaving you.</span>")
@@ -588,8 +607,23 @@
 				user.tri_message("[user] finishes shaving [M].",\
 											M, "<span class='notice'>[user] shaves you.</span>",\
 										user, "<span class='notice'>You shave [M].</span>")
-				M.cust_two_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
-				M.bioHolder.mobAppearance.customization_first = new_style
+				if (new_style == "None")
+					var/obj/item/wig = M.create_wig()
+					wig.set_loc(M.loc)
+					M.bioHolder.mobAppearance.customization_first = "None"
+					M.bioHolder.mobAppearance.customization_second = "None"
+					M.bioHolder.mobAppearance.customization_third = "None"
+				else
+					switch(which_part)
+						if (1)
+							M.cust_one_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
+							M.bioHolder.mobAppearance.customization_first = new_style
+						if (2)
+							M.cust_two_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
+							M.bioHolder.mobAppearance.customization_second = new_style
+						if (3)
+							M.cust_three_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
+							M.bioHolder.mobAppearance.customization_third = new_style
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
 		..()
 

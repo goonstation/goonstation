@@ -378,17 +378,15 @@
 	//Wire note: hascall check below added as fix for: undefined proc or verb /datum/targetable/changeling/monkey/attackby() (lmao)
 	if (src.master && hascall(src.master, "attackby"))
 		return src.master.attackby(a, b)
-	return
 
 /atom/movable/overlay/attack_hand(a, b, c, d, e)
 	if (src.master)
 		return src.master.attack_hand(a, b, c, d, e)
-	return
 
 /atom/movable/overlay/New()
+	..()
 	for(var/x in src.verbs)
 		src.verbs -= x
-	return
 
 /atom/movable/overlay
 	var/atom/master = null

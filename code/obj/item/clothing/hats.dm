@@ -875,10 +875,10 @@
 		boutput(user, "<span class='notice'>You better start running! It's kill or be killed now, buddy!</span>")
 		SPAWN_DBG(1 SECOND)
 			playsound(src.loc, "sound/vox/time.ogg", 100, 1)
-			SPAWN_DBG(1 SECOND)
-				playsound(src.loc, "sound/vox/for.ogg", 100, 1)
-				SPAWN_DBG(1 SECOND)
-					playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
+			sleep(1 SECOND)
+			playsound(src.loc, "sound/vox/for.ogg", 100, 1)
+			sleep(1 SECOND)
+			playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
 		var/perpname = user.name

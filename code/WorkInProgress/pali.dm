@@ -269,6 +269,7 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 	var/loc_maptext_x = 0
 	var/loc_maptext_y = 0
 	New()
+		..()
 		loc.maptext = loc_maptext
 		loc.maptext_width = loc_maptext_width
 		loc.maptext_height = loc_maptext_height
@@ -290,6 +291,7 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 	var/critter_type = /obj/critter/zombie
 
 /obj/hellportal/New()
+	..()
 	src.transform = matrix() * 0
 	animate(src, transform = matrix(), time = 1 SECOND, easing = SINE_EASING)
 	SPAWN_DBG(1 SECOND)

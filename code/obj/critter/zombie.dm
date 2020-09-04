@@ -116,7 +116,8 @@
 				SPAWN_DBG(0)
 					M:changeStatus("paralysis", 2 SECONDS)
 					step_away(M,src,15)
-					SPAWN_DBG(0.3 SECONDS) step_away(M,src,15)
+					sleep(0.3 SECONDS)
+					step_away(M,src,15)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 		else

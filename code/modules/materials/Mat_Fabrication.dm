@@ -367,6 +367,7 @@
 	var/datum/matfab_recipe/recipe = null
 
 	New(var/loc,var/schematic = null)
+		..()
 		if (!src.recipe)
 			qdel(src)
 			return 0

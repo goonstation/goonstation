@@ -15,6 +15,7 @@
 	var/image/shield_overlay = null
 
 	New()
+		..()
 		work()
 
 	dropped(mob/user as mob)

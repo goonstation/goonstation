@@ -441,13 +441,13 @@
 
 	SPAWN_DBG(hot_zone_timer-600)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
-		SPAWN_DBG(1 MINUTE)
-			if(hot_zone != null && hot_zone.gang_owners != null)
-				var/datum/gang/G = hot_zone.gang_owners
-				G.score_event += hot_zone_score
-				broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
-				sleep(10 SECONDS)
-			process_hot_zones()
+		sleep(1 MINUTE)
+		if(hot_zone != null && hot_zone.gang_owners != null)
+			var/datum/gang/G = hot_zone.gang_owners
+			G.score_event += hot_zone_score
+			broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
+			sleep(10 SECONDS)
+		process_hot_zones()
 
 /datum/game_mode/gang/proc/process_kidnapping_event()
 	kidnapp_success = 0
@@ -494,20 +494,20 @@
 
 	SPAWN_DBG(kidnapping_timer - 1 MINUTE)
 		if(kidnapping_target != null) broadcast_to_all_gangs("[target_name] has still not been captured by [top_gang.gang_name] and they have 1 minute left!")
-		SPAWN_DBG(1 MINUTE)
-			//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
-			if(!kidnapp_success)
-				//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
-				if (kidnapping_target && kidnapping_target.stat != 2)
-					for (var/datum/gang/G in gangs)
-						if (G != top_gang)
-							G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
-					broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
-				else
-					broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
+		sleep(1 MINUTE)
+		//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
+		if(!kidnapp_success)
+			//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
+			if (kidnapping_target && kidnapping_target.stat != 2)
+				for (var/datum/gang/G in gangs)
+					if (G != top_gang)
+						G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
+				broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
+			else
+				broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
 
-				sleep(delay_between_kidnappings)
-			process_kidnapping_event()
+			sleep(delay_between_kidnappings)
+		process_kidnapping_event()
 
 
 //bleh

@@ -997,9 +997,6 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	frequency = R_FREQ_LOUDSPEAKERS
 	var/image/active_light = null
 
-	New()
-		// active_light = new ()
-
 //Must be standing next to it to talk into it
 /obj/item/device/radio/intercom/loudspeaker/hear_talk(mob/M as mob, msgs, real_name, lang_id)
 	if (src.broadcasting)
@@ -1042,7 +1039,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	desc = "A Loudspeaker."
 
 	New()
-		//..()
+		..()
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			switch(src.dir)
 				if(NORTH)

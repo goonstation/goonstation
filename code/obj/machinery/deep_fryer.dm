@@ -16,12 +16,10 @@
 	New()
 		..()
 		UnsubscribeProcess()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(50)
 
-		R.add_reagent("grease", 25)
-		R.set_reagent_temp(src.frytemp)
+		reagents.add_reagent("grease", 25)
+		reagents.set_reagent_temp(src.frytemp)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isghostdrone(user) || isAI(user))
@@ -133,9 +131,7 @@
 			src.cooktime++
 
 		if (!src.fryitem.reagents)
-			var/datum/reagents/R = new/datum/reagents(50)
-			src.fryitem.reagents = R
-			R.my_atom = src.fryitem
+			src.fryitem.create_reagents(50)
 
 
 		src.reagents.trans_to(src.fryitem, 2)
@@ -195,9 +191,7 @@
 			qdel(src.fryitem)
 			src.fryitem = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
 			if (!src.fryitem.reagents)
-				var/datum/reagents/R = new/datum/reagents(50)
-				src.fryitem.reagents = R
-				R.my_atom = src.fryitem
+				src.fryitem.create_reagents(50)
 
 			src.fryitem.reagents.add_reagent("grease", 50)
 			fryholder.desc = "A heavily fried...something.  Who can tell anymore?"

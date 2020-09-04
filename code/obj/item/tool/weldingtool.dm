@@ -31,10 +31,8 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(capacity)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("fuel", capacity)
+		src.create_reagents(capacity)
+		reagents.add_reagent("fuel", capacity)
 		src.inventory_counter.update_number(get_fuel())
 
 		src.setItemSpecial(/datum/item_special/flame)

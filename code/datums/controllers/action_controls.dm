@@ -886,6 +886,7 @@ var/datum/action_controller/actions
 	plane = PLANE_HUD + 1
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 
 	unpooled()
@@ -906,6 +907,7 @@ var/datum/action_controller/actions
 	plane = PLANE_HUD + 1
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"border",5)
 
 	unpooled()

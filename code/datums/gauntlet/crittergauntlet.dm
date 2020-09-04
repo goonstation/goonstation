@@ -360,6 +360,7 @@
 			critters_left -= name
 
 	New()
+		..()
 		SPAWN_DBG(0.5 SECONDS)
 			viewing = locate() in world
 			staging = locate() in world

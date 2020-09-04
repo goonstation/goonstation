@@ -14,6 +14,7 @@
 
 
 	New(var/obj/item/parts/holder)
+		..()
 		src.holder = holder
 
 		src.setDisarmSpecial (/datum/item_special/disarm)

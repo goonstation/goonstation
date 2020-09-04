@@ -462,8 +462,7 @@
 		return
 
 	New()
-
-		return
+		..()
 
 	proc/removeOverlays()
 		if (using && using.client)
