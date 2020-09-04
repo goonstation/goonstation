@@ -535,14 +535,12 @@ Contains:
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(1250)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(1250)
 		if(zamboni)
-			R.add_reagent("cryostylane", 1000)
+			reagents.add_reagent("cryostylane", 1000)
 		else
-			R.add_reagent("water", 1000)
-			//R.add_reagent("cleaner", 250) //don't even need this now that we have fluid, probably. If you want it, add it yer self
+			reagents.add_reagent("water", 1000)
+			//reagents.add_reagent("cleaner", 250) //don't even need this now that we have fluid, probably. If you want it, add it yer self
 
 		if (!islist(src.ability_buttons))
 			ability_buttons = list()

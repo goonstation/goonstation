@@ -29,9 +29,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.real_name = pick("M", "m") + pick("a", "ah", "ae") + pick("ch", "tch", "tz") + pick("o", "oh", "oe") + " " + pick("M","m") + pick("a","ae","e") + pick("n","nn")
 
 			if (!src.reagents)
-				var/datum/reagents/R = new/datum/reagents(1000)
-				src.reagents = R
-				R.my_atom = src
+				src.create_reagents(1000)
 
 			src.reagents.add_reagent("stimulants", 200)
 

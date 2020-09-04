@@ -88,10 +88,7 @@
 		for (var/turf/T in view(5,src))
 			nearby_turfs += T
 
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.maximum_volume = 1000
-		R.my_atom = src
+		src.create_reagents(1000)
 
 		src.work_display = image('icons/obj/manufacturer.dmi', "")
 		src.activity_display = image('icons/obj/manufacturer.dmi', "")

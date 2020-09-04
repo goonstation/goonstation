@@ -826,9 +826,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(honey_production_amount)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(honey_production_amount)
 
 		statlog_bees(src)
 
@@ -1723,10 +1721,7 @@
 					newLarva.custom_desc = "A moon bee.  It's like a regular space bee, but it has a peculiar gleam in its eyes..."
 				newLarva.custom_bee_type = /obj/critter/domestic_bee/moon
 				newLarva.blog += "larva hatched by [key_name(user)]"
-				var/datum/reagents/R = new/datum/reagents(50)
-				newLarva.reagents = R
-				R.my_atom = newLarva
-				R.add_reagent("wolfsbane", 10)
+				newLarva.reagents.add_reagent("wolfsbane", 10)
 				qdel (src)
 
 	throw_impact(var/atom/A)
@@ -1821,16 +1816,14 @@
 	amount = 4
 	heal_amt = 1
 	doants = 0
+	initial_volume = 50
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("nectar", 10)
-		R.add_reagent("honey", 10)
-		R.add_reagent("cornstarch", 5)
-		R.add_reagent("pollen", 20)
+		reagents.add_reagent("nectar", 10)
+		reagents.add_reagent("honey", 10)
+		reagents.add_reagent("cornstarch", 5)
+		reagents.add_reagent("pollen", 20)
 
 /* -------------------- END -------------------- */
 

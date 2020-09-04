@@ -55,7 +55,7 @@
 		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
 		interrupt(INTERRUPT_ALWAYS)
 		return
-		
+
 /datum/action/bar/icon/claw_machine/onResume()
 	..()
 	state = ACTIONSTATE_DELETE
@@ -286,9 +286,7 @@
 				src.setMaterial(getMaterial(pick(material_varieties)))
 
 		if (src.icon_state == "fig-floorpills")
-			var/datum/reagents/R = new/datum/reagents(30)
-			src.reagents = R
-			R.my_atom = src
+			src.create_reagents(30)
 
 			var/primaries = rand(1,3)
 			var/adulterants = rand(2,4)

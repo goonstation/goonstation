@@ -71,9 +71,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(4000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(4000)
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
 	on_reagent_change(add)

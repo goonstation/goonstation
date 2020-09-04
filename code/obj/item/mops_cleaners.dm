@@ -238,9 +238,7 @@ WET FLOOR SIGN
 
 /obj/item/mop/New()
 	..()
-	var/datum/reagents/R = new/datum/reagents(20)
-	reagents = R
-	R.my_atom = src
+	src.create_reagents(20)
 	src.setItemSpecial(/datum/item_special/rangestab)
 	START_TRACKING
 	BLOCK_ROD

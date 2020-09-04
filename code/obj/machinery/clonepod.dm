@@ -59,9 +59,7 @@
 		req_access = list(access_medlab) //For premature unlocking.
 		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(100)
 
 		src.update_icon()
 		genResearch.clonepods.Add(src) //This will be used for genetics bonuses when cloning
@@ -657,9 +655,7 @@
 	New()
 		..()
 		UnsubscribeProcess()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(100)
 		src.update_icon(1)
 		SPAWN_DBG(0)
 			src.find_pods()
