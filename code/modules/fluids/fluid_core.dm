@@ -161,6 +161,7 @@ var/mutable_appearance/fluid_ma
 		fluid_ma.alpha = 255
 		fluid_ma.color = "#ffffff"
 		src.appearance = fluid_ma
+		src.overlay_refs = null // setting appearance removes our overlays!
 
 		finalcolor = "#ffffff"
 		finalalpha = 100
