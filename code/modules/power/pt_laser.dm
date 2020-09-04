@@ -409,11 +409,13 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
-			if(!online) stop_firing()
+			if(!online) src.stop_firing()
 			. = TRUE
 		if("setOutput")
 			src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
+			if(!src.output)
+				src.stop_firing()
 			. = TRUE
 		if("outputMW")
 			src.output_multi = 1 MEGA WATT
