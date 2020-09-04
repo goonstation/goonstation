@@ -77,21 +77,18 @@
 							H.bioHolder.AddEffectInstance(NEW,1)
 						holder.RemoveEffect(src.id)
 						holder.RemovePoolEffect(src)
+					else
+						if (H.blood_volume < 500 && H.blood_volume > 0)
+							H.blood_volume += 2
 
 /datum/bioEffect/hemochromia/rust
 	name = "Hemochromia Type-R"
 	desc = "Causes the subject's blood cells to take on a scarlet coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_rust"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 5
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("A")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_rust"
@@ -105,8 +102,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
@@ -120,16 +115,10 @@
 	name = "Hemochromia Type-B"
 	desc = "Causes the subject's blood cells to take on a copper coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_bronze"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 5
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("A","T")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_bronze"
@@ -143,8 +132,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
@@ -158,16 +145,10 @@
 	name = "Hemochromia Type-G"
 	desc = "Causes the subject's blood cells to take on a brass coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_gold"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 10
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("T","A")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_gold"
@@ -181,8 +162,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
@@ -196,16 +175,10 @@
 	name = "Hemochromia Type-L"
 	desc = "Causes the subject's blood cells to take on a chartreuse coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_lime"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 15
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("C","G")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_lime"
@@ -219,8 +192,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
@@ -234,16 +205,10 @@
 	name = "Hemochromia Type-O"
 	desc = "Causes the subject's blood cells to take on a verdant coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_olive"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 20
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("A","C")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_olive"
@@ -257,8 +222,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
@@ -272,16 +235,10 @@
 	name = "Hemochromia Type-J"
 	desc = "Causes the subject's blood cells to take on an emerald coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_jade"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 25
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("G","A")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_jade"
@@ -295,8 +252,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
@@ -310,16 +265,10 @@
 	name = "Hemochromia Type-T"
 	desc = "Causes the subject's blood cells to take on a cyan coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_teal"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 30
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("G","C")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_teal"
@@ -333,8 +282,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
@@ -348,16 +295,10 @@
 	name = "Hemochromia Type-C"
 	desc = "Causes the subject's blood cells to take on a cerulean coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_cobalt"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 35
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("A","G")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_cobalt"
@@ -371,8 +312,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
@@ -386,16 +325,10 @@
 	name = "Hemochromia Type-I"
 	desc = "Causes the subject's blood cells to take on an azure coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_indigo"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 40
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("C","T")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_indigo"
@@ -409,8 +342,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
@@ -424,16 +355,10 @@
 	name = "Hemochromia Type-P"
 	desc = "Causes the subject's blood cells to take on a lavander coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_purple"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 45
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("T","C")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_purple"
@@ -447,8 +372,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
@@ -462,16 +385,10 @@
 	name = "Hemochromia Type-V"
 	desc = "Causes the subject's blood cells to take on a plum coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_violet"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 50
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("C","A")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_violet"
@@ -485,8 +402,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
@@ -500,16 +415,10 @@
 	name = "Hemochromia Type-F"
 	desc = "Causes the subject's blood cells to take on a magenta coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_fuschia"
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
-	reclaim_fail = 10
 	lockProb = 55
-	lockedGaps = 2
-	lockedDiff = 2
 	lockedChars = list("C")
-	lockedTries = 12
-	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
 	icon_state  = "hemochromia_fuschia"
@@ -523,8 +432,6 @@
 	OnLife()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
