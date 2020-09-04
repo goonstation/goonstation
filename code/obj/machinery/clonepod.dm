@@ -81,10 +81,9 @@
 	disposing()
 		mailgroups.len = 0
 		radio_controller.remove_object(src, "[pdafrequency]")
-		genResearch.clonepods.Remove(src) //Bye bye
+		genResearch?.clonepods?.Remove(src) //Bye bye
 		connected?.pod1 = null
-		if(!isnull(connected?.scanner?.pods))
-			connected?.scanner?.pods -= src
+		connected?.scanner?.pods -= src
 		connected = null
 		if(occupant)
 			occupant.set_loc(src.loc)

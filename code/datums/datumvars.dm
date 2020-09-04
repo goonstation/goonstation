@@ -313,6 +313,9 @@
 
 	html += "<th>"
 
+	if(istype(name, /datum) || isclient(name) || islist(name))
+		html += "<a href='byond://?src=\ref[src];Vars=\ref[name]' style='font-size:0.45em;'>KEY</a> "
+
 	if (isnull(value))
 		html += "\[[name]\]</th><td><em class='value null'>null</em>"
 

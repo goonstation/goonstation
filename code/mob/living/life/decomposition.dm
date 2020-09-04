@@ -20,6 +20,7 @@
 			var/suspend_rot = \
 					istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell) || \
 					istype(owner.loc, /obj/morgue) || \
+					istype(owner.loc, /obj/item/reagent_containers/food/snacks/shell) || \
 					owner.reagents?.has_reagent("formaldehyde")
 
 			if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded)))

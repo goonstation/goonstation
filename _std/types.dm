@@ -103,7 +103,7 @@ proc/get_singleton(type)
 	return singletons[type]
 var/global/list/singletons
 
-//by_type and by_cat stuff
+// by_type and by_cat stuff
 
 #ifdef SPACEMAN_DMM // just don't ask
 #define START_TRACKING
@@ -114,11 +114,34 @@ var/global/list/singletons
 #define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1 //we use an assoc list here because removing from one is a lot faster
 #define STOP_TRACKING by_type[.....].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ...... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
 #endif
+// contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
+var/list/list/by_type = list()
 
 // sometimes we want to have a list of objects of multiple types, without having to traverse multiple lists
 // to do that add START_TRACKING_CAT("category") to New, unpooled, or whatever proc you want to start tracking the objects in (eg: tracking dead humans, put start tracking in death())
 // and add STOP_TRACKING_CAT("category") to disposing, or whatever proc you want to stop tracking the objects in (eg: tracking live humans, put stop tracking in death())
 // and to traverse the list, use by_type_cat["category"] to get the list of objects in that category
 // also ideally youd use defines for by_cat categories!
-#define START_TRACKING_CAT(x) if(!by_cat[x]) { by_cat[x] = list() }; by_cat[x][src] = 1
-#define STOP_TRACKING_CAT(x) by_cat[x].Remove(src)
+#define START_TRACKING_CAT(x) OTHER_START_TRACKING_CAT(src, x)
+#define STOP_TRACKING_CAT(x) OTHER_STOP_TRACKING_CAT(src, x)
+#define OTHER_START_TRACKING_CAT(what, x) if(!by_cat[x]) { by_cat[x] = list() }; by_cat[x][what] = 1
+#define OTHER_STOP_TRACKING_CAT(what, x) by_cat[x].Remove(what)
+
+/// contains lists of objects indexed by a category string based on START_TRACKING_CAT / STOP_TRACKING_CAT
+var/list/list/by_cat = list()
+
+// tracked categories
+
+#define TR_CAT_ATMOS_MACHINES "atmos_machines"
+#define TR_CAT_MANTA_TILES "manta_tiles"
+#define TR_CAT_LIGHT_GENERATING_TURFS "light_generating_turfs"
+#define TR_CAT_CRITTERS "critters"
+#define TR_CAT_PETS "pets"
+#define TR_CAT_PODS_AND_CRUISERS "pods_and_cruisers"
+#define TR_CAT_NERVOUS_MOBS "nervous_mobs"
+#define TR_CAT_SHITTYBILLS "shittybills"
+#define TR_CAT_JOHNBILLS "johnbills"
+#define TR_CAT_OTHERBILLS "otherbills"
+#define TR_CAT_TELEPORT_JAMMERS "teleport_jammers"
+// powernets? processing_items?
+// mobs? ai-mobs?

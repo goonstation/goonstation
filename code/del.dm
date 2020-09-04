@@ -14,40 +14,36 @@ proc/qdel(var/datum/O)
 		return
 
 	if (istype(O))
-		// only queue deletions if the round is running, otherwise the queue isn't being processed
-		if (current_state >= GAME_STATE_PLAYING)
-			O.dispose(qdel_instead=0)
-			if (istype(O, /atom/movable))
-				O:set_loc(null)
+		O.dispose(qdel_instead=0)
+		if (istype(O, /atom/movable))
+			O:set_loc(null)
 
-			if (isloc(O) && O:contents:len > 0)
-				for (var/C in O:contents)
-					qdel(C)
+		if (isloc(O) && O:contents:len > 0)
+			for (var/C in O:contents)
+				qdel(C)
 
-			/**
-			 * We'll assume here that the object will be GC'ed.
-			 * If the object is not GC'ed and must be explicitly deleted,
-			 * the delete queue process will decrement the gc counter and
-			 * increment the explicit delete counter for the type.
-			 */
-			#ifdef DELETE_QUEUE_DEBUG
-			detailed_delete_gc_count[O.type]++
-			#endif
+		/**
+			* We'll assume here that the object will be GC'ed.
+			* If the object is not GC'ed and must be explicitly deleted,
+			* the delete queue process will decrement the gc counter and
+			* increment the explicit delete counter for the type.
+			*/
+		#ifdef DELETE_QUEUE_DEBUG
+		detailed_delete_gc_count[O.type]++
+		#endif
 
-			// In the delete queue, we need to check if this is actually supposed to be deleted.
-			O.qdeled = 1
+		// In the delete queue, we need to check if this is actually supposed to be deleted.
+		O.qdeled = 1
 
-			/**
-			 * We will only enqueue the ref for deletion. This gives the GC time to work,
-			 * and makes less work for the delete queue to do.
-			 */
-			//if (!O.qdeltime)
-			//	O.qdeltime = world.time
+		/**
+			* We will only enqueue the ref for deletion. This gives the GC time to work,
+			* and makes less work for the delete queue to do.
+			*/
+		//if (!O.qdeltime)
+		//	O.qdeltime = world.time
 
-			// delete_queue.enqueue("\ref[O]")
-			delete_queue_2[((delqueue_pos + DELQUEUE_WAIT) % DELQUEUE_SIZE) + 1] += "\ref[O]"
-		else
-			del(O)
+		// delete_queue.enqueue("\ref[O]")
+		delete_queue_2[((delqueue_pos + DELQUEUE_WAIT) % DELQUEUE_SIZE) + 1] += "\ref[O]"
 	else
 		if(islist(O))
 			O:len = 0

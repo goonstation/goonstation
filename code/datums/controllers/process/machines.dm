@@ -21,7 +21,7 @@ datum/controller/process/machines
 		var/c = 0
 
 		if (ticker % 8 == 0)
-			src.atmos_machines = global.atmos_machines
+			src.atmos_machines = by_cat[TR_CAT_ATMOS_MACHINES]
 			for(var/X in atmos_machines)
 				var/obj/machinery/machine = X
 				if( !machine || machine.z == 4 && !Z4_ACTIVE ) continue

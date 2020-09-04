@@ -573,7 +573,7 @@
 
 			//air specific (messy)
 			fluid_ma.opacity = master_opacity
-
+			fluid_ma.overlays = F.overlays // gross, needed because of perspective overlays
 			F.appearance = fluid_ma
 
 

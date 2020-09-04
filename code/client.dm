@@ -407,6 +407,7 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
+		src.mob.reset_keymap()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
