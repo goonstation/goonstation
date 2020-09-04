@@ -207,7 +207,7 @@ const Electrify = (props, context) => {
                 </Button>
               ))}
               <Button
-                color={shockTimeleft ? "bad" : "good"}
+                color={shockTimeleft ? "good" : "bad"}
                 icon="bolt"
                 disabled={(!wires.shock)
                 || (mainTimeleft && backupTimeleft)}
