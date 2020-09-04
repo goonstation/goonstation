@@ -52,6 +52,7 @@ TRAYS
 	var/snapped
 
 	New()
+		..()
 		if(prob(60))
 			src.pixel_y = rand(0, 4)
 		BLOCK_KNIFE
@@ -189,6 +190,7 @@ TRAYS
 	throwforce = 1.0
 
 	New()
+		..()
 		src.icon_state = pick("spoon_plastic_pink","spoon_plastic_yellow","spoon_plastic_green","spoon_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -217,6 +219,7 @@ TRAYS
 	throwforce = 1.0
 
 	New()
+		..()
 		src.icon_state = pick("fork_plastic_pink","fork_plastic_yellow","fork_plastic_green","fork_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -245,6 +248,7 @@ TRAYS
 	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
 
 	New()
+		..()
 		src.icon_state = pick("knife_plastic_pink","knife_plastic_yellow","knife_plastic_green","knife_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -1102,6 +1106,7 @@ TRAYS
 
 /obj/item/fish/random // used by the Wholetuna Cordata plant
 	New()
+		..()
 		SPAWN_DBG(0)
 			var/fish = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)
 			new fish(get_turf(src))

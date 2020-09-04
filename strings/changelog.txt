@@ -1,5 +1,24 @@
 
+(t)fri sep 04 20
+(u)Sovexe
+(p)1879
+(e)🆕📄|feature, tgui
+(+)Converted PTL to TGUI
 (t)thu sep 03 20
+(u)ThePotato97
+(p)2056
+(e)|
+(+)AI eyebot is now able to interact with tguis.
+(u)adharainspace
+(p)2006
+(e)🆕🎨|feature, sprites
+(+)batons now flip around when held on harm intent
+(u)Nebulacrity
+(p)2035
+(e)🆕🎨|feature, sprites
+(*)Added a new trait: Pilot. There has been an increased amount of reports of NanoTrasen employees getting lost off-station before their shifts.
+(*)Added a new pod component: Warp-0 Engine. An older sibling of the Warp-1 Engine, this engine is slightly worse power-wise while also lacking the ability to generate wormholes.
+(+)Added Pilot and Stowaway trait sprites.
 (u)Superlagg
 (p)2047
 (e)🐛🆕|bug, feature

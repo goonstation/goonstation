@@ -506,7 +506,7 @@
 
 				var/n_steps = list(0, 12, 7, 6)[speed]
 
-				var/sleep_time = clamp(time_since_last / n_steps, 0.04 SECONDS, 1.5 SECONDS)
+				var/sleep_time = n_steps ? clamp(time_since_last / n_steps, 0.04 SECONDS, 1.5 SECONDS) : 0
 
 				for (var/i = 1 to n_steps)
 					sleep(sleep_time)

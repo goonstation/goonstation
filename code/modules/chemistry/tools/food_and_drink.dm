@@ -1275,11 +1275,11 @@
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/glass
 
 	New(mob/Target, obj/item/reagent_containers/food/drinks/drinkingglass/Glass)
-		target= Target
+		..()
+		target = Target
 		glass = Glass
 		icon = glass.icon
 		icon_state = glass.icon_state
-		return
 
 	proc/checkContinue()
 		if (glass.reagents.total_volume <= 0 || !isalive(glassholder) || !glassholder.find_in_hand(glass))

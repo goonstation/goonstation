@@ -212,6 +212,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	w_class = 2.0
 
 /obj/item/assembly/weld_rod/New()
+	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
 
@@ -232,6 +233,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	w_class = 2.0
 
 /obj/item/assembly/w_r_ignite/New()
+	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
 	igniter = new /obj/item/device/igniter

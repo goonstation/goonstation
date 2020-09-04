@@ -52,6 +52,8 @@ var/list/clothingbooth_items = list()
 	//power_usage = 100
 	var/datum/light/light
 	New()
+		..()
+		UnsubscribeProcess()
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)

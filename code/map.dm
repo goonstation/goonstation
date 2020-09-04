@@ -43,6 +43,7 @@ var/global/list/mapNames = list(
 /obj/landmark/map
 	name = "map_setting"
 	icon_state = "x3"
+	add_to_landmarks = FALSE
 
 	New()
 		if (src.name != "map_setting")
@@ -61,8 +62,7 @@ var/global/list/mapNames = list(
 			if (!map_settings)
 				map_settings = new /datum/map_settings
 				CRASH("A mapName entry for '[src.name]' wasn't found!")
-
-		qdel(src)
+		..()
 
 //Setting maps to be underwater is handled in the map config file, aka [mapname].dm
 

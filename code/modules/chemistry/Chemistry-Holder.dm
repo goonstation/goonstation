@@ -60,6 +60,7 @@ datum
 		var/postfoam = 0 //attempt at killing infinite foam
 
 		New(maximum=100)
+			..()
 			maximum_volume = maximum
 
 		disposing()

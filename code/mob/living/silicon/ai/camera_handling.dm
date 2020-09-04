@@ -213,6 +213,7 @@
 	var/fail_delay = 50		// Same but in case we failed
 
 	New(var/mob/living/silicon/ai/A)
+		..()
 		owner = A
 		global.tracking_list += src
 

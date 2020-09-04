@@ -293,6 +293,7 @@
 	stage_prob = 8
 
 	New()
+		..()
 		master = get_disease_from_path(/datum/ailment/disability/memetic_madness)
 
 	stage_act()

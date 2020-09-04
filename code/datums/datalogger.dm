@@ -3,6 +3,7 @@ var/global/datum/datalogger/game_stats
 /datum/datalogger
 	var/list/stats = list()
 	New()
+		..()
 		stats["date"] = time2text(world.realtime, "MM/DD/YY hh:mm:ss")
 		stats["adminhelps"] = 0
 		stats["deaths"] = 0

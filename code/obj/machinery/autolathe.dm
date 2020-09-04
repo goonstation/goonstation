@@ -129,11 +129,11 @@
 				src.g_amount = 0
 			SPAWN_DBG(1.6 SECONDS)
 				flick("autolathe_c",src)
-				SPAWN_DBG(1.6 SECONDS)
-					flick("autolathe_o",src)
-					SPAWN_DBG(1.6 SECONDS)
-						new template.type(usr.loc)
-						src.operating = 0
+				sleep(1.6 SECONDS)
+				flick("autolathe_o",src)
+				sleep(1.6 SECONDS)
+				new template.type(usr.loc)
+				src.operating = 0
 
 	if(href_list["act"])
 		if(href_list["act"] == "pulse")

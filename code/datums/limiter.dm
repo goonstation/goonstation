@@ -13,6 +13,7 @@ var/global/datum/limiter/limiter
 	var/list/spawned
 
 /datum/limiter/New()
+	..()
 	limits = list()
 	spawned = list()
 	currentTick = world.time

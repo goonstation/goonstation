@@ -9,6 +9,7 @@
 	var/kind
 
 	New(var/client/viewer, var/kind)
+		..()
 		src.kind = kind
 
 		src.viewer = viewer

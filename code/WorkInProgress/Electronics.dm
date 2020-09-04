@@ -12,13 +12,12 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/electronics/New()
+	..()
 	desc = "A [src.name] used in electronic projects."
-	return
 
 /obj/item/electronics/proc/randompix()
 	src.pixel_x = rand(8, 12)
 	src.pixel_y = rand(8, 12)
-	return
 
 ////////////////////////////////////////////////////////////////
 /obj/item/electronics/battery

@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1
 	New()
+		..()
 		SPAWN_DBG(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
 			term.dir = get_dir(get_turf(term), src)

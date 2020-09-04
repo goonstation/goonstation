@@ -25,6 +25,7 @@
 	var/solitaire_offset = 3
 
 	New(cardname, carddesc, cardback, cardface, cardfoil, carddata, cardreversible, cardreversed, cardtappable, cardtapped, cardspooky, cardsolitaire)
+		..()
 		if (cardname) src.card_name = cardname
 		if (carddesc) src.card_desc = carddesc
 		if (cardback) src.card_back = cardback

@@ -220,6 +220,7 @@ ABSTRACT_TYPE(/datum/plant)
 	// 1 is dominant, else recessive
 
 	New(var/loc,var/random_alleles = 1)
+		..()
 		if (random_alleles)
 			src.alleles[1] = rand(0,1)
 			src.alleles[2] = rand(0,1)

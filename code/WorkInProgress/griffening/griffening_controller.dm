@@ -39,6 +39,7 @@
 	var/phase_arguments = null
 
 	New(var/obj/griffening_central/F)
+		..()
 		field_center = F
 
 	proc/announce(message)
@@ -847,6 +848,7 @@ td, th {
 	var/datum/griffening_controller/controller = null
 
 	New()
+		..()
 		controller = new(src)
 		controller.spawn_field()
 

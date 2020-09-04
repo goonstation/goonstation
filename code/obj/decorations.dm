@@ -11,6 +11,7 @@
 	event_handler_flags = USE_HASENTERED
 
 	New()
+		..()
 		var/datum/reagents/R = new/datum/reagents(10)
 		reagents = R
 		R.my_atom = src

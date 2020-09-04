@@ -127,6 +127,23 @@
 
 ////////armed civ putt
 
+obj/machinery/vehicle/miniputt/pilot
+	New()
+		. = ..()
+		src.com_system.deactivate()
+		qdel(src.engine)
+		qdel(src.com_system)
+		src.components -= src.engine
+		src.components -= src.com_system
+		src.engine = new /obj/item/shipcomponent/engine/zero(src)
+		src.engine.ship = src
+		src.components += src.engine
+		src.engine.activate()
+		src.com_system = null
+		myhud.update_systems()
+		myhud.update_states()
+		return
+
 /obj/machinery/vehicle/miniputt/armed
 	New()
 		..()

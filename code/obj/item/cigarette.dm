@@ -620,6 +620,7 @@
 	rand_pos = 1
 
 /obj/item/cigarbox/New()
+	..()
 	src.update_icon()
 
 /obj/item/cigarbox/proc/update_icon()
