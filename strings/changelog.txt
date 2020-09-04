@@ -1,5 +1,9 @@
 
 (t)thu sep 03 20
+(u)ThePotato97
+(p)2056
+(e)|
+(+)AI eyebot is now able to interact with tguis.
 (u)adharainspace
 (p)2006
 (e)🆕🎨|feature, sprites
