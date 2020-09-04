@@ -12,6 +12,7 @@
 	layer = 2.6
 	anchored = 1
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
 
@@ -111,6 +112,7 @@
 	opacity = 0
 	anchored = 1
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/default_direction = NORTH //The direction things get sent into when the router does not have a destination for the given barcode or when there is none attached.
 	var/list/destinations = new/list() //List of tags and the associated directions.

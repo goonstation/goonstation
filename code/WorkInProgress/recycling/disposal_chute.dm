@@ -592,6 +592,7 @@
 	light_style = "cartport"
 	density = 0
 	layer = OBJ_LAYER-0.1
+	plane = PLANE_NOSHADOW_BELOW
 
 	MouseDrop_T(obj/storage/cart/target, mob/user)
 		if (!istype(target) || target.loc != src.loc || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user))
