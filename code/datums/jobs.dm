@@ -1152,7 +1152,7 @@
 		return
 
 /datum/job/special/atmospheric_technician
-	name = "Atmospheric Technician"
+	name = "Atmospherish Technician"
 	linkcolor = "#FF9900"
 	limit = 0
 	wages = 150
