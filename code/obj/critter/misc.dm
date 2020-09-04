@@ -683,7 +683,7 @@
 		var/datum/reagents/temporary_holder = new/datum/reagents(1000)
 		src.reagents.copy_to(temporary_holder)
 		var/turf/T = get_turf(src)
-		smoke_reaction(src.reagents, 12, T)
+		smoke_reaction(src.reagents, 5, T)
 		classic_smoke_reaction(temporary_holder, 10, T)
 		invisibility = 100
 		SPAWN_DBG(5 SECONDS)
