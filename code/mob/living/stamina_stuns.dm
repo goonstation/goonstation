@@ -145,8 +145,8 @@
 	if(prob(4) && ishellbanned(src)) //Chances are this will happen during combat
 		SPAWN_DBG(rand(5, 80)) //Detach the cause (hit, reduced stamina) from the consequence (disconnect)
 			var/dur = src.client.fake_lagspike()
-			SPAWN_DBG(dur)
-				del(src.client)
+			sleep(dur)
+			del(src.client)
 
 	var/stam_mod_items = 0
 	for(var/atom in src.get_equipped_items())

@@ -1667,8 +1667,8 @@
 
 
 														G.affecting.force_laydown_standup()
-														SPAWN_DBG(1 SECOND) //let us do that combo shit people like with throwing
-															src.force_laydown_standup()
+														sleep(1 SECOND) //let us do that combo shit people like with throwing
+														src.force_laydown_standup()
 
 								if (G && G.state < 1) //ZeWaka: Fix for null.state
 									var/turf/oldloc = src.loc

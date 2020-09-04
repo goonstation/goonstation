@@ -123,8 +123,8 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					O.icon = 'icons/effects/effects.dmi'
 					O.icon_state = "nothing"
 					flick("empdisable",O)
-					SPAWN_DBG(0.5 SECONDS)
-						qdel(O)
+					sleep(0.5 SECONDS)
+					qdel(O)
 
 				return 1
 		else if (istype(source, /obj/machinery) && isAI(user))

@@ -669,7 +669,7 @@ THROWING DARTS
 
 		if (expire)
 			//25 minutes +/- 5
-			SPAWN_DBG(600 * (25 + rand(-5,5)) )
+			SPAWN_DBG((25 + rand(-5,5)) MINUTES)
 				if (src && !ishuman(src.loc)) // Drop-all, gibbed etc (Convair880).
 					if (src.expire && (src.expired != 1)) src.expired = 1
 					return
@@ -678,18 +678,18 @@ THROWING DARTS
 				boutput(M, "<span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span>")
 
 				// 1 minute left
-				SPAWN_DBG(1 MINUTE)
-					if (src && !ishuman(src.loc))
-						if (src.expire && (src.expired != 1)) src.expired = 1
-						return
-					if (!src || !owner || (M != owner) || src.expired)
-						return
-					// There's a proc for this now (Convair880).
-					if (M.mind && M.mind.special_role == "mindslave")
-						remove_mindslave_status(M, "mslave", "expired")
-					else if (M.mind && M.mind.master)
-						remove_mindslave_status(M, "otherslave", "expired")
-					src.expired = 1
+				sleep(1 MINUTE)
+				if (src && !ishuman(src.loc))
+					if (src.expire && (src.expired != 1)) src.expired = 1
+					return
+				if (!src || !owner || (M != owner) || src.expired)
+					return
+				// There's a proc for this now (Convair880).
+				if (M.mind && M.mind.special_role == "mindslave")
+					remove_mindslave_status(M, "mslave", "expired")
+				else if (M.mind && M.mind.master)
+					remove_mindslave_status(M, "otherslave", "expired")
+				src.expired = 1
 		return
 
 	on_remove(var/mob/M)

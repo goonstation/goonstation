@@ -282,9 +282,9 @@ GAUNTLET CARDS
 	SPAWN_DBG(0) //to give time for duration and starting access to be set
 		starting_access = access
 		end_time = ticker.round_elapsed_ticks + duration*10
-		SPAWN_DBG(duration * 10)
-			if(access == starting_access) //don't delete access if it's modified with an ID computer
-				access = list()
+		sleep(duration * 10)
+		if(access == starting_access) //don't delete access if it's modified with an ID computer
+			access = list()
 
 /obj/item/card/id/temporary/examine(mob/user)
 	. = ..()
