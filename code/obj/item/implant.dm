@@ -177,19 +177,19 @@ THROWING DARTS
 	proc/getHealthList()
 		var/healthlist = list()
 		if (!src.implanted)
-			src.healthlist["OXY"] = 0
-			src.healthlist["TOX"] = 0
-			src.healthlist["BURN"] = 0
-			src.healthlist["BRUTE"] = 0
+			healthlist["OXY"] = 0
+			healthlist["TOX"] = 0
+			healthlist["BURN"] = 0
+			healthlist["BRUTE"] = 0
 		else
 			var/mob/living/L
 			if (isliving(src.owner))
 				L = src.owner
-				src.healthlist["OXY"] = round(L.get_oxygen_deprivation())
-				src.healthlist["TOX"] = round(L.get_toxin_damage())
-				src.healthlist["BURN"] = round(L.get_burn_damage())
-				src.healthlist["BRUTE"] = round(L.get_brute_damage())
-		return src.healthlist
+				healthlist["OXY"] = round(L.get_oxygen_deprivation())
+				healthlist["TOX"] = round(L.get_toxin_damage())
+				healthlist["BURN"] = round(L.get_burn_damage())
+				healthlist["BRUTE"] = round(L.get_brute_damage())
+		return healthlist
 
 	proc/sensehealth()
 		if (!src.implanted)
