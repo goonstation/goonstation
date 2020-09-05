@@ -87,6 +87,8 @@
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 
 	var/turf/targets_turf = get_turf(target)
+	if(!targets_turf)
+		return
 	var/target_true_x = targets_turf.x
 	var/target_true_y = targets_turf.y
 
