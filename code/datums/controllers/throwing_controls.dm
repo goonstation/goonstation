@@ -44,6 +44,11 @@
 		src.user = usr // ew
 		..()
 
+	proc/get_throw_travelled()
+		. = src.dist_travelled //dist traveled is super innacurrate, especially when stacking throws
+		if (src.thrown_from) //if we have this param we should use it to get the REAL distance.
+			. = get_dist(get_turf(thing), get_turf(src.thrown_from))
+
 var/global/datum/controller/throwing/throwing_controller = new
 
 /datum/controller/throwing
@@ -126,10 +131,6 @@ var/global/datum/controller/throwing/throwing_controller = new
 
 			thing.throwing = 0
 			thing.throw_unlimited = 0
-
-			thing.throw_traveled = thr.dist_travelled //dist traveled is super innacurrate, especially when stacking throws
-			if (thr.thrown_from) //if we have this param we should use it to get the REAL distance.
-				thing.throw_traveled = get_dist(get_turf(thing), get_turf(thr.thrown_from))
 
 			thing.throw_impact(get_turf(thing), thr)
 
