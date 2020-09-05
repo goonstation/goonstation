@@ -277,12 +277,11 @@
 
 /obj/machinery/bot/cambot/proc/flash_blink(var/loops, var/delay)
 	set waitfor = 0
-	SPAWN_DBG(0)
-		for (var/i=loops, i>0, i--)
-			add_simple_light("cambot", list(255,255,255,255 * (src.emagged ? 0.8 : 0.6)))
-			sleep(delay)
-			remove_simple_light("cambot")
-			sleep(delay)
+	for (var/i=loops, i>0, i--)
+		add_simple_light("cambot", list(255,255,255,255 * (src.emagged ? 0.8 : 0.6)))
+		sleep(delay)
+		remove_simple_light("cambot")
+		sleep(delay)
 
 /obj/machinery/bot/cambot/proc/photograph(var/atom/target)
 	if (!src || !src.on || !target)
