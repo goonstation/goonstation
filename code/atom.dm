@@ -531,12 +531,13 @@
 
 	var/atom/A = src.loc
 	. = ..()
-	src.move_speed = world.timeofday - src.l_move_time
-	src.l_move_time = world.timeofday
-	if ((A != src.loc && A && A.z == src.z))
+	src.move_speed = TIME - src.l_move_time
+	src.l_move_time = TIME
+	if (A != src.loc && A?.z == src.z)
 		src.last_move = get_dir(A, src.loc)
-		if (src.attached_objs && islist(src.attached_objs) && src.attached_objs.len)
-			for (var/atom/movable/M in attached_objs)
+		if (length(src.attached_objs))
+			for (var/_M in attached_objs)
+				var/atom/movable/M = _M
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()
@@ -563,26 +564,19 @@
 
 	if (isturf(src.loc))
 		last_turf = src.loc
+		var/turf/T = src.loc
 		if (src.event_handler_flags & USE_CHECKEXIT)
-			var/turf/T = src.loc
-			if (T)
-				T.checkingexit++
+			T.checkingexit++
 		if (src.event_handler_flags & USE_CANPASS || src.density)
-			var/turf/T = src.loc
-			if (T)
-				if (bound_width + bound_height > 64)
-					for(var/turf/BT in bounds(src))
-						BT.checkingcanpass++
-				else
-					T.checkingcanpass++
+			if (bound_width + bound_height > 64)
+				for(var/turf/BT in bounds(src))
+					BT.checkingcanpass++
+			else
+				T.checkingcanpass++
 		if (src.event_handler_flags & USE_HASENTERED)
-			var/turf/T = src.loc
-			if (T)
-				T.checkinghasentered++
+			T.checkinghasentered++
 		if (src.event_handler_flags & USE_PROXIMITY)
-			var/turf/T = src.loc
-			if (T)
-				T.checkinghasproximity++
+			T.checkinghasproximity++
 	else
 		last_turf = 0
 
