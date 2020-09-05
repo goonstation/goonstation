@@ -2433,19 +2433,21 @@
 			M.set_mutantrace(morph)
 
 /datum/job/daily/saturday
-	name = "Vice Officer"
+	name = "Part-time Vice Officer"
 	linkcolor = "#FF0000"
 	limit = 2
 	wages = 200
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
+	receives_badge = 1
 	recieves_miranda = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
 	slot_jump = /obj/item/clothing/under/misc/vice
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_ears =  /obj/item/device/radio/headset/security
-	items_in_backpack = list(/obj/item/storage/box/security_starter_kit) // Don't make them spawn with a full backpack again, please.
+	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
+	slot_poc2 = /obj/item/requisition_token/security
 
 	New()
 		..()
