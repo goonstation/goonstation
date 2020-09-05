@@ -252,7 +252,7 @@
 			var/turf/B = M.DR()
 			var/turf/C = M.UL()
 			var/turf/D = M.UR()
-			var/turf/O = get_turf(magnet)
+			var/turf/O = get_turf(target)
 			var/dist = min(min(get_dist(A, O), get_dist(B, O)), min(get_dist(C, O), get_dist(D, O)))
 			if (dist > 10)
 				boutput(user, "<span class='alert'>Designation failed: designated tile is outside magnet range.</span>")
