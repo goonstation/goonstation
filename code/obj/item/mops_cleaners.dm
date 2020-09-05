@@ -515,7 +515,7 @@ WET FLOOR SIGN
 				if (!F && T && T.active_liquid)
 					F = T.active_liquid
 
-				if (!(T && T.reagents) && !F) return
+				if (!(T && T.reagents) && !istype(F)) return
 
 				if (F)
 					if (F.group)
