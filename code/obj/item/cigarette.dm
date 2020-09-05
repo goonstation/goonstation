@@ -484,6 +484,7 @@
 	New()
 		..()
 		src.reagents.maximum_volume = 600
+		src.reagents.clear_reagents()
 
 	is_open_container()
 		return 1
