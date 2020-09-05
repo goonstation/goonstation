@@ -5,6 +5,8 @@
 	flags =  FPRINT | CONDUCT | EXTRADELAY
 	module_research_no_diminish = 1
 
+	// this is necessary so that this returns null
+	// else afterattack will not be called when out of range
 	pixelaction(atom/target, params, mob/user, reach)
 		..()
 
