@@ -8,7 +8,7 @@
 	var/splat = 0 // for thrown pies
 	food_effects = list("food_refreshed","food_cold")
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
 			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
@@ -107,7 +107,7 @@
 	heal_amt = 4
 	use_bite_mask = 0
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (contents)
 			var/atom/movable/randomContent
 			if (contents.len >= 1)
@@ -118,13 +118,13 @@
 			if (randomContent != src)
 				randomContent.throw_impact(hit_atom)
 
-			hit_atom.attackby(randomContent, usr)
+			hit_atom.attackby(randomContent, thr.user)
 
 			if (ismob(hit_atom))
 				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 				var/mob/M = hit_atom
-				if (M == usr)
-					src.visible_message("<span class='alert'>[usr] fumbles and smacks the [src] into their own face!</span>")
+				if (M == thr.user)
+					src.visible_message("<span class='alert'>[thr.user] fumbles and smacks the [src] into their own face!</span>")
 				else
 					src.visible_message("<span class='alert'>[src] smacks into [M]!</span>")
 

@@ -1262,7 +1262,7 @@
 			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
 		return
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		src.smash(A)
 
@@ -1625,7 +1625,7 @@
 			G.set_loc(src.loc)
 		qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)

@@ -967,7 +967,7 @@ proc/Create_Tommyname()
 	..()
 	set_readiness(0)
 
-/obj/item/garrote/throw_impact(atom/hit_atom)
+/obj/item/garrote/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	set_readiness(0)
 

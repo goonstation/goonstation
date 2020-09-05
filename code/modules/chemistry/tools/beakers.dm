@@ -211,7 +211,7 @@
 		else
 			src.UpdateOverlays(null, "fluid")
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)

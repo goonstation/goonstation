@@ -442,7 +442,7 @@ WET FLOOR SIGN
 		user.put_in_hand_or_drop(I)
 		qdel(src)
 
-/obj/item/sponge/throw_impact(atom/hit)
+/obj/item/sponge/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(hit && ishuman(hit))
 		if(prob(hit_face_prob))
 			var/mob/living/carbon/human/DUDE = hit

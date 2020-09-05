@@ -69,7 +69,7 @@
 
 		playsound(get_turf(src), 'sound/items/sticker.ogg', 50, 1)
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if (prob(50))
 			A.visible_message("<span class='alert'>[src] lands on [A] sticky side down!</span>")

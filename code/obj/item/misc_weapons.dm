@@ -474,7 +474,7 @@
 		..()
 		BLOCK_KNIFE
 
-/obj/item/dagger/throw_impact(atom/A)
+/obj/item/dagger/throw_impact(atom/A, datum/thrown_thing/thr)
 	if(iscarbon(A))
 		if (ismob(usr))
 			A:lastattacker = usr
@@ -530,7 +530,7 @@
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
 
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			C.do_disorient(stamina_damage = 60, weakened = 0, stunned = 0, disorient = 40, remove_stamina_below_zero = 1)
@@ -546,7 +546,7 @@
 	name = "portable knife"
 	icon_state = "teleport_knife"
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		usr.set_loc(get_turf(src))
 		usr.put_in_hand(src)
@@ -688,7 +688,7 @@
 	..()
 	BLOCK_KNIFE
 
-/obj/item/knife/butcher/throw_impact(atom/A)
+/obj/item/knife/butcher/throw_impact(atom/A, datum/thrown_thing/thr)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		if (ismob(usr))

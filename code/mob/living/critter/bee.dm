@@ -138,7 +138,7 @@
 					fellow_bee.aggressive = 0
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		if (!isdead(src))
 			animate_bumble(src) // please keep bumbling tia

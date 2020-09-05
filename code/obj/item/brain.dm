@@ -35,7 +35,7 @@
 		else
 			. += "<span class='alert'>This brain has gone cold.</span>"
 
-/obj/item/brain/throw_impact(var/atom/A)
+/obj/item/brain/throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 	if (T)

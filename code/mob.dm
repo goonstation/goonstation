@@ -2221,7 +2221,7 @@
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
 
-/mob/throw_impact(atom/hit, list/params)
+/mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(!isturf(hit) || hit.density)
 		if (throw_traveled <= 410)
 			if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))

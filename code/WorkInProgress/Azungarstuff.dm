@@ -1117,7 +1117,7 @@
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "lawbook"
 		if(hit_atom == usr)
 			if(prob(prob_clonk))

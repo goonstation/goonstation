@@ -612,7 +612,7 @@
 				src.item_state = src.item_off_open
 		return
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(isliving(A))
 			if (src.state == OPEN_AND_ON && src.can_stun())
 				src.do_stun(usr, A, "stun")

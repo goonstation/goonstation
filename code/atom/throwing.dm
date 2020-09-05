@@ -8,7 +8,7 @@
 /atom/movable/var/tmp/last_throw_y = 0
 
 // returns true if hit
-/atom/movable/proc/hit_check()
+/atom/movable/proc/hit_check(datum/thrown_thing/thr)
 	if(src.throwing)
 		for(var/thing in get_turf(src))
 			var/atom/A = thing
@@ -19,13 +19,13 @@
 				var/mob/living/L = A
 				if (!L.throws_can_hit_me) continue
 				if (L.lying) continue
-				src.throw_impact(A)
+				src.throw_impact(A, thr)
 				. = TRUE
 			// **TODO: Better behaviour for windows
 			// which are dense, but shouldn't always stop movement
 			if(isobj(A))
 				if(!A.CanPass(src, src.loc, 1.5))
-					src.throw_impact(A)
+					src.throw_impact(A, thr)
 					. = TRUE
 
 /atom/movable/proc/throw_begin(atom/target)
@@ -39,7 +39,7 @@
 		src.pixel_x = text2num(params["icon-x"]) - 16
 		src.pixel_y = text2num(params["icon-y"]) - 16
 
-/atom/movable/proc/throw_impact(atom/hit_atom, list/params)
+/atom/movable/proc/throw_impact(atom/hit_atom, datum/thrown_thing/thr=null)
 	var/area/AR = get_area(hit_atom)
 	if(AR?.sanctuary)
 		return
