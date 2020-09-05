@@ -151,7 +151,6 @@ THROWING DARTS
 	impcolor = "b"
 	//life_tick_energy = 0.1
 	var/healthstring = ""
-	var/healthlist = list()
 	var/message = null
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 	var/net_id = null
@@ -176,6 +175,7 @@ THROWING DARTS
 			JOB_XP(I, "Medical Doctor", 5)
 
 	proc/getHealthList()
+		var/healthlist = list()
 		if (!src.implanted)
 			src.healthlist["OXY"] = 0
 			src.healthlist["TOX"] = 0
