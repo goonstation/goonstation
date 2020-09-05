@@ -109,11 +109,6 @@
 
 	throw_impact(atom/hit_atom)
 		if (contents)
-			//This is a mildly lazy way of handling edge cases where the thrown pie has no thrower (propelled through other means, like gravitons)
-			//It's a gigantic bitch/impossible without a refactor to fix all the edge cases with that, so I'm just having the pie hit the target, instead of any contents
-			if (!usr)
-				src.throw_impact(hit_atom)
-
 			var/atom/movable/randomContent
 			if (contents.len >= 1)
 				randomContent = pick(contents)
