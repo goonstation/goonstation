@@ -41,6 +41,8 @@
 		recharge_phrase = pick("crackles with static.","emits a quiet tone.","bristles with energy!","heats up.")
 		error_phrase = pick("shudders briefly.","grows heavy for a moment.","emits a quiet buzz.","makes a small pop sound.")
 		attack_type = pick("lightning","fire","ice","sonic")
+		if(prob(10))
+			attack_type = "all"
 		cooldown = rand(25,900)
 		if (prob(5))
 			cooldown = 0
@@ -71,7 +73,11 @@
 				boutput(user, "<b>[O]</b> [recharge_phrase]")
 			ready = 1
 
-		switch(attack_type)
+		var/curAttack = attack_type
+		if(attack_type == "all")
+			curAttack = pick("lightning","fire","ice","sonic")
+
+		switch(curAttack)
 			if("fire")
 				playsound(T, "sound/effects/bamf.ogg", 50, 1, 0)
 				tfireflash(T, powerVars["fireRadius"], powerVars["fireTemp"])
