@@ -686,12 +686,12 @@
 			var/selected_record = find_record(ckey)
 			if ((isnull(src.diskette)) || (src.diskette.read_only) || (isnull(selected_record)))
 				src.temp = "Save error."
-				return
+				. = TRUE
 
 			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
 				if (R.fields["ckey"] == selected_record["fields"]["ckey"])
 					src.temp = "Record already exists on disk."
-					return
+					. = TRUE
 
 			var/datum/computer/file/clone/cloneFile = new
 			cloneFile.name = "CloneRecord-[ckey(selected_record["fields"]["name"])]"
@@ -709,7 +709,7 @@
 			if (src.diskette.read_only)
 				// The file needs to be deleted from the disk after loading the record
 				src.temp = "Load error - cannot transfer clone records from a disk in read only mode."
-				return
+				. = TRUE
 
 			var/loaded = 0
 
@@ -730,11 +730,14 @@
 			if (!isnull(src.scanner))
 				if ((!src.scanner.locked) && (src.scanner.occupant))
 					src.scanner.locked = 1
+					. = TRUE
 				else
 					src.scanner.locked = 0
+					. = TRUE
 		if("mindWipeToggle")
 			if(!pod1.operating && src.allow_mind_erasure)
 				pod1.mindwipe = !pod1.mindwipe
+				. = TRUE
 			else
 				src.temp = "Cannot toggle any modules while cloner is active."
 			. = TRUE

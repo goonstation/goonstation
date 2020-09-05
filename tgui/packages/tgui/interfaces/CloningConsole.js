@@ -46,11 +46,11 @@ export const CloningConsole = (props, context) => {
     balance,
   } = data;
 
+  const [tab, setTab] = useSharedState(context, "tab", "checkRecords");
+
   const clearTarget = function () {
     deletionTarget = "";
   };
-
-  const [tab, setTab] = useSharedState(context, "tab", "checkRecords");
 
   return (
     <Window
