@@ -754,7 +754,7 @@
 		data["meatLevels"] = pod1.meat_level
 		data["cloneSlave"] = pod1.cloneslave
 		data["geneticAnalysis"] = pod1.gen_analysis
-		data["completion"] = (!isnull(pod1.occupant) ? (100 * ((pod1.occupant.health + 100) / (pod1.heal_level + 100))) : 0)
+		data["completion"] = (!isnull(pod1.occupant) ? clamp(100 - ((pod1.occupant.max_health - pod1.occupant.health) - pod1.heal_level), 0, 100) : 0)
 	if(!isnull(src.scanner))
 		data["scannerOccupied"] = src.scanner.occupant
 		data["scannerLocked"] = src.scanner.locked
