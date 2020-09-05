@@ -66,9 +66,7 @@
 				if ("fire")
 					random_burn_damage(target, dmg_amount)
 				if ("toxin")
-					if (ishuman(target))
-						var/mob/living/carbon/human/H = target
-						H.toxloss += rand(1, dmg_amount)
+					target.take_toxin_damage(rand(1, dmg_amount))
 			if (src.stun_time)
 				target.changeStatus("stunned", src.stun_time * 15)
 			if (src.KO_time)
