@@ -167,7 +167,7 @@ client/proc/open_dj_panel()
  * Toggles the DJ Mode for a given client
  *
  * * required C - Client to toggle the DJ Mode of
- * & required actor - The client actor toggled the DJ Mode
+ * * required actor - The client actor toggled the DJ Mode
  */
 /datum/dj_panel/proc/toggledj(client/C, client/actor)
 	C.non_admin_dj = !C.non_admin_dj
