@@ -3262,6 +3262,8 @@
 			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
 			logTheThing("combat", src, thr.user, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr.user ? thr.user : "a non-mob"]).")
 			random_brute_damage(src, AM.throwforce,1)
+			if(thr?.user)
+				src.was_harmed(thr.user, AM)
 
 			#ifdef DATALOGGER
 			game_stats.Increment("violence")
@@ -3287,6 +3289,8 @@
 			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
 			random_brute_damage(src, AM.throwforce,1)
 			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr.user ? constructName(thr.user) : "a non-mob"]).")
+			if(thr?.user)
+				src.was_harmed(thr.user, AM)
 
 		#ifdef DATALOGGER
 		game_stats.Increment("violence")
