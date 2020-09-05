@@ -18,15 +18,15 @@
 	mats = 15
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant
-	var/heal_level = 90 //The clone is released once its health reaches this level.
+	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
 	var/locked = 0
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
-	var/attempting = 0 //One clone attempt at a time thanks
+	var/attempting = 0 // Are we cloning an actual person now?
+	var/operating = 0 // Are we creating a new body?
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/previous_heal = 0
 	var/portable = 0 //Are we part of a port-a-clone?
-	var/operating = 0 //Are we currently cloning some duder?
 	var/id = null
 
 	var/cloneslave = 0 //Is a traitor enslaving the clones?
@@ -39,6 +39,7 @@
 	var/gen_analysis = 0 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
 	var/gen_bonus = 1 //Normal generation speed
 	var/speed_bonus = DEFAULT_SPEED_BONUS // Multiplier that can be modified by modules
+	var/auto_mode = 1
 
 	power_usage = 200
 
@@ -53,6 +54,9 @@
 	var/datum/light/light
 
 	var/meat_level = MAXIMUM_MEAT_LEVEL / 4
+
+	var/static/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.75,"pepperoni"=0.5,"meat_slurry"=1,"bloodc"=0.5)
+
 
 	New()
 		..()
@@ -112,27 +116,21 @@
 			pda_connection.post_signal(src, newsignal)
 
 
-	attack_ai(mob/user as mob)
-		return attack_hand(user)
-
-	attack_hand(mob/user as mob)
-		interact_particle(user,src)
-
-		if (status & NOPOWER)
-			return
-
+	get_desc(dist, mob/user)
+		. = ""
 		if ((!isnull(src.occupant)) && (!isdead(src.occupant)))
-			var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
-			boutput(user, "Current clone cycle is [round(completion)]% complete.")
+			var/completion = clamp(100 - ((src.occupant.max_health - src.occupant.health) - heal_level), 0, 100)
+			//var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
+			. += "<br>Currently [!src.attempting ? "preparing a new body" : "cloning [src.occupant]"]. [round(completion)]% complete."
 
-		boutput(user, "Biomatter reserves are [round( 100 * (src.meat_level / MAXIMUM_MEAT_LEVEL) )]% full.")
+		var/meat_pct = round( 100 * (src.meat_level / MAXIMUM_MEAT_LEVEL) )
 
-		if (src.meat_level <= 0)
-			boutput(user, "<span class='alert'>Alert: Biomatter reserves depleted.</span>")
+		if (src.meat_level <= 1)
+			. += "<br><span class='alert'>Alert: Biomatter reserves depleted.</span>"
 		else if (src.meat_level <= MEAT_LOW_LEVEL)
-			boutput(user, "<span class='alert'>Alert: Biomatter reserves low.</span>")
-
-		return
+			. += "<br><span class='alert'>Alert: Biomatter reserves are low ([meat_pct]% full).</span>"
+		else
+			. += "<br>Biomatter reserves are [meat_pct]% full."
 
 	is_open_container()
 		return 2
@@ -145,28 +143,64 @@
 		else
 			src.icon_state = "pod_[src.occupant ? "1" : "0"][src.meat_level ? "" : "_lowmeat"][src.cloneslave ? "_mindslave" : "" ][src.mindwipe ? "_mindwipe" : ""]"
 
-	//Start growing a human clone in the pod!
-	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/list/traits)
-		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
+
+	proc/start_clone(force = 0)
+		// Returns 1 if we started a clone or 0 if we couldn't due to meat reasons
+
+		if (src.occupant)
+			// If we already have an occupant then we don't really need to start it, do we?
+			return 1
+		if ((force && src.meat_level < MEAT_NEEDED_TO_CLONE) || (!force && src.meat_level < initial(meat_level)))
+			// Don't actually start cloning if we don't have enough meat.
+			// For forced clones, this is the minimum needed to start (as usual)
+			// For auto-generated clones, it's the initial meat level (25%)
+			// Reason? Mostly just keeping it from beeping about low biomatter...
 			return 0
 
-		if (src.meat_level < MEAT_NEEDED_TO_CLONE)
-			src.connected_message("Insufficient biomatter to begin.")
+		// Create a new human and grow it while we wait for a mind
+		src.occupant = new /mob/living/carbon/human/clone(src)
+		src.update_icon()
+
+		//Get the clone body ready. They start out with a bunch of damage right off.
+		SPAWN_DBG(0.5 SECONDS) //Organs may not exist yet if we call this right away.
+			random_brute_damage(src.occupant, 90, 1)
+		src.occupant.take_toxin_damage(50)
+		src.occupant.take_oxygen_deprivation(40)
+		src.occupant.take_brain_damage(60)
+		src.occupant.changeStatus("paralysis", 10 SECONDS)
+
+		//Here let's calculate their health so the pod doesn't immediately eject them!!!
+		src.occupant.health = (src.occupant.get_brute_damage() + src.occupant.get_toxin_damage() + src.occupant.get_oxygen_deprivation())
+
+		src.operating = 1
+		src.locked = 1
+		src.gen_bonus = src.healing_multiplier()
+
+		return 1
+
+
+	// Start cloning someone (transferring mind + DNA into new body),
+	// starting a new clone cycle if needed
+	// Returns 1 (stated) or 0 (failed to start for some reason)
+	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/list/traits)
+		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
 		if (ghost.mind.dnr)
 			src.connected_message("Ephemereal conscience detected, seance protocols reveal this corpse cannot be cloned.")
 			return 0
 
+		//if (src.meat_level < MEAT_NEEDED_TO_CLONE)
+		if (!src.start_clone(1))
+			src.connected_message("Insufficient biomatter to begin.")
+			return 0
+
 		src.attempting = 1 //One at a time!!
-		src.locked = 1
 		src.failed_tick_counter = 0 // make sure we start here
 
 		src.eject_wait = 1
 		SPAWN_DBG(3 SECONDS)
 			src.eject_wait = 0
-
-		src.occupant = new /mob/living/carbon/human(src)
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
@@ -181,34 +215,26 @@
 			src.occupant.abilityHolder.transferOwnership(src.occupant) //mbc : fixed clone removing abilities bug!
 			src.occupant.abilityHolder.remove_unlocks()
 
+		ghost.client.mob = src.occupant
 
+		if(src.occupant.bioHolder.clone_generation > 1)
+			src.occupant.setStatus("maxhealth-", null, -((src.occupant.bioHolder.clone_generation - 1) * 15))
 
+		// @TODO Puritan needs some sort of new penalty rather than this...
+		// Lop off random limbs + give the bad clone mutation + fuck up health?
+		src.mess = 0
 		if (traits && traits.len && src.occupant.traitHolder)
 			src.occupant.traitHolder.traits = traits
 			if (src.occupant.traitHolder.hasTrait("puritan"))
 				src.mess = 1
 
-		ghost.client.mob = src.occupant
-
-		src.update_icon()
-		//Get the clone body ready
-		SPAWN_DBG(0.5 SECONDS) //Organs may not exist yet if we call this right away.
-			random_brute_damage(src.occupant, 90, 1)
-		src.occupant.take_toxin_damage(50)
-		src.occupant.take_oxygen_deprivation(40)
-		src.occupant.take_brain_damage(90)
-		src.occupant.changeStatus("paralysis", 60)
-		if(src.occupant.bioHolder.clone_generation > 1)
-			src.occupant.setStatus("maxhealth-", null, -((src.occupant.bioHolder.clone_generation - 1) * 15))
-			//src.occupant.max_health -= (src.occupant.bioHolder.clone_generation - 1) * 15 //Genetic degradation! Oh no!!
-		//Here let's calculate their health so the pod doesn't immediately eject them!!!
-		src.occupant.health = (src.occupant.get_brute_damage() + src.occupant.get_toxin_damage() + src.occupant.get_oxygen_deprivation())
-
-		boutput(src.occupant, "<span class='notice'><b>Clone generation process initiated.</b></span>")
-		boutput(src.occupant, "<span class='notice'>This will take a moment, please hold.</span>")
+		if (src.mess)
+			boutput(src.occupant, "<span class='notice'><b>Clone generation process initi&mdash;</b></span><span class='alert'> oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b></span>")
+		else
+			boutput(src.occupant, "<span class='notice'><b>Clone generation process initiated.</b> This might take a moment, please hold.</span>")
 
 		if (clonename)
-			if (prob(10))
+			if (prob(5))
 				src.occupant.real_name = "[pick("Almost", "Sorta", "Mostly", "Kinda", "Nearly", "Pretty Much", "Roughly", "Not Quite", "Just About", "Something Resembling", "Somewhat")] [clonename]"
 			else
 				src.occupant.real_name = clonename
@@ -238,7 +264,7 @@
 			qdel(ghost) //Don't leave ghosts everywhere!!
 
 		if (src.reagents && src.reagents.total_volume)
-			src.reagents.reaction(src.occupant, 2, 1000)
+			src.reagents.reaction(src.occupant, INGEST, 1000)
 			src.reagents.trans_to(src.occupant, 1000)
 
 			// Oh boy someone is cloning themselves up an army!
@@ -271,92 +297,122 @@
 
 
 		previous_heal = src.occupant.health
-		src.attempting = 0
-		src.operating = 1
-		// effectively "(1 + (!gen_analysis * 0.15)) * speed_bonus" (cash-4-clones is never on)
-		src.gen_bonus = src.healing_multiplier()
 		return 1
 
-	//Grow clones to maturity then kick them out.  FREELOADERS
-	process()
-		if (src.occupant && src.meat_level)
+
+	// Grow clones to maturity then kick them out when they're done.  FREELOADERS
+	process(mult)
+		/*
+		if (src.occupant && src.attempting && src.meat_level)
 			power_usage = 7500
 		else
 			power_usage = 200
 		..()
-		if (status & NOPOWER) //Autoeject if power is lost
-			if (src.occupant)
-				src.locked = 0
-				src.go_out()
-			return
+		*/
 
-		var/abort = 0
-		if ((src.occupant) && (src.occupant.loc == src) && src.occupant.traitHolder && src.occupant.traitHolder.hasTrait("puritan"))
-			abort = 1
-			src.occupant.take_toxin_damage(300)
-			src.occupant.death()
+		if (status & NOPOWER)
+			if (src.occupant && (src.attempting || isdead(src.occupant)))
+				// Autoeject if power is lost and we're cloning an actual person,
+				// or the clone is dead (e.g. if a clone starts and power dies immediately)
+				src.go_out(1)
+				power_usage = 200
+			return ..()
 
-		if(src.occupant && src.cloneslave == 1 && prob(10))
-			playsound(src.loc, pick("sound/machines/glitch1.ogg","sound/machines/glitch2.ogg",
-			"sound/machines/genetics.ogg","sound/machines/shieldoverload.ogg"), 50, 1)
+		if (src.occupant && src.occupant.loc == src)
+			// If we have a body inside the pod right now...
 
-		if ((src.occupant) && (src.occupant.loc == src))
-			if ((isdead(src.occupant)) || (src.occupant.suiciding) || abort)  //Autoeject corpses and suiciding dudes.
-				src.locked = 0
-				src.go_out()
+			var/abort = 0
+			if (src.occupant.traitHolder && src.occupant.traitHolder.hasTrait("puritan"))
+				// Puritans have a bad time.
+				// This is a little different from how it was before:
+				// - Immediately take 150 tox and 150 random brute
+				// - 50% chance, per limb, to lose that limb
+				// - enforced premature_clone, which gibs you on death
+				// If you have a clone body that's been allowed to fully heal before
+				// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
+				// out of deep critical health before they turn into chunky salsa
+				// This should be really rare to have happen, but I want to leave it in
+				// just in case someone manages to pull off a miracle save
+				abort = 1
+				src.occupant.bioHolder?.AddEffect("premature_clone")
+				src.occupant.take_toxin_damage(150)
+				random_brute_damage(src.occupant, 150, 0)
+				if (ishuman(src.occupant))
+					var/mob/living/carbon/human/P = src.occupant
+					if (P.limbs)
+						var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
+						for (var/limb in limbs)
+							if (prob(50))
+								P.limbs.sever(limb)
+				// src.occupant.death()
+
+			if (src.cloneslave == 1 && prob(10))
+				// Mindslave cloning modules make obnoxious noises.
+				playsound(src.loc, pick("sound/machines/glitch1.ogg","sound/machines/glitch2.ogg",
+				"sound/machines/genetics.ogg","sound/machines/shieldoverload.ogg"), 50, 1)
+
+			if (isdead(src.occupant) || src.occupant.suiciding || abort)  //Autoeject corpses and suiciding dudes.
+				// Dead or suiciding people are ejected.
+				src.go_out(1)
 				src.connected_message("Clone Rejected: Deceased.")
 				src.send_pda_message("Clone Rejected: Deceased")
-				return
+				power_usage = 200
+				return ..()
 
 			else if (src.failed_tick_counter >= MAX_FAILED_CLONE_TICKS) // you been in there too long, get out
-				src.locked = 0
-				src.go_out()
+				// If we've failed to progress the clone for a while, they get ejected too.
+				src.go_out(1)
 				src.connected_message("Clone Ejected: Low Biomatter.")
 				src.send_pda_message("Clone Ejected: Low Biomatter")
-				return
+				power_usage = 200
+				return ..()
 
 			else if (!src.meat_level)
-				src.failed_tick_counter ++
-				if (src.failed_tick_counter == (MAX_FAILED_CLONE_TICKS / 2)) // halfway to ejection
-					src.send_pda_message("Low Biomatter: Preparing to Eject Clone")
+				// If we lack more meat to continue cloning, then...
+				if (src.attempting)
+					// ... if someone's in this body, start the timer.
+					// If it's a pre-clone body, it can just stay in here
+					src.failed_tick_counter++
+					if (src.failed_tick_counter == (MAX_FAILED_CLONE_TICKS / 2)) // halfway to ejection
+						src.send_pda_message("Low Biomatter: Preparing to Eject Clone")
 				src.update_icon()
-				use_power(200)
-				return
+				power_usage = 200
+				return ..()
 
-			else if (src.occupant.health < src.heal_level)
+			else if ((src.occupant.max_health - src.occupant.health) > src.heal_level)
+				// Otherwise, heal thyself, clone.
+				src.occupant.changeStatus("paralysis", 10 SECONDS)
 
-				src.occupant.changeStatus("paralysis", 60)
-
-				//Slowly get that clone healed and finished.
-				src.occupant.HealDamage("All", 1 * gen_bonus, 1 * gen_bonus)
-
+				// Slowly get that clone healed and finished.
 				//At this rate one clone takes about 95 seconds to produce.(with heal_level 90)
+				src.occupant.HealDamage("All", 1 * gen_bonus * mult, 1 * gen_bonus * mult)
+
 				// Zamujasa: changed -0.5 to -1; consistently the slowest type to heal
-				src.occupant.take_toxin_damage(-1 * gen_bonus)
+				src.occupant.take_toxin_damage(-1 * gen_bonus * mult)
 
 				//Premature clones may have brain damage.
-				src.occupant.take_brain_damage(-2 * gen_bonus)
+				src.occupant.take_brain_damage(-2 * gen_bonus * mult)
 
 				//So clones don't die of oxy damage in a running pod.
-				if (src.occupant.reagents.get_reagent_amount("perfluorodecalin") < 6) // cogwerks: changed from epinephrine
-					src.occupant.reagents.add_reagent("perfluorodecalin", 2)
+				if (src.occupant.reagents.get_reagent_amount("perfluorodecalin") < 6)
+					src.occupant.reagents.add_reagent("perfluorodecalin", 2 * mult)
 
-				if (src.occupant.reagents.get_reagent_amount("epinephrine") < 8) // lowering this but keeping it in a fully value range
-					src.occupant.reagents.add_reagent("epinephrine", 4)
+				if (src.occupant.reagents.get_reagent_amount("epinephrine") < 8)
+					src.occupant.reagents.add_reagent("epinephrine", 4 * mult)
 
-				if (src.occupant.reagents.get_reagent_amount("saline") < 10) // cogwerks: adding this because it'll be funny when someone gets scanned
-					src.occupant.reagents.add_reagent("saline", 4)
+				if (src.occupant.reagents.get_reagent_amount("saline") < 10)
+					src.occupant.reagents.add_reagent("saline", 4 * mult)
 
-				if (src.occupant.reagents.get_reagent_amount("synthflesh") < 50) // cogwerks: adding this because it'll be funny when someone gets scanned
-					src.occupant.reagents.add_reagent("synthflesh", 10)
+				if (src.occupant.reagents.get_reagent_amount("synthflesh") < 50)
+					src.occupant.reagents.add_reagent("synthflesh", 10 * mult)
 
-				if (src.occupant.reagents.get_reagent_amount("mannitol") < 6) // after new internal organs, some clones seem to be dying in-vat from brain damage. stopgap
-					src.occupant.reagents.add_reagent("mannitol", 2)
+				if (src.occupant.reagents.get_reagent_amount("mannitol") < 6)
+					src.occupant.reagents.add_reagent("mannitol", 2 * mult)
 
 				//Also heal some oxy ourselves because epinephrine is so bad at preventing it!!
-				src.occupant.take_oxygen_deprivation(-10) // cogwerks: speeding this up too
+				src.occupant.take_oxygen_deprivation(-10 * mult) // cogwerks: speeding this up too
 
-				src.meat_level = max( 0, src.meat_level - meat_used_per_tick)
+				src.meat_level = max( 0, src.meat_level - meat_used_per_tick * mult )
 				if (!src.meat_level)
 					src.connected_message("Additional biomatter required to continue.")
 					src.send_pda_message("Low Biomatter")
@@ -364,51 +420,73 @@
 					playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
 					src.failed_tick_counter = 1
 
-				use_power(7500) //This might need tweaking.
-
 				var/heal_delta = (src.occupant.health - previous_heal)
-				if(heal_delta <= 0)
+				if (heal_delta <= 0)
 					src.failed_tick_counter++
 				else
 					src.failed_tick_counter = 0
 				previous_heal = src.occupant.health
-				if (heal_delta <= 0 && src.occupant.health > 50 && !eject_wait)
+
+				if ((src.occupant.health + (100 - src.occupant.max_health)) > 50 && src.failed_tick_counter >= 2 && !eject_wait)
+					// Wait a few ticks to see if they stop gaining health.
+					// Once that's the case, boot em
+					//
 					src.connected_message("Cloning Process Complete.")
 					src.send_pda_message("Cloning Process Complete")
-					src.locked = 0
-					src.go_out()
+					src.go_out(1)
 				else // go_out() updates icon too, so vOv
 					src.update_icon()
-				return
 
-			else if ((src.occupant.health >= src.heal_level) && (!src.eject_wait))
-				src.connected_message("Cloning Process Complete.")
-				src.send_pda_message("Cloning Process Complete")
+				power_usage = 7500
+				return ..()
+
+			else if (src.occupant.max_health - src.occupant.health <= src.heal_level)
+				// Clone is more or less fully complete!
+
+				// Unlock the pod.
 				src.locked = 0
-				src.go_out()
-				return
 
+				if (src.attempting && !eject_wait)
+					// If this body has an actual mind in it, they're done.
+					// Sure hope the outside is safe for ya.
+					src.connected_message("Cloning Process Complete.")
+					src.send_pda_message("Cloning Process Complete")
+					src.go_out(1)
+				else
+					// Clones that are idling get some freebies to keep them topped up
+					// until an actual person moves in
+					if (src.occupant.reagents.get_reagent_amount("salbutamol") < 6)
+						src.occupant.reagents.add_reagent("salbutamol", 2)
+					src.occupant.take_oxygen_deprivation(-10)
+					src.occupant.losebreath = 0
+
+				power_usage = 200
+				return ..()
 
 		else
 			src.occupant = null
-			src.operating = 0 //Welp. Where did you go? Jerk.
+			src.operating = 0
+			src.attempting = 0
 			src.failed_tick_counter = 0
-			if (src.locked)
-				src.locked = 0
+			src.locked = 0
 			if (!src.mess)
 				src.update_icon()
-			use_power(200)
-			return
+			power_usage = 200
 
-		return
+			if (!src.operating && src.auto_mode)
+				// Attempt to start a new clone (if possible)
+				src.start_clone()
+
+			return ..()
+
+		return ..()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (isnull(src.occupant))
 			return 0
-		if(user)
+		if (user)
 			boutput(user, "You force an emergency ejection.")
-		src.locked = 0
-		src.go_out()
+		src.go_out(1)
 		return 1
 
 	//Let's unlock this early I guess.
@@ -432,10 +510,10 @@
 		else if (istype(W, /obj/item/reagent_containers/glass))
 			return
 		else if (istype(W, /obj/item/cloneModule/speedyclone)) // speed module
-			if(is_speedy)
+			if (is_speedy)
 				boutput(user,"<span class='alert'>There's already a speed booster in the slot!</span>")
 				return
-			if(operating)
+			if (operating && attempting)
 				boutput(user,"<span class='alert'>The cloning pod emits an angry boop!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
@@ -448,10 +526,10 @@
 			return
 
 		else if (istype(W, /obj/item/cloneModule/efficientclone)) // efficiency module
-			if(is_efficient)
+			if (is_efficient)
 				boutput(user,"<span class='alert'>There's already an efficiency booster in the slot!</span>")
 				return
-			if(operating)
+			if (operating && attempting)
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
@@ -463,7 +541,7 @@
 			return
 
 		else if (istype(W, /obj/item/cloneModule/mindslave_module)) // Time to re enact the clone wars
-			if(operating)
+			if (operating && attempting)
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
 			logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
@@ -480,7 +558,7 @@
 			return
 
 		else if(istype(W, /obj/item/screwdriver) && cloneslave == 1) // Wait nevermind the clone wars were a terrible idea
-			if(src.occupant)
+			if (src.occupant && src.attempting)
 				boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove the mindslave module.</span>")
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindslave cloning module...</span>")
@@ -499,7 +577,6 @@
 		else
 			..()
 
-	var/static/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.75,"pepperoni"=0.5,"meat_slurry"=1,"bloodc"=0.5)
 	on_reagent_change()
 		for(var/reagent_id in src.reagents.reagent_list)
 			if (reagent_id in clonepod_accepted_reagents)
@@ -509,7 +586,7 @@
 					src.reagents.del_reagent(reagent_id)
 
 		if (src.occupant)
-			src.reagents.reaction(src.occupant, 1000) // why was there a 2 here? it was injecting ice cold reagents that burn people
+			src.reagents.reaction(src.occupant, INGEST, 1000)
 			src.reagents.trans_to(src.occupant, 1000)
 
 	//Put messages in the connected computer's temp var for display.
@@ -533,42 +610,63 @@
 		add_fingerprint(usr)
 		return
 
-	proc/go_out()
-		if (src.locked)
+	verb/toggle_auto()
+		set src in oview(1)
+		set name = "Toggle Auto Mode"
+		set category = "Local"
+
+		src.auto_mode = 1 - src.auto_mode
+		boutput(usr, "<span class='notice'>\The [src] will [src.auto_mode ? "automatically" : "no longer"] automatically prepare new bodies for clones.</span>")
+		add_fingerprint(usr)
+		return
+
+	proc/go_out(unlock = 0)
+		if (unlock)
+			src.locked = 0
+		else if (src.locked)
 			return
-		src.operating = 0 //Welp
+
 		src.failed_tick_counter = 0
+		src.eject_wait = 0 //If it's still set somehow.
+		src.operating = 0
+		src.attempting = 0
 
 		if (src.mess) //Clean that mess and dump those gibs!
 			src.mess = 0
 			gibs(get_turf(src)) // we don't need to do if/else things just to say "put gibs on this thing's turf"
-			src.update_icon()
 			for (var/obj/O in src)
 				O.set_loc(get_turf(src))
 				if (prob(33))
 					step_rand(O) // cogwerks - let's spread that mess instead of having a pile! bahaha
+			if (src.occupant)
+				src.occupant.set_loc(get_turf(src))
+				src.occupant = null
+			src.update_icon()
 			return
 
-		if (!(src.occupant))
+		if (!src.occupant)
 			return
 
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 
-		if ((src.occupant.health < heal_level - 50) && src.occupant.bioHolder) // this seems to often not work right, changing 20 to 50
+		if ((src.occupant.max_health - src.occupant.health) > (heal_level + 30) && src.occupant.bioHolder)
+			// this seems to often not work right, changing 20 to 50
+			// changing to 30 and rewriting to consider the /damage/ someone has;
+			// max_health can vary depending on other factors
 			src.occupant.bioHolder.AddEffect("premature_clone")
+
 		if (src.occupant.get_oxygen_deprivation())
 			src.occupant.take_oxygen_deprivation(-INFINITY)
 
 		if (src.occupant.losebreath) // STOP FUCKING SUFFOCATING GOD DAMN
 			src.occupant.losebreath = 0
 
-		if(iscarbon(src.occupant))
+		if (iscarbon(src.occupant))
 			var/mob/living/carbon/C = src.occupant
 			C.remove_ailments() // no more cloning with heart failure
 
 		src.occupant.set_loc(get_turf(src))
-		src.eject_wait = 0 //If it's still set somehow.
 		src.occupant = null
 		src.update_icon()
 		return
@@ -589,10 +687,12 @@
 		return operating && src.meat_level && gen_analysis //Only operate nominally for non-shit cloners
 
 	proc/healing_multiplier()
+		// effectively "(1 + (!gen_analysis * 0.15)) * speed_bonus" (cash-4-clones is never on)
 		if (wagesystem.clones_for_cash)
 			return (2 + (!gen_analysis * 0.15)) * speed_bonus
 		else
-			return (1 + (!gen_analysis * 0.15)) * speed_bonus //If the analysis feature is disabled, then generate the clone slightly faster
+			//If the analysis feature is disabled, then generate the clone slightly faster
+			return (1 + (!gen_analysis * 0.15)) * speed_bonus
 
 
 	relaymove(mob/user as mob)

@@ -1,5 +1,17 @@
 
 (t)fri sep 04 20
+(u)Zamujasa
+(e)🐛🆕🔄|feature, rework, bug
+(*)The cloner now works a little differently: it will begin producing a new body automatically, if possible.
+(*)When you clone someone, they will either be put into that body (if it exists), or the cloner will start producing a body for them (and then put them in it).
+(*)The cloning pod will keep a ready body indefinitely until someone is cloned into it.
+(*)You can toggle this automatic pre-generation via the right-click menu "Toggle Auto Mode".
+(+)The cloner now accounts for server tick delay when processing.
+(+)Puritan-trait-havers will no longer die immediately upon cloning, but...
+(+)The cloner will now consider maximum HP changes when deciding how far along a clone is.
+(+)Reagents added to the cloner should now react properly. Previously they kinda didn't.
+(+)Checking the status of the cloning pod has been moved to Examine rather than requiring you to click on it.
+(+)Probably added a few bugs. Sorry. I tested what I could think of, but y'all are good at breaking things.
 (u)Superlagg
 (p)1904
 (e)🆕|feature
