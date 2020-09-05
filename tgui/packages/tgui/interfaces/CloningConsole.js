@@ -1,11 +1,9 @@
 import { Fragment } from "inferno";
-import { useBackend, useSharedState } from "../backend";
+import { useBackend, useSharedState, useLocalState } from "../backend";
 import { truncate } from "../format.js";
 import { Box, Button, ColorBox, Section, Table, Tabs, ProgressBar, NoticeBox, LabeledList, Tooltip, Flex, Modal, Icon } from "../components";
 import { COLORS } from "../constants";
 import { Window } from "../layouts";
-
-let deletionTarget;
 
 const HEALTH_COLOR_BY_LEVEL = [
   "#17d568",
@@ -15,7 +13,6 @@ const HEALTH_COLOR_BY_LEVEL = [
   "#e74c3c",
   "#ed2814",
 ];
-
 
 
 const healthToColor = (oxy, tox, burn, brute) => {
@@ -45,12 +42,12 @@ export const CloningConsole = (props, context) => {
     clones_for_cash,
     balance,
   } = data;
+  const [
+    deletionTarget,
+    setDeletionTarget,
+  ] = useLocalState(context, 'deletionTarget', '');
 
   const [tab, setTab] = useSharedState(context, "tab", "checkRecords");
-
-  const clearTarget = function () {
-    deletionTarget = "";
-  };
 
   return (
     <Window
@@ -65,6 +62,7 @@ export const CloningConsole = (props, context) => {
         )}
         {(deletionTarget && (
           <Modal
+            mx={7}
             fontSize="31px">
             <Flex align="center">
               <Flex.Item mr={2} mt={1}>
@@ -85,15 +83,21 @@ export const CloningConsole = (props, context) => {
                 color="good"
                 onClick={() => {
                   act("delete", { ckey: deletionTarget });
-                  clearTarget();
+                  setDeletionTarget("");
                 }}>
                 Yes
               </Button>
               <Button
+                width={8}
+                align="center"
+                mt={2}
+                ml={5}
                 lineHeight="40px"
                 icon="times"
                 color="bad"
-                onClick={() => clearTarget()}>
+                onClick={() => {
+                  setDeletionTarget("");
+                }}>
                 No
               </Button>
             </Box>
@@ -162,6 +166,8 @@ const Functions = (props, context) => {
         </Box>
         <Box pt={2}>
           <Button
+            textAlign="center"
+            width={6.7}
             icon={geneticAnalysis ? "toggle-on" : "toggle-off"}
             color={geneticAnalysis ? "good" : "bad"}
             onClick={() => act("toggleGeneticAnalysis")}>
@@ -184,6 +190,8 @@ const Functions = (props, context) => {
           </Box>
           <Box pt={2}>
             <Button
+              textAlign="center"
+              width={6.7}
               icon={mindWipe ? "toggle-on" : "toggle-off"}
               color={mindWipe ? "good" : "bad"}
               onClick={() => act("mindWipeToggle")}>
@@ -293,6 +301,10 @@ const Records = (props, context) => {
     podGone,
     diskReadOnly,
   } = data;
+  const [
+    deletionTarget,
+    setDeletionTarget,
+  ] = useLocalState(context, 'deletionTarget', '');
 
   return (
     <Section title="Records">
@@ -354,7 +366,9 @@ const Records = (props, context) => {
                 icon="trash"
                 mt={1.2}
                 color={"bad"}
-                onClick={() => (deletionTarget = record.ckey)}>
+                onClick={() =>
+                { setDeletionTarget(record.ckey);
+                }}>
                 Delete
               </Button>
               {(!!disk && (
