@@ -725,7 +725,7 @@
 
 			if(!loaded)
 				src.temp = "Load error."
-				return TRUE
+				. = TRUE
 		if("toggleLock")
 			if (!isnull(src.scanner))
 				if ((!src.scanner.locked) && (src.scanner.occupant))
