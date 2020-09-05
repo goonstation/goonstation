@@ -911,7 +911,7 @@
 			if(!src.holder || !src.holder.root)
 				return 0
 
-			for(var/datum/computer/C in src.holder.root)
+			for(var/datum/computer/C in src.holder.root.contents)
 				if(C == src || C == src.holding_folder)
 					continue
 
