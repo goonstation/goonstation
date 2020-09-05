@@ -95,6 +95,7 @@
 	var/tmp/temp_flags = 0
 	var/tmp/last_bumped = 0
 	var/shrunk = 0
+	var/list/cooldowns
 
 	/// Override for the texture size used by setTexture.
 	var/texture_size = 0

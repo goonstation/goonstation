@@ -216,7 +216,6 @@
 //end of needed for timestop
 	var/dir_locked = FALSE
 
-	var/list/cooldowns = null
 	var/list/mob_properties
 
 	var/last_move_dir = null
