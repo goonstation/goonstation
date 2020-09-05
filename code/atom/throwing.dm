@@ -75,7 +75,6 @@
 			var/mob/M = src
 			M.force_laydown_standup()
 
-	src.throw_traveled = 0
 	src.last_throw_x = src.x
 	src.last_throw_y = src.y
 	src.throw_begin(target)

@@ -134,7 +134,6 @@ var/global/datum/controller/throwing/throwing_controller = new
 
 			thing.throw_impact(get_turf(thing), thr)
 
-			thing.throw_traveled = 0
 			thing.throw_count = 0
 
 			thing.throwforce -= thr.bonus_throwforce
