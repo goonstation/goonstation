@@ -1,4 +1,8 @@
 
+(t)sat sep 05 20
+(u)Sovexe
+(e)🆕|feature
+(*)Added a new secret chem, Bombini.
 (t)fri sep 04 20
 (u)pali
 (*)Securitrons are now less lazy when chasing people and don't stop for 1-2 second breaks to catch their breath
