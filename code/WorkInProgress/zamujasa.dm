@@ -463,6 +463,9 @@
 			active = 0
 			alpha = 255
 
+	ex_act(severity)
+		return
+
 
 /proc/fancy_pressure_bar(var/pressure, var/max_pressure, var/width = 300)
 
