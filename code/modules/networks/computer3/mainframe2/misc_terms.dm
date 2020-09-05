@@ -3913,7 +3913,7 @@
 
 		return
 
-	hitby(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (src.density)
 			for (var/obj/item/I in src.loc.contents)
 				I.hitby(M)

@@ -31,7 +31,7 @@
 /atom/movable/proc/throw_begin(atom/target)
 
 // when an atom gets hit by a thrown object, returns the sound to play
-/atom/proc/hitby(atom/movable/AM)
+/atom/proc/hitby(atom/movable/AM, datum/thrown_thing/thr=null)
 	SHOULD_CALL_PARENT(TRUE)
 
 /atom/movable/proc/throw_end(list/params, turf/thrown_from) //throw ends (callback regardless of whether we impacted something)
@@ -52,7 +52,7 @@
 		return
 
 	reagents?.physical_shock(20)
-	var/impact_sfx = hit_atom.hitby(src)
+	var/impact_sfx = hit_atom.hitby(src, thr)
 	if(src && impact_sfx)
 		playsound(src, impact_sfx, 40, 1)
 

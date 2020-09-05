@@ -174,7 +174,7 @@
 		update()
 		return
 
-	hitby(MO as mob|obj)
+	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
 		// Leaves people wondering where the stuff is, assuming they received a PDA alert at all.
 		if (istype(src, /obj/machinery/disposal/mail))
@@ -643,7 +643,7 @@
 		update()
 		return
 
-	hitby(MO as mob|obj)
+	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		if(istype(MO,/mob/living))
 			return ..()
 		return

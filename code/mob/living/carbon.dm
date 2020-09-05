@@ -232,7 +232,7 @@
 /mob/living/carbon/get_oxygen_deprivation()
 	return src.oxyloss
 
-/mob/living/carbon/hitby(atom/movable/AM)
+/mob/living/carbon/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	if(src.find_type_in_hand(/obj/item/bat))
 		var/turf/T = get_turf(src)
 		var/turf/U = get_step(src, src.dir)

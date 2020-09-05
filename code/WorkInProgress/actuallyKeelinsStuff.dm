@@ -3451,7 +3451,7 @@ var/list/lag_list = new/list()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		break_it()
 
-	hitby(atom/movable/AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = ..()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		break_it()

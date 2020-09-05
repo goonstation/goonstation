@@ -693,7 +693,7 @@ var/global/list/module_editors = list()
 /mob/living/silicon/electric_expose(var/power = 1)
 	return 0
 
-/mob/living/silicon/hitby(atom/movable/AM)
+/mob/living/silicon/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 
 	src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
