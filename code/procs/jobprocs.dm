@@ -488,8 +488,7 @@
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
 		src.force_equip(SHS, slot_in_backpack)
 		#endif
-		var/obj/item/clothing/mask/breath/MSK = new /obj/item/clothing/mask/breath(src.loc)
-		src.force_equip(MSK, slot_in_backpack)
+		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, slot_in_backpack)
 
@@ -501,9 +500,6 @@
 			src.equip_new_if_possible(JOB.slot_belt, slot_in_backpack)
 		else
 			src.equip_new_if_possible(JOB.slot_belt, slot_belt)
-			if (src.traitHolder && istype(src.belt, /obj/item/device/pda2))
-				if (src.traitHolder.hasTrait("immigrant") || src.traitHolder.hasTrait("pilot"))
-					del(src.belt)
 		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
 			for (var/X in JOB.items_in_belt)
 				if(ispath(X))
@@ -538,6 +534,11 @@
 		src.equip_new_if_possible(JOB.slot_rhan, slot_r_hand)
 	if (JOB.slot_lhan)
 		src.equip_new_if_possible(JOB.slot_lhan, slot_l_hand)
+
+	if (src.traitHolder?.hasTrait("immigrant") || src.traitHolder?.hasTrait("pilot"))
+		var/obj/item/device/pda2/pda = locate() in src
+		src.u_equip(pda)
+		qdel(pda)
 
 	var/T = pick(trinket_safelist)
 	var/obj/item/trinket = null
