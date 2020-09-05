@@ -1,5 +1,9 @@
 
 (t)sat sep 05 20
+(u)zjdtmkhzt
+(p)2077
+(e)|
+(+)Fixed a bug where magical artifact wands would not work past melee range.
 (u)Sovexe
 (e)🆕|feature
 (*)Added a new secret chem, Bombini.
