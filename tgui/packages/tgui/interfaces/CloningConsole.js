@@ -1,9 +1,11 @@
 import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../backend";
 import { truncate } from "../format.js";
-import { Box, Button, ColorBox, Section, Table, Tabs, ProgressBar, NoticeBox, LabeledList, Tooltip } from "../components";
+import { Box, Button, ColorBox, Section, Table, Tabs, ProgressBar, NoticeBox, LabeledList, Tooltip, Flex, Modal, Icon } from "../components";
 import { COLORS } from "../constants";
 import { Window } from "../layouts";
+
+let deletionTarget;
 
 const HEALTH_COLOR_BY_LEVEL = [
   "#17d568",
@@ -13,6 +15,8 @@ const HEALTH_COLOR_BY_LEVEL = [
   "#e74c3c",
   "#ed2814",
 ];
+
+
 
 const healthToColor = (oxy, tox, burn, brute) => {
   const healthSum = oxy + tox + burn + brute;
@@ -34,7 +38,7 @@ const HealthStat = props => {
 };
 
 export const CloningConsole = (props, context) => {
-  const { data } = useBackend(context);
+  const { data, act } = useBackend(context);
   const {
     cloneSlave,
     message,
@@ -42,12 +46,16 @@ export const CloningConsole = (props, context) => {
     balance,
   } = data;
 
-  const [tab, setTab] = useSharedState(context, "tab", "check-records");
+  const clearTarget = function () {
+    deletionTarget = "";
+  };
+
+  const [tab, setTab] = useSharedState(context, "tab", "checkRecords");
 
   return (
     <Window
       theme={cloneSlave ? "syndicate" : "ntos"}
-      width={750}
+      width={550}
       height={550}>
       <Window.Content scrollable>
         {message && (
@@ -55,23 +63,59 @@ export const CloningConsole = (props, context) => {
             {message}
           </NoticeBox>
         )}
+        {(deletionTarget && (
+          <Modal
+            fontSize="31px">
+            <Flex align="center">
+              <Flex.Item mr={2} mt={1}>
+                <Icon
+                  name="trash" />
+              </Flex.Item>
+              <Flex.Item>
+                {'Delete Record?'}
+              </Flex.Item>
+            </Flex>
+            <Box
+              mt={2}
+              textAlign="center"
+              fontSize="24px">
+              <Button
+                lineHeight="40px"
+                icon="check"
+                color="good"
+                onClick={() => {
+                  act("delete", { ckey: deletionTarget });
+                  clearTarget();
+                }}>
+                Yes
+              </Button>
+              <Button
+                lineHeight="40px"
+                icon="times"
+                color="bad"
+                onClick={() => clearTarget()}>
+                No
+              </Button>
+            </Box>
+          </Modal>
+        ))}
         <Section fitted>
           {/* draws the tabs at the top of the gui */}
           <Tabs>
             <Tabs.Tab
               icon="list"
-              textColor={tab === "check-records"
+              textColor={tab === "checkRecords"
               && "white"}
               selected={tab === "Records"}
-              onClick={() => setTab("check-records")}>
+              onClick={() => setTab("checkRecords")}>
               Records
             </Tabs.Tab>
             <Tabs.Tab
               icon="wrench"
-              textColor={tab === "check-functions"
+              textColor={tab === "checkFunctions"
               && "white"}
               selected={tab === "Functions"}
-              onClick={() => setTab("check-functions")}>
+              onClick={() => setTab("checkFunctions")}>
               Functions
             </Tabs.Tab>
           </Tabs>
@@ -83,10 +127,10 @@ export const CloningConsole = (props, context) => {
           </Section>
         ))}
         <StatusSection />
-        {tab === "check-records" && (
+        {tab === "checkRecords" && (
           <Records />
         )}
-        {tab === "check-functions" && (
+        {tab === "checkFunctions" && (
           <Functions />
         )}
       </Window.Content>
@@ -118,6 +162,7 @@ const Functions = (props, context) => {
         </Box>
         <Box pt={2}>
           <Button
+            icon={geneticAnalysis ? "toggle-on" : "toggle-off"}
             color={geneticAnalysis ? "good" : "bad"}
             onClick={() => act("toggleGeneticAnalysis")}>
             {geneticAnalysis ? "Enabled" : "Disabled"}
@@ -139,22 +184,25 @@ const Functions = (props, context) => {
           </Box>
           <Box pt={2}>
             <Button
-              color={geneticAnalysis ? "good" : "bad"}
+              icon={mindWipe ? "toggle-on" : "toggle-off"}
+              color={mindWipe ? "good" : "bad"}
               onClick={() => act("mindWipeToggle")}>
               {mindWipe ? "Enabled" : "Disabled"}
             </Button>
           </Box>
         </Section>
       ))}
-      {(!disk && (
+      {(!!disk && (
         <Section
           title="Disk Controls">
           <Button
+            icon="upload"
             color={"blue"}
             onClick={() => act("load")}>
             Load from disk
           </Button>
           <Button
+            icon="eject"
             color={"red"}
             onClick={() => act("eject")}>
             Eject Disk
@@ -216,6 +264,7 @@ const StatusSection = (props, context) => {
       <Box pt={2}>
         <Button
           width={7}
+          icon="dna"
           align={"center"}
           color={(occupantScanned ? "average" : (scannerGone ? "bad" : "good"))}
           disabled={occupantScanned | scannerGone}
@@ -224,6 +273,7 @@ const StatusSection = (props, context) => {
         </Button>
         <Button
           width={7}
+          icon={scannerLocked ? "unlock" : "lock-open"}
           align={"center"}
           disabled={!scannerOccupied}
           color={scannerLocked ? "bad" : "good"}
@@ -251,30 +301,33 @@ const Records = (props, context) => {
           <Table.Cell bold collapsing textAlign="center">
             Name
           </Table.Cell>
-          <Table.Cell />
+          <Table.Cell collapsing />
           <Table.Cell bold textAlign="center">
-            Vitals
+            Damage
           </Table.Cell>
-          <Table.Cell bold collapsing textAlign="center">
+          <Table.Cell bold textAlign="center">
             Actions
           </Table.Cell>
         </Table.Row>
         {records.map(record => (
           <Table.Row key={record.name}>
             <Table.Cell collapsing textAlign="center">
-              {record.id}-{truncate(record.name, 28)}
-              {/* shorten down that name so it doesn"t break the damn gui */}
-              {record.name.length > 20 && (
-                <Tooltip
-                  overrideLong
-                  position="bottom">
-                  {truncate(record.name, 64)}
-                </Tooltip>
-              /* if you have a name over 64 chars fuckyou cause it'll not show*/
-              )}
+              <Box
+                position="relative">
+                {record.id}-{truncate(record.name, 15)}
+                {/* shorten down that name so it doesn"t break the damn gui */}
+                {record.name.length > 20 && (
+                  <Tooltip
+                    overrideLong
+                    position="right"
+                    content={truncate(record.name.toLowerCase(), 39)} />
+                /* if you have a name over 39 chars fuckyou cause itll not shw*/
+                )}
+              </Box>
             </Table.Cell>
-            <Table.Cell collapsing textAlign="center">
+            <Table.Cell collapsing textAlign="center" px={-5}>
               <ColorBox
+                mx={1}
                 color={healthToColor(
                   record.health.OXY,
                   record.health.TOX,
@@ -298,13 +351,15 @@ const Records = (props, context) => {
             </Table.Cell>
             <Table.Cell textAlign="center">
               <Button
+                icon="trash"
                 mt={1.2}
                 color={"bad"}
-                onClick={() => act("delete", { ckey: record.ckey })}>
+                onClick={() => (deletionTarget = record.ckey)}>
                 Delete
               </Button>
-              {(!disk && (
+              {(!!disk && (
                 <Button
+                  icon="save"
                   mt={1.2}
                   color={"blue"}
                   disabled={record.saved || diskReadOnly}
@@ -313,8 +368,9 @@ const Records = (props, context) => {
                 </Button>
               ))}
               <Button
-                color={"good"}
+                icon="dna"
                 mt={1.2}
+                color={"good"}
                 disabled={podGone}
                 onClick={() => act("clone", { ckey: record.ckey })}>
                 Clone
