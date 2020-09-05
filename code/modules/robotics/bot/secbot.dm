@@ -396,7 +396,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 
 
-	proc/navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0)
+	proc/navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0,max_dist=600)
 		src.frustration = 0
 		src.path = null
 		if(src.mover)
@@ -409,7 +409,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 		// drsingh for cannot modify null.delay
 		if (!isnull(src.mover))
-			src.mover.master_move(the_target,current_movepath,adjacent,scanrate)
+			src.mover.master_move(the_target,current_movepath,adjacent,scanrate,max_dist)
 
 		// drsingh again for the same thing further down in a moment.
 		// Because master_move can delete the mover
@@ -494,7 +494,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				else if (target)		// make sure target exists
 					if (!IN_RANGE(src, src.target, 1))
 						src.moving = 0
-						navigate_to(src.target,(src.emagged >= 2) ? (ARREST_SPEED/2 * move_arrest_delay_mult) : (ARREST_SPEED * move_arrest_delay_mult))
+						navigate_to(src.target,(src.emagged >= 2) ? (ARREST_SPEED/2 * move_arrest_delay_mult) : (ARREST_SPEED * move_arrest_delay_mult), max_dist=50)
 						return
 
 			if(SECBOT_PREP_ARREST)		// preparing to arrest target
@@ -1008,7 +1008,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		src.master = null
 		..()
 
-	proc/master_move(var/atom/the_target as obj|mob, var/current_movepath,var/adjacent=0, var/scanrate)
+	proc/master_move(var/atom/the_target as obj|mob, var/current_movepath,var/adjacent=0, var/scanrate, max_dist=600)
 		if(!master || !isturf(master.loc))
 			src.master = null
 			//dispose()
@@ -1022,7 +1022,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if (!master)
 				return
 			var/compare_movepath = current_movepath
-			master.path = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 600, master.botcard)
+			master.path = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, max_dist, master.botcard)
 			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target)
@@ -1061,7 +1061,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				master.moving = 0
 				master.mover = null
 				if(master.mode == SECBOT_HUNT && master.target && master.frustration < 8 && !IN_RANGE(master, master.target, 1))
-					master.navigate_to(master.target,(master.emagged >= 2) ? (ARREST_SPEED/2 * master.move_arrest_delay_mult) : (ARREST_SPEED * master.move_arrest_delay_mult))
+					master.navigate_to(master.target,(master.emagged >= 2) ? (ARREST_SPEED/2 * master.move_arrest_delay_mult) : (ARREST_SPEED * master.move_arrest_delay_mult), max_dist=max_dist)
 				master = null
 
 
