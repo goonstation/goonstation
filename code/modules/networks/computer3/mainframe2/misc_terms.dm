@@ -915,8 +915,7 @@
 
 			T.timing = 1
 			T.c_state(1)
-			if (!(T in processing_items))
-				processing_items.Add(T)
+			processing_items |= src
 			src.last_sim = world.time
 
 			var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.

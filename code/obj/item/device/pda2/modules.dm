@@ -249,8 +249,7 @@
 
 	proc/toggle_scan()
 		src.on = !src.on
-		if (src.on && !(src in processing_items))
-			processing_items.Add(src)
+		if(src.on) processing_items |= src
 		for (var/obj/ability_button/pda_tray_toggle/B in src.ability_buttons)
 			B.icon_state = "pda[src.on]"
 		if (src.host)

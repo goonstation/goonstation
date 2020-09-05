@@ -163,8 +163,7 @@
 	equipped(var/mob/user, var/slot)
 		if (slot == SLOT_WEAR_MASK && istype(user))
 			src.chewer = user
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 			if (src.reagents && !src.reagents.total_volume)
 				user.show_text("Looks like [src] has lost its flavor, darn.")
 		return ..()

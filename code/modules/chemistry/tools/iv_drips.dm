@@ -185,12 +185,10 @@
 
 	proc/start_transfusion()
 		src.in_use = 1
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	proc/stop_transfusion()
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		src.in_use = 0
 		src.patient = null
 

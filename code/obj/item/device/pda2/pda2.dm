@@ -752,8 +752,7 @@
 		src.active_program = program
 		program.init()
 
-		if(program.setup_use_process && !(src in processing_items))
-			processing_items.Add(src)
+		if(program.setup_use_process) processing_items |= src
 
 		return 1
 

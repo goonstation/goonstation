@@ -34,8 +34,7 @@
 		src.light = new /datum/light/point
 		src.light.attach(src)
 		src.light.set_color(1,0,1)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id) // hack to make microphones work
 		for(var/obj/item/mechanics/miccomp/mic in src.contents)
@@ -353,8 +352,7 @@
 	New()
 		particles = new/list()
 		AddComponent(/datum/component/mechanics_holder)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		return ..()
 
 

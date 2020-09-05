@@ -79,8 +79,7 @@
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 /obj/item/cell/charged
 	charge = 7500
@@ -110,12 +109,11 @@
 	SPAWN_DBG(0.5 SECONDS)
 		updateicon()
 
-	if (genrate && !(src in processing_items))
-		processing_items.Add(src)
+	if (genrate)
+		processing_items |= src
 
 /obj/item/cell/disposing()
-	if (src in processing_items)
-		processing_items.Remove(src)
+	processing_items -= src
 	..()
 
 /obj/item/cell/proc/updateicon()

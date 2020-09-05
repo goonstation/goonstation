@@ -383,8 +383,7 @@
 		if(tester)
 			tester.update_bomb_log("Valve Opened.")
 
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		..()
 		return
 

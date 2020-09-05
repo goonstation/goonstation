@@ -504,8 +504,7 @@
 	disposing()
 		deployed = 0
 		closest_hotspot = 0
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 	process()
@@ -594,14 +593,12 @@
 		icon_state = "dowsing_hands"
 		deployed = 0
 		closest_hotspot = 0
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 
 	proc/deploy()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		src.icon_state = "dowsing_deployed_[0]"
 		speak_count = speak_interval
 		pixel_x = 0
@@ -623,8 +620,7 @@
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
 	if (istype(W,/obj/item/heat_dowsing))
-		if (!(W in processing_items))
-			processing_items.Add(W)
+		processing_items |= W
 
 		var/obj/item/heat_dowsing/H = W
 

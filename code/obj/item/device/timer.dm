@@ -143,8 +143,7 @@
 			src.timing = text2num(href_list["time"])
 			if(timing)
 				src.c_state(1)
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 
 			if (src.master && istype(master, /obj/item/device/transfer_valve))
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")

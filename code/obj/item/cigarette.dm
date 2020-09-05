@@ -99,8 +99,7 @@
 				M.set_clothing_icon_dirty()
 			if(src && src.reagents)
 				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
-			if (!(src in processing_items))
-				processing_items.Add(src) // we have a nice scheduler let's use that instead tia
+			processing_items |= src
 
 			hit_type = DAMAGE_BURN
 
@@ -897,9 +896,7 @@
 		playsound(get_turf(user), "sound/items/matchstick_light.ogg", 50, 1)
 		light.enable()
 
-		if (!(src in processing_items))
-			processing_items.Add(src)
-		return
+		processing_items |= src
 
 	proc/put_out(var/mob/user as mob, var/break_it = 0)
 		src.on = -1
@@ -1065,8 +1062,7 @@
 				playsound(get_turf(user), 'sound/items/zippo_open.ogg', 30, 1)
 				light.enable()
 
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 			else
 				src.on = 0
 				set_icon_state(src.icon_off)
@@ -1166,8 +1162,7 @@
 				src.item_state = "zippo"
 				light.disable()
 
-				if (src in processing_items)
-					processing_items.Remove(src)
+				processing_items -= src
 				return
 			//sleep(1 SECOND)
 

@@ -635,8 +635,7 @@ SYNDICATE DRONE FACTORY AREAS
 	src.desc = "This isn't coming off... oh god..."
 	if (!src.processing)
 		src.processing++
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 	SPAWN_DBG(5 SECONDS)
 		boutput(user, "<span class='notice'>The [src] feels like it's getting tighter. Ouch! Seems to have a lot of sharp edges inside.</span>")
 		random_brute_damage(user, 5)

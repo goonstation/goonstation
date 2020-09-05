@@ -130,8 +130,7 @@
 					else
 						P.pathogens = B.pathogens.Copy()
 					P.volume = 5
-					if (!(src in processing_items))
-						processing_items.Add(src)
+					processing_items |= src
 					src.process_pathogen = P
 					src.process_source = S
 					counter = 25

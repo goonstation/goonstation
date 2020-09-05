@@ -406,12 +406,9 @@ WET FLOOR SIGN
 /obj/item/sponge/New()
 	..()
 	src.create_reagents(50)
-	if (!(src in processing_items))
-		processing_items.Add(src)
-
+	processing_items |= src
 /obj/item/sponge/disposing()
-	if (src in processing_items)
-		processing_items.Remove(src)
+	processing_items -= src
 	..()
 
 /obj/item/sponge/examine()

@@ -177,8 +177,7 @@
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			src.force = 3
 			src.hit_type = DAMAGE_BLUNT

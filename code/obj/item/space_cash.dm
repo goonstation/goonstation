@@ -171,18 +171,15 @@
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	pooled()
-		if ((src in processing_items))
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 	unpooled()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	update_stack_appearance()
 		return

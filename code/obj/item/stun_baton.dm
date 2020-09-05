@@ -61,16 +61,14 @@
 		..()
 		if (src.uses_electricity != 0 && (!isnull(src.cell_type) && ispath(src.cell_type, /obj/item/ammo/power_cell)) && (!src.cell || !istype(src.cell)))
 			src.cell = new src.cell_type(src)
-		if (!(src in processing_items)) // No self-charging cell? Will be removed after the first tick.
-			processing_items.Add(src)
+		processing_items |= src
 		src.update_icon()
 		src.setItemSpecial(/datum/item_special/spark)
 
 		BLOCK_ROD
 
 	disposing()
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		if(cell)
 			cell.dispose()
 			cell = null

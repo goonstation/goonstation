@@ -79,8 +79,7 @@
 					boutput(M, "[user] activates the power sink!")
 				mode = 2
 				icon_state = "powersink1"
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 
 	process()
 		if(attached)

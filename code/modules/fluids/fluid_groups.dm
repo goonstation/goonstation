@@ -168,8 +168,7 @@
 		reagents = new /datum/reagents/fluid_group(90000000) //high number lol.
 		reagents.my_group = src
 
-		if (!(src in processing_fluid_groups))
-			processing_fluid_groups.Add(src)
+		processing_fluid_groups |= src
 
 	proc/update_amt_per_tile()
 		contained_amt = src.reagents.total_volume
@@ -407,15 +406,13 @@
 		if (src.qdeled) return
 
 		src.draining = 1
-		if (!(src in processing_fluid_drains))
-			processing_fluid_drains.Add(src)
+		processing_fluid_drains |= src
 
 	proc/update_loop()
 		if (src.qdeled) return
 
 		src.updating = 1
-		if (!(src in processing_fluid_spreads))
-			processing_fluid_spreads.Add(src)
+		processing_fluid_spreads |= src
 
 	proc/update_required_to_spread()
 		return
