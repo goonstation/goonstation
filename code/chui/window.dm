@@ -45,6 +45,7 @@ chui/window
 
 	//If overriden, be sure to call ..()
 	New(var/atom/adam)
+		..()
 		if(!chui) chui = new()
 		theme = chui.GetTheme( theme )
 		theAtom = adam

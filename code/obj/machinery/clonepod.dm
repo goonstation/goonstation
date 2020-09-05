@@ -59,9 +59,7 @@
 		req_access = list(access_medlab) //For premature unlocking.
 		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(100)
 
 		src.update_icon()
 		genResearch.clonepods.Add(src) //This will be used for genetics bonuses when cloning
@@ -83,7 +81,8 @@
 		radio_controller.remove_object(src, "[pdafrequency]")
 		genResearch?.clonepods?.Remove(src) //Bye bye
 		connected?.pod1 = null
-		connected?.scanner?.pods -= src
+		if(connected?.scanner?.pods)
+			connected?.scanner?.pods -= src
 		connected = null
 		if(occupant)
 			occupant.set_loc(src.loc)
@@ -569,9 +568,9 @@
 		C.remove_ailments() // no more cloning with heart failure
 
 	src.occupant.set_loc(get_turf(src))
-	src.update_icon()
 	src.eject_wait = 0 //If it's still set somehow.
 	src.occupant = null
+	src.update_icon()
 	return
 
 /obj/machinery/clonepod/proc/malfunction()
@@ -657,9 +656,7 @@
 	New()
 		..()
 		UnsubscribeProcess()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(100)
 		src.update_icon(1)
 		SPAWN_DBG(0)
 			src.find_pods()

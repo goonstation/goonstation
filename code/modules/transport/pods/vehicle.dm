@@ -1737,13 +1737,14 @@
 		qdel(src.com_system)
 		src.components -= src.engine
 		src.components -= src.com_system
-		src.engine = new /obj/item/shipcomponent/engine/zero(src)
-		src.engine.ship = src
-		src.components += src.engine
+		src.engine = null
+		Install(new /obj/item/shipcomponent/engine/zero(src))
+		Install(new /obj/item/shipcomponent/mainweapon/bad_mining(src))
 		src.engine.activate()
 		src.com_system = null
 		myhud.update_systems()
 		myhud.update_states()
+		new /obj/item/sea_ladder(src)
 
 /obj/machinery/vehicle/tank/minisub/secsub
 	body_type = "minisub"

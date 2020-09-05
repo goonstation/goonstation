@@ -37,6 +37,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "petri0"
 	desc = "A dish tailored hold pathogen cultures."
+	initial_volume = 40
 	var/stage = 0
 
 	var/dirty = 0
@@ -49,10 +50,7 @@
 	rc_flags = 0
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		// Integration notes: stable mutagen ID.
+		..()
 		for (var/nutrient in pathogen_controller.nutrients)
 			nutrition += nutrient
 			nutrition[nutrient] = 0

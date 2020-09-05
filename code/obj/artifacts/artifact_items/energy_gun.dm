@@ -11,11 +11,13 @@
 	mat_changedesc = 0
 
 	New(var/loc, var/forceartitype)
+		..()
 		var/datum/artifact/energygun/AS = new /datum/artifact/energygun(src)
 		if (forceartitype)
 			AS.validtypes = list("[forceartitype]")
 		src.artifact = AS
 		// The other three are normal for energy gun setup, so proceed as usual i guess
+		qdel(cell)
 		cell = null
 
 		SPAWN_DBG(0)

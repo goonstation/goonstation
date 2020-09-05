@@ -1196,7 +1196,6 @@ datum
 						if (!fainted)
 							M.emote("faint")
 							fainted = 1
-					if (19 to INFINITY)
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 100 * mult))
 						M.drowsyness  = max(M.drowsyness, 20)
 

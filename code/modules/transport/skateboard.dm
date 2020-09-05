@@ -42,6 +42,7 @@
 	pixel_x = -32
 
 	New(var/location = null, var/state = null)
+		..()
 		if(location)
 			src.set_loc(location)
 		else

@@ -28,6 +28,7 @@
 		last_dir = 0
 
 	New(owner)
+		..()
 		src.owner = owner
 		M = matrix()
 

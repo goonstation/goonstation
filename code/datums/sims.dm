@@ -664,6 +664,7 @@ var/global/datum/simsControl/simsController = new()
 			//addMotive(/datum/simsMotive/sanity)
 
 	New(var/mob/living/L)
+		..()
 		owner = L
 		simsController.register_simsHolder(src)
 		make_motives()

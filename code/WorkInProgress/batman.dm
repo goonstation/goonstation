@@ -306,17 +306,17 @@
 		usr.visible_message("<span class='alert'><B>[src] flings [T] with all of his might!</B></span>")
 		T.force_laydown_standup()
 		var/target_dir = get_dir(usr, T)
-		SPAWN_DBG(0)
-			if (T)
-				walk(T, target_dir, 1)
-				sleep(0.5 SECONDS)
-				walk(T, 0)
-				playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
-				random_brute_damage(T, 30)
-				T.losebreath += 10
-				T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
-				T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
-				T.visible_message("<span class='alert'><B>[T] lands very violently with a bone-crunching sound!</B></span>", "<span class='alert'><B>You land violently with a lot of pain!</B></span>")
+		sleep(0)
+		if (T)
+			walk(T, target_dir, 1)
+			sleep(0.5 SECONDS)
+			walk(T, 0)
+			playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+			random_brute_damage(T, 30)
+			T.losebreath += 10
+			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
+			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
+			T.visible_message("<span class='alert'><B>[T] lands very violently with a bone-crunching sound!</B></span>", "<span class='alert'><B>You land violently with a lot of pain!</B></span>")
 
 
 /mob/proc/batdropkick(mob/T as mob in oview())

@@ -14,6 +14,7 @@
 	var/list/onLoadCallbacks = new()
 
 	New(client/C)
+		..()
 		if (!C) return
 		src.owner = C
 		src.load()

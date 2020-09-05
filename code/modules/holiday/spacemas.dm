@@ -442,6 +442,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	var/image/fire_image = null
 
 	New()
+		..()
 		src.fire_image = image('icons/effects/160x160.dmi', "")
 
 	attack_hand(mob/user as mob)
@@ -656,9 +657,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
 			bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
 
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
-
 			real_name = "Santa Claus"
 			desc = "Father Christmas! Santa Claus! Old Nick! ..wait, not that last one. I hope."
 			gender = "male"
@@ -679,6 +677,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			HS.addAbility(/datum/targetable/santa/warmth)
 			HS.addAbility(/datum/targetable/santa/teleport)
 			HS.addAbility(/datum/targetable/santa/banish)
+
+			sleep(1 SECOND)
+			bioHolder.mobAppearance.UpdateMob()
 
 	death()
 		modify_christmas_cheer(-60)
@@ -870,23 +871,22 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			bioHolder.mobAppearance.customization_first = "None"
 			bioHolder.mobAppearance.customization_second = "None"
 			bioHolder.mobAppearance.customization_third = "None"
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
 
 			src.mind = new
 			real_name = "Krampus"
 			desc = "Oh shit! Have you been naughty?!"
 
 			if(!src.reagents)
-				var/datum/reagents/R = new/datum/reagents(1000)
-				src.reagents = R
-				R.my_atom = src
+				src.create_reagents(1000)
 
 			src.set_mutantrace(/datum/mutantrace/krampus)
 			src.reagents.add_reagent("stimulants", 50)
 			src.gender = "male"
 			bioHolder.AddEffect("loud_voice")
 			bioHolder.AddEffect("cold_resist")
+
+			sleep(1 SECOND)
+			bioHolder.mobAppearance.UpdateMob()
 
 	Bump(atom/movable/AM, yes)
 		if(src.stance == "krampage")

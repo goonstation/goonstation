@@ -71,9 +71,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(4000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(4000)
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
 	on_reagent_change(add)
@@ -212,6 +210,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	w_class = 2.0
 
 /obj/item/assembly/weld_rod/New()
+	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
 
@@ -232,6 +231,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	w_class = 2.0
 
 /obj/item/assembly/w_r_ignite/New()
+	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
 	igniter = new /obj/item/device/igniter

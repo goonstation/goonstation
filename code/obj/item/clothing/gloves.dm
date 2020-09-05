@@ -44,7 +44,6 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			src.glove_ID = src.CreateID()
 			if (glove_IDs) // fix for Cannot execute null.Add(), maybe??
 				glove_IDs.Add(src.glove_ID)
-		return
 
 	examine()
 		. = ..()

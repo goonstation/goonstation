@@ -218,7 +218,7 @@
 	//fluid has been removed from its tile. use 'lightweight' in evaporation procedure cause we dont need icon updates / try split / update loop checks at that point
 	// if 'lightweight' parameter is 2, invoke an update loop but still ignore icon updates
 	proc/remove(var/obj/fluid/F, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 0)
-		if (!F || F.pooled) return 0
+		if (!F || F.pooled || src.disposed) return 0
 		if (!members || !members.len || !members.Find(F)) return 0
 
 		if (!lightweight)
@@ -234,6 +234,8 @@
 				t = get_step( F, dir )
 				if (t && t.active_liquid)
 					t.active_liquid.blocked_dirs = 0
+
+		if(src.disposed || F.disposed) return 0 // update_icon lagchecks, rip
 
 		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
 		members -= F //remove after amt per tile ok? otherwise bad thing could happen

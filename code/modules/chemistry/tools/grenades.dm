@@ -25,11 +25,10 @@
 	stamina_crit_chance = 0
 
 	New()
+		..()
 		fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
 		fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
-		var/datum/reagents/R = new/datum/reagents(150000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(150000)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)

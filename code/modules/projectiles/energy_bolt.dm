@@ -281,6 +281,7 @@ toxic - poisons
 	icon_state = "shockwave"
 
 	New(var/x_val, var/y_val)
+		..()
 		pixel_x = x_val
 		pixel_y = y_val
 		src.Scale(0.4,0.4)

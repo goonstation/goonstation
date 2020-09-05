@@ -6,6 +6,7 @@
 	var/rate
 
 /datum/sun/New()
+	..()
 	rate = rand(75,125)/50 // 75% - 125% of standard rotation
 	if(prob(50))
 		rate = -rate

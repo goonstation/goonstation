@@ -38,9 +38,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(60)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(60)
 
 		if (src.on) //if we spawned lit, do something about it!
 			src.on = 0
@@ -48,17 +46,17 @@
 
 		if (src.exploding)
 			if (src.flavor)
-				R.add_reagent(src.flavor, 5)
-			R.add_reagent("nicotine", 5)
+				reagents.add_reagent(src.flavor, 5)
+			reagents.add_reagent("nicotine", 5)
 			numpuffs = 5 //trickcigs burn out faster
 			return
 		else if (!src.nic_free)
-			R.add_reagent("nicotine", 40)
+			reagents.add_reagent("nicotine", 40)
 			if (src.flavor)
-				R.add_reagent(src.flavor, 20)
+				reagents.add_reagent(src.flavor, 20)
 				return
 		else if (src.flavor)
-			R.add_reagent(src.flavor, 40)
+			reagents.add_reagent(src.flavor, 40)
 			return
 
 	afterattack(atom/target, mob/user, flag) // copied from the propuffs
@@ -395,14 +393,12 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(30)
 
 		if(!flavor)
 			src.flavor = pick("rum","menthol","chocolate","coffee","juice_lemon","juice_orange","juice_lime","juice_peach","bourbon","vermouth","yuck","mucus")
 		src.name = "[reagent_id_to_name(src.flavor)]-flavoured blunt wrap"
-		R.add_reagent(src.flavor, 20)
+		reagents.add_reagent(src.flavor, 20)
 
 
 /obj/item/clothing/mask/cigarette/cigarillo
@@ -487,9 +483,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(600)
-		reagents = R
-		R.my_atom = src
+		src.reagents.maximum_volume = 600
 
 	is_open_container()
 		return 1
@@ -620,6 +614,7 @@
 	rand_pos = 1
 
 /obj/item/cigarbox/New()
+	..()
 	src.update_icon()
 
 /obj/item/cigarbox/proc/update_icon()
@@ -1048,10 +1043,8 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(100) //this is the max volume
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("fuel", 100)
+		src.create_reagents(100)
+		reagents.add_reagent("fuel", 100)
 
 		src.setItemSpecial(/datum/item_special/flame)
 		return

@@ -21,6 +21,7 @@
 	var/image/image_cup = null
 
 	New()
+		..()
 		UnsubscribeProcess()
 		src.update()
 
@@ -260,6 +261,7 @@
 	var/image/fluid_image
 
 	New()
+		..()
 		UnsubscribeProcess()
 		if (ispath(src.default_carafe))
 			src.my_carafe = new src.default_carafe (src)

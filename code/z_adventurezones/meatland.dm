@@ -151,11 +151,9 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(25)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("acid",20)
-		R.add_reagent("vomit",5)
+		src.create_reagents(25)
+		reagents.add_reagent("acid",20)
+		reagents.add_reagent("vomit",5)
 
 	HasEntered(atom/A)
 		reagents.reaction(A, TOUCH, 2)
@@ -637,6 +635,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		name = "log_20510321"
 
 		New()
+			..()
 			fields = strings("meatland/meatland_records.txt","log_20510321")
 			/*list("Even with the recent acquisition of Hemera",
 					"technical documents and some working material,",
@@ -654,6 +653,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		name = "log_20510324"
 
 		New()
+			..()
 			fields = strings("meatland/meatland_records.txt","log_20510324")
 			/*list("The patterns on the acquired telecrystal core",
 						"perplex me more the more I look at them, not less.",
@@ -669,6 +669,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		name = "mail_20510415"
 
 		New()
+			..()
 			fields = strings("meatland/meatland_records.txt","mail_20510415")
 
 		/*list("Dear Research Staff,",
@@ -684,6 +685,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		name = "MEDLOG07"
 
 		New()
+			..()
 			fields = strings("meatland/meatland_records.txt","MEDLOG07")
 			/*list("The degradation effect has continued to",
 					"affect everything sent through the pad, organic or",
@@ -698,6 +700,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		name = "MEDLOG09"
 
 		New()
+			..()
 			fields =  strings("meatland/meatland_records.txt","MEDLOG09")
 			/*list("Patient's condition has continued to worsen. Same",
 				"way as the others.  Body continues to splinter.",
@@ -710,6 +713,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		name = "system_brief"
 
 		New()
+			..()
 			fields = strings("meatland/meatland_records.txt","system_brief")
 			/*list("The heart of the teleportation system is",
 				"the formed telecrystal. The crystal is wrapped",

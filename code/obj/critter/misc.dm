@@ -605,9 +605,7 @@
 	New()
 		..()
 
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(1000)
 
 		SPAWN_DBG(4 SECONDS)
 			if(!reagents.total_volume)
@@ -616,7 +614,7 @@
 				else
 					src.reagent_id = "water"
 
-				R.add_reagent(src.reagent_id, 10)
+				reagents.add_reagent(src.reagent_id, 10)
 
 				var/oldcolor = src.reagents.get_master_color()
 				var/icon/I = new /icon('icons/misc/critter.dmi',"golem")

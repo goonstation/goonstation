@@ -334,6 +334,7 @@
 	showTooltipDesc = 0
 
 	New()
+		..()
 		src.color = random_color()
 
 	examine(mob/user)

@@ -48,6 +48,7 @@
 	category = "Blueprints"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/variable {part_name = "Hard material"; required_amount = 5; required_value = 70; greater_than = 1; required_property = "hard"; proper_name = "hardness"} ())
 		required_parts.Add(new/datum/matfab_part/variable {part_name = "Dense material"; required_amount = 2; required_value = 60; greater_than = 1; required_property = "density"; proper_name = "density"} ())
 
@@ -63,6 +64,7 @@
 	category = "Clothing"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Fabric"; required_amount = 3} ())
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Reinforcement"; required_amount = 3} ())
 		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Visor"; required_amount = 2} ())
@@ -85,6 +87,7 @@
 	category = "Mining Tools"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/radiocative_material {part_name = "Internal"; required_amount = 45} ())
 		required_parts.Add(new/datum/matfab_part/charge {part_name = "Charge"; required_amount = 1} ())
 
@@ -100,6 +103,7 @@
 	category = "Mining Tools"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -119,6 +123,7 @@
 	category = "Mining Tools"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -137,6 +142,7 @@
 	category = "Mining Tools"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -155,6 +161,7 @@
 	category = "Mining Tools"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -821,6 +828,7 @@
 		return
 
 	New()
+		..()
 		for(var/A in materials)
 			var/numReq = materials[A]
 			if(numReq && isnum(numReq) && numReq >= 1)

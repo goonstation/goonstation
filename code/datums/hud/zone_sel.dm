@@ -17,6 +17,7 @@
 	var/icon/icon_hud = 'icons/mob/hud_human_new.dmi'
 
 	New(M, var/sloc, var/icon/I)
+		..()
 		master = M
 		if (sloc)
 			slocation = sloc

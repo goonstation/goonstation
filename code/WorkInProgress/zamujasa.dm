@@ -80,6 +80,7 @@
 	maptext_width = 96
 
 	New(var/change = 0)
+		..()
 		if (abs(change) < 1)
 			del(src)
 			return
@@ -113,6 +114,7 @@
 	var/bumped = 0
 
 	New(mob/M as mob, msg, style = "")
+		..()
 		for (var/obj/maptext_junk/speech/O in M.vis_contents)
 			if (!istype(O))
 				continue
@@ -251,6 +253,7 @@
 	var/working = 0
 
 	New()
+		..()
 		total_score = world.load_intra_round_value("afterlife_donations")
 		tracker = new /obj/maptext_junk()
 		tracker.pixel_y = 40
@@ -391,6 +394,7 @@
 	var/active = 0
 
 	New()
+		..()
 		SPAWN_DBG(0.5 SECONDS)
 			gunsim = locate() in world
 
@@ -600,9 +604,12 @@
 	name = "join"
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "landmark"
+	deleted_on_start = TRUE
+	add_to_landmarks = FALSE
+
 	New()
 		football_spawns[src.name] += src.loc
-		qdel(src)
+		..()
 
 	blue
 		name = "blue"
@@ -658,7 +665,7 @@
 
 
 	New()
-		SubscribeToProcess()
+		..()
 		src.process()
 
 	disposing()
@@ -700,10 +707,10 @@
 	var/update_delay = null
 
 	New()
+		..()
 		src.maptext_x = -100
 		src.maptext_width = 232
 		src.maptext_height = 64
-		SubscribeToProcess()
 		src.process()
 
 	disposing()
@@ -779,6 +786,7 @@
 	name = "football wave countdown"
 
 	New()
+		..()
 		src.maptext_x = -100
 		src.maptext_height = 64
 		src.maptext_width = 232
@@ -798,6 +806,7 @@
 	name = "new player tutorial maptext"
 
 	New()
+		..()
 		src.maptext_x = -100
 		src.maptext_height = 64
 		src.maptext_width = 232
@@ -813,6 +822,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 /obj/overlay/zamujasa/round_start_countdown
 	New()
+		..()
 		if (lobby_titlecard)
 			src.x = lobby_titlecard.x + 13
 			src.y = lobby_titlecard.y + 0
@@ -840,6 +850,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 	timer
 		New()
+			..()
 			if (lobby_titlecard)
 				src.x = lobby_titlecard.x + 13
 				src.y = lobby_titlecard.y + 1
@@ -885,6 +896,7 @@ Read the rules, don't grief, and have fun!</div>"}
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 
 	New()
+		..()
 		maptext_width = 64
 		maptext_x = -34
 		maptext_y = 1
