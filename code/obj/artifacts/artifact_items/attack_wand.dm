@@ -97,12 +97,15 @@
 						if (!M.is_cold_resistant())
 							var/obj/icecube/cube = new /obj/icecube(get_turf(M), M)
 							cube.health = powerVars["cubeHealth"]
+							O.ArtifactFaultUsed(M)
 
 							ArtifactLogs(user, M, O, "weapon", "trapping them in an ice cube", 0)
 
 			if("lightning")
 				arcFlashTurf(user, T, powerVars["wattage"])
-				ArtifactLogs(user, T, O, "weapon", "zapping target turf with electricity", 0)
+				for (var/mob/living/M in range(T,powerVars["iceRadius"]))
+					O.ArtifactFaultUsed(M)
+					ArtifactLogs(user, M, O, "weapon", "zapping them with electricity", 0)
 
 			if("sonic")
 				playsound(T, "sound/effects/screech.ogg", 100, 1, 0)
@@ -112,6 +115,7 @@
 					if (isintangible(M))
 						continue
 					if (!M.ears_protected_from_sound())
+						O.ArtifactFaultUsed(M)
 						shake_camera(M, 10, 0)
 					else
 						continue
