@@ -110,7 +110,6 @@ var/global/datum/controller/throwing/throwing_controller = new
 			var/hit_thing = thing.hit_check(thr)
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
-			thing.throw_count++ // if hit_check stopped us let's end this now
 			if(!thing.throwing || hit_thing)
 				end_throwing = TRUE
 				break
@@ -133,8 +132,6 @@ var/global/datum/controller/throwing/throwing_controller = new
 			thing.throw_unlimited = 0
 
 			thing.throw_impact(get_turf(thing), thr)
-
-			thing.throw_count = 0
 
 			thing.throwforce -= thr.bonus_throwforce
 

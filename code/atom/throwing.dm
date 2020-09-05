@@ -1,4 +1,3 @@
-/atom/movable/var/tmp/throw_count = 0	  //Counts up for tiles traveled in throw mode. Stacks on diagonals, stacks on stacked throws.
 /atom/var/tmp/throw_unlimited = 0 //Setting this to 1 before throwing will make the object behave as if in space. //If set on turf, the turf will allow infinite throwing over itself.
 /atom/movable/var/tmp/throw_return = 0    //When 1 item will return like a boomerang.
 /atom/movable/var/tmp/throw_spin = 1      //If the icon spins while thrown
