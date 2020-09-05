@@ -110,7 +110,7 @@
 		if (src.topBarRendered && src.rendered)
 
 			if (!called_by_owner)
-				for(var/obj/screen/ability/A in src.hud)
+				for(var/obj/screen/ability/A in src.hud.objects)
 					src.hud -= A
 
 			var/pos_x = start_x
@@ -1124,7 +1124,7 @@
 
 	updateButtons(var/called_by_owner = 0, var/start_x = 1, var/start_y = 0)
 		if (src.topBarRendered && src.rendered && src.hud)
-			for(var/obj/screen/ability/A in src.hud)
+			for(var/obj/screen/ability/A in src.hud.objects)
 				src.hud -= A
 
 		x_occupied = 1
