@@ -605,6 +605,38 @@ WET FLOOR SIGN
 		JOB_XP(usr, "Janitor", 2)
 		return
 
+/obj/item/caution/traitor
+	event_handler_flags = USE_PROXIMITY
+	var/obj/item/reagent_containers/payload
+
+	New()
+		. = ..()
+		payload = new /obj/item/reagent_containers/glass/bucket/red(src)
+		payload.reagents.add_reagent("superlube", payload.reagents.maximum_volume)
+		src.create_reagents(1)
+
+	attackby(obj/item/W, mob/user, params)
+		if(istype(W, /obj/item/reagent_containers))
+			boutput(user, "You stealthily replace the hidden [payload.name] with [W].")
+			user.drop_item(W)
+			src.payload.set_loc(src.loc)
+			user.put_in_hand_or_drop(src.payload)
+			src.payload = W
+			W.set_loc(src)
+		. = ..()
+
+	HasProximity(atom/movable/AM)
+		if (iscarbon(AM) && prob(40) && !ON_COOLDOWN(src, "spray", 3 SECONDS) && src.payload?.reagents)
+			if(ishuman(AM))
+				var/mob/living/carbon/human/H = AM
+				if(istype(H.shoes, /obj/item/clothing/shoes/galoshes))
+					return
+			var/turf/T = AM.loc
+			src.payload.reagents.trans_to(src, 1)
+			src.reagents.reaction(T)
+			src.reagents.clear_reagents()
+
+
 /obj/item/holoemitter
 	name = "Holo-emitter"
 	desc = "A compact holo emitter pre-loaded with various holographic signs. Fits into pockets and boxes."
