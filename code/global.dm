@@ -623,7 +623,7 @@ var/global
 
 	pregameHTML = null
 
-	list/cooldowns = list()
+	list/cooldowns
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
 

@@ -27,7 +27,6 @@
 		src.key = key
 		src.ckey = ckey(key)
 		src.tag = "player-[src.ckey]"
-		src.cooldowns = list()
 
 		if (mentors.Find(ckey(src.key)))
 			src.mentor = 1

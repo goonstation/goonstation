@@ -80,7 +80,10 @@ var/list/detailed_spawn_dbg = list()
 // cooldown stuff
 // assumes that COOLDOWN_OWNER has an (initialized) associative list `cooldowns` (it will store the timestamp when the thing goes off cooldown next)
 // returns time left on the cooldown with id ID, and if it was 0 it sets it to DELAY
-#define ON_COOLDOWN(COOLDOWN_OWNER, ID, DELAY) (max(COOLDOWN_OWNER.cooldowns[ID] - TIME, 0) || (COOLDOWN_OWNER.cooldowns[ID] = TIME + DELAY) && 0)
+#define ON_COOLDOWN(COOLDOWN_OWNER, ID, DELAY) (\
+	isnull(COOLDOWN_OWNER.cooldowns) && (COOLDOWN_OWNER.cooldowns = list()) && 0 || \
+	max(COOLDOWN_OWNER.cooldowns[ID] - TIME, 0) || \
+	(COOLDOWN_OWNER.cooldowns[ID] = TIME + DELAY) && 0)
 // the same thing but uses src as the cooldown owner and generates the ID based on the current proc's / verb's path
 #ifdef SPACEMAN_DMM // spacemandmm can't understand the fine art of the "many dots" syntax
 #define PROC_ON_COOLDOWN(DELAY) FALSE
