@@ -1502,7 +1502,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/botanist, 5, cost=40)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/janitor, 5, cost=40)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/engineer, 5, cost=70)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/diagnostics, 5, cost=70)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/diagnostics, 2, cost=70)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/game_codebreaker, 10, cost=25)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda_module/flashlight/high_power, 10, cost=100)
 
