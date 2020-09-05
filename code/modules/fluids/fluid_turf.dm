@@ -76,6 +76,13 @@
 			// maybe should be converted to this everywhere?
 			worldgenCandidates += src //Adding self to possible worldgen turfs
 
+		if(current_state > GAME_STATE_WORLD_INIT)
+			for(var/dir in cardinal)
+				var/turf/T = get_step(src, dir)
+				if(T.ocean_canpass() && !istype(T, /turf/space))
+					src.tilenotify(T)
+					break
+
 		//globals defined in fluid_spawner
 		#ifdef UNDERWATER_MAP
 		#else
@@ -209,11 +216,9 @@
 	tilenotify(turf/notifier)
 		if (istype(notifier, /turf/space)) return
 		if(notifier.ocean_canpass())
-			if (!(src in processing_fluid_turfs))
-				processing_fluid_turfs.Add(src)
+			processing_fluid_turfs |= src
 		else
-			if (src in processing_fluid_turfs)
-				processing_fluid_turfs.Remove(src)
+			if (processing_fluid_turfs.Remove(src))
 				if (src.light)
 					src.light.disable()
 
