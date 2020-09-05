@@ -1,5 +1,3 @@
-ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
-
 /datum/bioEffect/hemochromia_unknown
 	name = "Hemochromia Type-U"
 	desc = "A volatile mutation with 12 known stable alternatives. Will quickly break down into one of them if the subject exits the scanner."
@@ -18,60 +16,59 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_unknown"
 
 	OnLife()
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if(prob(12))
-				if(!istype(H.loc, /obj/machinery/genetics_scanner))
-					var/duplicateCheck = 0
-					if(holder.GetASubtypeEffect(/datum/bioEffect/hemochromia))
-						duplicateCheck = 1
-						holder.RemoveEffect(src.id)
-						holder.RemovePoolEffect(src)
-					var/typeRange = 0
-					if(rand(13) <= 4)
-						switch(H.bioHolder.bloodType)
-							if("A+")
-								if(prob(50))
-									typeRange = 1
-								else
-									typeRange = 2
-							if("A-") typeRange = 3
-							if("B+") typeRange = 4
-							if("B-") typeRange = 5
-							if("AB+") typeRange = 6
-							if("O-") typeRange = 7
-							if("O+") typeRange = 8
-							if("AB-")
-								if(prob(50))
-									typeRange = 9
-								else
-									typeRange = 10
-							else 
-								if(prob(100/3))
-									typeRange = 12
-								else
-									typeRange = 11
-					else
-						typeRange = rand(1,12)
-					var/datum/bioEffect/NEW = null
-					switch(typeRange)
-						if(2) NEW = new /datum/bioEffect/hemochromia/bronze()
-						if(3) NEW = new /datum/bioEffect/hemochromia/gold()
-						if(4) NEW = new /datum/bioEffect/hemochromia/lime()
-						if(5) NEW = new /datum/bioEffect/hemochromia/olive()
-						if(6) NEW = new /datum/bioEffect/hemochromia/jade()
-						if(7) NEW = new /datum/bioEffect/hemochromia/teal()
-						if(8) NEW = new /datum/bioEffect/hemochromia/cobalt()
-						if(9) NEW = new /datum/bioEffect/hemochromia/indigo()
-						if(10) NEW = new /datum/bioEffect/hemochromia/purple()
-						if(11) NEW = new /datum/bioEffect/hemochromia/violet()
-						if(12) NEW = new /datum/bioEffect/hemochromia/fuschia()
-						else NEW = new /datum/bioEffect/hemochromia/rust()
+		if(..()) return
+		var/mob/living/carbon/human/H = owner
+		if(ishuman(owner) && prob(12) && !istype(H.loc, /obj/machinery/genetics_scanner))
+			if(holder.GetASubtypeEffect(/datum/bioEffect/hemochromia))
+				holder.RemoveEffect(src.id)
+				holder.RemovePoolEffect(src)
+				return
+			var/typeRange = 0
+			if(rand(13) <= 4)
+				switch(H.bioHolder.bloodType)
+					if("A+")
+						if(prob(50))
+							typeRange = 1
+						else
+							typeRange = 2
+					if("A-") typeRange = 3
+					if("B+") typeRange = 4
+					if("B-") typeRange = 5
+					if("AB+") typeRange = 6
+					if("O-") typeRange = 7
+					if("O+") typeRange = 8
+					if("AB-")
+						if(prob(50))
+							typeRange = 9
+						else
+							typeRange = 10
+					else 
+						if(prob(100/3))
+							typeRange = 12
+						else
+							typeRange = 11
+			else
+				typeRange = rand(1,12)
+			var/datum/bioEffect/NEW = null
+			switch(typeRange)
+				if(2) NEW = new /datum/bioEffect/hemochromia/bronze()
+				if(3) NEW = new /datum/bioEffect/hemochromia/gold()
+				if(4) NEW = new /datum/bioEffect/hemochromia/lime()
+				if(5) NEW = new /datum/bioEffect/hemochromia/olive()
+				if(6) NEW = new /datum/bioEffect/hemochromia/jade()
+				if(7) NEW = new /datum/bioEffect/hemochromia/teal()
+				if(8) NEW = new /datum/bioEffect/hemochromia/cobalt()
+				if(9) NEW = new /datum/bioEffect/hemochromia/indigo()
+				if(10) NEW = new /datum/bioEffect/hemochromia/purple()
+				if(11) NEW = new /datum/bioEffect/hemochromia/violet()
+				if(12) NEW = new /datum/bioEffect/hemochromia/fuschia()
+				else NEW = new /datum/bioEffect/hemochromia/rust()
 
-					if(duplicateCheck == 0)
-						H.bioHolder.AddEffectInstance(NEW,1)
-					holder.RemoveEffect(src.id)
-					holder.RemovePoolEffect(src)
+			H.bioHolder.AddEffectInstance(NEW,1)
+			holder.RemoveEffect(src.id)
+			holder.RemovePoolEffect(src)
+
+ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 /datum/bioEffect/hemochromia
 	name = "Hemochromia Type-A"
@@ -89,13 +86,13 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	lockedTries = 12
 	stability_loss = 5
 	icon_state  = "hemochromia_unknown"
-	research_level = EFFECT_RESEARCH_DONE
 	occur_in_genepools = 0
 	var/blood_color_R
 	var/blood_color_G
 	var/blood_color_B
 
 	OnLife()
+		if(..()) return
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.blood_volume < 500 && H.blood_volume > 0)
@@ -119,7 +116,7 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 	OnAdd()
 		..()
-		blood_color_R = rand(254, 46)
+		blood_color_R = rand(46, 254)
 		blood_color_G = rand(0, 0)
 		blood_color_B = rand(0, 2)
 
@@ -133,9 +130,9 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 	OnAdd()
 		..()
-		blood_color_R = rand(255, 68)
-		blood_color_G = rand(122, 10)
-		blood_color_B = rand(1, 0)
+		blood_color_R = rand(68, 255)
+		blood_color_G = rand(10, 122)
+		blood_color_B = rand(0, 1)
 
 /datum/bioEffect/hemochromia/gold
 	name = "Hemochromia Type-G"
@@ -147,9 +144,9 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 	OnAdd()
 		..()
-		blood_color_R = rand(244, 101)
-		blood_color_G = rand(218, 84)
-		blood_color_B = rand(20, 4)
+		blood_color_R = rand(101, 244)
+		blood_color_G = rand(84, 218)
+		blood_color_B = rand(4, 20)
 
 /datum/bioEffect/hemochromia/lime
 	name = "Hemochromia Type-L"
@@ -161,8 +158,8 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 	OnAdd()
 		..()
-		blood_color_R = rand(135, 105)
-		blood_color_G = rand(199, 153)
+		blood_color_R = rand(105, 135)
+		blood_color_G = rand(153, 199)
 		blood_color_B = rand(0, 0)
 
 /datum/bioEffect/hemochromia/olive
@@ -175,9 +172,9 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 	OnAdd()
 		..()
-		blood_color_R = rand(112, 25)
-		blood_color_G = rand(147, 35)
-		blood_color_B = rand(5, 0)
+		blood_color_R = rand(25, 112)
+		blood_color_G = rand(35, 147)
+		blood_color_B = rand(0, 5)
 
 /datum/bioEffect/hemochromia/jade
 	name = "Hemochromia Type-J"
@@ -190,8 +187,8 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	OnAdd()
 		..()
 		blood_color_R = rand(0, 1)
-		blood_color_G = rand(216, 56)
-		blood_color_B = rand(105, 24)
+		blood_color_G = rand(56, 216)
+		blood_color_B = rand(24, 105)
 
 /datum/bioEffect/hemochromia/teal
 	name = "Hemochromia Type-T"
@@ -204,8 +201,8 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	OnAdd()
 		..()
 		blood_color_R = rand(0, 0)
-		blood_color_G = rand(205, 82)
-		blood_color_B = rand(200, 80)
+		blood_color_G = rand(82, 205)
+		blood_color_B = rand(80, 200)
 
 /datum/bioEffect/hemochromia/cobalt
 	name = "Hemochromia Type-C"
@@ -217,9 +214,9 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 	OnAdd()
 		..()
-		blood_color_R = rand(29, 0)
-		blood_color_G = rand(104, 24)
-		blood_color_B = rand(255, 78)
+		blood_color_R = rand(0, 29)
+		blood_color_G = rand(24, 104)
+		blood_color_B = rand(78, 255)
 
 /datum/bioEffect/hemochromia/indigo
 	name = "Hemochromia Type-I"
@@ -231,9 +228,9 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 	OnAdd()
 		..()
-		blood_color_R = rand(84, 14)
-		blood_color_G = rand(25, 3)
-		blood_color_B = rand(255, 69)
+		blood_color_R = rand(14, 84)
+		blood_color_G = rand(3, 25)
+		blood_color_B = rand(69, 255)
 
 /datum/bioEffect/hemochromia/purple
 	name = "Hemochromia Type-P"
@@ -245,9 +242,9 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 	OnAdd()
 		..()
-		blood_color_R = rand(136, 57)
-		blood_color_G = rand(61, 1)
-		blood_color_B = rand(214, 92)
+		blood_color_R = rand(57, 136)
+		blood_color_G = rand(1, 61)
+		blood_color_B = rand(92, 214)
 
 /datum/bioEffect/hemochromia/violet
 	name = "Hemochromia Type-V"
@@ -259,9 +256,9 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 	OnAdd()
 		..()
-		blood_color_R = rand(208, 93)
-		blood_color_G = rand(26, 0)
-		blood_color_B = rand(206, 91)
+		blood_color_R = rand(93, 208)
+		blood_color_G = rand(0, 26)
+		blood_color_B = rand(91, 206)
 
 /datum/bioEffect/hemochromia/fuschia
 	name = "Hemochromia Type-F"
@@ -273,6 +270,6 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 	OnAdd()
 		..()
-		blood_color_R = rand(238, 91)
-		blood_color_G = rand(15, 1)
-		blood_color_B = rand(124, 52)
+		blood_color_R = rand(91, 238)
+		blood_color_G = rand(1, 15)
+		blood_color_B = rand(52, 124)
