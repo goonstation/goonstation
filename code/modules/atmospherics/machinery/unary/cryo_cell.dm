@@ -66,7 +66,8 @@
 			if(!isdead(occupant))
 				if (!ishuman(occupant))
 					src.go_out() // stop turning into cyborgs thanks
-				if (occupant.health < 100) process_occupant()
+				if (occupant.health < occupant.max_health || occupant.bioHolder.HasEffect("premature_clone"))
+					process_occupant()
 				else
 					src.go_out()
 					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
@@ -136,14 +137,14 @@
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
-			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
+			temp_text = "<FONT color=red>[air_contents.temperature - T0C]</FONT>"
 		else if(air_contents.temperature > 170)
-			temp_text = "<FONT color=black>[air_contents.temperature]</FONT>"
+			temp_text = "<FONT color=black>[air_contents.temperature - T0C]</FONT>"
 		else
-			temp_text = "<FONT color=blue>[air_contents.temperature]</FONT>"
+			temp_text = "<FONT color=blue>[air_contents.temperature - T0C]</FONT>"
 
 		var/dat = "<B>Cryo cell control system</B><BR>"
-		dat += "<B>Current cell temperature:</B> [temp_text]K<BR>"
+		dat += "<B>Current cell temperature:</B> [temp_text]&deg;C<BR>"
 		dat += "<B>Eject Occupant:</B> [src.occupant ? "<A href='?src=\ref[src];eject_occupant=1'>Eject</A>" : "Eject"]<BR>"
 		dat += "<B>Cryo status:</B> [src.on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>"
 		dat += "[draw_beaker_text()]<BR>"

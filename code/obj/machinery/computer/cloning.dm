@@ -500,7 +500,7 @@
 	if (!src.pod1)
 		src.temp = "No cloning pod connected."
 		return
-	if (src.pod1.occupant)
+	if (src.pod1.attempting)
 		src.temp = "Cloning pod in use."
 		return
 	if (src.pod1.mess)
