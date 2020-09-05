@@ -5,6 +5,9 @@
 	flags =  FPRINT | CONDUCT | EXTRADELAY
 	module_research_no_diminish = 1
 
+	pixelaction(atom/target, params, mob/user, reach)
+		..()
+
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if (!src.ArtifactSanityCheck())
 			return
