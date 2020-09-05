@@ -481,23 +481,18 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			if(SECBOT_HUNT)		// hunting for perp
 
-				// if can't reach perp for long enough, go idle
-				if (src.frustration >= 8)
+				if (src.target.hasStatus("handcuffed") || src.frustration >= 8) // if can't reach perp for long enough, go idle
 					src.target = null
 					src.last_found = world.time
 					src.frustration = 0
-					src.mode = 0
+					src.mode = SECBOT_IDLE
 					//qdel(src.mover)
 					if (src.mover)
 						src.mover.master = null
 						src.mover = null
 					src.moving = 0
-					//walk_to(src,0)
-
-				if (target)		// make sure target exists
-					if (get_dist(src, src.target) <= 1)		// if right next to perp
-						src.baton_attack(src.target)
-					else								// not next to perp
+				else if (target)		// make sure target exists
+					if (!IN_RANGE(src, src.target, 1))
 						src.moving = 0
 						navigate_to(src.target,(src.emagged >= 2) ? (ARREST_SPEED/2 * move_arrest_delay_mult) : (ARREST_SPEED * move_arrest_delay_mult))
 						return
@@ -513,8 +508,11 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 						navigate_to(src.target)
 					return
 
-				if (!src.target.hasStatus("handcuffed") && !src.arrest_type)
-					actions.start(new/datum/action/bar/icon/secbot_cuff(src, src.target, src), src)
+				if (!src.arrest_type)
+					if(!src.target.hasStatus("handcuffed"))
+						actions.start(new/datum/action/bar/icon/secbot_cuff(src, src.target, src), src)
+					else
+						src.mode = SECBOT_IDLE
 				else if (get_dist(src, src.target) <= 1)
 					src.baton_attack(src.target)
 
@@ -1041,8 +1039,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					master.frustration = 0
 					break
 
-				if(!master.target && master?.path.len % 7 == 1) // Every 7 tiles, look for someone to kill
+				if(!master.target && master?.path.len % 5 == 1) // Every 5 tiles, look for someone to kill
 					master.look_for_perp()
+
+				if(master?.mode == SECBOT_HUNT && master.target && IN_RANGE(master, master.target, 1))
+					master.baton_attack(master.target)
+					break
 
 				if(master?.path)
 					step_to(master, master.path[1])
@@ -1058,12 +1060,10 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if (master)
 				master.moving = 0
 				master.mover = null
+				if(master.mode == SECBOT_HUNT && master.target && master.frustration < 8 && !IN_RANGE(master, master.target, 1))
+					master.navigate_to(master.target,(master.emagged >= 2) ? (ARREST_SPEED/2 * master.move_arrest_delay_mult) : (ARREST_SPEED * master.move_arrest_delay_mult))
 				master = null
 
-			//dispose()
-			return
-
-		return
 
 //secbot handcuff bar thing
 /datum/action/bar/icon/secbot_cuff
