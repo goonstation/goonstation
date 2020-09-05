@@ -6,12 +6,14 @@
 (*)When you clone someone, they will either be put into that body (if it exists), or the cloner will start producing a body for them (and then put them in it).
 (*)The cloning pod will keep a ready body indefinitely until someone is cloned into it.
 (*)You can toggle this automatic pre-generation via the right-click menu "Toggle Auto Mode".
+(*)Premature clones can have their genes fixed by hanging out in a cold cryo cell at full health for a while.
 (+)The cloner now accounts for server tick delay when processing.
 (+)Puritan-trait-havers will no longer die immediately upon cloning, but...
 (+)The cloner will now consider maximum HP changes when deciding how far along a clone is.
 (+)Reagents added to the cloner should now react properly. Previously they kinda didn't.
 (+)Checking the status of the cloning pod has been moved to Examine rather than requiring you to click on it.
 (+)Probably added a few bugs. Sorry. I tested what I could think of, but y'all are good at breaking things.
+(+)The cryo cell and freezer now show the temperature in Celsius.
 (u)Superlagg
 (p)1904
 (e)🆕|feature
