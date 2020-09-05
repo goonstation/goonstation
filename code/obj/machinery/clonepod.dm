@@ -568,9 +568,9 @@
 		C.remove_ailments() // no more cloning with heart failure
 
 	src.occupant.set_loc(get_turf(src))
-	src.update_icon()
 	src.eject_wait = 0 //If it's still set somehow.
 	src.occupant = null
+	src.update_icon()
 	return
 
 /obj/machinery/clonepod/proc/malfunction()
