@@ -561,13 +561,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	boutput(world, score_tracker.heisenhat_stats())
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
-	for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
-		if (!isdead(aiPlayer))
-			boutput(world, "<b>The AI, [aiPlayer.name] ([aiPlayer.get_message_mob().key]) had the following laws at the end of the game:</b>")
-		else
-			boutput(world, "<b>The AI, [aiPlayer.name] ([aiPlayer.get_message_mob().key]) had the following laws when it was deactivated:</b>")
+	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.centralized_ai_laws.format_for_logs()]")
 
-		aiPlayer.show_laws(1)
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] resetting gauntlet (why? who cares! the game is over!)")
 	if (gauntlet_controller.state)
@@ -575,10 +570,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #ifdef CREW_OBJECTIVES
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] displaying completed crew objectives")
 	if (successfulCrew.len)
-		boutput(world, "<B>The following crewmembers completed all of their Crew Objectives:</B>")
-		for (var/i in successfulCrew)
-			boutput(world, "<B>[i]</B>")
-		boutput(world, "Good job!")
+		boutput(world, "<B>The following crewmembers completed all of their Crew Objectives:</B><br>[successfulCrew.Join("<br>")]<br>Good job!")
 	else
 		boutput(world, "<B>Nobody completed all of their Crew Objectives!</B>")
 #endif
