@@ -3343,7 +3343,7 @@
 "bmo" = (/obj/decal/fakeobjects{anchored = 1; desc = "A vent. Cool air is gently flowing through it."; icon = 'icons/obj/atmospherics/pipe_vent.dmi'; icon_state = "hvent"; name = "air vent"},/turf/unsimulated/wall{icon = 'icons/turf/shuttle.dmi'; icon_state = "wall3"},/area/drone)
 "bmp" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor4"},/area/drone)
 "bmq" = (/obj/table/reinforced/auto,/obj/item/electronics/scanner/syndicate,/obj/item/electronics/soldering,/turf/unsimulated/floor/red/side{dir = 8},/area/drone/office)
-"bmr" = (/obj/machinery/rkit,/obj/machinery/light/small{dir = 4},/turf/unsimulated/floor/red/side{dir = 4},/area/drone/office)
+"bmr" = (/obj/machinery/rkit{olde = 1},/obj/machinery/light/small{dir = 4},/turf/unsimulated/floor/red/side{dir = 4},/area/drone/office)
 "bms" = (/obj/decal/stalagtite,/turf/unsimulated/floor/cave,/area/crater/cave/lower)
 "bmt" = (/obj/stone{dir = 1},/obj/decal/cleanable/cobweb2,/turf/unsimulated/floor/cave,/area/crater/cave/lower)
 "bmu" = (/obj/decal/cleanable/cobweb,/turf/unsimulated/floor/cave,/area/crater/cave/lower)
