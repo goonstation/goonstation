@@ -235,7 +235,7 @@
 				src.mess = 1
 				// Puritans have a bad time.
 				// This is a little different from how it was before:
-				// - Immediately take 150 tox and 150 random brute
+				// - Immediately take 250 tox and 100 random brute
 				// - 50% chance, per limb, to lose that limb
 				// - enforced premature_clone, which gibs you on death
 				// If you have a clone body that's been allowed to fully heal before
@@ -244,8 +244,8 @@
 				// This should be really rare to have happen, but I want to leave it in
 				// just in case someone manages to pull off a miracle save
 				src.occupant.bioHolder?.AddEffect("premature_clone")
-				src.occupant.take_toxin_damage(150)
-				random_brute_damage(src.occupant, 150, 0)
+				src.occupant.take_toxin_damage(250)
+				random_brute_damage(src.occupant, 100, 0)
 				if (ishuman(src.occupant))
 					var/mob/living/carbon/human/P = src.occupant
 					if (P.limbs)
@@ -458,7 +458,7 @@
 				else
 					// Clones that are idling get some freebies to keep them topped up
 					// until an actual person moves in
-					if (src.occupant.reagents.get_reagent_amount("salbutamol") < 6)
+					if (src.occupant.reagents.get_reagent_amount("salbutamol") < 2)
 						src.occupant.reagents.add_reagent("salbutamol", 2)
 					src.occupant.take_oxygen_deprivation(-10)
 					src.occupant.losebreath = 0
