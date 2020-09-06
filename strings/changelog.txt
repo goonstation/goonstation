@@ -1,5 +1,9 @@
 
 (t)sun sep 06 20
+(u)Nebulacrity
+(p)2057
+(e)🆕🎨|feature, sprites
+(*)Added a new mutation: Hemochromia. NanoTrasen has released a statement that differently colored blood is perfectly normal and not worth being alarmed over.
 (u)zjdtmkhzt
 (p)2059
 (e)⚖🆕|balance, feature
