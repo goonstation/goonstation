@@ -995,7 +995,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 
 	if(stand)
-		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform.Turn(-90), time = 3, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = 0, transform = null, time = 3, easing = LINEAR_EASING)
 	else
 		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(90), time = 2, easing = LINEAR_EASING)
 
