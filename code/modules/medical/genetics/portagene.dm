@@ -56,8 +56,17 @@
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
-	relaymove(mob/user as mob, dir)
-		eject(user)
+	relaymove(mob/usr as mob, dir)
+		if (!isalive(usr))
+			return
+		if (src.locked)
+			boutput(usr, "<span class='alert'><b>The scanner door is locked!</b></span>")
+			return
+
+		src.go_out()
+		add_fingerprint(usr)
+		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+		return
 
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
@@ -170,7 +179,7 @@
 	power_change()
 		return
 
-	verb/eject(var/mob/usr)
+	verb/eject()
 		set name = "Eject Occupant"
 		set src in oview(1)
 		set category = "Local"
@@ -203,6 +212,7 @@
 		src.go_in(usr)
 		add_fingerprint(usr)
 		return
+
 
 	verb/lock()
 		set name = "Scanner Lock"
