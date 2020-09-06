@@ -388,8 +388,7 @@ var/datum/score_tracker/score_tracker
 		if(data_core.tickets.len)
 			var/list/people_with_tickets = list()
 			for (var/datum/ticket/T in data_core.tickets)
-				if(!(T.target in people_with_tickets))
-					people_with_tickets += T.target
+				people_with_tickets |= T.target
 
 			for(var/N in people_with_tickets)
 				score_tracker.tickets_text += "<b>[N]</b><br><br>"
@@ -405,8 +404,7 @@ var/datum/score_tracker/score_tracker
 		if(data_core.fines.len)
 			var/list/people_with_fines = list()
 			for (var/datum/fine/F in data_core.fines)
-				if(!(F.target in people_with_fines))
-					people_with_fines += F.target
+				people_with_fines |= F.target
 
 			for(var/N in people_with_fines)
 				score_tracker.tickets_text += "<b>[N]</b><br><br>"

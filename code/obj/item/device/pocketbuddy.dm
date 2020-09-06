@@ -140,8 +140,7 @@
   src.speak("System message. Pocketbuddy v0.9 initializing.")
   sleep(2 SECONDS)
   src.speak(src.get_quip_for("init"))
-  if(!(src in processing_items))
-    processing_items += src
+  processing_items |= src
 
 /obj/item/device/pocketbuddy/proc/turn_off()
   src.speak("Pocketbuddy shutting down.")

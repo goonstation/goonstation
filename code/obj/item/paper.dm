@@ -1328,7 +1328,7 @@ WHO DID THIS */
 	throw_speed = 1
 	throw_spin = 0
 
-/obj/item/paper/folded/plane/hit_check()
+/obj/item/paper/folded/plane/hit_check(datum/thrown_thing/thr)
 	if(src.throwing)
 		src.throw_unlimited = 1
 

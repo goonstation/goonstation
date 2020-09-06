@@ -202,7 +202,7 @@
 
 	if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		src.toxloss = 0
-		return
+		return 1 //prevent organ damage
 
 	src.toxloss = max(0,src.toxloss + amount)
 	return
@@ -232,7 +232,7 @@
 /mob/living/carbon/get_oxygen_deprivation()
 	return src.oxyloss
 
-/mob/living/carbon/hitby(atom/movable/AM)
+/mob/living/carbon/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	if(src.find_type_in_hand(/obj/item/bat))
 		var/turf/T = get_turf(src)
 		var/turf/U = get_step(src, src.dir)

@@ -34,8 +34,7 @@
 		src.light = new /datum/light/point
 		src.light.attach(src)
 		src.light.set_color(1,0,1)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id) // hack to make microphones work
 		for(var/obj/item/mechanics/miccomp/mic in src.contents)
@@ -353,8 +352,7 @@
 	New()
 		particles = new/list()
 		AddComponent(/datum/component/mechanics_holder)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		return ..()
 
 
@@ -1954,7 +1952,7 @@
 		if(input.signal in signals)
 			signals.Remove(input.signal)
 			if(current_index > length(signals))
-				current_index = length(signals)
+				current_index = length(signals) ? length(signals) : 1 // Don't let current_index be 0
 			tooltip_rebuild = 1
 			if(announce)
 				componentSay("Removed : [input.signal]")

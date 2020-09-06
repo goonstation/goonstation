@@ -1122,7 +1122,7 @@
 		src.warm_count = max(src.warm_count, 0)
 		src.hatch_check(0, user)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		//..() <- Fuck off mom, I'm 25 and I do what I want =I
 		src.hatch_check(1, null, T)

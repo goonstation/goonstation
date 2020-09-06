@@ -29,7 +29,7 @@
 			user.suiciding = 0
 	return 1
 
-/obj/item/basketball/throw_impact(atom/hit_atom)
+/obj/item/basketball/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.icon_state = "bball"
 	if(hit_atom)
@@ -257,7 +257,7 @@
 	if(user)
 		src.icon_state = "bloodbowlball"
 
-/obj/item/bloodbowlball/throw_impact(atom/hit_atom)
+/obj/item/bloodbowlball/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.icon_state = "bloodbowlball"
 	if(hit_atom)

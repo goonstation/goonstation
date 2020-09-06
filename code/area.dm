@@ -199,8 +199,7 @@
 						if( sanctuary && !blocked && !(oldarea.sanctuary))
 							boutput( enteringM, "<b style='color:#31BAE8'>You are entering a sanctuary zone. You cannot be harmed by other players here.</b>" )
 						if (src.name != "Space" || src.name != "Ocean") //Who cares about making space active gosh
-							if (!(enteringM.mind in src.population))
-								src.population += enteringM.mind
+							src.population |= enteringM.mind
 							if (!src.active)
 								src.active = 1
 

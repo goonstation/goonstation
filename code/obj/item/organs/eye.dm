@@ -187,8 +187,7 @@
 		if (M.client)
 			src.assigned = M.client
 			SPAWN_DBG(-1)
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 		return
 
 	on_removal()
@@ -315,8 +314,7 @@
 		if (M.client)
 			src.assigned = M.client
 			SPAWN_DBG(-1)
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 		return
 
 	on_removal()

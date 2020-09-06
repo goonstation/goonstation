@@ -830,6 +830,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(to_del)
 		newbody.remove_item(to_del)
 		qdel(to_del)
+	to_del = locate(/obj/item/storage/bible) in newbody
+	if(to_del)
+		newbody.remove_item(to_del)
+		qdel(to_del)
 	if(newbody.wear_id)
 		newbody.wear_id:access = get_access("Captain")
 

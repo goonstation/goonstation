@@ -782,7 +782,7 @@
 		else
 			return ..()
 
-	hitby(AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		if (ismob(AM))
 			var/mob/M = AM

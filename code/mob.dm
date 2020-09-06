@@ -216,7 +216,6 @@
 //end of needed for timestop
 	var/dir_locked = FALSE
 
-	var/list/cooldowns = null
 	var/list/mob_properties
 
 	var/last_move_dir = null
@@ -239,7 +238,6 @@
 	huds = new
 	render_special = new
 	traitHolder = new(src)
-	cooldowns = new
 	if (!src.bioHolder)
 		src.bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
@@ -2221,11 +2219,11 @@
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
 
-/mob/throw_impact(atom/hit, list/params)
+/mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(!isturf(hit) || hit.density)
-		if (throw_traveled <= 410)
+		if (thr?.get_throw_travelled() <= 410)
 			if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
-				random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 				if (!src.hasStatus("weakened"))
 					src.changeStatus("weakened", 2 SECONDS)
 					src.force_laydown_standup()

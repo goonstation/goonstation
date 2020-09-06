@@ -1586,7 +1586,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	icon_state = "dart"
 	throw_spin = 0
 
-	throw_impact(M)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (ishuman(M) && prob(5))
 			var/mob/living/carbon/human/H = M
@@ -1611,7 +1611,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	throw_spin = 0
 	throw_speed = 3
 
-	throw_impact(M)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M

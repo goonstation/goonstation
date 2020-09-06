@@ -309,7 +309,7 @@
 			return 0
 		return 1
 
-	hitby(AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
 		playsound(src.loc, src.hitsound , 100, 1)

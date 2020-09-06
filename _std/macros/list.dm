@@ -25,8 +25,7 @@
 /proc/uniquelist(var/list/L)
 	. = list()
 	for(var/item in L)
-		if(!(item in .))
-			. += item
+		. |= item
 
 proc/pickweight(list/L)    // make this global
 	var/total = 0

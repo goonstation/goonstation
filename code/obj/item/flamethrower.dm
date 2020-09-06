@@ -479,8 +479,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			item_state = "flamethrower1"
 			force = 10
 			hit_type = DAMAGE_BURN
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			icon_state = "flamethrower_oxy_fuel"
 			force = 3
@@ -566,8 +565,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	if(lit)
 		force = 12
 		hit_type = DAMAGE_BURN
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 	else
 		force = 6
 		hit_type = DAMAGE_BLUNT

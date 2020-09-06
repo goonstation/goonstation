@@ -156,12 +156,10 @@ datum
 					parent_controller = controller
 
 				queue_update_tile(turf/simulated/T)
-					if (!(T in tiles_to_update))
-						tiles_to_update += T
+					tiles_to_update |= T
 
 				queue_update_group(datum/air_group)
-					if (!(air_group in groups_to_rebuild))
-						groups_to_rebuild += air_group
+					groups_to_rebuild |= air_group
 
 				update_space_sample()
 					if (!space_sample || !(space_sample.turf_flags & CAN_BE_SPACE_SAMPLE))

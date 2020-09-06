@@ -554,7 +554,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		else return ..()
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if (ismob(A))
 			src.hit(A)
 		if (src.amount <= 0)

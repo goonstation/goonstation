@@ -114,7 +114,7 @@
 			attach_sticker_manual(user)
 		return
 
-	throw_impact(mob/M as mob)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
 			if (prob(30) || good_throw && prob(70))

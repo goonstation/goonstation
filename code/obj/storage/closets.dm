@@ -301,7 +301,7 @@
 		if (!istype(M) || M.loc != src)
 			return
 
-		if (M.throw_count || istype(OldLoc, /turf/space) || (M.m_intent != "walk"))
+		if (M.throwing || istype(OldLoc, /turf/space) || (M.m_intent != "walk"))
 			var/flingdir = turn(get_dir(src.loc, OldLoc), 180)
 			src.throw_at(get_edge_target_turf(src, flingdir), throw_strength, 1)
 			return

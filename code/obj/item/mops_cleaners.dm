@@ -406,12 +406,9 @@ WET FLOOR SIGN
 /obj/item/sponge/New()
 	..()
 	src.create_reagents(50)
-	if (!(src in processing_items))
-		processing_items.Add(src)
-
+	processing_items |= src
 /obj/item/sponge/disposing()
-	if (src in processing_items)
-		processing_items.Remove(src)
+	processing_items -= src
 	..()
 
 /obj/item/sponge/examine()
@@ -445,7 +442,7 @@ WET FLOOR SIGN
 		user.put_in_hand_or_drop(I)
 		qdel(src)
 
-/obj/item/sponge/throw_impact(atom/hit)
+/obj/item/sponge/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(hit && ishuman(hit))
 		if(prob(hit_face_prob))
 			var/mob/living/carbon/human/DUDE = hit
@@ -518,7 +515,7 @@ WET FLOOR SIGN
 				if (!F && T && T.active_liquid)
 					F = T.active_liquid
 
-				if (!(T && T.reagents) && !F) return
+				if (!(T && T.reagents) && !istype(F)) return
 
 				if (F)
 					if (F.group)

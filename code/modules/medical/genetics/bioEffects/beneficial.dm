@@ -139,6 +139,7 @@
 			return
 		var/mob/living/carbon/human/H = owner
 		H.toxloss = 0
+		health_update_queue |= H
 
 /datum/bioEffect/breathless
 	name = "Anaerobic Metabolism"
@@ -167,6 +168,7 @@
 		var/mob/living/carbon/human/H = owner
 		H.oxyloss = 0
 		H.losebreath = 0
+		health_update_queue |= H
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"

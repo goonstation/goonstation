@@ -16,6 +16,7 @@
 	var/atom/return_target
 	var/bonus_throwforce = 0
 	var/end_throw_callback
+	var/mob/user
 	var/hitAThing = FALSE
 	var/dist_travelled = 0
 	var/speed_error = 0
@@ -40,12 +41,18 @@
 		src.return_target = return_target
 		src.bonus_throwforce = bonus_throwforce
 		src.end_throw_callback = end_throw_callback
+		src.user = usr // ew
 		..()
+
+	proc/get_throw_travelled()
+		. = src.dist_travelled //dist traveled is super innacurrate, especially when stacking throws
+		if (src.thrown_from) //if we have this param we should use it to get the REAL distance.
+			. = get_dist(get_turf(thing), get_turf(src.thrown_from))
 
 var/global/datum/controller/throwing/throwing_controller = new
 
 /datum/controller/throwing
-	var/global/list/datum/thrown_thing/thrown
+	var/list/datum/thrown_thing/thrown
 	var/running = FALSE
 
 /datum/controller/throwing/proc/start()
@@ -100,10 +107,9 @@ var/global/datum/controller/throwing/throwing_controller = new
 				end_throwing = TRUE
 				break
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
-			var/hit_thing = thing.hit_check()
+			var/hit_thing = thing.hit_check(thr)
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
-			thing.throw_count++ // if hit_check stopped us let's end this now
 			if(!thing.throwing || hit_thing)
 				end_throwing = TRUE
 				break
@@ -125,14 +131,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 			thing.throwing = 0
 			thing.throw_unlimited = 0
 
-			thing.throw_traveled = thr.dist_travelled //dist traveled is super innacurrate, especially when stacking throws
-			if (thr.thrown_from) //if we have this param we should use it to get the REAL distance.
-				thing.throw_traveled = get_dist(get_turf(thing), get_turf(thr.thrown_from))
-
-			thing.throw_impact(get_turf(thing), thr.params)
-
-			thing.throw_traveled = 0
-			thing.throw_count = 0
+			thing.throw_impact(get_turf(thing), thr)
 
 			thing.throwforce -= thr.bonus_throwforce
 

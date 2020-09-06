@@ -68,7 +68,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		updateIcon()
 		..()
 //This crap is here so nothing can destroy it.
-	hitby()
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		SHOULD_CALL_PARENT(FALSE)
 	reagent_act()
 	bullet_act()

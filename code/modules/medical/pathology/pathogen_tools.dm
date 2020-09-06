@@ -188,8 +188,7 @@
 				var/datum/reagent/RE = src.reagents.reagent_list[R]
 				if (R == "pathogen")
 					if (src.medium)
-						if (!(src in processing_items))
-							processing_items.Add(src)
+						processing_items |= src
 				else if (R in pathogen_controller.media)
 					if (src.medium && src.medium.id != R)
 						set_dirty("There are multiple, incompatible growth media in the petri dish.")
@@ -204,8 +203,7 @@
 						src.reagents.reagent_list -= R
 						src.reagents.update_total()
 						if (src.reagents.has_reagent("pathogen"))
-							if (!(src in processing_items))
-								processing_items.Add(src)
+							processing_items |= src
 					else
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)

@@ -1569,7 +1569,7 @@ keeping this here because I want to make something else with it eventually
 		else
 			return ..()
 
-	hitby(atom/movable/AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		if (isitem(AM))
 			src.visible_message("[AM] lands on [src]!")

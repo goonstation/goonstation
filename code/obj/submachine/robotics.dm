@@ -408,8 +408,7 @@ ported and crapped up by: haine
 			var/trans = src.active_tank.reagents.trans_to(target, amt_to_transfer)
 			user.show_text("You transfer [trans] unit\s of the solution to [target]. [active_tank.reagents.total_volume] unit\s remain.", "blue")
 			playsound(loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 0) // Play a sound effect.
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			return ..() // call your parents!!
 

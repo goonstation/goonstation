@@ -378,7 +378,7 @@ TRAYS
 			return ..()
 
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			if(ismob(usr))
@@ -608,7 +608,7 @@ TRAYS
 	proc/unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
 		playsound(get_turf(src), "sound/items/plate_tap.ogg", 30, 1)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if(ordered_contents.len == 0)
 			return
@@ -1178,7 +1178,7 @@ TRAYS
 		else
 			..()
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		var/list/throw_targets = list()
 		if(platenum == 0)

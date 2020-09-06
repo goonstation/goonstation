@@ -385,7 +385,7 @@
 		..()
 		return
 	//stolen from dagger, not much too it
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iswerewolf(A))
 			if (istype(usr, /mob))
 				A:lastattacker = usr
