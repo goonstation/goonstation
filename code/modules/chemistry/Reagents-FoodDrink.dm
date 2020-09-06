@@ -1,4 +1,9 @@
 //Contains reagents related to eating or drinking.
+
+ABSTRACT_TYPE(/datum/reagent/fooddrink)
+ABSTRACT_TYPE(/datum/reagent/fooddrink/alcoholic)
+ABSTRACT_TYPE(/datum/reagent/fooddrink/temp_bioeffect)
+
 datum
 	reagent
 		fooddrink/

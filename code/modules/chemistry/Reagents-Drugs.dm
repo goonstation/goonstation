@@ -1,4 +1,7 @@
 //Contains wacky space drugs
+
+ABSTRACT_TYPE(/datum/reagent/drug)
+
 datum
 	reagent
 		drug/

@@ -1,4 +1,7 @@
 //Contains medical reagents / drugs.
+
+ABSTRACT_TYPE(/datum/reagent/medical)
+
 datum
 	reagent
 		medical/

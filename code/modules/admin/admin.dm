@@ -1413,10 +1413,10 @@ var/global/noir = 0
 				var/list/L = list()
 				var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 				if(searchFor)
-					for(var/R in childrentypesof(/datum/reagent))
+					for(var/R in concrete_typesof(/datum/reagent))
 						if(findtext("[R]", searchFor)) L += R
 				else
-					L = childrentypesof(/datum/reagent)
+					L = concrete_typesof(/datum/reagent)
 
 				var/type
 				if(L.len == 1)

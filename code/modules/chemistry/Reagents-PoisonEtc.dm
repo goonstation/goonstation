@@ -1,4 +1,9 @@
 //Contains reagents that are poisons or otherwise intended to be harmful
+
+ABSTRACT_TYPE(/datum/reagent/harmful)
+ABSTRACT_TYPE(/datum/reagent/harmful/simple_damage_toxin)
+ABSTRACT_TYPE(/datum/reagent/harmful/simple_damage_burn)
+
 datum
 	reagent
 		harmful/

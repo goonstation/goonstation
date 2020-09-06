@@ -1,5 +1,8 @@
 //Contains disease reagents.
 
+ABSTRACT_TYPE(/datum/reagent/disease)
+//this is the solution for now. until i refactor all reagents to use absolute pathing :x
+
 datum
 	reagent
 		disease/

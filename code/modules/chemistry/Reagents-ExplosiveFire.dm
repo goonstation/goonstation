@@ -1,4 +1,7 @@
 //Contains Fire / Explosion / Implosion related reagents.
+
+ABSTRACT_TYPE(/datum/reagent/combustible)
+
 datum
 	reagent
 		combustible/
