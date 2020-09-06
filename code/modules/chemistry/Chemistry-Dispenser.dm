@@ -470,22 +470,143 @@
 			ch_window.Unsubscribe(usr.client)
 			return
 
-	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
-
 	attack_hand(mob/user as mob)
-		if(status & (NOPOWER|BROKEN))
+		return ui_interact(user)
+
+	ui_state(mob/user)
+		return tgui_default_state
+
+	ui_status(mob/user, datum/ui_state/state)
+		return min(
+			state.can_use_topic(src, user),
+			tgui_broken_state.can_use_topic(src, user),
+			tgui_not_incapacitated_state.can_use_topic(src, user)
+		)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ChemDispenser", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		var/list/data = list()
+		var/list/beakerContentsTemp = list()
+		var/list/dispensableReagentsTemp = list()
+		var/list/
+		data["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
+		data["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
+		data["beakerName"] = capitalize(glass_name)
+		if(beaker)
+			var/datum/reagents/R = beaker:reagents
+			if(istype(R) && R.reagent_list.len>0)
+				for(var/reagent in R.reagent_list)
+					var/datum/reagent/RE = R.reagent_list[reagent]
+					beakerContentsTemp.Add(list(list(
+						name = reagents_cache[reagent],
+						id = reagent,
+						volume = RE.volume
+					)))
+		if(dispensable_reagents)
+			for(var/reagent in dispensable_reagents)
+				dispensableReagentsTemp.Add(list(list(
+					name = reagents_cache[reagent],
+					id = reagent
+				)))
+		if(current_account)
+			for (var/datum/reagent_group/group in current_account.groups)
+
+		data["dispensableReagents"] = dispensableReagentsTemp
+		data["beakerContents"] = beakerContentsTemp
+		data["removeAmount"] = user_remove_amt
+		data["addAmount"] = user_dispense_amt
+		return data
+
+	ui_act(action, params)
+		if(..())
 			return
-		src.add_dialog(user)
-		/*
-		src.update_html()
-		user.Browse("<TITLE>[dispenser_name] Dispenser</TITLE>[dispenser_name] dispenser:<BR>[src.HTML]", "window=chem_dispenser;size=500x800;title=Chemistry Dispenser")
-		*/
-		ch_window.Subscribe(user.client)
-		return
-
-	proc/update_html()
-
+		switch(action)
+			if("dispense")
+				if (!(params["reagentId"] in dispensable_reagents))
+					return
+				beaker.reagents.add_reagent(params["reagentId"], isnum(src.user_dispense_amt) ? src.user_dispense_amt : 10)
+				beaker.reagents.handle_reactions()
+				src.update_icon()
+				src.send_beaker_details()
+				send_reagent_details()
+				doing_a_thing = 0
+				playsound(src.loc, dispense_sound, 50, 1, 0.3)
+				. = TRUE
+			if("eject")
+				if (beaker)
+					usr.put_in_hand_or_drop(beaker)
+					beaker = null
+					src.update_icon()
+					. = TRUE
+				else
+					var/obj/item/I = usr.equipped()
+					if (istype(I, glass_path))
+						usr.drop_item()
+						I.set_loc(src)
+						src.beaker = I
+						src.update_icon()
+						. = TRUE
+			if("remove")
+				beaker.reagents.remove_reagent(params["reagentId"], params["amount"])
+				src.update_icon()
+				send_beaker_details()
+				send_reagent_details()
+				. = TRUE
+			if("isolate")
+				beaker.reagents.isolate_reagent(params["reagentId"])
+				src.update_icon()
+				send_beaker_details()
+				send_reagent_details()
+				. = TRUE
+			if("all")
+				beaker.reagents.del_reagent(params["reagentId"])
+				src.update_icon()
+				send_beaker_details()
+				send_reagent_details()
+				. = TRUE
+			if("setdispense")
+				src.user_dispense_amt = clamp(round(params["amount"]), 1, 100)
+				. = TRUE
+			if("setremove")
+				src.user_remove_amt = clamp(round(params["amount"]), 1, 100)
+				. = TRUE
+			if("new_group")
+				var/reagents = input("Which reagents (separated by semicolons, indicate amount with equals signs)?","New Group") as null|text
+				if (isnull(reagents) || !length(reagents))
+					return
+				var/name = input("What should the reagent group be called?","New Group") as null|text
+				name = copytext(sanitize(html_encode(name)), 1, MAX_MESSAGE_LEN)
+				if (isnull(name) || !length(name) || name == " ")
+					doing_a_thing = 0
+					return
+				//DEBUG(reagents)
+				var/list/reagentlist = params2list(reagents)
+				//DEBUG(list2params(reagentlist))
+				var/datum/reagent_group/G = new /datum/reagent_group()
+				for (var/reagent in reagentlist)
+					if (lowertext(reagent) in src.dispensable_reagents)
+						G.reagents += lowertext(reagent)
+						//Special amounts!
+						if (istext(reagentlist[reagent])) //Set a dispense amount
+							var/num = text2num(reagentlist[reagent])
+							if(!num) num = 10
+							G.reagents[lowertext(reagent)] = clamp(round(num), 1, 100)
+						else //Default to 10 if no specific amount given
+							G.reagents[lowertext(reagent)] = 10
+				if(G.reagents == 0)
+					doing_a_thing = 0
+					return
+				G.name = name
+				G.update_desc()
+				if (current_account)
+					current_account.groups += G
+				send_group_details()
+				return
 
 	proc/eject_card()
 		if (src.user_id)
