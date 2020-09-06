@@ -347,17 +347,20 @@
 		if (src.occupant && src.occupant.loc == src)
 			// If we have a body inside the pod right now...
 
-			var/abort = 0
 			if (src.occupant.traitHolder && src.occupant.traitHolder.hasTrait("puritan"))
 				// puritans get punted out immediately
-				abort = 1
+				src.go_out(1)
+				src.connected_message("Clone Aborted: Genetic Structure Incompatible.")
+				src.send_pda_message("Clone Aborted: Genetic Structure Incompatible")
+				power_usage = 200
+				return ..()
 
 			if (src.cloneslave == 1 && prob(10))
 				// Mindslave cloning modules make obnoxious noises.
 				playsound(src.loc, pick("sound/machines/glitch1.ogg","sound/machines/glitch2.ogg",
 				"sound/machines/genetics.ogg","sound/machines/shieldoverload.ogg"), 50, 1)
 
-			if (isdead(src.occupant) || src.occupant.suiciding || abort)  //Autoeject corpses and suiciding dudes.
+			if (isdead(src.occupant) || src.occupant.suiciding)  //Autoeject corpses and suiciding dudes.
 				// Dead or suiciding people are ejected.
 				src.go_out(1)
 				src.connected_message("Clone Rejected: Deceased.")
@@ -636,6 +639,12 @@
 		src.operating = 0
 		src.attempting = 0
 
+		if ((src.occupant.max_health - src.occupant.health) > (heal_level + 30) && src.occupant.bioHolder)
+			// this seems to often not work right, changing 20 to 50
+			// changing to 30 and rewriting to consider the /damage/ someone has;
+			// max_health can vary depending on other
+			src.occupant.bioHolder.AddEffect("premature_clone")
+
 		if (src.mess) //Clean that mess and dump those gibs!
 			src.mess = 0
 			gibs(get_turf(src)) // we don't need to do if/else things just to say "put gibs on this thing's turf"
@@ -654,12 +663,6 @@
 
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
-
-		if ((src.occupant.max_health - src.occupant.health) > (heal_level + 30) && src.occupant.bioHolder)
-			// this seems to often not work right, changing 20 to 50
-			// changing to 30 and rewriting to consider the /damage/ someone has;
-			// max_health can vary depending on other factors
-			src.occupant.bioHolder.AddEffect("premature_clone")
 
 		if (src.occupant.get_oxygen_deprivation())
 			src.occupant.take_oxygen_deprivation(-INFINITY)
