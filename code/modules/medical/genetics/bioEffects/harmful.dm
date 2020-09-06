@@ -296,7 +296,7 @@
 		if (iscarbon(owner))
 			var/mob/living/carbon/C = owner
 			if (prob(tox_prob))
-				C.toxloss += tox_amount
+				C.take_toxin_damage(tox_amount)
 
 /datum/bioEffect/tourettes
 	name = "Tourettes"
