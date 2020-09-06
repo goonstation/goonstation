@@ -1,7 +1,7 @@
 #define MEAT_NEEDED_TO_CLONE	16
 #define MAXIMUM_MEAT_LEVEL		100
 #define DEFAULT_MEAT_USED_PER_TICK 0.6
-#define DEFAULT_SPEED_BONUS 1.5
+#define DEFAULT_SPEED_BONUS 1
 
 #define MEAT_LOW_LEVEL	MAXIMUM_MEAT_LEVEL * 0.15
 
@@ -40,6 +40,7 @@
 	var/gen_bonus = 1 //Normal generation speed
 	var/speed_bonus = DEFAULT_SPEED_BONUS // Multiplier that can be modified by modules
 	var/auto_mode = 1
+	var/auto_delay = 5
 
 	power_usage = 200
 
@@ -147,6 +148,9 @@
 	proc/start_clone(force = 0)
 		// Returns 1 if we started a clone or 0 if we couldn't due to meat reasons
 
+		// Reset the time until the next automatic start.
+		src.auto_delay = initial(src.auto_delay)
+
 		if (src.occupant)
 			// If we already have an occupant then we don't really need to start it, do we?
 			return 1
@@ -162,8 +166,11 @@
 		src.update_icon()
 
 		//Get the clone body ready. They start out with a bunch of damage right off.
-		SPAWN_DBG(0.5 SECONDS) //Organs may not exist yet if we call this right away.
-			random_brute_damage(src.occupant, 90, 1)
+		// changing this to takedamage which should hopefully apply it right away
+		// SPAWN_DBG(0.5 SECONDS) //Organs may not exist yet if we call this right away.
+		// 	random_brute_damage(src.occupant, 90, 1)
+		src.occupant.TakeDamage("chest", 90, 0, 0, DAMAGE_BLUNT)
+
 		src.occupant.take_toxin_damage(50)
 		src.occupant.take_oxygen_deprivation(40)
 		src.occupant.take_brain_damage(60)
@@ -220,13 +227,32 @@
 		if(src.occupant.bioHolder.clone_generation > 1)
 			src.occupant.setStatus("maxhealth-", null, -((src.occupant.bioHolder.clone_generation - 1) * 15))
 
-		// @TODO Puritan needs some sort of new penalty rather than this...
-		// Lop off random limbs + give the bad clone mutation + fuck up health?
+
 		src.mess = 0
 		if (traits && traits.len && src.occupant.traitHolder)
 			src.occupant.traitHolder.traits = traits
 			if (src.occupant.traitHolder.hasTrait("puritan"))
 				src.mess = 1
+				// Puritans have a bad time.
+				// This is a little different from how it was before:
+				// - Immediately take 150 tox and 150 random brute
+				// - 50% chance, per limb, to lose that limb
+				// - enforced premature_clone, which gibs you on death
+				// If you have a clone body that's been allowed to fully heal before
+				// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
+				// out of deep critical health before they turn into chunky salsa
+				// This should be really rare to have happen, but I want to leave it in
+				// just in case someone manages to pull off a miracle save
+				src.occupant.bioHolder?.AddEffect("premature_clone")
+				src.occupant.take_toxin_damage(150)
+				random_brute_damage(src.occupant, 150, 0)
+				if (ishuman(src.occupant))
+					var/mob/living/carbon/human/P = src.occupant
+					if (P.limbs)
+						var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
+						for (var/limb in limbs)
+							if (prob(50))
+								P.limbs.sever(limb)
 
 		if (src.mess)
 			boutput(src.occupant, "<span class='notice'><b>Clone generation process initi&mdash;</b></span><span class='alert'> oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b></span>")
@@ -323,28 +349,8 @@
 
 			var/abort = 0
 			if (src.occupant.traitHolder && src.occupant.traitHolder.hasTrait("puritan"))
-				// Puritans have a bad time.
-				// This is a little different from how it was before:
-				// - Immediately take 150 tox and 150 random brute
-				// - 50% chance, per limb, to lose that limb
-				// - enforced premature_clone, which gibs you on death
-				// If you have a clone body that's been allowed to fully heal before
-				// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
-				// out of deep critical health before they turn into chunky salsa
-				// This should be really rare to have happen, but I want to leave it in
-				// just in case someone manages to pull off a miracle save
+				// puritans get punted out immediately
 				abort = 1
-				src.occupant.bioHolder?.AddEffect("premature_clone")
-				src.occupant.take_toxin_damage(150)
-				random_brute_damage(src.occupant, 150, 0)
-				if (ishuman(src.occupant))
-					var/mob/living/carbon/human/P = src.occupant
-					if (P.limbs)
-						var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
-						for (var/limb in limbs)
-							if (prob(50))
-								P.limbs.sever(limb)
-				// src.occupant.death()
 
 			if (src.cloneslave == 1 && prob(10))
 				// Mindslave cloning modules make obnoxious noises.
@@ -443,9 +449,6 @@
 			else if (src.occupant.max_health - src.occupant.health <= src.heal_level)
 				// Clone is more or less fully complete!
 
-				// Unlock the pod.
-				src.locked = 0
-
 				if (src.attempting && !eject_wait)
 					// If this body has an actual mind in it, they're done.
 					// Sure hope the outside is safe for ya.
@@ -475,7 +478,9 @@
 
 			if (!src.operating && src.auto_mode)
 				// Attempt to start a new clone (if possible)
-				src.start_clone()
+				src.auto_delay -= mult
+				if (src.auto_delay < 0)
+					src.start_clone()
 
 			return ..()
 
@@ -518,8 +523,8 @@
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 			logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
-			speed_bonus *= 2
-			meat_used_per_tick *= 3
+			speed_bonus *= 3
+			meat_used_per_tick *= 4
 			is_speedy = 1
 			user.drop_item()
 			qdel(W)
