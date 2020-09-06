@@ -22,6 +22,7 @@
 	var/obj/item/organ/stomach = null
 	var/obj/item/organ/intestines = null
 	var/obj/item/organ/appendix = null
+	var/obj/item/organ/tail = null
 	var/lungs_changed = 2				//for changing lung stamina debuffs if it has changed since last cycle. starts at 2 for having 2 working lungs
 
 	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
@@ -44,7 +45,8 @@
 		"stomach"="/obj/item/organ/stomach",
 		"intestines"="/obj/item/organ/intestines",
 		"appendix"="/obj/item/organ/appendix",
-		"butt"="/obj/item/clothing/head/butt")
+		"butt"="/obj/item/clothing/head/butt",
+		"tail"="/obj/item/organ/tail")
 
 	New(var/mob/living/L)
 		..()
@@ -115,6 +117,9 @@
 		if (appendix)
 			appendix.donor = null
 			appendix.holder = null
+		if (tail)
+			tail.donor = null
+			tail.holder = null
 
 		head = null
 		skull = null
@@ -134,6 +139,7 @@
 		spleen = null
 		pancreas = null
 		appendix = null
+		tail = null
 
 		donor = null
 		..()
@@ -331,6 +337,9 @@
 		if (!src.appendix)
 			src.appendix = new /obj/item/organ/appendix(src.donor, src)
 			organ_list["appendix"] = appendix
+		if (!src.tail)
+			src.tail = null	// Humans dont have tailbones, fun fact
+			organ_list["tail"] = tail
 
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)
@@ -387,6 +396,8 @@
 				organ = "pancreas"
 			else if(organ == appendix)
 				organ = "appendix"
+			else if(organ == tail)
+				organ = "tail"
 			else
 				return 0 // what the fuck are you trying to remove
 
@@ -684,6 +695,18 @@
 				src.donor.update_body()
 				src.organ_list["appendix"] = null
 				return myappendix
+
+			if ("tail")
+				if (!src.tail)
+					return 0
+				var/obj/item/organ/tail/mytail = src.tail
+				mytail.set_loc(location)
+				mytail.on_removal()
+				mytail.holder = null
+				src.tail = null
+				src.donor.update_body()
+				src.organ_list["tail"] = null
+				return mytail
 
 	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
 		if (!src.donor || !I || !organ)
@@ -1032,6 +1055,21 @@
 				newappendix.set_loc(src.donor)
 				newappendix.holder = src
 				organ_list["appendix"] = newappendix
+				success = 1
+
+			if ("tail")
+				if (src.tail)
+					if (force)
+						qdel(src.tail)
+					else
+						return 0
+				var/obj/item/organ/tail/newtail = I
+				newtail.op_stage = op_stage
+				src.tail = newtail
+				newtail.set_loc(src.donor)
+				newtail.holder = src
+				organ_list["tail"] = newtail
+				src.donor.update_body()
 				success = 1
 
 		if (success)
