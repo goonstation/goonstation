@@ -87,7 +87,7 @@
 				return
 
 			var/obj/O = A
-			if(istype(O,/obj/machinery/rkit))
+			if(istype(O,/obj/machinery/rkit) || istype(O, /obj/item/electronics/frame))
 				return
 
 			if(O.mats == 0 || isnull(O.mats) || O.disposed || O.is_syndicate != 0)

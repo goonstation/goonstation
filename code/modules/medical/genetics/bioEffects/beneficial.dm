@@ -499,7 +499,7 @@ var/list/radio_brains = list()
 
 /datum/bioEffect/blood_overdrive
 	name = "Hemopoiesis Overdrive"
-	desc = "Subject has regenerates blood far faster than the average spaceman."
+	desc = "Subject regenerates blood far faster than the average spaceman."
 	id = "blood_overdrive"
 	probability = 20
 	effectType = EFFECT_TYPE_POWER
