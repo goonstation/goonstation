@@ -444,7 +444,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if (isliving(entering) && isturf(owner) && prob(75))
 			var/mob/living/L = entering
 			if(L.slip())
-				boutput(C, "You slip on the icy floor!")
+				boutput(L, "You slip on the icy floor!")
 				playsound(get_turf(owner), "sound/misc/slip.ogg", 30, 1)
 		return
 
