@@ -1826,7 +1826,7 @@ datum
 								H.show_text("Your chest feels heavy.", "red")
 								H.emote(pick("gasp", "choke", "cough"))
 								H.losebreath += (1 * mult)
-								H.oxyloss += rand(5, 10) * mult
+								H.take_oxygen_deprivation(rand(5, 10) * mult)
 							if(2) //Drop stuff
 								H.show_text(pick_string("chemistry_reagent_messages.txt", "strychnine2"), "red")
 								H.changeStatus("stunned", 20 * mult)

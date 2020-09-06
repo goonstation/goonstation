@@ -202,7 +202,7 @@
 
 	if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		src.toxloss = 0
-		return
+		return 1 //prevent organ damage
 
 	src.toxloss = max(0,src.toxloss + amount)
 	return
