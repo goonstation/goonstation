@@ -1307,3 +1307,65 @@ var/datum/action_controller/actions
 			..()
 			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
 				over_object.attackby(target, owner, params)
+
+/// general purpose action to anchor or unanchor stuff
+/datum/action/bar/icon/anchor_or_unanchor
+	id = "table_tool_interact"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/target
+	var/obj/item/tool
+	var/unanchor = FALSE
+
+	New(var/obj/target, var/obj/item/tool, var/unanchor=null, var/duration=null)
+		..()
+		if (target)
+			src.target = target
+		if (tool)
+			src.tool = tool
+			icon = src.tool.icon
+			icon_state = src.tool.icon_state
+		if (!isnull(unanchor))
+			src.unanchor = unanchor
+		else
+			src.unanchor = target.anchored
+		if (duration)
+			src.duration = duration
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("carpenter"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (target == null || tool == null || owner == null || get_dist(owner, target) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(unanchor && !target.anchored || !unanchor && target.anchored)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(iswrenchingtool(tool))
+			playsound(get_turf(target), "sound/items/Ratchet.ogg", 50, 1)
+		else if(isweldingtool(tool))
+			playsound(get_turf(target), "sound/items/Welder.ogg", 50, 1)
+		else if(isscrewingtool(tool))
+			playsound(get_turf(target), "sound/items/Screwdriver.ogg", 50, 1)
+		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
+
+	onEnd()
+		..()
+		owner.visible_message("<span class='notice'>[owner]  [unanchor ? "un" : ""]anchors [target].</span>")
+		if(unanchor)
+			target.anchored = FALSE
+		else
+			target.anchored = TRUE
