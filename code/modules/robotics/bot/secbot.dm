@@ -473,7 +473,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
 			if (oldloc != NewLoc && world.time != last_attack)
 				if (mode == SECBOT_HUNT && target)
-					if (IN_RANGE(src, src.target))
+					if (IN_RANGE(src, src.target, 1))
 						src.baton_attack(src.target)
 
 	process()
