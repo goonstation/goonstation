@@ -71,10 +71,9 @@
 	if (!istype(A))
 		return
 	//A.alpha = 200
-	var/matrix/M = matrix()
-	M.Scale(0.6, 1)
-	animate(A, transform=M, time = 3,easing = BOUNCE_EASING)
-	animate(transform=null, time = 3,easing = BOUNCE_EASING)
+	var/matrix/M = matrix(A.transform)
+	animate(A, transform = A.transform.Scale(0.6, 1), time = 3,easing = BOUNCE_EASING)
+	animate(transform = M, time = 3,easing = BOUNCE_EASING)
 	return
 
 /proc/animate_flockdrone_item_absorb(var/atom/A)
