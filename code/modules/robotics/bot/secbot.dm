@@ -116,7 +116,7 @@
 	idcheck = 1
 	auto_patrol = 1
 	report_arrests = 1
-	move_arrest_delay_mult = 1.2 // beepsky has some experience chasing crimers
+	move_arrest_delay_mult = 0.9 // beepsky has some experience chasing crimers
 	loot_baton_type = /obj/item/baton/beepsky
 	is_beepsky = IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON
 	hat = "nt"
