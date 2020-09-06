@@ -443,6 +443,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		while (stuncount > 0 && src.target)
 			// they moved while we were sleeping, abort
 			if(!IN_RANGE(src, src.target, 1))
+				src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 				return
 
 			stuncount--
