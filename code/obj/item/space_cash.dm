@@ -305,7 +305,7 @@
 
 	update_stack_appearance()
 		src.UpdateName()
-		src.inventory_counter.update_number(amount)
+		src.inventory_counter?.update_number(amount)
 		animate(src, transform = null, time = 1, easing = SINE_EASING, flags = ANIMATION_END_NOW)
 		switch (src.amount)
 			if (1000000 to INFINITY)
