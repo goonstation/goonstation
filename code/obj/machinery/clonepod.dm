@@ -40,7 +40,7 @@
 	var/gen_bonus = 1 //Normal generation speed
 	var/speed_bonus = DEFAULT_SPEED_BONUS // Multiplier that can be modified by modules
 	var/auto_mode = 1
-	var/auto_delay = 5
+	var/auto_delay = 10
 
 	power_usage = 200
 
@@ -57,6 +57,10 @@
 	var/meat_level = MAXIMUM_MEAT_LEVEL / 4
 
 	var/static/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.75,"pepperoni"=0.5,"meat_slurry"=1,"bloodc"=0.5)
+
+	// Copied from manufacturer.dm, except -- get this -- used for functioning, not MALfunctioning. wow.
+	var/static/list/sounds_function = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
+	'sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
 
 
 	New()
@@ -205,8 +209,12 @@
 		src.attempting = 1 //One at a time!!
 		src.failed_tick_counter = 0 // make sure we start here
 
+		src.look_busy(1)
+		src.visible_message("<span class='alert'>[src] whirrs and starts up!</span>")
+
+
 		src.eject_wait = 1
-		SPAWN_DBG(3 SECONDS)
+		SPAWN_DBG(5 SECONDS)
 			src.eject_wait = 0
 
 		if (istype(oldholder))
@@ -389,14 +397,17 @@
 				return ..()
 
 			else if ((src.occupant.max_health - src.occupant.health) > src.heal_level)
+
+				if (src.attempting)
+					// If we're cloning an actual person, make weird noises
+					src.look_busy(prob(33))
+
 				// Otherwise, heal thyself, clone.
 				src.occupant.changeStatus("paralysis", 10 SECONDS)
 
 				// Slowly get that clone healed and finished.
-				//At this rate one clone takes about 95 seconds to produce.(with heal_level 90)
+				//At this rate one clone takes about 95 seconds to produce.
 				src.occupant.HealDamage("All", 1 * gen_bonus * mult, 1 * gen_bonus * mult)
-
-				// Zamujasa: changed -0.5 to -1; consistently the slowest type to heal
 				src.occupant.take_toxin_damage(-1 * gen_bonus * mult)
 
 				//Premature clones may have brain damage.
@@ -439,7 +450,6 @@
 				if ((src.occupant.health + (100 - src.occupant.max_health)) > 50 && src.failed_tick_counter >= 2 && !eject_wait)
 					// Wait a few ticks to see if they stop gaining health.
 					// Once that's the case, boot em
-					//
 					src.connected_message("Cloning Process Complete.")
 					src.send_pda_message("Cloning Process Complete")
 					src.go_out(1)
@@ -457,6 +467,9 @@
 					// Sure hope the outside is safe for ya.
 					src.connected_message("Cloning Process Complete.")
 					src.send_pda_message("Cloning Process Complete")
+					// literally ding like a microwave
+					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+					look_busy()
 					src.go_out(1)
 				else
 					// Clones that are idling get some freebies to keep them topped up
@@ -733,6 +746,14 @@
 					return
 			else
 		return
+
+	proc/look_busy(var/big = 0)
+		if (big)
+			animate_shake(src,5,rand(3,8),rand(3,8))
+			playsound(src.loc, pick(src.sounds_function), 50, 2)
+		else
+			animate_shake(src,3,rand(1,4),rand(1,4))
+
 
 	//SOME SCRAPS I GUESS
 	/* EMP grenade/spell effect
