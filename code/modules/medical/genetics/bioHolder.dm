@@ -662,6 +662,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		return tally >= args.len
 
+	proc/GetASubtypeEffect(type)
+		for(var/id in effects)
+			var/datum/bioEffect/BE = effects[id]
+			if(istype(BE, type))
+				return BE
+		return null
+
 	proc/GetEffect(var/id) //Returns the effect with the given ID if it exists else returns null.
 		return effects[id]
 
