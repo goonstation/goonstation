@@ -1,15 +1,19 @@
 
 import { useBackend } from "../backend";
-import { Button, NumberInput, Section, Box, Table } from "../components";
+import { truncate } from "../format.js";
+import { Button, NumberInput, Section, Box, Table, Tooltip } from "../components";
 import { Window } from "../layouts";
 
 export const ChemDispenser = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window width={555} height={505} theme="ntos">
-      <Window.Content>
+    <Window width={570}
+      height={505}
+      theme="ntos">
+      <Window.Content scrollable>
         <ReagentDispenser />
         <Beaker />
+        <ChemGroups />
       </Window.Content>
     </Window>
   );
@@ -39,7 +43,7 @@ export const ReagentDispenser = (props, context) => {
           width={5}
           minValue={1}
           maxValue={100}
-          onChange={(e, value) => act("setdispense", {
+          onChange={(e, value) => act("setDispense", {
             amount: value,
           })} />
       )}>
@@ -56,10 +60,17 @@ export const ReagentDispenser = (props, context) => {
               align="center"
               width="129.5px"
               lineHeight={1.75}
-              content={capitalize(reagent.name)}
               onClick={() => act("dispense", {
                 reagentId: reagent.id,
-              })} />
+              })}>
+              {truncate(capitalize(reagent.name), 18)}
+              {reagent.name.length > 18 && (
+                <Tooltip
+                  overrideLong
+                  position="bottom"
+                  content={capitalize(reagent.name)} />
+              )}
+            </Button>
           ))}
         </Box>
       )}
@@ -93,7 +104,7 @@ export const Beaker = (props, context) => {
             value={removeAmount}
             minValue={1}
             maxValue={100}
-            onChange={(e, value) => act("setremove", {
+            onChange={(e, value) => act("setRemove", {
               amount: value,
             })} />
         </Box>
@@ -149,7 +160,26 @@ export const Beaker = (props, context) => {
 
 export const ChemGroups = (props, context) => {
   const { act, data } = useBackend(context);
+  const {
+    groupList,
+  } = data;
   return (
-    <Section title="Reagent Groups" />
+    <Section title="Reagent Groups">
+
+      {groupList.map(group => (
+        <Box key={group.name}>
+          <Button
+            key={group.name}
+            icon="tint"
+            lineHeight={1.75}
+            onClick={() => act('deleteGroup', {
+              selectedGroup: group.name,
+            })}>
+            {group.name}
+          </Button>
+          {group.info}
+        </Box>
+      ))}
+    </Section>
   );
 };

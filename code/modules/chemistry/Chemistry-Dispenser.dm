@@ -493,7 +493,7 @@
 		var/list/data = list()
 		var/list/beakerContentsTemp = list()
 		var/list/dispensableReagentsTemp = list()
-		var/list/
+		var/list/groupListTemp = list()
 		data["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
 		data["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
 		data["beakerName"] = capitalize(glass_name)
@@ -515,7 +515,11 @@
 				)))
 		if(current_account)
 			for (var/datum/reagent_group/group in current_account.groups)
-
+				groupListTemp.Add(list(list(
+					name = group.name,
+					info = group.group_desc
+				)))
+		data["groupList"] = groupListTemp
 		data["dispensableReagents"] = dispensableReagentsTemp
 		data["beakerContents"] = beakerContentsTemp
 		data["removeAmount"] = user_remove_amt
@@ -569,20 +573,19 @@
 				send_beaker_details()
 				send_reagent_details()
 				. = TRUE
-			if("setdispense")
+			if("setDispense")
 				src.user_dispense_amt = clamp(round(params["amount"]), 1, 100)
 				. = TRUE
-			if("setremove")
+			if("setRemove")
 				src.user_remove_amt = clamp(round(params["amount"]), 1, 100)
 				. = TRUE
-			if("new_group")
+			if("newGroup")
 				var/reagents = input("Which reagents (separated by semicolons, indicate amount with equals signs)?","New Group") as null|text
 				if (isnull(reagents) || !length(reagents))
 					return
 				var/name = input("What should the reagent group be called?","New Group") as null|text
 				name = copytext(sanitize(html_encode(name)), 1, MAX_MESSAGE_LEN)
 				if (isnull(name) || !length(name) || name == " ")
-					doing_a_thing = 0
 					return
 				//DEBUG(reagents)
 				var/list/reagentlist = params2list(reagents)
@@ -599,14 +602,34 @@
 						else //Default to 10 if no specific amount given
 							G.reagents[lowertext(reagent)] = 10
 				if(G.reagents == 0)
-					doing_a_thing = 0
 					return
 				G.name = name
 				G.update_desc()
 				if (current_account)
 					current_account.groups += G
 				send_group_details()
-				return
+				. = TRUE
+			if("deleteGroup")
+				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
+				if(group)
+					src.current_account.groups -= group
+					qdel(group)
+					. = TRUE
+			if("groupDispense")
+				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
+				if(istype(group) && current_account && (group in current_account.groups))
+					for (var/reagent in group.reagents)
+						if ((reagent in dispensable_reagents))
+							var/amt = 10
+							if (isnum(group.reagents[reagent]))
+								amt = group.reagents[reagent]
+							beaker.reagents.add_reagent(reagent,amt)
+							beaker.reagents.handle_reactions()
+					src.update_icon()
+					src.send_beaker_details()
+					send_reagent_details()
+				playsound(src.loc, dispense_sound, 50, 1, 0.3)
+				. = TRUE
 
 	proc/eject_card()
 		if (src.user_id)
