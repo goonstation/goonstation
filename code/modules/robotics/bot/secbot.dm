@@ -60,13 +60,6 @@
 	var/loot_baton_type = /obj/item/scrap
 	var/stun_type = "stun"
 	var/mode = 0
-#define SECBOT_IDLE 		0		// idle
-#define SECBOT_HUNT 		1		// found target, hunting
-#define SECBOT_PREP_ARREST 	2		// at target, preparing to arrest
-#define SECBOT_ARREST		3		// arresting target
-#define SECBOT_START_PATROL	4		// start patrol
-#define SECBOT_PATROL		5		// patrolling
-#define SECBOT_SUMMON		6		// summoned by PDA
 
 	var/auto_patrol = 0		// set to make bot automatically patrol
 	var/beacon_freq = 1445		// navigation beacon frequency
@@ -429,7 +422,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	proc/baton_attack(var/mob/living/carbon/M)
 		sleep(BATON_INITIAL_DELAY)
-		// if they moved while we were sleeping, abort
 		if(!IN_RANGE(src, src.target, 1))
 			return
 
@@ -449,7 +441,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.our_baton = new our_baton_type(src)
 
 		while (stuncount > 0 && src.target)
-			// don't try to arrest if they moved
+			// they moved while we were sleeping, abort
 			if(!IN_RANGE(src, src.target, 1))
 				return
 
@@ -481,7 +473,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
 			if (oldloc != NewLoc && world.time != last_attack)
 				if (mode == SECBOT_HUNT && target)
-					if (get_dist(src, src.target) <= 1)
+					if (IN_RANGE(src, src.target))
 						src.baton_attack(src.target)
 
 	process()
