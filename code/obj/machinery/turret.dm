@@ -475,9 +475,6 @@
 
 
 /obj/machinery/turretid/proc/updateTurrets()
-	if (!by_type[/obj/machinery/turret].len)
-		return
-
 	for (var/obj/machinery/turret/turret in by_type[/obj/machinery/turret])
 		var/area/A = get_area(turret)
 		if (A.type == src.turretArea)
