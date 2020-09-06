@@ -120,6 +120,9 @@
 	if(hasvar(src,"wear_id"))
 		DoGPS(src:wear_id)
 /mob/living/silicon/verb/GPS()
+	set name = "GPS"
+	set category = "Commands"
+	set desc = "Find your way around with ease!"
 	if(PROC_ON_COOLDOWN(10 SECONDS))
 		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0 SECONDS))].")
 		return
