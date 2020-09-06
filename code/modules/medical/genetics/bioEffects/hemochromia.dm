@@ -3,7 +3,6 @@
 	desc = "A volatile mutation with 12 known stable alternatives. Will quickly break down into one of them if the subject exits the scanner."
 	id = "hemochromia_unknown"
 	probability = 111
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel like you're out of breath."
 	msgLose = "You feel more stable."
 	reclaim_fail = 10
@@ -75,7 +74,6 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	desc = "An abstract mutation which is so much more unstable than Type-U that it shouldn't even be possible to observe with current technology."
 	id = "hemochromia_abstract"
 	probability = 0
-	effectType = EFFECT_TYPE_MUTANTRACE
 	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
@@ -87,6 +85,7 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	stability_loss = 5
 	icon_state  = "hemochromia_unknown"
 	occur_in_genepools = 0
+	acceptable_in_mutini = 0
 	var/blood_color_R
 	var/blood_color_G
 	var/blood_color_B
