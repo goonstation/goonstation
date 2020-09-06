@@ -120,7 +120,6 @@
 	loot_baton_type = /obj/item/baton/beepsky
 	is_beepsky = IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON
 	hat = "nt"
-	attack_per_step = 1
 
 	New()
 		. = ..()
