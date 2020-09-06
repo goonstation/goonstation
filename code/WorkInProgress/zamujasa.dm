@@ -896,7 +896,8 @@ Read the rules, don't grief, and have fun!</div>"}
 	invisibility = 101
 	plane = PLANE_HUD
 	layer = HUD_LAYER_3
-	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
+	var/static/matrix/infinity_matrix = matrix().Turn(90).Translate(18, 1)
 
 	New()
 		..()
@@ -908,9 +909,15 @@ Read the rules, don't grief, and have fun!</div>"}
 
 	proc/update_text(var/text)
 		maptext = {"<span class="vb r pixel sh">[text]</span>"}
+		if(src.transform) src.transform = null
 
 	proc/update_number(var/number)
-		maptext = {"<span class="vb r xfont sh"[number == 0 ? " style='color: #ff6666;'" : ""]>[number >= 100000 ? "[round(number / 1000)]K" : round(number)]</span>"}
+		if(number == -1)
+			maptext = {"<span class="vb r pixel sh" style="font-size:1.5em;">8</span>"} // pixel font has more symmetric 8, ok?
+			src.transform = infinity_matrix
+			return
+		maptext = {"<span class="vb r xfont sh"[number == 0 ? " style='color: #ff6666;'" : number == -1 ? " style='-ms-transform: rotate(-90deg);'" : ""]>[number == -1 ? "8" : number >= 100000 ? "[round(number / 1000)]K" : round(number)]</span>"}
+		if(src.transform) src.transform = null
 
 	proc/update_percent(var/current, var/maximum)
 		if (!maximum)
@@ -918,6 +925,7 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.update_number(current)
 			return
 		maptext = {"<span class="vb r xfont sh"[current == 0 ? " style='color: #ff6666;'" : ""]>[round(current / maximum * 100)]%</span>"}
+		if(src.transform) src.transform = null
 
 	proc/hide_count()
 		invisibility = 101
