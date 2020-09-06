@@ -601,6 +601,7 @@ datum/projectile
 
 	// Self-explanatory.
 	var/hits_ghosts = 0
+	var/hits_wraiths = 0
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/pierces = 0

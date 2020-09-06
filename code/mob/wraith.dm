@@ -184,12 +184,16 @@
 				WO.onAbsorb(M)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if (istype(mover, /obj/projectile))
+			var/obj/projectile/proj = mover
+			if (proj.proj_data.hits_wraiths)
+				return 0
 		if (src.density) return 0
 		else return 1
 
 
 	projCanHit(datum/projectile/P)
-		if (src.density) return 1
+		if (src.density || P.hits_wraiths) return 1
 		else return 0
 
 

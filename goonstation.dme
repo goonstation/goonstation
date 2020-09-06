@@ -961,6 +961,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\projectiles\bullet.dm"
 #include "code\modules\projectiles\crabber.dm"
 #include "code\modules\projectiles\disruptor_bolt.dm"
+#include "code\modules\projectiles\ectoblaster.dm"
 #include "code\modules\projectiles\energy_bolt.dm"
 #include "code\modules\projectiles\laser.dm"
 #include "code\modules\projectiles\owl.dm"
