@@ -265,6 +265,9 @@ datum/preferences
 
 		if (user && !IsGuestKey(user.key)) //ZeWaka: Fix for null.key
 			var/client/client = ismob( user ) ? user.client : user
+
+			if (!client) return // b r u h
+
 			if (rebuild_profile || client.cloud_available() && !had_cloud)
 				rebuild_profile = 0
 				had_cloud = client.cloud_available()
