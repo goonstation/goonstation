@@ -1,5 +1,9 @@
 
 (t)sun sep 06 20
+(u)RichardGere
+(p)2082
+(e)⚖|balance
+(+)Tweaked secbots responsiveness to accommodate the new movement change.
 (u)Zamujasa
 (*)Added the Rotbusttec implant to the medical and robotics fabricators.
 (+)The cloner now makes noises/jostles a bit when cloning a player.
