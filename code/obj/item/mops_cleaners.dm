@@ -605,6 +605,12 @@ WET FLOOR SIGN
 		JOB_XP(usr, "Janitor", 2)
 		return
 
+	attackby(obj/item/W, mob/user, params)
+		if(iswrenchingtool(W))
+			actions.start(new /datum/action/bar/icon/anchor_or_unanchor(src, W, duration=2 SECONDS), user)
+			return
+		. = ..()
+
 /obj/item/caution/traitor
 	event_handler_flags = USE_PROXIMITY
 	var/obj/item/reagent_containers/payload
@@ -623,6 +629,7 @@ WET FLOOR SIGN
 			user.put_in_hand_or_drop(src.payload)
 			src.payload = W
 			W.set_loc(src)
+			return
 		. = ..()
 
 	HasProximity(atom/movable/AM)
