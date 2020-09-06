@@ -1,5 +1,9 @@
 
 (t)sun sep 06 20
+(u)zjdtmkhzt
+(p)2059
+(e)⚖🆕|balance, feature
+(+)Electric wand type artifacts should now actually work. Some other small changes to wand artifacts were made too.
 (u)RichardGere
 (p)2082
 (e)⚖|balance
