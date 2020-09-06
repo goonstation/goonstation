@@ -12264,6 +12264,16 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/external{
+	autoclose = 0;
+	density = 0;
+	dir = 4;
+	frequency = 1449;
+	icon_state = "airlock_open";
+	id_tag = "dc_ai_door";
+	locked = 1;
+	name = "AI Module Airlock"
+	},
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_upload_foyer)
 "aWu" = (
@@ -22006,16 +22016,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/mining/magnet)
-"fzG" = (
-/obj/decal/tile_edge/line/white{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/white,
-/area/station/turret_protected/AIsat)
 "fAX" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -22396,6 +22396,16 @@
 	tag = "icon-grass1"
 	},
 /area/station/hydroponics)
+"ggg" = (
+/obj/decal/tile_edge/line/white{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "4-10"
+	},
+/turf/simulated/floor/airless/white,
+/area/station/turret_protected/AIsat)
 "ggE" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grass{
@@ -23216,6 +23226,16 @@
 	dir = 1
 	},
 /area/station/chemistry)
+"hsb" = (
+/obj/decal/tile_edge/line/white{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/white,
+/area/station/turret_protected/AIsat)
 "hsp" = (
 /obj/machinery/chem_dispenser,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -24687,6 +24707,16 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro/external{
+	autoclose = 0;
+	density = 0;
+	dir = 4;
+	frequency = 1449;
+	icon_state = "airlock_open";
+	id_tag = "dc_medbay_door";
+	locked = 1;
+	name = "Grove Module Airlock"
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "jqE" = (
@@ -24801,6 +24831,16 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro/external{
+	autoclose = 0;
+	density = 0;
+	dir = 4;
+	frequency = 1449;
+	icon_state = "airlock_open";
+	id_tag = "dc_medbay_door";
+	locked = 1;
+	name = "Grove Module Airlock"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -24859,16 +24899,6 @@
 /obj/disposalpipe/junction/middle/west,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
-"jBr" = (
-/obj/decal/tile_edge/line/white{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-10"
-	},
-/turf/simulated/floor/airless/white,
-/area/station/turret_protected/AIsat)
 "jBB" = (
 /obj/table/auto/desk,
 /obj/item/paper_bin{
@@ -25392,16 +25422,6 @@
 	allows_vehicles = 0
 	},
 /area/station/turret_protected/AIsat)
-"kpg" = (
-/obj/decal/tile_edge/line/white{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/white,
-/area/station/turret_protected/AIsat)
 "kpG" = (
 /obj/lattice,
 /obj/machinery/camera,
@@ -25636,12 +25656,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
-"kGx" = (
-/obj/cable{
-	icon_state = "1-6"
-	},
-/turf/simulated/wall/auto/reinforced/jen,
-/area/station/turret_protected/AIsat)
 "kHG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25771,12 +25785,6 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/owlery)
-"kRj" = (
-/obj/cable{
-	icon_state = "1-10"
-	},
-/turf/simulated/wall/auto/reinforced/jen,
-/area/station/turret_protected/AIsat)
 "kRk" = (
 /turf/simulated/floor/blue/side{
 	dir = 6
@@ -27393,37 +27401,6 @@
 	dir = 9
 	},
 /area/station/science/artifact)
-"nwo" = (
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 8;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 6;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning sign. I guess this area is dangerous.";
-	icon_state = "magwarning2";
-	name = "ACTIVE MAGNET AREA"
-	},
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
-	},
-/area/mining/magnet)
 "nxh" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
@@ -30513,6 +30490,16 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
+"run" = (
+/obj/decal/tile_edge/line/white{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/white,
+/area/station/turret_protected/AIsat)
 "ruA" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -31790,6 +31777,12 @@
 	dir = 10
 	},
 /area/station/hallway/primary/west)
+"tfZ" = (
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/wall/auto/reinforced/jen,
+/area/station/turret_protected/AIsat)
 "tga" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/heads)
@@ -35660,6 +35653,12 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"yfw" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/wall/auto/reinforced/jen,
+/area/station/turret_protected/AIsat)
 "yfD" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -35720,6 +35719,37 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"yhR" = (
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 6;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/obj/grille/catwalk/cross{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/mining/magnet)
 "yio" = (
 /obj/table/reinforced/bar/auto,
 /obj/random_item_spawner/tableware,
@@ -60979,7 +61009,7 @@ aZK
 aZK
 aZK
 aZK
-nwo
+yhR
 aaa
 aaa
 aaa
@@ -109390,7 +109420,7 @@ sej
 sej
 bCm
 dni
-kpg
+hsb
 rtO
 gAc
 uOd
@@ -110001,7 +110031,7 @@ ecc
 iVc
 bUF
 oie
-kGx
+yfw
 vdp
 neg
 neo
@@ -110605,7 +110635,7 @@ rno
 nOB
 cdz
 jPd
-kRj
+tfZ
 ntM
 bGj
 oQi
@@ -111202,7 +111232,7 @@ sej
 sej
 uaQ
 qEy
-fzG
+run
 qSD
 tnK
 tbT
@@ -111505,7 +111535,7 @@ sej
 sej
 ltZ
 qqh
-jBr
+ggg
 tLi
 uRe
 hqd
