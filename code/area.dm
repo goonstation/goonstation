@@ -1995,17 +1995,23 @@ area/station/crewquarters/cryotron
 /area/station/com_dish/comdish
 	name = "Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1 // ????
+#endif
 
 /area/station/com_dish/auxdish
 	name = "Auxilary Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1
+#endif
 
 /area/station/com_dish/research_outpost
 	name = "Research Outpost Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1
+#endif
 
 /area/station/engine
 	sound_environment = 5
