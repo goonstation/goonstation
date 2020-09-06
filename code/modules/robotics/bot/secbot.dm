@@ -514,7 +514,8 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					else
 						src.mode = SECBOT_IDLE
 				else if (get_dist(src, src.target) <= 1)
-					src.baton_attack(src.target)
+					SPAWN_DBG(0)
+						src.baton_attack(src.target)
 
 
 			if(SECBOT_ARREST)		// arresting

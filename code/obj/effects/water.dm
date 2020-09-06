@@ -29,30 +29,30 @@
 	if (!target || !R)
 		pool(src)
 		return
+	SPAWN_DBG(0)
+		var/turf/T
+		for(var/b=0, b<5, b++)
+			step_towards(src,target)
+			T = get_turf(src)
+			if(!R || !R.total_volume)
+				break
+			R.reaction(T,TOUCH,1)
+			if (!R || !R.total_volume) //i guess they can get removed after the first reaction
+				break
+			for(var/atom/atm in T)
+				R.reaction(atm,TOUCH,1)
+			R.remove_any(1)
 
-	var/turf/T
-	for(var/b=0, b<5, b++)
-		step_towards(src,target)
-		T = get_turf(src)
-		if(!R || !R.total_volume)
-			break
-		R.reaction(T,TOUCH,1)
-		if (!R || !R.total_volume) //i guess they can get removed after the first reaction
-			break
-		for(var/atom/atm in T)
-			R.reaction(atm,TOUCH,1)
-		R.remove_any(1)
+			sleep(0.2 SECONDS)
 
-		sleep(0.2 SECONDS)
+			if (try_connect_fluid && T && T.active_liquid)
+				T.active_liquid.try_connect_to_adjacent()
 
-		if (try_connect_fluid && T && T.active_liquid)
-			T.active_liquid.try_connect_to_adjacent()
+			if(src.loc == target)
+				break
 
-		if(src.loc == target)
-			break
+			if (disposed)
+				break
 
-		if (disposed)
-			break
-
-	if (!disposed)
-		pool(src)
+		if (!disposed)
+			pool(src)

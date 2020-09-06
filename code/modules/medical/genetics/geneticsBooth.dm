@@ -201,7 +201,7 @@
 
 					var/datum/bioEffect/NEW = new selected_product.BE.type()
 					copy_datum_vars(selected_product.BE,NEW)
-					occupant.bioHolder.AddEffectInstance(NEW,1)
+					occupant.bioHolder.AddEffectInstanceNoDelay(NEW)
 
 					selected_product.uses -= 1
 					if (selected_product.uses <= 0 || !selected_product.BE)

@@ -6,7 +6,7 @@
 
 //lagcheck stuff
 #ifdef SPACEMAN_DMM
-#define LAGCHECK(x)
+#define LAGCHECK(x) // this is wrong and bad, but it'd be way too much effort to remove lagchecks from everything :/
 #else
 #define LAGCHECK(x) if (lagcheck_enabled && world.tick_usage > x) sleep(world.tick_lag)
 #endif

@@ -175,9 +175,10 @@
 		if (src.time > 0)
 			src.time = round(src.time) - 1
 		else
-			alarm()
-			src.time = 0
-			src.timing = 0
+			SPAWN_DBG(0)
+				alarm()
+				src.time = 0
+				src.timing = 0
 		src.updateDialog()
 	return
 
