@@ -3,17 +3,11 @@
 /turf/space,
 /area)
 "aab" = (
-/obj/machinery/power/solar{
-	id = "westsolar";
-	name = "West Solar Array"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "solarpanel";
-	name = "solar paneling"
-	},
+/obj/machinery/power/solar/west,
+/turf/simulated/floor/airless/solar,
 /area/station/solar/west)
 "aac" = (
 /turf/space,
@@ -132,10 +126,20 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aaP" = (
-/obj/decal/cleanable/cobweb,
-/obj/storage/crate,
-/turf/simulated/floor/grime,
-/area/station/mining/magnet)
+/obj/grille/catwalk{
+	dir = 6
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
+/area/station/solar/west)
 "aaQ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -186,6 +190,9 @@
 	},
 /area/station/hallway/secondary/exit)
 "abb" = (
+/obj/grille/catwalk{
+	dir = 10
+	},
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -195,7 +202,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/west)
 "abd" = (
 /obj/lattice{
@@ -205,17 +214,11 @@
 /turf/space,
 /area)
 "abe" = (
-/obj/machinery/power/solar{
-	id = "westsolar";
-	name = "West Solar Array"
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "solarpanel";
-	name = "solar paneling"
-	},
+/obj/machinery/power/solar/west,
+/turf/simulated/floor/airless/solar,
 /area/station/solar/west)
 "abf" = (
 /turf/simulated/wall/auto/shuttle{
@@ -277,17 +280,22 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/main)
 "abr" = (
+/obj/grille/catwalk{
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/cable,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/west)
 "abs" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -790,9 +798,8 @@
 /turf/space,
 /area)
 "adE" = (
-/obj/landmark/artifact{
-	name = "artifact spawner (10%)";
-	spawnchance = 10
+/obj/grille/catwalk{
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -800,11 +807,17 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/cable,
-/turf/simulated/floor/plating/airless,
+/obj/landmark/artifact{
+	name = "artifact spawner (10%)";
+	spawnchance = 10
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/west)
 "adF" = (
 /obj/cable{
@@ -1359,6 +1372,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "afS" = (
+/obj/decal/cleanable/cobweb,
 /obj/storage/crate,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
@@ -1906,42 +1920,35 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/NEmaint)
 "ahE" = (
-/obj/machinery/power/solar{
-	id = "eastsolar";
-	name = "East Solar Array"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "solarpanel";
-	name = "solar paneling"
-	},
+/obj/machinery/power/solar/east,
+/turf/simulated/floor/airless/solar,
 /area/station/solar/east)
 "ahF" = (
-/obj/cable{
-	icon_state = "0-4"
+/obj/grille/catwalk{
+	dir = 10
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/east)
 "ahG" = (
-/obj/machinery/power/solar{
-	id = "eastsolar";
-	name = "East Solar Array"
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "solarpanel";
-	name = "solar paneling"
-	},
+/obj/machinery/power/solar/east,
+/turf/simulated/floor/airless/solar,
 /area/station/solar/east)
 "ahK" = (
 /obj/wingrille_spawn/auto,
@@ -2106,10 +2113,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/NEmaint)
 "aix" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9
-	},
-/turf/simulated/floor/industrial,
+/obj/storage/crate,
+/turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "aiy" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -2190,26 +2195,15 @@
 	},
 /area/station/mining)
 "aiK" = (
-/obj/grille,
-/turf/simulated/floor/plating/airless,
-/area/station/com_dish/auxdish)
-"aiL" = (
-/obj/cable{
-	icon_state = "0-4"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/turf/simulated/floor/plating/airless,
-/area/station/solar/east)
+/turf/simulated/floor/industrial,
+/area/station/mining/magnet)
 "aiM" = (
+/obj/grille/catwalk{
+	dir = 9
+	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -2217,26 +2211,40 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
 /area/station/solar/west)
 "aiP" = (
+/obj/grille/catwalk{
+	dir = 8
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
 /area/station/solar/west)
 "aiQ" = (
+/obj/grille/catwalk/cross{
+	dir = 1
+	},
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable,
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
 /area/station/solar/west)
 "aiR" = (
 /obj/cable{
@@ -2706,19 +2714,6 @@
 "alx" = (
 /turf/space,
 /area/station/com_dish/auxdish)
-"aly" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/turf/simulated/floor/plating/airless,
-/area/station/solar/east)
 "alz" = (
 /obj/landmark/magnet_shield,
 /obj/securearea{
@@ -3506,17 +3501,22 @@
 /turf/space,
 /area)
 "aoF" = (
-/obj/cable{
-	icon_state = "0-4"
+/obj/grille/catwalk{
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "0-4"
 	},
 /obj/cable,
-/turf/simulated/floor/plating/scorched,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/east)
 "aoG" = (
 /obj/cable{
@@ -3600,14 +3600,19 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aoO" = (
+/obj/grille/catwalk{
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/cable,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/west)
 "aoP" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -3790,31 +3795,41 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/NEmaint)
 "apx" = (
-/obj/landmark/artifact{
-	name = "artifact spawner (10%)";
-	spawnchance = 10
+/obj/grille/catwalk{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
+/obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/cable,
-/turf/simulated/floor/plating/airless,
+/obj/landmark/artifact{
+	name = "artifact spawner (10%)";
+	spawnchance = 10
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/east)
 "apy" = (
+/obj/grille/catwalk{
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/cable,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/west)
 "apz" = (
 /obj/wingrille_spawn/auto,
@@ -4304,15 +4319,22 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eastsolar)
 "aru" = (
+/obj/grille/catwalk{
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/east)
 "arv" = (
-/obj/lattice,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/lattice{
+	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area)
@@ -4541,24 +4563,24 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/eastsolar)
-"asC" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/solar/east)
 "asE" = (
+/obj/grille/catwalk/cross{
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
 	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable,
-/turf/simulated/floor/plating/scorched,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
 /area/station/solar/east)
 "asG" = (
 /turf/simulated/floor/yellow/side,
@@ -4571,23 +4593,34 @@
 /turf/simulated/floor/airless/engine/glow/blue,
 /area/station/engine/singcore)
 "asK" = (
+/obj/grille/catwalk{
+	dir = 8
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/scorched,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
 /area/station/solar/east)
 "asL" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/cable{
-	icon_state = "0-2"
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
 	},
-/obj/cable,
-/turf/simulated/floor/plating/airless,
 /area/station/solar/east)
 "asQ" = (
 /obj/firedoor_spawn,
@@ -4604,28 +4637,36 @@
 	},
 /area/station/hydroponics)
 "asT" = (
-/obj/lattice,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area)
 "asW" = (
-/obj/machinery/power/tracker,
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/airless,
+/obj/machinery/power/tracker/east,
+/turf/simulated/floor/airless/solar,
 /area)
 "asX" = (
-/obj/cable{
-	icon_state = "0-8"
+/obj/grille/catwalk{
+	dir = 6
 	},
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /obj/cable,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/west)
 "asY" = (
 /obj/cable{
@@ -5010,6 +5051,9 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/eastsolar)
 "aud" = (
+/obj/grille/catwalk{
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -5020,12 +5064,14 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/turf/simulated/floor/airless/plating/damaged1,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/east)
 "aue" = (
-/obj/machinery/power/tracker,
 /obj/cable,
-/turf/simulated/floor/plating/airless,
+/obj/machinery/power/tracker/west,
+/turf/simulated/floor/airless/solar,
 /area)
 "auj" = (
 /obj/firedoor_spawn,
@@ -6920,6 +6966,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aBT" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -6927,7 +6976,9 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/turf/simulated/floor/airless/plating/damaged3,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/station/solar/east)
 "aBU" = (
 /turf/simulated/floor/stairs{
@@ -63153,7 +63204,7 @@ aaa
 aaa
 ctu
 bra
-aaP
+afS
 bcF
 bcF
 bcF
@@ -63455,7 +63506,7 @@ aaa
 aaa
 ctu
 bra
-afS
+aix
 bcF
 bcF
 bcF
@@ -63757,7 +63808,7 @@ aaa
 aaa
 ctu
 bra
-aix
+aiK
 ajX
 akP
 amx
@@ -70365,7 +70416,7 @@ abr
 abr
 aoO
 apy
-apy
+aaP
 arv
 arv
 arv
@@ -84553,7 +84604,7 @@ adG
 adG
 adG
 adG
-aiK
+amS
 alf
 amw
 alx
@@ -84855,7 +84906,7 @@ adG
 adG
 adG
 adG
-aiK
+amS
 alf
 amR
 alx
@@ -85157,7 +85208,7 @@ adG
 adG
 adG
 adG
-aiK
+amS
 alx
 alx
 alx
@@ -85459,14 +85510,14 @@ adG
 adG
 adG
 aaa
-aiK
-aiK
+amS
+amS
 amS
 amS
 amS
 aaa
 aaa
-asC
+asK
 atl
 aaB
 aaB
@@ -85768,7 +85819,7 @@ aaa
 aaa
 aaa
 aaa
-asC
+asK
 aaa
 aaa
 aaa
@@ -86070,7 +86121,7 @@ aaa
 aaa
 aaa
 aaa
-asC
+asK
 aaa
 aaa
 aaa
@@ -86372,7 +86423,7 @@ ahE
 ahE
 ahE
 aaa
-asC
+asK
 aaa
 ahE
 ahE
@@ -86667,26 +86718,26 @@ iNv
 iNv
 iNv
 ahF
-aiL
-aly
-aly
-aly
+aoF
+aoF
+aoF
+aoF
 apx
-aly
+aoF
 aru
 asE
 aru
-aly
-aly
+aud
+aud
 aru
-aly
-aly
-aly
-aly
-aly
-aly
-aly
-aly
+aud
+aud
+aud
+aud
+aud
+aud
+aud
+aud
 aBT
 aaa
 aaa
@@ -86976,7 +87027,7 @@ ahG
 ahG
 ahG
 aaa
-asC
+asK
 aaa
 ahG
 ahG
@@ -87580,7 +87631,7 @@ ahE
 ahE
 ahE
 aaa
-asC
+asK
 aaa
 ahE
 ahE
@@ -87876,23 +87927,23 @@ iNv
 iNv
 iNv
 ahF
-aly
-aly
 aoF
-aly
-aly
+aoF
+aoF
+aoF
+aoF
 aru
 asL
 aru
 aud
-aly
+aud
 aru
-aly
-aly
-aly
-aly
-aly
-aly
+aud
+aud
+aud
+aud
+aud
+aud
 aBT
 aaa
 aaa
