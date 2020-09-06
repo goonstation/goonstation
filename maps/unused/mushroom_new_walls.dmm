@@ -4258,7 +4258,9 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/item/device/radio/intercom,
+/obj/item/device/radio/intercom{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/NEmaint)
 "ard" = (
@@ -6280,7 +6282,9 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
-/obj/item/device/radio/intercom,
+/obj/item/device/radio/intercom{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/station/janitor)
 "azb" = (
@@ -8453,7 +8457,9 @@
 	},
 /area/station/quartermaster/office)
 "aIy" = (
-/obj/item/device/radio/intercom,
+/obj/item/device/radio/intercom{
+	dir = 1
+	},
 /obj/machinery/light,
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/office)
@@ -14116,7 +14122,9 @@
 	c_tag = "Lounge";
 	dir = 4
 	},
-/obj/item/device/radio/intercom,
+/obj/item/device/radio/intercom{
+	dir = 4
+	},
 /obj/machinery/light/small{
 	dir = 8;
 	tag = "icon-bulb1 (WEST)"
@@ -19366,6 +19374,7 @@
 "bwb" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
+	dir = 1;
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
 	},
@@ -32575,6 +32584,7 @@
 "tKl" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
+	dir = 1;
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
 	},
@@ -35293,6 +35303,7 @@
 "xta" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
+	dir = 1;
 	frequency = 1485;
 	name = "Station Intercom (Security)"
 	},
