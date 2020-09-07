@@ -20727,6 +20727,9 @@
 	icon_state = "airbridge"
 	},
 /area/station/turret_protected/AIsat)
+"dBs" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/storage/emergencyinternals)
 "dDE" = (
 /obj/machinery/door/airlock/pyro/security,
 /obj/access_spawn/security,
@@ -21206,17 +21209,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
-"elm" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "enP" = (
 /obj/decal/tile_edge/line/red{
 	dir = 4;
@@ -22055,11 +22047,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/bridge)
-"fBb" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "9"
-	},
-/area/station/chapel/main)
 "fBL" = (
 /obj/stool/chair{
 	dir = 8;
@@ -22206,11 +22193,9 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
-"fJf" = (
-/turf/simulated/wall/auto/supernorn{
-	icon_state = "12"
-	},
-/area/station/chapel/main)
+"fJi" = (
+/turf/simulated/floor,
+/area/station/storage/emergencyinternals)
 "fJu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -22276,6 +22261,10 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"fRd" = (
+/obj/machinery/bot/duckbot,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "fRo" = (
 /obj/stool{
 	desc = "A soft little bed the general size and shape of a space bee.";
@@ -22288,6 +22277,15 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/crew_quarters/hor)
+"fRO" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark{
+	name = "kudzustart"
+	},
+/turf/simulated/floor,
+/area/station/turret_protected/ai_upload_foyer)
 "fSC" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
@@ -22343,11 +22341,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/chemistry)
-"fXm" = (
-/turf/simulated/wall/auto/reinforced/supernorn{
-	icon_state = "R12"
-	},
-/area/station/turret_protected/ai_upload_foyer)
 "fXp" = (
 /obj/machinery/light{
 	dir = 4
@@ -22376,6 +22369,17 @@
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
+"gaM" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "gaO" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
@@ -23004,10 +23008,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
-"gWF" = (
-/obj/machinery/bot/duckbot,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
 "gXL" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -24157,6 +24157,11 @@
 	dir = 4
 	},
 /area/station/hydroponics)
+"izE" = (
+/turf/simulated/wall/auto/supernorn{
+	icon_state = "12"
+	},
+/area/station/chapel/main)
 "izO" = (
 /turf/simulated/wall/auto/reinforced/jen{
 	icon_state = "R9"
@@ -24802,7 +24807,7 @@
 	icon_state = "airlock_open";
 	id_tag = "dc_medbay_door";
 	locked = 1;
-	name = "Grove Module Airlock"
+	name = "Medical Sector Airlock"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/blue,
@@ -24926,7 +24931,7 @@
 	icon_state = "airlock_open";
 	id_tag = "dc_medbay_door";
 	locked = 1;
-	name = "Grove Module Airlock"
+	name = "Medical Sector Airlock"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/bluewhite{
@@ -26085,6 +26090,18 @@
 	dir = 4
 	},
 /area/station/turret_protected/AIsat)
+"lld" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "llx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -26632,6 +26649,20 @@
 	icon_state = "fgreen2"
 	},
 /area/station/bridge)
+"mhH" = (
+/obj/table/reinforced,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "kitchen";
+	layer = 4;
+	name = "Kitchen Shutter";
+	opacity = 0;
+	p_open = 1
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
 "mhO" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -27336,10 +27367,6 @@
 	dir = 1
 	},
 /area/station/science)
-"njp" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/quartermaster)
 "njK" = (
 /obj/cable,
 /obj/cable{
@@ -29942,20 +29969,6 @@
 	dir = 1
 	},
 /area/station/science)
-"qCb" = (
-/obj/table/reinforced,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "kitchen";
-	layer = 4;
-	name = "Kitchen Shutter";
-	opacity = 0;
-	p_open = 1
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
 "qDW" = (
 /obj/lattice{
 	dir = 5;
@@ -30396,15 +30409,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
-"rjM" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/landmark{
-	name = "kudzustart"
-	},
-/turf/simulated/floor,
-/area/station/turret_protected/ai_upload_foyer)
 "rjW" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -31127,6 +31131,11 @@
 "sej" = (
 /turf/simulated/wall/auto/jen/dark1,
 /area/station/turret_protected/AIsat)
+"sfb" = (
+/turf/simulated/wall/auto/supernorn{
+	icon_state = "9"
+	},
+/area/station/chapel/main)
 "sfF" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -31501,9 +31510,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/lobby)
-"sJt" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/storage/emergencyinternals)
 "sJI" = (
 /obj/machinery/camera{
 	dir = 5
@@ -33242,6 +33248,16 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
+"uAI" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "uBH" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -33846,16 +33862,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
-"vwe" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "vwE" = (
 /obj/machinery/vending/security,
 /turf/simulated/floor/red,
@@ -34903,9 +34909,6 @@
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/hor)
-"wOL" = (
-/turf/simulated/floor,
-/area/station/storage/emergencyinternals)
 "wPs" = (
 /obj/landmark/start{
 	name = "Scientist"
@@ -35713,6 +35716,11 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"xVm" = (
+/turf/simulated/wall/auto/reinforced/supernorn{
+	icon_state = "R12"
+	},
+/area/station/turret_protected/ai_upload_foyer)
 "xVE" = (
 /obj/stool/chair/comfy/green{
 	dir = 1
@@ -35742,18 +35750,6 @@
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/bar)
-"xWa" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "xZf" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -35895,6 +35891,10 @@
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/bar)
+"ygJ" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/quartermaster)
 "yhs" = (
 /obj/storage/secure/closet/civilian/kitchen,
 /obj/machinery/camera{
@@ -68485,7 +68485,7 @@ aCD
 pdK
 vYV
 vYV
-qCb
+mhH
 vYV
 vYV
 vYV
@@ -75361,10 +75361,10 @@ bsh
 bsh
 aBL
 aTG
-elm
+gaM
 aTG
 aTG
-vwe
+uAI
 aFu
 aHt
 aIA
@@ -75666,7 +75666,7 @@ aBF
 aCb
 apZ
 aDC
-xWa
+lld
 aFx
 aHu
 aAU
@@ -77174,9 +77174,9 @@ apM
 aAZ
 aBM
 aCl
-njp
-njp
-njp
+ygJ
+ygJ
+ygJ
 aFG
 aCH
 aIG
@@ -79312,10 +79312,10 @@ aXa
 aXa
 aZx
 aXa
-sJt
-sJt
-sJt
-sJt
+dBs
+dBs
+dBs
+dBs
 bdd
 bdd
 bdd
@@ -79614,10 +79614,10 @@ aYg
 aYg
 aZz
 aYg
-sJt
+dBs
 bbL
-wOL
-sJt
+fJi
+dBs
 bdX
 beU
 bfR
@@ -79916,11 +79916,11 @@ aYg
 aYg
 aZA
 bah
-sJt
+dBs
 bbM
 bcs
 bcZ
-gWF
+fRd
 bbN
 bbN
 bbN
@@ -80218,10 +80218,10 @@ aYg
 aYg
 aZz
 aYg
-sJt
+dBs
 bbM
 bcs
-sJt
+dBs
 bdc
 beV
 bfS
@@ -80519,11 +80519,11 @@ aXa
 aXa
 aYg
 aZz
-sJt
-sJt
+dBs
+dBs
 bbM
 bcs
-sJt
+dBs
 bbN
 beX
 bfT
@@ -80821,11 +80821,11 @@ aXb
 aXa
 aYg
 aZz
-sJt
+dBs
 bba
 bbM
 bcs
-sJt
+dBs
 bbN
 bbN
 bbN
@@ -81425,11 +81425,11 @@ aWf
 aXa
 aYg
 aZz
-sJt
+dBs
 bbf
 bbM
 bct
-sJt
+dBs
 bdY
 bfa
 bbN
@@ -81727,11 +81727,11 @@ aXd
 aXa
 aYg
 aZz
-sJt
-sJt
-sJt
-sJt
-sJt
+dBs
+dBs
+dBs
+dBs
+dBs
 bdZ
 bfb
 bea
@@ -84434,7 +84434,7 @@ aMv
 aCs
 aOr
 aPI
-fJf
+izE
 aRQ
 aTe
 aTX
@@ -85038,7 +85038,7 @@ aEN
 aCs
 aCs
 aCs
-fBb
+sfb
 aRU
 aTg
 aTZ
@@ -85344,9 +85344,9 @@ aQB
 aRW
 aTj
 aUa
-fXm
+xVm
 aVC
-rjM
+fRO
 aXs
 aUB
 aYT
@@ -85948,7 +85948,7 @@ aQH
 aRY
 aTl
 aUd
-fXm
+xVm
 aUF
 aWF
 aXw
