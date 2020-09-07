@@ -575,6 +575,8 @@
 			fluid_ma.overlays = F.overlays // gross, needed because of perspective overlays
 			F.appearance = fluid_ma
 
+		if(src.disposed)
+			return 1
 
 		src.last_contained_amt = src.contained_amt
 		src.last_members_amt = src.members.len
