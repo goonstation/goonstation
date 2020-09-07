@@ -1,5 +1,9 @@
 
 (t)mon sep 07 20
+(u)Gannets
+(p)2093
+(e)⚖|balance
+(*)Increased maximum number of Nuclear Operatives to 8 from 6.
 (u)Aft2001
 (p)2098
 (e)|
