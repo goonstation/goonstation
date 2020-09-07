@@ -1014,7 +1014,7 @@ var/datum/job_controller/job_controls
 	return null
 
 /client/proc/cmd_job_controls()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Job Controls"
 
 	if (job_controls == null) boutput(src, "UH OH! Shit's broken as fuck!")

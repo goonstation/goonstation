@@ -2,6 +2,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 /datum/buildmode
 	var/list/extra_buttons = list()
 	New(var/datum/buildmode_holder/H)
+		..()
 		holder = H
 
 	// Called when mode is selected
@@ -58,6 +59,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	var/dir = SOUTH
 
 	New(var/client/C)
+		..()
 		owner = C
 		button_dir = new(null, src)
 		button_help = new(null, src)
@@ -118,7 +120,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		mode.paused()
 
 	proc/display_help()
-		boutput(usr, "<font color='blue'>[mode.desc]</font>")
+		boutput(usr, "<span class='notice'>[mode.desc]</span>")
 
 	// You shouldn't actually interact with these anymore.
 	var/obj/screen/buildmode/builddir/button_dir
@@ -129,7 +131,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 /client/proc/togglebuildmode()
 	set name = "Build Mode"
 	set desc = "Toggle build Mode on/off."
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 
 	if(!src.buildmode)
 		src.buildmode = new /datum/buildmode_holder(src)

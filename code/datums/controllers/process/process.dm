@@ -127,6 +127,8 @@ datum/controller/process/proc/started()
 	cpu_defer_count = 0
 
 	running()
+	if (!main)
+		world.log << "main is null somehow. src=\ref[src] ..."
 	main.processStarted(src)
 
 	onStart()

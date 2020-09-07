@@ -28,6 +28,7 @@ var/HasturPresent = 0
 	var/lastdir = null
 
 	New()
+		..()
 		src.see_in_dark = SEE_DARK_FULL
 		northsouth = icon('icons/misc/hastur.dmi')
 		eastwest = icon('icons/misc/hastur.dmi')
@@ -39,7 +40,6 @@ var/HasturPresent = 0
 		abilityHolder.addAbility(/datum/targetable/hastur/insanityaura)
 		abilityHolder.addAbility(/datum/targetable/hastur/masswhisper)
 		abilityHolder.addAbility(/datum/targetable/hastur/ancientinvisibility)
-		..()
 
 	Bump(atom/O)
 		. = ..()
@@ -201,15 +201,15 @@ var/HasturPresent = 0
 	cooldown = 2
 
 	cast()
-		for(var/mob/living/carbon/X in mobs)
-			var/msg = input("Message:", text("What would you like to whisper to everyone?")) as null|text
-			msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
-			if (!msg)
-				return
-			if (usr.client && usr.client.holder)
-				boutput(world, "<font color=purple><b>An otherwordly voice whispers into your ears... [msg]</b></font>")
-				//msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
-				//boutput(usr, "<b>You whisper to everyone:</b> [message]")
+		var/msg = input("Message:", text("What would you like to whisper to everyone?")) as null|text
+		msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
+		if (!msg)
+			return
+
+		if (usr.client && usr.client.holder)
+			boutput(world, "<font color=purple><b>An otherwordly voice whispers into your ears... [msg]</b></font>")
+			//msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
+			//boutput(usr, "<b>You whisper to everyone:</b> [message]")
 
 
 //ANCIENT INVISIBILIT ABILITY// - Pretty much just a changeling re-do
@@ -390,7 +390,7 @@ var/HasturPresent = 0
 					A.smash()
 				for(var/mob/living/M in src_turf)
 					if(M == O || M == user) continue
-					var/turf/destination = find_loc(user)
+					var/turf/destination = get_turf(user)
 					if (destination)
 						do_teleport(M, destination, 1, sparks=0) ///You will appear adjacent to Hastur.
 						playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)

@@ -5,7 +5,7 @@
 	icon_state = "proj_crab"
 
 	power = 50
-	cost = 10
+	cost = 30
 	dissipation_rate = 1
 	dissipation_delay = 20
 	ks_ratio = 0.0

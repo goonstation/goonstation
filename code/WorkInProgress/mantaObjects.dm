@@ -9,12 +9,6 @@
 
 //******************************************** MANTA COMPATIBLE LISTS HERE ********************************************
 
-var/list/mantaTiles = list()
-var/list/mantaBubbles = list()
-var/list/mantaPlants = list()
-var/list/mantaPropellers = list()
-var/list/mantaHeaters = list()
-var/list/mantaJunctionbox = list ()
 var/list/mantaPushList = list()
 var/mantaMoving = 1
 var/MagneticTether = 1
@@ -30,11 +24,11 @@ var/obj/manta_speed_lever/mantaLever = null
 	mouse_opacity = 0
 
 	New()
-		mantaBubbles.Add(src)
-		return ..()
+		START_TRACKING
+		..()
 
-	Del()
-		mantaBubbles.Remove(src)
+	disposing()
+		STOP_TRACKING
 		return ..()
 
 	small
@@ -74,7 +68,8 @@ var/obj/manta_speed_lever/mantaLever = null
 		updateIcon()
 		..()
 //This crap is here so nothing can destroy it.
-	hitby()
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		SHOULD_CALL_PARENT(FALSE)
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -149,7 +144,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /proc/mantaIsBroken()
 	var/broken = 0
-	for(var/obj/machinery/mantapropulsion/A in mantaPropellers)
+	for(var/obj/machinery/mantapropulsion/A in by_type[/obj/machinery/mantapropulsion])
 		if(!A.important) continue
 		if(A.health == 0) broken++
 		if(A.health > 0) broken--
@@ -160,6 +155,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /proc/mantaSetMove(var/moving=1, var/doShake=1)
 
 	if(mantaIsBroken() && moving == 1) //If too many are broken and we want to move, nope out. This is just an extra safety.
+		mantaMoving = 0
 		return
 
 	if(doShake)
@@ -167,16 +163,16 @@ var/obj/manta_speed_lever/mantaLever = null
 			var/mob/M = C.mob
 			if(M && M.z == 1) shake_camera(M, 5, 15, 0.2)
 
-	for(var/A in mantaTiles)
+	for(var/A in by_cat[TR_CAT_MANTA_TILES])
 		var/turf/space/fluid/manta/T = A
 		T.setScroll(moving)
-	for(var/A in mantaBubbles)
+	for(var/A in by_type[/obj/decal/mantaBubbles])
 		var/obj/O = A
 		O.alpha = (moving ? 255:0)
-	for(var/A in mantaPlants)
+	for(var/A in by_type[/obj/sea_plant_manta])
 		var/obj/O = A
 		O.alpha = (moving ? 0:255)
-	for(var/A in mantaPropellers)
+	for(var/A in by_type[/obj/machinery/mantapropulsion])
 		var/obj/machinery/mantapropulsion/O = A
 		O.setOn(moving)
 
@@ -200,14 +196,15 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/broken = 0
 
 	New()
+		..()
 		stateOff = "sea_propulsion_off"
 		stateOn = "sea_propulsion"
 		icon_state = stateOn
 		on = 1
-		return .
+		START_TRACKING
 
-	Del()
-		mantaPropellers.Remove(src)
+	disposing()
+		STOP_TRACKING
 		return ..()
 
 	Bumped(atom/AM) //This is stolen straight from the crusher, just making sure that the propellers are actually on.
@@ -287,7 +284,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				if (istype(I, /obj/item/cable_coil))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 60), user)
 			if(5)
-				if (istype(I, /obj/item/weldingtool) && I:welding)
+				if (isweldingtool(I) && I:try_weld(user,0,-1,0,0))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 			if(6)
 				if (istool(I, TOOL_WRENCHING))
@@ -301,7 +298,7 @@ var/obj/manta_speed_lever/mantaLever = null
 					if (S.amount >= 5)
 						actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 			if(9)
-				if (istype(I, /obj/item/weldingtool) && I:welding)
+				if (isweldingtool(I) && I:try_weld(user,0,-1,0,0))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 
 
@@ -366,7 +363,6 @@ var/obj/manta_speed_lever/mantaLever = null
 	appearance_flags = TILE_BOUND
 
 	New()
-		mantaPropellers.Add(src)
 		. = ..()
 		stateOff = "bigsea_propulsion_off"
 		stateOn = "bigsea_propulsion"
@@ -439,12 +435,12 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/max_power = 2e8		// maximum power that can be drained before exploding
 
 	New()
-		mantaJunctionbox.Add(src)
+		START_TRACKING
 		. = ..()
 		update_icon()
 
-	Del()
-		mantaJunctionbox.Remove(src)
+	disposing()
+		STOP_TRACKING
 		return ..()
 
 	attack_hand(mob/user as mob)
@@ -495,7 +491,6 @@ var/obj/manta_speed_lever/mantaLever = null
 	proc/Breakdown()
 		src.broken = 1
 		src.repairstate = 1
-		mantaJunctionbox.Remove(src)
 		src.desc = "You should start by removing the outer screws from the casing. Be sure to wear some insulated gloves!"
 
 	proc/Repair()
@@ -787,7 +782,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 8
 	stamina_crit_chance = 10
 
 /obj/effect/boommarker
@@ -823,7 +818,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			src.pixel_x = rand(-8,8)
 		if (!src.pixel_y)
 			src.pixel_y = rand(-8,8)
-		mantaPlants.Add(src)
+		START_TRACKING
 
 	attackby(obj/item/W, mob/user)
 		if (drop_type && issnippingtool(W))
@@ -833,8 +828,8 @@ var/obj/manta_speed_lever/mantaLever = null
 			qdel(src)
 		..()
 
-	Del()
-		mantaPlants.Remove(src)
+	disposing()
+		STOP_TRACKING
 		return ..()
 
 
@@ -928,7 +923,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/list/L = list()
 
 	New()
-		mantaTiles.Add(src)
+		START_TRACKING_CAT(TR_CAT_MANTA_TILES)
 		. = ..()
 		stateOff = "manta_sand"
 		stateOn = "[stateOff]_scroll"
@@ -937,7 +932,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return .
 
 	Del()
-		mantaTiles.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_MANTA_TILES)
 		return ..()
 
 	ex_act(severity)
@@ -958,7 +953,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
 					L+=T
 
-			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/wraith) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced))
+			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/wraith) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced) || istype(Obj, /obj/arrival_missile))
 				return
 
 			return_if_overlay_or_effect(Obj)
@@ -1102,7 +1097,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			boutput(owner, "<span class='notice'>You finish welding  the replacement propellers,the propeller is again in working condition.</span>")
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 80, 1)
 			propeller.health = 100
-			mantaPropellers.Add(src)
 		if (mantaMoving == 1)
 			propeller.on = 1
 			propeller.icon_state = "bigsea_propulsion"
@@ -1199,7 +1193,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			box.broken = 0
 			boutput(owner, "<span class='notice'>You successfully screw the casing back on.</span>")
 			playsound(get_turf(box), "sound/items/Deconstruct.ogg", 80, 1)
-			mantaJunctionbox.Add(src)
 			box.desc = "An electrical junction box is an enclosure housing electrical connections, to protect the connections and provide a safety barrier."
 			return
 
@@ -1315,7 +1308,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (random_events.announce_events)
 				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored")
 			else
-				message_admins("<span class='notice'>Manta Comms event ceasing.</span>")
+				message_admins("<span class='internal'>Manta Comms event ceasing.</span>")
 
 
 /datum/random_event/major/electricmalfunction
@@ -1323,8 +1316,8 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	event_effect()
 		..()
-		var/obj/machinery/junctionbox/J = mantaJunctionbox[rand(3,mantaJunctionbox.len)]
-		if (J.broken == 1)
+		var/obj/machinery/junctionbox/J = pick(by_type[/obj/machinery/junctionbox])
+		if (J.broken)
 			return
 		J.Breakdown()
 		command_alert("Certain junction boxes are malfunctioning around NSS Manta. Please seek out and repair the malfunctioning junction boxes before they lead to power outages.", "Electrical Malfunction")
@@ -1334,22 +1327,14 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	event_effect()
 		..()
-		var/list/EV = list()
-		//var/delay = rand(2000,3000) hissssss
-		//var/obj/effect/boommarker/B = /obj/effect/boommarker
-		for(var/obj/landmark/S in landmarks)//world)
-			if (S.name == "bigboom")
-				EV.Add(S.loc)
-		var/bigboommark = pick(EV)
-
-		var/list/eligible = mantaPropellers.Copy()
+		var/list/eligible = by_type[/obj/machinery/mantapropulsion].Copy()
 		for(var/i=0, i<3, i++)
-			var/obj/machinery/mantapropulsion/big/P = eligible[rand(1,eligible.len)]
+			var/obj/machinery/mantapropulsion/big/P = pick(eligible)
 			P.Breakdown()
 			eligible.Remove(P)
 			sleep(1 SECOND)
 
-		new /obj/effect/boommarker(bigboommark)
+		new /obj/effect/boommarker(pick_landmark(LANDMARK_BIGBOOM))
 #endif
 
 
@@ -1524,7 +1509,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if(istype(W, /obj/item/parts/human_parts/arm/right/polaris))
 			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 			playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
-			for (var/obj/machinery/door/airlock/M in doors)
+			for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 				if (M.id == src.id)
 					if (M.density)
 						M.open()
@@ -1542,12 +1527,12 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (H.limbs && (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/polaris)))
 				user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 
-				for (var/obj/machinery/door/poddoor/M in doors)
+				for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 					if (M.id == src.id)
 						if (M.density)
 							M.open()
 
-				for (var/obj/machinery/door/airlock/M in doors)
+				for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 					if (M.id == src.id)
 						if (M.density)
 							M.open()
@@ -1631,9 +1616,13 @@ var/obj/manta_speed_lever/mantaLever = null
 	Entered(atom/A as mob|obj)
 		if (isobserver(A) || isintangible(A))
 			return ..()
+		if(ismovable(A))
+			var/atom/movable/AM = A
+			if(AM.anchored)
+				return ..()
 
-		if (polarisfall.len)
-			var/turf/T = pick(polarisfall)
+		var/turf/T = pick_landmark(LANDMARK_FALL_POLARIS)
+		if(T)
 			fall_to(T, A)
 			return
 		else ..()

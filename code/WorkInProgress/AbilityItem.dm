@@ -307,7 +307,6 @@
 
 	pooled()
 		..()
-		loc = null
 		icon = null
 		icon_state = null
 
@@ -323,7 +322,7 @@
 	icon_state = "shieldceon"
 
 	execute_ability()
-		var/obj/item/storage/belt/utility/ceshielded/C = the_item
+		var/obj/item/storage/belt/utility/prepared/ceshielded/C = the_item
 		C.toggle()
 		..()
 		//if(C.active) icon_state = "shieldceoff"
@@ -337,11 +336,29 @@
 
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
-		J.attack_self(the_mob)
-		if(J.on) icon_state = "off"
-		else  icon_state = "on"
+		J.toggle()
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/saw_toggle
+	name = "Toggle Saw"
+	icon_state = "saw"
+
+	execute_ability()
+		var/obj/item/saw/S = the_item
+		S.attack_self(usr)
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/cable_toggle
+	name = "Toggle auto-laying mode"
+	icon_state = "coil"
+
+	execute_ability()
+		var/obj/item/cable_coil/C = the_item
+		C.attack_self(usr)
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -352,8 +369,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/space/engineer/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
+
 		J.flashlight_toggle(the_mob)
 		if (J.on) src.icon_state = "off"
 		else  src.icon_state = "on"
@@ -367,8 +383,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/hardhat/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
+
 		J.flashlight_toggle(the_mob)
 		if (J.on) src.icon_state = "off"
 		else  src.icon_state = "on"
@@ -395,6 +410,19 @@
 
 	execute_ability()
 		var/obj/item/clothing/glasses/meson/J = the_item
+		J.attack_self(the_mob)
+		if(J.on) icon_state = "meson1"
+		else  icon_state = "meson0"
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/nukie_meson_toggle
+	name = "Toggle Helmet Scanner"
+	icon_state = "meson0"
+
+	execute_ability()
+		var/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer/J = the_item
 		J.attack_self(the_mob)
 		if(J.on) icon_state = "meson1"
 		else  icon_state = "meson0"
@@ -692,9 +720,11 @@
 
 	proc/disposing_abilities()
 		if (!isnull(ability_buttons))
+			src.hide_buttons()
 			for (var/obj/ability_button/A in ability_buttons)
-				A.the_item = null
+				qdel(A)
 			ability_buttons.len = 0
+		src.the_mob = null
 
 	proc/clear_mob()
 		if (islist(src.ability_buttons))
@@ -718,7 +748,7 @@
 
 	proc/hide_buttons()
 		if(!the_mob || !islist(src.ability_buttons)) return
-		the_mob.item_abilities.Remove(ability_buttons)
+		the_mob.item_abilities?.Remove(ability_buttons)
 		the_mob.need_update_item_abilities = 1
 		the_mob.update_item_abilities()
 /*
@@ -797,8 +827,10 @@
 
 	disposing() //probably best to do this?
 		if (src.the_item)
+			if(length(src.the_item.ability_buttons))
+				src.the_item.ability_buttons -= src
 			src.the_item = null
-		if (src.the_mob)
+		if (src.the_mob) // TODO: remove from mob properly
 			src.the_mob = null
 		..()
 

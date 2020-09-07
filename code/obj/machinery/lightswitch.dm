@@ -8,7 +8,8 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = 1.0
-	plane = PLANE_NOSHADOW_BELOW
+	plane = PLANE_NOSHADOW_ABOVE
+	text = ""
 	var/on = 1
 	var/area/area = null
 	var/otherarea = null
@@ -33,9 +34,8 @@
 		src.on = src.area.lightswitch
 		updateicon()
 
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("trigger", "trigger")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
 
 		if (on)
 			light.set_color(0.5, 1, 0.50)
@@ -83,7 +83,7 @@
 		L.updateicon()
 		LAGCHECK(LAG_MED)
 
-	if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("[on ? "lightOn":"lightOff"]"))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
 
 	playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, 1)
 

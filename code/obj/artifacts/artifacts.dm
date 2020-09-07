@@ -29,6 +29,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	attack_hand(mob/user as mob)
+		user.lastattacked = src
 		src.ArtifactTouched(user)
 		return
 
@@ -36,6 +37,7 @@
 		return attack_hand(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		user.lastattacked = src
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -79,7 +81,7 @@
 			if("uranium")
 				src.ArtifactStimulus("radiate", round(volume / 2))
 			if("dna_mutagen","mutagen","omega_mutagen")
-				if (A.artitype == "martian")
+				if (A.artitype.name == "martian")
 					ArtifactDevelopFault(80)
 			if("phlogiston","dbreath","el_diablo","thermite","thalmerite","argine")
 				src.ArtifactStimulus("heat", 310 + (volume * 5))
@@ -132,7 +134,7 @@
 				src.ArtifactStimulus("radiate", P.power)
 		..()
 
-	Bumped(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
 			src.ArtifactStimulus("force", ITM.throwforce)
@@ -229,7 +231,7 @@
 			if("uranium")
 				src.ArtifactStimulus("radiate", round(volume / 2))
 			if("dna_mutagen","mutagen","omega_mutagen")
-				if (A.artitype == "martian")
+				if (A.artitype.name == "martian")
 					ArtifactDevelopFault(80)
 			if("phlogiston","dbreath","el_diablo")
 				src.ArtifactStimulus("heat", 310 + (volume * 5))
@@ -279,7 +281,7 @@
 				src.ArtifactStimulus("radiate", P.power)
 		..()
 
-	Bumped(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
 			src.ArtifactStimulus("force", ITM.throwforce)
@@ -297,6 +299,7 @@
 	var/associated_datum = /datum/artifact/art
 
 	New(var/loc, var/forceartitype)
+		..()
 		var/datum/artifact/AS = new src.associated_datum(src)
 		if (forceartitype)
 			AS.validtypes = list("[forceartitype]")
@@ -324,9 +327,18 @@
 		if (src.Artifact_attackby(W,user))
 			..()
 
+	hitby(atom/movable/M, datum/thrown_thing/thr)
+		if (isitem(M))
+			var/obj/item/ITM = M
+			src.ArtifactStimulus("force", ITM.throwforce)
+			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
+				I.impactpad_senseforce(src, ITM)
+		..()
+
 /obj/artifact_spawner
 	// pretty much entirely for debugging/gimmick use
 	New(var/loc,var/forceartitype = null,var/cinematic = 0)
+		..()
 		var/turf/T = get_turf(src)
 		if (cinematic)
 			T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")

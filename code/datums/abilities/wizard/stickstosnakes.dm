@@ -18,10 +18,10 @@
 		if(!holder)
 			return
 
-		var/has_spellpower = holder.owner.wizard_spellpower() // we track spellpower *before* we turn our staff into a snake
+		var/has_spellpower = holder.owner.wizard_spellpower(src) // we track spellpower *before* we turn our staff into a snake
 
 		var/atom/movable/stick = null
-		if(istype(target, /obj/item))
+		if(istype(target, /obj/item) || istype(target, /obj/railing)) // railings are stick-y enough, so
 			stick = target
 		else if(istype(target, /mob))
 			var/mob/living/carbon/human/M = target

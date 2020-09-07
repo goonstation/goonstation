@@ -19,21 +19,19 @@ WET FLOOR SIGN
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
+	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
 
 /obj/item/spraybottle/New()
-	var/datum/reagents/R = new/datum/reagents(100) // cogwerks - lowered from 1000 (what the hell) to 100
-	reagents = R
-	R.my_atom = src
+	..()
+	create_reagents(100)
 
 /obj/item/spraybottle/detective
 	name = "luminol bottle"
 	desc = "A spray bottle labeled 'Luminol - Blood Detection Agent'. That's what those fancy detectives use to see blood!"
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("luminol", 100)
+		..()
+		reagents.add_reagent("luminol", 100)
 
 	examine()
 		. = ..()
@@ -44,10 +42,8 @@ WET FLOOR SIGN
 	desc = "A spray bottle labeled 'Poo-b-Gone Space Cleaner'."
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cleaner", 100)
+		..()
+		reagents.add_reagent("cleaner", 100)
 
 /obj/janitorTsunamiWave
 	name = "chemicals"
@@ -57,6 +53,7 @@ WET FLOOR SIGN
 	anchored = 1
 
 	New(var/_loc, var/atom/target)
+		..()
 		set_loc(_loc)
 		create_reagents(10)
 		reagents.add_reagent("cleaner", 10)
@@ -165,12 +162,6 @@ WET FLOOR SIGN
 		new/obj/janitorTsunamiWave(get_turf(src), A)
 		playsound(src.loc, 'sound/effects/bigwave.ogg', 70, 1)
 
-	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cleaner", 100)
-
 /obj/item/spraybottle/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
@@ -206,14 +197,14 @@ WET FLOOR SIGN
 					continue
 				D.reagents.reaction(T)
 				if (ismob(T))
-					logTheThing("combat", user, T, "'s spray hits %target% [log_reagents] at [log_loc(user)].")
+					logTheThing("combat", user, T, "'s spray hits [constructTarget(T,"combat")] [log_reagents] at [log_loc(user)].")
 				D.reagents.remove_any(1)
 			if (!D.reagents.total_volume)
 				break
 			sleep(0.3 SECONDS)
 		qdel(D)
 	var/turf/logTurf = get_turf(D)
-	logTheThing("combat", user, logTurf, "sprays [src] at %target% [log_reagents] at [log_loc(user)].")
+	logTheThing("combat", user, logTurf, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
 
 	return
 
@@ -241,15 +232,13 @@ WET FLOOR SIGN
 	throw_range = 10
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS
-	stamina_damage = 35
+	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 10
 
 /obj/item/mop/New()
 	..()
-	var/datum/reagents/R = new/datum/reagents(20)
-	reagents = R
-	R.my_atom = src
+	src.create_reagents(20)
 	src.setItemSpecial(/datum/item_special/rangestab)
 	START_TRACKING
 	BLOCK_ROD
@@ -415,15 +404,11 @@ WET FLOOR SIGN
 	var/spam_flag = 0 // people spammed snapping their fucking fingers, so this is probably necessary
 
 /obj/item/sponge/New()
-	var/datum/reagents/sponge/R = new/datum/reagents/sponge(50)
-	reagents = R
-	R.my_atom = src
-	if (!(src in processing_items))
-		processing_items.Add(src)
-
+	..()
+	src.create_reagents(50)
+	processing_items |= src
 /obj/item/sponge/disposing()
-	if (src in processing_items)
-		processing_items.Remove(src)
+	processing_items -= src
 	..()
 
 /obj/item/sponge/examine()
@@ -457,7 +442,7 @@ WET FLOOR SIGN
 		user.put_in_hand_or_drop(I)
 		qdel(src)
 
-/obj/item/sponge/throw_impact(atom/hit)
+/obj/item/sponge/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(hit && ishuman(hit))
 		if(prob(hit_face_prob))
 			var/mob/living/carbon/human/DUDE = hit
@@ -530,7 +515,7 @@ WET FLOOR SIGN
 				if (!F && T && T.active_liquid)
 					F = T.active_liquid
 
-				if (!(T && T.reagents) && !F) return
+				if (!(T && T.reagents) && !istype(F)) return
 
 				if (F)
 					if (F.group)
@@ -609,7 +594,7 @@ WET FLOOR SIGN
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 4
 	stamina_crit_chance = 10
 
 	New()

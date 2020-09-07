@@ -76,8 +76,9 @@
 	desc = "It feels dense and like it wants to pop open. If you fumble around, maybe you can find some sort of catch or button."
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "flchair_parts"
-	stamina_damage = 15
-	stamina_cost = 15
+	force = 3
+	stamina_damage = 20
+	stamina_cost = 10
 	furniture_type = /obj/stool/chair/comfy/flock
 	furniture_name = "thrumming alcove"
 
@@ -123,9 +124,8 @@
 	else if (istype(W, /obj/item/satchel/))
 		boutput(user, "<span class='alert'>It isn't really clear how to make this work.</span>")
 		return
-	else if (!src.open && istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/welder = W
-		if (welder.welding)
+	else if (!src.open && isweldingtool(W))
+		if (W:try_weld(user,0,-1,0,0))
 			boutput(user, "<span class='alert'>It doesn't matter what you try, it doesn't seem to keep welded shut.</span>")
 		return
 	// smack the damn thing if it's closed
@@ -229,16 +229,17 @@
 
 /obj/lattice/flock/attackby(obj/item/C as obj, mob/user as mob)
 	if (istype(C, /obj/item/tile))
-		C:build(get_turf(src))
-		C:amount--
-		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
-		C.add_fingerprint(user)
+		var/obj/item/tile/T = C
+		if (T.amount >= 1)
+			T.build(get_turf(src))
+			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			T.add_fingerprint(user)
+			qdel(src)
 
-		if (C:amount < 1)
-			user.u_equip(C)
-			qdel(C)
-		qdel(src)
-	if (istype(C, /obj/item/weldingtool) && C:welding)
+		if (T.amount < 1  && !issilicon(user))
+			user.u_equip(T)
+			qdel(T)
+	if (isweldingtool(C) && C:try_weld(user,0,-1,0,0))
 		boutput(user, "<span class='notice'>The fibres burn away in the same way glass doesn't. Huh.</span>")
 		qdel(src)
 

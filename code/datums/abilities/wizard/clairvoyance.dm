@@ -17,7 +17,7 @@
 		..()
 
 		var/list/mob/targets = list()
-		for (var/mob/living/carbon/human/H in mobs)//world)
+		for (var/mob/living/carbon/human/H in mobs)
 			LAGCHECK(LAG_LOW)
 			targets += H
 

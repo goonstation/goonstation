@@ -31,18 +31,13 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			tutorial_area = locate(tutorial_area_type) in world
 			logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Got area [tutorial_area]")
 			if (tutorial_area)
-				// var/obj/landmark/tutorial_start/L = locate() in tutorial_area
-				// GODDAMNIT LUMMOX
-				var/obj/landmark/tutorial_start/L = null
-				for (var/obj/landmark/tutorial_start/temp in tutorial_area)
-					L = temp
-					break
-				if (!L)
+				for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
+					if(T.loc == tutorial_area)
+						initial_turf = T
+						break
+				if (!initial_turf)
 					logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Tutorial failed setup: missing landmark.")
 					throw EXCEPTION("Okay who removed the goddamn blob tutorial landmark")
-				initial_turf = get_turf(L)
-				if (!initial_turf)
-					logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Tutorial failed setup: [L], [initial_turf].")
 
 	Start()
 		if (!initial_turf)
@@ -60,7 +55,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 	Finish()
 		if (..())
-			bowner.set_loc(pick(observer_start))
+			bowner.set_loc(pick_landmark(LANDMARK_OBSERVER))
 			bowner.bio_points_max_bonus = initial(bowner.bio_points_max_bonus)
 			bowner.started = 0
 			for (var/obj/blob/B in bowner.blobs)
@@ -384,9 +379,9 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		MayAdvance()
 			return 0
 
-	ribosomes
+		ribosomes
 		name = "Ribosomes"
-		instructions = "Your most valuable assets are the ribosomes. As your size grows, so does the amount of time it takes for your spread ability to cool down. Ribosomes generate valuable structural materials for the blob, allowing it to mitigate this cooldown penalty. Place a ribosome on the marked blob tile to proceed."
+		instructions = "Your most valuable assets are the ribosomes. Ribosomes increase your biopoint generation, allowing you do do more things, faster. Place a ribosome on the marked blob tile to proceed."
 		var/turf/target
 		finished = 0
 
@@ -440,7 +435,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 	hotkeys
 		name = "Repair and Hotkeying"
-		instructions = "In hot situations, you will be unable to move around quickly and perform actions at the same time. This is where hotkeying comes in. You may assign up to three abilities to three different hotkey: CTRL+Click, ALT+Click and SHIFT+Click. This lets you perform stuff on the tile you click on! To assign a hotkey, CTRL/ALT/SHIFT-click an ability. Let's try this: assign a hotkey to the repair ability, and repair your damaged ribosome without moving."
+		instructions = "In hot situations, you will be unable to move around quickly and perform actions at the same time. This is where hotkeying comes in. You may assign up to three abilities to three different hotkey: CTRL+Click, ALT+Click and SHIFT+Click. This lets you perform stuff on the tile you click on! To assign a hotkey, CTRL/ALT/SHIFT-click an ability. Let's try this: assign a hotkey to the repair ability, and repair your damaged cells without moving."
 		var/turf/target
 
 		SetUp()
@@ -728,7 +723,6 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 	T.AddStep(new /datum/tutorialStep/blob/cutscene)
 	T.AddStep(new /datum/tutorialStep/blob/firewall)
 	T.AddStep(new /datum/tutorialStep/blob/cutscene2)
-	T.AddStep(new /datum/tutorialStep/blob/ribosomes)
 	T.AddStep(new /datum/tutorialStep/blob/clickmove)
 	T.AddStep(new /datum/tutorialStep/blob/hotkeys)
 	T.AddStep(new /datum/tutorialStep/blob/upgrades)
@@ -746,12 +740,12 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 	desc = "Some dork with a flamethrower."
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_f"
-	var/obj/item/flamethrower/loaded/L = new
+	var/obj/item/flamethrower/assembled/loaded/L = new
 
 	New()
 		..()
 		overlays += image('icons/mob/inhand/hand_weapons.dmi', "flamethrower1-R")
-		L.loc = src
+		L.set_loc(src)
 		L.lit = 1
 
 	proc/sprayAt(var/turf/T)

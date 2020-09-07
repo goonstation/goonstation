@@ -67,6 +67,54 @@ var/list/globalContextActions = null
 
 			return buttons
 
+	instrumental
+		var/spacingX = 16
+		var/spacingY = 16
+		var/offsetX = 0
+		var/offsetY = 0
+
+		New(var/SpacingX = 10, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0)
+			spacingX = SpacingX
+			spacingY = SpacingY
+			offsetX = OffsetX
+			offsetY = OffsetY
+			return ..()
+
+		showButtons(var/list/buttons, var/atom/target)
+			var/offX = 0
+			var/offY = spacingY
+			var/finalOff = spacingX * (buttons.len-3)
+			offX -= finalOff/2
+
+			for(var/obj/screen/contextButton/C in buttons) //todo : stop typechecking per context
+				C.screen_loc = "CENTER,CENTER+0.6"
+
+				var/mob/living/carbon/human/H = usr
+				if(istype(H)) H.hud.add_screen(C)
+				var/mob/living/critter/R = usr
+				if(istype(R)) R.hud.add_screen(C)
+				var/mob/wraith/W = usr
+				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
+
+				var/matrix/trans = unpool(/matrix)
+				trans = trans.Reset()
+				trans.Translate(offX, offY)
+
+				animate(C, alpha=255, transform=trans, easing=CUBIC_EASING, time=1)
+
+				offX += spacingX
+				//if(offX >= spacingX)
+				//	offX = 0
+				//	offY -= spacingY
+
+			return buttons
+
 	experimentalcircle
 		showButtons(var/list/buttons, var/atom/target)
 			var/atom/screenCenter = get_turf(usr.client.virtual_eye)
@@ -257,7 +305,7 @@ var/list/globalContextActions = null
 		if(W && W.contextActions && W.contextActions.len)
 			for(var/datum/contextAction/C in W.contextActions)
 				var/action = C.checkRequirements(target, src)
-				if(action) applicable.Add(action)
+				if(action) applicable.Add(C)
 
 		if(target && target.contextActions && target.contextActions.len)
 			for(var/datum/contextAction/C in target.contextActions)
@@ -281,6 +329,7 @@ var/list/globalContextActions = null
 			B.setup(C, src, target)
 			B.alpha = 0
 			buttons.Add(B)
+
 		if(target.contextLayout)
 			target.contextLayout.showButtons(buttons,target)
 		else
@@ -379,6 +428,9 @@ var/list/globalContextActions = null
 		//trans = trans.Reset()
 		transform = trans
 
+		background = null
+		src.underlays.Cut()
+
 		var/possible_bg = action.buildBackgroundIcon(target,user)
 		if (possible_bg)
 			background = possible_bg
@@ -395,7 +447,7 @@ var/list/globalContextActions = null
 		src.underlays.Cut()
 		background.icon_state = "[action.getBackground(target, user)]1"
 		src.underlays += background
-		if (usr.client.tooltipHolder && (action != null))
+		if (usr.client.tooltipHolder && (action != null) && action.use_tooltip)
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
 				"title" = action.getName(target, user),
@@ -410,14 +462,32 @@ var/list/globalContextActions = null
 		src.underlays.Cut()
 		background.icon_state = "[action.getBackground(target, user)]0"
 		src.underlays += background
-		if (usr.client.tooltipHolder)
+		if (usr.client.tooltipHolder && action.use_tooltip)
 			usr.client.tooltipHolder.hideHover()
 		return
 
 	clicked(list/params)
 		if(action.checkRequirements(target, user)) //Let's just check again, just in case.
 			SPAWN_DBG(0) action.execute(target, user)
-			user.closeContextActions()
+			if (action.flick_on_click)
+				flick(action.flick_on_click, src)
+			if (action.close_clicked)
+				user.closeContextActions()
+
+	disposing()
+		var/mob/living/carbon/human/H = user
+		if(istype(H)) H.hud.remove_screen(src)
+		var/mob/living/critter/R = user
+		if(istype(R)) R.hud.remove_screen(src)
+		var/mob/wraith/W = user
+		if(istype(W)) W.hud.remove_screen(src)
+		if (isrobot(user))
+			var/mob/living/silicon/robot/robot = user
+			robot.hud.remove_screen(src)
+		if (ishivebot(user))
+			var/mob/living/silicon/hivebot/hivebot = user
+			hivebot.hud.remove_screen(src)
+		..()
 
 /datum/contextAction
 	var/icon = 'icons/ui/context16x16.dmi'
@@ -426,6 +496,9 @@ var/list/globalContextActions = null
 	var/name = ""
 	var/desc = ""
 	var/tooltip_flags = null
+	var/use_tooltip = 1
+	var/close_clicked = 1
+	var/flick_on_click = null
 
 	proc/checkRequirements(var/atom/target, var/mob/user) //Is this action even allowed to show up under the given circumstances? 1=yes, 0=no
 		return 0
@@ -836,7 +909,7 @@ var/list/globalContextActions = null
 
 		checkRequirements(var/atom/target, var/mob/user)
 			.= 0
-			for (var/obj/item/deconstructor/D in user.equipped_list())
+			if(user.find_type_in_hand(/obj/item/deconstructor/))
 				return 1
 
 		wrench
@@ -1068,6 +1141,70 @@ var/list/globalContextActions = null
 				..()
 				var/obj/machinery/vehicle/V = target
 				V.return_to_station()
+
+
+	instrument
+		icon = 'icons/ui/context16x16.dmi'
+		name = "Play Note"
+		desc = "Click me to play a note!"
+		icon_state = "note"
+		use_tooltip = 0
+		close_clicked = 0
+		icon_background = "key"
+		flick_on_click = "key2"
+
+		var/note = 0
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/instrument/I = target
+			I.play_note(note,user)
+
+		checkRequirements(var/atom/target, var/mob/user)
+			.= ((user.equipped() == target) || target.density && target.loc == get_turf(target) && get_dist(user,target)<=1 && istype(target,/obj/item/instrument))
+
+		special
+			icon_background = "key_special"
+
+	kudzu
+		icon = 'icons/ui/context16x16.dmi'
+		name = "Deconstruct with Tool"
+		desc = "You shouldn't be reading this, bug."
+		icon_state = "wrench"
+		var/creation_path = null	//object to create
+		var/extra_time = 0
+
+		execute(var/atom/target, var/mob/user)
+			playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
+			actions.start(new/datum/action/bar/icon/kudzu_shaping(target,user, creation_path, extra_time), user)
+
+		checkRequirements(var/atom/target, var/mob/user)
+			if (istype(target, /obj/spacevine))
+				var/obj/spacevine/K = target
+				if (K.growth >= 20 && istype(user.equipped(), /obj/item/kudzu/kudzumen_vine))
+					return 1
+			return 0
+
+		plantpot
+			name = "Plant pot"
+			desc = "Create a plant pot."
+			icon_state = "kudzu-plantpot"
+			creation_path = /obj/machinery/plantpot/kudzu
+
+			execute(var/atom/target, var/mob/user)
+				boutput(user, "Shaping [target] into a plantpot, please remain still...")
+				extra_time = 2 SECONDS
+				return ..()
+
+		plantmaster
+			name = "Kudzu Plantmaster"
+			desc = "Create a plantmaster."
+			icon_state = "computer"	//"kudzu-plantmaster"
+			creation_path = /obj/submachine/seed_manipulator/kudzu
+
+			execute(var/atom/target, var/mob/user)
+				boutput(user, "Shaping [target] into a plantmaster, please remain still...")
+				extra_time = 5 SECONDS
+				return ..()
 
 /*
 	offered

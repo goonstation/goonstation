@@ -16,3 +16,7 @@
 		pierces_left-- //cost an extra pierce for rwalls and blast doors
 	if(pierces_left-- > 0)
 		return PROJ_PASSWALL | PROJ_PASSOBJ
+
+/datum/component/sniper_wallpierce/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_PROJ_COLLIDE)
+	. = ..()

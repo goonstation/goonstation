@@ -11,6 +11,9 @@
 	var/seekrange = 30
 	var/sight = SEE_SELF
 	var/see_in_dark = SEE_DARK_HUMAN + 3
+	var/antisight = 0
+	var/centerlight = null
+	var/centerlight_color = "#ffffff"
 	var/see_invisible = 2
 	var/scanning = 0
 	var/atom/tracking_target = null
@@ -24,7 +27,7 @@
 	var/trackable_range = 0
 
 
-	dispose()
+	disposing()
 		stop_tracking_me()
 		..()
 
@@ -309,7 +312,7 @@
 				lifeforms++
 				lifelist += C.name
 
-		for (var/obj/machinery/vehicle/V in pods_and_cruisers) //ignoring cruisers, they barely exist, sue me.
+		for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS]) //ignoring cruisers, they barely exist, sue me.
 			if(V != ship)
 				if ((ship.z == V.z) && get_dist(ship.loc, V) <= src.seekrange)
 					ships++
@@ -324,7 +327,7 @@
 					else
 						lifeforms++
 						lifelist += C.name
-		for(var/obj/O in lockers_and_crates)
+		for(var/obj/O in by_type[/obj/storage])
 			if ((ship.z == O.z) && get_dist(ship.loc, O) <= src.seekrange/2)
 				for (var/mob/living/M in O.contents)
 					lifeforms++
@@ -401,6 +404,9 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 	name = "Conclave A-1984 Sensor System"
 	desc = "Advanced geological meson scanners for ships."
 	sight = SEE_TURFS
+	antisight = SEE_BLACKNESS
+	centerlight = "thermal"
+	centerlight_color = "#9bdb9b"
 	power_used = 35
 	icon_state = "sensor-y"
 

@@ -14,8 +14,8 @@
 	var/icon_type = "disk"
 	mats = 4
 	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technicalogically advanced arrow."
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 
 	attack_self()
@@ -32,10 +32,11 @@
 			boutput(usr, "<span class='notice'>You deactivate the pinpointer</span>")
 
 	proc/work()
-		if(!active || !target_criteria) return
+		if(!active) return
 		if(!target)
-			target = locate(target_criteria)
-			if(!target)
+			if (target_criteria)
+				target = locate(target_criteria)
+			if(!target || target.qdeled)
 				active = 0
 				icon_state = "[src.icon_type]_pinonnull"
 				return
@@ -92,6 +93,7 @@
 			active = 1
 			for(var/X in by_type[/obj/item/card/id])
 				var/obj/item/card/id/I = X
+				if(!I) continue // the ID can get deleted in the lagcheck
 				for(var/datum/objective/regular/assassinate/A in src.owner.mind.objectives)
 					if(I.registered == null) continue
 					if(ckey(I.registered) == ckey(A.targetname))
@@ -226,3 +228,49 @@
 				icon_state = "blood_pinonfar"
 		SPAWN_DBG(0.5 SECONDS)
 			.(T)
+
+
+
+/obj/item/pinpointer/secweapons
+	name = "security weapon pinpointer"
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "sec_pinoff"
+	icon_type = "sec"
+	var/list/itemrefs
+	var/list/accepted_types
+	mats = null
+	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technicalogically advanced arrow."
+
+	proc/track(var/list/L)
+		itemrefs = list()
+		accepted_types = list()
+		for(var/atom/A in L)
+			itemrefs += ref(A)
+			accepted_types += A.type
+
+	attack_self()
+		if(!active)
+
+			var/list/choices = list()
+			for (var/x in itemrefs)
+				var/atom/A = locate(x)
+				if (A && (A.type in accepted_types) && !A.qdeled && !A.pooled)
+					choices += A
+
+			if (!length(choices))
+				usr.show_text("No track targets exist - possibly destroyed. Cannot activate pinpointer", "red")
+				return
+
+			target = input("Select a card to deal.", "Choose Card") as null|anything in choices
+
+			if (!target)
+				usr.show_text("No target specified. Cannot activate pinpointer.", "red")
+				return
+
+			active = 1
+			work()
+			boutput(usr, "<span class='notice'>You activate the pinpointer</span>")
+		else
+			active = 0
+			icon_state = "[src.icon_type]_pinoff"
+			boutput(usr, "<span class='notice'>You deactivate the pinpointer</span>")

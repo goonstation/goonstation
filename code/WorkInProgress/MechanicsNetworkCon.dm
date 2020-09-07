@@ -8,7 +8,8 @@
 	desc = ""
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "generic-p"
-
+	cabinet_banned = 1 // non-functional, abuse potential. B&
+	plane = PLANE_DEFAULT
 	var/net_id = null
 	var/host_id = null //Who are we connected to?(If we have a single host)
 	var/old_host_id = null //Were we previously connected to someone?  Do we care?
@@ -22,50 +23,59 @@
 
 	var/register = 1 // Whether or not to automagically send command=register&data=MECHNET to connecting devices
 
-	var/ready = 1
+	cooldown_time = 4 DECI SECONDS
+
+	get_desc()
+		. += {"<br><span class='notice'>[self_only ? "Only receiving signals addressed to [net_id]":"Receiving all signals regardless of address_1."]<br>
+		[register ? "Registering with mainframes.":"Not registering with mainframes."]<br>
+		Current NetID: [net_id]</span>"}
 
 	New()
 		. = ..()
 		src.net_id = generate_net_id(src)
-		mechanics.addInput("send packet", "spacket")
-		configs.Add(list("Toggle Self-Only Messages","Toggle Mainframe Registration"))
-		src.append_default_configs(2)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send packet", "spacket")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Self-Only Messages","toggleSelfOnly")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Mainframe Registration","toggleMainframeReg")
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user))
-			if(src.level == 1) //wrenched down
-				var/turf/T = get_turf(src)
-				var/obj/machinery/power/data_terminal/test_link = locate() in T
-				src.icon_state = "generic0"
-				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-					src.link = test_link
-					src.link.master = src
-					src.icon_state = "generic1"
-			else if(src.level == 2) //loose
-				resetConnection()
-				src.icon_state = "generic-p"
-				if(src.link)
-					src.link.master = null
-					src.link = null
-		else if(ispulsingtool(W))
-			switch(src.modify_configs())
-				if(0)
-					return
-				if("Toggle Self-Only Messages")
-					self_only = !self_only
-					boutput(usr, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages recieved."]")
-				if("Toggle Mainframe Registration")
-					register = !register
-					boutput(usr, "[register ? "Now registering with mainframes.":"Now no longer registering with mainframes."]")
+	disposing()
+		if(src.link)
+			src.link.master = null
+			src.link = null
+		..()
+
+	proc/toggleSelfOnly(obj/item/W as obj, mob/user as mob)
+		self_only = !self_only
+		boutput(usr, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages recieved."]")
+		tooltip_rebuild = 1
+
+	proc/toggleMainframeReg(obj/item/W as obj, mob/user as mob)
+		register = !register
+		boutput(usr, "[register ? "Now registering with mainframes.":"Now no longer registering with mainframes."]")
+		tooltip_rebuild = 1
+
+	secure()
+		var/turf/T = get_turf(src)
+		var/obj/machinery/power/data_terminal/test_link = locate() in T
+		src.icon_state = "generic0"
+		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+			src.link = test_link
+			src.link.master = src
+			src.icon_state = "generic1"
+
+	loosen()
+		resetConnection()
+		src.icon_state = "generic-p"
+		if(src.link)
+			src.link.master = null
+			src.link = null
 
 	proc/spacket(var/datum/mechanicsMessage/input)
-		if(!ready) return
-		ready = 0
-		SPAWN_DBG(0.4 SECONDS) ready = 1
-		post_raw(input.signal)
+		if(!isReady()) return
+		unReady()
+		post_raw(input.signal, input.data_file?.copy_file())
 		return
 
-	proc/post_raw(var/rawstring)
+	proc/post_raw(var/rawstring, var/datum/computer/file/data_file=null)
 		if(!src.link)
 			return
 
@@ -77,6 +87,9 @@
 
 		for(var/x in inputlist)
 			signal.data[x] = inputlist[x]
+
+		if(data_file)
+			signal.data_file = data_file
 
 		src.link.post_signal(src, signal)
 
@@ -106,35 +119,9 @@
 		var/dataStr = ""//list2params(S.data)  Using list2params() will result in weird glitches if the data already contains a set of params, like in terminal comms
 		for(var/i in S.data)
 			dataStr += "[i][isnull(S.data[i]) ? ";" : "=[S.data[i]];"]"
-		var/datum/mechanicsMessage/msg = mechanics.newSignal(dataStr)
-		mechanics.fireOutgoing(msg)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, dataStr, S.data_file?.copy_file())
 		animate_flash_color_fill(src,"#00AA00",1, 1)
 		return
-
-	proc/post_file(var/target_id, var/key, var/value, var/file)
-		if(!src.link || !target_id)
-			return
-
-		var/datum/signal/signal = get_free_signal()
-		signal.source = src
-		signal.transmission_method = TRANSMISSION_WIRE
-		signal.data[key] = value
-		if(file)
-			var/datum/computer/file/F = file
-			signal.data_file = F.copy_file()
-
-		signal.data["address_1"] = target_id
-		signal.data["command"] = "term_file"
-		signal.data["sender"] = src.net_id
-
-		src.link.post_signal(src, signal)
-
-	disposing()
-		if(src.link)
-			src.link.master = null
-			src.link = null
-
-		..()
 
 	proc/resetConnection()
 		if(!host_id)

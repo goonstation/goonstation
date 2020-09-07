@@ -531,7 +531,7 @@
 			if (use_box)
 				// create a patchbox
 				var/obj/item/item_box/medical_patches/B = new /obj/item/item_box/medical_patches(src.output_target)
-				B.name = "box of [patchname] [patchvol <= 20 ? "mini-" : null]patches"
+				B.name = "box of [patchname] [patchvol <= 15 ? "mini-" : null]patches"
 				patchloc = B
 				if (!med) // dangerrr
 					B.icon_state = "patchbox" // change icon
@@ -544,7 +544,7 @@
 			if (patchloc)
 				for (var/i=patchcount, i>0, i--)
 					var/obj/item/reagent_containers/patch/P
-					if (patchvol <= 20)
+					if (patchvol <= 15)
 						P = new /obj/item/reagent_containers/patch/mini(patchloc)
 						P.name = "[patchname] mini-patch"
 					else
@@ -662,6 +662,7 @@ datum/chemicompiler_core/stationaryCore
 	icon_state = "chemicompiler_st_off"
 	mats = 15
 	flags = NOSPLASH
+	processing_tier = PROCESSING_FULL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/datum/chemicompiler_executor/executor
 	var/datum/light/light

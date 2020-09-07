@@ -16,16 +16,12 @@
 	col_r = 0.7
 	col_g = 0.3
 	col_b = 0.3
-	var/datum/effects/system/spark_spread/spark_system
 	var/sparks = 7
 	var/burnt = 0
 
 
 	New()
 		..()
-		src.spark_system = unpool(/datum/effects/system/spark_spread)
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
 
 	attack_self(mob/user as mob)
 		if (src.on)
@@ -36,7 +32,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!src.on && sparks)
-			if (istype(W, /obj/item/weldingtool) && W:welding)
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
@@ -77,8 +73,7 @@
 
 	proc/gen_sparks()
 		src.sparks--
-		spark_system.set_up(1, 0, src)
-		src.spark_system.start()
+		elecflash(src)
 		if(!sparks)
 			src.put_out()
 			src.burnt = 1
@@ -101,8 +96,7 @@
 			src.icon_state = src.icon_on
 			src.item_state = src.item_on
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 			if(user)
 				user.update_inhands()
 		return
@@ -116,8 +110,7 @@
 			src.icon_state = src.icon_off
 			src.item_state = src.item_off
 			light.disable()
-			if (src in processing_items)
-				processing_items.Remove(src)
+			processing_items -= src
 			if(user)
 				user.update_inhands()
 		return

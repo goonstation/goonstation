@@ -27,18 +27,6 @@
 //deathbutton to deathbutton.dm
 
 /*
- *	HALLOWEEN LANDMARK
- */
-/obj/landmark/halloween
-	name = "halloween spawn"
-
-	New()
-		..()
-		if(istype(src.loc, /turf))
-			halloweenspawn.Add(src.loc)
-		qdel(src)
-
-/*
  *	DEATH PLAQUE
  */
 
@@ -173,7 +161,7 @@
 		return
 
 	proc/telehop()
-		var/turf/T = pick(blobstart)
+		var/turf/T = pick_landmark(LANDMARK_BLOBSTART)
 		if(T)
 			src.visible_message("<span class='alert'>[src] disappears!</span>")
 			playsound(src.loc,"sound/effects/singsuck.ogg", 100, 1)
@@ -196,13 +184,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker0"
 	item_state = "beaker"
+	initial_volume = 50
 
 	New()
-		..() // CALL YOUR GODDAMN PARENTS GODDAMNIT JESUS FUCKING CHRIST
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("strange_reagent", 50)
+		..()
+		reagents.add_reagent("strange_reagent", 50)
 
 /obj/item/storage/secure/ssafe/hjam
 	name = "Gun Storage"

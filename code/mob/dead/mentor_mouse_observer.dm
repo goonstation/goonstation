@@ -22,9 +22,16 @@
 		src.ping.layer = HUD_LAYER_3
 		src.ping.plane = PLANE_HUD
 
+	process_move(keys)
+		if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
+			..()
+
 	click(atom/target, params) // TODO spam delay
 		if (!islist(params))
 			params = params2list(params)
+
+		if(!params["ctrl"]) // mouse ping is now ctrl+click
+			return ..()
 
 		src.the_guy << src.ping
 		src << src.ping
@@ -86,17 +93,22 @@
 		var/rendered_admin = "<span class='game say[more_class]'><span class='name' data-ctx='\ref[src.mind]'>[src.name] ([src.ckey])</span> whispers, <span class='message'>\"[message]\"</span></span>"
 
 		//show message to admins
-		for (var/mob/M in mobs)
+		for (var/client/C)
+			if (!C.mob) continue
+			var/mob/M = C.mob
 			if(M == src || M == src.the_guy)
 				continue
-			if (M.client && M.client.holder && !M.client.player_mode)
+			if (C.holder && !C.player_mode)
 				var/thisR = rendered
-				if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
+				if ((istype(M, /mob/dead/observer)||C.holder) && src.mind)
 					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered_admin]</span>"
 				boutput(M, thisR)
 
 		boutput(src, rendered)
 		boutput(src.the_guy, rendered)
+
+	emote(act, voluntary=0)
+		src.my_mouse.emote(act, voluntary)
 
 	stop_observing()
 		boot()
@@ -111,6 +123,8 @@
 			src.my_mouse.set_loc(get_turf(src))
 			if(src.mind)
 				src.mind.transfer_to(src.my_mouse)
+			if(!get_turf(src))
+				src.my_mouse.gib()
 		src.the_guy = null
 		src.my_mouse = null
 		..()
@@ -127,5 +141,7 @@
 			src.mind.transfer_to(src.my_mouse)
 		else if(src.client)
 			src.my_mouse.client = src.client
+		if(!get_turf(src))
+			src.my_mouse.gib()
 		src.my_mouse = null
 		qdel(src)

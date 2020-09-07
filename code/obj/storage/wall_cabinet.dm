@@ -17,11 +17,6 @@
 	attack_hand(mob/user as mob)
 		return MouseDrop(user)
 
-	New()
-		..()
-		lockers_and_crates.Add(src)
-		AddComponent(/datum/component/storage, max_wclass = 4, slots = 13)
-
 	proc/update_icon()
 		return
 
@@ -110,6 +105,12 @@
 	spawn_contents = list(/obj/item/storage/box/stma_kit = 2,
 	/obj/item/storage/box/lglo_kit/random = 2,
 	/obj/item/storage/box/clothing/patient_gowns = 2)
+
+#if ASS_JAM
+	New()
+		. = ..()
+		ADD_MORTY(11, 8, 11, 11)
+#endif
 
 /obj/item/storage/wall/research_supplies
 	name = "research supplies"
@@ -339,6 +340,7 @@ obj/item/storage/wall/clothingrack/hatrack
 
 /obj/item/storage/wall/shelf/mineral
 	name = "mineral shelf"
+	icon_state = "mineralshelf"
 	spawn_contents = list(/obj/item/raw_material/mauxite = 4)
 
 	New()

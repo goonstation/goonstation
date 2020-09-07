@@ -7,6 +7,8 @@ datum/controller/process/mobs
 	var/list/wraiths = list()
 	var/list/adminghosts = list()
 
+	var/nextpopcheck = 0
+
 	setup()
 		name = "Mob"
 		schedule_interval = 40
@@ -19,6 +21,19 @@ datum/controller/process/mobs
 	doWork()
 		src.mobs = global.mobs
 		var/c
+
+		if (TIME > nextpopcheck)
+			nextpopcheck = TIME + 4 MINUTES
+			var/clients_num = total_clients()
+			if (clients_num >= SLOWEST_LIFE_PLAYERCOUNT)
+				schedule_interval = 80
+				footstep_extrarange = -10
+			else if (clients_num >= SLOW_LIFE_PLAYERCOUNT)  //hacky lag saving measure
+				schedule_interval = 65
+				footstep_extrarange = 0
+			else
+				schedule_interval = 40
+				footstep_extrarange = 0
 
 		for(var/X in src.mobs)
 			if(istype(X, /mob/living))

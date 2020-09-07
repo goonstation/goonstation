@@ -2,7 +2,7 @@
 //Turf Procs/Vars//
 ///////////////////
 
-/turf/var/obj/fluid/active_liquid
+/turf/var/tmp/obj/fluid/active_liquid
 
 //this is messy!
 //this is for turf/space/fluid oceans. Using this in place of turf/canpass() because this one can account for shitt like windows and tables.

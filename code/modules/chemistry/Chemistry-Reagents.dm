@@ -4,8 +4,6 @@
 //important MBC reagent note : implement mult for on_mob_life(). needed for proper realtime processing. lookk for examples, there are plenty
 //dont put them on byond-time effects like drowsy. just use them for damage, counters, statuseffects(realtime) etc.
 
-var/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
-
 datum
 	reagent
 		var/name = "Reagent"
@@ -47,6 +45,7 @@ datum
 		var/blocks_sight_gas = 0 //opacity
 		var/pierces_outerwear = 0//whether or not this penetrates outerwear that may protect the victim(e.g. biosuit)
 		var/stun_resist = 0
+		var/smoke_spread_mod = 0 //base minimum-required-to-spread on a smoke this chem is in. Highest value in the smoke is used
 		var/minimum_reaction_temperature = INFINITY // Minimum temperature for reaction_temperature() to occur, use -INFINITY to bypass this check
 
 		New()
@@ -185,6 +184,8 @@ datum
 
 		proc/how_many_depletions(var/mob/M)
 			var/deplRate = depletion_rate
+			if(!deplRate)
+				return
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism")) //fuck
@@ -281,8 +282,8 @@ datum
 				return AD
 			var/addProb = addiction_prob
 			//DEBUG_MESSAGE("addProb [addProb]")
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				if (H.traitHolder.hasTrait("strongwilled"))
 					addProb = round(addProb / 2)
 					rate /= 2
@@ -297,7 +298,7 @@ datum
 			holder.addiction_tally[src.id] += rate
 			var/current_tally = holder.addiction_tally[src.id]
 			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
-			if (addiction_min < current_tally && ishuman(M) && prob(addProb) && prob(addiction_prob2))
+			if (addiction_min < current_tally && isliving(M) && prob(addProb) && prob(addiction_prob2))
 				boutput(M, "<span class='alert'><b>You suddenly feel invigorated and guilty...</b></span>")
 				AD = new
 				AD.associated_reagent = src.name

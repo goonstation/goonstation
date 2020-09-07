@@ -145,3 +145,13 @@
 				var/converted_amt = min(flockjuice, min_blood_amount - H.blood_volume)
 				R.remove_reagent("flockdrone_fluid", converted_amt)
 				H.blood_volume += converted_amt
+
+/obj/item/organ/heart/flock/special_desc(dist, mob/user)
+	if(isflock(user))
+		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+		special_desc += "<br><span class='bold'>ID:</span> Resource repository"
+		special_desc += "<br><span class='bold'>Resources:</span> [src.resources]"
+		special_desc += "<br><span class='bold'>###=-</span></span>"
+		return special_desc
+	else
+		return null // give the standard description

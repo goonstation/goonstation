@@ -252,7 +252,7 @@
 			var/turf/B = M.DR()
 			var/turf/C = M.UL()
 			var/turf/D = M.UR()
-			var/turf/O = get_turf(magnet)
+			var/turf/O = get_turf(target)
 			var/dist = min(min(get_dist(A, O), get_dist(B, O)), min(get_dist(C, O), get_dist(D, O)))
 			if (dist > 10)
 				boutput(user, "<span class='alert'>Designation failed: designated tile is outside magnet range.</span>")
@@ -287,6 +287,8 @@
 	var/malfunctioning = 0
 	var/rarity_mod = 0
 
+	var/uses_global_controls = TRUE
+
 	var/image/active_overlay = null
 	var/list/damage_overlays = list()
 	var/sound_activate = 'sound/machines/ArtifactAnc1.ogg'
@@ -306,6 +308,7 @@
 		var/marker_type = /obj/magnet_target_marker
 		var/obj/magnet_target_marker/target = null
 		var/list/wall_bits = list()
+		uses_global_controls = FALSE
 
 		get_magnetic_center()
 			if (target)
@@ -469,15 +472,14 @@
 			boutput(user, "<span class='alert'>It's way too dangerous to do that while it's active!</span>")
 			return
 
-		if (istype(W,/obj/item/weldingtool/))
-			var/obj/item/weldingtool/WELD = W
+		if (isweldingtool(W))
 			if (src.health < 50)
 				boutput(usr, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 				return
-			if(WELD.try_weld(user, 1))
+			if(W:try_weld(user, 1))
 				src.damage(-10)
 				src.malfunctioning = 0
-				user.visible_message("<b>[user]</b> uses [WELD] to repair some of [src]'s damage.")
+				user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 				if (src.health >= 100)
 					boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 
@@ -721,7 +723,7 @@
 			src.generate_interface(usr)
 
 		else if (href_list["show_selectable"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -737,7 +739,7 @@
 			return
 
 		else if (href_list["activate_selectable"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -748,7 +750,7 @@
 					if (src) src.pull_new_source(href_list["activate_selectable"])
 
 		else if (href_list["activate_magnet"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -1103,7 +1105,12 @@
 	Bumped(var/atom/A) //This is a bit hacky, sorry. Better than duplicating all the code.
 		if(isliving(A))
 			var/mob/living/L = A
-			L.click(src, list(), null, null)
+			var/mob/living/carbon/human/H
+			if(ishuman(L))
+				H = L
+			var/obj/item/held = L.equipped()
+			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
+				L.click(src, list(), null, null)
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1943,12 +1950,10 @@ obj/item/clothing/gloves/concussive
 
 			for (var/mob/M in T.contents)
 				if (M)
-					logTheThing("station", user, M, "uses a cargo transporter to send [T.name][is_locked ? " (locked)" : ""][is_welded ? " (welded)" : ""] with %target% inside to [log_loc(src.target)].")
+					logTheThing("station", user, M, "uses a cargo transporter to send [T.name][is_locked ? " (locked)" : ""][is_welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 			T.set_loc(src.target)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src)
 			if (isrobot(user))
 				var/mob/living/silicon/robot/R = user
 				R.cell.charge -= src.robocharge
@@ -1968,6 +1973,7 @@ obj/item/clothing/gloves/concussive
 	var/list/possible_targets = list()
 
 	New()
+		..()
 		for(var/turf/T in world) //hate to do this but it's only once per spawn vOv
 			LAGCHECK(LAG_LOW)
 			if(istype(T,/turf/space) && T.z != 1 && !isrestrictedz(T.z))
@@ -1992,13 +1998,11 @@ obj/item/clothing/gloves/concussive
 			// Logs for good measure (Convair880).
 			for (var/mob/M in T.contents)
 				if (M)
-					logTheThing("station", user, M, "uses a Syndicate cargo transporter to send [T.name] with %target% inside to [log_loc(src.target)].")
+					logTheThing("station", user, M, "uses a Syndicate cargo transporter to send [T.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 			T.set_loc(src.target)
 			if(hasvar(T, "welded")) T:welded = 1
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src)
 			src.charges -= 1
 			if (src.charges < 0)
 				src.charges = 0
@@ -2358,6 +2362,20 @@ var/global/list/cargopads = list()
 		else return
 
 /turf/simulated/floor/ancient
+	name = "strange surface"
+	desc = "A strange jet black metal floor. There are odd lines carved into it."
+	icon_state = "ancient"
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		return
+
+	ex_act(severity)
+		return
+
+/turf/unsimulated/floor/ancient
 	name = "strange surface"
 	desc = "A strange jet black metal floor. There are odd lines carved into it."
 	icon_state = "ancient"

@@ -18,7 +18,7 @@ Contains:
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | TGUI_INTERACTIVE
 
 	pressure_resistance = ONE_ATMOSPHERE*5
 
@@ -26,8 +26,8 @@ Contains:
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 4
-	stamina_damage = 35
-	stamina_cost = 30
+	stamina_damage = 55
+	stamina_cost = 23
 	stamina_crit_chance = 10
 
 	New()
@@ -35,8 +35,7 @@ Contains:
 		src.air_contents = unpool(/datum/gas_mixture)
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		BLOCK_TANK
 		return
 
@@ -66,57 +65,10 @@ Contains:
 				.= 1
 
 	attack_self(mob/user as mob)
-		src.add_dialog(user)
 		if (!(src.air_contents))
 			return
 
-		var/using_internal
-		if(iscarbon(src.loc))
-			var/mob/living/carbon/location = loc
-			if(location.internal==src)
-				using_internal = 1
-
-		//var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"pragma\" content=\"no-cache\"><style type='text/css'>body { font-family: Tahoma, sans-serif; font-size: 10pt; }</style></head><body>" : ""
-
-		var/message = {"
-		<b>[src]</b>
-		<br><b>Tank Pressure:</b> [air_contents.return_pressure()] kPa
-		<br>[fancy_pressure_bar(air_contents.return_pressure(), 10 * ONE_ATMOSPHERE)]
-		<hr>
-		<b>Mask Release Valve:</b> <A href='?src=\ref[src];stat=1'>[using_internal?("Open"):("Closed")]</A>
-		<br><b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-10'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> <A href='?src=\ref[src];setpressure=1'>[distribute_pressure]</A> <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=10'>+</A>
-		"}
-		user.Browse(message, "window=tank;size=600x300")
-		onclose(user, "tank")
-		return
-
-	Topic(href, href_list)
-		..()
-		if (usr.stat|| usr.restrained())
-			return
-		if (src.loc == usr)
-			src.add_dialog(usr)
-			if (href_list["dist_p"])
-				var/cp = text2num(href_list["dist_p"])
-				src.distribute_pressure += cp
-				src.distribute_pressure = min(max(round(src.distribute_pressure), 0), 3*ONE_ATMOSPHERE)
-			if (href_list["stat"])
-				var/toggled = toggle_valve()
-				for (var/obj/ability_button/tank_valve_toggle/T in ability_buttons)
-					T.icon_state = toggled ? "airon" : "airoff"
-			if (href_list["setpressure"])
-				var/change = input(usr,"Target Pressure (0-303.975):","Enter target pressure",distribute_pressure) as num
-				if(!isnum(change)) return
-				distribute_pressure = min(max(0, change),303.975)
-				src.updateUsrDialog()
-				return
-
-			src.add_fingerprint(usr)
-			src.updateSelfDialog()
-		else
-			usr.Browse(null, "window=tank")
-			return
-		return
+		return ui_interact(user)
 
 	remove_air(amount)
 		return air_contents.remove(amount)
@@ -129,6 +81,9 @@ Contains:
 
 		check_status()
 		return 1
+
+	proc/set_release_pressure(var/pressure as num)
+		distribute_pressure = min(max(0, pressure), TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if(iscarbon(src.loc))
@@ -159,7 +114,7 @@ Contains:
 		if(!air_contents)
 			return null
 
-		var/tank_pressure = air_contents.return_pressure()
+		var/tank_pressure = MIXTURE_PRESSURE(air_contents)
 		//if(tank_pressure < distribute_pressure)
 		//	distribute_pressure = max(tank_pressure,17)
 
@@ -180,7 +135,7 @@ Contains:
 		if(!air_contents)
 			return 0
 
-		var/pressure = air_contents.return_pressure()
+		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
 			//boutput(world, "<span class='notice'>[x],[y] tank is exploding: [pressure] kPa</span>")
 			//Give the gas a chance to build up more pressure through reacting
@@ -188,7 +143,7 @@ Contains:
 			air_contents.react()
 			air_contents.react()
 			air_contents.react()
-			pressure = air_contents.return_pressure()
+			pressure = MIXTURE_PRESSURE(air_contents)
 
 			var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
@@ -272,6 +227,44 @@ Contains:
 		else
 			..()
 
+/obj/item/tank/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "GasTank", name)
+		ui.open()
+
+/obj/item/tank/ui_data(mob/user)
+	var/list/data = list()
+	data["pressure"] = MIXTURE_PRESSURE(air_contents)
+	data["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
+	data["valveIsOpen"] = using_internal()
+	data["releasePressure"] = distribute_pressure
+	data["maxRelease"] = TANK_MAX_RELEASE_PRESSURE
+
+	return data
+
+/obj/item/tank/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("toggle-valve")
+			toggle_valve()
+			. = TRUE
+		if("set-pressure")
+			var/target_pressure = params["releasePressure"]
+			if(isnum(target_pressure))
+				set_release_pressure(params["releasePressure"])
+				. = TRUE
+
+/obj/item/tank/ui_state(mob/user)
+	return tgui_physical_state
+
+/obj/item/tank/ui_status(mob/user)
+  return min(
+		tgui_physical_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
+
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/anesthetic
@@ -303,6 +296,8 @@ Contains:
 	item_state = "jetpack_mag"
 	mats = 16
 	force = 8
+	stamina_damage = 55
+	stamina_cost = 30
 	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
 	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
@@ -328,7 +323,7 @@ Contains:
 
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -346,9 +341,6 @@ Contains:
 				return 0.5
 			else
 				return 0
-		//G = null
-		qdel(G)
-		return
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 
@@ -383,7 +375,7 @@ Contains:
 	proc/allow_thrust(num, mob/user as mob)
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -429,6 +421,8 @@ Contains:
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	w_class = 2.0
 	force = 3.0
+	stamina_damage = 30
+	stamina_cost = 16
 	desc = "A small tank that is labelled to contain oxygen. In emergencies, wear a mask that can be used to transfer air, such as a breath mask, turn on the release valve on the oxygen tank, and put it on your belt."
 	wear_image_icon = 'icons/mob/belt.dmi'
 	module_research = list("atmospherics" = 1)
@@ -474,7 +468,7 @@ Contains:
 		return
 
 	proc/release()
-		var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
+		var/datum/gas_mixture/removed = air_contents.remove(TOTAL_MOLES(air_contents))
 		loc.assume_air(removed)
 
 	proc/ignite()
@@ -495,7 +489,6 @@ Contains:
 			return
 
 		var/turf/ground_zero = get_turf(loc)
-		loc = null
 
 		if(air_contents.temperature > (T0C + 400))
 			strength = fuel_moles/15
@@ -641,7 +634,7 @@ Contains:
 	allow_thrust(num, mob/user as mob)
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)

@@ -94,7 +94,7 @@
 		target.TakeDamage("head", rand(12, 18), 0) 				//OW!
 		target.changeStatus("weakened", 4 SECONDS)
 
-		logTheThing("combat", source, target, "rips out the staples on %target%'s [src]") //Crime
+		logTheThing("combat", source, target, "rips out the staples on [constructTarget(target,"combat")]'s [src]") //Crime
 
 /obj/item/clothing/mask/gas
 	name = "gas mask"
@@ -261,7 +261,7 @@
 	equipped(var/mob/user, var/slot)
 		. = ..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "mask")
+		if(istype(H) && slot == SLOT_WEAR_MASK)
 			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
 				src.cant_other_remove = 1.0
 				src.cant_self_remove = 0.0
@@ -281,8 +281,7 @@
 		if ( src.victim )
 			src.victim.change_misstep_chance(-25)
 			src.victim = null
-			if ( src in processing_items )
-				processing_items.Remove(src)
+			processing_items -= src
 
 	process()
 		if ( src.victim )
@@ -353,6 +352,26 @@
 		..()
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 10)
+
+	New()
+		..()
+		var/image/inventory = image('icons/obj/clothing/item_masks.dmi', "")
+		var/image/onhead = image('icons/mob/mask.dmi', "")
+
+		if (prob(1))
+			name = "surgical face bee-ld"
+			inventory.icon_state = "surgicalshield-bee"
+			onhead.icon_state = "surgicalshield-bee"
+			desc = "For those really, <i>really</i> messy surgeries where you also want to look like a dork."
+		else
+			inventory.icon_state = "surgicalshield-overlay"
+			onhead.icon_state = "surgicalshield-overlay"
+			var/randcol = random_hex(6)
+			inventory.color = "#[randcol]"
+			onhead.color = "#[randcol]"
+
+		src.UpdateOverlays(inventory, "surgmaskcolour")
+		src.wear_image.overlays += onhead
 
 /obj/item/paper_mask
 	name = "unfinished paper mask"

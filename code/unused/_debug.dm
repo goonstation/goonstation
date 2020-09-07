@@ -101,12 +101,12 @@ Doing this because FindTurfs() isn't even used
 	if(Debug)
 		var/image/I = image('icons/misc/mark.dmi', "blank")
 
-		if(lentext(tn)>8)
+		if(length(tn)>8)
 			tn = "*"
 
-		var/len = lentext(tn)
+		var/len = length(tn)
 
-		for(var/d = 1 to lentext(tn))
+		for(var/d = 1 to length(tn))
 
 
 			var/char = copytext(tn, len-d+1, len-d+2)
@@ -547,7 +547,7 @@ Doing this because FindTurfs() isn't even used
 			T.ttemp = 293.15
 
 /mob/verb/fire(turf/T as turf in world)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Create Fire"
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
@@ -558,7 +558,7 @@ Doing this because FindTurfs() isn't even used
 		T.firelevel = T.poison
 
 /mob/verb/co2(turf/T as turf in world)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Create CO2"
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
@@ -568,7 +568,7 @@ Doing this because FindTurfs() isn't even used
 		T.co2 += 300000000
 
 /mob/verb/n2o(turf/T as turf in world)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Create N2O"
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
@@ -578,7 +578,7 @@ Doing this because FindTurfs() isn't even used
 		T.sl_gas += 30000000
 
 /mob/verb/explosion(T as obj|mob|turf in world)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Create Explosion"
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")

@@ -14,21 +14,29 @@
 
 	New()
 		..()
-		light = new light_type
-		light.set_brightness(src.brightness)
-		light.set_color(col_r, col_g, col_b)
-		light.set_height(src.height)
-		light.attach(src)
+		if(ispath(light_type))
+			light = new light_type
+			light.set_brightness(src.brightness)
+			light.set_color(col_r, col_g, col_b)
+			light.set_height(src.height)
+			light.attach(src)
 
 	pickup(mob/user)
 		..()
-		light.attach(user)
+		if (light)
+			light.attach(user)
 
 	dropped(mob/user)
 		..()
-		SPAWN_DBG(0)
-			if (src.loc != user)
-				light.attach(src)
+		if (light)
+			SPAWN_DBG(0)
+				if (src.loc != user)
+					light.attach(src)
+
+	disposing()
+		if(light)
+			qdel(light)
+		..()
 
 /obj/item/device/light/flashlight
 	name = "flashlight"
@@ -48,8 +56,17 @@
 	col_g = 0.8
 	col_b = 0.7
 	module_research = list("science" = 1, "devices" = 1)
-	light_type = /datum/light/line
+	light_type = null
 	brightness = 4.6
+
+	var/datum/component/holdertargeting/simple_light/light_dir
+	New(loc, R = initial(col_r), G = initial(col_g), B = initial(col_b))
+		..()
+		col_r = R
+		col_g = G
+		col_b = B
+		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
+		light_dir.update(0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
@@ -88,18 +105,18 @@
 						var/mob/living/target = M
 						if (istype(target))
 							target.apply_flash(60, 8, 0, 0, rand(2, 8), rand(1, 15), 0, 30, 100, stamina_damage = 190, disorient_time = 50)
-							logTheThing("combat", user, target, "flashes %target% with an emagged flashlight.")
+							logTheThing("combat", user, target, "flashes [constructTarget(target,"combat")] with an emagged flashlight.")
 				user.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
 				on = 0
-				light.disable()
+				light_dir.update(0)
 				icon_state = "flightbroken"
 				name = "broken flashlight"
 				src.broken = 1
 			else
-				src.light.enable()
+				light_dir.update(1)
 		else
 			set_icon_state(src.icon_off)
-			src.light.disable()
+			light_dir.update(0)
 
 /obj/item/device/light/flashlight/abilities = list(/obj/ability_button/flashlight_toggle)
 
@@ -115,9 +132,16 @@
 	col_r = 0.0
 	col_g = 0.9
 	col_b = 0.1
-	brightness = 0.5
+	brightness = 0.6
 	height = 0.75
 	var/color_name = "green"
+	light_type = null
+	var/datum/component/holdertargeting/simple_light/light_c
+
+	New()
+		..()
+		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
+		light_c.update(0)
 
 	proc/burst()
 		var/turf/T = get_turf(src.loc)
@@ -128,11 +152,11 @@
 	proc/turnon()
 		on = 1
 		icon_state = "[base_state][on]"
-		light.enable()
+		light_c.update(1)
 
 	//Can be heated. Has chance to explode when heated. After heating, can explode when thrown or fussed with!
 	attackby(obj/item/W as obj, mob/user as mob)
-		if ((istype(W, /obj/item/weldingtool) && W:welding) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle) || istype(W, /obj/item/clothing/mask/cigarette)) && W:on) || W.burning)
+		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle) || istype(W, /obj/item/clothing/mask/cigarette)) && W:on) || W.burning)
 			user.visible_message("<span class='alert'><b>[user]</b> heats [src] with [W].</span>")
 			src.heated += 1
 			if (src.heated >= 3 || prob(5 + (heated * 20)))
@@ -150,7 +174,7 @@
 			src.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [src.loc]!</span>")
 			burst()
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if (heated > 0 && on && prob(30 + (heated * 20)))
 			if(iscarbon(A))
@@ -176,6 +200,19 @@
 				burst()
 			else
 				user.visible_message("<span class='notice'><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")
+
+/obj/item/device/light/glowstick/green_on
+	base_state = "glowstick-green"
+	icon_state = "glowstick-green0"
+	name = "emergency glowstick"
+	desc = "For emergency use only. Not for use in illegal lightswitch raves."
+	col_r = 0.0
+	col_g = 0.9
+	col_b = 0.1
+	color_name = "green"
+	New()
+		..()
+		turnon()
 
 /obj/item/device/light/glowstick/white
 	base_state = "glowstick-white"
@@ -272,7 +309,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!src.on)
-			if (istype(W, /obj/item/weldingtool) && W:welding)
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
@@ -311,8 +348,7 @@
 			src.force = 3
 			src.icon_state = src.icon_on
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		return
 
 	proc/put_out(var/mob/user as mob)
@@ -323,8 +359,7 @@
 			src.force = 0
 			src.icon_state = src.icon_off
 			light.disable()
-			if (src in processing_items)
-				processing_items.Remove(src)
+			processing_items -= src
 		return
 
 /obj/item/device/light/candle/spooky
@@ -400,8 +435,8 @@
 
 	attack_self(mob/user as mob)
 		playsound(get_turf(src), "sound/items/penclick.ogg", 30, 1)
-		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		src.on = !src.on
+		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)
 			set_icon_state(src.icon_on)
 			src.light.enable()

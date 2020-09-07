@@ -87,8 +87,13 @@
 				post_status()
 			return
 
-		if (!signal.data["address_1"] || signal.data["address_1"] != src.net_id || !signal.data["sender"])
+		if (!signal.data["address_1"] || !signal.data["sender"])
 			// Not for us, ignore
+			return
+
+		if (signal.data["address_1"] != src.net_id)
+			if (signal.data["address_1"] == "ping")
+				send_ping_response(signal.data["sender"])
 			return
 
 		switch (signal.data["command"])
@@ -128,6 +133,20 @@
 
 		frequency.post_signal(src, signal)
 
+	proc/send_ping_response(var/target)
+		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
+		if (!frequency || !target) return
+
+		var/datum/signal/pingsignal = get_free_signal()
+		pingsignal.source = src
+		pingsignal.data["device"] = "NAV_BEACON"
+		pingsignal.data["netid"] = src.net_id
+		pingsignal.data["sender"] = src.net_id
+		pingsignal.data["address_1"] = target
+		pingsignal.data["command"] = "ping_reply"
+		pingsignal.transmission_method = TRANSMISSION_RADIO
+
+		frequency.post_signal(src, pingsignal)
 
 	attackby(var/obj/item/I, var/mob/user)
 		var/turf/T = loc

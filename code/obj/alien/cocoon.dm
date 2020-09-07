@@ -38,7 +38,7 @@ they're trapped
 				if (M.buckled)
 					src.visible_message("<span class='notice'>[M] appears from the cocoon.</span>")
 		//			boutput(world, "[M] is no longer buckled to [src]")
-					M.anchored = 0
+					reset_anchored(M)
 					M.buckled = null
 					src.add_fingerprint(user)
 		return

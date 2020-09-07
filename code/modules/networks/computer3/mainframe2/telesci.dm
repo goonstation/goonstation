@@ -14,27 +14,27 @@
 var/telesci_modifiers_set = 0
 
 proc/is_teleportation_allowed(var/turf/T)
-	for (var/atom in teleport_jammers)
+	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
 		if (istype(atom, /obj/machinery/telejam))
 			var/obj/machinery/telejam/TJ = atom
 			if (!TJ.active)
 				continue
-			if(DIST_CHECK(TJ, T, TJ.range))
+			if(IN_RANGE(TJ, T, TJ.range))
 				return 0
 		if (istype(atom, /obj/item/device/flockblocker))
 			var/obj/item/device/flockblocker/F = atom
 			if (!F.active)
 				continue
-			if(DIST_CHECK(F, T, F.range))
+			if(IN_RANGE(F, T, F.range))
 				return 0
 
 	for (var/X in by_type[/obj/blob/nucleus])
 		var/obj/blob/nucleus/N = X
-		if(DIST_CHECK(N, T, 3))
+		if(IN_RANGE(N, T, 3))
 			return 0
 
 	// first check the always allowed turfs from map landmarks
-	if (T in telesci)
+	if (T in landmarks[LANDMARK_TELESCI])
 		return 1
 
 	if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))
@@ -223,8 +223,6 @@ proc/is_teleportation_allowed(var/turf/T)
 						src.realx = round(  max(0, min(coords.destx, world.maxx+1)) )
 						src.realy = round(  max(0, min(coords.desty, world.maxy+1)) )
 						src.realz = round(  max(0, min(coords.destz, world.maxz+1)) )
-						signal.data_file = null
-						pool(coords)
 						message_host("command=ack")
 
 					if ("send")
@@ -391,7 +389,7 @@ proc/is_teleportation_allowed(var/turf/T)
 									var/turf/simulated/T = scanTurf
 									if(T.active_hotspot)
 										burning = 1
-								message_host("command=scan_reply&o2=[GM.oxygen]&tox=[GM.toxins]&n2=[GM.nitrogen]&co2=[GM.carbon_dioxide]&temp=[GM.temperature]&pressure=[GM.return_pressure()][(burning)?("&burning=1"):(null)]")
+								message_host("command=scan_reply&[MOLES_REPORT_PACKET(GM)]temp=[GM.temperature]&pressure=[MIXTURE_PRESSURE(GM)][(burning)?("&burning=1"):(null)]")
 							else
 								message_host("command=scan_reply&cause=noatmos")
 
@@ -490,7 +488,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "sent %target% to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, which, "sent [constructTarget(which,"station")] to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
 			which.set_loc(target)
 
 		showswirl(src.loc)
@@ -520,7 +518,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "received %target% from [showCoords(which.x, which.y, which.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, which, "received [constructTarget(which,"station")] from [showCoords(which.x, which.y, which.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
 			which.set_loc(src.loc)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
@@ -552,11 +550,11 @@ proc/is_teleportation_allowed(var/turf/T)
 		for(var/atom/movable/O in send)
 			O.set_loc(target)
 			if(ismob(O))
-				logTheThing("station", usr, O, "sent %target% to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, O, "sent [constructTarget(O,"station")] to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
 
 		for(var/atom/movable/O in receive)
 			if(ismob(O))
-				logTheThing("station", usr, O, "received %target% from [showCoords(O.x, O.y, O.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, O, "received [constructTarget(O,"station")] from [showCoords(O.x, O.y, O.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
 			O.set_loc(src.loc)
 		showswirl(src.loc)
 		showswirl(target)
@@ -672,9 +670,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			if("rads")
 				for(var/turf/T in view(5,src.loc))
 					if(!T.reagents)
-						var/datum/reagents/R = new/datum/reagents(1000)
-						T.reagents = R
-						R.my_atom = T
+						T.create_reagents(1000)
 					T.reagents.add_reagent("radium", 20)
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] begins to glow bright green!</span>", 1)
 				return
@@ -1057,7 +1053,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			return
 
 		src.add_dialog(usr)
-		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, 5)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 
 		if (href_list["scan"])
 			if (!host_id)
@@ -1128,7 +1124,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			bm.z = ztarget
 			bookmarks.Add(bm)
 			src.updateUsrDialog()
-			playsound(src.loc, "keyboard", 50, 1, 5)
+			playsound(src.loc, "keyboard", 50, 1, -15)
 			return
 
 		if (href_list["setpad"])

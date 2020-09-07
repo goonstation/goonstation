@@ -17,7 +17,6 @@
 	butcherable = 1
 
 	is_npc = 1
-	var/datum/aiHolder/aquatic/ai = null
 
 	var/health_brute = 10
 	var/health_brute_vuln = 1
@@ -29,6 +28,27 @@
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
 	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
 	var/in_water_buff = 1 // buff amount for being in water
+
+	var/is_pet = null // null for automatic detection
+
+/mob/living/critter/aquatic/New(loc)
+	if(isnull(src.is_pet))
+		src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
+	if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
+		src.is_pet = 0
+	if(src.is_pet)
+		START_TRACKING_CAT(TR_CAT_PETS)
+	src.update_water_status(loc)
+	..()
+	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
+
+/mob/living/critter/aquatic/disposing()
+	if(ai)
+		ai.dispose()
+	ai = null
+	if(src.is_pet)
+		STOP_TRACKING_CAT(TR_CAT_PETS)
+	..()
 
 /mob/living/critter/aquatic/setup_healths()
 	add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
@@ -61,14 +81,23 @@
 		if (Bu && Bu.maximum_value > Bu.value && !is_heat_resistant())
 			Bu.TakeDamage(-in_water_buff)
 
+/mob/living/critter/aquatic/set_loc(newloc)
+	. = ..()
+	src.update_water_status()
+
 /mob/living/critter/aquatic/Move(NewLoc, direct)
 	. = ..()
-	if(istype(src.loc, /turf/space/fluid)) // question: is this logic viable? too messy?
+	src.update_water_status()
+
+/mob/living/critter/aquatic/proc/update_water_status(loc = null)
+	if(isnull(loc))
+		loc = src.loc
+	if(istype(loc, /turf/space/fluid)) // question: is this logic viable? too messy?
 		if(src.water_need)
 			src.water_need = 0
 			src.out_of_water_to_in_water = 1
-	else if(isturf(src.loc))
-		var/turf/T = src.loc
+	else if(isturf(loc))
+		var/turf/T = loc
 		if (T.active_liquid)
 			if(T.active_liquid.last_depth_level > 3)
 				if(src.water_need)
@@ -90,7 +119,7 @@
 				src.in_water_to_out_of_water = 1
 			src.water_need = 2
 
-/mob/living/critter/aquatic/TakeDamage(zone, brute, burn)
+/mob/living/critter/aquatic/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	if(prob(10 * src.in_water_buff) && !src.water_need)
 		src.HealDamage("All", in_water_buff, in_water_buff)
@@ -148,18 +177,14 @@
 
 /mob/living/critter/aquatic/fish/New()
 	..()
+	src.ai = new /datum/aiHolder/aquatic/fish(src)
 	animate_bumble(src)
-
-	src.ai = new /datum/aiHolder/aquatic/fish()
-	src.ai.owner = src
-	mobs.Remove(src)
 
 	/*SPAWN_DBG(0)
 		if(src.client)
 			src.is_npc = 0
 		else // i mean, i can't imagine many scenarios where a player controlled fish also needs AI that doesn't even run
-			src.ai = new /datum/aiHolder/aquatic/fish()
-			src.ai.owner = src
+			src.ai = new /datum/aiHolder/aquatic/fish(src)
 			mobs.Remove(src)*/
 
 /mob/living/critter/aquatic/fish/Move(NewLoc, direct)
@@ -174,12 +199,12 @@
 		hit_twitch(src)
 		src.visible_message("<b>[src]</b> [pick("flops around desperately","gasps","shudders")].")
 
-/mob/living/critter/aquatic/TakeDamage(zone, brute, burn)
+/mob/living/critter/aquatic/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	if(!isdead(src))
 		animate_bumble(src)
 
-/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom)
+/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..()
 	if(!water_need && !isdead(src))
 		animate_bumble(src)
@@ -383,8 +408,7 @@
 		if(src.client)
 			src.is_npc = 0
 		else
-			src.ai = new /datum/aiHolder/aquatic/king_crab()
-			src.ai.owner = src
+			src.ai = new /datum/aiHolder/aquatic/king_crab(src)
 
 /mob/living/critter/aquatic/king_crab/Move(NewLoc, direct)
 	. = ..()
@@ -514,7 +538,7 @@
 	if(check_target_immunity( target ))
 		return 0
 	if (prob(15))
-		logTheThing("combat", user, target, "accidentally slashes %target% with pincers at [log_loc(user)].")
+		logTheThing("combat", user, target, "accidentally slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 		user.visible_message("<span class='alert'><b>[user] accidentally slashes [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally slash [target] while trying to [user.a_intent] them!</b></span>")
 		harm(target, user, 1)
 		return 1
@@ -537,7 +561,7 @@
 
 /datum/limb/king_crab/harm(mob/target, var/mob/living/user, var/no_logs = 0)
 	if (no_logs != 1)
-		logTheThing("combat", user, target, "slashes %target% with pincers at [log_loc(user)].")
+		logTheThing("combat", user, target, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 	var/obj/item/affecting = target.get_affecting(user)
 	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2)
 	user.attack_effects(target, affecting)

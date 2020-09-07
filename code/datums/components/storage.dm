@@ -21,7 +21,7 @@
 /datum/component/storage/Initialize(var/list/spawn_contents, var/list/can_hold, var/in_list_or_max = FALSE, var/max_wclass = 2, var/slots = 7, var/sneaky = FALSE, var/does_not_open_in_pocket = TRUE)
 	if (!isobj(parent)) // future: allow all movable atoms
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_BY), .proc/attack_by)
+	RegisterSignal(parent, list(COMSIG_ATOM_ATTACKBY), .proc/attack_by)
 	RegisterSignal(parent, list(COMSIG_ATOM_HAND_ATTACK), .proc/hand_attack)
 	RegisterSignal(parent, list(COMSIG_ATOM_MOUSE_DROP), .proc/mouse_drop)
 	RegisterSignal(parent, list(COMSIG_OBJ_MOVE_TRIGGER), .proc/move_trigger)
@@ -48,11 +48,13 @@
 
 // since we have COMPONENT_DUPE_UNIQUE_PASSARGS, which means the old component gets passed the new component's initialization args, we should always get SC = null, original = TRUE (since new component doesn't get passed)
 // we should only get passed the other args (the new component's initialization args), if applicable
-/datum/component/storage/InheritComponent(datum/component/storage/SC, original, var/list/spawn_contents, var/list/can_hold, var/in_list_or_max, var/max_wclass, var/slots, var/sneaky, var/does_not_open_in_pocket)
+/datum/component/storage/InheritComponent(datum/component/storage/SC, original, var/list/spawn_contents, var/list/can_hold, var/list/can_also_hold, var/in_list_or_max, var/max_wclass, var/slots, var/sneaky, var/does_not_open_in_pocket)
 	if (spawn_contents)
 		make_my_stuff(spawn_contents)
 	if (can_hold)
 		src.can_hold = can_hold
+	if (can_also_hold)
+		src.can_hold |= can_also_hold
 	if (!isnull(in_list_or_max))
 		src.in_list_or_max = in_list_or_max
 	if (max_wclass)
@@ -109,7 +111,7 @@
 	if (!src.sneaky && !istype(I, /obj/item/gun/energy/crossbow))
 		user.visible_message("<span class='notice'>[user] has added [I] to [source]!</span>", "<span class='notice'>You have added [I] to [source].</span>")
 	playsound(source.loc, "rustle", 50, 1, -5)
-	return COMSIG_RETURN_EARLY
+	return RETURN_EARLY
 
 // source attacked by user with an empty hand
 /datum/component/storage/proc/hand_attack(source, mob/user)
@@ -219,19 +221,19 @@
 	for (var/A in source.contents)
 		if (istype(A, item_type))
 			found += A
-			return COMSIG_RETURN_SUCCESS
+			return RETURN_SUCCESS
 
 // remove I from source hud and transfer it to target (if provided; may not be provided if I's loc is set again right after)
 /datum/component/storage/proc/transfer_item(atom/source, obj/item/I, var/target)
 	if (target)
 		I.set_loc(target)
 	hud.remove_item(I)
-	return COMSIG_RETURN_SUCCESS
+	return RETURN_SUCCESS
 
 /datum/component/storage/proc/can_fit(source, obj/item/I)
 	if (src.max_wclass <= I.w_class)
-		return COMSIG_RETURN_FAILURE
-	return COMSIG_RETURN_SUCCESS
+		return RETURN_FAILURE
+	return RETURN_SUCCESS
 
 /datum/component/storage/proc/emp_act(atom/source)
 	if (source.contents.len)
@@ -256,7 +258,7 @@
 	I.dropped(user)
 	I.set_loc(source)
 	hud.add_item(I)
-	return COMSIG_RETURN_SUCCESS
+	return RETURN_SUCCESS
 
 // handles user opening the source and displaying the hud
 /datum/component/storage/proc/handle_storage(mob/user)
@@ -279,7 +281,7 @@
 		user.attach_hud(hud)
 		A.add_fingerprint(user)
 		animate_storage_rustle(A)
-		return COMSIG_RETURN_EARLY
+		return RETURN_EARLY
 	else
 		for (var/mob/M in hud.mobs)
 			if (M != user)

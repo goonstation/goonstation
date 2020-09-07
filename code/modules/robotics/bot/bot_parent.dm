@@ -11,6 +11,7 @@
 	var/locked = null
 	var/on = 1
 	var/health = 25
+	var/exploding = 0 //So we don't die like five times at once.
 	var/muted = 0 // shut up omg shut up.
 	var/no_camera = 0
 	var/setup_camera_network = "Robots"
@@ -38,7 +39,9 @@
 
 	disposing()
 		botcard = null
-		cam = null
+		if(cam)
+			cam.dispose()
+			cam = null
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -93,8 +96,9 @@
 
 /obj/machinery/bot/examine()
 	. = ..()
-	if (src.health < 20)
-		if (src.health > 15)
+	var/healthpct = src.health / initial(src.health)
+	if (healthpct <= 0.8)
+		if (healthpct >= 0.4)
 			. += "<span class='alert'>[src]'s parts look loose.</span>"
 		else
 			. += "<span class='alert'><B>[src]'s parts look very loose!</B></span>"

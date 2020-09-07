@@ -6,7 +6,7 @@ var/datum/action_controller/actions
 	var/list/running = list() //Associative list of running actions, format: owner=list of action datums
 
 	proc/hasAction(var/atom/owner, var/id) //has this mob an action of a given type running?
-		if(running.Find(owner))
+		if(owner in running)
 			var/list/actions = running[owner]
 			for(var/datum/action/A in actions)
 				if(A.id == id) return 1
@@ -34,13 +34,18 @@ var/datum/action_controller/actions
 		return
 
 	proc/start(var/datum/action/A, var/atom/owner) //Starts a new action.
-		if(!running.Find(owner))
+		if(!(owner in running))
 			running.Add(owner)
 			running[owner] = list(A)
 		else
 			interrupt(owner, INTERRUPT_ACTION)
+			for(var/datum/action/OA in running[owner])
+				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
+				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE)
+					OA.onResume()
+					qdel(A)
+					return OA
 			running[owner] += A
-
 		A.owner = owner
 		A.started = world.time
 		A.onStart()
@@ -97,6 +102,20 @@ var/datum/action_controller/actions
 		state = ACTIONSTATE_RUNNING
 		return
 
+	proc/onRestart()			   //Called when the action restarts (for example: automenders)
+		sleep(1)
+		started = world.time
+		state = ACTIONSTATE_RUNNING
+		loopStart()
+		return
+
+	proc/loopStart()				//Called after restarting. Meant to cotain code from -and be called from- onStart()
+		return
+
+	proc/onResume()				   //Called when the action resumes - likely from almost ending
+		state = ACTIONSTATE_RUNNING
+		return
+
 	proc/onEnd()				   //Called when the action succesfully ends.
 		state = ACTIONSTATE_DELETE
 		return
@@ -130,6 +149,11 @@ var/datum/action_controller/actions
 			bar.color = "#4444FF"
 			updateBar()
 
+	onRestart()
+		//Start the bar back at 0
+		bar.transform = matrix(0, 0, -15, 0, 1, 0)
+		..()
+
 	onDelete()
 		..()
 		var/atom/movable/A = owner
@@ -138,11 +162,28 @@ var/datum/action_controller/actions
 			A.attached_objs.Remove(border)
 		SPAWN_DBG(0.5 SECONDS)
 			if (bar)
+				bar.set_loc(null)
 				pool(bar)
 				bar = null
 			if (border)
+				border.set_loc(null)
 				pool(border)
 				border = null
+
+	disposing()
+		var/atom/movable/A = owner
+		if (owner != null && islist(A.attached_objs))
+			A.attached_objs.Remove(bar)
+			A.attached_objs.Remove(border)
+		if (bar)
+			bar.set_loc(null)
+			pool(bar)
+			bar = null
+		if (border)
+			border.set_loc(null)
+			pool(border)
+			border = null
+		..()
 
 	onEnd()
 		if (bar)
@@ -157,6 +198,12 @@ var/datum/action_controller/actions
 				updateBar(0)
 				bar.color = "#FFFFFF"
 				animate( bar, color = "#CC0000", time = 2.5 )
+		..()
+
+	onResume()
+		if (bar)
+			updateBar()
+			bar.color = "#4444FF"
 		..()
 
 	onUpdate()
@@ -176,6 +223,7 @@ var/datum/action_controller/actions
 			animate( bar, transform = matrix(1, 0, 0, 0, 1, 0), time = remain )
 		else
 			animate( bar, flags = ANIMATION_END_NOW )
+		return
 
 /datum/action/bar/blob_health // WOW HACK
 	onUpdate()
@@ -283,6 +331,7 @@ var/datum/action_controller/actions
 	var/icon_y_off = 30
 	var/icon_x_off = 0
 	var/image/icon_image
+	var/icon_plane = PLANE_HUD
 
 	onStart()
 		..()
@@ -290,7 +339,7 @@ var/datum/action_controller/actions
 			icon_image = image(icon, border ,icon_state, 10)
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
-			icon_image.plane = PLANE_HUD
+			icon_image.plane = icon_plane
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
 			border.overlays += icon_image
 
@@ -346,6 +395,7 @@ var/datum/action_controller/actions
 		R.setMaterial(mat)
 		if (istype(R))
 			R.amount = amount
+			R.inventory_counter?.update_number(R.amount)
 		R.dir = owner.dir
 		sheet.consume_sheets(cost)
 		if (sheet2 && cost2)
@@ -410,6 +460,7 @@ var/datum/action_controller/actions
 	var/icon_y_off = 30
 	var/icon_x_off = 0
 	var/image/icon_image
+	var/icon_plane = PLANE_HUD
 
 	onStart()
 		..()
@@ -417,7 +468,8 @@ var/datum/action_controller/actions
 			icon_image = image(icon ,owner,icon_state,10)
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
-			icon_image.plane = PLANE_HUD
+			icon_image.plane = icon_plane
+
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
 			owner << icon_image
 
@@ -492,7 +544,7 @@ var/datum/action_controller/actions
 				source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			logTheThing("combat", source, target, "tries to put \an [item] on %target% at at [log_loc(target)].")
+			logTheThing("combat", source, target, "tries to put \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 			icon = item.icon
 			icon_state = item.icon_state
 			for(var/mob/O in AIviewers(owner))
@@ -513,7 +565,7 @@ var/datum/action_controller/actions
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			*/
-			logTheThing("combat", source, target, "tries to remove \an [I] from %target% at [log_loc(target)].")
+			logTheThing("combat", source, target, "tries to remove \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 			var/name = "something"
 			if (!hidden)
 				icon = I.icon
@@ -537,14 +589,14 @@ var/datum/action_controller/actions
 		if(item)
 			if(item == source.equipped() && !I)
 				if(target.can_equip(item, slot))
-					logTheThing("combat", source, target, "successfully puts \an [item] on %target% at at [log_loc(target)].")
+					logTheThing("combat", source, target, "successfully puts \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 					for(var/mob/O in AIviewers(owner))
 						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
 					source.u_equip(item)
 					target.force_equip(item, slot)
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
 			if(I.handle_other_remove(source, target))
-				logTheThing("combat", source, target, "successfully removes \an [I] from %target% at [log_loc(target)].")
+				logTheThing("combat", source, target, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>", 1)
 
@@ -697,7 +749,7 @@ var/datum/action_controller/actions
 				else
 					ownerMob.u_equip(cuffs)
 
-			logTheThing("combat", ownerMob, target, "handcuffs %target% with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
+			logTheThing("combat", ownerMob, target, "handcuffs [constructTarget(target,"combat")] with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
 
 			if (cuffs2 && istype(cuffs2))
 				cuffs2.set_loc(target)
@@ -766,8 +818,7 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='alert'><B>[] attempts to remove the handcuffs!</B></span>", owner), 1)
+		owner.visible_message("<span class='alert'><B>[owner] attempts to remove the handcuffs!</B></span>")
 
 	onInterrupt(var/flag)
 		..()
@@ -778,8 +829,7 @@ var/datum/action_controller/actions
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
 			H.handcuffs.drop_handcuffs(H)
-			for(var/mob/O in AIviewers(H))
-				O.show_message("<span class='alert'><B>[H] manages to remove the handcuffs!</B></span>", 1)
+			H.visible_message("<span class='alert'><B>[H] attempts to remove the handcuffs!</B></span>")
 			boutput(H, "<span class='notice'>You successfully remove your handcuffs.</span>")
 
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).
@@ -836,17 +886,20 @@ var/datum/action_controller/actions
 	plane = PLANE_HUD + 1
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 
 	unpooled()
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
+		..()
 
 	pooled()
 		loc = null
 		attached_objs = list()
 		overlays.len = 0
+		..()
 
 /obj/actions/border
 	layer = 100
@@ -854,17 +907,20 @@ var/datum/action_controller/actions
 	plane = PLANE_HUD + 1
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"border",5)
 
 	unpooled()
 		img = image('icons/ui/actions.dmi',src,"border",5)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
+		..()
 
 	pooled()
 		loc = null
 		attached_objs = list()
 		overlays.len = 0
+		..()
 
 //Use this to start the action
 //actions.start(new/datum/action/bar/private/icon/magPicker(item, picker), usr)
@@ -898,13 +954,15 @@ var/datum/action_controller/actions
 			picker.working = 1
 			playsound(picker.loc, "sound/machines/whistlebeep.ogg", 50, 1)
 			out(owner, "<span class='notice'>\The [picker.name] starts to pick up \the [target].</span>")
-			if (picker.highpower && owner:cell)
+			if (picker.highpower && isghostdrone(owner))
+				var/mob/living/silicon/ghostdrone/our_drone = owner
+				if (!our_drone.cell) return
 				var/hpm_cost = 25 * (target.w_class * 2 + 1)
 				// Buff HPM by making it pick things up faster, at the expense of cell charge
 				// only allow it if more than double that power remains to keep it from bottoming out
-				if (UNLINT(owner:cell.charge >= hpm_cost * 2)) // i dont have the sanity to fix this
+				if (our_drone.cell.charge >= hpm_cost * 2)
 					duration /= 3
-					UNLINT(owner:cell.use(hpm_cost))
+					our_drone.cell.use(hpm_cost)
 
 	onInterrupt(var/flag) //They did something else while picking it up. I guess you dont have to do anything here unless you want to.
 		..()
@@ -1196,6 +1254,7 @@ var/datum/action_controller/actions
 	var/obj/item/target
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pickup"
+	icon_plane = PLANE_HUD+2
 
 	New(Target)
 		target = Target
@@ -1232,3 +1291,19 @@ var/datum/action_controller/actions
 		onEnd()
 			..()
 			target.try_equip_to_inventory_object(owner, over_object, params)
+
+	then_obj_click
+
+		var/atom/over_object
+		var/params
+
+		New(Target, Over, Parameters)
+			target = Target
+			over_object = Over
+			params = Parameters
+			..()
+
+		onEnd()
+			..()
+			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
+				over_object.attackby(target, owner, params)

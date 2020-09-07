@@ -244,7 +244,7 @@ var/reverse_mode = 0
 
 /proc/reverse_text(var/string)
 	var/new_string=""
-	for(var/i=lentext(string)+1, i>0, i--)
+	for(var/i=length(string)+1, i>0, i--)
 		new_string += copytext(string,i,i+1)
 	return new_string
 
@@ -311,8 +311,8 @@ var/reverse_mode = 0
 	var/beingUsed = 0
 
 	New()
+		..()
 		loop()
-		return
 
 	proc/loop()
 		if (!active)
@@ -394,11 +394,10 @@ var/reverse_mode = 0
 					if ("Bend the relic's power to your will")
 						using = 1
 						boutput(user, "<span class='alert'>You can feel the power of the relic coursing through you...</span>")
-						user:TakeDamage("chest", 0, 50)
-						user.bioHolder.AddEffect("telekinesis")
+						user.bioHolder.AddEffect("telekinesis_drag")
 						SPAWN_DBG(2 MINUTES)
 							using = 0
-							user.bioHolder.RemoveEffect("telekinesis")
+							user.bioHolder.RemoveEffect("telekinesis_drag")
 					if ("Use the relic's power to heal your wounds")
 						var/obj/shield/s = new/obj/shield( get_turf(src) )
 						s.name = "energy"
@@ -412,7 +411,7 @@ var/reverse_mode = 0
 						SPAWN_DBG(1 MINUTE) using = 0
 					if ("Attempt to absorb the relic's power")
 						if (prob(1))
-							user.bioHolder.AddEffect("telekinesis", 0, 0, 1) //because really
+							user.bioHolder.AddEffect("telekinesis_drag", 0, 0, 1) //because really
 							user.bioHolder.AddEffect("thermal_resist", 0, 0, 1) //if they're lucky enough to get this
 							user.bioHolder.AddEffect("xray", 0, 0, 1) //they're lucky enough to keep it
 							user.bioHolder.AddEffect("hulk", 0, 0, 1) //probably
@@ -471,9 +470,7 @@ var/reverse_mode = 0
 	proc/sparks()
 		var/area/A = get_area(src)
 		if (A.active)
-			var/datum/effects/system/spark_spread/E = unpool(/datum/effects/system/spark_spread)
-			E.set_up(3,0,get_turf(src))
-			E.start()
+			elecflash(src)
 		SPAWN_DBG(rand(10,300))
 			src.sparks()
 
@@ -580,6 +577,7 @@ var/reverse_mode = 0
 				boutput(O, "<span class='alert'><B>[my_target] stumbles around.</B></span>")
 
 /obj/fake_attacker/New(location, target)
+	..()
 	SPAWN_DBG(30 SECONDS)	qdel(src)
 	src.my_target = target
 	step_away(src,my_target,2)

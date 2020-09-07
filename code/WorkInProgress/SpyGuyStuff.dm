@@ -51,8 +51,11 @@ Fibre wire
 					priority_targets.Add(M.current)
 
 		if(!priority_targets.len) //Okay, fine. Any ghost. *sigh
-			for(var/mob/dead/observer/O in mobs)
-				if(O && O.client && O.mind && !O.mind.dnr)
+
+			for (var/client/C)
+				var/mob/dead/observer/O = C.mob
+				if (!istype(C)) continue
+				if(O.mind && !O.mind.dnr)
 					possible_targets.Add(O)
 
 
@@ -90,9 +93,10 @@ Fibre wire
 				else //How the fuck did we even get here??
 					H.ghostize()
 
-			SPAWN_DBG(1.5 SECONDS) playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
 			flick("skull_ominous_explode", src)
-			sleep(3 SECONDS)
+			sleep(1.5 SECONDS)
+			playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
+			sleep(1.5 SECONDS)
 			qdel(src)
 
 //////////////////////////////
@@ -280,7 +284,7 @@ proc/Create_Tommyname()
 		var/hash = md5("AReally[id]ShittySalt")
 		var/listPos = calc_start_point(hash)
 
-		for(var/i=1, i <= lentext(hash), i+=2)
+		for(var/i=1, i <= length(hash), i+=2)
 			var/block = copytext(hash, i, i+2)
 			if (isnull(base["[listPos]"]))
 				base["[listPos]"] = hex2num(block)
@@ -291,7 +295,7 @@ proc/Create_Tommyname()
 
 	//So is this
 	proc/calc_start_point(var/hash)
-		for(var/i = 1; i <= lentext(hash); i++)
+		for(var/i = 1; i <= length(hash); i++)
 			var/temp = copytext(hash, i, i+1)
 			temp = hex2num(temp)
 			. += temp
@@ -332,9 +336,8 @@ proc/Create_Tommyname()
 	on_trigger(var/atom/movable/triggerer)
 		if(isobserver(triggerer)) return
 		var/atom/target = get_edge_target_turf(src, src.throw_dir)
-		SPAWN_DBG(0)
-			if (target)
-				triggerer.throw_at(target, 50, 1)
+		if (target)
+			triggerer.throw_at(target, 50, 1)
 
 
 /obj/trigger/cluwnegib
@@ -964,6 +967,9 @@ proc/Create_Tommyname()
 	..()
 	set_readiness(0)
 
+/obj/item/garrote/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+	..(hit_atom)
+	set_readiness(0)
 
 /obj/item/garrote/disposing()
 	drop_grab()

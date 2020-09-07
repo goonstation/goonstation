@@ -50,8 +50,10 @@
 
 /datum/game_mode/gang/pre_setup()
 	var/num_players = 0
-	for(var/mob/new_player/player in mobs)
-		if(player.client && player.ready) num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+		if(player.ready) num_players++
 
 	var/num_teams = max(setup_min_teams, min(round((num_players) / 9), setup_max_teams)) //1 gang per 9 players
 
@@ -141,19 +143,21 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(leaders))
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 /datum/game_mode/gang/proc/equip_leader(mob/living/carbon/human/leader)
-	leader.verbs += /client/proc/set_gang_base
+	// leader.verbs += /client/proc/set_gang_base
+	var/datum/abilityHolder/holder = leader.add_ability_holder(/datum/abilityHolder/gang)
+	holder.addAbility(/datum/targetable/gang/set_gang_base)
 
 	//add gang channel to headset
 	if(leader.ears != null && istype(leader.ears,/obj/item/device/radio/headset))
 		var/obj/item/device/radio/headset/H = leader.ears
 		H.set_secure_frequency("g",leader.mind.gang.gang_frequency)
-		H.secure_colors["g"] = RADIOC_SYNDICATE
+		H.secure_classes["g"] = RADIOCL_SYNDICATE
 		boutput(leader, "Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.")
 
 	return
@@ -172,12 +176,12 @@
 	if(leaderMind.gang.gang_name == "NICOLAS CAGE FAN CLUB")
 		leaderMind.gang.item2 = /obj/item/clothing/mask/niccage
 	else
-		var/temp_item2 = input(leaderMind.current, "Select jumpsuit slot item","Gang Headwear")in headwear_list
+		var/temp_item2 = input(leaderMind.current, "Select head slot item","Gang Headwear")in headwear_list
 		leaderMind.gang.item2 = headwear_list[temp_item2]
 
 	while(leaderMind.gang.item2 in item2_used)
 		boutput(leaderMind.current , "<h4><span class='alert'>That item has been claimed by another gang.</span></h4>")
-		var/temp_item2 = input(leaderMind.current, "Select jumpsuit slot item","Gang Headwear")in headwear_list
+		var/temp_item2 = input(leaderMind.current, "Select head slot item","Gang Headwear")in headwear_list
 		leaderMind.gang.item2 = headwear_list[temp_item2]
 
 	item2_used += leaderMind.gang.item2
@@ -188,17 +192,23 @@
 /datum/game_mode/gang/proc/get_possible_leaders(minimum_leaders=1)
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
+
+		if ((player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_gangleader)
 				candidates += player.mind
 
 	if(candidates.len < minimum_leaders)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_gangleader set to yes, including players who don't want to be misc enemies in the pool for Gang Leader selection.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 				if (candidates.len >= minimum_leaders)
@@ -431,13 +441,13 @@
 
 	SPAWN_DBG(hot_zone_timer-600)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
-		SPAWN_DBG(1 MINUTE)
-			if(hot_zone != null && hot_zone.gang_owners != null)
-				var/datum/gang/G = hot_zone.gang_owners
-				G.score_event += hot_zone_score
-				broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
-				sleep(10 SECONDS)
-			process_hot_zones()
+		sleep(1 MINUTE)
+		if(hot_zone != null && hot_zone.gang_owners != null)
+			var/datum/gang/G = hot_zone.gang_owners
+			G.score_event += hot_zone_score
+			broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
+			sleep(10 SECONDS)
+		process_hot_zones()
 
 /datum/game_mode/gang/proc/process_kidnapping_event()
 	kidnapp_success = 0
@@ -484,20 +494,20 @@
 
 	SPAWN_DBG(kidnapping_timer - 1 MINUTE)
 		if(kidnapping_target != null) broadcast_to_all_gangs("[target_name] has still not been captured by [top_gang.gang_name] and they have 1 minute left!")
-		SPAWN_DBG(1 MINUTE)
-			//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
-			if(!kidnapp_success)
-				//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
-				if (kidnapping_target && kidnapping_target.stat != 2)
-					for (var/datum/gang/G in gangs)
-						if (G != top_gang)
-							G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
-					broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
-				else
-					broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
+		sleep(1 MINUTE)
+		//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
+		if(!kidnapp_success)
+			//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
+			if (kidnapping_target && kidnapping_target.stat != 2)
+				for (var/datum/gang/G in gangs)
+					if (G != top_gang)
+						G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
+				broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
+			else
+				broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
 
-				sleep(delay_between_kidnappings)
-			process_kidnapping_event()
+			sleep(delay_between_kidnappings)
+		process_kidnapping_event()
 
 
 //bleh
@@ -588,6 +598,7 @@
 
 		return count
 
+// Deprecated by /datum/targetable/gang/set_gang_base
 /client/proc/set_gang_base()
 	set category = "Gang"
 	set name = "Set Gang Base"
@@ -1009,6 +1020,8 @@
 		score += O.reagents.get_reagent_amount("catdrugs")
 		score += O.reagents.get_reagent_amount("methamphetamine")*1.5 //meth
 
+		if(istype(O, /obj/item/plant/herb/cannabis) && O.reagents.get_reagent_amount("THC") == 0)
+			score += 7
 		return round(score)
 
 	proc/cash_amount()
@@ -1055,19 +1068,17 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			user.lastattacked = src
 
 			if(health == max_health)
 				boutput(user, "<span class='notice'>The locker isn't damaged!</span>")
 				return
 
-			var/obj/item/weldingtool/welder = W
-			if(welder.welding)
-				if(welder.try_weld(user, 4))
-					repair_damage(20)
-					user.visible_message("<span class='notice'>[user] repairs the [src] with [welder]!</span>")
-					return
+			if(W:try_weld(user, 4))
+				repair_damage(20)
+				user.visible_message("<span class='notice'>[user] repairs the [src] with [W]!</span>")
+				return
 
 		if (health <= 0)
 			boutput(user, "<span class='alert'>The locker is broken, it needs to be repaired first!</span>")
@@ -1278,7 +1289,7 @@
 		if(target.ears != null && istype(target.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/H = target.ears
 			H.set_secure_frequency("g",src.gang.gang_frequency)
-			H.secure_colors["g"] = RADIOC_SYNDICATE
+			H.secure_classes["g"] = RADIOCL_SYNDICATE
 			boutput(target, "Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.")
 
 //		update_max_members()
@@ -1340,34 +1351,30 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 				haspaint = 1
 			else if(istype(I,/obj/item/device/radio/headset/gang) && I:secure_frequencies && I:secure_frequencies["g"] == user.mind.gang.gang_frequency)
 				hasheadset = 1
-		if(hasitem1 && hasitem2 && hasheadset)
-			if(!haspaint)
-				new /obj/item/spray_paint(user.loc)
-		else
-			if(!hasitem1)
-				var/obj/item/clothing/C = new user.mind.gang.item1(user.loc)
-				if (user.w_uniform)
-					user.drop_from_slot(user.w_uniform)
-				user.force_equip(C, user.w_uniform)
+		if(!hasitem1)
+			var/obj/item/clothing/C = new user.mind.gang.item1(user.loc)
+			// if (user.w_uniform)
+			// 	user.drop_from_slot(user.w_uniform)
+			user.equip_if_possible(C, user.slot_w_uniform)
 
-			if(!hasitem2)
-				var/obj/item/clothing/C = new user.mind.gang.item2(user.loc)
-				if (istype(C, /obj/item/clothing/head))
-					user.drop_from_slot(user.head)
-					user.force_equip(C, user.head)
-				else if (istype(C, /obj/item/clothing/mask))
-					user.drop_from_slot(user.wear_mask)
-					user.force_equip(C, user.wear_mask)
+		if(!hasitem2)
+			var/obj/item/clothing/C = new user.mind.gang.item2(user.loc)
+			if (istype(C, /obj/item/clothing/head))
+				user.drop_from_slot(user.head)
+				user.equip_if_possible(C, user.slot_head)
+			else if (istype(C, /obj/item/clothing/mask))
+				user.drop_from_slot(user.wear_mask)
+				user.equip_if_possible(C, user.slot_wear_mask)
 
-			if(!hasheadset)
-				var/obj/item/device/radio/headset/gang/headset = new /obj/item/device/radio/headset/gang(user.loc)
-				headset.set_secure_frequency("g",user.mind.gang.gang_frequency)
-				if (user.ears)
-					user.drop_from_slot(user.ears)
-				user.force_equip(headset, user.ears)
+		if(!hasheadset)
+			var/obj/item/device/radio/headset/gang/headset = new /obj/item/device/radio/headset/gang(user.loc)
+			headset.set_secure_frequency("g",user.mind.gang.gang_frequency)
+			if (user.ears)
+				user.drop_from_slot(user.ears)
+			user.equip_if_possible(headset, user.slot_ears)
 
-			if(!haspaint)
-				user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
+		if(!haspaint)
+			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
 		if(user.mind.special_role == "gang_leader")
 			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc, user.mind.gang)

@@ -76,6 +76,10 @@
 			stand_type = "taser_charge_rack"
 			recharges_contents = 1
 
+			empty
+				icon_state = "taser_rack0"
+				amount = 0
+
 	egun_rack
 		name = "energy gun rack"
 		desc = "A storage rack that fits 4 energy guns. Tidy!"
@@ -135,6 +139,7 @@
 				logTheThing("debug", src, null, "has a non-path contained_weapon, \"[src.contained_weapon]\", and is being disposed of to prevent errors")
 				qdel(src)
 				return
+			src.update()
 
 	get_desc(dist)
 		if (dist <= 1)
@@ -206,7 +211,7 @@
 
 			user.Browse(pdat, "window=rackpanel")
 			onclose(user, "rackpanel")
-		
+
 		if(!ishuman(user) || !isliving(user))
 			return
 

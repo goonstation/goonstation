@@ -47,26 +47,77 @@ TRAYS
 	stamina_damage = 5
 	stamina_cost = 10
 	stamina_crit_chance = 15
+	dir = NORTH
 	var/rotatable = 1 //just in case future utensils are added that dont wanna be rotated
+	var/snapped
 
 	New()
+		..()
 		if(prob(60))
 			src.pixel_y = rand(0, 4)
 		BLOCK_KNIFE
 		return
 
+	attack_self(mob/user as mob)
+		src.rotate()
 
-	//mbc disabling for now bc this can be done other ways without a verb and obj verbs slow down rclick menu
-	/*
-	verb/rotate()
-		set name = "Rotate"
-		set category = "Local"
+	proc/rotate()
 		if(rotatable)
-			set src in oview(1)
-
-			src.dir = turn(src.dir, 90)
+			//set src in oview(1)
+			src.dir = turn(src.dir, -90)
 		return
-	*/
+
+	proc/break_utensil(mob/living/carbon/user as mob, var/spawnatloc = 0)
+		var/location = get_turf(src)
+		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
+		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
+		user.u_equip(src)
+		var/replacethis
+		switch(src.type)
+			if(/obj/item/kitchen/utensil/spoon/plastic)
+				replacethis = "spoon_plastic_"
+			if(/obj/item/kitchen/utensil/fork/plastic)
+				replacethis = "fork_plastic_"
+			if(/obj/item/kitchen/utensil/knife/plastic)
+				if(src.snapped)
+					qdel(src)
+					return
+				replacethis = "knife_plastic_"
+		var/utensil_color = replacetext(src.icon_state,replacethis,"")
+		var/obj/item/kitchen/utensil/knife/plastic/k = new /obj/item/kitchen/utensil/knife/plastic
+		k.icon_state = "snapped_[utensil_color]"
+		k.snapped = 1
+		k.name = "snapped [k.name]"
+		if(spawnatloc)
+			k.set_loc(location)
+		else
+			user.put_in_hand_or_drop(k)
+		qdel(src)
+		return
+
+/obj/item/kitchen/utensil/spoon
+	name = "spoon"
+	desc = "A metal object that has a handle and ends in a small concave oval. Used to carry liquid objects from the container to the mouth."
+	icon_state = "spoon"
+
+	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [his_or_her(user)]self.</span>")
+			random_brute_damage(user, 5)
+		if (!spoon_surgery(M,user))
+			return ..()
+
+	custom_suicide = 1
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return 0
+		var/hisher = his_or_her(user)
+		user.visible_message("<span style='color:red'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
+		blood_slash(user, 25)
+		playsound(user.loc, src.hitsound, 50, 1)
+		user.TakeDamage("head", 150, 0)
+		user.updatehealth()
+		return 1
 
 /obj/item/kitchen/utensil/fork
 	name = "fork"
@@ -76,6 +127,7 @@ TRAYS
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	desc = "A multi-pronged metal object, used to pick up objects by piercing them. Helps with eating some foods."
 	dir = NORTH
+	throwforce = 7
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -95,40 +147,6 @@ TRAYS
 		user.TakeDamage("chest", 150, 0)
 		return 1
 
-/obj/item/kitchen/utensil/fork/plastic
-	name = "plastic fork"
-	icon_state = "fork_plastic"
-	desc = "A cheap plastic fork, prone to breaking. Helps with eating some foods."
-	force = 1.0
-	throwforce = 1.0
-
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs \himself.</span>")
-			random_brute_damage(user, 5)
-			JOB_XP(user, "Clown", 1)
-		if(prob(20))
-			src.break_fork(user)
-			return
-		if(!saw_surgery(M,user))
-			return ..()
-
-	proc/break_fork(mob/living/carbon/user as mob)
-		user.visible_message("<span class='alert'>[src] breaks!</span>")
-		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
-		user.u_equip(src)
-		qdel(src)
-		return
-
-	suicide(var/mob/user as mob)
-		user.visible_message("<span class='alert'><b>[user] tries to stab [src] right into \his heart!</b></span>")
-		src.break_fork(user)
-		SPAWN_DBG(10 SECONDS)
-			if(user)
-				user.suiciding = 0
-		return 1
-
-
 /obj/item/kitchen/utensil/knife
 	name = "knife"
 	icon_state = "knife"
@@ -139,7 +157,7 @@ TRAYS
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 7.0
-	throwforce = 5
+	throwforce = 10
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
 	dir = NORTH
 
@@ -164,12 +182,74 @@ TRAYS
 		user.TakeDamage("head", 150, 0)
 		return 1
 
+/obj/item/kitchen/utensil/spoon/plastic
+	name = "plastic spoon"
+	icon_state = "spoon_plastic"
+	desc = "A cheap plastic spoon, prone to breaking. Used to carry liquid objects from the container to the mouth."
+	force = 1.0
+	throwforce = 1.0
+
+	New()
+		..()
+		src.icon_state = pick("spoon_plastic_pink","spoon_plastic_yellow","spoon_plastic_green","spoon_plastic_blue")
+
+	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and jabs \himself.</span>")
+			random_brute_damage(user, 5)
+		if (prob(20))
+			src.break_utensil(user)
+			return
+		if (!spoon_surgery(M,user))
+			return ..()
+
+	suicide(var/mob/user as mob)
+		user.visible_message("<span style=\"color:red\"><b>[user] tries to jab [src] straight through \his eye and into \his brain!</b></span>")
+		src.break_utensil(user)
+		spawn(100)
+			if (user)
+				user.suiciding = 0
+		return 1
+
+/obj/item/kitchen/utensil/fork/plastic
+	name = "plastic fork"
+	icon_state = "fork_plastic_pink"
+	desc = "A cheap plastic fork, prone to breaking. Helps with eating some foods."
+	force = 1.0
+	throwforce = 1.0
+
+	New()
+		..()
+		src.icon_state = pick("fork_plastic_pink","fork_plastic_yellow","fork_plastic_green","fork_plastic_blue")
+
+	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and stabs \himself.</span>")
+			random_brute_damage(user, 5)
+		if (prob(20))
+			src.break_utensil(user)
+			return
+		if (!saw_surgery(M,user))
+			return ..()
+
+	suicide(var/mob/user as mob)
+		user.visible_message("<span style=\"color:red\"><b>[user] tries to stab [src] right into \his heart!</b></span>")
+		src.break_utensil(user)
+		spawn(100)
+			if (user)
+				user.suiciding = 0
+		return 1
+
 /obj/item/kitchen/utensil/knife/plastic
-	name = "knife"
+	name = "plastic knife"
 	icon_state = "knife_plastic"
 	force = 1.0
 	throwforce = 1.0
 	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
+
+	New()
+		..()
+		src.icon_state = pick("knife_plastic_pink","knife_plastic_yellow","knife_plastic_green","knife_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -177,26 +257,101 @@ TRAYS
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
 		if(prob(20))
-			src.break_knife(user)
+			src.break_utensil(user)
 			return
 		if(!scalpel_surgery(M,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
 		user.visible_message("<span class='alert'><b>[user] tries to slash  \his own throat with [src]!</b></span>")
-		src.break_knife(user)
+		src.break_utensil(user)
 		SPAWN_DBG(10 SECONDS)
 			if(user)
 				user.suiciding = 0
 		return 1
 
-	proc/break_knife(mob/living/carbon/user as mob)
-		user.visible_message("<span class='alert'>[src] breaks!</span>")
-		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
-		user.u_equip(src)
-		qdel(src)
-		return
+/obj/item/kitchen/plasticpackage
+	name = "package of plastic silverware"
+	desc = "These don't look very clean..."
+	icon_state = "plasticpackage"
+	w_class = 1.0
+	var/list/messages = list("The packaging decides to not open at this time. How rude.", "The plastic is just too strong for your fumbly fingers!", "Almost open! Wait...Nevermind.", "Almost there.....")
 
+	attack_self(mob/user as mob)
+		if(prob(40))
+			var/obj/item/kitchen/utensil/fork/plastic/f = new /obj/item/kitchen/utensil/fork/plastic
+			var/obj/item/kitchen/utensil/knife/plastic/k = new /obj/item/kitchen/utensil/knife/plastic
+			var/obj/item/kitchen/utensil/spoon/plastic/s = new /obj/item/kitchen/utensil/spoon/plastic
+			f.icon_state = "fork_plastic_white"
+			k.icon_state = "knife_plastic_white"
+			s.icon_state = "spoon_plastic_white"
+			f.set_loc(get_turf(user))
+			k.set_loc(get_turf(user))
+			s.set_loc(get_turf(user))
+			user.u_equip(src)
+			src.set_loc(user)
+			if(prob(30))
+				user.show_text("<b>The plastic silverware go EVERYWHERE!</b>","red")
+				var/list/throw_targets = list()
+				for (var/i=1, i<=3, i++)
+					throw_targets += get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
+				f.throw_at(pick(throw_targets), 5, 1)
+				if(prob(20))
+					f.break_utensil(user, 1)
+				k.throw_at(pick(throw_targets), 5, 1)
+				if(prob(20))
+					k.break_utensil(user, 1)
+				s.throw_at(pick(throw_targets), 5, 1)
+				if(prob(20))
+					s.break_utensil(user, 1)
+			qdel(src)
+		else
+			user.visible_message("<b>[user]</b> comically struggles to open the [src]","<b>[pick(messages)]</b>")
+
+//chopsticks
+/obj/item/kitchen/chopsticks_package
+	name = "chopsticks"
+	desc = "cheap disposable chopsticks!"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	icon_state = "chop_closed"
+	item_state = "chop"
+	w_class = 1.0
+
+	attack_self(mob/user as mob)
+		if(src.icon_state == "chop_closed")
+			user.visible_message("<b>[user.name]</b> unwraps the chopsticks!")
+			src.icon_state = "chop_stowed"
+			src.name = "stowed chopsticks"
+		else if(src.icon_state == "chop_stowed")
+			user.u_equip(src)
+			user.put_in_hand_or_drop(new /obj/item/kitchen/utensil/fork/chopsticks)
+			qdel(src)
+
+	attackby(obj/item/weapon as obj,mob/user as mob)
+		if(istype(weapon,/obj/item/paper))
+			if(src.icon_state == "chop_stowed")
+				user.u_equip(weapon)
+				qdel(weapon)
+				src.icon_state = "chop_closed"
+				src.name = "chopsticks"
+			else
+				boutput(user,"<span style=\"color:red\"><b>The chopstics already have a wrapper!</b></span>")
+
+/obj/item/kitchen/utensil/fork/chopsticks
+	name = "chopsticks"
+	desc = "cheap disposable chopsticks!"
+	icon_state = "chop_open"
+	item_state = "chop"
+	rotatable = 0
+	tool_flags = null
+
+	attack_self(mob/user as mob)
+		var/obj/item/kitchen/chopsticks_package/chop = new /obj/item/kitchen/chopsticks_package
+		chop.icon_state = "chop_stowed"
+		chop.name = "stowed chopsticks"
+		user.u_equip(src)
+		user.put_in_hand_or_drop(chop)
+		qdel(src)
 
 /obj/item/kitchen/utensil/knife/cleaver
 	name = "meatcleaver"
@@ -223,7 +378,7 @@ TRAYS
 			return ..()
 
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			if(ismob(usr))
@@ -269,65 +424,6 @@ TRAYS
 		user.TakeDamage("head", 150, 0)
 		return 1
 
-/obj/item/kitchen/utensil/spoon
-	name = "spoon"
-	desc = "A metal object that has a handle and ends in a small concave oval. Used to carry liquid objects from the container to the mouth."
-	icon_state = "spoon"
-	dir = NORTH
-
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and jabs [his_or_her(user)]self.</span>")
-			random_brute_damage(user, 5)
-			JOB_XP(user, "Clown", 1)
-		if(!spoon_surgery(M,user))
-			return ..()
-
-	custom_suicide = 1
-	suicide(var/mob/user as mob)
-		if(!src.user_can_suicide(user))
-			return 0
-		var/hisher = his_or_her(user)
-		user.visible_message("<span class='alert'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
-		blood_slash(user, 25)
-		playsound(user.loc, src.hitsound, 50, 1)
-		user.TakeDamage("head", 150, 0)
-		return 1
-
-/obj/item/kitchen/utensil/spoon/plastic
-	name = "plastic spoon"
-	icon_state = "spoon_plastic"
-	desc = "A cheap plastic spoon, prone to breaking. Used to carry liquid objects from the container to the mouth."
-	force = 1.0
-	throwforce = 1.0
-
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and jabs \himself.</span>")
-			random_brute_damage(user, 5)
-			JOB_XP(user, "Clown", 1)
-		if(prob(20))
-			src.break_spoon(user)
-			return
-		if(!spoon_surgery(M,user))
-			return ..()
-
-	proc/break_spoon(mob/living/carbon/user as mob)
-		user.visible_message("<span class='alert'>[src] breaks!</span>")
-		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
-		user.u_equip(src)
-		qdel(src)
-		return
-
-	suicide(var/mob/user as mob)
-		user.visible_message("<span class='alert'><b>[user] tries to jab [src] straight through \his eye and into \his brain!</b></span>")
-		src.break_spoon(user)
-		SPAWN_DBG(10 SECONDS)
-			if(user)
-				user.suiciding = 0
-		return 1
-
-
 /obj/item/kitchen/food_box // I came in here just to make donut/egg boxes put the things in your hand when you take one out and I end up doing this instead, kill me. -haine
 	name = "food box"
 	desc = "A box that can hold food! Well, not this one, I mean. You shouldn't be able to see this one."
@@ -339,6 +435,7 @@ TRAYS
 	var/box_type = "donutbox"
 	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/random
 	var/contained_food_name = "donut"
+	tooltip_flags = REBUILD_DIST
 
 	donut_box
 		name = "donut box"
@@ -385,6 +482,7 @@ TRAYS
 				user.drop_item()
 				W.set_loc(src)
 				src.amount ++
+				tooltip_rebuild = 1
 				boutput(user, "You place [W] into [src].")
 				src.update()
 			else return ..()
@@ -401,11 +499,13 @@ TRAYS
 		if(myFood)
 			if(src.amount >= 1)
 				src.amount--
+				tooltip_rebuild = 1
 			user.put_in_hand_or_drop(myFood)
 			boutput(user, "You take [myFood] out of [src].")
 		else
 			if(src.amount >= 1)
 				src.amount--
+				tooltip_rebuild = 1
 				var/obj/item/reagent_containers/food/snacks/newFood = new src.contained_food(src.loc)
 				user.put_in_hand_or_drop(newFood)
 				boutput(user, "You take [newFood] out of [src].")
@@ -430,11 +530,13 @@ TRAYS
 	throw_range = 8
 	force = 2
 	rand_pos = 0
+	pickup_sfx = "sound/items/pickup_plate.ogg"
 	var/list/ordered_contents = list()
 	var/food_desc = null
 	var/max_food = 2
 	var/list/throw_targets = list()
 	var/throw_dist = 3
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		..()
@@ -442,9 +544,11 @@ TRAYS
 
 	proc/add_contents(var/obj/item/W)
 		ordered_contents += W
+		tooltip_rebuild = 1
 
 	proc/remove_contents(var/obj/item/W)
 		ordered_contents -= W
+		tooltip_rebuild = 1
 
 	proc/update_icon()
 		for (var/i = 1, i <= ordered_contents.len, i++)
@@ -474,27 +578,37 @@ TRAYS
 			src.remove_contents(F)
 			src.update_icon()
 			F.set_loc(get_turf(src))
-			SPAWN_DBG(0)
-				F.throw_at(pick(throw_targets), 5, 1)
+			F.throw_at(pick(throw_targets), 5, 1)
 
 	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
-		sleep(0.3 SECONDS)
+		attack_particle(user,M)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.force_laydown_standup()
-		playsound(src, "shatter", 70, 1)
-		var/obj/O = unpool(/obj/item/raw_material/shard/glass)
-		O.set_loc(get_turf(M))
-		if(src.material)
-			O.setMaterial(copyMaterial(src.material))
+		playsound(get_turf(src), "sound/impact_sounds/plate_break.ogg", 50, 1)
+
+		var/turf/shardturf = get_turf(M)
+
 		if(src.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
 			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
 		else
-			sleep(0.3 SECONDS)
-			qdel(src)
+			user.drop_item()
+			src.set_loc(shardturf)
 
-	throw_impact(var/turf/T)
+		for (var/i in 1 to 2)
+			var/obj/O = unpool(/obj/item/raw_material/shard/glass)
+			O.set_loc(shardturf)
+			if(src.material)
+				O.setMaterial(copyMaterial(src.material))
+			O.throw_at(get_offset_target_turf(shardturf, rand(-4,4), rand(-4,4)), 7, 1)
+
+		qdel(src)
+
+	proc/unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
+		playsound(get_turf(src), "sound/items/plate_tap.ogg", 30, 1)
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if(ordered_contents.len == 0)
 			return
@@ -521,7 +635,10 @@ TRAYS
 		return "[food_desc]"
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/plate) && !istype(W, /obj/item/plate/tray))
+		if(istype(W, /obj/item/plate) && !istype(W, /obj/item/plate/tray) && W.type == src.type)
+			if(length(src.contents) || length(W.contents))
+				user.visible_message("<b>[user]</b> tries to stack plates but there's food on them.","You try to stack plates but there's food on them.")
+				return
 			qdel(W)
 			src.set_loc(user)
 			user.put_in_hand_or_drop(new /obj/item/platestack)
@@ -598,13 +715,14 @@ TRAYS
 				boutput(user, "<span class='alert'><B>You smash [src] over your own head!</b></span>")
 			else
 				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-				logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
+				logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 			if(ordered_contents.len != 0)
 				src.shit_goes_everywhere()
 			unique_attack_garbage_fuck(M, user)
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-			logTheThing("combat", user, M, "taps %target% over the head with [src].")
+			unique_tap_garbage_fluck(M,user)
+			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 	attack_hand(mob/user as mob)
 		..()
@@ -755,9 +873,12 @@ TRAYS
 			qdel(src)
 			return
 		tray_health--
+		tooltip_rebuild = 1
 
 		src.visible_message("\The [src] looks less sturdy now.")
 
+	unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
+		playsound(src, "step_lattice", 50, 1)
 
 /obj/item/fish
 	throwforce = 3
@@ -985,6 +1106,7 @@ TRAYS
 
 /obj/item/fish/random // used by the Wholetuna Cordata plant
 	New()
+		..()
 		SPAWN_DBG(0)
 			var/fish = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)
 			new fish(get_turf(src))
@@ -1056,7 +1178,7 @@ TRAYS
 		else
 			..()
 
-	throw_impact(var/turf/T)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		var/list/throw_targets = list()
 		if(platenum == 0)
@@ -1068,8 +1190,7 @@ TRAYS
 			platenum--
 			var/obj/item/plate/p = new /obj/item/plate
 			p.set_loc(get_turf(src))
-			SPAWN_DBG(0)
-				p.throw_at(pick(throw_targets), 5, 1)
+			p.throw_at(pick(throw_targets), 5, 1)
 			p.pixel_y = rand(-8,8)
 			p.pixel_x = rand(-8,8)
 		qdel(src)

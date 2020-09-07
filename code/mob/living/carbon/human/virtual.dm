@@ -49,7 +49,7 @@
 	disposing()
 		if (isghost && src.client)
 			var/mob/dead/observer/O = src.ghostize()
-			var/arrival_loc = pick(latejoin)
+			var/arrival_loc = pick_landmark(LANDMARK_LATEJOIN)
 			O.real_name = src.isghost
 			O.name = O.real_name
 			O.set_loc(arrival_loc)
@@ -78,7 +78,7 @@
 
 		. = src.say_dead(message, 1)
 
-	emote(var/act, var/voluntary = 0)
+	emote(var/act, var/voluntary = 0, var/emoteTarget = null)
 		if(isghost)
 			if (findtext(act, " ", 1, null))
 				var/t1 = findtext(act, " ", 1, null)

@@ -141,13 +141,14 @@
 				actions.stopId("magpickerhold", master)
 			var/obj/item/O = master.tools[content_id]
 			master.active_tool = O
-			O.loc = master
+			O.set_loc(master)
 			O.pickup(master) // Handle light datums and the like.
 			set_active_tool(1)
 			update_equipment()
 			update_tools()
 
 	New(M)
+		..()
 		master = M
 		src.boxes = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "blank", "1, 10 to 1, 1")
 		remove_screen(boxes)
@@ -325,9 +326,9 @@
 			var/turf/T = get_turf(master)
 			if (T)
 				var/datum/gas_mixture/environment = T.return_air()
-				var/total = environment.total_moles()
+				var/total = TOTAL_MOLES(environment)
 				if (total > 0) // prevent a division by zero
-					oxy.icon_state = "oxy[environment.oxygen/total*environment.return_pressure() < 17]"
+					oxy.icon_state = "oxy[environment.oxygen/total*MIXTURE_PRESSURE(environment) < 17]"
 				else
 					oxy.icon_state = "oxy1"
 				var/maptextc = "#ffffff"

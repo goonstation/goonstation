@@ -118,6 +118,7 @@
 	var/list/signed = list()
 	var/written = null
 	var/image/my_writing = null
+	tooltip_flags = REBUILD_DIST
 
 	New(location, var/image/IM, var/icon/IC, var/nname, var/ndesc)
 		..(location)
@@ -162,6 +163,7 @@
 				signature.layer = OBJ_LAYER + 0.01
 				src.overlays += signature
 				signed += "<span style='color: [P.font_color]'>[t]</span>"
+				tooltip_rebuild = 1
 			else if (signwrite == "write")
 				var/image/writing = image(icon='icons/misc/photo_writing.dmi',icon_state="[signwrite]")
 				writing.color = P.font_color
@@ -172,7 +174,7 @@
 				else
 					src.overlays -= src.my_writing
 					written = "[src.written] <span style='color: [P.font_color]'>[t]</span>"
-
+				tooltip_rebuild = 1
 				src.my_writing = writing
 				src.overlays += writing
 		return
@@ -182,6 +184,7 @@
 	var/mob/cursed_dude = null //set at photo creation
 	var/enchant_power = 13 //how long the photo's magic lasts, negative values make it infinite
 	var/enchant_delay = 0 //rolling counter to prevent spam utilization
+	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
 	//farting is handled in human.dm
 

@@ -10,6 +10,7 @@
 	density = 0
 	flags = NOSPLASH
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0 //is it open
 	var/id = null //ID used for brig stuff
@@ -228,8 +229,6 @@
 		if(status & BROKEN)			// nothing can happen if broken
 			return
 
-		src.updateDialog()
-
 		if(open && flush)	// flush can happen even without power, must be open first
 			flush()
 
@@ -301,9 +300,7 @@
 
 			AM.set_loc(src.loc)
 			AM.pipe_eject(0)
-			SPAWN_DBG(1 DECI SECOND)
-				if(AM)
-					AM.throw_at(target, 5, 1)
+			AM?.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
 		pool(H)
@@ -356,8 +353,6 @@
 	process()
 		if(status & BROKEN)			// nothing can happen if broken
 			return
-
-		src.updateDialog()
 
 		if(open && flush)	// flush can happen even without power, must be open first
 			flush()

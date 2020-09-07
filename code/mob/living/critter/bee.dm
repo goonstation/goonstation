@@ -138,7 +138,7 @@
 					fellow_bee.aggressive = 0
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		if (!isdead(src))
 			animate_bumble(src) // please keep bumbling tia
@@ -814,9 +814,7 @@
 			return null
 		;
 		new /obj/overlay/self_deleting {name = "hole in space time"; layer=2.2; icon = 'icons/misc/lavamoon.dmi'; icon_state="voidwarp";} (T, 20)
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 1, T)
-		s.start()
+		elecflash(src,power = 3)
 
 		var/obj/item/reagent_containers/food/snacks/ingredient/honey/honey = new /obj/item/reagent_containers/food/snacks/ingredient/honey(T)
 		. = honey
@@ -991,5 +989,21 @@
 
 /mob/living/critter/small_animal/bee/beestation //A special bee that should allow non-admins to play as a bee.
 	non_admin_bee_allowed = 1
+
+/mob/living/critter/small_animal/bee/ascbee
+	name = "ASCBee"
+	desc = "This bee looks rather... old school."
+	icon_body = "ascbee"
+	icon_state = "ascbee-wings"
+	icon_state_sleep = "ascbee-sleep"
+	honey_color = rgb(0, 255, 0)
+
+	on_pet(mob/user)
+		if (..())
+			return 1
+		if (prob(15))
+			for (var/mob/O in hearers(src, null))
+				O.show_message("[src] beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].",2)
+		return
 
 #undef ADMIN_BEES_ONLY

@@ -8,11 +8,10 @@
 	flags = NOSPLASH
 	var/on = 0
 	var/datum/light/light
-	var/temperature_archived
+	var/ARCHIVED(temperature)
 	var/obj/overlay/O1 = null
 	var/mob/occupant = null
 	var/obj/item/beaker = null
-	var/next_trans = 0
 	var/show_beaker_contents = 0
 
 	var/current_heat_capacity = 50
@@ -50,7 +49,7 @@
 				node = target
 				break
 
-	dispose()
+	disposing()
 		for (var/mob/M in src)
 			M.set_loc(src.loc)
 		..()
@@ -67,19 +66,18 @@
 			if(!isdead(occupant))
 				if (!ishuman(occupant))
 					src.go_out() // stop turning into cyborgs thanks
-				if (occupant.health < 100) process_occupant()
+				if (occupant.health < occupant.max_health || occupant.bioHolder.HasEffect("premature_clone"))
+					process_occupant()
 				else
 					src.go_out()
 					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-		if(next_trans < 10)
-			next_trans++
 
 		if(air_contents)
-			temperature_archived = air_contents.temperature
+			ARCHIVED(temperature) = air_contents.temperature
 			heat_gas_contents()
 			expel_gas()
 
-		if(abs(temperature_archived-air_contents.temperature) > 1)
+		if(abs(ARCHIVED(temperature)-air_contents.temperature) > 1)
 			network.update = 1
 
 		src.updateUsrDialog()
@@ -93,7 +91,7 @@
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -120,7 +118,7 @@
 		if (src.occupant)
 			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return 0
-		if(iscritter(target))
+		if(ismobcritter(target))
 			boutput(M, "<span class='alert'><B>The scanner doesn't support this body type.</B></span>")
 			return 0
 		if(!iscarbon(target) )
@@ -139,14 +137,14 @@
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
-			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
+			temp_text = "<FONT color=red>[air_contents.temperature - T0C]</FONT>"
 		else if(air_contents.temperature > 170)
-			temp_text = "<FONT color=black>[air_contents.temperature]</FONT>"
+			temp_text = "<FONT color=black>[air_contents.temperature - T0C]</FONT>"
 		else
-			temp_text = "<FONT color=blue>[air_contents.temperature]</FONT>"
+			temp_text = "<FONT color=blue>[air_contents.temperature - T0C]</FONT>"
 
 		var/dat = "<B>Cryo cell control system</B><BR>"
-		dat += "<B>Current cell temperature:</B> [temp_text]K<BR>"
+		dat += "<B>Current cell temperature:</B> [temp_text]&deg;C<BR>"
 		dat += "<B>Eject Occupant:</B> [src.occupant ? "<A href='?src=\ref[src];eject_occupant=1'>Eject</A>" : "Eject"]<BR>"
 		dat += "<B>Cryo status:</B> [src.on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>"
 		dat += "[draw_beaker_text()]<BR>"
@@ -282,7 +280,7 @@
 		if (src.occupant)
 			user.show_text("The cryo tube is already occupied.", "red")
 			return
-		logTheThing("combat", user, G.affecting, "shoves %target% into [src] at [log_loc(src)].") // Ditto (Convair880).
+		logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")] into [src] at [log_loc(src)].") // Ditto (Convair880).
 		var/mob/M = G.affecting
 		M.set_loc(src)
 		src.occupant = M
@@ -319,12 +317,12 @@
 		add_overlays()
 
 	proc/process_occupant()
-		if(air_contents.total_moles() < 10)
+		if(TOTAL_MOLES(air_contents) < 10)
 			return
 		if(ishuman(occupant))
 			if(isdead(occupant))
 				return
-			occupant.bodytemperature += 50*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
+			occupant.bodytemperature += 50*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + HEAT_CAPACITY(air_contents))
 			occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 			occupant.changeStatus("burning",-100)
 			var/mob/living/carbon/human/H = 0
@@ -341,25 +339,24 @@
 		else
 			src.go_out()
 			return
-		if(beaker && (next_trans == 10))
-			beaker.reagents.trans_to(occupant, 1, 10)
-			beaker.reagents.reaction(occupant)
-			next_trans = 0
+		if(beaker)
+			beaker.reagents.trans_to(occupant, 0.1, 10)
+			beaker.reagents.reaction(occupant, TOUCH, 5) //1/10th of small beaker - matches old rate for default beakers, give or take
 
 	proc/heat_gas_contents()
-		if(air_contents.total_moles() < 1)
+		if(TOTAL_MOLES(air_contents) < 1)
 			return
-		var/air_heat_capacity = air_contents.heat_capacity()
+		var/air_heat_capacity = HEAT_CAPACITY(air_contents)
 		var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
 		if(combined_heat_capacity > 0)
 			var/combined_energy = T20C*current_heat_capacity + air_heat_capacity*air_contents.temperature
 			air_contents.temperature = combined_energy/combined_heat_capacity
 
 	proc/expel_gas()
-		if(air_contents.total_moles() < 1)
+		if(TOTAL_MOLES(air_contents) < 1)
 			return
 		var/datum/gas_mixture/expel_gas
-		var/remove_amount = air_contents.total_moles()/100
+		var/remove_amount = TOTAL_MOLES(air_contents)/100
 		expel_gas = air_contents.remove(remove_amount)
 		expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
 		loc.assume_air(expel_gas)
@@ -411,22 +408,6 @@
 		src.add_fingerprint(usr)
 		build_icon()
 		return
-
-
-
-
-
-/mob/living/carbon/human/abiotic()
-	if ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves))
-		return 1
-	else
-		return 0
-
-/mob/proc/abiotic()
-	if ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || src.back || src.wear_mask)
-		return 1
-	else
-		return 0
 
 /datum/data/function/proc/reset()
 	return

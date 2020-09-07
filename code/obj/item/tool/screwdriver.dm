@@ -14,7 +14,7 @@
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 10
-	stamina_cost = 10
+	stamina_cost = 5
 	stamina_crit_chance = 30
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'

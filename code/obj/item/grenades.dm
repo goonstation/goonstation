@@ -26,8 +26,8 @@ PIPE BOMBS + CONSTRUCTION
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY
 	is_syndicate = 0
 	mats = 6
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 	var/sound_armed = null
 	var/icon_state_armed = null
@@ -148,8 +148,7 @@ PIPE BOMBS + CONSTRUCTION
 				var/atom/movable/thing = new payload(T)
 				var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
 				if(target)
-					SPAWN_DBG(0)
-						thing.throw_at(target, rand(0, 10), rand(1, 4))
+					thing.throw_at(target, rand(0, 10), rand(1, 4))
 		qdel(src)
 		return
 
@@ -218,9 +217,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (T)
 			if (T && isrestrictedz(T.z) || T.loc:sanctuary)
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, T)
-				s.start()
+				elecflash(src,power = 4)
 				qdel(src)
 				return
 			for (var/atom/X in orange(9, T))
@@ -417,9 +414,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (T)
 			if (isrestrictedz(T.z) && !restricted_z_allowed(usr, T))
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, T)
-				s.start()
+				elecflash(T)
 				qdel(src)
 				return
 
@@ -598,22 +593,22 @@ PIPE BOMBS + CONSTRUCTION
 				for (var/mob/N in viewers(user, null))
 					if (get_dist(N, user) <= 6)
 						N.flash(3 SECONDS)
-				SPAWN_DBG(0.2 SECONDS)
-					if (old_light_grenade)
-						random_brute_damage(user, 200)
-						SPAWN_DBG(1 DECI SECOND)
-							if (isdead(user) || user.nodamage || isAI(user)) return
-							logTheThing("combat", user, null, "was killed by touching a [src] at [log_loc(src)].")
-							var/mob/dead/observer/newmob
-							newmob = new/mob/dead/observer(user)
-							user.client.mob = newmob
-							user.mind.transfer_to(newmob)
-							qdel(user)
+				sleep(0.2 SECONDS)
+				if (old_light_grenade)
+					random_brute_damage(user, 200)
+					sleep(1 DECI SECOND)
+					if (isdead(user) || user.nodamage || isAI(user)) return
+					logTheThing("combat", user, null, "was killed by touching a [src] at [log_loc(src)].")
+					var/mob/dead/observer/newmob
+					newmob = new/mob/dead/observer(user)
+					user.client.mob = newmob
+					user.mind.transfer_to(newmob)
+					qdel(user)
+				else
+					if (destination)
+						user.set_loc(destination)
 					else
-						if (destination)
-							user.set_loc(destination)
-						else
-							user.set_loc(locate(40,19,2))
+						user.set_loc(locate(40,19,2))
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -844,9 +839,7 @@ PIPE BOMBS + CONSTRUCTION
 			if(prob(10))
 				explosion(src, location, 0, 0, 1, 1)
 			else
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, src)
-				s.start()
+				elecflash(src,power = 2)
 				playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
 		src.visible_message("<span class='alert'>\The [src] explodes!</span>")
 
@@ -936,9 +929,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (location && istype(location) && !location.loc:sanctuary)
 			if (isrestrictedz(location.z))
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, location)
-				s.start()
+				elecflash(location)
 				qdel(src)
 				return
 
@@ -1021,9 +1012,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (location && istype(location))
 			if (isrestrictedz(location.z))
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, location)
-				s.start()
+				elecflash(location)
 				qdel(src)
 				return
 
@@ -1144,10 +1133,9 @@ PIPE BOMBS + CONSTRUCTION
 				qdel(W)
 				qdel(src)
 		#endif
-		if(istype(W, /obj/item/weldingtool) && state == 1)
+		if(isweldingtool(W) && state == 1)
 			if(!W:try_weld(user, 1))
 				return
-			W:eyecheck(user)
 			boutput(user, "<span class='notice'>You hollow out the pipe.</span>")
 			src.state = 2
 			icon_state = "Pipe_Hollow"
@@ -1166,7 +1154,7 @@ PIPE BOMBS + CONSTRUCTION
 				boutput(user, "<span class='notice'>You stuff [W] into the [item_mods.len == 0 ? "first" : "second"] pipe.</span>")
 				item_mods += W
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 
 		if(istype(W, /obj/item/reagent_containers/) && state == 2)
 			var/ok = 0
@@ -1186,6 +1174,7 @@ PIPE BOMBS + CONSTRUCTION
 					avg_volatility += R.volatility * R.volume / src.reagents.total_volume
 
 				qdel(src.reagents)
+				src.reagents = null
 				if (avg_volatility < 1) // B A D.
 					src.strength = 0
 				else
@@ -1350,11 +1339,11 @@ PIPE BOMBS + CONSTRUCTION
 				if (butt > 1)
 					playsound(src.loc, "sound/voice/farts/superfart.ogg", 90, 1)
 					for (var/mob/M in view(3+butt,src.loc))
-						ass_explosion(M, 0, 1)
+						ass_explosion(M, 0, 5)
 				else
 					playsound(src.loc, "sound/voice/farts/poo2.ogg", 90, 1)
 					for (var/mob/M in view(3,src.loc))
-						ass_explosion(M, 0, 1)
+						ass_explosion(M, 0, 5)
 			if (confetti)
 				if (confetti > 1)
 					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(src.loc))
@@ -1477,9 +1466,7 @@ PIPE BOMBS + CONSTRUCTION
 		for (var/i = 1, i <= how_many_miniatures, i++)
 			var/obj/critter/gunbot/drone/miniature_syndie/O = new /obj/critter/gunbot/drone/miniature_syndie(get_turf(src))
 			var/atom/target = get_edge_target_turf(src, pick(alldirs))
-			SPAWN_DBG(0)
-				O.throw_at(target,4,3)
-				//O.process
+			O.throw_at(target,4,3)
 
 		..()
 
@@ -1524,6 +1511,27 @@ PIPE BOMBS + CONSTRUCTION
 			if (!M.stat)
 				M.emote("scream")
 
+
+/turf/proc/throw_shrapnel(var/T, var/sqstrength, var/shrapnel_range)
+	for (var/mob/living/carbon/human/M in view(T, shrapnel_range))
+		if(check_target_immunity(M)) continue
+		M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
+		if (M.get_ranged_protection()>=1.5)
+			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
+		else
+			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+			implanted.owner = M
+			M.implant += implanted
+			implanted.implanted(M, null, 25 * sqstrength)
+			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
+			if (!M.stat)
+				M.emote("scream")
+
+
+
+
+
+
 /obj/proc/blowthefuckup(var/strength = 1, var/delete = 1) // dropping this to object-level so that I can use it for other things
 	var/T = get_turf(src)
 	src.visible_message("<span class='alert'>[src] explodes!</span>")
@@ -1559,3 +1567,15 @@ PIPE BOMBS + CONSTRUCTION
 
 	explosion_new(src, T, strength, 1)
 	src.gib()
+
+/turf/proc/blowthefuckup(var/strength = 1, var/delete = 1) // simulate spalling damage. could use a new sprite though
+	var/T = get_turf(src)
+	src.visible_message("<span class='alert'>[src] explodes!</span>")
+	var/sqstrength = sqrt(strength)
+	var/shrapnel_range = 3 + sqstrength
+	if (strength >= 1)
+		src.throw_shrapnel(T, sqstrength, shrapnel_range)
+	new /obj/effects/explosion/tiny_baby (src.loc)
+	explosion_new(src, T, strength, 1)
+	if (delete)
+		qdel(src)

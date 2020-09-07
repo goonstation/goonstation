@@ -5,6 +5,10 @@
 // Automatically recharges air (unless off), will flush when ready if pre-set
 // Can hold items and human size things, no other draggables
 
+#define DISPOSAL_CHUTE_OFF 0
+#define DISPOSAL_CHUTE_CHARGING 1
+#define DISPOSAL_CHUTE_CHARGED 2
+
 /obj/machinery/disposal
 	name = "disposal unit"
 	desc = "A pneumatic waste disposal unit."
@@ -12,9 +16,9 @@
 	icon_state = "disposal"
 	anchored = 1
 	density = 1
-	flags = NOSPLASH
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/datum/gas_mixture/air_contents	// internal reservoir
-	var/mode = 1	// item mode 0=off 1=charging 2=charged
+	var/mode = DISPOSAL_CHUTE_CHARGING	// item mode 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
 	var/obj/disposalpipe/trunk/trunk = null // the attached pipe trunk
 	var/flushing = 0	// true if flushing in progress
@@ -37,7 +41,7 @@
 			if (src)
 				trunk = locate() in src.loc
 				if(!trunk)
-					mode = 0
+					mode = DISPOSAL_CHUTE_OFF
 					flush = 0
 				else
 					trunk.linked = src	// link the pipe trunk to self
@@ -85,6 +89,18 @@
 				S.satchel_updateicon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
+		if (istype(I,/obj/item/storage/))
+			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Empty it into the chute","Place it in the Chute")
+			if (!in_range(src, user))
+				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
+				return
+			if (action == "Empty it into the chute")
+				var/obj/item/storage/S = I
+				for(var/obj/item/O in S)
+					SEND_SIGNAL(S, COMSIG_STORAGE_TRANSFER_ITEM, O, src)
+				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+				return
+			if (isnull(action)) return
 		var/obj/item/magtractor/mag
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc
@@ -102,7 +118,7 @@
 				GM.set_loc(src)
 				user.visible_message("<span class='alert'><b>[user.name] stuffs [GM.name] into [src]!</b></span>")
 				qdel(G)
-				logTheThing("combat", user, GM, "places %target% into [src] at [log_loc(src)].")
+				logTheThing("combat", user, GM, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
 				actions.interrupt(G.affecting, INTERRUPT_MOVE)
 				actions.interrupt(user, INTERRUPT_ACT)
 		else
@@ -144,7 +160,7 @@
 		else if(target != user && !user.restrained() && Q == target.loc)
 			msg = "[user.name] stuffs [target.name] into the [src]!"
 			boutput(user, "You stuff [target.name] into the [src]!")
-			logTheThing("combat", user, target, "places %target% into [src] at [log_loc(src)].")
+			logTheThing("combat", user, target, "places [constructTarget(target,"combat")] into [src] at [log_loc(src)].")
 		else
 			return
 		actions.interrupt(target, INTERRUPT_MOVE)
@@ -154,13 +170,10 @@
 		if (msg)
 			src.visible_message(msg)
 
-		if (target == user && !istype(src,/obj/machinery/disposal/transport))
-			src.interacted(user)
-
 		update()
 		return
 
-	hitby(MO as mob|obj)
+	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
 		// Leaves people wondering where the stuff is, assuming they received a PDA alert at all.
 		if (istype(src, /obj/machinery/disposal/mail))
@@ -231,109 +244,48 @@
 		update()
 		return
 
-	// ai as human but can't flush
-	attack_ai(mob/user as mob)
-		interacted(user, 1)
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "DisposalChute")
+			ui.open()
 
-	// human interact with machine
-	attack_hand(mob/user as mob)
-		interacted(user, 0)
-		interact_particle(user,src)
+	ui_data(mob/user)
+		var/list/data = list()
+		data["flush"] = src.flush
+		data["mode"] = src.mode
+		data["name"] = src.name
+		data["pressure"] = MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE)
+		return data
 
-	proc/interacted(mob/user, var/ai=0)
-		src.add_fingerprint(user)
-		if(status & BROKEN)
-			src.remove_dialog(user)
-			return
-
-		var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
-
-		if(!ai)  // AI can't pull flush handle
-			if(flush)
-				dat += "Disposal handle: <A href='?src=\ref[src];handle=0'>Disengage</A> <B>Engaged</B>"
-			else
-				dat += "Disposal handle: <B>Disengaged</B> <A href='?src=\ref[src];handle=1'>Engage</A>"
-
-			dat += "<BR><HR><A href='?src=\ref[src];eject=1'>Eject contents</A><HR>"
-
-		if(mode == 0)
-			dat += "Pump: <B>Off</B> <A href='?src=\ref[src];pump=1'>On</A><BR>"
-		else if(mode == 1)
-			dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (pressurizing)<BR>"
-		else
-			dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
-
-		if (!air_contents)
-			initair()
-
-		var/per = 100* air_contents.return_pressure() / (2*ONE_ATMOSPHERE)
-
-		dat += "Pressure: [round(per, 1)]%<BR></body>"
-
-
-		src.add_dialog(user)
-		user.Browse(dat, "window=disposal;size=360x235")
-		onclose(user, "disposal")
-
-	// handle machine interaction
-
-	Topic(href, href_list)
+	ui_act(action, params)
 		if(..())
 			return
-		src.add_fingerprint(usr)
-		if(status & BROKEN)
-			DEBUG_MESSAGE("[src] is broken")
-			return
-		if(usr.stat || usr.restrained() || src.flushing)
-			DEBUG_MESSAGE("[src] is flushing/usr.stat returned with someting/usr is restrained")
-			return
-
-		if (in_range(src, usr) && isturf(src.loc))
-			DEBUG_MESSAGE("in range of [src] and it is on a turf")
-			src.add_dialog(usr)
-
-			if(href_list["close"])
-				DEBUG_MESSAGE("closed [src]")
-				src.remove_dialog(usr)
-				usr.Browse(null, "window=disposal")
-				return
-
-			if(href_list["pump"])
-				if(text2num(href_list["pump"]))
-					DEBUG_MESSAGE("[src] pump engaged")
-					power_usage = 600
-					mode = 1
-				else
-					DEBUG_MESSAGE("[src] pump disengaged")
-					power_usage = 100
-					mode = 0
-				update()
-
-			if(href_list["handle"])
-				DEBUG_MESSAGE("[src] handle")
-				flush = text2num(href_list["handle"])
-				if (flush)
-					if (!is_processing)
+		switch(action)
+			if("eject")
+				src.eject()
+				. = TRUE
+			if("toggleHandle")
+				src.flush = !src.flush
+				if (src.flush)
+					if (!src.is_processing)
 						SubscribeToProcess()
-						is_processing = 1
+						src.is_processing = 1
 				update()
 				playsound(get_turf(src), "sound/misc/handle_click.ogg", 50, 1)
-
-			if(href_list["eject"])
-				DEBUG_MESSAGE("[src] eject")
-				eject()
-		else
-			if (!isturf(src.loc))
-				DEBUG_MESSAGE("[src]'s loc is not a turf: [src.loc]")
-			if (!in_range(src, usr))
-				DEBUG_MESSAGE("[src] and [usr] are too far apart: [src] [log_loc(src)], [usr] [log_loc(usr)]")
-
-			usr.Browse(null, "window=disposal")
-			src.remove_dialog(usr)
-			return
-
-		src.updateDialog()
-		return
+				. = TRUE
+			if("togglePump")
+				if (src.mode)
+					power_usage = 100
+					mode = DISPOSAL_CHUTE_OFF
+				else
+					power_usage = 600
+					if ((MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE) >= 1))
+						mode = DISPOSAL_CHUTE_CHARGED
+					else
+						mode = DISPOSAL_CHUTE_CHARGING
+				update()
+				. = TRUE
 
 	// eject the contents of the disposal unit
 	proc/eject()
@@ -347,8 +299,9 @@
 		if (status & BROKEN)
 			icon_state = "disposal-broken"
 			ClearAllOverlays()
-			mode = 0
+			mode = DISPOSAL_CHUTE_OFF
 			flush = 0
+			power_usage = 0
 			return
 
 		// flush handle
@@ -390,9 +343,9 @@
 		if (!I)
 			I = image(src.icon, "[light_style]-charge")
 		switch (mode)
-			if (1)
+			if (DISPOSAL_CHUTE_CHARGING)
 				I.icon_state = "[light_style]-charge"
-			if (2)
+			if (DISPOSAL_CHUTE_CHARGED)
 				I.icon_state = "[light_style]-ready"
 			else
 				I = null
@@ -412,9 +365,7 @@
 
 		..()
 
-		src.updateDialog()
-
-		if(flush && air_contents.return_pressure() >= 2*ONE_ATMOSPHERE)	// flush can happen even without power
+		if(flush && MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)	// flush can happen even without power
 			SPAWN_DBG(0) //Quit holding up the process you fucker
 				flush()
 
@@ -425,7 +376,7 @@
 
 		use_power(100)		// base power usage
 
-		if(mode != 1)		// if off or ready, no need to charge
+		if(mode != DISPOSAL_CHUTE_CHARGING)		// if off or ready, no need to charge
 			return
 
 		// otherwise charge
@@ -435,7 +386,7 @@
 		var/datum/gas_mixture/env = L.return_air()
 		if (!air_contents)
 			air_contents = unpool(/datum/gas_mixture)
-		var/pressure_delta = (ONE_ATMOSPHERE*2.1) - air_contents.return_pressure()
+		var/pressure_delta = (ONE_ATMOSPHERE*2.1) - MIXTURE_PRESSURE(air_contents)
 
 		if(env.temperature > 0)
 			var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
@@ -446,8 +397,8 @@
 
 
 		// if full enough, switch to ready mode
-		if(air_contents.return_pressure() >= 2*ONE_ATMOSPHERE)
-			mode = 2
+		if(MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)
+			mode = DISPOSAL_CHUTE_CHARGED
 			power_usage = 100
 			update()
 			if (is_processing)
@@ -479,8 +430,8 @@
 		flushing = 0
 		// now reset disposal state
 		flush = 0
-		if(mode == 2)	// if was ready,
-			mode = 1	// switch to charging
+		if(mode == DISPOSAL_CHUTE_CHARGED)	// if was ready,
+			mode = DISPOSAL_CHUTE_CHARGING	// switch to charging
 		power_usage = 600
 		update()
 		return
@@ -504,9 +455,7 @@
 
 			AM.set_loc(src.loc)
 			AM.pipe_eject(0)
-			SPAWN_DBG(1 DECI SECOND)
-				if(AM)
-					AM.throw_at(target, 5, 1)
+			AM.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
 		qdel(H)
@@ -515,7 +464,7 @@
 	suicide(var/mob/living/carbon/human/user as mob)
 		if (!istype(user) || !src.user_can_suicide(user))
 			return 0
-		if (src.mode != 2)//!hasvar(user,"organHolder")) I will END YOU
+		if (src.mode != DISPOSAL_CHUTE_CHARGED)
 			return 0
 
 		user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and pulls the flush!</b></span>")
@@ -642,6 +591,7 @@
 	light_style = "cartport"
 	density = 0
 	layer = OBJ_LAYER-0.1
+	plane = PLANE_NOSHADOW_BELOW
 
 	MouseDrop_T(obj/storage/cart/target, mob/user)
 		if (!istype(target) || target.loc != src.loc || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user))
@@ -678,6 +628,8 @@
 		return
 
 	MouseDrop_T(mob/target, mob/user)
+		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.hasStatus(list("weakened", "paralysis", "stunned")) || isAI(user) || isAI(target) || isghostcritter(user))
+			return
 		..()
 		flush = 1
 
@@ -690,7 +642,7 @@
 		update()
 		return
 
-	hitby(MO as mob|obj)
+	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		if(istype(MO,/mob/living))
 			return ..()
 		return
@@ -700,3 +652,7 @@
 
 	attack_hand(mob/user as mob)
 		return
+
+#undef DISPOSAL_CHUTE_OFF
+#undef DISPOSAL_CHUTE_CHARGING
+#undef DISPOSAL_CHUTE_CHARGED

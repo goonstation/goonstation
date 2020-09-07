@@ -63,7 +63,7 @@
 			var/mob/living/H = AM
 			var/obj/item/ore_scoop/S = H.get_equipped_ore_scoop()
 			if (S && S.satchel && S.satchel.contents.len < S.satchel.maxitems && src.scoopable)
-				src.loc = S.satchel
+				src.set_loc(S.satchel)
 				S.satchel.satchel_updateicon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
@@ -74,7 +74,7 @@
 				var/obj/item/shipcomponent/secondary_system/orescoop/SCOOP = V.sec_system
 				if (SCOOP.contents.len >= SCOOP.capacity || !src.scoopable)
 					return
-				src.loc = SCOOP
+				src.set_loc(SCOOP)
 				if (SCOOP.contents.len >= SCOOP.capacity)
 					boutput(V.pilot, "<span class='alert'>Your pod's ore scoop hold is full!</span>")
 					playsound(V.loc, "sound/machines/chime.ogg", 20, 1)
@@ -472,9 +472,7 @@
 
 	setup_material()
 		src.setMaterial(getMaterial("viscerite"), appearance = 0, setname = 0)
-		var/datum/reagents/R = new/datum/reagents(25)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(25)
 		src.reagents.add_reagent("synthflesh", 25)
 		return ..()
 
@@ -547,11 +545,11 @@
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 5.0
-	throwforce = 15.0
+	throwforce = 5.0
 	g_amt = 3750
 	burn_type = 1
 	stamina_damage = 5
-	stamina_cost = 15
+	stamina_cost = 5
 	stamina_crit_chance = 35
 	burn_possible = 0
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
@@ -609,6 +607,18 @@
 			..()
 			var/datum/material/M = getMaterial("plasmaglass")
 			src.setMaterial(M, appearance = 1, setname = 1)
+
+/obj/item/raw_material/chitin
+	name = "chitin chunk"
+	desc = "A chunk of chitin."
+	icon_state = "chitin"
+	material_name = "Chitin"
+	metal = 3
+	dense = 1
+
+	setup_material()
+		src.setMaterial(getMaterial("chitin"), appearance = 0, setname = 0)
+		return ..()
 
 // bars, tied into the new material system
 
@@ -936,7 +946,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(!DIST_CHECK(O, user, 1))
+		if(!IN_RANGE(O, user, 1))
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -981,7 +991,7 @@
 		if (!output_location)
 			return src.loc
 
-		if (!DIST_CHECK(src.output_location, src, 1))
+		if (!IN_RANGE(src.output_location, src, 1))
 			output_location = null
 			return src.loc
 

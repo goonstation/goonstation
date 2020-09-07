@@ -37,6 +37,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "petri0"
 	desc = "A dish tailored hold pathogen cultures."
+	initial_volume = 40
 	var/stage = 0
 
 	var/dirty = 0
@@ -49,10 +50,7 @@
 	rc_flags = 0
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		// Integration notes: stable mutagen ID.
+		..()
 		for (var/nutrient in pathogen_controller.nutrients)
 			nutrition += nutrient
 			nutrition[nutrient] = 0
@@ -190,8 +188,7 @@
 				var/datum/reagent/RE = src.reagents.reagent_list[R]
 				if (R == "pathogen")
 					if (src.medium)
-						if (!(src in processing_items))
-							processing_items.Add(src)
+						processing_items |= src
 				else if (R in pathogen_controller.media)
 					if (src.medium && src.medium.id != R)
 						set_dirty("There are multiple, incompatible growth media in the petri dish.")
@@ -206,8 +203,7 @@
 						src.reagents.reagent_list -= R
 						src.reagents.update_total()
 						if (src.reagents.has_reagent("pathogen"))
-							if (!(src in processing_items))
-								processing_items.Add(src)
+							processing_items |= src
 					else
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)
@@ -276,12 +272,15 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "vial0"
 	item_state = "vial"
+	var/datum/microbody/FM = null
 
 	New()
 		..()
 		SPAWN_DBG(2 SECONDS)
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 			var/datum/pathogen/P = unpool(/datum/pathogen)
+			if(FM)
+				P.forced_microbody = FM
 			P.create_weak()
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
@@ -291,6 +290,18 @@
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("water", 5)
 			#endif
+
+/obj/item/reagent_containers/glass/vial/prepared/virus
+	FM = /datum/microbody/virus
+
+/obj/item/reagent_containers/glass/vial/prepared/parasite
+	FM = /datum/microbody/parasite
+
+/obj/item/reagent_containers/glass/vial/prepared/bacterium
+	FM = /datum/microbody/bacteria
+
+/obj/item/reagent_containers/glass/vial/prepared/fungus
+	FM = /datum/microbody/fungi
 
 /obj/item/reagent_containers/glass/beaker/parasiticmedium
 	name = "Beaker of Parasitic Medium"
@@ -412,16 +423,16 @@
 	proc/inject(var/mob/living/carbon/human/target, var/mob/user)
 		if (is_cure)
 			if (!is_vaccine)
-				logTheThing("pathology", user, target, "injects %target% with the cure for [src.pathogen.name].")
+				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with the cure for [src.pathogen.name].")
 				target.remission(src.pathogen)
 			else
-				logTheThing("pathology", user, target, "injects %target% with a vaccine for [src.pathogen.name].")
+				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with a vaccine for [src.pathogen.name].")
 				target.immunity(src.pathogen)
 		else
 			if (target.infected(src.pathogen))
-				logTheThing("pathology", user, target, "injects %target% with pathogen [src.pathogen.name] from a bad cure injector and infects them.")
+				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector and infects them.")
 			else
-				logTheThing("pathology", user, target, "injects %target% with pathogen [src.pathogen.name] from a bad cure injector but they were unaffected.")
+				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector but they were unaffected.")
 		src.pathogen = null
 		used = 1
 

@@ -698,6 +698,7 @@ obj/item/gnomechompski/elf
 	flying = 0
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
+	is_pet = 0
 
 	var/does_creepy_stuff = 1
 	var/typeName = "Generic"
@@ -782,6 +783,7 @@ obj/item/gnomechompski/elf
 	flying = 0
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
+	is_pet = 0
 
 	var/does_creepy_stuff = 1
 	var/typeName = "Generic"
@@ -811,7 +813,7 @@ obj/critter/madnessowl
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1
@@ -975,7 +977,7 @@ obj/critter/madnessowl/switchblade
 	density = 1
 	health = 500
 	maxhealth = 500
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	firevuln = 1.5
 	brutevuln = 1
 	flying = 1
@@ -1011,6 +1013,7 @@ obj/critter/madnessowl/switchblade
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "owlmutant"
 	dead_state = "owlmutant-dead"
+	death_text = "%src% <b>collapses, releasing a final hoot and regurgitating a Hootonium Core. What? </b>"
 	health = 666
 	flying = 1
 	firevuln = 1
@@ -1018,7 +1021,7 @@ obj/critter/madnessowl/switchblade
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	seekrange = 6
 	density = 1
 	butcherable = 1
@@ -1031,14 +1034,9 @@ obj/critter/madnessowl/switchblade
 
 	CritterDeath()
 		if (src.alive)
+			..()
 			playsound(src.loc, "sound/voice/animal/hoot.ogg", 65, 1)
-			src.visible_message("<b> [src] collapses, releasing a final hoot and regurgitating a Hootonium Core. What? <b/>")
-			src.alive = 0
-			walk_to(src,0)
-			anchored = 0
-			set_density(0)
 			layer = initial(layer)
-			icon = "owlmutant-dead"
 			new /obj/item/plutonium_core/hootonium_core (src.loc)
 
 	seek_target()
@@ -1112,10 +1110,9 @@ obj/critter/madnessowl/switchblade
 			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 			var/turf/T = get_edge_target_turf(user, get_dir(user, get_step_away(user, src)))
 			if (T && isturf(T))
-				SPAWN_DBG(0)
-					user.throw_at(T, 3, 2)
-					user.changeStatus("weakened", 5)
-					user.changeStatus("stunned", 5)
+				user.throw_at(T, 3, 2)
+				user.changeStatus("weakened", 5)
+				user.changeStatus("stunned", 5)
 
 
 		if (src.alive && src.health <= 0) src.CritterDeath()
@@ -1265,10 +1262,10 @@ obj/critter/madnessowl/switchblade
 		SPAWN_DBG(0)
 			src.visible_message("<span class='alert'><b>[src] goes [pick("on a rampage", "into a bloodlust", "berserk", "hog wild", "feral")]!</b></span>")
 			playsound(src.loc, "sound/voice/animal/hoot.ogg", 70, 1)
-			SPAWN_DBG(1 DECI SECOND)
-				if(!flailing) src.flail()
 			src.set_loc(M.loc)
 			src.frenzied = 20
+			sleep(1 DECI SECOND)
+			if(!flailing) src.flail()
 			while(src.target && src.frenzied && src.alive && src.loc == M.loc )
 				src.visible_message("<span class='alert'><b>[src] [pick("pecks", "claws", "slashes", "tears at", "lacerates", "mangles")] [src.target]!</b></span>")
 				random_brute_damage(target, 10,1)

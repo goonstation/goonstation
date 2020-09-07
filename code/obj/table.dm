@@ -1,10 +1,3 @@
-
-#define TABLE_DISASSEMBLE 0
-#define TABLE_WEAKEN 1
-#define TABLE_STRENGTHEN 2
-#define TABLE_ADJUST 3
-#define TABLE_LOCKPICK 4
-
 /obj/table
 	name = "table"
 	desc = "A metal table strong enough to support a substantial amount of weight, but easily made portable by unsecuring the bolts with a wrench."
@@ -182,7 +175,7 @@
 				return
 		return
 
-	dispose()
+	disposing()
 		var/turf/OL = get_turf(src)
 		if (src.desk_drawer && src.desk_drawer.contents.len)
 			for (var/atom/movable/A in src.desk_drawer)
@@ -191,7 +184,6 @@
 			src.desk_drawer = null
 			qdel(O)
 
-		loc = null
 		if (!OL)
 			return
 		if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
@@ -316,6 +308,8 @@
 				for (var/mob/N in AIviewers(usr, null))
 					if (N.client)
 						shake_camera(N, 4, 1, 0.5)
+			if(ismonkey(H))
+				actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
 		return
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -360,6 +354,54 @@
 		if (usr && usr == over_object && src.desk_drawer)
 			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()
+
+	Bumped(atom/AM)
+		..()
+		if(!ismonkey(AM))
+			return
+		var/mob/living/carbon/human/M = AM
+		if(!isalive(M))
+			return
+		actions.start(new /datum/action/bar/icon/railing_jump/table_jump(M, src), M)
+
+//Replacement for monkies walking through tables: They now parkour over them.
+//Note: Max count of tables traversable is 2 more than the iteration limit
+/datum/action/bar/icon/railing_jump/table_jump
+	id = "table_jump"
+	var/const/throw_range = 7
+	var/const/iteration_limit = 5
+
+	getLandingLoc()
+		var/iteration = 0
+		var/dir = get_dir(ownerMob, the_railing)
+		var/turf/target = get_step(the_railing, dir)
+		var/obj/table/maybe_table = locate(/obj/table) in target
+		while(maybe_table && iteration < iteration_limit)
+			iteration++
+			target = get_step(target, dir)
+			maybe_table = locate(/obj/table) in target
+			duration += 1 SECOND
+		return target
+
+	do_bunp()
+		return FALSE // no bunp
+
+	proc/unset_tablepass_callback(datum/thrown_thing/thr)
+		thr.thing.flags &= ~TABLEPASS
+
+	sendOwner()
+		var/const/throw_speed = 0.5
+		var/datum/thrown_thing/thr = ownerMob.throw_at(jump_target, throw_range, throw_speed)
+		if(!(ownerMob.flags & TABLEPASS))
+			ownerMob.flags |= TABLEPASS
+			thr.end_throw_callback = .proc/unset_tablepass_callback
+		for(var/O in AIviewers(ownerMob))
+			var/mob/M = O //inherently typed list
+			var/the_text = "[ownerMob] jumps over [the_railing]."
+			if (is_athletic_jump) // athletic jumps are more athletic!!
+				the_text = "[ownerMob] swooces right over [the_railing]!"
+			M.show_text("[the_text]", "red")
+		// logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing%]].")
 
 /* ======================================== */
 /* ---------------------------------------- */
@@ -451,7 +493,7 @@
 		auto = 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool) && W:welding)
+		if (isweldingtool(W) && W:try_weld(user,1))
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return
@@ -497,6 +539,16 @@
 
 	auto
 		auto = 1
+
+/obj/table/reinforced/chemistry/beakers //starts with 7 :B:eakers inside it, wow!!
+	var/list/stuff = list()
+	name = "beaker storage"
+
+	New()
+		..()
+		desc += " This one holds beakers in it! Wow!!"
+		for (var/B=0, B<=7, B++)
+			new /obj/item/reagent_containers/glass/beaker(src.desk_drawer)
 
 /obj/table/reinforced/industrial
 	name = "industrial table"
@@ -730,7 +782,7 @@
 		else
 			return ..()
 
-	hitby(AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		if (ismob(AM))
 			var/mob/M = AM

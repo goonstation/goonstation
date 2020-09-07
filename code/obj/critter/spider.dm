@@ -7,7 +7,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	density = 0
@@ -76,7 +76,7 @@
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 0.65
@@ -110,6 +110,7 @@
 	CritterDeath()
 		if(!src.alive) return
 		..()
+		if (honk) return // clown spiders have special deaths
 		playsound(src.loc, src.deathsound, 50, 0)
 		src.reagents.add_reagent(venom1, 50, null)
 		src.reagents.add_reagent(venom2, 50, null)
@@ -408,7 +409,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -455,6 +456,10 @@
 		adultpath = "/obj/critter/spider/clownqueen/cluwne"
 		item_shoes = /obj/item/clothing/shoes/cursedclown_shoes
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
+
+	New(var/parent = null)
+		..()
+		src.parent = parent
 
 	attack_hand(mob/user as mob)
 		if (src.alive && (user.a_intent != INTENT_HARM))
@@ -514,7 +519,7 @@
 		else ..()
 
 	CritterDeath()
-		src.alive = 0
+		..()
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)
@@ -524,13 +529,20 @@
 		gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
 		qdel (src)
 
+	disposing()
+		if (istype(parent, /mob/living/critter/spider/clownqueen))	//obj/critter queens can't make babies so who cares.
+			var/mob/living/critter/spider/clownqueen/queen = parent
+			if (islist(queen.babies))
+				queen.babies -= src
+		..()
+
 /obj/critter/spider/clownqueen
 	name = "queen clownspider"
 	desc = "You see this? This is why people hate clowns. This thing right here."
 	icon_state = "clownspider_queen"
 	health = 100
 	aggressive = 1
-	opensdoors =1 //clever girl
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY //clever girl
 	venom1 = "rainbow fluid"
 	death_text ="%src% explodes into technicolor gore!"
 	encase_in_web = 2
@@ -564,7 +576,7 @@
 			break
 
 	CritterDeath()
-		src.alive = 0
+		..()
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)

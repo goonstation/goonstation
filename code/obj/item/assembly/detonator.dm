@@ -88,15 +88,15 @@
 			if (istype(W, /obj/item/tank/plasma))
 				src.setDetState(1)
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 				W.master = src
 				W.layer = initial(src.layer)
 				src.part_t = W
 				src.add_fingerprint(user)
 				user.show_message("<span class='notice'>You insert the [W.name] into the slot.</span>")
 			else if (issnippingtool(W))
-				src.part_ig.loc = user.loc
-				src.part_mt.loc = user.loc
+				src.part_ig.set_loc(user.loc)
+				src.part_mt.set_loc(user.loc)
 				src.part_ig.master = null
 				src.part_mt.master = null
 				src.part_ig = null
@@ -112,7 +112,7 @@
 				user.show_message("<span class='alert'>The plasma tank must be firmly secured to the assembly first.</span>")
 			else if (ispryingtool(W))
 				src.setDetState(0)
-				src.part_t.loc = user.loc
+				src.part_t.set_loc(user.loc)
 				src.part_t.master = null
 				src.part_t = null
 				user.show_message("<span class='notice'>You pry the plasma tank out of the assembly.</span>")
@@ -140,7 +140,7 @@
 			if (istype(W, /obj/item/device/timer))
 				src.setDetState(4)
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 				W.master = src
 				W.layer = initial(src.layer)
 				src.part_fs = W
@@ -150,21 +150,21 @@
 			else if (issnippingtool(W))
 				src.setDetState(2)
 				var/obj/item/cable_coil/C = new /obj/item/cable_coil(user, 6)
-				C.loc = user.loc
+				C.set_loc(user.loc)
 				user.show_message("<span class='notice'>You cut the wiring on the assembly.</span>")
 		if (4)
 			if (issnippingtool(W))
 				src.setDetState(3)
-				src.part_fs.loc = user.loc
+				src.part_fs.set_loc(user.loc)
 				src.part_fs.master = null
 				src.part_fs = null
 				if (src.trigger)
-					src.trigger.loc = user.loc
+					src.trigger.set_loc(user.loc)
 					src.trigger.master = null
 					src.trigger = null
 					user.show_message("<span class='alert'>The triggering device falls off the assembly.</span>")
 				for (var/obj/item/a in src.attachments)
-					a.loc = user.loc
+					a.set_loc(user.loc)
 					a.master = null
 					a.layer = initial(a.layer)
 					src.clear_attachment(a)
@@ -180,7 +180,7 @@
 				options += "cancel"
 				var/target = input("Which device do you want to remove?", "Device to remove", "cancel") in options
 				if (target == src.trigger)
-					src.trigger.loc = user.loc
+					src.trigger.set_loc(user.loc)
 					src.trigger.master = null
 					src.trigger = null
 					user.show_message("<span class='notice'>You remove the triggering device from the assembly.</span>")
@@ -188,7 +188,7 @@
 					return
 				else
 					var/obj/item/T = target
-					T.loc = user.loc
+					T.set_loc(user.loc)
 					T.master = null
 					T.detonator_act("detach", src)
 					src.clear_attachment(target)
@@ -200,7 +200,7 @@
 				if (src.trigger)
 					user.show_message("<span class='alert'>There is a trigger already screwed onto the assembly.</span>")
 				else
-					W.loc = src
+					W.set_loc(src)
 					W.master = src
 					W.layer = initial(W.layer)
 					user.u_equip(W)
@@ -209,7 +209,7 @@
 					setDescription()
 			else if (istype(W, /obj/item/paper))
 				src.note = W:info
-				W.loc = null
+				W.set_loc(null)
 				W.master = null
 				W.layer = null
 				user.u_equip(W)
@@ -217,7 +217,7 @@
 				pool(W)
 			else if (W.is_detonator_attachment())
 				if (src.attachments.len < 3)
-					W.loc = src
+					W.set_loc(src)
 					W.master = src
 					W.layer = initial(W.layer)
 					user.u_equip(W)
@@ -259,14 +259,14 @@
 	if (src.defused)
 		src.attachedTo.visible_message("<b><span class='alert'>The cut detonation wire emits a spark. The detonator signal never reached the detonator unit.</span></b>")
 		return
-	if (src.part_t.air_contents.return_pressure() < 400 || src.part_t.air_contents.toxins < (4*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C))
+	if (MIXTURE_PRESSURE(src.part_t.air_contents) < 400 || src.part_t.air_contents.toxins < (4*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C))
 		src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.</span></b>")
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
 		del(src)
 		return
 	src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank blows, creating a microexplosion and rupturing the canister.</span></b>")
-	if (attachedTo.air_contents.return_pressure() < 7000)
+	if (MIXTURE_PRESSURE(attachedTo.air_contents) < 7000)
 		src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister, due to a serious lack of pressure, fails to explode into shreds and leaks its contents into the air.</span></b>")
 		src.attachedTo.health = 0
 		src.attachedTo.healthcheck()
@@ -288,7 +288,7 @@
 	message_admins("A canister bomb detonates at [epicenter.loc.name] ([showCoords(epicenter.x, epicenter.y, epicenter.z)])")
 	src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister shatters from the pressure, and the hot gas ignites.</span></b>")
 
-	var/power = min(850 * (attachedTo.air_contents.return_pressure() + attachedTo.air_contents.temperature - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
+	var/power = min(850 * (MIXTURE_PRESSURE(attachedTo.air_contents) + attachedTo.air_contents.temperature - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
 	//if (power == 150000) //they reached the cap SOMEHOW? well dang they deserve a medal
 		//src.builtBy.unlock_medal("", 1) //WIRE TODO: make new medal for this
 	explosion_new(attachedTo, epicenter, power)
@@ -304,12 +304,11 @@
 /obj/item/assembly/detonator/proc/failsafe_engage()
 	if (src.part_fs.timing)
 		return
+	src.safety = 0
 	src.part_fs.timing = 1
 	src.part_fs.c_state(1)
-	if (!(src in processing_items))
-		processing_items.Add(src)
-	if (!(src.part_fs in processing_items))
-		processing_items.Add(src.part_fs)
+	processing_items |= src
+	processing_items |= src.part_fs
 	src.dispatch_event("prime")
 
 	command_alert("A canister bomb is primed in [get_area(src)] at coordinates (<b>X</b>: [src.master.x], <b>Y</b>: [src.master.y], <b>Z</b>: [src.master.z])! It is set to go off in [src.part_fs.time] seconds.")

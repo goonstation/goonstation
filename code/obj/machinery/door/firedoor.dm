@@ -11,13 +11,12 @@
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.setup()
-			SPAWN_DBG(1 SECOND)
-				qdel(src)
+			sleep(1 SECOND)
+			qdel(src)
 
 	proc/setup()
 		for (var/obj/machinery/door/D in src.loc)
 			var/obj/machinery/door/firedoor/pyro/P = new/obj/machinery/door/firedoor/pyro(src.loc)
-			P.loc = src.loc
 			P.dir = D.dir
 			P.layer = D.layer + 0.01
 			break
@@ -114,9 +113,8 @@
 
 /obj/machinery/door/firedoor/attackby(obj/item/C as obj, mob/user as mob)
 	src.add_fingerprint(user)
-	if ((istype(C, /obj/item/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weldingtool/W = C
-		if(!W.try_weld(user, 1))
+	if ((isweldingtool(C) && !( src.operating ) && src.density))
+		if(!C:try_weld(user, 1))
 			return
 		if (!( src.blocked ))
 			src.blocked = 1

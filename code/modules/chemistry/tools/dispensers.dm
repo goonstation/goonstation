@@ -23,9 +23,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(4000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(4000)
 
 
 	get_desc(dist, mob/user)
@@ -65,7 +63,7 @@
 				reagents.temperature_reagents(exposed_temperature, exposed_volume)
 
 	MouseDrop(atom/over_object as obj)
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister))
+		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
 
 		if (get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)
@@ -181,9 +179,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(10000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(10000)
 		reagents.add_reagent("water",10000)
 
 /obj/reagent_dispensers/watertank/fountain
@@ -297,9 +293,7 @@
 	piss
 		New()
 			..()
-			var/datum/reagents/R = new/datum/reagents(4000)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(4000)
 			reagents.add_reagent("urine",400)
 			reagents.add_reagent("water",600)
 			src.update_icon()
@@ -310,9 +304,7 @@
 	juicer
 		New()
 			..()
-			var/datum/reagents/R = new/datum/reagents(4000)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(4000)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
@@ -353,6 +345,12 @@
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+
+	electric_expose(var/power = 1) //lets throw in ANOTHER hack to the temp expose one above
+		if (reagents)
+			for (var/i = 0, i < 3, i++)
+				reagents.temperature_reagents(power*400, power*125)
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"

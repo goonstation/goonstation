@@ -9,9 +9,11 @@
 	var/light_mod = null
 	var/connect_overlay = 0 // do we have wall connection overlays, ex nornwalls?
 	var/list/connects_to = list(/turf/simulated/wall/auto,/turf/simulated/wall/false_wall)
+	var/list/connects_to_exceptions = list() // because connections now work by parent type searches, this is for when you don't want certain subtypes to connect
 	var/list/connects_with_overlay = null
+	var/list/connects_with_overlay_exceptions = list() // same as above comment
 	var/image/connect_image = null
-	var/connect_overlay_dir = 0
+	var/tmp/connect_overlay_dir = 0
 	var/d_state = 0
 
 	New()
@@ -29,7 +31,7 @@
 	generate_worldgen()
 		src.update_icon()
 
-	disposing()
+	Del()
 		src.RL_SetSprite(null)
 		..()
 
@@ -43,10 +45,15 @@
 		src.connect_overlay_dir = 0
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
-			if (T && (T.type == src.type || (T.type in connects_to)))
+			if (T && (istype(T, src.type)))
 				builtdir |= dir
 			else if (connects_to)
 				for (var/i=1, i <= connects_to.len, i++)
+					// if the turf appears in our connection list AND isn't in our exceptions...
+					if (istype(T, connects_to[i]) && !(T.type in connects_to_exceptions))
+						builtdir |= dir
+						break
+					// Search for non-turf atoms we can connect to
 					var/atom/A = locate(connects_to[i]) in T
 					if (!isnull(A))
 						if (istype(A, /atom/movable))
@@ -56,19 +63,25 @@
 						builtdir |= dir
 						break
 			if (connect_overlay && connects_with_overlay)
-				if (T.type in connects_with_overlay)
-					src.connect_overlay_dir |= dir
-				else
-					for (var/i=1, i <= connects_with_overlay.len, i++)
-						var/atom/A = locate(connects_with_overlay[i]) in T
-						if (!isnull(A))
-							if (istype(A, /atom/movable))
-								var/atom/movable/M = A
-								if (!M.anchored)
-									continue
-							src.connect_overlay_dir |= dir
+				for (var/i=1, i <= connects_with_overlay.len, i++)
+					// if the turf appears in our overlay'd connection list, AND isn't in our exceptions, AND isn't... well, a copy of ourselves...
+					if (istype(T, connects_with_overlay[i]) && !(T.type in connects_with_overlay_exceptions) && !(T.type == src.type))
+						src.connect_overlay_dir |= dir
+						break
+					// Search for non-turf atoms we can connect to
+					var/atom/A = locate(connects_with_overlay[i]) in T
+					if (!isnull(A))
+						if (istype(A, /atom/movable))
+							var/atom/movable/M = A
+							if (!M.anchored)
+								continue
+						src.connect_overlay_dir |= dir
 
-		src.icon_state = "[mod][builtdir][src.d_state ? "C" : null]"
+		var/the_state = "[mod][builtdir]"
+		if ( !(istype(src, /turf/simulated/wall/auto/jen)) && !(istype(src, /turf/simulated/wall/auto/reinforced/jen)) ) //please no more sprite, i drained my brain doing this
+			src.icon_state += "[src.d_state ? "C" : null]"
+		icon_state = the_state
+
 		if (light_mod)
 			src.RL_SetSprite("[light_mod][builtdir]")
 
@@ -146,16 +159,15 @@
 					boutput(user, "<span class='notice'>You removed the support lines.</span>")
 					return
 
-		else if (istype(W, /obj/item/weldingtool) && W:welding)
-			var/obj/item/weldingtool/Weld = W
-			Weld.eyecheck(user)
+		else if (isweldingtool(W))
 			var/turf/T = user.loc
 			if (!(istype(T, /turf)))
 				return
 
 			if (src.d_state == 2)
+				if(!W:try_weld(user,1,-1,1,1))
+					return
 				boutput(user, "<span class='notice'>Slicing metal cover.</span>")
-				playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
 				sleep(2.5 SECONDS)
 				if (user.loc == T && (user.equipped() == W || isrobot(user)))
 					src.d_state = 3
@@ -163,8 +175,9 @@
 					return
 
 			else if (src.d_state == 5)
+				if(!W:try_weld(user,1,-1,1,1))
+					return
 				boutput(user, "<span class='notice'>Removing support rods.</span>")
-				playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
 				sleep(2.5 SECONDS)
 				if (user.loc == T && (user.equipped() == W || isrobot(user)))
 					src.d_state = 6
@@ -278,15 +291,132 @@
 
 		src.take_hit(W)
 
+/turf/simulated/wall/auto/jen
+	icon = 'icons/turf/walls_jen.dmi'
+	light_mod = "wall-jen-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_overlay = 1
+	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
+
+	connects_with_overlay = list(/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn,
+	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
+	/turf/simulated/wall/auto/reinforced/jen)
+
+	update_neighbors()
+		..()
+		for (var/obj/window/auto/O in orange(1,src))
+			O.update_icon()
+
+	the_tuff_stuff
+		explosion_resistance = 7
+
+	dark1
+		color = "#dddddd"
+
+	dark2
+		color = "#bbbbbb"
+
+	dark3
+		color = "#999999"
+
+	dark4
+		color = "#777777"
+
+	red
+		color = "#ff9999"
+
+	orange
+		color = "#ffc599"
+
+	brown
+		color = "#d4ab8c"
+
+	green
+		color = "#9ec09e"
+
+	yellow
+		color = "#fff5a7"
+
+	cyan
+		color = "#86fbff"
+
+	purple
+		color = "#c5a8cc"
+
+	blue
+		color = "#87befd"
+
+/turf/simulated/wall/auto/reinforced/jen
+	icon = 'icons/turf/walls_jen.dmi'
+	light_mod = "wall-jen-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_overlay = 1
+	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred)
+
+	connects_with_overlay = list(/turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/auto/jen,
+	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred)
+
+	the_tuff_stuff
+		explosion_resistance = 3
+
+	update_neighbors()
+		..()
+		for (var/obj/window/auto/O in orange(1,src))
+			O.update_icon()
+
+	dark1
+		color = "#dddddd"
+
+	dark2
+		color = "#bbbbbb"
+
+	dark3
+		color = "#999999"
+
+	dark4
+		color = "#777777"
+
+	red
+		color = "#ff9999"
+
+	orange
+		color = "#ffc599"
+
+	brown
+		color = "#d4ab8c"
+
+	green
+		color = "#9ec09e"
+
+	yellow
+		color = "#fff5a7"
+
+	cyan
+		color = "#86fbff"
+
+	purple
+		color = "#c5a8cc"
+
+	blue
+		color = "#87befd"
+
 /turf/simulated/wall/auto/supernorn
 	icon = 'icons/turf/walls_supernorn.dmi'
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
-	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
-	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred)
-	connects_with_overlay = list(/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
-	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred)
+	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
+
+	connects_with_overlay = list(/turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
 	the_tuff_stuff
 		explosion_resistance = 7
 
@@ -300,10 +430,13 @@
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
-	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
+	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange)
-	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/supernorn/wood,
-	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper)
+
+	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,)
 	the_tuff_stuff
 		explosion_resistance = 11
 
@@ -317,9 +450,12 @@
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
-	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
+	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
-	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/supernorn/wood,
+
+	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
 /turf/simulated/wall/auto/reinforced/supernorn/orange
@@ -328,9 +464,12 @@
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
 	explosion_resistance = 11
-	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
+	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
-	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/supernorn/wood,
+
+	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
 /turf/simulated/wall/auto/reinforced/supernorn/blackred
@@ -339,9 +478,12 @@
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
 	explosion_resistance = 11
-	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
+	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
-	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/supernorn/wood,
+
+	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
 
@@ -356,10 +498,13 @@
 			O.update_icon()
 /turf/simulated/wall/auto/supernorn/wood
 	icon = 'icons/turf/walls_wood.dmi'
-	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
-	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
+	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
+
 	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-	/turf/simulated/wall/false_wall, /turf/simulated/wall/false_wall/reinforced, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
+	/turf/simulated/wall/false_wall, /turf/simulated/wall/false_wall/reinforced, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
 
 /turf/simulated/wall/auto/gannets
 	icon = 'icons/turf/walls_destiny.dmi'
@@ -370,9 +515,10 @@
 	icon = 'icons/turf/walls_marsoutpost.dmi'
 	light_mod = "wall-"
 	connect_overlay = 1
-	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
+	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window)
-	connects_with_overlay = list(/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
+
+	connects_with_overlay = list(/turf/simulated/wall/auto/reinforced/supernorn,
 	/turf/simulated/wall/false_wall/reinforced, /obj/machinery/door, /obj/window)
 
 	update_neighbors()
@@ -396,7 +542,9 @@
 	var/light_mod = null
 	var/connect_overlay = 0 // do we have wall connection overlays, ex nornwalls?
 	var/list/connects_to = list(/turf/unsimulated/wall/auto)
+	var/list/connects_to_exceptions = null
 	var/list/connects_with_overlay = null
+	var/list/connects_with_overlay_exceptions = null
 	var/image/connect_image = null
 	var/d_state = 0
 
@@ -414,7 +562,7 @@
 	generate_worldgen()
 		src.update_icon()
 
-	disposing()
+	Del()
 		src.RL_SetSprite(null)
 		..()
 

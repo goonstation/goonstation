@@ -1,21 +1,34 @@
 //node1, air1, network1 correspond to input
 //node2, air2, network2 correspond to output
 //
+#define LEFT_CIRCULATOR 1
+#define RIGHT_CIRCULATOR 2
+
 /obj/machinery/atmospherics/binary/circulatorTemp
 	name = "hot gas circulator"
 	desc = "It's the gas circulator of a thermoeletric generator."
 	icon = 'icons/obj/atmospherics/pipes.dmi'
 	icon_state = "circ1-off"
+	var/obj/machinery/power/generatorTemp/generator = null
 
-	var/side = 1 // 1=left 2=right
+	var/side = null // 1=left 2=right
 	var/last_pressure_delta = 0
 
 	anchored = 1.0
 	density = 1
 
+	disposing()
+		switch (side)
+			if (LEFT_CIRCULATOR)
+				src.generator?.circ1 = null
+			if (RIGHT_CIRCULATOR)
+				src.generator?.circ2 = null
+		src.generator = null
+		..()
+
 	proc/return_transfer_air()
-		var/output_starting_pressure = air2.return_pressure()
-		var/input_starting_pressure = air1.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
+		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 
 		//Calculate necessary moles to transfer using PV = nRT
 		var/pressure_delta = abs((input_starting_pressure - output_starting_pressure))/2
@@ -53,7 +66,6 @@
 		return 1
 
 /obj/machinery/atmospherics/binary/circulatorTemp/right
-	side = 2
 	icon_state = "circ2-off"
 	name = "cold gas circulator"
 
@@ -63,43 +75,13 @@
 	icon_state = "power"
 	density = 1
 	anchored = 1
-/chui/window/teg
-	name = "Thermoelectric Generator"
-	GetBody()
-		var/list/built = list("<B>Thermo-Electric Generator</B><HR>")
-		var/obj/machinery/power/generatorTemp/us = theAtom
-		if(!us || !istype(us)) return "?"
-		built += "Output: [template("powah", engineering_notation(us.lastgen))]W<BR><BR>"
 
-		built += "<B>Hot loop</B><BR>"
-		built += "Temperature Inlet: [template("hotInletTemp", round(us.circ1.air1.temperature, 0.1))] K Outlet: [template("hotOutletTemp", round(us.circ1.air2.temperature, 0.1))] K<BR>"//[] round(
-		built += "Pressure Inlet: [template("hotInletPres", round(us.circ1.air1.return_pressure(), 0.1))] kPa Outlet: [template("hotOutletPres", round(us.circ1.air2.return_pressure(), 0.1))] kPa<BR>"//[]
-
-		built += "<B>Cold loop</B><BR>"
-		built += "Temperature Inlet: [template("coldInletTemp", round(us.circ2.air1.temperature, 0.1))] K  Outlet: [template("coldOutletTemp", round(us.circ2.air2.temperature, 0.1))] K<BR>"
-		built += "Pressure Inlet: [template("coldInletPres", round(us.circ2.air1.return_pressure(), 0.1))] kPa  Outlet: [template("coldOutletPres", round(us.circ2.air2.return_pressure(), 0.1))] kPa<BR>"
-		return built.Join("")
-	proc/UpdateTEG()
-		var/obj/machinery/power/generatorTemp/us = theAtom
-		if(!us || !istype(us)) return "?"
-		SetVars(list(
-			"powah" = engineering_notation(us.lastgen),
-			"hotInletTemp" = round(us.circ1.air1.temperature, 0.1),
-			"hotOutletTemp" = round(us.circ1.air2.temperature, 0.1),
-			"hotInletPres" = round(us.circ1.air1.return_pressure(), 0.1),
-			"hotOutletPres" = round(us.circ1.air2.return_pressure(), 0.1),
-			"coldInletTemp" = round(us.circ2.air1.temperature, 0.1),
-			"coldOutletTemp" = round(us.circ2.air2.temperature, 0.1),
-			"coldInletPres" = round(us.circ2.air1.return_pressure(), 0.1),
-			"coldOutletPres" = round(us.circ2.air2.return_pressure(), 0.1)
-		))
 /obj/machinery/power/generatorTemp
 	name = "generator"
 	desc = "A high efficiency thermoelectric generator."
 	icon_state = "teg"
 	anchored = 1
 	density = 1
-	var/chui/window/teg/window
 	//var/lightsbusted = 0
 
 	var/obj/machinery/atmospherics/binary/circulatorTemp/circ1
@@ -134,21 +116,34 @@
 	var/sound_bellalert = 'sound/machines/bellalert.ogg'
 	var/sound_warningbuzzer = 'sound/machines/warning-buzzer.ogg'
 
+	var/list/history = list()
+	var/const/history_max = 50
+
 	New()
 		..()
 
 		light = new /datum/light/point
 		light.attach(src)
 
-		window = new(src)
-
 		SPAWN_DBG(0.5 SECONDS)
-			circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,WEST)
-			circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,EAST)
-			if(!circ1 || !circ2)
-				status |= BROKEN
+			src.circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,WEST)
+			src.circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,EAST)
+			if(!src.circ1 || !src.circ2)
+				src.status |= BROKEN
+
+			src.circ1?.generator = src
+			src.circ1?.side = LEFT_CIRCULATOR
+			src.circ2?.generator = src
+			src.circ2?.side = RIGHT_CIRCULATOR
 
 			updateicon()
+
+	disposing()
+		src.circ1?.generator = null
+		src.circ1 = null
+		src.circ2?.generator = null
+		src.circ2 = null
+		..()
 
 	proc/updateicon()
 
@@ -209,8 +204,8 @@
 		lastgen = 0
 
 		if(cold_air && hot_air)
-			var/cold_air_heat_capacity = cold_air.heat_capacity()
-			var/hot_air_heat_capacity = hot_air.heat_capacity()
+			var/cold_air_heat_capacity = HEAT_CAPACITY(cold_air)
+			var/hot_air_heat_capacity = HEAT_CAPACITY(hot_air)
 
 			var/delta_temperature = hot_air.temperature - cold_air.temperature
 
@@ -227,6 +222,10 @@
 
 				lastgen = energy_transfer*efficiency
 				add_avail(lastgen)
+
+				src.history += src.lastgen
+				if (src.history.len > src.history_max)
+					src.history.Cut(1, 2) //drop the oldest entry
 
 				cold_air.temperature += energy_transfer*(1-efficiency)/cold_air_heat_capacity // pass the remaining energy through to the cold side
 
@@ -258,8 +257,6 @@
 			SPAWN_DBG(0.5 SECONDS)
 				spam_limiter = 0
 
-		window.UpdateTEG()
-
 // engine looping sounds and hazards
 		if (lastgenlev > 0)
 			if(grump < 0) // grumpcode
@@ -283,9 +280,7 @@
 			if(16 to 18)
 				playsound(src.loc, sound_bellalert, 60, 0)
 				if (prob(5))
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(2, 1, (get_turf(src)))
-					s.start()
+					elecflash(src,power = 3)
 			if(19 to 21)
 				playsound(src.loc, sound_warningbuzzer, 50, 0)
 				if (prob(5))
@@ -436,37 +431,45 @@
 			last = target
 			target = pick(next)
 
-
-	attack_ai(mob/user)
-		if(status & (BROKEN|NOPOWER)) return
-
-		interacted(user)
-
-	attack_hand(mob/user)
-
-		add_fingerprint(user)
-
-		if(status & (BROKEN|NOPOWER)) return
-
-		interacted(user)
-
-	proc/interacted(mob/user)
-		window.Subscribe(user.client)
-		return 1
-
-	Topic(href, href_list)
-		..()
-
-		if( href_list["close"] )
-			usr.Browse(null, "window=teg")
-			src.remove_dialog(usr)
-			return 0
-
-		return 1
-
 	power_change()
 		..()
 		updateicon()
+
+/obj/machinery/power/generatorTemp/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "TEG", src.name)
+		ui.open()
+
+/obj/machinery/power/generatorTemp/ui_data(mob/user)
+	var/list/data = list()
+	data["output"] = src.lastgen
+	data["history"] = src.history
+	if(src.circ1)
+		data["hotCircStatus"] = src.circ1
+		data["hotInletTemp"] = src.circ1.air1.temperature
+		data["hotOutletTemp"] = src.circ1.air2.temperature
+		data["hotInletPres"] = MIXTURE_PRESSURE(src.circ1.air1) KILO PASCALS
+		data["hotOutletPres"] = MIXTURE_PRESSURE(src.circ1.air2) KILO PASCALS
+	else
+		data["hotCircStatus"] = null
+		data["hotInletTemp"] = 0
+		data["hotOutletTemp"] = 0
+		data["hotInletPres"] = 0
+		data["hotOutletPres"] = 0
+	if(src.circ2)
+		data["coldCircStatus"] = src.circ2
+		data["coldInletTemp"] = src.circ2.air1.temperature
+		data["coldOutletTemp"] = src.circ2.air2.temperature
+		data["coldInletPres"] = MIXTURE_PRESSURE(src.circ2?.air1) KILO PASCALS
+		data["coldOutletPres"] = MIXTURE_PRESSURE(src.circ2?.air2) KILO PASCALS
+	else
+		data["coldCircStatus"] = null
+		data["coldInletTemp"] = 0
+		data["coldOutletTemp"] = 0
+		data["coldInletPres"] = 0
+		data["coldOutletPres"] = 0
+	return data
 
 /obj/machinery/atmospherics/unary/furnace_connector
 
@@ -492,7 +495,7 @@
 		return
 
 	proc/heat()
-		var/air_heat_capacity = air_contents.heat_capacity()
+		var/air_heat_capacity = HEAT_CAPACITY(air_contents)
 		var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
 		var/old_temperature = air_contents.temperature
 
@@ -758,3 +761,5 @@
 #undef PUMP_POWERLEVEL_3
 #undef PUMP_POWERLEVEL_4
 #undef PUMP_POWERLEVEL_5
+#undef LEFT_CIRCULATOR
+#undef RIGHT_CIRCULATOR

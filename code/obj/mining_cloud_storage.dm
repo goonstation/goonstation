@@ -4,12 +4,13 @@
 	var/for_sale
 
 /obj/machinery/ore_cloud_storage_container
-	name = "Rockbox&trade; Ore Cloud Storage Container"
+	name = "Rockbox™ Ore Cloud Storage Container"
 	desc = "This thing stores ore in \"the cloud\" for the station to use. Best not to think about it too hard."
 	icon = 'icons/obj/mining_cloud_storage.dmi'
 	icon_state = "ore_storage_unit"
 	density = 1
 	anchored = 1
+	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	var/list/ores = list()
 
@@ -82,7 +83,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(!DIST_CHECK(O, user, 1))
+		if(!IN_RANGE(O, user, 1))
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -188,7 +189,7 @@
 			R.set_loc(src)
 			for(R.amount,R.amount > 0, R.amount--)
 				var/obj/item/raw_material/new_mat = unpool(R.type)
-				new_mat.loc = src
+				new_mat.set_loc(src)
 				amount_loaded++
 			if (user && R)
 				user.u_equip(R)
@@ -244,15 +245,15 @@
 
 		if (status & BROKEN || status & NOPOWER)
 			var/dat = "The screen is blank."
-			user << browse(dat, "window=mining_dropbox;size=400x500")
+			user.Browse(dat, "window=mining_dropbox;size=400x500")
 			onclose(user, "mining_dropbox")
 			return
 
 		var/list/dat = list({"<B>[src.name]</B>
 			<br><HR>
-			<B>Rockbox&trade; Ore Cloud Storage Service Settings:</B>
+			<B>Rockbox™ Ore Cloud Storage Service Settings:</B>
 			<br><small>
-			<B>Rockbox&trade; Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>
+			<B>Rockbox™ Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>
 			<B>Client Quartermaster Transaction Fee:</B> [rockbox_globals.rockbox_client_fee_pct]%<BR>
 			<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> $[rockbox_globals.rockbox_client_fee_min]<BR>
 			</small><HR>"})
@@ -268,7 +269,7 @@
 		else
 			dat += "No ores currently loaded.<br>"
 
-		user << browse(dat.Join(), "window=mining_dropbox;size=500x500")
+		user.Browse(dat.Join(), "window=mining_dropbox;size=500x500")
 		onclose(user, "mining_dropbox")
 
 

@@ -28,6 +28,7 @@
 		health_oxy
 		bleeding
 		stamina
+		stamina_back
 		bodytemp
 		oxygen
 		fire
@@ -36,6 +37,7 @@
 		ability_toggle
 		stats
 		legend
+		sel
 	var/list/obj/screen/hud/inventory_bg = list()
 	var/list/obj/item/inventory_items = list()
 	var/show_inventory = 1
@@ -47,6 +49,8 @@
 	var/mob/living/carbon/human/master
 
 	var/layout_style = "goon"
+
+	var/mutable_appearance/default_sel_appearance
 
 	var/static/list/layouts = \
 							list("goon" = list( \
@@ -168,6 +172,7 @@
 		..()
 
 	New(M)
+		..()
 		master = M
 
 		SPAWN_DBG(0)
@@ -240,6 +245,7 @@
 			bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
 
 			stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", "EAST-1, NORTH", HUD_LAYER, tooltipTheme = "stamina")
+			stamina_back = create_screen("stamina_back","Stamina", src.icon_hud, "stamina_back", "EAST-1, NORTH", HUD_LAYER-2)
 			if (master.stamina_bar)
 				stamina.desc = master.stamina_bar.getDesc(master)
 
@@ -271,7 +277,11 @@
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/burnprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs burning attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/bluntprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs blunt attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 15%"
-		
+
+			sel = create_screen("sel", "sel", src.icon_hud, "sel", null, HUD_LAYER+1.2)
+			sel.mouse_opacity = 0
+			default_sel_appearance = new(sel)
+
 			set_visible(twohandl, 0)
 			set_visible(twohandr, 0)
 
@@ -294,7 +304,7 @@
 				if (I)
 					// this doesnt unequip the original item because that'd cause all the items to drop if you swapped your jumpsuit, I expect this to cause problems though
 					// ^-- You don't say.
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; master.put_in_hand(C) } master.force_equip(I, master.slot); return }
+					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
 					autoequip_slot(slot_wear_id, wear_id)
@@ -304,9 +314,25 @@
 					autoequip_slot(slot_ears, ears)
 					autoequip_slot(slot_wear_mask, wear_mask)
 					autoequip_slot(slot_head, head)
-					autoequip_slot(slot_belt, belt)
 					autoequip_slot(slot_back, back)
+
+
+					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						var/atom/movable/storage = S.master.parent
+						storage.attackby(I, user, params)
+						if (master.equipped() != I)
+							return
+
+					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt AFTER trying storages, and only swap if its not a storage swap
+						autoequip_slot(slot_belt, belt)
+
+					//ONLY do these if theyre actually empty, we dont want to pocket swap.
+					if (!master.l_store)
+						autoequip_slot(slot_l_store, l_store)
+					if (!master.r_store)
+						autoequip_slot(slot_r_store, r_store)
 					#undef autoequip_slot
+
 					return
 
 				show_inventory = !show_inventory
@@ -337,7 +363,7 @@
 			if ("equip")
 				var/obj/item/I = master.equipped()
 				if (I)
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; master.put_in_hand(C) } master.force_equip(I, master.slot); return }
+					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
 					autoequip_slot(slot_wear_id, wear_id)
@@ -347,8 +373,22 @@
 					autoequip_slot(slot_ears, ears)
 					autoequip_slot(slot_wear_mask, wear_mask)
 					autoequip_slot(slot_head, head)
-					autoequip_slot(slot_belt, belt)
 					autoequip_slot(slot_back, back)
+
+					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						var/atom/movable/storage = S.master.parent
+						storage.attackby(I, user, params)
+						if (master.equipped() != I)
+							return
+
+					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt AFTER trying storages, and only swap if its not a storage swap
+						autoequip_slot(slot_belt, belt)
+
+					//ONLY do these if theyre actually empty, we dont want to pocket swap.
+					if (!master.l_store)
+						autoequip_slot(slot_l_store, l_store)
+					if (!master.r_store)
+						autoequip_slot(slot_r_store, r_store)
 					#undef autoequip_slot
 					return
 
@@ -368,13 +408,17 @@
 				if (icon_x > 16)
 					if (icon_y > 16)
 						master.a_intent = INTENT_DISARM
+						master.check_for_intent_trigger()
 					else
 						master.a_intent = INTENT_HARM
+						master.check_for_intent_trigger()
 				else
 					if (icon_y > 16)
 						master.a_intent = INTENT_HELP
+						master.check_for_intent_trigger()
 					else
 						master.a_intent = INTENT_GRAB
+						master.check_for_intent_trigger()
 				src.update_intent()
 
 			if ("mintent")
@@ -513,6 +557,162 @@
 				clicked_slot(slot_head)
 			#undef clicked_slot
 
+	MouseEntered(var/obj/screen/hud/H, location, control, params)
+		if (!H || usr != src.master) return
+		var/obj/item/W = null
+		var/obj/item/I
+
+		#define entered_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseEntered(location,control,params); }
+		#define test_slot(slot) if (!W) { I = master.equipped(); if (I && !master.can_equip(I, master.slot)) { I = null; } if (I && sel) { sel.screen_loc = H.screen_loc; } }
+
+		switch(H.id)
+			if("belt")
+				entered_slot(slot_belt)
+				test_slot(slot_belt)
+			if("storage1")
+				entered_slot(slot_l_store)
+				test_slot(slot_l_store)
+			if("storage2")
+				entered_slot(slot_r_store)
+				test_slot(slot_r_store)
+			if("back") //mousing over the bag to trigger a sel outline is handled in small_storage_parent.dm off of the storage hud so we dont have to do typechecks
+				entered_slot(slot_back)
+				test_slot(slot_back)
+			if("shoes")
+				entered_slot(slot_shoes)
+				test_slot(slot_shoes)
+			if("gloves")
+				entered_slot(slot_gloves)
+				test_slot(slot_gloves)
+			if("id")
+				entered_slot(slot_wear_id)
+				test_slot(slot_wear_id)
+			if("under")
+				entered_slot(slot_w_uniform)
+				test_slot(slot_w_uniform)
+			if("suit")
+				entered_slot(slot_wear_suit)
+				test_slot(slot_wear_suit)
+			if("glasses")
+				entered_slot(slot_glasses)
+				test_slot(slot_glasses)
+			if("ears")
+				entered_slot(slot_ears)
+				test_slot(slot_ears)
+			if("mask")
+				entered_slot(slot_wear_mask)
+				test_slot(slot_wear_mask)
+			if("head")
+				entered_slot(slot_head)
+				test_slot(slot_head)
+			if ("lhand")
+				entered_slot(slot_l_hand)
+			if ("rhand")
+				entered_slot(slot_r_hand)
+			if ("intent")
+				switch (master.a_intent)
+					if (INTENT_DISARM)
+						sel.icon_state = "intent-sel-disarm"
+					if (INTENT_HARM)
+						sel.icon_state = "intent-sel-harm"
+					if (INTENT_HELP)
+						sel.icon_state = "intent-sel-help"
+					if (INTENT_GRAB)
+						sel.icon_state = "intent-sel-grab"
+				sel.screen_loc = H.screen_loc
+
+			if ("throw")
+				if (master.in_throw_mode)
+					sel.icon_state = "throw1_over"
+				else
+					sel.icon_state = "throw0_over"
+				sel.screen_loc = H.screen_loc
+
+		#undef entered_slot
+		#undef test_slot
+
+	MouseExited(obj/screen/hud/H)
+		if (!H || usr != src.master) return
+		if (sel)
+			sel.screen_loc = null
+			if (sel.icon_state != sel)
+				//sel.icon_state = "sel"
+				sel.appearance = default_sel_appearance
+
+	MouseDrop(obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+		if (!H) return
+		var/obj/item/W = null
+		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop(over_object, src_location, over_location, over_control, params); }
+		switch(H.id)
+			if("belt")
+				mdrop_slot(slot_belt)
+			if("storage1")
+				mdrop_slot(slot_l_store)
+			if("storage2")
+				mdrop_slot(slot_r_store)
+			if("back")
+				mdrop_slot(slot_back)
+			if("shoes")
+				mdrop_slot(slot_shoes)
+			if("gloves")
+				mdrop_slot(slot_gloves)
+			if("id")
+				mdrop_slot(slot_wear_id)
+			if("under")
+				mdrop_slot(slot_w_uniform)
+			if("suit")
+				mdrop_slot(slot_wear_suit)
+			if("glasses")
+				mdrop_slot(slot_glasses)
+			if("ears")
+				mdrop_slot(slot_ears)
+			if("mask")
+				mdrop_slot(slot_wear_mask)
+			if("head")
+				mdrop_slot(slot_head)
+			if ("lhand")
+				mdrop_slot(slot_l_hand)
+			if ("rhand")
+				mdrop_slot(slot_r_hand)
+		#undef mdrop_slot
+
+	MouseDrop_T(obj/screen/hud/H, atom/movable/O as obj, mob/user as mob)
+		if (!H) return
+		var/obj/item/W = null
+		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop_T(O,user); }
+		switch(H.id)
+			if("belt")
+				mdrop_slot(slot_belt)
+			if("storage1")
+				mdrop_slot(slot_l_store)
+			if("storage2")
+				mdrop_slot(slot_r_store)
+			if("back")
+				mdrop_slot(slot_back)
+			if("shoes")
+				mdrop_slot(slot_shoes)
+			if("gloves")
+				mdrop_slot(slot_gloves)
+			if("id")
+				mdrop_slot(slot_wear_id)
+			if("under")
+				mdrop_slot(slot_w_uniform)
+			if("suit")
+				mdrop_slot(slot_wear_suit)
+			if("glasses")
+				mdrop_slot(slot_glasses)
+			if("ears")
+				mdrop_slot(slot_ears)
+			if("mask")
+				mdrop_slot(slot_wear_mask)
+			if("head")
+				mdrop_slot(slot_head)
+			if ("lhand")
+				mdrop_slot(slot_l_hand)
+			if ("rhand")
+				mdrop_slot(slot_r_hand)
+		#undef mdrop_slot
+
 	proc/add_other_object(obj/item/I, loc) // this is stupid but necessary
 
 		var/hide = 0 //hide from layotu based on the ignore_inventory_hide thingo
@@ -581,10 +781,14 @@
 	proc/update_throwing()
 		if (!throwing) return 0
 		throwing.icon_state = "throw[master.in_throw_mode]"
+		if (sel.screen_loc == throwing.screen_loc)
+			sel.icon_state = "[throwing.icon_state]_over"
 
 	proc/update_intent()
 		if (!intent) return 0
 		intent.icon_state = "intent-[master.a_intent]"
+		if (sel.screen_loc == intent.screen_loc)
+			sel.icon_state = "intent-sel-[master.a_intent]"
 
 	proc/update_mintent()
 		if (!mintent) return 0
@@ -934,6 +1138,7 @@
 			if (health) health.icon = new_file
 			if (bleeding) bleeding.icon = new_file
 			if (stamina) stamina.icon = new_file
+			if (stamina_back) stamina_back.icon = new_file
 			if (bodytemp) bodytemp.icon = new_file
 			if (oxygen) oxygen.icon = new_file
 			if (fire) fire.icon = new_file
@@ -952,9 +1157,53 @@
 			if (master.stamina_bar)
 				master.stamina_bar.icon = new_file
 
+	proc/set_sprint(var/on)
+		if(stamina)
+			stamina.icon_state = on ? "stamina_sprint" : "stamina"
+
+
+
+
+
+
+
+//item moused over events
+
+/mob/proc/moused_over(var/obj/item/I)
+	.=0
+
+/mob/proc/moused_exit(var/obj/item/I)
+	.=0
+
 /mob/living/carbon/human
 	updateStatusUi()
 		if(src.hud && istype(src.hud, /datum/hud/human))
 			var/datum/hud/human/H = src.hud
 			H.update_status_effects()
 		return
+
+	moused_over(var/obj/item/I)
+		if (src.client && src.client.hand_ghosts)
+			if (!src.equipped() && !I.anchored && src.hud?.sel && I != src.back && can_reach(src, I))
+				if (I.two_handed)
+					src.hud.sel.screen_loc = "[src.hud.lhand.screen_loc] to [src.hud.rhand.screen_loc]"
+				else
+					if (src.hand)
+						src.hud.sel.screen_loc = src.hud.lhand.screen_loc
+					else
+						src.hud.sel.screen_loc = src.hud.rhand.screen_loc
+
+				src.hud.sel.icon = I.icon
+				src.hud.sel.icon_state = I.icon_state
+				src.hud.sel.alpha = 120
+				src.hud.sel.filters += filter(type = "outline")
+
+	moused_exit(var/obj/item/I)
+		if (src.client && src.client.hand_ghosts)
+			if (src.hud?.sel?.screen_loc)
+				src.hud.sel.screen_loc = null
+				////src.hud.sel.icon = src.hud.icon_hud
+				//src.hud.sel.icon_state = "sel"
+				//src.hud.alpha = 255
+				src.hud.sel.appearance = src.hud.default_sel_appearance
+				src.hud.sel.filters = null

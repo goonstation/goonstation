@@ -21,7 +21,7 @@
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool)
-	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba)
+	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba, /obj/item/toy/plush/small/chris)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -55,6 +55,10 @@
 		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
 		interrupt(INTERRUPT_ALWAYS)
 		return
+
+/datum/action/bar/icon/claw_machine/onResume()
+	..()
+	state = ACTIONSTATE_DELETE
 
 /datum/action/bar/icon/claw_machine/onInterrupt()
 	..()
@@ -179,6 +183,10 @@
 	name = "Tuba the rat"
 	icon_state = "tuba"
 
+/obj/item/toy/plush/small/chris
+	name = "Chris the goat"
+	icon_state = "chris"
+
 /obj/item/toy/sword
 	name = "toy sword"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -191,7 +199,7 @@
 	throw_range = 5
 	contraband = 3
 	stamina_damage = 1
-	stamina_cost = 3
+	stamina_cost = 7
 	stamina_crit_chance = 1
 	var/bladecolor = "G"
 	var/sound_attackM1 = 'sound/weapons/male_toyattack.ogg'
@@ -227,9 +235,9 @@
 	throwforce = 1
 	throw_speed = 4
 	throw_range = 7
-	stamina_damage = 1
-	stamina_cost = 1
-	stamina_crit_chance = 1
+	stamina_damage = 0
+	stamina_cost = 0
+	stamina_crit_chance = 0
 	//mat_changename = 0
 	rand_pos = 1
 	var/patreon_prob = 8
@@ -278,19 +286,17 @@
 				src.setMaterial(getMaterial(pick(material_varieties)))
 
 		if (src.icon_state == "fig-floorpills")
-			var/datum/reagents/R = new/datum/reagents(30)
-			src.reagents = R
-			R.my_atom = src
+			src.create_reagents(30)
 
 			var/primaries = rand(1,3)
 			var/adulterants = rand(2,4)
 
 			while(primaries > 0)
 				primaries--
-				src.reagents.add_reagent(pick(CYBERPUNK_drug_primaries), 6)
+				src.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_primaries"), 6)
 			while(adulterants > 0)
 				adulterants--
-				src.reagents.add_reagent(pick(CYBERPUNK_drug_adulterants), 3)
+				src.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), 3)
 
 
 	custom_suicide = 1
@@ -446,7 +452,14 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/oranges,
 /datum/figure_info/sam,
 /datum/figure_info/beebo,
-/datum/figure_info/romillybartlesby)
+/datum/figure_info/romillybartlesby,
+/datum/figure_info/dillbehrt,
+/datum/figure_info/listelsheerfield,
+/datum/figure_info/raphaelzahel,
+/datum/figure_info/derekclarke,
+/datum/figure_info/fartcan,
+/datum/figure_info/tomato
+)
 
 /datum/figure_info
 	var/name = "staff assistant"
@@ -799,6 +812,30 @@ var/list/figure_patreon_rarity = list(\
 		name = "\improper Romilly Bartlesby"
 		icon_state = "romillybartlesby"
 
+	dillbehrt
+		name = "\improper Dill Behrt"
+		icon_state = "dillbehrt"
+
+	listelsheerfield
+		name = "\improper Listel Sheerfield"
+		icon_state = "listelsheerfield"
+
+	raphaelzahel
+		name = "\improper Raphael Zahel"
+		icon_state = "raphaelzahel"
+
+	derekclarke
+		name = "\improper Derek Clarke"
+		icon_state = "derekclarke"
+
+	fartcan
+		name = "\improper Fart Canister"
+		icon_state = "fartcan"
+
+	tomato
+		name = "\improper Tomato"
+		icon_state = "tomato"
+
 #ifdef XMAS
 	santa
 		name = "\improper Santa Claus"
@@ -882,7 +919,7 @@ var/list/figure_patreon_rarity = list(\
 	w_class = 2
 	force = 5
 	throwforce = 7
-	stamina_damage = 15
+	stamina_damage = 25
 	stamina_cost = 10
 	stamina_crit_chance = 5
 
@@ -908,8 +945,8 @@ var/list/figure_patreon_rarity = list(\
 	throwforce = 1
 	throw_speed = 4
 	throw_range = 7
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	var/cooldown = 0
 
@@ -935,8 +972,8 @@ var/list/figure_patreon_rarity = list(\
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 5
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	var/redeemer = null
 	var/receiver = null

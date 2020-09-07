@@ -120,19 +120,19 @@
 		H.changeStatus("weakened", 3 SECONDS)
 		H.force_laydown_standup()
 
-	if (!is_bot)
-		var/list/possible_limbs = list()
-		if (H.limbs.l_arm)
-			possible_limbs += H.limbs.l_arm
-		if (H.limbs.r_arm)
-			possible_limbs += H.limbs.r_arm
-		if (H.limbs.l_leg)
-			possible_limbs += H.limbs.l_leg
-		if (H.limbs.r_leg)
-			possible_limbs += H.limbs.r_leg
+		if (!is_bot)
+			var/list/possible_limbs = list()
+			if (H.limbs.l_arm)
+				possible_limbs += H.limbs.l_arm
+			if (H.limbs.r_arm)
+				possible_limbs += H.limbs.r_arm
+			if (H.limbs.l_leg)
+				possible_limbs += H.limbs.l_leg
+			if (H.limbs.r_leg)
+				possible_limbs += H.limbs.r_leg
 
-		if (possible_limbs.len)
-			for (var/obj/item/parts/P in possible_limbs)
+			if (possible_limbs.len)
+				var/obj/item/parts/P = pick(possible_limbs)
 				if (prob(limbloss_prob))
 					H.show_text("Your [P] was severed by the [magical ? "explosion" : "shockwave"]!", "red")
 					P.sever()

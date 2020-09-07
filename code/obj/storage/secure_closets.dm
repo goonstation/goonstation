@@ -62,8 +62,6 @@
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/glasses/sunglasses/sechud,
-	/obj/item/storage/belt/security,
-	/obj/item/baton,
 	/obj/item/gun/energy/egun,
 	/obj/item/device/radio/headset/security,
 	/obj/item/clothing/glasses/thermal,
@@ -149,14 +147,20 @@
 	/obj/item/clothing/glasses/meson,
 	/obj/item/clothing/suit/fire,
 	/obj/item/clothing/mask/gas,
-	/obj/item/storage/belt/utility/ceshielded,
+	/obj/item/storage/belt/utility/prepared/ceshielded,
 	/obj/item/clothing/head/helmet/welding,
 	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/device/multitool,
 	/obj/item/device/flash,
 	/obj/item/stamp/ce,
-	/obj/item/device/radio/headset/command/ce,
-	/obj/item/deconstructor)
+#ifdef UNDERWATER_MAP
+	/obj/item/clothing/suit/space/diving/engineering,
+	/obj/item/clothing/head/helmet/space/engineer/diving,
+#else
+	/obj/item/clothing/suit/space/engineer,
+	/obj/item/clothing/head/helmet/space/engineer,
+#endif
+	/obj/item/device/radio/headset/command/ce)
 
 /* ==================== */
 /* ----- Security ----- */
@@ -176,9 +180,6 @@
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/glasses/sunglasses/sechud,
-	/obj/item/storage/belt/security,
-	/obj/item/baton,
-	/obj/item/gun/energy/taser_gun,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
 	/obj/item/barrier)
@@ -202,13 +203,13 @@
 /obj/storage/secure/closet/security/armory
 	name = "\improper Special Equipment locker"
 	req_access_txt = "37"
-	spawn_contents = list(/obj/item/device/flash,
-	/obj/item/storage/box/flashbang_kit,
+	spawn_contents = list(/obj/item/requisition_token/security = 2,
+	/obj/item/turret_deployer/riot = 2,
+	/obj/item/clothing/glasses/nightvision = 2,
 	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/clothing/suit/armor/EOD,
-	/obj/item/clothing/head/helmet/EOD,
+	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/ammo/bullets/abg,
-	/obj/item/gun/kinetic/riotgun)
+	/obj/item/ammo/bullets/abg,)
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items locker"
@@ -321,6 +322,15 @@
 	icon_closed = "medical"
 	icon_opened = "secure_white-open"
 	req_access_txt = "10"
+
+#if ASS_JAM
+	update_icon()
+		. = ..()
+		if(src.open)
+			src.UpdateOverlays(null, "morty")
+		else
+			ADD_MORTY(11, 11, 7, 7)
+#endif
 
 /obj/storage/secure/closet/medical/medicine
 	name = "medicine storage locker"
@@ -510,7 +520,9 @@
 	/obj/item/electronics/scanner,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/electronics/soldering,
-	/obj/item/deconstructor)
+	/obj/item/deconstructor,
+	/obj/item/electronics/frame/mech_cabinet=2,
+	/obj/item/storage/mechanics/housing_handheld=1)
 
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
@@ -533,9 +545,7 @@
 	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
-	/obj/item/clothing/head/helmet/welding,
-	/obj/item/storage/belt/utility,
-	/obj/item/deconstructor)
+	/obj/item/clothing/head/helmet/welding)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"
@@ -572,7 +582,6 @@
 	name = "\improper Custodial supplies locker"
 	req_access = list(access_janitor)
 	spawn_contents = list(/obj/item/storage/box/clothing/janitor,\
-	/obj/item/clothing/shoes/galoshes,\
 	/obj/item/reagent_containers/glass/bottle/cleaner = 2,\
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
@@ -615,7 +624,8 @@
 /obj/storage/secure/closet/civilian/chaplain
 	name = "\improper Religious supplies locker"
 	req_access = list(access_chapel_office)
-	spawn_contents = list(/obj/item/storage/box/clothing/chaplain,\
+	spawn_contents = list(/obj/item/storage/box/clothing/witchfinder,\
+	/obj/item/storage/box/clothing/chaplain,\
 	/obj/item/clothing/under/misc/chaplain/atheist,\
 	/obj/item/clothing/under/misc/chaplain,\
 	/obj/item/clothing/under/misc/chaplain/rabbi,\
@@ -628,7 +638,7 @@
 	/obj/item/clothing/head/turban,\
 	/obj/item/clothing/shoes/sandal,\
 	/obj/item/clothing/suit/flockcultist,\
-	/obj/item/reagent_containers/glass/bottle/holywater)
+	/obj/item/storage/box/holywaterkit)
 
 /* =================== */
 /* ----- Fridges ----- */
@@ -642,6 +652,16 @@
 	icon_greenlight = "fridge-greenlight"
 	icon_redlight = "fridge-redlight"
 	icon_sparks = "fridge-sparks"
+	intact_frame = 1
+
+/obj/storage/secure/closet/fridge/opened
+	New()
+		..()
+		name = "busted refrigerator"
+		desc = "The newest cooling technology...now with - oh god! What happened to the poor door?!"
+		intact_frame = 0
+		unlock()
+		toggle()
 
 /obj/storage/secure/closet/fridge/kitchen
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 5,/obj/item/storage/box/cookie_tin)

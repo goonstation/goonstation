@@ -1,0 +1,1 @@
+#When player caps are enabled, allow these people on the list to bypass the player cap if they are not already an Admin or Mentor. One key per line, admins are exempt.

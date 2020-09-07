@@ -21,21 +21,25 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/token_players_assigned = 0
 
+	do_antag_random_spawns = 0
+
 /datum/game_mode/nuclear/announce()
 	boutput(world, "<B>The current game mode is - Nuclear Emergency!</B>")
 	boutput(world, "<B>[syndicate_name()] operatives are approaching [station_name(1)]! They intend to destroy the [station_or_ship()] with a nuclear warhead.</B>")
 
 /datum/game_mode/nuclear/pre_setup()
-	var/the_spawn = syndicatestart && islist(syndicatestart) && syndicatestart.len ? pick(syndicatestart) : null
 	var/list/possible_syndicates = list()
 
-	if (!the_spawn)
+	if (!landmarks[LANDMARK_SYNDICATE])
 		boutput(world, "<span class='alert'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
 		return 0
 
 	var/num_players = 0
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.ready)
 			num_players++
 #if ASS_JAM
 	var/num_synds = max(1, min(round(num_players / 3), agents_possible))
@@ -66,6 +70,18 @@
 			"the net cafe" = list(/area/station/crew_quarters/info),
 			"the artifact lab" = list(/area/station/science/artifact),
 			"the genetics lab" = list(/area/station/medical/research))
+
+		else if (ismap("DONUT3"))
+			target_locations = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+			"inner engineering (surrounding the singularity, not in it)" = list(/area/station/engine/inner),
+			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+			"the inner hall of the medbay" = list(/area/station/medical/medbay),
+			"the main hallway in research" = list(/area/station/science),
+			"the chapel" = list(/area/station/chapel/main),
+			"the escape hallway" = list(/area/station/hallway/secondary/exit),
+			"the Research Director's office" = list(/area/station/crew_quarters/hor),
+			"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
+			"the kitchen" = list(/area/station/crew_quarters/kitchen))
 
 		else if (ismap("DESTINY") || ismap("CLARION"))
 			target_locations = list("the main security room" = list(/area/station/security/main),
@@ -151,10 +167,6 @@
 	return 1
 
 /datum/game_mode/nuclear/post_setup()
-	var/synd_spawn = pick(syndicatestart)
-	var/obj/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
-	var/obj/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
-
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
 	var/leader_selected = 0
 
@@ -163,9 +175,6 @@
 	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_spawn = pick(syndicatestart) // So they don't all spawn on the same tile.
-		synd_mind.current.set_loc(synd_spawn)
-
 		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
 
 		var/obj_count = 1
@@ -178,6 +187,9 @@
 		boutput(synd_mind.current, "We have identified a major structural weakness in the [station_or_ship()]'s design. Arm the bomb in <B>[src.target_location_name]</B> to obliterate [station_name(1)].")
 
 		if(!leader_selected)
+			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
+			if(!synd_mind.current.loc)
+				synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
@@ -188,6 +200,7 @@
 				new /obj/item/pinpointer/disk(synd_mind.current.loc)
 			leader_selected = 1
 		else
+			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			var/callsign = pick(callsign_list)
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
 			callsign_list -= callsign
@@ -197,32 +210,16 @@
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
 		SHOW_NUKEOP_TIPS(synd_mind.current)
 
-	if(nuke_spawn)
-		the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
+	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
+	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
 
-	if(closet_spawn)
-		new /obj/storage/closet/syndicate/nuclear(closet_spawn.loc)
-
-	for (var/obj/landmark/A in landmarks)//world)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "Syndicate-Gear-Closet")
-			new /obj/storage/closet/syndicate/personal(A.loc)
-			A.dispose()
-			continue
-
-		if (A.name == "Syndicate-Bomb")
-			new /obj/spawner/newbomb/timer/syndicate(A.loc)
-			A.dispose()
-			continue
-
-		if (A.name == "Breaching-Charges")
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			A.dispose()
-			continue
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])
+		new /obj/storage/closet/syndicate/personal(T)
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BOMB])
+	new /obj/spawner/newbomb/timer/syndicate(pick_landmark(LANDMARK_SYNDICATE_BOMB))
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
+		for(var/i = 1 to 5)
+			new /obj/item/breaching_charge/thermite(T)
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
@@ -246,7 +243,7 @@
 			// Minor Syndicate Victory - crew escaped but bomb was armed and counting down
 			finished = -1
 			return 1
-		if ((!the_bomb || (the_bomb && !the_bomb.armed)))
+		if ((!the_bomb || the_bomb.disposed || (the_bomb && !the_bomb.armed)))
 			if (all_operatives_dead())
 				// Major Station Victory - bombing averted, all operatives dead/captured
 				finished = 2
@@ -259,7 +256,7 @@
 	if (no_automatic_ending)
 		return 0
 
-	if (the_bomb && the_bomb.armed && the_bomb.det_time)
+	if (the_bomb && the_bomb.armed && the_bomb.det_time && !the_bomb.disposed)
 		// don't end the game if the bomb is armed and counting, even if the ops are all dead
 		return 0
 
@@ -270,7 +267,7 @@
 
 	// Minor or major Station Victory - bombing averted in any case.
 	if (src.bomb_check_timestamp && world.time > src.bomb_check_timestamp + 300)
-		if (!src.the_bomb || !istype(src.the_bomb, /obj/machinery/nuclearbomb))
+		if (!src.the_bomb || src.the_bomb.disposed || !istype(src.the_bomb, /obj/machinery/nuclearbomb))
 			if (src.all_operatives_dead())
 				finished = 2
 			else
@@ -308,6 +305,17 @@
 #ifdef DATALOGGER
 			game_stats.Increment("traitorloss")
 #endif
+
+	if(finished > 0)
+		var/value = world.load_intra_round_value("nukie_loss")
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("nukie_loss", value + 1)
+	else if(finished < 0)
+		var/value = world.load_intra_round_value("nukie_win")
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("nukie_win", value + 1)
 
 	for(var/datum/mind/M in syndicates)
 		var/syndtext = ""
@@ -354,17 +362,23 @@
 /datum/game_mode/nuclear/proc/get_possible_syndicates(minimum_syndicates=1)
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_syndicate)
 				candidates += player.mind
 
 	if(candidates.len < minimum_syndicates)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_syndicate set to yes, including players who don't want to be syndicates in the pool.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
+
+			if ((player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 				if ((minimum_syndicates > 1) && (candidates.len >= minimum_syndicates))
@@ -392,7 +406,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(ticker.minds))
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")

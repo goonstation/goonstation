@@ -41,74 +41,26 @@
 		radio_controller.remove_object(src, "[pdafrequency]")
 		..()
 
-	// user interaction
-	interacted(mob/user, var/ai=0)
-		src.add_fingerprint(user)
-		if(status & BROKEN)
-			src.remove_dialog(user)
-			return
+	ui_data(mob/user)
+		var/list/data = ..()
+		data["destinations"] = src.destinations
+		data["destinationTag"] = src.destination_tag
+		return data
 
-		var/dat = "<head><title>Mail Transport Unit</title></head><body><TT><B>Mail Transport Unit: [src.mail_tag ? (capitalize(src.mail_tag)) : "GENERIC"]</B><HR>"
-
-		if(flush)
-			dat += "Shipping handle: <A href='?src=\ref[src];handle=0'>Disengage</A> <B>Engaged</B>"
-		else
-			dat += "Shipping handle: <B>Disengaged</B> <A href='?src=\ref[src];handle=1'>Engage</A>"
-
-		dat += "<BR><HR><A href='?src=\ref[src];eject=1'>Eject contents</A><HR>"
-
-		dat += "<br>Destination: <A href='?src=\ref[src];set_dest=1'>[src.destination_tag ? src.destination_tag : "NONE"]</a>"
-		dat += "<br><a href='?src=\ref[src];rescan=1'>Rescan</a><hr>"
-
-		if(mode == 0)
-			dat += "Pump: <B>Off</B> <A href='?src=\ref[src];pump=1'>On</A><BR>"
-		else if(mode == 1)
-			dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (pressurizing)<BR>"
-		else
-			dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
-
-		var/per = 100* air_contents.return_pressure() / (2*ONE_ATMOSPHERE)
-
-		dat += "Pressure: [round(per, 1)]%<BR></body>"
-
-
-		src.add_dialog(user)
-		user.Browse(dat, "window=mailchute;size=360x270")
-		onclose(user, "mailchute")
-
-	Topic(href, href_list)
-		if(..())
-			return
-		src.add_fingerprint(usr)
-		if(status & BROKEN)
-			return
-		if(usr.stat || usr.restrained() || src.flushing)
-			return
-
-		if (in_range(src, usr) && istype(src.loc, /turf))
-			src.add_dialog(usr)
-
-			if(href_list["close"])
-				src.remove_dialog(usr)
-				usr.Browse(null, "window=mailchute")
-				return
-
-			if(href_list["pump"])
-				if(text2num(href_list["pump"]))
-					mode = 1
-				else
-					mode = 0
-				update()
-
-			if(href_list["set_dest"])
-				if(destinations)
-					var/dest = input("Select Parcel Destination", "Delivery Target Selection", src.destination_tag) as null|anything in destinations
-					if(dest && in_range(src, usr))
-						src.destination_tag = dest
-						update()
-
-			if(href_list["rescan"])
-				if(last_inquire && world.time < (last_inquire + 10))
+	ui_act(action, params)
+		. = ..()
+		// if action handled by parent type (disposal chute), no need to handle here
+		if (.)
+			return .
+		switch (action)
+			if ("select-destination")
+				if (src.destinations)
+					var/destination = params["destination"]
+					src.destination_tag = destination
+					update()
+					. = TRUE
+			if ("rescanDest")
+				if (last_inquire && world.time < (last_inquire + 10))
 					return
 				destinations = null
 				var/datum/signal/signal = get_free_signal()
@@ -116,20 +68,8 @@
 				signal.transmission_method = TRANSMISSION_RADIO
 				signal.data["command"] = "mail_inquire"
 
-				SPAWN_DBG(0.4 SECONDS)
-					if (radio_connection) radio_connection.post_signal(src, signal)
-
-			if(href_list["handle"])
-				flush = text2num(href_list["handle"])
-				update()
-
-			if(href_list["eject"])
-				eject()
-		else
-			usr.Browse(null, "window=mailchute")
-			src.remove_dialog(usr)
-			return
-		return
+				if (radio_connection)
+					radio_connection.post_signal(src, signal)
 
 	proc/post_radio_status()
 
@@ -157,11 +97,7 @@
 				src.destinations = sortList(src.destinations)
 
 		else if (signal.data["command"] == "mail_inquire")
-			SPAWN_DBG (4)
-				if (src) src.post_radio_status()
-			return
-
-		return
+			src.post_radio_status()
 
 	flush()
 
@@ -273,17 +209,17 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = "kitchen"
+		mailgroup = MGD_KITCHEN
 		message = 1
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = "botany"
+		mailgroup = MGD_BOTANY
 		message = 1
 	security
 		name = "Security"
 		mail_tag = "security"
-		mailgroup = "security"
+		mailgroup = MGD_SECURITY
 		message = 1
 
 		brig
@@ -299,12 +235,12 @@
 	bridge
 		name = "Bridge"
 		mail_tag = "bridge"
-		mailgroup = "command"
+		mailgroup = MGD_COMMAND
 		message = 1
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = "chaplain"
+		mailgroup = MGD_SPIRITUALAFFAIRS
 		message = 1
 	engineering
 		name = "Engineering"
@@ -324,7 +260,7 @@
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = "cargo"
+		mailgroup = MGD_CARGO
 		message = 1
 
 		refinery
@@ -334,7 +270,7 @@
 	research
 		name = "Research"
 		mail_tag = "research"
-		mailgroup = "science"
+		mailgroup = MGD_SCIENCE
 		message = 1
 
 		telescience
@@ -350,19 +286,19 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = "medbay"
-		mailgroup2 = "medresearch"
+		mailgroup = MGD_MEDBAY
+		mailgroup2 = MGD_MEDRESEACH
 		message = 1
 
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 		pathology
 			name = "Pathology"
@@ -376,8 +312,8 @@
 
 	checkpoint
 		name = "Don't spawn me"
-		mailgroup = "security"
-		mailgroup2 = "command"
+		mailgroup = MGD_SECURITY
+		mailgroup2 = MGD_COMMAND
 		message = 1
 
 		arrivals
@@ -476,7 +412,7 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = "kitchen"
+		mailgroup = MGD_KITCHEN
 		message = 1
 
 		north
@@ -492,7 +428,7 @@
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = "botany"
+		mailgroup = MGD_BOTANY
 		message = 1
 
 		north
@@ -508,7 +444,7 @@
 	security
 		name = "Security"
 		mail_tag = "security"
-		mailgroup = "security"
+		mailgroup = MGD_SECURITY
 		message = 1
 
 		north
@@ -552,7 +488,7 @@
 	bridge
 		name = "Bridge"
 		mail_tag = "bridge"
-		mailgroup = "command"
+		mailgroup = MGD_COMMAND
 		message = 1
 
 		north
@@ -568,7 +504,7 @@
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = "chaplain"
+		mailgroup = MGD_SPIRITUALAFFAIRS
 		message = 1
 
 		north
@@ -632,7 +568,7 @@
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = "cargo"
+		mailgroup = MGD_CARGO
 		message = 1
 
 		north
@@ -662,7 +598,7 @@
 	research
 		name = "Research"
 		mail_tag = "research"
-		mailgroup = "science"
+		mailgroup = MGD_SCIENCE
 		message = 1
 
 		north
@@ -720,8 +656,8 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = "medbay"
-		mailgroup2 = "medresearch"
+		mailgroup = MGD_MEDBAY
+		mailgroup2 = MGD_MEDRESEACH
 		message = 1
 
 		north
@@ -737,7 +673,7 @@
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 
 			north
@@ -753,7 +689,7 @@
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 
 			north
@@ -810,8 +746,8 @@
 
 	checkpoint
 		name = "Don't spawn me"
-		mailgroup = "security"
-		mailgroup2 = "command"
+		mailgroup = MGD_SECURITY
+		mailgroup2 = MGD_COMMAND
 		message = 1
 
 		arrivals

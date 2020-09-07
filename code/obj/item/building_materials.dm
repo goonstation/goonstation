@@ -43,17 +43,19 @@ MATERIAL
 	throw_range = 4
 	w_class = 3.0
 	max_stack = 50
-	stamina_damage = 30
-	stamina_cost = 30
+	stamina_damage = 42
+	stamina_cost = 23
 	stamina_crit_chance = 10
 	var/datum/material/reinforcement = null
 	module_research = list("metals" = 5)
 	rand_pos = 1
+	inventory_counter_enabled = 1
 
 	New()
 		..()
 		SPAWN_DBG(0)
 			update_appearance()
+		create_inventory_counter()
 		BLOCK_ALL
 
 	proc/amount_check(var/use_amount,var/mob/user)
@@ -75,6 +77,8 @@ MATERIAL
 				L.Browse(null, "window=met_sheet")
 				onclose(L, "met_sheet")
 			qdel(src)
+		else
+			src.inventory_counter?.update_number(amount)
 		return
 
 	proc/set_reinforcement(var/datum/material/M)
@@ -101,6 +105,7 @@ MATERIAL
 				src.icon_state += "-r"
 			src.color = src.material.color
 			src.alpha = src.material.alpha
+		inventory_counter?.update_number(amount)
 
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
@@ -114,10 +119,14 @@ MATERIAL
 			var/obj/item/sheet/new_stack = new /obj/item/sheet(get_turf(usr))
 			if(src.material)
 				new_stack.setMaterial(src.material)
+			if (src.reinforcement)
+				new_stack.set_reinforcement(src.reinforcement)
 			new_stack.amount = splitnum
 			new_stack.attack_hand(user)
 			new_stack.add_fingerprint(user)
 			new_stack.update_appearance()
+			src.inventory_counter.update_number(amount)
+			new_stack.inventory_counter.update_number(new_stack.amount)
 		else
 			..(user)
 
@@ -155,9 +164,12 @@ MATERIAL
 			if (S.amount + src.amount > src.max_stack)
 				src.amount = S.amount + src.amount - src.max_stack
 				S.amount = src.max_stack
+				src.inventory_counter.update_number(amount)
+				S.inventory_counter.update_number(S.amount)
 				boutput(user, "<span class='notice'>You add [S] to the stack. It now has [S.amount] sheets.</span>")
 			else
 				S.amount += src.amount
+				S.inventory_counter.update_number(S.amount)
 				boutput(user, "<span class='notice'>You add [S] to the stack. It now has [S.amount] sheets.</span>")
 				//SN src = null
 				qdel(src)
@@ -186,6 +198,7 @@ MATERIAL
 				S.setMaterial(src.material)
 				S.set_reinforcement(R.material)
 				S.amount = sheetsinput
+				S.inventory_counter.update_number(S.amount)
 				R.consume_rods(sheetsinput)
 				src.consume_sheets(sheetsinput)
 			else
@@ -242,6 +255,7 @@ MATERIAL
 				L["fl_tiles"] = "x4 Floor Tile"
 				L["rods"] = "x2 Rods"
 				L["rack"] = "Rack Parts"
+				L["railing"] = "Railing"
 				L["stool"] = "stool"
 				L["chair"] = "chair"
 				L["table"] = "Table Parts (2 Sheets)"
@@ -380,6 +394,14 @@ MATERIAL
 					a_icon = 'icons/obj/objects.dmi'
 					a_icon_state = "stool"
 					a_name = "a stool"
+
+				if("railing")
+					a_type = /obj/railing
+					a_amount = 1
+					a_cost = 1
+					a_icon = 'icons/obj/objects.dmi'
+					a_icon_state = "railing"
+					a_name = "a railing"
 
 				if("chair")
 					a_type = /obj/stool/chair
@@ -593,10 +615,11 @@ MATERIAL
 	throw_range = 20
 	m_amt = 1875
 	max_stack = 50
-	stamina_damage = 10
-	stamina_cost = 15
+	stamina_damage = 20
+	stamina_cost = 16
 	stamina_crit_chance = 30
 	rand_pos = 1
+	inventory_counter_enabled = 1
 
 	New()
 		..()
@@ -621,6 +644,7 @@ MATERIAL
 		else
 			icon_state = "rods_[src.amount]"
 			item_state = "rods"
+		src.inventory_counter.update_number(amount)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message("<span class='notice'>[user] begins gathering up [src]!</span>")
@@ -648,12 +672,13 @@ MATERIAL
 			new_stack.amount = splitnum
 			new_stack.attack_hand(user)
 			new_stack.add_fingerprint(user)
+			new_stack.update_icon()
+			src.update_icon()
 		else
 			..(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a material sheet.</span>")
 				return
@@ -663,7 +688,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You should probably put the rods down first.</span>")
 				return
-			if(!WELD.try_weld(user, 1))
+			if(!W:try_weld(user, 1))
 				return
 
 			var/weldinput = 1
@@ -678,7 +703,6 @@ MATERIAL
 			M.amount = weldinput
 			src.consume_rods(weldinput * 2)
 
-			WELD.eyecheck(user)
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into sheets.</span>")
 			update_icon()
 			if(src.amount < 1)	qdel(src)
@@ -749,9 +773,9 @@ MATERIAL
 			var/turf/T = usr.loc
 			SPAWN_DBG(1.5 SECONDS)
 				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned"))
-					src.consume_rods(2)
 					var/atom/G = new /obj/grille(usr.loc)
 					G.setMaterial(src.material)
+					src.consume_rods(2)
 					logTheThing("station", usr, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(usr)].")
 		src.add_fingerprint(user)
 		return
@@ -781,6 +805,7 @@ MATERIAL
 	var/bloodiness = 0 //
 
 	New()
+		..()
 		SPAWN_DBG(0) //wait for the head to be added
 			update()
 
@@ -806,16 +831,14 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+		if (isweldingtool(W))
 			if(!src.anchored && !istype(src.loc,/turf/simulated/floor) && !istype(src.loc,/turf/unsimulated/floor))
 				boutput(user, "<span class='alert'>There's nothing to weld that to.</span>")
 				return
 
-			if(!WELD.try_weld(user, 1))
+			if(!W:try_weld(user, 1))
 				return
 
-			WELD.eyecheck(user)
 			if(!src.anchored) user.visible_message("<span class='alert'><B>[user.name] welds the [src.name] to the floor.</B></span>")
 			else user.visible_message("<span class='alert'><B>[user.name] cuts the [src.name] free from the floor.</B></span>")
 			src.anchored = !(src.anchored)
@@ -947,13 +970,16 @@ MATERIAL
 	throwforce = 5.0
 	max_stack = 80
 	stamina_damage = 25
-	stamina_cost = 25
+	stamina_cost = 15
 	stamina_crit_chance = 15
+	tooltip_flags = REBUILD_DIST
+	inventory_counter_enabled = 1
 
 	New()
 		..()
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
+		src.inventory_counter.update_number(amount)
 		return
 
 	check_valid_stack(atom/movable/O as obj)
@@ -969,7 +995,7 @@ MATERIAL
 		return 1
 
 	get_desc(dist)
-		if (dist <= 1)
+		if (dist <= 3)
 			. += "<br>There are [src.amount] tile[s_es(src.amount)] left on the stack."
 
 	attack_hand(mob/user as mob)
@@ -983,11 +1009,14 @@ MATERIAL
 				F.setMaterial(getMaterial("steel"))
 			F.amount = 1
 			src.amount--
+			tooltip_rebuild = 1
 			user.put_in_hand_or_drop(F)
+			F.inventory_counter?.update_number(F.amount)
 			if (src.amount < 1)
 				//SN src = null
 				qdel(src)
 				return
+			src.inventory_counter?.update_number(src.amount)
 		else
 			..()
 		return
@@ -1002,16 +1031,16 @@ MATERIAL
 			return
 		else
 			var/S = T
-			if (!( istype(S, /turf/space) ))
+			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
 				boutput(user, "You cannot build on or repair this turf!")
 				return
 			else
 				src.build(S)
-				src.amount--
+				tooltip_rebuild = 1
 		if (src.amount < 1)
-			user.u_equip(src)
-			//SN src = null
-			qdel(src)
+			if (!issilicon(user))
+				user.u_equip(src)
+				qdel(src)
 			return
 		src.add_fingerprint(user)
 		return
@@ -1029,8 +1058,17 @@ MATERIAL
 		if (W.amount + src.amount > src.max_stack)
 			src.amount = W.amount + src.amount - src.max_stack
 			W.amount = src.max_stack
+			tooltip_rebuild = 1
+			W.tooltip_rebuild = 1
+			inventory_counter?.update_number(amount)
+			W.inventory_counter?.update_number(amount)
+
 		else
 			W.amount += src.amount
+			W.tooltip_rebuild = 1
+			W.inventory_counter?.update_number(W.amount)
+			// @TODO Zamu here -- in the future we should probably make this like update_amount,
+			// so we can have multiple icon states for varying stack amounts. Ah well. Not today.
 			//SN src = null
 			qdel(src)
 			return
@@ -1043,6 +1081,8 @@ MATERIAL
 		boutput(user, "<span class='notice'>You finish stacking tiles.</span>")
 
 	proc/build(turf/S as turf)
+		if (src.amount < 1)
+			return
 		var/turf/simulated/floor/W = S.ReplaceWithFloor()
 		if (W) //Wire: Fix for: Cannot read null.icon_old
 			W.inherit_area()
@@ -1052,7 +1092,8 @@ MATERIAL
 
 		if(ismob(usr) && !istype(src.material, /datum/material/metal/steel))
 			logTheThing("station", usr, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
-
+		src.amount--
+		inventory_counter?.update_number(amount)
 		return
 
 /obj/item/tile/steel

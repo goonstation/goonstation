@@ -69,9 +69,9 @@
 			if (O.sleeping)
 				O.sleeping = 3
 				if (prob(5)) // Heh.
-					boutput(O, "<font color='green'> [bicon(src)] Wake up, Neo...</font>")
+					boutput(O, "<span class='success'> [bicon(src)] Wake up, Neo...</span>")
 				else
-					boutput(O, "<font color='blue'> [bicon(src)] *beep* *beep*</font>")
+					boutput(O, "<span class='notice'> [bicon(src)] *beep* *beep*</span>")
 			src.visible_message("<span class='notice'>The [src.name]'s occupant alarm clock dings!</span>")
 			playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 		return
@@ -228,7 +228,7 @@
 					if (src.timing)
 						src.time_started = world.timeofday//realtime
 						// People do use sleepers for grief from time to time.
-						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing %target% asleep at [log_loc(src.our_sleeper)].")
+						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
 					else
 						src.time_started = 0
 						src.wake_occupant()
@@ -239,7 +239,7 @@
 				var/t = text2num(href_list["tp"])
 				if (t > 0 && src.timing && src.our_sleeper.occupant)
 					// People do use sleepers for grief from time to time.
-					logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by %target%) by [t] seconds at [log_loc(src.our_sleeper)].")
+					logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
 				//src.time = min(180, max(0, src.time + t))
 				src.time = clamp(src.time + (t*10), 0, 1800)
 
@@ -356,7 +356,7 @@
 			if (user && ismob(user))
 				user.show_text("You short out [src]'s reagent synthesis safety protocols.", "blue")
 			src.visible_message("<span class='alert'><b>[src] buzzes oddly!</b></span>")
-			logTheThing("station", user, src.occupant, "emags \a [src] [src.occupant ? "with %target% inside " : ""](setting it to inject poisons) at [log_loc(src)].")
+			logTheThing("station", user, src.occupant, "emags \a [src] [src.occupant ? "with [constructTarget(src.occupant,"station")] inside " : ""](setting it to inject poisons) at [log_loc(src)].")
 			return 1
 
 	demag(var/mob/user)
@@ -497,7 +497,7 @@
 					src.occupant.reagents.add_reagent(our_poison, inject_p)
 					//DEBUG_MESSAGE("Injected occupant with [inject_p] units of [our_poison] at [log_loc(src)].")
 					if (manual_injection == 1)
-						logTheThing("station", user_feedback, src.occupant, "manually injects %target% with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
+						logTheThing("station", user_feedback, src.occupant, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
 			else
 				if (src.occupant.health < -25 && crit < 10)
 					var/inject_c = 5
@@ -547,7 +547,7 @@
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -703,7 +703,7 @@
 			portable_machinery.Remove(src)
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 

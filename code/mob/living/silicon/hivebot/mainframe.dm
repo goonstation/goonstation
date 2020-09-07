@@ -139,7 +139,7 @@
 
 
 /mob/living/silicon/hive_mainframe/proc/Namepick()
-	var/randomname = pick(ai_names)
+	var/randomname = pick_string_autokey("names/ai.txt")
 	var/newname = input(src,"You are the a Mainframe Unit. Would you like to change your name to something else?", "Name change",randomname) as text
 
 	if (length(newname) == 0)

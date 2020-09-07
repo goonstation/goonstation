@@ -28,6 +28,7 @@
 	var/health_burn_vuln = 0.65
 	reagent_capacity = 100
 
+	can_help = 1
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
@@ -36,6 +37,10 @@
 	butcherable = 1
 	skinresult = /obj/item/material_piece/cloth/spidersilk
 	max_skins = 4
+
+	blood_id = "black_goop"
+
+	var/bite_transfer_amt = 2
 
 	New()
 		..()
@@ -114,8 +119,8 @@
 			else
 				M.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
 			// now spiders won't poison themselves - cirr
-			M.reagents.add_reagent(src.venom1, 2)
-			M.reagents.add_reagent(src.venom2, 2)
+			M.reagents.add_reagent(src.venom1, bite_transfer_amt)
+			M.reagents.add_reagent(src.venom2, bite_transfer_amt)
 
 
 	proc/grow_up()
@@ -158,7 +163,27 @@
 	venom1 = "toxin"
 	venom2 = "black_goop"
 	babyspider = 1
+	adultpath = /mob/living/critter/spider/med
+	bite_transfer_amt = 0.5
+
+/mob/living/critter/spider/med
+	name = "medium space spider"
+	desc = "A medium tiny spider, from space. In space. A space spider."
+	icon_state = "med_spide"
+	icon_state_dead = "med_spide-dead"
+	density = 0
+	flags = TABLEPASS
+	fits_under_table = 1
+	can_grab = 0 // Causes issues with tablepass, and doesn't make too much sense
+	health_brute = 25
+	health_burn = 25
+	good_grip = 0
+	max_skins = 1
+	venom1 = "toxin"
+	venom2 = "black_goop"
+	babyspider = 1
 	adultpath = /mob/living/critter/spider
+	bite_transfer_amt = 1.2
 
 /mob/living/critter/spider/ice
 	name = "ice spider"
@@ -285,8 +310,8 @@
 		stepsound = "cluwnestep"
 		adultpath = /mob/living/critter/spider/clownqueen/cluwne
 		add_abilities = list(/datum/targetable/critter/clownspider_kick/cluwne,
-							/datum/targetable/critter/spider_bite,
-							/datum/targetable/critter/spider_drain)
+							/datum/targetable/critter/spider_bite/cluwne,
+							/datum/targetable/critter/spider_drain/cluwne)
 		item_shoes = /obj/item/clothing/shoes/cursedclown_shoes
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
 
@@ -310,6 +335,9 @@
 						/datum/targetable/critter/spider_drain)
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
+	var/list/babies = null
+	// var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
+	var/max_defensive_babies = 100
 
 	cluwne
 		name = "queen cluwnespider"
@@ -318,11 +346,22 @@
 		icon_state_dead = "cluwnespider_queen"
 		stepsound = "cluwnestep"
 		add_abilities = list(/datum/targetable/critter/clownspider_trample/cluwne,
-							/datum/targetable/critter/vomitegg,
-							/datum/targetable/critter/spider_bite,
-							/datum/targetable/critter/spider_drain)
+							/datum/targetable/critter/vomitegg/cluwne,
+							/datum/targetable/critter/spider_bite/cluwne,
+							/datum/targetable/critter/spider_drain/cluwne)
 		item_shoes = /obj/item/clothing/shoes/cursedclown_shoes
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
+		// egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne
+		max_defensive_babies = 150
+
+	New()
+		..()
+		babies = list()
+
+	disposing()
+		if (islist(babies))
+			babies.len = 0
+		..()
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -342,6 +381,29 @@
 					if (T)
 						I.throw_at(T, 12, 3)
 			src.gib(1)
+
+	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0)
+		..()
+
+		//clownbabies can't fight clownqueens. but they can fight Cluwnequeens and vice versa
+		if (istype(T, src.type))
+			return
+		var/defenders = 0		//this is the amount of babies that will defend you
+		var/count = 0
+		for (var/obj/critter/spider/clown/CS in babies)
+			count++
+			if (count > max_defensive_babies)
+				break
+			if (get_dist(src, CS) > 7)
+				continue
+			if (defenders >= 3)
+				return
+			if (prob(70))
+				continue
+			CS.target = T
+			CS.attack = 1
+			CS.task = "chasing"
+			defenders++
 
 /proc/funnygibs(atom/location, var/list/ejectables, var/bDNA, var/btype)
 	SPAWN_DBG(0)

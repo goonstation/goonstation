@@ -12,32 +12,26 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			src.link_elements()
-			sleep(1 SECOND)
-			qdel(src)
+		if(current_state > GAME_STATE_PREGAME)
+			SPAWN_DBG(1)
+				src.initialize()
+
+	initialize()
+		src.link_elements()
+		..()
+		qdel(src)
 
 	proc/link_elements()
 
 		if(src.triggerer_id == src.triggerable_id)
 			return // I literally just said NOT to break this, you PROMISED.
 
-		for(var/obj/adventurepuzzle/A)
 
-			if(A.id == src.triggerer_id)
-				src.triggerers += A
+		if(length(adventure_elements_by_id[src.triggerer_id]))
+			src.triggerers = adventure_elements_by_id[src.triggerer_id]
 
-			if(A.id == src.triggerable_id)
-				src.triggerables += A
-
-
-		for(var/obj/item/adventurepuzzle/A)
-
-			if(A.id == src.triggerer_id)
-				src.triggerers += A
-
-			if(A.id == src.triggerable_id)
-				src.triggerables += A
+		if(length(adventure_elements_by_id[src.triggerable_id]))
+			src.triggerables = adventure_elements_by_id[src.triggerable_id]
 
 		if((src.triggerers.len > 0) && (src.triggerables.len > 0))
 
@@ -102,9 +96,7 @@
 	var/static/list/triggeracts = list("Activate" = "act", "Disable" = "off", "Destroy" = "del", "Do nothing" = "nop", "Enable" = "on")
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(5000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(5000)
 		..()
 
 	trigger_actions()
@@ -177,7 +169,6 @@
 	color = "#550000"
 	var/target = null
 
-#if ASS_JAM
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -187,8 +178,11 @@
 
 
 	equipped(var/mob/user, var/slot)
+		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "eyes")
+		if(!(user == usr))
+			return
+		if(istype(H) && slot == SLOT_GLASSES)
 			SPAWN_DBG(1 SECOND)
 				enter_urs_dungeon(user)
 		return
@@ -211,13 +205,6 @@
 			playsound(H.loc, "sound/ambience/music/VRtunes_edited.ogg", 75, 0)
 
 		return
-#else
-	equipped(var/mob/user, var/slot)
-		user.visible_message("<span class='notice'>[user] puts on the goggles, but nothing particularly special happens!</span>")
-		user.u_equip(src)
-		src.set_loc(get_turf(user))
-		return
-#endif
 
 
 /obj/item/clothing/glasses/urs_dungeon_exit
@@ -231,8 +218,9 @@
 		..()
 
 	equipped(var/mob/user, var/slot)
+		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "eyes")
+		if(istype(H) && slot == SLOT_GLASSES)
 			SPAWN_DBG(1 SECOND)
 				exit_urs_dungeon(user)
 		return
@@ -299,14 +287,14 @@
 				return
 
 	proc/announce()
-		var/area/our_area = src.loc
+		var/area/our_area = get_area(src)
 		our_area.sound_fx_2 = src.sound //assign even if null
 		var/played = our_area.played_fx_2
 
 		for (var/mob/M in our_area)
 			if (src.sound && !played)
 				if (M.client)
-					M.client.playAmbience(src, AMBIENCE_FX_2, 30)
+					M.client.playAmbience(our_area, AMBIENCE_FX_2, 50)
 			if(src.message)
 				M.show_message("<span class='game say bold'><span class='message'><span style='color: [src.text_color]'>[message]</span></span></span>", 2)
 
@@ -607,3 +595,30 @@
 			O.show_message(text("<span class='alert'>[M] ate the [content ? content : "empty canister"]!</span>"), 1)
 		src.injest(M)
 */
+
+var/johnbill_ursdungeon_code = 0420
+
+/area/diner/arcade/New()
+		..()
+		var/list/insults = strings("johnbill.txt", "insults")
+		johnbill_ursdungeon_code = random_hex(4)
+		john_talk = "Eh [pick(insults)], so we got a couple a import sets in the wall there, uh... just don't let my bro at 'em. Again. [johnbill_ursdungeon_code] oughta do'er."
+
+/obj/item/storage/secure/ssafe/diner_arcade
+	configure_mode = 0
+	random_code = 0
+	spawn_contents = list(/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/spacecash/random/small,/obj/item/spacecash/random/small)
+	New()
+		..()
+		src.code = johnbill_ursdungeon_code
+
+/obj/item/paper/tug/diner_arcade_invoice
+    name = "Big Yank's Space Tugs, Limited."
+    desc = "Looks like a bill of sale."
+    info = {"<b>Client:</b> Bill, John
+            <br><b>Date:</b> TBD
+            <br><b>Articles:</b> Structure, Static. Pressurized. Duplex.
+            <br><b>Destination:</b> \"jes' hook it up anywhere it fits\"\[sic\]
+            <br>
+            <br><b>Total Charge:</b> 9,233 paid in full with bootleg cigarillos.
+            <br>Big Yank's Cheap Tug"}

@@ -12,7 +12,7 @@
 		if(!holder)
 			return
 		var/protectuser = 1
-		if (!holder.owner.wizard_spellpower())
+		if (!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Without your staff to focus your spell, you might be affected!</span>")
 			protectuser = 0
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell!</b></span>")

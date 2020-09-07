@@ -28,6 +28,7 @@
 		last_dir = 0
 
 	New(owner)
+		..()
 		src.owner = owner
 		M = matrix()
 
@@ -36,7 +37,7 @@
 		..()
 
 	keys_changed(mob/user, keys, changed)
-		if (istype(src.owner, /obj/machinery/vehicle/escape_pod))
+		if (istype(src.owner, /obj/machinery/vehicle/escape_pod) || !owner)
 			return
 
 		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT|KEY_RUN))
@@ -130,7 +131,7 @@
 			delay = 10 / velocity_magnitude
 
 		if (velocity_dir & (velocity_dir-1))
-			delay *= 1.4
+			delay *= DIAG_MOVE_DELAY_MULT
 
 		delay = min(delay,min_delay)
 
@@ -165,5 +166,6 @@
 			if ("fire")
 				owner.fire_main_weapon() // just, fuck it.
 
-	modify_keymap(datum/keymap/keymap, client/C)
-		keymap.merge(C.get_keymap("pod"))
+	modify_keymap(client/C)
+		..()
+		C.apply_keybind("pod")

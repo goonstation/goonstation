@@ -41,6 +41,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	plane = PLANE_NOSHADOW_BELOW
 
 	New(var/loc,var/list/viral_list)
+		..()
 		if (!pooled)
 			setup(loc,viral_list)
 
@@ -129,18 +130,13 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			return
 		if (iscarbon(AM))
 			var/mob/M =	AM
-			if (!M.can_slip())
-				return
 			if (prob(src.slippery))
-				M.pulling = null
-				M.visible_message("<span class='alert'><b>[M]</b> slips on [src]!</span>",\
-				"<span class='alert'>You slip on [src]!</span>")
-				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-				M.changeStatus("stunned", 3 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
-				M.force_laydown_standup()
-				if (src.slipped_in_blood)
-					M.add_blood(src)
+				if (M.slip())
+					M.visible_message("<span class='alert'><b>[M]</b> slips on [src]!</span>",\
+					"<span class='alert'>You slip on [src]!</span>")
+
+					if (src.slipped_in_blood)
+						M.add_blood(src)
 
 	attackby(obj/item/W, mob/user)
 		if (src.can_sample && W.is_open_container() && W.reagents)
@@ -149,6 +145,12 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			return
 		else
 			return ..()
+
+
+	blob_act(var/power)
+		if(prob(75))
+			pool(src)
+			return
 
 	proc/Dry(var/time = rand(600,1000))
 		if (!src.can_dry || src.dry)
@@ -249,9 +251,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/reagents_max = 10
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(reagents_max) // 9u is the max since we wanna leave at least 1u of blood in the blood puddle
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(reagents_max)
 		if (ling_blood)
 			src.reagents.add_reagent("bloodc", 10)
 			src.sample_reagent = "bloodc"
@@ -273,9 +273,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	setup()
 		if (!src.reagents)
-			var/datum/reagents/R = new/datum/reagents(reagents_max)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(reagents_max)
 		else
 			src.reagents.clear_reagents()
 		if (ling_blood)
@@ -298,9 +296,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	proc/set_sample_reagent_custom(var/reagent_id, var/amt = 10)
 		if (!src.reagents)
-			var/datum/reagents/R = new/datum/reagents(reagents_max)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(reagents_max)
 		else
 			src.reagents.clear_reagents()
 
@@ -735,6 +731,21 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "iron"
 	sample_verb = "scrape"
+
+/obj/decal/cleanable/rust/jen
+	icon_state = "rust_jen"
+	random_icon_states = null
+	plane = PLANE_NOSHADOW_BELOW
+
+	// This is a big sprite that covers up most of the turf, so here's a way to interact with turfs without bludgeoning the rust
+	attack_hand(obj/M, mob/user)
+		return 0
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
+			..()
+		else
+			src.loc.attackby(user.equipped(), user)
 
 /obj/decal/cleanable/balloon
 	name = "balloon"
@@ -1174,6 +1185,19 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	dirt5
 		icon_state = "dirt5"
 
+	jen
+		icon_state = "dirt_jen"
+		plane = PLANE_NOSHADOW_BELOW
+
+		// This is a big sprite that covers up most of the turf, so here's a way to interact with turfs without bludgeoning the dirt
+		attack_hand(obj/M, mob/user)
+			return 0
+
+		attackby(obj/item/W, mob/user)
+			if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
+				..()
+			else
+				src.loc.attackby(user.equipped(), user)
 
 /obj/decal/cleanable/cobweb
 	name = "cobweb"
@@ -1285,9 +1309,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 						b.blood_type = src.blood_type
 						b.color = "#0b1f8f"
 					else if (prob(10))
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, src)
-						s.start()
+						elecflash(src)
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
@@ -1343,9 +1365,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
 				if (i > 0)
 					if (prob(10))
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, src)
-						s.start()
+						elecflash(src)
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
@@ -1405,9 +1425,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 						/*var/obj/decal/cleanable/oil/o =*/
 						make_cleanable(/obj/decal/cleanable/oil/streak,src.loc)
 					else if (prob(10))
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, src)
-						s.start()
+						elecflash(src)
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
@@ -1440,9 +1458,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	stain = "azure-stained"
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(10) // 9u is the max since we wanna leave at least 1u of blood in the blood puddle
-		reagents = R
-		R.my_atom = src
+		..()
+		src.create_reagents(10)
 		src.reagents.add_reagent("reliquary_blood", 10)
 		src.blood_DNA = "--conductive_substance--"
 		src.color = "#0b1f8f"
@@ -1457,14 +1474,19 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	dry_time = 1200
 	var/datum/light/light
 
-	New()
-		..()
+	unpooled()
 		light = new /datum/light/point
 		light.set_brightness(0.4)
 		light.set_height(0.5)
 		light.set_color(0.2, 1, 0.2)
 		light.attach(src)
 		light.enable()
+		..()
+
+	disposing()
+		if(light)
+			qdel(light)
+		..()
 
 	setup()
 		..()
@@ -1636,6 +1658,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				else
 					return
 				burn_time--
+
+			if (on_fire)
+				overlays -= on_fire
+				on_fire = null
+				burn_time = initial(burn_time)
 			pool(src)
 
 	reagent_act(id, volume)
@@ -1701,11 +1728,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 			smoke.set_up(5, 0, src.loc, ,"#cb5e97")
 			smoke.start()
-		/*
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 1, src.loc)
-		s.start()
-		*/
+
 		explosion(src, src.loc, -1, -1, -1, 1)
 		pool(src)
 

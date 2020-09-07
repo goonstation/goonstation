@@ -79,6 +79,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	endurance = 0
 	vending = 1
 	genome = 6
+	mutations = list(/datum/plantmutation/beans/jelly)
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
 	assoc_reagents = list("nitrogen")
 

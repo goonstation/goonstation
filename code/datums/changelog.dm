@@ -43,7 +43,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 	var/list/html=list()
 	var/text = changes
 	if (!text)
-		diary << "Failed to load changelog."
+		logDiary("Failed to load changelog.")
 	else
 		html += "<ul class=\"log[logclasses]\"><li class=\"title\"><i class=\"icon-bookmark\"></i> [title] as of [vcs_revision]</li>"
 
@@ -192,6 +192,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 		return html.Join()
 
 /datum/changelog/New()
+	..()
 //<img alt="Goon Station 13" src="[resource("images/changelog/postcardsmall.jpg")]" class="postcard" />
 
 	html = {"

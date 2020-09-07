@@ -19,9 +19,7 @@
 	if (src != M && M.getStatusDuration("burning")) //help others put out fires!!
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
-		if (ishuman(src))
-			var/mob/living/carbon/human/H = src
-			H.resist()
+		M.resist()
 	else if (M.health <= 0 && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
@@ -93,9 +91,7 @@
 					var/obj/item/clothing/head/sunhat/hat = X.head
 					if(istype(hat) && hat.uses)
 						src.visible_message("<span class='alert'>[src] tries to pat [target] on the head, but gets shocked by [target]'s hat!</span>")
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(5, 1, target.loc)
-						s.start()
+						elecflash(target)
 
 						hat.uses = max(0, hat.uses - 1)
 						if (hat.uses < 1)
@@ -114,7 +110,12 @@
 					else
 						src.visible_message("<span class='notice'>[src] gently pats [target] on the head.</span>")
 					return
-			src.visible_message("<span class='notice'>[src] shakes [target], trying to grab their attention!</span>")
+
+			if (ismobcritter(target))
+				var/mob/living/critter/C = target
+				C.on_pet(src)
+			else
+				src.visible_message("<span class='notice'>[src] shakes [target], trying to grab their attention!</span>")
 	hit_twitch(target)
 
 
@@ -122,7 +123,7 @@
 	boutput(src, "<span class='alert'>You have no idea how to perform CPR.</span>")
 	return
 
-/mob/living/carbon/human/administer_CPR(var/mob/living/carbon/human/target)
+/mob/living/administer_CPR(var/mob/living/target)
 	if (!src || !target)
 		return 0
 
@@ -130,21 +131,15 @@
 		boutput(src, "<span class='alert'>You desperately try to think of a way to do CPR on yourself, but it's just not logically possible!</span>")
 		return
 
-	if (target.head && (target.head.c_flags & 4))
-		boutput(src, "<span class='notice'>You need to take off their headgear before you can give CPR!</span>")
-		return
+	if (ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if (H.head && (H.head.c_flags & 4))
+			boutput(src, "<span class='notice'>You need to take off their headgear before you can give CPR!</span>")
+			return
 
-	if (target.wear_mask && !(target.wear_mask.c_flags & 32))
-		boutput(src, "<span class='notice'>You need to take off their facemask before you can give CPR!</span>")
-		return
-
-	if (src.head && (src.head.c_flags & 4))
-		boutput(src, "<span class='notice'>You need to take off your headgear before you can give CPR!</span>")
-		return
-
-	if (src.wear_mask && !(src.wear_mask.c_flags & 32))
-		boutput(src, "<span class='notice'>You need to take off your facemask before you can give CPR!</span>")
-		return
+		if (H.wear_mask && !(H.wear_mask.c_flags & 32))
+			boutput(src, "<span class='notice'>You need to take off their facemask before you can give CPR!</span>")
+			return
 
 	if (target.cpr_time >= world.time)
 		return
@@ -176,6 +171,16 @@
 			if (src)
 				src.visible_message("<span class='alert'>[src] performs CPR on [target]!</span>")
 
+/mob/living/carbon/human/administer_CPR(var/mob/living/target)
+	if (src.head && (src.head.c_flags & 4))
+		boutput(src, "<span class='notice'>You need to take off your headgear before you can give CPR!</span>")
+		return
+
+	if (src.wear_mask && !(src.wear_mask.c_flags & 32))
+		boutput(src, "<span class='notice'>You need to take off your facemask before you can give CPR!</span>")
+		return
+	..()
+
 ///////////////////////////////////////////// Grab intent //////////////////////////////////////////////////////////
 
 /mob/living/proc/grab_self()
@@ -183,13 +188,7 @@
 		return 0
 	return 1
 
-/mob/living/critter/grab_self()
-	if (!..())
-		return
-	// i'm not feeling very creative right now, so sue me - cirr
-	src.visible_message("<span class='alert'><B>[src] gets a hold of [his_or_her(src)] body! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
-
-/mob/living/carbon/grab_self()
+/mob/living/grab_self()
 	if(!..())
 		return
 
@@ -197,8 +196,7 @@
 	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		S.buckle_in(src,src,1)
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(src)
-		G.assailant = src
+		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src)
 		src.put_in_hand(G, src.hand)
 		G.affecting = src
 		src.grabbed_by += G
@@ -225,8 +223,7 @@
 	if (!I)
 		src.grab_self()
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(I)
-		G.assailant = src
+		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src)
 		G.affecting = src
 		src.grabbed_by += G
 		G.loc = I
@@ -256,7 +253,7 @@
 					boutput(src, pick("<span class='alert'>You're not in the mood to grab that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
 					return
 
-	logTheThing("combat", src, target, "grabs %target% at [log_loc(src)].")
+	logTheThing("combat", src, target, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
 
 	if (target)
 		target.add_fingerprint(src) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit (Convair880).
@@ -281,13 +278,11 @@
 			playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 			return
 		else
-			var/mob/living/carbon/human/T = target
-			if (istype(T) && T.do_block(src, null, show_msg = 0))
-				src.visible_message("<span class='alert'><B>[T] blocks [src]'s attempt to grab [him_or_her(T)]!</span>")
+			if (target.do_block(src, null, show_msg = 0))
+				src.visible_message("<span class='alert'><B>[target] blocks [src]'s attempt to grab [him_or_her(target)]!</span>")
 				playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 
-				T.remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
-				T.stamina_stun()
+				target.remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
 				return
 
 	if (istype(H))
@@ -368,7 +363,7 @@
 		def_zone = "All"
 		msgs.affecting = def_zone
 
-	if (ishuman(target) && target.lying == 1) //roll lying bodies
+	if (target.lying == 1) //roll lying bodies
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		msgs.base_attack_message = "<span class='alert'><B>[src] rolls [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.disarm_RNG_result = "shoved"
@@ -395,50 +390,54 @@
 			if (istext(attack_resistance))
 				msgs.show_message_target(attack_resistance)
 		msgs.damage = max(damage, 0)
+	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
+		var/armor_mod = 0
+		armor_mod = target.get_melee_protection(def_zone)
+		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm doesnt get full reduction
+		msgs.force_stamina_target = 1
 
-
-	var/target_stamina = STAMINA_MAX
-	if (ishuman(target))
-		var/mob/living/carbon/human/HT = target
-		target_stamina = HT.stamina
-		//nope fuck that
-		//if (HT.traitHolder && HT.traitHolder.hasTrait("training_security"))
-		//	mult *= 0.5
+	var/target_stamina = STAMINA_MAX //uses stamina?
+	if (isliving(target))
+		var/mob/living/L = target
+		target_stamina = L.stamina
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (H.sims)
 			mult *= H.sims.getMoodActionMultiplier()
-		var/stampart = round( ((STAMINA_MAX - target_stamina) / 3) )
-		if (is_shove)
-			msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
-			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-			if (prob((stampart + 70) * mult))
-				msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
-				msgs.disarm_RNG_result = "shoved"
 
-		if (prob((stampart + 5) * mult))
+	var/stampart = round( ((STAMINA_MAX - target_stamina) / 3) )
+	if (is_shove)
+		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
+		if (prob((stampart + 70) * mult))
+			msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
+			msgs.disarm_RNG_result = "shoved"
+
+	if (prob((stampart + 5) * mult))
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
 			for (var/uid in H.pathogens)
 				var/datum/pathogen/P = H.pathogens[uid]
 				var/ret = P.ondisarm(target, 1)
 				if (!ret)
 					msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
 					return msgs
-			msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B></span>"
-			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-			msgs.disarm_RNG_result = "shoved_down"
-			var/obj/item/I = target.equipped()
-			if (I && I.temp_flags & IS_LIMB_ITEM)
-				msgs.disarm_RNG_result = "attack_self_with_item_shoved_down"
+		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B></span>"
+		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
+		msgs.disarm_RNG_result = "shoved_down"
+		var/obj/item/I = target.equipped()
+		if (I && I.temp_flags & IS_LIMB_ITEM)
+			msgs.disarm_RNG_result = "attack_self_with_item_shoved_down"
 
-			return msgs
+		return msgs
 
 	if (is_shove) return msgs
 
 	var/obj/item/I = target.equipped()
 	if (I)
 		var/disarm_item_prob = 37
-		if (target.check_block())
+		if (target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
 			disarm_item_prob = 8
 
 		if (I.temp_flags & IS_LIMB_ITEM)
@@ -479,8 +478,8 @@
 
 #undef DISARM_WITH_ITEM_TEXT
 
-/mob/proc/check_block() //am i blocking?
-	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis"))
+/mob/proc/check_block(ignoreStuns = 0) //am i blocking?
+	if (ignoreStuns || (isalive(src) && !getStatusDuration("paralysis")))
 		var/obj/item/I = src.equipped()
 		if (I)
 			if (istype(I,/obj/item/grab/block))
@@ -503,14 +502,13 @@
 
 				playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
 				remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
-				stamina_stun()
 				fuckup_attack_particle(attacker)
 				return 1
 			block_spark(src)
 			fuckup_attack_particle(attacker)
 	return 0
 
-/mob/living/carbon/human/do_block(var/mob/attacker, var/obj/item/W, var/show_msg = 1)
+/mob/living/do_block(var/mob/attacker, var/obj/item/W, var/show_msg = 1)
 	if (stance == "dodge")
 		if (show_msg)
 			visible_message("<span class='alert'><B>[src] narrowly dodges [attacker]'s attack!</span>")
@@ -526,12 +524,9 @@
 		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
 		fuckup_attack_particle(attacker)
 		return 1
-	if (stamina <= STAMINA_DEFAULT_BLOCK_COST)
-		return 0
-
 	return ..()
 
-/mob/living/carbon/human/proc/get_passive_block(var/obj/item/W)
+/mob/living/proc/get_passive_block(var/obj/item/W)
 	var/ret = 0
 	if(getStatusDuration("stonerit"))
 		ret += 20
@@ -560,13 +555,11 @@
 		src.lastattacked = target
 		target.lastattacker = src
 		target.lastattackertime = world.time
-		logTheThing("combat", src, target, "touches %target% with stun gloves at [log_loc(src)].")
+		logTheThing("combat", src, target, "touches [constructTarget(target,"combat")] with stun gloves at [log_loc(src)].")
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
 		src.unlock_medal("High Five!", 1)
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 1, target.loc)
-		s.start()
+		elecflash(target)
 
 		src.gloves.uses = max(0, src.gloves.uses - 1)
 		if (src.gloves.uses < 1)
@@ -599,14 +592,14 @@
 		boutput(src, "<span class='alert'>The stun gloves don't have enough charge!</span>")
 		return
 
-/mob/living/proc/melee_attack(var/mob/living/carbon/human/target)
+/mob/living/proc/melee_attack(var/mob/living/target)
 	var/datum/limb/L = equipped_limb()
 	if (!L)
 		return
 
 	L.harm(target, src) // Calls melee_attack_normal if limb datum doesn't override anything.
 
-/mob/proc/melee_attack_normal(var/mob/living/carbon/human/target, var/extra_damage = 0, var/suppress_flags = 0, var/damtype = DAMAGE_BLUNT)
+/mob/proc/melee_attack_normal(var/mob/target, var/extra_damage = 0, var/suppress_flags = 0, var/damtype = DAMAGE_BLUNT)
 	if(!src || !target)
 		return 0
 
@@ -677,7 +670,7 @@
 	if (!target.canmove && target.lying)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.base_attack_message = "<span class='alert'><B>[src] [src.kickMessage] [target]!</B></span>"
-		msgs.logs = list("[src.kickMessage] %target%")
+		msgs.logs = list("[src.kickMessage] [constructTarget(target,"combat")]")
 		if (ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if (H.shoes)
@@ -718,6 +711,9 @@
 			//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
 		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+
+		if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
+			msgs.stamina_self -= STAMINA_HTH_COST
 
 	var/attack_resistance = target.check_attack_resistance()
 	if (attack_resistance)
@@ -784,7 +780,7 @@
 		random_brute_damage(target, damage)
 		target.UpdateDamageIcon()
 
-	logTheThing("combat", user, target, "punches %target% at [log_loc(user)].")
+	logTheThing("combat", user, target, "punches [constructTarget(target,"combat")] at [log_loc(user)].")
 	return
 
 /////////////////////////////////////////////////////// attackResult datum ////////////////////////////////////////
@@ -796,7 +792,7 @@
 	var/list/visible_target = list()
 	var/list/show_self = list()
 	var/list/show_target = list()
-	var/list/logs = list("punches %target%")
+	var/list/logs = null
 	var/list/after_effects = list()
 
 	// the message to play to the target
@@ -820,19 +816,19 @@
 	//grouping of combat message
 	var/msg_group = 0
 
+	var/force_stamina_target = null
+
 	New(var/mob/M)
+		..()
 		owner = M
 
 	proc/clear(var/mob/M)
 		target = M
-		visible_self = list()
-		visible_target = list()
-		show_self = list()
-		show_target = list()
-		if (istype(src, /datum/attackResults/disarm))
-			logs = list("disarms %target%")
-		else
-			logs = list("punches %target%")
+		visible_self.Cut()
+		visible_target.Cut()
+		show_self.Cut()
+		show_target.Cut()
+		logs = null
 		played_sound = null
 		base_attack_message = null
 		stamina_self = 0
@@ -847,7 +843,7 @@
 		bleed_always = 0 //Will cause bleeding regardless of damage type.
 		bleed_bonus = 0 //bonus to bleed damage specifically.
 
-		after_effects = list()
+		after_effects.Cut()
 
 	proc/show_message_self(var/message)
 		show_self += message
@@ -905,6 +901,12 @@
 				target.show_message(message, group = msg_group)
 
 		if (!(suppress & SUPPRESS_LOGS))
+			if (!length(logs))
+				if (istype(src, /datum/attackResults/disarm))
+					logs = list("disarms [constructTarget(target,"combat")]")
+				else
+					logs = list("punches [constructTarget(target,"combat")]")
+
 			for (var/message in logs)
 				logTheThing("combat", owner, target, "[message] at [log_loc(owner)].")
 
@@ -912,7 +914,7 @@
 			if (stamina_self > 0)
 				owner.add_stamina(stamina_self)
 			else
-				owner.remove_stamina(-stamina_self)
+				owner.process_stamina(-stamina_self)
 
 		if (src.disarm == 1)
 			target.add_fingerprint(owner)
@@ -952,6 +954,7 @@
 								target.force_laydown_standup()
 							if (src.disarm_RNG_result == "attack_self_with_item_shoved")
 								step_away(target, owner, 1)
+								target.OnMove(owner)
 
 					if ("shoved_down")
 						target.deliver_move_trigger("pushdown")
@@ -963,13 +966,10 @@
 						target.force_laydown_standup()
 					if ("shoved")
 						step_away(target, owner, 1)
+						target.OnMove(owner)
 			else
 				target.deliver_move_trigger("bump")
-
 		else
-			if (owner.traitHolder && !owner.traitHolder.hasTrait("glasscannon"))
-				owner.process_stamina(STAMINA_HTH_COST)
-
 #ifdef DATALOGGER
 			game_stats.Increment("violence")
 #endif
@@ -978,9 +978,9 @@
 			target.lastattackertime = world.time
 			target.add_fingerprint(owner)
 
-		if (damage > 0 || src.disarm == 1)
+		if (damage > 0 || (src.disarm == 1 || force_stamina_target))
 
-			if (src.disarm == 1 && damage <= 0)
+			if ((src.disarm == 1 || force_stamina_target) && damage <= 0)
 				goto process_stamina
 
 			if (damage > 0 && target != owner)
@@ -1037,12 +1037,12 @@
 				if (damage > 1)
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))	//attacker is rev, all heads who see the attack get mutiny buff
 						for (var/datum/mind/M in R.get_living_heads())
-							if (M.current && ishuman(M.current))
+							if (M.current)
 								if (get_dist(owner,M.current) <= 7)
 									if (owner in viewers(7,M.current))
 										M.current.changeStatus("mutiny", 10 SECONDS)
 
-				if(target.health < 0)
+				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
 						if (R.add_revolutionary(target.mind))
 							target.HealDamage("All", max(30 - target.health,0), 0)
@@ -1054,7 +1054,7 @@
 		clear(null)
 
 /datum/attackResults/disarm
-	logs = list("disarms %target%")
+	logs = null //list("disarms [constructTarget(src,"diary")]") //handled above
 
 ////////////////////////////////////////////////////////// Targeting checks ////////////////////////////////////
 
@@ -1063,10 +1063,6 @@
 		playsound(loc, "punch", 50, 1, 1)
 		src.visible_message("<span class='alert'><B>[attacker]'s attack bounces off [src] uselessly!</B></span>")
 		return 0
-
-	//if (disarm_check == 1 && (ishuman(src) && src.lying == 1))
-	//	src.visible_message("<span class='alert'><B>[attacker]</B> makes a threatening gesture at [src]!</span>")
-	//	return 0
 
 	return 1
 
@@ -1089,7 +1085,7 @@
 
 	return 1
 
-/mob/living/carbon/human/melee_attack_test(var/mob/attacker, var/obj/item/I, var/def_zone, var/disarm_check = 0)
+/mob/living/melee_attack_test(var/mob/attacker, var/obj/item/I, var/def_zone, var/disarm_check = 0)
 	if (!..())
 		return 0
 
@@ -1161,24 +1157,27 @@
 /mob/proc/calculate_bonus_damage(var/datum/attackResults/msgs)
 	return 0
 
-/mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs)
-	var/damage = 0
-	if (src.gloves)
-		damage += src.gloves.damage_bonus()
-
-	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
-		damage += rand(3,5)
-		if (msgs)
-			msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
-
-	if (src.is_hulk())
-		damage += max((abs(health+max_health)/max_health)*5, 5)
+/mob/living/calculate_bonus_damage(var/datum/attackResults/msgs)
+	.= ..()
 
 	if (src.traitHolder.hasTrait("bigbruiser"))
 		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
 		msgs.stamina_target -= STAMINA_HTH_DMG * 0.25
 
-	return damage
+
+/mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs)
+	. = ..()
+	if (src.gloves)
+		. += src.gloves.damage_bonus()
+
+	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
+		. += rand(3,5)
+		if (msgs)
+			msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
+
+	if (src.is_hulk())
+		. += max((abs(health+max_health)/max_health)*5, 5)
+
 
 /////////////////////////////////////////////////////// Target damage modifiers //////////////////////////////////
 
@@ -1190,7 +1189,7 @@
 		return "<span class='alert'>Sensors indicate no damage from external impact.</span>"
 	return null
 
-/mob/living/carbon/human/check_attack_resistance(var/obj/item/I)
+/mob/living/check_attack_resistance(var/obj/item/I)
 	if (reagents && reagents.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
 		return "<span class='alert'>You drunkenly shrug off the blow!</span>"
 	return null
@@ -1253,8 +1252,7 @@
 				var/turf/T = get_edge_target_turf(src, src.dir)
 				if (isturf(T))
 					src.visible_message("<span class='alert'><B>[src] savagely punches [target], sending them flying!</B></span>")
-					SPAWN_DBG (0)
-						target.throw_at(T, 10, 2)
+					target.throw_at(T, 10, 2)
 
 	if (src.bioHolder.HasEffect("revenant"))
 		var/datum/bioEffect/hidden/revenant/R = src.bioHolder.GetEffect("revenant")
@@ -1287,8 +1285,7 @@
 	T.changeStatus("weakened", 5 SECONDS)
 	var/turf/throwpoint = get_edge_target_turf(H, get_dir(H, T))
 	if (throwpoint && isturf(throwpoint))
-		SPAWN_DBG(0)
-			T.throw_at(throwpoint, 10, 2)
+		T.throw_at(throwpoint, 10, 2)
 
 	return
 
@@ -1308,7 +1305,7 @@
 			sims.affectMotive("fun", 2.5)
 
 //return 1 on successful dodge or parry, 0 on fail
-/mob/living/carbon/human/proc/parry_or_dodge(mob/M, obj/item/W)
+/mob/living/proc/parry_or_dodge(mob/M, obj/item/W)
 	.= 0
 	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
 		src.dir = get_dir(src, M)
@@ -1340,7 +1337,7 @@
 		src.lastattacked = target
 		target.lastattacker = src
 		target.lastattackertime = world.time
-		logTheThing("combat", src, target, "attacks %target% with energy claws at [log_loc(src)].")
+		logTheThing("combat", src, target, "attacks [constructTarget(target,"combat")] with energy claws at [log_loc(src)].")
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
 
 	if (ishuman(target))

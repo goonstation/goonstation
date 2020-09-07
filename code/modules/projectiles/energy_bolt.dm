@@ -5,7 +5,7 @@
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 20
 //How much ammo this costs
-	cost = 15
+	cost = 25
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
@@ -17,6 +17,8 @@
 	sname = "stun"
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/Taser.ogg'
+//should the sound have extra range?
+	shot_sound_extrarange = 5
 //How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
 //What is our damage type
@@ -56,6 +58,17 @@ toxic - poisons
 				H.changeStatus("stunned", power)
 		return*/
 
+/datum/projectile/energy_bolt/bouncy
+	name = "ricochet energy bolt"
+	var/max_bounce_count = 1
+	var/reflect_on_nondense_hits = FALSE
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		if (!ismob(hit))
+			if (shoot_reflected_bounce(P, hit, max_bounce_count, PROJ_NO_HEADON_BOUNCE, reflect_on_nondense_hits))
+				elecflash(get_turf(P),radius=0, power=2, exclude_center = 0)
+		..()
+
 /datum/projectile/heavyion
 	name = "ion bolt"
 	icon = 'icons/obj/projectiles.dmi'
@@ -89,7 +102,7 @@ toxic - poisons
 
 /datum/projectile/energy_bolt/burst
 	shot_number = 3
-	cost = 50
+	cost = 75
 	sname = "burst stun"
 
 
@@ -113,9 +126,10 @@ toxic - poisons
 		return
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
+	cost = 10
 	power = 15
-	dissipation_delay = 4
-	dissipation_rate = 5
+	dissipation_delay = 1
+	dissipation_rate = 2
 	icon_state = "spark"
 
 //////////// VUVUZELA
@@ -219,6 +233,7 @@ toxic - poisons
 /datum/projectile/energy_bolt/aoe
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "detain-projectile"
+	sname = "detain"
 	power = 20
 	cost = 50
 	dissipation_rate = 5
@@ -227,6 +242,7 @@ toxic - poisons
 	color_green = 165
 	color_blue = 0
 	max_range = 7 //slight range boost
+	damage_type = D_SPECIAL
 
 	on_hit(atom/O, angle, var/obj/projectile/P)
 		//lets make getting hit by the projectile a bit worse than getting the shockwave
@@ -240,7 +256,7 @@ toxic - poisons
 
 	on_max_range_die(obj/projectile/O)
 		detonate(O, O)
-		
+
 	proc/detonate(atom/O, var/obj/projectile/P)
 		if (istype(O, /obj/projectile))
 			var/obj/projectile/proj = O
@@ -265,6 +281,7 @@ toxic - poisons
 	icon_state = "shockwave"
 
 	New(var/x_val, var/y_val)
+		..()
 		pixel_x = x_val
 		pixel_y = y_val
 		src.Scale(0.4,0.4)
@@ -290,28 +307,15 @@ toxic - poisons
 	shot_sound = 'sound/weapons/Taser.ogg'
 	damage_type = D_ENERGY
 	hit_ground_chance = 30
-	brightness = 0
+	brightness = 1
+	color_red = 0.18
+	color_green = 0.2
+	color_blue = 1
+
 	disruption = 8
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
-#if ASS_JAM
 
-	on_pointblank(var/obj/projectile/P, var/mob/living/M)
-		// var/dir = angle2dir(angle)
-		M.throw_at(get_edge_target_turf(M, get_dir(M, P)),7,1, throw_type = THROW_GUNIMPACT)
-		//When it hits a mob or such should anything special happen
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		// var/dir = angle2dir(angle)
-		var/dir = get_dir(hit, O.shooter)
-		var/pow = O.power
-		O.die()
-		if (ishuman(hit))
-			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = pow*3, weakened = 0, stunned = 0, disorient = pow*4, remove_stamina_below_zero = 0)
-			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
-			H.emote("twitch_v")
-			H.changeStatus("slowed", 3 SECONDS)
-#else
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		// var/dir = angle2dir(angle)
 		M.throw_at(get_edge_target_turf(M, get_dir(P, M)),7,1, throw_type = THROW_GUNIMPACT)
@@ -329,7 +333,6 @@ toxic - poisons
 			H.emote("twitch_v")
 			H.changeStatus("slowed", 3 SECONDS)
 
-#endif
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)
 		return
 

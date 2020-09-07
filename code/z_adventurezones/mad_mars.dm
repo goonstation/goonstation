@@ -305,12 +305,13 @@
 	name = "Inactive Robot"
 	desc = "It looks like it hasn't been in service for decades."
 	icon_state = "mars_bot"
+	death_text = "%src% collapses!"
 	density = 1
 	health = 55
 	aggressive = 1
 	defensive = 1
 	wanderer = 0
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1
@@ -386,12 +387,7 @@
 
 	CritterDeath()
 		if (!src.alive) return
-		src.icon_state += "-dead"
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> collapses!")
+		..()
 		playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1)
 		speak("aaaaaaalkaAAAA##AAAAAAAAAAAAAAAAA'ERRAAAAAAAA!!!")
 
@@ -697,7 +693,7 @@
 	desc = "A 2030's-era security robot. Uh oh."
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mars_sec_bot"
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atksilicon = 1
 	var/overheat = 0
 	var/datum/projectile/my_bullet = new/datum/projectile/bullet/revolver_38

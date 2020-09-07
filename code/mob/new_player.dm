@@ -42,22 +42,8 @@ mob/new_player
 			keyd = mind.key
 
 		new_player_panel()
-		var/starting_loc
-		if (newplayer_start.len > 0)
-			starting_loc = pick(newplayer_start)
-		else
-			starting_loc = locate(1,1,1)
-		src.set_loc(starting_loc)
+		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
-		var/list/watch_locations = list()
-		for(var/obj/landmark/landmark in landmarks)//world)
-			if(landmark.tag == "landmark*new_player")
-				watch_locations += landmark.loc
-
-			LAGCHECK(LAG_REALTIME)
-
-		if(watch_locations.len>0)
-			loc = pick(watch_locations)
 
 		if (src.ckey && !adminspawned)
 			if (spawned_in_keys.Find("[src.ckey]"))
@@ -69,7 +55,7 @@ mob/new_player
 
 					close_spawn_windows()
 					boutput(src, "<span class='notice'>Now teleporting.</span>")
-					var/ASLoc = pick(observer_start)
+					var/ASLoc = pick_landmark(LANDMARK_OBSERVER)
 					if (ASLoc)
 						observer.set_loc(ASLoc)
 					else
@@ -107,7 +93,7 @@ mob/new_player
 			qdel(src)
 
 		// Given below call, not much reason to do this if pregameHTML wasn't set
-		if (pregameHTML && src.last_client)
+		if (pregameHTML && isclient(src.last_client))
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
@@ -163,8 +149,11 @@ mob/new_player
 		if(current_state <= GAME_STATE_PREGAME)
 			statpanel("Lobby")
 			if(client.statpanel=="Lobby" && ticker)
-				for(var/mob/new_player/player in mobs)
-					if (player.client && player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
+				for (var/client/C)
+					var/mob/new_player/player = C.mob
+					if (!istype(player)) continue
+
+					if (player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
 						if (client.holder) // are we an admin?
 							stat("[player.key] (as [player.client.fakekey])", (player.ready)?("(Playing)"):(null)) // give us the full deets
 						else // are we not an admin?
@@ -184,13 +173,14 @@ mob/new_player
 
 		if(href_list["observe"])
 			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+				if(!src.client) return
 				var/mob/dead/observer/observer = new()
 
 				src.spawning = 1
 
 				close_spawn_windows()
 				boutput(src, "<span class='notice'>Now teleporting.</span>")
-				var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+				var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 				if (ASLoc)
 					observer.set_loc(ASLoc)
 				else
@@ -264,8 +254,6 @@ mob/new_player
 			return 0
 		if (!JOB || !istype(JOB,/datum/job/) || JOB.limit == 0)
 			return 0
-		if((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && istype(JOB,/datum/job/command/))
-			return 0
 		if (!JOB.no_jobban_from_this_job && jobban_isbanned(src,JOB.name))
 			return 0
 		if (JOB.requires_whitelist)
@@ -273,6 +261,10 @@ mob/new_player
 				return 0
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0
+		if (JOB.rounds_needed_to_play && (src.client && src.client.player))
+			var/round_num = src.client.player.get_rounds_participated()
+			if (!isnull(round_num) && round_num < JOB.rounds_needed_to_play) //they havent played enough rounds!
+				return 0
 		if (JOB.limit < 0 || countJob(JOB.name) < JOB.limit)
 			return 1
 		return 0
@@ -309,34 +301,34 @@ mob/new_player
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
+			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
+				boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
+				//As with the Stowaway trait, location setting is handled elsewhere.
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
 			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
-				if (ishuman(character) && rp_latejoin && rp_latejoin.len)
-					starting_loc = pick(rp_latejoin)
+				if (ishuman(character) && by_type[/obj/cryotron])
+					starting_loc = pick(by_type[/obj/cryotron])
 
 				if (istype(starting_loc))
 					starting_loc.add_person_to_queue(character, JOB)
 				else
-					starting_loc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
+					starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
 					character.set_loc(starting_loc)
 			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_MISSILE)
-				var/list/spawns = list()
-				for(var/obj/landmark/latejoin_missile/L in landmarks)
-					spawns += L
-				var/obj/landmark/latejoin_missile/L = pick(spawns)
 				var/obj/arrival_missile/M = unpool(/obj/arrival_missile)
-				M.loc = L.loc
-				SPAWN_DBG(0) M.lunch(character, L.dir)
+				var/turf/T = pick_landmark(LANDMARK_LATEJOIN_MISSILE)
+				var/missile_dir = landmarks[LANDMARK_LATEJOIN_MISSILE][T]
+				M.set_loc(T)
+				SPAWN_DBG(0) M.lunch(character, missile_dir)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
 					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
 					return AttemptLateSpawn(new /datum/job/special/tourist)
-				var/starting_loc = pick(battle_royale_spawn)
-				character.set_loc(starting_loc)
+				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 				equip_battler(character)
 				character.mind.assigned_role = "MODE"
 				character.mind.special_role = "battler"
@@ -345,7 +337,7 @@ mob/new_player
 				battlemode.battle_shuttle_spawn(character.mind)
 			else
 				var/starting_loc = null
-				starting_loc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
+				starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(round(world.maxx / 2), round(world.maxy / 2), 1))
 				character.set_loc(starting_loc)
 
 			if (isliving(character))
@@ -379,7 +371,9 @@ mob/new_player
 					logTheThing("debug", character, null, "<b>Late join:</b> added player to ticker.minds.")
 					ticker.minds += character.mind
 				logTheThing("debug", character, null, "<b>Late join:</b> assigned job: [JOB.name]")
-
+				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
+				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
+					participationRecorder.record(character.mind.ckey)
 			SPAWN_DBG (0)
 				qdel(src)
 
@@ -402,13 +396,16 @@ mob/new_player
 				// 0 slots, nobody in it, don't show it
 				return
 
+			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
+			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
+				c = limit
+
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
 			var/shown = min(max(c, (limit == -1 ? 99 : limit)), maxslots)
-
 			// if there's still an open space, show a final join link
-			if (limit == -1 || (limit > maxslots && c < J.limit))
+			if (limit == -1 || (limit > maxslots && c < limit))
 				slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
 
 			// show slots up to the limit
@@ -418,7 +415,7 @@ mob/new_player
 
 			return {"
 				<tr><td class='latejoin-link'>
-					[(J.limit == -1 || c < J.limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
+					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
 					</td>
 					<td class='latejoin-cards'>[jointext(slots, " ")]</td>
 				</tr>
@@ -590,14 +587,14 @@ a.latejoin-card:hover {
 
 		src.spawning = 1
 
-		if(latejoin.len == 0)
+		if(!(LANDMARK_LATEJOIN in landmarks))
 			// the middle of the map is GeNeRaLlY part of the actual station. moreso than 1,1,1 at least
 			var/midx = round(world.maxx / 2)
 			var/midy = round(world.maxy / 2)
 			boutput(world, "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)")
 			src.set_loc(locate(midx,midy,1))
 		else
-			src.set_loc(pick(latejoin))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 		var/mob/new_character = null
 		if (J)
@@ -816,6 +813,7 @@ a.latejoin-card:hover {
 		set name = ".observe_round"
 
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+			if(!src.client) return
 			var/mob/dead/observer/observer = new()
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
 				src.client.using_antag_token = 0
@@ -824,7 +822,7 @@ a.latejoin-card:hover {
 
 			close_spawn_windows()
 			boutput(src, "<span class='notice'>Now teleporting.</span>")
-			var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (ASLoc)
 				observer.set_loc(ASLoc)
 			observer.apply_looks_of(client)

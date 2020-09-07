@@ -12,8 +12,6 @@
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = 3.0
-
-		//cogwerks - burn vars
 	burn_point = 2500
 	burn_output = 2500
 	burn_possible = 1
@@ -74,8 +72,8 @@
 	throw_range = 4
 	w_class = 4.0
 	desc = "A fancy synthetic leather-bound briefcase, capable of holding a number of small objects, with style."
-	stamina_damage = 35
-	stamina_cost = 30
+	stamina_damage = 40
+	stamina_cost = 17
 	stamina_crit_chance = 10
 	spawn_contents = list(/obj/item/paper = 2,/obj/item/pen)
 	// Don't use up more slots, certain job datums put items in the briefcase the player spawns with.

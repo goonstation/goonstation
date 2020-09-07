@@ -22,16 +22,16 @@
 		..()
 		icon_state = "[src.icon_tag]_deployer"
 
-	get_desc(dist)
+	get_desc()
 		. = "<br><span class='notice'>It looks [damage_words]</span>"
 
 
 	attack_self(mob/user as mob)
 		user.show_message("You assemble the turret parts.")
-		src.loc = get_turf(user)
+		src.set_loc(get_turf(user))
 		src.spawn_turret(user.dir)
 		user.u_equip(src)
-		src.loc = get_turf(user)
+		src.set_loc(get_turf(user))
 		qdel(src)
 
 	proc/spawn_turret(var/direct)
@@ -51,8 +51,7 @@
 		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
 	*/
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from)
-		..(target,range,speed)
+	throw_end(list/params, turf/thrown_from)
 		if(src.quick_deploy_fuel > 0)
 			var/turf/thrown_to = get_turf(src)
 			var/spawn_direction = get_dir(thrown_to,thrown_from)
@@ -111,8 +110,7 @@
 
 		var/matrix/M = matrix()
 		src.transform = M.Turn(src.external_angle)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		if(active)
 			set_projectile()
 
@@ -165,11 +163,12 @@
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 							flick("[src.icon_tag]_fire",src)
 							sleep(src.current_projectile.shot_delay)
+							muzzle_flash_any(src, get_angle(src,target), "muzzle_flash")
 					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/weldingtool) && !(src.active))
+		if (isweldingtool(W) && !(src.active))
 			var/turf/T = user.loc
 			if(!W:try_weld(user, 1))
 				return
@@ -180,7 +179,6 @@
 
 				if ((user.loc == T && user.equipped() == W))
 					user.show_message("You unweld the turret from the floor.")
-					W:eyecheck(user)
 					src.anchored = 0
 
 
@@ -194,7 +192,6 @@
 
 				if ((user.loc == T && user.equipped() == W))
 					user.show_message("You weld the turret to the floor.")
-					W:eyecheck(user)
 					src.anchored = 1
 
 
@@ -202,7 +199,7 @@
 					user.show_message("You weld the turret to the floor.")
 					src.anchored = 1
 
-		else if (istype(W, /obj/item/weldingtool) && (src.active))
+		else if (isweldingtool(W) && (src.active))
 			var/turf/T = user.loc
 			if (src.health >= max_health)
 				user.show_message("<span class='notice'>The turret is already fully repaired!.</span>")
@@ -215,7 +212,6 @@
 			sleep(2 SECONDS)
 
 			if ((user.loc == T && user.equipped() == W))
-				W:eyecheck(user)
 				user.show_message("You repair some of the damage on the turret.")
 				src.health = min(src.max_health, (src.health + 10))
 				src.check_health()
@@ -360,6 +356,7 @@
 		//deployer.emagged = src.emagged
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
+		deployer.tooltip_rebuild = 1
 		return deployer
 
 

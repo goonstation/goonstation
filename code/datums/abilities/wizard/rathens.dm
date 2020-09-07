@@ -31,5 +31,5 @@
 			smoke.set_up(5, 0, H:loc)
 			smoke.attach(H)
 			smoke.start()
-			ass_explosion(H, 1, 7)
+			ass_explosion(H, 1, 100)
 // See bigfart.dm for the ass_explosion() proc. The third value represents the probability of limb loss in percent.

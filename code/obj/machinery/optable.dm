@@ -103,7 +103,7 @@
 	if (!ismob(O))
 		boutput(user, "<span class='alert'>You can't put that on the operating table!</span>")
 		return
-	if (iscritter(O))
+	if (ismobcritter(O))
 		boutput(user, "<span class='alert'>You don't know how to operate on this. You never went to vet school!</span>")
 		return
 	if (!ishuman(O))

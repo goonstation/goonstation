@@ -6,6 +6,9 @@
 #define SPAWN_FISH 4
 #define SPAWN_LOOT 8
 #define SPAWN_PLANTSMANTA 16
+#define SPAWN_TRILOBITE 32
+#define SPAWN_HALLU 64
+
 
 /turf/proc/make_light() //dummyproc so we can inherit
 	.=0
@@ -18,7 +21,7 @@
 	pathable = 0
 	mat_changename = 0
 	mat_changedesc = 0
-	fullbright = 1
+	fullbright = 0
 	luminosity = 1
 	intact = 0 //allow wire laying
 	throw_unlimited = 0
@@ -73,6 +76,13 @@
 			// maybe should be converted to this everywhere?
 			worldgenCandidates += src //Adding self to possible worldgen turfs
 
+		if(current_state > GAME_STATE_WORLD_INIT)
+			for(var/dir in cardinal)
+				var/turf/T = get_step(src, dir)
+				if(T.ocean_canpass() && !istype(T, /turf/space))
+					src.tilenotify(T)
+					break
+
 		//globals defined in fluid_spawner
 		#ifdef UNDERWATER_MAP
 		#else
@@ -90,7 +100,12 @@
 						break
 
 		if (generateLight)
-			light_generating_fluid_turfs.Add(src)
+			START_TRACKING_CAT(TR_CAT_LIGHT_GENERATING_TURFS)
+
+	Del()
+		. = ..()
+		if (generateLight)
+			STOP_TRACKING_CAT(TR_CAT_LIGHT_GENERATING_TURFS)
 
 	make_light()
 		if (!light)
@@ -118,7 +133,7 @@
 			light.enable()
 
 //space/fluid/ReplaceWith() this is for future ctrl Fs
-	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = 1)
+	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = 1, force = 0)
 		.= ..(what, keep_old_material, handle_air)
 
 		if (handle_air)
@@ -156,9 +171,9 @@
 				P.initialize()
 
 		if(spawningFlags & SPAWN_FISH) //can spawn bad fishy
-			if (src.z == 5 && prob(1) && prob(7))
+			if (src.z == 5 && prob(1) && prob(2))
 				new /obj/critter/gunbot/drone/buzzdrone/fish(src)
-			else if (src.z == 5 && prob(1) && prob(4.5))
+			else if (src.z == 5 && prob(1) && prob(4))
 				new /obj/critter/gunbot/drone/gunshark(src)
 			else if (prob(1) && prob(20))
 				var/mob/fish = pick(childrentypesof(/mob/living/critter/aquatic/fish))
@@ -175,6 +190,18 @@
 				if (O)
 					O.initialize()
 
+		if(spawningFlags & SPAWN_TRILOBITE)
+			if (prob(17))
+				new /obj/overlay/tile_effect/cracks/spawner/trilobite(src)
+			if (prob(2))
+				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
+
+		if(spawningFlags & SPAWN_HALLU)
+			if (prob(1) && prob(16))
+				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
+			else if (prob(1) && prob(18))
+				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
+
 		if (spawningFlags & SPAWN_LOOT)
 			if (prob(1) && prob(9))
 				var/obj/storage/crate/trench_loot/C = pick(childrentypesof(/obj/storage/crate/trench_loot))
@@ -189,11 +216,9 @@
 	tilenotify(turf/notifier)
 		if (istype(notifier, /turf/space)) return
 		if(notifier.ocean_canpass())
-			if (!(src in processing_fluid_turfs))
-				processing_fluid_turfs.Add(src)
+			processing_fluid_turfs |= src
 		else
-			if (src in processing_fluid_turfs)
-				processing_fluid_turfs.Remove(src)
+			if (processing_fluid_turfs.Remove(src))
 				if (src.light)
 					src.light.disable()
 
@@ -208,10 +233,10 @@
 		//	if(O.burning && prob(40))
 		//		O.burning = 0
 
-	proc/force_mob_to_ingest(var/mob/M)//called when mob is drowning
+	proc/force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning
 		if (!M) return
 
-		var/react_volume = 50
+		var/react_volume = 50 * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 			M.reagents.add_reagent(ocean_reagent_id, react_volume) //todo : maybe add temp var here too
@@ -250,7 +275,7 @@
 	generateLight = 0
 
 	color = OCEAN_COLOR
-	fullbright = 1
+	// fullbright = 1
 
 	edge
 		icon_state = "pit_wall"
@@ -309,7 +334,7 @@
 	fullbright = 0
 	luminosity = 1
 	generateLight = 0
-	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT
+	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
 
 /turf/space/fluid/nospawn
 	spawningFlags = null
@@ -389,18 +414,17 @@
 	Entered(atom/movable/A as mob|obj)
 		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 			return ..()
-		if (icefall.len)
-			var/turf/T = pick(seafall)
-			if (isturf(T))
-				visible_message("<span class='alert'>[A] falls down [src]!</span>")
-				if (ismob(A))
-					var/mob/M = A
-					random_brute_damage(M, 25)
-					M.changeStatus("weakened", 5 SECONDS)
-					M.emote("scream")
-					playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
-				A.set_loc(T)
-				return
+		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
+		if (isturf(T))
+			visible_message("<span class='alert'>[A] falls down [src]!</span>")
+			if (ismob(A))
+				var/mob/M = A
+				random_brute_damage(M, 25)
+				M.changeStatus("weakened", 5 SECONDS)
+				M.emote("scream")
+				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+			A.set_loc(T)
+			return
 		else ..()
 
 /obj/machinery/computer/sea_elevator

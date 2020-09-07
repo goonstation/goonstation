@@ -29,7 +29,7 @@
 /mob/dead/process_move(keys)
 	if (!istype(src.loc,/turf)) //Pop observers and Follow-Thingers out!!
 		var/mob/dead/O = src
-		O.loc = get_turf(src)
+		O.set_loc(get_turf(src))
 	. = ..()
 
 /mob/dead/projCanHit(datum/projectile/P)
@@ -49,6 +49,9 @@
 	if (src.client && src.client.ismuted())
 		boutput(src, "You are currently muted and may not speak.")
 		return
+
+	if(src?.client?.preferences.auto_capitalization)
+		message = capitalize(message)
 
 	. = src.say_dead(message)
 

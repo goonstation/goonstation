@@ -4,7 +4,7 @@ var/can_pray = 0
 
 /client/proc/become_god(godName as text)
 	set name = "Become God"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "(\"godly name\") Enter a godly name. (Type nothing for a random name)"
 
 	if(!(usr.client in god_list))
@@ -35,7 +35,7 @@ var/can_pray = 0
 
 /client/proc/revoke_god()
 	set name = "Revoke God"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 
 	if(usr.client in god_list)
 		god_list -= usr.client
@@ -51,7 +51,7 @@ var/can_pray = 0
 
 /client/proc/check_gods()
 	set name = "Check Gods"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 
 	if(!length(god_list))
 		boutput(usr, "There are no gods.")

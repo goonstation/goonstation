@@ -117,7 +117,7 @@
 		LAGCHECK(LAG_HIGH)
 		if (!C)
 			continue
-		if (!iscarbon(C) && !iscritter(C))
+		if (!iscarbon(C) && !ismobcritter(C))
 			continue
 		if (isdead(C))
 			continue
@@ -145,7 +145,7 @@
 	for(var/atom/AT in A)
 		var/mob/living/C = AT
 		if( istype(C) )
-			if (!iscarbon(C) && !iscritter(C))
+			if (!iscarbon(C) && !ismobcritter(C))
 				continue
 			if (isdead(C))
 				continue
@@ -197,9 +197,11 @@
 		if (src.lasers)
 			use_power(200)
 			shoot_projectile_ST(src, lethal, U)
+			muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_laser")
 		else
 			use_power(100)
 			shoot_projectile_ST(src, stun, U)
+			muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_elec")
 
 
 	return
@@ -229,7 +231,8 @@
 
 /obj/machinery/turret/ex_act(severity)
 	if(severity < 3)
-		src.die()
+		SPAWN_DBG(0)
+			src.die()
 
 /obj/machinery/turret/emp_act()
 	..()
@@ -337,7 +340,7 @@
 	icon_state = "ai3"
 	anchored = 1
 	density = 0
-	plane = PLANE_NOSHADOW_BELOW
+	plane = PLANE_NOSHADOW_ABOVE
 	var/enabled = 1
 	var/lethal = 0
 	var/locked = 1
@@ -380,13 +383,10 @@
 			return
 
 	src.add_dialog(user)
-	var/loc = src.loc
-	if (istype(loc, /turf))
-		loc = loc:loc
-	if (!istype(loc, /area))
-		logTheThing("debug", null, null, "Turret badly positioned - loc.loc is [loc].")
+	var/area/area = get_area(src)
+	if (!istype(area))
+		logTheThing("debug", null, null, "Turret badly positioned.")
 		return
-	var/area/area = loc
 	var/t = "<TT><B>Turret Control Panel</B> ([area.name])<HR>"
 
 	if(!src.emagged && turretsExist)
@@ -476,13 +476,10 @@
 		else
 			icon_state = "ai0"
 
-		var/loc = src.loc
-		if (istype(loc, /turf))
-			loc = loc:loc
-		if (!istype(loc, /area))
-			logTheThing("debug", null, null, "Turret badly positioned - loc.loc is [loc].")
+		var/area/area = get_area(src)
+		if (!istype(area))
+			logTheThing("debug", null, null, "Turret badly positioned.")
 			return
-		var/area/area = loc
 		turretsExist = 0
 		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(area))
 			aTurret.setState(enabled, lethal)

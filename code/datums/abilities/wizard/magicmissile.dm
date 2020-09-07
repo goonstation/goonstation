@@ -26,7 +26,7 @@
 		holder.owner.say("ICEE BEEYEM")
 		..()
 
-		if(!holder.owner.wizard_spellpower())
+		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
 		for (var/mob/living/M as mob in oview())
@@ -40,7 +40,7 @@
 				continue
 
 			playsound(holder.owner.loc, "sound/effects/mag_magmislaunch.ogg", 25, 1, -1)
-			if ((!holder.owner.wizard_spellpower() && mob_count2 >= 1) || (mob_count2 >= mob_limit)) break
+			if ((!holder.owner.wizard_spellpower(src) && mob_count2 >= 1) || (mob_count2 >= mob_limit)) break
 			mob_count2++
 			SPAWN_DBG(0)
 				var/obj/overlay/A = new /obj/overlay(holder.owner.loc)

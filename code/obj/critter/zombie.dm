@@ -7,7 +7,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -15,6 +15,7 @@
 	brutevuln = 0.5
 	butcherable = 1
 	chase_text = "slams into"
+	is_pet = 0
 
 	var/punch_damage_max = 9
 	var/punch_damage_min = 3
@@ -84,8 +85,8 @@
 
 	CritterAttack(mob/living/M)
 		src.attacking = 1
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		if(istype(M,/obj/critter))
 			var/obj/critter/C = M
@@ -115,7 +116,8 @@
 				SPAWN_DBG(0)
 					M:changeStatus("paralysis", 2 SECONDS)
 					step_away(M,src,15)
-					SPAWN_DBG(0.3 SECONDS) step_away(M,src,15)
+					sleep(0.3 SECONDS)
+					step_away(M,src,15)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 		else
@@ -228,14 +230,12 @@
 				src.attacking = 0
 
 	CritterDeath()
-		src.alive = 0
+		..()
+		if (istype(src, /obj/critter/zombie/h7)) return //special death
+		gibs(src.loc) //cmon let's let them really make a mess
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
-		var/obj/decal/cleanable/blood/gibs/gib = null
-		gib = make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)
-		if (prob(30))
-			gib.icon_state = "gibup1"
-		gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
 		qdel (src)
+
 
 /obj/critter/zombie/scientist
 	name = "Shambling Scientist"
@@ -263,12 +263,6 @@
 			src.CritterAttack(M)
 		return
 
-	CritterDeath()
-		src.alive = 0
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
-		gibs(src.loc)
-		qdel (src)
-
 /obj/critter/zombie/h7
 	name = "Biosuit Shambler"
 	desc = "This does not reassure one about biosuit reliability."
@@ -285,7 +279,7 @@
 		return
 
 	CritterDeath()
-		src.alive = 0
+		..()
 		src.visible_message("<span class='alert'>Black mist flows from the broken suit!</span>")
 		playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 
@@ -340,9 +334,6 @@
 		M.changeStatus("radiation", 80, 4)
 
 	CritterDeath()
+		..()
 		src.remove_simple_light("rad")
-		src.alive = 0
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
-		gibs(src.loc)
 		make_cleanable( /obj/decal/cleanable/greenglow,src.loc)
-		qdel (src)

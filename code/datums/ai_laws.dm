@@ -137,3 +137,25 @@
 			number++
 
 	return laws
+
+/datum/ai_laws/proc/format_for_logs()
+	var/list/laws = list()
+
+	if (src.zeroth)
+		laws += "<br>0. [src.zeroth]"
+
+	var/number = 1
+	for (var/index = 1, index <= src.inherent.len, index++)
+		var/law = src.inherent[index]
+
+		if (length(law) > 0)
+			laws += "<br>[number]. [law]"
+			number++
+
+	for (var/index = 1, index <= src.supplied.len, index++)
+		var/law = src.supplied[index]
+		if (length(law) > 0)
+			laws += "<br>[number]. [law]"
+			number++
+
+	return laws.Join()

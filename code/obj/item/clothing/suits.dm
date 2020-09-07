@@ -536,6 +536,7 @@
 	burn_possible = 1
 	health = 20
 	rand_pos = 0
+	block_vision = 1
 
 	setupProperties()
 		..()
@@ -651,6 +652,7 @@
 			src.Bed.untuck_sheet()
 		src.Bed = null
 		src.eyeholes = 1
+		block_vision = 0
 		src.update_icon()
 		desc = "It's a bedsheet with eye holes cut in it."
 
@@ -661,6 +663,7 @@
 			src.Bed.untuck_sheet()
 		src.Bed = null
 		src.cape = 1
+		block_vision = 0
 		src.update_icon()
 		desc = "It's a bedsheet that's been tied into a cape."
 
@@ -671,6 +674,7 @@
 			src.Bed.untuck_sheet()
 		src.Bed = null
 		src.cape = 0
+		block_vision = !src.eyeholes
 		src.update_icon()
 		desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
 
@@ -740,72 +744,62 @@
 	item_state = "bedcape"
 	cape = 1
 	over_back = 1
+	block_vision = 0
 
 /obj/item/clothing/suit/bedsheet/cape/red
 	icon_state = "bedcape-red"
 	item_state = "bedcape-red"
 	bcolor = "red"
-	cape = 1
 
 /obj/item/clothing/suit/bedsheet/cape/orange
 	icon_state = "bedcape-orange"
 	item_state = "bedcape-orange"
 	bcolor = "orange"
-	cape = 1
 
 /obj/item/clothing/suit/bedsheet/cape/yellow
 	icon_state = "bedcape-yellow"
 	item_state = "bedcape-yellow"
 	bcolor = "yellow"
-	cape = 1
 
 /obj/item/clothing/suit/bedsheet/cape/green
 	icon_state = "bedcape-green"
 	item_state = "bedcape-green"
 	bcolor = "green"
-	cape = 1
 
 /obj/item/clothing/suit/bedsheet/cape/blue
 	icon_state = "bedcape-blue"
 	item_state = "bedcape-blue"
 	bcolor = "blue"
-	cape = 1
 
 /obj/item/clothing/suit/bedsheet/cape/pink
 	icon_state = "bedcape-pink"
 	item_state = "bedcape-pink"
 	bcolor = "pink"
-	cape = 1
 
 /obj/item/clothing/suit/bedsheet/cape/black
 	icon_state = "bedcape-black"
 	item_state = "bedcape-black"
 	bcolor = "black"
-	cape = 1
 
 /obj/item/clothing/suit/bedsheet/cape/hop
 	icon_state = "bedcape-hop"
 	item_state = "bedcape-hop"
 	bcolor = "hop"
-	cape = 1
 
 /obj/item/clothing/suit/bedsheet/cape/captain
 	icon_state = "bedcape-captain"
 	item_state = "bedcape-captain"
 	bcolor = "captain"
-	cape = 1
 
 /obj/item/clothing/suit/bedsheet/cape/royal
 	icon_state = "bedcape-royal"
 	item_state = "bedcape-royal"
 	bcolor = "royal"
-	cape = 1
 
 /obj/item/clothing/suit/bedsheet/cape/psych
 	icon_state = "bedcape-psych"
 	item_state = "bedcape-psych"
 	bcolor = "psych"
-	cape = 1
 
 // FIRE SUITS
 
@@ -1436,10 +1430,9 @@
 
 	setupProperties()
 		..()
-		setProperty("coldprot", 15)
-		setProperty("heatprot", 15)
-		setProperty("meleeprot", 0.5)
-		setProperty("rangedprot", 0.5)
+		setProperty("coldprot", 5)
+		setProperty("heatprot", 5)
+		setProperty("meleeprot", 2)
 
 /obj/item/clothing/suit/nursedress
 	name = "nurse dress"

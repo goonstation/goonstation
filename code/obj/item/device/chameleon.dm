@@ -77,6 +77,7 @@
 	var/obj/overlay/anim = null //The toggle animation overlay will also be retained
 	var/obj/dummy/chameleon/cham = null //No sense creating / destroying this
 	var/active = 0
+	tooltip_flags = REBUILD_DIST
 
 	is_syndicate = 1
 	mats = 14
@@ -136,6 +137,7 @@
 			cham.icon_state = target.icon_state
 			cham.dir = target.dir
 			can_use = 1
+			tooltip_rebuild = 1
 		else
 			user.show_text("\The [target] is not compatible with the scanner.", "red")
 
@@ -151,12 +153,12 @@
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
-			cham.loc = src
+			cham.set_loc(src)
 			boutput(usr, "<span class='notice'>You deactivate the [src].</span>")
-			anim.loc = get_turf(src)
+			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
 			SPAWN_DBG (8)
-				anim.loc = src //Back in the box with ye
+				anim.set_loc(src)
 		else
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
 				boutput(usr, "<span class='alert'>As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector.</span>")
@@ -169,24 +171,23 @@
 			src.active = 1
 
 			boutput(usr, "<span class='notice'>You activate the [src].</span>")
-			anim.loc = get_turf(src)
+			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
 			SPAWN_DBG (8)
-				anim.loc = src //Back in the box with ye
+				anim.set_loc(src)
 
 	proc/disrupt()
 		if (active)
 			active = 0
-			var/datum/effects/system/spark_spread/spark_system = unpool(/datum/effects/system/spark_spread)
-			spark_system.set_up(5, 0, src)
-			spark_system.attach(src)
-			spark_system.start()
+			elecflash(src)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
-			cham.loc = src
+			cham.set_loc(src)
 			can_use = 0
+			tooltip_rebuild = 1
 			SPAWN_DBG (100)
 				can_use = 1
+				tooltip_rebuild = 1
 
 /obj/item/device/chameleon/bomb
 	name = "chameleon bomb"
@@ -272,8 +273,5 @@
 
 	disrupt()
 		if (active)
-			var/datum/effects/system/spark_spread/spark_system = unpool(/datum/effects/system/spark_spread)
-			spark_system.set_up(5, 0, src)
-			spark_system.attach(src)
-			spark_system.start()
+			elecflash(src)
 			src.blowthefuckup(src.strength)

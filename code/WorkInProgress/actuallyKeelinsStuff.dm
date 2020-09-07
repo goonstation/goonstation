@@ -266,17 +266,6 @@ Returns:
 
 	return
 
-var/list/electiles = list()
-
-/proc/electile(numb as num)
-	for(var/X in electiles)
-		del(X)
-	for(var/turf/T in view())
-		var/obj/overlay/O = new(T)
-		O.icon = icon('icons/effects/electile.dmi')
-		O.icon_state = "v[numb][pick("a","b","c")]"
-		electiles.Add(O)
-
 /proc/testburning()
 	for(var/i=0, i<5, i++)
 		var/atom/A = null
@@ -314,6 +303,7 @@ var/list/electiles = list()
 		src.filters += filter(type="layer", render_source="*portaltrg")
 
 	New()
+		..()
 		SPAWN_DBG(50) setup()
 
 /atom/proc/cabinetGlassIcon(var/atom/A, var/targetWidth = 12, var/targetHeight= 10, var/iconSize = 32)
@@ -459,8 +449,8 @@ var/list/electiles = list()
 	if(trgX && trgY && trgZ)
 		var/startTime = world.timeofday
 		var/dmm_suite/D = new/dmm_suite()
-		if(loaded && lentext(loaded))
-			usr.loc = locate(trgX,trgY,trgZ)
+		if(loaded && length(loaded))
+			usr.set_loc(locate(trgX,trgY,trgZ))
 			D.read_map(loaded,trgX,trgY,trgZ)
 			boutput(usr, "<span class='alert'>LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC</span>")
 		else
@@ -641,7 +631,7 @@ var/list/electiles = list()
 
 	outer:
 		for(var/area/A as area in world) //Might want to do this manually instead.
-			if(A.type == /area)
+			if(area_space_nopower(A))
 				continue
 
 			for(var/X in ignoreAreas)
@@ -788,7 +778,7 @@ var/list/electiles = list()
 	opacity = 0
 
 /datum/admins/proc/camtest()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Test Cinematic camera"
 	set desc="Test Cinematic camera"
 
@@ -901,7 +891,7 @@ var/list/electiles = list()
 			source_loc = source.loc
 			client = source.client
 			if(remove_source)
-				source.loc = src
+				source.set_loc(src)
 			if(freeze_source)
 				source.nodamage = 1
 				source.canmove = 0
@@ -909,7 +899,7 @@ var/list/electiles = list()
 		return
 
 	proc/stop()
-		source.loc = source_loc
+		source.set_loc(source_loc)
 		source.client = client
 		source.client.pixel_x = 0
 		source.client.pixel_y = 0
@@ -1024,7 +1014,7 @@ var/list/electiles = list()
 	icon_state = "sabre"
 	anchored = 1
 	New(var/obj/item/experimental/melee/spear/S,var/atom/location)
-		src.loc = location
+		src.set_loc(location)
 		var/image/I = image(S)
 		I.appearance_flags = 0
 		src.overlays += image(S)
@@ -1051,7 +1041,7 @@ var/list/electiles = list()
 			if(beam)
 				if(last != get_turf(over_object))
 					last = get_turf(over_object)
-					beam.loc = get_turf(src)
+					beam.set_loc(get_turf(src))
 					animate(beam, transform=beam.transform, time=1)//, flags=ANIMATION_LINEAR_TRANSFORM)
 					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-get_dist(get_turf(src),get_turf(over_object)), 2))
 		return
@@ -1138,6 +1128,7 @@ var/list/electiles = list()
 	icon_y_off = 29
 
 	New(var/obj/item/experimental/melee/dagger/D, var/mob/U, var/atom/T)
+		..()
 		if(!D || !U || !T)
 			interrupt(INTERRUPT_ALWAYS)
 		else
@@ -1556,6 +1547,7 @@ var/list/electiles = list()
 	density = 1
 
 	New()
+		..()
 		setMaterial(getMaterial("slag"))
 		name = "Statue of Dr.Floorpills"
 
@@ -1607,7 +1599,7 @@ var/list/electiles = list()
 			call(procpath)(arglist(argcopy))
 
 /datum/admins/proc/pixelexplosion()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Pixel animation mode"
 	set desc="Enter pixel animation mode"
 	alert("Due to me being a lazy fuck you have to close & reopen your client to exit this mode. ITS A DEBUG THING OKAY")
@@ -1648,7 +1640,7 @@ var/list/electiles = list()
 				var/actX = A.pixel_x + x - 1
 				var/actY = A.pixel_y + y - 1
 				var/obj/apixel/P = unpool(/obj/apixel)
-				P.loc = A.loc
+				P.set_loc(A.loc)
 				P.pixel_x = actX
 				P.pixel_y = actY
 				P.color = color
@@ -2365,7 +2357,7 @@ var/list/electiles = list()
 
 /proc/gobuzz()
 	if(buzztile)
-		usr.loc = buzztile
+		usr.set_loc(buzztile)
 	return
 
 /obj/item/beamtest
@@ -2869,9 +2861,6 @@ var/list/electiles = list()
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "boomerang"
 
-	density = 0
-	opacity = 0
-	anchored = 1
 	contraband = 4
 
 	icon = 'icons/obj/items/weapons.dmi'
@@ -2894,7 +2883,7 @@ var/list/electiles = list()
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
@@ -2927,7 +2916,7 @@ var/list/electiles = list()
 		return ..(hit_atom)
 
 /proc/mod_color(var/atom/A)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Modify Icon"
 	set popup_menu = 0
 	var/list/options = list("Tint", "Invert Colors", "Change Alpha")
@@ -3019,7 +3008,7 @@ var/list/electiles = list()
 				return
 
 /client/proc/create_portal()
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Create Portal"
 	set popup_menu = 0
 
@@ -3145,6 +3134,7 @@ var/list/electiles = list()
 	icon_state = "r_wall"
 
 	New()
+		..()
 		update()
 
 	proc/update()
@@ -3434,6 +3424,7 @@ var/list/lag_list = new/list()
 		sleep(3 SECONDS)
 
 	New()
+		..()
 		build_base()
 		update()
 
@@ -3460,7 +3451,8 @@ var/list/lag_list = new/list()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		break_it()
 
-	hitby(atom/movable/AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		break_it()
 
@@ -3904,6 +3896,7 @@ var/list/lag_list = new/list()
 		return
 
 	New()
+		..()
 		for(var/D in typesof(/datum/engibox_mode) - /datum/engibox_mode)
 			modes += new D
 
@@ -3923,7 +3916,7 @@ var/list/lag_list = new/list()
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
 				user.loc.loc.Exited(user)
-				user.set_loc(pick(latejoin))
+				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			if("No")
 				return
 
@@ -4052,7 +4045,7 @@ var/list/lag_list = new/list()
 
 	if(high_range)
 	//Uses all cameras within viewrange + camera range, significantly slower
-		for(var/obj/machinery/camera/C in cameras)
+		for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 			if(C.z != src.z || get_dist(src, C) > (src.client.view + CAM_RANGE)) continue
 			visible = (visible | view(CAM_RANGE, C))
 	else

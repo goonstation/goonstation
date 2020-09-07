@@ -38,9 +38,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(60)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(60)
 
 		if (src.on) //if we spawned lit, do something about it!
 			src.on = 0
@@ -48,17 +46,17 @@
 
 		if (src.exploding)
 			if (src.flavor)
-				R.add_reagent(src.flavor, 5)
-			R.add_reagent("nicotine", 5)
+				reagents.add_reagent(src.flavor, 5)
+			reagents.add_reagent("nicotine", 5)
 			numpuffs = 5 //trickcigs burn out faster
 			return
 		else if (!src.nic_free)
-			R.add_reagent("nicotine", 40)
+			reagents.add_reagent("nicotine", 40)
 			if (src.flavor)
-				R.add_reagent(src.flavor, 20)
+				reagents.add_reagent(src.flavor, 20)
 				return
 		else if (src.flavor)
-			R.add_reagent(src.flavor, 40)
+			reagents.add_reagent(src.flavor, 40)
 			return
 
 	afterattack(atom/target, mob/user, flag) // copied from the propuffs
@@ -101,8 +99,7 @@
 				M.set_clothing_icon_dirty()
 			if(src && src.reagents)
 				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
-			if (!(src in processing_items))
-				processing_items.Add(src) // we have a nice scheduler let's use that instead tia
+			processing_items |= src
 
 			hit_type = DAMAGE_BURN
 
@@ -139,7 +136,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.on == 0)
-			if (istype(W, /obj/item/weldingtool) && W:welding)
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				return
 			else if (istype(W, /obj/item/sword) && W:active)
@@ -313,15 +310,13 @@
 		if (tlocation)
 			explosion(src, tlocation, 0, 1, 1, 2)
 		else
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src,power = 2)
 			playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
 		src.visible_message("<span class='alert'>The [src] explodes!</span>")
 
 		// Added (Convair880).
 		if (ismob(src.loc))
-			logTheThing("bombing", null, src.loc, "A trick cigarette (held/equipped by %target%) explodes at [log_loc(src)].")
+			logTheThing("bombing", null, src.loc, "A trick cigarette (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
 		else
 			logTheThing("bombing", src.fingerprintslast, null, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 
@@ -397,14 +392,12 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(30)
 
 		if(!flavor)
 			src.flavor = pick("rum","menthol","chocolate","coffee","juice_lemon","juice_orange","juice_lime","juice_peach","bourbon","vermouth","yuck","mucus")
 		src.name = "[reagent_id_to_name(src.flavor)]-flavoured blunt wrap"
-		R.add_reagent(src.flavor, 20)
+		reagents.add_reagent(src.flavor, 20)
 
 
 /obj/item/clothing/mask/cigarette/cigarillo
@@ -473,7 +466,7 @@
 		"cryoxadone","cryostylane","omnizine","jenkem","vomit","carpet","charcoal","blood","cheese","bilk","atropine",
 		"lexorin","teporone","mannitol","spaceacillin","saltpetre","anti_rad","insulin","gvomit","milk","colors","diluted_fliptonium",
 		"something","honey_tea","tea","coffee","chocolate","guacamole","juice_pickle","vanilla","enriched_msg","egg","aranesp",
-		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium")
+		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium", "synaptizine", "plasma", "morphine","oculine","CBD")
 		src.name = "[reagent_id_to_name(src.flavor)]-laced cigarette"
 		..()
 
@@ -489,9 +482,8 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(600)
-		reagents = R
-		R.my_atom = src
+		src.reagents.maximum_volume = 600
+		src.reagents.clear_reagents()
 
 	is_open_container()
 		return 1
@@ -600,8 +592,8 @@
 	icon_state = "cigbutt"
 	w_class = 1
 	throwforce = 1
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 
 /obj/item/cigarbox
@@ -622,6 +614,7 @@
 	rand_pos = 1
 
 /obj/item/cigarbox/New()
+	..()
 	src.update_icon()
 
 /obj/item/cigarbox/proc/update_icon()
@@ -761,8 +754,8 @@
 	w_class = 1
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 900
@@ -771,7 +764,7 @@
 	var/match_amt = 6 // -1 for infinite
 	rand_pos = 1
 
-	get_desc(dist)
+	get_desc()
 		if (src.match_amt == -1)
 			. += "There's a whole lot of matches left."
 		else if (src.match_amt >= 1)
@@ -789,6 +782,7 @@
 				user.put_in_hand_or_drop(W)
 				if (src.match_amt != -1)
 					src.match_amt --
+					tooltip_rebuild = 1
 			src.update_icon()
 		else
 			return ..()
@@ -839,8 +833,8 @@
 	w_class = 1
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 600
@@ -902,9 +896,7 @@
 		playsound(get_turf(user), "sound/items/matchstick_light.ogg", 50, 1)
 		light.enable()
 
-		if (!(src in processing_items))
-			processing_items.Add(src)
-		return
+		processing_items |= src
 
 	proc/put_out(var/mob/user as mob, var/break_it = 0)
 		src.on = -1
@@ -1049,10 +1041,8 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(100) //this is the max volume
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("fuel", 100)
+		src.create_reagents(100)
+		reagents.add_reagent("fuel", 100)
 
 		src.setItemSpecial(/datum/item_special/flame)
 		return
@@ -1072,8 +1062,7 @@
 				playsound(get_turf(user), 'sound/items/zippo_open.ogg', 30, 1)
 				light.enable()
 
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 			else
 				src.on = 0
 				set_icon_state(src.icon_off)
@@ -1173,10 +1162,14 @@
 				src.item_state = "zippo"
 				light.disable()
 
-				if (src in processing_items)
-					processing_items.Remove(src)
+				processing_items -= src
 				return
 			//sleep(1 SECOND)
+
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		if (exposed_temperature > 1000)
+			return ..()
+		return
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

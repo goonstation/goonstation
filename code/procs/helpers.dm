@@ -94,7 +94,7 @@ var/global/obj/flashDummy
 
 /proc/arcFlashTurf(var/atom/from, var/turf/target, var/wattage)
 	var/obj/O = getFlashDummy()
-	O.loc = target
+	O.set_loc(target)
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
 
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -104,7 +104,21 @@ var/global/obj/flashDummy
 
 	for(var/mob/living/M in get_turf(target))
 		M.shock(from, wattage, "chest", 1, 1)
-	O.loc = null
+
+	var/elecflashpower = 0
+	if (wattage > 12000)
+		elecflashpower = 6
+	else if (wattage > 7500)
+		elecflashpower = 5
+	else if (wattage > 5000)
+		elecflashpower = 4
+	else if (wattage > 2500)
+		elecflashpower = 3
+	else if (wattage > 1200)
+		elecflashpower = 2
+
+	elecflash(target,power = elecflashpower)
+	O.set_loc(null)
 
 /proc/arcFlash(var/atom/from, var/atom/target, var/wattage)
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
@@ -116,6 +130,20 @@ var/global/obj/flashDummy
 
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", 1, 1)
+
+	var/elecflashpower = 0
+	if (wattage > 12000)
+		elecflashpower = 6
+	else if (wattage > 7500)
+		elecflashpower = 5
+	else if (wattage > 5000)
+		elecflashpower = 4
+	else if (wattage > 2500)
+		elecflashpower = 3
+	else if (wattage > 1200)
+		elecflashpower = 2
+
+	elecflash(target,power = elecflashpower)
 
 proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuff. Takes some sort of bizzaro angles ?! Aahhhhh
 	var/list/crossed = list()
@@ -530,6 +558,41 @@ proc/get_angle(atom/a, atom/b)
 			py+=sdy
 			. += locate(px,py,M.z)
 
+//bnlah, same thing as above except instead of a list of turfs we return the first opaque turf
+/proc/getlineopaqueblocked(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+	var/px=M.x		//starting x
+	var/py=M.y
+	. = get_turf(N)
+	var/dx=N.x-px	//x distance
+	var/dy=N.y-py
+	var/dxabs=abs(dx)//Absolute value of x distance
+	var/dyabs=abs(dy)
+	var/sdx=sign(dx)	//Sign of x distance (+ or -)
+	var/sdy=sign(dy)
+	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
+	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
+	var/j			//Generic integer for counting
+	if(dxabs>=dyabs)	//x distance is greater than y
+		for(j=0;j<dxabs;j++)//It'll take dxabs steps to get there
+			y+=dyabs
+			if(y>=dxabs)	//Every dyabs steps, step once in y direction
+				y-=dxabs
+				py+=sdy
+			px+=sdx		//Step on in x direction
+			var/turf/T = locate(px,py,M.z)//Add the turf to the list
+			if(!T || T.opacity || T.opaque_atom_count)
+				return T
+	else
+		for(j=0;j<dyabs;j++)
+			x+=dxabs
+			if(x>=dyabs)
+				x-=dyabs
+				px+=sdx
+			py+=sdy
+			var/turf/T = locate(px,py,M.z)
+			if(!T || T.opacity || T.opaque_atom_count)
+				return T
+
 /proc/getstraightlinewalled(atom/M,vx,vy,include_origin = 1)//hacky fuck for l ighting
 	if (!M) return null
 	var/turf/T = null
@@ -591,7 +654,7 @@ proc/get_angle(atom/a, atom/b)
 /proc/sortmobs()
 
 	var/list/mob_list = list()
-	for(var/mob/living/silicon/ai/M in AIs)
+	for(var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
 		mob_list.Add(M)
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/dead/aieye/M in mobs)
@@ -787,16 +850,6 @@ proc/get_angle(atom/a, atom/b)
 	if(src && src.mob)
 		src.mob.remove_dialogs()
 	return
-
-/proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the mob is on, or what the mob is in is on, etc
-	//in case they're in a closet or sleeper or something
-	if (!M) return null
-	var/atom/loc = M.loc
-	while(!istype(loc, /turf/))
-		if (!loc)
-			break
-		loc = loc.loc
-	return loc
 
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
@@ -1689,7 +1742,7 @@ proc/countJob(rank)
 
 // Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 // Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
-/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list())
+/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0)
 	var/list/candidates = list()
 
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
@@ -1718,8 +1771,8 @@ proc/countJob(rank)
 
 		// Run prompts. Minds are preferable to mob references because of the confirmation delay.
 		for (var/datum/mind/M in ticker.minds)
-			if (M.current)
-				if (dead_player_list_helper(M.current) != 1)
+			if (M.current && M.current.client)
+				if (dead_player_list_helper(M.current, allow_dead_antags) != 1)
 					continue
 
 				SPAWN_DBG (0) // Don't lock up the entire proc.
@@ -1730,7 +1783,7 @@ proc/countJob(rank)
 						if (ghost_timestamp && world.time > ghost_timestamp + confirmation_spawn)
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
-						if (dead_player_list_helper(M.current) != 1)
+						if (dead_player_list_helper(M.current, allow_dead_antags) != 1)
 							if (M.current) boutput(M.current, text_chat_failed)
 							return
 
@@ -1746,7 +1799,7 @@ proc/countJob(rank)
 		// Filter list again.
 		if (candidates.len)
 			for (var/datum/mind/M2 in candidates)
-				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current) != 1)
+				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags) != 1)
 					candidates.Remove(M2)
 					continue
 
@@ -1770,7 +1823,7 @@ proc/countJob(rank)
 	candidates = list()
 
 	for (var/mob/O in mobs)
-		if (dead_player_list_helper(O) != 1)
+		if (dead_player_list_helper(O, allow_dead_antags) != 1)
 			continue
 		if (!(O in candidates))
 			candidates.Add(O)
@@ -1809,11 +1862,9 @@ proc/countJob(rank)
 			if (TO.my_ghost && istype(TO.my_ghost, /mob/dead/observer))
 				the_ghost = TO.my_ghost
 
-		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost) || the_ghost.observe_round)
+		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
 
-	if (!G.client || G.client && G.client.suicide) // Suicided? Tough luck.
-		return 0
 	if (!allow_dead_antags && (!G.mind || G.mind && (G.mind.dnr || !isnull(G.mind.special_role) || G.mind.former_antagonist_roles.len))) // Dead antagonists have had their chance.
 		return 0
 
@@ -1859,15 +1910,15 @@ proc/countJob(rank)
 		if ("mslave")
 			switch (removal_type)
 				if ("expired")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has worn off.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
 				if ("surgery")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was removed surgically.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
 				if ("override")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was overridden by a different implant.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
 				if ("death")
-					logTheThing("combat", M, mymaster, "(implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
 				else
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has vanished mysteriously.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has vanished mysteriously.")
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
@@ -1878,9 +1929,9 @@ proc/countJob(rank)
 		if ("vthrall")
 			switch (removal_type)
 				if ("death")
-					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
+					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
 				else
-					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
+					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
@@ -1892,15 +1943,15 @@ proc/countJob(rank)
 		if ("otherslave")
 			switch (removal_type)
 				if ("expired")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has worn off.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
 				if ("surgery")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was removed surgically.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
 				if ("override")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was overridden by a different implant.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
 				if ("death")
-					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
 				else
-					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindslave status.")
 
 			// Fix for mindslaved traitors etc losing their antagonist status.
 			if (M.mind && (M.mind.special_role == "spyslave"))
@@ -1932,7 +1983,7 @@ proc/countJob(rank)
   * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
   */
 /proc/whois(target, limit = 0, admin)
-	target = trim(lowertext(target))
+	target = trim(ckey(target))
 	if (!target) return 0
 	var/list/found = list()
 	for (var/mob/M in mobs)
@@ -1960,18 +2011,20 @@ proc/countJob(rank)
 /**
   * A universal ckey -> mob reference lookup proc, adapted from whois() (Convair880).
   */
-/proc/whois_ckey_to_mob_reference(target as text)
-	if (!target || isnull(target))
-		return 0
-	target = lowertext(target)
-	var/mob/our_mob
-	for (var/mob/M in mobs)
-		if ((!isnull(M.ckey) && !isnull(target)) && findtext(M.ckey, target))
-			//DEBUG_MESSAGE("Whois: match found for [target], it's [M].")
-			our_mob = M
-			break
-	if (our_mob) return our_mob
-	else return 0
+/proc/whois_ckey_to_mob_reference(target as text, exact=1)
+	if(isnull(target))
+		return
+	target = ckey(target)
+	for(var/client/C) // exact match first
+		if(C.ckey == target)
+			return C.mob
+	if(!exact)
+		for(var/client/C) // prefix match second
+			if(copytext(C.ckey, 1, length(target) + 1) == target)
+				return C.mob
+		for(var/client/C) // substring match third
+			if (findtext(C.ckey, target))
+				return C.mob
 
 /**
   * Returns random hex value of length given
@@ -2034,15 +2087,11 @@ proc/copy_datum_vars(var/atom/from, var/atom/target)
 var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
+var/global/list/allowed_restricted_z_areas
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
-	var/list/allowed = list()
-	for (var/areas in typesof(/area/shuttle/escape))
-		if (!allowed.Find(areas))
-			allowed.Add(areas)
-	for (var/areas2 in typesof(/area/shuttle_transit_space))
-		if (!allowed.Find(areas2))
-			allowed.Add(areas2)
+	if(!allowed_restricted_z_areas)
+		allowed_restricted_z_areas = typesof(/area/shuttle/escape) + typesof(/area/shuttle_transit_space)
 
 	if (M && isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
@@ -2055,7 +2104,7 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 	else if (T && isturf(T))
 		A = get_area(T)
 
-	if (A && istype(A) && (A.type in allowed))
+	if (A && istype(A) && (A.type in allowed_restricted_z_areas))
 		return 1
 	return 0
 
@@ -2363,6 +2412,31 @@ proc/angle_to_dir(angle)
 		else
 			.= SOUTH
 
+proc/dir_to_angle(dir)
+	.= 0
+	switch(dir)
+		if(NORTH)
+			.= 0
+		if(NORTHEAST)
+			.= 45
+		if(EAST)
+			.= 90
+		if(SOUTHEAST)
+			.= 135
+		if(SOUTH)
+			.= 180
+		if(SOUTHWEST)
+			.= 225
+		if(WEST)
+			.= 270
+		if(NORTHWEST)
+			.= 315
+
+proc/angle_to_vector(ang)
+	.= list()
+	. += cos(ang)
+	. += sin(ang)
+
 /**
   * Removes non-whitelisted reagents from the reagents of TA
   * user: the mob that adds a reagent to an atom that has a reagent whitelist
@@ -2381,11 +2455,14 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 			TA.reagents.del_reagent(reagent_id)
 			found = 1
 	if (found)
-		if (user)
-			boutput(user, "[custom_message]") // haine: done -> //TODO: using usr in procs is evil shame on you
+		if(user)
+			boutput(user, "[custom_message]")
 		else if (ismob(TA.loc))
 			var/mob/M = TA.loc
 			boutput(M, "[custom_message]")
+		else if(ismob(usr))
+			 // some procs don't know user, for instance because they are in on_reagent_change
+			boutput(usr, "[custom_message]")
 		else
 			TA.visible_message("[custom_message]")
 
@@ -2455,3 +2532,75 @@ proc/time_to_text(var/time)
 	else if(time || !length(.))
 		. += "[round(time / (1 SECOND), 0.1)] seconds"
 	. = jointext(., " ")
+
+// this is dumb and bad but it makes the bicon not expand the line vertically and also centers it
+// also it assumes 32px height by default
+proc/inline_bicon(the_thing, height=32)
+	return {"<span style="display:inline-block;vertical-align:middle;height:0px;">
+	<div style="position:relative;top:-[height / 2]px">
+	[bicon(the_thing)]
+	</div>
+	</span>"}
+
+
+//fucking clients.len doesnt work, filled with null values
+proc/total_clients()
+	.= 0
+	for (var/C in clients)
+		if (C)
+			.++
+
+
+//total clients used for player cap (which pretends admins don't exist)
+proc/total_clients_for_cap()
+	.= 0
+	for (var/C in clients)
+		if (C)
+			var/client/CC = C
+			if (!CC.holder)
+				.++
+
+	for (var/C in player_cap_grace)
+		if (player_cap_grace[C] > TIME)
+			.++
+
+
+proc/client_has_cap_grace(var/client/C)
+	if (C.ckey in player_cap_grace)
+		.= (player_cap_grace[C.ckey] > TIME)
+
+
+/*
+this proc finds the maximal subtype (i.e. the most subby) in a list of types
+*/
+proc/maximal_subtype(var/list/L)
+	if (!(length(L)))
+		.= null
+	else
+		.= L[1]
+		for (var/t in L)
+			if (ispath(t, .))
+				.= t
+			else if (!(ispath(., t)))
+				return null // paths in L aren't linearly ordered
+
+/**
+ * Takes associative list of the form list(thing = weight), returns weighted random choice of keys based on weights.
+ */
+proc/weighted_pick(list/choices)
+	var/total = 0
+	for(var/key in choices)
+		total += choices[key]
+	var/weighted_num = rand(1, total)
+	var/running_total = 0
+	for(var/key in choices)
+		running_total += choices[key]
+		if(weighted_num <= running_total)
+			return key
+	return
+
+proc/keep_truthy(some_list)
+	. = list()
+	for(var/x in some_list)
+		if(x)
+			. += x

@@ -64,7 +64,7 @@
 		holder = null
 
 		if (bones)
-			bones.disposing()
+			bones.dispose()
 
 		..()
 
@@ -75,6 +75,7 @@
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			H.limbs.vars[src.slot] = null
+			H.organs[src.slot] = null
 			if(remove_object)
 				if (H.l_hand == remove_object)
 					H.l_hand = null
@@ -106,7 +107,7 @@
 			object.cant_drop = initial(object.cant_drop)
 		else
 			remove_stage = 3
-		object.loc = src.holder.loc
+		object.set_loc(src.holder.loc)
 		if(hasvar(object,"skin_tone"))
 			object:skin_tone = holder.bioHolder.mobAppearance.s_tone
 
@@ -151,7 +152,7 @@
 			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
 		if (user)
-			logTheThing("admin", user, src.holder, "severed %target%'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
+			logTheThing("admin", user, src.holder, "severed [constructTarget(src.holder,"admin")]'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
 
 		var/obj/item/object = src
 		if(remove_object)
@@ -161,7 +162,7 @@
 		else
 			remove_stage = 3
 
-		object.loc = src.holder.loc
+		object.set_loc(src.holder.loc)
 		var/direction = src.holder.dir
 		if(hasvar(object,"skin_tone"))
 			object:skin_tone = holder.bioHolder.mobAppearance.s_tone
@@ -224,7 +225,7 @@
 
 		if(!both_legs)
 			if(attacher.zone_sel.selecting != slot || !ishuman(attachee))
-				return
+				return ..()
 
 			if(attachee.limbs.vars[src.slot])
 				boutput(attacher, "<span class='alert'>[attachee.name] already has one of those!</span>")
@@ -233,7 +234,7 @@
 			attachee.limbs.vars[src.slot] = src
 		else
 			if (!(attacher.zone_sel.selecting in list("l_leg","r_leg")))
-				return
+				return ..()
 			else if(attachee.limbs.vars["l_leg"] || attachee.limbs.vars["r_leg"])
 				boutput(attacher, "<span class='alert'>[attachee.name] still has one leg!</span>")
 				return

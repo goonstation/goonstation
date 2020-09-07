@@ -44,7 +44,7 @@
 		G.fields["sex"] = "Male"
 
 	G.fields["age"] ="[H.bioHolder.age]"
-	G.fields["fingerprint"] = "[md5(H.bioHolder.Uid)]"
+	G.fields["fingerprint"] = "[H.bioHolder.uid_hash]"
 	G.fields["dna"] = H.bioHolder.Uid
 	G.fields["p_stat"] = "Active"
 	G.fields["m_stat"] = "Stable"
@@ -227,6 +227,7 @@
 	var/issuer_byond_key = null
 
 	New()
+		..()
 		SPAWN_DBG(1 SECOND)
 			statlog_ticket(src, usr)
 
@@ -248,6 +249,7 @@
 	var/approver_byond_key = null
 
 	New()
+		..()
 		generate_ID()
 		SPAWN_DBG(1 SECOND)
 			for(var/datum/data/record/B in data_core.bank) //gross

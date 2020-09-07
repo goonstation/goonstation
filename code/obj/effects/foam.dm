@@ -10,7 +10,7 @@
 	density = 0
 	layer = OBJ_LAYER + 0.9
 	mouse_opacity = 0
-	event_handler_flags = USE_HASENTERED
+	event_handler_flags = USE_HASENTERED | USE_CANPASS
 	var/foamcolor
 	var/amount = 3
 	var/expand = 1
@@ -67,7 +67,9 @@
 	//playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
 
 	update_icon()
-
+	if(metal)
+		if(istype(loc, /turf/space))
+			loc:ReplaceWithMetalFoam(metal)
 	SPAWN_DBG(3 + metal*3)
 		process()
 	SPAWN_DBG(12 SECONDS)
@@ -181,22 +183,20 @@
 
 	if (ishuman(AM))
 		var/mob/living/carbon/human/M = AM
-		if (!M.can_slip())
-			return
 
-		if (src.reagents) //Wire note: Fix for Cannot read null.reagent_list
-			for(var/reagent_id in src.reagents.reagent_list)
-				var/amount = M.reagents.get_reagent_amount(reagent_id)
-				if(amount < 25)
-					M.reagents.add_reagent(reagent_id, min(round(amount / 2),15))
+		if (M.slip())
+			if (src.reagents) //Wire note: Fix for Cannot read null.reagent_list
+				for(var/reagent_id in src.reagents.reagent_list)
+					var/amount = M.reagents.get_reagent_amount(reagent_id)
+					if(amount < 25)
+						M.reagents.add_reagent(reagent_id, min(round(amount / 2),15))
 
-		logTheThing("combat", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
-		reagents.reaction(M, TOUCH, 5)
+			logTheThing("combat", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+			reagents.reaction(M, TOUCH, 5)
 
-		if(!istype(src.loc, /turf/space))
-			M.pulling = null
 			M.show_text("You slip on the foam!", "red")
-			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-			M.changeStatus("stunned", 2 SECONDS)
-			M.changeStatus("weakened", 2 SECONDS)
-			M.force_laydown_standup()
+
+/obj/effects/foam/CanPass(atom/movable/mover, turf/target)
+	if (src.metal && !mover)
+		return 0 // completely opaque to air
+	return 1

@@ -109,9 +109,7 @@
 				affected_mob.take_brain_damage(6)
 
 			else
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(4, 1, affected_mob)
-				s.start()
+				elecflash(affected_mob)
 				affected_mob.visible_message("<span class='alert'>The curse upon [src] rebukes [affected_mob]!</span>")
 				boutput(affected_mob, "<span class='alert'>Horrible visions of depravity and terror flood your mind!</span>")
 				affected_mob.emote("scream")
@@ -128,9 +126,7 @@
 			return
 
 		src.visible_message("<span class='alert'><b>The [src.name] is suddenly warped away!</b></span>")
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(4, 1, get_turf(src))
-		s.start()
+		elecflash(src)
 
 		if (ismob(src.loc))
 			var/mob/HH = src.loc
@@ -187,6 +183,11 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
+			if (M?.traitHolder?.hasTrait("training_chaplain"))
+				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
+				playsound(M, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				return
+
 			if (prob(20))
 				src.do_brainmelt(M, 1)
 			else if (prob(35))

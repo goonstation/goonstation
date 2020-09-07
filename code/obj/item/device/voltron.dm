@@ -13,6 +13,7 @@
 	var/mob/the_user = null
 	//Prolonged use causes damage.
 	New(mob/target, atom/location)
+		..()
 		src.set_loc(location)
 		the_user = target
 		target.set_loc(src)
@@ -113,7 +114,7 @@
 		power_icon = ""
 		handle_overlay()
 		return ..()
-	Del()
+	disposing()
 		if(prev_user)
 			prev_user.images -= cableimgs
 			prev_user = null
@@ -254,7 +255,7 @@
 
 			activating = 1
 
-			playsound(src, "sound/effects/singsuck.ogg", 40, 1)
+			playsound(get_turf(src), "sound/effects/singsuck.ogg", 40, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(usr))
 			O.name = "Energy"
 			O.anchored = 1
@@ -281,8 +282,38 @@
 			boutput(target, "<span class='notice'>You deactivate the [src].</span>")
 			deactivate()
 		else
-			boutput(user, "<span class='notice'>You activate the [src].</span>")
-			activate()
+			if(istype(user.l_hand,/obj/item/phone_handset) || istype(user.r_hand,/obj/item/phone_handset)) // travel through space line
+				var/obj/item/phone_handset/PH = null
+				var/obj/item/phone_handset/EXIT = null
+				var/turf/target_loc = null
+				if(istype(user.l_hand,/obj/item/phone_handset))
+					PH = user.l_hand
+				else
+					PH = user.r_hand
+				if(PH.parent.linked && PH.parent.linked.handset)
+					if(isturf(PH.parent.linked.handset.loc))
+						target_loc = PH.parent.linked.handset.loc
+					else if(ismob(PH.parent.linked.handset.loc))
+						target_loc = PH.parent.linked.handset.loc.loc
+					else
+						boutput(user, "You can't seem to enter the phone for some reason!")
+						return
+				else
+					boutput(user, "You can't seem to enter the phone for some reason!")
+					return
+				if(isrestrictedz(user.loc.z) || isrestrictedz(target_loc.z))
+					boutput(user, "You can't seem to enter the phone for some reason!")
+					return
+				EXIT = PH.parent.linked.handset
+				user.visible_message("[user] enters the phone line using their [src].", "You enter the phone line using your [src].", "You hear a strange sucking noise.")
+				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
+				user.drop_item(PH)
+				user.set_loc(target_loc)
+				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
+				user.visible_message("[user] suddenly emerges from the [EXIT]. [pick("","What the fuck?")]", "You emerge from the [EXIT].", "You hear a strange sucking noise.")
+			else
+				boutput(user, "<span class='notice'>You activate the [src].</span>")
+				activate()
 			power -= 5
 			handle_overlay()
 		return

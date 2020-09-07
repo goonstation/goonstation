@@ -65,7 +65,7 @@
 						boutput(user, "<span class='alert'><B>You can't put that item in the cabinet.</B></span>")
 
 	proc/takeItem(var/mob/user, var/obj/item/I, var/slotNum = null)
-		if (ismobcritter(user))
+		if (!ishuman(user))
 			return
 		if(!slotNum) //Didnt pass in a slot number, find next free slot.
 			for(var/X in slots)

@@ -3,34 +3,25 @@
 	desc = "Endows the subject with bioluminescent skin. Color and intensity may vary by subject."
 	id = "glowy"
 	probability = 99
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	blockCount = 3
 	blockGaps = 1
 	msgGain = "Your skin begins to glow softly."
 	msgLose = "Your glow fades away."
-	var/datum/light/light
-
-	New()
-		..()
-		light = new /datum/light/point
-		light.set_color(rand(1,10) / 10, rand(1,10) / 10, rand(1,10) / 10)
-		light.set_brightness(0.7)
 
 	OnAdd()
 		..()
-		light.attach(owner)
-		light.enable()
+		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
 
 	OnRemove()
 		..()
-		light.disable()
-		light.detach()
+		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
 
 /datum/bioEffect/horns
 	name = "Cranial Keratin Formation"
 	desc = "Enables the growth of a compacted keratin formation on the subject's head."
 	id = "horns"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "A pair of horns erupt from your head."
 	msgLose = "Your horns crumble away into nothing."
@@ -56,7 +47,7 @@
 	name = "Dermal Glitter"
 	desc = "Causes the subject's skin to shine and gleam."
 	id = "shiny"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	msgGain = "Your skin looks all blinged out."
 	msgLose = "Your skin fades to a more normal state."
@@ -74,7 +65,7 @@
 	name = "Melanin Suppressor"
 	desc = "Shuts down all melanin production in the subject's body."
 	id = "albinism"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	isBad = 1
 	var/eye_color_to_use = "#FF0000"
@@ -133,7 +124,7 @@
 	name = "Melanin Stimulator"
 	desc = "Overstimulates the subject's melanin glands."
 	id = "melanism"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	isBad = 1
 	eye_color_to_use = "#572E0B"
@@ -145,7 +136,7 @@
 	desc = "Increases the amount of natural body substances produced from the subject's apocrine glands."
 	id = "stinky"
 	probability = 99
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel sweaty."
 	msgLose = "You feel much more hygenic."
@@ -278,7 +269,7 @@
 	desc = {"Human worker clone batch #92 may contain inactive space bee DNA.
 	If you do not have the authorization level to know that SS13 is staffed with clones, please forget this entire message."}
 	id = "bee"
-	msgGain = "You feel buzzed"
+	msgGain = "You feel buzzed!"
 	msgLose = "You lose your buzz."
 	probability = 99
 
@@ -286,7 +277,7 @@
 	name = "Dactyl Crystallization"
 	desc = "The subject's digits crystallize and, when struck together, emit a pleasant noise."
 	id = "chime_snaps"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "Your fingers and toes turn transparent and crystalline."
 	msgLose = "Your fingers and toes return to normal."
@@ -295,7 +286,7 @@
 	name = "Dermal Glow"
 	desc = "Causes the subject's skin to emit faint light patterns."
 	id = "aura"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "You start to emit a pulsing glow."
 	msgLose = "The glow in your skin fades."
@@ -317,7 +308,7 @@
 	name = "Chronal Additive Inversement"
 	desc = "Causes the subject's age to become its additive inverse...somehow."
 	id = "chronal_additive_inversement"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	blockCount = 3
 	blockGaps = 3
@@ -336,7 +327,7 @@
 	name = "Temporal Displacement"
 	desc = "The subject becomes displaced in time, aging them at random."
 	id = "temporal_displacement"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	blockCount = 3
 	blockGaps = 3
@@ -357,7 +348,7 @@
 	name = "Blazing Aura"
 	desc = "Causes the subject's skin to emit harmless false fire."
 	id = "aura_fire"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	occur_in_genepools = 0
 	msgGain = "You burst into flames!"
 	msgLose = "Your skin stops emitting fire."

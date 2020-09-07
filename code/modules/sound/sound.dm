@@ -1,8 +1,37 @@
 #define TOO_QUIET 0.9 //experimentally found to be 0.6 - raised due to lag, I don't care if it's super quiet because there's already shitloads of other sounds playing
+#define SPACE_ATTEN_MIN 0.5
 #define EARLY_RETURN_IF_QUIET(v) if (v < TOO_QUIET) return
 #define EARLY_CONTINUE_IF_QUIET(v) if (v < TOO_QUIET) continue
-#define MAX_SOUND_RANGE 33
 
+#define SOURCE_ATTEN(A) do {\
+	if (A <= SPACE_ATTEN_MIN){\
+		vol *= SPACE_ATTEN_MIN;\
+		extrarange = clamp(-MAX_SOUND_RANGE + MAX_SPACED_RANGE + extrarange, -32,-20);\
+		spaced_source = 1;\
+	}\
+	else{\
+		vol *= A\
+	}\
+} while(false)
+
+#define LISTENER_ATTEN(A) do {\
+	if (A <= SPACE_ATTEN_MIN){\
+		if (!spaced_source && dist >= MAX_SPACED_RANGE){\
+			ourvolume = 0;\
+		}\
+		else{\
+			spaced_env = 1;\
+			ourvolume = clamp(ourvolume + 95, 25,200);\
+		}\
+	}\
+	else{\
+		ourvolume *= A\
+	}\
+} while(false)
+
+#define MAX_SOUND_RANGE 33
+#define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
+#define CLIENT_IGNORES_SOUND(C) (C && C.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
 
 // returns 0 to 1 based on air pressure in turf
 /proc/attenuate_for_location(var/atom/loc)
@@ -19,12 +48,13 @@
 		if (T.turf_flags & IS_TYPE_SIMULATED) //danger :)
 			var/turf/simulated/sim_T = T
 			if (sim_T.air)
-				attenuate *= sim_T.air.return_pressure() / ONE_ATMOSPHERE
+				attenuate *= MIXTURE_PRESSURE(sim_T.air) / ONE_ATMOSPHERE
 				attenuate = min(1, max(0, attenuate))
 
 	return attenuate
 
-
+var/global/SPACED_ENV = list(100,0.52,0,-1600,-1500,0,2,2,-10000,0,200,0.01,0.165,0,0.25,0.01,-5,1000,20,10,53,100,0x3f)
+var/global/SPACED_ECHO = list(-10000,0,-1450,0,0,1,0,1,10,10,0,1,0,10,10,10,10,7)
 var/global/ECHO_AFAR = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
@@ -73,85 +103,107 @@ var/global/list/falloff_cache = list()
 	if( channel == VOLUME_CHANNEL_ADMIN )
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
 
-
 /proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	// don't play if over the per-tick sound limit
 	if (!limiter || !limiter.canISpawn(/sound))
 		return
 
 	// don't play if the sound is happening nowhere
-	if (!source || !source.loc)
+	if (!source || !source.loc || source.z <= 0)
+		return
+
+	if (!length(spatial_z_maps))
 		return
 
 	EARLY_RETURN_IF_QUIET(vol)
 
 	var/area/source_location = get_area(source)
-	vol *= attenuate_for_location(source)
+	var/source_location_sound_group = null
+	if (source_location)
+		source_location_sound_group = source_location.sound_group
+
+	var/spaced_source = 0
+	var/spaced_env = 0
+	var/atten_temp = attenuate_for_location(source)
+	SOURCE_ATTEN(atten_temp)
 	//message_admins("volume: [vol]")
 	EARLY_RETURN_IF_QUIET(vol)
 
+	var/area/listener_location
+
+	var/dist
 	var/sound/S
 	var/turf/Mloc
-	for (var/client/C)
-		if (C.ignore_sound_flags)
-			if ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL)
-				continue
+	var/ourvolume
+	var/scaled_dist
+	var/storedVolume
 
-		var/mob/M = C.mob
-		//LAGCHECK(LAG_LOW)
+	for (var/mob/M in GET_NEARBY(source,MAX_SOUND_RANGE + extrarange))
+		var/client/C = M.client
+		if (!C)
+			continue
+
+		if (CLIENT_IGNORES_SOUND(C))
+			continue
 
 		Mloc = get_turf(M)
 
+		if (!Mloc)
+			continue
+
 		//Hard attentuation
-		var/dist = max(GET_MANHATTAN_DIST(Mloc, source), 1)
+		dist = max(GET_MANHATTAN_DIST(Mloc, source), 1)
 		if (dist > MAX_SOUND_RANGE + extrarange)
 			continue
 
-		if (Mloc && M.client && Mloc.z && Mloc.z == source.z)
+		listener_location = Mloc.loc
+		if(listener_location)
 
+			if(source_location_sound_group && source_location_sound_group != listener_location.sound_group)
+				//boutput(M, "You did not hear a [source] at [source_location] due to the sound_group ([source_location.sound_group]) not matching yours ([listener_location.sound_group])")
+				continue
 
-			var/area/listener_location = Mloc.loc
-			if(listener_location)
+			//volume-related handling
+			ourvolume = vol
 
-				if(source_location && source_location.sound_group && source_location.sound_group != listener_location.sound_group)
-					//boutput(M, "You did not hear a [source] at [source_location] due to the sound_group ([source_location.sound_group]) not matching yours ([listener_location.sound_group])")
-					continue
+			//Custom falloff handling, see: https://www.desmos.com/calculator/ybukxuu9l9
+			if (dist > falloff_cache.len)
+				falloff_cache.len = dist
+			var/falloffmult = falloff_cache[dist]
+			if (falloffmult == null)
+				scaled_dist = clamp(dist/(MAX_SOUND_RANGE+extrarange),0,1)
+				falloffmult = (1 - ((1.0542 * (0.18**-1.7)) / ((scaled_dist**-1.7) + (0.18**-1.7))))
+				falloff_cache[dist] = falloffmult
 
-				//volume-related handling
-				var/ourvolume = vol
+			ourvolume *= falloffmult
 
-				//Custom falloff handling, see: https://www.desmos.com/calculator/ybukxuu9l9
-				if (dist > falloff_cache.len)
-					falloff_cache.len = dist
-				var/falloffmult = falloff_cache[dist]
-				if (falloffmult == null)
-					var/scaled_dist = clamp(dist/(MAX_SOUND_RANGE+extrarange),0,1)
-					falloffmult = (1 - ((1.0542 * (0.18**-1.7)) / ((scaled_dist**-1.7) + (0.18**-1.7))))
-					falloff_cache[dist] = falloffmult
+			EARLY_CONTINUE_IF_QUIET(ourvolume)
 
-				ourvolume *= falloffmult
+			//mbc : i'm making a call and removing this check's affect on volume bc it gets quite expensive and i dont care about the sound being quieter
+			//if(M.ears_protected_from_sound()) //Bone conductivity, I guess?
+			//	ourvolume *= 0.2
 
-				EARLY_CONTINUE_IF_QUIET(ourvolume)
+			atten_temp = attenuate_for_location(Mloc)
+			LISTENER_ATTEN(atten_temp)
 
-				//mbc : i'm making a call and removing this check's affect on volume bc it gets quite expensive and i dont care about the sound being quieter
-				//if(M.ears_protected_from_sound()) //Bone conductivity, I guess?
-				//	ourvolume *= 0.2
-				ourvolume *= attenuate_for_location(Mloc) //SECRET GOON SOUND SAUCE
+			storedVolume = ourvolume
+			ourvolume *= C.getVolume(channel) / 100
+			//boutput(world, "for client [C] updating volume [storedVolume] to [ourvolume] for channel [channel]")
 
-				var/storedVolume = ourvolume
-				ourvolume *= C.getVolume(channel) / 100
-				//boutput(world, "for client [C] updating volume [storedVolume] to [ourvolume] for channel [channel]")
+			EARLY_CONTINUE_IF_QUIET(ourvolume)
 
-				EARLY_CONTINUE_IF_QUIET(ourvolume)
+			//sadly, we must generate
+			if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
+			if (!S) CRASH("Did not manage to generate sound [soundin] with source [source].")
+			C.sound_playing[ S.channel ][1] = storedVolume
+			C.sound_playing[ S.channel ][2] = channel
 
-				//sadly, we must generate
-				if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
-				if (!S) CRASH("Did not manage to generate sound [soundin] with source [source].")
-				C.sound_playing[ S.channel ][1] = storedVolume
-				C.sound_playing[ S.channel ][2] = channel
+			S.volume = ourvolume
 
-				S.volume = ourvolume
-
+			if (spaced_env)
+				S.environment = SPACED_ENV
+				S.echo = SPACED_ECHO
+			else
 				if(listener_location != source_location)
 					//boutput(M, "You barely hear a [source] at [source_location]!")
 					S.echo = ECHO_AFAR //Sound is occluded
@@ -166,7 +218,7 @@ var/global/list/falloff_cache = list()
 			C << S
 
 
-/mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, channel = VOLUME_CHANNEL_GAME)
+/mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	if(!src.client)
 		return
 
@@ -178,20 +230,74 @@ var/global/list/falloff_cache = list()
 	if (!source || !source.loc)
 		return
 
+	var/dist = max(GET_MANHATTAN_DIST(get_turf(src), get_turf(source)), 1)
+	if (dist > MAX_SOUND_RANGE + extrarange)
+		return
+
+	if (CLIENT_IGNORES_SOUND(src.client))
+		return
+
 	vol *= client.getVolume(channel) / 100
 
 	EARLY_RETURN_IF_QUIET(vol)
 
-	var/sound/S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
-	client.sound_playing[ S.channel ][1] = vol
+	//Custom falloff handling, see: https://www.desmos.com/calculator/ybukxuu9l9
+	if (dist > falloff_cache.len)
+		falloff_cache.len = dist
+	var/falloffmult = falloff_cache[dist]
+	if (falloffmult == null)
+		var/scaled_dist = clamp(dist/(MAX_SOUND_RANGE+extrarange),0,1)
+		falloffmult = (1 - ((1.0542 * (0.18**-1.7)) / ((scaled_dist**-1.7) + (0.18**-1.7))))
+		falloff_cache[dist] = falloffmult
+
+	vol *= falloffmult
+
+	EARLY_RETURN_IF_QUIET(vol)
+
+	var/spaced_source = 0
+	var/spaced_env = 0
+	var/atten_temp = attenuate_for_location(source)
+	SOURCE_ATTEN(atten_temp)
+
+	EARLY_RETURN_IF_QUIET(vol)
+
+	var/ourvolume = vol
+	atten_temp = attenuate_for_location(get_turf(src))
+	LISTENER_ATTEN(atten_temp)
+
+	var/sound/S = generate_sound(source, soundin, ourvolume, vary, extrarange, pitch)
+	client.sound_playing[ S.channel ][1] = ourvolume
 	client.sound_playing[ S.channel ][2] = channel
+
 	if (S)
+		if (spaced_env)
+			S.environment = SPACED_ENV
+			S.echo = SPACED_ECHO
+
 		var/turf/source_turf = get_turf(source)
 		if (istype(source_turf))
 			var/dx = source_turf.x - src.x
 			S.pan = max(-100, min(100, dx/8.0 * 100))
 
 		src << S
+
+		if (src.observers.len)
+			for (var/mob/M in src.observers)
+				if (CLIENT_IGNORES_SOUND(M.client))
+					continue
+					M.client.sound_playing[ S.channel ][1] = ourvolume
+					M.client.sound_playing[ S.channel ][2] = channel
+
+					M << S
+
+
+
+/mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
+	..()
+	if (deployed_to_eyecam && src.eyecam)
+		src.eyecam.playsound_local(source, soundin, vol, vary, extrarange, pitch, ignore_flag, channel)
+	return
+
 
 //handles a wide variety of inputs and spits out a valid sound object
 /proc/getSound(thing)
@@ -276,8 +382,6 @@ var/global/list/falloff_cache = list()
 		S.frequency = rand(725, 1250) / 1000 * pitch
 	else
 		S.frequency = pitch
-
-	S.volume *= attenuate_for_location(source)
 
 	return S
 

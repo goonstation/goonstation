@@ -1,5 +1,5 @@
 /client/proc/cmd_admin_say(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "asay"
 	set hidden = 1
 
@@ -27,7 +27,7 @@
 	ircbot.export("asay", ircmsg)
 
 /client/proc/cmd_admin_forceallsay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "forceallsay"
 	set hidden = 1
 	admin_only
@@ -50,10 +50,10 @@
 
 	logTheThing("admin", usr, null, "forced everyone to say: [msg]")
 	logTheThing("diary", usr, null, "forced everyone to say: [msg]", "admin")
-	message_admins("<span class='notice'>[key_name(usr)] forced everyone to say: [msg]</span>")
+	message_admins("<span class='internal'>[key_name(usr)] forced everyone to say: [msg]</span>")
 
 /client/proc/cmd_admin_murraysay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "murraysay"
 	set hidden = 1
 
@@ -76,12 +76,12 @@
 
 	logTheThing("admin", usr, null, "forced Murray to beep: [msg]")
 	logTheThing("diary", usr, null, "forced Murray to beep: [msg]", "admin")
-	message_admins("<span class='notice'>[key_name(usr)] forced Murray to beep: [msg]</span>")
+	message_admins("<span class='internal'>[key_name(usr)] forced Murray to beep: [msg]</span>")
 
 
 // more copies than a kinkos
 /client/proc/cmd_admin_hssay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "hssay"
 	set hidden = 1
 
@@ -101,7 +101,7 @@
 		maybeHS.speak(msg)
 		logTheThing("admin", usr, null, "forced HeadSurgeon to beep: [msg]")
 		logTheThing("diary", usr, null, "forced HeadSurgeon: [msg]", "admin")
-		message_admins("<span class='notice'>[key_name(usr)] forced HeadSurgeon to beep: [msg]</span>")
+		message_admins("<span class='internal'>[key_name(usr)] forced HeadSurgeon to beep: [msg]</span>")
 		return
 
 	for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/maybeHS in world)
@@ -109,13 +109,13 @@
 		maybeHS.speak(msg)
 		logTheThing("admin", usr, null, "forced HeadSurgeon to beep: [msg]")
 		logTheThing("diary", usr, null, "forced HeadSurgeon: [msg]", "admin")
-		message_admins("<span class='notice'>[key_name(usr)] forced HeadSurgeon to beep: [msg]</span>")
+		message_admins("<span class='internal'>[key_name(usr)] forced HeadSurgeon to beep: [msg]</span>")
 		return
 
 
 // can you guess what this is a copy of?  I bet you can't
 /client/proc/cmd_admin_bradsay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set  name = "bradsay"
 	set hidden = 1
 
@@ -135,4 +135,4 @@
 
 	logTheThing("admin", usr, null, "forced Bradbury II to beep: [msg]")
 	logTheThing("diary", usr, null, "forced Bradbury II to beep: [msg]", "admin")
-	message_admins("<span class='notice'>[key_name(usr)] forced Bradbury II to beep: [msg]</span>")
+	message_admins("<span class='internal'>[key_name(usr)] forced Bradbury II to beep: [msg]</span>")

@@ -83,7 +83,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 				var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 				if (typename)
 					var/basetype = /obj
-					if (holder.owner.holder.rank in list("Host", "Coder", "Shit Person"))
+					if (holder.owner.holder.rank in list("Host", "Coder", "Administrator"))
 						basetype = /datum
 					var/match = get_one_match(typename, basetype)
 					if (match)

@@ -4,7 +4,7 @@
 /////////////////////////////////////////////////// Setup //////////////////////////////////////////
 
 /mob/proc/make_vampire(var/shitty = 0)
-	if (ishuman(src) || iscritter(src))
+	if (ishuman(src) || ismobcritter(src))
 		if (ishuman(src))
 			var/datum/abilityHolder/vampire/A = src.get_ability_holder(/datum/abilityHolder/vampire)
 			if (A && istype(A))
@@ -25,7 +25,7 @@
 			SPAWN_DBG (25) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
-		else if (iscritter(src)) // For testing. Just give them all abilities that are compatible.
+		else if (ismobcritter(src)) // For testing. Just give them all abilities that are compatible.
 			var/mob/living/critter/C = src
 
 			if (isnull(C.abilityHolder)) // They do have a critter AH by default...or should.
@@ -70,7 +70,7 @@
 		return 0
 
 /mob/proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
-	if (!isvampire(src))
+	if (!isvampire(src) && !isvampiriczombie(src))
 		return
 
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
@@ -219,11 +219,13 @@
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
-		stat("Blood:", src.vamp_blood)
-		stat("Blood remaining:", src.points)
+		.= list()
+		.["Blood:"] = round(src.points)
+		.["Total:"] = round(src.vamp_blood)
 		return
 
 	onLife(var/mult = 1)
+		..()
 		if (traveling_to_coffin && isturf(owner.loc) && istype(traveling_to_coffin,/obj/storage/closet/coffin))
 			owner.set_loc(traveling_to_coffin)
 
@@ -310,7 +312,6 @@
 		return
 
 	remove_unlocks()
-		src.removeAbility(/datum/targetable/vampire/blood_steal)
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire/mk2)
 		src.removeAbility(/datum/targetable/vampire/mark_coffin)
@@ -405,7 +406,7 @@
 			SHOW_MINDSLAVE_TIPS(M)
 
 			boutput(owner, __blue("[M] has been revived as your thrall."))
-			logTheThing("combat", owner, M, "enthralled %target% at [log_loc(owner)].")
+			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
 
 
 
@@ -500,7 +501,7 @@
 		if (!M)
 			return 0
 
-		if (!(iscarbon(M) || iscritter(M)))
+		if (!(iscarbon(M) || ismobcritter(M)))
 			boutput(M, __red("You cannot use any powers in your current form."))
 			return 0
 

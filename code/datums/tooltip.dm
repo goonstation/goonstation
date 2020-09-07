@@ -84,6 +84,7 @@ var/global/list/atomTooltips = new()
 
 
 	New(client/C)
+		..()
 		if (!C) return 0
 		src.owner = C
 
@@ -210,6 +211,7 @@ var/global/list/atomTooltips = new()
 
 
 	New(client/C, datum/tooltipHolder/tipHolder, clone = 1, stuck = 1, atom/thing = null)
+		..()
 		if (!C) return 0
 		src.owner = C
 		src.holder = tipHolder
@@ -353,6 +355,8 @@ var/global/list/atomTooltips = new()
 				extra += "left"
 			if (options["flags"] & TOOLTIP_CENTER)
 				extra += "center"
+			if (options["flags"] & TOOLTIP_TOP2)
+				extra += "top2"
 
 			params["flags"] = extra
 			//src.specialFlags = extra
@@ -447,7 +451,7 @@ var/global/list/atomTooltips = new()
 /client/proc/cmd_tooltip_debug()
 	set name = "Debug Tooltips"
 	set desc = "Returns the amount of tooltips in existence everywhere"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	admin_only
 
@@ -518,7 +522,7 @@ var/global/list/atomTooltips = new()
 
 
 //Hides click-toggle tooltips on player movement
-/mob/OnMove()
+/mob/OnMove(source = null)
 	..()
 
 	if (usr && src.client && src.client.tooltipHolder)

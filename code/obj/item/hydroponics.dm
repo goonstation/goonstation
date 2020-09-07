@@ -12,7 +12,7 @@
 
 /obj/item/saw
 	name = "chainsaw"
-	desc = "A chainsaw used to chop up harmful plants. Despite its appearance, it's not extremely dangerous to humans."
+	desc = "A chainsaw used to chop up harmful plants."
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
@@ -21,7 +21,7 @@
 	var/active = 0.0
 	hit_type = DAMAGE_CUT
 	force = 3.0
-	var/active_force = 10.0
+	var/active_force = 12.0
 	var/off_force = 3.0
 	var/how_dangerous_is_this_thing = 1
 	var/takes_damage = 1
@@ -38,8 +38,8 @@
 	over_clothes = 1
 	override_attack_hand = 1
 	can_hold_items = 0
-	stamina_damage = 10
-	stamina_cost = 10
+	stamina_damage = 30
+	stamina_cost = 15
 	stamina_crit_chance = 35
 
 	cyborg
@@ -161,6 +161,7 @@
 		else
 			boutput(user, "<span class='notice'>[src] is now off.</span>")
 			src.force = off_force
+		tooltip_rebuild = 1
 		src.update_icon()
 		user.update_inhands()
 		src.add_fingerprint(user)
@@ -175,6 +176,8 @@
 		src.set_loc(user.loc)
 		user.gib()
 		return 1
+
+/obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
 /obj/item/saw/syndie
 	name = "red chainsaw"
@@ -200,7 +203,7 @@
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
 	arm_icon = "chainsaw1"
 	stamina_damage = 100
-	stamina_cost = 20
+	stamina_cost = 30
 	stamina_crit_chance = 40
 
 /obj/item/saw/syndie/attack(mob/living/carbon/human/target as mob, mob/user as mob)
@@ -323,8 +326,8 @@
 	mats = 12
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
 	arm_icon = "chainsaw1"
-	stamina_damage = 20
-	stamina_cost = 20
+	stamina_damage = 40
+	stamina_cost = 40
 	stamina_crit_chance = 50
 
 ////////////////////////////////////// Plant analyzer //////////////////////////////////////
@@ -354,29 +357,14 @@
 	desc = "A tool for cyborgs used to create plant seeds."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "forensic0"
-	var/list/available = list()
 	var/datum/plant/selected = null
 
-	New()
-		..()
-		for (var/A in typesof(/datum/plant)) src.available += new A(src)
-
-		/*for (var/datum/plant/P in src.available)
-			if (!P.vending || P.type == /datum/plant)
-				del P
-				continue*/
 
 	attack_self(var/mob/user as mob)
-/*		var/hacked = 0
-		if (isrobot(user))
-			var/mob/living/silicon/robot/R = user
-			if (R.emagged)
-				hacked = 1
-*/
 		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
 		var/list/usable = list()
 		for(var/datum/plant/A in hydro_controls.plant_species)
-			if (!A.vending/* || (A.vending == 2 && !hacked)*/)
+			if (!A.vending)
 				continue
 			usable += A
 
@@ -386,11 +374,21 @@
 	afterattack(atom/target as obj|mob|turf, mob/user as mob, flag)
 		if (isturf(target) && selected)
 			var/obj/item/seed/S
+			// if (selected.unique_seed)
+			// 	S = new selected.unique_seed(src.loc)
+			// else
+			// 	S = new /obj/item/seed(src.loc,0)
+			// S.generic_seed_setup(selected)
 			if (selected.unique_seed)
-				S = new selected.unique_seed(src.loc)
+				S = unpool(selected.unique_seed)
+				S.set_loc(src.loc)
 			else
-				S = new /obj/item/seed(src.loc,0)
+				S = unpool(/obj/item/seed)
+				S.set_loc(src.loc)
+				S.removecolor()
 			S.generic_seed_setup(selected)
+
+
 
 /obj/item/seedplanter/hidden
 	desc = "This is supposed to be a cyborg part. You're not quite sure what it's doing here."
@@ -454,13 +452,11 @@
 	w_class = 3.0
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	module_research = list("tools" = 2, "hydroponics" = 4)
+	initial_volume = 120
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(120)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("water", 120)
+		reagents.add_reagent("water", 120)
 
 /////////////////////////////////////////// Compost bag ////////////////////////////////////////////////
 
@@ -473,13 +469,11 @@
 	w_class = 3.0
 	rc_flags = 0
 	module_research = list("tools" = 1, "hydroponics" = 1)
+	initial_volume = 60
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(60)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("poo", 60)
+		reagents.add_reagent("poo", 60)
 
 /////////////////////////////////////////// Plant formulas /////////////////////////////////////
 
@@ -491,13 +485,11 @@
 	amount_per_transfer_from_this = 10
 	module_research = list("tools" = 1, "hydroponics" = 1, "science" = 1)
 	module_research_type = /obj/item/reagent_containers/glass/bottle/weedkiller
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("weedkiller", 40)
+		reagents.add_reagent("weedkiller", 40)
 
 /obj/item/reagent_containers/glass/bottle/mutriant
 	name = "Mutagenic Plant Formula"
@@ -505,13 +497,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("mutagen", 40)
+		reagents.add_reagent("mutagen", 40)
 
 /obj/item/reagent_containers/glass/bottle/groboost
 	name = "Ammonia Plant Formula"
@@ -519,13 +509,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("ammonia", 40)
+		reagents.add_reagent("ammonia", 40)
 
 /obj/item/reagent_containers/glass/bottle/topcrop
 	name = "Potash Plant Formula"
@@ -533,13 +521,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("potash", 40)
+		reagents.add_reagent("potash", 40)
 
 /obj/item/reagent_containers/glass/bottle/powerplant
 	name = "Saltpetre Plant Formula"
@@ -547,13 +533,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("saltpetre", 40)
+		reagents.add_reagent("saltpetre", 40)
 
 /obj/item/reagent_containers/glass/bottle/fruitful
 	name = "Mutadone Plant Formula"
@@ -561,13 +545,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("mutadone", 40)
+		reagents.add_reagent("mutadone", 40)
 
 /obj/item/reagent_containers/glass/happyplant
 	name = "Happy Plant Mixture"

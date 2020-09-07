@@ -28,6 +28,15 @@
 	lg = 0.6
 	lb = 1
 
+	disposing()
+		scanner?.connected = null
+		pod1?.connected = null
+		scanner = null
+		pod1 = null
+		diskette = null
+		records = null
+		..()
+
 	old
 		icon_state = "old2"
 		desc = "With the price of cloning pods nowadays it's not unexpected to skimp on the controller."
@@ -63,18 +72,22 @@
 
 /obj/machinery/computer/cloning/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN_DBG(0.7 SECONDS)
 		if(portable) return
 		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
 
 		src.temp = ""
+		var/hookup_error = FALSE
 		if (isnull(src.scanner))
 			src.temp += " <font color=red>SCNR-ERROR</font>"
+			hookup_error = TRUE
 		if (isnull(src.pod1))
 			src.temp += " <font color=red>POD1-ERROR</font>"
-		else
-			src.pod1.connected = src
+			hookup_error = TRUE
+		if (!hookup_error)
+			src.pod1?.connected = src
+			src.scanner?.connected = src
 
 		if (src.temp == "")
 			src.temp = "System ready."
@@ -301,6 +314,7 @@
 		src.active_record = locate(href_list["view_rec"]) in records
 		if ((isnull(src.active_record.fields["ckey"])) || (src.active_record.fields["ckey"] == ""))
 			qdel(src.active_record)
+			src.active_record = null
 			src.temp = "ERROR: Record Corrupt"
 		else
 			src.menu = 3
@@ -316,6 +330,7 @@
 			logTheThing("combat", usr, null, "deletes the cloning record [src.active_record.fields["name"]] for player [src.active_record.fields["ckey"]] at [log_loc(src)].")
 			src.records.Remove(src.active_record)
 			qdel(src.active_record)
+			src.active_record = null
 			src.temp = "Record deleted."
 			src.menu = 2
 /*
@@ -324,6 +339,7 @@
 				if(src.check_access(C))
 					src.records.Remove(src.active_record)
 					qdel(src.active_record)
+					src.active_record = null
 					src.temp = "Record deleted."
 					src.menu = 2
 				else
@@ -332,17 +348,24 @@
 	else if (href_list["disk"]) //Load or eject.
 		switch(href_list["disk"])
 			if("load")
-				if (src.diskette.data_type == "cloning_record")
-					var/datum/data/record/R = new /datum/data/record(  )
-					R.fields = src.diskette.data
-					src.records += R
-					src.temp = "Load successful, data transferred."
-					src.diskette.data_type = "corrupt"
-					src.diskette.data = ""
+				if (src.diskette.read_only)
+					// The file needs to be deleted from the disk after loading the record
+					src.temp = "Load error - cannot transfer clone records from a disk in read only mode."
 					src.updateUsrDialog()
 					return
 
-				else
+				var/loaded = 0
+
+				for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
+					if (!find_record(cloneRecord.fields["ckey"]))
+						var/datum/data/record/R = new
+						R.fields = cloneRecord.fields
+						src.records += R
+						loaded++
+						src.temp = "Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred."
+						src.diskette.root.remove_file(cloneRecord)
+
+				if(!loaded)
 					src.temp = "Load error."
 					src.updateUsrDialog()
 					return
@@ -359,17 +382,16 @@
 			src.updateUsrDialog()
 			return
 
-		else if (src.diskette.data_type == "corrupt")
-			src.temp = "Save error. Disk corruption."
-			src.updateUsrDialog()
-			return
+		for (var/datum/computer/file/clone/R in src.diskette.root.contents)
+			if (R.fields["ckey"] == src.active_record.fields["ckey"])
+				src.temp = "Record already exists on disk."
+				src.updateUsrDialog()
+				return
 
-		src.diskette.data = src.active_record.fields
-		src.diskette.ue = 1
-		src.diskette.data_type = "cloning_record"
-		src.diskette.owner = src.active_record.fields["name"]
-		src.diskette.name = "data disk - '[src.diskette.owner]'"
-		src.temp = "Save successful."
+		var/datum/computer/file/clone/cloneFile = new
+		cloneFile.name = "CloneRecord-[ckey(src.active_record.fields["name"])]"
+		cloneFile.fields = src.active_record.fields
+		src.temp = src.diskette.root.add_file(cloneFile) ? "Save successful." : "Save error."
 
 	else if (href_list["refresh"])
 		src.updateUsrDialog()
@@ -478,7 +500,7 @@
 	if (!src.pod1)
 		src.temp = "No cloning pod connected."
 		return
-	if (src.pod1.occupant)
+	if (src.pod1.attempting)
 		src.temp = "Cloning pod in use."
 		return
 	if (src.pod1.mess)
@@ -547,25 +569,6 @@
 				src.icon_state = "c_unpowered"
 				status |= NOPOWER
 
-
-//New loading/storing records is a todo while I determine how it should work.
-/obj/machinery/computer/cloning/proc
-	load_record()
-		if (!src.diskette || !src.diskette.root)
-			return -1
-
-
-		return 0
-
-	save_record()
-		if (!src.diskette || !src.diskette.root)
-			return -1
-
-
-
-		return 0
-
-
 //Find a dead mob with a brain and client.
 /proc/find_dead_player(var/find_key, needbrain=0)
 	if (isnull(find_key))
@@ -573,7 +576,7 @@
 
 	for(var/mob/M in mobs)
 		//Dead people only thanks!
-		if (!(isdead(M) || isVRghost(M) || inafterlifebar(M)) || (!M.client))
+		if (!(isdead(M) || isVRghost(M) || isghostcritter(M) || inafterlifebar(M)) || (!M.client))
 			continue
 		//They need a brain!
 		if (needbrain && ishuman(M) && !M:brain)
@@ -599,6 +602,7 @@
 	anchored = 1.0
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	var/obj/machinery/computer/cloning/connected = null
 
 	// In case someone wants a perfectly safe device. For some weird reason.
 	var/can_meat_grind = 1
@@ -632,11 +636,18 @@
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
 
+	disposing()
+		connected?.scanner = null
+		connected = null
+		pods = null
+		occupant = null
+		..()
+
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -683,7 +694,7 @@
 		src.icon_state = "scanner_1"
 
 		for(var/obj/O in src)
-			O.loc = src.loc
+			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
 
@@ -738,11 +749,14 @@
 		if ((!( src.occupant ) || src.locked))
 			return
 
-		for(var/obj/O in src)
-			O.set_loc(src.loc)
+		if(!src.occupant.disposed)
+			src.occupant.set_loc(src.loc)
 
-		src.occupant.set_loc(src.loc)
 		src.occupant = null
+
+		for(var/atom/movable/A in src)
+			A.set_loc(src.loc)
+
 		src.icon_state = "scanner_0"
 
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)

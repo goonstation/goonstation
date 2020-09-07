@@ -564,12 +564,13 @@ var/sound/iomoon_alarm_sound = null
 	aggressive = 1
 	defensive = 1
 	wanderer = 0
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 0.1
 	brutevuln = 0.4
 	angertext = "grumbles at"
+	death_text = "%src% flops over dead!"
 	butcherable = 0
 
 	CritterAttack(mob/M)
@@ -587,12 +588,7 @@ var/sound/iomoon_alarm_sound = null
 		return CritterAttack(M)
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
-		anchored = 0
-		src.icon_state = "lavacrab-dead"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> flops over dead!")
+		..()
 
 	ai_think()
 		. = ..()
@@ -607,12 +603,13 @@ var/sound/iomoon_alarm_sound = null
 	health = 10
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 0.1
 	brutevuln = 0.6
 	angertext = "beeps at"
+	death_text = "%src% blows apart!"
 	butcherable = 0
 	attack_range = 3
 	flying = 1
@@ -634,14 +631,9 @@ var/sound/iomoon_alarm_sound = null
 
 	CritterDeath()
 		if (!src.alive) return
-		src.alive = 0
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> blows apart!")
-
+		..()
 		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+			elecflash(src,power = 2)
 			qdel(src)
 
 	process()
@@ -729,17 +721,16 @@ var/sound/iomoon_alarm_sound = null
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "takeout"
 	heal_amt = 1
+	initial_volume = 60
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(60)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("chickensoup", 10)
-		R.add_reagent("salt", 10)
-		R.add_reagent("grease", 5)
-		R.add_reagent("msg", 2)
-		R.add_reagent("VHFCS", 8)
-		R.add_reagent("egg",5)
+		..()
+		reagents.add_reagent("chickensoup", 10)
+		reagents.add_reagent("salt", 10)
+		reagents.add_reagent("grease", 5)
+		reagents.add_reagent("msg", 2)
+		reagents.add_reagent("VHFCS", 8)
+		reagents.add_reagent("egg",5)
 
 /obj/item/yoyo
 	name = "Atomic Yo-Yo"
@@ -783,9 +774,7 @@ var/sound/iomoon_alarm_sound = null
 			boutput(user, "<i><b><font face = Tempus Sans ITC>EI NATH</font></b></i>")
 
 			//EI NATH!!
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(4, 1, user)
-			s.start()
+			elecflash(user,radius = 2, power = 6)
 
 			H.unkillable = 1
 			H.gib(1)
@@ -1132,7 +1121,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					last_noise_time = ticker.round_elapsed_ticks
 					last_noise_length = 80
 
-				critters += src
+				START_TRACKING_CAT(TR_CAT_CRITTERS)
 
 			process()
 				if (last_noise_time + last_noise_length < ticker.round_elapsed_ticks)
@@ -1202,7 +1191,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				if (active == -1)
 					return
 
-				critters -= src
+				STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 
 				active = -1
 				if (src.zapMarker)
@@ -1506,7 +1495,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 	disposing()
 		if (next)
-			next.disposing()
+			next.dispose()
 			next = null
 
 		..()

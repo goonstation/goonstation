@@ -49,13 +49,14 @@ Broken RCD + Effects
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 50000
-	var/datum/effects/system/spark_spread/spark_system
+
 	mats = 12
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 5
 	module_research = list("tools" = 8, "engineering" = 8, "devices" = 3, "efficiency" = 5)
 	module_research_type = /obj/item/rcd
+	inventory_counter_enabled = 1
 
 	// Borgs/drones can't really use matter units.
 	// (matter cost) x (this) = (power cell charge used)
@@ -88,7 +89,7 @@ Broken RCD + Effects
 	// What index into mode list we are (used for updating)
 	var/internal_mode = 1
 
-	get_desc(dist)
+	get_desc()
 		. += "<br>It holds [matter]/[max_matter] matter units. It is currently set to "
 		switch (src.mode)
 			if (RCD_MODE_FLOORSWALLS)
@@ -108,20 +109,9 @@ Broken RCD + Effects
 		. += "mode."
 
 	New()
-		if (src.shits_sparks)
-			src.spark_system = unpool(/datum/effects/system/spark_spread)
-			spark_system.set_up(5, 0, src)
-			spark_system.attach(src)
+		..()
 		src.update_icon()
 		return
-
-	pickup(mob/M)
-		..()
-		src.update_maptext()
-
-	dropped(mob/M)
-		src.maptext = null
-		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/rcd_ammo))
@@ -139,11 +129,10 @@ Broken RCD + Effects
 				src.matter += R.matter
 				R.matter = 0
 				qdel(R)
+			R.tooltip_rebuild = 1
 			src.update_icon()
 			playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
 			boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
-			if (src.maptext)
-				src.update_maptext()
 			return
 
 	attack_self(mob/user as mob)
@@ -169,11 +158,9 @@ Broken RCD + Effects
 				boutput(user, "Changed mode to 'Pod Door Control'")
 				boutput(user, "<span class='notice'>Place a door control on a wall, then place any amount of pod doors on floors.</span>")
 				boutput(user, "<span class='notice'>You can also select an existing door control by whacking it with \the [src].</span>")
-
 		// Gonna change this so it doesn't shit sparks when mode switched
 		// Just that it does it only after actually doing something
 		//src.shitSparks()
-		src.update_maptext()
 		src.update_icon()
 		return
 
@@ -323,8 +310,7 @@ Broken RCD + Effects
 					N.show_message(text("<span class='alert'><B>[] shoves \the [src] down []'s throat!</B></span>", user, H), 1)
 			playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
 			if(do_after(user, 20))
-				spark_system.set_up(5, 0, src)
-				src.spark_system.start()
+				elecflash(src)
 				var/mob/living/carbon/wall/W = new(H.loc)
 				W.real_name = H.real_name
 				playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
@@ -343,17 +329,7 @@ Broken RCD + Effects
 	proc/shitSparks()
 		if (!src.shits_sparks)
 			return
-		spark_system.set_up(5, 0, src)
-		src.spark_system.start()
-
-	proc/update_maptext()
-		if (!src.matter)
-			src.maptext = null
-			return
-
-		src.maptext_x = -2
-		src.maptext_y = 1
-		src.maptext = {"<span class="vb r pixel sh">[src.matter]</span></span>"}
+		elecflash(src)
 
 	proc/ammo_check(mob/user as mob, var/checkamt = 0)
 		if (issilicon(user))
@@ -390,7 +366,6 @@ Broken RCD + Effects
 		if ((!delay || do_after(user, delay)) && ammo_check(user, ammo))
 			ammo_consume(user, ammo)
 			playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
-			src.update_maptext()
 			shitSparks()
 			src.working_on -= target
 			return 1
@@ -414,6 +389,7 @@ Broken RCD + Effects
 		if (GetOverlayImage("mode"))
 			src.ClearSpecificOverlays("mode")
 		var/ammo_amt = 0
+		tooltip_rebuild = 1
 		switch (round((src.matter / src.max_matter) * 100)) //is the round() necessary? yell at me if it isnt
 			if (10 to 34)
 				ammo_amt = 1
@@ -445,6 +421,9 @@ Broken RCD + Effects
 
 		var/image/I = SafeGetOverlayImage("mode", src.icon, "[mode]-[ammo_amt]")
 		src.UpdateOverlays(I, "mode")
+
+		if (!issilicon(usr))
+			src.inventory_counter.update_number(matter)
 
 ///////////////////
 //NORMAL VARIANTS//
@@ -686,14 +665,10 @@ Broken RCD + Effects
 	m_amt = 50000
 	var/mode = 1
 	var/broken = 0 //Fully broken, that is.
-	var/datum/effects/system/spark_spread/spark_system
 
 	New()
 		..()
 		src.icon_state = "bad_rcd[rand(0,2)]"
-		src.spark_system = unpool(/datum/effects/system/spark_spread)
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/rcd_ammo))
@@ -709,12 +684,12 @@ Broken RCD + Effects
 		if (mode)
 			mode = 0
 			boutput(user, "Changed mode to 'Deconstruct'")
-			src.spark_system.start()
+			elecflash(src)
 			return
 		else
 			mode = 1
 			boutput(user, "Changed mode to 'Floor & Walls'")
-			src.spark_system.start()
+			elecflash(src)
 			return
 
 	afterattack(atom/A, mob/user as mob)
@@ -737,8 +712,7 @@ Broken RCD + Effects
 					return
 
 				src.broken++
-				spark_system.set_up(5, 0, src)
-				src.spark_system.start()
+				elecflash(src)
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 
 				for (var/turf/T in orange(1,user))
@@ -757,8 +731,7 @@ Broken RCD + Effects
 					return
 
 				src.broken++
-				spark_system.set_up(5,0,src)
-				src.spark_system.start()
+				elecflash(src)
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 100, 1)
 
 				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
@@ -802,9 +775,7 @@ Broken RCD + Effects
 
 				continue
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src,power=3)
 
 	proc/void_loop()
 		if (lifespan-- < 0)

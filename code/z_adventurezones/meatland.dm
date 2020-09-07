@@ -151,11 +151,9 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(25)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("acid",20)
-		R.add_reagent("vomit",5)
+		src.create_reagents(25)
+		reagents.add_reagent("acid",20)
+		reagents.add_reagent("vomit",5)
 
 	HasEntered(atom/A)
 		reagents.reaction(A, TOUCH, 2)
@@ -218,6 +216,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	firevuln = 0.15
 	angertext = "bares jagged fangs at"
 	generic = 0
+	is_pet = 0
 
 
 	floor
@@ -305,14 +304,10 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			return ..()
 
 	proc/update_meat_head_dialog(var/new_text)
-		if (!new_text || !length(ckey(new_text)) || !main_meat_head)
+		if (!new_text || !length(ckey(new_text)))
 			return
-
+		var/obj/critter/monster_door/meat_head/main_meat_head = by_type[/obj/critter/monster_door/meat_head][1]
 		main_meat_head.update_meat_head_dialog(new_text)
-
-var/global/obj/critter/monster_door/main_meat_head = null
-var/global/list/default_meat_head_dialog = list("hello hello", "... it's not viral, it's some kind of ... stress ... hello", "what is that ...", "... hurts ...",
-"...FACILITY IS ON RED ALERT...","...why...","...proper safety precautions were not....","...is it...", "...this isn't...")
 
 #define MEATHEAD_MAX_CUSTOM_UTTERANCES 32
 
@@ -330,27 +325,25 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 	bound_height = 64
 	bound_width = 64
 	angertext = "shakes and wobbles furiously at"
-	var/list/dialog = list()
+	var/list/dialog = null
 	var/obj/item/clothing/head/hat = null
 	var/static/list/meathead_noises = list('sound/misc/meat_gargle.ogg', 'sound/misc/meat_hork.ogg', 'sound/misc/meat_plop.ogg', 'sound/misc/meat_splat.ogg')
+	var/static/list/default_meat_head_dialog = list("hello hello", "... it's not viral, it's some kind of ... stress ... hello", "what is that ...", "... hurts ...",
+"...FACILITY IS ON RED ALERT...","...why...","...proper safety precautions were not....","...is it...", "...this isn't...")
 
 	New()
 		..()
-		if (default_meat_head_dialog)
-			dialog += default_meat_head_dialog.Copy()
+		dialog = default_meat_head_dialog.Copy()
+		START_TRACKING
 
-		SPAWN_DBG (20)
-			if (!main_meat_head)
-				main_meat_head = src
+	disposing()
+		STOP_TRACKING
+		..()
 
 	CritterDeath()
 		if (!src.alive) return
-		src.icon_state = "meatboss_dead"
-		src.alive = 0
-		src.anchored = 1
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
-
+		..()
+		src.icon_state = "meatboss_dead" // why can't you just use a - like everyone else
 
 	ai_think()
 		if(task == "chasing")
@@ -491,6 +484,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 /obj/critter/blobman/meaty_martha
 	generic = 0
+	death_text = "%src% collapses into viscera..."
 
 	New()
 		..()
@@ -534,15 +528,15 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 	CritterDeath()
 		if (!src.alive) return
-		src.visible_message("<b>[src]</b> collapses into viscera...")
+		..()
 		if (src.loc)
 			gibs(src.loc)
 		qdel(src)
 
 	proc/update_meat_head_dialog(var/new_text)
-		if (!new_text || !length(ckey(new_text)) || !main_meat_head)
+		if (!new_text || !length(ckey(new_text)))
 			return
-
+		var/obj/critter/monster_door/meat_head/main_meat_head = by_type[/obj/critter/monster_door/meat_head][1]
 		main_meat_head.update_meat_head_dialog(new_text)
 
 	proc/target_missing_limb(mob/living/carbon/human/testhuman)
@@ -641,6 +635,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		name = "log_20510321"
 
 		New()
+			..()
 			fields = strings("meatland/meatland_records.txt","log_20510321")
 			/*list("Even with the recent acquisition of Hemera",
 					"technical documents and some working material,",
@@ -658,6 +653,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		name = "log_20510324"
 
 		New()
+			..()
 			fields = strings("meatland/meatland_records.txt","log_20510324")
 			/*list("The patterns on the acquired telecrystal core",
 						"perplex me more the more I look at them, not less.",
@@ -673,6 +669,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		name = "mail_20510415"
 
 		New()
+			..()
 			fields = strings("meatland/meatland_records.txt","mail_20510415")
 
 		/*list("Dear Research Staff,",
@@ -688,6 +685,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		name = "MEDLOG07"
 
 		New()
+			..()
 			fields = strings("meatland/meatland_records.txt","MEDLOG07")
 			/*list("The degradation effect has continued to",
 					"affect everything sent through the pad, organic or",
@@ -702,6 +700,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		name = "MEDLOG09"
 
 		New()
+			..()
 			fields =  strings("meatland/meatland_records.txt","MEDLOG09")
 			/*list("Patient's condition has continued to worsen. Same",
 				"way as the others.  Body continues to splinter.",
@@ -714,6 +713,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		name = "system_brief"
 
 		New()
+			..()
 			fields = strings("meatland/meatland_records.txt","system_brief")
 			/*list("The heart of the teleportation system is",
 				"the formed telecrystal. The crystal is wrapped",

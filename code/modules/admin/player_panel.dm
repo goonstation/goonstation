@@ -1,7 +1,7 @@
 
 /client/proc/cmd_admin_playeropt(mob/M as mob in world)
 	set name = "Player Options"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 1
 	if (src.holder)
 		src.holder.playeropt(M)
@@ -22,7 +22,8 @@
 	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
 	var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? "<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>" : "<style type='text/css'>#topBar { top: 46px; left: 4px; right: 10px; background: inherit; }</style>"
 
-	var/dat = {"
+	var/list/dat = list()
+	dat += {"
 	[header_thing_chui_toggle]
 	<title>[M.name] ([M.key ? M.key : "NO CKEY"]) Options</title>
 	<style>
@@ -149,12 +150,14 @@
 					</div>
 					<div class='l'>Bioeffects<a href='?src=\ref[src];action=secretsfun;type=bioeffect_help'>*</a></div>
 					<div class='r'>
+						<a href='[playeropt_link(M, "managebioeffect")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addbioeffect")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removebioeffect")]'>Remove</a>
 					</div>
 					"}]
 					<div class='l'>Abilities</div>
 					<div class='r'>
+						<a href='[playeropt_link(M, "manageabils")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addabil")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removeabil")]'>Remove</a> &bull;
 						<a href='[playeropt_link(M, "abilholder")]'>New Holder</a>
@@ -201,10 +204,16 @@
 					</div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "jumpto")]'>Jump to</A> &bull;
+						<a href='[playeropt_link(M, "observe")]'>Observe</A> &bull;
 						<a href='[playeropt_link(M, "getmob")]'>Get</a> &bull;
 						<a href='[playeropt_link(M, "sendmob")]'>Send to...</a>
 						<br>Currently in [A]
-						<br>&nbsp;&nbsp;[T.x], [T.y], [T.z][(Q && Q != T) ? ", inside \the [Q]" : ""]
+			"}
+		if (T) //runtime fix for mobs in null space
+			dat += "<br>&nbsp;&nbsp;[T.x], [T.y], [T.z][(Q && Q != T) ? ", inside \the [Q]" : ""]"
+		else
+			dat += "Null Space"
+		dat += {"
 					</div>
 					<div class='l'>
 						Prison
@@ -333,7 +342,7 @@
 			<div class='optionGroup' style='border-color: #FFB347;'>
 				<h2 style='background-color: #FFB347;'>High Level Problems</h2>
 				<div>
-					<div class='l'>Shit Person</div>
+					<div class='l'>Administrator</div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "possessmob")]'>[M == usr ? "Release" : "Possess"] mob</a> &bull;
 						<a href='[playeropt_link(M, "viewvars")]'>Edit Variables</a> &bull;
@@ -360,9 +369,9 @@
 			"}
 
 	var/windowHeight = "450"
-	if (src.level == LEVEL_SHITGUY)
+	if (src.level == LEVEL_ADMIN)
 		windowHeight = "550"
 	else if (src.level == LEVEL_CODER)
-		windowHeight = "600"
+		windowHeight = "754"	//weird number, but for chui screen, it removes the scrolling.
 
-	usr.Browse(dat, "window=adminplayeropts[M.ckey];size=600x[windowHeight]")
+	usr.Browse(dat.Join(), "window=adminplayeropts[M.ckey];size=600x[windowHeight]")

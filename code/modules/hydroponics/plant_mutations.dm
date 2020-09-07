@@ -12,7 +12,7 @@
 	var/attacked_proc_override = 0
 	var/name_prefix = ""	// Prepend to plant name
 	var/name_suffix = ""	// Append to plant name
-	var/dont_rename_crop = false	// If the crop should not be renamed based on the
+	var/dont_rename_crop = false	// If the crop should not be renamed based on the plant's mutation
 
 	// Ranges various genes have to be in to get the mutation to appear - lower and upper bound
 	var/list/GTrange = list(null,null) // null means there is no limit so an upper bound of 25
@@ -56,21 +56,12 @@
 
 // Tomato Mutations
 
-/datum/plantmutation/tomato/explosive
+/datum/plantmutation/tomato/incendiary
 	name = "Seething Tomato"
 	name_prefix = "Seething "
-	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/explosive
+	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
 	iconmod = "TomatoExplosive"
-
-	HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
-		. = ..()
-		if (.)
-			return .
-		if (prob(5) || (user.client && user.client.hellbanned && prob(50)))
-			boutput(user, "<span class='alert'>A tomato explodes as you pick it off the plant!</span>")
-			explosion_new(POT, get_turf(user), 10, 1)
-			return 399
-		return 0
+	assoc_reagents = list("fuel")
 
 /datum/plantmutation/tomato/killer
 	name = "Suspicious Tomato"
@@ -132,6 +123,16 @@
 	ENrange = list(40,null)
 	chance = 10
 
+// Pear Mutations
+
+#if ASS_JAM
+/datum/plantmutation/pear/sickly
+	name = "Sickly Pear"
+	crop = /obj/item/reagent_containers/food/snacks/plant/pear/sickly
+	assoc_reagents = list("too much")
+
+#endif
+
 // Melon Mutations
 
 /datum/plantmutation/melon/george
@@ -182,6 +183,16 @@
 			POT.pixel_x = 0
 			POT.pixel_y = 0
 
+
+// Bean Mutations
+
+/datum/plantmutation/beans/jelly // hehehe
+	name = "Jelly Bean"
+	name_prefix = "jelly"
+	iconmod = "BeanJelly"
+	assoc_reagents = list("VHFCS")
+	crop = /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
+
 // Chili Mutations
 
 /datum/plantmutation/chili/chilly
@@ -204,6 +215,7 @@
 
 /datum/plantmutation/eggplant/literal
 	name = "Free-Range Eggplant"
+	dont_rename_crop = true
 	name_prefix = "free range "
 	iconmod = "EggplantEggs"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
@@ -331,6 +343,24 @@
 	assoc_reagents = list("phlogiston")
 	chance = 10
 
+// Ipecacuanha Mutations
+
+/datum/plantmutation/ipecacuanha/bilious
+	name = "Bilious Ipecacuanha"
+	name_prefix = "Bilious "
+	iconmod = "IpecacuanhaBilious"
+	crop = /obj/item/plant/herb/ipecacuanha/bilious
+	assoc_reagents = list("vomit","sewage","bitters")
+	chance = 10
+
+/datum/plantmutation/ipecacuanha/invigorating
+	name = "Invigorating Ipecacuanha"
+	name_prefix = "Invigorating "
+	iconmod = "IpecacuanhaInvigorating"
+	crop = /obj/item/plant/herb/ipecacuanha/invigorating
+	assoc_reagents = list("synaptizine")
+	chance = 10
+
 // Venne Mutations
 
 /datum/plantmutation/venne/toxic
@@ -437,7 +467,7 @@
 
 /datum/plantmutation/fungus/cloak
 	name = "Cloaked Panellus"
-	iconmod = "Cloak"
+	iconmod = "FungusCloak"
 	crop = /obj/item/reagent_containers/food/snacks/mushroom/cloak
 	PTrange = list(null,10) //low potency
 	CZrange = list(25,null) // high crop size
@@ -537,6 +567,7 @@
 
 /datum/plantmutation/tree/money
 	name = "Money Tree"
+	dont_rename_crop = true
 	name_prefix = "Money "
 	iconmod = "TreeCash"
 	crop = /obj/item/spacecash
@@ -544,6 +575,7 @@
 
 /datum/plantmutation/tree/paper
 	name = "Paper Tree"
+	dont_rename_crop = true
 	name_prefix = "Paper "
 	iconmod = "TreePaper"
 	crop = /obj/item/paper
@@ -551,6 +583,7 @@
 
 /datum/plantmutation/tree/dog
 	name = "Dogwood Tree"
+	dont_rename_crop = true
 	iconmod = "TreeDogwood"
 	special_proc_override = 1
 	attacked_proc_override = 1

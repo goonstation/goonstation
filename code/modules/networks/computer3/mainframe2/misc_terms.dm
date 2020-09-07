@@ -160,7 +160,7 @@
 
 		src.net_id = generate_net_id(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN_DBG(1 SECONDS)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -681,7 +681,7 @@
 	var/sim_delay = 300 //Time until next simulation.
 	power_usage = 200
 
-	var/vr_landmark = "bombtest-bomb" //Landmark where the ~vr bomb~ spawns.
+	var/vr_landmark = LANDMARK_VR_BOMB
 
 	power_change()
 		if(powered())
@@ -882,14 +882,14 @@
 			if(vrbomb)
 				qdel(vrbomb)
 
-			var/obj/landmark/B = locate("landmark*[vr_landmark]")
+			var/turf/B = pick_landmark(vr_landmark)
 			if(!B)
 				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
 				src.visible_message("[src] emits a somber ping.")
 				return
 
 			vrbomb = new
-			vrbomb.set_loc(B.loc)
+			vrbomb.set_loc(B)
 			vrbomb.anchored = 1
 			vrbomb.tester = src
 
@@ -915,8 +915,7 @@
 
 			T.timing = 1
 			T.c_state(1)
-			if (!(T in processing_items))
-				processing_items.Add(T)
+			processing_items |= src
 			src.last_sim = world.time
 
 			var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
@@ -950,25 +949,12 @@
 			results.fields += "Atmospheric Tank #1:"
 			if(tank1)
 				var/datum/gas_mixture/environment = tank1.return_air()
-				var/pressure = environment.return_pressure()
-				var/total_moles = environment.total_moles()
+				var/pressure = MIXTURE_PRESSURE(environment)
+				var/total_moles = TOTAL_MOLES(environment)
 
 				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
 				if(total_moles)
-					var/o2_level = environment.oxygen/total_moles
-					var/n2_level = environment.nitrogen/total_moles
-					var/co2_level = environment.carbon_dioxide/total_moles
-					var/plasma_level = environment.toxins/total_moles
-					var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-
-					results.fields += "Nitrogen: [round(n2_level*100)]%"
-					results.fields += "Oxygen: [round(o2_level*100)]%"
-					results.fields += "Carbon Dioxide: [round(co2_level*100)]%"
-					results.fields += "FAAE-1 (\"Plasma\"): [round(plasma_level*100)]%"
-
-					if(unknown_level > 0.01)
-						results.fields += "Unknown: [round(unknown_level)]%"
-
+					LIST_CONCENTRATION_REPORT(environment, results.fields)
 					results.fields += "|n"
 
 				else
@@ -979,25 +965,12 @@
 			results.fields += "Atmospheric Tank #2:"
 			if(tank2)
 				var/datum/gas_mixture/environment = tank2.return_air()
-				var/pressure = environment.return_pressure()
-				var/total_moles = environment.total_moles()
+				var/pressure = MIXTURE_PRESSURE(environment)
+				var/total_moles = TOTAL_MOLES(environment)
 
 				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
 				if(total_moles)
-					var/o2_level = environment.oxygen/total_moles
-					var/n2_level = environment.nitrogen/total_moles
-					var/co2_level = environment.carbon_dioxide/total_moles
-					var/plasma_level = environment.toxins/total_moles
-					var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-
-					results.fields += "Nitrogen: [round(n2_level*100)]%"
-					results.fields += "Oxygen: [round(o2_level*100)]%"
-					results.fields += "Carbon Dioxide: [round(co2_level*100)]%"
-					results.fields += "FAAE-1 (\"Plasma\"): [round(plasma_level*100)]%"
-
-					if(unknown_level > 0.01)
-						results.fields += "Unknown: [round(unknown_level)]%"
-
+					LIST_CONCENTRATION_REPORT(environment, results.fields)
 					results.fields += "|n"
 
 				else
@@ -2131,9 +2104,7 @@
 
 				src.update_icon()
 
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(3, 1, src)
-				s.start()
+				elecflash(src,power = 3)
 				if(src.host_id) //welp, we're broken.
 					src.post_status(src.host_id,"command","term_message","data","command=status&status=thermalert")
 				return 1
@@ -2719,11 +2690,13 @@
 				if (1)
 					light.disable()
 					if (src.host_id && change)
-						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
+						SPAWN_DBG(0)
+							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
 				if (0)
 					light.disable()
 					if (src.host_id && change)
-						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
+						SPAWN_DBG(0)
+							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
 
 			return
 
@@ -3784,7 +3757,7 @@
 					to_toss.set_loc(src.loc)
 					src.visible_message("<b>[src.name]</b> launches [to_toss]!")
 					playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
-					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, (throw_strength/50))
+					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, throw_strength/50, bonus_throwforce=throw_strength/4)
 
 				if (!src.active)
 					src.visible_message("<b>[src.name]</b> pings.")
@@ -3816,6 +3789,8 @@
 
 		if (I.w_class < 4)
 			if (src.contents.len < src.setup_max_objects)
+				if(I.cant_drop)
+					return
 				if (mag)
 					mag.dropItem(0)
 				else
@@ -3920,12 +3895,16 @@
 				boutput(user, "<span class='alert'>There's already something on the stand!</span>")
 				return
 			else
+				if(I.cant_drop)
+					return
 				if (mag)
 					mag.dropItem(0)
 				else
 					user.drop_item()
 				I.set_loc(src.loc)
 		else
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -3934,15 +3913,15 @@
 
 		return
 
-	Bumped(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (src.density)
 			for (var/obj/item/I in src.loc.contents)
-				I.Bumped(M)
+				I.hitby(M)
 				if (istype(I.artifact,/datum/artifact/) && isitem(M))
 					var/obj/item/ITM = M
 					var/obj/ART = I
 					src.impactpad_senseforce(ART, ITM)
-				return
+		..()
 
 	bullet_act(var/obj/projectile/P)
 		if (src.density)
@@ -4072,6 +4051,8 @@
 				return
 
 		if (!src.contents.len)
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4150,7 +4131,7 @@
 
 						src.sensed[3] = A.react_elec[3]
 
-						if (A.artitype == "eldritch")
+						if (A.artitype.name == "eldritch")
 							src.sensed[3] += rand(-7,7)
 
 						for(var/datum/artifact_fault in A.faults)
@@ -4238,6 +4219,8 @@
 				return
 
 		if (!src.contents.len)
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4311,13 +4294,13 @@
 							// Density
 							var/density = A.react_xray[1]
 
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								var/randval = rand(-2,6)
 								if (prob(50))
 									density *= rand(-2,6)
 								else
 									density /= (randval == 0 ? 1 : randval)
-							if (A.artitype == "eldritch" && prob(6))
+							if (A.artitype.name == "eldritch" && prob(6))
 								density = 666
 
 							src.sensed[1] = density
@@ -4325,10 +4308,10 @@
 							// Structural Consistency
 							var/consistency = A.react_xray[2]
 
-							if (consistency > 85 && A.artitype == "martian")
+							if (consistency > 85 && A.artitype.name == "martian")
 								consistency = 85
 
-							if (A.artitype == "eldritch" && prob(20))
+							if (A.artitype.name == "eldritch" && prob(20))
 								consistency *= rand(2,6)
 
 							src.sensed[2] = consistency
@@ -4339,11 +4322,12 @@
 							for (var/datum/artifact_fault in A.faults)
 								integrity -= 7
 
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								if (prob(50)) integrity *= rand(2,4)
 								else integrity /= rand(2,4)
 
-							if (integrity > 80 && A.artitype == "martian")
+							if (integrity > 80 && A.artitype.name == "martian")
+
 								integrity = 80
 
 							if (integrity < 0) src.sensed[3] = "< 1"
@@ -4351,9 +4335,9 @@
 
 							// Radiation Response
 							var/responsive = A.react_xray[4]
-							if (A.artitype == "martian")
+							if (A.artitype.name == "martian")
 								responsive -= 3
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								responsive += rand(-2,2)
 							if (responsive <= src.radstrength)
 								src.sensed[4] = "WEAK RESPONSE"
@@ -4369,11 +4353,11 @@
 
 							// Special Features
 							src.sensed[5] = A.react_xray[5]
-							if (A.artitype == "martian")
+							if (A.artitype.name == "martian")
 								src.sensed[5] += ",ORGANIC"
 							if (M.contents.len)
 								src.sensed[5] += ",CONTAINS OTHER OBJECT"
-							if (A.artitype == "eldritch" && prob(6))
+							if (A.artitype.name == "eldritch" && prob(6))
 								src.sensed[5] = "ERROR"
 
 							M.ArtifactStimulus("radiate", src.radstrength)
@@ -4455,6 +4439,8 @@
 		if (locate(/obj/) in src.loc.contents)
 			..()
 		else
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4725,8 +4711,8 @@
 	active = 1
 
 	var/setup_tag = null
-			//Pressure, Temperature, O2, N2, CO2, Plasma, Misc
-	var/list/sensed = list(null, null, null, null, null, null, null)
+			//Pressure, Temperature, gases, trace gases sum
+	var/list/sensed = null
 
 	New()
 		..()
@@ -4739,7 +4725,9 @@
 	message_interface(var/list/packetData)
 		switch (lowertext(packetData["command"]))
 			if ("info")
-				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=None&readinglist=Pressure-kPa,Temperature-K,Oxygen-%,Nitrogen-%,CO2-%,FAAE_1-%,Misc-%")
+				#define _FIELD_LABELS(_, _, NAME, ...) "[NAME]-%,"+
+				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=None&readinglist=Pressure-kPa,Temperature-K,[APPLY_TO_GASES(_FIELD_LABELS) ""]Misc-%")
+				// undefined at the end of the file because of https://secure.byond.com/forum/post/2072419
 
 			if ("status")
 				message_host("command=status&data=[src.active ? "1" : "0"]")
@@ -4749,28 +4737,27 @@
 
 			if ("sense")
 				var/datum/gas_mixture/air_sample = return_air()
-				var/total_moles = max(air_sample.total_moles(), 1)
+				var/total_moles = max(TOTAL_MOLES(air_sample), 1)
+				sensed.Cut()
 				if (air_sample)
-					sensed[1] = round(air_sample.return_pressure(), 0.1)
-					sensed[2] = round(air_sample.temperature, 0.1)
-					sensed[3] = round(100*air_sample.oxygen/total_moles, 0.1)
-					sensed[4] = round(100*air_sample.nitrogen/total_moles, 0.1)
-					sensed[5] = round(100*air_sample.carbon_dioxide/total_moles, 0.1)
-					sensed[6] = round(100*air_sample.toxins/total_moles, 0.1)
+					sensed.Add(round(MIXTURE_PRESSURE(air_sample), 0.1))
+					sensed.Add(round(air_sample.temperature, 0.1))
+					#define _SET_SENSED_GAS(GAS, ...) sensed.Add(round(100*air_sample.GAS/total_moles, 0.1));
+					APPLY_TO_GASES(_SET_SENSED_GAS)
+					#undef _SET_SENSED_GAS
 
 					var/tgmoles = 0
-					if(air_sample.trace_gases && air_sample.trace_gases.len)
+					if(length(air_sample.trace_gases))
 						for(var/datum/gas/trace_gas in air_sample.trace_gases)
 							tgmoles += trace_gas.moles
-					sensed[7] = round(100*tgmoles/total_moles, 0.1)
+					sensed.Add(round(100*tgmoles/total_moles, 0.1))
 				else
-					for (var/i = 1, i <= sensed.len, i++)
-						sensed[i] = "???"
+					sensed = list("???")
 
 				message_host("command=ack")
 
 			if ("read")
-				if (!sensed || sensed.len < 7)
+				if (!sensed)
 					message_host("command=nack")
 					return
 				for (var/i=1,i<=sensed.len,i++)
@@ -4778,7 +4765,7 @@
 						message_host("command=nack")
 						return
 
-				message_host("command=read&data=[sensed[1]],[sensed[2]],[sensed[3]],[sensed[4]],[sensed[5]],[sensed[6]],[sensed[7]]")
+				message_host("command=read&data=[sensed.Join(",")]")
 				message_host("command=ack")
 		return
 
@@ -4806,17 +4793,15 @@
 	New()
 		..()
 
-		mechanics = new(src)
-		mechanics.master = src
-
-		mechanics.addInput("input 0", "fire0")
-		mechanics.addInput("input 1", "fire1")
-		mechanics.addInput("input 2", "fire2")
-		mechanics.addInput("input 3", "fire3")
-		mechanics.addInput("input 4", "fire4")
-		mechanics.addInput("input 5", "fire5")
-		mechanics.addInput("input 6", "fire6")
-		mechanics.addInput("input 7", "fire7")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", "fire0")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", "fire3")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", "fire4")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", "fire5")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", "fire6")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", "fire7")
 
 	return_html_interface()
 		. = {"<b>INPUT STATUS</b>
@@ -4926,11 +4911,11 @@
 
 			if (lastSignal)
 				lastSignal.signal = "[output_word]"
-				mechanics.fireOutgoing(lastSignal)
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,lastSignal)
 				lastSignal = null
 
 			else
-				mechanics.fireOutgoing(mechanics.newSignal("[output_word]"))
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[output_word]")
 
 
 			if (pulses)
@@ -5022,3 +5007,4 @@
 
 			lastSignal = anInput
 
+#undef _FIELD_LABELS

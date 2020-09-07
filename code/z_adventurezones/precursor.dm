@@ -553,15 +553,13 @@
 			if(src.active) return
 
 			switch(function)
-				if("projectile" || null) // copied from singularity emitter code
+				if("projectile", null) // copied from singularity emitter code
 					src.animate_effect()
 					shoot_projectile_DIR(src, plaser, dir)
 					src.visible_message("<span class='alert'><b>[src]</b> fires a bolt of energy!</span>")
 
 					if(prob(35))
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(5, 1, src)
-						s.start()
+						elecflash(src)
 
 				if("electrical")
 					if (!linked_object)
@@ -918,9 +916,7 @@
 
 	proc/shock(var/mob/living/user as mob)
 		if(user)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, user.loc)
-			s.start()
+			elecflash(user,power=2)
 			var/shock_damage = rand(10,15)
 
 			if (user.bioHolder.HasEffect("resist_electric") == 2)
@@ -1011,6 +1007,8 @@
 	name = "darkness"
 	desc = "Oh god."
 	icon_state = "shade"
+	dead_state = "shade" //doesn't have a dead icon, just fades away
+	death_text = null //has special spooky voice lines
 	health = 10
 	brutevuln = 0.5
 	firevuln = 0
@@ -1066,9 +1064,9 @@
 		return ..()
 
 	CritterDeath()
+		..()
 		speak( pick("��r...�a ina ��r-kug z�h-bi!", "�d, �d, �u...bar...", "n�-nam-nu-kal...", "lugal-me taru, lugal-me galam!", "me-li-e-a...") )
 		// sing the sacred song to the bitter end // go out, exit, release // nothing is precious // our king will return, our king will ascend // woe is me
-		src.alive = 0
 		SPAWN_DBG(1.5 SECONDS)
 			qdel(src)
 
@@ -1120,6 +1118,7 @@
 	desc = "Something is terribly wrong with them."
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m"
+	dead_state = "body_m" //doesn't have a dead icon
 	alpha = 192
 	color = "#676767"
 	health = 100
@@ -1149,11 +1148,7 @@
 	CritterDeath()
 		if (!alive)
 			return
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
-		walk_to(src,0)
-		report_death()
+		..()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))
 		qdel(src)
 
@@ -1196,7 +1191,11 @@
 		var/temp_effect_limiter = 10
 		for (var/turf/T in view(range, src))
 			var/T_dist = get_dist(T, src)
-			var/T_effect_prob = 100 * (1 - (max(T_dist-1,1) / range))
+			var/T_effect_prob = 0
+			if(T_dist == 2)
+				T_effect_prob = 100
+			else
+				T_effect_prob = 100 * (1 - (max(T_dist-1,1) / range))
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = unpool(/obj/effects/sparks)
 				sparks.set_loc(T)
@@ -1247,11 +1246,11 @@
 							if (istype(T, /turf/simulated/wall))
 								T.ex_act(1)
 							else
-								qdel(T)
+								T.ReplaceWithSpaceForce()
 						else
-							T.ex_act( max(1, T_dist) )
+							T.ex_act(clamp(T_dist-2,1,3))
 							for (var/atom/A in T)
-								A.ex_act(max(1, T_dist))
+								A.ex_act(clamp(T_dist-2,1,3))
 
 						sleep(0.6 SECONDS)
 						for (var/obj/O in tempEffect)

@@ -152,55 +152,56 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
+				if (isliving(M))
+					var/mob/living/H = M
 					var/liver_damage = 0
 					if (!isalcoholresistant(H))
 						if (holder.get_reagent_amount(src.id) >= 15)
-							if(prob(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
+							if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 							H.stuttering += 1
-							if (H.canmove && isturf(H.loc) && prob(10))
+							if (H.canmove && isturf(H.loc) && probmult(10))
 								step(H, pick(cardinal))
 							if (prob(20)) H.make_dizzy(rand(3,5) * mult)
 						if (holder.get_reagent_amount(src.id) >= 25)
 							liver_damage = 0.25
-							if(prob(10)) H.emote(pick("hiccup", "burp"))
-							if (prob(10)) H.stuttering += rand(1,10)
+							if(probmult(10)) H.emote(pick("hiccup", "burp"))
+							if (probmult(10)) H.stuttering += rand(1,10)
 						if (holder.get_reagent_amount(src.id) >= 45)
-							if(prob(10))
+							if(probmult(10))
 								H.emote(pick("hiccup", "burp"))
-							if (prob(15))
+							if (probmult(15))
 								H.stuttering += rand(1,10)
-							if (H.canmove && isturf(H.loc) && prob(8))
+							if (H.canmove && isturf(H.loc) && probmult(8))
 								step(H, pick(cardinal))
 						if (holder.get_reagent_amount(src.id) >= 55)
 							liver_damage = 0.5
-							if(prob(10))
+							if(probmult(10))
 								H.emote(pick("hiccup", "fart", "mumble", "grumble"))
 							H.stuttering += 1
-							if (prob(33))
+							if (probmult(33))
 								H.change_eye_blurry(10 , 50)
-							if (H.canmove && isturf(H.loc) && prob(15))
+							if (H.canmove && isturf(H.loc) && probmult(15))
 								step(H, pick(cardinal))
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
-							if(prob(6))
+							if(probmult(6))
 								H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>")
 								H.vomit()
 							if(prob(15))
 								H.make_dizzy(5 * mult)
 						if (holder.get_reagent_amount(src.id) >= 60)
 							H.change_eye_blurry(10 , 50)
-							if(prob(6)) H.drowsyness += 5
+							if(probmult(6)) H.drowsyness += 5
 							if(prob(5)) H.take_toxin_damage(rand(1,2) * mult)
 
-					if (H.organHolder && H.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
-						if (H.organHolder.liver.robotic)
-							H.organHolder.heal_organ(1*mult, 1*mult, 2*mult, "liver")
-							M.take_toxin_damage(-1.5 * mult)
-						else
-							H.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
-				..()
+					if (ishuman(M))
+						var/mob/living/carbon/human/HH = M
+						if (HH.organHolder && HH.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
+							if (HH.organHolder.liver.robotic)
+								M.take_toxin_damage(-liver_damage * 3 * mult)
+							else
+								HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
+					..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				//Maybe add a bit that gives you a stamina buff if OD-ing on ethanol and you have a cyberliver.
@@ -254,15 +255,15 @@ datum
 			overdose = 20
 			pathogen_nutrition = list("iron")
 
-			on_mob_life(var/mob/living/carbon/human/H, var/mult = 1)
+			on_mob_life(var/mob/living/H, var/mult = 1)
 				..()
-				if (istype(H))
+				if (H.can_bleed)
 					H.blood_volume += 0.5 * mult
 					if(prob(10))
 						H.take_oxygen_deprivation(-1 * mult)
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				M.take_toxin_damage(1 * mult) // Iron overdose fucks you up bad
-				if(prob(5))
+				if(probmult(5))
 					if (M.nutrition > 10) // Not good for your stomach either
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", M), 1)
@@ -287,7 +288,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.canmove && isturf(M.loc))
 					step(M, pick(cardinal))
-				if(prob(5)) M.emote(pick("twitch","drool","moan"))
+				if(probmult(5)) M.emote(pick("twitch","drool","moan"))
 				..()
 				return
 
@@ -521,7 +522,7 @@ datum
 			pathogen_nutrition = list("sugar")
 			taste = "sweet"
 			var/remove_buff = 0
-			stun_resist = 5
+			stun_resist = 6
 
 			pooled()
 				..()
@@ -613,27 +614,19 @@ datum
 			transparency = 155
 			data = null
 
-			on_add(var/mob/M)
-				if(!M && holder) M = holder.my_atom
-				if(M != /mob/living/carbon/human)
-					return
-				if(M.bioHolder && M.bioHolder.HasEffect("quiet_voice")) data = 1
-				else data = 0
-				if(data == 1)
-					return
-				else
-					M.bioHolder.AddEffect("quiet_voice")
-				return
+			on_add()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(M.bioHolder && !M.bioHolder.HasEffect("quiet_voice"))
+						M.bioHolder.AddEffect("quiet_voice")
+				..()
 
-			on_remove(var/mob/M)
-				if(!M) M = holder.my_atom
-				if(M != /mob/living/carbon/human)
-					return
-				if(M.bioHolder && M.bioHolder.HasEffect("quiet_voice") && data == 1)
-					return
-				else
-					M.bioHolder.RemoveEffect("quiet_voice")
-				return
+			on_remove()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(M?.bioHolder.HasEffect("quiet_voice"))
+						M.bioHolder.RemoveEffect("quiet_voice")
+				..()
 
 		radium
 			name = "radium"
@@ -728,12 +721,13 @@ datum
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 #endif
 
-			on_mob_life(var/mob/living/carbon/human/H, var/mult = 1)
+			on_mob_life(var/mob/living/L, var/mult = 1)
 				..()
-				if (istype(H))
+				if (ishuman(L))
+					var/mob/living/carbon/human/H = L
 					if (H.organHolder)
 						H.organHolder.heal_organs(1*mult, 0, 1*mult, target_organs, 10)
-					H.nutrition += 1  * mult
+				L.nutrition += 1  * mult
 
 			reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
 				if(exposed_temperature < T0C)
@@ -781,7 +775,7 @@ datum
 			reaction_obj(var/obj/item/O, var/volume)
 				src = null
 				if(istype(O))
-					if(O.burning && prob(40))
+					if(O.burning && prob(80))
 						O.burning = 0
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
@@ -797,6 +791,7 @@ datum
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -10 * volume)
+						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 				return 1
 
 		water/water_holy
@@ -810,7 +805,7 @@ datum
 			reaction_mob(var/mob/target, var/method=TOUCH, var/volume)
 				..()
 				var/reacted = 0
-				var/mob/living/carbon/human/M = target
+				var/mob/living/M = target
 				if(istype(M))
 					if(by_type[/obj/machinery/playerzoldorf] && by_type[/obj/machinery/playerzoldorf].len)
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]

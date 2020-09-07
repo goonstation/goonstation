@@ -68,7 +68,7 @@ var/list/genescanner_addresses = list()
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -95,7 +95,7 @@ var/list/genescanner_addresses = list()
 		if (src.occupant)
 			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return 0
-		if(iscritter(target))
+		if(ismobcritter(target))
 			boutput(M, "<span class='alert'><B>The scanner doesn't support this body type.</B></span>")
 			return 0
 		if(!iscarbon(target) )
@@ -117,7 +117,7 @@ var/list/genescanner_addresses = list()
 		src.go_in(M)
 
 		for(var/obj/O in src)
-			O.loc = src.loc
+			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
 
@@ -219,7 +219,7 @@ var/list/genescanner_addresses = list()
 
 		// Added (Convair880).
 		if (src.occupant)
-			logTheThing("station", usr, src.occupant, "[src.locked ? "locks" : "unlocks"] the [src.name] with %target% inside at [log_loc(src)].")
+			logTheThing("station", usr, src.occupant, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 
 		return
 
@@ -244,11 +244,14 @@ var/list/genescanner_addresses = list()
 		if (src.locked)
 			return
 
-		for(var/obj/O in src)
-			O.set_loc(src.loc)
+		if(!src.occupant.disposed)
+			src.occupant.set_loc(src.loc)
 
-		src.occupant.set_loc(src.loc)
 		src.occupant = null
+
+		for(var/atom/movable/A in src)
+			A.set_loc(src.loc)
+
 		src.icon_state = "scanner_0"
 
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)

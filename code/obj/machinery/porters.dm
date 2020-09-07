@@ -171,9 +171,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 					var/obj/storage/closet/port_a_sci/PS = P
 					PS.on_teleport()
 
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, P)
-				s.start()
+				elecflash(P)
 
 		return
 
@@ -188,8 +186,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (!src)
 			return
 
-		for (var/obj/machinery/port_a_brig/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/port_a_brig/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -209,8 +206,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (!src)
 			return
 
-		for (var/obj/machinery/sleeper/port_a_medbay/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/sleeper/port_a_medbay/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -231,8 +227,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (!src)
 			return
 
-		for (var/obj/storage/closet/port_a_sci/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/storage/closet/port_a_sci/M in portable_machinery)
 			/*var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue*/
@@ -252,8 +247,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (!src)
 			return
 
-		for (var/obj/machinery/vending/port_a_nanomed/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/vending/port_a_nanomed/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -273,8 +267,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (!src)
 			return
 
-		for (var/obj/machinery/computer/genetics/portable/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/computer/genetics/portable/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -397,7 +390,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")
 				if (src.occupant)
-					logTheThing("station", user, src.occupant, "[src.locked ? "locks" : "unlocks"] [src.name] with %target% inside at [log_loc(src)].")
+					logTheThing("station", user, src.occupant, "[src.locked ? "locks" : "unlocks"] [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 			else
 				boutput(user, "<span class='alert'>This [src] doesn't seem to accept your authority.</span>")
 
@@ -534,7 +527,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			portable_machinery.Remove(src)
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 
@@ -745,7 +738,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 						var/mob/M = body_list[I] //What the actual fuck is this motherfucking nonsense shit fuck I hate you byond what the hell.
 						if(M.mind)
-							logTheThing("combat", src, body_list[next_in_line], "swapped [key_name(M)] and %target%'s bodies!")
+							logTheThing("combat", src, body_list[next_in_line], "swapped [key_name(M)] and [constructTarget(body_list[next_in_line],"combat")]'s bodies!")
 							M.mind.swap_with(body_list[next_in_line])
 							I++ //Step once more to prevent us from hitting the swapped mob
 
@@ -788,10 +781,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 						src.visible_message("<span class='alert'><B>\the [src]'s door flies open and a gout of flame erupts from within!</span>")
 						fireflash(src, 2)
 						for(var/mob/living/carbon/M in temp)
-							SPAWN_DBG(0)
-								M.update_burning(100)
-								var/turf/T = get_edge_target_turf(M, turn(NORTH, rand(0,7) * 45))
-								M.throw_at(T,100, 2)
+							M.update_burning(100)
+							var/turf/T = get_edge_target_turf(M, turn(NORTH, rand(0,7) * 45))
+							M.throw_at(T,100, 2)
 
 					if(3 to 10) //Hitchhiker friend!
 						var/obj/critter/C = pick(possible_new_friend)
@@ -827,6 +819,11 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 	New()
 		..()
+
+#if ASS_JAM
+		ADD_MORTY(8, 12, 10, 10)
+#endif
+
 		UnsubscribeProcess()
 		if (!islist(portable_machinery))
 			portable_machinery = list()
@@ -848,6 +845,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/anti_rad, 8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/spaceacillin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/insulin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/synaptizine, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/calomel, 6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)

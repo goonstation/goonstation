@@ -150,7 +150,7 @@
 			boutput(user, "<span class='hint'><b>Press Q or E to exit targeting.</b></span>")
 			vis_contents += user
 			controller = user
-			user.update_keymap()
+			user.reset_keymap()
 			if(user.client && targeter)
 				user.client.images += targeter.trgImage
 				user.client.eye = targeter
@@ -182,7 +182,7 @@
 			if(set_location)
 				controller.set_loc(get_step(src, SOUTH))
 			vis_contents.Cut()
-			controller.update_keymap()
+			controller.reset_keymap()
 			if(controller.client && targeter)
 				controller.client.images -= targeter.trgImage
 				controller.client.eye = controller
@@ -290,7 +290,7 @@
 		tray_obj = new/obj/torpedo_tube_tray(get_step(src, SOUTH))
 		tray_obj.parent = src
 		if(loaded)
-			loaded.loc = tray_obj.loc
+			loaded.set_loc(tray_obj.loc)
 			loaded = null
 		rebuildOverlays()
 		return
@@ -324,16 +324,14 @@
 				var/mob/M = loaded
 				M.set_loc(start)
 				M.dir = src.dir
-				SPAWN_DBG(0)
-					M.throw_at(target, 600, 2)
+				M.throw_at(target, 600, 2)
 
 
 			else if(istype(loaded, /obj/storage/closet))
 				var/obj/storage/closet/C = loaded
 				C.set_loc(start)
 				C.dir = src.dir
-				SPAWN_DBG(0)
-					C.throw_at(target, 600, 2)
+				C.throw_at(target, 600, 2)
 
 			else if(istype(loaded, /obj/torpedo))
 				var/obj/torpedo/T = loaded
@@ -381,13 +379,13 @@
 				M.setStatus("resting", INFINITE_STATUS)
 				M.force_laydown_standup()
 				M.set_loc(src.loc)
-				logTheThing("combat", user, target, " laods %target% onto \the [src] at [showCoords(user.x, user.y, user.z)]")
-				logTheThing("diary", user, target, " laods %target% onto \the [src] at [showCoords(user.x, user.y, user.z)]", "combat")
+				logTheThing("combat", user, target, " laods [constructTarget(target,"combat")] onto \the [src] at [showCoords(user.x, user.y, user.z)]")
+				logTheThing("diary", user, target, " laods [constructTarget(target,"diary")] onto \the [src] at [showCoords(user.x, user.y, user.z)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto [src]!</b></span>")
 			else
 				M.set_loc(src.loc)
-				logTheThing("combat", usr, target, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, target, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", usr, target, " loads [constructTarget(target,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
+				logTheThing("diary", usr, target, " loads [constructTarget(target,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
 				return
 
@@ -400,8 +398,8 @@
 				GM.setStatus("resting", INFINITE_STATUS)
 				GM.force_laydown_standup()
 				user.visible_message("<span class='alert'><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
-				logTheThing("combat", usr, GM, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, GM, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", usr, GM, " loads [constructTarget(GM,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
+				logTheThing("diary", usr, GM, " loads [constructTarget(GM,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 				qdel(G)
 		else
 			return ..(I,user)
@@ -475,7 +473,7 @@
 	proc/add(var/obj/torpedo/T)
 		if(loaded) return
 		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, T)) return
-		T.loc = src
+		T.set_loc(src)
 		src.loaded = T
 		changeIcon()
 		return

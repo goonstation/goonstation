@@ -1,4 +1,3 @@
-var/atmos_suspend = 0
 /*
 Overview:
 	The air_master global variable is the workhorse for the system.
@@ -157,20 +156,18 @@ datum
 					parent_controller = controller
 
 				queue_update_tile(turf/simulated/T)
-					if (!(T in tiles_to_update))
-						tiles_to_update += T
+					tiles_to_update |= T
 
 				queue_update_group(datum/air_group)
-					if (!(air_group in groups_to_rebuild))
-						groups_to_rebuild += air_group
+					groups_to_rebuild |= air_group
 
 				update_space_sample()
-					if (!space_sample || !space_sample.turf_flags & CAN_BE_SPACE_SAMPLE)
+					if (!space_sample || !(space_sample.turf_flags & CAN_BE_SPACE_SAMPLE))
 						if (map_currently_underwater)
 							space_sample = locate(/turf/space/fluid)
 						else
 							space_sample = locate(/turf/space)
-						return space_sample
+					return space_sample
 
 			setup(datum/controller/process/air_system/controller)
 				set_controller(controller)
@@ -242,6 +239,16 @@ datum
 						test.parent = group
 						test.processing = 0
 						active_singletons -= test
+
+						test.dist_to_space = null
+						var/dist
+						for(var/turf/simulated/b in possible_space_borders)
+							if (b == test)
+								test.dist_to_space = 1
+								break
+							dist = get_dist(b, test)
+							if (test.dist_to_space == null || dist < test.dist_to_space)
+								test.dist_to_space = dist
 
 					group.members = members
 					air_groups += group
@@ -375,8 +382,9 @@ datum
 				groups_to_rebuild.len = 0
 
 			process_groups()
-				for(var/datum/air_group/AG in air_groups)
-					AG.process_group(parent_controller)
+				for(var/x in air_groups)
+					var/datum/air_group/AG = x
+					AG?.process_group(parent_controller)
 					LAGCHECK(LAG_HIGH)
 
 			process_singletons()

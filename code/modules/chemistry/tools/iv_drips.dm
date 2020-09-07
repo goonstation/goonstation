@@ -109,7 +109,7 @@
 			H.tri_message("<span class='notice'><b>[user]</b> begins inserting [src]'s needle into [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] arm.</span>",\
 			user, "<span class='notice'>You begin inserting [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
 			H, "<span class='notice'>[H == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm.</span>")
-			logTheThing("combat", user, H, "tries to hook up an IV drip [log_reagents(src)] to %target% at [log_loc(user)].")
+			logTheThing("combat", user, H, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
 
 			if (H != user)
 				if (!do_mob(user, H, 50))
@@ -123,7 +123,7 @@
 			H.tri_message("<span class='notice'><b>[user]</b> inserts [src]'s needle into [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] arm.</span>",\
 			user, "<span class='notice'>You insert [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
 			H, "<span class='notice'>[H == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm.</span>")
-			logTheThing("combat", user, H, "connects an IV drip [log_reagents(src)] to %target% at [log_loc(user)].")
+			logTheThing("combat", user, H, "connects an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
 			src.start_transfusion()
 			return
 
@@ -185,12 +185,10 @@
 
 	proc/start_transfusion()
 		src.in_use = 1
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	proc/stop_transfusion()
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		src.in_use = 0
 		src.patient = null
 
@@ -360,8 +358,9 @@
 	desc = "A collection of parts that can be used to make an IV stand."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "IVstand_parts"
+	force = 2
 	stamina_damage = 10
-	stamina_cost = 10
+	stamina_cost = 8
 	furniture_type = /obj/iv_stand
 	furniture_name = "\improper IV stand"
 	build_duration = 25

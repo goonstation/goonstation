@@ -8,6 +8,7 @@
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	text = "<font color=#aaf>#"
 	var/health = 30
 	var/health_max = 30
 	var/health_multiplier = 1
@@ -46,10 +47,15 @@
 			src.health_max = src.health_max * src.health_multiplier
 			src.health = src.health_max
 			//DEBUG ("[src.name] [log_loc(src)] has [health] health / [health_max] max health ([health_multiplier] multiplier).")
-		SPAWN_DBG(0)
-			src.set_layer_from_settings()
-			update_nearby_tiles(need_rebuild=1)
-		return
+
+		if(current_state >= GAME_STATE_WORLD_INIT)
+			SPAWN_DBG(0)
+				initialize()
+
+	initialize()
+		src.set_layer_from_settings()
+		update_nearby_tiles(need_rebuild=1)
+		..()
 
 	proc/set_layer_from_settings()
 		if (!map_settings)
@@ -141,7 +147,6 @@
 		src.health = max(0,min(src.health - amount,src.health_max))
 
 		if (src.health == 0 && nosmash)
-			loc = null
 			qdel(src)
 		else if (src.health == 0 && !nosmash)
 			smash()
@@ -201,7 +206,6 @@
 		src.health = max(0,min(src.health - amount,src.health_max))
 		if (src.health == 0)
 			if (nosmash)
-				loc = null
 				qdel(src)
 			else
 				smash()
@@ -305,7 +309,7 @@
 			return 0
 		return 1
 
-	hitby(AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
 		playsound(src.loc, src.hitsound , 100, 1)
@@ -432,7 +436,7 @@
 			var/obj/item/grab/G = W
 			if (ishuman(G.affecting) && get_dist(G.affecting, src) <= 1)
 				src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
-				logTheThing("combat", user, G.affecting, "slams %target%'s head into [src]")
+				logTheThing("combat", user, G.affecting, "slams [constructTarget(user,"combat")]'s head into [src]")
 				playsound(src.loc, src.hitsound , 100, 1)
 				G.affecting:TakeDamage("head", 0, 5)
 				src.damage_blunt(G.affecting.throwforce)
@@ -641,7 +645,9 @@
 	var/mod = null
 	var/list/connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/auto/marsoutpost,
 		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
-		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper)
+		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/jen/red, /turf/simulated/wall/auto/jen/green, /turf/simulated/wall/auto/jen/yellow, /turf/simulated/wall/auto/jen/cyan, /turf/simulated/wall/auto/jen/purple,  /turf/simulated/wall/auto/jen/blue,
+		/turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/auto/reinforced/jen/red, /turf/simulated/wall/auto/reinforced/jen/green, /turf/simulated/wall/auto/reinforced/jen/yellow, /turf/simulated/wall/auto/reinforced/jen/cyan, /turf/simulated/wall/auto/reinforced/jen/purple, /turf/simulated/wall/auto/reinforced/jen/blue)
 	alpha = 160
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -726,6 +732,7 @@
 
 	attackby()
 	hitby()
+		SHOULD_CALL_PARENT(FALSE)
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -754,6 +761,7 @@
 			qdeled = 0// L   U    L
 
 	set_loc()
+		SHOULD_CALL_PARENT(FALSE)
 		loc = initialPos
 		return
 
@@ -810,10 +818,15 @@
 	var/no_dirs = 0 //ignore directional
 
 	New()
-		SPAWN_DBG(1 DECI SECOND)
-			src.set_up()
-			SPAWN_DBG(1 SECOND)
-				qdel(src)
+		..()
+		if(current_state >= GAME_STATE_WORLD_INIT)
+			SPAWN_DBG(0)
+				initialize()
+
+	initialize()
+		. = ..()
+		src.set_up()
+		qdel(src)
 
 	proc/set_up()
 		if (!locate(text2path(src.grille_path)) in get_turf(src))
@@ -823,7 +836,7 @@
 		if (!no_dirs)
 			for (var/dir in cardinal)
 				var/turf/T = get_step(src, dir)
-				if (!locate(/obj/wingrille_spawn) in T)
+				if ((!locate(/obj/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
 					var/obj/window/new_win = text2path("[src.win_path]/[dir2text(dir)]")
 					new new_win(src.loc)
 		if (src.full_win)
@@ -914,7 +927,7 @@
 	shattersound = 'sound/impact_sounds/Metal_Hit_Light_1.ogg'
 
 	New()
-		return
+		SHOULD_CALL_PARENT(FALSE) // I hate this but I don't feel lik refactoring cubicle panels, fuck that
 
 	smash()
 		if(health <= 0)

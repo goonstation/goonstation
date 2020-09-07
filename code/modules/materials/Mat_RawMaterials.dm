@@ -205,10 +205,8 @@
 
 	setup_material()
 		src.setMaterial(getMaterial("latex"), appearance = 0, setname = 0)
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("rubber", 10)
+		src.create_reagents(10)
+		reagents.add_reagent("rubber", 10)
 		return ..()
 
 /obj/item/material_piece/organic/wood

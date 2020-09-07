@@ -320,11 +320,10 @@
 	if (src.emagged && iscarbon(target))
 		var/atom/targetTurf = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 
-		SPAWN_DBG(0)
-			var/mob/living/carbon/Ctarget = target
-			boutput(Ctarget, "<span class='alert'><b>[src] knocks you back!</b></span>")
-			Ctarget.changeStatus("weakened", 2 SECONDS)
-			Ctarget.throw_at(targetTurf, 200, 4)
+		var/mob/living/carbon/Ctarget = target
+		boutput(Ctarget, "<span class='alert'><b>[src] knocks you back!</b></span>")
+		Ctarget.changeStatus("weakened", 2 SECONDS)
+		Ctarget.throw_at(targetTurf, 200, 4)
 
 	return
 
@@ -353,6 +352,8 @@
 	return src.explode()
 
 /obj/machinery/bot/firebot/explode()
+	if(src.exploding) return
+	src.exploding = 1
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
@@ -369,9 +370,7 @@
 	for(var/obj/item/I in emptybox.contents) //Empty the toolbox so we don't have infinite crowbars or whatever
 		qdel(I)
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return
 

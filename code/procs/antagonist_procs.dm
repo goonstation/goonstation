@@ -131,6 +131,17 @@
 			boutput(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Set your ringtone to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 
+		else
+			var/obj/item/uplink/syndicate/T = new(get_turf(traitor_mob))
+			T.lock_code_autogenerate = 1
+			T.setup(traitor_mob.mind, null)
+			pda_pass = T.lock_code
+			traitor_mob.put_in_hand_or_drop(T)
+
+			boutput(traitor_mob, "The Syndicate have <s>cunningly</s> disguised a Syndicate Uplink as [T.name]. Simply enter the code \"[pda_pass]\" into the device to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Uplink password:</B> [pda_pass].")
+
+
 /proc/equip_spy_theft(mob/living/carbon/human/traitor_mob)
 	if (!(traitor_mob && ishuman(traitor_mob)))
 		return
@@ -186,7 +197,7 @@
 		loc = "in your backpack"
 		if (traitor_mob.equip_if_possible(R, traitor_mob.slot_in_backpack) == 0)
 			loc = "on the floor"
-			R.loc = get_turf(traitor_mob)
+			R.set_loc(get_turf(traitor_mob))
 
 	if (istype(R, /obj/item/device/pda2))
 		var/obj/item/device/pda2/P = R
@@ -218,16 +229,18 @@
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(synd_mob), synd_mob.slot_w_uniform)
 	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/swat(synd_mob), synd_mob.slot_shoes)
 	synd_mob.equip_if_possible(new /obj/item/clothing/gloves/swat(synd_mob), synd_mob.slot_gloves)
-	synd_mob.equip_if_possible(new /obj/item/storage/backpack/satchel/syndie(synd_mob), synd_mob.slot_back)
-	synd_mob.equip_if_possible(new /obj/item/ammo/bullets/a357(synd_mob), synd_mob.slot_in_backpack)
+	synd_mob.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(synd_mob), synd_mob.slot_back)
+	//synd_mob.equip_if_possible(new /obj/item/ammo/bullets/a357(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/reagent_containers/pill/tox(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/remote/syndicate_teleporter(synd_mob), synd_mob.slot_l_store)
-	synd_mob.equip_if_possible(new /obj/item/gun/kinetic/revolver(synd_mob), synd_mob.slot_belt)
-
+	//synd_mob.equip_if_possible(new /obj/item/gun/kinetic/revolver(synd_mob), synd_mob.slot_belt)
+	synd_mob.equip_if_possible(new /obj/item/requisition_token/syndicate(synd_mob), synd_mob.slot_r_store)
+/*
 	var/obj/item/uplink/syndicate/U = new /obj/item/uplink/syndicate/alternate(synd_mob)
 	if (synd_mob.mind && istype(synd_mob.mind))
 		U.setup(synd_mob.mind)
 	synd_mob.equip_if_possible(U, synd_mob.slot_r_store)
+*/
 
 	var/obj/item/card/id/syndicate/I = new /obj/item/card/id/syndicate(synd_mob) // for whatever reason, this is neccessary
 	I.icon_state = "id"
@@ -247,7 +260,7 @@
 	for (var/obj/item/device/radio/headset/R in synd_mob.contents)
 		R.set_secure_frequency("h", the_frequency)
 
-		R.secure_colors = list(RADIOC_SYNDICATE)
+		R.secure_classes = list(RADIOCL_SYNDICATE)
 		R.protected_radio = 1 // Ops can spawn with the deaf trait.
 		R.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
 

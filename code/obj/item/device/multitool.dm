@@ -13,6 +13,11 @@
 	mats = 6
 	module_research = list("tools" = 5, "devices" = 2)
 
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/elecflash)
+
 //I don't actually know what I'm doing but hopefully this will cause severe deadly burns. Also electrical puns.
 /obj/item/device/multitool/custom_suicide = 1
 /obj/item/device/multitool/suicide(var/mob/user as mob)

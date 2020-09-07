@@ -29,7 +29,7 @@
 			user.suiciding = 0
 	return 1
 
-/obj/item/basketball/throw_impact(atom/hit_atom)
+/obj/item/basketball/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.icon_state = "bball"
 	if(hit_atom)
@@ -52,9 +52,9 @@
 			M.changeStatus("stunned", 2 SECONDS)
 			return
 
-/obj/item/basketball/throw_at(atom/target, range, speed)
+/obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	src.icon_state = "bball_spin"
-	..(target, range, speed)
+	..()
 
 /obj/item/basketball/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/plutonium_core))
@@ -136,7 +136,7 @@
 				if (get_dir(src,target) in cardinal)
 					src.visible_message("<span class='notice'><b>[user] mounts [src] on [target].</b></span>")
 					user.drop_item()
-					src.loc = get_turf(user)
+					src.set_loc(get_turf(user))
 					src.mounted = 1
 					src.anchored = 1
 					src.dir = get_dir(src, target)
@@ -257,7 +257,7 @@
 	if(user)
 		src.icon_state = "bloodbowlball"
 
-/obj/item/bloodbowlball/throw_impact(atom/hit_atom)
+/obj/item/bloodbowlball/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.icon_state = "bloodbowlball"
 	if(hit_atom)
@@ -288,9 +288,9 @@
 					return
 	return
 
-/obj/item/bloodbowlball/throw_at(atom/target, range, speed)
+/obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	src.icon_state = "bloodbowlball_air"
-	..(target, range, speed)
+	..()
 
 /obj/item/bloodbowlball/attack(target as mob, mob/user as mob)
 	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)

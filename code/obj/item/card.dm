@@ -13,8 +13,8 @@ GAUNTLET CARDS
 	wear_image_icon = 'icons/mob/mob.dmi'
 	w_class = 1.0
 	burn_type = 1
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	var/list/files = list("tools" = 1)
 	module_research_type = /obj/item/card
 
@@ -101,8 +101,8 @@ GAUNTLET CARDS
 	START_TRACKING
 
 /obj/item/card/id/disposing()
-	. = ..()
 	STOP_TRACKING
+	. = ..()
 
 /obj/item/card/id/command
 	icon_state = "id_com"
@@ -145,6 +145,33 @@ GAUNTLET CARDS
 	New()
 		access = get_access("Captain")
 		..()
+
+/obj/item/card/id/dabbing_license
+	name = "Dabbing License"
+	icon_state = "id_dab"
+	registered = "Dabber"
+	assignment = "Dabber"
+	desc = "This card authorizes the person wearing it to perform sick dabs."
+	var/dab_count = 0
+	var/dabbed_on_count = 0
+	var/arm_count = 0
+	var/brain_damage_count = 0
+	New()
+		access = list()
+		..()
+
+	get_desc()
+		. = {"<br>
+		Dabs performed: [dab_count]<br/>
+		Arms lost: [arm_count]<br/>
+		Brain Damage accumulated: [brain_damage_count]<br/>
+		People dabbed on: [dabbed_on_count]<br/>"}
+
+/obj/item/card/id/dabbing_license/attack_self(mob/user as mob)
+	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0)]")
+
+	src.add_fingerprint(user)
+	return
 
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)
@@ -255,9 +282,9 @@ GAUNTLET CARDS
 	SPAWN_DBG(0) //to give time for duration and starting access to be set
 		starting_access = access
 		end_time = ticker.round_elapsed_ticks + duration*10
-		SPAWN_DBG(duration * 10)
-			if(access == starting_access) //don't delete access if it's modified with an ID computer
-				access = list()
+		sleep(duration * 10)
+		if(access == starting_access) //don't delete access if it's modified with an ID computer
+			access = list()
 
 /obj/item/card/id/temporary/examine(mob/user)
 	. = ..()

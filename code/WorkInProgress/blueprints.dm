@@ -246,7 +246,7 @@
 /verb/adminCreateBlueprint()
 	set name = "Create Blueprint"
 	set desc = "Allows creation of blueprints of any user."
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
 	var/list/bps = new/list()
 	var/savefile/save = new/savefile("data/blueprints.dat")
@@ -462,8 +462,7 @@
 		return
 
 	New()
-
-		return
+		..()
 
 	proc/removeOverlays()
 		if (using && using.client)
@@ -493,7 +492,7 @@
 		else
 			save.dir.Add(name)
 			save.cd = "/[usr.client.ckey]/" + name
-			
+
 		var/minx = 100000000
 		var/miny = 100000000
 
@@ -668,6 +667,7 @@
 		return
 
 	equipped(var/mob/user, var/slot)
+		..()
 		using = user
 		updateOverlays()
 		return

@@ -8,7 +8,7 @@
 	icon_state = "red"
 	item_state = "toolbox-red"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
-	force = 5.0
+	force = 6.0
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
@@ -17,8 +17,8 @@
 	burn_point = 4500
 	burn_output = 4800
 	burn_type = 1
-	stamina_damage = 40
-	stamina_cost = 30
+	stamina_damage = 47
+	stamina_cost = 20
 	stamina_crit_chance = 10
 
 	New()
@@ -70,6 +70,15 @@
 	/obj/item/wirecutters,\
 	/obj/item/device/analyzer/atmospheric)
 
+	engineer_spawn
+		spawn_contents = list(/obj/item/device/analyzer/atmospheric/upgraded,\
+		/obj/item/electronics/soldering,\
+		/obj/item/device/t_scanner,\
+		/obj/item/cable_coil,\
+		/obj/item/reagent_containers/food/snacks/sandwich/pb,\
+		/obj/item/reagent_containers/food/snacks/plant/banana,\
+		/obj/item/reagent_containers/food/drinks/milk)
+
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
@@ -83,13 +92,13 @@
 
 	// The extra items (scanner and soldering iron) take up precious space in the backpack.
 	mechanic_spawn
-		spawn_contents = list(/obj/item/screwdriver,\
-		/obj/item/wirecutters,\
-		/obj/item/device/t_scanner,\
-		/obj/item/crowbar,\
-		/obj/item/electronics/scanner,\
+		spawn_contents = list(/obj/item/electronics/scanner,\
 		/obj/item/electronics/soldering,\
-		/obj/item/cable_coil)
+		/obj/item/device/t_scanner,\
+		/obj/item/cable_coil,\
+		/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
+		/obj/item/reagent_containers/food/snacks/chips,\
+		/obj/item/reagent_containers/food/drinks/coffee)
 
 /obj/item/storage/toolbox/artistic
 	name = "artistic toolbox"
@@ -281,6 +290,7 @@
 	stage_prob = 8
 
 	New()
+		..()
 		master = get_disease_from_path(/datum/ailment/disability/memetic_madness)
 
 	stage_act()

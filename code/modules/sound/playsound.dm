@@ -16,7 +16,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	uploaded_sound.priority = 254
 	uploaded_sound.channel = admin_sound_channel
 	uploaded_sound.frequency = freq
-
+	uploaded_sound.environment = -1
+	uploaded_sound.echo = -1
 	if (!vol)
 		return
 
@@ -33,7 +34,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [uploaded_sound.channel]")
 			if (src.djmode || src.non_admin_dj)
 				boutput(C, "<span class=\"medal\"><b>[admin_key] played:</b></span> <span class='notice'>[S]</span>")
-		move_admin_sound_channel()
+		dj_panel.move_admin_sound_channel()
 
 /client/proc/play_music_real(S as sound, var/freq as num)
 	if (!config.allow_admin_sounds)
@@ -50,6 +51,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		music_sound.frequency = 1
 	else
 		music_sound.frequency = freq
+	music_sound.environment = -1
+	music_sound.echo = -1
 
 	SPAWN_DBG(0)
 		var/admin_key = admin_key(src)
@@ -70,7 +73,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 			C << music_sound
 			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [music_sound.volume]")
-		move_admin_sound_channel()
+		dj_panel.move_admin_sound_channel()
 	logTheThing("admin", src, null, "started loading music [S]")
 	logTheThing("diary", src, null, "started loading music [S]", "admin")
 	message_admins("[key_name(src)] started loading music [S]")
@@ -82,7 +85,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	music_sound.repeat = 0
 	music_sound.priority = 254
 	music_sound.channel = 1013 // This probably works?
-
+	music_sound.environment = -1
+	music_sound.echo = -1
 	SPAWN_DBG(0)
 		for (var/client/C in clients)
 			LAGCHECK(LAG_LOW)
@@ -159,7 +163,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	vol = max(0,min(vol,100))
 	//usr.client.preferences.admin_music_volume = vol
 	usr.client.setVolume( VOLUME_CHANNEL_ADMIN, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed Admin Music Volume to [vol]. Note that this setting <b>WILL</b> save regardless of if you manually do so in Character Preferences.</span>")
+	boutput(usr, "<span class='notice'>You have changed Admin Music Volume to [vol].</span>")
 
 /mob/verb/radiomusicvolume()
 	set name = "Alter Radio Volume"
@@ -172,7 +176,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	var/vol = input("Goes from 0-100. Default is 50", "Radio Music Volume", usr.client.getRealVolume(VOLUME_CHANNEL_RADIO) * 100) as num
 	vol = max(0,min(vol,100))
 	usr.client.setVolume( VOLUME_CHANNEL_RADIO, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed Radio Music Volume to [vol]. Note that this setting <b>WILL</b> save regardless of if you manually do so in Character Preferences.</span>")
+	boutput(usr, "<span class='notice'>You have changed Radio Music Volume to [vol].</span>")
 
 /mob/verb/gamevolume()
 	set name = "Alter Game Volume"
@@ -185,7 +189,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	var/vol = input("Goes from 0-100. Default is 100", "Game Volume", usr.client.getRealVolume(VOLUME_CHANNEL_GAME) * 100) as num
 	vol = max(0,min(vol,100))
 	usr.client.setVolume( VOLUME_CHANNEL_GAME, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed Game Volume to [vol]. Note that this setting <b>WILL</b> save regardless of if you manually do so in Character Preferences.</span>")
+	boutput(usr, "<span class='notice'>You have changed Game Volume to [vol].</span>")
 
 /mob/verb/ambiencevolume()
 	set name = "Alter Ambience Volume"
@@ -198,7 +202,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	var/vol = input("Goes from 0-100. Default is 100", "Ambience Volume", usr.client.getRealVolume(VOLUME_CHANNEL_AMBIENT) * 100) as num
 	vol = max(0,min(vol,100))
 	usr.client.setVolume( VOLUME_CHANNEL_AMBIENT, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed Ambience Volume to [vol]. Note that this setting <b>WILL</b> save regardless of if you manually do so in Character Preferences.</span>")
+	boutput(usr, "<span class='notice'>You have changed Ambience Volume to [vol].</span>")
 
 
 /mob/verb/mastervolume()
@@ -212,7 +216,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	var/vol = input("Goes from 0-100. Default is 100", "Ambience Volume", usr.client.getMasterVolume() * 100) as num
 	vol = max(0,min(vol,100))
 	usr.client.setVolume( VOLUME_CHANNEL_MASTER, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed Master Volume to [vol]. Note that this setting <b>WILL</b> save regardless of if you manually do so in Character Preferences.</span>")
+	boutput(usr, "<span class='notice'>You have changed Master Volume to [vol].</span>")
 
 
 
@@ -220,7 +224,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 // for giving non-admins the ability to play music
 /client/proc/non_admin_dj(S as sound)
-	set category = "Special Verbs"
+	set category = "Commands"
 	set name = "Play Music"
 
 	if (src.play_music_real(S))
@@ -281,30 +285,6 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
 	SPAWN_DBG(5 SECONDS)
 		src.verbs += /client/verb/stop_all_sounds
-
-/proc/move_admin_sound_channel(var/opposite = 0)
-	if (opposite)
-		if (admin_sound_channel > 1014)
-			//DEBUG_MESSAGE("Increasing admin_sound_channel from [admin_sound_channel] to [(admin_sound_channel+1)]")
-			admin_sound_channel--
-			admin_dj.SetVar("admin_channel", admin_sound_channel)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-		else //At 1014, set it bring it up 10.
-			//DEBUG_MESSAGE("Resetting admin_sound_channel from [admin_sound_channel]")
-			admin_sound_channel = 1024
-			admin_dj.SetVar("admin_channel", 1024)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-	else
-		if (admin_sound_channel < 1024)
-			//DEBUG_MESSAGE("Increasing admin_sound_channel from [admin_sound_channel] to [(admin_sound_channel+1)]")
-			admin_sound_channel++
-			admin_dj.SetVar("admin_channel", admin_sound_channel)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-		else //At 1024, set it back down 10.
-			//DEBUG_MESSAGE("Resetting admin_sound_channel from [admin_sound_channel]")
-			admin_sound_channel = 1014
-			admin_dj.SetVar("admin_channel", 1014)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
 
 /client/proc/play_youtube_audio()
 	if (!config.youtube_audio_key)

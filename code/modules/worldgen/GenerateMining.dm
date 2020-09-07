@@ -193,6 +193,11 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			new/area/cordon/dark(T)
 			LAGCHECK(LAG_REALTIME)
 
+		for (var/i=0, i<55, i++)
+			var/turf/T = locate(rand(1,world.maxx),rand(1,world.maxy),AST_ZLEVEL)
+			for (var/turf/space/fluid/TT in range(rand(2,4),T))
+				TT.spawningFlags |= SPAWN_TRILOBITE
+
 		return miningZ
 
 /datum/mapGenerator/asteroidsDistance //Generates a bunch of asteroids based on distance to seed/center. Super simple.
@@ -281,25 +286,26 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		if(T.z == AST_ZLEVEL)
 			miningZ.Add(T)
 
-	var/extra = rand(0,AST_NUMPREFABSEXTRA)
-	for(var/n=0, n<AST_NUMPREFABS+extra, n++)
+	var/num_to_place = AST_NUMPREFABS + rand(0,AST_NUMPREFABSEXTRA)
+	for (var/n = 1, n <= num_to_place, n++)
+		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
 		var/datum/generatorPrefab/M = pickPrefab()
-		if(M)
+		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
 			var/stop = 0
 			var/count= 0
 			var/maxTries = (M.required ? 200:33)
-			while(!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(1+AST_MAPBORDER, maxX), rand(1+AST_MAPBORDER,maxY), AST_ZLEVEL)
 				var/ret = M.applyTo(target)
-				if(ret == 0)
+				if (ret == 0)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
 				else
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
 					stop = 1
 				count++
-				if(count >= 33)
+				if (count >= 33)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
 		else break
 
@@ -310,6 +316,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	else
 		D = new/datum/mapGenerator/asteroidsDistance()
 
+	game_start_countdown?.update_status("Setting up mining level...\nGenerating terrain...")
 	miningZ = D.generate(miningZ)
 
 	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
@@ -426,7 +433,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeY = 19
 
 	rockworms
-		maxNum = 10
+		maxNum = 4 // It was at 10 ... and there was a good chance that most of the prefabs on Z5 were this ugly mess. We need less of that. Way less. So here ya'go.
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_rockworms.dmm"
 		prefabSizeX = 5
@@ -490,6 +497,40 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeX = 16
 		prefabSizeY = 21
 
+	bee_sanctuary_space // Sov's Bee Sanctuary (Space Variant)
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_beesanctuary.dmm"
+		prefabSizeX = 41
+		prefabSizeY = 24
+
+	sequestered_cloner // MarkNstein's Sequestered Cloner
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_sequestered_cloner.dmm"
+		prefabSizeX = 20
+		prefabSizeY = 15
+
+	clown_nest // Gores abandoned Clown-Federation Outpost
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_clown_nest.dmm"
+		prefabSizeX = 30
+		prefabSizeY = 30
+
+	dans_asteroid // Discount Dans Delivery Asteroid featuring advanced cooling technology
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_dans_asteroid.dmm"
+		prefabSizeX = 37
+		prefabSizeY = 48
+
+	drug_den // A highly cozy hideout in space; take out the stress - eat some mice sandwiches.
+		maxNum = 1
+		probability = 40
+		prefabPath = "assets/maps/prefabs/prefab_drug_den.dmm"
+		prefabSizeX = 32
+		prefabSizeY = 27
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit

@@ -1,4 +1,36 @@
 
+(t)wed aug 26 20
+(u)pali
+(p)1962
+(e)🍑|ass-jam
+(*)Red cross symbols violated the Geneva Convention. They were replaced by a more appropriate medbay symbol.
+(t)sun jul 05 20
+(u)Kubius
+(p)1357
+(e)🍑🗺|ass-jam, mapping
+(*)The Bellerophon Fleet has a new vessel.
+(t)fri jun 12 20
+(u)Kubius
+(p)1040
+(e)🍑🆕|ass-jam, feature
+(+)Assjam mode vote has received weighted abstain - it's now much easier for the vote to succeed if people aren't actively objecting.
+(u)Comradef191
+(p)686
+(e)🍑🗺|ass-jam, mapping
+(*)Various Changes & Upgrades to Cogmap1, View Minor Changes for full list of Changes
+(+)"Upgraded" the Engine
+(+)"Upgraded" the Bridge
+(+)"Upgraded" Cargo
+(+)"Upgraded" Mining-Now the Magnet is only in z3
+(+)Brought back the AI Satellite
+(+)Removed Research
+(+)Removed Pathology (Maybe...)
+(+)Shrunk the Market
+(t)mon jun 08 20
+(u)Kubius
+(p)938
+(e)🍑🗺|ass-jam, mapping
+(*)New assjam map: Icarus! Vaguely triangular, singularity-driven, nominally a cruise liner.
 (t)wed may 20 20
 (u)Mithsaxel
 (p)713

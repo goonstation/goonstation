@@ -29,9 +29,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.real_name = pick("M", "m") + pick("a", "ah", "ae") + pick("ch", "tch", "tz") + pick("o", "oh", "oe") + " " + pick("M","m") + pick("a","ae","e") + pick("n","nn")
 
 			if (!src.reagents)
-				var/datum/reagents/R = new/datum/reagents(1000)
-				src.reagents = R
-				R.my_atom = src
+				src.create_reagents(1000)
 
 			src.reagents.add_reagent("stimulants", 200)
 
@@ -94,8 +92,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				M.changeStatus("stunned", 80)
 				M.changeStatus("weakened", 5 SECONDS)
 				var/turf/target = get_edge_target_turf(src, src.dir)
-				SPAWN_DBG(0)
-					M.throw_at(target, 10, 2)
+				M.throw_at(target, 10, 2)
 				playsound(src.loc, "swing_hit", 40, 1)
 			else if (isobj(AM))
 				var/obj/O = AM
@@ -205,7 +202,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					H.take_brain_damage(60)
 					H.changeStatus("stunned", 80)
 					H.changeStatus("weakened", 5 SECONDS)
-					H.UpdateDamage()
 					H.UpdateDamageIcon()
 					qdel(G)
 				else
@@ -232,7 +228,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					affecting.take_damage(500, 0)
 					H.changeStatus("stunned", 80)
 					H.changeStatus("weakened", 5 SECONDS)
-					H.UpdateDamage()
 					H.UpdateDamageIcon()
 					qdel(G)
 				else
@@ -513,11 +508,11 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							var/random_deviation = rand(0, 5)
 							SPAWN_DBG(random_deviation)
 								spawn_animation1(FF)
-								SPAWN_DBG(10) // animation, also to simulate them coming in and slamming into the ground
-									FF.visible_message("<span class='alert'><B>[FF] slams and anchors itself into the ground!</B></span>")
-									playsound(T, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-									for (var/mob/living/M in oviewers(ring_radius * 2, T))
-										shake_camera(M, 8, 3)
+								sleep(10) // animation, also to simulate them coming in and slamming into the ground
+								FF.visible_message("<span class='alert'><B>[FF] slams and anchors itself into the ground!</B></span>")
+								playsound(T, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+								for (var/mob/living/M in oviewers(ring_radius * 2, T))
+									shake_camera(M, 8, 3)
 						else // arena ropes
 							var/obj/decal/boxingrope/FF = new/obj/decal/boxingrope(T)
 							arenaropes += FF
@@ -549,8 +544,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					SPAWN_DBG(0)
 						arenaropes -= F
 						animate_buff_out(F)
-						SPAWN_DBG(10)
-							F.change_back()
+						sleep(10)
+						F.change_back()
 				*/
 				for (var/obj/decal/boxingrope/F in arenaropes)
 					SPAWN_DBG(0)
@@ -1239,7 +1234,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							R.updateicon()
 				src.verbs += /mob/living/carbon/human/machoman/verb/macho_meteor
 */
-	emote(var/act)
+	emote(var/act, var/emoteTarget = null)
 		switch(act)
 			if ("scream")
 				if (src.mind && src.mind.special_role && src.mind.special_role == "faustian macho man")
@@ -1271,7 +1266,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -1324,7 +1319,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			M.changeStatus("weakened", 2 SECONDS)
 			random_brute_damage(M, rand(1,2))
 	CritterDeath()
-		src.alive = 0
+		..()
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)
@@ -1435,9 +1430,10 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				O.pixel_y = -96
 				O.icon = 'icons/effects/214x246.dmi'
 				O.icon_state = "explosion"
-				SPAWN_DBG(3.5 SECONDS) qdel(O)
 				for (var/mob/N in viewers(user))
 					shake_camera(N, 8, 3)
+				sleep(3.5 SECONDS)
+				qdel(O)
 			SPAWN_DBG(0)
 				var/obj/item/old_grenade/emp/temp_nade = new(user.loc)
 				temp_nade.prime()

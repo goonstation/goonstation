@@ -14,17 +14,23 @@
 	skintoned = 0
 
 	decomp_affected = 0
+	var/robot_movement_modifier
 
 	var/max_health = 100
 	var/dmg_blunt = 0
 	var/dmg_burns = 0
-	var/speedbonus = 0 // does it help the robot move more quickly?
 	var/weight = 0     // for calculating speed modifiers
 	var/powerdrain = 0 // does this part consume any extra power
 
-	stamina_damage = 35
-	stamina_cost = 20
+	force = 6
+	stamina_damage = 40
+	stamina_cost = 23
 	stamina_crit_chance = 5
+
+	New()
+		..()
+		icon_state = "[src.icon_state_base]-[appearanceString]"
+
 
 	examine()
 		. = ..()
@@ -52,9 +58,8 @@
 		return standImage
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if(!WELD.try_weld(user, 1))
+		if(isweldingtool(W))
+			if(!W:try_weld(user, 1))
 				return
 			if (src.ropart_get_damage_percentage(1) > 0)
 				src.ropart_mend_damage(20,0)
@@ -152,7 +157,7 @@
 /obj/item/parts/robot_parts/head
 	name = "standard cyborg head"
 	desc = "A serviceable head unit for a potential cyborg."
-	icon = 'icons/mob/robots.dmi'
+	icon_state_base = "head"
 	icon_state = "head-generic"
 	slot = "head"
 	max_health = 175
@@ -160,10 +165,7 @@
 	var/obj/item/ai_interface/ai_interface = null
 	var/visible_eyes = 1
 	var/wires_exposed = 0
-	New()
-		..()
-		src.pixel_y -= 8
-		icon_state = "head-" + src.appearanceString
+
 
 	examine()
 		. = ..()
@@ -292,6 +294,7 @@
 	name = "sturdy cyborg head"
 	desc = "A reinforced head unit capable of taking more abuse than usual."
 	appearanceString = "sturdy"
+	icon_state = "head-sturdy"
 	max_health = 225
 	weight = 0.2
 
@@ -319,7 +322,7 @@
 			else
 				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
 				return
-		else if (istype(W, /obj/item/weldingtool))
+		else if (isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")
@@ -345,11 +348,12 @@
 	name = "heavy cyborg head"
 	desc = "A heavily reinforced head unit intended for use on cyborgs that perform tough and dangerous work."
 	appearanceString = "heavy"
+	icon_state = "head-heavy"
 	max_health = 350
 	weight = 0.4
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")
@@ -373,21 +377,24 @@
 	name = "light cyborg head"
 	desc = "A cyborg head with little reinforcement, to be built in times of scarce resources."
 	appearanceString = "light"
+	icon_state = "head-light"
 	max_health = 50
-	speedbonus = 0.2
+	robot_movement_modifier = /datum/movement_modifier/robot_part/head
 
 /obj/item/parts/robot_parts/head/antique
 	name = "antique cyborg head"
 	desc = "Looks like a discarded prop from some sorta low-budget scifi movie."
 	appearanceString = "android"
+	icon_state = "head-android"
 	max_health = 150
-	speedbonus = 0.2
 	visible_eyes = 0
+	robot_movement_modifier = /datum/movement_modifier/robot_part/head
 
 /obj/item/parts/robot_parts/chest
 	name = "standard cyborg chest"
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
-	icon_state = "chest"
+	icon_state_base = "body"
+	icon_state = "body-generic"
 	slot = "chest"
 	max_health = 250
 	var/wires = 0
@@ -459,6 +466,7 @@
 	name = "light cyborg chest"
 	desc = "A bare-bones cyborg chest designed for the least consumption of resources."
 	appearanceString = "light"
+	icon_state = "body-light"
 	max_health = 75
 
 /obj/item/parts/robot_parts/arm
@@ -496,7 +504,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		//gonna hack this in with appearanceString
-		if ((appearanceString == "sturdy" || appearanceString == "heavy") && istype(W, /obj/item/weldingtool))
+		if ((appearanceString == "sturdy" || appearanceString == "heavy") && isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")
@@ -530,9 +538,9 @@
 
 /obj/item/parts/robot_parts/arm/left
 	name = "standard cyborg left arm"
-	icon_state = "l_arm"
 	slot = "l_arm"
-	icon_state_base = "armL"
+	icon_state_base = "l_arm"
+	icon_state = "l_arm-generic"
 	handlistPart = "armL-generic"
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -556,6 +564,7 @@
 /obj/item/parts/robot_parts/arm/left/sturdy
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
+	icon_state = "l_arm-sturdy"
 	max_health = 100
 	weight = 0.2
 
@@ -583,21 +592,24 @@
 /obj/item/parts/robot_parts/arm/left/heavy
 	name = "heavy cyborg left arm"
 	appearanceString = "heavy"
+	icon_state = "l_arm-heavy"
 	max_health = 175
 	weight = 0.4
 
 /obj/item/parts/robot_parts/arm/left/light
 	name = "light cyborg left arm"
 	appearanceString = "light"
+	icon_state = "l_arm-light"
 	max_health = 25
-	speedbonus = 0.2
 	handlistPart = "armL-light"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
 
 /obj/item/parts/robot_parts/arm/right
 	name = "standard cyborg right arm"
 	icon_state = "r_arm"
 	slot = "r_arm"
-	icon_state_base = "armR"
+	icon_state_base = "r_arm"
+	icon_state = "r_arm-generic"
 	handlistPart = "armR-generic"
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -621,6 +633,7 @@
 /obj/item/parts/robot_parts/arm/right/sturdy
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
+	icon_state = "r_arm-sturdy"
 	max_health = 100
 	weight = 0.2
 
@@ -648,19 +661,22 @@
 /obj/item/parts/robot_parts/arm/right/heavy
 	name = "heavy cyborg right arm"
 	appearanceString = "heavy"
+	icon_state = "r_arm-heavy"
 	max_health = 175
 	weight = 0.4
 
 /obj/item/parts/robot_parts/arm/right/light
 	name = "light cyborg right arm"
 	appearanceString = "light"
+	icon_state = "r_arm-light"
 	max_health = 25
-	speedbonus = 0.2
 	handlistPart = "armR-light"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
 
 /obj/item/parts/robot_parts/leg
 	name = "placeholder item (don't use this!)"
 	desc = "A metal leg for a cyborg. It won't be able to move very well without this!"
+	icon_state_base = "legs" // effectively the prefix for items that go on both legs at once.
 	max_health = 60
 	var/step_sound = "step_robo"
 	var/step_priority = STEP_PRIORITY_LOW
@@ -750,96 +766,101 @@
 
 /obj/item/parts/robot_parts/leg/left
 	name = "standard cyborg left leg"
-	icon_state = "l_leg"
 	slot = "l_leg"
-	icon_state_base = "legL"
+	icon_state_base = "l_leg"
+	icon_state = "l_leg-generic"
 	step_image_state = "footprintsL"
 	movement_modifier = /datum/movement_modifier/robotleg_left
 
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
 	appearanceString = "light"
+	icon_state = "l_leg-light"
 	max_health = 25
-	speedbonus = 0.2
+	robot_movement_modifier = /datum/movement_modifier/robotleg_left
+
 
 /obj/item/parts/robot_parts/leg/left/treads
 	name = "left cyborg tread"
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
-	icon_state = "l_lower_t"
 	appearanceString = "treads"
+	icon_state = "l_leg-treads"
 	max_health = 100
-	speedbonus = 0.25
 	powerdrain = 2.5
 	step_image_state = "tracksL"
 	movement_modifier = /datum/movement_modifier/robottread_left
+	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_left
 
 /obj/item/parts/robot_parts/leg/right
 	name = "standard cyborg right leg"
-	icon_state = "r_leg"
 	slot = "r_leg"
-	icon_state_base = "legR"
+	icon_state_base = "r_leg"
+	icon_state = "r_leg-generic"
 	step_image_state = "footprintsR"
 	movement_modifier = /datum/movement_modifier/robotleg_right
 
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
 	appearanceString = "light"
+	icon_state = "r_leg-light"
 	max_health = 25
-	speedbonus = 0.2
+	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 
 /obj/item/parts/robot_parts/leg/right/treads
 	name = "right cyborg tread"
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
-	icon_state = "r_lower_t"
 	appearanceString = "treads"
+	icon_state = "r_leg-treads"
 	max_health = 100
-	speedbonus = 0.25
 	powerdrain = 2.5
 	step_image_state = "tracksR"
 	movement_modifier = /datum/movement_modifier/robottread_right
+	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_right
 
 /obj/item/parts/robot_parts/leg/treads
 	name = "cyborg treads"
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
-	icon_state = "lower_t"
 	slot = "leg_both"
 	appearanceString = "treads"
+	icon_state = "legs-treads"
 	max_health = 100
-	speedbonus = 0.5
 	powerdrain = 5
 	step_image_state = "tracks-w"
 	movement_modifier = /datum/movement_modifier/robotleg_right // only one of these? if it replaces both it doesn't matter which one we put here.
+	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_right
+
 
 /obj/item/parts/robot_parts/leg/thruster
 	name = "Alastor pattern thruster"
 	desc = "Nobody said this is safe."
-	icon_state = "lower_thruster"
 	slot = "leg_both"
 	appearanceString = "thruster"
+	icon_state = "legs-thruster"
 	max_health = 100
-	speedbonus = 0.5
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
+	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_right
 
 /obj/item/parts/robot_parts/leg/left/thruster
 	name = "left thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
-	icon_state = "l_lower_thruster"
 	appearanceString = "thruster"
+	icon_state = "l_leg-thruster"
 	max_health = 100
-	speedbonus = 0.3
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
+	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_left
+
 
 /obj/item/parts/robot_parts/leg/right/thruster
 	name = "right thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
-	icon_state = "r_lower_thruster"
 	appearanceString = "thruster"
+	icon_state = "r_leg-thruster"
 	max_health = 100
-	speedbonus = 0.3
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
+	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_right
 
 /obj/item/parts/robot_parts/robot_frame
 	name = "robot frame"
@@ -857,6 +878,7 @@
 
 	New()
 		..()
+		src.icon_state = "robo_suit"; //The frame is the only exception for the composite item name thing.
 		src.updateicon()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -1031,19 +1053,19 @@
 
 		if(src.l_leg)
 			if(src.l_leg.slot == "leg_both") src.overlays += image('icons/mob/robots.dmi', "leg-" + src.l_leg.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "legL-" + src.l_leg.appearanceString, OBJ_LAYER, 2)
+			else src.overlays += image('icons/mob/robots.dmi', "l_leg-" + src.l_leg.appearanceString, OBJ_LAYER, 2)
 
 		if(src.r_leg)
 			if(src.r_leg.slot == "leg_both") src.overlays += image('icons/mob/robots.dmi', "leg-" + src.r_leg.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "legR-" + src.r_leg.appearanceString, OBJ_LAYER, 2)
+			else src.overlays += image('icons/mob/robots.dmi', "r_leg-" + src.r_leg.appearanceString, OBJ_LAYER, 2)
 
 		if(src.l_arm)
 			if(src.l_arm.slot == "arm_both") src.overlays += image('icons/mob/robots.dmi', "arm-" + src.l_arm.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "armL-" + src.l_arm.appearanceString, OBJ_LAYER, 2)
+			else src.overlays += image('icons/mob/robots.dmi', "l_arm-" + src.l_arm.appearanceString, OBJ_LAYER, 2)
 
 		if(src.r_arm)
 			if(src.r_arm.slot == "arm_both") src.overlays += image('icons/mob/robots.dmi', "arm-" + src.r_arm.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "armR-" + src.r_arm.appearanceString, OBJ_LAYER, 2)
+			else src.overlays += image('icons/mob/robots.dmi', "r_arm-" + src.r_arm.appearanceString, OBJ_LAYER, 2)
 
 	proc/check_completion()
 		if (src.chest && src.head)
@@ -1107,7 +1129,7 @@
 		else if (O.ai_interface)
 			if (!(O in available_ai_shells))
 				available_ai_shells += O
-			for (var/mob/living/silicon/ai/AI in AIs)
+			for (var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 			O.shell = 1
 		else if (istype(O.brain, /obj/item/organ/brain/latejoin))
@@ -1165,303 +1187,6 @@
 // UPGRADES
 // Cyborg
 
-/obj/item/roboupgrade
-	name = "robot upgrade"
-	desc = "you shouldnt be able to see this!"
-	icon = 'icons/obj/robot_parts.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
-	var/active = 0 // Is this module used like an item?
-	var/passive = 0 // Does this module always work once installed?
-	var/activated = 0 // live ingame variable
-	var/drainrate = 0 // How much charge the upgrade consumes while installed
-	var/charges = -1 // How many times a limited upgrade can be used before it is consumed (infinite if negative)
-	var/removable = 1 // Can be removed from the cyborg
-	var/borg_overlay = null // Used for cyborg update_apperance proc
-
-	attack_self(var/mob/user as mob)
-		if (!isrobot(user))
-			boutput(user, "<span class='alert'>Only cyborgs can activate this item.</span>")
-		else
-			if (!src.activated)
-				upgrade_activate()
-			else
-				upgrade_deactivate()
-
-	proc/upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user)
-			return 1
-		if (!src.activated)
-			src.activated = 1
-
-	proc/upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
-		if (!user)
-			return 1
-		src.activated = 0
-
-/obj/item/roboupgrade/jetpack
-	name = "Propulsion Upgrade"
-	desc = "A small turbine allowing cyborgs to move freely in space."
-	icon_state = "up-jetpack"
-	drainrate = 25
-	borg_overlay = "up-jetpack"
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (..()) return
-		user.jetpack = 1
-
-	upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
-		if (..()) return
-		user.jetpack = 0
-
-/obj/item/roboupgrade/healthgoggles
-	name = "ProDoc Healthgoggles Upgrade"
-	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
-	icon_state = "up-prodoc"
-	var/client/assigned = null
-	drainrate = 5
-
-	New()
-		//updateIcons()
-		return ..()
-
-	proc/updateIcons() //I wouldve liked to avoid this but i dont want to put this inside the mobs life proc as that would be more code.
-		while (assigned)
-			assigned.images.Remove(health_mon_icons)
-			addIcons()
-
-			if(loc != assigned.mob)
-				assigned.images.Remove(health_mon_icons)
-				assigned = null
-
-			sleep(2 SECONDS)
-
-	proc/addIcons()
-		if(assigned)
-			for(var/image/I in health_mon_icons)
-				if(!I || !I.loc || !src)
-					continue
-				if(I.loc.invisibility && I.loc != src.loc)
-					continue
-				else assigned.images.Add(I)
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (..()) return
-		assigned = user.client
-		SPAWN_DBG(-1) updateIcons()
-		return
-
-	upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
-		if (..()) return
-		if(assigned)
-			assigned.images.Remove(health_mon_icons)
-			assigned = null
-		return
-
-/obj/item/roboupgrade/spectro
-	name = "Spectroscopic Scanner Upgrade"
-	desc = "Fitted with a sensor array that provides a readout of the chemical composition of substances that are examined."
-	icon_state = "up-spectro"
-	drainrate = 5
-
-/obj/item/roboupgrade/efficiency
-	name = "Efficiency Upgrade"
-	desc = "A more advanced cooling system that causes cyborgs to consume less cell charge."
-	icon_state = "up-power"
-	passive = 1
-
-/obj/item/roboupgrade/speed
-	name = "Speed Upgrade"
-	desc = "A booster unit that safely allows cyborgs to move at high speed."
-	icon_state = "up-speed"
-	drainrate = 100
-	borg_overlay = "up-speed"
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user) return
-		var/mob/living/silicon/robot/R = user
-		if (!R.part_leg_r && !R.part_leg_l)
-			boutput(user, "This upgrade cannot be used when you have no legs!")
-			src.activated = 0
-		else ..()
-
-/obj/item/roboupgrade/physshield
-	name = "Force Shield Upgrade"
-	desc = "A force field generator that protects cyborgs from structural damage."
-	icon_state = "up-Pshield"
-	drainrate = 100
-	borg_overlay = "up-pshield"
-
-/obj/item/roboupgrade/fireshield
-	name = "Heat Shield Upgrade"
-	desc = "An air diffusion field that protects cyborgs from heat damage."
-	icon_state = "up-Fshield"
-	drainrate = 100
-	borg_overlay = "up-fshield"
-
-/obj/item/roboupgrade/teleport
-	name = "Teleporter Upgrade"
-	desc = "A personal teleportation device that allows a cyborg to transport itself instantly."
-	icon_state = "up-teleport"
-	active = 1
-	drainrate = 250
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user || !src || src.loc != user || !issilicon(user) || !src.active)
-			return
-		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") >  0 || !isalive(user))
-			user.show_text("Not when you're incapacitated.", "red")
-			return
-		if (!isturf(user.loc))
-			user.show_text("You can't teleport from inside a container.", "red")
-			return
-
-		var/list/L = list()
-		var/list/areaindex = list()
-		for(var/obj/item/device/radio/beacon/R in tracking_beacons)//world)
-			if (!istype(R, /obj/item/device/radio/beacon/jones))
-				LAGCHECK(LAG_LOW)
-				var/turf/T = find_loc(R)
-				if (!T)	continue
-
-				var/tmpname = T.loc.name
-				if(areaindex[tmpname]) tmpname = "[tmpname] ([++areaindex[tmpname]])"
-				else areaindex[tmpname] = 1
-				L[tmpname] = R
-
-		for (var/obj/item/implant/tracking/I in tracking_implants)//world)
-			LAGCHECK(LAG_LOW)
-			if (!I.implanted || !ismob(I.loc)) continue
-			else
-				var/mob/M = I.loc
-				if (isdead(M))
-					if (M.timeofdeath + 6000 < world.time) continue
-				var/tmpname = M.real_name
-				if(areaindex[tmpname]) tmpname = "[tmpname] ([++areaindex[tmpname]])"
-				else areaindex[tmpname] = 1
-				L[tmpname] = I
-
-		var/desc = input("Area to jump to","Teleportation") in L
-
-		if (!user || !src || src.loc != user || !issilicon(user))
-			if (user) user.show_text("Teleportation failed.", "red")
-			return
-		if (user.mind && user.mind.current != src.loc) // Debrained or whatever.
-			user.show_text("Teleportation failed.", "red")
-			return
-		if (user.getStatusDuration("stunned") || getStatusDuration("weakened") || user.getStatusDuration("paralysis") >  0 || !isalive(user))
-			user.show_text("Not when you're incapacitated.", "red")
-			return
-		if (!src.active)
-			user.show_text("Cannot teleport, upgrade is inactive.", "red")
-			return
-		if (!desc || !L[desc])
-			user.show_text("Invalid selection.", "red")
-			return
-		if (!isturf(user.loc))
-			user.show_text("You can't teleport from inside a container.", "red")
-			return
-
-		do_teleport(user,L[desc],0)
-		return
-
-/obj/item/roboupgrade/repair
-	name = "Self-Repair Upgrade"
-	desc = "An infusion of nanobots that allow a cyborg to automatically repair sustained damage."
-	icon_state = "up-repair"
-	drainrate = 60
-	borg_overlay = "up-repair"
-
-/obj/item/roboupgrade/aware
-	name = "Recovery Upgrade"
-	desc = "Allows a cyborg to immediatley reboot its systems if incapacitated in any way."
-	icon_state = "up-aware"
-	active = 1
-	drainrate = 3333 //Was 100. jfc
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user) return
-		boutput(user, "<b>REBOOTING...</b>")
-		user.delStatus("stunned")
-		user.delStatus("weakened")
-		user.delStatus("paralysis")
-		user.blinded = 0
-		user.take_eye_damage(-INFINITY)
-		user.take_eye_damage(-INFINITY, 1)
-		user.blinded = 0
-		user.take_ear_damage(-INFINITY)
-		user.take_ear_damage(-INFINITY, 1)
-		user.change_eye_blurry(-INFINITY)
-		user.druggy = 0
-		user.change_misstep_chance(-INFINITY)
-		user.dizziness = 0
-
-		boutput(user, "<b>REBOOT COMPLETE</b>")
-
-/obj/item/roboupgrade/expand
-	name = "Expansion Upgrade"
-	desc = "A matter miniaturizer that frees up room in a cyborg for more upgrades."
-	icon_state = "up-expand"
-	active = 1
-	charges = 1
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user || src.qdeled) return
-		user.max_upgrades++
-		boutput(user, "<span class='notice'>You can now hold up to [user.max_upgrades] upgrades!</span>")
-		user.upgrades.Remove(src)
-		qdel(src)
-
-/obj/item/roboupgrade/rechargepack
-	name = "Recharge Pack"
-	desc = "A single-use reserve battery that can recharge a cyborg's cell to full capacity."
-	icon_state = "up-recharge"
-	active = 1
-	charges = 1
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user) return
-		if (user.cell)
-			var/obj/item/cell/C = user.cell
-			C.charge = C.maxcharge
-			boutput(user, "<span class='notice'>Cell has been recharged to [user.cell.charge]!</span>")
-		else
-			boutput(user, "<span class='alert'>You don't have a cell to recharge!</span>")
-			src.charges++
-
-/obj/item/roboupgrade/repairpack
-	name = "Repair Pack"
-	desc = "A single-use nanite infusion that can repair up to 50% of a cyborg's structure."
-	icon_state = "up-reppack"
-	active = 1
-	charges = 1
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user) return
-		for(var/obj/item/parts/robot_parts/RP in user.contents) RP.ropart_mend_damage(100,100)
-		boutput(user, "<span class='notice'>All components repaired!</span>")
-
-/obj/item/roboupgrade/opticmeson
-	name = "Optical Meson Upgrade"
-	desc = "A set of advanced lens and detectors enabling a cyborg to see into the meson spectrum."
-	icon_state = "up-opticmes"
-	drainrate = 5
-	borg_overlay = "up-meson"
-
-/obj/item/roboupgrade/visualizer
-	name = "Construction Visualizer"
-	desc = "A set of advanced lens which display 3D real time blueprints."
-	icon_state = "up-opticmes"
-	drainrate = 5
-	borg_overlay = "up-meson"
-/* doesn't really do anything atm
-/obj/item/roboupgrade/opticthermal
-	name = "Optical Thermal Upgrade"
-	desc = "A set of advanced lens and detectors enabling a cyborg to see into the thermal spectrum."
-	icon_state = "up-opticthe"
-	borg_overlay = "up-thermal"
-	drainrate = 10
-*/
 // AI Upgrades
 
 /obj/item/roboupgrade/ai
@@ -1560,11 +1285,11 @@
 
 /obj/item/parts/robot_parts/arm/left/reliquary
 	name = "odd robotic left arm"
-	icon_state = "l_arm_reli"
 	slot = "l_arm"
 	handlistPart = "hand_left_reli"
 	var/name_thing = "reli"
 	appearanceString = "reli"
+	icon_state = "l_arm-reli"
 	streak_decal = /obj/decal/cleanable/reliquaryblood
 	streak_descriptor = "blood"
 
@@ -1583,11 +1308,11 @@
 
 /obj/item/parts/robot_parts/arm/right/reliquary
 	name = "odd robotic right arm"
-	icon_state = "r_arm_reli"
 	slot = "r_arm"
 	handlistPart = "hand_right_reli"
 	var/name_thing = "reli"
 	appearanceString = "reli"
+	icon_state = "r_arm-reli"
 	streak_decal = /obj/decal/cleanable/reliquaryblood
 	streak_descriptor = "blood"
 
@@ -1606,11 +1331,11 @@
 
 /obj/item/parts/robot_parts/leg/left/reliquary
 	name = "odd robotic left leg"
-	icon_state = "l_leg_reli"
 	slot = "l_leg"
 	handlistPart = "foot_left_reli"
 	var/name_thing = "reli"
 	appearanceString = "reli"
+	icon_state = "l_leg-reli"
 	streak_decal = /obj/decal/cleanable/reliquaryblood
 	streak_descriptor = "blood"
 
@@ -1629,11 +1354,11 @@
 
 /obj/item/parts/robot_parts/leg/right/reliquary
 	name = "odd robotic right leg"
-	icon_state = "r_leg_reli"
 	slot = "r_leg"
 	handlistPart = "foot_right_reli"
 	var/name_thing = "reli"
 	appearanceString = "reli"
+	icon_state = "r-leg-reli"
 	streak_decal = /obj/decal/cleanable/reliquaryblood
 	streak_descriptor = "blood"
 

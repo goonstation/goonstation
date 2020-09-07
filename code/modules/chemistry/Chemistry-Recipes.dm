@@ -8,9 +8,11 @@ datum
 		var/list/required_reagents = new/list()
 		var/list/inhibitors = list()
 		var/instant = 1
+#ifdef CHEM_REACTION_PRIORITIES
 		//lower priorities happen last
 		//higher priorities happen first
 		var/priority = 10
+#endif
 
 		var/min_temperature = -INFINITY		//Will not react if below this
 		var/required_temperature = -1 //Not used by default. -1 = not used. //Positive values for reaction to take place when hotter than value, negative to take place when cooler than abs(value)
@@ -32,8 +34,10 @@ datum
 		var/consume_all = 0 //If set to 1, the recipe will consume ALL of its components instead of just proportional parts.
 
 
+#ifdef CHEM_REACTION_PRIORITIES
 		proc/operator<(var/datum/chemical_reaction/reaction)
 			return priority > reaction.priority
+#endif
 
 		proc/on_reaction(var/datum/reagents/holder, var/created_volume)
 			return
@@ -71,9 +75,7 @@ datum
 					holder.del_reagent("platinum")
 				var/location = get_turf(holder.my_atom)
 				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, location)
-				s.start()
+				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
@@ -100,9 +102,7 @@ datum
 					holder.del_reagent("propellant")
 				var/location = get_turf(holder.my_atom)
 				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, location)
-				s.start()
+				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
@@ -131,9 +131,7 @@ datum
 					holder.del_reagent("potassium")
 				var/location = get_turf(holder.my_atom)
 				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, location)
-				s.start()
+				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
@@ -160,9 +158,7 @@ datum
 					holder.del_reagent("smokepowder")
 				var/location = get_turf(holder.my_atom)
 				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, location)
-				s.start()
+				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
@@ -189,9 +185,7 @@ datum
 					holder.del_reagent("water")
 				var/location = get_turf(holder.my_atom)
 				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, location)
-				s.start()
+				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
@@ -580,7 +574,9 @@ datum
 			inhibitors = list("stabiliser")
 			instant = 1
 			mix_phrase = "The mixture implodes suddenly."
+#ifdef CHEM_REACTION_PRIORITY
 			priority = 20
+#endif
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				ldmatter_reaction(holder, created_volume)
 				return
@@ -1113,7 +1109,6 @@ datum
 			result = "rcola"
 			required_reagents = list("rum" = 1, "cola" = 1)
 			result_amount = 2
-			priority = 9
 			mix_phrase = "A sweet and bitter aroma fills the air."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
@@ -1340,7 +1335,7 @@ datum
 
 		cocktail_longisland_rcola
 			name = "Long Island Iced Tea"
-			id = "longisland"
+			id = "longisland_rcola"
 			result = "longisland"
 			required_reagents = list("tequila" = 1, "screwdriver" = 1, "gin" = 1, "juice_lemon" = 1, "rcola" = 1)
 			result_amount = 6
@@ -1607,9 +1602,59 @@ datum
 			name = "Hot Toddy"
 			id = "hottoddy"
 			result = "hottoddy"
-			required_reagents = list("sweet_tea", "bourbon" = 1, "juice_lemon" = 1)
+			required_reagents = list("sweet_tea" = 1, "bourbon" = 1, "juice_lemon" = 1)
 			result_amount = 3
 			mix_phrase = "The drink suddenly fills the room with a festive aroma."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		bees_knees
+			name = "Bee's knees"
+			id = "beesknees"
+			result = "beesknees"
+			required_reagents = list("gin" = 1, "honey" = 1, "juice_lemon" = 1)
+			result_amount = 3
+			mix_phrase = "You hear a faint buzz from the solution and your knees faintly ache"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		spiced_rum
+			name = "Spiced Rum"
+			id = "spicedrum"
+			result = "spicedrum"
+			required_reagents = list("rum" = 1, "capsaicin" = 1)
+			result_amount = 2
+			mix_phrase = "You feel like you might have misunderstood the recipe."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		phil_collins
+			name = "Phil Collins"
+			id = "philcollins"
+			result = "philcollins"
+			required_reagents = list("vtonic" = 1, "lemonade" = 1)
+			result_amount = 2
+			mix_phrase = "You can feel it coming in the air tonight. Oh lord."
+			mix_sound = 'sound/misc/PhilCollinsTom.ogg'
+			drinkrecipe = 1
+
+		duck_fart
+			name = "Duck Fart"
+			id = "duckfart"
+			result = "duckfart"
+			required_reagents = list("bourbon" = 1, "coffee" =1 , "milk" = 1)
+			result_amount = 3
+			mix_phrase = "You hear a faint quack from the solution along with a pungent stretch"
+			mix_sound = 'sound/voice/farts/fart3.ogg'
+			drinkrecipe = 1
+
+		pink_lemonade
+			name = "Pink lemonade"
+			id = "pinklemonade"
+			result = "pinklemonade"
+			required_reagents = list("grenadine" = 1,"lemonade" = 1)
+			result_amount = 2
+			mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
@@ -2162,7 +2207,7 @@ datum
 			name = "Salbutamol"
 			id = "salbutamol"
 			result = "salbutamol"
-			required_reagents = list("salicylic_acid" = 1, "lithium" = 1, "ammonia" = 1, "aluminium" = 1, "bromine" = 1)
+			required_reagents = list("oil" = 1, "lithium" = 1, "ammonia" = 1, "aluminium" = 1, "bromine" = 1)
 			result_amount = 5
 			mix_phrase = "The solution bubbles freely, creating a head of bluish foam."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -2171,7 +2216,7 @@ datum
 			name = "Perfluorodecalin"
 			id = "perfluorodecalin"
 			result = "perfluorodecalin"
-			required_reagents = list("hydrogen" = 1, "fluorine" = 1, "oil" = 1)
+			required_reagents = list("hydrogen" = 1, "fluorine" = 1, "salicylic_acid" = 1)
 			required_temperature = T0C + 100
 			// hydrogenate napthalene, then fluorinate
 			result_amount = 2 // lowered because the recipe is very easy
@@ -2302,7 +2347,7 @@ datum
 			required_reagents = list("triplepiss" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1)
 			//required_reagents = list("methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1, "formaldehyde" = 1)
 			result_amount = 2
-			priority = 9
+			inhibitors = list("stabiliser")
 			mix_phrase = "A sweet and sugary scent drifts from the unpleasant milky substance."
 			on_reaction(var/datum/reagents/holder)
 				if(prob(90))		// high chance of not working to piss them off
@@ -2350,9 +2395,7 @@ datum
 				var/turf/location = 0
 				if (holder.my_atom)
 					location = get_turf(holder.my_atom)
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(2, 1, location)
-					s.start()
+					elecflash(location)
 
 					for (var/mob/living/M in all_viewers(5, location))
 						if (isintangible(M))
@@ -2527,6 +2570,7 @@ datum
 						gathered += M.max_health - round(M.max_health / 2)
 						//M.max_health = round(M.max_health / 2)
 						M.setStatus("maxhealth-", null, -round(M.max_health / 2))
+						health_update_queue |= M
 						if(hascall(M,"add_stam_mod_max"))
 							M:add_stam_mod_max("anima_drain", -25)
 					if(gathered >= 80)
@@ -2604,7 +2648,9 @@ datum
 			// This should really require a closed container and an extreme phase change... or some other pseudo-science thing
 			mix_phrase = "A tiny point of light blooms within the material, and quickly grows to envelop the entire container. Your life flashes before your eyes."
 			required_temperature = T0C + 6344 // IMPOSSIBRUUUU
-			priority = INFINITY
+#ifdef CHEM_REACTION_PRIORITY
+			priority = INFINITY // should hopefully be handled in blacklists now
+#endif
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
@@ -2637,7 +2683,9 @@ datum
 			required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1, "stabiliser" = 1)
 			result_amount = 3
 			mix_phrase = "The mixture sets into a greyish powder!"
+#ifdef CHEM_REACTION_PRIORITY
 			priority = 9
+#endif
 
 		smoke
 			name = "Smoke"
@@ -2649,7 +2697,9 @@ datum
 			consume_all = 1
 			result_amount = 3
 			mix_phrase = "The mixture quickly turns into a pall of smoke!"
+#ifdef CHEM_REACTION_PRIORITY
 			priority = 9
+#endif
 			on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				if (holder)
 					holder.smoke_start(created_volume)
@@ -2661,7 +2711,9 @@ datum
 			required_reagents = list("chlorine" = 1, "sugar" = 1, "hydrogen" = 1, "platinum" = 1, "stabiliser" = 1)
 			result_amount = 3
 			mix_phrase = "The mixture becomes volatile and airborne."
+#ifdef CHEM_REACTION_PRIORITY
 			priority = 9
+#endif
 
 		unstable_propellant
 			name = "unstable propellant"
@@ -2672,7 +2724,9 @@ datum
 			special_log_handling = 1
 			consume_all = 1
 			mix_phrase = "The mixture violently sprays everywhere!"
+#ifdef CHEM_REACTION_PRIORITY
 			priority = 9
+#endif
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				classic_smoke_reaction(holder, min(round(created_volume / 5) + 1, 4), get_turf(holder.my_atom))
 
@@ -3952,7 +4006,6 @@ datum
 			result_amount = 9 //18
 			mix_phrase = "The mixture of particles settles together with so much ease that it seems like it has been waiting for this moment for a long time."
 			mix_sound = 'sound/misc/fuse.ogg'
-			priority = 14
 
 		good_cement //lime, alumina, magnesia, iron (iii) oxide, calcium sulfate
 			name = "good cement"
@@ -3962,7 +4015,7 @@ datum
 			result_amount = 5 //14
 			mix_phrase = "The mixture of particles settles together with ease."
 			mix_sound = 'sound/misc/fuse.ogg'
-			priority = 13
+			inhibitors = list("sulfur")
 
 		okay_cement //lime, alumina, magnesia, iron (iii) oxide
 			name = "okay cement"
@@ -3972,7 +4025,7 @@ datum
 			result_amount = 4 //13
 			mix_phrase = "The mixture of particles settles together complacently."
 			mix_sound = 'sound/misc/fuse.ogg'
-			priority = 12
+			inhibitors = list("gypsum")
 
 		poor_cement //lime, alumina, iron (iii) oxide
 			name = "poor cement"
@@ -3982,7 +4035,7 @@ datum
 			result_amount = 2 //
 			mix_phrase = "The mixture of particles settles together... barely."
 			mix_sound = 'sound/misc/fuse.ogg'
-			priority = 11
+			inhibitors = list("magnesium")
 
 		perfect_concrete
 			name = "perfect concrete"

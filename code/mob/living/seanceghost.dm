@@ -19,19 +19,6 @@
 	is_spacefaring()
 		return 1
 
-	Life(parent)
-		if (..(parent))
-			return 1
-
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
-
-		if (!src.abilityHolder)
-			src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
-
-		else if (src.health < src.max_health)
-			src.health++
-
 	ex_act(severity)
 		return
 
@@ -73,7 +60,7 @@
 		if(!canmove) return
 
 		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
-			var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				src.set_loc(OS)
 			else
@@ -173,7 +160,7 @@
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || ((isrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))
-			var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				Z.set_loc(OS)
 			else

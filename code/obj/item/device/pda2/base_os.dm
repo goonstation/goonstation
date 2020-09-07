@@ -27,6 +27,7 @@
 		var/datum/computer/file/text/note_file = null //If set, save to this file.
 		var/datum/computer/folder/note_folder = null //Which folder are we looking in?
 		//Messenger vars
+		var/expand_departments_list = 1
 		var/list/detected_pdas = list()
 		var/message_on = 1
 		var/message_silent = 0 //To beep or not to beep, that is the question
@@ -71,20 +72,20 @@
 
 			switch(src.mode)
 				if(0)
-					. += "<h2>PERSONAL DATA ASSISTANT</h2>"
-					. += "Owner: [src.master.owner]<br><br>"
+					. += {"<h2>PERSONAL DATA ASSISTANT</h2>
+					Owner: [src.master.owner]<br><br>
 
-					. += "<h4>General Functions</h4>"
-					. += "<ul>"
-					. += "<li><a href='byond://?src=\ref[src];mode=1'>Notekeeper</a></li>"
-					. += "<li><a href='byond://?src=\ref[src];mode=2'>Messenger</a></li>"
-					. += "<li><a href='byond://?src=\ref[src];mode=3'>File Browser</a></li>"
-					. += "</ul>"
+					<h4>General Functions</h4>
+					<ul>
+					<li><a href='byond://?src=\ref[src];mode=1'>Notekeeper</a></li>
+					<li><a href='byond://?src=\ref[src];mode=2'>Messenger</a></li>
+					<li><a href='byond://?src=\ref[src];mode=3'>File Browser</a></li>
+					</ul>
 
-					. += "<h4>Utilities</h4>"
-					. += "<ul>"
-					. += "<li><a href='byond://?src=\ref[src];mode=4'>Atmospheric Scan</a></li>"
-					. += "<li>Scanner: [src.master.scan_program ? "<a href='byond://?src=\ref[src];scanner=1'>[src.master.scan_program.name]</a>" : "None loaded"]</li>"
+					<h4>Utilities</h4>
+					<ul>
+					<li><a href='byond://?src=\ref[src];mode=4'>Atmospheric Scan</a></li>
+					<li>Scanner: [src.master.scan_program ? "<a href='byond://?src=\ref[src];scanner=1'>[src.master.scan_program.name]</a>" : "None loaded"]</li>"}
 #ifdef UNDERWATER_MAP
 					. += "<li><a href='byond://?src=\ref[src];trenchmap=1'>Trench Map</a></li>"
 #else
@@ -109,10 +110,10 @@
 						if ((!isnull(src.master.uplink)) && (src.master.uplink.active))
 							. += "<a href='byond://?src=\ref[src];note_func=lock'>Lock</a><br>"
 						else
-							. += "<a href='byond://?src=\ref[src];input=note'>Edit</a>"
-							. += " | <a href='byond://?src=\ref[src];note_func=new'>New File</a>"
-							. += " | <a href='byond://?src=\ref[src];note_func=save'>Save</a>"
-							. += " | <a href='byond://?src=\ref[src];note_func=switchmenu'>Load</a><br>"
+							. += {"<a href='byond://?src=\ref[src];input=note'>Edit</a>
+							 | <a href='byond://?src=\ref[src];note_func=new'>New File</a>
+							 | <a href='byond://?src=\ref[src];note_func=save'>Save</a>
+							 | <a href='byond://?src=\ref[src];note_func=switchmenu'>Load</a><br>"}
 
 						. += src.note
 					else
@@ -120,14 +121,14 @@
 						if((!src.note_folder) || !(src.note_folder.holder in src.master))
 							src.note_folder = src.holding_folder
 
-						. += " | \[[src.note_folder.holder.file_amount - src.note_folder.holder.file_used]\] Free"
-						. += " \[<a href='byond://?src=\ref[src];note_func=drive'>[src.note_folder.holder == src.master.hd ? "MAIN" : "CART"]</a>\]<br>"
-						. += "<table cellspacing=5>"
+						. += {" | \[[src.note_folder.holder.file_amount - src.note_folder.holder.file_used]\] Free
+						 \[<a href='byond://?src=\ref[src];note_func=drive'>[src.note_folder.holder == src.master.hd ? "MAIN" : "CART"]</a>\]<br>
+						<table cellspacing=5>"}
 
 						for(var/datum/computer/file/text/T in src.note_folder.contents)
-							. += "<tr><td><a href='byond://?src=\ref[src];target=\ref[T];note_func=load'>[T.name]</a></td>"
-							. += "<td>[T.extension]</td>"
-							. += "<td>Length: [T.data ? (length(T.data)) : "0"]</td></tr>"
+							. += {"<tr><td><a href='byond://?src=\ref[src];target=\ref[T];note_func=load'>[T.name]</a></td>
+							<td>[T.extension]</td>
+							<td>Length: [T.data ? (length(T.data)) : "0"]</td></tr>"}
 
 						. += "</table>"
 
@@ -138,22 +139,26 @@
 
 					if (!src.message_mode)
 
-						. += "<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> | "
-						. += "<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> | "
-						. += "<a href='byond://?src=\ref[src];input=tone'>Set Ringtone</a><br>"
-						. += "<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> | "
-						. += "<a href='byond://?src=\ref[src];message_mode=2'>Groups</a><br>"
+						. += {"<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> | 
+						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> | 
+						<a href='byond://?src=\ref[src];input=tone'>Set Ringtone</a><br>
+						<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> | 
+						<a href='byond://?src=\ref[src];message_mode=2'>Groups</a><br>
 
-						. += "<font size=2><a href='byond://?src=\ref[src];message_func=scan'>Scan</a></font><br>"
-						. += "<b>Detected PDAs</b><br>"
+						<font size=2><a href='byond://?src=\ref[src];message_func=scan'>Scan</a></font><br>
+						<b>Detected PDAs</b><br>"}
 
-						. += "<ul>"
-
-						var/count = 0
-
-						if (src.message_on)
-							for (var/department_id in page_departments)
-								. += "<li><a href='byond://?src=\ref[src];input=message;target=[page_departments[department_id]];department=1'>DEPT-[department_id]</a></li>"
+						if (!src.message_on)
+							. += "Please turn on Send/Receive to use the scan function."
+						else
+							. += "<ul>"
+							var/count = 0
+							if(expand_departments_list)
+								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Collapse DEPT list*</a>"
+								for (var/department_id in page_departments)
+									. += "<li><a href='byond://?src=\ref[src];input=message;target=[page_departments[department_id]];department=1'>DEPT-[department_id]</a></li>"
+							else
+								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Expand DEPT list*</a>"
 
 							var/pdaOwnerNames = list()
 							for (var/P_id in src.detected_pdas)
@@ -170,40 +175,42 @@
 							for (var/P_name in pdaOwnerNames)
 								var/P_id = pdaOwnerNames[P_name]
 
-								. += "<li><a href='byond://?src=\ref[src];input=message;target=[P_id]'>PDA-[P_name]</a>"
-								. += " (<a href='byond://?src=\ref[src];input=send_file;target=[P_id]'>*Send File*</a>)"
+								. += {"<li><a href='byond://?src=\ref[src];input=message;target=[P_id]'>PDA-[P_name]</a>
+								 (<a href='byond://?src=\ref[src];input=send_file;target=[P_id]'>*Send File*</a>)
 
 
-								. += "</li>"
+								</li>"}
 								count++
+							. += "</ul>"
 
-						. += "</ul>"
-
-						if (count == 0 && !page_departments.len)
-							. += "None detected.<br>"
+							if (count == 0 && !page_departments.len)
+								. += "None detected.<br>"
 
 					else if (src.message_mode == 1)
-						. += "<a href='byond://?src=\ref[src];message_func=clear'>Clear</a> | "
-						. += "<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>"
+						. += {"<a href='byond://?src=\ref[src];message_func=clear'>Clear</a> | 
+						<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>
 
-						. += "<h4>Messages</h4>"
+						<h4>Messages</h4>"}
 
 						. += src.message_note
 						. += "<br>"
 
 					else
-						. += "<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a> | "
-						. += "<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>"
-						. += "<h4>Groups</h4>"
+						. += {"<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a> | 
+						<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>
+						<h4>Groups</h4>"}
 
 						var/myReservedGroups = ""
 						var/myCustomGroups = ""
 
 						for (var/mailgroup in src.master.mailgroups)
 							if (mailgroup in src.master.reserved_mailgroups)
-								myReservedGroups += "<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a><br>"
+								myReservedGroups += {"<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a>
+								 (<a href='byond://?src=\ref[src];message_func=mute_group;groupname=[mailgroup]'>*[(mailgroup in src.master.muted_mailgroups) ? "Unmute" : "Mute"]*</a>)<br>"}
 							else
-								myCustomGroups += "<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a> (<a href='byond://?src=\ref[src];message_func=leave_group;groupname=[mailgroup]'>*Leave Group*</a>)<br>"
+								myCustomGroups += {"<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a>
+								 (<a href='byond://?src=\ref[src];message_func=leave_group;groupname=[mailgroup]'>*Leave Group*</a>)
+								 (<a href='byond://?src=\ref[src];message_func=mute_group;groupname=[mailgroup]'>*[(mailgroup in src.master.muted_mailgroups) ? "Unmute" : "Mute"]*</a>)<br>"}
 
 						. += myReservedGroups
 						. += myCustomGroups
@@ -215,27 +222,27 @@
 					if((!src.browse_folder) || !(src.browse_folder.holder in src.master))
 						src.browse_folder = src.holding_folder
 
-					. += " | <a href='byond://?src=\ref[src];target=\ref[src.browse_folder];browse_func=paste'>Paste</a><br>"
+					. += {" | <a href='byond://?src=\ref[src];target=\ref[src.browse_folder];browse_func=paste'>Paste</a><br>
 
-					. += "<b>Contents of [browse_folder] | Drive ID:\[[src.browse_folder.holder.title]]</b><br>"
-					. += "<b>Used: \[[src.browse_folder.holder.file_used]/[src.browse_folder.holder.file_amount]\]</b><hr>"
+					<b>Contents of [browse_folder] | Drive ID:\[[src.browse_folder.holder.title]]</b><br>
+					<b>Used: \[[src.browse_folder.holder.file_used]/[src.browse_folder.holder.file_amount]\]</b><hr>
 
-					. += "<table cellspacing=5>"
+					<table cellspacing=5>"}
 					for(var/datum/computer/file/F in browse_folder.contents)
 						if(F == src)
 							. += "<tr><td>System</td><td>Size: [src.size]</td><td>SYSTEM</td></tr>"
 							continue
-						. += "<tr><td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=open'>[F.name]</a></td>"
-						. +=  "<td>Size: [F.size]</td>"
+						. += {"<tr><td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=open'>[F.name]</a></td>
+						<td>Size: [F.size]</td>
 
-						. += "<td>[F.extension]</td>"
+						<td>[F.extension]</td>
 
-						. += "<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=delete'>Del</a></td>"
-						. += "<td><a href='byond://?src=\ref[src];target=\ref[F];input=rename'>Rename</a></td>"
+						<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=delete'>Del</a></td>
+						<td><a href='byond://?src=\ref[src];target=\ref[F];input=rename'>Rename</a></td>
 
-						. += "<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=copy'>Copy</a></td>"
+						<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=copy'>Copy</a></td>
 
-						. += "</tr>"
+						</tr>"}
 
 					. += "</table>"
 					var/datum/computer/folder/other_drive_folder
@@ -245,25 +252,25 @@
 							break
 
 					if (other_drive_folder)
-						. += "<hr><b>Contents of [other_drive_folder] | Drive ID:\[[other_drive_folder.holder.title]]</b><br>"
-						. += "<b>Used: \[[other_drive_folder.holder.file_used]/[other_drive_folder.holder.file_amount]\]</b> | <a href='byond://?src=\ref[src];target=\ref[other_drive_folder];browse_func=paste'>Paste</a><hr>"
+						. += {"<hr><b>Contents of [other_drive_folder] | Drive ID:\[[other_drive_folder.holder.title]]</b><br>
+						<b>Used: \[[other_drive_folder.holder.file_used]/[other_drive_folder.holder.file_amount]\]</b> | <a href='byond://?src=\ref[src];target=\ref[other_drive_folder];browse_func=paste'>Paste</a><hr>
 
-						. += "<table cellspacing=5>"
+						<table cellspacing=5>"}
 						for(var/datum/computer/file/F in other_drive_folder.contents)
 							if(F == src)
 								. += "<tr><td>System</td><td>Size: [src.size]</td><td>SYSTEM</td></tr>"
 								continue
-							. += "<tr><td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=open'>[F.name]</a></td>"
-							. +=  "<td>Size: [F.size]</td>"
+							. += {"<tr><td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=open'>[F.name]</a></td>
+							<td>Size: [F.size]</td>
 
-							. += "<td>[F.extension]</td>"
+							<td>[F.extension]</td>
 
-							. += "<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=delete'>Del</a></td>"
-							. += "<td><a href='byond://?src=\ref[src];target=\ref[F];input=rename'>Rename</a></td>"
+							<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=delete'>Del</a></td>
+							<td><a href='byond://?src=\ref[src];target=\ref[F];input=rename'>Rename</a></td>
 
-							. += "<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=copy'>Copy</a></td>"
+							<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=copy'>Copy</a></td>
 
-							. += "</tr>"
+							</tr>"}
 						. += "</table>"
 
 				if(4)
@@ -296,6 +303,9 @@
 			else if(href_list["trenchmap"])
 				if (usr.client && hotspot_controller)
 					hotspot_controller.show_map(usr.client)
+
+			else if(href_list["toggle_departments_list"])
+				expand_departments_list = !expand_departments_list
 
 			else if(href_list["input"])
 				switch(href_list["input"])
@@ -516,6 +526,12 @@
 						var/groupname = href_list["groupname"]
 						if (groupname)
 							src.master.mailgroups -= groupname
+					if("mute_group")
+						var/groupname = href_list["groupname"]
+						if (groupname in src.master.muted_mailgroups)
+							src.master.muted_mailgroups -= groupname
+						else
+							src.master.muted_mailgroups += groupname
 
 
 			else if(href_list["note_func"]) //Note program specific topic junk
@@ -658,7 +674,7 @@
 
 					var/groupAddress = signal.data["group"]
 					if(groupAddress) //Check to see if we have this ~mailgroup~
-						if(!(groupAddress in src.master.mailgroups) && groupAddress != "ai")
+						if((!(groupAddress in src.master.mailgroups) && groupAddress != "ai") || (groupAddress in src.master.muted_mailgroups))
 							return
 
 					var/sender = signal.data["sender_name"]
@@ -834,8 +850,8 @@
 
 			. = ""
 			if(src.mode)
-				. += " | <a href='byond://?src=\ref[src];mode=0'>Main Menu</a>"
-				. += " | <a href='byond://?src=\ref[src.master];refresh=1'>Refresh</a>"
+				. += {" | <a href='byond://?src=\ref[src];mode=0'>Main Menu</a>
+				 | <a href='byond://?src=\ref[src.master];refresh=1'>Refresh</a>"}
 
 			else
 				if (!isnull(src.master.cartridge) && !istype(src.master,/obj/item/device/pda2/ai))

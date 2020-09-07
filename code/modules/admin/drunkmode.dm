@@ -31,7 +31,6 @@ var/list/dangerousVerbs = list(\
 /client/proc/air_status,\
 /client/proc/fix_next_move,\
 /client/proc/debugreward,\
-/client/proc/cmd_modify_object_variables,\
 
 //Coder stuff this is mostly all dangerous shit
 /client/proc/cmd_modify_market_variables,\
@@ -56,7 +55,6 @@ var/list/dangerousVerbs = list(\
 /client/proc/check_gang_scores,\
 /client/proc/critter_creator_debug,\
 /client/proc/debug_deletions,\
-/client/proc/Debug2,\
 /client/proc/cmd_modify_controller_variables,\
 /client/proc/cmd_modify_ticker_variables,\
 /client/proc/find_thing,\
@@ -83,7 +81,7 @@ var/list/dangerousVerbs = list(\
 )
 
 /client/proc/enableDrunkMode()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Enable Drunk Mode"
 	set desc = "Are you drunk and slightly responsible still? Turn this on!"
 	set popup_menu = 0
@@ -98,7 +96,7 @@ var/list/dangerousVerbs = list(\
 	return
 
 /client/proc/disableDrunkMode()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Disable Drunk Mode"
 	set desc = "Done being drunk? We'll see."
 	set popup_menu = 0
@@ -130,7 +128,7 @@ var/list/dangerousVerbs = list(\
 
 
 /client/proc/forceDrunkMode(var/client/C in onlineAdmins)
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Force Drunk Mode"
 	set desc = "Is another admin drunk as a skunk? Put them in drunk mode sharpish."
 	set popup_menu = 0

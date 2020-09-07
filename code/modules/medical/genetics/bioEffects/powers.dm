@@ -4,7 +4,7 @@
 	id = "cryokinesis"
 	msgGain = "You notice a strange cold tingle in your fingertips."
 	msgLose = "Your fingers feel warmer."
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	cooldown = 600
 	probability = 66
 	blockCount = 3
@@ -23,8 +23,9 @@
 	disposing()
 		src.owner = null
 		if (ability)
-			ability.disposing()
+			ability.dispose()
 			ability.owner = null
+		src.ability = null
 		..()
 
 	OnAdd()
@@ -452,7 +453,8 @@
 				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
 				owner.real_name = H.real_name
 				owner.name = H.name
-
+				if(owner.bioHolder?.mobAppearance?.mutant_race)
+					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race)
 		return
 
 	cast_misfire(atom/target)
@@ -540,7 +542,7 @@
 		boutput(recipient, "<span style='color: #BD33D9'><b>[psyname]</b> echoes, \"<i>[msg]</i>\"</span>")
 		boutput(owner, "<span style='color: #BD33D9'>You echo \"<i>[msg]</i>\" to <b>[recipient.name]</b>.</span>")
 
-		logTheThing("telepathy", owner, recipient, "TELEPATHY to %target%: [msg]")
+		logTheThing("telepathy", owner, recipient, "TELEPATHY to [constructTarget(recipient,"telepathy")]: [msg]")
 
 		return
 
@@ -580,7 +582,7 @@
 		owner.visible_message("<span class='alert'><b>[owner]</b> puts their fingers to their temples and stares at [target] really hard.</span>")
 		owner.say(msg)
 
-		logTheThing("telepathy", owner, recipient, "TELEPATHY misfire to %target%: [msg]")
+		logTheThing("telepathy", owner, recipient, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
 
 		return
 
@@ -808,42 +810,45 @@
 		if (..())
 			return 1
 
-		if (linked_power.safety)
-			// checks if it can be used, displaying a message to the user if not
-			if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
-				spell_invisibility(owner, 50)
-				playsound(owner.loc, "sound/effects/mag_phase.ogg", 25, 1, -1)
-		else
-			// should have synchronized it!
-			owner.visible_message("<span class='alert'><b>[owner.name]'s flesh melts right off! Holy shit!</b></span>")
-			if (owner.gender == "female")
-				playsound(owner.loc, "sound/voice/screams/female_scream.ogg", 50, 0)
-			else
-				playsound(owner.loc, "sound/voice/screams/male_scream.ogg", 50, 0)
-			playsound(owner.loc, "sound/effects/bubbles.ogg", 50, 0)
-			playsound(owner.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 0)
-			if (ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.skeletonize()
-				var/bdna = null // For forensics (Convair880).
-				var/btype = null
-				if (H.bioHolder.Uid && H.bioHolder.bloodType)
-					bdna = H.bioHolder.Uid
-					btype = H.bioHolder.bloodType
-				gibs(owner.loc, null, null, bdna, btype)
-			else
-				owner.gib()
+		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
+			if (!linked_power.safety)
+				// If unsynchronized, you don't get to keep anything you have on you.
+				// The original version of this power instead gibbed you instantly, which wasn't very fun,
+				// and ended up as a newbie trap ("This sounds fun! *dead* oh.")
+				// This way it's a nice tradeoff, and you can always just pick things back up
+				boutput(owner, "<span class='alert'>Everything you were carrying falls away as you dissolve!</span>")
+				owner.unequip_all()
+
+			spell_invisibility(owner, 50)
+			playsound(owner.loc, "sound/effects/mag_phase.ogg", 25, 1, -1)
+
 
 	cast_misfire()
 		if (..())
 			return 1
 
-		playsound(owner.loc, "sound/effects/mag_golem.ogg", 50, 0)
-		owner.visible_message("<span class='alert'><b>[owner.name] solidifies into a statue! Doubt they're coming back from that...</b></span>")
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.become_statue()
-		return
+		// Misfires still transform you, but bad things happen.
+
+		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
+			if (!linked_power.safety && ishuman(owner))
+				// If unsynchronized, you drop a random organ. Hope it's not one of the important ones!
+				var/list/possible_drops = list("heart", "left_lung","right_lung","left_kidney","right_kidney",
+					"liver","spleen","pancreas","stomach","intestines","appendix","butt")
+				var/obj/item/organ/O = owner.organHolder.drop_organ(pick(possible_drops))
+				if (O)
+					boutput(owner, "<span class='alert'>You dissolve... mostly. Oops.</span>")
+
+			else
+				// If synchronized, you drop a random item you were carrying.
+				// This is a pretty weak downside, but at the same time,
+				// to get here you've managed to synchronize it and paid the stability penalty.
+				// We can afford to be nice.
+				var/obj/item/I = owner.unequip_random()
+				if (I)
+					boutput(owner, "<span class='alert'>\The [I] you were carrying falls away as you dissolve!</span>")
+
+			spell_invisibility(owner, 50)
+			playsound(owner.loc, "sound/effects/mag_phase.ogg", 25, 1, -1)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1363,11 +1368,15 @@
 		if (!P.active)
 			P.active = 1
 			P.last_loc = owner.loc
+			owner.canmove = 0
+			owner.restrain_time = TIME + 0.7 SECONDS
 			owner.visible_message("<span class='alert'><b>[owner] vanishes in a burst of blue light!</b></span>")
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
 			animate(owner, color = "#0000FF", time = 5, easing = LINEAR_EASING)
 			animate(alpha = 0, time = 5, easing = LINEAR_EASING)
 			SPAWN_DBG(0.7 SECONDS)
+				owner.canmove = 1
+				owner.restrain_time = 0
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
@@ -1597,8 +1606,10 @@
 			return 1
 		owner.visible_message("<span class='alert'><b>[owner.name] makes a weird noise!</b></span>")
 		playsound(owner.loc, 'sound/musical_instruments/WeirdHorn_0.ogg', 50, 0)
+		var/count = 0
 		for (var/mob/living/L in range(7,owner))
 			if (L.hearing_check(1))
+				if(count++ > (src.linked_power.power ? 10 : 7)) break
 				if(locate(/obj/item/bible) in get_turf(L))
 					owner.visible_message("<span class='alert'><b>A mysterious force smites [owner.name] for inciting blasphemy!</b></span>")
 					owner.gib()
@@ -1620,7 +1631,7 @@
 	name = "Telekinetic Pull"
 	desc = "Allows the subject to influence physical objects through utilizing latent powers in their mind."
 	id = "telekinesis_drag"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 5
 	blockGaps = 5
@@ -1658,7 +1669,7 @@
 	name = "Telekinesis"
 	desc = "Allows the subject to influence physical objects through utilizing latent powers in their mind."
 	id = "telekinesis_command"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 5
 	blockGaps = 5
@@ -1729,7 +1740,7 @@
 	name = "Cloak of Darkness"
 	desc = "Enables the subject to bend low levels of light around themselves, creating a cloaking effect."
 	id = "cloak_of_darkness"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	isBad = 0
 	probability = 33
 	blockGaps = 3
@@ -1819,7 +1830,7 @@
 	name = "Chameleon"
 	desc = "The subject becomes able to subtly alter light patterns to become invisible, as long as they remain still."
 	id = "chameleon"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 33
 	blockCount = 3
 	blockGaps = 3

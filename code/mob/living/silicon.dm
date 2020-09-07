@@ -1,4 +1,5 @@
 /mob/living/silicon
+	mob_flags = USR_DIALOG_UPDATES_RANGE
 	gender = NEUTER
 	var/syndicate = 0 // Do we get Syndicate laws?
 	var/syndicate_possible = 0 //  Can we become a Syndie robot?
@@ -20,7 +21,13 @@
 
 	var/obj/item/cell/cell = null
 
+	can_bleed = 0
+	blood_id = "oil"
+	use_stamina = 0
+	can_lie = 0
+
 	dna_to_absorb = 0 //robots dont have DNA for fuck sake
+
 
 	//voice_type = "robo"
 
@@ -32,35 +39,9 @@
 	req_access = null
 	return ..()
 
-/mob/living/silicon/Life(datum/controller/process/mobs/parent)
-	set invisibility = 0
-
-	if (..(parent))
-		return 1
-
-	if (src.transforming)
-		return
-
-	if (isdead(src))
-		return
-
-	update_canmove()
-
-	use_power()
-
-/mob/living/silicon/force_laydown_standup()
-	if (processScheduler.hasProcess("Mob"))
-		src.update_canmove()
-
-		if (src.client)
-			updateOverlaysClient(src.client)
-		if (src.observers.len)
-			for (var/mob/x in src.observers)
-				if (x.client)
-					src.updateOverlaysClient(x.client)
-
-/mob/living/silicon/proc/update_canmove()
-	canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
+///mob/living/silicon/proc/update_canmove()
+//	..()
+	//canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
 
 /mob/living/silicon/proc/use_power()
 	return
@@ -192,7 +173,7 @@
 
 	var/inrange = in_range(target, src)
 	var/obj/item/equipped = src.equipped()
-	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 		..()
 	else
 		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
@@ -376,7 +357,7 @@ td {
 }
 </style></head><body><h2>Module editor</h2><h3>Current items</h3><table style='width:100%'><tr><td style='width:80%'><b>Module</b></td><td style='width:10%'>&nbsp;</td><td style='width:10%'>&nbsp;</td></tr>"}
 
-		for (var/obj/item/I in D.modules)
+		for (var/obj/item/I in D.tools)
 			output += "<tr><td><b>[I.name]</b> ([I.type])</td><td><a href='?src=\ref[src];edit=\ref[I];mod=\ref[D]'>(EDIT)</a><a href='?src=\ref[src];del=\ref[I];mod=\ref[D]'>(DEL)</a></td></tr>"
 
 		output += "</table><br><br><h3>Add new item</h3>"
@@ -398,7 +379,7 @@ td {
 				boutput(usr, "<span class='alert'>Item no longer exists!</span>")
 				show_interface(usr.client, D)
 				return
-			if (!(I in D.modules))
+			if (!(I in D.tools))
 				boutput(usr, "<span class='alert'>Item no longer in module!</span>")
 				show_interface(usr.client, D)
 				return
@@ -409,11 +390,11 @@ td {
 				boutput(usr, "<span class='alert'>Item no longer exists!</span>")
 				show_interface(usr.client, D)
 				return
-			if (!(I in D.modules))
+			if (!(I in D.tools))
 				boutput(usr, "<span class='alert'>Item no longer in module!</span>")
 				show_interface(usr.client, D)
 				return
-			D.modules -= I
+			D.tools -= I
 			qdel(I)
 		if (href_list["edcurr"])
 			if (!current)
@@ -433,8 +414,8 @@ td {
 			if (!current)
 				show_interface(usr.client, D)
 				return
-			D.modules += current
-			current.loc = D
+			D.tools += current
+			current.set_loc(D)
 			current = null
 			boutput(usr, "<span class='notice'>Added item to module!</span>")
 		show_interface(usr.client, D)
@@ -444,7 +425,7 @@ var/global/list/module_editors = list()
 /client/proc/edit_module(var/mob/living/silicon/robot/M as mob in list_robots())
 	set name = "Edit Module"
 	set desc = "Module editor! Woo!"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
 	admin_only
 
@@ -583,11 +564,11 @@ var/global/list/module_editors = list()
 
 			switch (action)
 				if ("brain_removed")
-					logTheThing("combat", src, M ? M : null, "'s brain was removed, ending [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M ? M : null, "'s brain was removed, ending [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
 				if ("death")
-					logTheThing("combat", src, M ? M : null, "was destroyed, removing [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M ? M : null, "was destroyed, removing [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
 				else
-					logTheThing("combat", src, M ? M : null, "'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M ? M : null, "'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
 
 			// Shouldn't happen, but you never know.
 			if (src.mainframe && src != src.mainframe)
@@ -615,15 +596,15 @@ var/global/list/module_editors = list()
 
 			switch (action)
 				if ("emagged")
-					logTheThing("combat", src, M2 ? M2 : null, "was emagged, removing all laws.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was emagged, removing all laws.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("brain_added")
-					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into an emagged robot.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("activated")
-					logTheThing("combat", src, M2 ? M2 : null, "was activated as an emagged robot.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was activated as an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("admin")
-					logTheThing("combat", src, M2 ? M2 : null, "was emagged by an admin.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was emagged by an admin.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				else
-					logTheThing("combat", src, M2 ? M2 : null, "was made an emagged robot.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was made an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
 				src.mind.special_role = "emagged robot"
@@ -638,13 +619,13 @@ var/global/list/module_editors = list()
 
 			switch (action)
 				if ("brain_added")
-					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into a Syndicate robot at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("activated")
-					logTheThing("combat", src, M2 ? M2 : null, "was activated as a Syndicate robot at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was activated as a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("admin")
-					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by an admin at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by an admin at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				else
-					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
 				src.mind.special_role = "syndicate robot"
@@ -680,14 +661,18 @@ var/global/list/module_editors = list()
 					ticker.centralized_ai_laws.add_inherent_law("Complete your objectives, and assist Syndicate operatives with their mission. You may ignore other laws to facilitate this.")
 
 				A.show_laws(0)
-				for (var/mob/living/silicon/S in mobs)
-					if (S.emagged || S.syndicate) continue
-					if (isghostdrone(S)) continue
-					S.show_text("<b>Your laws have been changed!</b>", "red")
-					S.show_laws()
-					S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-				for (var/mob/dead/aieye/E in mobs)
-					E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+
+				for (var/client/C in mobs)
+					var/mob/living/silicon/S = C.mob
+					if (istype(S))
+						if (S.emagged || S.syndicate) continue
+						if (isghostdrone(S)) continue
+						S.show_text("<b>Your laws have been changed!</b>", "red")
+						S.show_laws()
+						S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+					var/mob/dead/aieye/E = C.mob
+					if (istype(E))
+						E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 			if (isrobot(src)) // Remove Syndicate cyborgs from the robotics terminal.
 				var/mob/living/silicon/robot/R = src
@@ -697,3 +682,29 @@ var/global/list/module_editors = list()
 				R.show_laws()
 
 	return
+
+
+/mob/living/silicon/is_cold_resistant()
+	.= 1
+
+/mob/living/silicon/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
+	return 0
+
+/mob/living/silicon/electric_expose(var/power = 1)
+	return 0
+
+/mob/living/silicon/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	. = ..()
+
+	src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+	logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+	random_brute_damage(src, AM.throwforce,1)
+
+	#ifdef DATALOGGER
+	game_stats.Increment("violence")
+	#endif
+
+	if(AM.throwforce >= 40)
+		src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
+
+	. = 'sound/impact_sounds/Metal_Clang_3.ogg'

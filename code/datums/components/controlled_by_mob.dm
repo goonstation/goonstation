@@ -37,7 +37,7 @@
 /datum/component/controlled_by_mob/proc/reinsert_mob()
 	var/obj/O = parent
 	controlling_mob.set_loc(movement_controller_dummy)
-	controlling_mob.update_keymap()
+	controlling_mob.reset_keymap()
 	if(!src.control_from_inside)
 		controlling_mob.client.eye = O
 
@@ -45,7 +45,7 @@
 	var/obj/O = parent
 	if(src.controlling_mob && src.controlling_mob.use_movement_controller == movement_controller_dummy)
 		src.controlling_mob.set_loc(get_turf(O))
-		controlling_mob.update_keymap()
+		controlling_mob.reset_keymap()
 		if(!src.control_from_inside)
 			controlling_mob.client.eye = controlling_mob
 

@@ -48,10 +48,8 @@
 
   if(martian)
     martian.set_loc(T)
-    SPAWN_DBG(0)
-      var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-      s.set_up(5, 1, holder.owner)
-      s.start()
+    elecflash(T,power = 3)
+
     playsound(T, "sound/effects/ghost2.ogg", 100, 1)
     holder.owner.visible_message("<span class='notice'><b>[holder.owner]</b> summons [martian.name]!</span>", "<span class='notice'>You pull [martian.real_name] through space to you!</span>")
     holder.owner.say("SUMMON!", 1)

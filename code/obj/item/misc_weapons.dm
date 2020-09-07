@@ -35,7 +35,7 @@
 	var/open = 0
 	var/use_glowstick = 1
 	var/obj/item/device/light/glowstick/loaded_glowstick = null
-	var/bladecolor = "G"
+	var/bladecolor = "invalid"
 	var/list/valid_colors = list("R","O","Y","G","C","B","P","Pi","W")
 	hit_type = DAMAGE_BLUNT
 	force = 1
@@ -50,20 +50,26 @@
 	contraband = 5
 	desc = "An illegal weapon that, when activated, uses cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
-	stamina_cost = 30
+	stamina_cost = 5
 	stamina_crit_chance = 35
-	var/do_stun = 1 //controlled by itemspecial for csword. sorry.
 	var/active_force = 60
-	var/active_stamina_dmg = 150
+	var/active_stamina_dmg = 40
+	var/active_stamina_cost = 40
 	var/inactive_stamina_dmg = 35
 	var/inactive_force = 1
+	var/inactive_stamina_cost = 5
 	var/state_name = "sword"
 	var/off_w_class = 2
 	var/datum/component/holdertargeting/simple_light/light_c
+	var/do_stun = 0
+
+	stunner
+		do_stun = 1
 
 	New()
 		..()
-		src.bladecolor = pick(valid_colors)
+		if(src.bladecolor == "invalid")
+			src.bladecolor = pick(valid_colors)
 		var/r = 0
 		var/g = 0
 		var/b = 0
@@ -72,77 +78,102 @@
 		switch(src.bladecolor)
 			if("R")
 				r = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/red(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/red(src)
 			if("O")
 				r = 255; g = 127
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/orange(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/orange(src)
 			if("Y")
 				r = 255; g = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/yellow(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/yellow(src)
 			if("G")
 				g = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick(src)
 			if("C")
 				b = 255; g = 200
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/cyan(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/cyan(src)
 			if("B")
 				b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/blue(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/blue(src)
 			if("P")
 				r = 153; b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/purple(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/purple(src)
 			if("Pi")
 				r = 255; g = 121; b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/pink(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/pink(src)
 			if("W")
 				r = 255; g = 255; b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
-
-		if (src.loaded_glowstick) //the glowstick needs to be on!
-			src.loaded_glowstick.turnon()
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
+			else
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
+		src.loaded_glowstick.turnon()
 
 		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
+		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SWORD
 
 /obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
-	if(ishuman(user))
-		if(active)
-			if (handle_parry(target, user))
-				return 1
+	if(active)
+		if (handle_parry(target, user))
+			return 1
+		if (do_stun)
+			target.do_disorient(150, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
 
-			if (!is_special)
-#ifdef USE_STAMINA_DISORIENT
-				target.do_disorient(0, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0) //we don't want disorient protection to affect stamina damage
-#else
-				target.changeStatus("stunned", 50)
-				target.changeStatus("weakened", 5 SECONDS)
-#endif
+		var/age_modifier = 0
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			age_modifier = 30 - H.bioHolder.age
 
-			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
-			..()
+		if(user.gender == MALE) playsound(get_turf(user), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.2, 1.0 + age_modifier/60)))
+		else playsound(get_turf(user), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.4, 1.0 + age_modifier/50)))
+		..()
+	else
+		if (user.a_intent == INTENT_HELP)
+			user.visible_message("<span class='combat bold'>[user] [pick_string("descriptors.txt", pick("mopey", "borg_shake"))] baps [target] on the [pick("nose", "forehead", "wrist", "chest")] with \the [src]'s handle!</span>")
+			if(prob(3))
+				SPAWN_DBG(0.2 SECONDS)
+					target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
+					target.changeStatus("stunned", 50)
+					target.changeStatus("weakened", 5 SECONDS)
 		else
-			if (user.a_intent == INTENT_HELP)
-				user.visible_message("<span class='combat bold'>[user] [pick_string("descriptors.txt", pick("mopey", "borg_shake"))] baps [target] on the [pick("nose", "forehead", "wrist", "chest")] with \the [src]'s handle!</span>")
-				if(prob(3))
-					SPAWN_DBG(0.2 SECONDS)
-						target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
-						target.changeStatus("stunned", 50)
-						target.changeStatus("weakened", 5 SECONDS)
-			else
-				..()
+			..()
+
+/obj/item/sword/proc/get_hex_color_from_blade(var/C as text)
+	switch(C)
+		if("R")
+			return "#FF0000"
+		if("O")
+			return "#FF9A00"
+		if("Y")
+			return "#FFFF00"
+		if("G")
+			return "#00FF78"
+		if("C")
+			return "#00FFFF"
+		if("B")
+			return "#0081DF"
+		if("P")
+			return "#CC00FF"
+		if("Pi")
+			return "#FFCCFF"
+		if("W")
+			return "#EBE6EB"
+	return "RAND"
+
+/obj/item/sword/proc/handle_deflect_visuals(mob/user)
+	var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
+	C.setup(user.loc)
+	C.color = get_hex_color_from_blade(src.bladecolor)
+	var/matrix/m = matrix()
+	m.Turn(rand(0,360))
+	C.transform = m
+	var/matrix/m1 = C.transform
+	m1.Scale(2,2)
+	var/turf/target = get_step(user,user.dir)
+	C.pixel_x = 32*(user.x - target.x)*0.2
+	C.pixel_y = 32*(user.y - target.y)*0.2
+	animate(C,transform=m1,time=8)
 
 /obj/item/sword/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))
@@ -152,8 +183,8 @@
 			S = H.find_type_in_hand(/obj/item/sword, "left")
 		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
 			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
-			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
-			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
+			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 			C.setup(H.loc)
 			var/matrix/m = matrix()
 			m.Turn(rand(0,360))
@@ -193,7 +224,9 @@
 		take_bleeding_damage(user, user, 5)
 		JOB_XP(user, "Clown", 1)
 	src.active = !( src.active )
+	tooltip_rebuild = 1
 	if (src.active)
+		BLOCK_ALL
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 		light_c.update(1)
 		boutput(user, "<span class='notice'>The sword is now active.</span>")
@@ -201,9 +234,10 @@
 		stamina_damage = active_stamina_dmg
 		if(ishuman(user))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordstart.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U),"sound/weapons/female_cswordturnon.ogg" , 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordstart.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+			else playsound(get_turf(U),"sound/weapons/female_cswordturnon.ogg" , 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = active_force
+		src.stamina_cost = active_stamina_cost
 		if (src.bladecolor)
 			if (!(src.bladecolor in src.valid_colors))
 				src.bladecolor = null
@@ -219,9 +253,10 @@
 		stamina_damage = inactive_stamina_dmg
 		if(ishuman(user))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U),"sound/weapons/female_cswordturnoff.ogg", 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+			else playsound(get_turf(U),"sound/weapons/female_cswordturnoff.ogg", 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = inactive_force
+		src.stamina_cost = inactive_stamina_cost
 		src.icon_state = "[state_name]0"
 		src.item_state = "[state_name]0"
 		src.w_class = off_w_class
@@ -254,6 +289,10 @@
 			return
 
 		if (!src.open)
+			if (!src.bladecolor) //rainbow
+				boutput(user, "<span class='alert'>This sword cannot be modified.</span>")
+				return
+
 			user.visible_message("<b>[user]</b> unscrews and opens [src].")
 			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
 			src.open = 1
@@ -277,42 +316,45 @@
 			loaded_glowstick = W
 			user.u_equip(W)
 			W.set_loc(src)
+			var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 			switch(src.loaded_glowstick.color_name)
 				if("red")
-					src.update_simple_light_color(255, 0, 0)
+					light_c.set_color(255, 0, 0)
 					src.bladecolor = "R"
 				if("orange")
-					src.update_simple_light_color(255, 127, 0)
+					light_c.set_color(255, 127, 0)
 					src.bladecolor = "O"
 				if("yellow")
-					src.update_simple_light_color(255, 255, 0)
+					light_c.set_color(255, 255, 0)
 					src.bladecolor = "Y"
 				if("green")
-					src.update_simple_light_color(0, 255, 0)
+					light_c.set_color(0, 255, 0)
 					src.bladecolor = "G"
 				if("cyan")
-					src.update_simple_light_color(0, 200, 255)
+					light_c.set_color(0, 200, 255)
 					src.bladecolor = "C"
 				if("blue")
-					src.update_simple_light_color(0, 0, 255)
+					light_c.set_color(0, 0, 255)
 					src.bladecolor = "B"
 				if("purple")
-					src.update_simple_light_color(153, 0, 255)
+					light_c.set_color(153, 0, 255)
 					src.bladecolor = "P"
 				if("pink")
-					src.update_simple_light_color(255, 121, 255)
+					light_c.set_color(255, 121, 255)
 					src.bladecolor = "Pi"
 				if("white")
-					src.update_simple_light_color(255, 255, 255)
+					light_c.set_color(255, 255, 255)
 					src.bladecolor = "W"
 			src.icon_state = "[state_name]-open-[bladecolor]"
+			var/datum/item_special/swipe/csaber/S = src.special
+			S.swipe_color = get_hex_color_from_blade(src.bladecolor)
 			return
 	else
 		return ..()
 
 /obj/item/sword/attack_hand(mob/user as mob)
 	if (src.open && src.loc == user)
-		if (src.loaded_glowstick)
+		if (src.loaded_glowstick && src.use_glowstick)
 			user.put_in_hand(loaded_glowstick)
 			src.loaded_glowstick = null
 			src.bladecolor = null
@@ -320,10 +362,44 @@
 			return
 	..()
 
+/obj/item/sword/red
+	bladecolor = "R"
+
+/obj/item/sword/orange
+	bladecolor = "O"
+
+/obj/item/sword/yellow
+	bladecolor = "Y"
+
+/obj/item/sword/green
+	bladecolor = "G"
+
+/obj/item/sword/cyan
+	bladecolor = "C"
+
+/obj/item/sword/blue
+	bladecolor = "B"
+
+/obj/item/sword/purple
+	bladecolor = "P"
+
+/obj/item/sword/pink
+	bladecolor = "Pi"
+
+/obj/item/sword/white
+	bladecolor = "W"
+
+/obj/item/sword/rainbow
+	bladecolor = null
+
 /obj/item/sword/vr
 	icon = 'icons/effects/VR.dmi'
 	inhand_image_icon = 'icons/effects/VR_csaber_inhand.dmi'
 	valid_colors = list("R","Y","G","C","B","P","W","Bl")
+	use_glowstick = 0
+
+/obj/item/sword/old
+	icon = 'icons/obj/items/oldsaber.dmi'
 	use_glowstick = 0
 
 /obj/item/sword/discount
@@ -339,7 +415,7 @@
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
 
-	examine()
+	get_desc()
 		..()
 		. += "It is set to [src.active ? "on" : "off"]."
 
@@ -387,10 +463,10 @@
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
-	desc = "Gets the blood to run out juuuuuust right."
+	desc = "Gets the blood to run out juuuuuust right. Looks like this could be nasty when thrown."
 	burn_type = 1
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 5
 	stamina_crit_chance = 50
 	pickup_sfx = "sound/items/blade_pull.ogg"
 
@@ -398,12 +474,13 @@
 		..()
 		BLOCK_KNIFE
 
-/obj/item/dagger/throw_impact(atom/A)
+/obj/item/dagger/throw_impact(atom/A, datum/thrown_thing/thr)
 	if(iscarbon(A))
 		if (ismob(usr))
 			A:lastattacker = usr
 			A:lastattackertime = world.time
-		A.changeStatus("weakened", 10 SECONDS)
+		A.changeStatus("weakened", 6 SECONDS)
+		A:force_laydown_standup()
 		take_bleeding_damage(A, null, 5, DAMAGE_CUT)
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 
@@ -453,7 +530,7 @@
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
 
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			C.do_disorient(stamina_damage = 60, weakened = 0, stunned = 0, disorient = 40, remove_stamina_below_zero = 1)
@@ -469,7 +546,7 @@
 	name = "portable knife"
 	icon_state = "teleport_knife"
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		usr.set_loc(get_turf(src))
 		usr.put_in_hand(src)
@@ -517,7 +594,7 @@
 	desc = "An ancient and questionably effective weapon."
 	burn_type = 0
 	stamina_damage = 45
-	stamina_cost = 25
+	stamina_cost = 20
 	stamina_crit_chance = 60
 	// pickup_sfx = "sound/items/blade_pull.ogg"
 
@@ -542,7 +619,7 @@
 	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
 	stamina_damage = 65
-	stamina_cost = 35
+	stamina_cost = 22
 	stamina_crit_chance = 60
 	// pickup_sfx = "sound/items/blade_pull.ogg"
 	// can_disarm = 1
@@ -611,7 +688,7 @@
 	..()
 	BLOCK_KNIFE
 
-/obj/item/knife/butcher/throw_impact(atom/A)
+/obj/item/knife/butcher/throw_impact(atom/A, datum/thrown_thing/thr)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		if (ismob(usr))
@@ -756,7 +833,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
-	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
+	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items to 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
 	click_delay = 10
@@ -767,8 +844,8 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 4
-	stamina_damage = 10
-	stamina_cost = 15
+	stamina_damage = 30
+	stamina_cost = 20
 	stamina_crit_chance = 2
 
 	proc/set_values()
@@ -778,8 +855,8 @@
 			throwforce = 20
 			throw_speed = 4
 			throw_range = 8
-			stamina_damage = 30
-			stamina_cost = 20
+			stamina_damage = 40
+			stamina_cost = 27
 			stamina_crit_chance = 5
 		else
 			src.click_delay = 10
@@ -787,9 +864,10 @@
 			throwforce = 5
 			throw_speed = 2
 			throw_range = 4
-			stamina_damage = 10
-			stamina_cost = 15
+			stamina_damage = 30
+			stamina_cost = 20
 			stamina_crit_chance = 2
+		tooltip_rebuild = 1
 		return
 
 	attack_self(mob/user as mob)
@@ -1022,6 +1100,7 @@
 	throwforce = 5.0
 	delimb_prob = 1
 	contraband = 4
+	tooltip_flags = REBUILD_USER
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Captain")
@@ -1168,6 +1247,7 @@
 	ih_sheathed_state = "scabbard-cap1"
 	ih_sheath_state = "scabbard-cap0"
 	sword_path = /obj/item/katana/captain
+	tooltip_flags = REBUILD_USER
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.type == /obj/item/katana)
@@ -1344,7 +1424,7 @@ obj/item/whetstone
 	force = 50 // almost as good as a csaber before it builds charge
 	throwforce = 25
 	stamina_damage = 25
-	stamina_cost = 25
+	stamina_cost = 30
 	stamina_crit_chance = 15
 	pickup_sfx = "sound/items/blade_pull.ogg" // could use a cool lasery sfx
 
@@ -1359,8 +1439,7 @@ obj/item/whetstone
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(istype (M) | !isdead(M))
 			var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
-			SPAWN_DBG(0)
-				M.throw_at(throw_target, 2, 2)
+			M.throw_at(throw_target, 2, 2)
 			if(force <= maximum_force)
 				force += 5
 				boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
@@ -1403,8 +1482,8 @@ obj/item/whetstone
 	click_delay = 30
 
 	force = 25 //this number is multiplied by 4 when attacking doors.
-	stamina_damage = 10
-	stamina_cost = 20
+	stamina_damage = 60
+	stamina_cost = 30
 
 	New()
 		..()

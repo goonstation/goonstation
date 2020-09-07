@@ -72,11 +72,11 @@
 				src.icon_state = "stove1"
 				src.pot = W
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 
 		if (!src.on && src.pot)
 
-			if (istype(W, /obj/item/weldingtool) && W:welding)
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				return
 
@@ -111,7 +111,7 @@
 			return
 		if(src.pot)
 			src.icon_state = "stove0"
-			src.pot.loc = src.loc
+			src.pot.set_loc(src.loc)
 			user.put_in_hand_or_drop(src.pot)
 			src.pot = null
 
@@ -282,14 +282,12 @@
 	w_class = 5.0
 	var/image/fluid_icon
 	var/datum/custom_soup/my_soup
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		..()
 		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "souppot-f")
-		var/datum/reagents/R = new/datum/reagents(max_reagents)
-		reagents = R
-		R.my_atom = src
-		return
+		src.create_reagents(max_reagents)
 
 	get_desc(var/dist)
 		if(dist>1)
@@ -376,6 +374,7 @@
 			else if (L.my_soup)
 				if(L.my_soup == src.my_soup)
 					src.total_wclass++
+					tooltip_rebuild = 1
 					L.my_soup = null
 					L.overlays = null
 					user.visible_message("[user] empties [L] into [src].", "You empty [L] into [src]")
@@ -383,6 +382,7 @@
 					boutput(user,"<span class='alert'><b>You can't mix soups! That'd be ridiculous!</span>")
 			else
 				src.total_wclass--
+				tooltip_rebuild = 1
 				L.my_soup = src.my_soup
 				L.add_soup_overlay(fluid_icon.color)
 				if(src.total_wclass <= 0)
@@ -405,6 +405,7 @@
 					if(src.my_soup)
 						usr.visible_message("<span class='alert'>[usr] dumps the soup out of [src] and onto [T]!</span>")
 						src.total_wclass = 0
+						tooltip_rebuild = 1
 						src.my_soup = null
 						src.on_reagent_change()
 						return
@@ -426,6 +427,7 @@
 		..()
 
 	proc/update_wclass_total()
+		tooltip_rebuild = 1
 		src.total_wclass = 0
 		for(var/obj/item/I in src.contents)
 			src.total_wclass += I.w_class

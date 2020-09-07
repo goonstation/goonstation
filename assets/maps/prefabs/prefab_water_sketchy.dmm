@@ -62,7 +62,7 @@
 "bm" = (/obj/item/seed/cannabis,/turf/simulated/floor/scorched2,/area/sea_sketch)
 "bn" = (/obj/item/reagent_containers/glass/wateringcan,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
 "bo" = (/obj/item/reagent_containers/patch/LSD,/turf/simulated/floor/plating/damaged1,/area/sea_sketch)
-"bp" = (/obj/decal/cleanable/gangtag{icon_state = "gangtag17"; pixel_x = 28},/obj/landmark/artifact/cannabis_seed,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
+"bp" = (/obj/decal/cleanable/gangtag{icon_state = "gangtag17"; pixel_x = 28},/obj/item/seed/cannabis,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
 "bq" = (/obj/reagent_dispensers/watertank,/turf/simulated/floor/plating,/area/sea_sketch)
 "br" = (/obj/machinery/chem_dispenser/alcohol,/turf/simulated/floor/grime,/area/sea_sketch)
 "bs" = (/obj/item/storage/box/glassbox,/turf/simulated/floor/grime,/area/sea_sketch)

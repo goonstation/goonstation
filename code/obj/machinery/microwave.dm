@@ -81,6 +81,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.broken = 0 // Fix it!
 		else
 			boutput(user, "It's broken!")
+			return
 	else if(src.dirty) // The microwave is all dirty so can't be used!
 		if(istype(O, /obj/item/spraybottle)) // If they're trying to clean it then let them
 			src.visible_message("<span class='notice'>[user] starts to clean the microwave.</span>")
@@ -89,7 +90,10 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.dirty = 0 // It's cleaned!
 			src.icon_state = "mw"
 		else //Otherwise bad luck!!
+			boutput(user, "It's dirty!")
 			return
+	else if (O.cant_drop) //For borg held items, if the microwave is clean and functioning
+		user.show_text("You can't put that in [src] when it's attached to you!", "red")
 	else if(istype(O,/obj/item/dice))
 		var/obj/item/dice/die = O
 		if(die.dicePals.len)
@@ -233,9 +237,7 @@ Please clean it before use!</TT><BR>
 					src.humanmeat_name = ""
 					src.humanmeat_job = ""
 					sleep(6 SECONDS)
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(2, 1, src)
-					s.start()
+					elecflash(src,power=2)
 					icon_state = "mwb"
 					src.visible_message("<span class='alert'>The microwave breaks!</span>")
 					src.broken = 2
@@ -322,9 +324,7 @@ Please clean it before use!</TT><BR>
 						sleep(6 SECONDS) // Wait a while
 						if(isnull(src)) // if object even still exists, who knows what that damn chef has done to that microwave
 							return
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(2, 1, src)
-						s.start()
+						elecflash(src,power=2)
 						icon_state = "mwb" // Make it look all busted up and shit
 						src.visible_message("<span class='alert'>The microwave breaks!</span>") //Let them know they're stupid
 						src.broken = 2 // Make it broken so it can't be used util fixed

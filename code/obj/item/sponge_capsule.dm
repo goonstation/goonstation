@@ -7,8 +7,8 @@
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	throw_speed = 4
 	throw_range = 7
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	rand_pos = 1
 	color = "#FF0000"
@@ -87,8 +87,8 @@
 	w_class = 1
 	throwforce = 2
 	flags = TABLEPASS | FPRINT | SUPPRESSATTACK
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	rand_pos = 1
 	var/caps_type = /obj/item/toy/sponge_capsule
@@ -128,6 +128,7 @@
 			user.put_in_hand_or_drop(S)
 			if(caps_amt != -1)
 				caps_amt--
+				tooltip_rebuild = 1
 		update_icon()
 	else
 		return ..()

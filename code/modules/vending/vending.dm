@@ -9,6 +9,7 @@
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
 	New(productpath, amount=0, cost=0, hidden=0)
+		..()
 		if (istext(productpath))
 			productpath = text2path(productpath)
 		if (!ispath(productpath))
@@ -112,9 +113,9 @@
 
 	New()
 		src.create_products()
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("vend", "vendinput")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", "vendinput")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", "vendname")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -127,6 +128,12 @@
 		if( world.time < lastvend ) return//aaaaaaa
 		lastvend = world.time + 2
 		throw_item()
+		return
+	proc/vendname(var/datum/mechanicsMessage/inp)
+		if( world.time < lastvend || !inp) return//aaaaaaa
+		if(!length(inp.signal)) return//aaaaaaa
+		lastvend = world.time + 5 //Make it slower to vend by name?
+		throw_item(inp.signal)
 		return
 
 	// just making this proc so we don't have to override New() for every vending machine, which seems to lead to bad things
@@ -193,6 +200,790 @@
 		else
 			return src.loc
 
+#define WIRE_EXTEND 1
+#define WIRE_SCANID 2
+#define WIRE_SHOCK 3
+#define WIRE_SHOOTINV 4
+
+/obj/machinery/vending/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			qdel(src)
+			return
+		if(2.0)
+			if (prob(50))
+				qdel(src)
+				return
+		if(3.0)
+			if (prob(25))
+				SPAWN_DBG(0)
+					src.malfunction()
+					return
+				return
+			else if (prob(25))
+				SPAWN_DBG(0)
+					src.fall()
+					return
+		else
+	return
+
+/obj/machinery/vending/blob_act(var/power)
+	if (prob(power * 1.25))
+		SPAWN_DBG(0)
+			if (prob(power / 3) && can_fall == 2)
+				for (var/i = 0, i < rand(4,7), i++)
+					src.malfunction()
+				qdel(src)
+			if (prob(50) || can_fall == 2)
+				src.malfunction()
+			else
+				src.fall()
+		return
+
+	return
+
+/obj/machinery/vending/emag_act(var/mob/user, var/obj/item/card/emag/E)
+	if (!src.emagged)
+		src.emagged = 1
+		if(user)
+			boutput(user, "You short out the product lock on [src]")
+		return 1
+	return 0
+
+/obj/machinery/vending/demag(var/mob/user)
+	if (!src.emagged)
+		return 0
+	if (user)
+		user.show_text("You repair the product lock on [src].")
+	src.emagged = 0
+	return 1
+
+/obj/machinery/vending/proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
+	if (!card || !user || !src.acceptcard)
+		return
+	boutput(user, "<span class='notice'>You swipe [card].</span>")
+	var/datum/data/record/account = null
+	account = FindBankAccountByName(card.registered)
+	if (account)
+		var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
+		if (enterpin == card.pin)
+			boutput(user, "<span class='notice'>Card authorized.</span>")
+			src.scan = card
+		else
+			boutput(user, "<span class='alert'>Pin number incorrect.</span>")
+			src.scan = null
+	else
+		boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
+		src.scan = null
+
+/obj/machinery/vending/proc/generate_HTML(var/update_vending = 0, var/update_wire = 0)
+	src.HTML = ""
+
+	if (!src.wire_HTML || update_wire)
+		src.generate_wire_HTML()
+	if (src.panel_open || isAI(usr))
+		src.HTML += src.wire_HTML
+
+	if (!src.vending_HTML || update_vending)
+		src.generate_vending_HTML()
+	src.HTML += src.vending_HTML
+
+	src.updateUsrDialog()
+
+/obj/machinery/vending/proc/generate_vending_HTML()
+	var/list/html_parts = list()
+	html_parts += "<b>Welcome!</b><br>"
+
+	if (src.paying_for && (!istype(src.paying_for, /datum/data/vending_product) || !src.pay))
+		src.paying_for = null
+
+	if (src.pay && src.acceptcard)
+		if (src.paying_for && !src.scan)
+			html_parts += "<B>You have selected the following item:</b><br>"
+			html_parts += "&emsp;<b>[src.paying_for.product_name]</b><br>"
+			html_parts += "Please swipe your card to authorize payment.<br>"
+			html_parts += "<B>Current ID:</B> None<BR>"
+		else if (src.scan)
+			if (src.paying_for)
+				html_parts += "<B>You have selected the following item for purchase:</b><br>"
+				html_parts += "&emsp;[src.paying_for.product_name]<br>"
+				html_parts += "<B>Please swipe your card to authorize payment.</b><br>"
+			var/datum/data/record/account = null
+			account = FindBankAccountByName(src.scan.registered)
+			html_parts += "<B>Current ID:</B> <a href='byond://?src=\ref[src];logout=1'><u>([src.scan])</u></A><BR>"
+			html_parts += "<B>Credits on Account: [account.fields["current_money"]] Credits</B> <BR>"
+		else
+			html_parts += "<B>Current ID:</B> None<BR>"
+
+	if (src.product_list.len == 0)
+		html_parts += "<font color = 'red'>No product loaded!</font>"
+
+	else if (src.paying_for)
+		html_parts += "<a href='byond://?src=\ref[src];vend=\ref[src.paying_for]'><u><b>Continue</b></u></a>"
+		html_parts += " | <a href='byond://?src=\ref[src];cancel_payfor=1;logout=1'><u><b>Cancel</b></u></a>"
+
+	else
+		html_parts += "<table style='width: 100%; border: none; border-collapse: collapse;'><thead><tr><th>Product</th><th>Amt.</th><th>Price</th></tr></thead>"
+		for (var/datum/data/vending_product/R in src.product_list)
+			if (R.product_hidden && !src.extended_inventory)
+				continue
+			if (R.product_amount > 0)
+				html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
+			else
+				html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
+
+		html_parts += "</table>";
+
+		if (src.pay)
+			html_parts += "<BR><B>Available Credits:</B> $[src.credit] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
+			if (!src.acceptcard)
+				html_parts += "<BR>This machine only takes credit bills."
+
+	src.vending_HTML = jointext(html_parts, "")
+
+
+/obj/machinery/vending/proc/generate_wire_HTML()
+	src.vendwires = list("Violet" = 1,\
+		"Orange" = 2,\
+		"Goldenrod" = 3,\
+		"Green" = 4)
+	var/list/html_parts = list()
+	html_parts = "<TT><B>The Access Panel is [src.panel_open ? "open" : "closed"]:</B><br>"
+	html_parts += "<table border=\"1\" style=\"width:100%\"><tbody><tr><td><small>"
+	for (var/wiredesc in vendwires)
+		var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
+		html_parts += "[wiredesc] wire: "
+		if (!is_uncut)
+			html_parts += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
+		else
+			html_parts += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
+			html_parts += "<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "
+		html_parts += "<br>"
+
+	html_parts += "<br>"
+	html_parts += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
+	html_parts += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
+	html_parts += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
+	html_parts += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
+	html_parts += "The AI control indicator is [src.ai_control_enabled ? "lit" : "unlit"].<BR>"
+	html_parts += "</small></td></tr></tbody></table></TT><br>"
+	src.wire_HTML = jointext(html_parts, "")
+
+/obj/machinery/vending/attackby(obj/item/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/spacecash))
+		if (src.pay)
+			src.credit += W.amount
+			W.amount = 0
+			boutput(user, "<span class='notice'>You insert [W].</span>")
+			user.u_equip(W)
+			W.dropped()
+			pool( W )
+			src.generate_HTML(1)
+			return
+		else
+			boutput(user, "<span class='alert'>This machine does not accept cash.</span>")
+			return
+	if (istype(W, /obj/item/device/pda2) && W:ID_card)
+		W = W:ID_card
+	if (istype(W, /obj/item/card/id))
+		if (src.acceptcard)
+			src.scan_card(W, user)
+			src.generate_HTML(1)
+			return
+			/*var/amount = input(usr, "How much money would you like to deposit?", "Deposit", 0) as null|num
+			if(amount <= 0)
+				return
+			if(amount > W:money)
+				boutput(user, "<span class='alert'>Insufficent funds. [W] only has [W:money] credits.</span>")
+				return
+			src.credit += amount
+			W:money -= amount
+			boutput(user, "<span class='notice'>You deposit [amount] credits. [W] now has [W:money] credits.</span>")
+			src.updateUsrDialog()
+			return()*/
+		else
+			boutput(user, "<span class='alert'>This machine does not accept ID cards.</span>")
+			return
+	else if (isscrewingtool(W))
+		src.panel_open = !src.panel_open
+		boutput(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
+		src.UpdateOverlays(src.panel_open ? src.panel_image : null, "panel")
+		src.generate_HTML(0, 1)
+		return
+	else if (istype(W, /obj/item/device/t_scanner) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))
+		if (src.seconds_electrified != 0)
+			boutput(user, "<span class='alert'>[bicon(W)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
+		else
+			if (status & NOPOWER)
+				boutput(user, "<span class='alert'>[bicon(W)] No electrical response received from access panel.</span>")
+			else
+				boutput(user, "<span class='notice'>[bicon(W)] Regular electrical response received from access panel.</span>")
+		return
+	else if (ispulsingtool(W))
+		return src.attack_hand(user)
+
+	else if (ispryingtool(W))
+		if (src.status & BROKEN) //if the vendor is broken
+			//action bar is defined at the end of these procs
+			actions.start(new /datum/action/bar/icon/right_vendor(src), user)
+			return
+
+	if (istype(W, /obj/item/vending/restock_cartridge))
+		//check if cartridge type matches the vending machine
+		var/obj/item/vending/restock_cartridge/Q = W
+		if (istype(src, text2path("/obj/machinery/vending/[Q.vendingType]")))
+
+		// if (istype(src, text2path("/obj/machinery/vending/[W:vendingType]")))
+			//remove all producs, reinitialize array and then create the products like new
+			src.product_list = new()
+			src.create_products()
+			src.generate_HTML(1)
+
+			boutput(user, "<span class='notice'>You restocked the items in [src].</span>")
+			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+			user.u_equip(W)
+			qdel(W)
+			return
+		else
+			boutput(user, "<span class='alert'>[W] is not compatible with [src].</span>")
+	else
+		user.lastattacked = src
+		hit_twitch(src)
+		attack_particle(user,src)
+		playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
+		..()
+		if (W && W.force >= 5 && prob(4 + (W.force - 5)))
+			src.fall(user)
+
+/obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
+	if (iscarbon(M) && M.throwing && prob(25))
+		src.fall(M)
+		return
+
+	..()
+
+/obj/machinery/vending/attack_ai(mob/user as mob)
+	return attack_hand(user)
+
+/obj/machinery/vending/attack_hand(mob/user as mob)
+	if (status & (BROKEN|NOPOWER))
+		return
+	src.add_dialog(user)
+
+	if (src.seconds_electrified != 0)
+		if (src.shock(user, 100))
+			return
+
+	if (!src.HTML)
+		src.generate_HTML()
+	else
+		if (src.HTML && !src.vending_HTML)
+			src.generate_HTML(1)
+		if (src.HTML && (src.panel_open || isAI(user)) && !src.wire_HTML)
+			src.generate_HTML(0, 1)
+
+	if (window_size)
+		user.Browse(src.HTML, "window=vending;size=[window_size]")
+	else
+		user.Browse(src.HTML, "window=vending")
+	onclose(user, "vending")
+
+	interact_particle(user,src)
+	return
+
+/obj/machinery/vending/Topic(href, href_list)
+	if (status & (BROKEN|NOPOWER))
+		return
+	if (usr.stat || usr.restrained())
+		return
+
+	//ehh just let the AI operate vending machines. why not!!
+	if (isAI(usr) && !src.ai_control_enabled)
+		boutput(usr, "<span class='alert'>AI control for this vending machine has been disconnected!</span>")
+		return
+
+	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+		src.add_dialog(usr)
+		src.add_fingerprint(usr)
+		if ((href_list["vend"]) && (src.vend_ready))
+
+			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
+				boutput(usr, "<span class='alert'>Access denied.</span>") //Unless emagged of course
+				flick(src.icon_deny,src)
+				return
+
+			src.vend_ready = 0 //One thing at a time!!
+
+			var/datum/data/vending_product/R = locate(href_list["vend"]) in src.product_list
+
+			if (!R || !istype(R))
+				src.vend_ready = 1
+				return
+			else if(R.product_hidden && !src.extended_inventory)
+				src.vend_ready = 1
+				return
+			var/product_path = R.product_path
+
+			if (istext(product_path))
+				product_path = text2path(product_path)
+
+			if (!product_path)
+				src.vend_ready = 1
+				return
+
+			if (R.product_amount <= 0)
+				src.vend_ready = 1
+				return
+
+			//Wire: Fix for href exploit allowing for vending of arbitrary items
+			if (!(R in src.product_list))
+				src.vend_ready = 1
+
+				trigger_anti_cheat(usr, "tried to href exploit [src] to spawn an invalid item.")
+				return
+
+			var/datum/data/record/account = null
+			if (src.pay)
+				if (src.acceptcard && src.scan)
+					account = FindBankAccountByName(src.scan.registered)
+					if (!account)
+						boutput(usr, "<span class='alert'>No bank account associated with ID found.</span>")
+						flick(src.icon_deny,src)
+						src.vend_ready = 1
+						src.paying_for = R
+						src.generate_HTML(1)
+						return
+					if (account.fields["current_money"] < R.product_cost)
+						boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
+						flick(src.icon_deny,src)
+						src.vend_ready = 1
+						src.paying_for = R
+						src.generate_HTML(1)
+						return
+				else
+					if (src.credit < R.product_cost)
+						boutput(usr, "<span class='alert'>Insufficient Credit.</span>")
+						flick(src.icon_deny,src)
+						src.vend_ready = 1
+						src.paying_for = R
+						src.generate_HTML(1)
+						return
+
+			if (((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
+				SPAWN_DBG(0)
+					src.speak(src.vend_reply)
+					src.last_reply = world.time
+
+			use_power(10)
+			if (src.icon_vend) //Show the vending animation if needed
+				flick(src.icon_vend,src)
+
+			src.prevend_effect()
+			if(!src.freestuff) R.product_amount--
+			SPAWN_DBG(src.vend_delay)
+				src.vend_ready = 1 // doin this at the top here just in case something goes fucky and the proc crashes
+
+				if (ispath(product_path))
+					var/atom/movable/vended = new product_path(src.get_output_location()) // changed from obj, because it could be a mob, THANKS VALUCHIMP
+					vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
+					if(isitem(vended))
+						usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
+					// else, just let it spawn where it is
+				else if (isicon(R.product_path))
+					var/icon/welp = icon(R.product_path)
+					if (welp.Width() > 32 || welp.Height() > 32)
+						welp.Scale(32, 32)
+						R.product_path = welp // if scaling is required reset the product_path so it only happens the first time
+					var/obj/dummy = new /obj/item(src.get_output_location())
+					dummy.name = R.product_name
+					dummy.desc = "?!"
+					dummy.icon = welp
+				else if (isfile(R.product_path))
+					var/S = sound(R.product_path)
+					if (S)
+						playsound(src.loc, S, 50, 0)
+
+				if (src.pay)
+					if (src.acceptcard && account)
+						account.fields["current_money"] -= R.product_cost
+					else
+						src.credit -= R.product_cost
+					wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+
+				src.postvend_effect()
+
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
+
+			if (src.paying_for)
+				src.paying_for = null
+				src.scan = null
+			src.generate_HTML(1)
+
+		if (href_list["logout"])
+			src.scan = null
+			src.generate_HTML(1)
+
+		if (href_list["cancel_payfor"])
+			src.paying_for = null
+			src.generate_HTML(1)
+
+		if (href_list["return_credits"])
+			SPAWN_DBG(src.vend_delay)
+				if (src.credit > 0)
+					var/obj/item/spacecash/returned = unpool(/obj/item/spacecash)
+					returned.setup(src.get_output_location(), src.credit)
+
+					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
+					src.credit = 0
+					boutput(usr, "<span class='notice'>You receive [returned].</span>")
+					src.generate_HTML(1)
+
+		if ((href_list["cutwire"]) && (src.panel_open))
+			var/twire = text2num(href_list["cutwire"])
+			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
+				boutput(usr, "You need a snipping tool!")
+				return
+			else if (src.isWireColorCut(twire))
+				src.mend(twire)
+			else
+				src.cut(twire)
+
+		if ((href_list["pulsewire"]) && (src.panel_open || isAI(usr)))
+			var/twire = text2num(href_list["pulsewire"])
+			if (! (usr.find_tool_in_hand(TOOL_PULSING) || isAI(usr)) )
+				boutput(usr, "You need a multitool or similar!")
+				return
+			else if (src.isWireColorCut(twire))
+				boutput(usr, "You can't pulse a cut wire.")
+				return
+			else
+				src.pulse(twire)
+	else
+		usr.Browse(null, "window=vending")
+		return
+	return
+
+/obj/machinery/vending/process()
+	if (status & BROKEN)
+		return
+	..()
+	if (status & NOPOWER)
+		return
+
+	if (!src.active)
+		return
+
+	if (src.seconds_electrified > 0)
+		src.seconds_electrified--
+
+	//Pitch to the people!  Really sell it!
+	if (prob(src.slogan_chance) && ((src.last_slogan + src.slogan_delay) <= world.time) && (src.slogan_list.len > 0))
+		var/slogan = pick(src.slogan_list)
+		src.speak(slogan)
+		src.last_slogan = world.time
+
+	if ((prob(shoot_inventory_chance)) && (src.shoot_inventory))
+		src.throw_item()
+
+	return
+
+/obj/machinery/vending/proc/speak(var/message)
+	if (status & NOPOWER)
+		return
+
+	if (!message)
+		return
+
+	for (var/mob/O in hearers(src, null))
+		if (src.glitchy_slogans)
+			O.show_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2)
+		else
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
+
+	return
+
+/obj/machinery/vending/proc/prevend_effect()
+	playsound(src.loc, 'sound/machines/driveclick.ogg', 30, 1, 0.1)
+	return
+
+/obj/machinery/vending/proc/postvend_effect()
+	playsound(src.loc, 'sound/machines/ping.ogg', 20, 1, 0.1)
+	return
+
+/obj/machinery/vending/power_change()
+	if (can_fall == 2)
+		icon_state = icon_fallen ? icon_fallen : "[initial(icon_state)]-fallen"
+		light.disable()
+		return
+
+	if (status & BROKEN)
+		icon_state = icon_broken ? icon_broken : "[initial(icon_state)]-broken"
+		light.disable()
+	else
+		if ( powered() )
+			icon_state = initial(icon_state)
+			status &= ~NOPOWER
+			light.enable()
+		else
+			SPAWN_DBG(rand(0, 15))
+				src.icon_state = icon_off ? icon_off : "[initial(icon_state)]-off"
+				status |= NOPOWER
+				light.disable()
+
+/obj/machinery/vending/proc/fall(mob/living/carbon/victim)
+	if (can_fall != 1)
+		return
+	can_fall = 2
+	status |= BROKEN
+	var/turf/vicTurf = get_turf(victim)
+	src.icon_state = "[initial(icon_state)]-fallen"
+//	SPAWN_DBG(0)
+//		src.icon_state = "[initial(icon_state)]-fall"
+//		SPAWN_DBG(2 SECONDS)
+//			src.icon_state = "[initial(icon_state)]-fallen"
+	if (istype(victim) && vicTurf && (get_dist(vicTurf, src) <= 1))
+		victim.changeStatus("weakened", 300)
+		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
+		victim.lying = 1
+		victim.set_loc(vicTurf)
+		if (src.layer < victim.layer)
+			src.layer = victim.layer+1
+		src.set_loc(vicTurf)
+		random_brute_damage(victim, rand(30,50),1)
+	else
+		src.visible_message("<b><font color=red>[src.name] tips over!</font></b>")
+
+	src.power_change()
+	src.anchored = 0
+	return
+
+//Oh no we're malfunctioning!  Dump out some product and break.
+/obj/machinery/vending/proc/malfunction()
+	for(var/datum/data/vending_product/R in src.product_list)
+		if (R.product_amount <= 0) //Try to use a record that actually has something to dump.
+			continue
+
+		var/dump_path = null
+		if (ispath(R.product_path))
+			dump_path = R.product_path
+		else if (istext(R.product_path))
+			dump_path = text2path(R.product_path)
+			if (isnull(dump_path))
+				continue
+		else
+			continue
+
+		while(R.product_amount>0)
+			new dump_path(src.loc)
+			R.product_amount--
+		break
+
+	status |= BROKEN
+	power_change()
+	return
+
+//Somebody cut an important wire and now we're following a new definition of "pitch."
+/obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
+	var/thrown = 0
+	var/list/datum/data/vending_product/valid_products = list()
+	var/mob/living/target = locate() in view(7,src)
+	if(!target)
+		return 0
+
+	if(length(item_name_to_throw))
+		for(var/datum/data/vending_product/product in src.product_list)
+			if(item_name_to_throw == product.product_name_cache[product.product_path])
+				if(product.product_amount > 0)
+					thrown = throw_item_act(product, target)
+				break
+	else
+		for(var/datum/data/vending_product/R in src.product_list)
+			if (R.product_amount <= 0) //Try to use a record that actually has something to dump.
+				continue
+			valid_products.Add(R)
+		if (valid_products.len)
+			thrown = throw_item_act(pick(valid_products), target)
+	return thrown
+
+/obj/machinery/vending/proc/throw_item_act(var/datum/data/vending_product/R, var/mob/living/target)
+	var/obj/throw_item = null
+	//Big if/else trying to create the object properly
+	if (ispath(R.product_path))
+		var/dump_path = R.product_path
+		throw_item = new dump_path(src.loc)
+	else if (istext(R.product_path))
+		var/dump_path = text2path(R.product_path)
+		if (dump_path)
+			throw_item = new dump_path(src.loc)
+	else if (isicon(R.product_path))
+		var/icon/welp = icon(R.product_path)
+		if (welp.Width() > 32 || welp.Height() > 32)
+			welp.Scale(32, 32)
+			R.product_path = welp // if scaling is required reset the product_path so it only happens the first time
+		var/obj/dummy = new /obj/item(src.get_output_location())
+		dummy.name = R.product_name
+		dummy.desc = "?!"
+		dummy.icon = welp
+		throw_item = dummy
+	else if (isfile(R.product_path))
+		var/sound/S = sound(R.product_path)
+		if (S)
+			R.product_amount--
+			SPAWN_DBG(0)
+				playsound(src.loc, S, 50, 0)
+				src.visible_message("<span class='alert'><b>[src] launches [R.product_name] at [target.name]!</b></span>")
+				src.generate_HTML(1)
+			return 1
+
+	if (throw_item)
+		R.product_amount--
+		use_power(10)
+		if (src.icon_vend) //Show the vending animation if needed
+			flick(src.icon_vend,src)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
+		src.generate_HTML(1)
+		throw_item.throw_at(target, 16, 3)
+		src.visible_message("<span class='alert'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
+		postvend_effect()
+		return 1
+	return 0
+
+
+/obj/machinery/vending/proc/isWireColorCut(var/wireColor)
+	var/wireFlag = APCWireColorToFlag[wireColor]
+	return ((src.wires & wireFlag) == 0)
+
+/obj/machinery/vending/proc/isWireCut(var/wireIndex)
+	var/wireFlag = APCIndexToFlag[wireIndex]
+	return ((src.wires & wireFlag) == 0)
+
+/obj/machinery/vending/proc/cut(var/wireColor)
+	var/wireFlag = APCWireColorToFlag[wireColor]
+	var/wireIndex = APCWireColorToIndex[wireColor]
+	src.wires &= ~wireFlag
+	switch(wireIndex)
+		if(WIRE_EXTEND)
+			src.extended_inventory = 0
+			src.generate_HTML(1)
+		if(WIRE_SHOCK)
+			src.seconds_electrified = -1
+		if (WIRE_SHOOTINV)
+			if(!src.shoot_inventory)
+				src.shoot_inventory = 1
+		if (WIRE_SCANID) //yeah the scanID wire also controls the AI control FUCK YOU
+			if(src.ai_control_enabled)
+				src.ai_control_enabled = 0
+	src.generate_HTML(0, 1)
+
+/obj/machinery/vending/proc/mend(var/wireColor)
+	var/wireFlag = APCWireColorToFlag[wireColor]
+	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
+	src.wires |= wireFlag
+	switch(wireIndex)
+		if(WIRE_SCANID)
+			src.ai_control_enabled = 1
+		if(WIRE_SHOCK)
+			src.seconds_electrified = 0
+		if (WIRE_SHOOTINV)
+			src.shoot_inventory = 0
+	src.generate_HTML(0, 1)
+
+/obj/machinery/vending/proc/pulse(var/wireColor)
+	var/wireIndex = APCWireColorToIndex[wireColor]
+	switch (wireIndex)
+		if (WIRE_EXTEND)
+			src.extended_inventory = !src.extended_inventory
+			src.generate_HTML(1)
+		if (WIRE_SCANID)
+			src.ai_control_enabled = !src.ai_control_enabled
+		if (WIRE_SHOCK)
+			src.seconds_electrified = 30
+		if (WIRE_SHOOTINV)
+			src.shoot_inventory = !src.shoot_inventory
+
+	src.generate_HTML(0, 1)
+
+//"Borrowed" airlock shocking code.
+/obj/machinery/vending/proc/shock(mob/user, prb)
+	if (!prob(prb))
+		return 0
+
+	if (status & (BROKEN|NOPOWER))		// unpowered, no shock
+		return 0
+
+	if (src.electrocute(user, 1))
+		return 1
+	else
+		return 0
+
+/obj/machinery/vending/electrocute(mob/user, netnum)
+	if (!netnum)		// unconnected cable is unpowered
+		return 0
+
+	var/datum/powernet/PN			// find the powernet
+	if (powernets && powernets.len >= netnum)
+		PN = powernets[netnum]
+
+	elecflash(src)
+
+	if (!PN) //Wire note: Fix for Cannot read null.avail
+		return 0
+
+	if (user.shock(src, PN.avail, user.hand == 1 ? "l_arm" : "r_arm", 1, 0))
+		for (var/mob/M in AIviewers(src))
+			if (M == user)	continue
+			M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
+		return 1
+	return 0
+
+/datum/action/bar/icon/right_vendor //This is used when you try to remove someone elses handcuffs.
+	duration = 5 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "right_vendor"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "crowbar"
+	var/obj/machinery/vending/vendor = null
+
+	New(vending_machine, var/Owner)
+		src.vendor = vending_machine
+		src.owner = Owner
+		..()
+
+	onUpdate()
+		..()
+		if(!IN_RANGE(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if(!(src.vendor.status & BROKEN)) //it somehow got fixed while making it go upright??
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(!IN_RANGE(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		for(var/mob/M in AIviewers(src.owner))
+			M.show_message("<span class='notice'><B>[src.owner] starts trying to pry \the [src.vendor] back up...</B></span>", 1)
+
+	onEnd()
+		..()
+		if(src.owner && vendor && (src.vendor.status & BROKEN))
+			src.vendor.can_fall = 1
+			src.vendor.layer = initial(src.vendor.layer)
+			src.vendor.anchored = 1
+			src.vendor.status &= ~BROKEN
+			src.vendor.power_change()
+
+			for(var/mob/M in AIviewers(src.owner))
+				M.show_message("<span class='notice'><B>[src.owner] manages to stand \the [src.vendor] back upright!</B></span>", 1)
+
+#undef WIRE_EXTEND
+#undef WIRE_SCANID
+#undef WIRE_SHOCK
+#undef WIRE_SHOOTINV
 
 /obj/machinery/vending/coffee
 	name = "coffee machine"
@@ -240,9 +1031,10 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/noodlecup, 10, cost=8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/burrito, 10, cost=10)
 		product_list += new/datum/data/vending_product(/obj/item/popsicle, 5, cost=5)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/fork/plastic, 10, cost=1)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/spoon/plastic, 10, cost=1)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/plastic, 10, cost=1)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/plasticpackage, 10, cost=1)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/fork/plastic, 10, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/spoon/plastic, 10, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/plastic, 10, cost=10)
 		product_list += new/datum/data/vending_product(/obj/item/tvdinner, 10, cost=20)
 
 
@@ -292,6 +1084,13 @@
 	lg = 0.88
 	lb = 0.88
 
+#if ASS_JAM
+	New()
+		. = ..()
+		if(src.type == /obj/machinery/vending/medical)
+			ADD_MORTY(7, 8, 12, 12)
+#endif
+
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 12)
@@ -307,9 +1106,11 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antirad, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/saline, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/atropine, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/synaptizine, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/eyedrops, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/antiviral, 6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/insulin, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/synaptizine, 6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/calomel, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/heparin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/proconvertin, 6)
@@ -366,7 +1167,6 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/antihistamine, 2, cost=70)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 2, cost=70)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/salicylic_acid, 10, cost=75)
-
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, rand(0, 2), hidden=1, cost=25)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/mini/synthflesh, rand(0, 5), hidden=1, cost=125)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape/medical, 1, hidden=1, cost=100)
@@ -476,7 +1276,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/knocker,20)
 
 #else
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12, 1, hidden=1) // this may be a bad idea, but it's only one box
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
 #endif
 /obj/machinery/vending/cola
 	name = "soda machine"
@@ -578,6 +1378,7 @@
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/mechanicbook, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/association, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/math, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/button, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/buttonPanel, 30)
@@ -586,6 +1387,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/pausecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/dispatchcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder/recharging, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/filecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/flushcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/accelerator, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder, 30)
@@ -768,8 +1570,10 @@
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/fork, 10)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife, 10)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/spoon, 10)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/chopsticks_package, 5)
 		product_list += new/datum/data/vending_product(/obj/item/plate/tray, 3)
 		product_list += new/datum/data/vending_product(/obj/surgery_tray/kitchen_island, 2)
+		product_list += new/datum/data/vending_product(/obj/item/storage/lunchbox, 12)
 		product_list += new/datum/data/vending_product(/obj/item/ladle, 1)
 		product_list += new/datum/data/vending_product(/obj/item/soup_pot, 1)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/rollingpin, 2)
@@ -835,25 +1639,7 @@
 					src.vending_HTML += "<BR>This machine only takes credit bills."
 
 			src.vending_HTML += "</TT>"
-/*
-	attack_hand(mob/user as mob)
-		if (status & (NOPOWER|BROKEN))
-			return
-		var/dat
-		if(pizcooking)
-			dat += "<TT><B>Cooking your pizza, please wait!</B></TT><BR>"
-		else
-			dat += "<TT><B>PizzaVend 0.5b</B></TT><BR>"
-			if(emagged)
-				dat += "<BR><B>Available Credits:</B> CREDIT CALCULATION ERROR<BR>"
-			else
-				dat += "<BR><B>Available Credits:</B> $[src.credit]<BR>"
-			dat += "Topping - <A href='?src=\ref[src];picktopping=1'>[piztopping]</A><BR>"
-			dat += "<A href='?src=\ref[src];cook=1'>Cook!</A><BR>"
-		user.Browse("<HEAD><TITLE>Pizza Vendor</TITLE></HEAD>[dat]", "window=pizzavend")
-		onclose(user, "pizzavend")
-		return
-*/
+
 	Topic(href, href_list)
 		if(..())
 			return
@@ -1266,14 +2052,20 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/card_manual, 10, cost=1)
+		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=2)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/grifening, 10, cost=15)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/trading, 5, cost=60)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=20)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/suit, 10, cost=15)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/tarot, 5, cost=25)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/hanafuda, 5, cost=298)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/storage, 5, cost=10)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicebox, 5, cost=150)
 		product_list += new/datum/data/vending_product(/obj/item/storage/dicepouch, 5, cost=100)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicecup, 5, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/goboard, 1, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/gobowl/b, 1, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=50)
 
 /obj/machinery/vending/clothing
 	name = "FancyPantsCo Sew-O-Matic"
@@ -1369,731 +2161,3 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cleaner, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
-
-//obj/machinery/vending
-#define WIRE_EXTEND 1
-#define WIRE_SCANID 2
-#define WIRE_SHOCK 3
-#define WIRE_SHOOTINV 4
-
-/obj/machinery/vending/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(25))
-				SPAWN_DBG(0)
-					src.malfunction()
-					return
-				return
-			else if (prob(25))
-				SPAWN_DBG(0)
-					src.fall()
-					return
-		else
-	return
-
-/obj/machinery/vending/blob_act(var/power)
-	if (prob(power * 1.25))
-		SPAWN_DBG(0)
-			if (prob(power / 3) && can_fall == 2)
-				for (var/i = 0, i < rand(4,7), i++)
-					src.malfunction()
-				qdel(src)
-			if (prob(50) || can_fall == 2)
-				src.malfunction()
-			else
-				src.fall()
-		return
-
-	return
-
-/obj/machinery/vending/emag_act(var/mob/user, var/obj/item/card/emag/E)
-	if (!src.emagged)
-		src.emagged = 1
-		if(user)
-			boutput(user, "You short out the product lock on [src]")
-		return 1
-	return 0
-
-/obj/machinery/vending/demag(var/mob/user)
-	if (!src.emagged)
-		return 0
-	if (user)
-		user.show_text("You repair the product lock on [src].")
-	src.emagged = 0
-	return 1
-
-/obj/machinery/vending/proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
-	if (!card || !user || !src.acceptcard)
-		return
-	boutput(user, "<span class='notice'>You swipe [card].</span>")
-	var/datum/data/record/account = null
-	account = FindBankAccountByName(card.registered)
-	if (account)
-		var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
-		if (enterpin == card.pin)
-			boutput(user, "<span class='notice'>Card authorized.</span>")
-			src.scan = card
-		else
-			boutput(user, "<span class='alert'>Pin number incorrect.</span>")
-			src.scan = null
-	else
-		boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
-		src.scan = null
-
-/obj/machinery/vending/proc/generate_HTML(var/update_vending = 0, var/update_wire = 0)
-	src.HTML = ""
-
-	if (!src.wire_HTML || update_wire)
-		src.generate_wire_HTML()
-	if (src.panel_open || isAI(usr))
-		src.HTML += src.wire_HTML
-
-	if (!src.vending_HTML || update_vending)
-		src.generate_vending_HTML()
-	src.HTML += src.vending_HTML
-
-	src.updateUsrDialog()
-
-/obj/machinery/vending/proc/generate_vending_HTML()
-	var/list/html_parts = list()
-	html_parts += "<b>Welcome!</b><br>"
-
-	if (src.paying_for && (!istype(src.paying_for, /datum/data/vending_product) || !src.pay))
-		src.paying_for = null
-
-	if (src.pay && src.acceptcard)
-		if (src.paying_for && !src.scan)
-			html_parts += "<B>You have selected the following item:</b><br>"
-			html_parts += "&emsp;<b>[src.paying_for.product_name]</b><br>"
-			html_parts += "Please swipe your card to authorize payment.<br>"
-			html_parts += "<B>Current ID:</B> None<BR>"
-		else if (src.scan)
-			if (src.paying_for)
-				html_parts += "<B>You have selected the following item for purchase:</b><br>"
-				html_parts += "&emsp;[src.paying_for.product_name]<br>"
-				html_parts += "<B>Please swipe your card to authorize payment.</b><br>"
-			var/datum/data/record/account = null
-			account = FindBankAccountByName(src.scan.registered)
-			html_parts += "<B>Current ID:</B> <a href='byond://?src=\ref[src];logout=1'><u>([src.scan])</u></A><BR>"
-			html_parts += "<B>Credits on Account: [account.fields["current_money"]] Credits</B> <BR>"
-		else
-			html_parts += "<B>Current ID:</B> None<BR>"
-
-	if (src.product_list.len == 0)
-		html_parts += "<font color = 'red'>No product loaded!</font>"
-
-	else if (src.paying_for)
-		html_parts += "<a href='byond://?src=\ref[src];vend=\ref[src.paying_for]'><u><b>Continue</b></u></a>"
-		html_parts += " | <a href='byond://?src=\ref[src];cancel_payfor=1;logout=1'><u><b>Cancel</b></u></a>"
-
-	else
-		html_parts += "<table style='width: 100%; border: none; border-collapse: collapse;'><thead><tr><th>Product</th><th>Amt.</th><th>Price</th></tr></thead>"
-		for (var/datum/data/vending_product/R in src.product_list)
-			if (R.product_hidden && !src.extended_inventory)
-				continue
-			if (R.product_amount > 0)
-				html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
-			else
-				html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
-
-		html_parts += "</table>";
-
-		if (src.pay)
-			html_parts += "<BR><B>Available Credits:</B> $[src.credit] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
-			if (!src.acceptcard)
-				html_parts += "<BR>This machine only takes credit bills."
-
-	src.vending_HTML = jointext(html_parts, "")
-
-
-/obj/machinery/vending/proc/generate_wire_HTML()
-	src.vendwires = list("Violet" = 1,\
-		"Orange" = 2,\
-		"Goldenrod" = 3,\
-		"Green" = 4)
-	var/list/html_parts = list()
-	html_parts = "<TT><B>The Access Panel is [src.panel_open ? "open" : "closed"]:</B><br>"
-	html_parts += "<table border=\"1\" style=\"width:100%\"><tbody><tr><td><small>"
-	for (var/wiredesc in vendwires)
-		var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
-		html_parts += "[wiredesc] wire: "
-		if (!is_uncut)
-			html_parts += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
-		else
-			html_parts += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
-			html_parts += "<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "
-		html_parts += "<br>"
-
-	html_parts += "<br>"
-	html_parts += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
-	html_parts += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
-	html_parts += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
-	html_parts += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
-	html_parts += "The AI control indicator is [src.ai_control_enabled ? "lit" : "unlit"].<BR>"
-	html_parts += "</small></td></tr></tbody></table></TT><br>"
-	src.wire_HTML = jointext(html_parts, "")
-
-/obj/machinery/vending/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/spacecash))
-		if (src.pay)
-			src.credit += W.amount
-			W.amount = 0
-			boutput(user, "<span class='notice'>You insert [W].</span>")
-			user.u_equip(W)
-			W.dropped()
-			pool( W )
-			src.generate_HTML(1)
-			return
-		else
-			boutput(user, "<span class='alert'>This machine does not accept cash.</span>")
-			return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
-		if (src.acceptcard)
-			src.scan_card(W, user)
-			src.generate_HTML(1)
-			return
-			/*var/amount = input(usr, "How much money would you like to deposit?", "Deposit", 0) as null|num
-			if(amount <= 0)
-				return
-			if(amount > W:money)
-				boutput(user, "<span class='alert'>Insufficent funds. [W] only has [W:money] credits.</span>")
-				return
-			src.credit += amount
-			W:money -= amount
-			boutput(user, "<span class='notice'>You deposit [amount] credits. [W] now has [W:money] credits.</span>")
-			src.updateUsrDialog()
-			return()*/
-		else
-			boutput(user, "<span class='alert'>This machine does not accept ID cards.</span>")
-			return
-	else if (isscrewingtool(W))
-		src.panel_open = !src.panel_open
-		boutput(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
-		src.UpdateOverlays(src.panel_open ? src.panel_image : null, "panel")
-		src.generate_HTML(0, 1)
-		return
-	else if (istype(W, /obj/item/device/t_scanner) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))
-		if (src.seconds_electrified != 0)
-			boutput(user, "<span class='alert'>[bicon(W)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
-		else
-			if (status & NOPOWER)
-				boutput(user, "<span class='alert'>[bicon(W)] No electrical response received from access panel.</span>")
-			else
-				boutput(user, "<span class='notice'>[bicon(W)] Regular electrical response received from access panel.</span>")
-		return
-	else if (ispulsingtool(W))
-		return src.attack_hand(user)
-
-	if (istype(W, /obj/item/vending/restock_cartridge))
-		//check if cartridge type matches the vending machine
-		var/obj/item/vending/restock_cartridge/Q = W
-		if (istype(src, text2path("/obj/machinery/vending/[Q.vendingType]")))
-
-		// if (istype(src, text2path("/obj/machinery/vending/[W:vendingType]")))
-			//remove all producs, reinitialize array and then create the products like new
-			src.product_list = new()
-			src.create_products()
-			src.generate_HTML(1)
-
-			boutput(user, "<span class='notice'>You restocked the items in [src].</span>")
-			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
-			user.u_equip(W)
-			qdel(W)
-			return
-		else
-			boutput(user, "<span class='alert'>[W] is not compatible with [src].</span>")
-	else
-		user.lastattacked = src
-		hit_twitch(src)
-		attack_particle(user,src)
-		playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
-		..()
-		if (W && W.force >= 5 && prob(4 + (W.force - 5)))
-			src.fall(user)
-
-/obj/machinery/vending/hitby(M as mob|obj)
-	if (iscarbon(M) && M:throwing && prob(25))
-		src.fall(M)
-		return
-
-	..()
-
-/obj/machinery/vending/attack_ai(mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/vending/attack_hand(mob/user as mob)
-	if (status & (BROKEN|NOPOWER))
-		return
-	src.add_dialog(user)
-
-	if (src.seconds_electrified != 0)
-		if (src.shock(user, 100))
-			return
-
-	if (!src.HTML)
-		src.generate_HTML()
-	else
-		if (src.HTML && !src.vending_HTML)
-			src.generate_HTML(1)
-		if (src.HTML && (src.panel_open || isAI(user)) && !src.wire_HTML)
-			src.generate_HTML(0, 1)
-
-	if (window_size)
-		user.Browse(src.HTML, "window=vending;size=[window_size]")
-	else
-		user.Browse(src.HTML, "window=vending")
-	onclose(user, "vending")
-
-	interact_particle(user,src)
-	return
-
-/obj/machinery/vending/Topic(href, href_list)
-	if (status & (BROKEN|NOPOWER))
-		return
-	if (usr.stat || usr.restrained())
-		return
-
-	//ehh just let the AI operate vending machines. why not!!
-	if (isAI(usr) && !src.ai_control_enabled)
-		boutput(usr, "<span class='alert'>AI control for this vending machine has been disconnected!</span>")
-		return
-
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		src.add_dialog(usr)
-		src.add_fingerprint(usr)
-		if ((href_list["vend"]) && (src.vend_ready))
-
-			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-				boutput(usr, "<span class='alert'>Access denied.</span>") //Unless emagged of course
-				flick(src.icon_deny,src)
-				return
-
-			src.vend_ready = 0 //One thing at a time!!
-
-			var/datum/data/vending_product/R = locate(href_list["vend"]) in src.product_list
-
-			if (!R || !istype(R))
-				src.vend_ready = 1
-				return
-			else if(R.product_hidden && !src.extended_inventory)
-				src.vend_ready = 1
-				return
-			var/product_path = R.product_path
-
-			if (istext(product_path))
-				product_path = text2path(product_path)
-
-			if (!product_path)
-				src.vend_ready = 1
-				return
-
-			if (R.product_amount <= 0)
-				src.vend_ready = 1
-				return
-
-			//Wire: Fix for href exploit allowing for vending of arbitrary items
-			if (!(R in src.product_list))
-				src.vend_ready = 1
-
-				trigger_anti_cheat(usr, "tried to href exploit [src] to spawn an invalid item.")
-				return
-
-			var/datum/data/record/account = null
-			if (src.pay)
-				if (src.acceptcard && src.scan)
-					account = FindBankAccountByName(src.scan.registered)
-					if (!account)
-						boutput(usr, "<span class='alert'>No bank account associated with ID found.</span>")
-						flick(src.icon_deny,src)
-						src.vend_ready = 1
-						src.paying_for = R
-						src.generate_HTML(1)
-						return
-					if (account.fields["current_money"] < R.product_cost)
-						boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
-						flick(src.icon_deny,src)
-						src.vend_ready = 1
-						src.paying_for = R
-						src.generate_HTML(1)
-						return
-				else
-					if (src.credit < R.product_cost)
-						boutput(usr, "<span class='alert'>Insufficient Credit.</span>")
-						flick(src.icon_deny,src)
-						src.vend_ready = 1
-						src.paying_for = R
-						src.generate_HTML(1)
-						return
-
-			if (((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
-				SPAWN_DBG(0)
-					src.speak(src.vend_reply)
-					src.last_reply = world.time
-
-			use_power(10)
-			if (src.icon_vend) //Show the vending animation if needed
-				flick(src.icon_vend,src)
-
-			src.prevend_effect()
-			if(!src.freestuff) R.product_amount--
-			SPAWN_DBG(src.vend_delay)
-				src.vend_ready = 1 // doin this at the top here just in case something goes fucky and the proc crashes
-
-				if (ispath(product_path))
-					var/atom/movable/vended = new product_path(src.get_output_location()) // changed from obj, because it could be a mob, THANKS VALUCHIMP
-					vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
-					if(isitem(vended))
-						usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
-					// else, just let it spawn where it is
-				else if (isicon(R.product_path))
-					var/icon/welp = icon(R.product_path)
-					if (welp.Width() > 32 || welp.Height() > 32)
-						welp.Scale(32, 32)
-						R.product_path = welp // if scaling is required reset the product_path so it only happens the first time
-					var/obj/dummy = new /obj/item(src.get_output_location())
-					dummy.name = R.product_name
-					dummy.desc = "?!"
-					dummy.icon = welp
-				else if (isfile(R.product_path))
-					var/S = sound(R.product_path)
-					if (S)
-						playsound(src.loc, S, 50, 0)
-
-				if (src.pay)
-					if (src.acceptcard && src.scan && account)
-						account.fields["current_money"] -= R.product_cost
-					else
-						src.credit -= R.product_cost
-					wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
-
-				src.postvend_effect()
-
-				if (mechanics)
-					mechanics.fireOutgoing(mechanics.newSignal("productDispensed"))
-
-			if (src.paying_for)
-				src.paying_for = null
-				src.scan = null
-			src.generate_HTML(1)
-
-		if (href_list["logout"])
-			src.scan = null
-			src.generate_HTML(1)
-
-		if (href_list["cancel_payfor"])
-			src.paying_for = null
-			src.generate_HTML(1)
-
-		if (href_list["return_credits"])
-			SPAWN_DBG(src.vend_delay)
-				if (src.credit > 0)
-					var/obj/item/spacecash/returned = unpool(/obj/item/spacecash)
-					returned.setup(src.get_output_location(), src.credit)
-
-					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
-					src.credit = 0
-					boutput(usr, "<span class='notice'>You receive [returned].</span>")
-					src.generate_HTML(1)
-
-		if ((href_list["cutwire"]) && (src.panel_open))
-			var/twire = text2num(href_list["cutwire"])
-			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-				boutput(usr, "You need a snipping tool!")
-				return
-			else if (src.isWireColorCut(twire))
-				src.mend(twire)
-			else
-				src.cut(twire)
-
-		if ((href_list["pulsewire"]) && (src.panel_open || isAI(usr)))
-			var/twire = text2num(href_list["pulsewire"])
-			if (! (usr.find_tool_in_hand(TOOL_PULSING) || isAI(usr)) )
-				boutput(usr, "You need a multitool or similar!")
-				return
-			else if (src.isWireColorCut(twire))
-				boutput(usr, "You can't pulse a cut wire.")
-				return
-			else
-				src.pulse(twire)
-	else
-		usr.Browse(null, "window=vending")
-		return
-	return
-
-/obj/machinery/vending/process()
-	if (status & BROKEN)
-		return
-	..()
-	if (status & NOPOWER)
-		return
-
-	if (!src.active)
-		return
-
-	if (src.seconds_electrified > 0)
-		src.seconds_electrified--
-
-	//Pitch to the people!  Really sell it!
-	if (prob(src.slogan_chance) && ((src.last_slogan + src.slogan_delay) <= world.time) && (src.slogan_list.len > 0))
-		var/slogan = pick(src.slogan_list)
-		src.speak(slogan)
-		src.last_slogan = world.time
-
-	if ((prob(shoot_inventory_chance)) && (src.shoot_inventory))
-		src.throw_item()
-
-	return
-
-/obj/machinery/vending/proc/speak(var/message)
-	if (status & NOPOWER)
-		return
-
-	if (!message)
-		return
-
-	for (var/mob/O in hearers(src, null))
-		if (src.glitchy_slogans)
-			O.show_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2)
-		else
-			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
-
-	return
-
-/obj/machinery/vending/proc/prevend_effect()
-	playsound(src.loc, 'sound/machines/driveclick.ogg', 30, 1, 0.1)
-	return
-
-/obj/machinery/vending/proc/postvend_effect()
-	playsound(src.loc, 'sound/machines/ping.ogg', 20, 1, 0.1)
-	return
-
-/obj/machinery/vending/power_change()
-	if (can_fall == 2)
-		icon_state = icon_fallen ? icon_fallen : "[initial(icon_state)]-fallen"
-		light.disable()
-		return
-
-	if (status & BROKEN)
-		icon_state = icon_broken ? icon_broken : "[initial(icon_state)]-broken"
-		light.disable()
-	else
-		if ( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-			light.enable()
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = icon_off ? icon_off : "[initial(icon_state)]-off"
-				status |= NOPOWER
-				light.disable()
-
-/obj/machinery/vending/proc/fall(mob/living/carbon/victim)
-	if (can_fall != 1)
-		return
-	can_fall = 2
-	status |= BROKEN
-	var/turf/vicTurf = get_turf(victim)
-	src.icon_state = "[initial(icon_state)]-fallen"
-//	SPAWN_DBG(0)
-//		src.icon_state = "[initial(icon_state)]-fall"
-//		SPAWN_DBG(2 SECONDS)
-//			src.icon_state = "[initial(icon_state)]-fallen"
-	if (istype(victim) && vicTurf && (get_dist(vicTurf, src) <= 1))
-		victim.changeStatus("weakened", 300)
-		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
-		victim.lying = 1
-		victim.set_loc(vicTurf)
-		if (src.layer < victim.layer)
-			src.layer = victim.layer+1
-		src.set_loc(vicTurf)
-		random_brute_damage(victim, rand(30,50),1)
-	else
-		src.visible_message("<b><font color=red>[src.name] tips over!</font></b>")
-
-	src.power_change()
-	src.anchored = 0
-	return
-
-//Oh no we're malfunctioning!  Dump out some product and break.
-/obj/machinery/vending/proc/malfunction()
-	for(var/datum/data/vending_product/R in src.product_list)
-		if (R.product_amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-
-		var/dump_path = null
-		if (ispath(R.product_path))
-			dump_path = R.product_path
-		else if (istext(R.product_path))
-			dump_path = text2path(R.product_path)
-			if (isnull(dump_path))
-				continue
-		else
-			continue
-
-		while(R.product_amount>0)
-			new dump_path(src.loc)
-			R.product_amount--
-		break
-
-	status |= BROKEN
-	power_change()
-	return
-
-//Somebody cut an important wire and now we're following a new definition of "pitch."
-/obj/machinery/vending/proc/throw_item()
-	var/obj/throw_item = null
-	var/mob/living/target = locate() in view(7,src)
-	if(!target)
-		return 0
-
-	for(var/datum/data/vending_product/R in src.product_list)
-		if (R.product_amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-
-		if (!prob(100/src.product_list.len)) //don't always use the top thing
-			continue
-
-		if (ispath(R.product_path))
-			var/dump_path = R.product_path
-			throw_item = new dump_path(src.loc)
-			if (throw_item)
-				R.product_amount--
-				break
-		else if (istext(R.product_path))
-			var/dump_path = text2path(R.product_path)
-			if (dump_path)
-				throw_item = new dump_path(src.loc)
-			if (throw_item)
-				R.product_amount--
-				break
-		else if (isicon(R.product_path))
-			var/icon/welp = icon(R.product_path)
-			if (welp.Width() > 32 || welp.Height() > 32)
-				welp.Scale(32, 32)
-				R.product_path = welp // if scaling is required reset the product_path so it only happens the first time
-			var/obj/dummy = new /obj/item(src.get_output_location())
-			dummy.name = R.product_name
-			dummy.desc = "?!"
-			dummy.icon = welp
-			throw_item = dummy
-			if (throw_item)
-				R.product_amount--
-				break
-		else if (isfile(R.product_path))
-			var/sound/S = sound(R.product_path)
-			if (S)
-				R.product_amount--
-				SPAWN_DBG(0)
-					playsound(src.loc, S, 50, 0)
-					src.visible_message("<span class='alert'><b>[src] launches [R.product_name] at [target.name]!</b></span>")
-					src.generate_HTML(1)
-				return 1
-
-	SPAWN_DBG(0)
-		if (throw_item)
-			throw_item.throw_at(target, 16, 3)
-			src.visible_message("<span class='alert'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
-	return 1
-
-/obj/machinery/vending/proc/isWireColorCut(var/wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	return ((src.wires & wireFlag) == 0)
-
-/obj/machinery/vending/proc/isWireCut(var/wireIndex)
-	var/wireFlag = APCIndexToFlag[wireIndex]
-	return ((src.wires & wireFlag) == 0)
-
-/obj/machinery/vending/proc/cut(var/wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	src.wires &= ~wireFlag
-	switch(wireIndex)
-		if(WIRE_EXTEND)
-			src.extended_inventory = 0
-			src.generate_HTML(1)
-		if(WIRE_SHOCK)
-			src.seconds_electrified = -1
-		if (WIRE_SHOOTINV)
-			if(!src.shoot_inventory)
-				src.shoot_inventory = 1
-		if (WIRE_SCANID) //yeah the scanID wire also controls the AI control FUCK YOU
-			if(src.ai_control_enabled)
-				src.ai_control_enabled = 0
-	src.generate_HTML(0, 1)
-
-/obj/machinery/vending/proc/mend(var/wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
-	src.wires |= wireFlag
-	switch(wireIndex)
-		if(WIRE_SCANID)
-			src.ai_control_enabled = 1
-		if(WIRE_SHOCK)
-			src.seconds_electrified = 0
-		if (WIRE_SHOOTINV)
-			src.shoot_inventory = 0
-	src.generate_HTML(0, 1)
-
-/obj/machinery/vending/proc/pulse(var/wireColor)
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	switch (wireIndex)
-		if (WIRE_EXTEND)
-			src.extended_inventory = !src.extended_inventory
-			src.generate_HTML(1)
-		if (WIRE_SCANID)
-			src.ai_control_enabled = !src.ai_control_enabled
-		if (WIRE_SHOCK)
-			src.seconds_electrified = 30
-		if (WIRE_SHOOTINV)
-			src.shoot_inventory = !src.shoot_inventory
-
-	src.generate_HTML(0, 1)
-
-//"Borrowed" airlock shocking code.
-/obj/machinery/vending/proc/shock(mob/user, prb)
-	if (!prob(prb))
-		return 0
-
-	if (status & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
-
-	if (src.electrocute(user, 1))
-		return 1
-	else
-		return 0
-
-/obj/machinery/vending/electrocute(mob/user, netnum)
-	if (!netnum)		// unconnected cable is unpowered
-		return 0
-
-	var/datum/powernet/PN			// find the powernet
-	if (powernets && powernets.len >= netnum)
-		PN = powernets[netnum]
-
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(5, 1, src)
-	s.start()
-
-	if (!PN) //Wire note: Fix for Cannot read null.avail
-		return 0
-
-	if (user.shock(src, PN.avail, user.hand == 1 ? "l_arm" : "r_arm", 1, 0))
-		for (var/mob/M in AIviewers(src))
-			if (M == user)	continue
-			M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
-		return 1
-	return 0
-
-#undef WIRE_EXTEND
-#undef WIRE_SCANID
-#undef WIRE_SHOCK
-#undef WIRE_SHOOTINV

@@ -12,9 +12,16 @@
 	spawn_contents = list(/mob/living/carbon/human/npc/monkey/angry = 6)
 
 	New()
+		..()
 		var/obj/item/barrel_signaller/M = new /obj/item/barrel_signaller(src.loc)
 		SPAWN_DBG(0)
 			M.my_barrel = src
+
+	is_acceptable_content(atom/A)
+		return istype(A, /mob/living/carbon/human/npc/monkey)
+
+	update_icon()
+		return
 
 
 /obj/item/barrel_signaller
@@ -31,9 +38,7 @@
 			if (my_barrel)
 				var/turf/location = get_turf(my_barrel.loc)
 				if(location)
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(5, 1, my_barrel)
-					s.start()
+					elecflash(my_barrel,power=3)
 					playsound(my_barrel.loc, "sound/effects/Explosion1.ogg", 75, 1)
 				logTheThing("combat", usr, null, "explodes a barrel of monkeys at [log_loc(src.my_barrel.loc)].")
 				my_barrel.visible_message("<span class='alert'>\The [my_barrel] explodes!</span>")

@@ -15,7 +15,7 @@
 		P.addAbility(/datum/targetable/hunter/hunter_trophycount)
 
 		if (src.mind && src.mind.special_role != "omnitraitor")
-			SHOW_TRAITOR_OMNI_TIPS(src)
+			SHOW_HUNTER_TIPS(src)
 
 	else return
 

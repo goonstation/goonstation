@@ -12,13 +12,11 @@
 		..()
 		SPAWN_DBG(1 SECOND)
 			if(prob(25))
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(3, 1, src.loc)
-				s.start()
+				elecflash(src,power=3)
 
 			var/event_type = rand(1,5)
 			switch(event_type)
-				if(1 || 2 || 3)
+				if(1, 2, 3)
 					spawn_horror()
 				/*
 				if(2)

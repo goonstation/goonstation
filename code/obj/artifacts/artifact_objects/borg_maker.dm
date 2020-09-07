@@ -43,7 +43,7 @@
 			if (user.bioHolder.Uid && user.bioHolder.bloodType)
 				bdna = user.bioHolder.Uid
 				btype = user.bioHolder.bloodType
-			var/turf/T = find_loc(user)
+			var/turf/T = get_turf(user)
 			gibs(T, null, null, bdna, btype)
 
 			ArtifactLogs(user, null, O, "touched", "robotizing user", 0) // Added (Convair880).

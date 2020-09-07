@@ -1,3 +1,5 @@
+#define HARD_DELETIONS_DISABLED
+
 #define QUEUE_WAIT_TIME 300
 
 // hi i fucked up this file p bad. if it ends up being as bad as
@@ -11,11 +13,29 @@ datum/controller/process/delete_queue
 #ifdef DELETE_QUEUE_DEBUG
 	var/tmp/datum/dynamicQueue/delete_queue = 0
 #endif
-	var/log_hard_deletions = 0
+
+#if defined(LOG_HARD_DELETE_REFERENCES) || defined(AUTO_REFERENCE_TRACKING_ON_HARD_DEL) || defined(LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO)
+	var/log_hard_deletions = 2
+#else
+
+	#ifdef HARD_DELETIONS_DISABLED
+	var/log_hard_deletions = 1
+	#else
+	var/log_hard_deletions = 0 // 1 = log them, 2 =  attempt to find references (requires LOG_HARD_DELETE_REFERENCES)
+	#endif
+
+#endif
 
 	setup()
 		name = "DeleteQueue"
+
+#ifdef HARD_DELETIONS_DISABLED
+		schedule_interval = 10 //ha ha whatever
+#else
 		schedule_interval = 5
+#endif
+
+
 		tick_allowance = 25
 
 	doWork()
@@ -45,17 +65,43 @@ datum/controller/process/delete_queue
 				gccount++
 				continue
 
-			if (log_hard_deletions == 1)
-				if (D.type == /obj/overlay)
-					var/obj/overlay/O = D
-					logTheThing("debug", text="HardDel of [D.type] -- iconstate [O.icon_state]")
+			if (log_hard_deletions)
+				if (D.type == /image)
+					var/image/I = D
+					logTheThing("debug", text="HardDel of [I.type] -- iconstate [I.icon_state], icon [I.icon]")
+				else if(istype(D, /atom))
+					var/atom/A = D
+					logTheThing("debug", text="HardDel of [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
 				else
 					logTheThing("debug", text="HardDel of [D.type]")
+#ifdef LOG_HARD_DELETE_REFERENCES
+				if (log_hard_deletions >= 2)
+					for(var/x in find_all_references_to(D))
+						logTheThing("debug", text=x)
+#endif
+#ifdef LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
+				if (log_hard_deletions >= 2)
+					var/list/result = list()
+					ref_visit_list_2(all_references, D, result)
+					for(var/x in result)
+						logTheThing("debug", text=x)
+#endif
+#ifdef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
+				if (log_hard_deletions >= 2)
+					for(var/client/C)
+						if(C.holder && C.holder.level >= LEVEL_CODER)
+							C.view_references(D)
+#endif
 
 			delcount++
+#ifndef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 			D.qdeled = 0
-			del(D)
 
+	#ifndef HARD_DELETIONS_DISABLED
+			del(D)
+	#endif
+
+#endif
 		//if (t_gccount != gccount || t_delcount != delcount)
 		//	boutput(world, "Delqueue update: buf [delqueue_pos]/[DELQUEUE_SIZE] ... [gccount - t_gccount] gc, [delcount - t_delcount] del")
 		global.delete_queue_2[global.delqueue_pos].len = 0
@@ -139,3 +185,118 @@ datum/controller/process/delete_queue
 		#endif
 		boutput(usr, "<b>Current Queue Length:</b> [delete_queue.count()]")
 		boutput(usr, "<b>Total Items Deleted:</b> [delcount] (Explictly) [gccount] (Gracefully GC'd)")
+
+
+// diagnostics
+
+#ifdef LOG_HARD_DELETE_REFERENCES
+/datum/var/ref_tracker_visited = 0
+/client/var/ref_tracker_visited = 0
+var/global/ref_tracker_generation = 0
+
+proc/ref_visit_list(var/list/L, var/list/next, var/datum/target, var/list/result, var/list/stack=null)
+	var/i = 0
+	var/top_level = isnull(stack)
+	if(isnull(stack))
+		stack = list()
+	for(var/x in L)
+		i += 1
+		var/key_name = "[i]"
+		if(top_level && !istext(x))
+			key_name = "[x] \ref[x] [x:type]"
+			if(istype(x, /atom/movable))
+				key_name += " [x:loc]"
+			if(istype(x, /atom) || istype(x, /image))
+				key_name += " [x:icon] [x:icon_state]"
+			x = x:vars
+		if(x == "vars")
+			continue
+		if(x && x == target)
+			result += jointext(stack + key_name, " - ")
+		if(istype(x, /list))
+			ref_visit_list(x, next, target, result, stack + key_name)
+		else if(istype(x, /client) || istype(x, /datum))
+			if(x:ref_tracker_visited != ref_tracker_generation)
+				x:ref_tracker_visited = ref_tracker_generation
+				next.Add(x)
+		var/y = null
+		try
+			y = L[x]
+		catch
+		if(y)
+			if(y && y == target)
+				result += jointext(stack + "[x]", " - ")
+			if(istype(y, /list))
+				ref_visit_list(y, next, target, result, stack + "[x]")
+			else if(istype(y, /client) || istype(y, /datum))
+				if(y:ref_tracker_visited != ref_tracker_generation)
+					y:ref_tracker_visited = ref_tracker_generation
+					next.Add(y)
+
+proc/find_all_references_to(var/datum/D)
+	var/list/current = null
+	var/list/next = world.contents + global.vars
+	. = list()
+	ref_tracker_generation++
+	while(length(next))
+		current = next
+		next = list()
+		ref_visit_list(current, next, D, .)
+#endif
+
+#ifdef LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
+var/global/list/all_references
+/datum/New()
+	if(!all_references) all_references = list("GLOB")
+	all_references["\ref[src]"] = 1
+	..()
+
+/datum/Del()
+	all_references.Remove("\ref[src]")
+	..()
+
+/client/New()
+	if(!all_references) all_references = list("GLOB")
+	all_references["\ref[src]"] = 1
+	..()
+
+/client/Del()
+	all_references.Remove("\ref[src]")
+	..()
+
+proc/ref_visit_list_2(var/list/L, var/datum/target, var/list/result, var/list/stack=null)
+	var/i = 0
+	var/top_level = isnull(stack)
+	if(isnull(stack))
+		stack = list()
+	for(var/x in L)
+		i += 1
+		var/key_name = "[i]"
+		if(top_level && x == "GLOB")
+			x = global.vars
+		else if(top_level)
+			x = locate(x)
+			if(!x)
+				continue
+			key_name = "[x] \ref[x] [x:type]"
+			if(istype(x, /atom/movable))
+				key_name += " [x:loc]"
+			if(istype(x, /atom) || istype(x, /image))
+				key_name += " [x:icon] [x:icon_state]"
+			x = x:vars
+		if(x == "vars")
+			continue
+		if(x && x == target)
+			result += jointext(stack + key_name, " - ")
+		if(istype(x, /list))
+			ref_visit_list_2(x, target, result, stack + key_name)
+		var/y = null
+		try
+			y = L[x]
+		catch
+		if(y)
+			if(y && y == target)
+				result += jointext(stack + "[x]", " - ")
+			if(istype(y, /list))
+				ref_visit_list_2(y, target, result, stack + "[x]")
+#endif

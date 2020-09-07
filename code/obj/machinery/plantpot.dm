@@ -56,6 +56,25 @@
 		..()
 		update_maptext()
 
+/obj/machinery/plantpot/kudzu
+	name = "hydroponics tray"
+	desc = "A tray filled with nutrient solution capable of sustaining plantlife... Made of plants."
+	icon_state = "kudzutray"
+
+	attackby(var/obj/item/W as obj, var/mob/user as mob)
+		//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
+		if(!src.current || src.dead)
+			if (destroys_kudzu_object(src, W, user))
+				if (prob(40))
+					user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W]!</span>")
+				else
+					user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W], destroying it!</span>")
+					qdel(src)
+					return
+			else
+				return ..()
+		..()
+
 /obj/machinery/plantpot
 	// The central object for Hydroponics. All plant growing and most of everything goes on in
 	// this object - that said you don't want to have too many of them on the map because they
@@ -99,17 +118,14 @@
 		// We have this here as a check for whether or not the plant needs to update its sprite.
 		// Originally plantpots updated constantly but this was found to be rather expensive, so
 		// now it only does that if it needs to.
-
+	var/actionpassed 	//holds defines for action bar harvesting yay :D
 	New()
 		..()
 		src.plantgenes = new /datum/plantgenes(src)
-		var/datum/reagents/R = new/datum/reagents(400)
-		reagents = R
-		R.maximum_volume = 400
+		src.create_reagents(400)
 		// The plantpot can store 400 reagents in total, we want a bit more than the max water
 		// level since we can put other additives in the pot for various effects.
-		R.my_atom = src
-		R.add_reagent("water", 200)
+		reagents.add_reagent("water", 200)
 		// 200 is the exact maximum amount of water a plantpot can hold before it is considered
 		// to have too much water, which stunts plant growth speed.
 		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi', "wat-[src.water_level]")
@@ -191,6 +207,12 @@
 		var/datum/plantgenes/DNA = src.plantgenes
 		// We obtain the current plant type in the plantpot, and the genes of the individual plant.
 		// We'll be referencing these a lot!
+
+		if(growing.required_reagents)
+			for(var/i=1,i<=growing.required_reagents.len,i++)
+				if(src.reagents.get_reagent_amount(growing.required_reagents[i]["id"]) < growing.required_reagents[i]["amount"])
+					return
+		//Checks to see if the plant requires a reagent to grow, and compares to to the reagents present in the pot.
 
 		// REAGENT PROCESSING
 		var/drink_rate = 1
@@ -369,7 +391,7 @@
 						// It doesn't make much sense to feed a full man to a dinky little plant.
 					var/mob/living/carbon/C = W:affecting
 					user.visible_message("<span class='alert'>[user] starts to feed [C] to the plant!</span>")
-					logTheThing("combat", user, (C), "attempts to feed %target% to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
+					logTheThing("combat", user, (C), "attempts to feed [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
 					message_admins("[key_name(user)] attempts to feed [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 					src.add_fingerprint(user)
 					if(!(user in src.contributors))
@@ -377,7 +399,7 @@
 					if(do_after(user, 30)) // Same as the gibber and reclaimer. Was 20 (Convair880).
 						if(src && W && W.loc == user && C)
 							user.visible_message("<span class='alert'>[src.name] grabs [C] and devours them ravenously!</span>")
-							logTheThing("combat", user, (C), "feeds %target% to a man-eater at [log_loc(src)].")
+							logTheThing("combat", user, (C), "feeds [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].")
 							message_admins("[key_name(user)] feeds [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 							if(C.mind)
 								C.ghostize()
@@ -410,6 +432,23 @@
 					qdel (W)
 					if(!(user in src.contributors))
 						src.contributors += user
+			if(src.current.harvest_tools)
+			//checks to see if the plant requires a specific tool to harvest, rather than an empty hand.
+				var/passed
+				for(var/i=1,i<=src.current.harvest_tools.len,i++)
+					if(ispath(src.current.harvest_tools[i]))
+						if(istype(W,src.current.harvest_tools[i]))
+							passed = 1
+							break
+					else if(istool(W,src.current.harvest_tools[i]))
+						passed = 1
+						break
+				if(passed)
+					if(src.current.harvest_tool_message)
+						boutput(user,src.current.harvest_tool_message)
+					HYPharvesting(user,null)
+					return
+
 
 		// From here on out we handle item reacions of the plantpot itself rather than specific
 		// special kinds of plant.
@@ -425,9 +464,9 @@
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
 				src.anchored = 1
 
-		else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
+		else if(isweldingtool(W) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
 			// These are for burning down plants with.
-			if(istype(W, /obj/item/weldingtool) && !W:try_weld(usr, 3, noisy = 0, burn_eyes = 1))
+			if(isweldingtool(W) && !W:try_weld(usr, 3, noisy = 0, burn_eyes = 1))
 				return
 			else if(istype(W, /obj/item/device/light/zippo) && !W:on)
 				boutput(user, "<span class='alert'>It would help if you lit it first, dumbass!</span>")
@@ -570,7 +609,8 @@
 			if(src.dead)
 				boutput(user, "<span class='alert'>The plant is dead and cannot be harvested!</span>")
 				return
-
+			if (src.current.harvest_tools)
+				return
 			var/datum/plant/growing = src.current
 			if(!growing.harvestable)
 				boutput(user, "<span class='alert'>You doubt this plant is going to grow anything worth harvesting...</span>")
@@ -601,7 +641,13 @@
 				return
 
 			if(HYPcheck_if_harvestable())
-				HYPharvesting(user,null)
+				if(!growing.harvest_tools) //if the plant needs a specific tool or set of tools to harvest
+					HYPharvesting(user,null)
+				else
+					if(!growing.harvest_tool_fail_message)
+						boutput(user, "<span><b>You don't have the right tool to harvest this plant!</b></span>")
+					else
+						boutput(user,growing.harvest_tool_fail_message)
 				// If the plant is ready for harvest, do that. Otherwise, check it's condition.
 			else
 				boutput(user, "You check [src.name] and the tray.")
@@ -920,7 +966,7 @@
 		var/getitem = null
 		var/dont_rename_crop = false
 		// Figure out what crop we use - the base crop or a mutation crop.
-		if(growing.crop)
+		if(growing.crop || MUT?.crop)
 			if(MUT)
 				if(MUT.crop)
 					getitem = MUT.crop
@@ -1050,7 +1096,8 @@
 					else
 						CROP.quality = quality_score
 
-				CROP.transform = matrix() * clamp((quality_score + 100) / 100, 0.35, 2)
+				if(!growing.stop_size_scaling) //Keeps plant sprite from scaling if variable is enabled.
+					CROP.transform = matrix() * clamp((quality_score + 100) / 100, 0.35, 2)
 
 				if(istype(CROP,/obj/item/reagent_containers/food/snacks/plant/))
 					// If we've got a piece of fruit or veg that contains seeds. More often than
@@ -1186,8 +1233,26 @@
 							if(issaved(growing.vars[V]) && V != "holder")
 								hybrid.vars[V] = growing.vars[V]
 						S.planttype = hybrid
+
 					seedcount++
 				getamount--
+
+
+			// Give XP based on base quality of crop harvest. Will make better later, like so more plants harvasted and stuff, this is just for testing.
+			// This is only reached if you actually got anything harvested.
+			// (tmp_crop here was causing runtimes in a lot of cases, so changing to just use it like this)
+			// Base quality score:
+			//   1: base
+			// -12: if HP <=  50% w/ 70% chance
+			// + 5: if HP >= 200% w/ 30% chance
+			// +10: if HP >= 400% w/ 30% chance
+			// Mutations can add or remove this, of course
+			// @TODO adjust this later, this is just to fix runtimes and make it slightly consistent
+			if (base_quality_score >= 1 && prob(10))
+				if (base_quality_score >= 11)
+					JOB_XP(user, "Botanist", 2)
+				else
+					JOB_XP(user, "Botanist", 1)
 
 			var/list/harvest_string = list("You harvest [cropcount] item")
 			if (cropcount > 1)
@@ -1731,11 +1796,8 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(5000)
-		reagents = R
-		R.maximum_volume = 5000
-		R.my_atom = src
-		R.add_reagent("water", 1000)
+		src.create_reagents(5000)
+		reagents.add_reagent("water", 1000)
 
 	get_desc()
 		var/reag_list = ""

@@ -90,7 +90,7 @@
 							if (damage < 500)
 								M.TakeDamage("chest", 0, damage, 0, DAMAGE_BURN)
 								M.changeStatus("stunned", stun * 10)
-								boutput(M, "<b><font color='red'>You feel a powerful shock course through your body!</font></b>")
+								boutput(M, "<b><span class='alert'>You feel a powerful shock course through your body!</span></b>")
 							else
 								M:gib()
 					else
@@ -103,7 +103,7 @@
 							if (damage < 500)
 								M.TakeDamage("chest", 0, damage, 0, DAMAGE_BURN)
 								M.changeStatus("stunned", stun * 10)
-								boutput(M, "<b><font color='red'>You feel a powerful shock course through your body!</font></b>")
+								boutput(M, "<b><span class='alert'>You feel a powerful shock course through your body!</span></b>")
 							else
 								M:gib()
 					if (attack_amt)

@@ -6,7 +6,7 @@
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	butcherable = 1
@@ -22,7 +22,7 @@
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	butcherable = 1
@@ -51,7 +51,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -74,6 +74,17 @@
 			src.atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
 			src.atk_disease_prob = 10
 			src.atkcarbon = 1
+
+/obj/critter/mouse/mad
+	name = "rabid space mouse"
+	desc = "A mouth-foaming cheese and flesh eating mouse. In space."
+	health = 10
+	chases_food = 0
+	feed_text = "squeaks viciously!"
+	atk_delay = 10
+	atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
+	atk_disease_prob = 35
+	atkcarbon = 1
 /*
 	CritterAttack(mob/living/M)
 		src.attacking = 1
@@ -134,6 +145,7 @@
 	icon_state = "remy"
 	health = 33
 	aggressive = 0
+	generic = 0
 
 /obj/critter/opossum
 	name = "space opossum"
@@ -144,7 +156,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -194,20 +206,6 @@
 	name = "Morty"
 	generic = 0
 
-var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "Litterbox",
-"Reginald", "Poosycat", "Dr. Purrsworthy", "Lt. Scratches", "Michael Catson",
-"Fluffy", "Mr. Purrfect", "Lord Furstooth", "Lion-O", "Johnathan", "Gary Catglitter",
-"Chat de Gaulle", "Ratbag",
-"Baron Fuzzykins, Defiler of Carpets", "Robert Meowgabe", "Chairman Meow", "Bacon",
-"Prunella", "Poonella", "SEXCOPTER", "Fat, Lazy Piece of Shit", "Jones Mk. II",
-"Jones Mk. III", "Jones Mk. IV", "Jones Mk.V", "Mr. Meowgi",
-"Furrston von Purringsworth", "Garfadukecliff", "SyndiCat", "Rosa Fluffemberg",
-"Karl Meowx", "Margaret Scratcher", "Marcel Purroust", "Franz Katka", "Das Katpital",
-"Proletaricat", "Perestroikat", "Mewy P. Newton", "Fidel Catstro", "George Lucats",
-"Lin Miao", "Felix Purrzhinsky", "Pol Pet", "Piggy", "Long Kitty", "Caterella", "Aristocat",
-"Arthur Cat Clarke", "Prick", "Pantalaimon", "Purrsula K. Le Guin", "Douglas Pat 'Ems",
-"Gato", "Zebra", "Possum", "Myst", "Too", "P", "Z", "Catopus")
-
 // hi I added my childhood cats' names to the list cause I miss em, they aren't really funny names but they were great cats
 // remove em if you want I guess
 // - Haine
@@ -221,7 +219,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -235,9 +233,11 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	event_handler_flags = USE_HASENTERED | USE_PROXIMITY | USE_FLUID_ENTER
 
 	New()
+		if(src.name == "jons the catte")
+			src.is_pet = 1
 		..()
 		if (src.randomize_cat)
-			src.name = pick(cat_names)
+			src.name = pick_string_autokey("names/cats.txt")
 
 #ifdef HALLOWEEN
 			src.cattype = 3 //Black cats for halloween.
@@ -290,22 +290,24 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			..()
 
 	CritterAttack(mob/M)
-		if (ismob(M))
-			src.attacking = 1
-			var/attackCount = (src.catnip ? rand(4,8) : 1)
-			while (attackCount-- > 0)
-				src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-				if (ismob(M))
-					random_brute_damage(src.target, 3,1)
-				else if (istype(M, /obj/critter)) //robust cat simulation.
-					var/obj/critter/C = src.target
-					C.health -= 2
-					if (C.health <= 0 && C.alive)
-						C.CritterDeath()
-						src.attacking = 0
-				sleep(0.2 SECONDS)
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
+			src.visible_message("<span class='combat'><B>[src]</B> tries to bite [src.target] but \the [src.target] dodges nimbly!</span>")
+			return
+		src.attacking = 1
+		var/attackCount = (src.catnip ? rand(4,8) : 1)
+		while (attackCount-- > 0)
+			src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
+			if (ismob(M))
+				random_brute_damage(src.target, 3,1)
+			else if (istype(M, /obj/critter)) //robust cat simulation.
+				var/obj/critter/C = src.target
+				C.health -= 2
+				if (C.health <= 0 && C.alive)
+					C.CritterDeath()
+					src.attacking = 0
+			sleep(0.2 SECONDS)
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN_DBG(1 SECOND)
 		src.attacking = 0
@@ -332,11 +334,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		return
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
+		..()
 		src.icon_state = "cat[cattype]-dead"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
 		if(prob(5))
 			SPAWN_DBG(3 SECONDS)
 				src.visible_message("<b>[src]</b> comes back to life, good thing he has 9 lives!")
@@ -386,6 +385,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	health = 30
 	randomize_cat = 0
 	generic = 0
+	is_pet = 2
 	var/swiped = 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -439,7 +439,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	desc = "Although this cat is vegan, it's still a carnivore."
 
 	New()
-		name = pick(cat_names)
+		name = pick_string_autokey("names/cats.txt")
 		..()
 
 /obj/critter/dog/george
@@ -452,12 +452,13 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0 //set to 1 for robots as space cars
 	firevuln = 1
 	brutevuln = 1
 	angertext = "growls at"
+	death_text = null // he's just asleep
 	atk_brute_amt = 2
 	crit_brute_amt = 4
 	chase_text = "jumps on"
@@ -529,10 +530,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		return
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
+		..()
 		src.icon_state = "[src.doggy]-lying"
-		walk_to(src,0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
 		SPAWN_DBG(1 MINUTE)
@@ -554,6 +553,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	name = "Blair"
 	icon_state = "pug"
 	doggy = "pug"
+	is_pet = 2
 
 var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")
 
@@ -584,7 +584,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -652,7 +652,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -754,7 +754,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_PUBLIC
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -850,7 +850,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0 // this was funny for a while but now is less so
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE // this was funny for a while but now is less so
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -1114,8 +1114,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.visible_message("<span class='combat'><B>[src]</B> bites [M]!</span>")
 				playsound(src.loc, "swing_hit", 30, 0)
 				random_brute_damage(M, 3,1)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 		else if (isrobot(M))
 			if (prob(10))
@@ -1617,7 +1617,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -1669,7 +1669,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -1717,8 +1717,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 						E = H.drop_organ(chosen_eye)
 						playsound(get_turf(M), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 						E.set_loc(src.loc)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 			else
 				src.visible_message("<span class='combat'><B>[src]</B> bites [M]!</span>")
@@ -1763,7 +1763,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		return F
 
 /obj/critter/boogiebot
-	name = "Boogiebot"
+	name = "boogiebot"
 	desc = "A robot that looks ready to get down at any moment."
 	icon_state = "boogie"
 	density = 1
@@ -1771,7 +1771,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -1783,6 +1783,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	chase_text = "boogies right into"
 	atk_brute_amt = 5
 	generic = 0
+	var/emagged = 0
 	var/dance_forever = 0
 	death_text = "%src% stops dancing forever."
 
@@ -1793,6 +1794,13 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.visible_message("<b>[src]</b> [msg]!",2)
 			src.icon_state = pick("boogie-d1","boogie-d2","boogie-d3")
 			// maybe later make it ambient play a short chiptune here later or at least some new sound effect
+			if (emagged)
+				SPAWN_DBG(0.5 SECONDS)
+					for (var/mob/living/carbon/human/responseMonkey in orange(2, src)) // they don't have to be monkeys, but it's signifying monkey code
+						LAGCHECK(LAG_MED)
+						if (!can_act(responseMonkey, 0))
+							continue
+						responseMonkey.emote("dance")
 			SPAWN_DBG(20 SECONDS)
 				if (src) src.icon_state = "boogie"
 
@@ -1827,6 +1835,15 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		else
 			. = ..()
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			if(user)
+				boutput(user, "<span class='alert'>You short out the [src]'s dancing intensity setting to 'flashmob'.</span>")
+			src.visible_message("<span class='alert'><b>[src] lights up with determination!</b></span>")
+			src.emagged = TRUE
+			return 1
+		return 0
+
 /obj/critter/meatslinky // ferrets for wire
 	name = "space ferret"
 	desc = "A ferret that came from space. Or maybe went to space. Who knows how it got here?"
@@ -1837,7 +1854,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -1967,7 +1984,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -2011,7 +2028,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	butcherable = 1
@@ -2070,7 +2087,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1
@@ -2141,3 +2158,24 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			return
 		SPAWN_DBG(rand(0, 10))
 			src.do_a_little_dance()
+
+obj/critter/frog
+	name = "frog"
+	desc = "Ribbit."
+	icon_state = "frog"
+	death_text = "%src% croaks."
+	butcherable = 1
+	density = 0
+	health = 20
+	aggressive = 0
+	defensive = 1
+	wanderer = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
+	atkcarbon = 1
+	atksilicon = 1
+	firevuln = 1
+	brutevuln = 1
+	generic = 1
+	atk_text = "hops into"
+	angertext = "croaks angrily at"
+	chase_text = "hops after"

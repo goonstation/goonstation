@@ -179,7 +179,9 @@
 	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
-	/obj/item/storage/belt/wrestling = 2)
+	/obj/item/storage/belt/wrestling = 2,
+	/obj/item/storage/box/kendo_box = 1,
+	/obj/item/storage/box/kendo_box/hakama = 1)
 
 /obj/storage/closet/thunderdome/green
 	icon_state = "syndicate1"
@@ -191,7 +193,9 @@
 	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
-	/obj/item/storage/belt/wrestling = 2)
+	/obj/item/storage/belt/wrestling = 2,
+	/obj/item/storage/box/kendo_box = 1,
+	/obj/item/storage/box/kendo_box/hakama = 1)
 
 /obj/storage/closet/electrical_supply
 	name = "electrical supplies closet"
@@ -204,6 +208,15 @@
 	desc = "A handy closet full of everything an aspiring apprentice welder could ever need."
 	spawn_contents = list(/obj/item/clothing/head/helmet/welding = 3,
 	/obj/item/weldingtool = 3)
+
+/obj/storage/closet/wrestling
+	name = "wrestling supplies closet"
+	desc = "A handy closet full of everything an aspiring fake showboater wrestler needs to launch his career."
+	spawn_contents = list(/obj/item/storage/belt/wrestling/fake = 3,
+	/obj/item/clothing/under/shorts/random = 3,
+	/obj/item/clothing/mask/wrestling/black = 1,
+	/obj/item/clothing/mask/wrestling/blue = 1,
+	/obj/item/clothing/mask/wrestling/green = 1)
 
 /obj/storage/closet/office
 	name = "office supply closet"
@@ -253,6 +266,10 @@
 			B8.pixel_y = 6
 			B8.pixel_x = 0
 
+			var/obj/item/folder/B9 = new /obj/item/folder(src)
+			B9.pixel_y = 0
+			B9.pixel_x = 6
+
 			return 1
 
 //A closet that traps you when you step onto it!
@@ -284,7 +301,7 @@
 		if (!istype(M) || M.loc != src)
 			return
 
-		if (M.throw_count || istype(OldLoc, /turf/space) || (M.m_intent != "walk"))
+		if (M.throwing || istype(OldLoc, /turf/space) || (M.m_intent != "walk"))
 			var/flingdir = turn(get_dir(src.loc, OldLoc), 180)
 			src.throw_at(get_edge_target_turf(src, flingdir), throw_strength, 1)
 			return
@@ -351,7 +368,7 @@
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
-				for (var/obj/storage/O in lockers_and_crates)
+				for (var/obj/storage/O in by_type[/obj/storage])
 					LAGCHECK(LAG_LOW)
 					if (O.z != src.z || O.open || !O.can_open())
 						continue
@@ -403,22 +420,21 @@
 				return
 
 		if (src.open)
-			if (!src.is_short && istype(W, /obj/item/weldingtool))
+			if (!src.is_short && isweldingtool(W))
 				return
 
 			else if (iswrenchingtool(W))
 				return
 
-		else if (!src.open && istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/welder = W
-			if(!welder.try_weld(user, 1, burn_eyes = 1))
+		else if (!src.open && isweldingtool(W))
+			if(!W:try_weld(user, 1, burn_eyes = 1))
 				return
 			if (!src.welded)
-				src.weld(1, welder, user)
-				src.visible_message("<span class='alert'>[user] welds [src] closed with [welder].</span>")
+				src.weld(1, W, user)
+				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
 			else
-				src.weld(0, welder, user)
-				src.visible_message("<span class='alert'>[user] unwelds [src] with [welder].</span>")
+				src.weld(0, W, user)
+				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
 			return
 
 		if (src.secure)

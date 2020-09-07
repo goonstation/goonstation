@@ -1,5 +1,7 @@
 // the cable coil object, used for laying cable
 
+obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
+
 #define MAXCOIL 120
 #define STARTCOIL 30 //base type starting coil amt
 /obj/item/cable_coil
@@ -26,6 +28,7 @@
 	rand_pos = 1
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab
+	inventory_counter_enabled = 1
 
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null
@@ -88,6 +91,7 @@
 			return 0
 		else if (src.amount == used)
 			qdel(src)
+			return 1
 		else
 			amount -= used
 			updateicon()
@@ -100,7 +104,7 @@
 			if (ismob(loc))
 				var/mob/owner = loc
 				owner.u_equip(src)
-			loc = newloc
+			set_loc(newloc)
 			return src
 		src.use(amt)
 		var/obj/item/cable_coil/C = new /obj/item/cable_coil(newloc)
@@ -122,6 +126,8 @@
 			set_icon_state("coil[iconmod]")
 			base_name = "[namemod]cable coil"
 		updateName()
+		inventory_counter?.update_number(amount)
+
 
 /obj/item/cable_coil/cut
 	icon_state = "coil2"
@@ -252,6 +258,12 @@
 			C.amount += src.amount
 			boutput(user, "You join the cable coils together.")
 			C.updateicon()
+			if(istype(src.loc, /obj/item/storage))
+				SEND_SIGNAL(src.loc, COMSIG_STORAGE_TRANSFER_ITEM, src)
+			else if(istype(src.loc, /mob))
+				var/mob/M = src.loc
+				M.u_equip(src)
+				M.drop_item(src)
 			qdel(src)
 			return
 

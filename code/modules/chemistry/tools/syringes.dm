@@ -161,11 +161,11 @@
 					boutput(user, "<span class='alert'>You cannot directly fill this object.</span>")
 					return
 
-				if (iscarbon(target) || iscritter(target))
+				if (iscarbon(target) || ismobcritter(target))
 					if (target != user)
 						for (var/mob/O in AIviewers(world.view, user))
 							O.show_message(text("<span class='alert'><B>[] is trying to inject []!</B></span>", user, target), 1)
-						logTheThing("combat", user, target, "tries to inject %target% with a syringe [log_reagents(src)] at [log_loc(user)].")
+						logTheThing("combat", user, target, "tries to inject [constructTarget(target,"combat")] with a syringe [log_reagents(src)] at [log_loc(user)].")
 
 						if (!do_mob(user, target))
 							if (user && ismob(user))
@@ -190,7 +190,7 @@
 
 				SPAWN_DBG (5)
 					if (src && src.reagents && target && target.reagents)
-						logTheThing("combat", user, target, "injects %target% with a syringe [log_reagents(src)] at [log_loc(user)].")
+						logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with a syringe [log_reagents(src)] at [log_loc(user)].")
 						// Convair880: Seems more efficient than separate calls. I believe this shouldn't clutter up the logs, as the number of targets you can inject is limited.
 						// Also wraps up injecting food (advertised in the 'Tip of the Day' list) and transferring chems to other containers (i.e. brought in line with beakers and droppers).
 
@@ -284,6 +284,11 @@
 	name = "syringe (calomel)"
 	desc = "Contains calomel, which be used to purge impurities, but is highly toxic itself."
 	initial_reagents = "calomel"
+
+/obj/item/reagent_containers/syringe/synaptizine
+	name = "syringe (synaptizine)"
+	desc = "Contains synaptizine, a mild stimulant to increase alertness."
+	initial_reagents = "synaptizine"
 
 #undef S_DRAW
 #undef S_INJECT

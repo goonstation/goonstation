@@ -55,9 +55,9 @@
 		if(MT.reagents)
 			MT.reagents.add_reagent(venom_id, inject_amount)
 
-		if (ishuman(MT))
+		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")
-		logTheThing("combat", holder.owner, MT, "stings %target% with [name] as a changeling [log_loc(holder.owner)].")
+		logTheThing("combat", holder.owner, MT, "stings [constructTarget(MT,"combat")] with [name] as a changeling [log_loc(holder.owner)].")
 
 	neurotoxin
 		name = "Neurotoxic Sting"

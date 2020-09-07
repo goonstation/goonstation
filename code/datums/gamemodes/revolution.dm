@@ -20,6 +20,7 @@
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
 	var/round_limit = 21000 // 35 minutes (see post_setup)
 	var/endthisshit = 0
+	do_antag_random_spawns = 0
 
 /datum/game_mode/revolution/extended
 	name = "extended revolution"
@@ -95,14 +96,14 @@
 	if(round_limit > 0)
 		SPAWN_DBG (round_limit) // this has got to end soon
 			command_alert("A revolution has been detected on [station_name(1)]. All loyal members of the crew are to ensure the revolution is quelled.","Emergency Riot Update")
-			SPAWN_DBG(6000) // 10 minutes to clean up shop
-				command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Riot Update")
-				SPAWN_DBG(3000) // 5 minutes until everyone dies
-					command_alert("You may feel a slight burning sensation.", "Emergency Riot Update")
-					SPAWN_DBG(10 SECONDS) // welp
-						for(var/mob/living/carbon/M in mobs)
-							M.gib()
-						endthisshit = 1
+			sleep(6000) // 10 minutes to clean up shop
+			command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Riot Update")
+			sleep(3000) // 5 minutes until everyone dies
+			command_alert("You may feel a slight burning sensation.", "Emergency Riot Update")
+			sleep(10 SECONDS) // welp
+			for(var/mob/living/carbon/M in mobs)
+				M.gib()
+			endthisshit = 1
 
 /datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
 	equip_traitor(rev_mob)
@@ -159,7 +160,7 @@
 			comm.messagetext.Add(intercepttext)
 */
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -187,7 +188,7 @@
 
 /datum/game_mode/revolution/proc/add_revolutionary(datum/mind/rev_mind)
 	.= 0
-	if (!rev_mind.current || (rev_mind.current && !rev_mind.current.client))
+	if (!rev_mind?.current || (rev_mind.current && !rev_mind.current.client))
 		return 0
 
 	var/list/uncons = src.get_unconvertables()
@@ -265,17 +266,23 @@
 /datum/game_mode/revolution/proc/get_possible_revolutionaries()
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_revhead)
 				candidates += player.mind
 
 	if(candidates.len < 1)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_revhead set to yes, so we're adding players who don't want to be rev leaders to the pool.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 	if(candidates.len < 1)
@@ -355,7 +362,7 @@
 				continue
 
 			// Check if they're on the current z-level
-			var/turf/T = get_turf_loc(head_mind.current)
+			var/turf/T = get_turf(head_mind.current)
 			if(T.z != 1)
 				continue
 			// If they are then don't end the round
@@ -389,7 +396,7 @@
 			if(isghostcritter(rev_mind.current) || isVRghost(rev_mind.current))
 				continue
 
-			var/turf/T = get_turf_loc(rev_mind.current)
+			var/turf/T = get_turf(rev_mind.current)
 			if(T.z != 1)
 				continue
 
@@ -431,7 +438,7 @@
 		text = ""
 		if(rev_mind.current)
 			text += "[rev_mind.current.real_name]"
-			var/turf/T = get_turf_loc(rev_mind.current)
+			var/turf/T = get_turf(rev_mind.current)
 			if(isdead(rev_mind.current))
 				text += " (Dead)"
 			else if(T.z == 2)
@@ -450,7 +457,7 @@
 	for(var/datum/mind/rev_nh_mind in revolutionaries)
 		if(rev_nh_mind.current)
 			text += "[rev_nh_mind.current.real_name]"
-			var/turf/T = get_turf_loc(rev_nh_mind.current)
+			var/turf/T = get_turf(rev_nh_mind.current)
 			if(T.z == 2)
 				text += " (Imprisoned!)"
 			else if(isdead(rev_nh_mind.current))
@@ -475,7 +482,7 @@
 			if(isdead(head_mind.current))
 				text += " (Dead)"
 			else
-				var/turf/T = get_turf_loc(head_mind.current)
+				var/turf/T = get_turf(head_mind.current)
 				if(T.z != 1)
 					text += " (Abandoned the [station_or_ship()]!)"
 				else
@@ -504,8 +511,8 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 7
-	stamina_damage = 25
-	stamina_cost = 14
+	stamina_damage = 30
+	stamina_cost = 15
 	stamina_crit_chance = 10
 	hitsound = 'sound/impact_sounds/Wood_Hit_1.ogg'
 
@@ -513,3 +520,26 @@
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_LARGE
+		processing_items.Add(src)
+
+	disposing()
+		..()
+		processing_items.Remove(src)
+
+	process()
+		..()
+		if (ismob(src.loc))
+			var/mob/owner = src.loc
+			if (owner.mind && ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
+				var/datum/game_mode/revolution/R = ticker.mode
+
+				if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
+					var/found = 0
+					for (var/datum/mind/M in R.head_revolutionaries)
+						if (M.current && ishuman(M.current))
+							if (get_dist(owner,M.current) <= 5)
+								for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
+									found = 1
+									break
+					if (found)
+						owner.changeStatus("revspirit", 20 SECONDS)

@@ -14,7 +14,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_play,
 		/client/proc/admin_observe,
 		/client/proc/game_panel,
-		new/client/proc/game_panel(null, "Secrets", "bring back secrets 2016"),
+		/client/proc/game_panel_but_called_secrets,
 		/client/proc/player_panel,
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/toggle_pray,
@@ -27,6 +27,7 @@ var/list/admin_verbs = list(
 		/client/proc/hivesay,
 		/client/proc/marsay,
 		/client/proc/flocksay,
+		/client/proc/silisay,
 		/client/proc/toggle_hearing_all_looc,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
@@ -82,7 +83,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_bradsay,
 		/datum/admins/proc/restart,
 		/datum/admins/proc/toggleenter,
-		/client/proc/respawn_target,
 		/client/proc/respawn_self,
 		/client/proc/cmd_admin_check_reagents,
 		/client/proc/cmd_admin_check_health,
@@ -90,8 +90,6 @@ var/list/admin_verbs = list(
 		/client/proc/revive_all_bees,
 		/client/proc/revive_all_cats,
 		/client/proc/revive_all_parrots,
-		///client/proc/revive_critter,
-		///client/proc/kill_critter,
 		/datum/admins/proc/toggle_blood_system,
 		/client/proc/narrator_mode,
 		/client/proc/admin_pick_random_player,
@@ -116,6 +114,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_death_confetti,
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
+		/client/proc/cmd_admin_managebioeffect,
 
 		/client/proc/debug_deletions,
 
@@ -134,7 +133,6 @@ var/list/admin_verbs = list(
 		/client/proc/display_bomb_monitor,
 		//Ban verbs
 		/client/proc/openBanPanel,
-		/client/proc/cmd_admin_addban,
 		/client/proc/banooc,
 		/client/proc/view_cid_list,
 		/client/proc/modify_parts,
@@ -149,7 +147,6 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/toggletraitorscaling,
 		/client/proc/toggle_flourish,
 
-		/client/proc/getturftelesci,
 		/client/proc/cmd_view_runtimes,
 		/client/proc/cmd_antag_history,
 		/client/proc/cmd_admin_show_player_stats,
@@ -164,10 +161,22 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_adminundamn,
 		/client/proc/cmd_admin_admindamn,
 		/client/proc/toggle_respawn_arena,
+
+		/client/proc/cmd_emag_all,
+		/client/proc/cmd_scale_all,
+		/client/proc/cmd_rotate_all,
+		/client/proc/cmd_spin_all,
+		/client/proc/cmd_atom_emergency_stop,
+		/client/proc/cmd_emag_type,
+		/client/proc/cmd_transmute_type,
+		/client/proc/cmd_scale_type,
+		/client/proc/cmd_rotate_type,
+		/client/proc/cmd_spin_type,
+		/client/proc/cmd_get_type
 		),
 
 	4 = list(
-		// LEVEL_ADMIN, admin
+		// LEVEL_IA, admin
 		/*
 		/client/proc/noclip,
 		/client/proc/cmd_admin_mute,
@@ -222,12 +231,13 @@ var/list/admin_verbs = list(
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
 		/client/proc/rspawn_panel,
+		/client/proc/cmd_admin_manageabils,
+		/client/proc/create_all_wizard_rings,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
 		/client/proc/noclip,
 		///client/proc/addpathogens,
-		/client/proc/addreagents,
 		/client/proc/respawn_as_self,
 		/client/proc/cmd_give_pet,
 		/client/proc/cmd_give_pets,
@@ -241,17 +251,16 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_icegib,
 		/client/proc/cmd_admin_goldgib,
 		/client/proc/cmd_admin_spidergib,
+		/client/proc/cmd_admin_implodegib,
 		/client/proc/cmd_admin_cluwnegib,
+		/client/proc/cmd_admin_buttgib,
 		/client/proc/cmd_admin_tysongib,
 		/client/proc/removeOther,
-		/client/proc/cmd_change_map,
-		/client/proc/cmd_start_map_vote,
-		/client/proc/cmd_end_map_vote,
-		/client/proc/cmd_cancel_map_vote,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
+		/datum/admins/proc/supplydrop_spawn_obj,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
@@ -260,12 +269,11 @@ var/list/admin_verbs = list(
 
 
 	6 = list(
-		// LEVEL_SHITGUY, shit person
+		// LEVEL_ADMIN, Administrator
 		/datum/admins/proc/togglesoundwaiting,
-		/datum/admins/proc/pixelexplosion,
-		/proc/mod_color,
 		/client/proc/debug_variables,
 		/verb/adminCreateBlueprint,
+		/client/proc/toggle_text_mode,
 		/client/proc/cmd_mass_modify_object_variables,
 		/client/proc/cmd_debug_mutantrace,
 		/client/proc/cmd_admin_rejuvenate,
@@ -289,9 +297,6 @@ var/list/admin_verbs = list(
 		/client/proc/sendmobs,
 		/client/proc/gettraitors,
 		/client/proc/getnontraitors,
-		/client/proc/Debug2,
-		/client/proc/jobbans,
-		/client/proc/rebuild_jobbans_panel,
 		/datum/admins/proc/adrev,
 		/datum/admins/proc/adspawn,
 		/datum/admins/proc/adjump,
@@ -301,18 +306,13 @@ var/list/admin_verbs = list(
 		/client/proc/general_report,
 		/client/proc/map_debug_panel,
 		/client/proc/air_report,
-		/client/proc/air_status,
 		/client/proc/fix_next_move,
 		/client/proc/debugreward,
 
 		/client/proc/flip_view,
 		/client/proc/show_image_to_all,
 		/client/proc/sharkban,
-		/client/proc/cmd_explosion,
 		/client/proc/toggle_literal_disarm,
-		/client/proc/admin_smoke,
-		///client/proc/admin_foam,
-		/client/proc/admin_fluid,
 		/client/proc/implant_all,
 
 		/datum/admins/proc/toggleaprilfools,
@@ -322,7 +322,6 @@ var/list/admin_verbs = list(
 		/client/proc/admin_toggle_nightmode,
 		/client/proc/toggle_ip_alerts,
 		/client/proc/upload_custom_hud,
-		///client/proc/replace_with_explosive,
 		/client/proc/enable_waterflow,
 		/client/proc/delete_fluids,
 		/client/proc/special_fullbright,
@@ -330,6 +329,10 @@ var/list/admin_verbs = list(
 		/client/proc/dereplace_space,
 		/client/proc/ghostdroneAll,
 		/client/proc/showPregameHTML,
+
+		/client/proc/call_proc,
+		/client/proc/call_proc_all,
+		/client/proc/debug_global_variable,
 
 		// /client/proc/admin_airborne_fluid,
 		// /client/proc/replace_space,
@@ -343,7 +346,6 @@ var/list/admin_verbs = list(
 	7 = list(
 		// LEVEL_CODER, coder
 		/client/proc/cmd_job_controls,
-		/datum/admins/proc/pixelexplosion,
 		/client/proc/cmd_modify_market_variables,
 		/client/proc/BK_finance_debug,
 		/client/proc/BK_alter_funds,
@@ -365,10 +367,8 @@ var/list/admin_verbs = list(
 
 		/client/proc/ticklag,
 		/client/proc/cmd_debug_vox,
-		///client/proc/view_save_data,
 		/client/proc/check_gang_scores,
 		/client/proc/mapWorld,
-		///client/proc/call_proc_atom,
 		/client/proc/haine_blood_debug,
 		/client/proc/debug_messages,
 		/client/proc/toggle_next_click,
@@ -422,13 +422,13 @@ var/list/admin_verbs = list(
 
 	8 = list(
 		// LEVEL_HOST, host
-		/client/proc/cmd_claim_rs_verbs
+		/client/proc/cmd_claim_rs_verbs,
+		/datum/admins/proc/toggle_soundpref_override
 		),
 	)
 
 // verbs that SAs and As get while observing. PA+ get these all the time
 var/list/special_admin_observing_verbs = list(
-	/client/proc/cmd_admin_check_contents,
 	/datum/admins/proc/toggle_respawns,
 	/datum/admins/proc/toggledeadchat,
 	/client/proc/togglepersonaldeadchat,
@@ -439,7 +439,6 @@ var/list/special_admin_observing_verbs = list(
 var/list/special_pa_observing_verbs = list(
 	/client/proc/cmd_admin_drop_everything,
 	/client/proc/debug_variables,
-	/client/proc/cmd_modify_object_variables,
 	/client/proc/cmd_modify_ticker_variables,
 	/client/proc/cmd_modify_controller_variables,
 	/client/proc/Getmob,
@@ -474,7 +473,7 @@ var/list/special_pa_observing_verbs = list(
 		var/client/C = who[chosen]
 		C.screen += A
 		boutput(usr, "<span class='notice'>Successful.</span>")
-		logTheThing("admin", usr, C.mob, "added [A] to %target%'s screen.")
+		logTheThing("admin", usr, C.mob, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
 	if(!src.holder)
@@ -504,12 +503,12 @@ var/list/special_pa_observing_verbs = list(
 			src.holder.level = LEVEL_HOST
 		if ("Coder")
 			src.holder.level = LEVEL_CODER
-		if ("Shit Person")
-			src.holder.level = LEVEL_SHITGUY
-		if ("Primary Administrator")
-			src.holder.level = LEVEL_PA
 		if ("Administrator")
 			src.holder.level = LEVEL_ADMIN
+		if ("Primary Administrator")
+			src.holder.level = LEVEL_PA
+		if ("Intermediate Administrator")
+			src.holder.level = LEVEL_IA
 		if ("Secondary Administrator")
 			src.holder.level = LEVEL_SA
 		if ("Moderator")
@@ -543,10 +542,10 @@ var/list/special_pa_observing_verbs = list(
 			if ( src.holder.level > LEVEL_MOD)
 				src.deadchat = 1
 				src.verbs += special_admin_observing_verbs
-			if ( src.holder.level > LEVEL_ADMIN )
+			if ( src.holder.level > LEVEL_IA )
 				src.verbs += special_pa_observing_verbs
 		else
-			if ( src.holder.level > LEVEL_ADMIN)
+			if ( src.holder.level > LEVEL_IA)
 				src.deadchat = 1
 				src.verbs += special_admin_observing_verbs
 			if( src.holder.level > LEVEL_PA ) //SHIT GUY PLUS
@@ -581,7 +580,7 @@ var/list/special_pa_observing_verbs = list(
 		src.holder.level = 0
 
 /client/proc/admin_observe()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Set Observe"
 	if(!src.holder)
 		alert("You are not an admin")
@@ -604,7 +603,7 @@ var/list/special_pa_observing_verbs = list(
 		boutput(src, "<span class='notice'>You are already observing!</span>")
 
 /client/proc/admin_play()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Set Play"
 	if(!src.holder)
 		alert("You are not an admin")
@@ -625,55 +624,62 @@ var/list/special_pa_observing_verbs = list(
 		boutput(src, "<span class='notice'>You are already playing!</span>")
 
 /client/proc/get_admin_state()
-	set category = "Special Verbs"
-	for(var/mob/M in mobs)
-		if(M.client && M.client.holder)
-			if(M.client.holder.state == 1)
-				boutput(src, "[M.key] is playing - [M.client.holder.state]")
-			else if(M.client.holder.state == 2)
-				boutput(src, "[M.key] is observing - [M.client.holder.state]")
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	for(var/client/C)
+		if(C.holder)
+			if(C.holder.state == 1)
+				boutput(src, "[C.key] is playing - [C.holder.state]")
+			else if(C.holder.state == 2)
+				boutput(src, "[C.key] is observing - [C.holder.state]")
 			else
-				boutput(src, "[M.key] is undefined - [M.client.holder.state]")
+				boutput(src, "[C.key] is undefined - [C.holder.state]")
 
 //admin client procs ported over from mob.dm
 
 /client/proc/player_panel()
 	set name = "Player Panel"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	if (src.holder && !src.holder.tempmin)
 		src.holder.player()
 	return
 
 /client/proc/rspawn_panel()
 	set name = "Respawn Panel"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	if (src.holder)
 		src.holder.s_respawn()
 	return
 
 /client/proc/jobbans()
 	set name = "Jobban Panel"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	if(src.holder)
 		src.holder.Jobbans()
 	return
 
 /client/proc/rebuild_jobbans_panel()
 	set name = "Rebuild Jobbans Panel"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	if (src.holder)
 		src.holder.buildjobbanspanel()
 	return
 
 /client/proc/game_panel()
 	set name = "Game Panel"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	if (src.holder)
+		src.holder.Game()
+	return
+
+/client/proc/game_panel_but_called_secrets()
+	set name = "Secrets"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	if (src.holder)
 		src.holder.Game()
 	return
 
 /client/proc/stealth()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Stealth Mode"
 	admin_only
 
@@ -719,7 +725,7 @@ var/list/special_pa_observing_verbs = list(
 		ircbot.export("admin", ircmsg)
 
 /client/proc/alt_key()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Alternate Key"
 	set desc = "Shows your key as something else!"
 	admin_only
@@ -762,7 +768,7 @@ var/list/special_pa_observing_verbs = list(
 		ircbot.export("admin", ircmsg)
 */
 /client/proc/banooc()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "OOC (Un)Ban"
 	set desc = "Ban or unban a player from using OOC"
 	admin_only
@@ -774,16 +780,16 @@ var/list/special_pa_observing_verbs = list(
 	if (!oocban_isbanned(target))
 		oocban_fullban(target)
 		message_admins("[key_name(src)] has banned [key_name(target)] from OOC")
-		logTheThing("admin", usr, target, "Banned %target% from OOC")
-		logTheThing("diary", usr, target, "Banned %target% from OOC", "admin")
+		logTheThing("admin", usr, target, "Banned [constructTarget(target,"admin")] from OOC")
+		logTheThing("diary", usr, target, "Banned [constructTarget(target,"diary")] from OOC", "admin")
 	else
 		oocban_unban(selection)
 		message_admins("[key_name(src)] has unbanned [key_name(target)] from OOC")
-		logTheThing("admin", usr, target, "Unbanned %target% from OOC")
-		logTheThing("diary", usr, target, "Unbanned %target% from OOC", "admin")
+		logTheThing("admin", usr, target, "Unbanned [constructTarget(target,"admin")] from OOC")
+		logTheThing("diary", usr, target, "Unbanned [constructTarget(target,"diary")] from OOC", "admin")
 
 /client/proc/warn(var/mob/M in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Warn"
 	set desc = "Warn a player"
@@ -795,7 +801,7 @@ var/list/special_pa_observing_verbs = list(
 		M.Browse(rules, "window=rules;size=480x320")
 		boutput(M, "<span class='alert'><B>You have been warned by an administrator. This is the only warning you will receive.</B></span>")
 		M.client.warned = 1
-		message_admins("<span class='notice'>[src.ckey] warned [M.ckey].</span>")
+		message_admins("<span class='internal'>[src.ckey] warned [M.ckey].</span>")
 	else
 		var/addData[] = new()
 		addData["ckey"] = M.ckey
@@ -808,7 +814,7 @@ var/list/special_pa_observing_verbs = list(
 
 /client/proc/clear_area_overlays()
 	set name = "Clear Area Overlays"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 
 	for(var/area/A in world)
 		A.icon_state = ""
@@ -816,7 +822,7 @@ var/list/special_pa_observing_verbs = list(
 var/list/fun_images = list()
 /client/proc/show_image_to_all()
 	set name = "Show Image to All"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
 	if(fun_images.len)
 		switch(alert("There is already an existing image.", "Warning", "Ignore", "Clear", "Cancel"))
@@ -842,12 +848,12 @@ var/list/fun_images = list()
 /client/proc/show_rules_to_player(mob/M as mob in world)
 	set name = "Show Rules to Player"
 	set popup_menu = 0
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return
-	logTheThing("admin", src, M, "forced %target% to view the rules")
-	logTheThing("diary", src, M, "forced %target% to view the rules", "admin")
+	logTheThing("admin", src, M, "forced [constructTarget(M,"admin")] to view the rules")
+	logTheThing("diary", src, M, "forced [constructTarget(M,"diary")] to view the rules", "admin")
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
 	M << csound("sound/misc/klaxon.ogg")
 	boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
@@ -856,7 +862,7 @@ var/list/fun_images = list()
 
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 
 	admin_only
@@ -874,7 +880,7 @@ var/list/fun_images = list()
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
 	set desc = "Respawn yourself as the currenly loaded character of a player. Instantly. Right where you stand."
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	admin_only
 
@@ -902,7 +908,7 @@ var/list/fun_images = list()
 /client/proc/respawn_as_self()
 	set name = "Respawn As Self"
 	set desc = "Respawn yourself as your currenly loaded character. Instantly. Right where you stand."
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	admin_only
 
@@ -930,7 +936,7 @@ var/list/fun_images = list()
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
 
 /client/proc/cmd_admin_humanize(var/mob/M in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Humanize"
 	set popup_menu = 0
 
@@ -974,8 +980,8 @@ var/list/fun_images = list()
 		if (S.dependent && S.mainframe && isAI(S.mainframe))
 			qdel(S.mainframe) // Delete mainframe if it's an AI-controlled robot.
 
-	logTheThing("admin", src, M, "has made %target% a human.")
-	logTheThing("diary", src, M, "has made %target% a human.", "admin")
+	logTheThing("admin", src, M, "has made [constructTarget(M,"admin")] a human.")
+	logTheThing("diary", src, M, "has made [constructTarget(M,"diary")] a human.", "admin")
 	message_admins("[key_name(src)] has made [key_name(M)] a human.")
 
 	if (send_to_arrival_shuttle == 1)
@@ -986,7 +992,7 @@ var/list/fun_images = list()
 		return M.humanize(0)
 
 /client/proc/cmd_admin_pop_off_all_the_limbs_oh_god()
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Pop off everyone's limbs"
 	set desc = "Oh christ no don't do this"
 
@@ -1008,7 +1014,7 @@ var/list/fun_images = list()
 /client/proc/mapWorld()
 	set name = "Map World"
 	set desc = "Takes a series of screenshots for mapping"
-	set category = null //Debug
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 
 	//Gotta prevent dummies
 	var/confirm = alert("WARNING: This proc should absolutely not be run on a live server! Make sure you know what you are doing!", "WARNING", "Cancel", "Proceed")
@@ -1139,7 +1145,7 @@ var/list/fun_images = list()
 /client/proc/view_cid_list(var/C as text)
 	set name = "View CompID List"
 	set desc = "View the list of observed computer IDs belonging to a key"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 
 	admin_only
 
@@ -1148,7 +1154,7 @@ var/list/fun_images = list()
 /client/proc/cmd_chat_debug(var/client/C in clients)
 	set name = "Debug Chat"
 	set desc = "Opens a firebug console in the target's chat area"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	admin_only
 
@@ -1160,14 +1166,14 @@ var/list/fun_images = list()
 		ehjax.send(C, "browseroutput", list("firebug" = 1))
 
 /client/proc/blobsay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "blobsay"
 	set hidden = 1
 	admin_only
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_SHITGUY)
+	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "BLOBSAY: [msg]")
 	logTheThing("diary", src, null, "BLOBSAY: [msg]", "admin")
@@ -1192,14 +1198,14 @@ var/list/fun_images = list()
 
 //say to all changelings hiveminds
 /client/proc/hivesay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "hivesay"
 	set hidden = 1
 	admin_only
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_SHITGUY)
+	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "HIVESAY: [msg]")
 	logTheThing("diary", src, null, "HIVESAY: [msg]", "admin")
@@ -1230,15 +1236,45 @@ var/list/fun_images = list()
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
+/client/proc/silisay(msg as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "silisay"
+	admin_only
+	if (!src.mob || src.player_mode)
+		return
+
+	if (src.holder.level < LEVEL_ADMIN)
+		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
+	logTheThing("admin", src, null, "SILISAY: [msg]")
+	logTheThing("diary", src, null, "SILISAY: [msg]", "admin")
+
+	if (!msg)
+		return
+	var/show_other_key = 0
+	if (src.stealth || src.alt_key)
+		show_other_key = 1
+
+	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>ADMIN([show_other_key ? src.fakekey : src.key])</span> says, <span class='message'>\"[msg]\"</span></span></i>"
+	var/adminrendered = "<i><span class='game say'>Robotic Talk, <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, <span class='message'>\"[msg]\"</span></span></i>"
+
+	for (var/mob/M in mobs)
+		if (istype(M, /mob/new_player))
+			continue
+		if (M.client && (M.robot_talk_understand || M.client.holder && !M.client.player_mode))
+			var/thisR = rendered
+			if (M.client.holder && src.mob.mind)
+				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
+			M.show_message(thisR, 2)
+
 /client/proc/dronesay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "dronesay"
 	set hidden = 1
 	admin_only
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_SHITGUY)
+	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "DRONESAY: [msg]")
 	logTheThing("diary", src, null, "DRONESAY: [msg]", "admin")
@@ -1264,14 +1300,14 @@ var/list/fun_images = list()
 
 // let's keep xeroxing until all that remains is a faded butt - cirr
 /client/proc/marsay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "marsay"
 	set hidden = 1
 	admin_only
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_SHITGUY)
+	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "MARSAY: [msg]")
 	logTheThing("diary", src, null, "MARSAY: [msg]", "admin")
@@ -1281,14 +1317,14 @@ var/list/fun_images = list()
 	martian_speak(src.mob, msg, 1)
 
 /client/proc/flocksay(msg as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "flocksay"
 	set hidden = 1
 	admin_only
 	if (!src.mob || src.player_mode)
 		return
 
-	if (src.holder.level >= LEVEL_SHITGUY)
+	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
 	logTheThing("admin", src, null, "FLOCKSAY: [msg]")
 	logTheThing("diary", src, null, "FLOCKSAY: [msg]", "admin")
@@ -1300,7 +1336,7 @@ var/list/fun_images = list()
 
 /client/proc/cmd_dectalk()
 	set name = "Dectalk"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set desc = "Sends a message as voice to all players"
 	set popup_menu = 0
 
@@ -1339,7 +1375,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 	set name = "Give Pet"
 	set desc = "Assigns someone a pet!  Woo!"
-	set hidden = 1
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	admin_only
 
 	if (!M)
@@ -1362,15 +1398,15 @@ var/list/fun_images = list()
 		CritterPet.atkcarbon = 0
 		CritterPet.atksilicon = 0
 
-	logTheThing("admin", usr ? usr : src, M, "gave %target% a pet [pet_path]!")
-	logTheThing("diary", usr ? usr : src, M, "gave %target% a pet [pet_path]!", "admin")
+	logTheThing("admin", usr ? usr : src, M, "gave [constructTarget(M,"admin")] a pet [pet_path]!")
+	logTheThing("diary", usr ? usr : src, M, "gave [constructTarget(M,"diary")] a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave [M] a pet [pet_path]!")
 
 /client/proc/cmd_give_pets()
 	set popup_menu = 0
 	set name = "Give Pets"
 	set desc = "Assigns everyone a pet!  Woo!"
-	set hidden = 1
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	admin_only
 
 	var/pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
@@ -1399,7 +1435,7 @@ var/list/fun_images = list()
 /client/proc/cmd_customgrenade()
 	set popup_menu = 0
 	set name = "Custom Grenade"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set desc = "Create a custom object spewing grenade"
 	admin_only
 
@@ -1412,16 +1448,14 @@ var/list/fun_images = list()
 		return
 
 	if(new_grenade)
-		var/obj/item/old_grenade/thing_thrower/nade = new
+		var/obj/item/old_grenade/thing_thrower/nade = new(usr.loc)
 		nade.count = input("How many things?", "How many things?", 8) as null|num
 		nade.payload = obj_path
-		nade.loc = usr.loc
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
 	else
-		var/obj/item/old_grenade/banana/nade = new /obj/item/old_grenade/banana
+		var/obj/item/old_grenade/banana/nade = new /obj/item/old_grenade/banana(usr.loc)
 		nade.payload = obj_path
-		nade.loc = usr.loc
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
 	logTheThing("admin", src, null, "spawned a custom grenade at [usr.loc]")
@@ -1429,7 +1463,7 @@ var/list/fun_images = list()
 	message_admins("[key_name(src)] spawned a custom grenade at [usr.loc].")
 
 /client/proc/admin_changes()
-	set category = "Admin"
+	set category = "Commands"
 	set name = "Admin Changelog"
 	set desc = "Show or hide the admin changelog"
 	admin_only
@@ -1443,7 +1477,7 @@ var/list/fun_images = list()
 		src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
 
 /client/proc/removeSelf()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Remove Self"
 	set desc = "Simply removes you from existence"
 	set popup_menu = 0
@@ -1467,7 +1501,7 @@ var/list/fun_images = list()
 	qdel(O)
 
 /client/proc/removeOther(var/mob/M as mob in world)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Remove Other"
 	set desc = "Remove some other dude from the mortal plain"
 	set popup_menu = 0
@@ -1487,12 +1521,13 @@ var/list/fun_images = list()
 
 	M.remove()
 
-	logTheThing("admin", src, C ? C : M, "removed %target% from existence!")
-	logTheThing("diary", src, C ? C : M, "removed %target% from existence!", "admin")
+	var/Target = C ? C : M
+	logTheThing("admin", src, Target, "removed [constructTarget(Target,"admin")] from existence!")
+	logTheThing("diary", src, Target, "removed [constructTarget(Target,"diary")] from existence!", "admin")
 	message_admins("[key_name(src)] removed [key_name(C ? C : M)] from existence!")
 
 /client/proc/cmd_change_map()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Switch Map"
 	set desc = "Switch the map for the next round"
 	set popup_menu = 0
@@ -1537,7 +1572,7 @@ var/list/fun_images = list()
 		boutput(world, "<span class='notice'><b>The next round's map will be: [map]</b></span>")
 
 /client/proc/cmd_start_map_vote()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Start Map Vote"
 	set desc = "Start a player vote for the next map"
 	set popup_menu = 0
@@ -1568,7 +1603,7 @@ var/list/fun_images = list()
 	message_admins("[key_name(usr ? usr : src)] triggered a player map vote (duration: [duration])")
 
 /client/proc/cmd_end_map_vote()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "End Map Vote"
 	set desc = "End a player vote for the next map"
 	set popup_menu = 0
@@ -1593,7 +1628,7 @@ var/list/fun_images = list()
 	message_admins("[key_name(usr ? usr : src)] ended the player map vote")
 
 /client/proc/cmd_cancel_map_vote()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Cancel Map Vote"
 	set desc = "Cancel a player map vote without doing anything"
 	set popup_menu = 0
@@ -1622,7 +1657,7 @@ var/list/fun_images = list()
 	message_admins("[key_name(usr ? usr : src)] cancelled the player map vote prematurely. Rude.")
 
 /client/proc/cmd_antag_history(var/ckey as text)
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "View Antag History"
 	set desc = "View the antag history for a given player"
 	set popup_menu = 0
@@ -1688,7 +1723,7 @@ var/list/fun_images = list()
 
 
 /client/proc/cmd_dispatch_observe_to_ghosts(var/atom/movable/target)
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Alert All Ghosts"
 	set desc = "Send a notice to ghosts that something weird is happening at a person"
 	set popup_menu = 0
@@ -1698,7 +1733,7 @@ var/list/fun_images = list()
 		ghost_notifier.send_notification(src, target, /datum/ghost_notification/observe/admin)
 
 /client/proc/showPregameHTML()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Display Pregame HTML"
 	set desc = "Tired of boring map gimmicks on the pregame screen? Try HTML!"
 
@@ -1734,7 +1769,7 @@ var/list/fun_images = list()
 					winshow(C, "pregameBrowser", 1)
 
 /client/proc/implant_all()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Implant All"
 	set desc = "Gives everyone a microbomb. You cannot undo this!!"
 
@@ -1783,8 +1818,12 @@ var/list/fun_images = list()
 
 
 	if (parameters["right"])
-		var/list/atoms = list(get_turf(A))
-		for(var/thing in get_turf(A))
+		var/turf/clicked_turf = get_turf(A)
+		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
+		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
+		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
+		var/list/atoms = list(clicked_turf)
+		for(var/thing in clicked_turf)
 			var/atom/atom = thing
 			atoms += atom
 		if (atoms.len)
@@ -1795,18 +1834,18 @@ var/list/fun_images = list()
 
 	if (!client.holder.animtoggle)
 		if (ismob(A))
-			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"])
+			choice = input(usr, "What do? (Atom verbs are ON)", "[A]") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"])
 		else if (isturf(A))
-			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"])
+			choice = input(usr, "What do? (Atom verbs are ON)", "[A]") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"])
 		else
-			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"])
+			choice = input(usr, "What do? (Atom verbs are ON)", "[A]") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"])
 	else
 		if (ismob(A))
-			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["mob"]
+			choice = input(usr, "What do?", "[A]") as null|anything in client.holder.admin_interact_verbs["mob"]
 		else if (isturf(A))
-			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["turf"]
+			choice = input(usr, "What do?", "[A]") as null|anything in client.holder.admin_interact_verbs["turf"]
 		else
-			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["obj"]
+			choice = input(usr, "What do?", "[A]") as null|anything in client.holder.admin_interact_verbs["obj"]
 
 	var/client/C = src.client
 	switch(choice)
@@ -1814,6 +1853,10 @@ var/list/fun_images = list()
 			C.cmd_admin_get_mobject(A)
 		if("Follow Thing")
 			C.admin_follow_mobject(A)
+		if("Manage Bioeffects")
+			C.cmd_admin_managebioeffect(A)
+		if("Manage Abilities")
+			C.cmd_admin_manageabils(A)
 		if("Add Reagents")
 			C.addreagents(A)
 		if("Check Reagents")
@@ -1868,7 +1911,10 @@ var/list/fun_images = list()
 			C.getturftelesci(A)
 
 		if ("Possess")
-			possess(A)
+			if(istype(A, /mob))
+				possessmob(A)
+			else
+				possess(A)
 		if ("Create Poster")
 			C.generate_poster(A)
 

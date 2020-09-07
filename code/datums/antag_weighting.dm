@@ -7,7 +7,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 /datum/antagWeighter
 	var/debug = 0 //print a shit load of debug messages or not
-	var/variance = 10 //percentage probability *per choice* to ignore weighting for a single antag role (instead picking some random dude)
+	var/variance = 100 //percentage probability *per choice* to ignore weighting for a single antag role (instead picking some random dude)
 	var/minPlayed = 5 //minimum amount of rounds participated in required for the antag weighter to consider a person a valid choice
 
 
@@ -16,8 +16,9 @@ var/global/datum/antagWeighter/antagWeighter
 		src.debug = debugMode ? debugMode : 0
 
 		//All picks during ass day are random
-		if (it_is_ass_day)
+#if ASS_JAM
 			src.variance = 100
+#endif
 
 
 	proc/debugLog(msg)
@@ -227,8 +228,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 		//Set up segmented list for variance
 		var/list/historyLookup = list()
-		if (history.len > amount)
-			historyLookup = history.Copy(amount + 1)
+		historyLookup = history.Copy()
 
 		//Build our final list of chosen people, to the max of "amount"
 		var/cCount = 0
@@ -332,8 +332,9 @@ var/global/datum/antagWeighter/antagWeighter
 			count++
 
 		//Selections during ass day don't count for weighting (but we still want to record that sweet sweet data yo)
-		if (it_is_ass_day)
+#if ASS_JAM
 			apiPlayers["assday"] = 1
+#endif
 
 		if (src.debug)
 			src.debugLog("Players list sending to API: [json_encode(apiPlayers)]")

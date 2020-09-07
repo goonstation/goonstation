@@ -94,6 +94,11 @@
 		return 0
 	if (jobban_isbanned(G, "Ghostdrone"))
 		return 0
+	if (G.client.player)
+		var/round_num = G.client.player.get_rounds_participated()
+		if (!isnull(round_num) && round_num < 20)
+			boutput(G, "<span class='alert'>You only have [round_num] rounds played. You need 20 rounds to play this role.")
+			return 0
 	return 1
 
 #define GHOSTDRONE_BUILD_INTERVAL 1000

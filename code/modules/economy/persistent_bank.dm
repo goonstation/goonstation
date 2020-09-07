@@ -84,6 +84,8 @@
 	var/held_item = 0
 	var/completed_objs = 0
 	var/all_objs = 0
+	var/pilot = 0 //buckled into pilots chair
+	var/pilot_bonus = 0
 
 	GetBody()
 		var/ret
@@ -99,9 +101,11 @@
 		else
 			ret = "<p style=\"text-align:left;\">Base Wage .....<span style=\"float:right;\"><b>[final_payout]   </b></span> </p><br style=\"line-height:0px;\" />"
 			ret += "<p style=\"text-align:left;\">Antagonist - No tax!</p>"
-
-		if (it_is_ass_day)
+		if (pilot)
+			ret += "<p style=\"text-align:left;\">Pilot's bonus ....<span style=\"float:right;\"><b>+ [pilot_bonus] </b></span> </p>"
+#if ASS_JAM
 			ret += "<p style=\"text-align:left;\">2X ASS DAY BONUS!</p>"
+#endif
 
 		ret += "<hr>"
 		ret += "<big><b><p style=\"text-align:left;\">PAYOUT ..... <span style=\"float:right;\">[final_payout]</span> </p></b></big><br>"

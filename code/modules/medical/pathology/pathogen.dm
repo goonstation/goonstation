@@ -22,11 +22,11 @@
 // And for all:
 // RARITY_ABSTRACT: Used strictly for categorization. ABSTRACT symptoms will never appear.
 //                  ie. if lingual is a symptom category with multiple subsymptoms (for easy mutex), it should be abstract.
-#define RARITY_VERY_COMMON 10
-#define RARITY_COMMON 5
+#define RARITY_VERY_COMMON 1
+#define RARITY_COMMON 2
 #define RARITY_UNCOMMON 3
-#define RARITY_RARE 2
-#define RARITY_VERY_RARE 1
+#define RARITY_RARE 4
+#define RARITY_VERY_RARE 5
 #define RARITY_ABSTRACT 0
 
 datum/pathogen_cdc
@@ -40,6 +40,7 @@ datum/pathogen_cdc
 	var/list/mutations = list()
 
 	New(var/pathogen_uid)
+		..()
 		creation_time = world.time / 600
 		src.uid = pathogen_uid
 
@@ -119,6 +120,7 @@ datum/controller/pathogen
 			return
 		if (H in CDC.infections)
 			CDC.infections -= H
+		P.oncured()
 
 	proc/patient_zero(var/datum/pathogen_cdc/CDC, var/topic_holder)
 		if (CDC.patient_zero)
@@ -175,7 +177,7 @@ datum/controller/pathogen
 							var/datum/suppressant/S = src.path_to_suppressant[spath]
 							types += S.name
 							types[S.name] = S
-						var/chosen = input("Which suppresant?", "Suppressant", types[1]) in types
+						var/chosen = input("Which suppressant?", "Suppressant", types[1]) in types
 						P.suppressant = types[chosen]
 						P.desc = "[P.suppressant.color] dodecahedrical [P.body_type.plural]"
 
@@ -650,6 +652,7 @@ datum/controller/pathogen
 		src.cdc_creator[key] = P
 
 	New()
+		..()
 		UID_to_symptom = list()
 		symptom_to_UID = list()
 		UID_to_suppressant = list()
@@ -917,7 +920,7 @@ datum/pathogen
 
 	var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent.
 	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
-	var/curable_by_suppression = 0 					// If not 0, represents a probability of becoming regressive through suppression. If negative, randomly generated.
+	var/curable_by_suppression = 10	// If not 0, represents a probability of becoming regressive through suppression. If negative, randomly generated.
 	var/rads = 0 									// The pathogen may mutate inside someone according to rads.
 	var/rad_mutate_cooldown = 0 					// The amount of ticks to wait before we can mutate again due to radiation.
 	var/ticked = 0
@@ -974,11 +977,13 @@ datum/pathogen
 		generate_attributes(strength)
 
 	New()
+		..()
 		setup(0, null, 0)
 
 	unpooled()
 		clear()
 		setup(0, null, 0)
+		..()
 
 	proc/create_weak()
 		randomize(0)
@@ -1246,25 +1251,8 @@ datum/pathogen
 			rad_mutate_cooldown = 0
 		*/
 
-	// This is the real thing, wrapped by process().
-	proc/disease_act()
-		var/list/acted = list()
-		var/order = pick(0,1)
-		if (order)
-			for (var/datum/effect in src.effects)
-				if (effect.type in acted)
-					continue
-				acted += effect.type
-				if (prob(body_type.activity[stage]))
-					effect:disease_act(infected, src)
-		else
-			for (var/i = src.effects.len, i > 0, i--)
-				var/datum/effect = src.effects[i]
-				if (effect.type in acted)
-					continue
-				acted += effect.type
-				if (prob(body_type.activity[stage]))
-					effect:disease_act(infected, src)
+	// handles pathogen advancing or receding in stage and also being cured
+	proc/progress_pathogen()
 		if (!cooldown)
 			if (in_remission)
 				if (prob(abs(advance_speed)))
@@ -1297,6 +1285,27 @@ datum/pathogen
 		else
 			cooldown--
 
+	// This is the real thing, wrapped by process().
+	proc/disease_act()
+		var/list/acted = list()
+		var/order = pick(0,1)
+		if (order)
+			for (var/datum/effect in src.effects)
+				if (effect.type in acted)
+					continue
+				acted += effect.type
+				if (prob(body_type.activity[stage]))
+					effect:disease_act(infected, src)
+		else
+			for (var/i = src.effects.len, i > 0, i--)
+				var/datum/effect = src.effects[i]
+				if (effect.type in acted)
+					continue
+				acted += effect.type
+				if (prob(body_type.activity[stage]))
+					effect:disease_act(infected, src)
+		progress_pathogen()
+
 	// it's like disease_act, but for dead people!
 	proc/disease_act_dead()
 		var/list/acted = list()
@@ -1316,7 +1325,7 @@ datum/pathogen
 				acted += effect.type
 				if (prob(body_type.activity[stage]))
 					effect:disease_act_dead(infected, src)
-		// let's not bother doing all the suppression and curing type stuff for dead people, most symptoms won't do anything anyway
+		progress_pathogen()
 
 	// A safe method for advancing the pathogen's stage.
 	proc/advance()
@@ -1422,16 +1431,23 @@ datum/pathogen
 		return message
 
 	// Act on emoting. Vetoing available by returning 0.
-	proc/onemote(act)
-		suppressant.onemote(infected, act, src)
+	proc/onemote(act, voluntary, param)
+		suppressant.onemote(infected, act, voluntary, param, src)
 		for (var/effect in src.effects)
-			. *= effect:onemote(infected, act, src)
+			. *= effect:onemote(infected, act, voluntary, param, src)
 
 	// Act when dying. Returns nothing.
 	proc/ondeath()
 		for (var/effect in src.effects)
 			effect:ondeath(infected, src)
 		suppressant.ondeath(src)
+		return
+
+	// Act when pathogen is cured. Returns nothing.
+	proc/oncured()
+		for (var/effect in src.effects)
+			effect:oncured(infected, src)
+		suppressant.oncured(src)
 		return
 
 	proc/add_new_symptom(var/list/allowed, var/allow_duplicates = 0)
@@ -1549,7 +1565,7 @@ proc/num2hexoc(num, pad)
 
 // One's complement reverse engineering of a hexadecimal one's complement representation to a base 10 signed number
 proc/hex2numoc(var/num)
-	var/len = lentext(num)
+	var/len = length(num)
 	var/max = 7
 	for (var/i = len - 1, i > 0, i--)
 		max = max * 16 + 15

@@ -13,7 +13,7 @@
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1.5
@@ -57,10 +57,7 @@
 			randomturfs.Add(T)
 		src.set_loc(pick(randomturfs))
 		if (dospark)
-			SPAWN_DBG(0)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, src)
-				s.start()
+			elecflash(src)
 		if (dosmoke)
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			smoke.set_up(10, 0, src.loc)
@@ -98,10 +95,7 @@
 				playsound(src.loc, "sound/weapons/lasermed.ogg", 100, 1)
 				if (prob(66))
 					C.TakeDamage("chest", 0, rand(3,5)/C.get_ranged_protection())
-					SPAWN_DBG(0)
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, C)
-						s.start()
+					elecflash(C)
 				else boutput(target, "<span class='alert'>The shot missed!</span>")
 				src.attack = 0
 				sleeping = 1
@@ -204,8 +198,8 @@
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		if (prob(95))
 			if (prob(10))

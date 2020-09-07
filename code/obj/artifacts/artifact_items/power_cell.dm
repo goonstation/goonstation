@@ -40,7 +40,7 @@
 
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact
-	rarity_class = 1
+	rarity_class = 2 // modified from 1 as part of art tweak
 	validtypes = list("ancient","martian","wizard","precursor")
 	automatic_activation = 1
 	react_elec = list("equal",0,10)

@@ -13,9 +13,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 /obj/item/uplink
 	name = "uplink"
-	stamina_damage = 25
-	stamina_cost = 25
-	stamina_crit_chance = 10
+	stamina_damage = 0
+	stamina_cost = 0
+	stamina_crit_chance = 0
 
 	var/uses = 12 // Amount of telecrystals.
 	var/list/datum/syndicate_buylist/items_general = list() // See setup().
@@ -34,10 +34,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
+		..()
 		SPAWN_DBG (10)
 			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !src.items_objective.len))
 				src.setup()
-		return
 
 	proc/generate_code()
 		if (!src || !istype(src))
@@ -697,7 +697,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					return 0
 				B.claimed = 1
 				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
-					M.loc = get_turf(delivery)
+					M.set_loc(get_turf(delivery))
 				if (istype(delivery.loc, /mob))
 					var/mob/M = delivery.loc
 					if (istype(delivery,/obj/item/parts/human_parts) && ishuman(M))
@@ -993,6 +993,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/blink
 	name = "Blink"
 	eqtype = "Defensive"
+	vr_allowed = 0
 	desc = "This spell teleports you a short distance forwards. Useful for evasion or getting into areas."
 	assoc_spell = /datum/targetable/spell/blink
 

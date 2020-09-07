@@ -103,12 +103,12 @@
 	if (!src)
 		return
 
+	if(src.exploding) return
+	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 
 	var/turf/T = get_turf(src)
 	if (T && isturf(T))
@@ -223,7 +223,6 @@
 			src.path.Remove(src.path[1])
 		else
 			src.frustration++
-			sleep (10)
 
 		SPAWN_DBG (3)
 			if (src && src.path && src.path.len)

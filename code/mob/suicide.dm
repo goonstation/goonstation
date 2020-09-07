@@ -20,7 +20,6 @@
 // cirr here, the amount of code duplication for suicides a) made me sad and b) ought to have been in a parent proc to allow this functionality for everyone anyway
 // the suiciding var is already at the mob level for fuck's sakes
 /mob/verb/suicide()
-	set hidden = 1
 
 	if (!isliving(src) || isdead(src))
 		boutput(src, "You're already dead!")
@@ -137,7 +136,7 @@
 				if (src && !isdead(src))
 					src.suiciding = 0
 			src.pixel_y = 0
-			src.anchored = 0
+			reset_anchored(src)
 			src.on_chair = 0
 			src.buckled = null
 			return

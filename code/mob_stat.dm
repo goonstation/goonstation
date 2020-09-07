@@ -15,6 +15,7 @@
 	//above : ORDER IS IMPORANT
 
 	New()
+		..()
 		//-1 indicates a blank space to be inserted (These are set in update() but for ease of reading I have labeled the spacers here)
 		//this shit is kind of messy to read but it is Quicker than repopulating the list each update()
 		stats["Map:"] = 0
@@ -68,7 +69,7 @@
 				saveStat("Map Vote Link:",mapVoteLinkStat)
 
 				if (mapSwitcher.voteCurrentDuration)
-					saveStat("Map Vote Time:", "([round(((mapSwitcher.voteStartedAt + mapSwitcher.voteCurrentDuration) - world.time) / 10)] seconds remaining, [mapSwitcher.playerVotes.len] vote[mapSwitcher.playerVotes.len != 1 ? "s" : ""])")
+					saveStat("Map Vote Time:", "([round(((mapSwitcher.voteStartedAt + mapSwitcher.voteCurrentDuration + PREGAME_LOBBY_TICKS) - world.time) / 10)] seconds remaining, [map_vote_holder.voters] vote[map_vote_holder.voters != 1 ? "s" : ""])")
 			else
 				stats["Map Vote Link:"] = 0
 				stats["Map Vote Time:"] = 0
@@ -148,10 +149,14 @@ var/global/datum/mob_stat_thinker/mobStat = new
 		if (world.time - mobStat.last_update > mobStat.update_interval)
 			mobStat.update()
 
+		/*
+
 		if (mobStat.stats["Map Vote Time:"])
 			var/vote = mapSwitcher.playerVotes[src.client.ckey]
 			if (vote)
 				stat ("Your vote: ","[vote]")
+
+		*/
 
 		//MBC : Copy paste for life : This is the same loop as below basically. (I don't want to check admin holder each and every loop iteration for non-admins! I'd rather the code look like shit.
 

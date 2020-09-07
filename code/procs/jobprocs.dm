@@ -53,8 +53,10 @@
 
 	var/list/unassigned = list()
 
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready && !player.mind.assigned_role)
+	for (var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+		if (player.ready && !player.mind.assigned_role)
 			unassigned += player
 
 	if (unassigned.len == 0)
@@ -312,8 +314,6 @@
 		boutput(src, "<span class='alert'><b>Something went wrong setting up your rank and equipment! Report this to a coder.</b></span>")
 		return
 
-	//if(JOB.name == "Captain")
-		//boutput(world, "<b>[src] is the Captain!</b>")
 	if (JOB.announce_on_join)
 		SPAWN_DBG(1 SECOND)
 			boutput(world, "<b>[src.name] is the [JOB.name]!</b>")
@@ -322,31 +322,16 @@
 	src.mind.assigned_role = JOB.name
 
 	if (!joined_late)
-		if ((ticker && ticker.mode && !istype(ticker.mode, /datum/game_mode/construction)) && JOB.name != "Tourist")
-			var/obj/S = null
+		if (ticker?.mode && !istype(ticker.mode, /datum/game_mode/construction))
 			if (job_start_locations && islist(job_start_locations[JOB.name]))
-				var/list/locations = job_start_locations[JOB.name]
-				S = pick(locations)
-				if (locate(/mob) in S.loc)
-					for (var/i=5, i>0, i--)
-						S = pick(locations)
-						if (!(locate(/mob) in S.loc))
-							break
-			else
-				for (var/obj/landmark/start/sloc in landmarks)//world)
-					LAGCHECK(LAG_LOW)
-					if (sloc.name != JOB.name)
-						continue
-					if (locate(/mob) in sloc.loc)
-						continue
-					S = sloc
-					break
-			if (!S)
-				S = locate("start*[JOB.name]") // use old stype
-			if (istype(S, /obj/landmark/start) && isturf(S.loc))
-				src.set_loc(S.loc)
+				var/tries = 8
+				var/turf/T
+				do
+					T = pick(job_start_locations[JOB.name])
+				while((locate(/mob) in T) && tries--)
+				src.set_loc(T)
 		else
-			src.set_loc(pick(latejoin))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 	else
 		src.unlock_medal("Fish", 1)
 
@@ -380,10 +365,10 @@
 		if (ishuman(src))
 			if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
 				src:spawnId(rank)
-			else if (src.traitHolder)
+			if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
 				//Has the immigrant trait - they're hiding in a random locker
 				var/list/obj/storage/SL = list()
-				for(var/obj/storage/S in lockers_and_crates)
+				for(var/obj/storage/S in by_type[/obj/storage])
 					// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post
 					if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost))
 						var/turf/simulated/T = S.loc
@@ -393,6 +378,26 @@
 
 				if(SL.len > 0)
 					src.set_loc(pick(SL))
+
+			if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
+				var/turf/pilotSpawnLocation = null
+
+				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
+				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
+				#else														//This part of the code executes only if the map is a space one.
+				while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
+				#endif
+				for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+					qdel(snappedDrone)
+				V.finish_board_pod(src)
 
 			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
@@ -438,7 +443,7 @@
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/D = new /obj/item/disk/data/floppy(src)
 				src.equip_if_possible(D, slot_in_backpack)
-				var/datum/data/record/R = new /datum/data/record(  )
+				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
 				R.fields["name"] = src.real_name
 				R.fields["id"] = copytext(md5(src.real_name), 2, 6)
@@ -453,14 +458,14 @@
 					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
 					R.fields["abilities"] = A
 
-				R.fields["traits"] = list()
-				if(src.traitHolder && src.traitHolder.traits.len)
-					R.fields["traits"] = src.traitHolder.traits.Copy()
+				SPAWN_DBG(0)
+					if(src.traitHolder && src.traitHolder.traits.len)
+						R.fields["traits"] = src.traitHolder.traits.Copy()
 
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind
-				D.data = R.fields
-				D.data_type = "cloning_record"
+				R.name = "CloneRecord-[ckey(src.real_name)]"
+				D.root.add_file(R)
 				D.name = "data disk - '[src.real_name]'"
 
 			if(JOB.receives_badge)
@@ -468,6 +473,24 @@
 				src.equip_if_possible(B, slot_in_backpack)
 				B.badge_owner_name = src.real_name
 				B.badge_owner_job = src.job
+
+	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
+		var/obj/item/tank/emergency_oxygen/E = new /obj/item/tank/emergency_oxygen(src.loc)
+		src.force_equip(E, slot_in_backpack)
+		#ifdef UNDERWATER_MAP
+		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
+		src.force_equip(SSW, slot_in_backpack)
+		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
+		src.force_equip(SHW, slot_in_backpack)
+		#else
+		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
+		src.force_equip(SSS, slot_in_backpack)
+		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
+		src.force_equip(SHS, slot_in_backpack)
+		#endif
+		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
+		src.force_equip(GPSDEVICE, slot_in_backpack)
 
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
@@ -477,8 +500,6 @@
 			src.equip_new_if_possible(JOB.slot_belt, slot_in_backpack)
 		else
 			src.equip_new_if_possible(JOB.slot_belt, slot_belt)
-			if (src.traitHolder && src.traitHolder.hasTrait("immigrant") && istype(src.belt, /obj/item/device/pda2))
-				del(src.belt) //UGHUGHUGHUGUUUUUUUU
 		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
 			for (var/X in JOB.items_in_belt)
 				if(ispath(X))
@@ -514,6 +535,11 @@
 	if (JOB.slot_lhan)
 		src.equip_new_if_possible(JOB.slot_lhan, slot_l_hand)
 
+	if (src.traitHolder?.hasTrait("immigrant") || src.traitHolder?.hasTrait("pilot"))
+		var/obj/item/device/pda2/pda = locate() in src
+		src.u_equip(pda)
+		qdel(pda)
+
 	var/T = pick(trinket_safelist)
 	var/obj/item/trinket = null
 
@@ -533,13 +559,16 @@
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
 		trinket = new/obj/item/device/light/zippo(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
+		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
+		trinket = new random_lunchbox_path(src)
 	else
 		trinket = new T(src)
 
 	if (trinket) // rewrote this a little bit so hopefully people will always get their trinket
 		src.trinket = trinket
 		src.trinket.event_handler_flags |= IS_TRINKET
-		trinket.name = "[src.real_name][pick(trinket_names)] [trinket.name]"
+		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
 		if (istype(src.back, /obj/item/storage) && src.equip_if_possible(trinket, slot_in_backpack))
@@ -677,7 +706,7 @@
 	return
 
 // this proc is shit, make a better one 2day
-proc/bad_traitorify(mob/living/carbon/human/H, traitor_role="hard-mode traitor")
+proc/bad_traitorify(mob/H, traitor_role="hard-mode traitor")
 	var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
 	var/num_objectives = rand(1,3)
 	var/datum/objective/new_objective = null
@@ -723,9 +752,7 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 /obj/item/clothing/head/chav, /obj/item/clothing/head/det_hat, /obj/item/clothing/head/green, /obj/item/clothing/head/helmet/hardhat, /obj/item/clothing/head/merchant_hat,
 /obj/item/clothing/head/mj_hat, /obj/item/clothing/head/red, /obj/item/clothing/head/that, /obj/item/clothing/head/wig, /obj/item/clothing/head/turban, /obj/item/dice/magic8ball,
 /obj/item/reagent_containers/food/drinks/mug/random_color, /obj/item/reagent_containers/food/drinks/skull_chalice, /obj/item/pen/marker/random, /obj/item/pen/crayon/random,
-/obj/item/clothing/gloves/yellow/unsulated, /obj/item/reagent_containers/food/snacks/fortune_cookie)
-
-var/list/trinket_names = list("'s dad's","'s mom's", "'s grampa's", "'s grandma's", "'s favorite", "'s trusty", "'s favorite", "'s heirloom", "'s pet",
-"'s beloved", "'s lucky", "'s best", "'s antique", "'s old", "'s ol'", "'s prized", "'s neat", "'s good old", "'s good ol'", "'s son's", "'s daughter's",
-"'s aunt's", "'s uncle's", "'s finest", "'s shiniest", "'s lovely", "'s stupid", "'s prize winning", "'s top shelf", "'s 'prize winning'", "'s 'top shelf'",
-"'s autographed", "'s monogramed", "'s bejazzled", "'s jewel encrusted", "'s fanciest", "'s worn out", "'s custom", "'s luxurious", "'s superb", "'s precious")
+/obj/item/clothing/gloves/yellow/unsulated, /obj/item/reagent_containers/food/snacks/fortune_cookie, /obj/item/instrument/triangle, /obj/item/instrument/tambourine, /obj/item/instrument/cowbell,
+/obj/item/toy/plush/small/bee, /obj/item/paper/book/the_trial, /obj/item/paper/book/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
+/obj/item/clothing/mask/cigarette/cigar, /obj/item/device/light/sparkler, /obj/item/toy/sponge_capsule, /obj/item/reagent_containers/food/snacks/plant/pear, /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
+/obj/item/seed/alien)

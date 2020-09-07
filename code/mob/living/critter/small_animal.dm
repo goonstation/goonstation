@@ -48,6 +48,7 @@ todo: add more small animals!
 	density = 0
 	custom_gib_handler = /proc/gibs
 	hand_count = 1
+	can_help = 1
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
@@ -58,10 +59,29 @@ todo: add more small animals!
 	var/health_brute_vuln = 1
 	var/health_burn = 20
 	var/health_burn_vuln = 1
-	var/pull_w_class = 2
 
 	var/fur_color = 0
 	var/eye_color = 0
+
+	var/is_pet = null // null = autodetect
+
+
+
+	New(loc)
+		if(isnull(src.is_pet))
+			src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
+		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
+			src.is_pet = 0
+		if(src.is_pet)
+			START_TRACKING_CAT(TR_CAT_PETS)
+		..()
+
+		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
+
+	disposing()
+		if(src.is_pet)
+			STOP_TRACKING_CAT(TR_CAT_PETS)
+		..()
 
 	setup_healths()
 		add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
@@ -75,20 +95,6 @@ todo: add more small animals!
 		else
 			return ..()
 
-	proc/can_pull(atom/A)
-		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
-			return 1
-		if (ismob(A))
-			return (src.pull_w_class >= 3)
-		else if (isobj(A))
-			if (istype(A,/obj/item))
-				var/obj/item/I = A
-				return (pull_w_class >= I.w_class)
-			else
-				return (src.pull_w_class >= 4)
-		return 0
-
-
 	death(var/gibbed)
 		if (!gibbed)
 			src.unequip_all()
@@ -96,6 +102,18 @@ todo: add more small animals!
 
 	canRideMailchutes()
 		return src.fits_under_table
+
+	proc/reduce_lifeprocess_on_death() //used for AI mobs we dont give a dang about them after theyre dead
+		remove_lifeprocess(/datum/lifeprocess/blood)
+		remove_lifeprocess(/datum/lifeprocess/canmove)
+		remove_lifeprocess(/datum/lifeprocess/disability)
+		remove_lifeprocess(/datum/lifeprocess/fire)
+		remove_lifeprocess(/datum/lifeprocess/hud)
+		remove_lifeprocess(/datum/lifeprocess/mutations)
+		remove_lifeprocess(/datum/lifeprocess/organs)
+		remove_lifeprocess(/datum/lifeprocess/sight)
+		remove_lifeprocess(/datum/lifeprocess/skin)
+		remove_lifeprocess(/datum/lifeprocess/statusupdate)
 
 /* =============================================== */
 /* -------------------- Mouse -------------------- */
@@ -181,6 +199,16 @@ todo: add more small animals!
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.can_hold_items = 0
 
+	attackby(obj/item/I, mob/M)
+		if(istype(I, /obj/item/reagent_containers/food/snacks/ingredient/cheese) && ishuman(M))
+			src.visible_message("[M] feeds \the [src] some [I].", "[M] feeds you some [I].")
+			for(var/damage_type in src.healthlist)
+				var/datum/healthHolder/hh = src.healthlist[damage_type]
+				hh.HealDamage(5)
+			qdel(I)
+			return
+		. = ..()
+
 /mob/living/critter/small_animal/mouse/weak
 	health_brute = 2
 	health_burn = 2
@@ -243,7 +271,7 @@ todo: add more small animals!
 	New()
 		..()
 		if (src.randomize_name)
-			src.name = pick(cat_names)
+			src.name = pick_string_autokey("names/cats.txt")
 			src.real_name = src.name
 		if (src.randomize_look)
 #ifdef HALLOWEEN
@@ -361,6 +389,11 @@ todo: add more small animals!
 			src.visible_message("[src] purrs!",\
 			"You purr!")
 
+/mob/living/critter/small_animal/cat/weak
+	add_abilities = list()
+	health_brute = 10
+	health_burn = 10
+
 /* -------------------- Jones -------------------- */
 
 /mob/living/critter/small_animal/cat/jones
@@ -424,6 +457,7 @@ todo: add more small animals!
 	var/sound/sound_bark = "sound/voice/animal/dogbark.ogg"
 	var/gabe = 0 //sniff. bark bork. brork.
 	pull_w_class = 4
+
 	OnMove()
 		if(client && client.player && client.player.shamecubed)
 			loc = client.player.shamecubed
@@ -431,10 +465,11 @@ todo: add more small animals!
 
 		makeWaddle(src)
 		.=..()
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter/med
+		HH.limb = new /datum/limb/small_critter
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
@@ -492,6 +527,13 @@ todo: add more small animals!
 					src.delStatus("weakened")
 					src.icon_state = src.dogtype
 
+
+	pug
+		weak
+			add_abilities = list()
+			health_brute = 10
+			health_burn = 10
+
 /* -------------------- Reverse Pug -------------------- */
 // the people demanded it
 /mob/living/critter/small_animal/dog/reverse
@@ -543,6 +585,11 @@ todo: add more small animals!
 	icon_state = "corgi"
 	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
+
+	weak
+		add_abilities = list()
+		health_brute = 10
+		health_burn = 10
 
 /* -------------------- George -------------------- */
 
@@ -636,6 +683,11 @@ todo: add more small animals!
 		if (src.randomize_shiba)
 			src.name = pick(shiba_names)
 			src.real_name = src.name
+
+	weak
+		add_abilities = list()
+		health_brute = 10
+		health_burn = 10
 
 /* -------------------- Illegal -------------------- */
 
@@ -996,6 +1048,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
 				new /obj/item/power_stones/Owl(src.loc)
+		else
+			. = ..()
 
 
 /* -------------------- Large Owl -------------------- */
@@ -1342,6 +1396,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pull_w_class = 3
 	meat_type = /obj/item/reagent_containers/food/snacks/burger/roburger
 
+	base_move_delay = 1.6
+	base_walk_delay = 2.1
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -1353,6 +1410,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	setup_overlays()
 		return
+
+
+	weak
+		health_brute = 5
+		health_burn = 5
 
 /* ================================================ */
 /* -------------------- Ferret -------------------- */
@@ -1473,6 +1535,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.limb_name = "mouth"
 		HH.can_hold_items = 0
 
+
+	weak
+		health_brute = 10
+		health_burn = 10
 
 /* ================================================ */
 /* -------------------- Possum -------------------- */
@@ -1658,6 +1724,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (prob(10))
 			src.visible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
 			"You purr!")
+
 
 /* ============================================= */
 /* -------------------- Bat -------------------- */
@@ -1945,6 +2012,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 	var/butterflytype = 1
+	isFlying = 1
 
 	New()
 		..()
@@ -2036,6 +2104,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_walk_delay = 1.8
 	health_brute = 8
 	health_burn = 8
+	isFlying = 1
 
 	New()
 		..()
@@ -2099,6 +2168,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_walk_delay = 1.8
 	health_brute = 8
 	health_burn = 8
+	isFlying = 1
 
 	New()
 		..()
@@ -2411,14 +2481,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "mouse-mentor"
 	icon_state_dead = "mouse-mentor-dead"
 	var/icon_state_exclaim = "mouse-mentor-exclaim"
+	health_brute = 35
+	health_burn = 35
 
 	New()
 		..()
 		/*src.fur_color = "#c486ec"
 		src.eye_color = "#000000"
 		src.setup_overlays()*/
-		var/list/valid_adjectives = list("cute", "adorable", "nerdy", "small", "large", "grody", "tiny", "chubby", "smelly", "fluffy", "bewildered", "confused", "bouncy", "tired", "purple", "squeaky", "sneaky", "friendly", "helpful", "quick", "champion", "muscular", "heroic", "space federation wrestling champion", "brainy", "hungry", "chatty", "awesome", "humongous", "wise", "worried")
-		src.real_name = "[pick(valid_adjectives)] [src.name]"
+		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
 		src.name = src.real_name
 
 	setup_overlays()
@@ -2463,7 +2534,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else
 			M.visible_message("\The [src] jumps into [M]'s pocket.", "\The [src] jumps into your pocket.")
 		boutput(M, "You can click on the status effect in the top right to kick the mouse out.")
-		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on their screen to ping in the place where you're clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
+		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on their screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
 		var/mob/dead/target_observer/mentor_mouse_observer/obs = new(M, src.is_admin)
 		obs.set_observe_target(M)
 		obs.my_mouse = src
@@ -2499,6 +2570,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3)
+					var/obj/item/bible/B = locate(/obj/item/bible) in get_turf(src)
+					if(B)
+						SPAWN_DBG(1) // so that this message happens second
+							playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4)
+							B.visible_message("<span class='notice'>[B] toots back [pick("grumpily","complaintively","indignantly","sadly","annoyedly","gruffly","quietly","crossly")].</span>")
 					return "<span class='emote'><b>[src]</b> toots helpfully!</span>"
 		return ..()
 
@@ -2529,6 +2605,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.into_pocket(M, 0)
 		else
 			return ..()
+
+	understands_language(language)
+		if(language == "animal") // by default admin mice speak english but we want them to understand animal-ese
+			return 1
+		return ..()
 
 /mob/living/critter/small_animal/crab
 	name = "crab"
@@ -2561,3 +2642,245 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.icon_state = "beak"
 		HH.name = "right claw"
 		HH.limb_name = "claw"
+
+
+
+/mob/living/critter/small_animal/trilobite
+	name = "trilobite"
+	real_name = "trilobite"
+	desc = "This is an alien trilobite."
+	icon_state = "trilobite"
+	icon_state_dead = "trilobite-dead"
+	speechverb_say = "clicks"
+	speechverb_exclaim = "screeches"
+	speechverb_ask = "chitters"
+	health_brute = 6
+	health_burn = 6
+	flags = TABLEPASS | DOORPASS
+	fits_under_table = 1
+
+	density = 1
+
+	base_move_delay = 4
+	base_walk_delay = 5
+
+//	var/mob/living/target = null
+
+	New()
+		..()
+		src.remove_stam_mod_max("small_animal")
+		src.add_stam_mod_max("trilobite", -(STAMINA_MAX-10))
+		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
+		SPAWN_DBG(1 SECOND)
+			animate_bumble(src)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter/med/dash
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "mouth"
+		HH.limb_name = "mouth"
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","chitter")
+				if (src.emote_check(voluntary, 50))
+					playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 1.3)
+					return "<span class='emote'><b>[src]</b> chitters!</span>"
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","chitter")
+				return 2
+		return ..()
+
+	death(var/gibbed)
+		playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 1.7)
+		new /obj/item/raw_material/claretine(src.loc)
+		new /obj/item/raw_material/chitin(src.loc)
+		if (prob(70))
+			new /obj/item/raw_material/claretine(src.loc)
+			new /obj/item/raw_material/chitin(src.loc)
+		..()
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/trilobite(src)
+			//todo later : move this lifeprocess stuff to a component
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			reduce_lifeprocess_on_death()
+			..()
+
+
+
+/mob/living/critter/small_animal/hallucigenia
+	name = "hallucigenia"
+	real_name = "hallucigenia"
+	desc = "This is an alien hallucigenia."
+	icon_state = "hallucigenia"
+	icon_state_dead = "hallucigenia-dead"
+	speechverb_say = "clicks"
+	speechverb_exclaim = "screeches"
+	speechverb_ask = "chitters"
+	health_brute = 4
+	health_burn = 4
+	flags = TABLEPASS | DOORPASS
+	fits_under_table = 1
+
+	density = 1
+
+	base_move_delay = 13
+	base_walk_delay = 15
+
+//	var/mob/living/target = null
+
+	New()
+		..()
+		src.remove_stam_mod_max("small_animal")
+		src.add_stam_mod_max("hallucigenia", -(STAMINA_MAX-100))
+		src.add_sm_light("hallucigenia\ref[src]", list(255,100,100,0.8 * 255))
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/spike
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handzap"
+		HH.name = "spikes"
+		HH.limb_name = "spikes"
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","chitter")
+				if (src.emote_check(voluntary, 50))
+					playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 0.7)
+					return "<span class='emote'><b>[src]</b> chitters!</span>"
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","chitter")
+				return 2
+		return ..()
+
+	death(var/gibbed)
+		playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 0.6)
+		new /obj/item/reagent_containers/food/snacks/healgoo(get_turf(src))
+
+		..()
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/spike(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			reduce_lifeprocess_on_death()
+			..()
+
+
+/mob/living/critter/small_animal/pikaia
+	name = "pikaia"
+	real_name = "pikaia"
+	desc = "This is an alien pikaia."
+	icon_state = "pikaia"
+	icon_state_dead = "pikaia-dead"
+	speechverb_say = "bloops"
+	speechverb_exclaim = "blips"
+	speechverb_ask = "blups"
+	health_brute = 24
+	health_burn = 24
+	flags = TABLEPASS | DOORPASS
+	fits_under_table = 1
+
+	density = 1
+
+	base_move_delay = 2.3
+	base_walk_delay = 4
+
+//	var/mob/living/target = null
+
+	New()
+		..()
+		src.remove_stam_mod_max("small_animal")
+		src.add_stam_mod_max("pikaia", -(STAMINA_MAX-140))
+		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
+		SPAWN_DBG(1 SECOND)
+			animate_bumble(src)
+
+	is_hulk()
+		.= 1
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter/med
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "body"
+		HH.limb_name = "body"
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","chitter")
+				if (src.emote_check(voluntary, 50))
+					playsound(get_turf(src), 'sound/misc/talk/buwoo_exclaim.ogg', 90, 1, pitch = 0.8)
+					return "<span class='emote'><b>[src]</b> squeals!</span>"
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","chitter")
+				return 2
+		if (act == "flip")
+			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+				var/mob/living/M = G.affecting
+				if (M == src)
+					continue
+				if (!G.affecting)
+					continue
+				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+				if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
+					src.emote("scream")
+					logTheThing("combat", src, G.affecting, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")
+					M.lastattacker = src
+					M.lastattackertime = world.time
+					G.affecting.TakeDamage("head", rand(2,8), 0, 0, DAMAGE_BLUNT)
+					playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1, pitch = 1.3)
+					src.visible_message("<span class='alert'><B>[src] crunches [G.affecting]!</B></span>")
+		return ..()
+
+	death(var/gibbed)
+		playsound(get_turf(src), 'sound/misc/talk/blub.ogg', 80, 1, pitch = 0.6)
+		new /obj/item/reagent_containers/food/snacks/greengoo(get_turf(src))
+
+		..()
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/pikaia(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			reduce_lifeprocess_on_death()
+			..()

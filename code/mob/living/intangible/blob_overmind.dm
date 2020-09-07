@@ -9,13 +9,14 @@
 	canmove = 1
 	blinded = 0
 	anchored = 1
+	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 
 	var/datum/tutorial/blob/tutorial
 	var/attack_power = 1
 	var/bio_points = 0
 	var/bio_points_max = 1
-	var/bio_points_max_bonus = 5
+	var/bio_points_max_bonus = 7 //starting bio point cap should be 10-12 now, i think. a bit more wiggle room for starter blobs.
 	var/base_gen_rate = 3
 	var/gen_rate_bonus = 0
 	var/gen_rate_used = 0
@@ -59,6 +60,8 @@
 	var/extra_tries_max = 2
 	var/extra_try_period = 3000 //3000 = 5 minutes
 	var/extra_try_timestamp = 0
+
+	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
 
 	proc/start_tutorial()
 		if (tutorial)
@@ -133,7 +136,7 @@
 			src.bio_points_max = BlobPointsBezierApproximation(round(blobs.len / 5)) + bio_points_max_bonus
 
 		var/newBioPoints
-
+		var/mult = (max(tick_spacing, TIME - last_blob_life_tick) / tick_spacing)
 		//debuff active
 		if (src.debuff_timestamp)
 			var/genBonus = gen_rate_bonus
@@ -142,10 +145,10 @@
 
 			//maybe other debuffs here in the future
 
-			newBioPoints = max(0,min(src.bio_points + (base_gen_rate + genBonus - gen_rate_used),src.bio_points_max))
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max) //these are rounded in point displays
 
 		else
-			newBioPoints = max(0,min(src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used),src.bio_points_max))
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max) //ditto above
 
 		src.bio_points = newBioPoints
 
@@ -179,6 +182,8 @@
 				else
 					N.UpdateOverlays(null, "reflectivity")
 
+		src.last_blob_life_tick = TIME
+
 	death()
 		//death was called but the player isnt playing this blob anymore
 		//OR they're in the process of transforming (e.g. gibbing)
@@ -206,8 +211,7 @@
 		..()
 		stat(null, " ")
 		stat("--Blob--", " ")
-		stat("Bio Points:", "[bio_points]/[bio_points_max]")
-
+		stat("Bio Points:", "[round(bio_points)]/[bio_points_max]")
 		//debuff active
 		if (src.debuff_timestamp && gen_rate_bonus > 0)
 			var/genBonus = round(gen_rate_bonus / 2)
@@ -291,7 +295,7 @@
 				return
 
 			if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-				var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 				if (OS)
 					src.set_loc(OS)
 				else
@@ -607,6 +611,15 @@
 		cooldown_overlay.maptext_y = 1
 		cooldown_overlay.maptext_x = 1
 
+	disposing()
+		if(ability)
+			ability.button = null
+			ability = null
+		if(upgrade)
+			upgrade.button = null
+			upgrade = null
+		..()
+
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!istype(O,/obj/screen/blob/) || !isblob(user))
@@ -750,13 +763,13 @@
 
 	var/turf/T = get_turf(src)
 	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 		if (ASLoc)
 			W.set_loc(ASLoc)
 		else
 			W.z = 1
 	else
-		W.set_loc(pick(latejoin))
+		W.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 	if (src.mind)
 		src.mind.transfer_to(W)

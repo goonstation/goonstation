@@ -218,17 +218,6 @@
 	src.last_flash = world.time
 	use_power(1000)
 
-	for (var/obj/O in get_turf(src))
-		if (istype(O, /obj/overlay/tile_effect) || istype(O, /obj/machinery/camera))
-			continue
-		if (O.layer > layer)
-			SPAWN_DBG(0)
-				O.overlays += image('icons/effects/fire.dmi', "2old")
-				sleep(1 SECOND)
-				if (O)
-					O.visible_message("<span class='alert'>[src]'s flashbulb burns [O] to a crisp.</span>")
-					qdel(O)
-
 	for (var/mob/O in viewers(src, null))
 		if (get_dist(src, O) > src.range)
 			continue

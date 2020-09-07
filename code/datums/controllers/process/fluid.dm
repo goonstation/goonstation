@@ -31,6 +31,8 @@ datum/controller/process/fluid_group
 			if (FG.queued_drains)
 				FG.reagents.skip_next_update = 1
 				FG.drain(FG.last_drain.active_liquid ? FG.last_drain.active_liquid : pick(FG.members), FG.queued_drains) //420 drain it
+				if(!FG)
+					continue
 				FG.queued_drains = 0
 				FG.last_drain = 0
 				FG.draining = 0

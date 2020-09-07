@@ -42,6 +42,7 @@ var/global/list/smart_string_pickers = list()
 	var/list/definitions = list()
 
 	New(input_file)
+		..()
 		if(!isfile(input_file))
 			input_file = file(input_file)
 		var/list/sections_text = splittext(replacetext(file2text(input_file), "\\\n", "\\n"), section_splitter)

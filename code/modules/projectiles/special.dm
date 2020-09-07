@@ -132,6 +132,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/pellets_to_fire = 15
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
+	var/pellet_shot_volume = 100
 	nomsg = 1
 	// 0 = on spawn
 	// 1 = on impact
@@ -148,6 +149,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(split_type) //don't multihit on pointblank unless we'd be splitting on launch
 			return
 		var/datum/projectile/F = new spread_projectile_type()
+		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(O)
 		var/pellets = pellets_to_fire
 		while (pellets > 0)
@@ -161,6 +163,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	proc/split(var/obj/projectile/P)
 		var/datum/projectile/F = new spread_projectile_type()
+		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(P)
 		var/pellets = pellets_to_fire
 		while (pellets > 0)
@@ -219,7 +222,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/uniform_burst/circle
 	name = "circular spread"
 	sname = "circular spread"
-	spread_angle = 360
+	spread_angle = 180
 	pellets_to_fire = 20
 
 /datum/projectile/special/spreader/uniform_burst/blaster
@@ -230,6 +233,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	pellets_to_fire = 5
 	spread_projectile_type = /datum/projectile/laser/blaster/blast
 	shot_sound = 'sound/weapons/laser_f.ogg'
+
+
+/datum/projectile/special/spreader/uniform_burst/spikes
+	name = "spike wave"
+	sname = "spike wave"
+	spread_angle = 65
+	cost = 200
+	pellets_to_fire = 7
+	spread_projectile_type = /datum/projectile/bullet/spike
+	shot_sound = 'sound/weapons/radxbow.ogg'
+
+
 
 // Really crazy shit
 
@@ -371,9 +386,40 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(prob(50))
 			world << sound('sound/effects/creaking_metal1.ogg', volume = 60)
 
+// A weapon by Sovexe
+/datum/projectile/special/meowitzer //what have I done
+	shot_sound = 'sound/misc/boing/6.ogg'
+	name  = "meowitzer"
+	sname  = "meowitzer"
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "cat1"
+	dissipation_delay = 75
+	dissipation_rate = 300
+	projectile_speed = 20
+	cost = 1
 
+	var/explosive_hits = 1
+	var/explosion_power = 30
+	var/hit_sound = 'sound/voice/animal/cat.ogg'
+	var/last_sound_time = 0 // anti-ear destruction
+	var/max_bounce_count = 50
 
+	on_hit(atom/A, direction, projectile)
+		shoot_reflected_bounce(projectile, A, max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
+		var/turf/T = get_turf(A)
 
+		//prevent playing all 50 sounds at once on rapid bounce
+		if(world.time >= last_sound_time + 1 DECI SECOND)
+			last_sound_time = world.time
+			playsound(A, hit_sound, 60, 1)
+
+		if (explosive_hits)
+			SPAWN_DBG(0)
+				explosion_new(projectile, T, explosion_power, 1)
+		return
+
+/datum/projectile/special/meowitzer/inert
+	explosive_hits = 0
 
 /datum/projectile/special/spewer
 	name = "volatile bolt"
@@ -676,6 +722,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	rotate_proj = 0
 	face_desired_dir = 1
 	goes_through_walls = 1
+	is_magical = 1
 
 	shot_sound = 0
 	hit_mob_sound = 'sound/effects/mag_iceburstimpact_high.ogg'
@@ -712,10 +759,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			else
 				targetTurf = get_edge_target_turf(hit, P.dir)
 
-			SPAWN_DBG(0)
-				L.changeStatus("weakened", 2 SECONDS)
-				L.force_laydown_standup()
-				L.throw_at(targetTurf, rand(5,7), rand(1,2), throw_type = THROW_GUNIMPACT)
+			L.changeStatus("weakened", 2 SECONDS)
+			L.force_laydown_standup()
+			L.throw_at(targetTurf, rand(5,7), rand(1,2), throw_type = THROW_GUNIMPACT)
 
 	on_canpass(var/obj/projectile/P, atom/movable/passing_thing)
 		if (P != passing_thing)
@@ -776,18 +822,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 70
 	dissipation_delay = 0
 	window_pass = 0
-	spread_projectile_type = /datum/projectile/laser/wasp
+	spread_projectile_type = /datum/projectile/special/spawner/wasp
 	pellets_to_fire = 4
 	var/spread_angle = 60
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
 	var/initial_angle_offset_mult = 0
 
-
-	proc/throw_egg(var/turf/T)
-		if (T)
-			var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = new(T)
-			W.throw_impact(T)
 
 	on_launch(var/obj/projectile/P)
 		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
@@ -812,19 +853,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/typetospawn = null
 	var/hasspawned = null
 
-	on_launch(obj/projectile/O)
-		hasspawned = null
-
 	on_hit(atom/hit, direction, projectile)
-		if(ismob(hit)&&typetospawn)
-			hasspawned = new typetospawn(get_turf(hit))
-			return 1
+		if(ismob(hit) && typetospawn)
+			hasspawned = 1
+			. = new typetospawn(get_turf(hit))
+		return
 
 
 	on_end(obj/projectile/O)
 		if(!hasspawned && typetospawn)
-			hasspawned = new typetospawn(get_turf(O))
-			return 1
+			. = new typetospawn(get_turf(O))
+		hasspawned = null
+		return
 
 /datum/projectile/special/spawner/gun //shoot guns
 	name = "gun"
@@ -837,6 +877,36 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	casing = null
 	icon_turf_hit = null
 	typetospawn = /obj/item/gun/kinetic/derringer
+
+
+/datum/projectile/special/spawner/wasp //shoot wasps
+	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
+	icon_state = "critter_egg"
+	name = "space wasp egg"
+	brightness = 0
+	sname = "space wasp egg"
+	shot_sound = null
+	shot_number = 1
+	silentshot = 1 //any noise will be handled by the egg splattering anyway
+	hit_ground_chance = 0
+	damage_type = D_KINETIC
+	power = 15
+	dissipation_delay = 30
+	dissipation_rate = 1
+	ks_ratio = 1.0
+	cost = 10
+	window_pass = 0
+	typetospawn = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
+
+	on_hit(atom/hit, direction, projectile)
+		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
+		if(istype(W))
+			W.throw_impact(get_turf(hit))
+
+	on_end(obj/projectile/O)
+		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
+		if(istype(W))
+			W.throw_impact(get_turf(O))
 
 /datum/projectile/special/spawner/beepsky
 	name = "Beepsky"
@@ -856,15 +926,29 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	typetospawn = /obj/machinery/bot/secbot
 
 	on_hit(atom/hit)
-		if(..())
+		var/obj/machinery/bot/secbot/beepsky = ..()
+		if(istype(beepsky) && ismob(hit))
 			var/mob/hitguy = hit
 			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
-			var/obj/machinery/bot/secbot/beepsky = hasspawned
 			beepsky.emagged = 1
 			if(istype(hitguy, /mob/living/carbon))
 				beepsky.target = hitguy
 
 	on_end(obj/projectile/O)
-		if(..())
-			var/obj/machinery/bot/secbot/beepsky = hasspawned
+		var/obj/machinery/bot/secbot/beepsky = ..()
+		if(istype(beepsky))
 			beepsky.emagged = 1
+
+/datum/projectile/special/spawner/battlecrate
+	name = "Battlecrate"
+	power = 100
+	cost = 0
+	shot_sound = 'sound/weapons/rocket.ogg'
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "attachecase"
+	typetospawn = /obj/lootbox
+	var/explosion_power = 15
+
+	on_hit(atom/hit, direction, projectile)
+		explosion_new(projectile, get_turf(hit), explosion_power, 1)
+		..()

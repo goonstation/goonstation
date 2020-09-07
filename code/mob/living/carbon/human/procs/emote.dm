@@ -2,13 +2,8 @@
 
 
 
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0)
+/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
 	var/param = null
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		if (P.onemote(act))
-			return
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
 
@@ -16,19 +11,28 @@
 		src.visible_message("<span class='alert'>[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
 		return
 
-	if (findtext(act, " ", 1, null))
-		var/t1 = findtext(act, " ", 1, null)
-		param = copytext(act, t1 + 1, length(act) + 1)
-		act = copytext(act, 1, t1)
+	if (emoteTarget)
+		param = emoteTarget
+	else if (voluntary == 1)
+		if (findtext(act, " ", 1, null))
+			var/t1 = findtext(act, " ", 1, null)
+			param = copytext(act, t1 + 1, length(act) + 1)
+			act = copytext(act, 1, t1)
 
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	var/m_type = 1 //1 is visible, 2 is audible
-	var/custom = 0 //Sorry, gotta make this for chat groupings.
+	for (var/uid in src.pathogens)
+		var/datum/pathogen/P = src.pathogens[uid]
+		if (P.onemote(act, voluntary, param))
+			return
 
-	for (var/obj/item/implant/I in src)
+	for (var/obj/item/implant/I in src.implant)
 		if (I.implanted)
 			I.trigger(act, src)
 
+	var/muzzled = (src.wear_mask && src.wear_mask.is_muzzle)
+	var/m_type = 1 //1 is visible, 2 is audible
+	var/custom = 0 //Sorry, gotta make this for chat groupings.
+
+	var/maptext_out = 0
 	var/message = null
 	if (src.mutantrace)
 		message = src.mutantrace.emote(act, voluntary)
@@ -54,7 +58,7 @@
 							var/obj/critter/opossum/responsePossum = poss
 							if (!responsePossum.alive)
 								continue
-							if(!DIST_CHECK(responsePossum, src, 4))
+							if(!IN_RANGE(responsePossum, src, 4))
 								continue
 							if (possumMax-- < 0)
 								break
@@ -63,7 +67,7 @@
 							var/mob/living/critter/small_animal/opossum/P = poss
 							if (P.playing_dead) // already out
 								continue
-							if(!DIST_CHECK(P, src, 4))
+							if(!IN_RANGE(P, src, 4))
 								continue
 							P.play_dead(rand(20,40)) // shorter than the regular "death" stun
 					else
@@ -91,42 +95,67 @@
 							message = "<B>[src]</B> grunts for a moment. Nothing happens."
 					else
 						m_type = 2
+
+
+						if (iscluwne(src))
+							playsound(get_turf(src), "sound/voice/farts/poo.ogg", 50, 1)
+						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
+							playsound(get_turf(src), "sound/voice/farts/poo2_robot.ogg", 50, 1, 0, src.get_age_pitch())
+						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
+							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
+						else
+							if (narrator_mode)
+								playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 0, 0, src.get_age_pitch())
+							else
+								if (src.getStatusDuration("food_deep_fart"))
+									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3)
+								else
+									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch())
+
 						var/fart_on_other = 0
-						for (var/mob/living/M in src.loc) //TODO : FARTABLE FLAG?
-							if (M == src || !M.lying)
-								continue
-							message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
-							if (sims)
-								sims.affectMotive("fun", 4)
-							if (src.mind)
-								if (M.mind && M.mind.assigned_role == "Geneticist")
-									karma_update(10, "SAINT", src)
-							fart_on_other = 1
-							break
-						for (var/obj/item/bible/B in src.loc)
-							B.farty_heresy(src)
-							fart_on_other = 1
-							break
-						for (var/obj/item/book_kinginyellow/K in src.loc)
-							K.farty_doom(src)
-							fart_on_other = 1
-							break
-						for (var/obj/item/photo/voodoo/V in src.loc) //kubius: voodoo photo farty party
-							var/mob/M = V.cursed_dude
-							if (!M || !M.lying)
-								continue
-							playsound(get_turf(M), src.sound_fart, 20, 0, 0, src.get_age_pitch())
-							switch(rand(1, 7))
-								if (1) M.visible_message("<span class='emote'><b>[M]</b> suddenly radiates an unwelcoming odor.</span>")
-								if (2) M.visible_message("<span class='emote'><b>[M]</b> is visited by ethereal incontinence.</span>")
-								if (3) M.visible_message("<span class='emote'><b>[M]</b> experiences paranormal gastrointestinal phenomena.</span>")
-								if (4) M.visible_message("<span class='emote'><b>[M]</b> involuntarily telecommutes to the farty party.</span>")
-								if (5) M.visible_message("<span class='emote'><b>[M]</b> is swept over by a mysterious draft.</span>")
-								if (6) M.visible_message("<span class='emote'><b>[M]</b> abruptly emits an odor of cheese.</span>")
-								if (7) M.visible_message("<span class='emote'><b>[M]</b> is set upon by extradimensional flatulence.</span>")
-							if (sims)
-								sims.affectMotive("fun", 4)
-							//break deliberately omitted
+						for (var/thing in src.loc)
+							var/atom/A = thing
+							if (A.event_handler_flags & IS_FARTABLE)
+								if (istype(A,/mob/living))
+									var/mob/living/M = A
+									if (M == src || !M.lying)
+										continue
+									message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
+									if (sims)
+										sims.affectMotive("fun", 4)
+									if (src.mind)
+										if (M.mind && M.mind.assigned_role == "Geneticist")
+											src.add_karma(10)
+									fart_on_other = 1
+									break
+								else if (istype(A,/obj/item/bible))
+									var/obj/item/bible/B = A
+									B.farty_heresy(src)
+									fart_on_other = 1
+									break
+								else if (istype(A,/obj/item/book_kinginyellow))
+									var/obj/item/book_kinginyellow/K = A
+									K.farty_doom(src)
+									fart_on_other = 1
+									break
+								else if (istype(A,/obj/item/photo/voodoo))
+									var/obj/item/photo/voodoo/V = A
+									var/mob/M = V.cursed_dude
+									if (!M || !M.lying)
+										continue
+									playsound(get_turf(M), src.sound_fart, 20, 0, 0, src.get_age_pitch())
+									switch(rand(1, 7))
+										if (1) M.visible_message("<span class='emote'><b>[M]</b> suddenly radiates an unwelcoming odor.</span>")
+										if (2) M.visible_message("<span class='emote'><b>[M]</b> is visited by ethereal incontinence.</span>")
+										if (3) M.visible_message("<span class='emote'><b>[M]</b> experiences paranormal gastrointestinal phenomena.</span>")
+										if (4) M.visible_message("<span class='emote'><b>[M]</b> involuntarily telecommutes to the farty party.</span>")
+										if (5) M.visible_message("<span class='emote'><b>[M]</b> is swept over by a mysterious draft.</span>")
+										if (6) M.visible_message("<span class='emote'><b>[M]</b> abruptly emits an odor of cheese.</span>")
+										if (7) M.visible_message("<span class='emote'><b>[M]</b> is set upon by extradimensional flatulence.</span>")
+									if (sims)
+										sims.affectMotive("fun", 4)
+									//break deliberately omitted
+
 						if (!fart_on_other)
 							switch(rand(1, 42))
 								if (1) message = "<B>[src]</B> lets out a girly little 'toot' from [his_or_her(src)] butt."
@@ -175,68 +204,81 @@
 								if (40) message = "<B>[src]</B> laughs! [his_or_her(src)] breath smells like a fart."
 								if (41) message = "<B>[src]</B> farts, and as such, blob cannot evoulate."
 								if (42) message = "<b>[src]</B> farts. It might have been the Citizen Kane of farts."
-						if (src.bioHolder && src.bioHolder.HasEffect("toxic_farts"))
-							message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
-							var/turf/fart_turf = get_turf(src)
-							fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
+
 						// If there is a chest item, see if it can be activated on fart (attack_self)
 						if (src && src.chest_item != null) //Gotta do that pre-emptive runtime protection!
 							src.chest_item_attack_self_on_fart()
-						if (src.bioHolder && src.bioHolder.HasEffect("linkedfart"))
-							message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
-							var/turf/fart_turf = get_turf(src)
-							fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
 
-							for(var/mob/living/H in mobs)
-								if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
-								if(locate(/obj/item/bible) in get_turf(H))
-									src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
-									src.gib()
-								else
-									H.emote("fart")
-						if (istype(src.loc, /turf/space))
-							// mbc : no actually fuck this it throws off the whole balance of space movement
-							if (src.getStatusDuration("food_space_farts"))
-								src.inertia_dir = src.dir
-								step(src, inertia_dir)
-								SPAWN_DBG(1 DECI SECOND)
+						if (src.bioHolder)
+							if (src.bioHolder.HasEffect("toxic_farts"))
+								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
+								var/turf/fart_turf = get_turf(src)
+								fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
+
+							if (src.bioHolder.HasEffect("linkedfart"))
+								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
+								var/turf/fart_turf = get_turf(src)
+								fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
+
+								for(var/mob/living/H in mobs)
+									if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
+									var/found_bible = 0
+									for (var/thing in H.loc)
+										var/atom/A = thing
+										if (A.event_handler_flags & IS_FARTABLE)
+											if (istype(A,/obj/item/bible))
+												found_bible = 1
+									if (found_bible)
+										src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
+										src.gib()
+									else
+										H.emote("fart")
+
+						var/turf/T = get_turf(src)
+						if (T && T == src.loc)
+							if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
+								if (src.getStatusDuration("food_space_farts"))
 									src.inertia_dir = src.dir
 									step(src, inertia_dir)
-
-						if (iscluwne(src))
-							playsound(get_turf(src), "sound/voice/farts/poo.ogg", 50, 1)
-						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(get_turf(src), "sound/voice/farts/poo2_robot.ogg", 50, 1, 0, src.get_age_pitch())
-						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
-							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
-						else
-							if (narrator_mode)
-								playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 0, 0, src.get_age_pitch())
+									SPAWN_DBG(1 DECI SECOND)
+										src.inertia_dir = src.dir
+										step(src, inertia_dir)
 							else
-								if (src.getStatusDuration("food_deep_fart"))
-									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3)
-								else
-									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch())
-
-						if(src.loc && istype(src.loc, /turf/simulated/floor/specialroom/freezer) && prob(10)) //ZeWaka: Fix for null.loc
-							message = "<b>[src]</B> farts. The fart freezes in MID-AIR!!!"
-							new/obj/item/material_piece/fart(src.loc)
-							var/obj/item/material_piece/fart/F = unpool(/obj/item/material_piece/fart)
-							F.set_loc(src.loc)
+								if(prob(10) && istype(src.loc, /turf/simulated/floor/specialroom/freezer)) //ZeWaka: Fix for null.loc
+									message = "<b>[src]</B> farts. The fart freezes in MID-AIR!!!"
+									new/obj/item/material_piece/fart(src.loc)
+									var/obj/item/material_piece/fart/F = unpool(/obj/item/material_piece/fart)
+									F.set_loc(src.loc)
 
 						src.expel_fart_gas(oxyplasmafart)
 
 						src.stamina_stun()
+						fartcount++
+						if(fartcount == 69 || fartcount == 420)
+							var/obj/item/paper/grillnasium/fartnasium_recruitment/flyer/F = new(get_turf(src))
+							src.put_in_hand_or_drop(F)
+							src.visible_message("<b>[src]</B> farts out a... wait is this viral marketing?")
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
+				if(src.mutantrace && src.mutantrace.name == "dwarf" && prob(1))
+					var/glowsticktype = pick(typesof(/obj/item/device/light/glowstick))
+					var/obj/item/device/light/glowstick/G = new glowsticktype
+					G.set_loc(src.loc)
+					G.turnon()
+					var/turf/target = get_offset_target_turf(src.loc, (rand(5)-rand(5)), (rand(5)-rand(5)))
+					G.throw_at(target,5,1)
+					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
-			if ("salute","bow","hug","wave", "blowkiss")
+			if ("salute","bow","hug","wave", "blowkiss","sidehug")
 				// visible targeted emotes
 				if (!src.restrained())
-					var/M = null
+					var/mob/M = null
 					if (param)
-						for (var/mob/A in view(null, null))
+						var/range = 8
+						if (act == "hug" || act == "sidehug")
+							range = 1
+						for (var/mob/A in view(range, src))
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
@@ -248,24 +290,34 @@
 						switch(act)
 							if ("bow","wave")
 								message = "<B>[src]</B> [act]s to [param]."
+								maptext_out = "<I>[act]s to [param]</I>"
+							if ("sidehug")
+								message = "<B>[src]</B> awkwardly side-hugs [param]."
+								maptext_out = "<I>awkwardly side-hugs [param]</I>"
 							if ("blowkiss")
 								message = "<B>[src]</B> blows a kiss to [param]."
+								maptext_out = "<I>blows a kiss to [param]</I>"
 								//var/atom/U = get_turf(param)
 								//shoot_projectile_ST(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
 							else
 								message = "<B>[src]</B> [act]s [param]."
+								maptext_out = "<I>[act]s [param]</I>"
 					else
 						switch(act)
-							if ("hug")
+							if ("hug", "sidehug")
 								message = "<B>[src]</b> [act]s [himself_or_herself(src)]."
+								maptext_out = "<I>[act]s [himself_or_herself(src)]</I>"
 							if ("blowkiss")
 								message = "<B>[src]</b> blows a kiss to... [himself_or_herself(src)]?"
+								maptext_out = "<I> blows a kiss to... [himself_or_herself(src)]?</I>"
 							else
 								message = "<B>[src]</b> [act]s."
-								karma_update(2, "SAINT", src)
+								maptext_out = "<I>[act]s [param]</I>"
+								src.add_karma(2)
 
 				else
 					message = "<B>[src]</B> struggles to move."
+					maptext_out = "<I>struggles to move</I>"
 
 				m_type = 1
 
@@ -284,10 +336,13 @@
 					switch(act)
 						if ("nod")
 							message = "<B>[src]</B> [act]s to [param]."
+							maptext_out = "<I>[act]s to [param]</I>"
 						if ("glare","stare","look","leer")
 							message = "<B>[src]</B> [act]s at [param]."
+							maptext_out = "<I>[act]s at [param]</I>"
 				else
 					message = "<B>[src]</b> [act]s."
+					maptext_out = "<I>[act]s</I>"
 
 				m_type = 1
 
@@ -304,6 +359,7 @@
 						alert("Unable to use this emote, must be either audible or visible.")
 						return
 					message = "<B>[src]</B> [input]"
+					maptext_out = "<I>[input]</I>"
 
 			if ("customv")
 				if (IS_TWITCH_CONTROLLED(src)) return
@@ -313,6 +369,7 @@
 
 				param = sanitize(html_encode(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[param]</I>"
 				m_type = 1
 				custom = copytext(param, 1, 10)
 
@@ -323,6 +380,7 @@
 					if(!param) return
 				param = sanitize(html_encode(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[param]</I>"
 				m_type = 2
 				custom = copytext(param, 1, 10)
 
@@ -332,6 +390,7 @@
 					return
 				param = sanitize(html_encode(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[param]</I>"
 				m_type = 1 // default to visible
 				custom = copytext(param, 1, 10)
 
@@ -367,6 +426,7 @@
 						if (IS_TWITCH_CONTROLLED(H))
 							return
 #endif
+						maptext_out = "<I>offers to [H]...</I>"
 						src.give_to(H)
 						return
 				m_type = 1
@@ -395,49 +455,66 @@
 				if (!manualbreathing)
 					src.show_text("You are already breathing!")
 					return
-				if (src.breathstate)
-					src.show_text("You just breathed in, try breathing out next dummy!")
-					return
+
+				var/datum/lifeprocess/breath/B = lifeprocesses[/datum/lifeprocess/breath]
+				if (B)
+					if (B.breathstate)
+						src.show_text("You just breathed in, try breathing out next dummy!")
+						return
+					B.breathtimer = 0
+					B.breathstate = 1
+
 				src.show_text("You breathe in.")
-				src.breathtimer = 0
-				src.breathstate = 1
 
 			if ("exhale")
 				if (!manualbreathing)
 					src.show_text("You are already breathing!")
 					return
-				if (!src.breathstate)
-					src.show_text("You just breathed out, try breathing in next silly!")
-					return
+
+				var/datum/lifeprocess/breath/B = lifeprocesses[/datum/lifeprocess/breath]
+				if (B)
+					if (!B.breathstate)
+						src.show_text("You just breathed out, try breathing in next silly!")
+						return
+					B.breathstate = 0
+
 				src.show_text("You breathe out.")
-				src.breathstate = 0
 
 			if ("closeeyes")
 				if (!manualblinking)
 					src.show_text("Why would you want to do that?")
 					return
-				if (src.blinkstate)
-					src.show_text("You just closed your eyes, try opening them now dumbo!")
-					return
+
+				var/datum/lifeprocess/statusupdate/S = lifeprocesses[/datum/lifeprocess/breath]
+				if (S)
+					if (S.blinkstate)
+						src.show_text("You just closed your eyes, try opening them now dumbo!")
+						return
+					S.blinkstate = 1
+					S.blinktimer = 0
+
 				src.show_text("You close your eyes.")
-				src.blinkstate = 1
-				src.blinktimer = 0
 
 			if ("openeyes")
 				if (!manualblinking)
 					src.show_text("Your eyes are already open!")
 					return
-				if (!src.blinkstate)
-					src.show_text("Your eyes are already open, try closing them next moron!")
-					return
+
+				var/datum/lifeprocess/statusupdate/S = lifeprocesses[/datum/lifeprocess/breath]
+				if (S)
+					if (!S.blinkstate)
+						src.show_text("Your eyes are already open, try closing them next moron!")
+						return
+					S.blinkstate = 0
+
 				src.show_text("You open your eyes.")
-				src.blinkstate = 0
 
 	//april fools end
 
 			if ("birdwell")
 				if ((src.client && src.client.holder) && src.emote_check(voluntary, 50))
 					message = "<B>[src]</B> birdwells."
+					maptext_out = "<I>birdwells</I>"
 					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1)
 				else
 					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
@@ -447,6 +524,7 @@
 				if (istype(src.wear_mask, /obj/item/clothing/mask/anime) && !src.stat)
 
 					message = "<B>[src]</B> uguus!"
+					maptext_out = "<I>uguus</I>"
 					m_type = 2
 					if (narrator_mode)
 						playsound(get_turf(src), 'sound/vox/uguu.ogg', 80, 0, 0, src.get_age_pitch())
@@ -482,6 +560,7 @@
 									src.add_juggle(thing)
 							else
 								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 			if ("twirl", "spin"/*, "juggle"*/)
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
@@ -494,14 +573,17 @@
 							else if (src.r_hand)
 								thing = src.r_hand
 						if (thing)
-							thing.on_spin_emote(src)
+							message = thing.on_spin_emote(src)
+							maptext_out = "<I>twirls [thing]</I>"
 							animate(thing, transform = turn(matrix(), 120), time = 0.7, loop = 3)
 							animate(transform = turn(matrix(), 240), time = 0.7)
 							animate(transform = null, time = 0.7)
 						else
 							message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+							maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 				else
 					message = "<B>[src]</B> struggles to move."
+					maptext_out = "<I>struggles to move</I>"
 
 			if ("tip")
 				if (!src.restrained() && !src.stat)
@@ -511,10 +593,11 @@
 						SPAWN_DBG(1 SECOND)
 							hat.set_loc(src.loc)
 							src.head = null
+							src.add_karma(-10)
 							src.gib()
-							karma_update(10, "SIN", src)
 					else if (istype(src.head, /obj/item/clothing/head) && !istype(src.head, /obj/item/clothing/head/fedora))
 						src.show_text("This hat just isn't [pick("fancy", "suave", "manly", "sexerific", "majestic", "euphoric")] enough for that!", "red")
+						//maptext_out = "<I>tips hat</I>"
 						return
 					else
 						src.show_text("You can't tip a hat you don't have!", "red")
@@ -548,13 +631,15 @@
 						message = "<B>[src]</B> throws [his_or_her(src)] [hat_or_beret] on the floor and stomps on it![already_stomped]\
 						<br><B>[src]</B> grumbles, \"<i>rasmn frasmn grmmn</i>.\""
 
+					maptext_out = "<I>stomps on their hat!</I>"
+
 					if (hat_or_beret == "beret")
 						hat.icon_state = "hosberet-smash" // make sure it looks smushed!
 					else
 						hat.icon_state = "hoscap-smash"
 					src.drop_from_slot(hat) // we're done here, drop that hat!
 					if(src.mind && src.mind.assigned_role != "Head of Security")
-						karma_update(5, "SAINT", src)
+						src.add_karma(5)
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm and grumbles."
 				m_type = 1
@@ -566,12 +651,14 @@
 				if (!muzzled)
 					if (src.emote_check(voluntary, 25))
 						message = "<B>[src]</B> blows a bubble."
+						maptext_out = "<I>blows a bubble</I>"
 						//todo: sound
 						//todo: gum icon animation?
 						if (gum.reagents && gum.reagents.total_volume)
 							gum.reagents.reaction(get_turf(src), TOUCH, gum.chew_size)
 				else
 					message = "<B>[src]</B> tries to make a noise."
+					maptext_out = "<I>tries to make a noise</I>"
 				m_type = 2
 
 			if ("handpuppet")
@@ -581,54 +668,67 @@
 			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","drool","shrug","tremble","quiver","shiver","shudder","shake","think","ponder","contemplate","grump")
 				// basic visible single-word emotes
 				message = "<B>[src]</B> [act]s."
+				maptext_out = "<I>[act]s</I>"
 				m_type = 1
 
 			if (":)")
 				message = "<B>[src]</B> smiles."
+				maptext_out = "<I>smiles</I>"
 				m_type = 1
 
 			if (":(")
 				message = "<B>[src]</B> frowns."
+				maptext_out = "<I>frowns</I>"
 				m_type = 1
 
 			if (":d", ">:)") // the switch is lowertext()ed so this is what :D would be
 				message = "<B>[src]</B> grins."
+				maptext_out = "<I>grins</I>"
 				m_type = 1
 
 			if ("d:", "dx") // same as above for D: and DX
 				message = "<B>[src]</B> grimaces."
+				maptext_out = "<I>grimaces</I>"
 				m_type = 1
 
 			if (">:(")
 				message = "<B>[src]</B> scowls."
+				maptext_out = "<I>scowls</I>"
 				m_type = 1
 
 			if (":j")
 				message = "<B>[src]</B> smirks."
+				maptext_out = "<I>smirks</I>"
 				m_type = 1
 
 			if (":i")
 				message = "<B>[src]</B> grumps."
+				maptext_out = "<I>grumps</I>"
 				m_type = 1
 
 			if (":|")
 				message = "<B>[src]</B> stares."
+				maptext_out = "<I>stares</I>"
 				m_type = 1
 
 			if ("xd")
 				message = "<B>[src]</B> laughs."
+				maptext_out = "<I>laughs</I>"
 				m_type = 1
 
 			if (":c")
 				message = "<B>[src]</B> pouts."
+				maptext_out = "<I>pouts</I>"
 				m_type = 1
 
 			if ("clap")
 				// basic visible single-word emotes - unusable while restrained
 				if (!src.restrained())
 					message = "<B>[src]</B> [lowertext(act)]s."
+					maptext_out = "<I>claps</I>"
 				else
 					message = "<B>[src]</B> struggles to move."
+					maptext_out = "<I>struggles to move</I>"
 				m_type = 1
 
 			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle")
@@ -636,9 +736,13 @@
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
 					message = "<B>[src]</B> [act]s."
+					maptext_out = "<I>[act]s</I>"
 				else
 					message = "<B>[src]</B> tries to make a noise."
+					maptext_out = "<I>tries to make a noise</I>"
 				m_type = 2
+
+				maptext_out = "<I>[act]s</I>"
 
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
@@ -651,38 +755,46 @@
 			if ("laugh","chuckle","giggle","chortle","guffaw","cackle")
 				if (!muzzled)
 					message = "<B>[src]</B> [act]s."
+					maptext_out = "<I>[act]s</I>"
 					if (src.sound_list_laugh && src.sound_list_laugh.len)
 						playsound(src.loc, pick(src.sound_list_laugh), 80, 0, 0, src.get_age_pitch())
 				else
 					message = "<B>[src]</B> tries to make a noise."
+					maptext_out = "<I>tries to make a noise</I>"
 				m_type = 2
 
 			// basic emotes that change the wording a bit
 
 			if ("blush")
 				message = "<B>[src]</B> blushes."
+				maptext_out = "<I>blushes</I>"
 				m_type = 1
 
 			if ("flinch")
 				message = "<B>[src]</B> flinches."
+				maptext_out = "<I>flinches</I>"
 				m_type = 1
 
 			if ("blink_r")
 				message = "<B>[src]</B> blinks rapidly."
+				maptext_out = "<I>blinks rapidly</I>"
 				m_type = 1
 
 			if ("eyebrow","raiseeyebrow")
 				message = "<B>[src]</B> raises an eyebrow."
+				maptext_out = "<I>raises an eyebrow</I>"
 				m_type = 1
 
 			if ("shakehead","smh")
 				message = "<B>[src]</B> shakes [his_or_her(src)] head."
+				maptext_out = "<I>shakes [his_or_her(src)] head</I>"
 				m_type = 1
 
 			if ("shakebutt","shakebooty","shakeass","twerk")
 				message = "<B>[src]</B> shakes [his_or_her(src)] ass!"
+				maptext_out = "<I>shakes [his_or_her(src)] ass!</I>"
 				m_type = 1
-				karma_update(3, "SIN", src)
+				src.add_karma(-3)
 
 				SPAWN_DBG (5)
 					var/beeMax = 15
@@ -700,18 +812,22 @@
 
 			if ("pale")
 				message = "<B>[src]</B> goes pale for a second."
+				maptext_out = "<I>goes pale...</I>"
 				m_type = 1
 
 			if ("flipout")
 				message = "<B>[src]</B> flips the fuck out!"
+				maptext_out = "<I>flips the fuck out!</I>"
 				m_type = 1
 
 			if ("rage","fury","angry")
 				message = "<B>[src]</B> becomes utterly furious!"
+				maptext_out = "<I>becomes utterly furious!</I>"
 				m_type = 1
 
 			if ("shame","hanghead")
 				message = "<B>[src]</B> hangs [his_or_her(src)] head in shame."
+				maptext_out = "<I>hangs [his_or_her(src)] head in shame</I>"
 				m_type = 1
 
 			// basic emotes with alternates for restraints
@@ -719,101 +835,179 @@
 			if ("flap")
 				if (!src.restrained())
 					message = "<B>[src]</B> flaps [his_or_her(src)] arms!"
+					maptext_out = "<I>flaps [his_or_her(src)] arms!</I>"
 					if (src.sound_list_flap && src.sound_list_flap.len)
 						playsound(src.loc, pick(src.sound_list_flap), 80, 0, 0, src.get_age_pitch())
 				else
 					message = "<B>[src]</B> writhes!"
+					maptext_out = "<I>writhes!</I>"
 				m_type = 1
 
 			if ("aflap")
 				if (!src.restrained())
 					message = "<B>[src]</B> flaps [his_or_her(src)] arms ANGRILY!"
+					maptext_out = "<I>flaps [his_or_her(src)] arms ANGRILY!</I>"
 					if (src.sound_list_flap && src.sound_list_flap.len)
 						playsound(src.loc, pick(src.sound_list_flap), 80, 0, 0, src.get_age_pitch())
 				else
 					message = "<B>[src]</B> writhes angrily!"
+					maptext_out = "<I>writhes angrily!</I>"
 				m_type = 1
 
 			if ("raisehand")
-				if (!src.restrained()) message = "<B>[src]</B> raises a hand."
-				else message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+				if (!src.restrained())
+					message = "<B>[src]</B> raises a hand."
+					maptext_out = "<I>raises a hand</I>"
+				else
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move their arm</I>"
 				m_type = 1
 
 			if ("crackknuckles","knuckles")
-				if (!src.restrained()) message = "<B>[src]</B> cracks [his_or_her(src)] knuckles."
-				else message = "<B>[src]</B> irritably shuffles around."
+				if (!src.restrained())
+					message = "<B>[src]</B> cracks [his_or_her(src)] knuckles."
+					maptext_out = "<I>cracks their knuckles</I>"
+				else
+					message = "<B>[src]</B> irritably shuffles around."
+					maptext_out = "<I>irritably shuffles around</I>"
 				m_type = 1
 
 			if ("stretch")
-				if (!src.restrained()) message = "<B>[src]</B> stretches."
-				else message = "<B>[src]</B> writhes around slowly."
+				if (!src.restrained())
+					message = "<B>[src]</B> stretches."
+					maptext_out = "<I>stretches</I>"
+				else
+					message = "<B>[src]</B> writhes around slowly."
+					maptext_out = "<I>writhes around slowly</I>"
 				m_type = 1
 
 			if ("rude")
-				if (!src.restrained()) message = "<B>[src]</B> makes a rude gesture."
-				else message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+				if (!src.restrained())
+					message = "<B>[src]</B> makes a rude gesture."
+					maptext_out = "<I>makes a rude gesture</I>"
+				else
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move their arm</I>"
 				m_type = 1
 
 			if ("cry")
-				if (!muzzled) message = "<B>[src]</B> cries."
-				else message = "<B>[src]</B> makes an odd noise. A tear runs down [his_or_her(src)] face."
+				if (!muzzled)
+					message = "<B>[src]</B> cries."
+					maptext_out = "<I>cries</I>"
+				else
+					message = "<B>[src]</B> makes an odd noise. A tear runs down [his_or_her(src)] face."
+					maptext_out = "<I>makes an odd noise</I>"
 				m_type = 2
 
 			if ("retch","gag")
-				if (!muzzled) message = "<B>[src]</B> retches in disgust!"
-				else message = "<B>[src]</B> makes a strange choking sound."
+				if (!muzzled)
+					message = "<B>[src]</B> retches in disgust!"
+					maptext_out = "<I>retches in disgust!</I>"
+				else
+					message = "<B>[src]</B> makes a strange choking sound."
+					maptext_out = "<I>makes a strange choking sound</I>"
 				m_type = 2
 
 			if ("raspberry")
-				if (!muzzled) message = "<B>[src]</B> blows a raspberry."
-				else message = "<B>[src]</B> slobbers all over [himself_or_herself(src)]."
+				if (!muzzled)
+					message = "<B>[src]</B> blows a raspberry."
+					maptext_out = "<I>blows a raspberry</I>"
+				else
+					message = "<B>[src]</B> slobbers all over [himself_or_herself(src)]."
+					maptext_out = "<I>slobbers all over themselves</I>"
 				m_type = 2
 
 			if ("tantrum")
-				if (!src.restrained()) message = "<B>[src]</B> throws a tantrum!"
-				else message = "<B>[src]</B> starts wriggling around furiously!"
+				if (!src.restrained())
+					message = "<B>[src]</B> throws a tantrum!"
+					maptext_out = "<I>throws a tantrum!</I>"
+				else
+					message = "<B>[src]</B> starts wriggling around furiously!"
+					maptext_out = "<I>starts wriggling around furiously!</I>"
 				m_type = 1
 
 			if ("gesticulate")
-				if (!src.restrained()) message = "<B>[src]</B> gesticulates."
-				else message = "<B>[src]</B> wriggles around a lot."
+				if (!src.restrained())
+					message = "<B>[src]</B> gesticulates."
+					maptext_out = "<I>gesticulates</I>"
+				else
+					message = "<B>[src]</B> wriggles around a lot."
+					maptext_out = "<I>wriggles around a lot</I>"
 				m_type = 1
 
 			if ("wgesticulate")
-				if (!src.restrained()) message = "<B>[src]</B> gesticulates wildly."
-				else message = "<B>[src]</B> enthusiastically wriggles around a lot!"
+				if (!src.restrained())
+					message = "<B>[src]</B> gesticulates wildly."
+					maptext_out = "<I>gesticulates wildly</I>"
+				else
+					message = "<B>[src]</B> enthusiastically wriggles around a lot!"
+					maptext_out = "<I>enthusiastically wriggles around a lot!</I>"
 				m_type = 1
 
 			if ("smug")
-				if (!src.restrained()) message = "<B>[src]</B> folds [his_or_her(src)] arms and smirks broadly, making a self-satisfied \"heh\"."
-				else message = "<B>[src]</B> shuffles a bit and smirks broadly, emitting a rather self-satisfied noise."
+				if (!src.restrained())
+					message = "<B>[src]</B> folds [his_or_her(src)] arms and smirks broadly, making a self-satisfied \"heh\"."
+					maptext_out = "<I>folds their arms and smirks broadly</I>"
+				else
+					message = "<B>[src]</B> shuffles a bit and smirks broadly, emitting a rather self-satisfied noise."
+					maptext_out = "<I>shuffles a bit and smirks broadly</I>"
 				m_type = 1
 				if (src.mind)
-					karma_update(2, "SIN", src)
+					src.add_karma(-2)
 
 			if ("nosepick","picknose")
-				if (!src.restrained()) message = "<B>[src]</B> picks [his_or_her(src)] nose."
-				else message = "<B>[src]</B> sniffs and scrunches [his_or_her(src)] face up irritably."
+				if (!src.restrained())
+					message = "<B>[src]</B> picks [his_or_her(src)] nose."
+					maptext_out = "<I>picks their nose</I>"
+				else
+					message = "<B>[src]</B> sniffs and scrunches [his_or_her(src)] face up irritably."
+					maptext_out = "<I>sniffs and scrunches their face up irritably</I>"
 				m_type = 1
 				if (src.mind)
-					karma_update(1, "SIN", src)
+					src.add_karma(-1)
 
 			if ("flex","flexmuscles")
 				if (!src.restrained())
 					var/roboarms = src.limbs && istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && istype(src.limbs.l_arm, /obj/item/parts/robot_parts)
-					if (roboarms) message = "<B>[src]</B> flexes [his_or_her(src)] powerful robotic muscles."
-					else message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
-				else message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
+					if (roboarms)
+						message = "<B>[src]</B> flexes [his_or_her(src)] powerful robotic muscles."
+						maptext_out = "<I>flexes [his_or_her(src)] powerful robotic muscles</I>"
+					else
+						message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
+						maptext_out = "<I>flexes [his_or_her(src)] muscles</I>"
+				else
+					message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
+					maptext_out = "<I>tries to stretch [his_or_her(src)] arms</I>"
 				m_type = 1
 
+				for(var/atom in src.get_equipped_items())
+					var/obj/item/C = atom
+					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
+						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
+						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
+						drop_item()
+						O.set_loc(src)
+						equip_if_possible(O, drophand)
+						src.visible_message("<span class='alert'><B>[src] pulls a set of tools out of \the [C]!</B></span>")
+						playsound(src.loc, "rustle", 60, 1)
+						break
+
 			if ("facepalm")
-				if (!src.restrained()) message = "<B>[src]</B> places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation."
-				else message = "<B>[src]</B> looks rather exasperated."
+				if (!src.restrained())
+					message = "<B>[src]</B> places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation."
+					maptext_out = "<I>places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation</I>"
+				else
+					message = "<B>[src]</B> looks rather exasperated."
+					maptext_out = "<I>looks rather exasperated</I>"
 				m_type = 1
 
 			if ("panic","freakout")
-				if (!src.restrained()) message = "<B>[src]</B> enters a state of hysterical panic!"
-				else message = "<B>[src]</B> starts writhing around in manic terror!"
+				if (!src.restrained())
+					message = "<B>[src]</B> enters a state of hysterical panic!"
+					maptext_out = "<I>enters a state of hysterical panic!</I>"
+				else
+					message = "<B>[src]</B> starts writhing around in manic terror!"
+					maptext_out = "<I>starts writhing around in manic terror!</I>"
 				m_type = 1
 
 			// targeted emotes
@@ -844,9 +1038,15 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (M) message = "<B>[src]</B> flips off [M]."
-					else message = "<B>[src]</B> raises [his_or_her(src)] middle finger."
-				else message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arm."
+					if (M)
+						message = "<B>[src]</B> flips off [M]."
+						maptext_out = "<I>flips off [M]!</I>"
+					else
+						message = "<B>[src]</B> raises [his_or_her(src)] middle finger."
+						maptext_out = "<I>raises [his_or_her(src)] middle finger</I>"
+				else
+					message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>scowls and tries to move [his_or_her(src)] arm</I>"
 
 			if ("doubleflip","doubledeuce","doublebird","flip2")
 				m_type = 1
@@ -857,9 +1057,15 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (M) message = "<B>[src]</B> gives [M] the double deuce!"
-					else message = "<B>[src]</B> raises both of [his_or_her(src)] middle fingers."
-				else message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arms."
+					if (M)
+						message = "<B>[src]</B> gives [M] the double deuce!"
+						maptext_out = "<I>gives [M] the double deuce!</I>"
+					else
+						message = "<B>[src]</B> raises both of [his_or_her(src)] middle fingers."
+						maptext_out = "<I>raises both of [his_or_her(src)] middle fingers</I>"
+				else
+					message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arms."
+					maptext_out = "<I>scowls and tries to move [his_or_her(src)] arms.</I>"
 
 			if ("boggle")
 				m_type = 1
@@ -869,8 +1075,12 @@
 						if (ckey(param) == ckey(A.name))
 							M = A
 							break
-				if (M) message = "<B>[src]</B> boggles at [M]'s stupidity."
-				else message = "<B>[src]</B> boggles at the stupidity of it all."
+				if (M)
+					message = "<B>[src]</B> boggles at [M]'s stupidity."
+					maptext_out = "<I> boggles at [M]'s stupidity</I>"
+				else
+					message = "<B>[src]</B> boggles at the stupidity of it all."
+					maptext_out = "<I>boggles at the stupidity of it all</I>"
 
 			if ("shakefist")
 				m_type = 1
@@ -881,9 +1091,15 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (M) message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist at [M]!"
-					else message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist!"
-				else message = "<B>[src]</B> tries to move [his_or_her(src)] arm angrily!"
+					if (M)
+						message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist at [M]!"
+						maptext_out = "<I>angrily shakes [his_or_her(src)] fist at [M]!</I>"
+					else
+						message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist!"
+						maptext_out = "<I>angrily shakes [his_or_her(src)] fist!</I>"
+				else
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm angrily!"
+					maptext_out = "<I>tries to move [his_or_her(src)] arm angrily!</I>"
 
 			if ("handshake","shakehand","shakehands")
 				m_type = 1
@@ -897,8 +1113,12 @@
 					if (M == src) M = null
 
 					if (M)
-						if (M.canmove && !M.r_hand && !M.restrained()) message = "<B>[src]</B> shakes hands with [M]."
-						else message = "<B>[src]</B> holds out [his_or_her(src)] hand to [M]."
+						if (M.canmove && !M.r_hand && !M.restrained())
+							message = "<B>[src]</B> shakes hands with [M]."
+							maptext_out = "<I>shakes hands with [M]</I>"
+						else
+							message = "<B>[src]</B> holds out [his_or_her(src)] hand to [M]."
+							maptext_out = "<I>holds out [his_or_her(src)] hand to [M]</I>"
 
 			if ("daps","dap")
 				m_type = 1
@@ -909,9 +1129,15 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (M) message = "<B>[src]</B> gives daps to [M]."
-					else message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps [himself_or_herself(src)]. Shameful."
-				else message = "<B>[src]</B> wriggles around a bit."
+					if (M)
+						message = "<B>[src]</B> gives daps to [M]."
+						maptext_out = "<I>gives daps to [M]</I>"
+					else
+						message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps [himself_or_herself(src)]. Shameful."
+						maptext_out = "<I>shamefully gives daps to [himself_or_herself(src)]</I>"
+				else
+					message = "<B>[src]</B> wriggles around a bit."
+					maptext_out = "<I>wriggles around a bit</I>"
 
 			if ("slap","bitchslap","smack")
 				m_type = 1
@@ -925,12 +1151,17 @@
 								if (ckey(param) == ckey(A.name))
 									M = A
 									break
-						if (M) message = "<B>[src]</B> slaps [M] across the face! Ouch!"
+						if (M)
+							message = "<B>[src]</B> slaps [M] across the face! Ouch!"
+							maptext_out = "<I>slaps [M] across the face!</I>"
 						else
 							message = "<B>[src]</B> slaps [himself_or_herself(src)]!"
+							maptext_out = "<I>slaps [himself_or_herself(src)]!</I>"
 							src.TakeDamage("head", 0, 4, 0, DAMAGE_BURN)
 						playsound(src.loc, src.sound_snap, 100, 1)
-				else message = "<B>[src]</B> lurches forward strangely and aggressively!"
+				else
+					message = "<B>[src]</B> lurches forward strangely and aggressively!"
+					maptext_out = "<I>lurches forward strangely and aggressively!</I>"
 
 			if ("highfive")
 				m_type = 1
@@ -951,16 +1182,20 @@
 								if (alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", "Yes", "No") == "Yes")
 									if (M in view(1,null))
 										message = "<B>[src]</B> and [M] highfive!"
+										maptext_out = "<I>highfives [M]!</I>"
 										playsound(src.loc, src.sound_snap, 100, 1)
 								else
 									message = "<B>[src]</B> offers [M] a highfive, but [M] leaves [him_or_her(src)] hanging!"
+									maptext_out = "<I>tries to highfive [M] but is left hanging!</I>"
 									if (M.mind)
-										karma_update(5, "SIN", src)
+										src.add_karma(-5)
 							else
 								message = "<B>[src]</B> highfives [M]!"
+								maptext_out = "<I>highfives [M]!</I>"
 								playsound(src.loc, src.sound_snap, 100, 1)
 						else
 							message = "<B>[src]</B> randomly raises [his_or_her(src)] hand!"
+							maptext_out = "<I>randomly raises [his_or_her(src)] hand!</I>"
 			// emotes that do STUFF! or are complex in some way i guess
 
 			if ("snap","snapfingers","fingersnap","click","clickfingers")
@@ -995,6 +1230,7 @@
 					m_type = 2
 				else
 					message = "<B>[src]</B> makes air quotes with [his_or_her(src)] fingers."
+					maptext_out = "<I>makes air quotes with [his_or_her(src)] fingers</I>"
 					m_type = 1
 
 			if ("twitch")
@@ -1030,9 +1266,9 @@
 				if (!voluntary || src.emote_check(voluntary,50))
 					if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown"))
 						src.deathConfetti()
-					if (prob(15) && !ischangeling(src) && !isdead(src)) message = "<span style=\"color:black\"><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
+					if (prob(15) && !ischangeling(src) && !isdead(src)) message = "<span class='regular'><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
 					else
-						message = "<span style=\"color:black\"><B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...</span>"
+						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...</span>"
 						playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
 					m_type = 1
 
@@ -1063,11 +1299,13 @@
 
 					if (!M)
 						message = "<B>[src]</B> points."
+						maptext_out = "<I>points</I>"
 					else
 						src.point(M)
 
 					if (M)
 						message = "<B>[src]</B> points to [M]."
+						maptext_out = "<I>points to [M]</I>"
 					else
 				m_type = 1
 
@@ -1077,8 +1315,10 @@
 					if (isnum(t1))
 						if (t1 <= 5 && (!src.r_hand || !src.l_hand))
 							message = "<B>[src]</B> raises [t1] finger\s."
+							maptext_out = "<I>raises [t1] finger\s</I>"
 						else if (t1 <= 10 && (!src.r_hand && !src.l_hand))
 							message = "<B>[src]</B> raises [t1] finger\s."
+							maptext_out = "<I>raises [t1] finger\s</I>"
 				m_type = 1
 
 			if ("wink")
@@ -1095,6 +1335,7 @@
 						break
 
 				message = "<B>[src]</B> winks."
+				maptext_out = "<I>winks</I>"
 				m_type = 1
 
 			if ("collapse", "trip")
@@ -1121,10 +1362,7 @@
 									src.dir = turn(src.dir, 90)
 									sleep(0.2 SECONDS)
 
-							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-							s.set_up(3, 1, src)
-							s.start()
-
+							elecflash(src,power = 2)
 						else
 							//glowsticks
 							var/left_glowstick = istype (l_hand, /obj/item/device/light/glowstick)
@@ -1239,6 +1477,8 @@
 									// todo: add context-sensitive break dancing and some other goofy shit
 
 						SPAWN_DBG(0.5 SECONDS)
+							//i hate these checks - too lazy to fix for real now but lets throw on some lagchecks since we're already spawning
+							LAGCHECK(LAG_MED)
 							var/beeMax = 15
 							for (var/obj/critter/domestic_bee/responseBee in range(7, src))
 								if (!responseBee.alive)
@@ -1248,8 +1488,9 @@
 									break
 
 								responseBee.dance_response()
-								karma_update(1, "SAINT", src)
+								src.add_karma(1)
 
+							LAGCHECK(LAG_MED)
 							var/parrotMax = 15
 							for (var/obj/critter/parrot/responseParrot in range(7, src))
 								if (!responseParrot.alive)
@@ -1258,6 +1499,7 @@
 									break
 								responseParrot.dance_response()
 
+							LAGCHECK(LAG_MED)
 							var/crabMax = 5
 							for (var/obj/critter/crab/party/responseCrab in range(7, src))
 								if (!responseCrab.alive)
@@ -1269,8 +1511,9 @@
 						if (src.traitHolder && src.traitHolder.hasTrait("happyfeet"))
 							if (prob(33))
 								SPAWN_DBG(0.5 SECONDS)
-									for (var/mob/living/carbon/human/responseMonkey in range(1, src)) // they don't have to be monkeys, but it's signifying monkey code
-										if (responseMonkey.stat || responseMonkey.getStatusDuration("paralysis") || responseMonkey.sleeping || responseMonkey.getStatusDuration("stunned") || (responseMonkey == src))
+									for (var/mob/living/carbon/human/responseMonkey in orange(1, src)) // they don't have to be monkeys, but it's signifying monkey code
+										LAGCHECK(LAG_MED)
+										if (!can_act(responseMonkey, 0))
 											continue
 										responseMonkey.emote("dance")
 
@@ -1286,7 +1529,7 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
-
+					var/combatflip = 0
 					//TODO: space flipping
 					//if ((!src.restrained()) && (!src.lying) && (istype(src.loc, /turf/space)))
 					//	message = "<B>[src]</B> does a flip!"
@@ -1300,7 +1543,7 @@
 					//		animate(transform = turn(GetPooledMatrix(), -180), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -270), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -360), time = 1, loop = -1)
-					if (istype(src.loc,/obj/))
+					if (isobj(src.loc))
 						var/obj/container = src.loc
 						container.mob_flip_inside(src)
 
@@ -1379,24 +1622,24 @@
 
 									src.emote("scream")
 									message = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
-									logTheThing("combat", src, G.affecting, "suplexes %target%[tabl ? " into \an [tabl]" : null] [log_loc(src)]")
+									logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 									M.lastattacker = src
 									M.lastattackertime = world.time
+									combatflip = 1
 									if (iswrestler(src))
 										if (prob(50))
 											M.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
 										else
-											G.affecting.changeStatus("stunned", 50)
 											G.affecting.changeStatus("weakened", 5 SECONDS)
 											G.affecting.force_laydown_standup()
 											G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 										playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 									else
-										src.changeStatus("weakened", 3.5 SECONDS)
+										src.changeStatus("weakened", 3.9 SECONDS)
 
 										if (client && client.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
-										if (!G.affecting.hasStatus("weakened"))
+										if (G.affecting && !G.affecting.hasStatus("weakened"))
 											G.affecting.changeStatus("weakened", 4.5 SECONDS)
 
 
@@ -1413,20 +1656,19 @@
 												if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))) || ((src.bioHolder.HasEffect("fat") || G.affecting.bioHolder.HasEffect("fat")) && (!g_tabl.reinforced || prob(90))))
 													SPAWN_DBG(0)
 														g_tabl.smash()
-														src.changeStatus("stunned", 7 SECONDS)
-														src.changeStatus("weakened", 6 SECONDS)
+														src.changeStatus("weakened", 7 SECONDS)
 														random_brute_damage(src, rand(20,40))
 														take_bleeding_damage(src, src, rand(20,40))
 
-														G.affecting.changeStatus("stunned", 2 SECONDS)
+
 														G.affecting.changeStatus("weakened", 4 SECONDS)
 														random_brute_damage(G.affecting, rand(20,40))
 														take_bleeding_damage(G.affecting, src, rand(20,40))
 
 
 														G.affecting.force_laydown_standup()
-														SPAWN_DBG(1 SECOND) //let us do that combo shit people like with throwing
-															src.force_laydown_standup()
+														sleep(1 SECOND) //let us do that combo shit people like with throwing
+														src.force_laydown_standup()
 
 								if (G && G.state < 1) //ZeWaka: Fix for null.state
 									var/turf/oldloc = src.loc
@@ -1443,9 +1685,9 @@
 										if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
 											src.remove_stamina(STAMINA_FLIP_COST)
 											src.stamina_stun()
-
+										combatflip = 1
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
-										logTheThing("combat", src, M, "flips into %target%")
+										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
 										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
 										M.changeStatus("weakened", 2 SECONDS)
@@ -1456,7 +1698,8 @@
 									else
 										message = "<B>[src]</B> flips in [M]'s general direction."
 									break
-
+					if(combatflip)
+						actions.interrupt(src, INTERRUPT_ACT)
 					if (src.lying)
 						message = "<B>[src]</B> flops on the floor like a fish."
 					// If there is a chest item, see if its reagents can be dumped into the body
@@ -1469,9 +1712,7 @@
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> burps.")
 						for (var/mob/M in oview(1))
-							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-							s.set_up(3, 1, src)
-							s.start()
+							elecflash(src,power = 2)
 							boutput(M, "<span class='notice'>BZZZZZZZZZZZT!</span>")
 							M.TakeDamage("chest", 0, 20, 0, DAMAGE_BURN)
 							src.charges -= 1
@@ -1611,54 +1852,132 @@
 			if ("poo", "poop", "shit", "crap")
 				if (src.emote_check(voluntary))
 					message = "<B>[src]</B> grunts for a moment. [prob(1) ? "Something" : "Nothing"] happens."
+					maptext_out = "<I>grunts</I>"
 
 			if ("monologue")
 				m_type = 2
 				if (src.mind && src.mind.assigned_role == "Detective")
+					var/obj/item/grab/G
 					if (istype(src.l_hand, /obj/item/grab))
-						var/obj/item/grab/G = src.l_hand
-						if (ishuman(G.affecting))
-							message = "<span style=\"color:black\"><B>[src]</B> says, \"I'll stare the bastard in the face as he screams to God, and I'll laugh harder when he whimpers like a baby. And when [src.l_hand:affecting]'s eyes go dead, the hell I send him to will seem like heaven after what I've done to him.\"</span>"
+						G = src.l_hand
 					else if (istype(src.r_hand, /obj/item/grab))
-						var/obj/item/grab/G = src.r_hand
-						if (ishuman(G.affecting))
-							message = "<span style=\"color:black\"><B>[src]</B> says, \"I'll stare the bastard in the face as he screams to God, and I'll laugh harder when he whimpers like a baby. And when [src.r_hand:affecting]'s eyes go dead, the hell I send him to will seem like heaven after what I've done to him.\"</span>"
+						G = src.r_hand
+					if (G && ishuman(G.affecting))
+						var/mob/M = G.affecting
+						src.say_verb("I'll stare the bastard in the face as [he_or_she(M)] screams to God, and I'll laugh harder when [he_or_she(M)] whimpers like a baby.")
+						sleep(0.7 SECONDS)
+						if(G && G.affecting == M)
+							src.say_verb("And when [M]'s eyes go dead, the hell I send [him_or_her(M)] to will seem like heaven after what I've done to [him_or_her(M)].")
+						else
+							src.emote("laugh")
 					else if (istype(src.loc.loc, /area/station/security/detectives_office))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"As I looked out the door of my office, I realised it was a night when you didn't know your friends but strangers looked familiar. A night like this, the smartest thing to do is nothing: stay home. It was like the wind carried people along with it. But I had to get out there.\"</span>"
+						src.say_verb("As I looked out the door of my office, I realised it was a night when you didn't know your friends but strangers looked familiar.")
+						sleep(1 SECONDS)
+						src.say_verb("A night like this, the smartest thing to do is nothing: stay home.")
+						sleep(0.5 SECONDS)
+						src.say_verb("It was like the wind carried people along with it.")
+						sleep(0.8 SECONDS)
+						src.say_verb("But I had to get out there.")
 					else if (istype(src.loc.loc, /area/station/maintenance))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The dark maintenance corridoors of this place were always the same, home to the most shady characters you could ever imagine. Walk down the right back alley in [station_name(1)], and you can find anything.\"</span>"
+						src.say_verb("The dark maintenance corridoors of this place were always the same, home to the most shady characters you could ever imagine.")
+						sleep(1 SECONDS)
+						src.say_verb("Walk down the right back alley in [station_name(1)], and you can find anything.")
 					else if (istype(src.loc.loc, /area/station/hydroponics))
-						message = "<span style=\"color:black\"><B>[src]</b> says, \"A gang of space farmers growing psilocybin mushrooms, cannabis, and of course those goddamned george melons. A shady bunch, whose wiles had earned them the trust of many. The Chef. The Barman. But not me. No, their charms don't work on a man of values and principles.\"</span>"
+						src.say_verb("A gang of space farmers growing psilocybin mushrooms, cannabis, and of course those goddamned george melons.")
+						sleep(1 SECONDS)
+						src.say_verb("A shady bunch, whose wiles had earned them the trust of many.")
+						sleep(0.8 SECONDS)
+						src.say_verb("The Chef.")
+						sleep(0.8 SECONDS)
+						src.say_verb("The Barman.")
+						sleep(0.8 SECONDS)
+						src.say_verb("But not me.")
+						sleep(0.5 SECONDS)
+						src.emote("frown")
+						sleep(0.5 SECONDS)
+						src.say_verb("No, their charms don't work on a [man_or_woman(src)] of values and principles.")
 					else if (istype(src.loc.loc, /area/station/mailroom))
-						message = "<span style=\"color:black\"><B>[src]</b> says, \"The post office, an unused room habited by a brainless monkey, a cynical postman, and now, me. I've never trusted postal workers, with their crisp blue suits and their peaked caps. There's never any mail sent, excepting the ticking packages I gotta defuse up in the bridge.\"</span>"
+						src.say_verb("The post office, an unused room habited by a brainless monkey, a cynical postman, and now, me.")
+						sleep(1 SECONDS)
+						src.say_verb("I've never trusted postal workers, with their crisp blue suits and their peaked caps.")
+						sleep(0.5 SECONDS)
+						src.say_verb("There's never any mail sent, excepting the ticking packages I gotta defuse up in the bridge.")
 					else if (istype(src.loc.loc, /area/centcom))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"Central Command. I was tired as hell but I could afford to be tired now... I needed it to be morning. I wanted to hear doors opening, cars start, and human voices talking about the Space Olympics. I wanted to make sure there were still folks out there facing life with nothing up their sleeves but their arms. They didn't know it yet, but they had a better shot at happiness and a fair shake than they did yesterday.\"</span>"
+						src.say_verb("Central Command.")
+						sleep(1 SECONDS)
+						src.say_verb("I was tired as hell but I could afford to be tired now...")
+						sleep(1 SECONDS)
+						src.say_verb("I needed it to be morning.")
+						sleep(0.7 SECONDS)
+						src.say_verb("I wanted to hear doors opening, cars start, and human voices talking about the Space Olympics.")
+						sleep(0.7 SECONDS)
+						src.say_verb("I wanted to make sure there were still folks out there facing life with nothing up their sleeves but their arms.")
+						sleep(1 SECONDS)
+						src.say_verb("They didn't know it yet, but they had a better shot at happiness and a fair shake than they did yesterday.")
 					else if (istype(src.loc.loc, /area/station/chapel))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The self-pontificating bastard who calls himself our chaplain conducts worship here. If you can call the summoning of an angry god who pelts us with toolboxes, bolts of lightning, and occasionally rips our bodies in twain 'worship'.\"</span>"
+						src.say_verb("The self-pontificating bastard who calls himself our chaplain conducts worship here.")
+						sleep(0.5 SECONDS)
+						src.say_verb("If you can call the summoning of an angry god who pelts us with toolboxes, bolts of lightning, and occasionally rips our bodies in twain 'worship'.")
 					else if (istype(src.loc.loc, /area/station/bridge))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The bridge. The home of the Captain and Head of Personnel. I tried to tell myself I was the sturdy leg in our little triangle. I was worried it was true.\"</span>"
+						src.say_verb("The bridge.")
+						sleep(1 SECONDS)
+						src.say_verb("The home of the Captain and Head of Personnel.")
+						sleep(0.6 SECONDS)
+						src.say_verb("I tried to tell myself I was the sturdy leg in our little triangle.")
+						sleep(1 SECONDS)
+						src.say_verb("I was worried it was true.")
 					else if (istype(src.loc.loc, /area/station/security/main))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"I had dreams of being security before I got into the detective game. I wanted to meet stimulating and interesting people of an ancient space culture, and kill them. I wanted to be the first kid on my ship to get a confirmed kill.\"</span>"
+						src.say_verb("I had dreams of being security before I got into the detective game.")
+						sleep(1 SECONDS)
+						src.say_verb("I wanted to meet stimulating and interesting people of an ancient space culture, and kill them.")
+						sleep(0.7 SECONDS)
+						src.say_verb("I wanted to be the first kid on my ship to get a confirmed kill.")
 					else if (istype(src.loc.loc, /area/station/crew_quarters/bar))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The station bar, full of the best examples of lowlifes and drunks I'll ever find. I need a drink though, and there are no better places to find a beer than here.\"</span>"
+						src.say_verb("The station bar, full of the best examples of lowlifes and drunks I'll ever find.")
+						sleep(0.7 SECONDS)
+						src.say_verb("I need a drink though, and there are no better places to find a beer than here.")
 					else if (istype(src.loc.loc, /area/station/medical))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"Medical. In truth it's full of the biggest bunch of cut throats on the station, most would rather cut you up than sow you up, but if I've got a slug in my ass, I don't have much choice.\"</span>"
+						src.say_verb("Medical.")
+						sleep(0.8 SECONDS)
+						src.say_verb("In truth it's full of the biggest bunch of cut throats on the station, most would rather cut you up than sow you up, but if I've got a slug in my ass, I don't have much choice.")
 					else if (istype(src.loc.loc, /area/station/hallway/primary/))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The halls of the station assault my nostrils like a week old meal left festering in the sink. A thug around every corner, and reason enough themselves to keep my gun in my hand.\"</span>"
+						src.say_verb("The halls of the station assault my nostrils like a week old meal left festering in the sink.")
+						sleep(0.8 SECONDS)
+						src.say_verb("A thug around every corner, and reason enough themselves to keep my gun in my hand.")
 					else if (istype(src.loc.loc, /area/station/hallway/secondary/exit))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The only way off this hellhole and it's the one place I don't want to be, but sometimes you have to show your friends that you're worth a damn. Sometimes that means dying, sometimes it means killing a whole lot of people to escape alive.\"</span>"
+						src.say_verb("The only way off this hellhole and it's the one place I don't want to be, but sometimes you have to show your friends that you're worth a damn.")
+						sleep(0.8 SECONDS)
+						src.say_verb("Sometimes that means dying, sometimes it means killing a whole lot of people to escape alive.")
 					else if (istype(src.loc.loc, /area/station/hallway/secondary/entry))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The entrance to [station_name(1)]. You will never find a more wretched hive of scum and villainy. I must be cautious.\"</span>"
+						src.say_verb("The entrance to [station_name(1)].")
+						sleep(0.6 SECONDS)
+						src.say_verb("You will never find a more wretched hive of scum and villainy.")
+						sleep(0.7 SECONDS)
+						src.say_verb("I must be cautious.")
 					else if (istype(src.loc.loc, /area/station/engine/))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The churning, hellish heart of the station that just can't help missing the beat. Full of the dregs of society, and not the right place to be caught unwanted. I better watch my back.\"</span>"
+						src.say_verb("The churning, hellish heart of the station that just can't help missing the beat.")
+						sleep(0.7 SECONDS)
+						src.say_verb("Full of the dregs of society, and not the right place to be caught unwanted.")
+						sleep(0.5 SECONDS)
+						src.say_verb("I better watch my back.")
 					else if (istype(src.loc.loc, /area/station/maintenance/disposal))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"Disposal. Usually bloodied, full of grey-suited corpses and broken windows. Down here, you can hear the quiet moaning of the station itself. It's like it's mourning. Mourning better days long gone, like assistants through these pipes.\"</span>"
+						src.say_verb("Disposal.")
+						sleep(1 SECONDS)
+						src.say_verb("Usually bloodied, full of grey-suited corpses and broken windows.")
+						sleep(0.6 SECONDS)
+						src.say_verb("Down here, you can hear the quiet moaning of the station itself.")
+						sleep(1 SECONDS)
+						src.say_verb("It's like it's mourning.")
+						sleep(0.6 SECONDS)
+						src.say_verb("Mourning better days long gone, like assistants through these pipes.")
 					else if (istype(src.loc.loc, /area/station/crew_quarters/cafeteria))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"A place to eat, but not an appealing one. I've heard rumours about this place, and if there's one thing I know, it's that it's not normal to eat people.\"</span>"
+						src.say_verb("A place to eat, but not an appealing one.")
+						sleep(0.6 SECONDS)
+						src.say_verb("I've heard rumours about this place, and if there's one thing I know, it's that it's not normal to eat people.")
 					else if (istype(src.wear_mask, /obj/item/clothing/mask/cigarette))
 						message = "<B>[src]</B> takes a drag on [his_or_her(src)] cigarette, surveying the scene around them carefullly."
 					else
-						message = "<B>[src]</B> looks uneasy, like [src.gender == MALE ? "" : "s"]he's missing a vital part of h[src.gender == MALE ? "im" : "er"]self. [src.gender == MALE ? "H" : "Sh"]e needs a smoke badly."
+						message = "<B>[src]</B> looks uneasy, like [hes_or_shes(src)] missing a vital part of [himself_or_herself(src)]. [capitalize(he_or_she(src))] needs a smoke badly."
 
 				else
 					message = "<B>[src]</B> tries to say something clever, but just can't pull it off looking like that."
@@ -1672,11 +1991,21 @@
 				var/mob/living/carbon/human/H = null
 				if(ishuman(src))
 					H = src
+				var/obj/item/I = src.wear_id
+				if (istype(I, /obj/item/device/pda2))
+					var/obj/item/device/pda2/P = I
+					if(P.ID_card)
+						I = P.ID_card
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm))
 					src.show_text("You can't do that without arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || it_is_ass_day || istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
-					karma_update(4, "SIN", src)
-					if(locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
+				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || ASS_JAM || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+					var/obj/item/card/id/dabbing_license/dab_id = null
+					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
+						dab_id = I
+						dab_id.dab_count++
+						dab_id.tooltip_rebuild = 1
+					src.add_karma(-4)
+					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
 						// determine the name of the perp (goes by ID if wearing one)
 						var/perpname = src.name
 						//if(src:wear_id && src:wear_id:registered)
@@ -1707,6 +2036,8 @@
 									get_dabbed_on = 1
 									if(prob(5))
 										M.emote("cry") //You should be ashamed
+									if(dab_id)
+										dab_id.dabbed_on_count++
 
 						if(get_dabbed_on == 0)
 							if (src.mind && src.mind.assigned_role == "Clown")
@@ -1721,11 +2052,17 @@
 						if(H)
 							if(H.limbs.l_arm)
 								src.limbs.l_arm.sever()
+								if(dab_id)
+									dab_id.arm_count++
 							if(H.limbs.r_arm)
 								src.limbs.r_arm.sever()
+								if(dab_id)
+									dab_id.arm_count++
 							H.emote("scream")
-					if(!istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate) && (!istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/biggest)) || (!src.reagents.has_reagent("puredabs")))
+					if(!(istype(src.head, /obj/item/clothing/head/bighat/syndicate) || src.reagents.has_reagent("puredabs")))
 						src.take_brain_damage(10)
+						if(dab_id)
+							dab_id.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text(__red("Your head hurts!"))
 				else
@@ -1747,41 +2084,67 @@
 				return
 
 	showmessage:
-	if (message)
-		logTheThing("say", src, null, "EMOTE: [message]")
-		act = lowertext(act)
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
-		else if (m_type & 2)
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
-		else if (!isturf(src.loc))
-			var/atom/A = src.loc
-			for (var/mob/O in A.contents)
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+
+	//copy paste lol
+
+	if (maptext_out)
+		var/image/chat_maptext/chat_text = null
+		SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
+			if (speechpopups && src.chat_text)
+				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
+				if(chat_text)
+					chat_text.measure(src.client)
+					for(var/image/chat_maptext/I in src.chat_text.lines)
+						if(I != chat_text)
+							I.bump_up(chat_text.measured_height)
+
+			if (message)
+				logTheThing("say", src, null, "EMOTE: [message]")
+				act = lowertext(act)
+				if (m_type & 1)
+					for (var/mob/O in viewers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (m_type & 2)
+					for (var/mob/O in hearers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (!isturf(src.loc))
+					var/atom/A = src.loc
+					for (var/mob/O in A.contents)
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+
+
+	else
+
+		if (message)
+			logTheThing("say", src, null, "EMOTE: [message]")
+			act = lowertext(act)
+			if (m_type & 1)
+				for (var/mob/O in viewers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+			else if (m_type & 2)
+				for (var/mob/O in hearers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+			else if (!isturf(src.loc))
+				var/atom/A = src.loc
+				for (var/mob/O in A.contents)
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
-	var/datum/gas/farts/trace_gas = new
 	if(oxyplasmafart == 1)
 		gas.toxins += 1
 	if(oxyplasmafart == 2)
 		gas.oxygen += 1
 	gas.vacuum()
-	gas.trace_gases = list()
-	gas.trace_gases += trace_gas
 	if(src.reagents && src.reagents.get_reagent_amount("fartonium") > 6.9)
-		trace_gas.moles = 6.9
+		gas.farts = 6.9
+	else if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
+		gas.farts = 2.69
+	else if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
+		gas.farts = 1.69
 	else
-		if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
-			trace_gas.moles = 2.69
-		else
-			if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
-				trace_gas.moles = 1.69
-			else
-				trace_gas.moles = 0.69
+		gas.farts = 0.69
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)
@@ -1790,6 +2153,8 @@
 	src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 
 /mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/H)
+	if(PROC_ON_COOLDOWN(2 SECONDS))
+		return
 	H.render_target = "*\ref[H]"
 	var/image/left_arm = image(null, H)
 	left_arm.render_source = H.render_target
@@ -1823,11 +2188,8 @@
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		sleep(0.5 SECONDS)
-		torso.loc = null
 		qdel(torso)
-		right_arm.loc = null
 		qdel(right_arm)
-		left_arm.loc = null
 		qdel(left_arm)
 		REMOVE_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
 		H.update_canmove()

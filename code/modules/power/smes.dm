@@ -206,156 +206,81 @@
 	if (terminal && terminal.powernet)
 		terminal.powernet.newload += amount
 
-/obj/machinery/power/smes/attack_ai(mob/user)
+/obj/machinery/power/smes/ui_state(mob/user)
+	return tgui_default_state
 
-	add_fingerprint(user)
+/obj/machinery/power/smes/ui_status(mob/user, datum/ui_state/state)
+	return min(
+		state.can_use_topic(src, user),
+		tgui_broken_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
 
-	if (status & BROKEN) return
+/obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Smes", src.name)
+		ui.open()
 
-	interacted(user)
+/obj/machinery/power/smes/ui_data(mob/user)
+	var/list/data = list()
+	data["capacity"] = src.capacity
+	data["charge"] = src.charge
+	data["inputAttempt"] = src.chargemode
+	data["inputting"] = src.charging
+	data["inputLevel"] = src.chargelevel
+	data["inputLevelMax"] = SMESMAXCHARGELEVEL
+	data["inputAvailable"] = src.lastexcess
+	data["outputAttempt"] = src.online
+	data["outputting"] = src.loaddemand
+	data["outputLevel"] = src.output
+	data["outputLevelMax"] = SMESMAXOUTPUT
+	return data
 
-/obj/machinery/power/smes/attack_hand(mob/user)
-
-	add_fingerprint(user)
-
-	if (status & BROKEN) return
-
-	interacted(user)
-
-
-
-/obj/machinery/power/smes/proc/interacted(mob/user)
-
-	if ( (get_dist(src, user) > 1 ))
-		if (!isAI(user) && !issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=smes")
-			return
-
-	src.add_dialog(user)
-
-	// @todo fix this later
-	var/t = {"
-<title>SMES Status [n_tag ? " - [n_tag]" : null]</title>
-<style type="text/css">
-	h3, h4 {
-		margin: 0;
-	}
-
-	#powerMenu > div {
-		box-sizing: border-box;
-	}
-
-	.bar {
-		height: 8px;
-		max-height: 8px;
-		background: #363;
-		border: 1px solid white;
-		padding: 1px;
-		position: relative;
-		margin: 0.25em 0;
-	}
-
-	.bar .inner {
-		height: 100%;
-		margin: 0;
-		padding: 0;
-		background: #4e4;
-	}
-
-	.bar .marker {
-		position: absolute;
-		top: 0px;
-		width: 1px;
-		margin-left: -1px;
-		height: 40%;
-		background: white;
-		border: 1px solid black;
-		border-top: none;
-	}
-
-	p {
-		margin: 0.25em 0;
-	}
-</style>
-<div id="#powerMenu">
-<h3 style="text-align: center;">SMES Power Storage Unit [n_tag ? "- [n_tag]" : null]</h3>
-<br>
-	<strong>Stored Charge: [round(100.0*charge/capacity, 0.1)]%</strong> <em>([charging ? "Charging" : ((chargecount > 0) ? "Preparing to charge..." : "Not Charging")])</em>
-	<div class='bar'><div class='inner' style="width: [round(100 * (charge / capacity), 0.01)]%;"></div></div>
-<br>
-	<strong>Charging:</strong> [chargemode ? "<b>Enabled</b> (<a href='?src=\ref[src];cmode=1'>Disable</a>)" : "<b>Disabled</b> (<a href='?src=\ref[src];cmode=1'>Enable</a>)"]
-	<br><strong>Input level:</strong> <a href='?src=\ref[src];input=set'>[chargelevel]</a> (<a href='?src=\ref[src];input=min'>Min</a> &middot; <a href='?src=\ref[src];input=max'>Max</a>)
-	<div class='bar-outer'><div class='bar'><div class='inner' style="width: [max(0, min(100, round(100 * (lastexcess / SMESMAXCHARGELEVEL), 0.01)))]%;"></div><div class='marker' style="left: [round(100 * (chargelevel / SMESMAXCHARGELEVEL), 0.01)]%;"></div></div>
-	<strong>Available:</strong> [round(lastexcess)] W
-<br>
-<br>
-	<strong>Output:</strong> [online ? "<b>Enabled</b> (<a href='?src=\ref[src];online=1'>Disable</a>)" : "<b>Disabled</b> (<a href='?src=\ref[src];online=1'>Enable</a>)"]
-	<br><strong>Output level:</strong> <a href='?src=\ref[src];output=set'>[output]</a> (<a href='?src=\ref[src];output=min'>Min</a> &middot; <a href='?src=\ref[src];output=max'>Max</a>)
-	<div class='bar'><div class='inner' style="width: [min(100, round(100 * (loaddemand / SMESMAXOUTPUT), 0.01))]%;"></div><div class='marker' style="left: [round(100 * (output / SMESMAXCHARGELEVEL), 0.01)]%;"></div></div>
-	<strong>Current load:</strong> [round(loaddemand)] W
-</div>
-"}
-
-	user.Browse(t, "window=smes;size=400x340")
-	onclose(user, "smes")
-	return
-
-/obj/machinery/power/smes/Topic(href, href_list)
-	..()
-
-	if (usr.stat || usr.restrained() )
+/obj/machinery/power/smes/ui_act(action, params)
+	if(..())
 		return
-
-	if (( usr.using_dialog_of(src) && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr) || issilicon(usr)))
-		if (href_list["close"])
-			usr.Browse(null, "window=smes")
-			src.remove_dialog(usr)
-			return
-
-		else if ( href_list["cmode"] )
-			chargemode = !chargemode
+	switch(action)
+		if("toggle-input")
+			src.chargemode = !src.chargemode
 			if (!chargemode)
 				charging = 0
-			updateicon()
-
-		else if ( href_list["online"] )
-			online = !online
-			updateicon()
-		else if (href_list["input"])
-			switch (href_list["input"])
-				if ("min")
-					chargelevel = 0
-				if ("max")
-					chargelevel = SMESMAXCHARGELEVEL
-				if ("set")
-					var/newnum = input(usr, "New target charge level? 0 to [SMESMAXCHARGELEVEL].", "SMES Config", chargelevel) as null|num
-					if (newnum)
-						chargelevel	= newnum
-
-			chargelevel = max(0, min(SMESMAXCHARGELEVEL, chargelevel))	// clamp to range
-
-		else if (href_list["output"])
-			switch (href_list["output"])
-				if ("min")
-					output = 0
-				if ("max")
-					output = SMESMAXOUTPUT
-				if ("set")
-					var/newnum = input(usr, "New output level? 0 to [SMESMAXOUTPUT].", "SMES Config", output) as null|num
-					if (newnum)
-						output = newnum
-
-			output = max(0, min(SMESMAXOUTPUT, output))	// clamp to range
-
-
-		src.updateUsrDialog()
-
-	else
-		usr.Browse(null, "window=smes")
-		src.remove_dialog(usr)
-
-	return
+			src.updateicon()
+			. = TRUE
+		if("toggle-output")
+			src.online = !src.online
+			src.updateicon()
+			. = TRUE
+		if("set-input")
+			var/target = params["target"]
+			var/adjust = params["adjust"]
+			if(target == "min")
+				src.chargelevel = 0
+				. = TRUE
+			else if(target == "max")
+				src.chargelevel = SMESMAXCHARGELEVEL
+				. = TRUE
+			else if(adjust)
+				src.chargelevel = clamp((src.chargelevel + adjust), 0 , SMESMAXCHARGELEVEL)
+				. = TRUE
+			else if(text2num(target) != null) //set by drag
+				src.chargelevel = clamp(text2num(target), 0 , SMESMAXCHARGELEVEL)
+				. = TRUE
+		if("set-output")
+			var/target = params["target"]
+			var/adjust = params["adjust"]
+			if(target == "min")
+				src.output = 0
+				. = TRUE
+			else if(target == "max")
+				src.output = SMESMAXOUTPUT
+				. = TRUE
+			else if(adjust)
+				src.output = clamp((src.output + adjust), 0 , SMESMAXOUTPUT)
+				. = TRUE
+			else if(text2num(target) != null) //set by drag
+				src.output = clamp(text2num(target), 0 , SMESMAXOUTPUT)
+				. = TRUE
 
 /proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)
 	var/href = "<A href='?src=\ref[S];rate control=1;[V]"

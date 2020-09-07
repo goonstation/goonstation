@@ -76,3 +76,29 @@
 	edible = 0
 	mats = 6
 
+	on_transplant(mob/M)
+		. = ..()
+		if(!broken)
+			ADD_STATUS_LIMIT(M, "Food", 6)
+
+	on_removal()
+		. = ..()
+		REMOVE_STATUS_LIMIT(src.donor, "Food")
+
+	unbreakme()
+		..()
+		if(donor)
+			ADD_STATUS_LIMIT(src.donor, "Food", 6)
+
+	breakme() 
+		..()
+		if(donor)
+			REMOVE_STATUS_LIMIT(src.donor, "Food")
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		organ_abilities = list(/datum/targetable/organAbility/projectilevomit)
+
+	demag(mob/user)
+		..()
+		organ_abilities = initial(organ_abilities)

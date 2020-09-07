@@ -164,7 +164,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/htmlIcon = null
 
 	proc/onFinish()
-		for (var/obj/machinery/computer/genetics/C in genetics_computers)
+		for (var/obj/machinery/computer/genetics/C in by_type[/obj/machinery/computer/genetics])
 			if (C.tracked_research == src)
 				C.tracked_research = null
 				break
@@ -211,13 +211,13 @@ var/datum/geneticsResearchManager/genResearch = new()
 	onBegin()
 		global_instance = GetBioeffectFromGlobalListByID(mutation_id)
 		global_instance.research_finish_time = world.time + researchTime
-		global_instance.research_level = max(global_instance.research_level,1)
+		global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_IN_PROGRESS)
 		return
 
 	onFinish()
 		..()
 		if (global_instance.research_level < 2)
-			global_instance.research_level = max(global_instance.research_level,2)
+			global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_DONE)
 			genResearch.mutations_researched++
 		return
 
@@ -430,7 +430,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	for(var/ID in C.bioHolder.effectPool)
 		var/datum/bioEffect/BE = C.bioHolder.GetEffectFromPool(ID)
 		var/datum/bioEffect/MUT = new BE.type(scan)
-		MUT.dnaBlocks = BE.dnaBlocks
+		MUT.dnaBlocks.blockList = BE.dnaBlocks.blockList
+		MUT.dnaBlocks.blockListCurr = BE.dnaBlocks.blockListCurr
 		scan.dna_pool += MUT
 
 	return scan

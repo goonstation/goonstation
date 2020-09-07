@@ -338,10 +338,10 @@ Contains:
 			msgs.played_sound = joustingTool.hitsound
 			msgs.affecting = pick("chest", "head")
 			msgs.logs = list()
-			msgs.logc("jousts %target% with a [joustingTool]")
+			msgs.logc("jousts [constructTarget(T,"combat")] with a [joustingTool]")
 			msgs.damage_type = DAMAGE_BLUNT
 
-			//logTheThing("combat", R, T, " jousts %target% with a [joustingTool]")
+			//logTheThing("combat", R, T, " jousts [constructTarget(src,"diary")] with a [joustingTool]")
 
 			if (S) // they were on a segway, diiiiis-MOUNT!
 				S.eject_rider(2)
@@ -360,15 +360,14 @@ Contains:
 					T.u_equip(hat)
 					hat.set_loc(T.loc)
 					hat.dropped(T)
-					SPAWN_DBG(0) hat.throw_at(get_edge_target_turf(T, S.dir), 50, 1)
+					hat.throw_at(get_edge_target_turf(T, S.dir), 50, 1)
 
 			else if (istype(joustingTool, /obj/item/experimental/melee/spear)) // don't need custom attackResults here, just use the spear attack, that's deadly enough
 				T.attackby(joustingTool, R)
 				R.visible_message("[R] lances [T] with a spear!", "You stab at [T] in passing!")
 				if (prob(33))
-					R.u_equip(joustingTool)
-					joustingTool.dropped(R)
-					joustingTool.loc = get_turf(T)
+					R.drop_item(joustingTool)
+					joustingTool.set_loc(get_turf(T))
 					if (prob(50))
 						R.show_message("The spear sticks in [T] and you lose control of [src]!")
 						src.eject_rider(2)
@@ -506,11 +505,11 @@ Contains:
 	switch (action)
 		if ("impact")
 			if (ismob(rider) && ismob(other_dude))
-				logTheThing("vehicle", rider, other_dude, "driving [src] crashes into %target%[immune_to_impact != 0 ? " (immune to impact)" : ""] at [log_loc(src)].")
+				logTheThing("vehicle", rider, other_dude, "driving [src] crashes into [constructTarget(other_dude,"vehicle")][immune_to_impact != 0 ? " (immune to impact)" : ""] at [log_loc(src)].")
 
 		if ("shoved_off")
 			if (ismob(rider) && ismob(other_dude))
-				logTheThing("vehicle", other_dude, rider, "shoves %target% off of a [src] at [log_loc(src)].")
+				logTheThing("vehicle", other_dude, rider, "shoves [constructTarget(rider,"vehicle")] off of a [src] at [log_loc(src)].")
 
 	return
 
@@ -536,14 +535,12 @@ Contains:
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(1250)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(1250)
 		if(zamboni)
-			R.add_reagent("cryostylane", 1000)
+			reagents.add_reagent("cryostylane", 1000)
 		else
-			R.add_reagent("water", 1000)
-			//R.add_reagent("cleaner", 250) //don't even need this now that we have fluid, probably. If you want it, add it yer self
+			reagents.add_reagent("water", 1000)
+			//reagents.add_reagent("cleaner", 250) //don't even need this now that we have fluid, probably. If you want it, add it yer self
 
 		if (!islist(src.ability_buttons))
 			ability_buttons = list()
@@ -949,7 +946,7 @@ Contains:
 	if(!M)
 		..()
 		return
-	if (iscritter(M))
+	if (ismobcritter(M))
 		var/mob/living/critter/C = M
 		if (isghostcritter(C))
 			..()
@@ -1233,7 +1230,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 		if ("pax_enter", "pax_exit")
 			if (pax && ismob(pax))
-				logTheThing("vehicle", pax, rider && ismob(rider) ? rider : null, "[action == "pax_enter" ? "is stuffed into" : "is ejected from"] [src.name] ([forced_in == 1 ? "Forced by" : "Driven by"]: [rider && ismob(rider) ? "%target%" : "N/A or unknown"]) at [log_loc(src)].")
+				var/logtarget = (rider && ismob(rider) ? rider : null)
+				logTheThing("vehicle", pax, logtarget, "[action == "pax_enter" ? "is stuffed into" : "is ejected from"] [src.name] ([forced_in == 1 ? "Forced by" : "Driven by"]: [rider && ismob(rider) ? "[constructTarget(logtarget,"vehicle")]" : "N/A or unknown"]) at [log_loc(src)].")
 
 	return
 
@@ -1787,8 +1785,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			M.changeStatus("stunned", 80)
 			M.changeStatus("weakened", 5 SECONDS)
 			var/turf/target = get_edge_target_turf(src, src.dir)
-			SPAWN_DBG(0)
-				M.throw_at(target, 10, 2)
+			M.throw_at(target, 10, 2)
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		in_bump = 0
@@ -1976,6 +1973,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	//blend_mode = BLEND_MULTIPLY
 
 	New()
+		..()
 		src.Scale(9,9)
 
 /mob/proc/add_adminbus_powers()
@@ -1988,6 +1986,122 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	src.verbs -= /client/proc/toggle_gib_onhit
 	src.verbs -= /client/proc/toggle_dark_adminbus
 	return
+
+//////////////////////////////////////////////////////////////// Battle Bus //////////////////////////
+
+/obj/vehicle/adminbus/battlebus
+	name = "Battle Bus"
+	desc = "A bus made for war."
+	var/datum/projectile/P = new/datum/projectile/special/spawner/battlecrate
+	var/datum/projectile/special/spreader/uniform_burst/circle/P2 = new
+	var/power_hotwheels = FALSE
+	var/power_staticcharge = FALSE
+	var/power_bomberbus = FALSE
+	var/power_bomberbus_chance = 25
+	var/power_bomberbus_type = /obj/bomberman
+
+	New()
+		..()
+
+		P2.spread_projectile_type = /datum/projectile/fireball
+		P2.pellets_to_fire = 10
+		P2.pellet_shot_volume = 75 / P2.pellets_to_fire //anti-ear destruction
+
+		if (!islist(src.ability_buttons))
+			ability_buttons = list()
+		ability_buttons += new/obj/ability_button/battlecannon
+		ability_buttons += new/obj/ability_button/omnicannon
+		ability_buttons += new/obj/ability_button/bombchute
+		ability_buttons += new/obj/ability_button/hotwheels
+		ability_buttons += new/obj/ability_button/staticcharge
+
+	relaymove(mob/user, dir)
+		if(src.power_hotwheels)
+			tfireflash(get_turf(src), 0, 100)
+		if(src.power_staticcharge)
+			elecflash(get_turf(src),radius=0, power=2, exclude_center = 0)
+		if(src.power_bomberbus && prob(power_bomberbus_chance))
+			new src.power_bomberbus_type(get_turf(src))
+		. = ..()
+
+
+/obj/ability_button/battlecannon
+	name = "Battle Cannon"
+	icon = 'icons/misc/buildmode.dmi'
+	icon_state = "buildmode4"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			shoot_projectile_DIR(bus, bus.P, the_mob.dir)
+
+/obj/ability_button/omnicannon
+	name = "Omni Cannon"
+	icon = 'icons/mob/spell_buttons.dmi'
+	icon_state = "pandemonium"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+
+			shoot_projectile_DIR(bus, bus.P2, NORTH)
+
+/obj/ability_button/hotwheels
+	name = "Hot Wheels"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "fire_e_sprint"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			bus.power_hotwheels = !bus.power_hotwheels
+			if (bus.power_hotwheels)
+				boutput( the_mob, "<span class='alert'>Hot wheels engaged!</span>" )
+			else
+				boutput( the_mob, "<span class='alert'>Your tires begin to cooldown.</span>" )
+
+/obj/ability_button/staticcharge
+	name = "Static Charge"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "zzzap"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			bus.power_staticcharge = !bus.power_staticcharge
+			if (bus.power_staticcharge)
+				boutput( the_mob, "<span class='alert'>The bus begins to tingle with static!</span>" )
+			else
+				boutput( the_mob, "<span class='alert'>The static charge disipates.</span>" )
+
+/obj/ability_button/bombchute
+	name = "Bomb Chute"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "fire_e_flamethrower"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			bus.power_bomberbus = !bus.power_bomberbus
+			if (bus.power_bomberbus)
+				boutput( the_mob, "<span class='alert'>The bomb chute springs open!</span>" )
+			else
+				boutput( the_mob, "<span class='alert'>The bomb chute seals tightly shut.</span>" )
 
 //////////////////////////////////////////////////////////////// Forklift //////////////////////////
 
@@ -2002,7 +2116,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/openpanel = 0			//1 when the back panel is opened
 	var/broken = 0				//1 when the forklift is broken
 	var/light = 0				//1 when the yellow light is on
-	var/datum/light/actual_light
 	soundproofing = 5
 	throw_dropped_items_overboard = 1
 	var/image/image_light = null
@@ -2013,10 +2126,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 /obj/vehicle/forklift/New()
 	..()
-	actual_light = new /datum/light/line
-	actual_light.set_color(0.5, 0.5, 0.1)
-	actual_light.set_brightness(3)
-	actual_light.attach(src)
+	src.add_sm_light("forklift\ref[src]", list(0.5*255,0.5*255,0.5*255,255*0.67), directional = 1)
 
 /obj/vehicle/forklift/examine()
 	. = ..()
@@ -2142,13 +2252,13 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	if (!light)
 		light = 1
 		update_overlays()
-		actual_light.enable()
+		src.toggle_sm_light(1)
 		return
 
 	if (light)
 		light = 0
 		update_overlays()
-		actual_light.disable()
+		src.toggle_sm_light(0)
 	return
 
 /obj/vehicle/forklift/MouseDrop_T(atom/movable/A as obj|mob, mob/user as mob)
@@ -2158,7 +2268,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 	//pick up crates with forklift
 	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart)) && get_dist(A, src) <= 1 && src.rider == usr && helditems.len != helditems_maximum && !broken)
-		A.loc = src
+		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()
 		boutput(usr, "<span class='notice'><B>You pick up the [A.name].</B></span>")
@@ -2227,7 +2337,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			boutput(usr, "<span class='notice'><B>You leave [helditems.len] crates on [src.loc].</B></span>")
 
 		for (var/obj/HI in helditems)
-			HI.loc = src.loc
+			HI.set_loc(src.loc)
 
 		helditems.len = 0
 		update_overlays()
@@ -2274,7 +2384,7 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	//break the light if it is on
 	if (light)
 		light = 0
-		actual_light.disable()
+		src.toggle_sm_light(0)
 		update_overlays()
 
 /obj/vehicle/forklift/proc/update_overlays()

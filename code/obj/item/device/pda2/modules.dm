@@ -83,7 +83,7 @@
 		if (src.host && islist(src.host.ability_buttons) && src.host.ability_buttons.len && islist(src.ability_buttons) && src.ability_buttons.len)
 			for (var/obj/ability_button/B in src.ability_buttons)
 				src.host.ability_buttons.Remove(B)
-				if (src.host.the_mob)
+				if (src.host.the_mob?.item_abilities)
 					src.host.the_mob.item_abilities.Remove(B)
 			if (src.host.the_mob)
 				src.host.the_mob.need_update_item_abilities = 1
@@ -249,8 +249,7 @@
 
 	proc/toggle_scan()
 		src.on = !src.on
-		if (src.on && !(src in processing_items))
-			processing_items.Add(src)
+		if(src.on) processing_items |= src
 		for (var/obj/ability_button/pda_tray_toggle/B in src.ability_buttons)
 			B.icon_state = "pda[src.on]"
 		if (src.host)

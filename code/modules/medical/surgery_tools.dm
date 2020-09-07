@@ -48,21 +48,25 @@ CONTAINS:
 			icon_state = pick("scalpel1", "scalpel2")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
-		setProperty("piercing", 33)
+		setProperty("piercing", 80)
 		BLOCK_KNIFE
 
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
-			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
-			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 		if (!scalpel_surgery(M, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
 				src.reagents.trans_to(M,5)
 			return
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -95,8 +99,8 @@ CONTAINS:
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_SAWING
 	hit_type = DAMAGE_CUT
-	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 5
+	hitsound = 'sound/impact_sounds/circsaw.ogg'
+	force = 8
 	w_class = 1.0
 	throwforce = 3.0
 	throw_speed = 3
@@ -111,18 +115,18 @@ CONTAINS:
 
 	New()
 		..()
+		src.setItemSpecial(/datum/item_special/double)
 		if (src.icon_state == "saw1")
 			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
-		setProperty("piercing", 33)
 		BLOCK_LARGE
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
-			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
-			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 		if (!saw_surgery(M, user))
 			return ..()
 		else
@@ -141,6 +145,10 @@ CONTAINS:
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 /obj/item/circular_saw/vr
 	icon = 'icons/effects/VR.dmi'
@@ -177,14 +185,14 @@ CONTAINS:
 		..()
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
-		setProperty("piercing", 33)
+		setProperty("piercing", 80)
 
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
-			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
-			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 		if (!spoon_surgery(M, user))
 			return ..()
 		else
@@ -206,6 +214,10 @@ CONTAINS:
 				user.suiciding = 0
 		return 1
 
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
+
 /* ==================================================== */
 /* -------------------- Staple Gun -------------------- */
 /* ==================================================== */
@@ -224,7 +236,7 @@ CONTAINS:
 	var/datum/projectile/staple = new/datum/projectile/bullet/staple
 	var/ammo = 20
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 7
 	stamina_crit_chance = 15
 	module_research = list("tools" = 1, "medicine" = 1, "weapons" = 1)
 
@@ -272,7 +284,7 @@ CONTAINS:
 				if (H.stat!=2)
 					H.emote(pick("cry", "wail", "weep", "sob", "shame", "twitch"))
 				src.ammo--
-				logTheThing("combat",user, H, "staples a butt to %target%'s head")
+				logTheThing("combat",user, H, "staples a butt to [constructTarget(H,"combat")]'s head")
 				return
 
 			else if (istype(H.wear_mask, /obj/item/clothing/mask/))
@@ -287,7 +299,7 @@ CONTAINS:
 				if (H.stat!=2)
 					H.emote(pick("shake", "flinch", "tremble", "shudder", "twitch_v", "twitch"))
 				src.ammo--
-				logTheThing("combat",user, H, "staples [K] to %target%'s head")
+				logTheThing("combat",user, H, "staples [K] to [constructTarget(H,"combat")]'s head")
 				return
 
 		if (!surgeryCheck(H, user))
@@ -344,11 +356,13 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "defib-on"
 	item_state = "defib"
+	pickup_sfx = "sound/items/pickup_defib.ogg"
 	var/icon_base = "defib"
 	var/charged = 1
 	var/charge_time = 100
 	var/emagged = 0
 	var/makeshift = 0
+	var/talk2me = 1
 	var/obj/item/cell/cell = null
 	mats = 10
 
@@ -379,7 +393,7 @@ CONTAINS:
 		return 1
 
 	attack(mob/living/M as mob, mob/user as mob)
-		if (!ishuman(M))
+		if (!isliving(M) || issilicon(M))
 			return ..()
 		if (src.defibrillate(M, user, src.emagged, src.makeshift, src.cell))
 			JOB_XP(user, "Medical Doctor", 5)
@@ -390,13 +404,17 @@ CONTAINS:
 			SPAWN_DBG(src.charge_time)
 				src.charged = 1
 				set_icon_state("[src.icon_base]-on")
-				playsound(user.loc, "sound/weapons/flash.ogg", 75, 1)
+				playsound(user.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
+
+	attack_self(mob/user as mob)
+		user.show_text("You [talk2me ? "disable" : "enable"] the [src]'s verbal alert system.")
+		src.talk2me = !src.talk2me
 
 	proc/do_the_shocky_thing(mob/user as mob)
 		if (src.charged == 0)
 			user.show_text("[src] is still charging!", "red")
 			return 0
-		playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 75, 1)
+		playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 75, 1, pitch = 0.92)
 		src.charged = 0
 		set_icon_state("[src.icon_base]-shock")
 		SPAWN_DBG(1 SECOND)
@@ -404,8 +422,12 @@ CONTAINS:
 		SPAWN_DBG(src.charge_time)
 			src.charged = 1
 			set_icon_state("[src.icon_base]-on")
-			playsound(src.loc, "sound/weapons/flash.ogg", 75, 1)
+			playsound(src.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
 		return 1
+
+	proc/speak(var/message)	// lifted entirely from bot_parent.dm
+		if (src.talk2me)
+			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
 
 	disposing()
 		..()
@@ -413,7 +435,7 @@ CONTAINS:
 			src.cell.dispose()
 			src.cell = null
 
-	get_desc(dist)
+	get_desc()
 		..()
 		if (istype(src.cell))
 			if (src.cell.artifact)
@@ -433,8 +455,8 @@ CONTAINS:
 			user.suiciding = 0
 		return 1
 
-/obj/item/robodefibrillator/proc/defibrillate(var/mob/living/carbon/human/patient as mob, var/mob/living/user as mob, var/emagged = 0, var/faulty = 0, var/obj/item/cell/cell = null, var/suiciding = 0)
-	if (!ishuman(patient))
+/obj/item/robodefibrillator/proc/defibrillate(var/mob/living/patient as mob, var/mob/living/user as mob, var/emagged = 0, var/faulty = 0, var/obj/item/cell/cell = null, var/suiciding = 0)
+	if (!isliving(patient))
 		return 0
 
 	if (cell && cell.percent() <= 0)
@@ -458,61 +480,77 @@ CONTAINS:
 
 		user.visible_message("<span class='alert'><b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!</span>",\
 		"<span class='alert'>You shock [user == patient ? "yourself" : patient] with [src]!</span>")
-		logTheThing("combat", patient, user, "was defibrillated by %target% with [src] [log_loc(patient)]")
+		logTheThing("combat", patient, user, "was defibrillated by [constructTarget(user,"combat")] with [src] [log_loc(patient)]")
 
 
 		if (patient.bioHolder.HasEffect("resist_electric"))
 			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>",\
 			"<span class='notice'>You resist the shock!</span>")
+			speak("ERROR: Unable to complete circuit for shock delivery!")
 			return 1
 
 		else if (isdead(patient))
 			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>")
+			speak("ERROR: Patient is deceased.")
 			return 1
 
 		else
-			patient.Virus_ShockCure(100)
-			var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
-			if (suiciding)
 
-			else if (patient.health < 0)
-				if (sumdamage >= 90)
-					user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")
-				if (prob(66))
-					patient.visible_message("<span class='notice'><b>[patient]</b> inhales deeply!</span>")
-					patient.take_oxygen_deprivation(-50)
-					if (patient.organHolder && patient.organHolder.heart)
-						patient.get_organ("heart").heal_damage(10,10,10)
-				else
-					patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond!</span>")
+			if ((patient.hasStatus("defibbed") && prob(90)) || prob(75)) // it was a 100% chance before... probably
+				patient.cure_disease_by_path(/datum/ailment/malady/flatline)
+			if (!patient.find_ailment_by_type(/datum/ailment/malady/flatline))
+				speak("Normal cardiac rhythm restored.")
+			else
+				speak("Lethal dysrhythmia detected. Patient is still in cardiac arrest!")
+			patient.Virus_ShockCure(35)	// so it doesnt have a 100% chance to cure roboTF
+			patient.setStatus("defibbed", user == patient ? 6 SECONDS : 12 SECONDS)
+
+			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
+				var/mob/living/carbon/human/H = patient
+				for (var/uid in H.pathogens)
+					var/datum/pathogen/P = H.pathogens[uid]
+					P.onshocked(35, 500)
+
+				var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
+				if (suiciding)
+
+				else if (patient.health < 0)
+					if (sumdamage >= 90)
+						user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")
+						speak("Patient has life-threatening injuries. Patient is unlikely to survive unless these wounds are treated.")
+					if (prob(66))
+						patient.visible_message("<span class='notice'><b>[patient]</b> inhales deeply!</span>")
+						patient.take_oxygen_deprivation(-50)
+						if (H.organHolder && H.organHolder.heart)
+							H.get_organ("heart").heal_damage(10,10,10)
+					else if (patient.hasStatus("defibbed")) // Always gonna get *something* if you keep shocking them
+						patient.visible_message("<span class='notice'><b>[patient]</b> inhales sharply!</span>")
+						patient.take_oxygen_deprivation(-10)
+						if (H.organHolder && H.organHolder.heart)
+							H.get_organ("heart").heal_damage(3,3,3)
+					else
+						patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond!</span>")
 
 			if (cell)
 				var/adjust = cell.charge
 				if (adjust <= 0) // bwuh??
 					adjust = 1000 // fu
-				patient.changeStatus("paralysis", min(0.001 * adjust, 10) * 10)
-				patient.changeStatus("stunned", min(0.002 * adjust, 10) * 10)
-				patient.changeStatus("weakened", min(0.002 * adjust, 10) * 10)
+				patient.changeStatus("paralysis", min(0.002 * adjust, 10) * 10)
 				patient.stuttering += min(0.005 * adjust, 25)
 				//DEBUG_MESSAGE("[src]'s defibrillate(): adjust = [adjust], paralysis + [min(0.001 * adjust, 5)], stunned + [min(0.002 * adjust, 10)], weakened + [min(0.002 * adjust, 10)], stuttering + [min(0.005 * adjust, 25)]")
 
 			else if (faulty)
-				patient.changeStatus("paralysis", 1 SECOND)
-				patient.changeStatus("stunned", 2 SECONDS)
-				patient.changeStatus("weakened", 2 SECONDS)
+				patient.changeStatus("paralysis", 1.5 SECONDS)
 				patient.stuttering += 5
 			else
 #ifdef USE_STAMINA_DISORIENT
 				if (emagged)
 					patient.do_disorient(130, weakened = 50, stunned = 50, paralysis = 40, disorient = 60, remove_stamina_below_zero = 0)
 				else
-					patient.changeStatus("paralysis", 40)
-					patient.changeStatus("stunned", 50)
-					patient.changeStatus("weakened", 5 SECONDS)
+					patient.changeStatus("paralysis", 50)
 #else
-				patient.changeStatus("paralysis", 40)
-				patient.changeStatus("stunned", 50)
-				patient.changeStatus("weakened", 5 SECONDS)
+				patient.changeStatus("paralysis", 50)
+
 #endif
 				patient.stuttering += 10
 
@@ -528,6 +566,7 @@ CONTAINS:
 				if (prob(25 + suiciding))
 					cell.zap(user)
 				cell.use(cell.charge)
+				src.tooltip_rebuild = 1
 
 			if (emagged && !faulty && prob(10))
 				user.show_text("[src]'s on board scanner indicates that the target is undergoing a cardiac arrest!", "red")
@@ -535,8 +574,17 @@ CONTAINS:
 			return 1
 
 	else
-		user.visible_message("Nothing happens!",\
-		faulty ? "<span class='alert'>[src] doesn't discharge!</span>" : "<span class='alert'>[src]'s on board medical scanner indicates that no shock is required!</span>")
+		if (faulty)
+			user.visible_message("Nothing happens!", "<span class='alert'>[src] doesn't discharge!</span>")
+		else
+			if (do_the_shocky_thing(user))
+				user.visible_message("<span class='alert'><b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!</span>",\
+				"<span class='alert'>You shock [user == patient ? "yourself" : patient] with [src]!</span>")
+				logTheThing("combat", patient, user, "was defibrillated by [constructTarget(user,"combat")] with [src] when they didn't need it at [log_loc(patient)]")
+				patient.changeStatus("weakened", 0.1 SECONDS)
+				patient.force_laydown_standup()
+				patient.remove_stamina(45)
+
 		return 0
 
 /obj/item/robodefibrillator/emagged
@@ -562,6 +610,95 @@ CONTAINS:
 		src.cell = newcell
 		newcell.set_loc(src)
 
+
+
+
+/obj/item/robodefibrillator/mounted
+	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
+	w_class = 4
+
+	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
+		if (parent)
+			parent.put_back_defib(M)
+		else
+			qdel(src)
+
+	disposing()
+		parent = null
+		..()
+
+/obj/machinery/defib_mount
+	name = "mounted defibrillator"
+	icon = 'icons/obj/compact_machines.dmi'
+	desc = "Used to resuscitate critical patients."
+	icon_state = "defib1"
+	anchored = 1
+	density = 0
+	mats = 25
+	var/obj/item/robodefibrillator/mounted/defib = null
+
+	emag_act()
+		..()
+		defib.emag_act()
+
+	disposing()
+		if (defib)
+			qdel(defib)
+			defib = null
+		..()
+
+	proc/update_icon()
+		if (defib && defib.loc == src)
+			icon_state = "defib1"
+		else
+			icon_state = "defib0"
+
+	process()
+		if (src.defib && src.defib.loc != src)
+			if (get_dist(get_turf(src.defib), get_turf(src)) > 1)
+				if (isliving(src.defib.loc))
+					put_back_defib(src.defib.loc)
+		..()
+
+	attack_hand(mob/living/user as mob)
+		user.lastattacked = src
+		..()
+		if (!defib)
+			src.defib = new /obj/item/robodefibrillator/mounted(src)
+		user.put_in_hand_or_drop(src.defib)
+		src.defib.parent = src
+		playsound(get_turf(src), "sound/items/pickup_defib.ogg", 65, vary=0.2)
+
+		update_icon()
+
+		//set move callback (when user moves, defib go back)
+		if (islist(user.move_laying))
+			user.move_laying += src
+		else
+			if (user.move_laying)
+				user.move_laying = list(user.move_laying, src.defib)
+			else
+				user.move_laying = list(src.defib)
+
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		user.lastattacked = src
+		if (W == src.defib)
+			src.defib.move_callback(user,get_turf(user),get_turf(src))
+
+	proc/put_back_defib(var/mob/living/M)
+		if (src.defib)
+			M.drop_item(defib)
+			src.defib.set_loc(src)
+			src.defib.parent = null
+		if (islist(M.move_laying))
+			M.move_laying -= src.defib
+		else
+			M.move_laying = null
+
+		playsound(get_turf(src), "sound/items/putback_defib.ogg", 65, vary=0.2)
+		update_icon()
+
+
 /* ================================================ */
 /* -------------------- Suture -------------------- */
 /* ================================================ */
@@ -582,8 +719,8 @@ CONTAINS:
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 5000
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 	var/in_use = 0
 	hide_attack = 2
@@ -648,7 +785,7 @@ CONTAINS:
 	var/in_use = 0
 	hide_attack = 2
 
-	get_desc(dist)
+	get_desc()
 		..()
 		if (src.uses >= 0)
 			switch (src.uses)
@@ -673,7 +810,7 @@ CONTAINS:
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), "bandag"), user)
 				src.in_use = 1
 			else if (H.bleeding)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, zone, 0, rand(3,5), "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), "bandag"), user)
 				src.in_use = 1
 			else
 				user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to bandage!", "red")
@@ -796,6 +933,7 @@ CONTAINS:
 				var/obj/item/bandage/B = tool
 				B.in_use = 0
 				B.uses --
+				B.tooltip_rebuild = 1
 				B.update_icon()
 			else if (istype(tool, /obj/item/material_piece/cloth))
 				ownerMob.u_equip(tool)
@@ -1066,8 +1204,8 @@ CONTAINS:
 	throw_range = 6
 	m_amt = 7000
 	g_amt = 3500
-	stamina_damage = 2
-	stamina_cost = 2
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 15
 	module_research = list("tools" = 2, "medicine" = 3, "weapons" = 0.1)
 	hide_attack = 2
@@ -1361,7 +1499,6 @@ CONTAINS:
 	icon_state = "tray"
 	density = 1
 	anchored = 0
-	var/list/stuff_to_move = null
 	var/max_to_move = 10
 	p_class = 1.5
 
@@ -1389,6 +1526,9 @@ keeping this here because I want to make something else with it eventually
 
 	New()
 		..()
+		src.layer -= 0.01
+		if (!islist(src.attached_objs))
+			src.attached_objs = list()
 		if (!ticker) // pre-roundstart, this is a thing made on the map so we want to grab whatever's been placed on top of us automatically
 			SPAWN_DBG(0)
 				var/stuff_added = 0
@@ -1396,16 +1536,10 @@ keeping this here because I want to make something else with it eventually
 					if (I.anchored || I.layer < src.layer)
 						continue
 					else
-						src.contents += I
-						src.vis_contents += I
+						attach(I)
 						stuff_added++
 						if (stuff_added >= src.max_to_move)
 							break
-
- 	//this might not be necessary, I'm not sure. but it can't hurt
-	Del()
-		src.vis_contents = null
-		src.contents = null
 
 	Move(NewLoc,Dir)
 		. = ..()
@@ -1415,15 +1549,13 @@ keeping this here because I want to make something else with it eventually
 
 			//if we're over the max amount a table can fit, have a chance to drop an item. Chance increases with items on tray
 			if (prob((src.contents.len-max_to_move)*1.1))
-				var/obj/item/falling = pick(src.contents)
+				var/obj/item/falling = pick(src.attached_objs)
+				detach(falling)
 				// src.visible_message("[falling] falls off of [src]!")
 				var/target = get_offset_target_turf(get_turf(src), rand(5)-rand(5), rand(5)-rand(5))
 				falling.set_loc(get_turf(src))
-				src.vis_contents -= falling
 
-				SPAWN_DBG(1 DECI SECOND)
-					if(falling)
-						falling.throw_at(target, 1, 1)
+				falling?.throw_at(target, 1, 1)
 
 
 	attackby(obj/item/W as obj, mob/user as mob, params)
@@ -1432,28 +1564,41 @@ keeping this here because I want to make something else with it eventually
 			return
 		else if (src.place_on(W, user, params))
 			user.show_text("You place [W] on [src].")
-			src.vis_contents += W
-			W.set_loc(src)
+			src.attach(W)
 			return
 		else
 			return ..()
 
-	hitby(atom/movable/AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		if (isitem(AM))
 			src.visible_message("[AM] lands on [src]!")
-			src.vis_contents += AM
-			AM.set_loc(src)
+			AM.set_loc(get_turf(src))
+			attach(AM)
 
+	disposing()
+		for (var/obj/item/I in src.attached_objs)
+			detach(I)
+		..()
 
 	proc/deconstruct()
 		var/obj/item/furniture_parts/surgery_tray/P = new /obj/item/furniture_parts/surgery_tray(src.loc)
 		if (P && src.material)
 			P.setMaterial(src.material)
-		for (var/obj/i in src.contents)
-			i.set_loc(src.loc)
 		qdel(src)
 		return
+
+	proc/attach(obj/item/I as obj)
+		if(I.anchored) return
+		src.attached_objs.Add(I) // attach the item to the table
+		I.glide_size = 0 // required for smooth movement with the tray
+		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
+		SPAWN_DBG(0)
+			RegisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
+
+	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
+		src.attached_objs.Remove(I)
+		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray
@@ -1461,8 +1606,9 @@ keeping this here because I want to make something else with it eventually
 	desc = "A collection of parts that can be used to make a tray."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "tray_parts"
-	stamina_damage = 15
-	stamina_cost = 15
+	force = 3
+	stamina_damage = 7
+	stamina_cost = 7
 	furniture_type = /obj/surgery_tray
 	furniture_name = "tray"
 	build_duration = 30
@@ -1514,3 +1660,7 @@ keeping this here because I want to make something else with it eventually
 		handle = null
 		Poisoner = null
 		..()
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)

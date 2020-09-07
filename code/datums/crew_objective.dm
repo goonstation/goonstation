@@ -117,8 +117,8 @@ ABSTRACT_TYPE(/datum/objective/crew/headofsecurity)
 		medal_name = "Dead or alive, you're coming with me"
 		check_completion()
 			for(var/datum/mind/M in ticker.minds)
-				if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),map_settings.escape_centcom) && M.current.hasStatus("handcuffed"))
-					if(owner.current && !isdead(owner.current) && istype(get_area(owner.current),map_settings.escape_centcom)) //split this up as it was long
+				if(M.special_role && M.current && !isobserver(M.current) && in_centcom(M.current) && M.current.hasStatus("handcuffed"))
+					if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //split this up as it was long
 						return 1
 			return 0
 
@@ -137,7 +137,7 @@ ABSTRACT_TYPE(/datum/objective/crew/headofpersonnel)
 		explanation_text = "End the round alive but not on the station or escape levels."
 		medal_name = "Unperson"
 		check_completion()
-			if(owner.current && !isdead(owner.current) && owner.current.z != 1 && !istype(get_area(owner.current),map_settings.escape_centcom)) return 1
+			if(owner.current && !isdead(owner.current) && owner.current.z != 1 && !in_centcom(owner.current)) return 1
 			else return 0
 
 ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
@@ -148,6 +148,14 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 		check_completion()
 			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
 				if(F.z == 1 && F.active == 1)
+					return 1
+			return 0
+	ptl
+		explanation_text = "Earn at least a million credits via the PTL."
+		medal_name = "1.21 Jiggawatts"
+		check_completion()
+			for(var/obj/machinery/power/pt_laser/P in machine_registry[MACHINES_POWER])
+				if(P.lifetime_earnings >= 1 MEGA)
 					return 1
 			return 0
 
@@ -167,8 +175,8 @@ ABSTRACT_TYPE(/datum/objective/crew/securityofficer)
 		medal_name = "Dead or alive, you're coming with me"
 		check_completion()
 			for(var/datum/mind/M in ticker.minds)
-				if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),map_settings.escape_centcom) && M.current.hasStatus("handcuffed"))
-					if(owner.current && !isdead(owner.current) && istype(get_area(owner.current),map_settings.escape_centcom)) //split this up as it was long
+				if(M.special_role && M.current && !isobserver(M.current) && in_centcom(M.current) && M.current.hasStatus("handcuffed"))
+					if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //split this up as it was long
 						return 1
 			return 0
 	brigstir
@@ -316,7 +324,7 @@ ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 			if(mechanic_controls.scanned_items.len > 9) return 1
 			else return 0
 	teleporter
-		explanation_text = "Ensure that there are at least two teleporters on the station level at the end of the round, excluding the science teleporter."
+		explanation_text = "Ensure that there are at least two functioning command teleporter consoles, complete with portal generators and portal rings, on the station level at the end of the round."
 		medal_name = "It's not 'Door to Heaven'"
 		check_completion()
 			var/telecount = 0
@@ -348,7 +356,7 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 		explanation_text = "Ensure that Heisenbee escapes on the shuttle."
 		check_completion()
 			for (var/obj/critter/domestic_bee/heisenbee/H in world)
-				if (istype(get_area(H),map_settings.escape_centcom) && H.alive)
+				if (in_centcom(H) && H.alive)
 					return 1
 			return 0
 	noscorch
@@ -379,7 +387,7 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 		check_completion()
 			if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 				var/mob/living/carbon/human/H = owner.current
-				if(istype(get_area(H),map_settings.escape_centcom) && H.getStatusDuration("burning") > 1 && owner.current.reagents.has_reagent("silver_sulfadiazine")) return 1
+				if(in_centcom(H) && H.getStatusDuration("burning") > 1 && owner.current.reagents.has_reagent("silver_sulfadiazine")) return 1
 				else return 0
 
 ABSTRACT_TYPE(/datum/objective/crew/scientist)
@@ -412,7 +420,7 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 		check_completion()
 			if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 				var/mob/living/carbon/human/H = owner.current
-				if(istype(get_area(H),map_settings.escape_centcom) && H.getStatusDuration("burning") > 1 && owner.current.reagents.has_reagent("silver_sulfadiazine")) return 1
+				if(in_centcom(H) && H.getStatusDuration("burning") > 1 && owner.current.reagents.has_reagent("silver_sulfadiazine")) return 1
 				else return 0
 
 	/*artifact // This is going to be really fucking awkward to do so disabling for now
@@ -428,7 +436,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		explanation_text = "Ensure that Dr. Acula escapes on the shuttle."
 		check_completion()
 			for (var/obj/critter/bat/doctor/Dr in world)
-				if (istype(get_area(Dr),map_settings.escape_centcom) && Dr.alive)
+				if (in_centcom(Dr) && Dr.alive)
 					return 1
 			return 0
 
@@ -445,13 +453,13 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		medal_name = "What's this box doing here?"
 		check_completion()
 			for (var/obj/machinery/bot/medbot/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (istype(get_area(H),map_settings.escape_centcom))
+				if (in_centcom(H))
 					return 1
 			for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (istype(get_area(H),map_settings.escape_centcom))
+				if (in_centcom(H))
 					return 1
 			for (var/obj/machinery/bot/medbot/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (istype(get_area(H),map_settings.escape_centcom))
+				if (in_centcom(H))
 					return 1
 			return 0
 	scanned
@@ -496,7 +504,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		medal_name = "It's frickin' freezing in here, Mr. Bigglesworth"
 		check_completion()
 			var/cryocount = 0
-			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in atmos_machines)
+			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in by_cat[TR_CAT_ATMOS_MACHINES])
 				if(C.on && C.air_contents.temperature < 225)
 					cryocount ++
 			if(cryocount > 1) return 1
@@ -576,7 +584,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldoctor)
 		medal_name = "It's frickin' freezing in here, Mr. Bigglesworth"
 		check_completion()
 			var/cryocount = 0
-			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in atmos_machines)
+			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in by_cat[TR_CAT_ATMOS_MACHINES])
 				if(C.on && C.air_contents.temperature < 225)
 					cryocount ++
 			if(cryocount > 1) return 1
@@ -621,7 +629,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 		check_completion()
 			if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 				var/mob/living/carbon/human/H = owner.current
-				if(istype(get_area(H),map_settings.escape_centcom) && H.head && H.head.name == "[H.real_name]'s butt") return 1
+				if(in_centcom(H) && H.head && H.head.name == "[H.real_name]'s butt") return 1
 			return 0
 	promotion
 		explanation_text = "Escape on the shuttle alive with a non-assistant ID registered to you."
@@ -629,7 +637,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 		check_completion()
 			if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 				var/mob/living/carbon/human/H = owner.current
-				if(istype(get_area(H),map_settings.escape_centcom) && H.wear_id && H.wear_id:registered == H.real_name && H.wear_id:assignment != ("Technical Assistant" || "Staff Assistant" || "Medical Assistant")) return 1
+				if(in_centcom(H) && H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
 				else return 0
 	clown
 		explanation_text = "Escape on the shuttle alive wearing at least one piece of clown clothing."
@@ -644,7 +652,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 		medal_name = "Guardin' gnome"
 		check_completion()
 			for(var/obj/item/gnomechompski/G in world)
-				if (istype(get_area(G),map_settings.escape_centcom)) return 1
+				if (in_centcom(G)) return 1
 			return 0
 	mailman
 		explanation_text = "Escape on the shuttle alive wearing at least one piece of mailman clothing."
@@ -666,7 +674,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 		explanation_text = "Escape on the shuttle alive as a monkey."
 		medal_name = "Primordial"
 		check_completion()
-			if(owner.current && !isdead(owner.current) && istype(get_area(owner.current),map_settings.escape_centcom) && ismonkey(owner.current)) return 1
+			if(owner.current && !isdead(owner.current) && in_centcom(owner.current) && ismonkey(owner.current)) return 1
 			else return 0
 
 	headsurgeon
@@ -674,10 +682,10 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 		medal_name = "What's this box doing here?"
 		check_completion()
 			for (var/obj/machinery/bot/medbot/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (istype(get_area(H),map_settings.escape_centcom))
+				if (in_centcom(H))
 					return 1
 			for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (istype(get_area(H),map_settings.escape_centcom))
+				if (in_centcom(H))
 					return 1
 			return 0
 
@@ -690,7 +698,7 @@ ABSTRACT_TYPE(/datum/objective/crew/technicalassistant)
 		check_completion()
 			if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 				var/mob/living/carbon/human/H = owner.current
-				if(istype(get_area(H),map_settings.escape_centcom) && H.head && H.head.name == "[H.real_name]'s butt") return 1
+				if(in_centcom(H) && H.head && H.head.name == "[H.real_name]'s butt") return 1
 			return 0
 	mailman
 		explanation_text = "Escape on the shuttle alive wearing at least one piece of mailman clothing."
@@ -704,9 +712,9 @@ ABSTRACT_TYPE(/datum/objective/crew/technicalassistant)
 		explanation_text = "Escape on the shuttle alive with a non-assistant ID registered to you."
 		medal_name = "Glass ceiling"
 		check_completion()
-			if(owner.current && !isdead(owner.current) && istype(get_area(owner.current),map_settings.escape_centcom)) //checking basic stuff - they escaped alive and have an ID
+			if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //checking basic stuff - they escaped alive and have an ID
 				var/mob/living/carbon/human/H = owner.current
-				if(H.wear_id && H.wear_id:registered == H.real_name && H.wear_id:assignment != ("Technical Assistant" || "Staff Assistant" || "Medical Assistant")) return 1
+				if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
 				else return 0
 	spacesuit
 		explanation_text = "Get your grubby hands on a spacesuit."
@@ -723,15 +731,15 @@ ABSTRACT_TYPE(/datum/objective/crew/medicalassistant)
 		explanation_text = "Escape on the shuttle alive as a monkey."
 		medal_name = "Primordial"
 		check_completion()
-			if(owner.current && !isdead(owner.current) && istype(get_area(owner.current),map_settings.escape_centcom) && ismonkey(owner.current)) return 1
+			if(owner.current && !isdead(owner.current) && in_centcom(owner.current) && ismonkey(owner.current)) return 1
 			else return 0
 	promotion
 		explanation_text = "Escape on the shuttle alive with a non-assistant ID registered to you."
 		medal_name = "Glass ceiling"
 		check_completion()
-			if(owner.current && !isdead(owner.current) && istype(get_area(owner.current),map_settings.escape_centcom)) //checking basic stuff - they escaped alive and have an ID
+			if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //checking basic stuff - they escaped alive and have an ID
 				var/mob/living/carbon/human/H = owner.current
-				if(H.wear_id && H.wear_id:registered == H.real_name && H.wear_id:assignment != ("Technical Assistant" || "Staff Assistant" || "Medical Assistant")) return 1
+				if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
 				else return 0
 	healself
 		explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
@@ -746,9 +754,9 @@ ABSTRACT_TYPE(/datum/objective/crew/medicalassistant)
 		medal_name = "What's this box doing here?"
 		check_completion()
 			for (var/obj/machinery/bot/medbot/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (istype(get_area(H),map_settings.escape_centcom)) return 1
+				if (in_centcom(H)) return 1
 			for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (istype(get_area(H),map_settings.escape_centcom)) return 1
+				if (in_centcom(H)) return 1
 			return 0
 
 

@@ -12,13 +12,12 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/electronics/New()
+	..()
 	desc = "A [src.name] used in electronic projects."
-	return
 
 /obj/item/electronics/proc/randompix()
 	src.pixel_x = rand(8, 12)
 	src.pixel_y = rand(8, 12)
-	return
 
 ////////////////////////////////////////////////////////////////
 /obj/item/electronics/battery
@@ -454,7 +453,7 @@
 	if(istype(O,/obj/machinery/rkit))
 		return
 	if(istype(O,/obj/))
-		if(O.mats == 0 || (O.is_syndicate != 0 && src.is_syndicate == 0))
+		if(O.mats == 0 || O.disposed || (O.is_syndicate != 0 && src.is_syndicate == 0))
 			// if this item doesn't have mats defined or was constructed or
 			// attempting to scan a syndicate item and this is a normal scanner
 			boutput(user, "<span class='alert'>The structure of this object is not compatible with the scanner.</span>")
@@ -646,16 +645,16 @@
 
 			if("blueprint")
 				if(href_list["op"])
-					if (src.no_print_spam && world.time < src.no_print_spam + 50)
+					if (src.no_print_spam && world.time < src.no_print_spam + 25)
 						usr.show_text("[src] isn't done with the previous print job.", "red")
 					else
 						var/datum/electronics/scanned_item/O = locate(href_list["op"]) in mechanic_controls.scanned_items
 						if (istype(O.blueprint, /datum/manufacture/mechanics/))
 							usr.show_text("Print job started...", "blue")
 							var/datum/manufacture/mechanics/M = O.blueprint
-							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
+							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
 							src.no_print_spam = world.time
-							SPAWN_DBG (50)
+							SPAWN_DBG (25)
 								if (src)
 									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
 
@@ -669,17 +668,16 @@
 	name = "deconstruction device"
 	desc = "A device meant to facilitate the deconstruction of scannable machines."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "deconstruction"
+	icon_state = "deconstruction-saw"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "deconstruction-saw"
+	force = 10
+	throwforce = 4
+	hitsound = 'sound/machines/chainsaw_green.ogg'
+	hit_type = DAMAGE_CUT
+	tool_flags = TOOL_SAWING
 	w_class = 3.0
-	var/datum/effects/system/spark_spread/spark_system
 	module_research = list("electronics" = 3, "engineering" = 1)
-
-	New()
-		..()
-		src.spark_system = unpool(/datum/effects/system/spark_spread)
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
-		return
 
 	proc/finish_decon(atom/target,mob/user)
 		if (!isobj(target))
@@ -699,8 +697,7 @@
 		F.icon_state = "dbox_big"
 		F.w_class = 4
 
-		spark_system.set_up(5, 0, src)
-		spark_system.start()
+		elecflash(src,power=2)
 
 		O.was_deconstructed_to_frame(user)
 
@@ -722,7 +719,7 @@
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
 			return
 
-		if (!O.allowed(user) || O.is_syndicate)
+		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
@@ -744,7 +741,7 @@
 /obj/disposing()
 	if (src.decon_contexts)
 		for(var/datum/contextAction/C in src.decon_contexts)
-			C.disposing()
+			C.dispose()
 	..()
 
 /obj/proc/was_deconstructed_to_frame(mob/user)
@@ -832,3 +829,15 @@
 		if (O && owner)
 			boutput(owner, "<span class='alert'>Deconstruction of [O] interrupted!</span>")
 		..()
+
+/obj/item/deconstructor/borg
+	name = "deconstruction device"
+	desc = "A device meant to facilitate the deconstruction of scannable machines. This one has been modified for safe use by borgs."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "deconstruction"
+	force = 0
+	throwforce = 0
+	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+	hit_type = DAMAGE_BLUNT
+	tool_flags = null
+	w_class = 3.0

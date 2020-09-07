@@ -26,8 +26,8 @@
 	var/monkey_clothes = 0
 	// it's clothes specifically for monkeys please don't plaster it to their chest with an offset
 
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 
 	flags = FPRINT | TABLEPASS
@@ -91,10 +91,8 @@
 			src.icon_state = ""
 			src.icon = 'b_items.dmi'
 			flick(text("[]", t), src)
-			SPAWN_DBG(1.4 SECONDS)
-				qdel(src)
-				return
-			return
+			sleep(1.4 SECONDS)
+			qdel(src)
 		return 0
 	return 1
 */ //TODO FIX

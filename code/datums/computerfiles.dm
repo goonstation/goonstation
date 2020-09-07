@@ -22,8 +22,6 @@
 		..()
 		metadata = list("date" = world.realtime, "owner"=null,"group"=null, "permission"=COMP_ALLACC)
 
-		return
-
 	folder
 		name = "Folder"
 		size = 0
@@ -158,16 +156,12 @@
 		return null
 
 	disposing()
-		if (Debug2)
-			logTheThing("debug", null, null, "<b>Computer Datum:</b> disposing() called on [src.type] \ref[src] [src.name]")
 		// same as above, XOXOXO. -singh
 		//if(holder && holding_folder)
 		//	holding_folder.remove_file(src)
 		..()
 
 	disposing()
-		if (Debug2)
-			logTheThing("debug", null, null, "<b>Computer Datum:</b> dispose() called on [src.type] \ref[src] [src.name]")
 		if (holding_folder)
 			holding_folder.remove_file(src)
 			src.holding_folder = null
@@ -278,6 +272,17 @@
 			src.contained_files.len = 0
 			src.contained_files = null
 		..()
+
+/datum/computer/file/clone
+	name = "Clone Record"
+	extension = "DNA"
+	size = 8
+	var/list/fields = list()
+
+	disposing()
+		fields = null
+		. = ..()
+
 
 /datum/computer/folder/link
 	name = "symlink"

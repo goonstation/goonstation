@@ -190,19 +190,16 @@
 	CritterDeath()
 		if (!src.alive)
 			return
-		//src.icon_state += "-dead"
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
+		..()
 		loot_table.drop()
 		if (dead_change_icon)
 			icon = dead_icon
 			icon_state = dead_icon_state
-		tokenized_message(death_text, null)
+		else // ughh, admins and their custom critters
+			src.icon_state = replacetext(src.icon_state, "-dead", "") //can't assume it's going to have a dead state...
 		play_optional_sound(death_sound)
 		if (on_death)
 			on_death.doOnDeath()
-		walk_to(src,0)
 
 	clone()
 		var/obj/critter/custom/C = ..()
@@ -542,7 +539,6 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			gibs(C.loc, list())
 		else
 			robogibs(C.loc, list())
-		C.loc = null
 		qdel(C)
 
 /datum/critterDeath/explode
@@ -582,7 +578,6 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		var/L = C.loc
 		SPAWN_DBG (delay)
 			explosion_new(C, L, power)
-			C.loc = null
 			qdel(C)
 
 /datum/critterDeath/smoke
@@ -625,7 +620,6 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			holder.my_atom = C
 			holder.add_reagent(reagent, 50)
 			smoke_reaction(holder, 4, L)
-			C.loc = null
 			qdel(C)
 
 /datum/critterEvent
@@ -1430,6 +1424,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	var/sound/shockwave_sound
 
 	New()
+		..()
 		dummyHolder = new()
 		ability = new()
 		dummyHolder.abilities += ability
@@ -1500,6 +1495,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	abstract = 0
 
 	New()
+		..()
 		template = new /obj/critter/domestic_bee
 		stattype = /obj/critter/domestic_bee
 
@@ -1984,17 +1980,17 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	proc/show_interface(var/mob/M)
 		if (!template)
 			create_template()
-		var/output = "<html><head><style>"
-		output += {"
-body { font-family: monospace; white-space: pre-wrap; font-size: 0.5em; }
-table { width: 100%; text-align: left; border: none; border-spacing: 0; border-collapse: collapse; }
-tr { border:none; }
-td { border:none; vertical-align: top; }
-th.half, td.half { width: 50%; }
-td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
-.subtitle { font-size: 1.2em; font-weight: bold; }
-.attribute-name { font-weight: bold; }
-.active { font-weight: bold; }
+		var/output = {"
+	<style type='text/css'>
+		body { font-family: Consolas, monospace; white-space: pre-wrap; }
+		table { width: 100%; text-align: left; border: none; border-spacing: 0; border-collapse: collapse; font-size: 110%; }
+		tr { border:none; }
+		td { border:none; vertical-align: top; }
+		th.half, td.half { width: 50%; }
+		td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
+		.subtitle { font-size: 1.2em; font-weight: bold; }
+		.attribute-name { font-weight: bold; }
+		.active { font-weight: bold; }
 		"}
 		output += "</style></head><body>"
 		output += "<table><tr><td colspan='2' class='title'>Critter creation kit</td></tr>"
@@ -2110,7 +2106,7 @@ td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
 
 /client/proc/critter_creator_debug()
 	set name = "Critter Creator (WIP)"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set hidden = 0
 
 	var/datum/critterCreator/CR = critter_creator_controller.getCreator(src.mob)

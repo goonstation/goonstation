@@ -34,4 +34,4 @@
 		if (random_events.announce_events)
 			command_alert("The solar flare has safely passed [station_name(1)]. Communications should be restored to normal.", "All Clear")
 		else
-			message_admins("<span class='notice'>Random Radio/Flare Event ceasing.</span>")
+			message_admins("<span class='internal'>Random Radio/Flare Event ceasing.</span>")

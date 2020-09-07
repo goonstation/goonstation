@@ -14,7 +14,7 @@
 /*
 
 /datum/bioEffect/hidden/foodbonus
-	effectType = effectTypeFood
+	effectType = EFFECT_TYPE_FOOD
 	curable_by_mutadone = 0
 	occur_in_genepools = 0
 	can_copy = 0

@@ -291,6 +291,27 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "2_welded"
 	req_access = null
 
+/obj/machinery/door/airlock/pyro/medical/alt2
+	icon_state = "med_closed"
+	icon_base = "med"
+	panel_icon_state = "2_panel_open"
+	welded_icon_state = "2_welded"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/medical/morgue
+	icon_state = "morgue_closed"
+	icon_base = "morgue"
+	panel_icon_state = "2_panel_open"
+	welded_icon_state = "2_welded"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/mining
+	icon_state = "mining_closed"
+	icon_base = "mining"
+	panel_icon_state = "2_panel_open"
+	welded_icon_state = "2_welded"
+	req_access = null
+
 /obj/machinery/door/airlock/pyro/maintenance
 	name = "maintenance access"
 	icon_state = "maint_closed"
@@ -361,6 +382,31 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_base = "sec_glass"
 	req_access = list(access_security)
 
+/obj/machinery/door/airlock/pyro/glass/med 
+	icon_state = "med_glass_closed"
+	icon_base = "med_glass"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/glass/sci
+	icon_state = "sci_glass_closed"
+	icon_base = "sci_glass"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/glass/toxins
+	icon_state = "toxins_glass_closed"
+	icon_base = "toxins_glass"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/glass/mining
+	icon_state = "mining_glass_closed"
+	icon_base = "mining_glass"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/glass/botany
+	icon_state = "botany_glass_closed"
+	icon_base = "botany_glass"
+	req_access = null
+
 /obj/machinery/door/airlock/pyro/classic
 	icon_state = "old_closed"
 	icon_base = "old"
@@ -389,6 +435,16 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			src.autoclose = 0
 		..(user)
 
+/obj/machinery/door/airlock/pyro/glass/windoor/alt
+	icon_state = "windoor2_closed"
+	icon_base = "windoor2"
+	panel_icon_state = "windoor2"
+	welded_icon_state = "windoor2_weld"
+	sound_airlock = 'sound/machines/windowdoor.ogg'
+	has_panel = 0
+	has_crush = 0
+	layer = 3.5
+
 /obj/machinery/door/airlock/pyro/sci_alt
 	icon_state = "sci_closed"
 	icon_base = "sci"
@@ -396,7 +452,13 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "2_welded"
 	req_access = null
 
-
+/obj/machinery/door/airlock/pyro/toxins_alt
+	icon_state = "toxins2_closed"
+	icon_base = "toxins2"
+	panel_icon_state = "2_panel_open"
+	welded_icon_state = "2_welded"
+	req_access = null
+	
 /obj/machinery/door/airlock/gannets
 	name = "airlock"
 	icon = 'icons/obj/doors/destiny.dmi'
@@ -672,7 +734,7 @@ About the new airlock wires panel:
 	var/wireIndex = airlockWireColorToIndex[wireColor]
 	wires &= ~wireFlag
 	switch(wireIndex)
-		if(AIRLOCK_WIRE_MAIN_POWER1 || AIRLOCK_WIRE_MAIN_POWER2)
+		if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			//Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be crowbarred open, but bolts-raising will not work. Cutting these wires may electocute the user.
 			src.loseMainPower()
 			SPAWN_DBG(1 DECI SECOND)
@@ -685,7 +747,7 @@ About the new airlock wires panel:
 				logTheThing("station",usr,null,"[usr] has bolted a door at [log_loc(src)].")
 			update_icon()
 			src.updateUsrDialog()
-		if (AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
+		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
 			src.loseBackupPower()
 			SPAWN_DBG(1 DECI SECOND)
@@ -717,13 +779,13 @@ About the new airlock wires panel:
 	var/wireIndex = airlockWireColorToIndex[wireColor] //not used in this function
 	wires |= wireFlag
 	switch(wireIndex)
-		if(AIRLOCK_WIRE_MAIN_POWER1 || AIRLOCK_WIRE_MAIN_POWER2)
+		if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			if ((!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)))
 				src.regainMainPower()
 				SPAWN_DBG(1 DECI SECOND)
 					src.shock(usr, 50)
 				src.updateUsrDialog()
-		if (AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
+		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			if ((!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2)))
 				src.regainBackupPower()
 				SPAWN_DBG(1 DECI SECOND)
@@ -874,9 +936,7 @@ About the new airlock wires panel:
 	if(powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(5, 1, src)
-	s.start()
+	elecflash(user,power = 2)
 
 	var/shock_damage = 0
 	if(PN.avail > 750000)	//someone juiced up the grid enough, people going to die!
@@ -894,7 +954,7 @@ About the new airlock wires panel:
 	else
 		shock_damage = min(rand(20,45),rand(20,45))*prot
 
-//		message_admins("<span class='notice'><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
+//		message_admins("<span class='internal'><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
 
 	if (user.bioHolder.HasEffect("resist_electric") == 2)
 		var/healing = 0
@@ -1457,9 +1517,8 @@ About the new airlock wires panel:
 		..()
 		return
 
-	if ((istype(C, /obj/item/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weldingtool/W = C
-		if(!W.try_weld(user, 1, burn_eyes = 1))
+	if ((isweldingtool(C) && !( src.operating ) && src.density))
+		if(!C:try_weld(user, 1, burn_eyes = 1))
 			return
 		if (!src.welded)
 			src.welded = 1

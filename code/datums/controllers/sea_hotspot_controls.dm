@@ -69,7 +69,7 @@
 
 			for (var/beacon in warp_beacons)
 				if (istype(beacon, /obj/warp_beacon/miningasteroidbelt))
-					var/turf/T = get_turf_loc(beacon)
+					var/turf/T = get_turf(beacon)
 					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
 
 			Z_LOG_DEBUG("Hotspot Map", "Map generation complete")
@@ -228,9 +228,7 @@
 			LAGCHECK(LAG_HIGH)
 
 		if (tally)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(4, 1, T)
-			s.start()
+			elecflash(T)
 
 	proc/stomp_turf(var/turf/T) //Move hotspot 1 tile and set its dir to the difference between stomp loc and hotspot center
 		.= 0
@@ -453,6 +451,7 @@
 	var/z = 0
 
 	New(x=0,y=0,z=0)
+		..()
 		src.x = x
 		src.y = y
 		src.z = z
@@ -480,8 +479,8 @@
 	force = 6
 	throw_speed = 4
 	throw_range = 5
-	stamina_damage = 25
-	stamina_cost = 10
+	stamina_damage = 30
+	stamina_cost = 15
 	stamina_crit_chance = 1
 	//two_handed = 1
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
@@ -505,8 +504,7 @@
 	disposing()
 		deployed = 0
 		closest_hotspot = 0
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 	process()
@@ -595,14 +593,12 @@
 		icon_state = "dowsing_hands"
 		deployed = 0
 		closest_hotspot = 0
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 
 	proc/deploy()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		src.icon_state = "dowsing_deployed_[0]"
 		speak_count = speak_interval
 		pixel_x = 0
@@ -624,8 +620,7 @@
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
 	if (istype(W,/obj/item/heat_dowsing))
-		if (!(W in processing_items))
-			processing_items.Add(W)
+		processing_items |= W
 
 		var/obj/item/heat_dowsing/H = W
 
@@ -918,6 +913,9 @@
 		set src in oview(1)
 		set category = "Local"
 
+		if(!isliving(usr) || !isalive(usr))
+			return
+
 		mode_toggle = !mode_toggle
 
 		for (var/mob/O in hearers(src, null))
@@ -1140,6 +1138,10 @@
 			return list()
 		else
 			return ..()
+
+	attack_self(mob/user)
+		. = ..()
+		src.examine(user)
 
 	attack_hand(mob/user as mob)
 		if (!src.anchored)

@@ -17,7 +17,7 @@
 		..()
 
 		var/SPrange = 1
-		if (holder.owner.wizard_spellpower())
+		if (holder.owner.wizard_spellpower(src))
 			SPrange = 5
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell only works at point blank without a staff to focus it!</span>")

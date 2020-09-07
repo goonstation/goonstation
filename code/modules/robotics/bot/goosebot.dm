@@ -69,6 +69,8 @@
 	return src.explode()
 
 /obj/machinery/bot/goosebot/explode()
+	if(src.exploding) return
+	src.exploding = 1
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='combat'><B>[src] blows apart!</B></span>", 1)
@@ -90,7 +92,7 @@
 		playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
 		SPAWN_DBG(1 SECOND)
 			E.throwforce = 1
-		SPAWN_DBG(5 SECONDS)
+			sleep(4 SECONDS)
 			icon_state = "goosebot"
 
 	return

@@ -5,14 +5,16 @@
 	icon_state = "satchel"
 	flags = ONBELT
 	w_class = 1
+	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	var/maxitems = 50
 	var/list/allowed = list(/obj/item/)
 	var/itemstring = "items"
+	inventory_counter_enabled = 1
 
 
 	New()
-		src.satchel_updateicon()
 		..()
+		src.satchel_updateicon()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		var/proceed = 0
@@ -31,6 +33,7 @@
 			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
 			if (src.contents.len == src.maxitems) boutput(user, "<span class='notice'>[src] is now full!</span>")
 			src.satchel_updateicon()
+			tooltip_rebuild = 1
 		else boutput(user, "<span class='alert'>[src] is full!</span>")
 
 	attack_self(var/mob/user as mob)
@@ -40,6 +43,7 @@
 				I.set_loc(T)
 			boutput(user, "<span class='notice'>You empty out [src].</span>")
 			src.satchel_updateicon()
+			tooltip_rebuild = 1
 		else ..()
 
 	attack_hand(mob/user as mob)
@@ -70,7 +74,8 @@
 					user.visible_message("<span class='notice'><b>[usr]</b> takes \a [getItem.name] out of \the [src].</span>",\
 					"<span class='notice'>You take \a [getItem.name] from [src].</span>")
 					user.put_in_hand_or_drop(getItem)
-
+					src.satchel_updateicon()
+			tooltip_rebuild = 1
 		return ..(user)
 
 	proc/search_through(mob/user as mob)
@@ -134,6 +139,7 @@
 			boutput(user, "<span class='notice'>You finish filling \the [src].</span>")
 		else boutput(user, "<span class='alert'>\The [src] is already full!</span>")
 		src.satchel_updateicon()
+		tooltip_rebuild = 1
 
 	proc/satchel_updateicon()
 		var/perc
@@ -157,6 +163,7 @@
 				src.overlays += image('icons/obj/items/items.dmi', "satcounter5")
 
 		signal_event("icon_updated")
+		src.inventory_counter?.update_number(src.contents.len)
 
 	get_desc()
 		return "It contains [src.contents.len]/[src.maxitems] [src.itemstring]."
@@ -246,5 +253,12 @@
 				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
 				icon_state = "figurinecase"
 
-
+/obj/item/satchel/figurines/full
+	New()
+		. = ..()
+		for(var/i = 0, i < maxitems, i++)
+			var/obj/item/toy/figure/F = new()
+			F.set_loc(src)
+			src.satchel_updateicon()
+		tooltip_rebuild = 1
 

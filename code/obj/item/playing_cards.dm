@@ -22,8 +22,10 @@
 	var/card_tappable = 1 // tap 2 islands for mana
 	var/card_tapped = 0 // summon Fog Bank, laugh
 	var/card_spooky = 0
+	var/solitaire_offset = 3
 
-	New(cardname, carddesc, cardback, cardface, cardfoil, carddata, cardreversible, cardreversed, cardtappable, cardtapped, cardspooky)
+	New(cardname, carddesc, cardback, cardface, cardfoil, carddata, cardreversible, cardreversed, cardtappable, cardtapped, cardspooky, cardsolitaire)
+		..()
 		if (cardname) src.card_name = cardname
 		if (carddesc) src.card_desc = carddesc
 		if (cardback) src.card_back = cardback
@@ -35,6 +37,7 @@
 		if (cardtappable) src.card_tappable = cardtappable
 		if (cardtapped) src.card_tapped = cardtapped
 		if (cardspooky) src.card_spooky = cardspooky
+		if (cardsolitaire) src.solitaire_offset = cardsolitaire
 
 	proc/examine_data()
 		return card_data
@@ -51,6 +54,8 @@
 	burn_output = 500
 	burn_possible = 1
 	health = 10
+	tooltip_flags = REBUILD_DIST
+	inventory_counter_enabled = 1
 	var/list/cards = list()
 	var/face_up = 0
 	var/card_name = "blank card"
@@ -65,6 +70,7 @@
 	var/card_reversed = 0 // IS it reversed?
 	var/card_tappable = 1 // tap dat shit
 	var/card_tapped = 0
+	var/solitaire_offset = 0 //any number : used for stacking cards with a specific negative y offset(like solitaire)
 
 	New()
 		..()
@@ -75,7 +81,7 @@
 		if (!src.cards.len)
 			qdel(src)
 			return
-
+		tooltip_rebuild = 1
 		src.overlays = null
 		switch (src.cards.len)
 			if (-INFINITY to 0)
@@ -92,6 +98,7 @@
 					src.card_reversible = Card.card_reversible
 					src.card_reversed = Card.card_reversed
 					src.spooky = Card.card_spooky
+					src.solitaire_offset = Card.solitaire_offset
 				if (src.face_up)
 					if (src.card_reversible && src.card_reversed)
 						src.name = "reversed [src.card_name]"
@@ -152,6 +159,8 @@
 				if (src.face_up)
 					src.face_up = 0
 
+		src.inventory_counter.update_number(src.cards.len)
+
 	proc/draw_card(var/obj/item/playing_cards/CardStack, var/atom/target as turf|obj|mob, var/draw_face_up = 0, var/datum/playing_card/Card)
 		if (!src.cards.len)
 			qdel(src)
@@ -163,6 +172,8 @@
 			if (target)
 				if (ismob(target))
 					target:put_in_hand_or_drop(CardStack)
+				else if (isturf(target))
+					CardStack.set_loc(target)
 				else
 					CardStack.set_loc(target.loc)
 		if (!Card || !istype(Card, /datum/playing_card))
@@ -197,9 +208,9 @@
 		if (dist <= 0 && src.cards.len >= 2 && src.cards.len <= 10)
 			var/seen_hand = ""
 			for (var/datum/playing_card/Card in src.cards)
-				seen_hand += "\an [Card.card_name], "
+				seen_hand += "\an [Card.card_name] <br>"
 			var/final_seen_hand = copytext(seen_hand, 1, -2)
-			. += "It has [src.cards.len] cards: [final_seen_hand]."
+			. += "<b>It has [src.cards.len] cards:</b><br> [final_seen_hand]"
 		if (dist <= 0 && src.cards.len >= 11)
 			. += "There's [src.cards.len] cards in the [src.cards.len <= 19 ? "stack" : "deck"]."
 
@@ -291,9 +302,9 @@
 				usr, "<span class='notice'>You draw [other_stupid_var] from [src][usr == target ? "." : " and deal it to [target]."]</span>", \
 				target, "<span class='notice'>[target == usr ? "You draw" : "<b>[usr]</b> draws"] a card from [src][target == usr ? "." : " and deals it to you."]</span>")
 				src.draw_card(null, target, deal_face_up, Card)
-			else if (istype(target, /obj/table))
+			else if (istype(target, /obj/table) || istype(target, /turf/simulated/floor) || istype(target,/turf/unsimulated/floor))
 				usr.visible_message("<span class='notice'><b>[usr]</b> draws [other_stupid_var] from [src] and places it on [target].</span>",\
-				"<span class='notice'>You draw [other_stupid_var] from [src] and place it on [target].[other_stupid_var]</span>")
+				"<span class='notice'>You draw [other_stupid_var] from [src] and place it on [target]. [other_stupid_var]</span>")
 				src.draw_card(null, target, deal_face_up, Card)
 			else if (istype(target, /obj/item/playing_cards))
 				usr.visible_message("<span class='notice'><b>[usr]</b> draws [other_stupid_var] from [src] and adds it to [target].</span>",\
@@ -340,9 +351,15 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/playing_cards))
 			var/obj/item/playing_cards/C = W
-			src.add_cards(C)
-			user.visible_message("<span class='notice'><b>[user]</b> adds [C] to the bottom of [src].</span>",\
-			"<span class='notice'>You add [C] to the bottom of [src].</span>")
+			if(user.a_intent == INTENT_DISARM && isturf(src.loc))
+				user.u_equip(C)
+				C.set_loc(src.loc)
+				C.pixel_x = src.pixel_x
+				C.pixel_y = (src.pixel_y - C.solitaire_offset)
+			else
+				src.add_cards(C)
+				user.visible_message("<span class='notice'><b>[user]</b> adds [C] to the bottom of [src].</span>",\
+				"<span class='notice'>You add [C] to the bottom of [src].</span>")
 		else return ..()
 
 	attack_self(mob/user as mob)
@@ -374,6 +391,16 @@
 				user.visible_message("<span class='notice'><b>[user]</b> shuffles [src].</span>",\
 				"<span class='notice'>You shuffle [src].</span>")
 				src.last_shown_off = world.time
+
+	afterattack(var/atom/A as turf, var/mob/user as mob, reach, params)
+		if(istype(A,/turf/simulated/floor) || istype(A,/turf/unsimulated/floor))
+			user.u_equip(src)
+			src.set_loc(A)
+			if (islist(params) && params["icon-y"] && params["icon-x"])
+				src.pixel_x = text2num(params["icon-x"]) - 16
+				src.pixel_y = text2num(params["icon-y"]) - 16
+		else
+			..()
 
 /obj/item/playing_cards/suit
 	desc = "Some playing cards, all in a neat stack. Each belongs to one of four suits and has a number. Collect all 52!"
@@ -450,6 +477,95 @@
 /obj/item/playing_cards/tarot/spooky
 	spooky = 1
 
+/obj/item/playing_cards/hanafuda
+	desc = "Some hanafuda cards, all in a neat stack."
+	icon_state = "deck-hanafuda"
+	card_back = "hanafuda"
+
+	var/datum/playing_card/Card
+	New()
+		..()
+		var/card_num = 1
+		var/target_month = 1
+		for(var/i=1,i<=48,i++)
+			Card = new()
+			Card.card_back = "hanafuda"
+			Card.card_desc = "a card for playing hanafuda!"
+			Card.solitaire_offset = 5
+			var/special_second
+			var/special_third
+			var/special_fourth
+
+			switch(target_month)
+				if(1)
+					Card.card_name = "January : "
+					special_third = "Poetry Slip"
+					special_fourth = "Bright : Crane"
+				if(2)
+					Card.card_name = "February : "
+					special_third = "Poetry Slip"
+					special_fourth = "Animal : Bush Warbler"
+				if(3)
+					Card.card_name = "March : "
+					special_third = "Poetry Slip"
+					special_fourth = "Bright : Curtain"
+				if(4)
+					Card.card_name = "April : "
+					special_third = "Red Ribbon"
+					special_fourth = "Animal : Cuckoo"
+				if(5)
+					Card.card_name = "May : "
+					special_third = "Blue Ribbon"
+					special_fourth = "Animal : Butterfly"
+				if(6)
+					Card.card_name = "June : "
+					special_third = "Red Ribbon"
+					special_fourth = "Animal : Eight-Plank Bridge"
+				if(7)
+					Card.card_name = "July : "
+					special_third = "Red Ribbon"
+					special_fourth = "Animal : Boar"
+				if(8)
+					Card.card_name = "August : "
+					special_third = "Animal : Geese"
+					special_fourth = "Bright : Moon"
+				if(9)
+					Card.card_name = "September : "
+					special_third = "Blue Ribbon"
+					special_fourth = "Animal/Plain : Sake Cup"
+				if(10)
+					Card.card_name = "October : "
+					special_third = "Blue Ribbon"
+					special_fourth = "Animal : Deer"
+				if(11)
+					Card.card_name = "November : "
+					special_second = "Red Ribbon"
+					special_third = "Animal : Swallow"
+					special_fourth = "Bright : Rain Man"
+				if(12)
+					Card.card_name = "December : "
+					special_fourth = "Bright : Phoenix"
+
+			switch(card_num)
+				if(1)
+					Card.card_name += "Plain"
+				if(2)
+					Card.card_name += (special_second ? special_second : "Plain")
+				if(3)
+					Card.card_name += (special_third ? special_third : "Plain")
+				if(4)
+					Card.card_name += (special_fourth ? special_fourth : "Plain")
+
+			Card.card_face = "[target_month]-[card_num]"
+			src.cards += Card
+
+			if(card_num <= 3)
+				card_num++
+			else
+				card_num = 1
+				if(target_month <= 12)
+					target_month++
+
 // Traitor Trading Triumvirate?
 
 /obj/item/playing_cards/trading
@@ -516,7 +632,7 @@
 			src.card_human += H
 		for (var/mob/living/silicon/robot/R in mobs)
 			src.card_cyborg += R
-		for (var/mob/living/silicon/ai/A in AIs)
+		for (var/mob/living/silicon/ai/A in by_type[/mob/living/silicon/ai])
 			src.card_ai += A
 		card_type_mob = childrentypesof(/datum/playing_card/griffening/creature/mob)
 		card_type_friend = childrentypesof(/datum/playing_card/griffening/creature/friend)
@@ -897,6 +1013,18 @@
 			..()
 			src.Cards = new /obj/item/playing_cards/clow(src)
 
+	hanafuda
+		name = "box of hanafuda cards"
+		desc = "A little box of full-art hanafuda cards."
+		icon_state = "box-hanafuda"
+		icon_closed = "box-hanafuda"
+		icon_open = "box-hanafuda-open"
+		icon_empty = "box-hanafuda-empty"
+
+		New()
+			..()
+			src.Cards = new /obj/item/playing_cards/hanafuda(src)
+
 
 	attack_self(mob/user as mob)
 		if (src.reusable)
@@ -967,6 +1095,7 @@
 	<li>To draw or deal a card face-up, use any intent other than help.</li>
 	<li>To draw or deal a specific card, use grab intent.</li>
 	<li>To tap or untap a card, click-drag the card onto itself.</li>
+	<li>To stack cards without forming a hand, click a card with another card while on disarm intent.</li>
 	</ul>"}
 
 

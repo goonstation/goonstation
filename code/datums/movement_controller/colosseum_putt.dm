@@ -98,7 +98,8 @@
 				walk(master, 0)
 				master.flying = 0
 
-	modify_keymap(datum/keymap/keymap, client/C)
+	modify_keymap(client/C)
 		..()
-		keymap.merge(C.get_keymap("colosseum_putt"))
-
+		C.apply_keybind("colputt")
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("colputt_arrow")

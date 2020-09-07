@@ -175,7 +175,7 @@
 			if(FA.lockdownbyai == 1)
 				FA.lockdownbyai = 0
 				FA.reset()
-	for(var/obj/machinery/door/airlock/AL in doors) //open airlocks
+	for(var/obj/machinery/door/airlock/AL in by_type[/obj/machinery/door]) //open airlocks
 		SPAWN_DBG ( 0 )
 			if(AL.canAIControl() && AL.lockdownbyai == 1)
 				AL.open()
@@ -359,7 +359,7 @@
 		return
 	logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 	logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-	message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+	message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 	call_shuttle_proc(src, call_reason)
 
 	// hack to display shuttle timer

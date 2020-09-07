@@ -21,7 +21,7 @@
 		if (!M)
 			return 1
 
-		if (iscritter(M)) // Placeholder because only humans use bioeffects at the moment.
+		if (ismobcritter(M)) // Placeholder because only humans use bioeffects at the moment.
 			if (M.invisibility != 0)
 				boutput(M, __red("You are already invisible."))
 				return 1
@@ -31,7 +31,7 @@
 			boutput(M, __blue("<b>Your cloak will remain active for the next [src.cloak_duration / 60] minutes.</b>"))
 
 			SPAWN_DBG (src.cloak_duration * 10)
-				if (M && iscritter(M))
+				if (M && ismobcritter(M))
 					M.invisibility = 0
 					M.UpdateOverlays(null, "shield")
 					boutput(M, __red("<b>You are no longer invisible.</b>"))

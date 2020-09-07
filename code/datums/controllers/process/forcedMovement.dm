@@ -145,7 +145,7 @@ datum/controller/process/fMove
 
 		//now manta!
 		debugPushList = mantaPushList
-		if(mantaMoving)
+		if(mantaMoving == 1)
 			for(var/A in mantaPushList)
 				var/atom/movable/M = A
 				if(!M)
@@ -186,4 +186,4 @@ datum/controller/process/fMove
 		return
 
 	tickDetail()
-		return "Managing [mantaPushList.len] mantapush objects and [spacePushList.len] spacepush objects."
+		boutput(usr, "<b>ForcedMovement:</b> Managing [mantaPushList.len] mantapush objects and [spacePushList.len] spacepush objects")

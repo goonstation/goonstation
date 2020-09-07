@@ -19,14 +19,10 @@
 	var/drain_max = 12
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
-	src.overlays = 0
-
 	if(on)
 		icon_state = "pscrubber:1"
 	else
 		icon_state = "pscrubber:0"
-
-	return
 
 /obj/machinery/portable_atmospherics/scrubber/process()
 	..()
@@ -56,7 +52,7 @@
 
 		//atmos
 
-		var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
+		var/transfer_moles = min(1, volume_rate/environment.volume)*TOTAL_MOLES(environment)
 
 		//Take a gas sample
 		var/datum/gas_mixture/removed
@@ -70,13 +66,19 @@
 		// drsingh attempted fix for Cannot read null.temperature
 		if (filtered_out && removed)
 			filtered_out.temperature = removed.temperature
-			filtered_out.toxins = removed.toxins
-			removed.toxins = 0
+			#define _FILTER_OUT_GAS(GAS, ...) \
+				filtered_out.GAS = removed.GAS; \
+				removed.GAS = 0;
+			APPLY_TO_GASES(_FILTER_OUT_GAS)
+			#undef _FILTER_OUT_GAS
 
-			filtered_out.carbon_dioxide = removed.carbon_dioxide
-			removed.carbon_dioxide = 0
+			// revert for breathable
+			removed.oxygen = filtered_out.oxygen
+			filtered_out.oxygen = 0
+			removed.nitrogen = filtered_out.nitrogen
+			filtered_out.nitrogen = 0
 
-			if(removed.trace_gases && removed.trace_gases.len)
+			if(length(removed.trace_gases))
 				for(var/datum/gas/trace_gas in removed.trace_gases)
 //					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
 					removed.trace_gases -= trace_gas
@@ -103,16 +105,14 @@
 
 /obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/atmosporter))
-		var/canamt = W.contents.len
-		if (canamt >= W:capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		var/obj/item/atmosporter/porter = W
+		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
 		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
 			src.contained = 1
 			src.set_loc(W)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, user)
-			s.start()
+			elecflash(user)
 	..()
 
 
@@ -127,11 +127,11 @@
 	var/holding_text
 
 	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
+		holding_text = {"<BR><B>Tank Pressure</B>: [MIXTURE_PRESSURE(holding.air_contents)] KPa<BR>
 <A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
 "}
 	var/output_text = {"<TT><B>[name]</B><BR>
-Pressure: [air_contents.return_pressure()] KPa<BR>
+Pressure: [MIXTURE_PRESSURE(air_contents)] KPa<BR>
 Port Status: [(connected_port)?("Connected"):("Disconnected")]
 [holding_text]
 <BR>

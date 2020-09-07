@@ -1,16 +1,16 @@
 /datum/projectile/wavegun
 	name = "energy wave"
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "wave"
+	icon_state = "wave-r"
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 10
 //How much ammo this costs
-	cost = 33
+	cost = 30
 //How fast the power goes away
-	dissipation_rate = -2.5 //gets strong fast-ish
+	dissipation_rate = -1 //gains power at the same rate that a taser loses power - equal at 6 tiles
 	max_range = 24 //Range/time limiter for non-standard dissipation - long range, but not infinite
 //How many tiles till it starts to lose power (gain, in this case)
-	dissipation_delay = 4
+	dissipation_delay = 0
 //Kill/Stun ratio
 	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting
@@ -35,6 +35,9 @@ toxic - poisons
 	//Can we pass windows
 	window_pass = 0
 
+	color_red = 1
+	color_green = 0
+	color_blue = 0
 
 /datum/projectile/wavegun/transverse //expensive taser shots that go through /everything/
 	shot_number = 1
@@ -51,7 +54,9 @@ toxic - poisons
 	damage_type = D_ENERGY
 	sname = "transverse wave"
 	icon_state = "wave-g"
-
+	color_red = 0
+	color_green = 1
+	color_blue = 0
 
 
 
@@ -62,31 +67,27 @@ toxic - poisons
 	dissipation_delay = 0
 	dissipation_rate = -10 //only reliable past a few tiles
 	max_range = 18 //taser-and-a-half range
-	cost = 100 //two shots, unless you upgrade to a pulserifle/etc cell
+	cost = 100 //three shots
 	hit_ground_chance = 0
 	damage_type = D_SPECIAL
 	sname = "electromagnetic distruption wave"
 	icon_state = "wave-emp"
 	disruption = 25
 
+	color_red = 0
+	color_green = 0
+	color_blue = 1
+
 	on_hit(atom/H, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(H)
-		if(P.power != 0) //avoid AoE on pointblank... but if you just shoot the guy beside you you're going to get EMPed
-			for(var/turf/tile in range(1,T))
-				for(var/atom/movable/O in tile.contents)
-					O.emp_act()
-					SEND_SIGNAL(O, COMSIG_MOVABLE_EMP_ACT)
-		if(prob(P.power*1.25)) //chance to EMP main target again - better odds the further it travels. Has a meaningful effect on borgs/pods/doors
-			for(var/atom/movable/O in T.contents)
+		for(var/atom/movable/O in T.contents)
+			if(!istype(O, /obj/machinery/nuclearbomb) || prob(P.power * 0.5)) //Direct hit has a low chance to affect the nuke -
 				O.emp_act()
 				SEND_SIGNAL(O, COMSIG_MOVABLE_EMP_ACT)
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 0, T)
-		s.start()
-
-	on_pointblank(obj/projectile/P, mob/living/M)  //on pointblank, just EMP the mob. No AoE, don't EMP other things on the tile.
-		M.emp_act()
-		SEND_SIGNAL(M, COMSIG_MOVABLE_EMP_ACT)
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 0, M)
-		s.start()
+		if(prob(P.power * 1.25)) //chance to EMP in an AoE - better odds the further it travels. Has a meaningful effect on borgs/pods/doors
+			for(var/turf/tile in range(1, T))
+				for(var/atom/movable/O in tile.contents)
+					if(!istype(O, /obj/machinery/nuclearbomb)) //AoE emp does not affect nuke
+						O.emp_act()
+						SEND_SIGNAL(O, COMSIG_MOVABLE_EMP_ACT)
+		elecflash(T)

@@ -25,8 +25,12 @@
 
 /datum/game_mode/mixed/pre_setup()
 	var/num_players = 0
-	for(var/mob/new_player/player in mobs)
-		if(player.client && player.ready) num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if(player.ready)
+			num_players++
 
 	if (num_players < werewolf_players_req || !has_werewolves)
 		traitor_types -= "werewolf"
@@ -226,19 +230,18 @@
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 				traitor.current.unequip_all(1)
 
-				if (wizardstart.len == 0)
+				if (!job_start_locations["wizard"])
 					boutput(traitor.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 				else
-					var/starting_loc = pick(wizardstart)
-					traitor.current.set_loc(starting_loc)
+					traitor.current.set_loc(pick(job_start_locations["wizard"]))
 
 				equip_wizard(traitor.current)
 
 				var/randomname
 				if (traitor.current.gender == "female")
-					randomname = wiz_female.len ? pick(wiz_female) : "Witch"
+					randomname = pick_string_autokey("names/wizard_female.txt")
 				else
-					randomname = wiz_male.len ? pick(wiz_male) : "Wizard"
+					randomname = pick_string_autokey("names/wizard_male.txt")
 
 				SPAWN_DBG (0)
 					var/newname = input(traitor.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
@@ -287,9 +290,9 @@
 
 				if (!src.spy_market)
 					src.spy_market = new /datum/game_mode/spy_theft
-					SPAWN_DBG(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
-						src.spy_market.build_bounty_list()
-						src.spy_market.update_bounty_readouts()
+					sleep(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
+					src.spy_market.build_bounty_list()
+					src.spy_market.update_bounty_readouts()
 
 			if ("werewolf")
 				objective_set_path = /datum/objective_set/werewolf
@@ -308,9 +311,12 @@
 /datum/game_mode/mixed/proc/get_possible_enemies(type,number)
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			switch(type)
 				if("wizard")
 					if(player.client.preferences.be_wizard) candidates += player.mind
@@ -337,9 +343,12 @@
 		else
 			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_misc set to yes, including players who don't want to be misc enemies in the pool for [type] assignment.")
 
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 				if ((number > 1) && (candidates.len >= number))
 					break
@@ -376,7 +385,7 @@
 			comm.messagetext.Add(intercepttext)
 */
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -393,15 +402,20 @@
 
 /datum/game_mode/mixed/proc/get_mob_list()
 	var/list/mobs = list()
-	for(var/mob/living/player in mobs)
-		if (player.client)
-			mobs += player
+
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+		mobs += player
 	return mobs
 
 /datum/game_mode/mixed/proc/pick_human_name_except(excluded_name)
 	var/list/names = list()
-	for(var/mob/living/player in mobs)
-		if (player.client && (player.real_name != excluded_name))
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.real_name != excluded_name)
 			names += player.real_name
 	if(!names.len)
 		return null

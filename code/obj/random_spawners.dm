@@ -10,14 +10,17 @@
 	var/amt2spawn = 0
 	var/min_amt2spawn = 0
 	var/max_amt2spawn = 0
+	var/rare_chance = 0 // chance (out of 100) that the rare item list will be spawned instead of the common one
 	var/list/items2spawn = list()
+	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
 	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
 	New()
+		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.spawn_items()
-			SPAWN_DBG(10 SECONDS)
-				qdel(src)
+			sleep(10 SECONDS)
+			qdel(src)
 
 	proc/spawn_items()
 		if (islist(src.guaranteed) && src.guaranteed.len)
@@ -30,24 +33,45 @@
 				if (isnum(guaranteed[new_item]))
 					amt = abs(guaranteed[new_item])
 				for (amt, amt>0, amt--)
-					new new_item(src.loc)
+					closet_check_spawn(new_item)
 
 		if (!islist(src.items2spawn) || !src.items2spawn.len)
 			logTheThing("debug", src, null, "has an invalid items2spawn list")
 			return
-
+		if (rare_chance)
+			if (!islist(src.rare_items2spawn) || !src.rare_items2spawn.len)
+				logTheThing("debug", src, null, "has an invalid rare_items2spawn list")
+				return
 		if (amt2spawn == 0)
 			amt2spawn = rand(min_amt2spawn, max_amt2spawn)
 		if (amt2spawn == 0) // If for whatever reason we still end up with 0...
 			return
 		for (amt2spawn, amt2spawn>0, amt2spawn--)
-			var/obj/new_item = pick(src.items2spawn)
+			// first, decide whether or not we will spawn a rare item!
+			var/list/item_list = list()
+			if (prob(rare_chance))
+				if (rare_items2spawn)
+					item_list = rare_items2spawn
+				else
+					logTheThing("debug", src, null, "has an invalid rare spawn list, [rare_items2spawn]")
+					DEBUG_MESSAGE("[src] has an invalid rare spawn list, [rare_items2spawn]")
+					continue
+			else
+				item_list = items2spawn
+			var/obj/new_item = pick(item_list)
 			if (!ispath(new_item))
 				logTheThing("debug", src, null, "has a non-path item in its spawn list, [new_item]")
 				DEBUG_MESSAGE("[src] has a non-path item in its spawn list, [new_item]")
 				continue
-			new new_item(src.loc)
 
+			closet_check_spawn(new_item)
+
+	proc/closet_check_spawn(var/obj/item/new_item)
+		var/obj/storage/S = locate(/obj/storage) in src.loc
+		if (S)
+			new new_item(S)
+		else
+			new new_item(src.loc)
 /obj/random_item_spawner/snacks
 	name = "random snack spawner"
 	icon_state = "rand_snacks"
@@ -748,6 +772,119 @@
 		min_amt2spawn = 5
 		max_amt2spawn = 7
 
+/obj/random_item_spawner/junk
+	name = "random junk spawner"
+	icon_state = "rand_junk"
+	min_amt2spawn = 2
+	max_amt2spawn = 7
+	rare_chance = 5
+	items2spawn = list(/obj/item/brick,
+	/obj/item/c_sheet,
+	/obj/item/c_tube,
+	/obj/item/cable_coil/cut,
+	/obj/item/camera_film,
+	/obj/item/casing,
+	/obj/item/casing/rifle,
+	/obj/item/casing/small,
+	/obj/item/cigbutt,
+	/obj/item/clothing/head/paper_hat,
+	/obj/item/clothing/mask/gas,
+	/obj/item/clothing/mask/medical,
+	/obj/item/clothing/mask/surgical,
+	/obj/item/clothing/shoes,
+	/obj/item/coin,
+	/obj/item/device/infra_sensor,
+	/obj/item/device/radio,
+	/obj/item/device/timer,
+	/obj/item/folder,
+	/obj/item/hairball,
+	/obj/item/hand_labeler,
+	/obj/item/light/bulb/neutral,
+	/obj/item/light/tube/neutral,
+	/obj/item/match,
+	/obj/item/mining_tool,
+	/obj/item/mousetrap,
+	/obj/item/mousetrap/armed,
+	/obj/item/paper,
+	/obj/item/plank,
+	/obj/item/plate,
+	/obj/item/pen,
+	/obj/item/pen/crayon/random,
+	/obj/item/raw_material/shard/glass,
+	/obj/item/reagent_containers/food/drinks/paper_cup,
+	/obj/item/rods/steel,
+	/obj/item/rubberduck,
+	/obj/item/scissors,
+	/obj/item/scrap,
+	/obj/item/sheet/glass,
+	/obj/item/sheet/steel,
+	/obj/item/spacecash/five,
+	/obj/item/spacecash/random/really_small,
+	/obj/item/spacecash/random/small,
+	/obj/item/stamp,
+	/obj/item/stick,
+	/obj/item/tile/steel)
+
+	rare_items2spawn = list(/obj/item/bluntwrap,
+	/obj/item/cell,
+	/obj/item/crowbar,
+	/obj/item/electronics/scanner,
+	/obj/item/electronics/soldering,
+	/obj/item/light_parts,
+	/obj/item/light_parts/bulb,
+	/obj/item/light_parts/floor,
+	/obj/item/screwdriver,
+	/obj/item/spraybottle,
+	/obj/item/spongecaps,
+	/obj/item/storage/toolbox/mechanical,
+	/obj/item/storage/toolbox/electrical,
+	/obj/item/storage/toolbox/emergency,
+	/obj/item/tank/air,
+	/obj/item/tank/emergency_oxygen,
+	/obj/item/weldingtool,
+	/obj/item/wrench)
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
+
 /obj/random_item_spawner/landmine
 	name = "random land mine spawner"
 	min_amt2spawn = 1
@@ -805,10 +942,11 @@
 	var/obj/machinery/vehicle/pod2spawn = null
 
 	New()
+		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.set_up()
-			SPAWN_DBG(1 SECOND)
-				qdel(src)
+			sleep(1 SECOND)
+			qdel(src)
 
 	proc/set_up()
 		// choose pod to spawn and spawn it
@@ -1655,3 +1793,29 @@
 	few
 		min_amt2spawn = 1
 		max_amt2spawn = 3
+
+/obj/random_item_spawner/chompskey //fringe case
+	name = "chompskey spawner"
+	desc = "Modify where_to_spawn by adding lists with elements that coorespond to coordinate pairs: i.e. add list(120,31)"
+	var/list/where_to_spawn = list()
+
+	spawn_items() //since this is a fringe case spawner, this is an override to the standard spawn rules
+		if(where_to_spawn.len)
+			var/reference = rand(1,where_to_spawn.len)
+			var/new_x = where_to_spawn[reference][1]
+			var/new_y = where_to_spawn[reference][2]
+			closet_check_spawn(new_x,new_y)
+		else
+			closet_check_spawn()
+
+	closet_check_spawn(var/new_x,var/new_y)
+		var/obj/item/K = new /obj/item/device/key/chompskey
+
+		if(new_x && new_y)
+			K.set_loc(locate(new_x,new_y,src.z))
+		else
+			K.set_loc(src.loc)
+
+		var/obj/storage/S = locate(/obj/storage) in K.loc
+		if (S)
+			K.set_loc(S)

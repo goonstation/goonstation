@@ -3,7 +3,6 @@
 */
 
 var/global/area/current_battle_spawn = null
-var/global/list/battle_equipment = null
 var/global/list/datum/mind/battle_pass_holders = list()
 
 #define TIME_BETWEEN_SHUTTLE_MOVES 50
@@ -26,7 +25,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	var/datum/random_event/special/battlestorm/storm = null
 	var/datum/random_event/special/supplydrop/dropper = null
 	var/list/datum/mind/recently_deceased = list()
-
+	do_antag_random_spawns = 0
 
 /datum/game_mode/battle_royale/announce()
 	boutput(world, "<B>The current game mode is - Battle Royale!</B>")
@@ -34,8 +33,11 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 /datum/game_mode/battle_royale/pre_setup()
 	// EVERYONE IS A BATTLER
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.ready)
 			src.traitors.Add(player)
 			if(player.mind)
 				player.mind.assigned_role = "MODE"
@@ -78,12 +80,11 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		battle_shuttle_spawn(player)
 
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
-	var/battler_spawn = pick(battle_royale_spawn)
 	bestow_objective(player,/datum/objective/battle_royale/win)
 	boutput(player.current, "<B>Objective</B>: Defeat all other battlers!")
 	player.current.nodamage = 1 // No murder on the battle shuttle
 		// Stuff them on the shuttle
-	player.current.set_loc(battler_spawn)
+	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 	equip_battler(player.current)
 	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/escape/transit/battle_shuttle))
@@ -130,9 +131,10 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		current_battle_spawn_name = pick(drop_locations)
 		current_battle_spawn = drop_locations[current_battle_spawn_name]
 		// oh and tell anyone on the shuttle it moved I guess
-		for(var/mob/M in mobs)
-			if(istype(get_area(M),/area/shuttle/escape/transit/battle_shuttle))
-				boutput(M, "<span class='notice'>The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
+		for(var/client/C)
+			if (C.mob)
+				if(istype(get_area(C.mob),/area/shuttle/escape/transit/battle_shuttle))
+					boutput(C.mob, "<span class='notice'>The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
 
 	// Is it time for a storm
 	if(src.next_storm < world.time)
@@ -170,7 +172,7 @@ proc/hide_weapons_everywhere()
 	murder_supplies.Add(/obj/item/gun/kinetic/pistol)
 
 
-	for(var/obj/O in lockers_and_crates) // imcoder
+	for(var/obj/O in by_type[/obj/storage]) // imcoder
 		if(prob(33))
 			weapon = pick(murder_supplies)
 			new weapon(O)

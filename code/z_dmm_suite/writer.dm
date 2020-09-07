@@ -4,9 +4,8 @@
 
 dmm_suite
 	var/save_comment = 1
-	var/static/list/map_save_var_blacklist = list("flags", "luminosity", "checkingcanpass", "net_id", "processing_bucket", "netnum", "host_id", \
-		"tdir", "current_processing_tier", "connect_overlay_dir", "blog", "lastbumped")
-	
+	var/static/list/map_save_var_blacklist = list("flags", "luminosity", "net_id", "host_id", "glide_size", "screen_loc")
+
 	/*-- write_map -----------------------------------
 	Generates DMM map text from a region represented by turfs on two opposite
 	corners of a 3D block. Generated map text is ready to be saved to file or
@@ -265,6 +264,7 @@ dmm_suite/proc
 			if(istext(A.vars[V])) // Text
 				if(saving) attributesText += "; "
 				var/val = replacetext(A.vars[V], {"""}, {"\\""}) // escape quotes
+				val = replacetext(val, "\n", "\\n")
 				attributesText += {"[V] = "[val]""}
 			else if(isnum(A.vars[V]) || ispath(A.vars[V])) // Numbers & Type Paths
 				if(saving) attributesText += "; "
@@ -321,7 +321,7 @@ dmm_suite/prefab_saving
 	var/unsimulate = 0
 	var/static/list/unsimulate_reskinning_vars = list("icon", "icon_state", "opacity", "name", "desc", "pixel_x", "pixel_y", "layer", "plane")
 	var/static/list/unsimulate_mild_reskinning_vars = list("icon", "icon_state")
-	
+
 dmm_suite/prefab_saving/unsimulate
 	unsimulate = 1
 

@@ -32,6 +32,7 @@
 		src.transform = null
 		src.override_state = null
 		animate(src)
+		..()
 
 	disposing()
 		particleMaster.active_particles -= src
@@ -49,6 +50,7 @@ var/datum/particleMaster/particleMaster = new
 	var/allowed_particles_per_tick = 7
 
 	New()
+		..()
 		particleTypes = list()
 		particleSystems = list()
 		for (var/ptype in childrentypesof(/datum/particleType))
@@ -96,7 +98,7 @@ var/datum/particleMaster/particleMaster = new
 			LAGCHECK(LAG_MED)
 
 		if (count <= 0)
-			location.temp_flags &= ~HAS_PARTICLESYSTEM
+			location?.temp_flags &= ~HAS_PARTICLESYSTEM
 		//mbc : lazy remove location has_particlesystem_target flag below in particle system Die() proc. Not 100% reliable but i dont wanna do another search for target.
 
 
@@ -176,6 +178,7 @@ var/datum/particleMaster/particleMaster = new
 	var/matrix/third = null
 
 	New()
+		..()
 		MatrixInit()
 
 	proc/MatrixInit()
@@ -1008,6 +1011,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	var/atom/target = null
 
 	New(var/atom/location = null, var/particleTypeName = null, var/particleTime = null, var/particleColor = null, var/atom/target = null, particleSprite = null)
+		..()
 		if (location && particleTypeName)
 			src.location = location
 			src.particleTypeName = particleTypeName

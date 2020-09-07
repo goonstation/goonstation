@@ -250,7 +250,7 @@
 		target.vamp_beingbitten = 0
 
 		boutput(M, __blue("[target] has been enslaved and is now your thrall."))
-		logTheThing("combat", M, target, "enthralled %target%, making them a loyal mindslave at [log_loc(M)].")
+		logTheThing("combat", M, target, "enthralled [constructTarget(target,"combat")], making them a loyal mindslave at [log_loc(M)].")
 
 	onInterrupt()
 		..()

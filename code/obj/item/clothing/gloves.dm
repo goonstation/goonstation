@@ -44,7 +44,6 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			src.glove_ID = src.CreateID()
 			if (glove_IDs) // fix for Cannot execute null.Add(), maybe??
 				glove_IDs.Add(src.glove_ID)
-		return
 
 	examine()
 		. = ..()
@@ -83,7 +82,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				"<span><b>[challenger]</b> slaps [target] in the face with the the [src]!</span>",
 				"<span class='alert'><b>[challenger] slaps you in the face with the [src]! [capitalize(he_or_she(challenger))] has offended your honour!</span>"
 			)
-			logTheThing("combat", challenger, target, "glove-slapped %target%")
+			logTheThing("combat", challenger, target, "glove-slapped [constructTarget(target,"combat")]")
 		else
 			target.visible_message(
 				"<span class='alert'><b>[challenger]</b> slaps [target] in the face with the [src]!</span>"
@@ -99,17 +98,19 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				user.show_text("You don't need to add more wiring to the [src.name].", "red")
 				return
 
+			var/obj/item/cable_coil/coil = W
+			if(!coil.use(1))
+				return
 			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
 			src.setSpecialOverride(/datum/item_special/spark, 0)
 			src.material_prints += ", electrically charged"
-			W:amount--
 			return
 
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
 			var/obj/item/cell/C = W
 
-			if (C.charge < 2500)
+			if (C.charge < 1500)
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
@@ -124,7 +125,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				if (src.uses < 0)
 					src.uses = 0
 				src.uses = min(src.uses + 1, src.max_uses)
-				C.use(2500)
+				C.use(1500)
 				src.icon_state = "stun"
 				src.item_state = "stun"
 				src.overridespecial = 1
@@ -397,7 +398,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		..()
 		boutput(user, "<span class='notice'><b>You have to put the gloves on your hands first, silly!</b></span>")
 
-	get_desc(dist)
+	get_desc()
 		if (src.weighted)
 			. += "These things are pretty heavy!"
 
@@ -408,6 +409,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			return
 		boutput(user, "You slip the horseshoe inside one of the gloves.")
 		src.weighted = 1
+		tooltip_rebuild = 1
 		qdel(W)
 	else
 		return ..()
@@ -453,7 +455,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 	equipment_click(atom/user, atom/target, params, location, control, origParams, slot)
 		if(target == user || spam_flag || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return 0
-		if(slot != SLOT_GLOVES) return 0 
+		if(slot != SLOT_GLOVES) return 0
 
 		var/netnum = 0
 		if(src.overridespecial)
@@ -507,7 +509,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 						gen.efficiency_controller -= 5
 
 				else if(isliving(target_r)) //Probably unsafe.
-					logTheThing("combat", user, target_r, "zaps %target% with power gloves")
+					logTheThing("combat", user, target_r, "zaps [constructTarget(target_r,"combat")] with power gloves")
 					switch(user:a_intent)
 						if("harm")
 							src.electrocute(target_r, 100, netnum)

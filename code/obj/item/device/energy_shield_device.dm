@@ -15,6 +15,7 @@
 	var/image/shield_overlay = null
 
 	New()
+		..()
 		work()
 
 	dropped(mob/user as mob)
@@ -22,9 +23,6 @@
 		return
 
 	pickup(mob/user)
-		return
-
-	equipped(var/mob/user, var/slot)
 		return
 
 	attack_self()

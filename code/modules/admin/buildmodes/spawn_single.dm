@@ -16,7 +16,7 @@ change the direction of created objects.<br>
 	var/matrix/mtx = matrix()
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
-			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None")) || cinematic
+			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "Supplydrop", "Supplydrop (no lootbox)", "None")) || cinematic
 			return
 		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom)
 		update_button_text(objpath)
@@ -73,6 +73,12 @@ change the direction of created objects.<br>
 						A.dir = holder.dir
 						A.onVarChanged("dir", SOUTH, A.dir)
 						blink(T)
+				if("Supplydrop")
+					if (ispath(objpath, /atom/movable))
+						new/obj/effect/supplymarker/safe(T, 3 SECONDS, objpath)
+				if("Supplydrop (no lootbox)")
+					if (ispath(objpath, /atom/movable))
+						new/obj/effect/supplymarker/safe(T, 3 SECONDS, objpath, TRUE)
 				else
 					var/atom/A = 0
 					if(ispath(objpath, /turf))

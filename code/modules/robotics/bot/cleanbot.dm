@@ -190,12 +190,9 @@
 		return
 
 	attackby(obj/item/W, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WT = W
-			if (!WT.welding)
-				return
+		if (isweldingtool(W))
 			if (src.health < initial(src.health))
-				if(WT.try_weld(user, 1))
+				if(W:try_weld(user, 1))
 					src.health = initial(src.health)
 					src.visible_message("<span class='alert'><b>[user]</b> repairs the damage on [src].</span>")
 
@@ -424,13 +421,13 @@
 		if (!src)
 			return
 
+		if(src.exploding) return
+		src.exploding = 1
 		src.on = 0
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src, radius=1, power=3, exclude_center = 0)
 
 		var/turf/T = get_turf(src)
 		if (T && isturf(T))

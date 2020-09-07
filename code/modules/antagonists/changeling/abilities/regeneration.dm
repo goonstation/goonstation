@@ -45,7 +45,7 @@
 				changeling_super_heal_step(C, 100, 100) //get those limbs back i didn't lay here for 45 seconds to be hopping around on one leg dang it
 				if (C && !isdead(C))
 					C.HealDamage("All", 1000, 1000)
-					C.brainloss = 0
+					C.take_brain_damage(-INFINITY)
 					C.take_toxin_damage(-INFINITY)
 					C.take_oxygen_deprivation(-INFINITY)
 					C.delStatus("paralysis")
@@ -173,7 +173,7 @@
 			return 1
 		boutput(holder.owner, __blue("Your skin begins reforming around your skeleton."))
 
-		while(C.health < 100 || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
+		while(C.health < C.max_health || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
 			if(isdead(C))
 				break
 			sleep(3 SECONDS)

@@ -19,6 +19,7 @@
 	w_class = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	var/rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
+	tooltip_flags = REBUILD_SPECTRO | REBUILD_DIST
 	var/amount_per_transfer_from_this = 5
 	var/initial_volume = 50
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
@@ -120,7 +121,7 @@
 			if(!ok)
 				return
 		// First filter out everything we don't want to refill or empty quickly.
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender))
+		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
@@ -184,7 +185,7 @@
 					boutput(user, "<span class='notice'>You apply [src.amount_per_transfer_from_this] units of the solution to [target].</span>")
 					target.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [target.name].</span>")
 				var/mob/living/MOB = target
-				logTheThing("combat", user, MOB, "splashes [src] onto %target% [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
+				logTheThing("combat", user, MOB, "splashes [src] onto [constructTarget(MOB,"combat")] [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
 				can_mousedrop = 0
 				if (src.splash_all_contents)
 					src.reagents.reaction(target,TOUCH)
@@ -279,7 +280,7 @@
 				if (target:flags & NOSPLASH) return
 			can_mousedrop = 0
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "splash all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
-			logTheThing("combat", user, target, "splashes [src] onto %target% [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+			logTheThing("combat", user, target, "splashes [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			if (reagents)
 				reagents.physical_shock(14)
 
@@ -414,6 +415,7 @@
 		qdel(src)
 
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
+		. = ..()
 		if (src.is_open_container() && src.reagents && src.reagents.total_volume > 0)
 			user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
 			src.reagents.reaction(get_turf(user), TOUCH)

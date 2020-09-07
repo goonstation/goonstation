@@ -18,6 +18,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	contraband = 4
 	hide_attack = 2 //Point blanking... gross
 	pickup_sfx = "sound/items/pickup_gun.ogg"
+	inventory_counter_enabled = 1
 
 	var/continuous = 0 //If 1, fire pixel based while button is held.
 	var/c_interval = 3 //Interval between shots while button is held.
@@ -46,12 +47,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/charge_up = 0 //Does this gun have a charge up time and how long is it? 0 = normal instant shots.
 	var/shoot_delay = 4
 
-	buildTooltipContent()
-		var/Tcontent = ..()
-		if(current_projectile)
-			Tcontent += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
+	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 
-		return Tcontent
+	buildTooltipContent()
+		. = ..()
+		if(current_projectile)
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
+		lastTooltipContent = .
 
 	New()
 		SPAWN_DBG(2 SECONDS)
@@ -196,17 +198,31 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		shoot(target_turf, user_turf, user, pox, poy)
 
 	//if they're holding a gun in each hand... why not shoot both!
-	if (can_dual_wield && (!charge_up) && ishuman(user))
-		if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
-			if (user.r_hand:canshoot())
-				user.next_click = max(user.next_click, world.time + user.r_hand:shoot_delay)
-			SPAWN_DBG(0.2 SECONDS)
-				user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
-		else if(!user.hand && istype(user.l_hand, /obj/item/gun)&& user.l_hand:can_dual_wield)
-			if (user.l_hand:canshoot())
-				user.next_click = max(user.next_click, world.time + user.l_hand:shoot_delay)
-			SPAWN_DBG(0.2 SECONDS)
-				user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+	if (can_dual_wield && (!charge_up))
+		if(ishuman(user))
+			if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
+				if (user.r_hand:canshoot())
+					user.next_click = max(user.next_click, world.time + user.r_hand:shoot_delay)
+				SPAWN_DBG(0.2 SECONDS)
+					user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+			else if(!user.hand && istype(user.l_hand, /obj/item/gun)&& user.l_hand:can_dual_wield)
+				if (user.l_hand:canshoot())
+					user.next_click = max(user.next_click, world.time + user.l_hand:shoot_delay)
+				SPAWN_DBG(0.2 SECONDS)
+					user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+		else if(ismobcritter(user))
+			var/mob/living/critter/M = user
+			var/list/obj/item/gun/guns = list()
+			for(var/datum/handHolder/H in M.hands)
+				if(H.item && H.item != src && istype(H.item, /obj/item/gun) && H.item:can_dual_wield)
+					if (H.item:canshoot())
+						guns += H.item
+						user.next_click = max(user.next_click, world.time + H.item:shoot_delay)
+			SPAWN_DBG(0)
+				for(var/obj/item/gun/gun in guns)
+					sleep(0.2 SECONDS)
+					gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+
 
 	return 1
 
@@ -284,6 +300,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!process_ammo(user))
 		return
 
+	if (src.muzzle_flash)
+		if (isturf(user.loc))
+			muzzle_flash_attack_particle(user, user.loc, M, src.muzzle_flash)
+
+
 	if(slowdown)
 		SPAWN_DBG(-1)
 			user.movement_delay_modifier += slowdown
@@ -351,6 +372,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return
 	if (!istype(src.current_projectile,/datum/projectile/))
 		return
+
+	if (src.muzzle_flash)
+		if (isturf(user.loc))
+			var/turf/origin = user.loc
+			muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
 	if (ismob(user))
 		var/mob/M = user
@@ -451,6 +477,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 1
 
 /obj/item/gun/on_spin_emote(var/mob/living/carbon/human/user as mob)
+	. = ..(user)
 	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
 		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
 		src.shoot_point_blank(user, user)

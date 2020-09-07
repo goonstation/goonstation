@@ -11,10 +11,7 @@
 	density = 1
 	nodamage = 1
 	opacity = 1
-
-	//Life(datum/controller/process/mobs/parent)
-		//..(parent)
-		//return
+	use_stamina = 0
 
 	examine(mob/user)
 		. = list("<span class='notice'>*---------*</span>")
@@ -49,7 +46,7 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool) && W:welding)
+		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 			src.gib(1)
 		else
 			..()

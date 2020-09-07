@@ -9,9 +9,8 @@
 		..()
 
 		if (!istype(T,/turf/))
-			if (blobstart.len > 0) // Erik: Fix for pick() from empty list.
-				T = pick(blobstart)
-			else
+			T = pick_landmark(LANDMARK_BLOBSTART)
+			if(!T)
 				message_admins("The black hole event failed to spawn a black hole (no blobstart landmark found)")
 				return
 
@@ -72,8 +71,8 @@
 				src.get_fed(10)
 
 	disposing()
-		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
-			particleMaster.RemoveSystem(new /datum/particleSystem/bhole_warning(src))
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
+			particleMaster.RemoveSystem(/datum/particleSystem/bhole_warning)
 		..()
 
 	proc/get_fed(var/feed_amount)
@@ -101,6 +100,7 @@
 	var/time_to_die = 0
 
 	New(var/loc,duration, move_prob = -1)
+		..()
 		if (duration < 1)
 			duration = rand(5 SECONDS,30 SECONDS)
 
@@ -109,8 +109,7 @@
 
 		time_to_die = ( ticker ? ticker.round_elapsed_ticks : 0 ) + duration
 
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	disposing()
 		processing_items.Remove(src)

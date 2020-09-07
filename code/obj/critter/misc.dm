@@ -7,7 +7,7 @@
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	generic = 0
@@ -36,7 +36,7 @@
 		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
 		SPAWN_DBG (100) //Give time for people to butcher it if they want.
 			if (!src.disposed && src.loc && original_object)
-				original_object.loc = src.loc
+				original_object.set_loc(src.loc)
 				original_object = null
 				qdel(src)
 		return ..()
@@ -58,12 +58,13 @@
 	name = "plasma spore"
 	desc = "A barely intelligent colony of organisms. Very volatile."
 	icon_state = "spore"
+	death_text = "%src% ruptures and explodes!"
 	density = 1
 	health = 1
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 2
@@ -71,8 +72,7 @@
 	flying = 1
 
 	CritterDeath()
-		src.visible_message("<b>[src]</b> ruptures and explodes!")
-		src.alive = 0
+		..()
 		var/turf/T = get_turf(src.loc)
 		if(T)
 			T.hotspot_expose(700,125)
@@ -308,7 +308,7 @@
 	atkcarbon = 1
 	atksilicon = 1
 	brutevuln = 0.5
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	seekrange = 5
 	density = 0
 	angertext = "suddenly materializes and lunges at"
@@ -394,7 +394,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1
@@ -438,7 +438,7 @@
 		if (M.reagents)
 			M.reagents.add_reagent("histamine", 12)
 			M.reagents.add_reagent("toxin", 2)
-			karma_update(1, "SAINT", M)
+			M.add_karma(1)
 
 /obj/critter/spacebee/angry
 	name = "angry space wasp"
@@ -465,7 +465,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -541,8 +541,8 @@
 	CritterAttack(mob/M)
 		if (!src.alive) return
 		src.attacking = 1
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		if(!M.stat)
 			M.visible_message("<span class='combat'><B>[src]</B> pummels [src.target] mercilessly!</span>")
@@ -590,7 +590,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0 // don't bother!
@@ -599,14 +599,13 @@
 	generic = 0
 	atk_text = "bashes against"
 	atk_brute_amt = 7
+	is_pet = FALSE
 	var/reagent_id = null
 
 	New()
 		..()
 
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(1000)
 
 		SPAWN_DBG(4 SECONDS)
 			if(!reagents.total_volume)
@@ -615,7 +614,7 @@
 				else
 					src.reagent_id = "water"
 
-				R.add_reagent(src.reagent_id, 10)
+				reagents.add_reagent(src.reagent_id, 10)
 
 				var/oldcolor = src.reagents.get_master_color()
 				var/icon/I = new /icon('icons/misc/critter.dmi',"golem")
@@ -694,7 +693,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -795,8 +794,8 @@
 			random_brute_damage(src.target, rand(4,8),1)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		return
 
@@ -825,7 +824,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 0
 	atcritter = 0
@@ -834,6 +833,7 @@
 	seekrange = 5
 	invisibility = 1
 	flying = 1
+	is_pet = FALSE
 
 	generic = 0
 
@@ -918,7 +918,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -951,7 +951,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -1053,6 +1053,9 @@
 	name = "???"
 	desc = "What the hell is that?"
 	icon_state = "ancientrobot"
+	dead_state = "ancientrobot" // fades away
+	death_text = "%src% fades away."
+	post_pet_text = " For some reason! Not like that's weird or anything!"
 	invisibility = 10
 	health = 30
 	firevuln = 0
@@ -1060,19 +1063,16 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 0
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	seekrange = 5
 	density = 1
 	var/boredom_countdown = 0
 
 	CritterDeath()
-		src.visible_message("<b>[src]</b> fades away.")
-		src.alive = 0
-		walk_to(src,0)
+		..()
 		flick("ancientrobot-disappear",src)
-		src.invisibility = 10
-		critters -= src
-		src.dispose()
+		SPAWN_DBG(16) //maybe let the animation actually play
+			qdel(src)
 
 	seek_target()
 		src.anchored = 0
@@ -1092,43 +1092,12 @@
 			break
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
-
-		if (!src.alive)
-			..()
-			return
-
-		switch(W.hit_type)
-			if(DAMAGE_BURN)
-				src.health -= W.force * src.firevuln
-			if(DAMAGE_BLUNT)
-				src.health -= W.force * src.brutevuln
-
-		if (src.alive && src.health <= 0) src.CritterDeath()
-
+		..()
 		src.boredom_countdown = rand(5,10)
-		src.target = user
-		src.oldtarget_name = user.name
-		src.task = "chasing"
 
 	attack_hand(var/mob/user as mob)
-
-		if (!src.alive)
-			..()
-			return
-		if (user.a_intent == "harm")
-			src.health -= rand(1,2) * src.brutevuln
-			for(var/mob/O in viewers(src, null))
-				O.show_message("<span class='combat'><b>[user]</b> punches [src]!</span>", 1)
-			playsound(src.loc, "punch", 50, 1)
-			if (src.alive && src.health <= 0) src.CritterDeath()
-
-			src.boredom_countdown = rand(5,10)
-			src.target = user
-			src.oldtarget_name = user.name
-			src.task = "chasing"
-		else
-			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!<br>For some reason! Not like that's weird or anything!</span>", 1)
-
+		..()
+		src.boredom_countdown = rand(5,10)
 
 	ChaseAttack(mob/M)
 		return
@@ -1201,8 +1170,8 @@
 			src.visible_message("<span class='combat'><B>[src]</B> grabs at [M]'s arm!</span>")
 			boutput(M, "<span class='combat'><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN_DBG(6 SECONDS)
 			src.attacking = 0
@@ -1218,9 +1187,8 @@
 		return ..()
 
 	CritterDeath()
+		..()
 		speak( pick("There...is...nothing...","It's dark.  Oh god, oh god, it's dark.","Thank you.","Oh wow. Oh wow. Oh wow.") )
-		src.icon_state = "crunched-dead"
-		src.alive = 0
 		SPAWN_DBG(1.5 SECONDS)
 			qdel(src)
 
@@ -1275,7 +1243,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0 // don't bother!

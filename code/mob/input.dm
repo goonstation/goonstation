@@ -40,6 +40,8 @@ mob
 			src.update_cursor()
 
 	process_move(keys)
+		set waitfor = 0
+
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 			if (controller)
@@ -54,7 +56,7 @@ mob
 		if (src.move_dir)
 			var/running = 0
 			var/mob/living/carbon/human/H = src
-			if ( (keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT && (H.getStatusDuration("staggered") < 1 && !H.hasStatus("blocking")) )
+			if ((keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 				running = 1
 			if (H.pushing && get_dir(H,H.pushing) != H.move_dir) //Stop pushing before calculating move_delay if we've changed direction
 				H.pushing = 0
@@ -62,7 +64,7 @@ mob
 			var/delay = max(src.movement_delay(get_step(src,src.move_dir), running), world.tick_lag) // don't divide by zero
 			var/move_dir = src.move_dir
 			if (move_dir & (move_dir-1))
-				delay *= 1.4 // actual sqrt(2) unsurprisingly resulted in rounding errors
+				delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
 			if (src.client && src.client.flying)
 				var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
 				if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
@@ -115,7 +117,7 @@ mob
 							qdel(G)
 					for(var/grab in src.grabbed_by)
 						var/obj/item/grab/G = grab
-						if (get_dist(src, G.assailant) > 1)
+						if (istype(G) && get_dist(src, G.assailant) > 1)
 							if (G.state > 1)
 								delay += G.assailant.p_class
 							qdel(G)
@@ -173,10 +175,6 @@ mob
 							last_move_trigger = ticker ? ticker.round_elapsed_ticks : 0 //Wire note: Fix for Cannot read null.round_elapsed_ticks
 							deliver_move_trigger(m_intent)
 
-						if (running)
-							src.remove_stamina(STAMINA_COST_SPRINT)
-							if (src.pulling)
-								src.remove_stamina(STAMINA_COST_SPRINT-1)
 
 						src.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects
 						src.animate_movement = SLIDE_STEPS
@@ -186,18 +184,18 @@ mob
 						//else
 						src.pushing = 0
 
-
 						var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
 						for(var/grab in src.grabbed_by)
 							var/obj/item/grab/G = grab
-							if (G.state < GRAB_NECK) continue
+							if (G?.state < GRAB_NECK) continue
 							do_step = 0
 							break
 
 						if (do_step)
 							step(src, move_dir)
+							if (src.loc != old_loc)
+								OnMove()
 
-						OnMove()
 						src.glide_size = glide // but Move will auto-set glide_size, so we need to override it again
 
 						//robust grab : Assailant gets moved here (do_step shit). this is messy, i'm sorry, blame MBC
@@ -209,6 +207,7 @@ mob
 
 							for(var/grab in src.grabbed_by)
 								var/obj/item/grab/G = grab
+								if (G.assailant == pushing || G.affecting == pushing) continue
 								if (G.state < GRAB_NECK) continue
 								if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
 									return
@@ -218,19 +217,25 @@ mob
 									delay += G.assailant.p_class
 
 						if (src.loc != old_loc)
+							if (running)
+								src.remove_stamina(STAMINA_COST_SPRINT)
+								if (src.pulling)
+									src.remove_stamina(STAMINA_COST_SPRINT-1)
+
 							var/list/pulling = list()
 							if (src.pulling)
-								if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
+								if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1)|| src.pulling == src) // fucks sake
 									src.pulling = null
 									//hud.update_pulling() // FIXME
 								else
 									pulling += src.pulling
 							for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-								if (G.affecting == src) continue
 								pulling += G.affecting
 
 							for (var/atom/movable/A in pulling)
 								if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+									continue
+								if (A == src || A == pushing)
 									continue
 								if (!isturf(A.loc) || A.anchored)
 									return // whoops
@@ -238,6 +243,7 @@ mob
 								A.glide_size = glide
 								step(A, get_dir(A, old_loc))
 								A.glide_size = glide
+								A.OnMove(src)
 				else
 					if (src.loc) //ZeWaka: Fix for null.relaymove
 						delay = src.loc.relaymove(src, move_dir, delay) //relaymove returns 1 if we dont want to override delay

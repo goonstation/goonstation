@@ -37,28 +37,24 @@
 	var/sizey = 0
 	var/offset = 0
 
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 
 	var/sealed = 0 //Can you write on this with a pen?
 
 /obj/item/paper/New()
-
 	..()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("paper", 10)
+	src.create_reagents(10)
+	reagents.add_reagent("paper", 10)
+	SPAWN_DBG(0)
+		if (src.info && src.icon_state == "paper_blank")
+			icon_state = "paper"
 	if (!src.rand_pos)
 		return
 	else
 		src.pixel_y = rand(-8, 8)
 		src.pixel_x = rand(-9, 9)
-	SPAWN_DBG(0)
-		if (src.info && src.icon_state == "paper_blank")
-			icon_state = "paper"
-	return
 
 
 /obj/item/paper/pooled()
@@ -81,10 +77,8 @@
 		src.reagents.clear_reagents()
 		src.reagents.add_reagent("paper", 10)
 	else
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("paper", 10)
+		src.create_reagents(10)
+		reagents.add_reagent("paper", 10)
 
 	if (!src.offset)
 		return
@@ -135,8 +129,11 @@
 	return 1
 
 /obj/item/paper/attack_self(mob/user as mob)
-	if (alert("What would you like to do with [src]?",,"Fold","Nothing") == "Nothing")
+	var/menuchoice = alert("What would you like to do with [src]?",,"Fold","Read","Nothing")
+	if (menuchoice == "Nothing")
 		return
+	else if (menuchoice == "Read")
+		src.examine(user)
 	else
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
 		var/obj/item/paper/P = src
@@ -694,6 +691,24 @@ Only trained personnel should operate station systems. Follow all procedures car
 	</ul>
 	"}
 
+/obj/item/paper/neonlining
+	name = "paper - How to properly install official Nanotrasen neon lining"
+	icon_state = "paper"
+	info = {"<center><h2>How to properly install official Nanotrasen neon lining</h2></center>
+	<h3>Product description</h3><hr>
+	Ever wanted to spice up your bar? Build a meditation room? Enhance the station halls in case of an emergency? Then this official Nanotrasen neon lining are what you need. Now with color change modules!<hr>
+	<h3>Modifying the neon lining</h3><hr>
+	<ul style='list-style-type:disc'>
+		<li>1) A wrench can be used to change the shape of the lining. Currently only 6 shapes officially supported.</li>
+		<li>2) To turn an already attached piece of lining back into a coil, carefully use a crowbar to detach it from the it's attachment point.</li>
+		<li>3) Apply a standard multitool to change the pattern of the lining. If upon changing shape the pattern's value is higher than the maximum for that shape, the value gets automatically reset to 0.</li>
+		<li>4) As this version is designed to be more flexible and compact, the lining feeds only on an internal power source. Due to this the only way to turn it off/on is to cut/mend the wires that connect to said power source.</li>
+		<li>5) To adjust the lining's rotation, simply unscrew it from it's attachment point. The lining will automatically snap to the next available rotation and screw itself into a new attachment point.</li>
+		<li>6) Due to safety concerns caused by our previous prototype of the product, the color change modules are only active when the lining is detached and thus in a coil.</li>
+		<li>7) There have been reports that when the lining is in the short line shape, using a multitool to change the pattern sometimes triggers the movement function of it's rotation program. This essentially shifts the lining a bit. We understand that this might be a bit unintuitive, but since this isn't hazardous we have no intentions of fixing it.</li>
+	</ul>
+	"}
+
 /obj/item/paper/manta_polarisnote
 	name = "paper - Note to myself"
 	icon_state = "paper"
@@ -757,6 +772,60 @@ Only trained personnel should operate station systems. Follow all procedures car
 	Remember, only you can prevent deadly pathogens!
 	"}
 
+/obj/item/paper/shipping_precautions
+	name = "Read this and check the cargo!"
+	icon_state = "paper_caution_bloody"
+	desc = "An ordinary notice about shipping procedures...stained with blood?"
+	info = {"<center><h2>Warning</h2></center>
+	<hr>
+	<h3>Discount Dan contracts you - a healthy and breathing human being to deliver this cargo safely to the nearest Discount Dans fabrication center!</h3>
+	<br>
+	<br>
+	<br>
+	So read carefully and heed the precautions! Keep the fridges closed! All of them! Do not look inside...and if you happen to hear any clawing, grumbling, or cries for help...<b>ignore them</b>!
+	<br>
+	<br>
+	The freight is extremely valuable! Any light or human flesh exposed to said cargo will cost your pal Discount Dan an arm, a leg and a space-tastic lawsuit!
+	<br>
+	<br>
+	Remain cautious - because it's what's necessary!
+	"}
+
+/obj/item/paper/dreamy_rhyme
+	name = "Space-Rhymes"
+	icon_state = "thermal_paper"
+	desc = "Scibbled rhymes...and thoughts."
+	info = {" Space duck, I do not give a...I do not give anything about luck, shrug, puck, quack
+	<br>
+	<br>
+	<br>
+	<b>Yeah! Yo! Here the quick rhymer goes, clowns convulse!
+	<br>
+	<br>
+	Soon enough your mimes go fold, like a piece of paper!
+	<br>
+	<br>
+	This Emcee did not just meet ya'his thoughts created a - whole universe!
+	<br>
+	<br>
+	Spitting lines like liquid fire as he converse!
+	<br>
+	<br>
+	Transfer ideas from word to mind; not just half-assed like some damn pantomime!
+	<br>
+	<br>
+	Never behind the crime, A-grades as janitor...oh so fine!</b>
+	"}
+
+/obj/item/paper/mice_problem
+	name = "Fucking space-rats!"
+	icon_state = "paper"
+	desc = "A scribbled note - created with burning rage."
+	info = {"<center><h3>MICE?!</h3></center>
+	<hr>
+	<i>Ey! Yo! What the hell? You think you can take a day off - relax - and then these hungry n'angry food pirates come along! Damn Thompson McGreasy; unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
+	"}
+
 /obj/item/paper/fortune
 	name = "fortune"
 	info = {"<center>YOUR FORTUNE</center>"}
@@ -772,7 +841,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	var/list/sol = list("He plunged into the sea.", "Follow the NSS Polaris.", "Across the Channel.", "It's in the Void.")
 
 	New()
-
 		var/randme = rand(1,10)
 		var/fortune = "Blah."
 
@@ -790,6 +858,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		info = {"<font face='System' size='3'><center>YOUR FORTUNE</center><br><br>
 		Discount Dan's is the proud sponsor of your magical fortune. Whether good or bad, delightful or alarming, know it to be true.<br><br>
 		[fortune]</font>"}
+		..()
 
 
 /obj/item/paper/thermal/fortune
@@ -984,6 +1053,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 
 /obj/item/paper_bin/proc/update()
+	tooltip_rebuild = 1
 	src.icon_state = "paper_bin[(src.amount || locate(/obj/item/paper, src)) ? "1" : null]"
 	return
 
@@ -1028,9 +1098,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 		user.drop_item()
 		W.set_loc(src)
 	else
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/T = W
-			if ((T.welding && T.weldfuel > 0))
+		if (isweldingtool(W))
+			if ((T:try_weld(user,0,1,0,0) && T:weldfuel > 0))
 				viewers(user, null) << text("[] burns the paper with the welding tool!", user)
 				SPAWN_DBG( 0 )
 					src.burn(1800000.0)
@@ -1057,8 +1126,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 	var/is_reassignable = 1
 	var/assignment = null
@@ -1235,7 +1304,13 @@ WHO DID THIS */
 		user.show_text("You unfold the [src] back into a sheet of paper! It looks pretty crinkled.", "blue")
 		src.name = "crinkled paper"
 		src.desc = src.old_desc
-		src.icon_state = src.old_icon_state
+		if(src.old_icon_state)
+			src.icon_state = src.old_icon_state
+		else
+			if(src.info)
+				src.icon_state = "paper"
+			else
+				src.icon_state = "paper_blank"
 		src.sealed = 0
 	else
 		..()
@@ -1253,7 +1328,7 @@ WHO DID THIS */
 	throw_speed = 1
 	throw_spin = 0
 
-/obj/item/paper/folded/plane/hit_check()
+/obj/item/paper/folded/plane/hit_check(datum/thrown_thing/thr)
 	if(src.throwing)
 		src.throw_unlimited = 1
 

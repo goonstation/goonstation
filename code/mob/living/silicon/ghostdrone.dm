@@ -29,15 +29,12 @@
 	var/jetpack = 1 //fuck whoever made this
 	var/jeton = 0
 
-	var/datum/light/light
-
 	//gimmicky things
 	var/obj/item/clothing/head/hat = null
 	var/obj/item/clothing/suit/bedsheet/bedsheet = null
 
 	New()
 		..()
-		ghost_drones += src
 		hud = new(src)
 		src.attach_hud(hud)
 		//src.sight |= SEE_TURFS //Uncomment for meson-like vision. I'm not a fan of it though. -Wire
@@ -62,9 +59,6 @@
 		var/obj/item/cell/cerenkite/charged/CELL = new /obj/item/cell/cerenkite/charged(src)
 		src.cell = CELL
 
-		light = new /datum/light/line
-		light.set_brightness(2)
-		light.attach(src)
 
 		src.health = src.max_health
 		src.botcard.access = list(access_maint_tunnels, access_ghostdrone, access_engineering,access_external_airlocks,
@@ -75,8 +69,9 @@
 		//Attach shit to tools
 		src.tools = list(
 			new /obj/item/magtractor(src),
-			new /obj/item/tool/omnitool(src),
+			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/safe(src),
+			new /obj/item/lamp_manufacturer(src),
 			new /obj/item/device/analyzer/atmospheric(src),
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
@@ -96,29 +91,6 @@
 		/*SPAWN_DBG(0)
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
-
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		for (var/obj/item/I in src)
-			if (!I.material) continue
-			I.material.triggerOnLife(src, I)
-
-		if (hud)
-			hud.update_environment()
-			hud.update_health()
-			hud.update_tools()
-
-		if (src.client)
-			src.updateStatic()
-			src.updateOverlaysClient(src.client)
-			src.antagonist_overlay_refresh(0, 0)
-
-		if (src.observers.len)
-			for (var/mob/x in src.observers)
-				if (x.client)
-					src.updateOverlaysClient(x.client)
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -155,7 +127,6 @@
 	death(gibbed)
 		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
 		setdead(src)
-		ghost_drones -= src
 		if (src.mind)
 			src.mind.dnr = 0
 		if (src.client)
@@ -205,16 +176,7 @@
 		. = ..()
 		hud.update_pulling()
 
-	dispose()
-		..()
-		if (src in ghost_drones)
-			ghost_drones -= src
-		if (src in available_ghostdrones)
-			available_ghostdrones -= src
-
 	disposing()
-		if (src in ghost_drones)
-			ghost_drones -= src
 		if (src in available_ghostdrones)
 			available_ghostdrones -= src
 		..()
@@ -291,7 +253,7 @@
 			return 1
 		if (src.bedsheet)
 			UpdateOverlays(null, "face")
-			light.disable()
+			src.remove_sm_light("ghostdrone\ref[src]")
 			src.icon_state = "g_drone["-[type]"]"
 			return 1
 
@@ -306,12 +268,11 @@
 
 		if (length(color) == 7) //Set our luminosity color, if valid
 			var/colors = GetColors(src.faceColor)
-			colors[1] = colors[1] / 255
-			colors[2] = colors[2] / 255
-			colors[3] = colors[3] / 255
-			light.set_color(colors[1], colors[2], colors[3])
+			src.add_sm_light("ghostdrone\ref[src]", list(colors[1],colors[2],colors[3],0.4 * 255))
 
-		light.enable()
+
+
+		src.toggle_sm_light(1)
 		UpdateOverlays(newFace, "face")
 		return 1
 
@@ -338,7 +299,7 @@
 
 	proc/updateSprite()
 		if (isdead(src) || !src.client || src.charging || src.newDrone)
-			light.disable()
+			src.toggle_sm_light(0)
 			if (src.bedsheet)
 				//fuckin bedsheets...
 				if (isdead(src) || !src.client) //dead or no client
@@ -354,8 +315,7 @@
 				src.icon_state = "g_drone-dead"
 
 			if (!isdead(src))
-				light.set_color(0.94, 0.88, 0.12) //yellow
-				light.enable()
+				src.add_sm_light("ghostdrone\ref[src]", list(0.94*255,0.88*255,0.12*255,0.4 * 255))
 			UpdateOverlays(null, "face")
 			UpdateOverlays(null, "hoverDiscs")
 			animate(src) //stop bumble animation
@@ -517,15 +477,14 @@
 		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
-				if (WELD.welding)
+				if (W:try_weld(user,0,-1,0,0))
 					user.visible_message("<span class='alert'><b>[user] burns [src] with [W]!</b></span>")
-					damage_heat(WELD.force)
+					damage_heat(W.force)
 				else
 					user.visible_message("<span class='alert'><b>[user] beats [src] with [W]!</b></span>")
-					damage_blunt(WELD.force)
+					damage_blunt(W.force)
 			else
 				if (src.health >= src.max_health)
 					boutput(user, "<span class='alert'>It isn't damaged!</span>")
@@ -533,9 +492,9 @@
 				if (get_fraction_of_percentage_and_whole(src.health,src.max_health) < 33)
 					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 					return
-				if(WELD.try_weld(user, 1))
+				if(W:try_weld(user, 1))
 					src.health = max(1,min(src.health + 5,src.max_health))
-					user.visible_message("<b>[user]</b> uses [WELD] to repair some of [src]'s damage.")
+					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == src.max_health)
 						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 				else
@@ -1005,11 +964,13 @@
 
 		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[nohear_message()]</span></span>"
 
-		for (var/mob/M in mobs)
-			if (istype(M, /mob/new_player))
+		for (var/client/C)
+			if (!C.mob) continue
+			if (istype(C.mob, /mob/new_player))
 				continue
+			var/mob/M = C.mob
 
-			if (M.client && (M in hearers(src) || M.client.holder))
+			if ((M in hearers(src) || M.client.holder))
 				var/thisR = rendered
 				if (isghostdrone(M) || M.client.holder)
 					if ((istype(M, /mob/dead/observer)||M.client.holder)&& src.mind)
@@ -1029,19 +990,20 @@
 
 		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[nohear_message()]</span></span>"
 
-		for (var/mob/M in mobs)
-			if (istype(M, /mob/new_player))
+		for (var/client/C)
+			if (!C.mob) continue
+			if (istype(C.mob, /mob/new_player))
 				continue
+			var/mob/M = C.mob
 
-			if (M.client)
-				var/thisR = rendered
-				if (isghostdrone(M) || M.client.holder)
-					if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-					M.show_message(thisR, 2)
-				else if (M in hearers(src))
-					thisR = nohear
-					M.show_message(thisR, 2)
+			var/thisR = rendered
+			if (isghostdrone(M) || M.client.holder)
+				if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
+					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
+				M.show_message(thisR, 2)
+			else if (M in hearers(src))
+				thisR = nohear
+				M.show_message(thisR, 2)
 
 	say(message = "")
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -1165,15 +1127,18 @@
 		src.flash(3 SECONDS)
 		switch (severity)
 			if (1.0)
-				src.gib(1)
+				SPAWN_DBG(0)
+					src.gib(1)
 
 			if (2.0)
-				src.TakeDamage(null, round(src.health / 2, 1.0))
-				src.changeStatus("stunned", 10 SECONDS)
+				SPAWN_DBG(0)
+					src.TakeDamage(null, round(src.health / 2, 1.0))
+					src.changeStatus("stunned", 10 SECONDS)
 
 			if (3.0)
-				src.TakeDamage(null, round(src.health / 3, 1.0))
-				src.changeStatus("stunned", 50)
+				SPAWN_DBG(0)
+					src.TakeDamage(null, round(src.health / 3, 1.0))
+					src.changeStatus("stunned", 50)
 
 	blob_act(var/power)
 		if (src.nodamage) return
@@ -1263,11 +1228,17 @@
 			else
 				return ..()
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("drone"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("drone")
 
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("drone_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("drone_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("drone_tg")
 
 /proc/droneize(target = null, pickNew = 1)
 	if (!target) return 0
@@ -1337,9 +1308,9 @@
 	theMind.dnr = 1
 
 
-	boutput(M, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")
-	if (M.mind)
-		M.Browse(grabResource("html/ghostdrone.html"),"window=ghostdrone;size=600x440;title=Ghostdrone Help")
+	boutput(G, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")
+	if (G.mind)
+		G.Browse(grabResource("html/ghostdrone.html"),"window=ghostdrone;size=600x440;title=Ghostdrone Help")
 
 	SPAWN_DBG(1 SECOND)
 		G.show_laws_drone()

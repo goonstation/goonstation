@@ -24,7 +24,7 @@
 		if (istype(W, /turf/unsimulated/wall/adaptive))
 			W:adapt()
 
-	disposing()
+	Del()
 		var/turf/N = locate(x, y+1, z)
 		var/turf/S = locate(x, y-1, z)
 		var/turf/W = locate(x-1, y, z)
@@ -142,6 +142,7 @@
 	var/area/wizard_place/wizard_area
 
 	New()
+		..()
 		ensure_wizard_area()
 
 	proc/ensure_wizard_area()
@@ -172,7 +173,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (id)
 			wizard_zone_controller.triggerables += src
 
-	disposing()
+	Del()
 		qdel(opener)
 		..()
 
@@ -235,7 +236,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (istype(W, /turf/unsimulated/wall/adaptive))
 			W:adapt()
 
-	disposing()
+	Del()
 		var/turf/N = locate(x, y+1, z)
 		var/turf/S = locate(x, y-1, z)
 		var/turf/W = locate(x-1, y, z)
@@ -461,7 +462,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (istype(W, /obj/item/orb))
 			if (!O)
 				O = W
-				O.loc = src
+				O.set_loc(src)
 				user.u_equip(O)
 				if (user.client)
 					user.client.screen -= O
@@ -560,11 +561,11 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 			drink(user)
 		else if (ishuman(target))
 			user.visible_message("<span class='alert'>[user] attempts to force [target] to drink [src].</span>")
-			logTheThing("combat", user, target, "tries to force %target% to drink [src] ([potion_name] -- [reagent]).")
+			logTheThing("combat", user, target, "tries to force [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
 			if (do_after(user, 30))
 				if (reagent)
 					user.visible_message("<span class='alert'>[user] forces [target] to drink [src].</span>")
-					logTheThing("combat", user, target, "forces %target% to drink [src] ([potion_name] -- [reagent]).")
+					logTheThing("combat", user, target, "forces [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
 					drink(target)
 
 	identified
@@ -724,7 +725,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 				boutput(user, "<span class='notice'>You place the crystal into the socket.</span>")
 				crystal = W
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 				user.client.screen -= W
 				apply_crystal()
 			else
@@ -816,7 +817,6 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	disposing()
 		if (effect_overlay)
-			effect_overlay.loc = null
 			qdel(effect_overlay)
 			effect_overlay = null
 		..()

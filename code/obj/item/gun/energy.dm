@@ -8,21 +8,24 @@
 	add_residue = 0 // Does this gun add gunshot residue when fired? Energy guns shouldn't.
 	var/rechargeable = 1 // Can we put this gun in a recharger? False should be a very rare exception.
 	var/robocharge = 800
+	var/cell_type = /obj/item/ammo/power_cell // Type of cell to spawn by default.
 	var/obj/item/ammo/power_cell/cell = null
 	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
 	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
 	var/can_swap_cell = 1
+	muzzle_flash = null
+	inventory_counter_enabled = 1
 
 	New()
 		if (!cell)
-			cell = new/obj/item/ammo/power_cell
+			cell = new cell_type
 		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
 			processing_items.Add(src)
 		..()
+		update_icon()
 
 	disposing()
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 
@@ -38,6 +41,10 @@
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
+		if (src.cell)
+			inventory_counter.update_percent(src.cell.charge, src.cell.max_charge)
+		else
+			inventory_counter.update_text("-")
 		return 0
 
 	emp_act()
@@ -164,8 +171,10 @@
 	item_state = "taser"
 	uses_multiple_icon_states = 1
 	force = 1.0
+	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target."
 	module_research = list("weapons" = 4, "energy" = 4, "miniaturization" = 2)
+	muzzle_flash = "muzzle_flash_elec"
 
 	New()
 		current_projectile = new/datum/projectile/energy_bolt
@@ -180,6 +189,7 @@
 				src.icon_state = "taserburst[ratio]"
 			else if(current_projectile.type == /datum/projectile/energy_bolt)
 				src.icon_state = "taser[ratio]"
+		..()
 
 	attack_self()
 		..()
@@ -192,17 +202,36 @@
 			cell.charge = 100
 			..()
 
+/obj/item/gun/energy/taser_gun/bouncy
+	name = "richochet taser gun"
+	desc = "A weapon that produces an cohesive electrical charge that stuns its target. This one appears to be capable of firing ricochet charges."
+
+	New()
+		..()
+		current_projectile = new/datum/projectile/energy_bolt/bouncy
+		projectiles = list(current_projectile)
+
+	update_icon()
+		if(cell)
+			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			if(current_projectile.type == /datum/projectile/energy_bolt/bouncy)
+				src.icon_state = "taser[ratio]"
+		..()
+
 /////////////////////////////////////LASERGUN
 /obj/item/gun/energy/laser_gun
 	name = "laser gun"
 	icon_state = "laser"
+	item_state = "laser"
 	uses_multiple_icon_states = 1
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	force = 7.0
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	module_research = list("weapons" = 4, "energy" = 4)
+	muzzle_flash = "muzzle_flash_laser"
 
 	New()
-		cell = new/obj/item/ammo/power_cell/med_power
 		current_projectile = new/datum/projectile/laser
 		projectiles = list(current_projectile)
 		..()
@@ -223,6 +252,7 @@
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "laser[ratio]"
 			return
+		..()
 
 ////////////////////////////////////// Antique laser gun
 // Part of a mini-quest thing (see displaycase.dm). Typically, the gun's properties (cell, projectile)
@@ -232,6 +262,7 @@
 	icon_state = "caplaser"
 	uses_multiple_icon_states = 1
 	desc = "Wait, that's not a plastic toy..."
+	muzzle_flash = "muzzle_flash_laser"
 
 	New()
 		if (!src.cell)
@@ -244,6 +275,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -260,6 +292,7 @@
 	force = 7.0
 	desc = "A gun that produces a harmful phaser bolt, causing substantial damage."
 	module_research = list("weapons" = 4, "energy" = 4)
+	muzzle_flash = "muzzle_flash_phaser"
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -268,6 +301,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -295,6 +329,7 @@
 	hide_attack = 1
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
 	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
+	muzzle_flash = null
 
 	New()
 		current_projectile = new/datum/projectile/rad_bolt
@@ -302,6 +337,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			if(src.cell.charge >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
 				set_icon_state("crossbow")
@@ -317,31 +353,36 @@
 	name = "energy gun"
 	icon_state = "energy"
 	uses_multiple_icon_states = 1
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	desc = "Its a gun that has two modes, stun and kill"
 	item_state = "egun"
 	force = 5.0
 	mats = 50
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
+	muzzle_flash = "muzzle_flash_elec"
 
 	New()
-		cell = new/obj/item/ammo/power_cell/med_power
 		current_projectile = new/datum/projectile/energy_bolt
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			if(current_projectile.type == /datum/projectile/energy_bolt)
 				src.item_state = "egun"
 				src.icon_state = "energystun[ratio]"
+				muzzle_flash = "muzzle_flash_elec"
 			else if (current_projectile.type == /datum/projectile/laser)
 				src.item_state = "egun-kill"
 				src.icon_state = "energykill[ratio]"
+				muzzle_flash = "muzzle_flash_laser"
 			else
 				src.item_state = "egun"
 				src.icon_state = "energy[ratio]"
+				muzzle_flash = "muzzle_flash_elec"
 	attack_self(var/mob/M)
 		..()
 		update_icon()
@@ -370,6 +411,7 @@
 		projectiles = list(current_projectile,new/datum/projectile/laser/ntburst)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -392,18 +434,20 @@
 	icon_state = "tasers100"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
 	item_state = "tasers"
+	cell_type = /obj/item/ammo/power_cell/high_power
 	force = 8.0
 	two_handed = 1
 	can_dual_wield = 0
 	shoot_delay = 6
+	muzzle_flash = "muzzle_flash_elec"
 
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
 		current_projectile = new/datum/projectile/special/spreader/tasershotgunspread
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt)
+		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/tasershotgun)
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -433,6 +477,7 @@
 		projectiles = list(current_projectile)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -455,12 +500,22 @@
 	current_projectile = new/datum/projectile/claw
 	projectiles = null
 	is_syndicate = 1
-	custom_cell_max_capacity = 15000 //endless crab
+	custom_cell_max_capacity = 100 //endless crab
 
 	New()
 		current_projectile = new/datum/projectile/claw
 		projectiles = list(current_projectile)
 		..()
+
+	attackby(obj/item/b, mob/user)
+		if(istype(b, /obj/item/ammo/power_cell))
+			boutput(user, "<span class='alert'>You attempt to swap the cell but \the [src] bites you instead.</span>")
+			playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1, -6)
+			user.TakeDamage(user.zone_sel.selecting, 3, 0)
+			take_bleeding_damage(user, user, 3, DAMAGE_CUT)
+			return
+		. = ..()
+
 
 
 
@@ -481,6 +536,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.20) * 100
@@ -493,13 +549,14 @@
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "wavegun100"
 	item_state = "wave"
+	cell_type = /obj/item/ammo/power_cell/high_power
 	uses_multiple_icon_states = 1
 	m_amt = 4000
 	force = 6.0
 	module_research = list("weapons" = 2, "energy" = 2, "miniaturization" = 3)
+	muzzle_flash = "muzzle_flash_wavep"
 
 	New()
-		cell = new/obj/item/ammo/power_cell/med_power
 		current_projectile = new/datum/projectile/wavegun
 		projectiles = list(current_projectile,new/datum/projectile/wavegun/transverse,new/datum/projectile/wavegun/emp)
 		..()
@@ -508,18 +565,22 @@
 	// Flaborized has made a lovely new wavegun sprite! - Gannets
 	// Flaborized has made even more wavegun sprites!
 	update_icon()
+		..()
 		if (src.cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			if(current_projectile.type == /datum/projectile/wavegun)
 				src.icon_state = "wavegun[ratio]"
 				item_state = "wave"
+				muzzle_flash = "muzzle_flash_wavep"
 			else if (current_projectile.type == /datum/projectile/wavegun/transverse)
 				src.icon_state = "wavegun_green[ratio]"
 				item_state = "wave-g"
+				muzzle_flash = "muzzle_flash_waveg"
 			else
 				src.icon_state = "wavegun_emp[ratio]"
 				item_state = "wave-emp"
+				muzzle_flash = "muzzle_flash_waveb"
 
 	attack_self(mob/user as mob)
 		..()
@@ -543,6 +604,7 @@
 		..()
 
 	update_icon()
+		..()
 		return
 
 	shoot(var/target,var/start,var/mob/user)
@@ -577,6 +639,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (!cell)
 			icon_state = "teleport"
 			return
@@ -685,6 +748,7 @@
 	throw_range = 10
 	mats = 0
 	module_research = list("weapons" = 1, "energy" = 5, "science" = 10)
+	muzzle_flash = "muzzle_flash_waveg"
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -733,6 +797,7 @@
 
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -785,6 +850,7 @@
 
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -811,6 +877,7 @@
 
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -894,6 +961,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -914,6 +982,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -934,9 +1003,6 @@
 		projectiles = list(current_projectile,new/datum/projectile/bullet/frog/getout)
 		..()
 
-	update_icon()
-		return
-
 
 ///////////////////////////////////////Shrink Ray
 /obj/item/gun/energy/shrinkray
@@ -952,6 +1018,7 @@
 		projectiles = list(current_projectile)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -980,9 +1047,6 @@
 		projectiles = list(new/datum/projectile/bullet/glitch/gun)
 		..()
 
-	update_icon()
-		return
-
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
 			playsound(user, "sound/weapons/DSBFG.ogg", 75)
@@ -994,8 +1058,10 @@
 	name = "laser rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
+	item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
+	muzzle_flash = "muzzle_flash_plaser"
 
 	New()
 		..()
@@ -1004,6 +1070,7 @@
 		projectiles = list(new/datum/projectile/laser/pred)
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -1039,6 +1106,7 @@
 	custom_cell_max_capacity = 100
 	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
 	var/obj/item/heldItem = null
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		current_projectile = new/datum/projectile/pickpocket/steal
@@ -1061,6 +1129,7 @@
 				boutput(user, "You remove \the [heldItem.name] from the gun.")
 				user.put_in_hand_or_drop(heldItem)
 				heldItem = null
+				tooltip_rebuild = 1
 			else
 				boutput(user, "The gun does not contain anything.")
 		else
@@ -1075,6 +1144,7 @@
 			user.u_equip(I)
 			I.dropped(user)
 			boutput(user, "You insert \the [heldItem.name] into the gun's gripper.")
+			tooltip_rebuild = 1
 		return ..()
 
 	attack(mob/M as mob, mob/user as mob)
@@ -1093,7 +1163,6 @@
 		var/turf/tgt = get_turf(M)
 		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
 			boutput(user, "\The [src.name] jams!")
-			message_admins("[key_name(usr)] is a nerd and tried to fire a pickpocket gun in a restricted z-level at [showCoords(us.x, us.y, us.z)].")
 			return
 		return ..(M, user)
 
@@ -1133,6 +1202,7 @@
 	can_dual_wield = 0
 	two_handed = 1
 	desc = "A gun that produces a harmful laser, causing substantial damage."
+	muzzle_flash = "muzzle_flash_laser"
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -1141,6 +1211,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			//Wire: Fix for Division by zero runtime
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
@@ -1161,6 +1232,7 @@
 	icon = 'icons/obj/items/gun.dmi'
 	item_state = "lawg-detain"
 	icon_state = "lawbringer0"
+	desc = "A gun with a microphone. Fascinating."
 	var/old = 0
 	m_amt = 5000
 	g_amt = 2000
@@ -1169,6 +1241,7 @@
 	var/image/indicator_display = null
 	rechargeable = 0
 	can_swap_cell = 0
+	muzzle_flash = "muzzle_flash_elec"
 
 	New(var/mob/M)
 		cell = new/obj/item/ammo/power_cell/self_charging/lawbringer
@@ -1207,8 +1280,9 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
-				owner_prints = md5(H.bioHolder.Uid)
+				owner_prints = H.bioHolder.uid_hash
 				src.name = "HoS [H.real_name]'s Lawbringer"
+				tooltip_rebuild = 1
 
 	//stolen the heartalk of microphone. the microphone can hear you from one tile away. unless you wanna
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
@@ -1225,7 +1299,7 @@
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (owner_prints && (md5(H.bioHolder.Uid) != owner_prints))
+			if (owner_prints && (H.bioHolder.uid_hash != owner_prints))
 				are_you_the_law(M, msg[1])
 				return
 		else
@@ -1281,21 +1355,15 @@
 				if ("pulse")
 					current_projectile = projectiles["pulse"]
 					item_state = "lawg-pulse"
-#if ASS_JAM
-					playsound(M, "sound/vox/pull.ogg", 50)
-#else
 					playsound(M, "sound/vox/push.ogg", 50)
 
-#endif
 					/datum/projectile/energy_bolt/pulse
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
 				if ("detain","execute","knockout","hotshot","bigshot","highexplosive","he","clownshot", "pulse")
 					random_burn_damage(M, 50)
 					M.changeStatus("weakened", 4 SECONDS)
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(2, 1, (get_turf(src)))
-					s.start()
+					elecflash(src,power=2)
 					M.visible_message("<span class='alert'>[M] tries to fire [src]! The gun initiates its failsafe mode.</span>")
 					return
 
@@ -1322,6 +1390,7 @@
 
 	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
+		..()
 		src.icon_state = "[old ? "old-" : ""]lawbringer0"
 		src.overlays = null
 
@@ -1335,20 +1404,28 @@
 
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
+				muzzle_flash = "muzzle_flash_elec"
 			else if (current_projectile.type == /datum/projectile/bullet/revolver_38)			//execute - cyan
 				indicator_display.color = "#00FFFF"
+				muzzle_flash = "muzzle_flash"
 			else if (current_projectile.type == /datum/projectile/bullet/smoke)			//smokeshot - dark-blue
 				indicator_display.color = "#0000FF"
+				muzzle_flash = "muzzle_flash"
 			else if (current_projectile.type == /datum/projectile/bullet/tranq_dart/law_giver)	//knockout - green
 				indicator_display.color = "#008000"
+				muzzle_flash = null
 			else if (current_projectile.type == /datum/projectile/bullet/flare)			//hotshot - red
 				indicator_display.color = "#FF0000"
+				muzzle_flash = null
 			else if (current_projectile.type == /datum/projectile/bullet/aex/lawbringer)	//bigshot - purple
 				indicator_display.color = "#551A8B"
+				muzzle_flash = null
 			else if (current_projectile.type == /datum/projectile/bullet/clownshot)		//clownshot - pink
 				indicator_display.color = "#FFC0CB"
+				muzzle_flash = null
 			else if (current_projectile.type == /datum/projectile/energy_bolt/pulse)		//clownshot - pink
 				indicator_display.color = "#EEEEFF"
+				muzzle_flash = "muzzle_flash_bluezap"
 			else
 				indicator_display.color = "#000000"				//default, should never reach. make it black
 			src.overlays += indicator_display
@@ -1364,7 +1441,7 @@
 	// Checks if the gun can shoot based on the fingerprints of the shooter.
 	//returns true if the prints match or there are no prints stored on the gun(emagged). false if it fails
 	proc/fingerprints_can_shoot(var/mob/user)
-		if (!owner_prints || (md5(user.bioHolder.Uid) == owner_prints))
+		if (!owner_prints || (user.bioHolder.uid_hash == owner_prints))
 			return 1
 		return 0
 
@@ -1385,56 +1462,6 @@
 			if (current_projectile.type == /datum/projectile/bullet/flare)
 				shoot_fire_hotspots(target, start, user)
 		return ..(target, start, user)
-
-	//gotta override this to set the desc name to the proper thing
-	special_desc()
-		var/output = "This is \an [src.name]."
-		// Added for forensics (Convair880).
-		if (isitem(src) && src.blood_DNA)
-			output = "<span class='alert'>This is a bloody [src.name].</span>"
-			if (src.desc && src.blood_DNA == "--conductive_substance--")
-				output += "<br>[src.desc] <span class='alert'>It seems to be covered in an odd azure liquid!</span>"
-			if (src.desc)
-				output += "<br>[src.desc] <span class='alert'>It seems to be covered in blood!</span>"
-		else if (src.desc)
-			output += "<br>[src.desc]"
-		var/dist = get_dist(src, usr)
-		var/extra = src.get_desc(dist, usr)
-		if (extra)
-			output += " [extra]"
-
-	get_desc()
-		set src in usr
-		var/gun_setting_name = "detain"
-		if(current_projectile.type == /datum/projectile/energy_bolt/aoe)
-			gun_setting_name = "detain"
-		else if (current_projectile.type == /datum/projectile/bullet/revolver_38)
-			gun_setting_name = "execute"
-		else if (current_projectile.type == /datum/projectile/bullet/smoke)
-			gun_setting_name = "smokeshot"
-		else if (current_projectile.type == /datum/projectile/bullet/tranq_dart/law_giver)
-			gun_setting_name = "knockout"
-		else if (current_projectile.type == /datum/projectile/bullet/flare)
-			gun_setting_name = "hotshot"
-		else if (current_projectile.type == /datum/projectile/bullet/aex/lawbringer)
-			gun_setting_name = "bigshot"
-		else if (current_projectile.type == /datum/projectile/bullet/clownshot)
-			gun_setting_name = "clownshot"
-		else if (current_projectile.type == /datum/projectile/energy_bolt/pulse)		//clownshot - pink
-			gun_setting_name = "pulse"
-
-		src.desc = "It is set to [gun_setting_name]."
-		if(src.cell)
-				//[src.projectiles ? "It will use the projectile: [src.current_projectile.sname]. " : ""]
-			src.desc += " There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
-		else
-			src.desc += " There is no cell loaded!"
-		if(current_projectile)
-			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
-		else
-			src.desc += " <span class='alert'>*ERROR* No output selected!</span>"
-		return
-
 
 /obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
@@ -1466,11 +1493,7 @@
 // An energy gun that uses the lawbringer's Pulse setting, to beef up the current armory.
 
 /obj/item/gun/energy/pulse_rifle
-#if ASS_JAM
-	name = "pullse rifle"
-#else
 	name = "pulse rifle"
-#endif
 	desc = "todo"
 	icon_state = "pulse_rifle"
 	uses_multiple_icon_states = 1
@@ -1478,6 +1501,7 @@
 	force = 5
 	two_handed = 1
 	can_dual_wield = 0
+	muzzle_flash = "muzzle_flash_bluezap"
 
 	New()
 		..()
@@ -1486,6 +1510,7 @@
 		projectiles = list(new/datum/projectile/energy_bolt/pulse)
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100

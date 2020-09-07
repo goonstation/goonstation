@@ -33,15 +33,10 @@
 					boutput(holder.owner, "<span class='alert'>[target] seems to be warded from the effects!</span>")
 					return 1
 
-			if (holder.owner.wizard_spellpower())
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(4, 1, target)
-				s.start()
-				target.elecgib()
+			if (holder.owner.wizard_spellpower(src))
+				elecflash(holder.owner,power = 3)
 			else
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(4, 1, target)
-				s.start()
+				elecflash(holder.owner,power = 2)
 				boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 				target.visible_message("<span class='alert'>[target] is severely burned by an electrical charge!</span>")
 				target.lastattacker = holder.owner

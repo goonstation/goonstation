@@ -245,6 +245,8 @@
 			send_beaker_details()
 			send_reagent_details(0)
 		src.update_icon()
+		src.add_dialog(user)
+		ch_window.Subscribe(user.client)
 
 	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
@@ -253,10 +255,12 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				src.take_damage(400)
+				SPAWN_DBG(0)
+					src.take_damage(400)
 				return
 			if(2.0)
-				src.take_damage(150)
+				SPAWN_DBG(0)
+					src.take_damage(150)
 				return
 
 	blob_act(var/power)
@@ -336,8 +340,7 @@
 
 		else if (href_list["eject"])
 			if (beaker)
-				// should this use "put in hands or drop"? seems like a better idea. idk
-				beaker:set_loc(src.output_target ? src.output_target : get_turf(src))
+				usr.put_in_hand_or_drop(beaker)
 				beaker = null
 			else
 				var/obj/item/I = usr.equipped()
@@ -610,7 +613,7 @@
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers. No sir."
 	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", \
 								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
-								"coconut_milk", "sugar", "water", "vanilla", "tea")
+								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine")
 	icon_state = "alc_dispenser"
 	icon_base = "alc_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks

@@ -15,7 +15,7 @@ var $messages, $subOptions, $contextMenu, $filterMessages, $playMusic;
 var opts = {
     //General
     'messageCount': 0, //A count...of messages...
-    'messageLimit': 2053, //A limit...for the messages...
+    'messageLimit': 4000, //A limit...for the messages...
     'scrollSnapTolerance': 20, //If within x pixels of bottom
     'clickTolerance': 10, //Keep focus if outside x pixels of mousedown position on mouseup
     'popups': 0, //Amount of popups opened ever
@@ -266,8 +266,8 @@ function output(message, group) {
 
     //Pop the top message off if history limit reached
     if (opts.messageCount >= opts.messageLimit) {
-        $messages.children('div.entry:first-child').remove();
-        opts.messageCount--; //I guess the count should only ever equal the limit
+        $messages.children('div.entry:nth-child(-n+' + opts.messageLimit / 2 + ')').remove();
+        opts.messageCount -= opts.messageLimit / 2; //I guess the count should only ever equal the limit
     }
 
     var $lastEntry = $messages.children('.entry').last();
@@ -386,6 +386,15 @@ function changeMode(mode) {
     }
 }
 
+
+function changeTheme(theme) {
+    var body = $('body');
+    body.removeClass(opts.currentTheme);
+    body.addClass(theme);
+    opts.currentTheme = theme;
+    setCookie('theme', theme, 365);
+}
+
 function handleClientData(ckey, ip, compid) {
     //byond sends player info to here
     var currentData = {'ckey': ckey, 'ip': ip, 'compid': compid};
@@ -464,6 +473,8 @@ function ehjaxCallback(data) {
             } else {
                 handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
             }
+        } else if (data.changeTheme) {
+            changeTheme(data.changeTheme);
         } else if (data.loadAdminCode) {
             if (opts.adminLoaded) {return;}
             var adminCode = data.loadAdminCode;
@@ -872,11 +883,7 @@ $(function() {
 
     $('body').on('click', '#changeTheme a', function(e) {
         var theme = $(this).attr('data-theme');
-        var body = $('body');
-        body.removeClass(opts.currentTheme);
-        body.addClass(theme);
-        opts.currentTheme = theme;
-        setCookie('theme', theme, 365);
+        changeTheme(theme);
     });
 
     $('#togglePing').click(function(e) {

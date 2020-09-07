@@ -14,7 +14,7 @@
 		if (!source)
 			source = "random"
 		if (announce_to_admins)
-			message_admins("<span class='notice'>Beginning [src.name] event (Source: [source]).</span>")
+			message_admins("<span class='internal'>Beginning [src.name] event (Source: [source]).</span>")
 			logTheThing("admin", null, null, "Random event [src.name] was triggered. Source: [source]")
 
 		if (centcom_headline && centcom_message && random_events.announce_events)
@@ -26,10 +26,10 @@
 			return 1
 		return 0
 
-	proc/is_event_available()
+	proc/is_event_available(var/ignore_time_lock = 0)
 		var/timer = ticker.round_elapsed_ticks
 
-		if (timer < src.required_elapsed_round_time && random_events.time_lock)
+		if (!ignore_time_lock && timer < src.required_elapsed_round_time && random_events.time_lock)
 			return 0
 
 		if (src.wont_occur_past_this_time > -1)

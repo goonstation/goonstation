@@ -145,6 +145,7 @@
 		if (src.health <= 0)
 			src.CritterDeath()
 
+
 //The HoS's pet turtle. He can wear the beret!
 /obj/critter/turtle/sylvester
 	name = "Sylvester"
@@ -152,8 +153,7 @@
 	icon_state = "turtle"		//I kinda wanna make sylvester stand out a bit amongs other turtles, even without the hat.
 	health = 100
 	generic = 0
-
-
+	is_pet = 2
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
 

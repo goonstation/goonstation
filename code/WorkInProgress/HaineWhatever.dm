@@ -161,10 +161,9 @@
 			src.reagents.add_reagent(src.initial_reagent, 5)
 
 	equipped(var/mob/user, var/slot)
-		if (slot == "mask" && istype(user))
+		if (slot == SLOT_WEAR_MASK && istype(user))
 			src.chewer = user
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 			if (src.reagents && !src.reagents.total_volume)
 				user.show_text("Looks like [src] has lost its flavor, darn.")
 		return ..()
@@ -1108,7 +1107,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			usr.say("MOON TIARA ACTION!")
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "sailormoon"
 		if (hit_atom == usr)
 			if (ishuman(usr))
@@ -1175,7 +1174,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	throwforce = 2.0
 	throw_speed = 3
 	throw_range = 5
-	stamina_damage = 3
+	stamina_damage = 15
 	stamina_cost = 3
 	stamina_crit_chance = 15
 	abilities = list(/obj/ability_button/sailormoon_heal)
@@ -1594,7 +1593,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			return ..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom && isvampire(hit_atom))
 			src.force = (src.force * 2)
 			src.stamina_damage = (src.stamina_damage * 2)
@@ -1618,7 +1617,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	mats = 50
 	contraband = 1
 	stamina_damage = 40
-	stamina_cost = 30
+	stamina_cost = 23
 	stamina_crit_chance = 10
 
 /obj/item/destiny_model
@@ -1921,7 +1920,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 			M.add_stam_mod_regen("r_cocaine", 200)
 			M.addOverlayComposition(/datum/overlayComposition/cocaine)
 		return
-		
+
 	on_remove()
 		if(ismob(holder?.my_atom))
 			var/mob/M = holder.my_atom

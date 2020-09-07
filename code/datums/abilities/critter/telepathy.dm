@@ -24,7 +24,7 @@
         return 1
       else
         var/message = html_encode(input("What would you like to communicate to [target]?", "Telepathy", "") as text)
-        logTheThing("say", holder.owner, target, "MARTIAN TELEPATHY TO %target%: [message]")
+        logTheThing("say", holder.owner, target, "MARTIAN TELEPATHY TO [constructTarget(target,"say")]: [message]")
         message = trim(copytext(sanitize(message), 1, 255))
         var/class = "martiansay"
         if(istype(holder.owner, /mob/living/critter/martian/overseer))
@@ -35,7 +35,8 @@
         // it'd be nice to let admins know what's been said
         var/adminrendered = "<span class='game [class]'><span class='name' data-ctx='\ref[holder.owner.mind]'>[holder.owner.real_name]</span> telepathies <span class='name' data-ctx='\ref[T.mind]'>[T.real_name]</span>:<span class='message'>\"[message]\"</span></span>"
 
-        for (var/mob/M in mobs)
+        for (var/client/C)
+          var/mob/M = C.mob
           if(istype(M, /mob/new_player))
             continue
 

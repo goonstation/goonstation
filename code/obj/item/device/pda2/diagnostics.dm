@@ -78,10 +78,9 @@
 				mode = 1
 				if(result) result.Cut()
 				master.updateSelfDialog()
-				SPAWN_DBG(2 SECONDS)
-					mode = 0
-					master.updateSelfDialog()
-				return
+				sleep(2 SECONDS)
+				mode = 0
+				master.updateSelfDialog()
 
 		else if (href_list["range"])
 			var/rd = text2num(href_list["range"])
@@ -131,7 +130,8 @@
 				result += "[signal.data["device"]] \[[signal.data["netid"]]\] [signal.data["data"]]<BR>"
 
 	proc/adjust_frequency(var/old_freq, var/new_freq)
-		radio_controller.remove_object(master, "[old_freq]")
+		if (old_freq != 1149) // don't unregister the PDA itself
+			radio_controller.remove_object(master, "[old_freq]")
 		radio_controller.add_object(master, "[new_freq]")
 
 
@@ -283,7 +283,8 @@
 
 
 	proc/adjust_frequency(var/old_freq, var/new_freq)
-		radio_controller.remove_object(master, "[old_freq]")
+		if (old_freq != 1149) // don't unregister the PDA itself
+			radio_controller.remove_object(master, "[old_freq]")
 		radio_controller.add_object(master, "[new_freq]")
 
 
@@ -438,9 +439,9 @@
 
 				src.post_signal(signal,"[send_freq]")
 				master.updateSelfDialog()
-				SPAWN_DBG(1 SECOND)
-					mode = 0
-					master.updateSelfDialog()
+				sleep(1 SECOND)
+				mode = 0
+				master.updateSelfDialog()
 
 
 

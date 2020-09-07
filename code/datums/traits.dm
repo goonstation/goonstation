@@ -55,6 +55,13 @@
 		return (calcTotal() >= 0)
 
 	proc/updateTraits(var/mob/user)
+
+		// Not passed a user, try to gracefully recover.
+		if (!user)
+			user = usr
+			if (!user)
+				return
+
 		if(!winexists(user, "traitssetup_[user.ckey]"))
 			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
 
@@ -543,6 +550,15 @@
 	isPositive = 1
 	category = "trinkets"
 
+/obj/trait/lunchbox
+	name = "Lunchbox (-1) \[Trinkets\]"
+	cleanName = "Lunchbox"
+	desc = "Start your shift with a cute little lunchbox, packed with all your favourite foods!"
+	id = "lunchbox"
+	points = -1
+	isPositive = 1
+	category = "trinkets"
+
 // Skill - Undetermined Border
 
 /obj/trait/smoothtalker
@@ -655,15 +671,14 @@
 			var/mob/living/carbon/human/H = owner
 			H.max_health = 150
 			H.health = 150
-			H.brainloss = 60
+			H.take_brain_damage(60)
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.max_health = 150
-			if(H.brainloss < 60)
-				H.brainloss = 60
+			if(H.get_brain_damage() < 60)
+				H.take_brain_damage(60-H.get_brain_damage())
 		return
 
 /obj/trait/athletic
@@ -692,6 +707,28 @@
 	category = "stats"
 	points = -2
 	isPositive = 1
+
+//Category: Background.
+
+/obj/trait/immigrant
+	name = "Stowaway (+1) \[Background\]"
+	cleanName = "Stowaway"
+	desc = "You spawn hidden away on-station without an ID or PDA."
+	id = "immigrant"
+	icon_state = "stowaway"
+	category = "background"
+	points = 1
+	isPositive = 0
+
+obj/trait/pilot
+	name = "Pilot (0) \[Background\]"
+	cleanName = "Pilot"
+	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection but without a PDA."
+	id = "pilot"
+	icon_state = "pilot"
+	category = "background"
+	points = 0
+	isPositive = 0
 
 // NO CATEGORY - Grey Border
 
@@ -755,7 +792,7 @@
 			throw EXCEPTION("Could not find reagent for id:[allergen]")
 
 	onLife(var/mob/owner)
-		if (owner.reagents.has_reagent(allergen))
+		if (owner?.reagents?.has_reagent(allergen))
 			owner.reagents.add_reagent("histamine", 1.4) //1.4 units of histamine per life cycle? is that too much?
 
 /obj/trait/random_allergy/medical_allergy
@@ -784,13 +821,13 @@
 		. = ..()
 
 	onAdd(var/mob/owner)
-		if(ishuman(owner))
+		if(isliving(owner))
 			addAddiction(owner)
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
-		if(ishuman(owner) && prob(1))
-			var/mob/living/carbon/human/M = owner
+		if(isliving(owner) && prob(1))
+			var/mob/living/M = owner
 			for(var/datum/ailment_data/addiction/A in M.ailments)
 				if(istype(A, /datum/ailment_data/addiction))
 					if(A.associated_reagent == selected_reagent) return
@@ -798,7 +835,7 @@
 		return
 
 	proc/addAddiction(var/mob/owner)
-		var/mob/living/carbon/human/M = owner
+		var/mob/living/M = owner
 		var/datum/ailment_data/addiction/AD = new
 		AD.associated_reagent = selected_reagent
 		AD.last_reagent_dose = world.timeofday
@@ -884,14 +921,6 @@
 	points = -1
 	isPositive = 1
 
-/obj/trait/immigrant
-	name = "Stowaway (+1)"
-	cleanName = "Stowaway"
-	desc = "You spawn hidden away on-station without an ID or PDA."
-	id = "immigrant"
-	points = 1
-	isPositive = 0
-
 /obj/trait/nervous
 	name = "Nervous (+1)"
 	cleanName = "Nervous"
@@ -903,11 +932,11 @@
 
 	onAdd(var/mob/owner)
 		..()
-		nervous_mobs += owner
+		OTHER_START_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 	onRemove(var/mob/owner)
 		..()
-		nervous_mobs -= owner
+		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 /obj/trait/burning
 	name = "Human Torch (+1)"
@@ -979,22 +1008,6 @@
 	points = 1
 	isPositive = 0
 
-/obj/trait/bigbutt
-	name = "Dummy Thick (-2)"
-	desc = "Your buttocks are stubbornly chunky, and they clap together even when sneaking around."
-	id = "bigbutt"
-	icon_state = "bigbutt"
-	points = -2
-	isPositive = 0
-	isMoveTrait = 1
-
-	onMove(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if(H.footstep >= 3)
-				playsound(H.loc, "sound/impact_sounds/Slap.ogg", 40, 1)
-		return
-
 /obj/trait/allears
 	name = "All Ears (+1) \[Trinkets\]"
 	cleanName="All ears"
@@ -1003,5 +1016,4 @@
 	id = "allears"
 	points = 1
 	isPositive = 0
-
 
