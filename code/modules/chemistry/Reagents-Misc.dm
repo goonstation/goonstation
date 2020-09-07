@@ -741,7 +741,7 @@ datum
 			fluid_g = 255
 			value = 4 // 1 1 1
 			hygiene_value = 0.25
-			block_slippy = -1
+			block_slippy = -2
 
 			reaction_turf(var/turf/target, var/volume)
 				src = null

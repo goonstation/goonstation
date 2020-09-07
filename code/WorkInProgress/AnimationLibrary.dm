@@ -72,7 +72,7 @@
 		return
 	//A.alpha = 200
 	var/matrix/M = matrix(A.transform)
-	animate(A, transform = A.transform.Scale(0.6, 1), time = 3,easing = BOUNCE_EASING)
+	animate(A, transform = A.transform.Scale(0.6, 1), time = 3,easing = BOUNCE_EASING,flags=ANIMATION_PARALLEL)
 	animate(transform = M, time = 3,easing = BOUNCE_EASING)
 	return
 
@@ -579,7 +579,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/x = movepx + ipx
 		var/y = movepy + ipy
 		//Shift pixel offset
-		animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT)
+		animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT,flags=ANIMATION_PARALLEL)
 		var/matrix/M = matrix(A.transform)
 		animate(transform = turn(A.transform, (movepx - movepy) * 4), time = 0.6, easing = EASE_OUT)
 		animate(pixel_x = ipx, pixel_y = ipy, time = 0.6,easing = EASE_IN)
@@ -589,7 +589,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 
 /proc/hit_twitch(var/atom/A)
-	if (!A || istype(A, /mob/living/object))
+	if (!A || istype(A, /mob/living/object) || ON_COOLDOWN(A, "hit_twitch", 0.1 SECONDS))
 		return
 	var/which = 0
 	if (usr)
@@ -628,16 +628,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/x = movepx + ipx
 	var/y = movepy + ipy
 
-	animate(A, pixel_x = x, pixel_y = y, time = 2,easing = EASE_IN)
-	animate(A, pixel_x = ipx, pixel_y = ipy, time = 2,easing = EASE_IN)
+	animate(A, pixel_x = x, pixel_y = y, time = 2,easing = EASE_IN,flags=ANIMATION_PARALLEL)
+	animate(pixel_x = ipx, pixel_y = ipy, time = 2,easing = EASE_IN)
 
 //only call this from disorient. ITS NOT YOURS DAD
 /proc/violent_twitch(var/atom/A)
 	SPAWN_DBG(0)
-		var/matrix/start = matrix(A.transform)
 		var/matrix/target = matrix(A.transform)
-		target.Scale(1,1)
-		target.Turn(rand(-45,45))
+		var/deg = rand(-45,45)
+		target.Turn(deg)
 
 
 		A.transform = target
@@ -650,7 +649,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 		//Look i know this check looks janky. that's because IT IS. violent_twitch is ONLY called for disorient. okay. this stops it fucking up rest animation
 		if (!A.hasStatus(list("weakened", "paralysis")))
-			A.transform = start
+			A.transform = A.transform.Turn(-deg)
 		A.pixel_x = old_x
 		A.pixel_y = old_y
 
@@ -659,7 +658,6 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN_DBG(-1)
 		var/matrix/start = matrix(A.transform)
 		var/matrix/target = matrix(A.transform)
-		target.Scale(1,1)
 		target.Turn(rand(-45,45))
 		A.transform = target
 
@@ -987,16 +985,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(!istype(A))
 		return
 
-	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease)
+	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease, flags=ANIMATION_PARALLEL)
 
 /proc/animate_rest(var/atom/A, var/stand)
 	if(!istype(A))
 		return
-
 	if(stand)
-		animate(A, pixel_x = 0, pixel_y = 0, transform = null, time = 3, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform.Turn(-90), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 	else
-		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(90), time = 2, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/animate_flip(var/atom/A, var/T)
 	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T)
