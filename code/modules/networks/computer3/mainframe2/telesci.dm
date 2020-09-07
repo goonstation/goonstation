@@ -56,6 +56,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	timeout = 10
 	desc = "Stand on this to have your wildest dreams come true!"
 	device_tag = "PNET_S_TELEPAD"
+	plane = PLANE_NOSHADOW_BELOW
 	var/recharging = 0
 	var/realx = 0
 	var/realy = 0
