@@ -9062,6 +9062,7 @@
 	dir = 4;
 	pixel_y = 1
 	},
+/obj/machinery/light,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aKF" = (
@@ -10123,7 +10124,11 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/circuit,
+/obj/machinery/turret{
+	dir = 10;
+	tag = "icon-grey_target_prism (SOUTHEAST)"
+	},
+/turf/simulated/floor/bot,
 /area/station/turret_protected/ai_module_storage)
 "aOG" = (
 /obj/table/auto,
@@ -11362,6 +11367,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/ai_upload,
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_module_storage)
 "aTp" = (
@@ -11584,9 +11590,7 @@
 /turf/simulated/floor/purple,
 /area/station/turret_protected/ai_module_storage)
 "aUf" = (
-/obj/machinery/turret{
-	dir = 8
-	},
+/obj/machinery/turret,
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
@@ -11800,7 +11804,7 @@
 /area/station/turret_protected/ai_upload)
 "aUZ" = (
 /obj/machinery/turret{
-	dir = 8
+	dir = 10
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -12894,7 +12898,7 @@
 /area/station/turret_protected/ai_upload_foyer)
 "aYo" = (
 /obj/machinery/turret{
-	dir = 8
+	dir = 9
 	},
 /obj/machinery/camera/motion{
 	c_tag = "AI Upload";
@@ -13083,7 +13087,7 @@
 /area/station/maintenance/east)
 "aYX" = (
 /obj/machinery/turret{
-	dir = 8
+	dir = 1
 	},
 /obj/machinery/light,
 /turf/simulated/floor/circuit,
@@ -22215,6 +22219,7 @@
 /area/station/bridge)
 "fGI" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/north,
+/obj/machinery/light,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "fGZ" = (
@@ -25493,7 +25498,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "kaN" = (
 /obj/wingrille_spawn/auto,
@@ -30923,7 +30928,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "rma" = (
 /obj/machinery/light,
