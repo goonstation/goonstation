@@ -506,7 +506,8 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 						navigate_to(src.target, ARREST_SPEED * move_arrest_delay_mult, max_dist = 50)
 						return
 					else
-						src.baton_attack(src.target)
+						SPAWN_DBG(0)
+							src.baton_attack(src.target)
 
 			if(SECBOT_PREP_ARREST)		// preparing to arrest target
 
