@@ -64,7 +64,7 @@
 			icon_state = "light0"
 			light.set_color(1, 0.50, 0.50)
 
-/obj/machinery/light_switch/get_desc(dist, user)
+/obj/machinery/light_switch/get_desc(dist, mob/user)
 	if(user && !user.stat)
 		return "A light switch. It is [on? "on" : "off"]."
 
