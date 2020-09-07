@@ -114,7 +114,7 @@
 
 /obj/item/toy/plush/attack(mob/M as mob, mob/user as mob)
 	if (user.a_intent == INTENT_HELP)
-		user.audible_message("<span class='emote'>[src] gives [M] a hug!</span>")
+		M.visible_message("<span class='emote'>[src] gives [M] a hug!</span>", "<span class='emote'>[src] gives you a hug!</span>")
 	else
 		..()
 
