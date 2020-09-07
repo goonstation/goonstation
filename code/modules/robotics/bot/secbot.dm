@@ -955,16 +955,26 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if (report_arrests)
 			var/bot_location = get_area(src)
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
-			var/datum/signal/pdaSignal = get_free_signal()
 			var/message2send
+			var/list/mailgroups = list(MGD_SECURITY, "AI-Arrest Alerts")
 			if (src.tacticool)
 				message2send = "Notification: Tactical law intervention agent [src] codename [src.badge_number] status KIA in [bot_location]!"
 			else
 				message2send = "Notification: [src] destroyed in [bot_location]! Officer down!"
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="[message2send]")
-			pdaSignal.transmission_method = TRANSMISSION_RADIO
-			if(transmit_connection != null)
-				transmit_connection.post_signal(src, pdaSignal)
+			for(var/mailgroup in mailgroups)
+				var/datum/signal/pdaSignal = get_free_signal()
+				pdaSignal.source = src
+				pdaSignal.data["command"] = "text_message"
+				pdaSignal.data["sender_name"] = "SECURITY-MAILBOT"
+				pdaSignal.data["message"] = "[message2send]"
+
+				pdaSignal.data["address_1"] = "00000000"
+				pdaSignal.data["group"] = mailgroup
+				pdaSignal.data["sender"] = "00000000"
+				//pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="[message2send]")
+				pdaSignal.transmission_method = TRANSMISSION_RADIO
+				if(transmit_connection != null)
+					transmit_connection.post_signal(src, pdaSignal)
 
 		if(src.exploding) return
 		src.exploding = 1
@@ -1137,19 +1147,28 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 					//////PDA NOTIFY/////
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
-				var/datum/signal/pdaSignal = get_free_signal()
 				var/message2send
+				var/list/mailgroups = list(MGD_SECURITY, "AI-Arrest Alerts")
 				if (master.tacticool)
 					message2send = "Notification: Tactical law operation agent [master] [master.badge_number] reporting grandslam on tango [last_target] for suspected [rand(10,99)]-[rand(1,999)] \"[pick_string("shittybill", "drugs")]-[pick_string("shittybill", "insults")]\" \
 					in [bot_location] at grid reference [LT_loc.x][prob(50)?"-niner":""] mark [LT_loc.y][prob(50)?"-niner":""]. Unit requesting law enforcement personnel for further suspect prosecution. [master.badge_number] over and out."
 					master.speak(message2send)
 				else
 					message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000",\
+				for(var/mailgroup in mailgroups)
+					var/datum/signal/pdaSignal = get_free_signal()
+					pdaSignal.data["command"] = "text_message"
+					pdaSignal.data["sender_name"] = "SECURITY-MAILBOT"
+					pdaSignal.data["message"] = "[message2send]"
+
+					pdaSignal.data["address_1"] = "00000000"
+					pdaSignal.data["group"] = mailgroup
+					pdaSignal.data["sender"] = "00000000"
+				//pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000",\
 				"message"="[message2send]")
-				pdaSignal.transmission_method = TRANSMISSION_RADIO
-				if(transmit_connection != null)
-					transmit_connection.post_signal(master, pdaSignal)
+					pdaSignal.transmission_method = TRANSMISSION_RADIO
+					if(transmit_connection != null)
+						transmit_connection.post_signal(master, pdaSignal)
 
 			master.mode = SECBOT_IDLE
 			master.target = null
