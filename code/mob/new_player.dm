@@ -93,7 +93,8 @@ mob/new_player
 			qdel(src)
 
 		// Given below call, not much reason to do this if pregameHTML wasn't set
-		if (pregameHTML && isclient(src.last_client))
+		// explanation for isnull(src.key) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
+		if (isnull(src.key) && pregameHTML && isclient(src.last_client))
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
