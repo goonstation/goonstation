@@ -66,7 +66,7 @@
 	New()
 		..()
 		req_access = list(access_medlab) //For premature unlocking.
-		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
+		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, "AI-Cloning Alerts")
 
 		src.create_reagents(100)
 
