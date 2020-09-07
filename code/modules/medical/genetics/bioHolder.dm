@@ -92,8 +92,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/mob/owner = null
 	var/datum/bioHolder/parentHolder = null
 
-	var/datum/mutantrace/mutant_race = null
-
 	var/gender = MALE
 	var/pronouns = 0		//1 if using neutral pronouns (they/their);  0 if using gendered pronouns matching their gender var
 	var/screamsound = "male"
