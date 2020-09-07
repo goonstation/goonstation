@@ -617,7 +617,7 @@ This is basically useless for anyone but miners.
 	name = "Slip and Sign"
 	item = /obj/item/caution/traitor
 	cost = 2
-	desc = "This Wet Floor Sign spits out organic superlubricant under everyone nearby unless they are wearing galoshes. That'll teach them to ignore the signs. Click with a bucket (or beaker or drinking glass etc.) to replace the payload."
+	desc = "This Wet Floor Sign spits out organic superlubricant under everyone nearby unless they are wearing galoshes. That'll teach them to ignore the signs. If you are wearing the long janitor gloves you can click with a bucket (or beaker or drinking glass etc.) to replace the payload."
 	job = list("Janitor")
 
 /datum/syndicate_buylist/traitor/syndanalyser
