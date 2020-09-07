@@ -1132,7 +1132,7 @@ obj/critter/madnessowl/switchblade
 			on_damaged(src)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<span class='alert'><b>[user]</b> punches [src]!</span>", 1)
-			playsound(src.loc, "sound/impact_sounds/Generic_Punch_[(rand(1, 5))].ogg", 50, 1)
+			playsound(src.loc, pick(sounds_punch), 50, 1)
 			if(prob(30))
 				playsound(src.loc, "sound/voice/animal/hoot.ogg", 60, 1)
 				src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)

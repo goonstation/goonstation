@@ -1,4 +1,20 @@
 
+(t)sun sep 06 20
+(u)Nebulacrity
+(p)2057
+(e)🆕🎨|feature, sprites
+(*)Added a new mutation: Hemochromia. NanoTrasen has released a statement that differently colored blood is perfectly normal and not worth being alarmed over.
+(u)zjdtmkhzt
+(p)2059
+(e)⚖🆕|balance, feature
+(+)Electric wand type artifacts should now actually work. Some other small changes to wand artifacts were made too.
+(u)RichardGere
+(p)2082
+(e)⚖|balance
+(+)Tweaked secbots responsiveness to accommodate the new movement change.
+(u)Zamujasa
+(*)Added the Rotbusttec implant to the medical and robotics fabricators.
+(+)The cloner now makes noises/jostles a bit when cloning a player.
 (t)sat sep 05 20
 (u)zjdtmkhzt
 (p)2077

@@ -1157,7 +1157,7 @@
 	var/stam_crit_pow = src.stamina_crit_chance
 	if (prob(stam_crit_pow))
 		msgs.stamina_crit = 1
-		msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
+		msgs.played_sound = pick(sounds_punch)
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 

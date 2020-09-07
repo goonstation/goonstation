@@ -388,7 +388,7 @@
 		if (user.a_intent == INTENT_HARM)
 			src.health -= rand(1,2) * src.brutevuln
 			src.visible_message("<span class='alert'><b>[user]</b> punches [src]!</span>")
-			playsound(src.loc, pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg','sound/impact_sounds/Generic_Punch_5.ogg'), 100, 1)
+			playsound(src.loc, pick(sounds_punch), 100, 1)
 			attack_twitch(user)
 			hit_twitch(src)
 			if (hitsound)

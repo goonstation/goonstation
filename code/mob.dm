@@ -985,7 +985,8 @@
 
 /mob/proc/movement_delay(var/atom/move_target = 0)
 	.= 2 + movement_delay_modifier
-	. *= max(src?.pushing.p_class, 1)
+	if (src.pushing)
+		. *= max(src.pushing.p_class, 1)
 
 /mob/proc/Life(datum/controller/process/mobs/parent)
 	return

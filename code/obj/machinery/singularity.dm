@@ -1358,19 +1358,19 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 			if(!isnull(S1))
 				power_s += S1.energy
-			if(!isnull(P1))
+			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
 					P1.air_contents.toxins -= 0.001
-			if(!isnull(P2))
+			if(P2?.air_contents)
 				if(CA2.active != 0)
 					power_p += P2.air_contents.toxins
 					P2.air_contents.toxins -= 0.001
-			if(!isnull(P3))
+			if(P3?.air_contents)
 				if(CA3.active != 0)
 					power_p += P3.air_contents.toxins
 					P3.air_contents.toxins -= 0.001
-			if(!isnull(P4))
+			if(P4?.air_contents)
 				if(CA4.active != 0)
 					power_p += P4.air_contents.toxins
 					P4.air_contents.toxins -= 0.001
