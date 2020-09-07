@@ -1,4 +1,8 @@
 //Contains exotic or special reagents.
+
+ABSTRACT_TYPE(/datum/reagent/cement)
+ABSTRACT_TYPE(/datum/reagent/concrete)
+
 datum
 	reagent
 		nitroglycerin // Yes, this is a bad idea.

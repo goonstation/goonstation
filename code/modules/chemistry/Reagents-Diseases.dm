@@ -1,5 +1,7 @@
 //Contains disease reagents.
 
+ABSTRACT_TYPE(/datum/reagent/disease)
+
 datum
 	reagent
 		disease/
