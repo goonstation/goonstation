@@ -77,7 +77,8 @@
 	New()
 		START_TRACKING
 		..()
-		src.area_name = src.loc.loc.name
+		var/area/area = get_area(src)
+		src.area_name = area?.name
 		src.transmit_connection = radio_controller.add_object(src,"[frequency]")
 		src.net_id = generate_net_id(src)
 
