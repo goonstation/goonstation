@@ -23738,7 +23738,8 @@
 /obj/machinery/turretid{
 	name = "Armoury Turret deactivation control";
 	pixel_y = -24;
-	req_access = list(37)
+	req_access = list(37);
+	turretArea = /area/station/turret_protected/armory_outside
 	},
 /turf/simulated/floor/red/side{
 	dir = 6
@@ -34101,7 +34102,7 @@
 /area/station/maintenance/SWmaint)
 "uVe" = (
 /obj/machinery/door/airlock/pyro/command{
-	name = "AI Module Storage"
+	name = "Computer Core"
 	},
 /obj/access_spawn/heads,
 /obj/cable{
@@ -34604,13 +34605,13 @@
 	pixel_y = 29
 	},
 /obj/machinery/turretid{
-	areastring = null;
 	name = "Perimiter Defences Turret Control";
 	pixel_x = 13;
-	pixel_y = 29
+	pixel_y = 29;
+	turretArea = /area/station/turret_protected/AIbaseoutside
 	},
 /turf/simulated/floor/circuit/white,
-/area/station/turret_protected/AIbaseoutside)
+/area/station/turret_protected/AIsat)
 "vHh" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
@@ -35334,6 +35335,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/heads,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/turret_protected/Zeta)
 "wIj" = (
