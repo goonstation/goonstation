@@ -1288,6 +1288,8 @@
 
 	set_clothing_icon_dirty()
 
+	SEND_SIGNAL(W.loc, COMSIG_STORAGE_TRANSFER_ITEM, W)
+
 	W.dropped(src)
 
 /*

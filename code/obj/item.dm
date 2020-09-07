@@ -607,7 +607,7 @@
 #define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 
 
-/obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+/obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params) // for clickdragging our item to over_object
 	..()
 
 	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL))
@@ -665,7 +665,7 @@
 	if (istype(S))
 		if (S.master && istype(S.master,/datum/hud/storage))
 			var/datum/hud/storage/hud = S.master
-			over_object = hud.master //If dragged into backpack HUD, change over_object to the backpack
+			over_object = hud.master.parent //If dragged into storage HUD, change over_object to the storage atom
 
 	if (istype(over_object,/obj/item/storage) && over_object != src)
 		var/obj/item/storage/storage = over_object
@@ -694,6 +694,7 @@
 
 
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
+	//var/atom/movable/initial_loc = src.loc
 	if (!src.anchored)
 		if (!user.r_hand || !user.l_hand || (user.r_hand == src) || (user.l_hand == src))
 			if (!user.hand) //big messy ugly bad if() chunk here because we want to prefer active hand
@@ -729,9 +730,6 @@
 	else
 		user.show_text("This item is anchored to the floor!", "blue")
 		.= 0
-
-	if (. == 1)
-		SEND_SIGNAL(src.loc, COMSIG_STORAGE_TRANSFER_ITEM, src)
 
 /obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
 	if (src.material)

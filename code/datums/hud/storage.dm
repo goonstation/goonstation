@@ -101,7 +101,6 @@
 			if (storage && I && storage.loc == usr && (SEND_SIGNAL(storage, COMSIG_STORAGE_CAN_FIT, I) & RETURN_SUCCESS))
 				sel.screen_loc = empty_obj_loc
 
-
 	MouseExited(var/obj/screen/hud/H)
 		if (!H) return
 		sel.screen_loc = null
@@ -177,9 +176,13 @@
 			src.obj_locs[obj_loc] = I
 			i++
 		empty_obj_loc =  "[x+(i%sx)],[y-round(i/sx)]:[pixel_y_adjust]"
-		//master.update_icon()
+		if(isitem(storage))
+			var/obj/item/I = storage
+			I.tooltip_rebuild = 1
+		//storage.update_icon()
 
 	proc/add_item(obj/item/I)
+		add_object(I, HUD_LAYER+1)
 		update()
 
 	proc/remove_item(obj/item/I)

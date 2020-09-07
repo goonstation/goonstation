@@ -117,10 +117,10 @@
 /datum/component/storage/proc/hand_attack(source, mob/user)
 	return src.handle_storage(user)
 
-// source click dragged to over_object (can be HUD or usr)
+// source click dragged to over_object (can be HUD, usr, or turf)
 /datum/component/storage/proc/mouse_drop(atom/source, atom/over_object)
 	var/obj/screen/hud/S = over_object
-	if (istype(S))
+	if (istype(S)) // click drag storage from one HUD slot to another
 		playsound(source.loc, "rustle", 50, 1, -5)
 		if (!usr.restrained() && !usr.stat && source.loc == usr)
 			if (S.id == "rhand")
@@ -133,7 +133,7 @@
 						usr.u_equip(source)
 						usr.put_in_hand(source, 1)
 			return
-	if (over_object == usr && in_range(source, usr) && isliving(usr) && !usr.stat)
+	if (over_object == usr && in_range(source, usr) && isliving(usr) && !usr.stat) // click drag storage to mob to open it
 		if (usr.s_active)
 			usr.detach_hud(usr.s_active)
 			usr.s_active = null
@@ -143,7 +143,7 @@
 		hud.update()
 		usr.attach_hud(hud)
 		return
-	if (usr.is_in_hands(source))
+	if (usr.is_in_hands(source)) // click drag storage to some other atom
 		var/turf/T = over_object
 		if (istype(T, /obj/table))
 			T = get_turf(T)
@@ -223,10 +223,11 @@
 			found += A
 			return RETURN_SUCCESS
 
-// remove I from source hud and transfer it to target (if provided; may not be provided if I's loc is set again right after)
+// transfer I to target (if provided) and remove it from source contents and hud
 /datum/component/storage/proc/transfer_item(atom/source, obj/item/I, var/target)
 	if (target)
 		I.set_loc(target)
+	source.contents -= I
 	hud.remove_item(I)
 	return RETURN_SUCCESS
 
