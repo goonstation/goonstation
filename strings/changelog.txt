@@ -1,5 +1,11 @@
 
 (t)mon sep 07 20
+(u)kyle & pali & BatElite
+(e)🆕|feature
+(*)Added the Spaceship of Theseus medal
+(u)SageAcrin & pali & Dogs
+(e)🆕|feature
+(*)Added the Quit Cloning Around medal
 (u)Gannets
 (p)2093
 (e)⚖|balance
