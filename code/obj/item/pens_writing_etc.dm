@@ -39,6 +39,13 @@
 	var/spam_flag_sound = 0
 	var/spam_flag_message = 0 // one message appears for every five times you click the pen if you're just sitting there jamming on it
 	var/spam_timer = 20
+	var/symbol_setting = null
+	var/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
+	"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
+	var/list/c_symbol = list("Dollar", "Euro", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
+	"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentacle")
+
 
 	attack_self(mob/user as mob)
 		..()
@@ -289,8 +296,6 @@
 				JOB_XP(user, "Clown", 1)
 
 
-
-
 	rainbow
 		name = "strange crayon"
 		color = "#FFFFFF"
@@ -326,21 +331,34 @@
 				user.suiciding = 0
 		return 1
 
+	attack_self(mob/user as mob)
+		..()
+		if (!user)
+			return
+		var/write_thing = input(user, "What do you want to write?", null, null) as null|anything in ((isghostdrone(user) || !user.literate) ? src.c_symbol : (src.c_default + src.c_symbol))
+
+		if(write_thing)
+			src.symbol_setting = write_thing
+		else
+			src.symbol_setting = null // and thus the click-floor-2-pick-shit goes on
+
+
 	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
 		if (!T || !user || src.in_use || get_dist(T, user) > 1)
 			return
-		src.in_use = 1
-		var/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
-		"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
-		var/list/c_symbol = list("Dollar", "Euro", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
-		"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentacle")
 
-		var/t = input(user, "What do you want to write?", null, null) as null|anything in ((isghostdrone(user) || !user.literate) ? c_symbol : (c_default + c_symbol))
+		var/t // t is for twhat we're tdrawing
+			src.in_use = 1
+
+		if (src.symbol_setting)
+			t = src.symbol_setting
+		else
+			t = input(user, "What do you want to write?", null, null) as null|anything in ((isghostdrone(user) || !user.literate) ? src.c_symbol : (src.c_default + src.c_symbol))
 
 		if (!t || get_dist(T, user) > 1)
 			src.in_use = 0
 			return
+
 		var/obj/decal/cleanable/writing/G = make_cleanable(/obj/decal/cleanable/writing,T)
 		G.artist = user.key
 
