@@ -2878,4 +2878,5 @@
 		A.interact(src)
 
 /mob/proc/add_karma(how_much)
-	src?.mind.add_karma(how_much)
+	src.mind?.add_karma(how_much)
+	// TODO add NPC karma
