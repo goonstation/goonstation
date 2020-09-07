@@ -106,11 +106,17 @@
 	message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 	if (!message || get_dist(src, user) > 1)
 		return
-	logTheThing("say", user, null, "makes [src] say,  \"[message]\"")
+	logTheThing("say", user, null, "makes [src] say, \"[message]\"")
 	user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
 	var/mob/living/carbon/human/H = user
 	if (H.sims)
 		H.sims.affectMotive("fun", 1)
+
+/obj/item/toy/plush/attack(mob/M as mob, mob/user as mob)
+	if (user.a_intent == "help")
+		user.audible_message("<span class='emote'>[src] gives [M] a hug!</span>")
+	else
+		..()
 
 /obj/item/toy/plush/small
 	name = "small plush toy"
