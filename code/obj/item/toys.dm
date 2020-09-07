@@ -116,7 +116,7 @@
 	if (user.a_intent == INTENT_HELP)
 		M.visible_message("<span class='emote'>[src] gives [M] a hug!</span>", "<span class='emote'>[src] gives you a hug!</span>")
 	else
-		..()
+		. = ..()
 
 /obj/item/toy/plush/small
 	name = "small plush toy"
