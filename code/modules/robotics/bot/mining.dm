@@ -25,9 +25,11 @@
 	var/image/display_hover = null
 	var/image/display_tool_idle = null
 	var/image/display_tool_animated = null
+	var/datum/digbot_ui/ui = null
 
 /obj/machinery/bot/mining/New()
 	..()
+	src.ui = new/datum/digbot_ui(src)
 	setupOverlayVars()
 	sleep(5)
 	if(on)
@@ -77,25 +79,14 @@
 	else src.overlays += display_tool_idle
 
 /obj/machinery/bot/mining/attack_hand(user as mob)
-	var/dat
-	dat += text({"
-<TT><B>Automatic Asteroid Mining Bot v1.0</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]"},
-text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
-	if(!src.locked)
-		dat += text({"<BR>
-Dig suspicious locations: []<BR>
-Dig up to hardness level: []"},
-text("<A href='?src=\ref[src];operation=suspicious'>[src.digsuspicious ? "Yes" : "No"]</A>"),
-text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
+	src.add_fingerprint(user)
+	ui.show_ui(user)
 
-	boutput(user,  browse("<HEAD><TITLE>Repairbot v1.0 controls</TITLE></HEAD>[dat]", "window=autorepair"))
-	onclose(user, "autorepair")
-	return
+/obj/machinery/bot/mining/attack_ai()
+	togglePowerSwitch()
 
 /obj/machinery/bot/mining/attackby(var/obj/item/W , mob/user as mob)
-	//Regular ID
+	src.add_fingerprint(user)
 	if(istype(W, /obj/item/card/id))
 		if(src.allowed(usr))
 			src.locked = !src.locked
@@ -117,23 +108,6 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 		src.emagged = 1
 		if(!src.on) 
 			turnOn()
-
-/obj/machinery/bot/mining/Topic(href, href_list)
-	if(..())
-		return
-	src.add_fingerprint(usr)
-	switch(href_list["operation"])
-		if("start")
-			togglePowerSwitch()
-		if("suspicious")
-			src.digsuspicious = !src.digsuspicious
-			src.updateUsrDialog()
-		if("hardness")
-			src.hardthreshold = input(usr, "Maximum hardness level this bot will dig up to?", "Hardness Threshold", "") as num
-			src.updateUsrDialog()
-
-/obj/machinery/bot/mining/attack_ai()
-	togglePowerSwitch()
 
 /obj/machinery/bot/mining/process()
 	if(!src.on) return
@@ -160,8 +134,6 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 		src.path = null
 
 	src.oldloc = src.loc
-
-
 
 /obj/machinery/bot/mining/proc/findTarget()
 	digbottargets = list()
@@ -299,6 +271,48 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 /datum/action/bar/icon/digbotdig/drill
 	id = "digbot_dig"
 	icon_state = "lasdrill"
+
+
+//////////////////////////////////////
+//////  Digbot UI  ///////////////////
+//////////////////////////////////////
+
+/datum/digbot_ui
+	var/obj/machinery/bot/mining/bot = null
+
+/datum/digbot_ui/New(obj/machinery/bot/mining/bot)
+	..()
+	src.bot = bot
+
+/datum/digbot_ui/proc/validate_user(mob/user as mob)
+	return !(user.stat || user.restrained())
+
+/datum/digbot_ui/Topic(href, href_list)
+	// boutput(world, "Received topic to pump ui: [list2params(href_list)]")
+	if(!validate_user(usr))
+		return
+	if(href_list["ui_target"] == "digbot_ui")
+		switch(href_list["ui_action"])
+			if("toggle_power")
+				bot.togglePowerSwitch()
+			if("toggle_suspicious")
+				bot.digsuspicious = !bot.digsuspicious
+			if("hardness")
+				bot.hardthreshold = input(usr, "Maximum hardness level this bot will dig up to?", "Hardness Threshold", "") as num
+	show_ui(usr)
+
+/datum/digbot_ui/proc/show_ui(mob/user)
+	if (user.client.tooltipHolder)
+		user.client.tooltipHolder.showClickTip(bot, list("title" = "Digbot Controls", "content" = render()))
+
+/datum/digbot_ui/proc/render()
+	return {"
+<span>[bot.on ? "Active" : "Inactive"] - </span><a href="?src=\ref[src]&ui_target=digbot_ui&ui_action=toggle_power">Toggle Power</a><br />
+<span>Settings:<br />
+<a href="?src=\ref[src]&ui_target=digbot_ui&ui_action=toggle_suspicious">[bot.digsuspicious ? "Digging" : "Avoiding"] suspicious rocks</a><br />
+<a href="?src=\ref[src]&ui_target=digbot_ui&ui_action=hardness">Targeting rock hardness [bot.hardthreshold] and lower</a>
+"}
+
 
 //////////////////////////////////////
 //////Digbot Construction/////////////
