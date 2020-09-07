@@ -151,7 +151,7 @@ var/image/blob_icon_cache
 		if (istype(src.loc,/turf))
 			if (istype(src.loc.loc,/area))
 				src.loc.loc.Exited(src)
-		healthbar.onDelete()
+		healthbar?.onDelete()
 		qdel(healthbar)
 		healthbar = null
 		..()
