@@ -670,16 +670,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			A.pixel_y = rand(-2,2)
 			sleep(0.1 SECONDS)
 
-		animate(A, pixel_x = 0, pixel_y = 0, transform = null, time = 1, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform * target.Invert() * start, time = 1, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/eat_twitch(var/atom/A)
 	var/matrix/squish_matrix = matrix(A.transform)
 	squish_matrix.Scale(1,0.92)
 	var/matrix/M = matrix(A.transform)
-	squish_matrix.Scale(1,1)
 	var/ipy = A.pixel_y
 
-	animate(A, transform = squish_matrix, time = 1,easing = EASE_OUT)
+	animate(A, transform = squish_matrix, time = 1,easing = EASE_OUT, flags=ANIMATION_PARALLEL)
 	animate(pixel_y = -1, time = 1,easing = EASE_OUT)
 	animate(transform = M, time = 1, easing = EASE_IN)
 	animate(pixel_y = ipy, time = 1,easing = EASE_IN)
@@ -793,30 +792,32 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/x_severity_inverse = 0 - x_severity
 	var/y_severity_inverse = 0 - y_severity
 
-	animate(A, transform = null, pixel_y = rand(y_severity_inverse,y_severity), pixel_x = rand(x_severity_inverse,x_severity),time = 1,loop = amount, easing = ELASTIC_EASING)
+	animate(A, pixel_y = rand(y_severity_inverse,y_severity), pixel_x = rand(x_severity_inverse,x_severity),time = 1,loop = amount, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 	SPAWN_DBG(amount)
 		if (A)
-			animate(A, transform = null, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
+			animate(A, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
 	return
 
 /proc/animate_teleport(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix(1, 3, MATRIX_SCALE)
-	animate(A, transform = M, pixel_y = 32, time = 10, alpha = 50, easing = CIRCULAR_EASING)
+	var/matrix/original = matrix(A.transform)
+	var/matrix/M = A.transform.Scale(1, 3)
+	animate(A, transform = M, pixel_y = 32, time = 10, alpha = 50, easing = CIRCULAR_EASING, flags=ANIMATION_PARALLEL)
 	M.Scale(0,4)
 	animate(transform = M, time = 5, color = "#1111ff", alpha = 0, easing = CIRCULAR_EASING)
-	animate(transform = null, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
+	animate(transform = original, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	return
 
 /proc/animate_teleport_wiz(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix(0, 4, MATRIX_SCALE)
-	animate(A, color = "#ddddff", time = 20, alpha = 70, easing = LINEAR_EASING)
+	var/matrix/original = matrix(A.transform)
+	var/matrix/M = A.transform.Scale(0, 4)
+	animate(A, color = "#ddddff", time = 20, alpha = 70, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 	animate(transform = M, pixel_y = 32, time = 20, color = "#2222ff", alpha = 0, easing = CIRCULAR_EASING)
 	animate(time = 8, transform = M, alpha = 5) //Do nothing, essentially
-	animate(transform = null, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
+	animate(transform = original, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	return
 
 /proc/animate_rainbow_glow_old(var/atom/A)
