@@ -233,7 +233,11 @@
 		ghost.client.mob = src.occupant
 
 		if(src.occupant.bioHolder.clone_generation > 1)
-			src.occupant.setStatus("maxhealth-", null, -((src.occupant.bioHolder.clone_generation - 1) * 15))
+			var/health_penalty = (src.occupant.bioHolder.clone_generation - 1) * 15
+			src.occupant.setStatus("maxhealth-", null, -health_penalty)
+			if(health_penalty >= 100)
+				src.occupant.unlock_medal("Quit Cloning Around")
+
 
 
 		src.mess = 0

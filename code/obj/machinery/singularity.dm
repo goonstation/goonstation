@@ -103,8 +103,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	event()
 	if (Ti)
 		src.Dtime = Ti
-	src.x--
-	src.y--
+	SPAWN_DBG(0)
+		src.x--
+		src.y--
 	..()
 
 /obj/machinery/the_singularity/process()
