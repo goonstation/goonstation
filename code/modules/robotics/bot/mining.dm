@@ -2,7 +2,8 @@
 	name = "Digbot"
 	desc = "A little robot with a pickaxe. He looks so jazzed to go hit some rocks!"
 	icon = 'icons/obj/bots/aibots.dmi'
-	icon_state = "digbot"
+	icon_state = "digbot0"
+	var/const/base_sprite_pixels_from_floor = 5
 	layer = 5.0
 	density = 0
 	anchored = 0
@@ -21,22 +22,54 @@
 	var/list/digbottargets = list()
 	var/lumlevel = 0.2
 	var/use_medium_light = 1
-
-	New()
-		..()
-
-/obj/machinery/bot/mining/drill
-	name = "Digbot Mk2"
-	desc = "A little robot with a drill. Looks like he means business!"
-	icon_state = "digbot2"
-	diglevel = 4
-	hardthreshold = 4
+	var/image/display_hover = null
+	var/image/display_tool_idle = null
+	var/image/display_tool_animated = null
 
 /obj/machinery/bot/mining/New()
 	..()
+	src.display_hover = image('icons/obj/bots/aibots.dmi', "digbot hover")
+	src.display_tool_idle = image('icons/obj/bots/aibots.dmi', "digbot powerpick idle")
+	src.display_tool_animated = image('icons/obj/bots/aibots.dmi', "digbot powerpick digging")
 	sleep(5)
 	if(on)
-		src.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+		turnOn()
+		
+/obj/machinery/bot/mining/proc/togglePowerSwitch()
+	src.on = !src.on
+	if(src.on)
+		turnOff()
+	else
+		turnOn()
+	src.target = null
+	src.oldtarget = null
+	src.oldloc = null
+	src.path = null
+	src.updateUsrDialog()
+
+/obj/machinery/bot/mining/proc/turnOn()
+	src.on = 1
+	src.add_sm_light("digbot\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+	setEffectOverlays()
+
+/obj/machinery/bot/mining/proc/turnOff()
+	src.on = 0
+	src.remove_sm_light("digbot\ref[src]")
+	setEffectOverlays()
+
+/obj/machinery/bot/mining/proc/setEffectOverlays()
+	src.icon_state = "digbot[on]"
+	src.overlays = null
+	if(src.on)
+		src.overlays += display_hover
+		pixel_y = 0
+	else
+		var/const/volume = 50
+		var/const/vary = 1
+		playsound(src.loc, "sound/impact_sounds/Metal_Clang_3.ogg", volume, vary)
+		pixel_y = -base_sprite_pixels_from_floor
+	if(src.digging) src.overlays += display_tool_animated
+	else src.overlays += display_tool_idle
 
 /obj/machinery/bot/mining/attack_hand(user as mob)
 	var/dat
@@ -77,7 +110,8 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 		src.oldtarget = null
 		src.anchored = 0
 		src.emagged = 1
-		src.on = 1
+		if(!src.on) 
+			turnOn()
 
 /obj/machinery/bot/mining/Topic(href, href_list)
 	if(..())
@@ -85,14 +119,7 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
-			src.on = !src.on
-			if(on)
-				src.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
-			src.target = null
-			src.oldtarget = null
-			src.oldloc = null
-			src.path = null
-			src.updateUsrDialog()
+			togglePowerSwitch()
 		if("suspicious")
 			src.digsuspicious = !src.digsuspicious
 			src.updateUsrDialog()
@@ -101,35 +128,15 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 			src.updateUsrDialog()
 
 /obj/machinery/bot/mining/attack_ai()
-	src.on = !src.on
-	src.target = null
-	src.oldtarget = null
-	src.oldloc = null
-	src.path = null
+	togglePowerSwitch()
 
 /obj/machinery/bot/mining/process()
-	//checks to see if robot is on
 	if(!src.on) return
-	//checks to see if already repairing
 	if(src.digging) return
-	//checks if already targeting something
-	digbottargets = list()
+	if(!istype(target, /turf/simulated/wall/asteroid/))
+		src.target = null
 	if(!src.target)
-		for(var/obj/machinery/bot/mining/bot in machine_registry[MACHINES_BOTS])
-			if(bot != src) digbottargets += bot.target
-	/////////Search for target code
-	if(!src.target)
-	    ///Search for asteroid wall
-		for (var/turf/simulated/wall/asteroid/D in view(7,src))
-			if(!(D in digbottargets) && D != src.oldtarget)
-				if (D.hardness <= src.hardthreshold)
-					if (!src.digsuspicious)
-						if(D.event)
-							continue
-					src.oldtarget = D
-					src.target = D
-					break
-
+		src.findTarget()
 	if(!src.target)
 		if(src.loc != src.oldloc)
 			src.oldtarget = null
@@ -137,66 +144,146 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 
 	if(src.target && (!src.path || !src.path.len))
 		spawn(0)
-			if (!isturf(src.loc)) return
-			if (!target) return
-			src.path = AStar(src.loc, src.target, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance)
-			if (!src.path)
-				src.oldtarget = src.target
-				src.target = null
-				return
-			src.path.len-- // walk next to target, not ontop
+			src.buildPath()
 
 	if(src.path && src.path.len && src.target)
 		step_to(src, src.path[1])
 		src.path -= src.path[1]
 
 	if(src.target in range(1,src))
-		if(istype(src.target, /turf/simulated/wall/asteroid/)) src.dig(src.target)
+		actions.start(new/datum/action/bar/icon/digbotdig(src, target), src)
 		src.path = null
-		return
 
 	src.oldloc = src.loc
 
+	
 
-/obj/machinery/bot/mining/proc/dig(var/turf/simulated/wall/asteroid/target)
-	if(!istype(target, /turf/simulated/wall/asteroid/)) return
+/obj/machinery/bot/mining/proc/findTarget()
+	digbottargets = list()
+	for(var/obj/machinery/bot/mining/bot in machine_registry[MACHINES_BOTS])
+		if(bot != src) digbottargets += bot.target
+	for (var/turf/simulated/wall/asteroid/D in view(7,src))
+		if(!(D in digbottargets) && D != src.oldtarget)
+			if (D.hardness <= src.hardthreshold)
+				if (!src.digsuspicious && D.event)
+					continue
+				src.oldtarget = D
+				src.target = D
+				pointAtTarget()
+				break
+	return
+	
+/obj/machinery/bot/mining/proc/pointAtTarget()
+	if (src.target)
+		for (var/mob/O in hearers(src, null))
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Doomed rock detected!\"</span></span>", 2)
+		var/obj/decal/point/P = new(src.target)
+		P.pixel_x = target.pixel_x
+		P.pixel_y = target.pixel_y
+		SPAWN_DBG (20)
+			P.invisibility = 101
+			qdel(P)
+	
+/obj/machinery/bot/mining/proc/buildPath()
+	if (!isturf(src.loc)) return
+	if (!target) return
+	src.path = findPath(src.loc, src.target, , 7)
+	if (!src.path)
+		src.oldtarget = src.target
+		src.target = null
+		return
 
-	src.anchored = 1
-
+/obj/machinery/bot/mining/proc/startDiggingEffects()
 	src.visible_message("<span class='alert'>[src] starts digging!</span>")
 	if (src.diglevel > 2) playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
 	else playsound(src.loc, 'sound/impact_sounds/Stone_Cut_1.ogg', 100, 1)
 	src.digging = 1
+	src.anchored = 1
+	setEffectOverlays()
 
-	var/cuttime = 3
-	var/chance = 90
-	var/minedifference = target.hardness - src.diglevel
-	if (minedifference == -1)
-		cuttime -= 1
-		chance += 5
-	else if (minedifference <= -2)
-		cuttime -= 2
-		chance = 100
-	else if (minedifference == 1)
-		cuttime += 1
-		chance -= 15
-	else if (minedifference >= 2)
-		chance = 0
+/obj/machinery/bot/mining/proc/stopDiggingEffects()
+	src.digging = 0
+	src.anchored = 0
+	setEffectOverlays()
 
-	if (cuttime < 1) cuttime = 1
-	cuttime *= 10
-	if (chance > 100) chance = 100
-	if (chance < 0) chance = 0
 
-	spawn(cuttime)
-		if(prob(chance))
-			target.destroy_asteroid(0)
-			src.digging = 0
-			src.anchored = 0
-			src.target = null
-		else
-			src.visible_message("<span class='alert'>[src] fails to dig the asteroid!</span>")
-			src.digging = 0
+//////////////////////////////////////
+//////Digbot Drill Variant/////////////
+//////////////////////////////////////
+
+/obj/machinery/bot/mining/drill
+	name = "Digbot Mk2"
+	desc = "A little robot with a drill. Looks like he means business!"
+	icon_state = "digbot-drill"
+	diglevel = 4
+	hardthreshold = 4
+
+/obj/machinery/bot/mining/drill/New()
+	..()
+	src.display_tool_idle = image('icons/obj/bots/aibots.dmi', "digbot powerdrill")
+	src.display_tool_animated = src.display_tool_idle
+
+
+//////////////////////////////////////
+//////Digbot Actionbar/////////////
+//////////////////////////////////////
+
+/datum/action/bar/icon/digbotdig
+	duration = 3 SECONDS //This varies, see below
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	id = "digbot_dig"
+	icon = 'icons/obj/items/mining.dmi'
+	icon_state = "powerpick"
+	var/obj/machinery/bot/mining/bot
+	var/turf/simulated/wall/asteroid/target
+
+	New(var/obj/machinery/bot/mining/bot, var/turf/simulated/wall/asteroid/target)
+		..()
+		src.bot = bot
+		src.target = target
+		if(!checkStillValid()) return
+
+		var/minedifference = target.hardness - bot.diglevel
+		if (minedifference <= -2)
+			duration -= 2 SECONDS
+		else if (minedifference == -1)
+			duration -= 1 SECOND
+		else if (minedifference == 1)
+			duration += 1 SECOND
+
+	onStart()
+		..()
+		if(!checkStillValid()) return
+		bot.startDiggingEffects()
+
+	onUpdate()
+		..()
+		if(!checkStillValid()) return
+	
+	onEnd()
+		if(checkStillValid()) 
+			target.damage_asteroid(bot.diglevel)
+			if(!istype(target, /turf/simulated/wall/asteroid/))
+				bot.target = null
+		if(bot != null)
+			bot.stopDiggingEffects()
+		..()
+	
+	onDelete()
+		..()
+		if(bot != null)
+			bot.stopDiggingEffects()
+
+	proc/checkStillValid()
+		if(bot == null || target == null) 
+			interrupt(INTERRUPT_ALWAYS)
+			return false
+		if(!bot.on || !istype(target, /turf/simulated/wall/asteroid/))
+			bot.target = null
+			interrupt(INTERRUPT_ALWAYS)
+			return false
+		return true
+
 
 //////////////////////////////////////
 //////Digbot Construction/////////////
@@ -206,7 +293,7 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 	name = "hard hat/sensor assembly"
 	desc = "You need to add a robot arm next."
 	icon = 'icons/obj/bots/aibots.dmi'
-	icon_state = "helmet_signaler"
+	icon_state = "digbot assembly 1"
 	w_class = 3.0
 	var/build_step = 0
 
@@ -218,6 +305,7 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 				qdel(T)
 				src.build_step = 1
 				src.name = "hard hat/sensor/robot arm assembly"
+				src.icon_state = "digbot assembly 2"
 				boutput(user, "You add the robot arm to the assembly. Now you need to add a mining tool.")
 			else
 				boutput(user,  "You already added that part!")
@@ -246,14 +334,3 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 				return
 		else 
 			..()
-/*
-/obj/item/clothing/head/helmet/hardhat/proc/attackby(var/obj/item/T, mob/user as mob)
-	if(istype(T, /obj/item/device/prox_sensor))
-		boutput(user,  "You attach the proximity sensor to the hard hat. Now you need to add a robot arm.")
-		new /obj/item/digbotassembly(get_turf(user))
-		qdel(T)
-		qdel(src)
-		return
-	else 
-		..()
-		*/
