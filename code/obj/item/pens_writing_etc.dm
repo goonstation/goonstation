@@ -348,7 +348,7 @@
 			return
 
 		var/t // t is for twhat we're tdrawing
-			src.in_use = 1
+		src.in_use = 1
 
 		if (src.symbol_setting)
 			t = src.symbol_setting
