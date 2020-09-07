@@ -93,8 +93,8 @@ AI MODULES
 		message_admins("[M.name] ([key_name(M)]) used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
 		logTheThing("admin", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".")
 		logTheThing("diary", M, null, "used \a [src] and uploaded a change to the AI laws: \"[msg]\".", "admin")
-		logTheThing("admin", M, null, "AI and silicon laws have been modified:[ticker.centralized_ai_laws.format_for_logs()]")
-		logTheThing("diary", M, null, "AI and silicon laws have been modified:[ticker.centralized_ai_laws.format_for_logs()]", "admin")
+		logTheThing("admin", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]")
+		logTheThing("diary", M, null, "AI and silicon laws have been modified:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
 
 
 /******************** Modules ********************/

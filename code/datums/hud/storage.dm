@@ -8,6 +8,7 @@
 	var/empty_obj_loc = null
 
 	New(master)
+		..()
 		src.master = master
 		src.boxes = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "block", ui_storage_area)
 		src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)

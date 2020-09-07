@@ -204,8 +204,7 @@
 		if (slot == SLOT_GLASSES)
 			assigned = user.client
 			SPAWN_DBG(-1)
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 		return
 
 	unequipped(var/mob/user)
@@ -443,8 +442,7 @@
 			assigned = user.client
 			SPAWN_DBG(-1)
 				//updateIcons()
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 		return
 
 	unequipped(var/mob/user)
@@ -548,8 +546,7 @@
 			assigned = user.client
 			SPAWN_DBG(-1)
 				//updateIcons()
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 		return
 
 	unequipped(var/mob/user)

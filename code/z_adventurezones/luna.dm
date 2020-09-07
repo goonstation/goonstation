@@ -300,6 +300,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	ex_employee
 		New()
+			..()
 			fields = list("MLH_INTERNAL",
 "*SEC",
 "LOCALHOST",

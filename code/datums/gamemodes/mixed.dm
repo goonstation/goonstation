@@ -290,9 +290,9 @@
 
 				if (!src.spy_market)
 					src.spy_market = new /datum/game_mode/spy_theft
-					SPAWN_DBG(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
-						src.spy_market.build_bounty_list()
-						src.spy_market.update_bounty_readouts()
+					sleep(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
+					src.spy_market.build_bounty_list()
+					src.spy_market.update_bounty_readouts()
 
 			if ("werewolf")
 				objective_set_path = /datum/objective_set/werewolf

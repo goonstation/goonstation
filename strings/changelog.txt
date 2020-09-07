@@ -1,5 +1,56 @@
 
+(t)mon sep 07 20
+(u)Aft2001
+(p)2098
+(e)|
+(+)An AI's PDA name is now based on its actual name, instead of just being labeled as 'AI'
+(t)sun sep 06 20
+(u)Nebulacrity
+(p)2057
+(e)🆕🎨|feature, sprites
+(*)Added a new mutation: Hemochromia. NanoTrasen has released a statement that differently colored blood is perfectly normal and not worth being alarmed over.
+(u)zjdtmkhzt
+(p)2059
+(e)⚖🆕|balance, feature
+(+)Electric wand type artifacts should now actually work. Some other small changes to wand artifacts were made too.
+(u)RichardGere
+(p)2082
+(e)⚖|balance
+(+)Tweaked secbots responsiveness to accommodate the new movement change.
+(u)Zamujasa
+(*)Added the Rotbusttec implant to the medical and robotics fabricators.
+(+)The cloner now makes noises/jostles a bit when cloning a player.
+(t)sat sep 05 20
+(u)zjdtmkhzt
+(p)2077
+(e)|
+(+)Fixed a bug where magical artifact wands would not work past melee range.
+(u)Sovexe
+(e)🆕|feature
+(*)Added a new secret chem, Bombini.
 (t)fri sep 04 20
+(u)pali
+(*)Securitrons are now less lazy when chasing people and don't stop for 1-2 second breaks to catch their breath
+(u)Zamujasa
+(e)🐛🆕🔄|feature, rework, bug
+(*)The cloner now works a little differently: it will begin producing a new body automatically, if possible.
+(*)When you clone someone, they will either be put into that body (if it exists), or the cloner will start producing a body for them (and then put them in it).
+(*)The cloning pod will keep a ready body indefinitely until someone is cloned into it.
+(*)You can toggle this automatic pre-generation via the right-click menu "Toggle Auto Mode".
+(*)Premature clones can have their genes fixed by hanging out in a cold cryo cell at full health for a while.
+(+)The cloner now accounts for server tick delay when processing.
+(+)Puritan-trait-havers will no longer die immediately upon cloning, but...
+(+)The cloner will now consider maximum HP changes when deciding how far along a clone is.
+(+)Reagents added to the cloner should now react properly. Previously they kinda didn't.
+(+)Checking the status of the cloning pod has been moved to Examine rather than requiring you to click on it.
+(+)Probably added a few bugs. Sorry. I tested what I could think of, but y'all are good at breaking things.
+(+)The cryo cell and freezer now show the temperature in Celsius.
+(u)Superlagg
+(p)1904
+(e)🆕|feature
+(+)Securitrons are now much more dutiful when patrolling and responding to summons
+(+)Securitrons also show a progress bar when cuffing someone. Careful, they don't like to be interrupted!
+(+)Upgraded the Hos' secbot PDA program to be able to summon every active securitron or force it to stun whoever its chasing.
 (u)Sovexe
 (p)1879
 (e)🆕📄|feature, tgui

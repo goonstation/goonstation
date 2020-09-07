@@ -85,6 +85,7 @@ datum/pathogendna
 	var/datum/pathogen/reference = null
 
 	New(var/datum/pathogen/P)
+		..()
 		if (P)
 			reference = unpool(/datum/pathogen)
 			reference.setup(0, P, 0, src)

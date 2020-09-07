@@ -80,6 +80,7 @@
 	maptext_width = 96
 
 	New(var/change = 0)
+		..()
 		if (abs(change) < 1)
 			del(src)
 			return
@@ -113,6 +114,7 @@
 	var/bumped = 0
 
 	New(mob/M as mob, msg, style = "")
+		..()
 		for (var/obj/maptext_junk/speech/O in M.vis_contents)
 			if (!istype(O))
 				continue
@@ -251,6 +253,7 @@
 	var/working = 0
 
 	New()
+		..()
 		total_score = world.load_intra_round_value("afterlife_donations")
 		tracker = new /obj/maptext_junk()
 		tracker.pixel_y = 40
@@ -391,6 +394,7 @@
 	var/active = 0
 
 	New()
+		..()
 		SPAWN_DBG(0.5 SECONDS)
 			gunsim = locate() in world
 
@@ -458,6 +462,9 @@
 		SPAWN_DBG(10 SECONDS)
 			active = 0
 			alpha = 255
+
+	ex_act(severity)
+		return
 
 
 /proc/fancy_pressure_bar(var/pressure, var/max_pressure, var/width = 300)
@@ -600,9 +607,12 @@
 	name = "join"
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "landmark"
+	deleted_on_start = TRUE
+	add_to_landmarks = FALSE
+
 	New()
 		football_spawns[src.name] += src.loc
-		qdel(src)
+		..()
 
 	blue
 		name = "blue"
@@ -658,7 +668,7 @@
 
 
 	New()
-		SubscribeToProcess()
+		..()
 		src.process()
 
 	disposing()
@@ -700,10 +710,10 @@
 	var/update_delay = null
 
 	New()
+		..()
 		src.maptext_x = -100
 		src.maptext_width = 232
 		src.maptext_height = 64
-		SubscribeToProcess()
 		src.process()
 
 	disposing()
@@ -779,6 +789,7 @@
 	name = "football wave countdown"
 
 	New()
+		..()
 		src.maptext_x = -100
 		src.maptext_height = 64
 		src.maptext_width = 232
@@ -798,6 +809,7 @@
 	name = "new player tutorial maptext"
 
 	New()
+		..()
 		src.maptext_x = -100
 		src.maptext_height = 64
 		src.maptext_width = 232
@@ -813,6 +825,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 /obj/overlay/zamujasa/round_start_countdown
 	New()
+		..()
 		if (lobby_titlecard)
 			src.x = lobby_titlecard.x + 13
 			src.y = lobby_titlecard.y + 0
@@ -840,6 +853,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 	timer
 		New()
+			..()
 			if (lobby_titlecard)
 				src.x = lobby_titlecard.x + 13
 				src.y = lobby_titlecard.y + 1
@@ -882,9 +896,11 @@ Read the rules, don't grief, and have fun!</div>"}
 	invisibility = 101
 	plane = PLANE_HUD
 	layer = HUD_LAYER_3
-	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
+	var/static/matrix/infinity_matrix = matrix().Turn(90).Translate(18, 1)
 
 	New()
+		..()
 		maptext_width = 64
 		maptext_x = -34
 		maptext_y = 1
@@ -893,9 +909,15 @@ Read the rules, don't grief, and have fun!</div>"}
 
 	proc/update_text(var/text)
 		maptext = {"<span class="vb r pixel sh">[text]</span>"}
+		if(src.transform) src.transform = null
 
 	proc/update_number(var/number)
-		maptext = {"<span class="vb r xfont sh"[number == 0 ? " style='color: #ff6666;'" : ""]>[number >= 100000 ? "[round(number / 1000)]K" : round(number)]</span>"}
+		if(number == -1)
+			maptext = {"<span class="vb r pixel sh" style="font-size:1.5em;">8</span>"} // pixel font has more symmetric 8, ok?
+			src.transform = infinity_matrix
+			return
+		maptext = {"<span class="vb r xfont sh"[number == 0 ? " style='color: #ff6666;'" : number == -1 ? " style='-ms-transform: rotate(-90deg);'" : ""]>[number == -1 ? "8" : number >= 100000 ? "[round(number / 1000)]K" : round(number)]</span>"}
+		if(src.transform) src.transform = null
 
 	proc/update_percent(var/current, var/maximum)
 		if (!maximum)
@@ -903,6 +925,7 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.update_number(current)
 			return
 		maptext = {"<span class="vb r xfont sh"[current == 0 ? " style='color: #ff6666;'" : ""]>[round(current / maximum * 100)]%</span>"}
+		if(src.transform) src.transform = null
 
 	proc/hide_count()
 		invisibility = 101

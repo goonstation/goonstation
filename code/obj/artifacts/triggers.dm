@@ -24,6 +24,7 @@
 	hint_prob = 75
 
 	New()
+		..()
 		stimulus_amount = rand(3,30)
 
 /datum/artifact_trigger/heat
@@ -31,6 +32,7 @@
 	hint_range = 20
 
 	New()
+		..()
 		stimulus_amount = rand(320,400)
 
 /datum/artifact_trigger/cold
@@ -39,6 +41,7 @@
 	hint_range = 20
 
 	New()
+		..()
 		stimulus_amount = rand(200,300)
 
 /datum/artifact_trigger/radiation
@@ -47,6 +50,7 @@
 	hint_prob = 75
 
 	New()
+		..()
 		stimulus_type = pick(">=","<=")
 		stimulus_amount = rand(1,10)
 
@@ -56,6 +60,7 @@
 	hint_prob = 66
 
 	New()
+		..()
 		stimulus_type = pick(">=","<=")
 		stimulus_amount = rand(5,5000)
 
@@ -67,6 +72,7 @@
 	hint_prob = 100
 
 	New()
+		..()
 		stimulus_amount = rand(10,100)
 
 /datum/artifact_trigger/reagent/blood

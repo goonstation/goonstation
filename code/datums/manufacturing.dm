@@ -15,6 +15,7 @@
 	var/apply_material = 0
 
 	New()
+		..()
 		if (!sanity_check_exemption)
 			src.sanity_check()
 
@@ -1062,6 +1063,16 @@
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/implantcase/health)
 	time = 40 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/implant_antirot
+	name = "Rotbusttec Implant"
+	item_paths = list("CON-1","CRY-1")
+	item_names = list("Conductive Material","Crystal")
+	item_amounts = list(2,2)
+	item_outputs = list(/obj/item/implantcase/antirot)
+	time = 30 SECONDS
 	create = 1
 	category = "Resource"
 

@@ -15,6 +15,7 @@
 	var/helpable = 1
 
 	New()
+		..()
 		var/obj/screen/blob/B = new /obj/screen/blob(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
@@ -1057,6 +1058,7 @@
 	var/upgradename = "upgrade"
 
 	New()
+		..()
 		var/obj/screen/blob/B = new /obj/screen/blob(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

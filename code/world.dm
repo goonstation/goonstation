@@ -401,7 +401,7 @@ var/f_color_selector_handler/F_Color_Selector
 			traitList[T.id] = T
 
 		Z_LOG_DEBUG("Preload", "  /obj/bioEffect")
-		var/list/datum/bioEffect/tempBioList = childrentypesof(/datum/bioEffect)
+		var/list/datum/bioEffect/tempBioList = concrete_typesof(/datum/bioEffect, cache=FALSE)
 		for(var/effect in tempBioList)
 			var/datum/bioEffect/E = new effect(1)
 			bioEffectList[E.id] = E        //Caching instances for easy access to rarity and such. BECAUSE THERES NO PROPER CONSTANTS IN BYOND.

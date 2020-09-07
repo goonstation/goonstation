@@ -73,6 +73,7 @@
 	 */
 // Want a mult on your machine process? Put var/mult in its arguments and put mult wherever something could be mangled by lagg
 /obj/machinery/proc/process(var/mult) //<- like that, but in your machine's process()
+	SHOULD_NOT_SLEEP(TRUE)
 	// Called for all /obj/machinery in the "machines" list, approximately once per second
 	// by /datum/controller/game_controller/process() when a game round is active
 	// Any regular action of the machine is executed by this proc.

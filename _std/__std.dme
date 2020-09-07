@@ -57,6 +57,7 @@
 #include "defines\vehicles.dm"
 #include "defines\watermap.dm"
 #include "defines\worldgen.dm"
+#include "defines\_frequency.dm"
 #include "macros\antag_popups.dm"
 #include "macros\antagchecks.dm"
 #include "macros\atmos.dm"

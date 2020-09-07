@@ -79,9 +79,6 @@ Contains:
 	bound_width = 96
 	bound_height = 96
 
-	bound_x = -32
-	bound_y = -32
-
 	var/active = 0
 	var/energy = 10
 	var/warp = 5
@@ -101,11 +98,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 */
 /obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null)
 	src.energy = E
-	pixel_x = -64
-	pixel_y = -64
+	pixel_x = -32
+	pixel_y = -32
 	event()
 	if (Ti)
 		src.Dtime = Ti
+	src.x--
+	src.y--
 	..()
 
 /obj/machinery/the_singularity/process()
@@ -158,9 +157,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (!isarea(X))
 			if (get_dist(src.get_center(), X) <= 2) // why was this a switch before ffs
 				src.Bumped(A)
-				if (A && A.qdeled)
-					A = null
-					X = null
 			else if (istype(X, /atom/movable))
 				var/atom/movable/AM = X
 				if (!AM.anchored)
@@ -1362,19 +1358,19 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 			if(!isnull(S1))
 				power_s += S1.energy
-			if(!isnull(P1))
+			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
 					P1.air_contents.toxins -= 0.001
-			if(!isnull(P2))
+			if(P2?.air_contents)
 				if(CA2.active != 0)
 					power_p += P2.air_contents.toxins
 					P2.air_contents.toxins -= 0.001
-			if(!isnull(P3))
+			if(P3?.air_contents)
 				if(CA3.active != 0)
 					power_p += P3.air_contents.toxins
 					P3.air_contents.toxins -= 0.001
-			if(!isnull(P4))
+			if(P4?.air_contents)
 				if(CA4.active != 0)
 					power_p += P4.air_contents.toxins
 					P4.air_contents.toxins -= 0.001
@@ -1534,8 +1530,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					if("prime")
 						if(!timing)
 							src.timing = 1
-							if(!(src in processing_items))
-								processing_items.Add(src)
+							processing_items |= src
 							src.icon_state = "portgen2"
 
 							// And here (Convair880).
@@ -1567,8 +1562,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		/*
 		if (href_list["time"])
 			src.timing = text2num(href_list["time"])
-			if(timing && !(src in processing_items))
-				processing_items.Add(src)
+			if(timing) processing_items |= src
 				src.icon_state = "portgen2"
 			else
 				src.icon_state = "portgen1"

@@ -17,6 +17,7 @@
 	var/obj/item/device/radio/radio = null
 
 /obj/item/robot_module/New()
+	..()
 	// add contents
 	if (src.include_common_tools)
 		src.add_contents(/datum/robot/module_tool_creator/recursive/module/common)

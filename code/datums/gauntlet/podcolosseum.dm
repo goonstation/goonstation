@@ -375,6 +375,7 @@
 		resetting = 0
 
 	New()
+		..()
 		SPAWN_DBG(0.5 SECONDS)
 			viewing = locate() in world
 			staging = locate() in world
@@ -495,6 +496,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	var/image/health_overlay
 
 	New(var/barLength = 4, var/is_left = 0)
+		..()
 		for (var/i = 1, i <= barLength, i++)
 			var/obj/screen/S = new /obj/screen()
 			var/edge = is_left ? "WEST" : "EAST"

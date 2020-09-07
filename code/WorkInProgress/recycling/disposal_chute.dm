@@ -174,7 +174,7 @@
 		update()
 		return
 
-	hitby(MO as mob|obj)
+	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
 		// Leaves people wondering where the stuff is, assuming they received a PDA alert at all.
 		if (istype(src, /obj/machinery/disposal/mail))
@@ -592,6 +592,7 @@
 	light_style = "cartport"
 	density = 0
 	layer = OBJ_LAYER-0.1
+	plane = PLANE_NOSHADOW_BELOW
 
 	MouseDrop_T(obj/storage/cart/target, mob/user)
 		if (!istype(target) || target.loc != src.loc || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user))
@@ -642,7 +643,7 @@
 		update()
 		return
 
-	hitby(MO as mob|obj)
+	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		if(istype(MO,/mob/living))
 			return ..()
 		return

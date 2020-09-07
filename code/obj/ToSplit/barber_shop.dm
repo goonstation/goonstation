@@ -147,11 +147,10 @@
 	desc = "The #1 hair growth product on the market! WARNING: Some side effects may occur."
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "tonic1"
+	initial_volume = 50
 	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("hairgrownium", 40)
+		..()
+		reagents.add_reagent("hairgrownium", 40)
 
 	on_reagent_change()
 		src.icon_state = "tonic[src.reagents.total_volume ? "1" : "0"]"

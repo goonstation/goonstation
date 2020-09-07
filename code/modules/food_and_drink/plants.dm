@@ -97,7 +97,7 @@
 	plant_reagent = "juice_tomato"
 	validforhat = 1
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
@@ -112,7 +112,7 @@
 	crop_prefix = "seething "
 	desc = "You say tomato, I toolbox you."
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		var/mob/living/carbon/human/H = A
 		var/datum/plantgenes/DNA = src.plantgenes
@@ -472,7 +472,7 @@
 			pool (src)
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		if (ismob(hit_atom) && prob(50))
 			var/mob/M = hit_atom
@@ -543,7 +543,7 @@
 		var/dmg = min(20, src.plantgenes.endurance / 5 + 3)
 		src.damage(hitMob, dmg, dmg + 5, user)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		var/mob/living/carbon/human/user = usr
 
 		if(hit_atom)

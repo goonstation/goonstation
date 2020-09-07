@@ -823,8 +823,7 @@
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	process()
 		if (prob(30) && src.icon_state == "surs-open")

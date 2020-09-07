@@ -139,6 +139,7 @@
 			return
 		var/mob/living/carbon/human/H = owner
 		H.toxloss = 0
+		health_update_queue |= H
 
 /datum/bioEffect/breathless
 	name = "Anaerobic Metabolism"
@@ -167,6 +168,7 @@
 		var/mob/living/carbon/human/H = owner
 		H.oxyloss = 0
 		H.losebreath = 0
+		health_update_queue |= H
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"
@@ -497,7 +499,7 @@ var/list/radio_brains = list()
 
 /datum/bioEffect/blood_overdrive
 	name = "Hemopoiesis Overdrive"
-	desc = "Subject has regenerates blood far faster than the average spaceman."
+	desc = "Subject regenerates blood far faster than the average spaceman."
 	id = "blood_overdrive"
 	probability = 20
 	effectType = EFFECT_TYPE_POWER

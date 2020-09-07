@@ -670,9 +670,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			if("rads")
 				for(var/turf/T in view(5,src.loc))
 					if(!T.reagents)
-						var/datum/reagents/R = new/datum/reagents(1000)
-						T.reagents = R
-						R.my_atom = T
+						T.create_reagents(1000)
 					T.reagents.add_reagent("radium", 20)
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] begins to glow bright green!</span>", 1)
 				return

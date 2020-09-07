@@ -47,6 +47,7 @@
  * return datum/tgui The requested UI.
  */
 /datum/tgui/New(mob/user, datum/src_object, interface, title)
+	..()
 	log_tgui(user,
 		"new [interface] fancy [user.client.preferences.tgui_fancy]",
 		src_object = src_object) // |GOONSTATION-CHANGE| (client.preferences)

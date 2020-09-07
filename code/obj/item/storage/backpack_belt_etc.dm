@@ -112,6 +112,7 @@
 	item_state = "bp_fjallraven_red"
 
 	New()
+		..()
 		if (prob(50))
 			icon_state = "bp_fjallraven_yellow"
 			item_state = "bp_fjallraven_yellow"
@@ -254,8 +255,7 @@
 		return
 
 	proc/activate()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 		if(charge > 0)
 			charge -= 1

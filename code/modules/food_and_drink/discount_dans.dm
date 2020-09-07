@@ -282,7 +282,7 @@
 		boutput(user, "You crack the burrito like a glow stick, activating the heater mechanism.")
 		return
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (prob(10) && T)
 			src.splat()

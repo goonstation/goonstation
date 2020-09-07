@@ -12,10 +12,6 @@
 			bioHolder.mobAppearance.customization_second_color = "#555555"
 			bioHolder.mobAppearance.customization_third_color = "#555555"
 
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
-				abilityHolder.updateButtons()
-
 			real_name = "Cyalume Knight"
 			desc = "A knight of modern times."
 			gender = "male"
@@ -45,6 +41,11 @@
 			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_heal)
 			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_lightning)
 			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_choke)
+
+			sleep(1 SECOND)
+
+			bioHolder.mobAppearance.UpdateMob()
+			abilityHolder.updateButtons()
 
 	bullet_act(obj/projectile/P, mob/meatshield) // deflect energy projectiles, cut bullets
 		var/obj/item/sword/deflecting_sword

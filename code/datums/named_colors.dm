@@ -10,6 +10,7 @@
 	var/b=0		//
 
 	New(textname,red,green,blue)
+		..()
 		name = textname
 		r = red
 		g = green

@@ -2007,6 +2007,7 @@
 	duration = -1
 
 	New(var/datum/item_special/rush/D, var/mob/U, var/atom/T)
+		..()
 		if(!istype(D, /datum/item_special/rush))
 			interrupt(INTERRUPT_ALWAYS)
 		if(!D || !U || !T)

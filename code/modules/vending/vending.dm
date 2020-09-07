@@ -9,6 +9,7 @@
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
 	New(productpath, amount=0, cost=0, hidden=0)
+		..()
 		if (istext(productpath))
 			productpath = text2path(productpath)
 		if (!ispath(productpath))
@@ -454,8 +455,8 @@
 		if (W && W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
 
-/obj/machinery/vending/hitby(M as mob|obj)
-	if (iscarbon(M) && M:throwing && prob(25))
+/obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
+	if (iscarbon(M) && M.throwing && prob(25))
 		src.fall(M)
 		return
 
