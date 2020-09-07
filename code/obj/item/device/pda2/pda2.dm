@@ -49,7 +49,7 @@
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
 	var/mailgroups = list("staff",MGD_PARTY) //What default mail groups the PDA is part of.
 	var/muted_mailgroups = list() //What mail groups should the PDA ignore?
-	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,"ai","sillicon",MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,"janitor",MGD_SPIRITUALAFFAIRS,"engineer","mining",MGD_KITCHEN,"mechanic",MGD_BOTANY,MGD_STATIONREPAIR) //Job-specific mailgroups that cannot be joined or left
+	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,"ai","silicon","AI-Health Alerts","AI-Death Alerts","AI-Sec_Scanner Alerts","AI-Arrest Alerts","AI-Sec_Records Alerts","AI-Cloning Alerts",MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,"janitor",MGD_SPIRITUALAFFAIRS,"engineer","mining",MGD_KITCHEN,"mechanic",MGD_BOTANY,MGD_STATIONREPAIR) //Job-specific mailgroups that cannot be joined or left
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 
@@ -85,7 +85,8 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list("ai") //"special" mailgroup, just recieves everything
+		mailgroups = list("ai","silicon",MGD_PARTY,"AI-Health Alerts","AI-Death Alerts","AI-Sec_Scanner Alerts","AI-Arrest Alerts","AI-Sec_Records Alerts","AI-Cloning Alerts")
+		//6 special groups so that the AI can receive mailbots but still mute them as needed because holy fuck sometimes the sec-scanner alerts go nuts
 
 	cyborg
 		icon_state = "pda-h"
