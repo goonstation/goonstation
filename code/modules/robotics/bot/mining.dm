@@ -153,7 +153,7 @@
 /obj/machinery/bot/mining/proc/pointAtTarget()
 	if (src.target)
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Doomed rock detected!\"</span></span>", 2)
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> points and beeps, \"Doomed rock detected!\"</span></span>", 2)
 		var/obj/decal/point/P = new(src.target)
 		P.pixel_x = target.pixel_x
 		P.pixel_y = target.pixel_y
@@ -209,7 +209,7 @@
 
 
 //////////////////////////////////////
-//////Digbot Actionbar/////////////
+////// Digbot Actionbar /////////////
 //////////////////////////////////////
 
 /datum/action/bar/icon/digbotdig
@@ -269,7 +269,7 @@
 		return true
 
 /datum/action/bar/icon/digbotdig/drill
-	id = "digbot_dig"
+	id = "digbot_drill"
 	icon_state = "lasdrill"
 
 
@@ -288,7 +288,6 @@
 	return !(user.stat || user.restrained())
 
 /datum/digbot_ui/Topic(href, href_list)
-	// boutput(world, "Received topic to pump ui: [list2params(href_list)]")
 	if(!validate_user(usr))
 		return
 	if(href_list["ui_target"] == "digbot_ui")
