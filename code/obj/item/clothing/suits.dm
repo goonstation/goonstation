@@ -1049,7 +1049,7 @@
 
 		setupProperties()
 			..()
-			setProperty("exploprot", 25)
+			setProperty("exploprot", 4)
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 3)
 
@@ -1073,7 +1073,7 @@
 
 		setupProperties()
 			..()
-			setProperty("exploprot", 10)
+			setProperty("exploprot", 2)
 			setProperty("meleeprot", 4)
 			setProperty("rangedprot", 1.5)
 
@@ -1115,7 +1115,7 @@
 
 			setupProperties()
 				..()
-				setProperty("exploprot", 25)
+				setProperty("exploprot", 6)
 
 		unremovable
 			cant_self_remove = 1
