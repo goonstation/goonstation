@@ -658,19 +658,23 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN_DBG(-1)
 		var/matrix/start = matrix(A.transform)
 		var/matrix/target = matrix(A.transform)
-		target.Turn(rand(-45,45))
+		var/last_angle = rand(-45,45)
+		target.Turn(last_angle)
 		A.transform = target
+		var/orig_x = A.pixel_x
+		var/orig_y = A.pixel_y
 
 		for (var/i = 0, (i < 7 && A), i++)
-			target = matrix(start)
-			target.Turn(rand(-45,45))
+			var/new_angle = rand(-45, 45)
+			target = A.transform.Turn(-last_angle + new_angle)
+			last_angle = new_angle
 			A.transform = target
 
-			A.pixel_x = rand(-3,3)
-			A.pixel_y = rand(-2,2)
+			A.pixel_x = orig_x + rand(-3,3)
+			A.pixel_y = orig_y + rand(-2,2)
 			sleep(0.1 SECONDS)
 
-		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform * target.Invert() * start, time = 1, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(A, pixel_x = orig_x, pixel_y = orig_y, transform = UNDO_TRANSFORMATION(start, target, A.transform), time = 1, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/eat_twitch(var/atom/A)
 	var/matrix/squish_matrix = matrix(A.transform)
