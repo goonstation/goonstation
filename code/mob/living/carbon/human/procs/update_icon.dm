@@ -848,24 +848,24 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 					// all this shit goes on the torso anyway
 					if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
-						if(AHOLD.mob_color_flags & DETAIL_1)
-							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_1, MOB_DETAIL_LAYER1)
+						if(AHOLD.mob_color_flags & BODYDETAIL_1)
+							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_1, MOB_BODYDETAIL_LAYER1)
 							human_image.color = AHOLD.customization_first_color_special
 							src.body_standing.overlays += human_image
 
-						if(AHOLD.mob_color_flags & DETAIL_2)
-							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_2, MOB_DETAIL_LAYER1)
+						if(AHOLD.mob_color_flags & BODYDETAIL_2)
+							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_2, MOB_BODYDETAIL_LAYER1)
 							human_image.color = AHOLD.customization_second_color_special
 							src.body_standing.overlays += human_image
 
-						if(AHOLD.mob_color_flags & DETAIL_3)
-							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_3, MOB_DETAIL_LAYER1)
+						if(AHOLD.mob_color_flags & BODYDETAIL_3)
+							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_3, MOB_BODYDETAIL_LAYER1)
 							human_image.color = AHOLD.customization_third_color_special
 							src.body_standing.overlays += human_image
 
-						if(AHOLD.mob_color_flags & DETAIL_OVERSUIT_1)	// need more oversuits? Make more of these!
+						if(AHOLD.mob_color_flags & BODYDETAIL_OVERSUIT_1)	// need more oversuits? Make more of these!
 							human_detail_image = image(icon = AHOLD.body_icon, icon_state = AHOLD.mob_oversuit_1, layer = MOB_OVERSUIT_LAYER1)
-							if(AHOLD.mob_color_flags & DETAIL_OVERSUIT_IS_COLORFUL)
+							if(AHOLD.mob_color_flags & BODYDETAIL_OVERSUIT_IS_COLORFUL)
 								human_detail_image.color = AHOLD.customization_first_color_special
 							else
 								human_detail_image.color = "#FFFFFF"

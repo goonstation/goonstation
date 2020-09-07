@@ -15,7 +15,7 @@
 	// (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD)
 	var/mutant_color_flags = (HAS_UNUSED_HAIR_COLOR | HEAD_HAS_OWN_COLORS)
 	// if you want to use all the details, plus oversuit =
-	// (DETAIL_1 | DETAIL_2 | DETAIL_3 | OVERSUIT_USES_PREF_COLOR_1)
+	// (BODYDETAIL_1 | BODYDETAIL_2 | BODYDETAIL_3 | OVERSUIT_USES_PREF_COLOR_1)
 
 	// set to 1 to override the limb attack actions. Mutantraces may use the limb action within custom_attack(),
 	var/override_attack = 1	// but they must explicitly specify if they're overriding via this var
@@ -38,9 +38,7 @@
 	var/special_head = null	// The special head we're going to use, if any
 	var/special_head_state = "head"	// The state of the head we're using
 	var/mutant_folder = 'icons/effects/genetics.dmi'	// Look in this folder for all the limbs
-
-	var/tail = TAIL_NONE // What tail do we have? Or are supposed to have?
-	var/tail_type = null
+	var/list/mutant_organs = list() // Format: "entry_in_organlist", /obj/item/organ/path
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -110,11 +108,12 @@
 		if(ishuman(M))
 			AppearanceSetter(M, "set")
 			LimbSetter(M, "set")
+			var/droptail = 1
+			if(ischangeling(M))
+				droptail = 0
+			organ_mutator(M, "set", droptail)
 			src.limb_list.Add(l_limb_arm_type_mutantrace, r_limb_arm_type_mutantrace, l_limb_leg_type_mutantrace, r_limb_leg_type_mutantrace)
 			src.mob = M
-			var/datum/appearanceHolder/AHM = mob?.bioHolder?.mobAppearance
-			if (AHM)
-				AHM.mutant_race = src.type
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
@@ -162,10 +161,10 @@
 				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
 				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
 				H.image_cust_three.pixel_y = initial(H.image_cust_three.pixel_y)
-				var/datum/appearanceHolder/AHM = H?.bioHolder?.mobAppearance
-				if (AHM)
-					AHM.mutant_race = null
-
+				var/droptail = 1
+				if(ischangeling(H))
+					droptail = 0
+				organ_mutator(H, "reset", droptail)
 				AppearanceSetter(H, "reset")
 				LimbSetter(H, "reset")
 				qdel(src.limb_list)
@@ -298,8 +297,6 @@
 				//////////////HEAD//////////////////
 				if (src.special_head)
 					L.organHolder.head.MakeMutantHead(src.special_head)
-				//tail
-				set_tail(L, src.tail, 0)
 
 			if ("reset")
 				// And the other way around (Convair880).
@@ -345,8 +342,6 @@
 							limb.remove_stage = 0
 				//////////////HEAD//////////////////
 				L.organHolder.head.MakeMutantHead(HEAD_HUMAN)
-				//tail
-				set_tail(L, TAIL_NONE, 0)
 
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
@@ -357,43 +352,50 @@
 			return rgb(L["r"], L["g"], L["b"])
 		return rgb(22, 210, 22)
 
-	// Removes the mob's current tail (if any) and replaces it with the tail specified
-	// Third var determines if we drop the tail (0) or banish it to the shadow realm (1)
-	// Defaults to just dropping it on the ground
-	proc/set_tail(var/mob/living/carbon/human/Tf as mob, var/tailnum as num, var/deletail as num)
-		if(!ishuman(Tf) || tailnum > TAIL_ROACH || tailnum < TAIL_NONE)
-			return 0
+	proc/organ_mutator(var/mob/living/carbon/human/O, var/mode as text, var/drop_tail)
+		if(!ishuman(O) || !(O?.organHolder))
+			return // hard to mess with someone's organs if they can't have any
 
-		if(Tf.organHolder.tail)	// dump the old tail, if they have one
-			if(deletail)
-				qdel(Tf.organHolder.tail)
-			else
-				if (!istype(Tf.organHolder.tail, /obj/item/organ/tail/bone))
-					Tf.visible_message("<span class='notice'>[Tf]'s tail falls off, and a new one appears in its place!</span>", "<span class='notice'>Your tail falls off, and a new one appears in its place!</span>")
-				Tf.organHolder.drop_organ("tail")
+		var/datum/organHolder/OHM = O.organHolder
 
-		switch(tailnum)	// Mutantraces come with a free, new tail
-			if (TAIL_NONE)	// Unless you shouldn't have one
-				Tf.organHolder.tail = null
-			if (TAIL_MONKEY)
-				Tf.organHolder.tail = new /obj/item/organ/tail/monkey(Tf, Tf.organHolder)
-			if (TAIL_LIZARD)
-				Tf.organHolder.tail = new /obj/item/organ/tail/lizard(Tf, Tf.organHolder)
-			if (TAIL_COW)
-				Tf.organHolder.tail = new /obj/item/organ/tail/cow(Tf, Tf.organHolder)
-			if (TAIL_WEREWOLF)
-				Tf.organHolder.tail = new /obj/item/organ/tail/wolf(Tf, Tf.organHolder)
-			if (TAIL_SKELETON)
-				Tf.organHolder.tail = new /obj/item/organ/tail/bone(Tf, Tf.organHolder)
-			if (TAIL_SEAMONKEY)
-				Tf.organHolder.tail = new /obj/item/organ/tail/seamonkey(Tf, Tf.organHolder)
-			if (TAIL_CAT)
-				Tf.organHolder.tail = new /obj/item/organ/tail/cat(Tf, Tf.organHolder)
-			if (TAIL_ROACH)
-				Tf.organHolder.tail = new /obj/item/organ/tail/roach(Tf, Tf.organHolder)
+		switch(mode)
+			if("set")
+				if(!src.mutant_organs.len)
+					return // All done!
+				else
+					for(var/mutorgan in src.mutant_organs)
+						if (mutorgan == "tail") // Not everyone has a tail. So just force it in
+							if (OHM.tail)
+								var/obj/organ_drop = OHM.tail
+								OHM.drop_organ("tail")
+								if (!drop_tail)
+									qdel(organ_drop)
+						else // But everyone has everything else.
+							var/obj/item/organ/org = OHM.get_organ(mutorgan)
+							if (!istype(org) ||istype(org, /obj/item/organ) && org?.robotic) // No free organs, trade-ins only, keep ur robotic stuff
+								continue
+						var/obj/item/organ_get = src.mutant_organs[mutorgan]
+						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
+					return
+			if("reset")
+				if(!src.mutant_organs.len)
+					return // All done!
+				else
+					for(var/mutorgan in src.mutant_organs)
+						if (mutorgan == "tail") // Not everyone has a tail. So just force it in
+							if (OHM.tail)
+								var/obj/organ_drop = OHM.tail
+								OHM.drop_organ("tail")
+								if (!drop_tail)
+									qdel(organ_drop)
+						else // But everyone has everything else.
+							var/obj/item/organ/org = OHM.get_organ(mutorgan)
+							if (!istype(org) ||istype(org, /obj/item/organ) && org?.robotic) // No free organs, trade-ins only, keep ur robotic stuff
+								continue
+							var/obj/item/organ_get = OHM.organ_list[mutorgan] // Get us a new stock human-ass organ
+							OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
+					return
 
-		Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-		return 1
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
@@ -532,12 +534,11 @@
 	icon_state = "lizard"
 	allow_fat = 1
 	override_attack = 0
-	mutant_appearance_flags = (IS_MUTANT | HAS_SPECIAL_SKINTONE | HAS_HUMAN_EYES | HAS_SPECIAL_HEAD | HAS_DETAIL_HAIR | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_A_TAIL | HAS_SPECIAL_HEAD)
-	mutant_color_flags = (DETAIL_2 | HAS_HAIR_COLORED_DETAILS | SKINTONE_USES_PREF_COLOR_1 | FIX_COLORS)
+	mutant_appearance_flags = (IS_MUTANT | HAS_SPECIAL_SKINTONE | HAS_HUMAN_EYES | HAS_SPECIAL_HEAD | HAS_BODYDETAIL_HAIR | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_SPECIAL_HEAD)
+	mutant_color_flags = (BODYDETAIL_2 | HAS_HAIR_COLORED_DETAILS | SKINTONE_USES_PREF_COLOR_1 | FIX_COLORS)
 	voice_override = "lizard"
-	tail = TAIL_LIZARD
 	special_head = HEAD_LIZARD
-	tail_type = /obj/item/organ/tail/lizard
+	mutant_organs = list("tail" = /obj/item/organ/tail/lizard)
 	mutant_folder = 'icons/mob/lizard.dmi'
 	special_hair_3 = "head-detail_1"
 	detail_2 = "lizard_detail-1"
@@ -546,12 +547,23 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
 
+	New(mob/living/carbon/human/M)
+		. = ..()
+		if(ishuman(M))
+			M.mob_flags |= SHOULD_HAVE_A_TAIL
+
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
 		mob.see_invisible = 1
 
 	say_filter(var/message)
 		return replacetext(message, "s", stutter("ss"))
+
+	disposing()
+		if(ishuman(mob))
+			if (mob.mob_flags & SHOULD_HAVE_A_TAIL)
+				mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		. = ..()
 
 /datum/mutantrace/zombie
 	name = "zombie"
@@ -746,9 +758,7 @@
 	mutant_folder = 'icons/mob/skeleton.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
-
-	tail = TAIL_SKELETON
-	tail_type = /obj/item/organ/tail/bone
+	mutant_organs = list("tail" = /obj/item/organ/tail/bone)
 	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/left
@@ -761,11 +771,16 @@
 		..()
 		if(ishuman(M))
 			M.mob_flags |= IS_BONER
+			M.mob_flags |= SHOULD_HAVE_A_TAIL
 
 	disposing()
-		if (ishuman(mob) && (mob.mob_flags & IS_BONER))
-			mob.mob_flags &= ~IS_BONER
-		..()
+		if (ishuman(mob))
+			if (mob.mob_flags & IS_BONER)
+				mob.mob_flags &= ~IS_BONER
+			if (mob.mob_flags & SHOULD_HAVE_A_TAIL)
+				mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		. = ..()
+
 
 /*
 /datum/mutantrace/ape
@@ -885,12 +900,13 @@
 	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 	mutant_folder = 'icons/mob/werewolf.dmi'
 	special_head = HEAD_WEREWOLF
-	tail = TAIL_WEREWOLF
-	tail_type = /obj/item/organ/tail/wolf
+	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 
 	New()
 		..()
 		if (mob)
+			if(ishuman(mob))
+				mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
@@ -924,7 +940,10 @@
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name
 
-		return ..()
+		if(ishuman(mob))
+			if (mob.mob_flags & SHOULD_HAVE_A_TAIL)
+				mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		. = ..()
 
 	sight_modifier()
 		if (mob && ismob(mob))
@@ -1049,17 +1068,20 @@
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	var/had_tablepass = 0
 	var/table_hide = 0
-	tail = TAIL_MONKEY
-	tail_type = /obj/item/organ/tail/monkey
+	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
 
 	New(var/mob/living/carbon/human/M)
 		M.add_stam_mod_max("monkey", -50)
 		..()
+		if(ishuman(M))
+			M.mob_flags |= SHOULD_HAVE_A_TAIL
 
 	disposing()
 		if (ishuman(mob))
 			mob:remove_stam_mod_max("monkey")
-		..()
+			if (mob.mob_flags & SHOULD_HAVE_A_TAIL)
+				mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		. = ..()
 
 	say_verb()
 		return "chimpers"
@@ -1239,8 +1261,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/left
-	tail = TAIL_SEAMONKEY
-	tail_type = /obj/item/organ/tail/seamonkey
+	mutant_organs = list("tail" = /obj/item/organ/tail/seamonkey)
 
 /datum/mutantrace/martian
 	name = "martian"
@@ -1335,8 +1356,7 @@
 	name = "roach"
 	icon_state = "roach"
 	override_attack = 0
-	tail = TAIL_ROACH
-	tail_type = /obj/item/organ/tail/roach
+	mutant_organs = list("tail" = /obj/item/organ/tail/roach)
 	mutant_folder = 'icons/mob/roach.dmi'
 	special_head = HEAD_ROACH
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/right
@@ -1345,6 +1365,10 @@
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
 	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 
+	New(mob/living/carbon/human/M)
+		. = ..()
+		if(ishuman(M))
+			M.mob_flags |= SHOULD_HAVE_A_TAIL
 
 	say_verb()
 		return "clicks"
@@ -1353,14 +1377,19 @@
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
 		mob.see_invisible = 1
 
+	disposing()
+		if(ishuman(mob))
+			if (mob.mob_flags & SHOULD_HAVE_A_TAIL)
+				mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		. = ..()
+
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)
 	name = "cat"
 	icon_state = "cat"
 	jerk = 1
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
-	tail = TAIL_CAT
-	tail_type = /obj/item/organ/tail/cat
+	mutant_organs = list("tail" = /obj/item/organ/tail/cat)
 	mutant_folder = 'icons/mob/cat.dmi'
 	special_head = HEAD_CAT
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/right
@@ -1369,12 +1398,23 @@
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
 	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 
+	New(mob/living/carbon/human/M)
+		. = ..()
+		if(ishuman(M))
+			M.mob_flags |= SHOULD_HAVE_A_TAIL
+
 	say_verb()
 		return "meows"
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
 		mob.see_invisible = 1
+
+	disposing()
+		if(ishuman(mob))
+			if (mob.mob_flags & SHOULD_HAVE_A_TAIL)
+				mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		. = ..()
 
 
 /datum/mutantrace/amphibian
@@ -1676,8 +1716,7 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "cow"
-	tail = TAIL_COW
-	tail_type = /obj/item/organ/tail/cow
+	mutant_organs = list("tail" = /obj/item/organ/tail/cow)
 	mutant_folder = 'icons/mob/cow.dmi'
 	special_head = HEAD_COW
 	special_hair_1 = "head-detail1"
@@ -1686,8 +1725,8 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/left
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_DETAIL_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES | HAS_A_TAIL | HAS_EXTRA_DETAILS)
-	mutant_color_flags = (HAS_HAIR_COLORED_DETAILS | HEAD_HAS_OWN_COLORS | DETAIL_OVERSUIT_1)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_BODYDETAIL_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS)
+	mutant_color_flags = (HAS_HAIR_COLORED_DETAILS | HEAD_HAS_OWN_COLORS | BODYDETAIL_OVERSUIT_1)
 
 
 	New(var/mob/living/carbon/human/H)
@@ -1696,7 +1735,7 @@
 			mob.update_face()
 			mob.update_body()
 			mob.update_clothing()
-
+			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 
 			H.blood_id = "milk"
 			H.blood_color = "FFFFFF"
@@ -1707,7 +1746,9 @@
 			var/mob/living/carbon/human/H = mob
 			H.blood_id = initial(H.blood_id)
 			H.blood_color = initial(H.blood_color)
-		..()
+			if (H.mob_flags & SHOULD_HAVE_A_TAIL)
+				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		. = ..()
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")

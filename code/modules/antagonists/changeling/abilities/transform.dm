@@ -96,59 +96,12 @@
 		logTheThing("combat", holder.owner, target_name, "transforms into [target_name] as a changeling [log_loc(holder.owner)].")
 		var/mob/living/carbon/human/C = holder.owner
 		var/datum/bioHolder/D = H.absorbed_dna[target_name]
-		var/datum/mutantrace/what_they_were = D.mobAppearance.mutant_race
 		C.bioHolder.CopyOther(D)
-
-		// now we need to swap out our limbs with whatever they had
-		// cus limb appearance is stored in the limb and whatnot
-
-		var/list/limbs_to_check = list(C.limbs.l_arm, C.limbs.r_arm, C.limbs.l_leg, C.limbs.r_leg)
-		var/list/human_limbs = list(/obj/item/parts/human_parts/arm/left, /obj/item/parts/human_parts/arm/right, /obj/item/parts/human_parts/leg/left, /obj/item/parts/human_parts/leg/right)
-		var/list/limbs_to_add = list()
-
-		if (what_they_were?.limb_list) // setup the limbs we should have based on their DNA
-			limbs_to_add = what_they_were.limb_list
-		else // they're human or don't have any special limbs, okay neat
-			limbs_to_add = human_limbs
-
-		var/limb_list_index = 0
-		for(var/obj/item/parts/limb in limbs_to_check)
-			limb_list_index ++	// no index skipping, please
-			if (limb_list_index > 4)
-				break
-			if(!limb) // we're missing that limb, and tf isnt gonna help that
-				continue
-			if (istype(limb, /obj/item/parts/human_parts/)) // will probably overwrite anything that isnt robot arms
-				var/obj/item/parts/add_this_limb = limbs_to_add[limb_list_index]
-				if(!add_this_limb)
-					add_this_limb = human_limbs[limb_list_index]
-				limb.delete() // we dont care about mundane limbs. Plus we can just tf into a wolf to get werewolf arms anyway
-				switch (limb_list_index)
-					if (1)
-						C.limbs.l_arm = new add_this_limb(C, D.mobAppearance)
-					if (2)
-						C.limbs.r_arm = new add_this_limb(C, D.mobAppearance)
-					if (3)
-						C.limbs.l_leg = new add_this_limb(C, D.mobAppearance)
-					if (4)
-						C.limbs.r_leg = new add_this_limb(C, D.mobAppearance)
-			else // Special limbs, like robot stuff
-				continue // let's keep those
-
-		// if they had a tail, you get one too
-		if(C.organHolder.tail)
-			qdel(C.organHolder.tail)
-			C.organHolder.tail = null
-			C.organHolder.organ_list["tail"] = null
-		if(what_they_were?.tail_type)	// dump the old tail, if they have one
-			var/obj/item/organ/tail/newtail = what_they_were.tail_type
-			C.organHolder.tail = new newtail(C, C.organHolder)
-			C.organHolder.organ_list["tail"] = newtail
 		C.real_name = target_name
 		C.bioHolder.RemoveEffect("husk")
 		C.organHolder.head.update_icon()
 		if (C.bioHolder?.mobAppearance?.mutant_race)
-			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race)
+			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race.type)
 		else
 			C.set_mutantrace(null)
 

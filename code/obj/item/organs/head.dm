@@ -163,7 +163,7 @@
 				our_hair_icon = AHead.customization_icon
 			else if (AHead.mob_appearance_flags & HAS_SPECIAL_HAIR) // or special hair
 				our_hair_icon = AHead.customization_icon_special
-			else if (AHead.mob_appearance_flags & HAS_DETAIL_HAIR) // or hair that isnt really hair but applied the same way
+			else if (AHead.mob_appearance_flags & HAS_BODYDETAIL_HAIR) // or hair that isnt really hair but applied the same way
 				our_hair_icon = AHead.head_icon
 			src.head_image_cust_one = image(icon = our_hair_icon, layer = MOB_HAIR_LAYER2)
 			src.head_image_cust_two = image(icon = our_hair_icon, layer = MOB_HAIR_LAYER2)
@@ -183,7 +183,7 @@
 					src.head_image_cust_one.icon_state = hair_list[AHead.customization_first_special]
 					src.head_image_cust_two.icon_state = hair_list[AHead.customization_second_special]
 					src.head_image_cust_three.icon_state = hair_list[AHead.customization_third_special]
-				else if (AHead.mob_appearance_flags & HAS_DETAIL_HAIR) // no list to pick from, defined by mutantraces
+				else if (AHead.mob_appearance_flags & HAS_BODYDETAIL_HAIR) // no list to pick from, defined by mutantraces
 					src.head_image_cust_one.icon_state = AHead.customization_first_special
 					src.head_image_cust_two.icon_state = AHead.customization_second_special
 					src.head_image_cust_three.icon_state = AHead.customization_third_special
