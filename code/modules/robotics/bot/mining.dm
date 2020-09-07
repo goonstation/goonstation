@@ -217,7 +217,8 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "digbot_dig"
 	icon = 'icons/obj/items/mining.dmi'
-	icon_state = "powerpick"
+	icon_state = "" //intentionaly blank
+	//The pick-variant has a mining animation, but the drill variant does not - and overrides icon_state
 	var/obj/machinery/bot/mining/bot
 	var/turf/simulated/wall/asteroid/target
 
