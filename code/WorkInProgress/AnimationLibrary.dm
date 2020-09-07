@@ -996,7 +996,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/animate_flip(var/atom/A, var/T)
-	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T)
+	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T, flags=ANIMATION_PARALLEL)
 	animate(transform = matrix(A.transform, 180, MATRIX_ROTATE), time = T)
 
 
