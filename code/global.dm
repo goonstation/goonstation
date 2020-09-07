@@ -32,8 +32,6 @@ var/global
 
 	turf/buzztile = null
 
-	list/list/by_type = list() // contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
-
 	obj/screen/renderSourceHolder
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
@@ -42,20 +40,16 @@ var/global
 	list/clients = list()
 	list/mobs = list()
 	list/ai_mobs = list()
-	list/atmos_machines = list() // need another list to pull atmos machines out of the main machine loop and in with the pipe networks
 	list/processing_items = list()
 	list/health_update_queue = list()
 	list/processing_fluid_groups = list()
 	list/processing_fluid_spreads = list()
 	list/processing_fluid_drains = list()
 	list/processing_fluid_turfs = list()
-	list/light_generating_fluid_turfs = list()
 	list/warping_mobs = list()
 	datum/hotspot_controller/hotspot_controller = new
 		//items that ask to be called every cycle
 
-	list/critters = list()
-	list/pets = list() //station pets
 	list/muted_keys = list()
 
 	server_start_time = 0
@@ -88,11 +82,7 @@ var/global
 
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
 
-	list/pods_and_cruisers = list() //things that we want enemy gunbots or turrets etc to target that are not mobs (keep this list small and use it for vehicles mainly)
-
 	list/spacePushList = list()
-
-	list/nervous_mobs = list()
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
@@ -496,13 +486,6 @@ var/global
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
 
-	list/shittybills = list()
-	list/johnbills = list()
-	list/otherbills = list()
-	list/teleport_jammers = list()
-
-
-
 	// Controllers
 	datum/research/disease/disease_research = new()
 	datum/research/artifact/artifact_research = new()
@@ -567,9 +550,6 @@ var/global
 
 	// list of miscreants since mode is irrelevant
 	list/miscreants = list()
-
-	// list of ghost-respawn critters for objective tracking
-	list/reincarnated_critters = list()
 
 	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
 	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
@@ -643,7 +623,7 @@ var/global
 
 	pregameHTML = null
 
-	list/cooldowns = list()
+	list/cooldowns
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
 
@@ -739,7 +719,6 @@ var/global
 /proc/sendItemIcons(var/client/C)
 	for (var/key in browse_item_icons)
 		getItemIcon(key = key, C = C)
-		LAGCHECK(LAG_HIGH)
 
 /// Sends all item icons to all clients. Used at world startup to preload things.
 /proc/sendItemIconsToAll()

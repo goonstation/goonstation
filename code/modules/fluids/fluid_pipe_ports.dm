@@ -21,11 +21,11 @@
 			boutput(user, "You open the fluid pipe valve.")
 
 	New()
-		atmos_machines.Add(src)
+		START_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
 		..()
 
 	disposing()
-		atmos_machines.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
 		..()
 
 	proc/process()
@@ -63,11 +63,11 @@
 			boutput(user, "You open the fluid pipe valve.")
 
 	New()
-		atmos_machines.Add(src)
+		START_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
 		..()
 
 	disposing()
-		atmos_machines.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
 		..()
 
 	proc/process()

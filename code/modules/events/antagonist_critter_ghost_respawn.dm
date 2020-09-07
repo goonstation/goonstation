@@ -23,6 +23,7 @@
 		return dropped_items
 
 	New(potential_drop_items, remove_dropped_items = 0, number_of_rolls = 1, percent_droprate = 100, pity_drop_atleast_one = 0)
+		..()
 		src.potential_drop_items = potential_drop_items
 		src.remove_dropped_items = remove_dropped_items
 		src.number_of_rolls = number_of_rolls
@@ -46,6 +47,7 @@
 		return items_to_drop
 
 	New(critter_types, drop_tables)
+		..()
 		src.critter_types = critter_types
 		src.drop_tables = drop_tables
 

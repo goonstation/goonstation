@@ -160,7 +160,9 @@ var/mutable_appearance/fluid_ma
 		fluid_ma.icon_state = "15"
 		fluid_ma.alpha = 255
 		fluid_ma.color = "#ffffff"
+		fluid_ma.overlays = null
 		src.appearance = fluid_ma
+		src.overlay_refs = null // setting appearance removes our overlays!
 
 		finalcolor = "#ffffff"
 		finalalpha = 100
@@ -245,12 +247,12 @@ var/mutable_appearance/fluid_ma
 		if (A.event_handler_flags & USE_FLUID_ENTER)
 			A.EnteredFluid(src,oldloc)
 
-	proc/force_mob_to_ingest(var/mob/M)//called when mob is drowning
+	proc/force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
 		var/react_volume = src.amt > 10 ? (src.amt / 2) : (src.amt)
-		react_volume = min(react_volume,20)
+		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 		src.group.reagents.reaction(M, INGEST, react_volume,1,src.group.members.len)
@@ -313,7 +315,7 @@ var/mutable_appearance/fluid_ma
 
 		for(var/A in src.loc)
 			var/atom/atom = A
-			if (atom && atom & FLUID_SUBMERGE)
+			if (atom && atom.flags & FLUID_SUBMERGE)
 				var/mob/living/M = A
 				var/obj/O = A
 				if (istype(M))
@@ -607,8 +609,6 @@ var/mutable_appearance/fluid_ma
 			src.update_perspective_overlays()
 
 	proc/update_perspective_overlays() // fancy perspective overlaying
-		return //TEMPORARILY DISABLED as it is causing shittons of runtimes ( ithink byond bug broke somethin??)
-		/*
 		if (icon_state != "15") return
 		var/blocked = 0
 		for( var/dir in cardinal )
@@ -636,7 +636,6 @@ var/mutable_appearance/fluid_ma
 				display_overlay("5",32,32) //northwest
 			else
 				clear_overlay("5") //northwest
-		*/
 
 	//perspective overlays
 	proc/display_overlay(var/overlay_key, var/pox, var/poy)

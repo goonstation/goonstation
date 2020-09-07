@@ -72,7 +72,7 @@ proc/ClearBadsmokeRefs(var/atom/A)
 					pool(smoke)
 					continue
 				step(smoke,direction)
-			SPAWN_DBG(150+rand(10,30))
-				if (smoke)
-					pool(smoke)
-				src.total_smoke--
+			sleep(150+rand(10,30))
+			if (smoke)
+				pool(smoke)
+			src.total_smoke--

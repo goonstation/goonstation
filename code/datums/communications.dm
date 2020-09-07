@@ -129,8 +129,7 @@ datum/radio_frequency
 				signal.dispose()
 			else if (signal)
 				signal.wipe()
-				if (!(signal in reusable_signals))
-					reusable_signals += signal
+				reusable_signals |= signal
 			LAGCHECK(LAG_MED)
 
 		check_for_jammer(obj/source)

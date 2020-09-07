@@ -218,6 +218,7 @@
 							return
 						else
 							var/obj/item/clothing/head/butt/cyberbutt/new_organ = new
+							affected_mob.organHolder.drop_organ("butt")
 							affected_mob.organHolder.receive_organ(new_organ,"butt")
 							boutput(affected_mob, "<span class='alert'>You butt fall off!</span>")
 							affected_mob.emote("scream")

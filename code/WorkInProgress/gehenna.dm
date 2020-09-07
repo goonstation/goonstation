@@ -9,13 +9,14 @@
 	var/targetZ = 1 // target z-level to push it's contents to
 	var/xOffset = 0 // use only for pushing to the same z-level
 	var/yOffset = 0 // use only for pushing to the same z-level
+	add_to_landmarks = FALSE
 
 	New()
 		var/turf/greasedupFrenchman = loc
 		greasedupFrenchman.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 		greasedupFrenchman.vistarget.warptarget = greasedupFrenchman
 		greasedupFrenchman.updateVis()
-		qdel(src) // vaccinate your children
+		..()
 
 
 /turf/var/turf/vistarget = null	// target turf for projecting its contents elsewhere

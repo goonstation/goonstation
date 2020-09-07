@@ -153,6 +153,13 @@
 	/obj/item/device/multitool,
 	/obj/item/device/flash,
 	/obj/item/stamp/ce,
+#ifdef UNDERWATER_MAP
+	/obj/item/clothing/suit/space/diving/engineering,
+	/obj/item/clothing/head/helmet/space/engineer/diving,
+#else
+	/obj/item/clothing/suit/space/engineer,
+	/obj/item/clothing/head/helmet/space/engineer,
+#endif
 	/obj/item/device/radio/headset/command/ce)
 
 /* ==================== */

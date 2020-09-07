@@ -65,6 +65,8 @@
 
 	var/login_success = 0
 
+	var/view_tint
+
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
 #ifdef PROC_LOGGING
@@ -122,10 +124,10 @@
 /client/Del()
 	if (player_capa && src.login_success)
 		player_cap_grace[src.ckey] = TIME + 2 MINUTES
-
+	/* // THIS THING IS BREAKING THE REST OF THE PROC FOR SOME REASON AND I HAVE NO IDEA WHY
 	if (current_state < GAME_STATE_FINISHED)
 		ircbot.event("logout", src.key)
-
+	*/
 	logTheThing("admin", src, null, " has disconnected.")
 
 	src.images.Cut() //Probably not needed but eh.
@@ -405,6 +407,7 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
+		src.mob.reset_keymap()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
@@ -527,6 +530,9 @@
 		ignore_sound_flags |= SOUND_VOX
 
 	src.reputations = new(src)
+
+	// Set view tint
+	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
 
 	if(src.holder && src.holder.level >= LEVEL_CODER)
 		src.control_freak = 0
@@ -986,7 +992,7 @@ var/global/curr_day = null
 			src.Browse(null, "window=resourcePreload")
 			return
 
-	..()
+	. = ..()
 	return
 
 /client/proc/mute(len = -1)
@@ -1086,6 +1092,12 @@ var/global/curr_day = null
 	set name ="apply-depth-shadow"
 
 	apply_depth_filter() //see _plane.dm
+
+/client/verb/apply_view_tint()
+	set hidden = 1
+	set name ="apply-view-tint"
+
+	view_tint = !view_tint
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.

@@ -328,8 +328,7 @@ Obsidian Crown
 		cant_other_remove = 1
 		if (!src.processing)
 			src.processing++
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 
 		if (istype(user.reagents)) //Protect them from poisions! (And coincidentally healing chems OH WELL)
 			user.reagents.maximum_volume = 0

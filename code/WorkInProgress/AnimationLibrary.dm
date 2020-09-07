@@ -71,10 +71,9 @@
 	if (!istype(A))
 		return
 	//A.alpha = 200
-	var/matrix/M = matrix()
-	M.Scale(0.6, 1)
-	animate(A, transform=M, time = 3,easing = BOUNCE_EASING)
-	animate(transform=null, time = 3,easing = BOUNCE_EASING)
+	var/matrix/M = matrix(A.transform)
+	animate(A, transform = A.transform.Scale(0.6, 1), time = 3,easing = BOUNCE_EASING)
+	animate(transform = M, time = 3,easing = BOUNCE_EASING)
 	return
 
 /proc/animate_flockdrone_item_absorb(var/atom/A)
@@ -994,14 +993,10 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(!istype(A))
 		return
 
-	var/matrix/M = matrix()
-	if (A.shrunk)
-		M *= (0.75 ** A.shrunk)
-
 	if(stand)
-		animate(A, pixel_x = 0, pixel_y = 0, transform = M, time = 3, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = 0, transform = null, time = 3, easing = LINEAR_EASING)
 	else
-		animate(A, pixel_x = 0, pixel_y = -4, transform = M.Turn(90), time = 2, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(90), time = 2, easing = LINEAR_EASING)
 
 /proc/animate_flip(var/atom/A, var/T)
 	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T)

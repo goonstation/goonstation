@@ -307,10 +307,8 @@
 	src.safety = 0
 	src.part_fs.timing = 1
 	src.part_fs.c_state(1)
-	if (!(src in processing_items))
-		processing_items.Add(src)
-	if (!(src.part_fs in processing_items))
-		processing_items.Add(src.part_fs)
+	processing_items |= src
+	processing_items |= src.part_fs
 	src.dispatch_event("prime")
 
 	command_alert("A canister bomb is primed in [get_area(src)] at coordinates (<b>X</b>: [src.master.x], <b>Y</b>: [src.master.y], <b>Z</b>: [src.master.z])! It is set to go off in [src.part_fs.time] seconds.")

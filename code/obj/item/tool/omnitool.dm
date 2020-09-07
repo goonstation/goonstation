@@ -267,10 +267,8 @@
 
 	New()
 		. = ..()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("fuel", 20)
+		src.create_reagents(20)
+		reagents.add_reagent("fuel", 20)
 
 
 

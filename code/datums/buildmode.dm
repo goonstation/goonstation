@@ -2,6 +2,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 /datum/buildmode
 	var/list/extra_buttons = list()
 	New(var/datum/buildmode_holder/H)
+		..()
 		holder = H
 
 	// Called when mode is selected
@@ -58,6 +59,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	var/dir = SOUTH
 
 	New(var/client/C)
+		..()
 		owner = C
 		button_dir = new(null, src)
 		button_help = new(null, src)

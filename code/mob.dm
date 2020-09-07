@@ -216,7 +216,6 @@
 //end of needed for timestop
 	var/dir_locked = FALSE
 
-	var/list/cooldowns = null
 	var/list/mob_properties
 
 	var/last_move_dir = null
@@ -239,7 +238,6 @@
 	huds = new
 	render_special = new
 	traitHolder = new(src)
-	cooldowns = new
 	if (!src.bioHolder)
 		src.bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
@@ -395,7 +393,8 @@
 	src.last_client = src.client
 	src.apply_camera(src.client)
 	src.update_cursor()
-	src.reset_keymap()
+	if(src.client.preferences)
+		src.reset_keymap()
 
 	src.client.mouse_pointer_icon = src.cursor
 
@@ -986,7 +985,8 @@
 
 /mob/proc/movement_delay(var/atom/move_target = 0)
 	.= 2 + movement_delay_modifier
-	. *= max(src?.pushing.p_class, 1)
+	if (src.pushing)
+		. *= max(src.pushing.p_class, 1)
 
 /mob/proc/Life(datum/controller/process/mobs/parent)
 	return
@@ -1926,13 +1926,13 @@
 		src.layer=0
 		src.plane = PLANE_UNDERFLOOR
 		animate_slide(the_turf, 0, 0, duration)
-		SPAWN_DBG(duration+5)
-			src.death(1)
-			var/mob/dead/observer/newmob = ghostize()
-			newmob.corpse = null
+		sleep(duration+5)
+		src.death(1)
+		var/mob/dead/observer/newmob = ghostize()
+		newmob.corpse = null
 
-			qdel(floorcluwne)
-			qdel(src)
+		qdel(floorcluwne)
+		qdel(src)
 
 /mob/proc/buttgib(give_medal)
 	if (isobserver(src)) return
@@ -2220,11 +2220,11 @@
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
 
-/mob/throw_impact(atom/hit, list/params)
+/mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(!isturf(hit) || hit.density)
-		if (throw_traveled <= 410)
+		if (thr?.get_throw_travelled() <= 410)
 			if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
-				random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 				if (!src.hasStatus("weakened"))
 					src.changeStatus("weakened", 2 SECONDS)
 					src.force_laydown_standup()
@@ -2714,9 +2714,8 @@
 		newbody.set_loc(animation.loc)
 		qdel(animation)
 		newbody.anchored = 1 // Stop running into the lava every half second jeez!
-		SPAWN_DBG(4 SECONDS)
-			reset_anchored(newbody)
-	return
+		sleep(4 SECONDS)
+		reset_anchored(newbody)
 
 /mob/proc/damn()
 	if(!src.mind)
@@ -2773,11 +2772,9 @@
 		src.plane = PLANE_UNDERFLOOR
 		animate_slide(the_turf, 0, 0, duration)
 		src.emote("scream") // AAAAAAAAAAAA
-		SPAWN_DBG(duration+5)
-			src.hell_respawn()
-			qdel(satan)
-	//END
-	return
+		sleep(duration+5)
+		src.hell_respawn()
+		qdel(satan)
 
 /mob/proc/un_damn()
 	if(!src.mind)

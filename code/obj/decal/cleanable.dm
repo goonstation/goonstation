@@ -41,6 +41,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	plane = PLANE_NOSHADOW_BELOW
 
 	New(var/loc,var/list/viral_list)
+		..()
 		if (!pooled)
 			setup(loc,viral_list)
 
@@ -250,9 +251,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/reagents_max = 10
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(reagents_max) // 9u is the max since we wanna leave at least 1u of blood in the blood puddle
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(reagents_max)
 		if (ling_blood)
 			src.reagents.add_reagent("bloodc", 10)
 			src.sample_reagent = "bloodc"
@@ -274,9 +273,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	setup()
 		if (!src.reagents)
-			var/datum/reagents/R = new/datum/reagents(reagents_max)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(reagents_max)
 		else
 			src.reagents.clear_reagents()
 		if (ling_blood)
@@ -299,9 +296,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	proc/set_sample_reagent_custom(var/reagent_id, var/amt = 10)
 		if (!src.reagents)
-			var/datum/reagents/R = new/datum/reagents(reagents_max)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(reagents_max)
 		else
 			src.reagents.clear_reagents()
 
@@ -1463,9 +1458,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	stain = "azure-stained"
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(10) // 9u is the max since we wanna leave at least 1u of blood in the blood puddle
-		reagents = R
-		R.my_atom = src
+		..()
+		src.create_reagents(10)
 		src.reagents.add_reagent("reliquary_blood", 10)
 		src.blood_DNA = "--conductive_substance--"
 		src.color = "#0b1f8f"

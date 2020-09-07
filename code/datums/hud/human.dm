@@ -172,6 +172,7 @@
 		..()
 
 	New(M)
+		..()
 		master = M
 
 		SPAWN_DBG(0)

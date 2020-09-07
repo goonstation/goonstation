@@ -212,8 +212,7 @@
 								"<span class='combat'><b>You encase [H] in ice!</b></span>")
 
 				if (istype(S) && S.babyspider)
-					SPAWN_DBG(0)
-						S.grow_up()
+					S.grow_up()
 
 			doCooldown()
 			disabled = 0

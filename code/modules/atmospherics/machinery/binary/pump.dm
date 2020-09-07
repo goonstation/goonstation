@@ -156,6 +156,7 @@ datum/pump_ui/basic_pump_ui
 	var/obj/machinery/atmospherics/binary/pump/our_pump
 
 datum/pump_ui/basic_pump_ui/New(obj/machinery/atmospherics/binary/pump/our_pump)
+	..()
 	src.our_pump = our_pump
 	pump_name = our_pump.name
 

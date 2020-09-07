@@ -102,8 +102,7 @@ var/image/blob_icon_cache
 			setMaterial(copyMaterial(O.my_material))
 			color = material.color
 			original_color = color
-			if (!(src in O.blobs))
-				O.blobs += src
+			O.blobs |= src
 			onAttach(O)
 			if( state_overlay )
 				blob_icon_cache.color = O.organ_color

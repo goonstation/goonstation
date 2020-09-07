@@ -186,21 +186,18 @@
 			if(S.get_tile_heat(T))
 				.= S
 				break
-			LAGCHECK(LAG_HIGH)
 
 	proc/get_hotspots_list(var/turf/T)
 		.= list()
 		for (var/datum/sea_hotspot/S in hotspot_groups)
 			if(S.get_tile_heat(T))
 				.+= S
-			LAGCHECK(LAG_HIGH)
 
 	proc/get_hotspots_amount(var/turf/T)
 		.= 0
 		for (var/datum/sea_hotspot/S in hotspot_groups)
 			if(S.get_tile_heat(T))
 				.+= 1
-			LAGCHECK(LAG_HIGH)
 
 	proc/probe_turf(var/turf/T)
 		.= 0
@@ -209,7 +206,6 @@
 				.+= (S.get_tile_heat(T) / S.vent_capture_amt) * (2 - (1 / (S.vent_capture_amt - 1))) //lessen individual output of multiple capture units on the same hotspot, but with a small boost to overall output
 			else
 				.+= S.get_tile_heat(T)
-			LAGCHECK(LAG_HIGH)
 
 		var/amt = hotspot_controller.get_hotspots_amount(T)
 		var/mult = ( (amt > 1) ? (1 + (amt / 2.3)) : (1) ) //stack bonus (2.3 is the magic number that contorls the bonus scaling)
@@ -225,8 +221,6 @@
 			if (heat)
 				S.bonus_heat += S.per_activity
 			tally += heat
-			LAGCHECK(LAG_HIGH)
-
 		if (tally)
 			elecflash(T)
 
@@ -246,8 +240,6 @@
 				S.drift_dir = vector_to_dir(center.x - T.x, center.y - T.y)
 
 				S.move_center_to(get_step(S.center.turf(), S.drift_dir))
-
-			LAGCHECK(LAG_MED)
 
 	proc/colorping_at_turf(var/turf/T)
 		for (var/datum/sea_hotspot/S in hotspot_groups)
@@ -451,6 +443,7 @@
 	var/z = 0
 
 	New(x=0,y=0,z=0)
+		..()
 		src.x = x
 		src.y = y
 		src.z = z
@@ -503,8 +496,7 @@
 	disposing()
 		deployed = 0
 		closest_hotspot = 0
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 	process()
@@ -593,14 +585,12 @@
 		icon_state = "dowsing_hands"
 		deployed = 0
 		closest_hotspot = 0
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 
 	proc/deploy()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		src.icon_state = "dowsing_deployed_[0]"
 		speak_count = speak_interval
 		pixel_x = 0
@@ -622,8 +612,7 @@
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
 	if (istype(W,/obj/item/heat_dowsing))
-		if (!(W in processing_items))
-			processing_items.Add(W)
+		processing_items |= W
 
 		var/obj/item/heat_dowsing/H = W
 

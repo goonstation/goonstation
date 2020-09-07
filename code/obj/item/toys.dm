@@ -21,7 +21,7 @@
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool)
-	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba)
+	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba, /obj/item/toy/plush/small/chris)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -55,6 +55,10 @@
 		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
 		interrupt(INTERRUPT_ALWAYS)
 		return
+
+/datum/action/bar/icon/claw_machine/onResume()
+	..()
+	state = ACTIONSTATE_DELETE
 
 /datum/action/bar/icon/claw_machine/onInterrupt()
 	..()
@@ -179,6 +183,10 @@
 	name = "Tuba the rat"
 	icon_state = "tuba"
 
+/obj/item/toy/plush/small/chris
+	name = "Chris the goat"
+	icon_state = "chris"
+
 /obj/item/toy/sword
 	name = "toy sword"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -278,9 +286,7 @@
 				src.setMaterial(getMaterial(pick(material_varieties)))
 
 		if (src.icon_state == "fig-floorpills")
-			var/datum/reagents/R = new/datum/reagents(30)
-			src.reagents = R
-			R.my_atom = src
+			src.create_reagents(30)
 
 			var/primaries = rand(1,3)
 			var/adulterants = rand(2,4)
@@ -448,7 +454,12 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/beebo,
 /datum/figure_info/romillybartlesby,
 /datum/figure_info/dillbehrt,
-/datum/figure_info/listelsheerfield)
+/datum/figure_info/listelsheerfield,
+/datum/figure_info/raphaelzahel,
+/datum/figure_info/derekclarke,
+/datum/figure_info/fartcan,
+/datum/figure_info/tomato
+)
 
 /datum/figure_info
 	var/name = "staff assistant"
@@ -808,6 +819,22 @@ var/list/figure_patreon_rarity = list(\
 	listelsheerfield
 		name = "\improper Listel Sheerfield"
 		icon_state = "listelsheerfield"
+
+	raphaelzahel
+		name = "\improper Raphael Zahel"
+		icon_state = "raphaelzahel"
+
+	derekclarke
+		name = "\improper Derek Clarke"
+		icon_state = "derekclarke"
+
+	fartcan
+		name = "\improper Fart Canister"
+		icon_state = "fartcan"
+
+	tomato
+		name = "\improper Tomato"
+		icon_state = "tomato"
 
 #ifdef XMAS
 	santa

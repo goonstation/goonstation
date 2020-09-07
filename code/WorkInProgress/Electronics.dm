@@ -12,13 +12,12 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/electronics/New()
+	..()
 	desc = "A [src.name] used in electronic projects."
-	return
 
 /obj/item/electronics/proc/randompix()
 	src.pixel_x = rand(8, 12)
 	src.pixel_y = rand(8, 12)
-	return
 
 ////////////////////////////////////////////////////////////////
 /obj/item/electronics/battery
@@ -149,6 +148,7 @@
 			user.u_equip(E)
 			//parts.Add(E)
 			boutput(user, "<span class='notice'>You add the [E.name] to the [src].</span>")
+			needed_parts[E.type] -= 1
 			return
 		else if(istype(E,/obj/item/electronics/soldering))
 			if(!secured)
@@ -168,6 +168,17 @@
 				actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
 				//deploy()
 			return
+		else if(istype(E,/obj/item/electronics/scanner) && !secured)
+			if(!parts_check())
+				boutput(user, "<span class='notice'>Missing components:</span>")
+				for(var/part in needed_parts)
+					var/obj/item/electronics/_part = part
+					if(needed_parts[part] > 0)
+						boutput(user, "<span class='notice'>[initial(_part.name)]: [needed_parts[part]]</span>")
+			else
+				boutput(user, "<span class='notice'>All components present</span>")
+			return
+
 	if (ispryingtool(W))
 		if (!anchored)
 			src.dir = turn(src.dir, 90)
@@ -265,6 +276,7 @@
 						T = T.loc
 					Z.set_loc(T)
 					//parts.Remove(Z)
+					needed_parts[Z.type] += 1
 
 
 		updateDialog()
@@ -360,47 +372,9 @@
 
 
 /obj/item/electronics/frame/proc/parts_check()
-//	if(src.contents.len != needed_parts.len)
-//		return 0
-
-	//for(var/tracker = 1, tracker <= parts:len, tracker ++)
-	var/list/checkList = needed_parts.Copy()
-	for(var/tracker = 1, tracker <= src.contents:len, tracker ++)
-		var/partID
-		//var/obj/T = parts[tracker]
-		var/obj/T = src.contents[tracker]
-		if(istype(T,/obj/item/electronics/battery))
-			partID = "battery"
-		else if(istype(T,/obj/item/electronics/fuse))
-			partID = "fuse"
-		else if(istype(T,/obj/item/electronics/switc))
-			partID = "switch"
-		else if(istype(T,/obj/item/electronics/capacitor))
-			partID = "capacitor"
-		else if(istype(T,/obj/item/electronics/resistor))
-			partID = "resistor"
-		else if(istype(T,/obj/item/electronics/bulb))
-			partID = "bulb"
-		else if(istype(T,/obj/item/electronics/relay))
-			partID = "relay"
-		else if(istype(T,/obj/item/electronics/board))
-			partID = "board"
-		else if(istype(T,/obj/item/electronics/keypad))
-			partID = "keypad"
-		else if(istype(T,/obj/item/electronics/screen))
-			partID = "screen"
-		else if(istype(T,/obj/item/electronics/buzzer))
-			partID = "buzzer"
-
-		if (!isnum(checkList[partID]) || (checkList[partID] < 1))
-			continue
-
-		checkList[partID] = checkList[partID] - 1
-
-	for (var/i in checkList)
-		if (checkList[i] > 0)
+	for(var/part in needed_parts)
+		if(needed_parts[part]>0)
 			return 0
-
 	return 1
 
 ////////////////////////////////////////////////////////////////?
@@ -451,10 +425,10 @@
 		is_syndicate = 1
 
 /obj/item/electronics/scanner/afterattack(var/obj/O, mob/user as mob)
-	if(istype(O,/obj/machinery/rkit))
+	if(istype(O,/obj/machinery/rkit) || istype(O, /obj/item/electronics/frame))
 		return
 	if(istype(O,/obj/))
-		if(O.mats == 0 || O.disposed || (O.is_syndicate != 0 && src.is_syndicate == 0))
+		if(O.mats == 0 || isnull(O.mats) || O.disposed || (O.is_syndicate != 0 && src.is_syndicate == 0))
 			// if this item doesn't have mats defined or was constructed or
 			// attempting to scan a syndicate item and this is a normal scanner
 			boutput(user, "<span class='alert'>The structure of this object is not compatible with the scanner.</span>")
@@ -492,6 +466,7 @@
 	var/frequency = 1149
 	var/datum/radio_frequency/radio_connection
 	var/no_print_spam = 1 // In relation to world.time.
+	var/olde = 0
 
 /obj/machinery/rkit/New()
 	..()
@@ -616,7 +591,9 @@
 	for(var/datum/electronics/scanned_item/S in mechanic_controls.scanned_items)
 		dat += "<u>[S.name]</u><small> "
 		//dat += "<A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
-		if (S.blueprint)
+		if (S.item_mats && src.olde)
+			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
+		else if (S.blueprint)
 			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
 		dat += "</small><br>"
 	dat += "<br>"

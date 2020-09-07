@@ -518,7 +518,7 @@
 
 	animate_storage_thump(src)
 
-/obj/hitby(atom/movable/AM)
+/obj/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 	if(!.)
 		. = 'sound/impact_sounds/Generic_Stab_1.ogg'

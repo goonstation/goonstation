@@ -249,7 +249,9 @@
 
 /obj/storage/crate/syndicate_surplus
 	var/ready = 0
+	grab_stuff_on_spawn = FALSE
 	New()
+		..()
 		SPAWN_DBG(2 SECONDS)
 			if (!ready)
 				spawn_items()

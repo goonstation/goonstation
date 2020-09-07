@@ -30,6 +30,7 @@
 	var/c_flags = null
 	var/tooltip_flags = null
 	var/item_function_flags = null
+	var/force_use_as_tool = 0
 
 	pressure_resistance = 50
 	var/obj/item/master = null
@@ -124,36 +125,44 @@
 		. += "<hr>"
 		if(rarity >= 4)
 			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
+		//combat stats
 		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</span></div>"
 		if (src.stamina_cost || src.stamina_damage)
 			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
 
+		//standard object properties
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
-				if(!istype(P, /datum/objectProperty/inline))
+				if(!P.hidden)
 					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
 
-		//itemblock tooltip additions
+		//Blocking section
 		if(src.c_flags & HAS_GRAB_EQUIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
 			for(var/obj/item/grab/block/B in src)
 				if(B.properties && B.properties.len)
-					for(var/datum/objectProperty/inline/P in B.properties)
-						. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+					//inline-blocking-based properties (disorient resist and damage-type blocks)
 					for(var/datum/objectProperty/P in B.properties)
-						if(!istype(P, /datum/objectProperty/inline))
+						if(P.inline)
+							. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+					//blocking-based properties
+					for(var/datum/objectProperty/P in B.properties)
+						if(!P.hidden)
 							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
 			for (var/datum/component/C in src.GetComponents(/datum/component/itemblock))
 				. += jointext(C.getTooltipDesc(), "")
 		else if(src.c_flags & BLOCK_TOOLTIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
 
+		//item specials
+		//unarmed special overrides from gloves
 		if(istype(src, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = src
 			if(G.specialoverride && G.overridespecial)
 				var/content = resource("images/tooltips/[G.specialoverride.image].png")
 				. += "<br>Unarmed special attack override:<br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[G.specialoverride.name]: [G.specialoverride.getDesc()]</div>"
 			. = jointext(., "")
+		//standard item specials
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
@@ -436,33 +445,6 @@
 
 /obj/item/proc/equipment_click(atom/source, atom/target, params, location, control, origParams, slot) //Called through hand_range_attack on items the mob is wearing that have HAS_EQUIP_CLICK in flags.
 	return 0
-
-
-/*
-		var/icon/overlay = icon('icons/effects/96x96.dmi',"smoke")
-		if (color)
-			overlay.Blend(color,ICON_MULTIPLY)
-		var/image/I = image(overlay)
-		I.pixel_x = -32
-		I.pixel_y = -32
-
-		var/the_dir = NORTH
-	for(var/i=0, i<8, i++)
-		var/obj/chem_smoke/C = new/obj/chem_smoke(location, holder, max_vol)
-		C.overlays += I
-		if (rname) C.name = "[rname] smoke"
-		SPAWN_DBG(0)
-			var/my_dir = the_dir
-			var/my_time = rand(80,110)
-			var/my_range = 3
-			SPAWN_DBG(my_time) qdel(C)
-			for(var/b=0, b<my_range, b++)
-				sleep(1.5 SECONDS)
-				if (!C) break
-				step(C,my_dir)
-				C.expose()
-		the_dir = turn(the_dir,45)
-*/
 
 /obj/item/proc/combust_ended()
 	processing_items.Remove(src)
@@ -831,6 +813,8 @@
 			I.remove_from_mob()
 			I.set_item(src)
 
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
+
 	if(chokehold)
 		chokehold.attack_self(user)
 
@@ -1161,7 +1145,7 @@
 
 	user.violate_hippocratic_oath()
 
-	for (var/mob/V in nervous_mobs)
+	for (var/mob/V in by_cat[TR_CAT_NERVOUS_MOBS])
 		if (get_dist(user,V) > 6)
 			continue
 		if (prob(8) && user)
@@ -1176,10 +1160,12 @@
 	msgs.logc("attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)])")
 
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
+		return
 	var/stam_crit_pow = src.stamina_crit_chance
 	if (prob(stam_crit_pow))
 		msgs.stamina_crit = 1
-		msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
+		msgs.played_sound = pick(sounds_punch)
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 

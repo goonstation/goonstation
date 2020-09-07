@@ -965,6 +965,7 @@
 	// @TODO
 	// HOLY SHIT REMOVE THIS THESE OLD POST ITS ARE GONE or something idk fuck
 	New()
+		..()
 		new /obj/item/item_box/postit(get_turf(src))
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)

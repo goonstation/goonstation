@@ -48,10 +48,8 @@
 
 /obj/item/extinguisher/New()
 	..()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("ff-foam", 100)
+	src.create_reagents(100)
+	reagents.add_reagent("ff-foam", 100)
 	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 	BLOCK_TANK
 
@@ -191,5 +189,9 @@
 		boutput(user, "The safety is on.")
 		safety = 1
 	return
+
+/obj/item/extinguisher/move_trigger(var/mob/M, kindof)
+	if (..() && reagents)
+		reagents.move_trigger(M, kindof)
 
 /obj/item/extinguisher/abilities = list(/obj/ability_button/extinguisher_ab)

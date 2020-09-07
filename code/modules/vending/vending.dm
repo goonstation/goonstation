@@ -9,6 +9,7 @@
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
 	New(productpath, amount=0, cost=0, hidden=0)
+		..()
 		if (istext(productpath))
 			productpath = text2path(productpath)
 		if (!ispath(productpath))
@@ -454,8 +455,8 @@
 		if (W && W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
 
-/obj/machinery/vending/hitby(M as mob|obj)
-	if (iscarbon(M) && M:throwing && prob(25))
+/obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
+	if (iscarbon(M) && M.throwing && prob(25))
 		src.fall(M)
 		return
 
@@ -800,7 +801,8 @@
 			if (R.product_amount <= 0) //Try to use a record that actually has something to dump.
 				continue
 			valid_products.Add(R)
-		thrown = throw_item_act(pick(valid_products), target)
+		if (valid_products.len)
+			thrown = throw_item_act(pick(valid_products), target)
 	return thrown
 
 /obj/machinery/vending/proc/throw_item_act(var/datum/data/vending_product/R, var/mob/living/target)

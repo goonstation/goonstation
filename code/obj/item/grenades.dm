@@ -593,22 +593,22 @@ PIPE BOMBS + CONSTRUCTION
 				for (var/mob/N in viewers(user, null))
 					if (get_dist(N, user) <= 6)
 						N.flash(3 SECONDS)
-				SPAWN_DBG(0.2 SECONDS)
-					if (old_light_grenade)
-						random_brute_damage(user, 200)
-						SPAWN_DBG(1 DECI SECOND)
-							if (isdead(user) || user.nodamage || isAI(user)) return
-							logTheThing("combat", user, null, "was killed by touching a [src] at [log_loc(src)].")
-							var/mob/dead/observer/newmob
-							newmob = new/mob/dead/observer(user)
-							user.client.mob = newmob
-							user.mind.transfer_to(newmob)
-							qdel(user)
+				sleep(0.2 SECONDS)
+				if (old_light_grenade)
+					random_brute_damage(user, 200)
+					sleep(1 DECI SECOND)
+					if (isdead(user) || user.nodamage || isAI(user)) return
+					logTheThing("combat", user, null, "was killed by touching a [src] at [log_loc(src)].")
+					var/mob/dead/observer/newmob
+					newmob = new/mob/dead/observer(user)
+					user.client.mob = newmob
+					user.mind.transfer_to(newmob)
+					qdel(user)
+				else
+					if (destination)
+						user.set_loc(destination)
 					else
-						if (destination)
-							user.set_loc(destination)
-						else
-							user.set_loc(locate(40,19,2))
+						user.set_loc(locate(40,19,2))
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)

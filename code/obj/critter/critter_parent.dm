@@ -388,7 +388,7 @@
 		if (user.a_intent == INTENT_HARM)
 			src.health -= rand(1,2) * src.brutevuln
 			src.visible_message("<span class='alert'><b>[user]</b> punches [src]!</span>")
-			playsound(src.loc, pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg','sound/impact_sounds/Generic_Punch_5.ogg'), 100, 1)
+			playsound(src.loc, pick(sounds_punch), 100, 1)
 			attack_twitch(user)
 			hit_twitch(src)
 			if (hitsound)
@@ -856,14 +856,14 @@
 	New(loc)
 		if(!src.reagents) src.create_reagents(100)
 		wander_check = rand(5,20)
-		critters += src
+		START_TRACKING_CAT(TR_CAT_CRITTERS)
 		report_spawn()
 		if(isnull(src.is_pet))
 			src.is_pet = !generic && (copytext(src.name, 1, 2) in uppercase_letters)
 		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
 			src.is_pet = 0
 		if(src.is_pet)
-			pets += src
+			START_TRACKING_CAT(TR_CAT_PETS)
 		if(generic)
 			src.quality = rand(min_quality,max_quality)
 			var/nickname = getCritterQuality(src.quality)
@@ -873,11 +873,11 @@
 		..()
 
 	disposing()
-		critters -= src
+		STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 		if(registered_area)
 			registered_area.registered_critters -= src
 		if(src.is_pet)
-			pets -= src
+			STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
 	proc/seek_target()
@@ -1122,7 +1122,7 @@
 		src.warm_count = max(src.warm_count, 0)
 		src.hatch_check(0, user)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		//..() <- Fuck off mom, I'm 25 and I do what I want =I
 		src.hatch_check(1, null, T)

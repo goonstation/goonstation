@@ -158,6 +158,7 @@ datum/light
 #endif
 
 	New(x=0, y=0, z=0)
+		..()
 		src.x = x
 		src.y = y
 		src.z = z

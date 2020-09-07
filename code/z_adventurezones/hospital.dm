@@ -237,10 +237,10 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)
-						target << sound('sound/ambience/loop/Static_Horror_Loop_End.ogg',channel=7)
-					qdel(src)
+				sleep(rand(100,400))
+				if(target)
+					target << sound('sound/ambience/loop/Static_Horror_Loop_End.ogg',channel=7)
+				qdel(src)
 			walk_towards(src, src.target, 3)
 
 		..()

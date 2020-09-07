@@ -53,7 +53,7 @@
 		return
 
 /obj/item/shipcomponent/engine/proc/Wormhole()
-	if (wormholeQueued)
+	if (wormholeQueued || warprecharge == -1)
 		return
 	var/list/beacons = list()
 	for(var/obj/warp_beacon/W in warp_beacons)
@@ -90,6 +90,15 @@
 	desc = "An incredibly powerful but slow engine"
 	powergenerated = 500
 	currentgen = 500
-	warprecharge =300
+	warprecharge = 300
 	speedmod = 3
 	icon_state = "engine-3"
+
+/obj/item/shipcomponent/engine/zero
+	name = "Warp-0 Engine"
+	desc = "An old prototype engine"
+	powergenerated = 190
+	currentgen = 190
+	warprecharge = -1 //This disables the ability to create wormholes completely.
+	speedmod = 2
+	icon_state = "engine-4"

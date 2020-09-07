@@ -9,7 +9,6 @@
 
 //******************************************** MANTA COMPATIBLE LISTS HERE ********************************************
 
-var/list/mantaTiles = list()
 var/list/mantaPushList = list()
 var/mantaMoving = 1
 var/MagneticTether = 1
@@ -69,7 +68,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		updateIcon()
 		..()
 //This crap is here so nothing can destroy it.
-	hitby()
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		SHOULD_CALL_PARENT(FALSE)
 	reagent_act()
 	bullet_act()
@@ -164,11 +163,8 @@ var/obj/manta_speed_lever/mantaLever = null
 			var/mob/M = C.mob
 			if(M && M.z == 1) shake_camera(M, 5, 15, 0.2)
 
-	for(var/A in mantaTiles)
+	for(var/A in by_cat[TR_CAT_MANTA_TILES])
 		var/turf/space/fluid/manta/T = A
-		if (!istype(T))
-			mantaTiles.Remove(T)
-			continue
 		T.setScroll(moving)
 	for(var/A in by_type[/obj/decal/mantaBubbles])
 		var/obj/O = A
@@ -927,7 +923,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/list/L = list()
 
 	New()
-		mantaTiles.Add(src)
+		START_TRACKING_CAT(TR_CAT_MANTA_TILES)
 		. = ..()
 		stateOff = "manta_sand"
 		stateOn = "[stateOff]_scroll"
@@ -936,7 +932,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return .
 
 	Del()
-		mantaTiles.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_MANTA_TILES)
 		return ..()
 
 	ex_act(severity)
@@ -957,7 +953,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
 					L+=T
 
-			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/wraith) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced))
+			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/wraith) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced) || istype(Obj, /obj/arrival_missile))
 				return
 
 			return_if_overlay_or_effect(Obj)

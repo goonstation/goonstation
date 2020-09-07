@@ -14,6 +14,7 @@
 	var/next_event_at = 0
 
 	New()
+		..()
 		for (var/evtype in typesof(/datum/construction_event))
 			var/datum/construction_event/E = new evtype()
 			if (E.is_abstract)
