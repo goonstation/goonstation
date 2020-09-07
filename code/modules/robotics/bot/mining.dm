@@ -28,19 +28,24 @@
 
 /obj/machinery/bot/mining/New()
 	..()
-	src.display_hover = image('icons/obj/bots/aibots.dmi', "digbot hover")
-	src.display_tool_idle = image('icons/obj/bots/aibots.dmi', "digbot powerpick idle")
-	src.display_tool_animated = image('icons/obj/bots/aibots.dmi', "digbot powerpick digging")
+	setupOverlayVars()
 	sleep(5)
 	if(on)
 		turnOn()
-		
+	else
+		setEffectOverlays()
+
+/obj/machinery/bot/mining/proc/setupOverlayVars()
+	src.display_hover = image('icons/obj/bots/aibots.dmi', "digbot hover")
+	src.display_tool_idle = image('icons/obj/bots/aibots.dmi', "digbot powerpick idle")
+	src.display_tool_animated = image('icons/obj/bots/aibots.dmi', "digbot powerpick digging")
+
 /obj/machinery/bot/mining/proc/togglePowerSwitch()
 	src.on = !src.on
 	if(src.on)
-		turnOff()
-	else
 		turnOn()
+	else
+		turnOff()
 	src.target = null
 	src.oldtarget = null
 	src.oldloc = null
@@ -151,12 +156,12 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 		src.path -= src.path[1]
 
 	if(src.target in range(1,src))
-		actions.start(new/datum/action/bar/icon/digbotdig(src, target), src)
+		startToolAction()
 		src.path = null
 
 	src.oldloc = src.loc
 
-	
+
 
 /obj/machinery/bot/mining/proc/findTarget()
 	digbottargets = list()
@@ -193,6 +198,9 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 		src.target = null
 		return
 
+/obj/machinery/bot/mining/proc/startToolAction()
+	actions.start(new/datum/action/bar/icon/digbotdig(src, target), src)
+
 /obj/machinery/bot/mining/proc/startDiggingEffects()
 	src.visible_message("<span class='alert'>[src] starts digging!</span>")
 	if (src.diglevel > 2) playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
@@ -218,10 +226,14 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 	diglevel = 4
 	hardthreshold = 4
 
-/obj/machinery/bot/mining/drill/New()
+/obj/machinery/bot/mining/drill/setupOverlayVars()
 	..()
 	src.display_tool_idle = image('icons/obj/bots/aibots.dmi', "digbot powerdrill")
 	src.display_tool_animated = src.display_tool_idle
+
+/obj/machinery/bot/mining/drill/startToolAction()
+	//Do not call parent!
+	actions.start(new/datum/action/bar/icon/digbotdig/drill(src, target), src)
 
 
 //////////////////////////////////////
@@ -284,6 +296,9 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 			return false
 		return true
 
+/datum/action/bar/icon/digbotdig/drill
+	id = "digbot_dig"
+	icon_state = "lasdrill"
 
 //////////////////////////////////////
 //////Digbot Construction/////////////
@@ -310,17 +325,6 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 			else
 				boutput(user,  "You already added that part!")
 				return
-		else if (istype(T, /obj/item/mining_tool/))
-			if (src.build_step == 1)
-				if (user.r_hand == T) user.u_equip(T)
-				else user.u_equip(T)
-				boutput(user,  "You add [T.name]. Now you have a finished mining bot! Hooray!")
-				qdel(T)
-				new /obj/machinery/bot/mining(user.loc)
-				qdel(src)
-			else
-				boutput(user,  "It's not ready for that part yet.")
-				return
 		else if (istype(T, /obj/item/mining_tool/drill))
 			if (src.build_step == 1)
 				if (user.r_hand == T) user.u_equip(T)
@@ -328,6 +332,17 @@ text("<A href='?src=\ref[src];operation=hardness'>[src.hardthreshold]</A>"))
 				boutput(user,  "You add [T.name]. Now you have a finished mining bot! Hooray!")
 				qdel(T)
 				new /obj/machinery/bot/mining/drill(user.loc)
+				qdel(src)
+			else
+				boutput(user,  "It's not ready for that part yet.")
+				return
+		else if (istype(T, /obj/item/mining_tool/))
+			if (src.build_step == 1)
+				if (user.r_hand == T) user.u_equip(T)
+				else user.u_equip(T)
+				boutput(user,  "You add [T.name]. Now you have a finished mining bot! Hooray!")
+				qdel(T)
+				new /obj/machinery/bot/mining(user.loc)
 				qdel(src)
 			else
 				boutput(user,  "It's not ready for that part yet.")
