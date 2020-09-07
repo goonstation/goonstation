@@ -226,7 +226,6 @@
 			logTheThing("combat", src, null, "'s AI controlled cyborg body was destroyed [log_health(src)] at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 			src.mainframe.return_to(src)
 		setdead(src)
-		borg_death_alert()
 		src.canmove = 0
 
 		if (src.camera)
@@ -2317,7 +2316,7 @@
 
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
-		var/mailgroup = MGD_MEDRESEACH
+		var/list/mailgroups = list(MGD_MEDRESEACH, "silicon")
 		var/net_id = generate_net_id(src)
 		var/frequency = 1149
 		var/datum/radio_frequency/radio_connection = radio_controller.add_object(src, "[frequency]")
@@ -2333,7 +2332,8 @@
 			else	//Someone passed us an unkown modifier
 				message = "UNKNOWN ERROR: [src] in [myarea]"
 
-		if (message && mailgroup && radio_connection)
+		for(var/mailgroup in mailgroups)
+			//if (message && mailgroup && radio_connection)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
@@ -2343,7 +2343,6 @@
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = mailgroup
 			newsignal.data["sender"] = net_id
-
 			radio_connection.post_signal(src, newsignal)
 			radio_controller.remove_object(src, "[frequency]")
 
@@ -2763,56 +2762,58 @@
 	get_valid_target_zones()
 		return list("head", "chest", "l_leg", "r_leg", "l_arm", "r_arm")
 
+
 	proc/compborg_lose_limb(var/obj/item/parts/robot_parts/part)
-		if(!part) return
+		if(isalive(src) && !isnull(src.loc)) //had issues with the proc being called multiple times with null src loc for some reason, checks to make sure this only happens if the borg is still alive
+			if(!part) return
 
-		playsound(get_turf(src), "sound/impact_sounds/Metal_Hit_Light_1.ogg", 40, 1)
-		if (istype(src.loc,/turf/)) make_cleanable(/obj/decal/cleanable/robot_debris, src.loc)
-		elecflash(src,power = 2)
+			playsound(get_turf(src), "sound/impact_sounds/Metal_Hit_Light_1.ogg", 40, 1)
+			if (istype(src.loc,/turf/)) make_cleanable(/obj/decal/cleanable/robot_debris, src.loc)
+			elecflash(src,power = 2)
 
-		if (istype(part,/obj/item/parts/robot_parts/chest/))
-			src.visible_message("<b>[src]'s</b> chest unit is destroyed!")
-			src.part_chest = null
-		if (istype(part,/obj/item/parts/robot_parts/head/))
-			src.visible_message("<b>[src]'s</b> head breaks apart!")
-			borg_death_alert()//no head means you dead
-			if (src.brain)
-				src.brain.set_loc(get_turf(src))
-			src.part_head.brain = null
-			src.part_head = null
-		if (istype(part,/obj/item/parts/robot_parts/arm/))
-			if (part.slot == "arm_both")
-				src.visible_message("<b>[src]'s</b> arms are destroyed!")
-				src.part_leg_r = null
-				src.part_leg_l = null
-				src.compborg_force_unequip(1)
-				src.compborg_force_unequip(3)
-			if (part.slot == "arm_left")
-				src.visible_message("<b>[src]'s</b> left arm breaks off!")
-				src.part_arm_l = null
-				src.compborg_force_unequip(1)
-			if (part.slot == "arm_right")
-				src.visible_message("<b>[src]'s</b> right arm breaks off!")
-				src.part_arm_r = null
-				src.compborg_force_unequip(3)
-		if (istype(part,/obj/item/parts/robot_parts/leg/))
-			if (part.slot == "leg_both")
-				src.visible_message("<b>[src]'s</b> legs are destroyed!")
-				src.part_leg_r = null
-				src.part_leg_l = null
-			if (part.slot == "leg_left")
-				src.visible_message("<b>[src]'s</b> left leg breaks off!")
-				src.part_leg_l = null
-			if (part.slot == "leg_right")
-				src.visible_message("<b>[src]'s</b> right leg breaks off!")
-				src.part_leg_r = null
-		//var/loseslot = part.slot //ZeWaka: Fix for null.slot
-		if(part.robot_movement_modifier)
-			REMOVE_MOVEMENT_MODIFIER(src, part.robot_movement_modifier, part.type)
-		src.update_bodypart()
-		//src.update_bodypart(loseslot)
-		qdel(part)
-		return
+			if (istype(part,/obj/item/parts/robot_parts/chest/))
+				src.visible_message("<b>[src]'s</b> chest unit is destroyed!")
+				src.part_chest = null
+			if (istype(part,/obj/item/parts/robot_parts/head/))
+				src.visible_message("<b>[src]'s</b> head breaks apart!")
+				//borg_death_alert()//no head means you dead
+				if (src.brain)
+					src.brain.set_loc(get_turf(src))
+				src.part_head.brain = null
+				src.part_head = null
+			if (istype(part,/obj/item/parts/robot_parts/arm/))
+				if (part.slot == "arm_both")
+					src.visible_message("<b>[src]'s</b> arms are destroyed!")
+					src.part_leg_r = null
+					src.part_leg_l = null
+					src.compborg_force_unequip(1)
+					src.compborg_force_unequip(3)
+				if (part.slot == "arm_left")
+					src.visible_message("<b>[src]'s</b> left arm breaks off!")
+					src.part_arm_l = null
+					src.compborg_force_unequip(1)
+				if (part.slot == "arm_right")
+					src.visible_message("<b>[src]'s</b> right arm breaks off!")
+					src.part_arm_r = null
+					src.compborg_force_unequip(3)
+			if (istype(part,/obj/item/parts/robot_parts/leg/))
+				if (part.slot == "leg_both")
+					src.visible_message("<b>[src]'s</b> legs are destroyed!")
+					src.part_leg_r = null
+					src.part_leg_l = null
+				if (part.slot == "leg_left")
+					src.visible_message("<b>[src]'s</b> left leg breaks off!")
+					src.part_leg_l = null
+				if (part.slot == "leg_right")
+					src.visible_message("<b>[src]'s</b> right leg breaks off!")
+					src.part_leg_r = null
+			//var/loseslot = part.slot //ZeWaka: Fix for null.slot
+			if(part.robot_movement_modifier)
+				REMOVE_MOVEMENT_MODIFIER(src, part.robot_movement_modifier, part.type)
+			src.update_bodypart()
+			//src.update_bodypart(loseslot)
+			qdel(part)
+			return
 
 	proc/compborg_get_total_damage(var/sort = 0)
 		var/tally = 0
