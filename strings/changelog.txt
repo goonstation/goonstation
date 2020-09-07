@@ -1,4 +1,9 @@
 
+(t)mon sep 07 20
+(u)Aft2001
+(p)2098
+(e)|
+(+)An AI's PDA name is now based on its actual name, instead of just being labeled as 'AI'
 (t)sun sep 06 20
 (u)Nebulacrity
 (p)2057

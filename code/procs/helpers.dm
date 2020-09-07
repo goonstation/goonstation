@@ -1441,8 +1441,9 @@ var/list/hex_chars = list("0","1","2","3","4","5","6","7","8","9","A","B","C","D
 var/list/all_functional_reagent_ids = list()
 
 proc/get_all_functional_reagent_ids()
-	for (var/X in childrentypesof(/datum/reagent) )
-		all_functional_reagent_ids += initial(X:id)
+	for (var/X in concrete_typesof(/datum/reagent))
+		var/datum/reagent/R = X
+		all_functional_reagent_ids += initial(R.id)
 
 proc/reagent_id_to_name(var/reagent_id)
 	if (!reagent_id || !reagents_cache.len)
