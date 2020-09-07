@@ -200,7 +200,7 @@
 		var/is_barber = user.mind.assigned_role == "Barber"
 		var/passed_dye_roll = 1
 
-		if(user.bioHolder.HasEffect("clumsy" && prob(40)))
+		if(user.bioHolder.HasEffect("clumsy") && prob(40))
 			var/recolor_these_hair_layers_instead = 0
 			var/mob/living/carbon/human/famtofuckup = null
 			passed_dye_roll = 0
