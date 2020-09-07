@@ -182,9 +182,10 @@
 
 	proc/finish_work()
 
-		output_loop(src.queue[1])
-		if (!src.repeat)
-			src.queue -= src.queue[1]
+		if(length(src.queue))
+			output_loop(src.queue[1])
+			if (!src.repeat)
+				src.queue -= src.queue[1]
 
 		if (src.queue.len < 1)
 			src.manual_stop = 0
