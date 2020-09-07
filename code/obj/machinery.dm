@@ -50,7 +50,7 @@
 	..()
 	src.power_change()
 	var/area/A = get_area(src)
-	A.machines += src
+	A?.machines += src
 
 /obj/machinery/disposing()
 	if (!isnull(initial(machine_registry_idx)))
