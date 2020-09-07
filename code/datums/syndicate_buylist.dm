@@ -613,8 +613,8 @@ This is basically useless for anyone but miners.
 		if (istype(cart) && owner)
 			cart.owner_ckey = owner.ckey
 
-/datum/syndicate_buylist/traitor/wet_floor_sign
-	name = "Lubed Floor Sign" // better name pending
+/datum/syndicate_buylist/traitor/slip_and_sign
+	name = "Slip and Sign"
 	item = /obj/item/caution/traitor
 	cost = 2
 	desc = "This Wet Floor Sign spits out organic superlubricant under everyone nearby unless they are wearing galoshes. That'll teach them to ignore the signs. Click with a bucket (or beaker or drinking glass etc.) to replace the payload."
