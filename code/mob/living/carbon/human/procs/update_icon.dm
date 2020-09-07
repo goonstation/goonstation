@@ -1195,23 +1195,23 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			src.body_standing.overlays += mutantrace.detail_2//image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
 			src.body_standing.overlays += mutantrace.detail_3//image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
 
-	if (src.organHolder && src.organHolder.tail)
+	if (src.organHolder?.tail)
 		var/obj/item/organ/tail/their_tail = src.organHolder.tail
 		var/image/tail_img = null
 		if(their_tail.organ_image_under_suit_1)
-			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_under_suit_1, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_LAYER-0.3)
+			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_under_suit_1, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_TAIL_LAYER2)
 			if (their_tail.organ_color_1)
 				tail_img.color = their_tail.organ_color_1
 			src.body_standing.overlays += tail_img
 
 		if(their_tail.organ_image_under_suit_2)
-			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_under_suit_2, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_LAYER-0.25)
+			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_under_suit_2, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_TAIL_LAYER1)
 			if (their_tail.organ_color_2)
 				tail_img.color = their_tail.organ_color_2
 			src.body_standing.overlays += tail_img
 
 		if(their_tail.organ_image_over_suit)
-			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_over_suit, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_LAYER_BASE+0.3)
+			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_over_suit, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_OVERSUIT_LAYER)
 			if (their_tail.organ_color_1)
 				tail_img.color = their_tail.organ_color_1
 			src.body_standing.overlays += tail_img

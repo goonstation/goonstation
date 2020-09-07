@@ -1070,6 +1070,7 @@
 				newtail.holder = src
 				organ_list["tail"] = newtail
 				src.donor.update_body()
+				newtail.make_it_colorful()
 				success = 1
 
 		if (success)

@@ -17,20 +17,17 @@
 	proc/update_tail_icon()
 		if (!src.icon_piece_1 && !src.icon_piece_2)
 			return	// Nothing really there to update
-		var/icon/tail_icon = null
-		tail_icon = new /icon(src.icon, src.icon_state)
+		src.overlays.len = 0
 
 		if (src.icon_piece_1)
-			var/icon/icon_1 = new /icon(src.icon, src.icon_piece_1)
-			icon_1.Blend(src.organ_color_1, ICON_MULTIPLY)
-			tail_icon.Blend(icon_1, ICON_OVERLAY)
+			var/image/organ_piece_1 = image(src.icon, src.icon_piece_1)
+			organ_piece_1.color = src.organ_color_1
+			src.overlays += organ_piece_1
 
 		if (src.icon_piece_2)
-			var/icon/icon_2 = new /icon(src.icon, src.icon_piece_2)
-			icon_2.Blend(src.organ_color_2, ICON_MULTIPLY)
-			tail_icon.Blend(icon_2, ICON_OVERLAY)
-
-		src.icon = tail_icon
+			var/image/organ_piece_2 = image(src.icon, src.icon_piece_2)
+			organ_piece_2.color = src.organ_color_2
+			src.overlays += organ_piece_2
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for tails. */
@@ -90,18 +87,31 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && src.donor.mutantrace) // Humans dont need tails to not be clumsy idiots
+		if (src.get_damage() >= FAIL_DAMAGE && src.donor.mob_flags & SHOULD_HAVE_A_TAIL && !ischangeling(src.donor)) // Humans dont need tails to not be clumsy idiots
 			donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
 		return 1
 
 	on_removal()
-		if (src.failure_ability && src.donor.bioHolder && src.donor.mutantrace)
+		if (src.failure_ability && src.donor.mob_flags & SHOULD_HAVE_A_TAIL && !ischangeling(src.donor))
 			src.donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
 
 	on_broken(var/mult = 1)
 		if(prob(2) && src.donor.mutantrace)
 			src.donor.change_misstep_chance(10)
 			src.donor.bioHolder.AddEffect(failure_ability)
+
+	proc/make_it_colorful()
+		var/mob/living/carbon/human/M = src.donor
+		if (M && ishuman(M))	// Get the colors here so they dont change later, ie reattached on someone else
+			var/datum/appearanceHolder/aH = M.bioHolder.mobAppearance
+			src.organ_color_1 = organ_fix_colors(aH.customization_first_color)
+			src.organ_color_2 = organ_fix_colors(aH.customization_second_color)
+		else	// Just throw some colors in there or something
+			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
+			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
+
+		// Colorize (and build) organ item
+		src.update_tail_icon()
 
 /obj/item/organ/tail/monkey
 	name = "monkey tail"
@@ -126,21 +136,10 @@
 	New()
 		..()
 		// This tail accepts hairstyle colors!
-		var/mob/living/carbon/human/M = src.donor
-		if (M && ishuman(M))	// Get the colors here so they dont change later, ie reattached on someone else
-			var/datum/appearanceHolder/aH = M.bioHolder.mobAppearance
-			src.organ_color_1 = organ_fix_colors(aH.customization_first_color)
-			src.organ_color_2 = organ_fix_colors(aH.customization_second_color)
-		else	// Just throw some colors in there or something
-			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
-			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
-
 		src.organ_image_under_suit_1 = "lizard_under_suit_1"
 		src.organ_image_under_suit_2 = "lizard_under_suit_2"
 		src.organ_image_over_suit = "lizard_over_suit"
-
-		// Colorize (and build) organ item
-		src.update_tail_icon()
+		make_it_colorful()
 
 /obj/item/organ/tail/cow
 	name = "cow tail"

@@ -32,11 +32,11 @@
 	var/icon_beard = null
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
 
-	var/tail = TAIL_NONE // What tail do we have? Or are supposed to have?
-
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
 	var/body_offset = 0
+
+	var/list/mutant_organs = list() // Format: "entry_in_organlist", /obj/item/organ/path
 
 	var/r_limb_arm_type_mutantrace = null // Should we get custom arms? Dispose() replaces them with normal human arms.
 	var/l_limb_arm_type_mutantrace = null
@@ -106,6 +106,10 @@
 			var/datum/appearanceHolder/AHM = mob?.bioHolder?.mobAppearance
 			if (AHM)
 				AHM.mutant_race = src.type
+			var/droptail = 1
+			if(ischangeling(M))
+				droptail = 0
+			organ_mutator(M, "set", droptail)
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
@@ -207,7 +211,6 @@
 
 			M.update_face()
 			M.update_body()
-			set_tail(mob, src.tail)
 
 			if (M.bioHolder && M.bioHolder.mobAppearance)
 				M.bioHolder.mobAppearance.UpdateMob()
@@ -243,6 +246,10 @@
 
 			if (ishuman(mob))
 				var/mob/living/carbon/human/H = mob
+				var/droptail = 1
+				if(ischangeling(H))
+					droptail = 0
+				organ_mutator(H, "reset", droptail)
 				H.image_eyes.pixel_y = initial(H.image_eyes.pixel_y)
 				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
 				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
@@ -314,7 +321,51 @@
 		..()
 		return
 
-	// Removes the mob's current tail (if any) and replaces it with the tail specified
+	proc/organ_mutator(var/mob/living/carbon/human/O, var/mode as text, var/drop_tail)
+		if(!ishuman(O) || !(O?.organHolder))
+			return // hard to mess with someone's organs if they can't have any
+
+		var/datum/organHolder/OHM = O.organHolder
+
+		switch(mode)
+			if("set")
+				if(!src.mutant_organs.len)
+					return // All done!
+				else
+					for(var/mutorgan in src.mutant_organs)
+						if (mutorgan == "tail") // Not everyone has a tail. So just force it in
+							if (OHM.tail)
+								if (drop_tail)
+									OHM.drop_organ("tail")
+								else
+									qdel(OHM.tail)
+						else // But everyone has everything else.
+							var/obj/item/organ/org = OHM.get_organ(mutorgan)
+							if (!istype(org) ||istype(org, /obj/item/organ) && org?.robotic) // No free organs, trade-ins only, keep ur robotic stuff
+								continue
+						var/obj/item/organ_get = src.mutant_organs[mutorgan]
+						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
+					return
+			if("reset")
+				if(!src.mutant_organs.len)
+					return // All done!
+				else
+					for(var/mutorgan in src.mutant_organs)
+						if (mutorgan == "tail") // Not everyone has a tail. So just force it in
+							if (OHM.tail)
+								if (drop_tail)
+									OHM.drop_organ("tail")
+								else
+									qdel(OHM.tail)
+						else // But everyone has everything else.
+							var/obj/item/organ/org = OHM.get_organ(mutorgan)
+							if (!istype(org) ||istype(org, /obj/item/organ) && org?.robotic) // No free organs, trade-ins only, keep ur robotic stuff
+								continue
+							var/obj/item/organ_get = OHM.organ_list[mutorgan] // Get us a new stock human-ass organ
+							OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
+					return
+
+	/* // Removes the mob's current tail (if any) and replaces it with the tail specified
 	// Third var determines if we drop the tail (0) or banish it to the shadow realm (1)
 	// Defaults to just dropping it on the ground
 	proc/set_tail(var/mob/living/carbon/human/Tf as mob, var/tailnum as num, var/deletail as num)
@@ -357,7 +408,7 @@
 
 		Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
 		Tf.update_body()
-		return 1
+		return 1 */
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
@@ -509,7 +560,7 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "lizard"
-	tail = TAIL_LIZARD
+	mutant_organs = list("tail" = /obj/item/organ/tail/lizard)
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -527,13 +578,18 @@
 			detail_2.color = fix_colors(aH.customization_second_color)
 			detail_3.color = fix_colors(aH.customization_third_color)
 
-			// detail_1.color = aH.customization_first_color
-			// detail_2.color = aH.customization_second_color
-			// detail_3.color = aH.customization_third_color
+			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 
 			mob.update_face()
 			mob.update_body()
 			mob.update_clothing()
+
+	disposing()
+		if(ishuman(mob))
+			var/mob/living/carbon/human/T = mob
+			if (T.mob_flags & SHOULD_HAVE_A_TAIL)
+				T.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		. = ..()
 
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
@@ -743,16 +799,21 @@
 	icon_override_static = 1
 	voice_override = "skelly"
 	decomposes = FALSE
-	tail = TAIL_SKELETON
+	mutant_organs = list("tail" = /obj/item/organ/tail/bone)
 
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
 			M.mob_flags |= IS_BONER
+			M.mob_flags |= SHOULD_HAVE_A_TAIL
 
 	disposing()
-		if (ishuman(mob) && (mob.mob_flags & IS_BONER))
-			mob.mob_flags &= ~IS_BONER
+		if(ishuman(mob))
+			var/mob/living/carbon/human/T = mob
+			if (T.mob_flags & IS_BONER)
+				T.mob_flags &= ~IS_BONER
+			if (T.mob_flags & SHOULD_HAVE_A_TAIL)
+				T.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		..()
 
 /*
@@ -872,11 +933,12 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/werewolf
 	ignore_missing_limbs = 0
 	var/old_client_color = null
-	tail = TAIL_WEREWOLF
+	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 
 	New()
 		..()
 		if (mob)
+			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
@@ -909,6 +971,11 @@
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name
+
+			if(ishuman(mob))
+				var/mob/living/carbon/human/T = mob
+				if (T.mob_flags & SHOULD_HAVE_A_TAIL)
+					T.mob_flags &= ~SHOULD_HAVE_A_TAIL
 
 		return ..()
 
@@ -1030,15 +1097,19 @@
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	var/had_tablepass = 0
 	var/table_hide = 0
-	tail = TAIL_MONKEY
+	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
 
 	New(var/mob/living/carbon/human/M)
 		M.add_stam_mod_max("monkey", -50)
+		M.mob_flags |= SHOULD_HAVE_A_TAIL
 		..()
 
 	disposing()
 		if (ishuman(mob))
 			mob:remove_stam_mod_max("monkey")
+			var/mob/living/carbon/human/T = mob
+			if (T.mob_flags & SHOULD_HAVE_A_TAIL)
+				T.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		..()
 
 	say_verb()
@@ -1214,7 +1285,7 @@
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "seamonkey"
 	aquatic = 1
-	tail = TAIL_SEAMONKEY
+	mutant_organs = list("tail" = /obj/item/organ/tail/seamonkey)
 
 /datum/mutantrace/martian
 	name = "martian"
@@ -1309,7 +1380,18 @@
 	icon_state = "roach"
 	icon_override_static = 1
 	override_attack = 0
-	tail = TAIL_ROACH
+	mutant_organs = list("tail" = /obj/item/organ/tail/roach)
+
+	New(mob/living/carbon/human/M)
+		. = ..()
+		mob.mob_flags |= SHOULD_HAVE_A_TAIL
+
+	disposing()
+		if(ishuman(mob))
+			var/mob/living/carbon/human/T = mob
+			if (T.mob_flags & SHOULD_HAVE_A_TAIL)
+				T.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		. = ..()
 
 	say_verb()
 		return "clicks"
@@ -1325,7 +1407,18 @@
 	jerk = 1
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
-	tail = TAIL_CAT
+	mutant_organs = list("tail" = /obj/item/organ/tail/cat)
+
+	New(mob/living/carbon/human/M)
+		. = ..()
+		mob.mob_flags |= SHOULD_HAVE_A_TAIL
+
+	disposing()
+		if(ishuman(mob))
+			var/mob/living/carbon/human/T = mob
+			if (T.mob_flags & SHOULD_HAVE_A_TAIL)
+				T.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		. = ..()
 
 	say_verb()
 		return "meows"
@@ -1627,11 +1720,12 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "cow"
-	tail = TAIL_COW
+	mutant_organs = list("tail" = /obj/item/organ/tail/cow)
 
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
+			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
@@ -1656,6 +1750,8 @@
 			var/mob/living/carbon/human/H = mob
 			H.blood_id = initial(H.blood_id)
 			H.blood_color = initial(H.blood_color)
+			if (H.mob_flags & SHOULD_HAVE_A_TAIL)
+				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		..()
 
 

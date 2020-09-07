@@ -18,6 +18,7 @@
 // Mob clothing and effect layers
 #define MOB_LAYER_BASE 		4
 #define MOB_OVERLAY_BASE	FLOAT_LAYER
+#define MOB_OVERSUIT_LAYER 		(MOB_LAYER_BASE+1)
 #define MOB_EFFECT_LAYER 	(MOB_OVERLAY_BASE-1)	// FLOAT_LAYER
 #define MOB_HANDCUFF_LAYER 	(MOB_OVERLAY_BASE-2)
 #define MOB_INHAND_LAYER 	(MOB_OVERLAY_BASE-3)
@@ -36,6 +37,8 @@
 #define MOB_UNDERWEAR_LAYER (MOB_OVERLAY_BASE-16)
 #define MOB_DAMAGE_LAYER 	(MOB_OVERLAY_BASE-17)
 #define MOB_LIMB_LAYER 		(MOB_OVERLAY_BASE-18)
+#define MOB_TAIL_LAYER1 		(MOB_OVERLAY_BASE-19)
+#define MOB_TAIL_LAYER2 		(MOB_OVERLAY_BASE-20)
 
 // Some effects were defined on layer 10, some on layer 20... Lets unify this...
 // These are for effects that should display below lighting
