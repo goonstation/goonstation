@@ -1072,10 +1072,10 @@
 		item_state = "syndie_specialist"
 
 		setupProperties()
-		..()
-		setProperty("exploprot", 10)
-		setProperty("meleeprot", 4)
-		setProperty("rangedprot", 1.5)
+			..()
+			setProperty("exploprot", 10)
+			setProperty("meleeprot", 4)
+			setProperty("rangedprot", 1.5)
 
 		medic
 			name = "specialist operative medic uniform"
