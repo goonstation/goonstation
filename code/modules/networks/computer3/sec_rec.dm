@@ -734,18 +734,19 @@
 				peripheral_command("[src.setup_mail_freq]", freqsignal, "\ref[src.radiocard]")
 				src.log_string += "<br>Adjusting frequency... \[[src.setup_mail_freq]]."
 
-			var/datum/signal/signal = get_free_signal()
-			//signal.encryption = "\ref[src.radiocard]"
-
 			//Create a PDA mass-message string.
-			signal.data["command"] = "text_message"
-			signal.data["sender_name"] = "SEC-MAILBOT"
-			signal.data["group"] = src.setup_mailgroup //Only security PDAs should be informed.
-			signal.data["message"] = "Alert! Crewman \"[perp_name]\" has been flagged for arrest by [src.authenticated]!"
+			var/list/mailgroups = list(MGD_SECURITY, "AI-Sec_Records Alerts")
+			for(var/mailgroup in mailgroups)
+				var/datum/signal/signal = get_free_signal()
+				//signal.encryption = "\ref[src.radiocard]"
+				signal.data["command"] = "text_message"
+				signal.data["sender_name"] = "SEC-MAILBOT"
+				signal.data["group"] = mailgroup //Only select PDAs should be informed (aka sec and ai)
+				signal.data["message"] = "Alert! Crewman \"[perp_name]\" has been flagged for arrest by [src.authenticated]!"
 
-			src.log_string += "<br>Arrest notification sent."
-			last_arrest_report = world.time
-			peripheral_command("transmit", signal, "\ref[src.radiocard]")
+				src.log_string += "<br>Arrest notification sent."
+				last_arrest_report = world.time
+				peripheral_command("transmit", signal, "\ref[src.radiocard]")
 			return
 
 		find_access_file() //Look for the whimsical account_data file
