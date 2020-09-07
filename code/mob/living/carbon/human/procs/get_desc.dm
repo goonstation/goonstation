@@ -158,16 +158,46 @@
 		else
 			. += "<br><span class='alert'><B>[src.name] has been decapitated!</B></span>"
 
+
 		if (src.organHolder.chest)
-			if (src.organHolder.chest.op_stage >= 9.0)
+			if (src.organHolder.chest.op_stage < 9.0)
+				. += "<br><span class='alert'><B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B></span>"
+			if (src.organHolder.chest.op_stage >= 9.0 && src.organHolder.chest.op_stage < 10.0)
 				if (src.organHolder.heart)
 					. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open!</B></span>"
 				else
 					. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open and [t_his] heart has been removed!</B></span>"
+
+			if (src.organHolder.chest.op_stage >= 10.0 && !istype(src.mutantrace, /datum/mutantrace/skeleton))
+				if ((!src.mutantrace || src.mutantrace.tail == TAIL_NONE) && src.butt_op_stage >= 4)
+					. += "<br><span class='alert'><B>[src.name] has a large incision at the base of [t_his] back!</B></span>"
+				else if ((!src.mutantrace || src.mutantrace.tail == TAIL_NONE) && src.butt_op_stage < 4)
+					. += "<br><span class='alert'><B>[src.name] has a large incision above [t_his] butt!</B></span>"
+
+				else if (src.organHolder.tail && src.mutantrace && src.mutantrace.tail > TAIL_NONE)
+					. += "<br><span class='alert'><B>[src.name] has a long incision around the base of [t_his] tail!</B></span>"
+				else if (!src.organHolder.tail && src.mutantrace && src.mutantrace.tail > TAIL_NONE && src.butt_op_stage >= 4)
+					. += "<br><span class='alert'><B>[src.name] has a large incision at the base of [t_his] back where [t_his] tail should be!</B></span>"
+				else if (!src.organHolder.tail && src.mutantrace && src.mutantrace.tail > TAIL_NONE && src.butt_op_stage < 4)
+					. += "<br><span class='alert'><B>[src.name] has a large incision above [t_his] butt where [t_his] tail should be!</B></span>"
+
+		if (istype(src.mutantrace, /datum/mutantrace/skeleton))
+			if (!src.organHolder.tail)
+				. += "<br><span class='alert'><B>[src.name]'s tailbone is missing!</B></span>"
+
+		if (src.organHolder.chest.op_stage == 0.0)
+			if (src.organHolder.tail && (src.organHolder.tail.type != /obj/item/organ/tail/bone) && (!src.mutantrace || src.mutantrace.tail == TAIL_NONE) && src.butt_op_stage >= 4)
+				. += "<br><span class='alert'><B>[src.name] has [src.organHolder.tail.name] attached just above the spot where [t_his] butt should be!</B></span>"
+			if (src.organHolder.tail && (src.organHolder.tail.type != /obj/item/organ/tail/bone) && (!src.mutantrace || src.mutantrace.tail == TAIL_NONE) && src.butt_op_stage < 4)
+				. += "<br><span class='alert'><B>[src.name] has [src.organHolder.tail.name] attached just above [t_his] butt.</B></span>"
+
+			if (!src.organHolder.tail && src.mutantrace && src.mutantrace.tail > TAIL_NONE)
+				. += "<br><span class='alert'><B>[src.name] is missing their tail!</B></span>"
 			else if(src.organHolder.chest.op_stage > 0.0)
 				. += "<br><span class='alert'><B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B></span>"
 		else
 			. += "<br><span class='alert'><B>[src.name]'s entire chest is missing!</B></span>"
+
 
 		if (src.butt_op_stage > 0)
 			if (src.butt_op_stage >= 4)

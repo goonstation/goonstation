@@ -598,9 +598,9 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(src.loc)
+			new_character = new J.mob_type(src.loc, client.preferences.AH)
 		else
-			new_character = new /mob/living/carbon/human(src.loc) // fallback
+			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH) // fallback
 
 		close_spawn_windows()
 

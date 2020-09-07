@@ -12,6 +12,7 @@
 
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
+	var/datum/appearanceHolder/AH_we_spawned_with = null	// Used to colorize things that need to be colorized before the player notices they aren't
 
 	var/targeting_ability = null
 
@@ -229,7 +230,9 @@
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
 
 // mob procs
-/mob/New()
+/mob/New(var/loc, var/datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
+	src.AH_we_spawned_with = AH_passthru
+	src.loc = loc
 	hallucinations = new
 	organs = new
 	grabbed_by = new
@@ -238,8 +241,9 @@
 	huds = new
 	render_special = new
 	traitHolder = new(src)
-	if (!src.bioHolder)
-		src.bioHolder = new /datum/bioHolder ( src )
+	cooldowns = new
+	if (!bioHolder)
+		bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
 	. = ..()
 	mobs.Add(src)

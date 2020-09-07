@@ -3,6 +3,7 @@
 		..()
 		SPAWN_DBG(0)
 			randomize_look(src, 1, 1, 1, 1, 1, 1)
+			src.organHolder.head.update_icon(0)
 
 		SPAWN_DBG(1 SECOND)
 			set_clothing_icon_dirty()

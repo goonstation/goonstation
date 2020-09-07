@@ -341,10 +341,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("lizard")
-					return 1
+				M.set_mutantrace(/datum/mutantrace/lizard, 1)
+				return 1
 			return 0
 
 	cow
@@ -353,10 +351,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("cow")
-					return 1
+				M.set_mutantrace(/datum/mutantrace/cow, 1)
+				return 1
 			return 0
 
 	skeleton
@@ -365,10 +361,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("skeleton")
-					return 1
+				M.set_mutantrace(/datum/mutantrace/skeleton, 1)
+				return 1
 			return 0
 
 	roach
@@ -377,10 +371,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("roach")
-					return 1
+				M.set_mutantrace(/datum/mutantrace/roach, 1)
+				return 1
 			return 0
 
 	limbless

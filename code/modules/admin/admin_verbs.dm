@@ -893,7 +893,7 @@ var/list/fun_images = list()
 		boutput(src, "<span class='alert'>No preferences found on target client.</span>")
 
 	var/mob/mymob = src.mob
-	var/mob/living/carbon/human/H = new(mymob.loc)
+	var/mob/living/carbon/human/H = new(mymob.loc, cli.preferences.AH)
 	cli.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
@@ -920,8 +920,8 @@ var/list/fun_images = list()
 			return
 
 	var/mob/mymob = src.mob
-	var/mob/living/carbon/human/H = new()
-	H.set_loc(mymob.loc)
+	var/mob/living/carbon/human/H = new(mymob.loc, src.preferences.AH)
+	//H.set_loc(mymob.loc)
 	src.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
