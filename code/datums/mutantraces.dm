@@ -365,51 +365,6 @@
 							OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
 					return
 
-	/* // Removes the mob's current tail (if any) and replaces it with the tail specified
-	// Third var determines if we drop the tail (0) or banish it to the shadow realm (1)
-	// Defaults to just dropping it on the ground
-	proc/set_tail(var/mob/living/carbon/human/Tf as mob, var/tailnum as num, var/deletail as num)
-		if(!ishuman(Tf) || tailnum > TAIL_ROACH || tailnum < TAIL_NONE)
-			return 0
-
-		if(Tf.organHolder.tail)	// dump the old tail, if they have one
-			if(deletail)
-				Tf.organHolder.tail = null
-				//shit this might drop all the tails in your inventory
-				for(var/obj/item/organ/tail/hidden_secret_tails in Tf.contents)	// Cus mutants love to hoard tails in their mob
-					if(istype(hidden_secret_tails, /obj/item/organ/tail))
-						hidden_secret_tails.set_loc(Tf.loc)
-						hidden_secret_tails.dropped(Tf)
-						hidden_secret_tails.layer = initial(hidden_secret_tails.layer)
-			else
-				if (!istype(Tf.organHolder.tail, /obj/item/organ/tail/bone))
-					Tf.visible_message("<span class='notice'>[Tf]'s tail falls off, and a new one appears in its place!</span>", "<span class='notice'>Your tail falls off, and a new one appears in its place!</span>")
-				Tf.organHolder.drop_organ("tail")
-
-		switch(tailnum)	// Mutantraces come with a free, new tail
-			if (TAIL_NONE)	// Unless you shouldn't have one
-				Tf.organHolder.tail = null
-			if (TAIL_MONKEY)
-				Tf.organHolder.tail = new /obj/item/organ/tail/monkey(Tf, Tf.organHolder)
-			if (TAIL_LIZARD)
-				Tf.organHolder.tail = new /obj/item/organ/tail/lizard(Tf, Tf.organHolder)
-			if (TAIL_COW)
-				Tf.organHolder.tail = new /obj/item/organ/tail/cow(Tf, Tf.organHolder)
-			if (TAIL_WEREWOLF)
-				Tf.organHolder.tail = new /obj/item/organ/tail/wolf(Tf, Tf.organHolder)
-			if (TAIL_SKELETON)
-				Tf.organHolder.tail = new /obj/item/organ/tail/bone(Tf, Tf.organHolder)
-			if (TAIL_SEAMONKEY)
-				Tf.organHolder.tail = new /obj/item/organ/tail/seamonkey(Tf, Tf.organHolder)
-			if (TAIL_CAT)
-				Tf.organHolder.tail = new /obj/item/organ/tail/cat(Tf, Tf.organHolder)
-			if (TAIL_ROACH)
-				Tf.organHolder.tail = new /obj/item/organ/tail/roach(Tf, Tf.organHolder)
-
-		Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-		Tf.update_body()
-		return 1 */
-
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
 	icon = 'icons/mob/blob_ambassador.dmi'
