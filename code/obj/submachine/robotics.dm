@@ -44,9 +44,12 @@
 /obj/item/lamp_manufacturer
 	name = "miniaturized lamp manufacturer"
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings."
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "borglampman-white"
-	var/prefix = "borglampman"
+	icon = 'icons/obj/items/tools/lampman.dmi'
+	icon_state = "borg_white"
+	var/prefix = "borg"
+	var/metal_ammo = 0
+	var/max_ammo = 20
+	var/load_interval = 5
 
 	var/cost_broken = 50 //For broken/burned lamps (the old lamp gets recycled in the tool)
 	var/cost_empty = 75
@@ -88,14 +91,39 @@
 				setting = "white"
 				dispensing_tube = /obj/item/light/tube
 				dispensing_bulb = /obj/item/light/bulb
-		set_icon_state("[prefix]-[setting]")
+		set_icon_state("[prefix]_[setting]")
 		tooltip_rebuild = 1
 
 
 	get_desc()
 		. = "It is currently set to dispense [setting] lamps."
 
-
+/obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
+	if (issilicon(user))
+		boutput(user,"You don't have to load this, you're a robot! It uses power instead.")
+	else
+		if (istype(W, /obj/item/sheet))
+			var/obj/item/sheet/S = W
+			if (S.material.material_flags & MATERIAL_METAL)
+				if (src.metal_ammo == src.max_ammo)
+					boutput(user, "The lamp manufacturer is full.")
+				else
+					var/loadAmount = 0
+					if (S.amount < src.load_interval)
+						loadAmount = S.amount
+					else
+						loadAmount = src.load_interval
+					if ((src.metal_ammo + loadAmount) > src.max_ammo)
+						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
+					src.metal_ammo += loadAmount
+					S.consume_sheets(loadAmount)
+					playsound(get_turf(src), "sound/machines/click.ogg", 25, 1)
+					src.inventory_counter.update_number(src.metal_ammo)
+					boutput(user, "You load the metal sheet into the lamp manufacturer.")
+			else
+				boutput(user, "You can't load that! You need metal sheets.")
+		else
+			..()
 
 /obj/item/robot_chemaster
 	name = "mini-ChemMaster"
