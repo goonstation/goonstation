@@ -458,6 +458,12 @@
 		else
 			src.overlays += image('icons/effects/fire.dmi', "1old")
 		processing_items.Add(src)
+#if ASS_JAM
+		if(src.reagents)
+			SPAWN_DBG(3 SECONDS)
+				if(src.reagents)
+					smoke_reaction(src.reagents, 0, get_turf(src), do_sfx=FALSE) // bring back infinicheese 2020
+#endif
 		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
 
 			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
