@@ -345,12 +345,12 @@
 		shielded = 1
 		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some blast!</b></span>")
 
-	power *= (100-max(exploprot, 100))/100
+	power *= (1-exploprot)
 	power -= reduction
 	var/b_loss = clamp(power*15, 0, 120)
 	var/f_loss = clamp((power-3)*10, 0, 120)
 
-	var/delib_chance = b_loss - 25
+	var/delib_chance = b_loss - 20
 	if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))
 		delib_chance += 20
 
