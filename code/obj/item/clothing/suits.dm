@@ -1049,7 +1049,7 @@
 
 		setupProperties()
 			..()
-			setProperty("exploprot", 3)
+			setProperty("exploprot", 4)
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 3)
 
@@ -1070,6 +1070,12 @@
 		desc = "A syndicate issue combat dress system, pressurized for space travel."
 		icon_state = "syndie_specialist"
 		item_state = "syndie_specialist"
+
+		setupProperties()
+			..()
+			setProperty("exploprot", 2)
+			setProperty("meleeprot", 4)
+			setProperty("rangedprot", 1.5)
 
 		medic
 			name = "specialist operative medic uniform"
@@ -1103,6 +1109,13 @@
 			name = "specialist operative marksman's suit"
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
+
+		grenadier
+			name = "specialist operative bombsuit"
+
+			setupProperties()
+				..()
+				setProperty("exploprot", 6)
 
 		unremovable
 			cant_self_remove = 1

@@ -1,5 +1,9 @@
 
 (t)tue sep 08 20
+(u)Gannets
+(p)2106
+(e)⚖|balance
+(+)Improved armour values for Nuclear Operative Specialist uniforms.
 (u)Zamujasa
 (+)Lowered the intensity of screen-shake effects across the board.
 (+)Manta will no longer fling your viewpoint halfway across the screen, for example.
