@@ -721,7 +721,7 @@
 			return healthlist[assoc]
 		return null
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		hit_twitch(src)
 		if (nodamage)
 			return
