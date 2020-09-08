@@ -45,7 +45,7 @@
 	name = "miniaturized lamp manufacturer"
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings."
 	icon = 'icons/obj/items/tools/lampman.dmi'
-	icon_state = "borg_white"
+	icon_state = "borg-white"
 	var/prefix = "borg"
 	var/metal_ammo = 0
 	var/max_ammo = 20
@@ -91,7 +91,7 @@
 				setting = "white"
 				dispensing_tube = /obj/item/light/tube
 				dispensing_bulb = /obj/item/light/bulb
-		set_icon_state("[prefix]_[setting]")
+		set_icon_state("[prefix]-[setting]")
 		tooltip_rebuild = 1
 
 

@@ -614,9 +614,6 @@
 		if(inserted_lamp)
 			if (current_lamp.light_status == LIGHT_OK && current_lamp.name == L.name) //name because I want this to be able to replace working lights with different colours
 				boutput(user, "This fitting already has an identical lamp.")
-				if (!issilicon(user))
-					M.metal_ammo++
-					M.inventory_counter.update_number(M.metal_ammo)
 				qdel(L)
 				return //Stop borgs from making more sparks than necessary
 

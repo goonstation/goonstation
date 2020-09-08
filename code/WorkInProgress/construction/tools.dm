@@ -234,7 +234,7 @@
 /obj/item/lamp_manufacturer/organic
 	icon = 'icons/obj/items/tools/lampman.dmi'
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
-	icon_state = "bio_white"
+	icon_state = "bio-white"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
 	w_class = 2
 	click_delay = 1
