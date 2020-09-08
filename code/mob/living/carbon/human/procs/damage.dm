@@ -358,8 +358,7 @@
 		delib_chance = round(delib_chance / 2)
 
 	if (prob(delib_chance))
-		src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb on ex_act(3)
-
+		src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
 
 	switch (power)
 		if (-INFINITY to 0) //blocked
@@ -369,6 +368,7 @@
 			SPAWN_DBG(1 DECI SECOND)
 				src.gib(1)
 			return
+	src.apply_sonic_stun(0, 0, 0, 0, 0, round(power*7), round(power*7), power*40)
 
 	if (prob(b_loss) && !shielded && !reduction)
 		src.changeStatus("paralysis", b_loss DECI SECONDS)
