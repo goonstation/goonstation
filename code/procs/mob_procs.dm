@@ -520,7 +520,7 @@
 	return 0
 
 /mob/living/carbon/human/get_explosion_resistance()
-	// @todo
+	return GET_MOB_PROPERTY(src, PROP_EXPLOPROT)/100
 
 /mob/proc/spread_blood_clothes(mob/whose)
 	return

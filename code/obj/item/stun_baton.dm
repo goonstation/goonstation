@@ -668,7 +668,7 @@
 	block_prop_setup(source, obj/item/grab/block/B)
 		if(src.status)
 			B.setProperty("rangedprot", 0.5)
-			B.setProperty("exploprot", 1)
+			B.setProperty("exploprot", 10)
 			. = ..()
 
 	proc/update_icon()

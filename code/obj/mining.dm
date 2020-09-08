@@ -1858,7 +1858,7 @@ obj/item/clothing/gloves/concussive
 				C.stuttering += 15
 				boutput(C, "<span class='alert'>The concussive blast knocks you off your feet!</span>")
 			if(get_dist(src,C) <= src.expl_heavy)
-				C.TakeDamage("All",rand(15,25)/C.get_explosion_resistance(),0)
+				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
 				boutput(C, "<span class='alert'>You are battered by the concussive shockwave!</span>")
 
 /obj/item/cargotele

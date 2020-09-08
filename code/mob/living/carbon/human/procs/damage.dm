@@ -320,88 +320,61 @@
 		return
 
 	if(!power)
-		power = 8-severity*2
+		switch(severity)
+			if(1)
+				power = 9
+			if(2)
+				power = 4
+			if(3)
+				power = 2.5
 
+	var/exploprot = src.get_explosion_resistance()
+	var/reduction = 0
 	var/shielded = 0
-	var/spellshielded = 0
+
 	for (var/obj/item/device/shield/S in src)
 		if (S.active)
+			exploprot += 30
 			shielded = 1
+			reduction += 1
 			break
 
-	var/reduction = 0
-	if (src.energy_shield) reduction = src.energy_shield.protect()
+	if (src.energy_shield) reduction += src.energy_shield.protect()/15
 	if (src.spellshield)
-		reduction += 30
-		spellshielded = 1
+		reduction += 2
+		shielded = 1
 		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some blast!</b></span>")
 
-	var/exploprot = GET_MOB_PROPERTY(src, PROP_EXPLOPROT)
-	reduction += rand(exploprot, exploprot * 5)
-	severity += round(exploprot/4)
-	var/b_loss = min(120, power*15)/(1+exploprot/8) - reduction
-	var/f_loss = null
+	power *= (1-exploprot)
+	power -= reduction
+	var/b_loss = clamp(power*15, 0, 120)
+	var/f_loss = clamp((power-3)*10, 0, 120)
 
-	var/delib_chance = b_loss - 30
+	var/delib_chance = b_loss - 20
 	if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))
 		delib_chance += 20
 
 	if (src.traitHolder && src.traitHolder.hasTrait("explolimbs") || src.getStatusDuration("food_explosion_resist"))
 		delib_chance = round(delib_chance / 2)
 
-	if (spellshielded)
-		severity++
+	if (prob(delib_chance) && !shielded)
+		src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
 
-	switch (severity)
-		if (1.0) //gib
-			b_loss += max(500 - reduction, 0)
+	switch (power)
+		if (-INFINITY to 0) //blocked
+			boutput(src, "<span class='alert'><b>You are shielded from the blast!</b></span>")
+			return
+		if (6 to INFINITY) //gib
 			SPAWN_DBG(1 DECI SECOND)
 				src.gib(1)
 			return
-
-		if (2.0) //60-120 damage, maybe multiple delimbs
-			if(!shielded)
-				b_loss *= 0.66
-				f_loss = b_loss
-			src.apply_sonic_stun(0, 0, 0, 0, 0, 30, 30, 2*b_loss)
-			while(delib_chance > 0)
-				if (prob(delib_chance))
-					src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg")))
-				delib_chance -= 35 // let's not get too crazy
-
-		if (3.0) //15-45 damage, maybe 1 delimb
-			src.apply_sonic_stun(0, 0, 0, 0, 0, 15, 15, 2*b_loss)
-			if (prob(delib_chance))
-				src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb on ex_act(3)
-
-		if (4.0 to INFINITY)
-			b_loss = 0
-			boutput(src, "<span class='alert'><b>Your armor shields you from the blast!</b></span>")
+	src.apply_sonic_stun(0, 0, 0, 0, 0, round(power*7), round(power*7), power*40)
 
 	if (prob(b_loss) && !shielded && !reduction)
 		src.changeStatus("paralysis", b_loss DECI SECONDS)
 		src.force_laydown_standup()
 
 	TakeDamage(zone="All", brute=b_loss, burn=f_loss, tox=0, damage_type=0, disallow_limb_loss=1)
-
-	/*
-	for (var/organ in src.organs)
-		var/obj/item/temp = src.organs["[organ]"]
-		if (isitem(temp))
-			switch(temp.name)
-				if ("head")
-					temp.take_damage(b_loss * 0.2, f_loss * 0.2)
-				if ("chest")
-					temp.take_damage(b_loss * 0.4, f_loss * 0.4)
-				if ("l_arm")
-					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-				if ("r_arm")
-					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-				if ("l_leg")
-					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-				if ("r_leg")
-					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-	*/
 	src.UpdateDamageIcon()
 
 /mob/living/carbon/human/blob_act(var/power)
