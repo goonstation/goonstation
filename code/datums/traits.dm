@@ -740,6 +740,24 @@ obj/trait/pilot
 	points = 1
 	isPositive = 0
 
+/obj/trait/color_shift
+	name = "Color Shift (0)"
+	cleanName = "Color Shift"
+	desc = "Grants the user Achromia and Hemochromia."
+	id = "color_shift"
+	points = 0
+	isPositive = 1
+	
+	onAdd(var/mob/owner)
+		if(owner.bioHolder)
+			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
+			owner.bioHolder.AddEffect("hemochromia_unknown", 0, 0, 0, 1)
+
+	onLife(var/mob/owner)	//Yes, the fact that Hemochromia isn't enforced is intentional. Mainly because it'd be too annoying to do properly. Just roll with it.
+		if(owner.bioHolder)
+			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
+		return
+
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
 	cleanName = "Slow Metabolism"
