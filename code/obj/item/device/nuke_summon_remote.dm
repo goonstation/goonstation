@@ -8,18 +8,19 @@
 	anchored = 0.0
 	w_class = 2.0
 
-	var/uses = 1
-	var/sound_firing = 'sound/weapons/energy/howitzer_firing.ogg' //temp
+	var/charges = 1
+	var/use_sound = 'sound/machines/chime.ogg'
 
 	attack_self(mob/user as mob)
-		if(uses >= 1)
+		if(charges >= 1)
 			var/datum/game_mode/nuclear/mode = ticker.mode
 			showswirl(mode.the_bomb)
 			mode.the_bomb?.set_loc(get_turf(src))
 			showswirl(src)
 			src.visible_message("<span class='alert'>[user] has summoned the Nuclear Bomb!</span>")
-			src.uses -= 1
-			playsound(src.loc, sound_firing, 70, 1)
+			src.charges -= 1
+			playsound(src.loc, use_sound, 70, 1)
 		else
+			boutput(user, "<span class='alert'>The [src] is out of charge and can't be used again!</span>")
 			return
 
