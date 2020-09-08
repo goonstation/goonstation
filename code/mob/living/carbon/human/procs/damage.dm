@@ -330,6 +330,7 @@
 
 	var/exploprot = src.get_explosion_resistance()
 	var/reduction = 0
+	var/shielded = 0
 
 	for (var/obj/item/device/shield/S in src)
 		if (S.active)
