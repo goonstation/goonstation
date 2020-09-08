@@ -328,7 +328,7 @@
 			if(3)
 				power = 2.5
 
-	var/exploprot = GET_MOB_PROPERTY(src, PROP_EXPLOPROT)
+	var/exploprot = src.get_explosion_resistance()
 	var/reduction = 0
 	var/shielded = 0
 
