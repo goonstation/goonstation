@@ -1049,7 +1049,7 @@
 
 		setupProperties()
 			..()
-			setProperty("exploprot", 3)
+			setProperty("exploprot", 30)
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 3)
 
@@ -1193,7 +1193,7 @@
 		setProperty("radprot", 50)
 		setProperty("coldprot", 75)
 		setProperty("heatprot", 25)
-		setProperty("exploprot", 3)
+		setProperty("exploprot", 30)
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
 		setProperty("space_movespeed", 0)
@@ -1237,7 +1237,7 @@
 		setProperty("radprot", 25)
 		setProperty("coldprot", 50)
 		setProperty("heatprot", 15)
-		setProperty("exploprot", 2)
+		setProperty("exploprot", 20)
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 2)
 

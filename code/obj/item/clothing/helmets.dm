@@ -520,7 +520,7 @@
 		..()
 		setProperty("meleeprot_head", 9)
 		setProperty("disorient_resist_eye", 25)
-		setProperty("exploprot", 2)
+		setProperty("exploprot", 20)
 
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS Hat"
@@ -657,7 +657,7 @@
 	setupProperties()
 		..()
 		setProperty("radprot", 50)
-		setProperty("exploprot", 1)
+		setProperty("exploprot", 10)
 
 	syndicate
 		name = "Syndicate Command Helmet"
