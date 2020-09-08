@@ -10,14 +10,12 @@
 	on = 0
 	var/digging = 0
 	health = 25
-	locked = 1
 	var/diglevel = 2
 	var/digsuspicious = 0
 	var/hardthreshold = 2
 	var/turf/target
 	var/turf/oldtarget
 	var/oldloc = null
-	req_access = list(access_engineering)
 	var/list/path = null
 	var/list/digbottargets = list()
 	var/lumlevel = 0.2
@@ -87,13 +85,6 @@
 
 /obj/machinery/bot/mining/attackby(var/obj/item/W , mob/user as mob)
 	src.add_fingerprint(user)
-	if(istype(W, /obj/item/card/id))
-		if(src.allowed(usr))
-			src.locked = !src.locked
-			boutput(user,  "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.")
-		else
-			boutput(user,  "The [src] doesn't seem to accept your authority.")
-		src.updateUsrDialog()
 	//////////////////////
 	///Emagged code///////
 	//////////////////////
