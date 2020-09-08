@@ -624,7 +624,7 @@ WET FLOOR SIGN
 	attackby(obj/item/W, mob/user, params)
 		var/mob/living/carbon/human/H = user
 		if(istype(W, /obj/item/reagent_containers) && istype(H) && istype(H.gloves, /obj/item/clothing/gloves/long))
-			boutput(user, "You stealthily replace the hidden [payload.name] with [W].")
+			boutput(user, "<span class='notice'>You stealthily replace the hidden [payload.name] with [W].</span>")
 			user.drop_item(W)
 			src.payload.set_loc(src.loc)
 			user.put_in_hand_or_drop(src.payload)
