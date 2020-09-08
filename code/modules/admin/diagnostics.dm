@@ -630,6 +630,20 @@ proc/debug_color_of(var/thing)
 				img.app.color = "#ffffff"
 				img.app.alpha = 50
 
+	wet_floors
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(!theTurf.wet)
+				img.app.alpha = 0
+				return
+			img.app.overlays = list(src.makeText(theTurf.wet, RESET_ALPHA | RESET_COLOR))
+			switch(theTurf.wet)
+				if(1)
+					img.app.color = "#55aa55"
+				if(2)
+					img.app.color = "#5555aa"
+				if(3)
+					img.app.color = "#aa5555"
+
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
