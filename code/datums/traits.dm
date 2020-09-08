@@ -1019,7 +1019,7 @@ obj/trait/pilot
 
 /obj/trait/atheist
 	name = "Atheist (0)"
-	cleanName="Atheist"
+	cleanName = "Atheist"
 	desc = "In this moment, you are euphoric. Cannot pray, cannot receive help from chaplains, perhaps some other things..."
 	id = "atheist"
 	points = 0

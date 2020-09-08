@@ -83,7 +83,7 @@ var/global/list/bible_contents = list()
 		else if (!isdead(M))
 			var/mob/H = M
 			// ******* Check
-			if ((ishuman(H) && prob(60) && !(M?.traitHolder?.hasTrait("atheist"))))
+			if ((ishuman(H) && prob(60) && !(M.traitHolder?.hasTrait("atheist"))))
 				bless(M)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
 				boutput(M, "<span class='alert'>May the power of Christ compel you to be healed!</span>")
@@ -94,7 +94,7 @@ var/global/list/bible_contents = list()
 				logTheThing("combat", user, M, "biblically healed [constructTarget(M,"combat")]")
 			else
 				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
-					if (M?.traitHolder?.hasTrait("atheist"))
+					if (M.traitHolder?.hasTrait("atheist"))
 						M.take_brain_damage(5)
 					else
 						M.take_brain_damage(10)
@@ -164,7 +164,7 @@ var/global/list/bible_contents = list()
 			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
 			return 0
 
-		if (user?.traitHolder?.hasTrait("atheist"))
+		if (user.traitHolder?.hasTrait("atheist"))
 			user.visible_message("<span class='alert'>[user] farts on the bible with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b></span>")
 			return
 		else
