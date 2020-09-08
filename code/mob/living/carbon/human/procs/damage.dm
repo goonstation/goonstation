@@ -334,7 +334,7 @@
 
 	for (var/obj/item/device/shield/S in src)
 		if (S.active)
-			exploprot += 30
+			exploprot += 0.3
 			shielded = 1
 			reduction += 1
 			break
@@ -345,7 +345,7 @@
 		shielded = 1
 		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some blast!</b></span>")
 
-	power *= (1-exploprot)
+	power *= clamp(1-exploprot, 0, 1)
 	power -= reduction
 	var/b_loss = clamp(power*15, 0, 120)
 	var/f_loss = clamp((power-3)*10, 0, 120)
