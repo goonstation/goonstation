@@ -79,7 +79,9 @@
 		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 		holder_skin = AH.s_tone
 		var/list/L = hex_to_rgb_list(AH.s_tone)
-		var/new_color = (L["r"] + L["g"] + L["b"]) / 3
+		var/new_color = ((L["r"] + L["g"] + L["b"]) / 3) - 42
+		if (new_color < 0)
+			new_color = 0
 		AH.s_tone = rgb(new_color, new_color, new_color)
 		H.update_body()
 
