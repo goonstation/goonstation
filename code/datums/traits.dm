@@ -748,15 +748,10 @@ obj/trait/pilot
 	points = 0
 	isPositive = 1
 	
-	onAdd(var/mob/owner)
+	onAdd(var/mob/owner)	//Not enforcing any of them with onLife because Hemochromia is a multi-mutation thing while Achromia would darken the skin color every tick until it's pitch black.
 		if(owner.bioHolder)
 			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
 			owner.bioHolder.AddEffect("hemochromia_unknown", 0, 0, 0, 1)
-
-	onLife(var/mob/owner)	//Yes, the fact that Hemochromia isn't enforced is intentional. Mainly because it'd be too annoying to do properly. Just roll with it.
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
-		return
 
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
