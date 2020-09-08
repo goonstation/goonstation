@@ -2066,6 +2066,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/goboard, 1, cost=100)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/b, 1, cost=50)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/clow, 5, cost=100) // (this is an anime joke)
+		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=100)      //      (please laugh)
 
 /obj/machinery/vending/clothing
 	name = "FancyPantsCo Sew-O-Matic"
