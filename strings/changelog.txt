@@ -1,4 +1,17 @@
 
+(t)tue sep 08 20
+(u)Gannets
+(p)2106
+(e)⚖|balance
+(+)Improved armour values for Nuclear Operative Specialist uniforms.
+(u)Zamujasa
+(+)Lowered the intensity of screen-shake effects across the board.
+(+)Manta will no longer fling your viewpoint halfway across the screen, for example.
+(+)Some effects may need to be intensified again later, but in general screen shake has been a constant complaint, to the point some players would quit and rejoin to avoid it.
+(u)Superlagg
+(p)2102
+(e)🆕|feature
+(+)Metal organs are no longer made of delicious flesh.
 (t)mon sep 07 20
 (u)Flourish
 (p)2104

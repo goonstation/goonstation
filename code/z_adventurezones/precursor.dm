@@ -226,7 +226,7 @@
 				var/mob/living/carbon/human/H = A
 				H.emote(pick("shiver","shudder"))
 				H.change_misstep_chance(5)
-				shake_camera(H, 25, 2)
+				shake_camera(H, 25, 16)
 			if(istype(A, /obj/precursor_puzzle/glowing_door))
 				var/obj/precursor_puzzle/glowing_door/D = A
 				if(src.pitch == D.pitch)

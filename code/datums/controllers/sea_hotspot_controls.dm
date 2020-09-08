@@ -360,11 +360,11 @@
 		for (var/mob/living/M in range(6, C))
 			found = 1
 			if (phenomena_flags & PH_QUAKE_WEAK)
-				shake_camera(M, 4, 0.1)
+				shake_camera(M, 4, 4)
 				M.show_text("<span class='alert'><b>The ground rumbles softly.</b></span>")
 
 			if (phenomena_flags & PH_QUAKE)
-				shake_camera(M, 5, 0.5)
+				shake_camera(M, 5, 16)
 				random_brute_damage(M, 3)
 				M.changeStatus("weakened", 1 SECOND)
 				M.show_text("<span class='alert'><b>The ground quakes and rumbles violently!</b></span>")
@@ -976,7 +976,7 @@
 			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
 
 		for (var/mob/C in viewers(src))
-			shake_camera(C, 5, 1)
+			shake_camera(C, 5, 8)
 
 		//squash person
 

@@ -462,7 +462,7 @@
 		for(var/mob/M in src)
 			M << sound(P.proj_data.shot_sound,volume=35)
 			M << sound(hitsound, volume=30)
-			shake_camera(M, 1, 1)
+			shake_camera(M, 1, 8)
 
 
 
@@ -566,7 +566,7 @@
 				V.checkhealth()
 
 			for (var/mob/C in src)
-				shake_camera(C, 6, 1)
+				shake_camera(C, 6, 8)
 				//M << sound("sound/impact_sounds/Generic_Hit_Heavy_1.ogg",volume=35)
 
 			if (ismob(target) && target != hitmob)

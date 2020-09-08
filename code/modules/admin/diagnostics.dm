@@ -630,6 +630,46 @@ proc/debug_color_of(var/thing)
 				img.app.color = "#ffffff"
 				img.app.alpha = 50
 
+	wet_floors
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(!theTurf.wet)
+				img.app.alpha = 0
+				return
+			img.app.overlays = list(src.makeText(theTurf.wet, RESET_ALPHA | RESET_COLOR))
+			switch(theTurf.wet)
+				if(1)
+					img.app.color = "#55aa55"
+				if(2)
+					img.app.color = "#5555aa"
+				if(3)
+					img.app.color = "#aa5555"
+
+	last_touched
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/list/lines = list()
+			var/toucher = null
+			for(var/atom/A in list(theTurf) + theTurf.contents)
+				if(is_ok(A) && A.fingerprintslast)
+					if(isnull(toucher))
+						toucher = A.fingerprintslast
+					else if(toucher != A.fingerprintslast)
+						toucher = -1
+					lines += "[A.name] - [A.fingerprintslast]"
+			if(isnull(toucher))
+				img.app.alpha = 0
+				return
+			img.app.desc = lines.Join("<br>\n")
+			if(toucher == -1)
+				img.app.color = "#FF0000"
+			else
+				img.app.color = debug_color_of(toucher)
+				img.app.overlays = list(src.makeText(toucher, RESET_ALPHA | RESET_COLOR))
+		proc/is_ok(atom/A)
+			return TRUE
+
+	last_touched/no_items
+		is_ok(atom/A)
+			return !istype(A, /obj/item)
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay

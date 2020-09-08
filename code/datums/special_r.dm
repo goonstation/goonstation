@@ -372,7 +372,7 @@ EndNote
 			else
 				F.icon_state = pick("platingdmg1","platingdmg2","platingdmg3")
 		else if(istype(T, /turf/simulated/wall))
-			var/turf/simulated/wall/W
+			var/turf/simulated/wall/W = T
 			if (was_eaten)
 				W.icon = 'icons/misc/meatland.dmi'
 				W.icon_state = "bloodwall_2"

@@ -552,7 +552,7 @@ var/bombini_saved = 0
 						sleep(5 SECONDS)
 						playsound(T, "sound/impact_sounds/Machinery_Break_1.ogg", 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
-							shake_camera(M, 5, 2)
+							shake_camera(M, 5, 8)
 
 						sleep(2 SECONDS)
 						playsound(T, "sound/effects/creaking_metal2.ogg", 70, 1)
@@ -566,7 +566,7 @@ var/bombini_saved = 0
 						sleep(4 SECONDS)
 						playsound(T, "sound/machines/boost.ogg", 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
-							shake_camera(M, 10, 4)
+							shake_camera(M, 10, 16)
 
 				T = get_turf(src)
 				SPAWN_DBG(25 SECONDS)

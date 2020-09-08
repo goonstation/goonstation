@@ -279,7 +279,7 @@
 			asize++
 		acount++
 	src.playsound_local(src.loc,"sound/effects/screech.ogg", 100, 1)
-	shake_camera(src, 20, 1)
+	shake_camera(src, 20, 16)
 	boutput(src, "<font color=red>[screamstring]</font>")
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")
 	return

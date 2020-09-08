@@ -171,6 +171,9 @@
 		if (msg)
 			src.visible_message(msg)
 
+		if (target == user && !istype(src,/obj/machinery/disposal/transport))
+			src.ui_interact(user)
+
 		update()
 		return
 

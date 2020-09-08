@@ -64,7 +64,7 @@
 			new/obj/effect/supplyexplosion(src.loc)
 			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 			for(var/mob/M in view(7, src.loc))
-				shake_camera(M, 20, 1)
+				shake_camera(M, 20, 8)
 				if(gib_mobs && M.loc == src.loc)
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)

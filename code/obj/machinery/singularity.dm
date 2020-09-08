@@ -1623,7 +1623,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	playsound(T, 'sound/effects/creaking_metal1.ogg', 100, 0, 5, 0.5)
 	for (var/mob/M in range(7,T))
 		boutput(M, "<span class='bold alert'>The contaiment field on \the [src] begins destabilizing!</span>")
-		shake_camera(M, 5, 1)
+		shake_camera(M, 5, 16)
 	for (var/turf/TF in range(4,T))
 		animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
 	particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(T))
@@ -1631,7 +1631,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	SPAWN_DBG(3 SECONDS)
 		for (var/mob/M in range(7,T))
 			boutput(M, "<span class='bold alert'>The containment field on \the [src] fails completely!</span>")
-			shake_camera(M, 5, 1)
+			shake_camera(M, 5, 16)
 
 		// And most importantly here (Convair880)!
 		logTheThing("bombing", src.activator, null, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")

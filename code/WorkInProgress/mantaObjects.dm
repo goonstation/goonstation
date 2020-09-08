@@ -161,7 +161,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	if(doShake)
 		for(var/client/C in clients)
 			var/mob/M = C.mob
-			if(M && M.z == 1) shake_camera(M, 5, 15, 0.2)
+			if(M && M.z == 1) shake_camera(M, 5, 32, 0.2)
 
 	for(var/A in by_cat[TR_CAT_MANTA_TILES])
 		var/turf/space/fluid/manta/T = A

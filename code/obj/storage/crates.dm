@@ -363,7 +363,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/grenade_launcher,
 		/obj/item/storage/pouch/grenade_round,
 		/obj/item/storage/grenade_pouch/mixed_explosive,
-		/obj/item/clothing/suit/space/syndicate/specialist,
+		/obj/item/clothing/suit/space/syndicate/specialist/grenadier,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
 	heavy
