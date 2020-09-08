@@ -598,18 +598,60 @@
 	msgLose = "You notice a few extra colors."
 	probability = 99
 	icon_state  = "bad"
-	var/list/protanopia_matrix = list(MATRIX_PROTANOPIA)
+	var/list/color_matrix = list(MATRIX_PROTANOPIA)
 
 	OnAdd()
 		src.removed = 0
-		APPLY_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
-		owner.client?.color = protanopia_matrix
+		owner.apply_color_matrix(color_matrix, "protanopia")
 		return
 
 	OnRemove()
 		src.removed = 1
-		REMOVE_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
-		owner.client?.color = null
+		owner.remove_color_matrix(color_matrix, "protanopia")
+		return
+
+/datum/bioEffect/colorblindness/greenblind
+	name = "Deuteranopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing green to be indistinguishable from red."
+	id = "deuteranopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot less green."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+	color_matrix = list(MATRIX_DEUTERANOPIA)
+
+	OnAdd()
+		src.removed = 0
+		owner.apply_color_matrix(color_matrix, "deuteranopia")
+		return
+
+	OnRemove()
+		src.removed = 1
+		owner.remove_color_matrix(color_matrix, "deuteranopia")
+		return
+
+/datum/bioEffect/colorblindness/blueblind
+	name = "Tritanopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing red-green colorblindness."
+	id = "tritanopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot more yellow."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+	color_matrix = list(MATRIX_TRITANOPIA)
+
+	OnAdd()
+		src.removed = 0
+		owner.apply_color_matrix(color_matrix, "tritanopia")
+		return
+
+	OnRemove()
+		src.removed = 1
+		owner.remove_color_matrix(color_matrix, "tritanopia")
 		return
 
 /datum/bioEffect/emoter/screamer

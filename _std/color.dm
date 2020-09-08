@@ -109,5 +109,15 @@
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
+/proc/mult_color_matrix(var/list/M1, var/list/M2)
+	if (M1.len != M2.len)
+		return 0
+	. = list()
+	for(var/i in 1 to M1.len)
+		. += M1[i] * M2[i]
+	return
+
 //Color matrices		// vv Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
-#define MATRIX_PROTANOPIA 0.55,0.45,0.000,0.55,0.45,0.000,0.000,0.25,1.0,0.0,0.0,0.0
+#define MATRIX_PROTANOPIA 0.55, 0.45, 0.00, 0.00, 0.55, 0.45, 0.00, 0.00, 0.00, 0.25, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00
+#define MATRIX_DEUTERANOPIA 0.63, 0.38, 0.00, 0.00, 0.70, 0.30, 0.00, 0.00, 0.00, 0.30, 0.70, 0.00, 0.00, 0.00, 0.00, 1.00
+#define MATRIX_TRITANOPIA 0.95, 0.05, 0.00, 0.00, 0.00, 0.43, 0.57, 0.00, 0.00, 0.48, 0.53, 0.00, 0.00, 0.00, 0.00, 1.00
