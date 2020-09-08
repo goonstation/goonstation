@@ -1785,7 +1785,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 			boutput(rider, "<span class='alert'><B>You crash through the wall!</B></span>")
 			for(var/mob/C in viewers(src))
-				shake_camera(C, 10, 4)
+				shake_camera(C, 10, 16)
 				if(C == rider)
 					continue
 				C.show_message("<span class='alert'><B>The [src] crashes through the wall!</B></span>", 1)
@@ -1795,7 +1795,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		var/mob/M = AM
 		boutput(rider, "<span class='alert'><B>You crash into [M]!</B></span>")
 		for (var/mob/C in viewers(src))
-			shake_camera(C, 8, 3)
+			shake_camera(C, 8, 12)
 			if(C == rider)
 				continue
 			C.show_message("<span class='alert'><B>The [src] crashes into [M]!</B></span>", 1)
@@ -1815,7 +1815,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		if(O.density)
 			boutput(rider, "<span class='alert'><B>You crash into [O]!</B></span>")
 			for (var/mob/C in viewers(src))
-				shake_camera(C, 8, 3)
+				shake_camera(C, 8, 12)
 				if(C == rider)
 					continue
 				C.show_message("<span class='alert'><B>The [src] crashes into [O]!</B></span>", 1)

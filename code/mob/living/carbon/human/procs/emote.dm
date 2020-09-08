@@ -2048,7 +2048,7 @@
 					else if(!src.reagents.has_reagent("puredabs"))
 						message = "<span class='alert'><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
 						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0)
-						shake_camera(src, 40, 0.5)
+						shake_camera(src, 40, 8)
 						if(H)
 							if(H.limbs.l_arm)
 								src.limbs.l_arm.sever()

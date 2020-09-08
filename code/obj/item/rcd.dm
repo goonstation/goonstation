@@ -763,7 +763,7 @@ Broken RCD + Effects
 				A.pixel_x = rand(-4,4)
 				A.pixel_y = rand(-4,4)
 			else if (isliving(A))
-				shake_camera(A, 8, 3)
+				shake_camera(A, 8, 32)
 				A.ex_act( get_dist(src, A) > 1 ? 3 : 1 )
 
 			else if (istype(A, /obj) && (A != src))

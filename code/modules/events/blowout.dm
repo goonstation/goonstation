@@ -74,7 +74,7 @@
 
 		for (var/mob/M in mobs)
 			SPAWN_DBG(0)
-				shake_camera(M, 400, 2) // wire note: lowered strength from 840 to 400, by popular request
+				shake_camera(M, 400, 16)
 
 		sleep(rand(1.5 MINUTES,2 MINUTES)) // drsingh lowered these by popular request.
 		command_alert("Radiation levels lowering [station_or_ship()]wide. ETA 60 seconds until all areas are safe.", "Anomaly Alert")

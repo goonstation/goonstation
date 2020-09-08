@@ -121,7 +121,6 @@
 						continue
 					if (!M.ears_protected_from_sound())
 						O.ArtifactFaultUsed(M)
-						shake_camera(M, 10, 0)
 					else
 						continue
 

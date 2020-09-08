@@ -1986,7 +1986,7 @@
 	if(src_turf)
 		src_turf.fluid_react_single("toxic_fart",50,airborne = 1)
 		for(var/mob/living/L in range(src_turf, 6))
-			shake_camera(L, 10, 5)
+			shake_camera(L, 10, 32)
 
 	if (animation)
 		animation.delaydispose()

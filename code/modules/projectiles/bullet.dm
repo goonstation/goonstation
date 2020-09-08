@@ -682,7 +682,7 @@ toxic - poisons
 	on_launch(obj/projectile/proj)
 		proj.AddComponent(/datum/component/sniper_wallpierce, 4) //pierces 4 walls/lockers/doors/etc. Does not function on restricted Z, rwalls and blast doors use 2 pierces
 		for(var/mob/M in range(proj.loc, 5))
-			shake_camera(M, 3, 1)
+			shake_camera(M, 3, 8)
 
 
 

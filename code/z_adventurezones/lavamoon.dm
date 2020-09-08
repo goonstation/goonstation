@@ -835,7 +835,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			N.flash(3 SECONDS)
 
 			SPAWN_DBG(0)
-				shake_camera(N, 210, 2)
+				shake_camera(N, 210, 16)
 	//todo: Alarms.  Not the dumb siren, I mean like the power plant's computer systems freaking the fuck out because oh jesus radiation
 
 	var/obj/machinery/networked/mainframe/mainframe = locate("IOMOON_MAINFRAME")
