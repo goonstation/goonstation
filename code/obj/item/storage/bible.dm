@@ -166,7 +166,7 @@ var/global/list/bible_contents = list()
 
 		if (user?.traitHolder?.hasTrait("atheist"))
 			user.visible_message("<span class='alert'>[user] farts on the bible with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b></span>")
-			return
+			return 0
 		else
 			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
 			user.gib()
