@@ -8,3 +8,4 @@ if they dont, please make a new file. i dont want to have to de-bloat another se
 TODO:
 add a procs folder, and move most of our generic helper procs there (from the random places theyre scattered across the codebase)
 add a globals folder, and move most of our global stuff there? not sure about this.
+identify files withs similar purposes across defines, macros, lists, procs, globals, whatever. then make a file in main std folder with that content and delete the others.
