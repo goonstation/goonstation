@@ -330,7 +330,6 @@
 
 	var/exploprot = src.get_explosion_resistance()
 	var/reduction = 0
-	var/shielded = 0
 
 	for (var/obj/item/device/shield/S in src)
 		if (S.active)
@@ -357,7 +356,7 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("explolimbs") || src.getStatusDuration("food_explosion_resist"))
 		delib_chance = round(delib_chance / 2)
 
-	if (prob(delib_chance))
+	if (prob(delib_chance) && !shielded)
 		src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
 
 	switch (power)
