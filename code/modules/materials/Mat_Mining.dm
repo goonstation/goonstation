@@ -54,7 +54,7 @@
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, var/reach)
 		if(user == target || (!isturf(target.loc) && !isturf(target)))

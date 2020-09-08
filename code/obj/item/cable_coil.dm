@@ -47,7 +47,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		..(loc)
 		if (spawn_conductor_name)
 			applyCableMaterials(src, getMaterial(spawn_insulator_name), getMaterial(spawn_conductor_name))
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message("<span class='notice'>[user] begins coiling cable!</span>")

@@ -626,7 +626,7 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"

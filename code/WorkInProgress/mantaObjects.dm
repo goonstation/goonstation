@@ -732,7 +732,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/rddiploma
 	name = "RD's diploma"
@@ -768,7 +768,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/constructioncone
 	desc = "Caution!"

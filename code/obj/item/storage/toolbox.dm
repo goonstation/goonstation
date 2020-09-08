@@ -28,7 +28,7 @@
 		if (src.type == /obj/item/storage/toolbox)
 			message_admins("BAD: [src] ([src.type]) spawned at [showCoords(src.x, src.y, src.z)]")
 			qdel(src)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

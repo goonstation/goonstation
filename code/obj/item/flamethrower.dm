@@ -38,7 +38,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		setItemSpecial(null)
 
 /obj/item/flamethrower/assembled

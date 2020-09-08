@@ -241,7 +241,7 @@ WET FLOOR SIGN
 	src.create_reagents(20)
 	src.setItemSpecial(/datum/item_special/rangestab)
 	START_TRACKING
-	BLOCK_ROD
+	BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/mop/disposing()
 	. = ..()
@@ -599,7 +599,7 @@ WET FLOOR SIGN
 
 	New()
 		..()
-		BLOCK_SOFT
+		BLOCK_SETUP(BLOCK_SOFT)
 
 	dropped()
 		JOB_XP(usr, "Janitor", 2)

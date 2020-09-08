@@ -45,7 +45,7 @@
 		AddComponent(/datum/component/transfer_on_attack)
 		AddComponent(/datum/component/barber/haircut)
 		AddComponent(/datum/component/toggle_tool_use)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/M as mob, mob/user as mob)
 		if (src.remove_bandage(M, user))
@@ -89,7 +89,7 @@
 		AddComponent(/datum/component/transfer_on_attack)
 		AddComponent(/datum/component/barber/shave)
 		AddComponent(/datum/component/toggle_tool_use)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/M as mob, mob/user as mob)
 		if (scalpel_surgery(M, user))
