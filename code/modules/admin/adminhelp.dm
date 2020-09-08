@@ -148,6 +148,11 @@
 		gib(client.mob)
 		return
 
+	if (client.mob.traitHolder?.hasTrait("atheist"))
+		boutput(client.mob, "You can't pray to what you don't believe in.")
+		client.mob.take_oxygen_deprivation(10)
+		return
+
 	if(ON_COOLDOWN(client.player, "ahelp", ADMINHELP_DELAY))
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return

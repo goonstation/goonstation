@@ -1017,3 +1017,10 @@ obj/trait/pilot
 	points = 1
 	isPositive = 0
 
+/obj/trait/atheist
+	name = "Atheist (0)"
+	cleanName="Atheist"
+	desc = "In this moment, you are euphoric. Cannot pray, cannot receive help from chaplains, perhaps some other things..."
+	id = "atheist"
+	points = 0
+	isPositive = 0
