@@ -328,7 +328,7 @@ WET FLOOR SIGN
 					user.show_text("You were interrupted.", "red")
 					return
 				user.show_text("You have finished mopping!", "blue")
-				playsound(src.loc, "sound/effects/slosh.ogg", 25, 1)
+				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 				if (U && isturf(U))
 					U.clean_forensic()
 				else
