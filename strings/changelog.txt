@@ -1,5 +1,9 @@
 
 (t)tue sep 08 20
+(u)Tarmunora
+(p)2109
+(e)⚖|balance
+(+)Changed explosion resist property to be a percentage-based protection
 (u)Gannets
 (p)2106
 (e)⚖|balance
