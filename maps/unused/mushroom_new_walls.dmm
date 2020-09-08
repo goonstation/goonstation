@@ -20270,6 +20270,14 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay2,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = 24;
+	pixel_y = -12;
+	tag = ""
+	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "cIr" = (
@@ -21376,9 +21384,6 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "eED" = (
-/obj/machinery/camera{
-	dir = 8
-	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
@@ -21510,11 +21515,15 @@
 	pixel_x = 12;
 	pixel_y = 12
 	},
-/obj/machinery/camera{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/simulated/floor/greenwhite{
 	dir = 4
@@ -21569,7 +21578,11 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/camera{
-	dir = 8
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
@@ -22518,9 +22531,6 @@
 	},
 /area/station/hydroponics)
 "ggW" = (
-/obj/machinery/light/incandescent/cool{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "4-5"
 	},
@@ -23047,7 +23057,11 @@
 /area/station/owlery)
 "gRi" = (
 /obj/machinery/camera{
-	dir = 8
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
@@ -23298,8 +23312,20 @@
 /turf/simulated/floor/white,
 /area/station/chemistry)
 "hhg" = (
-/turf/simulated/wall/auto/jen/dark3,
-/area)
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	pixel_x = 11;
+	pixel_y = 24;
+	tag = ""
+	},
+/turf/space,
+/area/station/turret_protected/AIbaseoutside)
 "hhS" = (
 /obj/table/reinforced/chemistry/auto{
 	desc = "A black countertop table for storing kitchen-y objects.";
@@ -23590,11 +23616,15 @@
 /turf/simulated/floor,
 /area/station/hydroponics)
 "hEk" = (
-/obj/machinery/camera{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/simulated/floor{
 	icon_state = "airbridge"
@@ -23916,7 +23946,11 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/camera{
-	dir = 6
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 22;
+	tag = ""
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
@@ -24017,11 +24051,23 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay2,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_x = 11;
+	pixel_y = -23;
+	tag = ""
+	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "ihb" = (
 /obj/machinery/camera{
-	dir = 6
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 22;
+	tag = ""
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -24096,7 +24142,11 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/camera{
-	dir = 6
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 22;
+	tag = ""
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -25046,6 +25096,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/map/light/dimred,
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/AIsat)
 "jrR" = (
@@ -25605,23 +25656,15 @@
 /area/station/hydroponics)
 "klF" = (
 /obj/lattice{
-	dir = 4;
 	icon_state = "lattice-dir"
 	},
+/obj/machinery/light/runway_light/delay2,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 1;
+	dir = 9;
 	name = "autoname - SS13";
-	pixel_x = 11;
-	pixel_y = 24;
-	tag = ""
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_x = 11;
-	pixel_y = -23;
+	pixel_x = -23;
+	pixel_y = 11;
 	tag = ""
 	},
 /turf/space,
@@ -25672,14 +25715,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_x = 11;
-	pixel_y = -23;
-	tag = ""
-	},
+/obj/machinery/light/runway_light/delay2,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -26210,14 +26246,6 @@
 	name = "autoname - SS13";
 	pixel_x = -23;
 	pixel_y = 11;
-	tag = ""
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = 24;
-	pixel_y = -12;
 	tag = ""
 	},
 /turf/space,
@@ -26801,7 +26829,13 @@
 /turf/simulated/floor/engine,
 /area/station/security/armory)
 "lWh" = (
-/obj/machinery/camera,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 22;
+	tag = ""
+	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -27720,7 +27754,11 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/camera{
-	dir = 4
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
@@ -27780,6 +27818,10 @@
 	},
 /obj/cable{
 	icon_state = "6-8"
+	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/simulated/floor/greenwhite{
 	dir = 1
@@ -27891,7 +27933,6 @@
 	name = "Satellite A3-67 Beacon";
 	pixel_y = 6
 	},
-/obj/map/light/dimred,
 /turf/space,
 /area)
 "nzc" = (
@@ -28074,7 +28115,11 @@
 /area/station/crew_quarters/bar)
 "nLP" = (
 /obj/machinery/camera{
-	dir = 8
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -29221,6 +29266,21 @@
 /obj/storage/closet/wardrobe/grey,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
+"peM" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_x = 11;
+	pixel_y = -23;
+	tag = ""
+	},
+/turf/space,
+/area/station/turret_protected/AIbaseoutside)
 "peP" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -29898,7 +29958,13 @@
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
-/obj/machinery/camera,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 22;
+	tag = ""
+	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "pXB" = (
@@ -30175,7 +30241,11 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/camera{
-	dir = 9
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
@@ -31818,7 +31888,11 @@
 /area/station/security/main)
 "sqF" = (
 /obj/machinery/camera{
-	dir = 4
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
@@ -31916,7 +31990,11 @@
 /area/station/maintenance/SEmaint)
 "syA" = (
 /obj/machinery/camera{
-	dir = 5
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -32037,11 +32115,15 @@
 	},
 /area/station/medical/medbay/lobby)
 "sJI" = (
-/obj/machinery/camera{
-	dir = 5
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor{
 	icon_state = "airbridge"
@@ -32176,10 +32258,16 @@
 	icon_state = "2-4"
 	},
 /obj/stool,
-/obj/machinery/camera,
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -12
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 22;
+	tag = ""
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -32461,14 +32549,6 @@
 	name = "autoname - SS13";
 	pixel_x = 24;
 	pixel_y = -12;
-	tag = ""
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = -23;
-	pixel_y = 11;
 	tag = ""
 	},
 /turf/space,
@@ -32831,11 +32911,14 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "ttL" = (
-/obj/machinery/camera{
-	dir = 10
-	},
 /obj/cable{
 	icon_state = "4-9"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/simulated/floor/white,
 /area/station/turret_protected/AIsat)
@@ -33535,9 +33618,15 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/machinery/camera,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 22;
+	tag = ""
 	},
 /turf/simulated/floor{
 	icon_state = "airbridge"
@@ -33678,7 +33767,11 @@
 /area/station/storage/primary)
 "uqL" = (
 /obj/machinery/camera{
-	dir = 9
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -33775,7 +33868,11 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/camera{
-	dir = 5
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
@@ -34226,6 +34323,9 @@
 	},
 /obj/cable{
 	icon_state = "4-10"
+	},
+/obj/machinery/light/incandescent/cool{
+	dir = 1
 	},
 /turf/simulated/floor/greenwhite{
 	dir = 1
@@ -35471,7 +35571,11 @@
 /area/station/science/lab)
 "wMA" = (
 /obj/machinery/camera{
-	dir = 4
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -35761,9 +35865,6 @@
 	},
 /area/station/turret_protected/AIsat)
 "xio" = (
-/obj/machinery/camera{
-	dir = 4
-	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge"
@@ -35810,7 +35911,10 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/camera{
-	dir = 10
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
@@ -99410,8 +99514,8 @@ aaa
 aaa
 aaa
 aaa
-hhg
-hhg
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -99713,7 +99817,7 @@ aaa
 aaa
 aaa
 aaa
-hhg
+aaa
 aaa
 aaa
 aaa
@@ -110821,8 +110925,8 @@ xen
 xen
 xen
 xen
-xen
 qFw
+xen
 xen
 xen
 xen
@@ -110875,8 +110979,8 @@ qFw
 xen
 xen
 xen
-qFw
 xen
+qFw
 xen
 xen
 xen
@@ -111123,8 +111227,8 @@ xen
 xen
 xen
 xen
+hhg
 xen
-klF
 xen
 xen
 xen
@@ -111173,12 +111277,12 @@ mxD
 mxD
 bxm
 xen
-ifO
-xen
-xen
-xen
 koj
 xen
+xen
+xen
+xen
+peM
 xen
 xen
 xen
@@ -111425,8 +111529,8 @@ xen
 xen
 xen
 xen
-xen
 qFw
+xen
 xen
 xen
 xen
@@ -111479,8 +111583,8 @@ qFw
 xen
 xen
 xen
-qFw
 xen
+qFw
 xen
 xen
 xen
@@ -117794,7 +117898,7 @@ see
 cCX
 jGu
 bAS
-cIb
+klF
 bAS
 see
 cCX
@@ -122587,7 +122691,7 @@ aaa
 aaa
 aaa
 aaa
-hhg
+aaa
 aaa
 aaa
 aaa
@@ -122665,7 +122769,7 @@ aaa
 aaa
 aaa
 aaa
-hhg
+aaa
 aaa
 aaa
 aaa
@@ -122889,8 +122993,6 @@ aaa
 aaa
 aaa
 aaa
-hhg
-hhg
 aaa
 aaa
 aaa
@@ -122966,8 +123068,10 @@ aaa
 aaa
 aaa
 aaa
-hhg
-hhg
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
