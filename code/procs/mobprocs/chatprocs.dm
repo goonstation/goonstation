@@ -810,9 +810,10 @@
 		if (!M.client)
 			continue
 		var/msg = message
-		if (self_message && M==src)
-			msg = self_message
-		M.show_message(msg, 1, blind_message, 2, group)
+		if (self_message && M == src)
+			M.show_message(self_message, 1, self_message, 2, group)
+		else
+			M.show_message(msg, 1, blind_message, 2, group)
 
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
