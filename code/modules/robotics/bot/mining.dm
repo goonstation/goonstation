@@ -90,9 +90,8 @@
 	//////////////////////
 	if ((istype(W, /obj/item/card/emag)) && (!src.emagged))
 		boutput(user,  "<span class='alert'>You short out [src]. It.. didn't really seem to affect anything, though.</span>")
-		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='alert bold'><B>[src] buzzes oddly!</span>", 1)
+		for(var/mob/O in hearers(src, null))
+			O.show_message("<span class='alert bold'><B>[src] buzzes oddly!</span>", 1)
 		src.target = null
 		src.oldtarget = null
 		src.anchored = 0
@@ -113,8 +112,7 @@
 		return
 
 	if(src.target && (!src.path || !src.path.len))
-		spawn(0)
-			src.buildPath()
+		src.buildPath()
 
 	if(src.path && src.path.len && src.target)
 		step_to(src, src.path[1])
