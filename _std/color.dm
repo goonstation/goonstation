@@ -109,7 +109,7 @@
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
-/proc/mult_color_matrix(var/list/M1, var/list/M2)
+/proc/mult_color_matrix(var/list/M1, var/list/M2) // always 4x4
 	if (M1.len != M2.len)
 		return 0
 	. = list()
