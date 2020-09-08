@@ -61,6 +61,41 @@
 		if (!particleMaster.CheckSystemExists(system_path, owner))
 			particleMaster.RemoveSystem(system_path, owner)
 
+/datum/bioEffect/achromia
+	name = "Achromia"
+	desc = "The subject loses most of their skin pigmentation, with the remainder causing their skin take on a gray coloration."
+	id = "achromia"
+	effectType = EFFECT_TYPE_POWER
+	probability = 99
+	var/holder_skin = null
+
+	OnAdd()
+		if (!ishuman(owner))
+			return
+
+		var/mob/living/carbon/human/H = owner
+		if (!H.bioHolder)
+			return
+		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+		holder_skin = AH.s_tone
+		var/list/L = hex_to_rgb_list(AH.s_tone)
+		var/new_color = (L["r"] + L["g"] + L["b"]) / 3
+		AH.s_tone = rgb(new_color, new_color, new_color)
+		H.update_body()
+
+	OnRemove()
+		if (!ishuman(owner))
+			return
+
+		var/mob/living/carbon/human/H = owner
+		if (!H.bioHolder)
+			return
+		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+		if (!AH)
+			return
+		AH.s_tone = holder_skin
+		H.update_body()
+
 /datum/bioEffect/color_changer
 	name = "Melanin Suppressor"
 	desc = "Shuts down all melanin production in the subject's body."
