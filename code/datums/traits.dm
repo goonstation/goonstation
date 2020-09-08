@@ -745,6 +745,7 @@ obj/trait/pilot
 	cleanName = "Color Shift"
 	desc = "Grants the user Achromia and Hemochromia."
 	id = "color_shift"
+	icon_state = "color_shift"
 	points = 0
 	isPositive = 1
 	

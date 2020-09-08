@@ -67,6 +67,7 @@
 	id = "achromia"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
+	icon_state  = "achromia"
 	var/holder_skin = null
 
 	OnAdd()

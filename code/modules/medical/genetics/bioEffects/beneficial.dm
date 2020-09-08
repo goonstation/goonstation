@@ -317,6 +317,7 @@
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	stability_loss = 5
+	icon_state  = "noir"
 	msgGain = "You feel chromatic pain."
 	msgLose = "Colors around you begin returning to normal."
 
