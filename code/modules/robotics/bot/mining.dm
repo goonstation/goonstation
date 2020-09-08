@@ -356,7 +356,7 @@
 				else user.u_equip(T)
 				boutput(user,  "You add [T.name]. Now you have a finished mining bot! Hooray!")
 				qdel(T)
-				new /obj/machinery/bot/mining(user.loc)
+				new /obj/machinery/bot/mining(get_truf(src))
 				qdel(src)
 			else
 				boutput(user,  "It's not ready for that part yet.")

@@ -385,9 +385,9 @@
 		return
 
 	attackby(var/obj/item/T, mob/user as mob)
-		if(istype(T, /obj/item/device/prox_sensor))
+		if(istype(T, /obj/item/device/prox_sensor) && src.type == /obj/item/clothing/head/helmet/hardhat) //No derivatives
 			boutput(user,  "You attach the proximity sensor to the hard hat. Now you need to add a robot arm.")
-			new /obj/item/digbotassembly(get_turf(user))
+			new /obj/item/digbotassembly(get_turf(src))
 			qdel(T)
 			qdel(src)
 			return
