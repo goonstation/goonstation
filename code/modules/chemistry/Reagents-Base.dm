@@ -825,7 +825,7 @@ datum
 						M.change_vampire_blood(-burndmg)
 						reacted = 1
 					else if (method == TOUCH)
-						if (M?.traitHolder?.hasTrait("atheist"))
+						if (M.traitHolder?.hasTrait("atheist"))
 							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
 						else
 							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
