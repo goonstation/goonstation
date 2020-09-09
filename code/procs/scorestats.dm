@@ -272,7 +272,7 @@ var/datum/score_tracker/score_tracker
 		var/found_hb = 0
 		var/tier = world.load_intra_round_value("heisenbee_tier")
 		for(var/obj/critter/domestic_bee/heisenbee/HB in by_cat[TR_CAT_PETS])
-			var/obj/item/hat = HB.original_hat)
+			var/obj/item/hat = HB.original_hat
 			if(hat && !hat.disposed)
 				if(hat.loc != HB)
 					var/atom/movable/L = hat.loc
