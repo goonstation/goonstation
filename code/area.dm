@@ -38,7 +38,6 @@
 	/// for escape checks
 	var/is_centcom = 0
 
-	var/gencolor
 	level = null
 	#ifdef UNDERWATER_MAP
 	name = "Ocean"
