@@ -1494,7 +1494,6 @@
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2, 20, cost=100)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/atmos, 5, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/mechanic, 2, cost=40)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/quartermaster, 5, cost=50)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 5, cost=40)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/genetics, 5, cost=40)
