@@ -1,5 +1,9 @@
 
 (t)wed sep 09 20
+(u)pali
+(p)2081
+(e)🆕|feature
+(*)Traitor janitors can now buy a very special wet floor sign. Also wet floor signs can now be anchored / unanchored with a wrench.
 (u)MarkNstein
 (p)2126
 (e)|
