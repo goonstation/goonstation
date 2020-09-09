@@ -839,13 +839,16 @@ Only trained personnel should operate station systems. Follow all procedures car
 	"consort with wizards.", "sell really awesome drugs.", "have all-access.", "know the king.", "make amazing pizza.", "have a toolbox and are not afraid to use it.")
 	var/static/list/general = list("NanoTrasen locked me to this desk and is forcing me to make fortunes for these cookies please help!", "Help I'm trapped in this cookie!", "Buy Discount Dan's today!")
 	var/static/list/sol = list("He plunged into the sea.", "Follow the NSS Polaris.", "Across the Channel.", "It's in the Void.")
+	var/static/initialized = FALSE
 
 	New()
 		var/randme = rand(1,10)
 		var/fortune = "Blah."
 
-		for(var/datum/data/record/t in data_core.general)
-			who += "[t.fields["name"]]"
+		if(!initialized)
+			initialized = TRUE
+			for(var/datum/data/record/t in data_core.general)
+				who += "[t.fields["name"]]"
 
 		switch(randme)
 			if(1)
