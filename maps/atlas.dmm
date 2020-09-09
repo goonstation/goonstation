@@ -1835,6 +1835,7 @@
 /area/station/mining/refinery)
 "eF" = (
 /obj/machinery/light_switch/auto,
+/obj/machinery/nanofab/refining,
 /turf/simulated/floor/stairs/wide/other,
 /area/station/mining/refinery)
 "eG" = (
@@ -4083,6 +4084,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster)
 "kQ" = (
@@ -6113,6 +6115,7 @@
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
+	light_type = /obj/item/light/tube/purpleish;
 	pixel_y = 21
 	},
 /turf/simulated/floor/purplewhite{
@@ -9362,7 +9365,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light{
-	layer = 3
+	layer = 3;
+	light_type = /obj/item/light/tube/purpleish
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/artifact)
@@ -11227,6 +11231,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/effects/background_objects/x5,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "Cy" = (
@@ -12010,7 +12015,9 @@
 /obj/machinery/chem_master{
 	dir = 8
 	},
-/obj/machinery/light,
+/obj/machinery/light{
+	light_type = /obj/item/light/tube/purpleish
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -12019,6 +12026,7 @@
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
+	light_type = /obj/item/light/tube/purpleish;
 	pixel_x = -10
 	},
 /turf/simulated/floor/purplewhite{
@@ -12275,6 +12283,7 @@
 "Fr" = (
 /obj/table/auto,
 /obj/item/paper_bin,
+/obj/item/pen/pencil,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "Fs" = (
@@ -12294,6 +12303,18 @@
 "Fu" = (
 /obj/table/auto,
 /obj/machinery/light,
+/obj/item/reagent_containers/food/drinks/cola/random{
+	pixel_y = -2;
+	pixel_x = 1
+	},
+/obj/item/reagent_containers/food/drinks/cola/random{
+	pixel_x = -13;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/cola/random{
+	pixel_y = 7;
+	pixel_x = 5
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "Fv" = (
@@ -12622,6 +12643,7 @@
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
+	light_type = /obj/item/light/tube/purpleish;
 	pixel_y = 21
 	},
 /turf/simulated/floor/purplewhite{
@@ -12986,6 +13008,10 @@
 /obj/machinery/computer/robot_module_rewriter,
 /turf/simulated/floor,
 /area/station/medical/robotics)
+"GZ" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/SEmaint)
 "Ha" = (
 /obj/machinery/computer/operating{
 	id = "robotics"
@@ -13102,7 +13128,8 @@
 /area/station/science/teleporter)
 "Hn" = (
 /obj/machinery/light{
-	layer = 3
+	layer = 3;
+	light_type = /obj/item/light/tube/purpleish
 	},
 /obj/stool/chair/office/purple{
 	tag = "icon-office_chair_purple (WEST)";
@@ -13164,6 +13191,7 @@
 /obj/cable,
 /obj/machinery/light{
 	dir = 4;
+	light_type = /obj/item/light/tube/purpleish;
 	pixel_x = 10
 	},
 /turf/simulated/floor/purplewhite{
@@ -16384,7 +16412,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light{
-	layer = 3
+	layer = 3;
+	light_type = /obj/item/light/tube/purpleish
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
@@ -17751,6 +17780,14 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/lounge)
+"Vy" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/effects/background_objects/station/ss10,
+/turf/space,
+/area)
 "VC" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 10;
@@ -18557,6 +18594,7 @@
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
+	light_type = /obj/item/light/tube/purpleish;
 	pixel_x = 10
 	},
 /obj/machinery/power/data_terminal,
@@ -18571,6 +18609,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
 	},
+/obj/machinery/meter,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
 "Yt" = (
@@ -18826,6 +18865,18 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/core)
+"Zc" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar/west,
+/obj/effects/background_objects/x3,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/south)
 "Zd" = (
 /obj/stool/bench/red,
 /obj/machinery/light_switch/auto,
@@ -54555,7 +54606,7 @@ YR
 YR
 YR
 Cs
-za
+GZ
 DA
 aa
 PS
@@ -60882,7 +60933,7 @@ lU
 kl
 aa
 aa
-nB
+Vy
 qD
 rg
 sr
@@ -63940,7 +63991,7 @@ KP
 KP
 KP
 KP
-KP
+Zc
 KP
 KP
 aa

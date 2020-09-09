@@ -987,6 +987,14 @@
 		color_r = 0.95
 		color_g = 0.2
 		color_b = 0.95
+	light_purpleish
+		name = "light purpleish light tube"
+		desc = "Fancy."
+		icon_state = "tube-purple"
+		base_state = "tube-purple"
+		color_r = 0.98
+		color_g = 0.76
+		color_b = 0.98
 	blacklight
 		name = "black light tube"
 		desc = "Fancy."
