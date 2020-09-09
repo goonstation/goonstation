@@ -21,6 +21,10 @@ WET FLOOR SIGN
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
 
+/obj/item/spraybottle/pixelaction(atom/target, params, mob/user, reach)
+	..()
+	return FALSE // this needs to be here for ranged clicking I think, I hate it
+
 /obj/item/spraybottle/New()
 	..()
 	create_reagents(100)
