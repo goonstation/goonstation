@@ -2139,13 +2139,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/crewquarters/cryotron)
-"fD" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "fE" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2593,10 +2586,10 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster)
 "gS" = (
-/obj/machinery/light_switch/auto,
-/turf/simulated/floor/yellow/side{
+/obj/machinery/disposal/small{
 	dir = 8
 	},
+/turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster)
 "gT" = (
 /obj/table/auto,
@@ -2801,6 +2794,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/light_switch/auto,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -2956,18 +2950,6 @@
 	dir = 1
 	},
 /area/station/security/main)
-"hV" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
 "hW" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -9621,11 +9603,9 @@
 	},
 /area/station/hallway)
 "yn" = (
-/obj/machinery/disposal/small{
-	dir = 8
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster)
+/obj/machinery/genetics_booth,
+/turf/simulated/floor,
+/area/station/hallway)
 "yo" = (
 /obj/machinery/firealarm{
 	pixel_y = 25
@@ -10091,6 +10071,18 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
+"zx" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "zG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/coldloop)
@@ -12476,6 +12468,21 @@
 	dir = 8
 	},
 /area/station/science/artifact)
+"Gh" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "Gi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/artifact)
@@ -14091,6 +14098,13 @@
 /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/north,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"Kv" = (
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "Kw" = (
 /obj/machinery/computer/atmosphere/pumpcontrol{
 	frequency = 1229
@@ -17649,21 +17663,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
-"Xc" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
 "Xf" = (
 /turf/simulated/floor/arrival{
 	dir = 4
@@ -17834,10 +17833,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"XF" = (
-/obj/machinery/genetics_booth,
-/turf/simulated/floor,
-/area/station/hallway)
 "XG" = (
 /obj/cable{
 	d2 = 4;
@@ -57223,7 +57218,7 @@ zJ
 Az
 Bl
 zG
-hV
+zx
 CZ
 DF
 Ew
@@ -58425,7 +58420,7 @@ lt
 mU
 mU
 mU
-Xc
+Gh
 mU
 mU
 mU
@@ -59916,7 +59911,7 @@ bH
 bH
 bH
 bH
-yn
+gS
 bH
 bH
 cv
@@ -62031,7 +62026,7 @@ dY
 eN
 dx
 gi
-gS
+dX
 hv
 iw
 gX
@@ -66583,7 +66578,7 @@ lV
 nQ
 zV
 AH
-fD
+Kv
 yF
 CF
 yF
@@ -72316,7 +72311,7 @@ sG
 tT
 sC
 wS
-XF
+yn
 wN
 zo
 lf
