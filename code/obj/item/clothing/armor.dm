@@ -395,12 +395,13 @@
 		setProperty("exploprot", 60)
 
 /obj/item/clothing/suit/armor/hoscape
-	name = "head of securitys cape"
-	desc = "A rather dashing cape."
+	name = "Head of Security's cape"
+	desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
-
 	setupProperties()
 		..()
-		setProperty("meleeprot", 7)
-		setProperty("rangedprot", 1.5)
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.7)
+		setProperty("coldprot", 5)
+		setProperty("heatprot", 35)

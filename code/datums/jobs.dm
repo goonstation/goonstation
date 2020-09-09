@@ -253,7 +253,7 @@
 
 #ifdef SUBMARINE_MAP
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold/fancy_alt
-	slot_suit = /obj/item/clothing/suit/armor/hoscape
+	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/hos
 	slot_poc1 = /obj/item/requisition_token/security
