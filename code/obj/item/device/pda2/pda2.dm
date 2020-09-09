@@ -252,7 +252,7 @@
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
-		for (var/datum/computer/file/pda_program/P in src.cartridge.root.contents)
+		for (var/datum/computer/file/pda_program/P in src.cartridge.root?.contents)
 			if (P.name == "Packet Sniffer")
 				radio_controller.remove_object(src, "[P:scan_freq]")
 				continue
