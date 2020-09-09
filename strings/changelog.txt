@@ -1,6 +1,10 @@
 
 (t)wed sep 09 20
 (u)MarkNstein
+(p)2124
+(e)|
+(*)ChemiCompiler no longer transfers double the intended amount when dumping.
+(u)MarkNstein
 (p)2100
 (e)🆕🎨|feature, sprites
 (*)Digbot revived: a bot for miners. Craftable and has a blueprint in robotics and mining fabs.
