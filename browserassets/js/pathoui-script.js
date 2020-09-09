@@ -132,6 +132,9 @@
 			case "helpCapacity":
 				$("#manipHelp").html("This determines how many symptom segments you can splice onto a pathogen without it collapsing. For instance, a tier 5 symptom would cost 5 capacity, since it is made of 5 segments.");
 				break;
+			case "helpMaxStats":
+				$("#manipHelp").html("This determines the total amount of points that can be spread among the various stats like Advance Rate, Suppression Threshold, and Spread.");
+				break;
 			case "btnClrAnalysisCurr":
 				$("#analyzerHelp").html("Clear the currently assembled sequence of segments in Current Analysis");
 				break;
@@ -814,6 +817,7 @@
 			$("#txtSymp").text(loadedDna.pathogenSymptomaticity);
 			$("#txtSupCode").text(loadedDna.pathogenSupCode);
 			$("#txtCap").text(loadedDna.pathogenCap==-1?"∞":loadedDna.pathogenCap);
+			$("#txtMaxStats").text(loadedDna.pathogenMaxStats);
 		} else {
 			$("#txtPName").text("");
 			$("#txtPType").text("");
@@ -822,6 +826,7 @@
 			$("#txtSymp").text("");
 			$("#txtSupCode").text("");
 			$("#txtCap").text("");
+			$("#txtMaxStats").text("");
 		}
 		annunciatorHolder.setLoadAnn(loadedDna);
 		if(!cancGlobalUpdate) {

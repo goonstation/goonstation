@@ -451,6 +451,7 @@
 		"pathogenSymptomaticity":"[PDNA.reference.symptomatic]",
 		"pathogenSupCode":"[pathogen_controller.suppressant_to_UID[PDNA.reference.suppressant.type]]",
 		"pathogenCap":"[PDNA.reference.body_type.seqMax]",
+		"pathogenMaxStats":"[PDNA.reference.body_type.maxStats]",
 		"pathogenType":"[PDNA.reference.body_type.singular]","isSplicing":[splicing]}"}
 
 	proc/slots2json()
