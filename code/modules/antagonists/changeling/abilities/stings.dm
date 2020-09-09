@@ -48,6 +48,7 @@
 		var/mob/MT = target
 		if (!MT.reagents)
 			boutput(holder.owner, __red("That does not hold reagents, apparently."))
+			return 1
 		if (!stealthy)
 			holder.owner.visible_message(__red("<b>[holder.owner] stings [target]!</b>"))
 		else
@@ -97,10 +98,10 @@
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
 					return 0
 				var/max_amount = min(15,target.reagents.maximum_volume - target.reagents.total_volume)
-				target.reagents.add_reagent("blood", max_amount, targeting.dna_sting_target)
+				target.reagents?.add_reagent("blood", max_amount, targeting.dna_sting_target)
 				return 0
 			var/mob/MT = target
-			MT.reagents.add_reagent("blood", 15, targeting.dna_sting_target)
+			MT.reagents?.add_reagent("blood", 15, targeting.dna_sting_target)
 			return 0
 
 	fartonium
