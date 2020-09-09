@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1
 	New()
+		..()
 		SPAWN_DBG(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
 			term.dir = get_dir(get_turf(term), src)
@@ -225,8 +226,8 @@
 
 /obj/item/clothing/glasses/construction
 	name = "\improper Construction Visualizer"
-	icon_state = "meson"
-	item_state = "glasses"
+	icon_state = "construction"
+	item_state = "construction"
 	mats = 6
 	desc = "The latest technology in viewing live blueprints."
 

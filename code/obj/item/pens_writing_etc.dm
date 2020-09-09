@@ -626,7 +626,7 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"
@@ -863,11 +863,15 @@
 		return
 
 	proc/display_booklet_contents(var/mob/user as mob, var/page = 1)
+		set src in view()
+		set category = "Local"
+
+		if (!length(pages))
+			return
+
 		var/obj/item/paper/cur_page = pages[page]
 		var/next_page = ""
 		var/prev_page = "     "
-		set src in view()
-		set category = "Local"
 
 		if(!user.literate)
 			. = html_encode(illiterateGarbleText(cur_page.info)) // deny them ANY useful information
@@ -965,6 +969,7 @@
 	// @TODO
 	// HOLY SHIT REMOVE THIS THESE OLD POST ITS ARE GONE or something idk fuck
 	New()
+		..()
 		new /obj/item/item_box/postit(get_turf(src))
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)

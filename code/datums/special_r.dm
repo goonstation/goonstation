@@ -362,18 +362,23 @@ EndNote
 	return
 
 /proc/creepify_station()
-	for(var/turf/simulated/floor/F in world)
-		if (was_eaten)
-			F.icon_state = "bloodfloor_2"
-			F.name = "fleshy floor"
-		else
-			F.icon_state = pick("platingdmg1","platingdmg2","platingdmg3")
-	for(var/turf/simulated/wall/W in world)
-		if (was_eaten)
-			W.icon = 'icons/misc/meatland.dmi'
-			W.icon_state = "bloodwall_2"
-			W.name = "meaty wall"
-		else
-			if(!istype(W, /turf/simulated/wall/r_wall) && !istype(W, /turf/simulated/wall/auto/reinforced))
-				W.icon_state = "r_wall-4"
-	return
+	var/counter = 0
+	for(var/turf/T in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+		if(istype(T, /turf/simulated/floor))
+			var/turf/simulated/floor/F = T
+			if (was_eaten)
+				F.icon_state = "bloodfloor_2"
+				F.name = "fleshy floor"
+			else
+				F.icon_state = pick("platingdmg1","platingdmg2","platingdmg3")
+		else if(istype(T, /turf/simulated/wall))
+			var/turf/simulated/wall/W = T
+			if (was_eaten)
+				W.icon = 'icons/misc/meatland.dmi'
+				W.icon_state = "bloodwall_2"
+				W.name = "meaty wall"
+			else
+				if(!istype(W, /turf/simulated/wall/r_wall) && !istype(W, /turf/simulated/wall/auto/reinforced))
+					W.icon_state = "r_wall-4"
+		if(counter++ % 300 == 0)
+			LAGCHECK(LAG_MED)

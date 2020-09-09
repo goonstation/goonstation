@@ -401,7 +401,7 @@ var/f_color_selector_handler/F_Color_Selector
 			traitList[T.id] = T
 
 		Z_LOG_DEBUG("Preload", "  /obj/bioEffect")
-		var/list/datum/bioEffect/tempBioList = childrentypesof(/datum/bioEffect)
+		var/list/datum/bioEffect/tempBioList = concrete_typesof(/datum/bioEffect, cache=FALSE)
 		for(var/effect in tempBioList)
 			var/datum/bioEffect/E = new effect(1)
 			bioEffectList[E.id] = E        //Caching instances for easy access to rarity and such. BECAUSE THERES NO PROPER CONSTANTS IN BYOND.
@@ -1239,6 +1239,14 @@ var/f_color_selector_handler/F_Color_Selector
 
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
+
+				if(copytext(msg, 1, 2) == SPACEBEE_EXTENSION_ASAY_PREFIX)
+					spacebee_extension_system?.process_asay(msg, nick)
+					var/ircmsg[] = new()
+					ircmsg["key"] = nick
+					ircmsg["msg"] = msg
+					return ircbot.response(ircmsg)
+
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 				logTheThing("admin", null, null, "Discord ASAY: [nick]: [msg]")
@@ -1328,7 +1336,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
-				if (M.client)
+				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")

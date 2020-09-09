@@ -66,6 +66,10 @@
 #define COMSIG_ITEM_CONSUMED_PRE "itm_atk_consumed_pre"
 /// When an item is eaten
 #define COMSIG_ITEM_CONSUMED "itm_atk_consumed"
+/// When an item is used to attack a mob before it actually hurts the mob
+#define COMSIG_ITEM_ATTACK_PRE "itm_atk_pre"
+/// When an item is used in-hand
+#define COMSIG_ITEM_ATTACK_SELF "itm_atk_self"
 
 // blocking signals
 /// After  an item block is set up
@@ -89,6 +93,11 @@
 #define COMSIG_MOB_PICKUP "mob_pickup"
 
 #define COMSIG_MOB_DROPPED "mob_drop"
+
+#define COMSIG_MOB_CLICK "mob_click"
+
+// mob/living signals
+#define COMSIG_LIVING_SPRINT_START "living_sprint_start"
 
 //attack_X signals
 /// Attacking wiht an item in-hand
@@ -148,3 +157,12 @@
 // obj/critter signals
 // When an obj/critter dies
 #define COMSIG_OBJ_CRITTER_DEATH "obj_critter_death"
+
+/// general return values //
+// it is a mystery
+
+/// signal specific return values
+// COMSIG_LIVING_SPRINT_START
+#define RETURN_SPRINT_OVERRIDDEN 0x001000
+// COMSIG_MOB_CLICK
+#define RETURN_CANCEL_CLICK 0x001000

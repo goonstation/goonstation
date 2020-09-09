@@ -11,16 +11,16 @@ var/global/datum/map_settings/map_settings = null
 //id corresponds to the name of the /obj/landmark/map
 //playerPickable defines whether the map can be chosen by players when voting on a new map. Setting to ASS_JAM should allow it on the 13th only, and not on RP.
 var/global/list/mapNames = list(
-	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = 1,				"MaxPlayersAllowed" = 80),
+	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = 1,		"MaxPlayersAllowed" = 80),
 #ifdef RP_MODE
 	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1, 	"MinPlayersAllowed" = 14),
 #else
-	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
+	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
 #endif
 	//"Construction" = list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"Cogmap 1 (Old)" = 	list("id" = "COGMAP_OLD", 	"settings" = "cogmap_old"),
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
-	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
+	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
 	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = ASS_JAM),
 	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
 	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 1),
@@ -30,11 +30,11 @@ var/global/list/mapNames = list(
 	"Oshan Laboratory"= list("id" = "OSHAN", 	"settings" = "oshan", 			"playerPickable" = 1),
 	"Samedi" = 			list("id" = "SAMEDI", 		"settings" = "samedi", 			"playerPickable" = ASS_JAM),
 	"1 pamgoC" = 		list("id" = "PAMGOC", 		"settings" = "pamgoc", 			"playerPickable" = ASS_JAM),
-	"Kondaru" = 		list("id" = "KONDARU", "settings" = "kondaru", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
-	"Ozymandias" = 		list("id" = "OZYMANDIAS", "settings" = "ozymandias", 				"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
+	"Kondaru" = 		list("id" = "KONDARU", 		"settings" = "kondaru", 		"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
+	"Ozymandias" = 	list("id" = "OZYMANDIAS", "settings" = "ozymandias", 	"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
 	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = ASS_JAM),
-	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,				"MaxPlayersAllowed" = 30),
+	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,	"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
 	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM)
@@ -43,6 +43,7 @@ var/global/list/mapNames = list(
 /obj/landmark/map
 	name = "map_setting"
 	icon_state = "x3"
+	add_to_landmarks = FALSE
 
 	New()
 		if (src.name != "map_setting")
@@ -61,8 +62,7 @@ var/global/list/mapNames = list(
 			if (!map_settings)
 				map_settings = new /datum/map_settings
 				CRASH("A mapName entry for '[src.name]' wasn't found!")
-
-		qdel(src)
+		..()
 
 //Setting maps to be underwater is handled in the map config file, aka [mapname].dm
 
@@ -359,6 +359,26 @@ var/global/list/mapNames = list(
 		"the main medical bay room" = list(/area/station/medical/medbay),
 		"the research artifact lounge" = list(/area/station/science/artifact))
 
+	job_limits_override = list(
+		/datum/job/civilian/clown = 2,
+		/datum/job/security/security_officer = 6,
+		/datum/job/security/detective = 3,
+		/datum/job/research/geneticist = 3,
+		/datum/job/research/roboticist = 3,
+		/datum/job/research/scientist = 6,
+		/datum/job/research/medical_doctor = 7,
+		/datum/job/engineering/mechanic = 4,
+		/datum/job/engineering/miner = 4,
+		/datum/job/engineering/engineer = 6,
+		/datum/job/civilian/chef = 2,
+		/datum/job/civilian/barman = 2,
+		/datum/job/civilian/janitor = 3,
+		/datum/job/civilian/chaplain = 2,
+		/datum/job/special/lawyer = 1,
+		/datum/job/special/vice_officer = 1,
+		/datum/job/special/atmospheric_technician = 1
+	)
+
 /datum/map_settings/manta
 	name = "MANTA"
 	display_name = "NSS Manta"
@@ -540,6 +560,14 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	auto_walls = 1
+
+	job_limits_from_landmarks = 1
+	job_limits_override = list(
+		/datum/job/special/atmospheric_technician = 1,
+		/datum/job/special/barber = 1,
+		/datum/job/special/research_assistant = 2,
+		/datum/job/special/medical_assistant = 2
+	)
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro

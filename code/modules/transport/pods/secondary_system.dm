@@ -843,7 +843,7 @@
 	if(ismob(A))
 		var/mob/M = A
 		boutput(ship.pilot, "<span class='alert'><B>You crash into [M]!</B></span>")
-		shake_camera(M, 8, 3)
+		shake_camera(M, 8, 16)
 		boutput(M, "<span class='alert'><B>The [src] crashes into [M]!</B></span>")
 		M.changeStatus("stunned", 80)
 		M.changeStatus("weakened", 5 SECONDS)

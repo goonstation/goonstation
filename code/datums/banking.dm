@@ -31,7 +31,7 @@
 	var/clone_cost = 2500 // I wanted to make this a var on SOMETHING so that it can be changed during rounds
 
 	New()
-
+		..()
 		// 5 minutes = 3000 milliseconds
 		time_between_paydays = 3000
 		time_between_lotto = 5000 // this was way too fuckin high
@@ -1025,6 +1025,7 @@
 
 	// Give a random set of numbers
 	New()
+		..()
 		START_TRACKING
 
 		lotteryRound = wagesystem.lotteryRound

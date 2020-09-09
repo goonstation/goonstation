@@ -755,12 +755,16 @@
 	},
 /area/station/hallway/primary/south)
 "amX" = (
-/obj/machinery/portable_atmospherics/pump,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
 	},
 /obj/machinery/light/emergency,
+/obj/table/round/auto,
+/obj/item/reagent_containers/food/snacks/burger/cheeseburger{
+	desc = "There's a light layer of dust over it, but it's still warm to the touch. Modern chemistry at work.";
+	name = "weird cheeseburger"
+	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
 "amY" = (
@@ -5500,7 +5504,7 @@
 	name = "ratty blue couch"
 	},
 /obj/landmark/start{
-	name = "Scientist"
+	name = "Research Assistant"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge_port{
@@ -10644,6 +10648,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
 "dmU" = (
@@ -12800,6 +12805,9 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/landmark/start{
+	name = "Medical Assistant"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/breakroom)
@@ -16713,7 +16721,10 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "fft" = (
-/obj/machinery/door/airlock/pyro/engineering,
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Engineering Door";
+	req_access = null
+	},
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
 /turf/simulated/floor/grey,
@@ -17514,6 +17525,14 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
 "ftb" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/obj/landmark/start{
+	name = "Barber"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "ftj" = (
@@ -19969,6 +19988,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"gim" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "gip" = (
 /obj/table/wood/auto,
 /obj/item/clothing/gloves/yellow,
@@ -21285,7 +21308,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "gzm" = (
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "gzu" = (
@@ -25762,7 +25785,9 @@
 /area/station/engine/power)
 "hQZ" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4
+	dir = 4;
+	name = "Engineering Door";
+	req_access = null
 	},
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
@@ -27768,6 +27793,14 @@
 /area/station/engine/coldloop)
 "iyT" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/southwest,
+/obj/stool/bed,
+/obj/landmark/start{
+	name = "Atmospheric Technician"
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
 "iza" = (
@@ -28833,13 +28866,13 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "iOd" = (
-/obj/table/round/auto,
-/obj/item/wrench,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/table/round/auto,
+/obj/item/wrench,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
 "iOi" = (
@@ -34281,7 +34314,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/gen_storage)
 "krO" = (
-/obj/machinery/space_heater,
+/obj/stool/chair{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
 "krQ" = (
@@ -44035,7 +44070,7 @@
 	name = "ratty blue couch"
 	},
 /obj/landmark/start{
-	name = "Scientist"
+	name = "Research Assistant"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge_port{
@@ -45353,6 +45388,9 @@
 	name = "ratty blue couch"
 	},
 /obj/machinery/light_switch/north,
+/obj/landmark/start{
+	name = "Medical Assistant"
+	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/breakroom)
 "nGi" = (
@@ -46736,7 +46774,7 @@
 /area/station/engine/engineering/private)
 "oaY" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/southwest,
-/obj/machinery/portable_atmospherics/canister/air/large,
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
 "obb" = (
@@ -68942,6 +68980,10 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/green/checker,
 /area/station/storage/emergency2)
+"usU" = (
+/obj/machinery/shieldgenerator/energy_shield,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "utb" = (
 /obj/table/auto,
 /obj/item/shaker/ketchup{
@@ -126455,7 +126497,7 @@ lNf
 xkd
 qPp
 xrA
-saJ
+usU
 wCq
 ygY
 xGX
@@ -127663,7 +127705,7 @@ tqe
 xkd
 qPp
 xrA
-tyS
+gim
 wCq
 aJu
 wqf

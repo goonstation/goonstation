@@ -49,7 +49,7 @@ CONTAINS:
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
@@ -63,6 +63,10 @@ CONTAINS:
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
 				src.reagents.trans_to(M,5)
 			return
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -116,7 +120,7 @@ CONTAINS:
 			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
@@ -141,6 +145,10 @@ CONTAINS:
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 /obj/item/circular_saw/vr
 	icon = 'icons/effects/VR.dmi'
@@ -205,6 +213,10 @@ CONTAINS:
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 /* ==================================================== */
 /* -------------------- Staple Gun -------------------- */
@@ -1557,7 +1569,7 @@ keeping this here because I want to make something else with it eventually
 		else
 			return ..()
 
-	hitby(atom/movable/AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		if (isitem(AM))
 			src.visible_message("[AM] lands on [src]!")
@@ -1648,3 +1660,7 @@ keeping this here because I want to make something else with it eventually
 		handle = null
 		Poisoner = null
 		..()
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)

@@ -64,3 +64,5 @@
 
 // item comp defs
 #define GOOD_4_ME_2_EAT 1
+//item attack bitflags
+#define ATTACK_PRE_DONT_ATTACK 1	// The pre-attack signal doesnt want the attack to continue, so don't

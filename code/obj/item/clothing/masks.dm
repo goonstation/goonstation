@@ -261,7 +261,7 @@
 	equipped(var/mob/user, var/slot)
 		. = ..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_WEAR_MASM)
+		if(istype(H) && slot == SLOT_WEAR_MASK)
 			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
 				src.cant_other_remove = 1.0
 				src.cant_self_remove = 0.0
@@ -281,8 +281,7 @@
 		if ( src.victim )
 			src.victim.change_misstep_chance(-25)
 			src.victim = null
-			if ( src in processing_items )
-				processing_items.Remove(src)
+			processing_items -= src
 
 	process()
 		if ( src.victim )

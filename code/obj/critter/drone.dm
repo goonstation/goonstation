@@ -114,7 +114,7 @@
 			else continue
 
 
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (A && src.z == A.z && get_dist(src,A) <= src.seekrange)
 				if (istype(atom, /obj/machinery/vehicle))
@@ -275,7 +275,7 @@
 			//		waking = 1
 			//		break
 
-			for (var/atom in pods_and_cruisers)
+			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
 				if (A && src.z == A.z && get_dist(src,A) <= 10)
 					waking = 1
@@ -313,7 +313,7 @@
 			//		stay_awake = 1
 			//		break
 
-			for (var/atom in pods_and_cruisers)
+			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
 				if (A && src.z == A.z && get_dist(src,A) <= 10)
 					stay_awake = 1
@@ -986,7 +986,7 @@
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-			poorSoul:Virus_ShockCure(poorSoul, 100)
+			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
 			poorSoul:changeStatus("weakened", 4 SECONDS)
 			if (isdead(poorSoul) && prob(25))

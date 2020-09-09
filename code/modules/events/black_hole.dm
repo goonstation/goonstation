@@ -36,7 +36,7 @@
 
 		for (var/mob/M in range(14,src))
 			boutput(M, "<span class='alert'>The air grows heavy and thick. Something feels terribly wrong.</span>")
-			shake_camera(M, 5, 1)
+			shake_camera(M, 5, 16)
 		playsound(get_turf(src),'sound/effects/creaking_metal1.ogg',100,0,5,0.5)
 
 		sleep(lifespan / 2)
@@ -100,6 +100,7 @@
 	var/time_to_die = 0
 
 	New(var/loc,duration, move_prob = -1)
+		..()
 		if (duration < 1)
 			duration = rand(5 SECONDS,30 SECONDS)
 
@@ -108,8 +109,7 @@
 
 		time_to_die = ( ticker ? ticker.round_elapsed_ticks : 0 ) + duration
 
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	disposing()
 		processing_items.Remove(src)

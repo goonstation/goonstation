@@ -58,7 +58,8 @@
 	Del()
 		if (cameras && cameras.len)
 			for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
-				C.coveredTiles -= src
+				if(C.coveredTiles)
+					C.coveredTiles -= src
 		cameras = null
 		..()
 
@@ -406,7 +407,7 @@
 	else if (A.y >= (world.maxy - 1))
 		edge_step(A, 0, 3)
 
-/turf/hitby(atom/movable/AM)
+/turf/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 	if(src.density)
 		if(AM.throwforce >= 80)

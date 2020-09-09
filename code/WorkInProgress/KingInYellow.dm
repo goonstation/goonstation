@@ -36,6 +36,7 @@
 	var/image/effect = null
 
 	New(var/atom/location, var/atom/trg)
+		..()
 		if(trg != null)
 			set_loc(location)
 			effect = image('icons/effects/effects.dmi', src, "ykingvanish", 4)
@@ -54,6 +55,7 @@
 	var/created = null
 
 	New(var/atom/location, var/atom/trg)
+		..()
 		set_loc(location)
 		target = trg
 		created = world.time
@@ -94,8 +96,8 @@
 	var/processing = 0
 
 	New()
-		BLOCK_BOOK
-		return
+		..()
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	process()
 		..()

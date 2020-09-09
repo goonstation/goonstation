@@ -97,7 +97,7 @@
 /datum/aiTask/timed/targeted/trilobite/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
 				holder.current_task = src.escape
@@ -145,7 +145,7 @@
 /datum/aiTask/timed/targeted/escape_vehicles/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, target_range))
 				targets += A
@@ -171,6 +171,7 @@
 	var/weight = 15
 	target_range = 7
 	frustration_threshold = 3
+	var/last_seek
 
 /datum/aiTask/timed/targeted/flee_and_shoot/frustration_check()
 	.= 0
@@ -188,7 +189,8 @@
 	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE))
 		return
 
-	if(!holder.target)
+	if(!holder.target && world.time > last_seek + 5 SECONDS)
+		last_seek = world.time
 		var/list/possible = get_targets()
 		if (possible.len)
 			holder.target = pick(possible)
@@ -226,7 +228,7 @@
 /datum/aiTask/timed/targeted/flee_and_shoot/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
 				targets += A
@@ -352,7 +354,7 @@
 /datum/aiTask/timed/targeted/pikaia/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
 				targets += A

@@ -231,7 +231,7 @@ var/datum/score_tracker/score_tracker
 		command_pets_escaped = list()
 		pets_escaped = list()
 
-		for (var/pet in pets)
+		for (var/pet in by_cat[TR_CAT_PETS])
 			if(iscritter(pet))
 				var/obj/critter/P = pet
 				if (in_centcom(P) && P.alive)
@@ -271,9 +271,9 @@ var/datum/score_tracker/score_tracker
 		. += "<B>Heisenbee's hat:</B> "
 		var/found_hb = 0
 		var/tier = world.load_intra_round_value("heisenbee_tier")
-		for(var/obj/critter/domestic_bee/heisenbee/HB in pets)
-			var/obj/item/hat = locate(HB.original_hat_ref)
-			if(hat)
+		for(var/obj/critter/domestic_bee/heisenbee/HB in by_cat[TR_CAT_PETS])
+			var/obj/item/hat = HB.original_hat
+			if(hat && !hat.disposed)
 				if(hat.loc != HB)
 					var/atom/movable/L = hat.loc
 					while(istype(L) && !istype(L, /mob))
@@ -292,12 +292,12 @@ var/datum/score_tracker/score_tracker
 				else
 					. += "[hat][inline_bicon(getFlatIcon(HB, no_anim=TRUE))](tier [HB.original_tier])"
 			else if(HB.alive)
-				if(HB.original_tier)
-					. += "\[DESTROYED!\]"
+				if(hat)
+					. += "[inline_bicon(getFlatIcon(hat, no_anim=TRUE))] \[DESTROYED!\]"
 				else
 					. += "No hat yet."
-			else if(HB.original_tier)
-				. += "\[DESTROYED!\] \[🐝 MURDERED!\]"
+			else if(hat)
+				. += "[inline_bicon(getFlatIcon(hat, no_anim=TRUE))] \[DESTROYED!\] \[🐝 MURDERED!\]"
 			else
 				. += "No hat yet. \[🐝 MURDERED!\]"
 			found_hb = 1
@@ -388,8 +388,7 @@ var/datum/score_tracker/score_tracker
 		if(data_core.tickets.len)
 			var/list/people_with_tickets = list()
 			for (var/datum/ticket/T in data_core.tickets)
-				if(!(T.target in people_with_tickets))
-					people_with_tickets += T.target
+				people_with_tickets |= T.target
 
 			for(var/N in people_with_tickets)
 				score_tracker.tickets_text += "<b>[N]</b><br><br>"
@@ -405,8 +404,7 @@ var/datum/score_tracker/score_tracker
 		if(data_core.fines.len)
 			var/list/people_with_fines = list()
 			for (var/datum/fine/F in data_core.fines)
-				if(!(F.target in people_with_fines))
-					people_with_fines += F.target
+				people_with_fines |= F.target
 
 			for(var/N in people_with_fines)
 				score_tracker.tickets_text += "<b>[N]</b><br><br>"

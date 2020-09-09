@@ -33,6 +33,7 @@ chui/engine
 	var/chui/window/staticinst
 
 	New()
+		..()
 		themes = list()
 		for( var/thm in typesof( "/chui/theme" ) )
 			themes += new thm()

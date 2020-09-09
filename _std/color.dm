@@ -1,4 +1,9 @@
 //COLURSSSSSS AAAAA
+// num2hex, hex2num
+#define num2hex(X, len) num2text(X, len, 16)
+
+#define hex2num(X) text2num(X, 16)
+
 /proc/hsv2rgb(var/hue, var/sat, var/val)
 	var/hh
 	var/p

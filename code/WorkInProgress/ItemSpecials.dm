@@ -697,7 +697,7 @@
 				animate(cracks, alpha=0, time=30)
 
 				for(var/mob/M in viewers())
-					shake_camera(M, 8, 3)
+					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
 					animate_shake(T)
@@ -742,7 +742,7 @@
 				animate(cracks, alpha=0, time=30)
 
 				for(var/mob/M in viewers())
-					shake_camera(M, 8, 3)
+					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
 					animate_shake(T)
@@ -954,6 +954,7 @@
 		pixelaction(atom/target, params, mob/user, reach)
 			if(!isturf(target.loc) && !isturf(target)) return
 			if(!usable(user)) return
+			if(user.a_intent != INTENT_DISARM) return //only want this to deploy on disarm intent
 			if(master && istype(master, /obj/item/baton) && !master:can_stun())
 				playsound(get_turf(master), 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
 				return
@@ -976,6 +977,8 @@
 						on_hit(A,2)
 						attacked += A
 						hit = 1
+						if (ishuman(user) && master  && istype(master, /obj/item/clothing/gloves))
+							user.unlock_medal("High Five!", 1)
 						break
 				if (!hit)
 					SPAWN_DBG(secondhit_delay)
@@ -997,8 +1000,6 @@
 						G.icon_state = "yellow"
 						G.item_state = "ygloves"
 						user.update_clothing() // Was missing (Convair880).
-
-					if (G.uses <= 0)
 						user.show_text("The gloves are no longer electrically charged.", "red")
 						G.overridespecial = 0
 					else
@@ -1682,7 +1683,7 @@
 						if (tile)
 							hit = 1
 							user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
-							logTheThing("combat", user, "fling throws a floor tile ([F]) from [turf].")
+							logTheThing("combat", user, null, "fling throws a floor tile ([F]) from [turf].")
 
 							user.lastattacked = user //apply combat click delay
 							tile.throw_at(target, tile.throw_range, tile.throw_speed, params)
@@ -2006,6 +2007,7 @@
 	duration = -1
 
 	New(var/datum/item_special/rush/D, var/mob/U, var/atom/T)
+		..()
 		if(!istype(D, /datum/item_special/rush))
 			interrupt(INTERRUPT_ALWAYS)
 		if(!D || !U || !T)

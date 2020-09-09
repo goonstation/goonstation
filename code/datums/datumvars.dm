@@ -34,13 +34,13 @@
 		boutput(usr, "<span class='alert'>Yeah, no.</span>")
 		return
 	if (V)
-		body += debug_variable(S, V, V, 0)
+		body += debug_variable(S, V, "GLOB", 0)
 	else
 		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
 		return
 	body += "</tbody></table>"
 
-	var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""] - Refresh button doesn't work."
+	var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""]"
 
 	//stole this from view_variables below
 	var/html = {"
@@ -54,16 +54,13 @@
 	<body>
 	<strong>Global Variable: [S]</strong>
 	<hr>
-	<a href='byond://?src=\ref[src];Refresh-Global-Var=\ref[V]'>Refresh</a>
+	<a href='byond://?src=\ref[src];Refresh-Global-Var=[S]'>Refresh</a>
 		<hr>
 		[body]
 	</body>
 </html>
 "}
 
-	if (src.holder.level >= LEVEL_CODER)
-		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[V]'>Call Proc</a>"
-		html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[V]'>List Procs</a>"
 	usr.Browse(html, "window=variables\ref[V];size=600x400")
 
 /client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
@@ -141,7 +138,7 @@
 	names = sortList(names)
 	if(D == "GLOB")
 		for (var/V in names)
-			body += debug_variable(V, global.vars[V], D, 0)
+			body += debug_variable(V, global.vars[V], D, 0, 10)
 	else
 		for (var/V in names)
 			body += debug_variable(V, D.vars[V], D, 0)
@@ -303,7 +300,7 @@
 		}
 </style>"}
 
-/client/proc/debug_variable(name, value, var/fullvar, level)
+/client/proc/debug_variable(name, value, var/fullvar, level, max_list_len=1500)
 	var/html = ""
 	html += "<tr>"
 	if (level == 0)
@@ -312,6 +309,9 @@
 		html += "</td>"
 
 	html += "<th>"
+
+	if(istype(name, /datum) || isclient(name) || islist(name))
+		html += "<a href='byond://?src=\ref[src];Vars=\ref[name]' style='font-size:0.45em;'>KEY</a> "
 
 	if (isnull(value))
 		html += "\[[name]\]</th><td><em class='value null'>null</em>"
@@ -362,7 +362,7 @@
 		var/list/L = value
 		html += "\[[name]\]</th><td>List ([(!isnull(L) && L.len > 0) ? "[L.len] items" : "<em>empty</em>"])"
 
-		if (!isnull(L) && L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || name == "verbs" || L.len > 100))
+		if (!isnull(L) && L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || name == "verbs"))
 			// not sure if this is completely right...
 			//if (0) // (L.vars.len > 0)
 			//	html += "<ol>"
@@ -377,11 +377,13 @@
 					assoc = !isnum(L[1]) && L[L[1]]
 				catch
 					DEBUG_MESSAGE("bad assoc list var [name] [L] [1] [L[1]]")
-			for (var/index = 1, index <= L.len, index++)
+			for (var/index = 1, index <= min(L.len, max_list_len), index++)
 				if (name != "contents" && name != "screen" && name != "vis_contents" && name != "vis_locs" && assoc)
-					html += debug_variable(L[index], L[L[index]], value, level + 1)
+					html += debug_variable(L[index], L[L[index]], value, level + 1, max_list_len)
 				else
-					html += debug_variable("[index]", L[index], value, level + 1)
+					html += debug_variable("[index]", L[index], value, level + 1, max_list_len)
+			if(L.len > max_list_len)
+				html += "<tr><th>\[...\]</th><td><em class='value'>...</em></td>"
 
 			html += "</tbody></table>"
 
@@ -398,7 +400,7 @@
 		src.debug_variables(locate(href_list["Refresh"]))
 	if (href_list["Refresh-Global-Var"])
 		usr_admin_only
-		src.debug_variable(locate(href_list["Refresh-Global-Var"]))
+		src.debug_global_variable(href_list["Refresh-Global-Var"])
 		// src.debug_variable(S, V, V, 0)
 	if (href_list["JumpToThing"])
 		usr_admin_only

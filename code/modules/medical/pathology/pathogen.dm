@@ -40,6 +40,7 @@ datum/pathogen_cdc
 	var/list/mutations = list()
 
 	New(var/pathogen_uid)
+		..()
 		creation_time = world.time / 600
 		src.uid = pathogen_uid
 
@@ -651,6 +652,7 @@ datum/controller/pathogen
 		src.cdc_creator[key] = P
 
 	New()
+		..()
 		UID_to_symptom = list()
 		symptom_to_UID = list()
 		UID_to_suppressant = list()
@@ -975,6 +977,7 @@ datum/pathogen
 		generate_attributes(strength)
 
 	New()
+		..()
 		setup(0, null, 0)
 
 	unpooled()

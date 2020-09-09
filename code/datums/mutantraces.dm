@@ -70,6 +70,8 @@
 
 	var/datum/movement_modifier/movement_modifier
 
+	var/decomposes = TRUE
+
 
 	proc/say_filter(var/message)
 		return message
@@ -101,6 +103,9 @@
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 		if(ishuman(M))
 			src.mob = M
+			var/datum/appearanceHolder/AHM = mob?.bioHolder?.mobAppearance
+			if (AHM)
+				AHM.mutant_race = src.type
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			AppearanceSetter(M, "set")
 			for(var/obj/item/clothing/W in restricted)
@@ -245,6 +250,9 @@
 				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
 				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
 				H.image_cust_three.pixel_y = initial(H.image_cust_three.pixel_y)
+				var/datum/appearanceHolder/AHM = H?.bioHolder?.mobAppearance
+				if (AHM)
+					AHM.mutant_race = null
 
 				// And the other way around (Convair880).
 				if (src.r_limb_arm_type_mutantrace)
@@ -714,6 +722,7 @@
 	icon_state = "skeleton"
 	icon_override_static = 1
 	voice_override = "skelly"
+	decomposes = FALSE
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -860,7 +869,7 @@
 			var/datum/ailment_data/disease/D = mob.find_ailment_by_type(/datum/ailment/disease/lycanthropy/)
 
 			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
-			mob.bioHolder.AddEffect("accent_scoob", null, null, 0, 1)
+			mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
 
 			if(D)
 				D.cycles++

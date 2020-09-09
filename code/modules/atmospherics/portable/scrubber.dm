@@ -19,14 +19,10 @@
 	var/drain_max = 12
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
-	src.overlays = 0
-
 	if(on)
 		icon_state = "pscrubber:1"
 	else
 		icon_state = "pscrubber:0"
-
-	return
 
 /obj/machinery/portable_atmospherics/scrubber/process()
 	..()

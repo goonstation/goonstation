@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { shallowDiffers } from 'common/react';
 import { Component, createRef, Fragment } from 'inferno';
 import { Button } from 'tgui/components';
@@ -36,10 +42,10 @@ export class ChatPanel extends Component {
     );
     if (shouldUpdateStyle) {
       chatRenderer.assignStyle({
-        width: '100%',
-        whiteSpace: 'pre-wrap',
-        fontSize: this.props.fontSize,
-        lineHeight: this.props.lineHeight,
+        'width': '100%',
+        'white-space': 'pre-wrap',
+        'font-size': this.props.fontSize,
+        'line-height': this.props.lineHeight,
       });
     }
   }

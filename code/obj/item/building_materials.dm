@@ -56,7 +56,7 @@ MATERIAL
 		SPAWN_DBG(0)
 			update_appearance()
 		create_inventory_counter()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	proc/amount_check(var/use_amount,var/mob/user)
 		if (src.amount < use_amount)
@@ -624,7 +624,7 @@ MATERIAL
 	New()
 		..()
 		update_icon()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	check_valid_stack(atom/movable/O as obj)
 		if (!istype(O,/obj/item/rods/))
@@ -805,6 +805,7 @@ MATERIAL
 	var/bloodiness = 0 //
 
 	New()
+		..()
 		SPAWN_DBG(0) //wait for the head to be added
 			update()
 

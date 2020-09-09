@@ -1197,6 +1197,7 @@
 		B.update_icon(0)
 		if (S)
 			S.reagents.trans_to(B, 50)
+			B.food_effects += S.food_effects
 			if(S.real_name)
 				B.name = "[S.real_name] cake"
 
@@ -1206,7 +1207,6 @@
 			B.name = "[rand(50) ? "yellow" : "white"] cake"
 
 		B.desc = "Mmm! A delicious-looking [B.name]!"
-		B.food_effects += S.food_effects
 		return B
 
 

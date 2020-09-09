@@ -40,6 +40,7 @@
 		src.render_target = "[name]"
 #endif
 		src.is_screen = is_screen
+		..()
 
 	proc/add_depth_shadow()
 		src.filters += filter(type="drop_shadow", x=2, y=-2, color=rgb(4, 8, 16, 150), size=4, offset=1)
@@ -96,7 +97,8 @@ client
 		game_display = new
 		src.screen += game_display
 
-		for(var/obj/screen/plane_parent/pl)
+		for(var/_pl in src.plane_parents)
+			var/obj/screen/plane_parent/pl = _pl
 			var/obj/screen/plane_display/display = new(pl)
 			plane_displays += display
 			if(!pl.is_screen)

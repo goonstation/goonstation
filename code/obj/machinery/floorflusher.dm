@@ -10,6 +10,7 @@
 	density = 0
 	flags = NOSPLASH
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0 //is it open
 	var/id = null //ID used for brig stuff
@@ -229,7 +230,8 @@
 			return
 
 		if(open && flush)	// flush can happen even without power, must be open first
-			flush()
+			SPAWN_DBG(0)
+				flush()
 
 		if(status & NOPOWER)			// won't charge if no power
 			return
@@ -354,7 +356,7 @@
 			return
 
 		if(open && flush)	// flush can happen even without power, must be open first
-			flush()
+			SPAWN_DBG(0) flush()
 
 		if(status & NOPOWER)			// won't charge if no power
 			return

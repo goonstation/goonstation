@@ -121,9 +121,15 @@ var/global/obj/flashDummy
 	O.set_loc(null)
 
 /proc/arcFlash(var/atom/from, var/atom/target, var/wattage)
+	var/target_r = target
+	if (isturf(target))
+		var/obj/O = getFlashDummy()
+		O.set_loc(target)
+		target_r = O
+
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
 
-	var/list/affected = DrawLine(from, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/O in affected)
 		SPAWN_DBG(0.6 SECONDS) pool(O)
@@ -1016,8 +1022,8 @@ proc/get_angle(atom/a, atom/b)
 		var/client/client = M.client
 
 		for(var/i=0, i<duration, i++)
-			var/off_x = (rand(0, strength*32) * (prob(50) ? -1:1))
-			var/off_y = (rand(0, strength*32) * (prob(50) ? -1:1))
+			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
+			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
 			animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			sleep(delay)
@@ -1435,8 +1441,9 @@ var/list/hex_chars = list("0","1","2","3","4","5","6","7","8","9","A","B","C","D
 var/list/all_functional_reagent_ids = list()
 
 proc/get_all_functional_reagent_ids()
-	for (var/X in childrentypesof(/datum/reagent) )
-		all_functional_reagent_ids += initial(X:id)
+	for (var/X in concrete_typesof(/datum/reagent))
+		var/datum/reagent/R = X
+		all_functional_reagent_ids += initial(R.id)
 
 proc/reagent_id_to_name(var/reagent_id)
 	if (!reagent_id || !reagents_cache.len)
@@ -1983,7 +1990,7 @@ proc/countJob(rank)
   * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
   */
 /proc/whois(target, limit = 0, admin)
-	target = trim(lowertext(target))
+	target = trim(ckey(target))
 	if (!target) return 0
 	var/list/found = list()
 	for (var/mob/M in mobs)

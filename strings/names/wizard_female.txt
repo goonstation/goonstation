@@ -14,3 +14,19 @@ names@=
 	Morrigan
 	Ursula
 	Buffy
+	Llorio
+	The Murthe
+	Morgaine
+	Sheelba of the Eyeless Face
+	Ivrian
+	Myshella of Law
+	Onyesonwu
+	Est
+	Elphaba
+	Lady of the Green Kirtle
+	Magica DeSpell
+	Queen Beryl
+	Scarlet Witch
+	Sea Hag
+	Zatanna
+	Sybel

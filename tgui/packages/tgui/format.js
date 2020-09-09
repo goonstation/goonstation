@@ -87,8 +87,7 @@ export const formatMoney = (value, precision = 0) => {
   let result = '';
   for (let i = 0; i < length; i++) {
     if (i > 0 && i < indexOfPoint && (indexOfPoint - i) % 3 === 0) {
-      // Thin space
-      result += '\u2009';
+      result += ',';
     }
     result += fixed.charAt(i);
   }

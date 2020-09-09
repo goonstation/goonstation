@@ -11,8 +11,8 @@
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.setup()
-			SPAWN_DBG(1 SECOND)
-				qdel(src)
+			sleep(1 SECOND)
+			qdel(src)
 
 	proc/setup()
 		for (var/obj/machinery/door/D in src.loc)

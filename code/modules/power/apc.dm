@@ -188,7 +188,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/disposing()
 	cell = null
-	terminal.master = null
+	terminal?.master = null
 	terminal = null
 	..()
 

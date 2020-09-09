@@ -38,7 +38,6 @@
 	/// for escape checks
 	var/is_centcom = 0
 
-	var/gencolor
 	level = null
 	#ifdef UNDERWATER_MAP
 	name = "Ocean"
@@ -199,8 +198,7 @@
 						if( sanctuary && !blocked && !(oldarea.sanctuary))
 							boutput( enteringM, "<b style='color:#31BAE8'>You are entering a sanctuary zone. You cannot be harmed by other players here.</b>" )
 						if (src.name != "Space" || src.name != "Ocean") //Who cares about making space active gosh
-							if (!(enteringM.mind in src.population))
-								src.population += enteringM.mind
+							src.population |= enteringM.mind
 							if (!src.active)
 								src.active = 1
 
@@ -393,6 +391,7 @@
 		if (light_manager)
 			light_manager.lights -= L
 	New()
+		..()
 		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
 
@@ -1995,17 +1994,23 @@ area/station/crewquarters/cryotron
 /area/station/com_dish/comdish
 	name = "Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1 // ????
+#endif
 
 /area/station/com_dish/auxdish
 	name = "Auxilary Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1
+#endif
 
 /area/station/com_dish/research_outpost
 	name = "Research Outpost Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1
+#endif
 
 /area/station/engine
 	sound_environment = 5
@@ -3156,6 +3161,7 @@ area/station/security/visitation
 	* Called when an area first loads
   */
 /area/New()
+	..()
 	src.icon = 'icons/effects/alert.dmi'
 	src.layer = EFFECTS_LAYER_BASE
 //Halloween is all about darkspace

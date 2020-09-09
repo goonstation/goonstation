@@ -32,6 +32,7 @@ var/list/rollList = list()
 	var/initialDesc = "A six-sided die."
 
 	New()
+		..()
 		SPAWN_DBG(0)
 			initialName = name
 			initialDesc = desc
@@ -269,7 +270,7 @@ var/list/rollList = list()
 		diceInChat()
 		rollList = list()
 
-	throw_impact(var/atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if(istype(hit_atom, /mob))
 			if((istype(src, /obj/item/dice/weighted)) && (istype(hit_atom, /mob/living/carbon/human)))
 				src.hitmob = hit_atom

@@ -441,12 +441,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/slippery_entered
 	execute(var/atom/owner, var/atom/movable/entering)
-		if (iscarbon(entering) && isturf(owner) && prob(75))
-			var/mob/living/carbon/C = entering
-			boutput(C, "You slip on the icy floor!")
-			playsound(get_turf(owner), "sound/misc/slip.ogg", 30, 1)
-			C.changeStatus("weakened", 2 SECONDS)
-			C.force_laydown_standup()
+		if (isliving(entering) && isturf(owner) && prob(75))
+			var/mob/living/L = entering
+			if(L.slip())
+				boutput(L, "You slip on the icy floor!")
+				playsound(get_turf(owner), "sound/misc/slip.ogg", 30, 1)
 		return
 
 /datum/materialProc/ice_life

@@ -66,6 +66,7 @@
 	var/last_voice_sound = 0
 	var/speechbubble_enabled = 1
 	var/speechpopupstyle = null
+	var/isFlying = 0 // for player controled flying critters
 
 	var/caneat = 1
 	var/candrink = 1
@@ -231,6 +232,50 @@
 		"})
 
 	return ..(gibbed)
+
+/mob/living/verb/afterlife_bar()
+	set src = usr
+	set hidden = TRUE
+	set name = "Afterlife Bar"
+	if(isdead(src))
+		var/mob/dead/observer/ghost = src.ghostize()
+		usr = ghost
+		ghost.go_to_deadbar()
+	else
+		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
+
+/mob/living/verb/enter_ghostdrone_queue()
+	set src = usr
+	set hidden = TRUE
+	set name = "Enter Ghostdrone Queue"
+	if(isdead(src))
+		var/mob/dead/observer/ghost = src.ghostize()
+		usr = ghost
+		ghost.enter_ghostdrone_queue()
+	else
+		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
+
+/mob/living/verb/enter_vr()
+	set src = usr
+	set hidden = TRUE
+	set name = "Enter VR"
+	if(isdead(src))
+		var/mob/dead/observer/ghost = src.ghostize()
+		usr = ghost
+		ghost.go_to_vr()
+	else
+		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
+
+/mob/living/verb/respawn_as_animal()
+	set src = usr
+	set hidden = TRUE
+	set name = "Respawn as Animal"
+	if(isdead(src))
+		var/mob/dead/observer/ghost = src.ghostize()
+		usr = ghost
+		ghost.respawn_as_animal()
+	else
+		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
 
 /mob/living/Login()
 	..()
@@ -1274,7 +1319,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/set_loc(var/newloc as turf|mob|obj in world)
 	var/atom/oldloc = src.loc
 	. = ..()
-	if(src && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
+	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
 		if(src.chat_text.vis_locs.len)
 			var/atom/movable/AM = src.chat_text.vis_locs[1]
 			AM.vis_contents -= src.chat_text
@@ -1411,10 +1456,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
 				sustained_moves += steps
 			else
-				if (sustained_moves >= SUSTAINED_RUN_REQ+1)
+				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !isFlying)
 					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
-				else if (move_dir == turn(last_move_dir,180))
+				else if (move_dir == turn(last_move_dir,180) && !isFlying)
 					sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
 					if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
@@ -1589,6 +1634,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/proc/start_sprint()
 	if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 		return
+	if (SEND_SIGNAL(src, COMSIG_LIVING_SPRINT_START) & RETURN_SPRINT_OVERRIDDEN)
+		return
 	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
 			spell_batpoof(src, cloak = 0)
@@ -1615,7 +1662,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
 					sprint_particle(src, last)
-					playsound(src.loc,"sound/effects/sprint_puff.ogg", 29, 1,extrarange = -4)
+					if (!isFlying)
+						playsound(src.loc,"sound/effects/sprint_puff.ogg", 29, 1,extrarange = -4)
 
 // cogwerks - fix for soulguard and revive
 /mob/living/proc/remove_ailments()
@@ -1749,7 +1797,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	return shock_damage
 
-/mob/living/hitby(atom/movable/AM)
+/mob/living/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = 'sound/impact_sounds/Generic_Hit_2.ogg'
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	if (src.can_bleed && isitem(AM))
@@ -1757,4 +1805,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if ((I.hit_type == DAMAGE_STAB && prob(20)) || (I.hit_type == DAMAGE_CUT && prob(40)))
 			take_bleeding_damage(src, null, I.throwforce * 0.5, I.hit_type)
 			. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
+			if(thr?.user)
+				src.was_harmed(thr.user, AM)
 	..()

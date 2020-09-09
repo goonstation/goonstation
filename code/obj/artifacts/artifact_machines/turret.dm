@@ -22,6 +22,7 @@
 	examine_hint = "It is covered in very conspicuous markings."
 
 	New()
+		..()
 		bullet = new /datum/projectile/artifact
 		shot_range = rand(2,6)
 		if (prob(20))

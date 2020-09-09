@@ -404,6 +404,7 @@
 	allowed_type = /obj/item/light/bulb
 	wallmounted = 0
 	deconstruct_flags = DECON_SIMPLE
+	plane = PLANE_DEFAULT
 
 	var/switchon = 0		// independent switching for lamps - not controlled by area lightswitch
 
