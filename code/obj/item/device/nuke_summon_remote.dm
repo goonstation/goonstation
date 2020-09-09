@@ -9,7 +9,7 @@
 	w_class = 2.0
 
 	var/charges = 1
-	var/use_sound = 'sound/machines/chime.ogg'
+	var/use_sound = "sound/machines/chime.ogg"
 
 	attack_self(mob/user as mob)
 		if(charges >= 1)
