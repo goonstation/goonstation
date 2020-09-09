@@ -118,7 +118,7 @@
 				$("#manipHelp").html("Suppression Threshold determines how hard your pathogen is to suppress. Higher values will require more of the suppressant chem or higher external suppression factors.");
 				break;
 			case "helpSpread":
-				$("#manipHelp").html("Spread determines how easily your pathogen will spread. How this expresses itself depends on the symptoms, for instance, a symptom that spreads via pathogen clouds might make larger clouds, while a symptom that spreads on hugs might have a higher chance per hug.");
+				$("#manipHelp").html("Spread determines how easily your pathogen will spread. How this expresses itself depends on the symptoms, for instance, a symptom that spreads via pathogen clouds might make clouds more often, while a symptom that spreads on hugs might have a higher chance per hug.");
 				break;
 			case "helpStages":
 				$("#manipHelp").html("This determines how many stages your pathogen can go through. This largely depends on the microbody, though rarely a pathogen can mutate to have less or more stages. This ranges from 1-5. At higher stages a pathogen's symptoms will generally have stronger effects. Different microbody types also trigger their symptoms at different rates depending on the stage.");
