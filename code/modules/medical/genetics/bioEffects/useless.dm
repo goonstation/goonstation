@@ -65,7 +65,6 @@
 	name = "Achromia"
 	desc = "The subject loses most of their skin pigmentation, with the remainder causing their skin take on a gray coloration."
 	id = "achromia"
-	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	icon_state  = "achromia"
 	var/holder_skin = null

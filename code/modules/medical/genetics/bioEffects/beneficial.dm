@@ -314,7 +314,6 @@
 	name = "Noir"
 	desc = "The subject generates a light-defying aura, equalizing photons in such a way that make them look completely grayscale."
 	id = "noir"
-	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	stability_loss = 5
 	icon_state  = "noir"
