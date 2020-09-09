@@ -101,6 +101,16 @@
 	file_amount = 80
 	portable = 0
 
+	disposing()
+		if (src.root)
+			for (var/datum/computer/file/pda_program/P in src.root.contents)
+				if (P.name == "Packet Sniffer")
+					radio_controller.remove_object(src, "[P:scan_freq]")
+					continue
+				if (P.name == "Ping Tool")
+					radio_controller.remove_object(src, "[P:send_freq]")
+		. = ..()
+
 /obj/item/disk/data/memcard
 	name = "Memory Board"
 	icon_state = "memcard"
