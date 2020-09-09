@@ -1,5 +1,9 @@
 
 (t)tue sep 08 20
+(u)Superlagg
+(p)2111
+(e)⚖🆕|balance, feature
+(+)Werewolves are no longer completely unintelligible.
 (u)Tarmunora
 (p)2109
 (e)⚖|balance
