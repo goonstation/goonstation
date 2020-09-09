@@ -1404,6 +1404,16 @@
 	create = 1
 	category = "Machinery"
 
+/datum/manufacture/digbot
+	name = "Mining Drone"
+	item_paths = list("MET-1","MET-2","CON-1","ALL")
+	item_names = list("Metal","Sturdy Metal","Conductive Material","Any Material")
+	item_amounts = list(10,2,10,5)
+	item_outputs = list(/obj/machinery/bot/mining)
+	time = 60 SECONDS
+	create = 1
+	category = "Machinery"
+
 /datum/manufacture/robup_jetpack
 	name = "Propulsion Upgrade"
 	item_paths = list("CON-1","MET-1")
