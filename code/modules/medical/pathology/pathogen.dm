@@ -998,8 +998,8 @@ datum/pathogen
 			src.stage = 1
 			src.generation = origin.generation
 			src.symptomatic = origin.symptomatic
-			src.advance_speed = origin.spread
-			src.spread = origin.advance_speed
+			src.advance_speed = origin.advance_speed
+			src.spread = origin.spread
 			src.body_type = origin.body_type
 			src.suppression_threshold = origin.suppression_threshold
 			if (sample)
