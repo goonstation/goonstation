@@ -1597,11 +1597,6 @@
 		return 0;
 	}
 
-	function updateStatManipButtons()
-	{
-
-	};
-
 	function setButtonEnabled(jqSel, bEnable) {
 		var btn = $(jqSel);
 		if(!btn.hasClass("button")) {
