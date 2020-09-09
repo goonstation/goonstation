@@ -9726,6 +9726,12 @@
 /area/station/hallway)
 "yn" = (
 /obj/decal/poster/wallsign/poster_clown,
+/obj/npc/trader/exclown{
+	name = "Tiny Geoff Honkington";
+	transform = list(0.5, 0, 0, 0, 0.5, 0);
+	pixel_x = 15;
+	pixel_y = -12
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
 "yo" = (
@@ -13008,10 +13014,6 @@
 /obj/machinery/computer/robot_module_rewriter,
 /turf/simulated/floor,
 /area/station/medical/robotics)
-"GZ" = (
-/obj/machinery/portable_atmospherics/canister/air/large,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/SEmaint)
 "Ha" = (
 /obj/machinery/computer/operating{
 	id = "robotics"
@@ -13955,6 +13957,14 @@
 /obj/machinery/atmospherics/portables_connector/south,
 /turf/simulated/floor/blue,
 /area/station/science/lab)
+"Jm" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/effects/background_objects/station/ss10,
+/turf/space,
+/area)
 "Jo" = (
 /obj/machinery/atmospherics/valve/horizontal,
 /obj/cable{
@@ -17572,6 +17582,18 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/cafeteria)
+"UA" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar/west,
+/obj/effects/background_objects/x3,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/south)
 "UC" = (
 /turf/simulated/wall/auto/supernorn{
 	icon_state = "3"
@@ -17780,14 +17802,6 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/lounge)
-"Vy" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir-b"
-	},
-/obj/effects/background_objects/station/ss10,
-/turf/space,
-/area)
 "VC" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 10;
@@ -17840,6 +17854,7 @@
 	},
 /obj/critter/spider/baby,
 /obj/item/paper/fortune,
+/obj/marker/supplymarker,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "VI" = (
@@ -18012,6 +18027,7 @@
 "Wr" = (
 /obj/machinery/vending/pizza/fallen{
 	color = "#b0a060";
+	desc = "A vending machine that serves... pizza?<br>This one seems to have fallen over long ago.";
 	name = "old and dusty pizza vending machine"
 	},
 /turf/simulated/floor/plating/random,
@@ -18865,18 +18881,6 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/core)
-"Zc" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/solar/west,
-/obj/effects/background_objects/x3,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
-/area/station/solar/south)
 "Zd" = (
 /obj/stool/bench/red,
 /obj/machinery/light_switch/auto,
@@ -19055,6 +19059,10 @@
 /obj/storage/secure/closet/fridge/blood,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"ZJ" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/SEmaint)
 "ZK" = (
 /obj/securearea,
 /obj/machinery/light/incandescent/blueish,
@@ -54606,7 +54614,7 @@ YR
 YR
 YR
 Cs
-GZ
+ZJ
 DA
 aa
 PS
@@ -60933,7 +60941,7 @@ lU
 kl
 aa
 aa
-Vy
+Jm
 qD
 rg
 sr
@@ -63991,7 +63999,7 @@ KP
 KP
 KP
 KP
-Zc
+UA
 KP
 KP
 aa
