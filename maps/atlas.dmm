@@ -17332,6 +17332,12 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/small{
+	dir = 8
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -17405,6 +17411,13 @@
 	icon_state = "3"
 	},
 /area/station/bridge/captain)
+"Wl" = (
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "Wn" = (
 /obj/machinery/atmospherics/portables_connector/south,
 /obj/machinery/firealarm{
@@ -66512,7 +66525,7 @@ lV
 nQ
 zV
 AH
-yF
+Wl
 yF
 CF
 yF
