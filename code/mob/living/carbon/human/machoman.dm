@@ -87,7 +87,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				var/mob/M = AM
 				boutput(src, "<span class='alert'><B>You power-clothesline [M]!</B></span>")
 				for (var/mob/C in oviewers(src))
-					shake_camera(C, 8, 3)
+					shake_camera(C, 8, 24)
 					C.show_message("<span class='alert'><B>[src] clotheslines [M] into oblivion!</B></span>", 1)
 				M.changeStatus("stunned", 80)
 				M.changeStatus("weakened", 5 SECONDS)
@@ -103,19 +103,19 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						if (D.open())
 							boutput(src, "<span class='alert'><B>You forcefully kick open [D]!</B></span>")
 							for (var/mob/C in oviewers(D))
-								shake_camera(C, 8, 3)
+								shake_camera(C, 8, 24)
 								C.show_message("<span class='alert'><B>[src] forcefully kicks open [D]!</B></span>", 1)
 						else
 							boutput(src, "<span class='alert'><B>You forcefully kick [D]!</B></span>")
 							for (var/mob/C in oviewers(src))
-								shake_camera(C, 8, 3)
+								shake_camera(C, 8, 24)
 								C.show_message("<span class='alert'><B>[src] forcefully kicks [D]!</B></span>", 1)
 							if (prob(33))
 								qdel(D)
 					else if(O.anchored != 2)
 						boutput(src, "<span class='alert'><B>You crash into [O]!</B></span>")
 						for (var/mob/C in oviewers(src))
-							shake_camera(C, 8, 3)
+							shake_camera(C, 8, 24)
 							C.show_message("<span class='alert'><B>[src] crashes into [O]!</B></span>", 1)
 						if ((istype(O, /obj/window) && !istype(O, /obj/window/auto/reinforced/indestructible)) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 							qdel(O)
@@ -349,7 +349,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				if (M != src)
 					M.changeStatus("weakened", 80)
 				SPAWN_DBG(0)
-					shake_camera(M, 4, 2)
+					shake_camera(M, 4, 16)
 			if (istype(src.loc, /turf/simulated/floor))
 				src.loc:break_tile()
 			if (H)
@@ -512,7 +512,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 								FF.visible_message("<span class='alert'><B>[FF] slams and anchors itself into the ground!</B></span>")
 								playsound(T, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 								for (var/mob/living/M in oviewers(ring_radius * 2, T))
-									shake_camera(M, 8, 3)
+									shake_camera(M, 8, 24)
 						else // arena ropes
 							var/obj/decal/boxingrope/FF = new/obj/decal/boxingrope(T)
 							arenaropes += FF
@@ -679,7 +679,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					for (var/mob/N in viewers(src, null))
 						N.flash(3 SECONDS)
 						if (N.client)
-							shake_camera(N, 6, 4)
+							shake_camera(N, 6, 16)
 							N.show_message(text("<span class='alert'><b>A blinding light envelops [src]!</b></span>"), 1)
 
 					playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
@@ -707,7 +707,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			for (var/mob/N in viewers(src, null))
 				N.flash(3 SECONDS)
 				if (N.client)
-					shake_camera(N, 6, 4)
+					shake_camera(N, 6, 16)
 					N.show_message(text("<span class='alert'><b>A blinding light envelops [src]!</b></span>"), 1)
 			playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 			src.visible_message("<span class='alert'><B>A group of micro men suddenly materializes!</B></span>")
@@ -927,7 +927,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					for (var/mob/N in viewers(src, null))
 						N.flash(3 SECONDS)
 						if (N.client)
-							shake_camera(N, 6, 4)
+							shake_camera(N, 6, 16)
 							N.show_message(text("<span class='alert'><b>A blinding light envelops [src]!</b></span>"), 1)
 
 					playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
@@ -998,7 +998,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					for (var/mob/N in viewers(src, null))
 						N.flash(3 SECONDS)
 						if (N.client)
-							shake_camera(N, 6, 4)
+							shake_camera(N, 6, 16)
 							N.show_message(text("<span class='alert'><b>A blinding light envelops [src]!</b></span>"), 1)
 
 					playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
@@ -1077,7 +1077,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					H.visible_message("<span class='alert'><b>[H] instantly vaporizes into a cloud of blood!</b></span>")
 					for (var/mob/N in viewers(src, null))
 						if (N.client)
-							shake_camera(N, 6, 4)
+							shake_camera(N, 6, 16)
 					qdel(H)
 					SPAWN_DBG(0)
 						//alldirs
@@ -1212,7 +1212,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				if (M != src)
 					M.weakened = max(M.weakened, 8)
 				SPAWN_DBG(0)
-					shake_camera(M, 4, 2)
+					shake_camera(M, 4, 8)
 			playsound(src.loc, "explosion", 40, 1)
 			playsound(src.loc, pick(snd_macho_rage), 50)
 			src.layer = MOB_LAYER
@@ -1431,7 +1431,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				O.icon = 'icons/effects/214x246.dmi'
 				O.icon_state = "explosion"
 				for (var/mob/N in viewers(user))
-					shake_camera(N, 8, 3)
+					shake_camera(N, 8, 24)
 				sleep(3.5 SECONDS)
 				qdel(O)
 			SPAWN_DBG(0)

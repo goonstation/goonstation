@@ -77,7 +77,8 @@
 	New()
 		START_TRACKING
 		..()
-		src.area_name = src.loc.loc.name
+		var/area/area = get_area(src)
+		src.area_name = area?.name
 		src.transmit_connection = radio_controller.add_object(src,"[frequency]")
 		src.net_id = generate_net_id(src)
 
@@ -182,9 +183,10 @@
 
 	proc/finish_work()
 
-		output_loop(src.queue[1])
-		if (!src.repeat)
-			src.queue -= src.queue[1]
+		if(length(src.queue))
+			output_loop(src.queue[1])
+			if (!src.repeat)
+				src.queue -= src.queue[1]
 
 		if (src.queue.len < 1)
 			src.manual_stop = 0
@@ -2051,6 +2053,7 @@
 	/datum/manufacture/firebot,
 	/datum/manufacture/floorbot,
 	/datum/manufacture/cleanbot,
+	/datum/manufacture/digbot,
 	/datum/manufacture/visor,
 	/datum/manufacture/deafhs,
 	/datum/manufacture/robup_jetpack,
@@ -2071,6 +2074,7 @@
 	/datum/manufacture/implant_robotalk,
 	/datum/manufacture/sbradio,
 	/datum/manufacture/implant_health,
+	/datum/manufacture/implant_antirot,
 	/datum/manufacture/cyberappendix,
 	/datum/manufacture/cyberpancreas,
 	/datum/manufacture/cyberspleen,
@@ -2132,6 +2136,7 @@
 		/datum/manufacture/body_bag,
 		/datum/manufacture/implanter,
 		/datum/manufacture/implant_health,
+		/datum/manufacture/implant_antirot,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/cyberappendix,
@@ -2167,6 +2172,7 @@
 	/datum/manufacture/powerhammer,
 	/datum/manufacture/drill,
 	/datum/manufacture/conc_gloves,
+	/datum/manufacture/digbot,
 	/datum/manufacture/jumpsuit,
 	/datum/manufacture/shoes,
 	/datum/manufacture/breathmask,

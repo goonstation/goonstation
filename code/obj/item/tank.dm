@@ -36,7 +36,7 @@ Contains:
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
 		processing_items |= src
-		BLOCK_TANK
+		BLOCK_SETUP(BLOCK_TANK)
 		return
 
 	disposing()

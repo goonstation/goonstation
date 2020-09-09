@@ -16,7 +16,7 @@
 
 	New()
 		..()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	attack_self(mob/user as mob)
 		var/turf/T = get_turf(user)

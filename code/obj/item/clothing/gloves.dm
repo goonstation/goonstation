@@ -428,7 +428,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/clothing/gloves/powergloves
 	desc = "Now I'm playin' with power!"

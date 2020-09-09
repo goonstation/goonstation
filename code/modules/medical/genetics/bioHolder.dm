@@ -544,6 +544,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		if (do_delay && BE.add_delay > 0)
 			sleep(BE.add_delay)
+
+		src.AddEffectInstanceNoDelay(BE, do_stability)
+
+	proc/AddEffectInstanceNoDelay(var/datum/bioEffect/BE,var/do_stability = 1)
+		if (!istype(BE) || !owner || HasEffect(BE.id))
+			return null
 		effects[BE.id] = BE
 		BE.owner = owner
 		BE.holder = src
@@ -655,6 +661,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 				tally++
 
 		return tally >= args.len
+
+	proc/GetASubtypeEffect(type)
+		for(var/id in effects)
+			var/datum/bioEffect/BE = effects[id]
+			if(istype(BE, type))
+				return BE
+		return null
 
 	proc/GetEffect(var/id) //Returns the effect with the given ID if it exists else returns null.
 		return effects[id]

@@ -241,7 +241,7 @@ WET FLOOR SIGN
 	src.create_reagents(20)
 	src.setItemSpecial(/datum/item_special/rangestab)
 	START_TRACKING
-	BLOCK_ROD
+	BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/mop/disposing()
 	. = ..()
@@ -328,7 +328,7 @@ WET FLOOR SIGN
 					user.show_text("You were interrupted.", "red")
 					return
 				user.show_text("You have finished mopping!", "blue")
-				playsound(src.loc, "sound/effects/slosh.ogg", 25, 1)
+				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 				if (U && isturf(U))
 					U.clean_forensic()
 				else
@@ -599,7 +599,7 @@ WET FLOOR SIGN
 
 	New()
 		..()
-		BLOCK_SOFT
+		BLOCK_SETUP(BLOCK_SOFT)
 
 	dropped()
 		JOB_XP(usr, "Janitor", 2)

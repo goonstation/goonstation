@@ -77,7 +77,7 @@
 
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
-	if (!istype(W, /obj/item/card))
+	if (!istype(W, /obj/item/card/id))
 		boutput(user, "No ID given.")
 		return ..()
 

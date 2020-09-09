@@ -40,7 +40,7 @@
 					world << sound('sound/voice/farts/superfart.ogg', volume = 67)
 					for (var/mob/M in mobs)
 						if (M.client)
-							shake_camera(M, 20, 1)
+							shake_camera(M, 20, 8)
 						if (M.lying)
 							M.show_text("You duck and cover, avoiding the shockwave! Phew!", "blue")
 							continue

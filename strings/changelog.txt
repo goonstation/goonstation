@@ -1,4 +1,65 @@
 
+(t)wed sep 09 20
+(u)MarkNstein
+(p)2100
+(e)🆕🎨|feature, sprites
+(*)Digbot revived: a bot for miners. Craftable and has a blueprint in robotics and mining fabs.
+(t)tue sep 08 20
+(u)Superlagg
+(p)2111
+(e)⚖🆕|balance, feature
+(+)Werewolves are no longer completely unintelligible.
+(u)Tarmunora
+(p)2109
+(e)⚖|balance
+(+)Changed explosion resist property to be a percentage-based protection
+(u)Gannets
+(p)2106
+(e)⚖|balance
+(+)Improved armour values for Nuclear Operative Specialist uniforms.
+(u)Zamujasa
+(+)Lowered the intensity of screen-shake effects across the board.
+(+)Manta will no longer fling your viewpoint halfway across the screen, for example.
+(+)Some effects may need to be intensified again later, but in general screen shake has been a constant complaint, to the point some players would quit and rejoin to avoid it.
+(u)Superlagg
+(p)2102
+(e)🆕|feature
+(+)Metal organs are no longer made of delicious flesh.
+(t)mon sep 07 20
+(u)Flourish
+(p)2104
+(e)🆕|feature
+(+)Hit someone with a plush toy on help intent to make the plush toy hug them.
+(u)kyle & pali & BatElite
+(e)🆕|feature
+(*)Added the Spaceship of Theseus medal
+(u)SageAcrin & pali & Dogs
+(e)🆕|feature
+(*)Added the Quit Cloning Around medal
+(u)Gannets
+(p)2093
+(e)⚖|balance
+(*)Increased maximum number of Nuclear Operatives to 8 from 6.
+(u)Aft2001
+(p)2098
+(e)|
+(+)An AI's PDA name is now based on its actual name, instead of just being labeled as 'AI'
+(t)sun sep 06 20
+(u)Nebulacrity
+(p)2057
+(e)🆕🎨|feature, sprites
+(*)Added a new mutation: Hemochromia. NanoTrasen has released a statement that differently colored blood is perfectly normal and not worth being alarmed over.
+(u)zjdtmkhzt
+(p)2059
+(e)⚖🆕|balance, feature
+(+)Electric wand type artifacts should now actually work. Some other small changes to wand artifacts were made too.
+(u)RichardGere
+(p)2082
+(e)⚖|balance
+(+)Tweaked secbots responsiveness to accommodate the new movement change.
+(u)Zamujasa
+(*)Added the Rotbusttec implant to the medical and robotics fabricators.
+(+)The cloner now makes noises/jostles a bit when cloning a player.
 (t)sat sep 05 20
 (u)zjdtmkhzt
 (p)2077

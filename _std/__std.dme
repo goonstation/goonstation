@@ -71,6 +71,7 @@
 #include "macros\list.dm"
 #include "macros\macros.dm"
 #include "macros\maps.dm"
+#include "macros\matrix.dm"
 #include "macros\mob_properties.dm"
 #include "macros\movement_modifiers.dm"
 #include "macros\plane.dm"

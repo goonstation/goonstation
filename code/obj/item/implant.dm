@@ -443,6 +443,18 @@ THROWING DARTS
 		..()
 
 
+// dumb joke
+/obj/item/implant/antirot
+	name = "\improper Rotbusttec implant"
+	icon_state = "implant-r"
+	impcolor = "r"
+
+	on_death()
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = owner
+			H.reagents.add_reagent("formaldehyde", 5)
+
+
 /* Deprecated old turds shit */
 /obj/item/implant/sec
 	name = "security implant"
@@ -1165,6 +1177,10 @@ THROWING DARTS
 /obj/item/implantcase/robust
 	name = "glass case - 'Robusttec'"
 	implant_type = "/obj/item/implant/robust"
+
+/obj/item/implantcase/antirot
+	name = "glass case - 'Rotbusttec'"
+	implant_type = "/obj/item/implant/antirot"
 
 /obj/item/implantcase/access
 	name = "glass case - 'Electronic Access'"

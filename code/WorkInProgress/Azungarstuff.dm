@@ -1110,7 +1110,7 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	throw_begin(atom/target)
 		icon_state = "lawspin"

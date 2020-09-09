@@ -742,7 +742,7 @@ var/sound/iomoon_alarm_sound = null
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/spawner/ancient_robot_artifact
 	name = "robot artifact spawn"
@@ -835,7 +835,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			N.flash(3 SECONDS)
 
 			SPAWN_DBG(0)
-				shake_camera(N, 210, 2)
+				shake_camera(N, 210, 16)
 	//todo: Alarms.  Not the dumb siren, I mean like the power plant's computer systems freaking the fuck out because oh jesus radiation
 
 	var/obj/machinery/networked/mainframe/mainframe = locate("IOMOON_MAINFRAME")
@@ -1258,7 +1258,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					random_burn_damage(poorSoul, 45)
 					boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 					poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-					poorSoul:Virus_ShockCure(poorSoul, 100)
+					poorSoul:Virus_ShockCure(100)
 					poorSoul:shock_cyberheart(100)
 					poorSoul:changeStatus("weakened", 3 SECONDS)
 					if (isdead(poorSoul) && prob(25))

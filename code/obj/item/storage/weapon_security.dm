@@ -217,7 +217,7 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/storage/football
 	name = "space-american football kit"

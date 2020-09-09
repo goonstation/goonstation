@@ -1022,7 +1022,7 @@
 			playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 #endif
 			for(var/mob/M in view(7, I.loc))
-				shake_camera(M, 20, 1)
+				shake_camera(M, 20, 8)
 
 		if (mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in grabbed_by)

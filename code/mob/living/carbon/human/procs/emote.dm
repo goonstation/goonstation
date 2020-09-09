@@ -2048,7 +2048,7 @@
 					else if(!src.reagents.has_reagent("puredabs"))
 						message = "<span class='alert'><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
 						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0)
-						shake_camera(src, 40, 0.5)
+						shake_camera(src, 40, 8)
 						if(H)
 							if(H.limbs.l_arm)
 								src.limbs.l_arm.sever()
@@ -2128,6 +2128,13 @@
 				var/atom/A = src.loc
 				for (var/mob/O in A.contents)
 					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+
+// I'm very sorry for this but it's to trick the linter into thinking emote doesn't sleep (since it usually doesn't)
+// you see from the important places it's called as emote("scream") etc. which doesn't actually sleep but for the linter to recognize
+// that would be difficult, datumize emotes 2day!
+#ifdef SPACEMAN_DMM
+/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null)
+#endif
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)

@@ -307,7 +307,7 @@
 					src.material.triggerOnAttacked(src, user, user, src)
 				for (var/mob/N in AIviewers(usr, null))
 					if (N.client)
-						shake_camera(N, 4, 1, 0.5)
+						shake_camera(N, 4, 8, 0.5)
 			if(ismonkey(H))
 				actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
 		return
@@ -472,7 +472,7 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				for (var/mob/N in AIviewers(usr, null))
 					if (N.client)
-						shake_camera(N, 4, 1, 0.5)
+						shake_camera(N, 4, 8, 0.5)
 			else
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
 		return

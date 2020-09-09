@@ -338,7 +338,7 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/storage/desk_drawer
 	name = "desk drawer"

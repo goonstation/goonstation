@@ -106,7 +106,7 @@
 		src.take_brain_damage(1 + power * 0.1)
 
 	for (var/mob/C in viewers(src))
-		shake_camera(C, 6, 1)
+		shake_camera(C, 6, 16)
 	if (ismob(target))
 		var/mob/M = target
 		var/msg = pick("tackles", "rushes into", "sacks", "steamrolls", "plows into", "bashes", "leaps into", "runs into", "bowls over")

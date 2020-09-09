@@ -103,8 +103,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	event()
 	if (Ti)
 		src.Dtime = Ti
-	src.x--
-	src.y--
+	SPAWN_DBG(0)
+		src.x--
+		src.y--
 	..()
 
 /obj/machinery/the_singularity/process()
@@ -1358,19 +1359,19 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 			if(!isnull(S1))
 				power_s += S1.energy
-			if(!isnull(P1))
+			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
 					P1.air_contents.toxins -= 0.001
-			if(!isnull(P2))
+			if(P2?.air_contents)
 				if(CA2.active != 0)
 					power_p += P2.air_contents.toxins
 					P2.air_contents.toxins -= 0.001
-			if(!isnull(P3))
+			if(P3?.air_contents)
 				if(CA3.active != 0)
 					power_p += P3.air_contents.toxins
 					P3.air_contents.toxins -= 0.001
-			if(!isnull(P4))
+			if(P4?.air_contents)
 				if(CA4.active != 0)
 					power_p += P4.air_contents.toxins
 					P4.air_contents.toxins -= 0.001
@@ -1622,7 +1623,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	playsound(T, 'sound/effects/creaking_metal1.ogg', 100, 0, 5, 0.5)
 	for (var/mob/M in range(7,T))
 		boutput(M, "<span class='bold alert'>The contaiment field on \the [src] begins destabilizing!</span>")
-		shake_camera(M, 5, 1)
+		shake_camera(M, 5, 16)
 	for (var/turf/TF in range(4,T))
 		animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
 	particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(T))
@@ -1630,7 +1631,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	SPAWN_DBG(3 SECONDS)
 		for (var/mob/M in range(7,T))
 			boutput(M, "<span class='bold alert'>The containment field on \the [src] fails completely!</span>")
-			shake_camera(M, 5, 1)
+			shake_camera(M, 5, 16)
 
 		// And most importantly here (Convair880)!
 		logTheThing("bombing", src.activator, null, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")
