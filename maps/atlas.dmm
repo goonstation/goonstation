@@ -2771,7 +2771,6 @@
 /area/station/engine/elect)
 "ht" = (
 /obj/storage/secure/closet/engineering/mechanic,
-/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -3125,7 +3124,6 @@
 /area/station/engine/elect)
 "is" = (
 /obj/storage/secure/closet/engineering/mechanic,
-/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -3550,7 +3548,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "jv" = (
-/obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
@@ -9590,9 +9587,11 @@
 	},
 /area/station/hallway)
 "yn" = (
-/obj/machinery/genetics_booth,
-/turf/simulated/floor,
-/area/station/hallway)
+/obj/machinery/disposal/small{
+	dir = 8
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster)
 "yo" = (
 /obj/machinery/firealarm{
 	pixel_y = 25
@@ -16773,6 +16772,13 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
+"SB" = (
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "SG" = (
 /obj/machinery/networked/test_apparatus/gas_sensor,
 /obj/cable,
@@ -17146,6 +17152,10 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
+"Va" = (
+/obj/machinery/genetics_booth,
+/turf/simulated/floor,
+/area/station/hallway)
 "Vc" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -17411,13 +17421,6 @@
 	icon_state = "3"
 	},
 /area/station/bridge/captain)
-"Wl" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "Wn" = (
 /obj/machinery/atmospherics/portables_connector/south,
 /obj/machinery/firealarm{
@@ -59858,7 +59861,7 @@ bH
 bH
 bH
 bH
-bH
+yn
 bH
 bH
 cv
@@ -66525,7 +66528,7 @@ lV
 nQ
 zV
 AH
-Wl
+SB
 yF
 CF
 yF
@@ -72258,7 +72261,7 @@ sG
 tT
 sC
 wS
-yn
+Va
 wN
 zo
 lf
