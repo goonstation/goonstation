@@ -93,6 +93,8 @@
 				return
 
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+				if (W:on <= 0)
+					return
 				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
 				return
 
