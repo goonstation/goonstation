@@ -62,6 +62,9 @@
 			if (!user)
 				return
 
+		if(!user.client)
+			return
+
 		if(!winexists(user, "traitssetup_[user.ckey]"))
 			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
 
@@ -102,6 +105,9 @@
 		return
 
 	proc/showTraits(var/mob/user)
+		if(!user.client)
+			return
+
 		if(!winexists(user, "traitssetup_[user.ckey]"))
 			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
 
