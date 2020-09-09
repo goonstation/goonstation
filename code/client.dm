@@ -150,6 +150,7 @@
 
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "Sorry, this game does not support Telnet.")
+		preferences = new
 		sleep(5 SECONDS)
 		del(src)
 		return
@@ -164,6 +165,11 @@
 	player.client = src
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Player set ([player])")
+	
+	// moved preferences from new_player so it's accessible in the client scope
+	if (!preferences)
+		preferences = new
+
 
 	//Assign custom interface datums
 	src.chatOutput = new /datum/chatOutput(src)
@@ -314,10 +320,6 @@
 		alert(src.mob,"I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
 		del(src)
 		return
-
-	// moved preferences from new_player so it's accessible in the client scope
-	if (!preferences)
-		preferences = new
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
 
