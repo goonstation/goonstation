@@ -32,7 +32,7 @@
 
 	var/obj/machinery/camera/camera = null
 
-/mob/living/silicon/hivebot/TakeDamage(zone, brute, burn)
+/mob/living/silicon/hivebot/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	bruteloss += brute
 	fireloss += burn
 	health_update_queue |= src

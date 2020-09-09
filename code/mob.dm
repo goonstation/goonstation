@@ -992,7 +992,7 @@
 	return
 
 // for mobs without organs
-/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type)
+/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	hit_twitch(src)
 #if ASS_JAM//pausing damage for timestop
 	if(src.paused)

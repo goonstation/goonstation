@@ -217,7 +217,7 @@
 			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (!src.density)
 			return
 		health -= burn
