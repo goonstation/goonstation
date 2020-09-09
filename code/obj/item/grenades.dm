@@ -1202,7 +1202,7 @@ PIPE BOMBS + CONSTRUCTION
 			else
 				name = "pipe bomb frame"
 
-			desc = "Two small pipes joined together, filled with welding fuel and connected with a cable. It needs some kind of ignition switch."
+			desc = "Two small pipes joined together, filled with explosives and connected with a cable. It needs some kind of ignition switch."
 			src.flags &= ~NOSPLASH
 
 		if(istype(W, /obj/item/assembly/time_ignite) && state == 4)
