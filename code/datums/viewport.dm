@@ -45,8 +45,9 @@
 	disposing()
 		if(viewer)
 			SPAWN_DBG(0)
-				winset( viewer, "[viewport_id].map_[viewport_id]", "parent=none" )
-				winset( viewer, "[viewport_id]", "parent=none" )
+				if(viewer)
+					winset( viewer, "[viewport_id].map_[viewport_id]", "parent=none" )
+					winset( viewer, "[viewport_id]", "parent=none" )
 			if(viewer)
 				viewer.viewports -= src
 		if(handler)
