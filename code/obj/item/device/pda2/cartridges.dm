@@ -24,16 +24,6 @@
 	file_amount = 32
 	title = "ROM Cart"
 
-	disposing()
-		if (src.root)
-			for (var/datum/computer/file/pda_program/P in src.root.contents)
-				if (P.name == "Packet Sniffer")
-					radio_controller.remove_object(src, "[P:scan_freq]")
-					continue
-				if (P.name == "Ping Tool")
-					radio_controller.remove_object(src, "[P:send_freq]")
-		. = ..()
-
 	captain
 		name = "\improper Value-PAK cartridge"
 		desc = "Now with 200% more value!"
