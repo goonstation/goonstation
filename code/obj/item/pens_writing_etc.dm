@@ -863,11 +863,15 @@
 		return
 
 	proc/display_booklet_contents(var/mob/user as mob, var/page = 1)
+		set src in view()
+		set category = "Local"
+
+		if (!length(pages))
+			return
+
 		var/obj/item/paper/cur_page = pages[page]
 		var/next_page = ""
 		var/prev_page = "     "
-		set src in view()
-		set category = "Local"
 
 		if(!user.literate)
 			. = html_encode(illiterateGarbleText(cur_page.info)) // deny them ANY useful information
