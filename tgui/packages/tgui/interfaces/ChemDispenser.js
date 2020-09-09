@@ -2,7 +2,7 @@
 import { useBackend, useSharedState } from "../backend";
 import { truncate } from "../format.js";
 import { clamp } from "common/math";
-import { Button, NumberInput, Section, Box, Table, Tooltip, Icon } from "../components";
+import { Button, NumberInput, Section, Box, Table, Tooltip, Icon, Tabs } from "../components";
 import { Window } from "../layouts";
 
 export const titleCase = str => {
@@ -17,24 +17,6 @@ export const titleCase = str => {
 };
 
 
-const sortMap = {
-  0: {
-    contents: "Big to Small",
-    algorithm: (a, b) => b.volume - a.volume,
-  },
-  1: {
-    contents: "Small to Big",
-    algorithm: (a, b) => a.volume - b.volume,
-  },
-  2: {
-    contents: "Density",
-    algorithm: (a, b) => a.state - b.state,
-  },
-  3: {
-    contents: "Order Added",
-    algorithm: (a, b) => a.state,
-  },
-};
 
 const stateMap = {
   1: {
@@ -49,25 +31,6 @@ const stateMap = {
     icon: "wind", // gas
     pr: 0.5,
   },
-};
-
-export const lightOrDark = (r, g, b) => {
-  let hsp;
-  hsp = Math.sqrt(
-    0.299 * (r * r)
-  + 0.587 * (g * g)
-  + 0.114 * (b * b)
-  );
-  if (hsp>127.5) {
-    return "black";
-  }
-  else {
-    return "white";
-  }
-};
-
-export const sortVolume = (a, b) => {
-  return parseFloat(a.volume) - parseFloat(b.volume);
 };
 
 
@@ -85,7 +48,7 @@ export const ChemDispenser = (props, context) => {
           <ReagentDispenser />
           <Beaker />
           {!!beakerContents.length && (
-            <BeakerContentsMap />
+            <BeakerContentsGraph />
           )}
           <ChemGroups />
         </Box>
@@ -251,7 +214,7 @@ export const Beaker = (props, context) => {
 
 
 
-export const BeakerContentsMap = (props, context) => {
+export const BeakerContentsGraph = (props, context) => {
   const { act, data } = useBackend(context);
   const [sort, setSort] = useSharedState(context, 'sort', 1);
   const {
@@ -260,32 +223,50 @@ export const BeakerContentsMap = (props, context) => {
     beakerTotalVolume,
   } = data;
   const finalColor = data.finalColor || "";
+  const sortMap = [
+    {
+      id: 0,
+      icon: "sort-amount-down",
+      contents: "",
+      algorithm: (a, b) => b.volume - a.volume,
+    },
+    {
+      id: 1,
+      icon: "sort-amount-up",
+      contents: "",
+      algorithm: (a, b) => a.volume - b.volume,
+    },
+    {
+      id: 2,
+      contents: "Density",
+      algorithm: (a, b) => a.state - b.state,
+    },
+    {
+      id: 3,
+      contents: "Order Added",
+      algorithm: (a, b) => a.state,
+    },
+  ];
   return (
-    <Section align="center" p={0.5}>
-      <Button
-        py={1}
-        mb={1}
-        onClick={() => setSort(sort === 3 ? 0 : sort + 1)}>
-        <Box as="span">
-          <Icon name="sort-amount-down" />
-          {!sort ? (
-            <Box as="span" bold>  {"Big to Small"} </Box>)
-            : "Big to Small" }
-          {" / "}
-          <Icon name="sort-amount-up" />
-          {sort === 1 ? (
-            <Box as="span" bold> {"Small to Big"} </Box>)
-            : "Small to Big" }
-          {" / "}
-          {sort === 2 ? (
-            <Box as="span" bold> {"Density"} </Box>)
-            : "Density" }
-          {" / "}
-          {sort === 3 ? (
-            <Box as="span" bold> {"Order Added"} </Box>)
-            : "Order Added" }
-        </Box>
-      </Button>
+    <Section align="center" p={0.5}
+      title={(
+        <Tabs>
+          {sortMap.map(sortBy => (
+            <Tabs.Tab
+              key={sortBy.id}
+              fontSize="11px"
+              textAlign="center"
+              align="center"
+              selected={sort === sortBy.id}
+              onClick={() => setSort(sortBy.id)}>
+              {sortBy.icon && (
+                <Icon name={sortBy.icon} />
+              )}
+              {sortBy.contents}
+            </Tabs.Tab>
+          ))}
+        </Tabs>
+      )}>
       <Box
         position="relative"
         py={1.5}
@@ -320,7 +301,7 @@ export const BeakerContentsMap = (props, context) => {
         backgroundColor="black">
         <Tooltip
           position="top"
-          content={(maximumBeakerVolume - beakerTotalVolume)} />
+          content={" ( " + (maximumBeakerVolume - beakerTotalVolume) + "u )"} />
       </Box>
     </Section>
   );
@@ -338,19 +319,24 @@ export const ChemGroups = (props, context) => {
     <Section
       fontFamily="Arial"
       title={
-        <Button
-          icon="eject"
-          onClick={() => act("card")}>
-          {idCardInserted ? ("Eject ID: " + idCardName) : "Insert ID to Save Groups"}
-        </Button>
+        <Box as="span">
+          {"Reagent Groups"}
+        </Box>
       }
       buttons={
-        <Button
-          icon="plus-circle"
-          lineHeight={1.75}
-          onClick={() => act("newGroup")}>
-          New Group
-        </Button>
+        <Box>
+          <Button
+            icon="eject"
+            onClick={() => act("card")}>
+            {idCardInserted ? ("Eject ID: " + idCardName) : "Insert ID to Save Groups"}
+          </Button>
+          <Button
+            icon="plus-circle"
+            lineHeight={1.75}
+            onClick={() => act("newGroup")}>
+            New Group
+          </Button>
+        </Box>
       }>
 
       {groupList.map(group => (
