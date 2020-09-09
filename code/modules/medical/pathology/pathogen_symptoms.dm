@@ -219,27 +219,27 @@ datum/pathogeneffects/malevolent/coughing
 			return
 		switch (origin.stage)
 			if (1)
-				if (prob(3))
+				if (prob(0.12*origin.spread))
 					M.show_message("<span class='alert'>You cough.</span>")
-					src.infect_cloud(M, origin, origin.spread/5)
+					src.infect_cloud(M, origin)
 			if (2)
-				if (prob(5))
+				if (prob(0.2*origin.spread))
 					M.visible_message("<span class='alert'>[M] coughs!</span>", "<span class='alert'>You cough.</span>", "<span class='alert'>You hear someone coughing.</span>")
-					src.infect_cloud(M, origin, origin.spread/5)
+					src.infect_cloud(M, origin)
 			if (3)
-				if (prob(7))
+				if (prob(0.28*origin.spread))
 					M.visible_message("<span class='alert'>[M] coughs violently!</span>", "<span class='alert'>You cough violently!</span>", "<span class='alert'>You hear someone cough violently!</span>")
-					src.infect_cloud(M, origin, origin.spread/5)
+					src.infect_cloud(M, origin)
 			if (4)
-				if (prob(10))
+				if (prob(0.4*origin.spread))
 					M.visible_message("<span class='alert'>[M] coughs violently!</span>", "<span class='alert'>You cough violently!</span>", "<span class='alert'>You hear someone cough violently!</span>")
 					M.TakeDamage("chest", 1, 0)
-					src.infect_cloud(M, origin, origin.spread/5)
+					src.infect_cloud(M, origin)
 			if (5)
-				if (prob(10))
+				if (prob(0.4*origin.spread))
 					M.visible_message("<span class='alert'>[M] coughs very violently!</span>", "<span class='alert'>You cough very violently!</span>", "<span class='alert'>You hear someone cough very violently!</span>")
 					M.TakeDamage("chest", 2, 0)
-					src.infect_cloud(M, origin, origin.spread/5)
+					src.infect_cloud(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -306,27 +306,25 @@ datum/pathogeneffects/malevolent/sneezing
 			return
 		switch (origin.stage)
 			if (1)
-				if (prob(10))
+				if (prob(0.4*origin.spread))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin, origin.spread/5)
+					src.infect_cloud(M, origin)
 			if (2)
-				if (prob(12))
+				if (prob(0.48*origin.spread))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin, origin.spread/5)
+					src.infect_cloud(M, origin)
 			if (3)
-				if (prob(15))
+				if (prob(0.6*origin.spread))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin, origin.spread/5)
-
+					src.infect_cloud(M, origin)
 			if (4)
-				if (prob(20))
+				if (prob(0.8*origin.spread))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin, origin.spread/5)
-
+					src.infect_cloud(M, origin)
 			if (5)
-				if (prob(20))
+				if (prob(0.8*origin.spread))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin, origin.spread/5)
+					src.infect_cloud(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -933,7 +931,7 @@ datum/pathogeneffects/malevolent/gibbing
 						var/mob/living/carbon/human/H = M
 						H.dump_contents_chance = 100
 					M.show_message("<span class='alert'>Your organs burst out of your body!</span>")
-					src.infect_cloud(M, origin, origin.spread)
+					src.infect_cloud(M, origin, origin.spread) // boof
 					logTheThing("pathology", M, null, "gibbed due to Gibbing symptom in [origin].")
 					M.gib()
 				else if (prob(30))
@@ -1008,12 +1006,12 @@ datum/pathogeneffects/malevolent/fluent
 			return message
 		switch (origin.stage)
 			if (1 to 3)
-				if (prob(origin.stage * 2))
-					src.infect_cloud(M, origin, origin.spread/5)
+				if (prob(origin.stage * origin.spread * 0.16))
+					src.infect_cloud(M, origin)
 
 			if (4 to 5)
-				if (prob(origin.stage * 5))
-					src.infect_cloud(M, origin, origin.spread/5)
+				if (prob(origin.stage * origin.spread * 0.4))
+					src.infect_cloud(M, origin)
 		return message
 
 	may_react_to()
@@ -1682,7 +1680,7 @@ datum/pathogeneffects/malevolent/farts
 
 	proc/fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		if(doInfect)
-			infect_cloud(M, origin, origin.spread/5)
+			src.infect_cloud(M, origin, origin.spread/5)
 		if(voluntary)
 			origin.symptom_data[name] = TIME
 
@@ -1894,7 +1892,7 @@ datum/pathogeneffects/malevolent/beesneeze
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/toThrow = new /obj/item/reagent_containers/food/snacks/ingredient/egg/bee(T)
 		M.visible_message("<span class='alert'>[M] sneezes out a space bee egg!</span> [chosen_phrase]", "<span class='alert'>You sneeze out a bee egg!</span> [chosen_phrase]", "<span class='alert'>You hear someone sneezing.</span>")
 		toThrow.throw_at(target, 6, 1)
-		src.infect_cloud(M, origin, origin.spread/2)
+		src.infect_cloud(M, origin, origin.spread) // at some point I want the bees to spread this instead
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
