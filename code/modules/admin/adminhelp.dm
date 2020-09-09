@@ -148,11 +148,6 @@
 		gib(client.mob)
 		return
 
-	if (client.mob.traitHolder?.hasTrait("atheist"))
-		boutput(client.mob, "You can't pray to what you don't believe in.")
-		client.mob.take_oxygen_deprivation(10)
-		return
-
 	if(ON_COOLDOWN(client.player, "ahelp", ADMINHELP_DELAY))
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
@@ -168,7 +163,11 @@
 	if (client.mob.mind)
 		src.add_karma(-1)
 
-	boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
+	if (client.mob.traitHolder?.hasTrait("atheist"))
+		boutput(client.mob, "You feel ridiculous doing it, but manage to get through a silent prayer,</B> <I>\"[msg]\"</I>")
+		client.mob.take_oxygen_deprivation(10)
+	else
+		boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
 	logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")
 	logTheThing("diary", client.mob, null, "PRAYER: [msg]", "ahelp")
 	var/audio
