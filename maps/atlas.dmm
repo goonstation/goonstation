@@ -9590,10 +9590,8 @@
 	},
 /area/station/hallway)
 "yn" = (
-/obj/reagent_dispensers/watertank/fountain,
-/turf/simulated/floor/blue/side{
-	dir = 8
-	},
+/obj/machinery/genetics_booth,
+/turf/simulated/floor,
 /area/station/hallway)
 "yo" = (
 /obj/machinery/firealarm{
@@ -9990,9 +9988,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "zn" = (
-/obj/stool/chair/blue{
-	dir = 1
-	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/blue/side{
 	dir = 10
 	},
@@ -71947,7 +71943,7 @@ sG
 tT
 sC
 wS
-yn
+wj
 wj
 zn
 lf
@@ -72249,7 +72245,7 @@ sG
 tT
 sC
 wS
-sC
+yn
 wN
 zo
 lf
