@@ -761,6 +761,11 @@ proc/debug_color_of(var/thing)
 				infoOverlayImages[ "[x]-[y]" ] = overlay
 				src.images += overlay
 
+/client/proc/SetInfoOverlayAlias( )
+	set name = "Info Overlay"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	src.SetInfoOverlay()
+
 /client/proc/SetInfoOverlay( )
 	set name = "Debug Overlay"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

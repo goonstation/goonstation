@@ -264,6 +264,7 @@ var/list/admin_verbs = list(
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
+		/client/proc/SetInfoOverlayAlias,
 
 		),
 
