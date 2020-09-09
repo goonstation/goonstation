@@ -26,7 +26,7 @@ proc/build_syndi_buylist_cache()
 	var/vr_allowed = 1
 	var/not_in_crates = 0 // This should not go in surplus crates.
 
-	proc/run_on_spawn(var/obj/item, var/mob/living/owner) // Use this to run code when the item is spawned.
+	proc/run_on_spawn(obj/item, mob/living/owner, in_surplus_crate=FALSE) // Use this to run code when the item is spawned.
 		return
 
 ////////////////////////////////////////// Standard items (generic & nukeops uplink) ///////////////////////////////
@@ -357,7 +357,7 @@ proc/build_syndi_buylist_cache()
 	desc = "A crate containing 18-24 credits worth of whatever junk we had lying around."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
-	run_on_spawn(var/obj/storage/crate/syndicate_surplus/crate, var/mob/living/owner)
+	run_on_spawn(var/obj/storage/crate/syndicate_surplus/crate, var/mob/living/owner, in_surplus_crate)
 		crate.spawn_items(owner)
 /*
 This is basically useless for anyone but miners.
@@ -383,7 +383,7 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	objective = /datum/objective/regular/assassinate
 
-	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner)
+	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner, in_surplus_crate)
 		tracker.owner = owner
 		return
 
@@ -396,7 +396,7 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	objective = /datum/objective/spy_theft/assasinate
 
-	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner)
+	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner, in_surplus_crate)
 		tracker.owner = owner
 		return
 
@@ -533,7 +533,7 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	blockedmode = list(/datum/game_mode/revolution)
 
-	run_on_spawn(var/obj/item/storage/briefcase/satan/Q,var/mob/living/owner)
+	run_on_spawn(var/obj/item/storage/briefcase/satan/Q,var/mob/living/owner, in_surplus_crate)
 		if (istype(Q) && owner)
 			owner.make_merchant() //give them the power to summon more contracts
 			Q.merchant = owner
@@ -609,9 +609,21 @@ This is basically useless for anyone but miners.
 	job = list("Janitor")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
-	run_on_spawn(var/obj/storage/cart/trash/syndicate/cart,var/mob/living/owner)
+	run_on_spawn(var/obj/storage/cart/trash/syndicate/cart,var/mob/living/owner, in_surplus_crate)
 		if (istype(cart) && owner)
 			cart.owner_ckey = owner.ckey
+
+/datum/syndicate_buylist/traitor/slip_and_sign
+	name = "Slip and Sign"
+	item = /obj/item/caution/traitor
+	cost = 2
+	desc = "This Wet Floor Sign spits out organic superlubricant under everyone nearby unless they are wearing galoshes. That'll teach them to ignore the signs. If you are wearing the long janitor gloves you can click with a bucket (or beaker or drinking glass etc.) to replace the payload."
+	job = list("Janitor")
+
+	run_on_spawn(obj/item/caution/traitor/sign, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/clothing/shoes/galoshes(sign.loc)
+			new /obj/item/clothing/gloves/long(sign.loc)
 
 /datum/syndicate_buylist/traitor/syndanalyser
 	name = "Syndicate Device Analyzer"
