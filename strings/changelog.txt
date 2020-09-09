@@ -1,5 +1,9 @@
 
 (t)wed sep 09 20
+(u)Flaborized
+(p)2090
+(e)🎨|sprites
+(+)New sprites for a wide variety of glasses
 (u)MarkNstein
 (p)2124
 (e)|
