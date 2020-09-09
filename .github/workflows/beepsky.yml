@@ -153,7 +153,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-          token: '${{ secrets.ROBUDDY_PAT }}'
+          token: '${{ secrets.ROBUDDYBOT_PAT }}'
 
       - name: Install Dependencies
         run: |
