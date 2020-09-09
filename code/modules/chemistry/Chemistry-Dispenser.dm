@@ -494,30 +494,44 @@
 		var/list/beakerContentsTemp = list()
 		var/list/dispensableReagentsTemp = list()
 		var/list/groupListTemp = list()
+		data["idCardInserted"] = !isnull(src.user_id)
+		data["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
 		data["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
 		data["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
 		data["beakerName"] = capitalize(glass_name)
 		if(beaker)
 			var/datum/reagents/R = beaker:reagents
+			var/datum/color/average = R.get_average_color()
+			data["finalColor"] = average.to_rgba()
 			if(istype(R) && R.reagent_list.len>0)
 				for(var/reagent in R.reagent_list)
-					var/datum/reagent/RE = R.reagent_list[reagent]
+					var/datum/reagent/current_reagent = R.reagent_list[reagent]
 					beakerContentsTemp.Add(list(list(
 						name = reagents_cache[reagent],
 						id = reagent,
-						volume = RE.volume
+						colorR = current_reagent.fluid_r,
+						colorG = current_reagent.fluid_g,
+						colorB = current_reagent.fluid_b,
+						state = current_reagent.reagent_state,
+						volume = current_reagent.volume
 					)))
 		if(dispensable_reagents)
 			for(var/reagent in dispensable_reagents)
+				var/datum/reagent/current_reagent = reagents_cache[reagent]
 				dispensableReagentsTemp.Add(list(list(
-					name = reagents_cache[reagent],
+					name = current_reagent.name,
+					colorR = current_reagent.fluid_r,
+					colorG = current_reagent.fluid_g,
+					colorB = current_reagent.fluid_b,
+					state = current_reagent.reagent_state,
 					id = reagent
 				)))
 		if(current_account)
 			for (var/datum/reagent_group/group in current_account.groups)
 				groupListTemp.Add(list(list(
 					name = group.name,
-					info = group.group_desc
+					info = group.group_desc,
+					ref = ref(group)
 				)))
 		data["groupList"] = groupListTemp
 		data["dispensableReagents"] = dispensableReagentsTemp
@@ -630,6 +644,22 @@
 					send_reagent_details()
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
 				. = TRUE
+			if ("card")
+				if (src.user_id)
+					src.eject_card()
+					src.update_account()
+					send_generic_details()
+					send_group_details()
+				else
+					var/obj/item/I = usr.equipped()
+					if (istype(I, /obj/item/card/id) || istype(I, /obj/item/card/data))
+						usr.drop_item()
+						I.set_loc(src)
+						src.user_id = I
+						src.update_account()
+						send_generic_details()
+						send_group_details()
+				return
 
 	proc/eject_card()
 		if (src.user_id)
