@@ -894,6 +894,7 @@
 			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		if ("rest")
+			if(ON_COOLDOWN(src, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			if(src.ai_active && !src.hasStatus("resting"))
 				src.show_text("You feel too restless to do that!", "red")
 			else
