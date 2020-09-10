@@ -361,7 +361,7 @@
 		return 0
 	if (!iscarbon(M) && !ismobcritter(M))
 		return 0
-	if(ismobcritter(M) && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
+	if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 		return 0
 
 	if (M == user)
