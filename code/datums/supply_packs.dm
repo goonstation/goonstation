@@ -415,7 +415,7 @@
 					/obj/item/clothing/head/helmet/hardhat/security/improved)
 	cost = 15000
 	containertype = /obj/storage/secure/crate/weapon
-	containername = "Weapons Crate - Security Equipment Upgrade (Cardlocked \[Security])"
+	containername = "Weapons Crate - Experimental Security Equipment (Cardlocked \[Security])"
 	access = access_security
 
 /datum/supply_packs/security_brig_resupply
