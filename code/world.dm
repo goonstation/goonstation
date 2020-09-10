@@ -1143,6 +1143,7 @@ var/f_color_selector_handler/F_Color_Selector
 							return 1
 
 						if("rest")
+							if(ON_COOLDOWN(twitch_mob, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
 								H.setStatus("resting", INFINITE_STATUS)
@@ -1151,6 +1152,7 @@ var/f_color_selector_handler/F_Color_Selector
 							return 1
 
 						if("stand")
+							if(ON_COOLDOWN(twitch_mob, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
 								H.delStatus("resting")
