@@ -86,7 +86,7 @@
 			last_laugh = world.time
 
 	process()
-		if(prob(75)) // Takes around 12 seconds for ol chompski to vanish
+		if(prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a crate
 		if(istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))

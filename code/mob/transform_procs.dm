@@ -838,7 +838,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		newbody.wear_id:access = get_access("Captain")
 
 	if (!newbody.bioHolder)
-		newbody.bioHolder = new bioHolder()
+		newbody.bioHolder = new bioHolder(newbody)
 	newbody.bioHolder.AddEffect("radio_brain")
 	// newbody.abilityHolder = src.abilityHolder
 	// if (newbody.abilityHolder)
