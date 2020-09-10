@@ -117,7 +117,7 @@ TOILET
 				A.set_loc(target)
 #endif
 		src.clogged = 0
-		for (var/item in get_all_contents())
+		for (var/item in src.contents)
 			if (hud && item)
 				qdel(item)
 				src.hud.remove_item(item)
