@@ -544,7 +544,7 @@
 			src.vend_prize()
 			src.last_vend = world.time
 		else
-			boutput(user, "<span style=\"color:red\">[src] isn't ready to dispense a prize yet.</span>")
+			boutput(user, "<span class='alert'>[src] isn't ready to dispense a prize yet.</span>")
 
 		return
 
@@ -581,11 +581,15 @@
 				prize = new /obj/item/wrench/gold(prize_location)
 			if(7)
 				prize = new /obj/item/firework( prize_location )
-				prize.icon = 'icons/obj/device.dmi'
+				prize.icon = 'icons/obj/items/device.dmi'
 				prize.icon_state = "shield0"
 				prize.name = "decloaking device"
 				prize.desc = "A device for removing cloaks. Made in Space-Taiwan."
 				prize:det_time = 5
+			if(8)
+				prize = new /obj/item/toy/gooncode(prize_location)
+				prize.name = "Gooncode floppy disk"
+				prize.desc = "They're really just handing these out now, huh?"
 
 
 /obj/item/peripheralx/card_scanner
@@ -750,11 +754,11 @@
 			return
 
 		if(issilicon(usr) && get_dist(src, usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You cannot press the ejection button.</span>")
+			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.add_dialog(usr).host
 
 		if(href_list["card"])
 			if(!isnull(src.authid))
@@ -865,11 +869,11 @@
 			return
 
 		if(issilicon(usr) && get_dist(src, usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You cannot press the ejection button.</span>")
+			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.add_dialog(usr).host
 
 		if(href_list["disk"])
 			if(!isnull(src.disk))
@@ -964,11 +968,11 @@
 			return
 
 		if(issilicon(usr) && get_dist(src, usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You cannot press the ejection button.</span>")
+			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.add_dialog(usr).host
 
 		if(href_list["scanner"])
 			if(!isnull(src.scanner))
@@ -1061,14 +1065,14 @@
 			if(host)
 				for(var/mob/M in viewers(host, null))
 					if(M.client)
-						M.show_message(text("<span style=\"color:red\">You hear a loud whirring noise coming from the [src.host.name].</span>"), 2)
+						M.show_message(text("<span class='alert'>You hear a loud whirring noise coming from the [src.host.name].</span>"), 2)
 				// add a sound effect maybe
 				sleep(rand(50,100))
 				if(host)
 					if(prob(50))
 						for(var/mob/M in viewers(host, null))
 							if(M.client)
-								M.show_message(text("<span style=\"color:red\"><B>The [src.host.name] explodes!</B></span>"), 1)
+								M.show_message(text("<span class='alert'><B>The [src.host.name] explodes!</B></span>"), 1)
 						var/turf/T = get_turf(src.host.loc)
 						if(T)
 							T.hotspot_expose(700,125)
@@ -1077,7 +1081,7 @@
 						return
 					for(var/mob/M in viewers(host, null))
 						if(M.client)
-							M.show_message(text("<span style=\"color:red\"><B>The [src.host.name] catches on fire!</B></span>"), 1)
+							M.show_message(text("<span class='alert'><B>The [src.host.name] catches on fire!</B></span>"), 1)
 						fireflash(src.host.loc, 0)
 						playsound(src.host.loc, "sound/items/Welder2.ogg", 50, 1)
 						src.host.set_broken()

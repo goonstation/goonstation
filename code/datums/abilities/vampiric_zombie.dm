@@ -42,21 +42,21 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.updateIcon()
-				boutput(usr, "<span style=\"color:blue\">Please press a number to bind this ability to...</span>")
+				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this spell here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
 			return
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
 			usr.update_cursor()
 			return
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			owner.holder.owner.targeting_spell = owner
-			owner.holder.owner.update_cursor()
+			usr.targeting_ability = owner
+			usr.update_cursor()
 		else
 			SPAWN_DBG(0)
 				spell.handleCast()
@@ -66,20 +66,35 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Thrall"
-	notEnoughPointsMessage = "<span style=\"color:red\">You need more blood to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 0
 
 	var/mob/vamp_isbiting = null
 	var/datum/abilityHolder/vampire/master = 0
 
-	onAbilityStat() // In the 'Vampire' tab.
-		..()
+	var/last_blood_points = 0
+
+	onLife(var/mult = 1) //failsafe for UI not doing its update correctly elsewhere
+		.= 0
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if (istype(H.mutantrace, /datum/mutantrace/vamp_zombie))
 				var/datum/mutantrace/vamp_zombie/V = H.mutantrace
-				stat("Blood Points:", V.blood_points)
-				stat("Max Health (based on blood):", H.max_health)
+
+				if (last_blood_points != V.blood_points)
+					last_blood_points = V.blood_points
+					src.updateText(0, src.x_occupied, src.y_occupied)
+
+
+	onAbilityStat() // In the 'Vampire' tab.
+		..()
+		.= list()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (istype(H.mutantrace, /datum/mutantrace/vamp_zombie))
+				var/datum/mutantrace/vamp_zombie/V = H.mutantrace
+				.["Blood:"] = V.blood_points
+				.["Max HP:"] = H.max_health
 
 	proc/msg_to_master(var/msg)
 		if (master)
@@ -164,7 +179,7 @@
 		if (!M)
 			return 0
 
-		if (!(iscarbon(M) || iscritter(M)))
+		if (!(iscarbon(M) || ismobcritter(M)))
 			boutput(M, __red("You cannot use any powers in your current form."))
 			return 0
 

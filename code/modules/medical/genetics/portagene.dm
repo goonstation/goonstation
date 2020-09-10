@@ -6,17 +6,61 @@
 	anchored = 0
 	var/mob/occupant = null
 	var/locked = 0
+	var/homeloc = null
 
 	New()
 		..()
-		genetics_computers += src
+
+		if (!islist(portable_machinery))
+			portable_machinery = list()
+		portable_machinery.Add(src)
+
+		src.homeloc = src.loc
+		return
+
+	disposing()
+		if (islist(portable_machinery))
+			portable_machinery.Remove(src)
+		..()
+
+	examine()
+		. = ..()
+		. += "Home turf: [get_area(src.homeloc)]."
+
+	MouseDrop(over_object, src_location, over_location)
+		..()
+		if (isobserver(usr) || isintangible(usr))
+			return
+		if ((usr in src.contents) || !isturf(usr.loc))
+			return
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+			return
+		if (get_dist(src, usr) > 1)
+			usr.show_text("You are too far away to do this!", "red")
+			return
+		if (get_dist(over_object, src) > 1)
+			usr.show_text("The [src.name] is too far away from the target!", "red")
+			return
+		if (!istype(over_object,/turf/simulated/floor/))
+			usr.show_text("You can't set this target as the home location.", "red")
+			return
+		var/turf/check_loc = over_object
+		if (check_loc && isturf(check_loc) && isrestrictedz(check_loc.z))
+			usr.show_text("You can't set this target as the home location.", "red")
+			return
+
+		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
+			src.homeloc = over_object
+			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
+			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
+			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W) && (src.status & BROKEN))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			if(do_after(user, 20))
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -34,15 +78,15 @@
 			var/obj/item/grab/G = W
 
 			if (src.occupant)
-				boutput(user, "<span style=\"color:red\"><B>The scanner is already occupied!</B></span>")
+				boutput(user, "<span class='alert'><B>The scanner is already occupied!</B></span>")
 				return
 
 			if (src.locked)
-				boutput(usr, "<span style=\"color:red\"><B>You need to unlock the scanner first.</B></span>")
+				boutput(usr, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
 				return
 
 			if(!iscarbon(G.affecting))
-				boutput(user, "<span style=\"color:blue\"><B>The scanner supports only carbon based lifeforms.</B></span>")
+				boutput(user, "<span class='hint'><B>The scanner supports only carbon based lifeforms.</B></span>")
 				return
 
 			var/mob/M = G.affecting
@@ -71,7 +115,7 @@
 		if (!isalive(usr))
 			return
 		if (src.locked)
-			boutput(usr, "<span style=\"color:red\"><b>The scanner door is locked!</b></span>")
+			boutput(usr, "<span class='alert'><b>The scanner door is locked!</b></span>")
 			return
 
 		src.go_out()
@@ -86,10 +130,10 @@
 		if (!isalive(usr))
 			return
 		if (src.locked)
-			boutput(usr, "<span style=\"color:red\"><b>The scanner door is locked!</b></span>")
+			boutput(usr, "<span class='alert'><b>The scanner door is locked!</b></span>")
 			return
 		if (src.occupant)
-			boutput(usr, "<span style=\"color:red\">It's already occupied.</span>")
+			boutput(usr, "<span class='alert'>It's already occupied.</span>")
 			return
 
 		src.go_in(usr)
@@ -104,7 +148,7 @@
 		if (!isalive(usr))
 			return
 		if (usr == src.occupant)
-			boutput(usr, "<span style=\"color:red\"><b>You can't reach the scanner lock from the inside.</b></span>")
+			boutput(usr, "<span class='alert'><b>You can't reach the scanner lock from the inside.</b></span>")
 			return
 
 		playsound(src.loc, "sound/machines/click.ogg", 50, 1)
@@ -112,12 +156,12 @@
 			src.locked = 0
 			usr.visible_message("<b>[usr]</b> unlocks the scanner.")
 			if (src.occupant)
-				boutput(src.occupant, "<span style=\"color:red\">You hear the scanner's lock slide out of place.</span>")
+				boutput(src.occupant, "<span class='alert'>You hear the scanner's lock slide out of place.</span>")
 		else
 			src.locked = 1
 			usr.visible_message("<b>[usr]</b> locks the scanner.")
 			if (src.occupant)
-				boutput(src.occupant, "<span style=\"color:red\">You hear the scanner's lock click into place.</span>")
+				boutput(src.occupant, "<span class='alert'>You hear the scanner's lock click into place.</span>")
 
 	proc/go_out()
 		if (!src.occupant)

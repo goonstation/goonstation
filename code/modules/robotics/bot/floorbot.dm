@@ -2,7 +2,7 @@
 /obj/item/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top"
 	name = "tiles and toolbox"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_tiles"
 	force = 3.0
 	throwforce = 10.0
@@ -14,7 +14,7 @@
 /obj/item/toolbox_tiles_sensor
 	desc = "It's a toolbox with tiles sticking out the top and a sensor attached"
 	name = "tiles, toolbox and sensor arrangement"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
 	force = 3.0
 	throwforce = 10.0
@@ -27,7 +27,7 @@
 /obj/machinery/bot/floorbot
 	name = "Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "floorbot0"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -96,10 +96,10 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 /obj/machinery/bot/floorbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if (user)
-			boutput(user, "<span style=\"color:red\">You short out [src]'s target assessment circuits.</span>")
+			boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
 		SPAWN_DBG(0)
 			for (var/mob/O in hearers(src, null))
-				O.show_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
 		src.target = null
 		src.oldtarget = null
 		src.anchored = 0
@@ -121,7 +121,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 /obj/machinery/bot/floorbot/emp_act()
 	..()
 	if (!src.emagged && prob(75))
-		src.visible_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>")
+		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		src.target = null
 		src.oldtarget = null
 		src.anchored = 0
@@ -147,7 +147,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 			src.amount += T.amount
 			loaded = T.amount
 			qdel(T)
-		boutput(user, "<span style=\"color:red\">You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!</span>")
+		boutput(user, "<span class='alert'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!</span>")
 		src.updateicon()
 	//Regular ID
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -165,7 +165,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 /obj/machinery/bot/floorbot/Topic(href, href_list)
 	if (..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if ("start")
@@ -220,7 +220,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		// Search for incomplete/damaged floor
 		if (src.improvefloors)
 			for (var/turf/simulated/floor/F in view(src.search_range, src))
-				if (F != src.oldtarget && (!F.intact || F.burnt || F.broken) && !(F in floorbottargets) && !should_ignore_tile(F))
+				if (F != src.oldtarget && (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam)) && !(F in floorbottargets) && !should_ignore_tile(F))
 					return F
 
 
@@ -311,7 +311,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 				if (src.path && src.path.len)
 					step_to(src, src.path[1])
 					src.path -= src.path[1]
-					sleep(3)
+					sleep(0.3 SECONDS)
 
 			if (get_turf(src.loc) == get_turf(src.target))
 				do_the_thing()
@@ -347,12 +347,12 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		src.repairing = 1
 		var/new_tile = 0
 
-		if (istype(target, /turf/space/))
-			src.visible_message("<span style=\"color: blue;\">[src] begins building flooring.</span>")
+		if (istype(target, /turf/space/) || istype(target, /turf/simulated/floor/metalfoam))
+			src.visible_message("<span class='notice'>[src] begins building flooring.</span>")
 			new_tile = 1
 
 		else if (istype(target, /turf/simulated/floor))
-			src.visible_message("<span style=\"color: blue;\">[src] begins to fix the floor.</span>")
+			src.visible_message("<span class='notice'>[src] begins to fix the floor.</span>")
 
 		else
 			// how the fucking jesus did you get here
@@ -382,7 +382,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	else if (src.emagged && istype(target, /turf/simulated/floor))
 		// Emagged "repair"
 
-		src.visible_message("<span style=\"color:red\">[src] starts ripping up the flooring!</span>")
+		src.visible_message("<span class='alert'>[src] starts ripping up the flooring!</span>")
 		src.anchored = 1
 		src.repairing = 1
 		SPAWN_DBG(1 SECOND)
@@ -406,7 +406,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 /obj/machinery/bot/floorbot/proc/eattile(var/obj/item/tile/T)
 	if (!istype(T, /obj/item/tile))
 		return
-	src.visible_message("<span style=\"color:red\">[src] begins to collect tiles.</span>")
+	src.visible_message("<span class='alert'>[src] begins to collect tiles.</span>")
 	src.repairing = 1
 	SPAWN_DBG(0.2 SECONDS)
 		if (isnull(T))
@@ -427,7 +427,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 /obj/machinery/bot/floorbot/proc/maketile(var/obj/item/sheet/M)
 	if (!istype(M, /obj/item/sheet))
 		return
-	src.visible_message("<span style=\"color:red\">[src] begins to create tiles.</span>")
+	src.visible_message("<span class='alert'>[src] begins to create tiles.</span>")
 	src.repairing = 1
 	M.set_loc(src)
 	SPAWN_DBG(0.2 SECONDS)
@@ -500,11 +500,11 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	qdel(src)
 
 /obj/machinery/bot/floorbot/explode()
+	if(src.exploding) return
+	src.exploding = 1
 	src.on = 0
 	for (var/mob/O in hearers(src, null))
-		O.show_message("<span style=\"color:red\"><B>[src] blows apart!</B></span>", 1)
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return

@@ -176,6 +176,8 @@
 						if(2 to 6)
 							items += /obj/item/gun/energy/phaser_gun
 							item_amounts += 1
+							items += /obj/item/storage/firstaid/crit
+							item_amounts += 1
 						if(7 to 10)
 							for (var/i = 1, i < rand(4,10), i++)
 								items += pick(/obj/item/chem_grenade/incendiary, /obj/item/chem_grenade/cryo, /obj/item/chem_grenade/shock, /obj/item/chem_grenade/pepper, prob(10); /obj/item/chem_grenade/sarin)
@@ -266,7 +268,7 @@
 					picker = rand(1,3)
 					switch(picker)
 						if(1)
-							items += /obj/item/reagent_containers/food/snacks/plant/tomato/explosive
+							items += /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
 							item_amounts += 5
 						if(2)
 							items += /obj/item/clothing/ears/earmuffs/yeti
@@ -341,9 +343,9 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (istype(trap))
 			if (E)
-				boutput(user, "<span style=\"color:red\">The crate's anti-tamper system immediately activates in response to [E]! Fuck!</span>")
+				boutput(user, "<span class='alert'>The crate's anti-tamper system immediately activates in response to [E]! Fuck!</span>")
 			else
-				src.visible_message("<span style=\"color:red\">Something sets off [src]'s anti-tamper system!</span>")
+				src.visible_message("<span class='alert'>Something sets off [src]'s anti-tamper system!</span>")
 			trap.trigger_trap(user)
 		else
 			..()
@@ -353,7 +355,7 @@
 		if(istype(lock) && locked)
 			var/success_state = lock.attempt_to_open(user)
 			if (success_state == 1) // Succeeded
-				boutput(user, "<span style=\"color:blue\">The crate unlocks!</span>")
+				boutput(user, "<span class='notice'>The crate unlocks!</span>")
 				src.locked = 0
 				src.lock = null
 				src.trap = null
@@ -370,10 +372,9 @@
 				lock.read_device(user)
 			if (istype(trap))
 				trap.read_device(user)
-		else if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if (WELD.welding)
-				boutput(user, "<span style=\"color:red\">The crate seems to be resistant to welding.</span>")
+		else if (isweldingtool(W))
+			if (W:try_weld(user,0,-1,0,0))
+				boutput(user, "<span class='alert'>The crate seems to be resistant to welding.</span>")
 				return
 			else
 				..()
@@ -384,13 +385,12 @@
 	update_icon()
 		if(open) icon_state = icon_opened
 		else icon_state = icon_closed
-		src.overlays = null
 
 		if (src.locked)
 			light.color = "#FF0000"
 		else
 			light.color = "#00FF00"
-		src.overlays += src.light
+		src.UpdateOverlays(src.light, "light")
 
 		switch(tier)
 			if(2)
@@ -399,7 +399,7 @@
 				stripes.color = "#C00000"
 			else
 				stripes.color = "#00C000"
-		src.overlays += src.stripes
+		src.UpdateOverlays(src.stripes, "stripes")
 
 // LOCKS
 
@@ -409,6 +409,7 @@
 	var/attempts_remaining = 0
 
 	New()
+		..()
 		scramble_code()
 
 	proc/attempt_to_open(var/mob/living/opener)
@@ -417,18 +418,18 @@
 		return -1
 
 	proc/fail_attempt(var/mob/living/opener)
-		boutput(opener, "<span style=\"color:red\">A red light flashes.</span>")
+		boutput(opener, "<span class='alert'>A red light flashes.</span>")
 		attempts_remaining--
 		if (attempts_remaining <= 0)
-			boutput(opener, "<span style=\"color:red\">The crate's anti-tamper system activates!</span>")
+			boutput(opener, "<span class='alert'>The crate's anti-tamper system activates!</span>")
 			if (holder && holder.trap)
 				holder.trap.trigger_trap(opener)
 				if (!holder.trap.destroys_crate)
 					src.scramble_code()
-					boutput(opener, "<span style=\"color:red\">Looks like the code changed, too. You'll have to start again.</span>")
+					boutput(opener, "<span class='alert'>Looks like the code changed, too. You'll have to start again.</span>")
 			else
 				src.scramble_code()
-				boutput(opener, "<span style=\"color:red\">Looks like the code changed. You'll have to start again.</span>")
+				boutput(opener, "<span class='alert'>Looks like the code changed. You'll have to start again.</span>")
 			return
 
 	proc/inputter_check(var/mob/living/opener)
@@ -454,7 +455,7 @@
 	var/lastattempt = null
 
 	attempt_to_open(var/mob/living/opener)
-		boutput(opener, "<span style=\"color:blue\">The crate is locked with a deca-code lock.</span>")
+		boutput(opener, "<span class='notice'>The crate is locked with a deca-code lock.</span>")
 		var/input = input(usr, "Enter digit from 1 to 10.", "Deca-Code Lock") as null|num
 		if (input < 1 || input > 10)
 			boutput(opener, "You leave the crate alone.")
@@ -473,7 +474,7 @@
 	read_device(var/mob/living/reader)
 		boutput(reader, "<b>DECA-CODE LOCK REPORT:</b>")
 		if (attempts_allowed == 1)
-			boutput(reader, "<span style=\"color:red\">* Anti-tamper system will activate on next failed access attempt.</span>")
+			boutput(reader, "<span class='alert'>* Anti-tamper system will activate on next failed access attempt.</span>")
 		else
 			boutput(reader, "* Anti-tamper system will activate after [attempts_remaining] failed access attempts.")
 
@@ -508,7 +509,7 @@
 		code_pool = "nine"
 
 	attempt_to_open(var/mob/living/opener)
-		boutput(opener, "<span style=\"color:blue\">The crate is locked with a password lock. You'll need a multitool or similar to get very far here.</span>")
+		boutput(opener, "<span class='notice'>The crate is locked with a password lock. You'll need a multitool or similar to get very far here.</span>")
 		var/input = input(usr, "Enter one letter to reveal part of the password, or attempt to guess the password.", "Password Lock") as null|text
 		input = lowertext(input)
 
@@ -521,7 +522,7 @@
 
 		if (length(input) == 1)
 			if (attempts_remaining <= 1)
-				boutput(opener, "<span style=\"color:red\">Trying to reveal any more of the password would set off the anti-tamper system. You'll have to make a guess.</span>")
+				boutput(opener, "<span class='alert'>Trying to reveal any more of the password would set off the anti-tamper system. You'll have to make a guess.</span>")
 				return -1
 
 			var/chars_found = 0
@@ -549,7 +550,7 @@
 		boutput(reader, "<b>PASSWORD LOCK REPORT:</b>")
 		boutput(reader, "All passwords are fully lower-case and feature no non-alphabetical characters.")
 		if (attempts_allowed == 1)
-			boutput(reader, "<span style=\"color:red\">* Anti-tamper system will activate on next failed access attempt.</span>")
+			boutput(reader, "<span class='alert'>* Anti-tamper system will activate on next failed access attempt.</span>")
 		else
 			boutput(reader, "* Anti-tamper system will activate after [attempts_remaining] failed access attempts.")
 
@@ -594,7 +595,7 @@
 	var/damage = 20
 
 	trigger_trap(var/mob/living/opener)
-		holder.visible_message("<span style=\"color:red\"><b>Spikes shoot out of [holder]!</b></span>")
+		holder.visible_message("<span class='alert'><b>Spikes shoot out of [holder]!</b></span>")
 		if (opener)
 			random_brute_damage(opener,damage,1)
 			playsound(opener.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
@@ -614,7 +615,7 @@
 	destroys_crate = 1
 
 	trigger_trap(var/mob/living/opener)
-		holder.visible_message("<span style=\"color:red\">A loud grinding sound comes from inside [holder] as it unlocks!</span>")
+		holder.visible_message("<span class='alert'>A loud grinding sound comes from inside [holder] as it unlocks!</span>")
 		playsound(holder.loc, "sound/machines/engine_grump1.ogg", 60, 1)
 
 		for (var/obj/I in holder.contents)
@@ -634,17 +635,21 @@
 /obj/item/clothing/gloves/psylink_bracelet
 	name = "jewelled bracelet"
 	desc = "Some pretty jewellery."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bracelet"
 	material_prints = "patterned scratches"
 	w_class = 1
+	var/primary = TRUE
 	var/image/gemstone = null
 	var/obj/item/clothing/gloves/psylink_bracelet/twin
 
 	New()
-		src.gemstone = image('icons/obj/items.dmi',"bracelet-gem")
+		..()
+		if(!primary)
+			return
+		src.gemstone = image('icons/obj/items/items.dmi',"bracelet-gem")
 		var/obj/item/clothing/gloves/psylink_bracelet/two = new /obj/item/clothing/gloves/psylink_bracelet/secondary(src.loc)
-		two.gemstone = image('icons/obj/items.dmi',"bracelet-gem")
+		two.gemstone = image('icons/obj/items/items.dmi',"bracelet-gem")
 		src.twin = two
 		two.twin = src
 		var/picker = rand(1,3)
@@ -663,6 +668,7 @@
 		two.overlays += two.gemstone
 
 	equipped(var/mob/user, var/slot)
+		..()
 		if (!user)
 			return
 		if (src.twin && ishuman(src.twin.loc))
@@ -670,10 +676,11 @@
 			if (psy.bioHolder && psy.bioHolder.HasEffect("psy_resist"))
 				return
 			if (psy.gloves == src.twin)
-				boutput(user, "<span style=\"color:red\">You suddenly begin hearing and seeing things. What the hell?</span>")
-				boutput(psy, "<span style=\"color:red\">You suddenly begin hearing and seeing things. What the hell?</span>")
+				boutput(user, "<span class='alert'>You suddenly begin hearing and seeing things. What the hell?</span>")
+				boutput(psy, "<span class='alert'>You suddenly begin hearing and seeing things. What the hell?</span>")
 
 	unequipped(var/mob/user)
+		..()
 		if (!user)
 			return
 		if (src.twin && ishuman(src.twin.loc))
@@ -681,13 +688,11 @@
 			if (psy.bioHolder && psy.bioHolder.HasEffect("psy_resist"))
 				return
 			if (psy.gloves == src.twin)
-				boutput(user, "<span style=\"color:blue\">The strange hallcuinations suddenly stop. That was weird.</span>")
-				boutput(psy, "<span style=\"color:blue\">The strange hallcuinations suddenly stop. That was weird.</span>")
+				boutput(user, "<span class='notice'>The strange hallcuinations suddenly stop. That was weird.</span>")
+				boutput(psy, "<span class='notice'>The strange hallcuinations suddenly stop. That was weird.</span>")
 
 /obj/item/clothing/gloves/psylink_bracelet/secondary
-
-	New()
-		return
+	primary = FALSE
 
 /mob/proc/get_psychic_link()
 	return null
@@ -721,6 +726,7 @@
 		else
 			if (pick_from_these_files.len)
 				info = file2text(pick(pick_from_these_files))
+		..()
 
 /obj/item/paper/loot_crate_letters/generic_science
 	name = "scientific document"

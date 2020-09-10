@@ -48,7 +48,7 @@
 			SPAWN_DBG(0)
 				while(P)
 					step(P, the_dir)
-					sleep(2)
+					sleep(0.2 SECONDS)
 
 		SPAWN_DBG(10 SECONDS)
 			holder.owner.set_loc(D.loc)

@@ -36,7 +36,7 @@
 			negative_mobs += H
 			eligible_mobs -= H
 
-		sleep(50)
+		sleep(5 SECONDS)
 
 		for (var/mob/living/carbon/human/H in positive_mobs)
 			H.bioHolder.AddEffect("magnets_pos")

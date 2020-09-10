@@ -10,9 +10,12 @@ var/list/ban_from_airborne_fluid = list()
 
 	//max_alpha = 200
 
-	required_to_spread = 15
+	required_to_spread = 5
 
 	drains_floor = 0
+
+	update_required_to_spread()
+		required_to_spread = min(15, max(0.25+src.reagents.get_smoke_spread_mod(), (src.contained_amt**0.8)/40)+0.65) //wowowow magic numbers
 
 //What follows is not for the faint of heart.
 // I have done a shitton of copy paste from the base obj/fluid type.
@@ -25,20 +28,20 @@ var/list/ban_from_airborne_fluid = list()
 	do_iconstate_updates = 0
 	mouse_opacity = 1
 	opacity = 0
+	layer = FLUID_AIR_LAYER
 
 	set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return
-		if(istype( src.loc, /turf ) )
-			src.loc:active_airborne_liquid = 0
 		if (!newloc) return
+
 		is_setup = 1
-		if(!istype( newloc, /turf ) || !waterflow_enabled)
+		if(!isturf(newloc) || !waterflow_enabled)
 			src.removed()
 			return
 
 		set_loc(newloc)
 		src.loc = newloc
-		loc:active_airborne_liquid = src//the dreaded :
+		src.loc:active_airborne_liquid = src//the dreaded :
 
 	done_init()
 		var/i = 0
@@ -85,8 +88,8 @@ var/list/ban_from_airborne_fluid = list()
 		is_setup = 0
 		blocked_dirs = 0
 		blocked_perspective_objects["[dir]"] = 0
-		src.loc = null
 		my_depth_level = 0
+		..()
 
 	unpooled()
 		if (isturf(src.loc))
@@ -97,12 +100,12 @@ var/list/ban_from_airborne_fluid = list()
 		src.step_sound = 0
 
 	//ALTERNATIVE to force ingest in life
-	proc/just_do_the_apply_thing(var/mob/M,var/hasmask = 0)
+	proc/just_do_the_apply_thing(var/mob/M, var/mult = 1, var/hasmask = 0)
 		if (!M) return
-		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
+		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
 
-		var/react_volume = min(1,src.amt)
-		react_volume = min(react_volume,20)
+		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
+		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 
@@ -119,12 +122,12 @@ var/list/ban_from_airborne_fluid = list()
 			src.group.reagents.reaction(M, INGEST, react_volume/2,1,src.group.members.len, paramslist = plist)
 			src.group.reagents.trans_to(M, react_volume)
 
-	force_mob_to_ingest(var/mob/M)//called when mob is drowning/standing in the smoke
+	force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning/standing in the smoke
 		if (!M) return
-		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
+		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
 
-		var/react_volume = src.amt > 10 ? max(6,src.amt / 3) : (src.amt)
-		react_volume = min(react_volume,20)
+		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
+		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 

@@ -1,4 +1,92 @@
 
+(t)wed sep 09 20
+(u)pali
+(*)Debug Overlays now has an alias Info Overlays available in the Server tab
+(*)Made the overlays more user friendly.
+(*)Added Area Power overlay and Blood Owner overlay
+(t)tue sep 08 20
+(u)pali
+(*)Added debug overlays: Wet Floors and Last Touched (shows the ckey of last person to touch things at a tile), includes a version that ignores items
+(t)sun aug 23 20
+(u)Zamujasa
+(*)Round start has a few more details in the countdown.
+(*)Round start countdown begins IMMEDIATELY rather than waiting.
+(*)Round start will hold at 30 seconds if the game isn't done being set up yet.
+(*)Messing with the game panel and the like still needs to wait until "Ready" in the list.
+(*)tgui interfaces like the dj panel should work immediately but probably won't auto-update
+(t)mon aug 17 20
+(u)pali
+(*)Proc calling is now available to Administrator rank.
+(*)View Variables now doesn't scroll up every time you edit a var.
+(*)Calling procs is now a bit more user friendly (it tells you when the proc doesn't exist, no need to remember whether to prefix with `proc/` or not, return value is shown better, it tells you when an exception happens).
+(*)View Variables now has a List Procs button that shows you a clickable list of all procs of that object. First time it gets built it might take some time (and maybe cause some lag). Game Panel has a button to look at global procs.
+(t)tue aug 11 20
+(u)pali
+(*)Admin Interact (~ + click) is now also accessible from View Variables.
+(t)wed aug 05 20
+(u)Sovexe
+(*)Added new command Spawn-Supplydrop along with a Supplydrop cinematic effect for build mode spawning.
+(t)tue aug 04 20
+(u)Zamujasa
+(*)Player notes now show multiline data properly. Maybe. I didn't test this. vOv
+(t)mon jul 24 20
+(u)Sovexe
+(*)New Ability Management Panel accesible in player options and tilde menu.
+(t)thu jul 23 20
+(u)Sovexe
+(*)Added the meowitzer.
+(t)fri jul 17 20
+(u)Kyle
+(*)Add button in secrets panel to add an ability to a selected mob or to all mobs. You can specify all humans or all mob/living. Also, fixed issue with trying to add abilities to abilityholder Composites that did not have any abilityHolders inside it.
+(t)tue jul 14 20
+(u)Sovexe
+(*)Updated Respawn-Panel to handle spawning antagonist players, plus minor UI improvements.
+(t)tue jul 14 20
+(u)Sovexe
+(*)Oceanify is now compatible with underwater maps and includes Manta compatibility. Additionally ocean is now auto colored to match reagent color.
+(t)mon jun 29 20
+(u)Sovexe
+(*)New Check Bioeffects admin tool available in player options and tilde menu.
+(t)tue jun 23 20
+(u)Sovexe
+(*)The Pests (playable) event now allows for customization in the form of critter type and quantity.
+(t)mon jun 22 20
+(u)Sovexe
+(*)The Awaken Sleeper Agents event now allows you to override player antagonist preferences.
+(t)sun jun 21 20
+(u)Sovexe
+(*)The Antagonist Critter Spawn event now allows for customization in the form of critter type and quantity.
+(t)mon jun 15 20
+(u)pali
+(*)Toggle-Text-Mode verb to force someone into / out of ASCII mode.
+(t)tue jun 09 20
+(u)pali
+(*)Admin verbs reorganized
+(*)Toggle which verb categories you see using the Change Admin Preferences verb
+(*)silisay verb for talking to silicons
+(t)fri may 22 20
+(u)pali
+(*)Added the <i>legs</i> component for when you want an object to have AI legs
+(*)Just for reference: Open the Edit Variables menu on an object, click Add Component and select the right one. There's a couple of fun ones
+(*)Added a controlled_by_mob component for when you want to actually play as the fridge with legs. When adding the component choose number of arguments = 1, argument type "mob reference" and choose the mob that's supposed to control the object
+(t)tue may 19 20
+(u)pali
+(*)The respawn panel is now available to PA. It is also in the Game Panel now. And you can create hidden jobs in the job panel which are only available through the respawn panel and not visible to players.
+(*)Added a Respawn As button to the player options window. Works with hidden jobs.
+(*)Mutant races can now be set in the custom job panel. You can also switch if the job starts with an automatic id and if its arrival gets announced.
+(t)sat may 16 20
+(u)pali
+(*)In-backpack, in-belt slots and implant added to custom job creator.
+(t)mon apr 27 20
+(u)kyle
+(*)Add back player original job to player options next to mob name. This was removed a while ago for no reason afaik, so I'm adding it back. It was helpful to me when I added it originally.
+(t)sat apr 25 20
+(u)kyle
+(*)Move the view variables, posess, and Modify icon down to PA in the player options panel.
+(t)wed apr 22 20
+(u)mbc
+(*)Moved all admin-specific right click verbs into a new menu. Press Tilde to turn on 'Admin Interact' mode, and then left click on an item to view options for that item (or right click a tile to select from a list of items on that tile).
+(*)Apologies for switching things up - this is actually a super important change to reduce lag that players experience when they use right-click.
 (t)fri mar 20 20
 (u)pali
 (*)A bunch of debug-overlay stuff. Specifically:
@@ -42,7 +130,7 @@
 (*)fart atmos
 (*)farts now have a trace gas. you can smell it when it's in a room. you can vomit when you've had enough. you can't breathe just farts. please be careful, report any bugs immediately. *fart
 (*)fart atmos (fart atmos)
-(*)im gonna copypaste this entry into the real changelog once someone finds out it happenned. For now, please ping me if you see ANY major issues, people dying, lag, etc. 
+(*)im gonna copypaste this entry into the real changelog once someone finds out it happenned. For now, please ping me if you see ANY major issues, people dying, lag, etc.
 (t)sun jan 26 20
 (u)Zamujasa
 (*)Moved "Debug Overlays" to PA from Coder.

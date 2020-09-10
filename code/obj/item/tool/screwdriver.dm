@@ -14,7 +14,7 @@
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 10
-	stamina_cost = 10
+	stamina_cost = 5
 	stamina_crit_chance = 30
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -23,13 +23,16 @@
 	rand_pos = 1
 	custom_suicide = 1
 
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_KNIFE)
+
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] jams the screwdriver into [his_or_her(user)] eye over and over and over.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] jams the screwdriver into [his_or_her(user)] eye over and over and over.</b></span>")
 		take_bleeding_damage(user, null, 25, DAMAGE_STAB)
 		user.TakeDamage("head", 160, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/screwdriver/vr

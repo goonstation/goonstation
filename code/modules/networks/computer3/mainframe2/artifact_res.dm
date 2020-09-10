@@ -1334,7 +1334,7 @@
 </html>
 "}
 
-		user.machine = src
+		src.add_dialog(user)
 		user.Browse(dat, "window=art_computer;size=580x360;can_resize=0")
 		onclose(user, "art_computer")
 		return
@@ -1357,7 +1357,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["button"])
 			. = round(text2num(href_list["button"]))
@@ -1386,7 +1386,7 @@
 			src.highlightMap = 0
 			displayingAlertFlag = 1
 			src.updateUsrDialog(REASON_FIELDS|REASON_HIGHLIGHT)
-			sleep(10)
+			sleep(1 SECOND)
 
 			DEBUG_OUT(5)
 			src.last_reset = world.time
@@ -1395,7 +1395,7 @@
 			src.old_host_id = null
 
 			src.post_status(old, "command","term_disconnect")
-			sleep(5)
+			sleep(0.5 SECONDS)
 			DEBUG_OUT(6)
 			src.post_status(old, "command", "term_connect", "device", src.device_tag)
 
@@ -1409,7 +1409,7 @@
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
 			DEBUG_OUT("[M]")
-			if ((M.client && M.machine == src))
+			if (M.using_dialog_of(src))
 				DEBUG_OUT("[M]!!!")
 				if (forceUpdate || entryUpdateFlags)
 					DEBUG_OUT("[M] ! !  !")
@@ -1420,7 +1420,7 @@
 
 		if (issilicon(usr))
 			if (!(usr in nearby))
-				if (usr.client && usr.machine==src)
+				if (usr.using_dialog_of(src))
 					if (forceUpdate || entryUpdateFlags)
 						src.dynamicUpdate(usr, forceUpdate|entryUpdateFlags)
 						entryUpdateFlags = REASON_NONE

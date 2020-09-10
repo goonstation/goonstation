@@ -2,7 +2,7 @@
 /obj/item/seed/
 	name = "plant seed"
 	desc = "Plant this in soil to grow something."
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seeds"
 	var/seedcolor = "#000000"
 	w_class = 1.0
@@ -12,8 +12,8 @@
 	var/seeddamage = 0 // This is used mostly for infusions. How likely a seed is to be destroyed.
 	var/isstrange = 0  // Seeds cannot be gene scanned if they're strange seeds.
 	var/generation = 0 // Keeps track of how many times a plant has been bred from the initial seed.
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	module_research = list("hydroponics" = 1, "efficiency" = 1)
 	module_research_type = /obj/item/seed
 	rand_pos = 1
@@ -31,6 +31,14 @@
 			docolor()
 		// Colors in the seed packet, if we want to do that. Any seed that doesn't use the
 		// standard seed packet sprite shouldn't do this or it'll end up looking stupid.
+
+	//kudzumen can analyze seeds via ezamine when close.
+	get_desc(dist, mob/user)
+		if (dist >= 2)
+			return
+
+		if (iskudzuman(user))
+			. = scan_plant(src, user, visible = 0) // Replaced with global proc (Convair880).
 
 	proc/docolor() //bleh, used when unpooling
 		src.plant_seed_color(src.seedcolor)
@@ -55,8 +63,6 @@
 		planttype = 0
 		plantgenes = 0
 		seedcolor = "#000000"
-
-
 
 	proc/generic_seed_setup(var/datum/plant/P)
 		// This proc is pretty much entirely for regular seeds you find from the vendor
@@ -90,7 +96,7 @@
 		// it to color in the seed packet so you can recognise the packets at a glance.
 		if (!colorRef) return
 		if (!src.artifact)
-			var/icon/I = new /icon('icons/obj/hydroponics/hydromisc.dmi',"seeds-ovl")
+			var/icon/I = new /icon('icons/obj/hydroponics/items_hydroponics.dmi',"seeds-ovl")
 			I.Blend(colorRef, ICON_ADD)
 			src.overlays += I
 
@@ -126,7 +132,7 @@
 /obj/item/seed/grass/
 	name = "grass seed"
 	seedcolor = "#CCFF99"
-	auxillary_datum = /datum/plant/grass
+	auxillary_datum = /datum/plant/herb/grass
 
 /obj/item/seed/maneater/
 	name = "strange seed"
@@ -135,7 +141,7 @@
 /obj/item/seed/creeper/
 	name = "creeper seed"
 	seedcolor = "#CC00FF"
-	auxillary_datum = /datum/plant/creeper
+	auxillary_datum = /datum/plant/weed/creeper
 
 /obj/item/seed/crystal/
 	name = "crystal seed"
@@ -145,7 +151,7 @@
 /obj/item/seed/cannabis/
 	name = "cannabis seed"
 	seedcolor = "#00FF00"
-	auxillary_datum = /datum/plant/cannabis
+	auxillary_datum = /datum/plant/herb/cannabis
 
 // weird alien plants
 

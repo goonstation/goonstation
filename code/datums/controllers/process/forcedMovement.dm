@@ -54,7 +54,7 @@ datum/controller/process/fMove
 				if (T && T.turf_flags & CAN_BE_SPACE_SAMPLE)
 					var/prob_slip = 5
 
-					if (tmob.handcuffed)
+					if (tmob.hasStatus("handcuffed"))
 						prob_slip = 100
 
 					if (!tmob.canmove)
@@ -77,7 +77,7 @@ datum/controller/process/fMove
 					prob_slip = round(prob_slip)
 					if (prob_slip < 5) //next to something, but they might slip off
 						if (prob(prob_slip) )
-							boutput(tmob, "<span style=\"color:blue\"><B>You slipped!</B></span>")
+							boutput(tmob, "<span class='notice'><B>You slipped!</B></span>")
 							tmob.inertia_dir = tmob.last_move
 							step(tmob, tmob.inertia_dir)
 							continue
@@ -145,7 +145,7 @@ datum/controller/process/fMove
 
 		//now manta!
 		debugPushList = mantaPushList
-		if(mantaMoving)
+		if(mantaMoving == 1)
 			for(var/A in mantaPushList)
 				var/atom/movable/M = A
 				if(!M)
@@ -186,4 +186,4 @@ datum/controller/process/fMove
 		return
 
 	tickDetail()
-		return "Managing [mantaPushList.len] mantapush objects and [spacePushList.len] spacepush objects."
+		boutput(usr, "<b>ForcedMovement:</b> Managing [mantaPushList.len] mantapush objects and [spacePushList.len] spacepush objects")

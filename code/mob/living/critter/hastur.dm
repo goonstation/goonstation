@@ -28,6 +28,7 @@ var/HasturPresent = 0
 	var/lastdir = null
 
 	New()
+		..()
 		src.see_in_dark = SEE_DARK_FULL
 		northsouth = icon('icons/misc/hastur.dmi')
 		eastwest = icon('icons/misc/hastur.dmi')
@@ -39,7 +40,6 @@ var/HasturPresent = 0
 		abilityHolder.addAbility(/datum/targetable/hastur/insanityaura)
 		abilityHolder.addAbility(/datum/targetable/hastur/masswhisper)
 		abilityHolder.addAbility(/datum/targetable/hastur/ancientinvisibility)
-		..()
 
 	Bump(atom/O)
 		. = ..()
@@ -159,7 +159,7 @@ var/HasturPresent = 0
 			boutput(M, __red("[target] is too far away."))
 			return 1
 
-		M.visible_message(pick("<span style=\"color:red\"><B>[M] reveals their true form for a moment and -COMPLETELY- devours [target]!</B></span>","<span style=\"color:red\"><B>Huge mouth emerges underneath [M]'s robes and DEVOURS [target]!</B></span>","<span style=\"color:red\"><B>[M] growls angrily as they reveal their true form, completely devouring [target]!</B></span>"))
+		M.visible_message(pick("<span class='alert'><B>[M] reveals their true form for a moment and -COMPLETELY- devours [target]!</B></span>","<span class='alert'><B>Huge mouth emerges underneath [M]'s robes and DEVOURS [target]!</B></span>","<span class='alert'><B>[M] growls angrily as they reveal their true form, completely devouring [target]!</B></span>"))
 		playsound(M.loc, pick('sound/misc/hastur/devour1.ogg','sound/misc/hastur/devour2.ogg','sound/misc/hastur/devour3.ogg','sound/misc/hastur/devour4.ogg'), 90,1)
 		flick("hastur-devour", M)
 		SPAWN_DBG(7 DECI SECONDS)
@@ -201,15 +201,15 @@ var/HasturPresent = 0
 	cooldown = 2
 
 	cast()
-		for(var/mob/living/carbon/X in mobs)
-			var/msg = input("Message:", text("What would you like to whisper to everyone?")) as null|text
-			msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
-			if (!msg)
-				return
-			if (usr.client && usr.client.holder)
-				boutput(world, "<font color=purple><b>An otherwordly voice whispers into your ears... [msg]</b></font>")
-				//msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
-				//boutput(usr, "<b>You whisper to everyone:</b> [message]")
+		var/msg = input("Message:", text("What would you like to whisper to everyone?")) as null|text
+		msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
+		if (!msg)
+			return
+
+		if (usr.client && usr.client.holder)
+			boutput(world, "<font color=purple><b>An otherwordly voice whispers into your ears... [msg]</b></font>")
+			//msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
+			//boutput(usr, "<b>You whisper to everyone:</b> [message]")
 
 
 //ANCIENT INVISIBILIT ABILITY// - Pretty much just a changeling re-do
@@ -230,10 +230,10 @@ var/HasturPresent = 0
 			H.invisibility = 0
 			H.alpha = 255
 			H.stepsound = "sound/misc/hastur/tentacle_walk.ogg"
-			H.visible_message(pick("<span style=\"color:red\">A horrible apparition fades into view!</span>", "<span style=\"color:red\">A pool of shadow forms and manifests into shape!</span>"), pick("<span style=\"color:red\">Void manifests around you, giving you your physical form back.</span>", "<span style=\"color:red\">Energies of the void allow you to manifest back in a physical form.</span>"))
+			H.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms and manifests into shape!</span>"), pick("<span class='alert'>Void manifests around you, giving you your physical form back.</span>", "<span class='alert'>Energies of the void allow you to manifest back in a physical form.</span>"))
 			stage = 0
 		else
-			H.visible_message(pick("<span style=\"color:red\">[H] vanishes from sight!</span>", "<span style=\"color:red\">[H] dissolves into the void!</span>"), pick("<span style=\"color:blue\">You are enveloped by the void, hiding your physical manifestation.</span>", "<span style=\"color:blue\">You fade into the void!</span>"))
+			H.visible_message(pick("<span class='alert'>[H] vanishes from sight!</span>", "<span class='alert'>[H] dissolves into the void!</span>"), pick("<span class='notice'>You are enveloped by the void, hiding your physical manifestation.</span>", "<span class='notice'>You fade into the void!</span>"))
 			H.set_density(0)
 			H.invisibility = 10
 			H.alpha = 160
@@ -300,7 +300,7 @@ var/HasturPresent = 0
 			var/obj/target_r = new/obj/tentacle_trg_dummy(target)
 
 			playsound(user, "sound/misc/hastur/tentacle_hit.ogg", 50, 1)
-			user.visible_message("<span style=\"color:red\"><B>[user] sends a sharp tentacle flying!</B></span>")
+			user.visible_message("<span class='alert'><B>[user] sends a sharp tentacle flying!</B></span>")
 			user.dir = get_dir(user, target)
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
@@ -323,7 +323,7 @@ var/HasturPresent = 0
 					if (ishuman(M))
 						playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 						take_bleeding_damage(M, M, 15)
-						M.visible_message("<span style=\"color:red\">[M] gets stabbed by a sharp, spiked tentacle!</span>")
+						M.visible_message("<span class='alert'>[M] gets stabbed by a sharp, spiked tentacle!</span>")
 						random_brute_damage(M, rand(10,20),1)
 					else
 						M.meteorhit(O)
@@ -334,7 +334,7 @@ var/HasturPresent = 0
 					if (A == O || A == user) continue
 					A.meteorhit(O)
 
-			sleep(7)
+			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
 				pool(O)
 
@@ -370,7 +370,7 @@ var/HasturPresent = 0
 			var/obj/target_r = new/obj/tentacle_trg_dummy(target)
 
 			playsound(user, "sound/misc/hastur/tentacle_hit.ogg", 50, 1)
-			user.visible_message("<span style=\"color:red\"><B>[user] sends a grabbing tentacle flying!</B></span>")
+			user.visible_message("<span class='alert'><B>[user] sends a grabbing tentacle flying!</B></span>")
 			user.dir = get_dir(user, target)
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
@@ -390,12 +390,12 @@ var/HasturPresent = 0
 					A.smash()
 				for(var/mob/living/M in src_turf)
 					if(M == O || M == user) continue
-					var/turf/destination = find_loc(user)
+					var/turf/destination = get_turf(user)
 					if (destination)
 						do_teleport(M, destination, 1, sparks=0) ///You will appear adjacent to Hastur.
 						playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 						M.changeStatus("paralysis", 2 SECONDS)
-						M.visible_message("<span style=\"color:red\">[M] gets grabbed by a tentacle and dragged!</span>")
+						M.visible_message("<span class='alert'>[M] gets grabbed by a tentacle and dragged!</span>")
 
 
 					else
@@ -407,7 +407,7 @@ var/HasturPresent = 0
 					if (A == O || A == user) continue
 					A.meteorhit(O)
 
-			sleep(7)
+			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
 				pool(O)
 

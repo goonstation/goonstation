@@ -108,7 +108,7 @@ obj/machinery/recharger
 			charge_status = STATUS_ACTIVE
 			update_icon()
 	else
-		boutput(user, "<span style='color:red'>That [G.name] won't fit in \the [src]!")
+		boutput(user, "<span class='alert'>That [G.name] won't fit in \the [src]!")
 
 /obj/machinery/recharger/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
@@ -146,7 +146,7 @@ obj/machinery/recharger
 		src.icon_state = sprite_error
 
 
-/obj/machinery/recharger/process()
+/obj/machinery/recharger/process(var/mult)
 	// what the fuck
 	// why
 	// why the fuck
@@ -164,15 +164,15 @@ obj/machinery/recharger
 
 
 	if (src.charging && charge_status != STATUS_INACTIVE)
-		power_usage = ACTIVE_POWER_DRAIN
+		power_usage = ACTIVE_POWER_DRAIN * mult
 	else
-		power_usage = 50
+		power_usage = 50 * mult
 
 
 	if(charge_status == STATUS_ACTIVE && src.charging)
 		try
 			//Do the charging - all items to be recharged should implement proc/charge()
-			switch(src.charging:charge(CHARGE_AMOUNT))
+			switch(src.charging:charge(CHARGE_AMOUNT * mult))
 				if(REPORT_FINISH)
 					// Charge complete
 					charge_status = STATUS_COMPLETE
@@ -181,13 +181,13 @@ obj/machinery/recharger
 				if(REPORT_ERROR)
 					// Charge failed - the item does not want to be recharged
 					charge_status = STATUS_ERRORED
-					src.visible_message("<span style='color:red'>[src.charging] is not compatible with \the [src].</span>")
+					src.visible_message("<span class='alert'>[src.charging] is not compatible with \the [src].</span>")
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 					update_icon()
 
 		catch
 			//This item was on accepted_items, but didn't have a proc/charge()
-			src.visible_message("<span style='color:red'>[src] could not interface with \the [src.charging].</span>")
+			src.visible_message("<span class='alert'>[src] could not interface with \the [src.charging].</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 			charge_status = STATUS_ERRORED
 			update_icon()

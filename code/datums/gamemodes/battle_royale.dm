@@ -3,7 +3,6 @@
 */
 
 var/global/area/current_battle_spawn = null
-var/global/list/battle_equipment = null
 var/global/list/datum/mind/battle_pass_holders = list()
 
 #define TIME_BETWEEN_SHUTTLE_MOVES 50
@@ -26,7 +25,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	var/datum/random_event/special/battlestorm/storm = null
 	var/datum/random_event/special/supplydrop/dropper = null
 	var/list/datum/mind/recently_deceased = list()
-
+	do_antag_random_spawns = 0
 
 /datum/game_mode/battle_royale/announce()
 	boutput(world, "<B>The current game mode is - Battle Royale!</B>")
@@ -34,8 +33,11 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 /datum/game_mode/battle_royale/pre_setup()
 	// EVERYONE IS A BATTLER
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.ready)
 			src.traitors.Add(player)
 			if(player.mind)
 				player.mind.assigned_role = "MODE"
@@ -78,16 +80,15 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		battle_shuttle_spawn(player)
 
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
-	var/battler_spawn = pick(battle_royale_spawn)
 	bestow_objective(player,/datum/objective/battle_royale/win)
 	boutput(player.current, "<B>Objective</B>: Defeat all other battlers!")
 	player.current.nodamage = 1 // No murder on the battle shuttle
 		// Stuff them on the shuttle
-	player.current.set_loc(battler_spawn)
+	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 	equip_battler(player.current)
 	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/escape/transit/battle_shuttle))
-			boutput(player.current,"<span style=\"color:red\">You are thrown out of the shuttle for taking too long!</span>")
+			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
 			player.current.set_loc(pick(get_area_turfs(current_battle_spawn,1)))
 			player.current.nodamage = 0
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
@@ -115,10 +116,10 @@ var/global/list/datum/mind/battle_pass_holders = list()
 /datum/game_mode/battle_royale/declare_completion()
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
 	if(living_battlers.len == 1)
-		boutput(world,"<h2 style=\"color:red\">[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
-		boutput(living_battlers[1].current,"<h1 style=\"color:blue\">Holy shit you won!!!</h1>")
+		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
+		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
 	else
-		boutput(world,"<h2 style=\"color:red\">Literally everyone died. wow.</h2>")
+		boutput(world,"<h2 class='alert'>Literally everyone died. wow.</h2>")
 
 
 
@@ -130,9 +131,10 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		current_battle_spawn_name = pick(drop_locations)
 		current_battle_spawn = drop_locations[current_battle_spawn_name]
 		// oh and tell anyone on the shuttle it moved I guess
-		for(var/mob/M in mobs)
-			if(istype(get_area(M),/area/shuttle/escape/transit/battle_shuttle))
-				boutput(M,"<span style=\"color:blue\">The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
+		for(var/client/C)
+			if (C.mob)
+				if(istype(get_area(C.mob),/area/shuttle/escape/transit/battle_shuttle))
+					boutput(C.mob, "<span class='notice'>The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
 
 	// Is it time for a storm
 	if(src.next_storm < world.time)
@@ -152,7 +154,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 // Does what it says on the tin
 proc/hide_weapons_everywhere()
-	boutput(world, "<span style=\"color:blue\">Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
+	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
 	// Im stealing the list of items from the surplus crate so this check needs to happen
 	if(!syndi_buylist_cache)
 		build_syndi_buylist_cache()
@@ -170,7 +172,7 @@ proc/hide_weapons_everywhere()
 	murder_supplies.Add(/obj/item/gun/kinetic/pistol)
 
 
-	for(var/obj/O in lockers_and_crates) // imcoder
+	for(var/obj/O in by_type[/obj/storage]) // imcoder
 		if(prob(33))
 			weapon = pick(murder_supplies)
 			new weapon(O)
@@ -240,7 +242,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	I.registered = "[battler.name]"
 	I.assignment = "Battler"
 	I.icon_state = "gold"
-	I.icon = 'icons/obj/card.dmi'
+	I.icon = 'icons/obj/items/card.dmi'
 	battler.equip_if_possible(I, battler.slot_wear_id)
 	//battler.Equip_Bank_Purchase(battler.mind.purchased_bank_item)
 	battler.set_clothing_icon_dirty()

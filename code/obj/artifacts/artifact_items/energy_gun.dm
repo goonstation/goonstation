@@ -11,11 +11,13 @@
 	mat_changedesc = 0
 
 	New(var/loc, var/forceartitype)
+		..()
 		var/datum/artifact/energygun/AS = new /datum/artifact/energygun(src)
 		if (forceartitype)
 			AS.validtypes = list("[forceartitype]")
 		src.artifact = AS
 		// The other three are normal for energy gun setup, so proceed as usual i guess
+		qdel(cell)
 		cell = null
 
 		SPAWN_DBG(0)
@@ -31,13 +33,12 @@
 		src.setItemSpecial(null)
 
 	examine()
-		set src in oview()
-		boutput(usr, "You have no idea what this thing is!")
+		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
 		if (istext(A.examine_hint))
-			boutput(usr, "[A.examine_hint]")
+			. += A.examine_hint
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -96,16 +97,22 @@
 		..()
 		bullet = new/datum/projectile/artifact
 		bullet.randomise()
+		// artifact tweak buff, people said guns were useless compared to their cells
+		// the next 3 lines override the randomize(). Doing this instead of editting randomize to avoid changing prismatic spray.
+		bullet.power = rand(15,35) // randomise puts it between 2 and 50, let's make it less variable
+		bullet.dissipation_rate = rand(1,bullet.power)
+		bullet.cost = rand(35,100) // randomise puts it at 50-150
+
 		integrity = rand(50, 100)
-		integrity_loss = rand(1, 7)
+		integrity_loss = rand(1, 3) // was rand(1,7)
 		react_xray[3] = integrity
 
 	proc/ReduceHealth(var/obj/item/gun/energy/artifact/O)
 		var/prev_health = integrity
 		integrity -= integrity_loss
 		if (integrity <= 20 && prev_health > 20)
-			O.visible_message("<span style=\"color:red\">[O] emits a terrible cracking noise.</span>")
+			O.visible_message("<span class='alert'>[O] emits a terrible cracking noise.</span>")
 		if (integrity <= 0)
-			O.visible_message("<span style=\"color:red\">[O] crumbles into nothingness.</span>")
+			O.visible_message("<span class='alert'>[O] crumbles into nothingness.</span>")
 			qdel(O)
 		react_xray[3] = integrity

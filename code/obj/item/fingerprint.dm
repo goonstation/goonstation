@@ -4,9 +4,10 @@
 
 /obj/item/fcardholder
 	name = "Finger Print Case"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "fcardholder0"
-	item_state = "clipboard"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "clipboard0"
 	stamina_damage = 2
 	stamina_cost = 2
 	stamina_crit_chance = 1
@@ -24,7 +25,7 @@
 	if ((usr.stat || usr.restrained()))
 		return
 	if (usr.contents.Find(src))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
 			if (P && P.loc == src)
@@ -67,7 +68,7 @@
 			add_fingerprint(user)
 			src.add_fingerprint(user)
 		else
-			boutput(user, "<span style=\"color:blue\">Not enough space!!!</span>")
+			boutput(user, "<span class='notice'>Not enough space!!!</span>")
 	else
 		if (istype(P, /obj/item/pen))
 			var/t = input(user, "Holder Label:", text("[]", src.name), null)  as text
@@ -104,9 +105,10 @@
 
 /obj/item/f_card
 	name = "Finger Print Card"
-	icon = 'icons/obj/card.dmi'
+	icon = 'icons/obj/items/card.dmi'
 	icon_state = "fingerprint0"
 	amount = 10.0
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throwforce = 1
 	w_class = 1.0
@@ -116,14 +118,9 @@
 
 
 /obj/item/f_card/examine()
-	set src in view(2)
-	set category = "Local"
-
-	..()
-	boutput(usr, text("<span style=\"color:blue\">There are [] on the stack!</span>", src.amount))
-	usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", src.name, display()), text("window=[]", src.name))
-	onclose(usr, "[src.name]")
-	return
+	. = ..()
+	. += "<span class='notice'>There are [src.amount] on the stack!</span>"
+	. += src.display()
 
 /obj/item/f_card/proc/display()
 

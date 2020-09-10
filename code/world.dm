@@ -1,5 +1,13 @@
-//START BASIC WORLD DEFINES
-world
+/**
+  * # World
+  *
+  * If you think this Universe is bad, you should see some of the others. ~ Philip K. Dick
+  *
+  * The byond world object stores some basic byond level config, and has a few hub specific procs for managing hub visiblity
+  *
+  * The world /New() is the root of where a round itself begins
+  */
+/world
 	mob = /mob/new_player
 
 	#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
@@ -13,8 +21,6 @@ world
 	area = /area
 
 	view = "15x15"
-
-//END BASIC WORLD DEFINES
 
 
 //Let's clarify something. I don't know if it needs clarifying, but here I go anyways.
@@ -42,7 +48,7 @@ var/global/mob/twitch_mob = 0
 		var/list/lines = splittext(text, "\n")
 		if (lines[1])
 			master_mode = lines[1]
-			diary << "Saved mode is '[master_mode]'"
+			logDiary("Saved mode is '[master_mode]'")
 
 /world/proc/save_mode(var/the_mode)
 	var/F = file("data/mode.txt")
@@ -90,7 +96,7 @@ var/global/mob/twitch_mob = 0
 	set background = 1
 	var/text = file2text("config/admins.txt")
 	if (!text)
-		diary << "Failed to load config/admins.txt\n"
+		logDiary("Failed to load config/admins.txt\n")
 	else
 		var/list/lines = splittext(text, "\n")
 		for(var/line in lines)
@@ -105,11 +111,11 @@ var/global/mob/twitch_mob = 0
 				var/m_key = copytext(line, 1, pos)
 				var/a_lev = copytext(line, pos + 3, length(line) + 1)
 				admins[m_key] = a_lev
-				diary << ("ADMIN: [m_key] = [a_lev]")
+				logDiary("ADMIN: [m_key] = [a_lev]")
 
-/world/proc/load_whitelist()
+/world/proc/load_whitelist(fileName = "strings/whitelist.txt")
 	set background = 1
-	var/text = file2text("strings/whitelist.txt")
+	var/text = file2text(fileName)
 	if (!text)
 		return
 	else
@@ -122,7 +128,25 @@ var/global/mob/twitch_mob = 0
 				continue
 
 			whitelistCkeys += line
-			diary << ("WHITELIST: [line]")
+			logDiary("WHITELIST: [line]")
+
+
+/world/proc/load_playercap_bypass()
+	set background = 1
+	var/text = file2text("+secret/strings/allow_thru_cap.txt")
+	if (!text)
+		return
+	else
+		var/list/lines = splittext(text, "\n")
+		for(var/line in lines)
+			if (!line)
+				continue
+
+			if (copytext(line, 1, 2) == "#")
+				continue
+
+			bypassCapCkeys += line
+			logDiary("WHITELIST: [line]")
 
 // dsingh for faster create panel loads
 /world/proc/precache_create_txt()
@@ -193,9 +217,11 @@ var/f_color_selector_handler/F_Color_Selector
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
-		var/dll = world.GetConfig("env", "EXTOOLS_DLL")
-		if (dll)
-			call(dll, "debug_initialize")()
+		enable_extools_debugger()
+#ifdef REFERENCE_TRACKING
+		enable_reference_tracking()
+#endif
+
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
 		world.Profile(PROFILE_START)
@@ -213,8 +239,6 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << "========================================"
 		world.log << ""
 
-		serverKey = (world.port % 1000) / 100
-
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
 		config.load("config/config.txt")
@@ -223,6 +247,8 @@ var/f_color_selector_handler/F_Color_Selector
 			var/specific_config = "config/config-[world.port].txt"
 			if (fexists(specific_config))
 				config.load(specific_config)
+
+		serverKey = config.server_key ? config.server_key : (world.port % 1000) / 100
 
 		if (config.allowRotatingFullLogs)
 			roundLog << "========================================<br>"
@@ -318,6 +344,14 @@ var/f_color_selector_handler/F_Color_Selector
 		//REMIND ME TO TRIM THIS CRAP DOWN -Keelin
 		Z_LOG_DEBUG("Preload", "Beginning more setup things.")
 
+		//YO, most of this crap below can be removed using initial() on the typepath in interations on the list, e.g.,
+		/*
+		/proc/baz(arg)
+			for var/bar in list_of_foo_subtypes
+				var/datum/foo/foobar = bar
+				if initial(foobar.variable) == Arg
+					do_thing
+		*/
 
 		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab")
 		for(var/A in childrentypesof(/datum/generatorPrefab))
@@ -367,7 +401,7 @@ var/f_color_selector_handler/F_Color_Selector
 			traitList[T.id] = T
 
 		Z_LOG_DEBUG("Preload", "  /obj/bioEffect")
-		var/list/datum/bioEffect/tempBioList = childrentypesof(/datum/bioEffect)
+		var/list/datum/bioEffect/tempBioList = concrete_typesof(/datum/bioEffect, cache=FALSE)
 		for(var/effect in tempBioList)
 			var/datum/bioEffect/E = new effect(1)
 			bioEffectList[E.id] = E        //Caching instances for easy access to rarity and such. BECAUSE THERES NO PROPER CONSTANTS IN BYOND.
@@ -383,16 +417,19 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/New()
 	Z_LOG_DEBUG("World/New", "World New()")
+	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
 
+	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
+		pregameHTML = {"
+			<meta http-equiv='X-UA-Compatible' content='IE=edge'><style>body{margin:0;padding:0;background:url([resource("images/heisenbee_titlecard.png")]) black;background-size:100%;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;}</style><script>document.onclick=function(){window.location.href="byond://winset?id=mapwindow.map&focus=true";}</script>
+			<a href="https://www.deviantart.com/alexbluebird" target="_blank" style="position:absolute;bottom:3px;right:3px;color:white;opacity:0.7;">by AlexBlueBird</a>
+		"}
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
-	diary << ""
-	diary << ""
-	diary << "Starting up. [time2text(world.timeofday, "hh:mm.ss")]"
-	diary << "---------------------"
-	diary << ""
+	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"
+	logDiary("\n----------------------\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n----------------------\n")
 
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
@@ -423,10 +460,15 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(0)
 		init()
 
+#define UPDATE_TITLE_STATUS(x) if (game_start_countdown) game_start_countdown.update_status(x)
+
 /world/proc/init()
 	set background = 1
 	Z_LOG_DEBUG("World/Init", "init() - Lagcheck enabled")
 	lagcheck_enabled = 1
+
+	game_start_countdown = new()
+	UPDATE_TITLE_STATUS("Initializing world")
 
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH
@@ -434,6 +476,8 @@ var/f_color_selector_handler/F_Color_Selector
 	src.load_admins()//UGH
 	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
 	src.load_whitelist() //WHY ARE WE UGH-ING
+	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
+	src.load_playercap_bypass()
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
@@ -454,6 +498,7 @@ var/f_color_selector_handler/F_Color_Selector
 		save_intra_round_value("solarium_complete", 0)
 		save_intra_round_value("somebody_ate_the_fucking_thing", 0)
 
+	UPDATE_TITLE_STATUS("Loading data")
 
 	if (config)
 		if (config.server_name != null && config.server_region != null)
@@ -472,11 +517,6 @@ var/f_color_selector_handler/F_Color_Selector
 	src.load_rules()
 
 	mapSwitcher = new()
-
-	//is_it_ass_day() // ASS DAY!
-	// Ass Day is set at compile time now, not runtime
-
-	//create_random_station() //--Disabled because it's making initial geometry stuff take forever. Feel free to re-enable it if it's just throwing off the time count and not actually adding workload.
 
 	Z_LOG_DEBUG("World/Init", "Telemanager setup...")
 	tele_man = new()
@@ -499,10 +539,14 @@ var/f_color_selector_handler/F_Color_Selector
 		"[R_FREQ_DEFAULT]" = "General"
 		)
 
+	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Process scheduler setup...")
 	processScheduler = new /datum/controller/processScheduler
-	processScheduler.deferSetupFor(/datum/controller/process/ticker)
 	processSchedulerView = new /datum/processSchedulerView
+	var/datum/controller/process/tgui/tgui_process = processScheduler.addNowSkipSetup(/datum/controller/process/tgui)
+	var/datum/controller/process/ticker/ticker_process = processScheduler.addNowSkipSetup(/datum/controller/process/ticker)
+	tgui_process.setup()
+	ticker_process.setup()
 
 	Z_LOG_DEBUG("World/Init", "Building area sims scores...")
 	if (global_sims_mode)
@@ -511,13 +555,14 @@ var/f_color_selector_handler/F_Color_Selector
 
 	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
 
+	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")
 	src.update_status()
 
 	Z_LOG_DEBUG("World/Init", "Setting up occupations list...")
 	SetupOccupationsList()
 
-	Z_LOG_DEBUG("World/Init", "Notifying IRC of new round")
+	Z_LOG_DEBUG("World/Init", "Notifying Discord of new round")
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker && ticker.hide_mode) ? "secret" : master_mode))
 	world.log << "Map: [getMapNameFromID(map_setting)]"
 
@@ -539,35 +584,58 @@ var/f_color_selector_handler/F_Color_Selector
 		bust_lights()
 		master_mode = "disaster" // heh pt. 2
 
+	UPDATE_TITLE_STATUS("Lighting up")
 	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
 	RL_Start()
 
 	//SpyStructures and caches live here
+	UPDATE_TITLE_STATUS("Updating cache")
 	Z_LOG_DEBUG("World/Init", "Building various caches...")
 	build_chem_structure()
 	build_reagent_cache()
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_camera_network()
+	build_manufacturer_icons()
 	clothingbooth_setup()
+#if ASS_JAM
+	ass_jam_init()
+#endif
 
 	//QM Categories by ZeWaka
 	build_qm_categories()
 
-	if(!SKIP_Z5_SETUP)
-		Z_LOG_DEBUG("World/Init", "Setting up mining level...")
-		makeMiningLevel()
+	#if SKIP_Z5_SETUP == 0
+	UPDATE_TITLE_STATUS("Building mining level")
+	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
+	makeMiningLevel()
+	#endif
 
+	UPDATE_TITLE_STATUS("Mapping spatials")
+	Z_LOG_DEBUG("World/New", "Setting up spatial map...")
+	init_spatial_map()
+
+	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
 	aiDirty = 2
 	world.updateCameraVisibility()
 
+	UPDATE_TITLE_STATUS("Preloading client data...")
+	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
+	sendItemIconsToAll()
+
+	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
 	processScheduler.setup()
 
+	UPDATE_TITLE_STATUS("Reticulating splines")
 	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
 	initialize_worldgen()
 
+	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
+	map_settings.init()
+
+	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")
 
@@ -583,13 +651,15 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 
 	Z_LOG_DEBUG("World/Init", "Init() complete")
+	TgsInitializationComplete()
 	//sleep_offline = 1
-
 
 	// Biodome elevator accident stats
 	bioele_load_stats()
 	bioele_shifts_since_accident++
 	bioele_save_stats()
+
+#undef UPDATE_TITLE_STATUS
 
 //Crispy fullban
 /proc/Reboot_server(var/retry)
@@ -598,7 +668,7 @@ var/f_color_selector_handler/F_Color_Selector
 		//we're already holding and in the reboot retry loop, do nothing
 		if (mapSwitcher.holdingReboot && !retry) return
 
-		out(world, "<span style='color: blue;'><b>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</b></span>")
+		out(world, "<span class='bold notice'>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</span>")
 		message_admins("Reboot interrupted by a map-switch compile to [mapSwitcher.next]. Retrying in [mapSwitcher.rebootRetryDelay / 10] seconds.")
 
 		mapSwitcher.holdingReboot = 1
@@ -626,18 +696,19 @@ var/f_color_selector_handler/F_Color_Selector
 
 	lagcheck_enabled = 0
 	processScheduler.stop()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
 
 	SPAWN_DBG(world.tick_lag)
-		for (var/mob/M in mobs)
-			if (M.client)
+		for (var/client/C)
+			if (C.mob)
 				if (prob(40))
-					M << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg'))
+					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/TimeForANewRound.ogg'))
 				else
-					M << sound('sound/misc/NewRound.ogg')
+					C.mob << sound('sound/misc/NewRound.ogg')
 
 #ifdef DATALOGGER
 	SPAWN_DBG(world.tick_lag*2)
@@ -653,7 +724,7 @@ var/f_color_selector_handler/F_Color_Selector
 		//game_stats.WriteToFile("data/game_stats.txt")
 #endif
 
-	sleep(50) // wait for sound to play
+	sleep(5 SECONDS) // wait for sound to play
 	if(config.update_check_enabled)
 		world.installUpdate()
 
@@ -675,6 +746,11 @@ var/f_color_selector_handler/F_Color_Selector
 			ehjax.send(C, "browseroutput", "roundrestart")
 
 		world.Reboot()
+
+/world/Reboot()
+	TgsReboot()
+	shutdown_logging()
+	return ..()
 
 /world/proc/update_status()
 	Z_LOG_DEBUG("World/Status", "Updating status")
@@ -707,12 +783,16 @@ var/f_color_selector_handler/F_Color_Selector
 	if (abandon_allowed)
 		features += "respawn allowed"
 
-	//if (config && config.allow_ai)
-	//	features += "AI"
+	if (abandon_allowed)
+		features += "respawn allowed"
+
+#if ASS_JAM
+	features += "Ass Jam"
+#endif
 
 	var/n = 0
-	for (var/mob/M in mobs)
-		if (M.client)
+	for (var/client/C in clients)
+		if (C)
 			n++
 
 	if (n > 1)
@@ -752,28 +832,28 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 /world/Topic(T, addr, master, key)
-	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
+	TGS_TOPIC	// logging for these is done in TGS
+	logDiary("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 	Z_LOG_DEBUG("World", "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
 		var/x = 1
-		for (var/client/C in clients)
+		for (var/client/C)
 			x++
 		return x
 
 	else if(T == "players")
 		var/n = 0
-		for(var/mob/M in mobs)
-			if(M.client)
-				n++
+		for(var/client/C)
+			n++
 		return n
 
 	else if (T == "admins")
 		var/list/s = list()
 		var/n = 0
-		for(var/mob/M in mobs)
-			if(M && M.client && M.client.holder)
-				s["admin[n]"] = (M.client.stealth ? "~" : "") + M.client.key
+		for(var/client/C)
+			if(C.holder)
+				s["admin[n]"] = (C.stealth ? "~" : "") + C.key
 				n++
 		s["admins"] = n
 		return list2params(s)
@@ -781,9 +861,9 @@ var/f_color_selector_handler/F_Color_Selector
 	else if (T == "mentors")
 		var/list/s = list()
 		var/n = 0
-		for(var/mob/M in mobs)
-			if(M && M.client && !M.client.holder && M.client.is_mentor())
-				s["mentor[n]"] = M.client.key
+		for(var/client/C)
+			if(!C.holder && C.is_mentor())
+				s["mentor[n]"] = C.key
 				n++
 		s["mentors"] = n
 		return list2params(s)
@@ -812,15 +892,14 @@ var/f_color_selector_handler/F_Color_Selector
 		else elapsed = "welp"
 		s["elapsed"] = elapsed
 		var/n = 0
-		for(var/mob/M in mobs)
-			if(M.client)
-				s["player[n]"] = "[(M.client.stealth || M.client.alt_key) ? M.client.fakekey : M.client.key]"
-				n++
+		for(var/client/C)
+			s["player[n]"] = "[(C.stealth || C.alt_key) ? C.fakekey : C.key]"
+			n++
 		s["players"] = n
 		s["map_name"] = getMapNameFromID(map_setting)
 		return list2params(s)
 
-	else // IRC bot communication (or callbacks)
+	else // Discord bot communication (or callbacks)
 
 #ifdef TWITCH_BOT_ALLOWED
 		//boutput(world,"addres : [addr]     twitchbotaddr : [TWITCH_BOT_ADDR]")
@@ -1064,17 +1143,19 @@ var/f_color_selector_handler/F_Color_Selector
 							return 1
 
 						if("rest")
+							if(ON_COOLDOWN(twitch_mob, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
-								H.resting = 1
+								H.setStatus("resting", INFINITE_STATUS)
 								H.force_laydown_standup()
 								H.hud.update_resting()
 							return 1
 
 						if("stand")
+							if(ON_COOLDOWN(twitch_mob, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
-								H.resting = 0
+								H.delStatus("resting")
 								H.force_laydown_standup()
 								H.hud.update_resting()
 							return 1
@@ -1115,7 +1196,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 
-				logTheThing("ooc", null, null, "IRC OOC: [nick]: [msg]")
+				logTheThing("ooc", null, null, "Discord OOC: [nick]: [msg]")
 
 				if (nick == "buttbot")
 					for (var/obj/machinery/bot/buttbot/B in machine_registry[MACHINES_BOTS])
@@ -1160,10 +1241,18 @@ var/f_color_selector_handler/F_Color_Selector
 
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
+
+				if(copytext(msg, 1, 2) == SPACEBEE_EXTENSION_ASAY_PREFIX)
+					spacebee_extension_system?.process_asay(msg, nick)
+					var/ircmsg[] = new()
+					ircmsg["key"] = nick
+					ircmsg["msg"] = msg
+					return ircbot.response(ircmsg)
+
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
-				logTheThing("admin", null, null, "IRC ASAY: [nick]: [msg]")
-				logTheThing("diary", null, null, "IRC ASAY: [nick]: [msg]", "admin")
+				logTheThing("admin", null, null, "Discord ASAY: [nick]: [msg]")
+				logTheThing("diary", null, null, "Discord ASAY: [nick]: [msg]", "admin")
 				var/rendered = "<span class=\"admin\"><span class=\"prefix\"></span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
 
 				message_admins(rendered, 1, 1)
@@ -1187,9 +1276,9 @@ var/f_color_selector_handler/F_Color_Selector
 				logTheThing("diary", null, null, "[server_name] PM: [nick]: [msg]", "admin")
 				var/rendered = "<span class=\"admin\"><span class=\"prefix\">[server_name] PM:</span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
 
-				for (var/mob/M in mobs)
-					if (M.client && M.client.holder)
-						boutput(M, rendered)
+				for (var/client/C)
+					if (C.holder)
+						boutput(C.mob, rendered)
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = nick
@@ -1207,8 +1296,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
 
-				var/mob/M = whois_ckey_to_mob_reference(who)
-				if (M.client)
+				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				if (M?.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
 							<div style="background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
@@ -1223,14 +1312,14 @@ var/f_color_selector_handler/F_Color_Selector
 						</div>
 						"})
 					M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-					logTheThing("admin_help", null, M, "IRC: [nick] PM'd %target%: [msg]")
-					logTheThing("diary", null, M, "IRC: [nick] PM'd %target%: [msg]", "ahelp")
-					for (var/mob/K in mobs)
-						if (K && K.client && K.client.holder && K.key != M.key)
-							if (K.client.player_mode && !K.client.player_mode_ahelp)
+					logTheThing("admin_help", null, M, "Discord: [nick] PM'd [constructTarget(M,"admin_help")]: [msg]")
+					logTheThing("diary", null, M, "Discord: [nick] PM'd [constructTarget(M,"diary")]: [msg]", "ahelp")
+					for (var/client/C)
+						if (C.holder && C.key != M.key)
+							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
-								boutput(K, "<font color='blue'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (IRC) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</font>")
+								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1248,20 +1337,20 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
-				var/mob/M = whois_ckey_to_mob_reference(who)
-				if (M.client)
-					boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (IRC)</b>: <span class='message'>[msg]</span></span>")
-					logTheThing("admin", null, M, "IRC: [nick] Mentor PM'd %target%: [msg]")
-					logTheThing("diary", null, M, "IRC: [nick] Mentor PM'd %target%: [msg]", "admin")
-					for (var/mob/K in mobs)
-						if (K && K.client && K.client.can_see_mentor_pms() && K.key != M.key)
-							if(K.client.holder)
-								if (K.client.player_mode && !K.client.player_mode_mhelp)
+				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				if (M?.client)
+					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
+					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
+					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
+					for (var/client/C)
+						if (C.can_see_mentor_pms() && C.key != M.key)
+							if(C.holder)
+								if (C.player_mode && !C.player_mode_mhelp)
 									continue
 								else
-									boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [nick] (IRC) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
+									boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
 							else
-								boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [nick] (IRC) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
+								boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1336,9 +1425,9 @@ var/f_color_selector_handler/F_Color_Selector
 				for (var/mob/M in mobs)
 					if (M.ckey && (findtext(M.real_name, who) || findtext(M.ckey, who)))
 						M.full_heal()
-						logTheThing("admin", nick, M, "healed / revived %target%")
-						logTheThing("diary", nick, M, "healed / revived %target%", "admin")
-						message_admins("<span style=\"color:red\">Admin [nick] healed / revived [key_name(M)] from IRC!</span>")
+						logTheThing("admin", nick, M, "healed / revived [constructTarget(M,"admin")]")
+						logTheThing("diary", nick, M, "healed / revived [constructTarget(M,"diary")]", "admin")
+						message_admins("<span class='alert'>Admin [nick] healed / revived [key_name(M)] from Discord!</span>")
 
 						var/ircmsg[] = new()
 						ircmsg["type"] = "heal"
@@ -1400,9 +1489,9 @@ var/f_color_selector_handler/F_Color_Selector
 				msg += "It is running [mode]<br>"
 				msg += "<a href='[address]'>Click here to join it</a><br>"
 				msg += "---------------------</div><br>"
-				for (var/mob/M in mobs)
-					if (isdead(M))
-						boutput(M, msg)
+				for (var/client/C)
+					if (isdead(C.mob))
+						boutput(C.mob, msg)
 
 				return 1
 
@@ -1434,7 +1523,7 @@ var/f_color_selector_handler/F_Color_Selector
 				ircmsg["cpu"] = world.cpu
 				ircmsg["queue_len"] = delete_queue ? delete_queue.count() : 0
 				var/curtime = world.timeofday
-				sleep(10)
+				sleep(1 SECOND)
 				ircmsg["time"] = (world.timeofday - curtime) / 10
 				return ircbot.response(ircmsg)
 
@@ -1462,9 +1551,9 @@ var/f_color_selector_handler/F_Color_Selector
 				if (game_end_delayed == 0)
 					game_end_delayed = 1
 					game_end_delayer = plist["nick"]
-					logTheThing("admin", null, null, "[game_end_delayer] delayed the server restart from IRC.")
-					logTheThing("diary", null, null, "[game_end_delayer] delayed the server restart from IRC.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] delayed the server restart from IRC.</font>")
+					logTheThing("admin", null, null, "[game_end_delayer] delayed the server restart from Discord.")
+					logTheThing("diary", null, null, "[game_end_delayer] delayed the server restart from Discord.", "admin")
+					message_admins("<span class='internal'>[game_end_delayer] delayed the server restart from Discord.</span>")
 					ircmsg["msg"] = "Server restart delayed. Use undelay to cancel this."
 				else
 					ircmsg["msg"] = "The server restart is already delayed, use undelay to cancel this."
@@ -1481,18 +1570,18 @@ var/f_color_selector_handler/F_Color_Selector
 				else if (game_end_delayed == 1)
 					game_end_delayed = 0
 					game_end_delayer = plist["nick"]
-					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from IRC.")
-					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from IRC.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] removed the restart delay from IRC.</font>")
+					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord.")
+					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord.", "admin")
+					message_admins("<span class='internal'>[game_end_delayer] removed the restart delay from Discord.</span>")
 					game_end_delayer = null
 					ircmsg["msg"] = "Removed the restart delay."
 					return ircbot.response(ircmsg)
 
 				else if (game_end_delayed == 2)
 					game_end_delayer = plist["nick"]
-					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from IRC and triggered an immediate restart.")
-					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from IRC and triggered an immediate restart.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] removed the restart delay from IRC and triggered an immediate restart.</font>")
+					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.")
+					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.", "admin")
+					message_admins("<span class='internal>[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.</span>")
 					ircmsg["msg"] = "Removed the restart delay."
 
 					SPAWN_DBG(1 DECI SECOND)
@@ -1540,12 +1629,32 @@ var/f_color_selector_handler/F_Color_Selector
 				catch (var/exception/e)
 					ircmsg["msg"] = e.name
 
-				logTheThing("admin", nick, null, "set the next round's map to [mapName] from IRC")
-				logTheThing("diary", nick, null, "set the next round's map to [mapName] from IRC", "admin")
-				message_admins("[nick] set the next round's map to [mapName] from IRC")
+				logTheThing("admin", nick, null, "set the next round's map to [mapName] from Discord")
+				logTheThing("diary", nick, null, "set the next round's map to [mapName] from Discord", "admin")
+				message_admins("[nick] set the next round's map to [mapName] from Discord")
 
 				return ircbot.response(ircmsg)
 
+			if ("whitelistChange")
+				if (!plist["wlType"] || !plist["ckey"])
+					return 0
+
+				var/type = plist["wlType"]
+				var/ckey = plist["ckey"]
+				var/msg
+
+				if (type == "add" && !(ckey in whitelistCkeys))
+					whitelistCkeys += ckey
+					msg = "Entry '[ckey]' added to whitelist"
+				else if (type == "remove" && (ckey in whitelistCkeys))
+					whitelistCkeys -= ckey
+					msg = "Entry '[ckey]' removed from whitelist"
+
+				if (msg)
+					logTheThing("admin", null, null, msg)
+					logTheThing("diary", null, null, msg, "admin")
+
+				return 1
 
 
 /// EXPERIMENTAL STUFF
@@ -1560,7 +1669,7 @@ var/opt_inactive = null
 				//mysql.CleanQueries()
 			opt_inactive = world.timeofday
 
-		sleep(100)
+		sleep(10 SECONDS)
 
 
 
@@ -1568,7 +1677,7 @@ var/opt_inactive = null
 /world/proc/KickInactiveClients()
 	for(var/client/C in clients)
 		if(!C.holder && ((C.inactivity/10)/60) >= 15)
-			boutput(C, "<span style=\"color:red\">You have been inactive for more than 15 minutes and have been disconnected.</span>")
+			boutput(C, "<span class='alert'>You have been inactive for more than 15 minutes and have been disconnected.</span>")
 			del(C)
 
 /// EXPERIMENTAL STUFF

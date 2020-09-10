@@ -8,13 +8,15 @@
 	var/splat = 0 // for thrown pies
 	food_effects = list("food_refreshed","food_cold")
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
-			src.visible_message("<span style=\"color:red\">[src] splats in [M]'s face!</span>")
+			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
 			playsound(get_turf(src), "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			M.change_eye_blurry(rand(5,10))
 			M.take_eye_damage(rand(0, 2), 1)
+			if (prob(40))
+				JOB_XP(M, "Clown", 2)
 		else
 			..()
 
@@ -57,7 +59,7 @@
 		..()
 		if (has_key)
 			src.has_key = 0
-			M.visible_message("<span style=\"color:red\">[M] pulls a key out of [src]!</span>","<span style=\"color:red\">You discover an iron key in [src]! Gross!</span>")
+			M.visible_message("<span class='alert'>[M] pulls a key out of [src]!</span>","<span class='alert'>You discover an iron key in [src]! Gross!</span>")
 			new /obj/item/device/key/haunted(get_turf(src))
 		return
 
@@ -105,13 +107,8 @@
 	heal_amt = 4
 	use_bite_mask = 0
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (contents)
-			//This is a mildly lazy way of handling edge cases where the thrown pie has no thrower (propelled through other means, like gravitons)
-			//It's a gigantic bitch/impossible without a refactor to fix all the edge cases with that, so I'm just having the pie hit the target, instead of any contents
-			if (!usr)
-				src.throw_impact(hit_atom)
-
 			var/atom/movable/randomContent
 			if (contents.len >= 1)
 				randomContent = pick(contents)
@@ -121,15 +118,15 @@
 			if (randomContent != src)
 				randomContent.throw_impact(hit_atom)
 
-			hit_atom.attackby(randomContent, usr)
+			hit_atom.attackby(randomContent, thr?.user)
 
 			if (ismob(hit_atom))
 				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 				var/mob/M = hit_atom
-				if (M == usr)
-					src.visible_message("<span style=\"color:red\">[usr] fumbles and smacks the [src] into their own face!</span>")
+				if (M == thr.user)
+					src.visible_message("<span class='alert'>[thr.user] fumbles and smacks the [src] into their own face!</span>")
 				else
-					src.visible_message("<span style=\"color:red\">[src] smacks into [M]!</span>")
+					src.visible_message("<span class='alert'>[src] smacks into [M]!</span>")
 
 /obj/item/reagent_containers/food/snacks/pie/slurry
 	name = "slurry pie"
@@ -167,6 +164,7 @@
 	heal_amt = 2
 	food_effects = list("food_sweaty_big","food_refreshed")
 	New()
+		..()
 		if(prob(10))
 			name = pick("fart pie","butt pie","mud pie","piesterior","ham pie","dump cake","derri-eclaire")
 

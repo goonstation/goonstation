@@ -11,7 +11,7 @@
 	can_research = 0
 	can_make_injector = 0
 	reclaim_fail = 100
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 
 	//Moved special job stuff (chaplain, medical) over to traits system.
 
@@ -22,7 +22,7 @@
 	id = "arcane_shame"
 	msgGain = "You feel shameful. Also bald."
 	msgLose = "Your shame fades. Now you feel only righteous anger!"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	can_copy = 0
 
@@ -40,7 +40,7 @@
 	name = "Husk"
 	desc = "Subject appears to have been drained of all fluids."
 	id = "husk"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	can_copy = 0
 
@@ -60,13 +60,13 @@
 	name = "Eaten"
 	desc = "Subject appears to have been partially consumed."
 	id = "eaten"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	can_copy = 0
 
 	OnMobDraw()
 		if (ishuman(owner) && !owner:decomp_stage)
-			owner:body_standing:overlays += image('icons/mob/human.dmi', "decomp1")
+			owner:body_standing:overlays += image('icons/mob/human_decomp.dmi', "decomp1")
 		return
 
 	OnAdd()
@@ -81,7 +81,7 @@
 	name = "Consumed"
 	desc = "Most of their flesh has been chewed off."
 	id = "consumed"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	can_copy = 0
 
 /datum/bioEffect/hidden/zombie
@@ -89,7 +89,7 @@
 	name = "Necrotic Degeneration"
 	desc = "Subject's cellular structure is degenerating due to sub-lethal necrosis."
 	id = "zombie"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	isBad = 1
 	can_copy = 0
 	msgGain = "You begin to rot."
@@ -115,18 +115,19 @@
 	name = "Stunted Genetics"
 	desc = "Genetic abnormalities possibly resulting from incomplete development in a cloning pod."
 	id = "premature_clone"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	isBad = 1
 	can_copy = 0
 	msgGain = "You don't feel quite right."
 	msgLose = "You feel normal again."
 	var/outOfPod = 0 //Out of the cloning pod.
+	var/timeInCryo = 0 // Time spent in a cryo tube
 
 	OnAdd()
 		..()
 		owner.set_mutantrace(/datum/mutantrace/premature_clone)
 		if (!istype(owner.loc, /obj/machinery/clonepod))
-			boutput(owner, "<span style=\"color:red\">Your genes feel...disorderly.</span>")
+			boutput(owner, "<span class='alert'>Your genes feel...disorderly.</span>")
 		return
 
 	OnRemove()
@@ -142,14 +143,29 @@
 
 		if (outOfPod)
 			if (prob(6))
-				owner.visible_message("<span style=\"color:red\">[owner.name] suddenly and violently vomits!</span>")
+				owner.visible_message("<span class='alert'>[owner.name] suddenly and violently vomits!</span>")
 				owner.vomit()
 
 			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\">[owner.name] vomits blood!</span>")
+				owner.visible_message("<span class='alert'>[owner.name] vomits blood!</span>")
 				playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				random_brute_damage(owner, rand(5,8))
 				bleed(owner, rand(5,8), 5)
+
+			if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+				if (owner.bodytemperature < owner.base_body_temp - 80 && (owner.max_health - owner.health < 10))
+					// cryoxadone checks for 100 under; this is a little higher to account
+					// for the healing cryoxadone does (which increases temp), given that
+					// premature clones randomly take damage.
+					timeInCryo++
+
+					if (timeInCryo == 1)
+						boutput(owner, "<span class='notice'>You feel a little better.</span>")
+					else if (timeInCryo == 5)
+						// Being in cryo long enough will help fix your messed-up genes.
+						timeLeft = 1
+			else
+				timeInCryo = 0
 
 		else if (!istype(owner.loc, /obj/machinery/clonepod))
 			outOfPod = 1
@@ -160,7 +176,7 @@
 	name = "Poor Hygiene"
 	desc = "This guy needs a shower, stat!"
 	id = "sims_stinky"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	can_copy = 0
 	curable_by_mutadone = 0
@@ -180,16 +196,40 @@
 				if (C == owner)
 					continue
 				if (src.variant == 2)
-					boutput(C, "<span style=\"color:red\">[src.personalized_stink]</span>")
+					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
-					boutput(C, "<span style=\"color:red\">[stinkString()]</span>")
+					boutput(C, "<span class='alert'>[stinkString()]</span>")
 
 // Magnetic Random Event
 
 /datum/bioEffect/hidden/magnetic
 	name = "magnetic charge parent"
 	desc = "This shouldn't be used."
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	can_copy = 0
+	curable_by_mutadone = 0
+	occur_in_genepools = 0
 	var/active = 1
+
+	var/max_charge = 10
+	var/charge = 5
+
+	proc/update_charge(var/amount)
+		var/init_charge = src.charge
+		src.charge += amount
+		src.charge = clamp(src.charge,0,src.max_charge)
+		if(src.charge != init_charge)
+			src.update_overlay()
+			return 1
+		return 0
+
+	proc/update_overlay()
+		if(src.overlay_image)
+			if(isliving(owner))
+				src.overlay_image.alpha = charge/max_charge*255
+				var/mob/living/L = owner
+				L.UpdateOverlays(overlay_image, id)
 
 	proc/deactivate(var/time)
 		active = 0
@@ -201,11 +241,6 @@
 	desc = "This person is charged with a strong positive magnetic field."
 	id = "magnets_pos"
 	msgGain = "You notice odd red static sparking on your skin."
-	effectType = effectTypeDisability
-	isBad = 1
-	can_copy = 0
-	curable_by_mutadone = 0
-	occur_in_genepools = 0
 
 	OnAdd()
 		if (ishuman(owner))
@@ -218,11 +253,7 @@
 	desc = "This person is charged with a strong negative magnetic field."
 	id = "magnets_neg"
 	msgGain = "You notice odd blue static sparking on your skin."
-	effectType = effectTypeDisability
-	isBad = 1
-	can_copy = 0
-	curable_by_mutadone = 0
-	occur_in_genepools = 0
+	effectType = EFFECT_TYPE_DISABILITY
 
 	OnAdd()
 		if (ishuman(owner))

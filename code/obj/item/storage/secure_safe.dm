@@ -30,10 +30,10 @@
 /obj/item/storage/secure/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if ((src.locked == 1) && (!src.emagged))
 		emagged = 1
-		src.overlays += image('icons/obj/storage.dmi', icon_sparking)
-		sleep(6)
+		src.overlays += image('icons/obj/items/storage.dmi', icon_sparking)
+		sleep(0.6 SECONDS)
 		src.overlays = null
-		overlays += image('icons/obj/storage.dmi', icon_locking)
+		overlays += image('icons/obj/items/storage.dmi', icon_locking)
 		locked = 0
 		if (user)
 			boutput(user, "You short out the lock on [src].")
@@ -44,7 +44,7 @@
 	if (!src.emagged)
 		return 0
 	emagged = 0
-	sleep(6)
+	sleep(0.6 SECONDS)
 	src.overlays = null
 	if (user)
 		user.show_text("You repair the lock on [src].", "blue")
@@ -56,24 +56,25 @@
 	//Waluigi hates this
 	if (hackable)
 		if (isscrewingtool(W) && (src.locked == 1))
-			sleep(6)
+			sleep(0.6 SECONDS)
 			src.open =! src.open
-			user.show_message("<span style=\"color:blue\">You [src.open ? "open" : "close"] the service panel.</span>")
+			tooltip_rebuild = 1
+			user.show_message("<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
 
 		if (ispulsingtool(W) && (src.open == 1) && (!src.locked) && (!src.l_hacking))
-			user.show_message(text("<span style=\"color:red\">Now attempting to reset internal memory, please hold.</span>"), 1)
+			user.show_message(text("<span class='alert'>Now attempting to reset internal memory, please hold.</span>"), 1)
 			src.l_hacking = 1
 			SPAWN_DBG(10 SECONDS)
 				if (prob(40))
 					src.l_setshort = 1
 					configure_mode = 1
-					user.show_message("<span style=\"color:red\">Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
-					sleep(80)
+					user.show_message("<span class='alert'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
+					sleep(8 SECONDS)
 					src.l_setshort = 0
 					src.l_hacking = 0
 				else
-					user.show_message("<span style=\"color:red\">Unable to reset internal memory.</span>", 1)
+					user.show_message("<span class='alert'>Unable to reset internal memory.</span>", 1)
 					src.l_hacking = 0
 			return
 
@@ -84,18 +85,18 @@
 
 /obj/item/storage/secure/attack_hand(mob/user as mob)
 	if (src.loc == user && src.locked == 1)
-		boutput(usr, "<span style=\"color:red\">[src] is locked and cannot be opened!</span>")
+		boutput(usr, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return
 	return ..()
 
 /obj/item/storage/secure/MouseDrop(atom/over_object, src_location, over_location)
 	if ((usr.is_in_hands(src) || over_object == usr) && src.locked == 1)
-		boutput(usr, "<span style=\"color:red\">[src] is locked and cannot be opened!</span>")
+		boutput(usr, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return
 	return ..()
 
 /obj/item/storage/secure/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	add_fingerprint(user)
 	return show_lock_panel(user)
 
@@ -245,48 +246,63 @@
 
 				if (locked)
 					locked = 0
-					overlays = list(image('icons/obj/storage.dmi', icon_open))
-					src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clicks unlocked.</span>")
+					overlays = list(image('icons/obj/items/storage.dmi', icon_open))
+					src.visible_message("<span class='alert'>[src]'s lock mechanism clicks unlocked.</span>")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 
 				else
 					locked = 1
 
 					overlays = null
-					src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clunks locked.</span>")
+					src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 
 			else if (href_list["enter"] == "")
 				locked = 1
 
 				overlays = null
-				src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clunks locked.</span>")
+				src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 
 			else
 				usr << output("ERR!&0", "caselock.browser:updateReadout")
 				var/code_attempt = uppertext(ckey(href_list["enter"]))
+				/*
+				Mastermind game in which the solution is "code" and the guess is "code_attempt"
+				First go through the guess and find any with the exact same position as in the solution
+				Increment rightplace when such occurs.
+				Then go through the guess and, with each letter, go through all the letters of the solution code
+				Increment wrongplace when such occurs.
+
+				In both cases, add a power of two corresponding to the locations of the relevant letters
+				This forms a set of flags which is checked whenever same-letters are found
+
+				Once all of the guess has been iterated through for both rightplace and wrongplace, construct
+				a beep/boop message dependant on what was gotten right.
+				*/
 				if (length(code_attempt) == 4)
-					var/i = 0
-					var/j = 0
-					var/incode = 0
+					var/guessplace = 0
+					var/codeplace = 0
+					var/guessflags = 0
+					var/codeflags = 0
+
+					var/wrongplace = 0
 					var/rightplace = 0
-					var/offset = 0
-					while (++i < 5)
-						if (copytext(code_attempt, i,i+1) == copytext(code, i, i + 1))
-							offset += 2 ** (i-1)
+					while (++guessplace < 5)
+						if ((((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, guessplace, guessplace + 1)))
+							guessflags += 2 ** (guessplace-1)
+							codeflags += 2 ** (guessplace-1)
 							rightplace++
-							incode++
-							continue
-					
-					i = 0
-					while (++i < 5)
-						j = 0
-						while(++j < 5)
-							if(i != j && (((offset - offset % (2 ** (j - 1))) / (2 ** (j - 1))) % 2 == 0) && (copytext(code_attempt, i,i+1) == copytext(code, j, j+1)))
-								offset += 2 ** (j-1)
-								incode++
-								j = 5
+
+					guessplace = 0
+					while (++guessplace < 5)
+						codeplace = 0
+						while(++codeplace < 5)
+							if(guessplace != codeplace && (((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (((codeflags - codeflags % (2 ** (codeplace - 1))) / (2 ** (codeplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, codeplace , codeplace + 1)))
+								guessflags += 2 ** (guessplace-1)
+								codeflags += 2 ** (codeplace-1)
+								wrongplace++
+								codeplace = 5
 
 					var/desctext = ""
 					switch(rightplace)
@@ -297,10 +313,10 @@
 						if (3)
 							desctext += "a trio of grumpy beeps"
 
-					if (desctext && (incode - rightplace) > 0)
+					if (desctext && (wrongplace) > 0)
 						desctext += " and "
 
-					switch(incode - rightplace)
+					switch(wrongplace)
 						if (1)
 							desctext += "a short boop"
 						if (2)
@@ -311,7 +327,7 @@
 							desctext += "a long, sad, warbly boop"
 
 					if (desctext)
-						src.visible_message("<span style=\"color:red\">[src]'s lock panel emits [desctext].</span>")
+						src.visible_message("<span class='alert'>[src]'s lock panel emits [desctext].</span>")
 						playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1) // set this to play proper beeps later
 
 	else if (href_list["lock"])
@@ -319,8 +335,8 @@
 			locked = 1
 
 			overlays = null
-			boutput(usr, "<span style=\"color:red\">The lock mechanism clunks locked.</span>")
-			src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clunks locked.</span>")
+			boutput(usr, "<span class='alert'>The lock mechanism clunks locked.</span>")
+			src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 /*
 	else if (href_list["setcode"])
@@ -329,7 +345,7 @@
 
 		src.configure_mode = 1
 		src.locked = 0
-		overlays = list(image('icons/obj/storage.dmi', icon_open))
+		overlays = list(image('icons/obj/items/storage.dmi', icon_open))
 		src.code = ""
 
 		boutput(usr, "Code reset.  Please type new code and press enter.")
@@ -345,7 +361,7 @@
 			else if ((src.code == src.l_code) && (src.emagged == 0) && (src.l_set == 1))
 				src.locked = 0
 				src.overlays = null
-				overlays += image('icons/obj/storage.dmi', icon_open)
+				overlays += image('icons/obj/items/storage.dmi', icon_open)
 				src.code = null
 			else
 				src.code = "ERROR"
@@ -371,7 +387,7 @@
 
 /obj/item/storage/secure/sbriefcase
 	name = "secure briefcase"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "secure"
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
@@ -387,7 +403,7 @@
 /*
 /obj/item/storage/secure/sbriefcase/attack(mob/M as mob, mob/user as mob)
 	if (usr.bioHolder.HasEffect("clumsy") && prob(50))
-		user.visible_message("<span style=\"color:red\"><b>[usr]</b> swings [src] too hard and nails \himself in the face.</span>")
+		user.visible_message("<span class='alert'><b>[usr]</b> swings [src] too hard and nails \himself in the face.</span>")
 		random_brute_damage(usr, 10)
 		usr.paralysis += 2
 		return
@@ -403,7 +419,7 @@
 			else if (issilicon(M))
 				S = M
 			if (H && (istype(H.head, /obj/item/clothing/head/helmet/) && H.head.body_parts_covered & HEAD) && prob(80))
-				boutput(M, "<span style=\"color:red\">The helmet protects you from being hit hard in the head!</span>")
+				boutput(M, "<span class='alert'>The helmet protects you from being hit hard in the head!</span>")
 				return
 			var/time = rand(2, 6)
 			if (prob(75))
@@ -417,9 +433,9 @@
 			if (S && isalive(S)) S.lastgasp()
 			if(!isdead(M))	setunconcious(M)
 			M.set_clothing_icon_dirty()
-			M.visible_message("<span style=\"color:red\"><B>[M] has been knocked unconscious!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] has been knocked unconscious!</B></span>")
 		else
-			boutput(M, "<span style=\"color:red\">[user] tried to knock you unconcious!</span>")
+			boutput(M, "<span class='alert'>[user] tried to knock you unconcious!</span>")
 			M.change_eye_blurry(3)
 
 	return
@@ -427,7 +443,7 @@
 
 /obj/item/storage/secure/ssafe
 	name = "secure safe"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "safe"
 	icon_open = "safe0"
 	icon_locking = "safeb"
@@ -542,7 +558,7 @@
 	name = "paper- 'IOU'"
 	New()
 		..()
-		var/iou_name = pick(uppercase_letters) + " " + pick(last_names)
+		var/iou_name = pick(uppercase_letters) + " " + pick_string_autokey("names/last.txt")
 		if (prob(1))
 			iou_name = pick("L Alliman", "J Antonsson") // we're stealin all ur stuff >:D
 		var/iou_thing = pick("gold bar", "telecrystal", "skull", "football", "human arm", "human arm", "human leg", "human leg", "[pick("pile", "wad")] of cash",\
@@ -553,6 +569,48 @@
 		<u>[iou_thing]</u>
 		- <i>[iou_name]</i>"}
 		return
+
+/obj/item/storage/secure/ssafe/theorangeroom
+	configure_mode = 0
+	random_code = 1
+
+	New()
+		..()
+		var/loot = rand(1,2)
+		switch (loot)
+			if (1)
+				new /obj/item/storage/pill_bottle/cyberpunk(src)
+				new /obj/item/storage/pill_bottle/ipecac(src)
+				new /obj/item/gun/kinetic/pistol(src)
+				new /obj/item/paper/orangeroomsafe(src)
+			if (2)
+				new /obj/item/storage/pill_bottle/bathsalts(src)
+				new /obj/item/reagent_containers/pill/crank(src)
+				new /obj/item/reagent_containers/patch/LSD(src)
+				new /obj/item/paint_can/random(src)
+				var/obj/item/spacecash/random/tourist/S = unpool(/obj/item/spacecash/random/tourist)
+				S.setup(src)
+
+/obj/item/paper/orangeroomsafe
+	name = "Bon voyage!"
+
+	New()
+		..()
+		src.icon_state = "thermal_paper"
+		src.desc = "This piece of paper has been scribbled on with focused elegance."
+		src.info = {"<center><h2>Goodbye boredom!</h2></center>
+		<hr>
+		Today is my first day abboard this vessel and oh wow! I would have never guessed that I'd be the lucky bastard to get to sleep the first shift.
+		<br>
+		<br>
+		Joffrey is working the engine and making sure that we don't blow up and that curious computer in the cockpit brings us to where we gotta go.
+		<br>
+		Certainly checking out if the nearest NanoTrasen station is doing well is not a hard job at all.
+		<br>
+		For most of the day we simply twiddle our thumbs and kick back.
+		<br>
+		<br>
+		<i>I think I'll take a good nights sleep and relax with my personal goodies. :)</i>"}
 
 /obj/item/storage/secure/ssafe/theblindpig
 	configure_mode = 0
@@ -654,7 +712,7 @@
 				S.setup(src)
 				S = unpool(/obj/item/spacecash/thousand)
 				S.setup(src)
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING

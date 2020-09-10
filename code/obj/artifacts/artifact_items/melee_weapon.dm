@@ -53,11 +53,11 @@
 			return
 		if (!isliving(user) || !isliving(target))
 			return
-		user.visible_message("<span style=\"color:red\"><b>[user.name]</b> attacks [target.name] with [O]!</span>")
+		user.visible_message("<span class='alert'><b>[user.name]</b> attacks [target.name] with [O]!</span>")
 		var/turf/T = get_turf(user)
 		playsound(T, hitsound, 50, 1, -1)
 		if (src.deadly)
-			user.visible_message("<span style=\"color:red\"><b>[target] is utterly destroyed!</b></span>")
+			user.visible_message("<span class='alert'><b>[target] is utterly destroyed!</b></span>")
 			target.gib()
 		else
 			switch(damtype)
@@ -66,9 +66,7 @@
 				if ("fire")
 					random_burn_damage(target, dmg_amount)
 				if ("toxin")
-					if (ishuman(target))
-						var/mob/living/carbon/human/H = target
-						H.toxloss += rand(1, dmg_amount)
+					target.take_toxin_damage(rand(1, dmg_amount))
 			if (src.stun_time)
 				target.changeStatus("stunned", src.stun_time * 15)
 			if (src.KO_time)

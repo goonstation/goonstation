@@ -5,7 +5,7 @@
 /obj/item/cloak_gen
 	name = "cloaking field generator"
 	desc = "It's humming softly."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "cloakgen_off"
 	var/range = 3
 	var/maxrange = 5
@@ -17,6 +17,7 @@
 	contraband = 2
 
 	New()
+		..()
 		var/obj/item/remote/cloak_gen/remote = new /obj/item/remote/cloak_gen(src.loc)
 		SPAWN_DBG(0)
 			remote.my_gen = src
@@ -29,7 +30,7 @@
 		return
 
 	attack_self()
-		boutput(usr, "<span style=\"color:red\">I need to place it on the ground to use it.</span>")
+		boutput(usr, "<span class='alert'>I need to place it on the ground to use it.</span>")
 
 	// Shouldn't be required, but there have been surplus crate-related bugs in the past (Convair880).
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -62,14 +63,14 @@
 
 		if (!isturf(loc))
 			if (usr && ismob(usr))
-				boutput(usr, "<span style=\"color:red\">The field generator must be on the floor to be activated.</span>")
+				boutput(usr, "<span class='alert'>The field generator must be on the floor to be activated.</span>")
 			return
 
 		active = 1
 		anchored = 1
 
 		if (usr && ismob(usr))
-			boutput(usr, "<span style=\"color:blue\">You activate the cloak field generator.</span>")
+			boutput(usr, "<span class='notice'>You activate the cloak field generator.</span>")
 
 		for(var/turf/T in range(range,src))
 			if(!isturf(T)) continue
@@ -87,7 +88,7 @@
 		active = 0
 		anchored = 0
 		if (usr && ismob(usr))
-			boutput(usr, "<span style=\"color:blue\">You deactivate the cloak field generator.</span>")
+			boutput(usr, "<span class='notice'>You deactivate the cloak field generator.</span>")
 		for(var/A in fields)
 			qdel(A)
 
@@ -116,7 +117,7 @@
 					src.anti_spam = world.time
 					my_gen.turn_on()
 			else
-				boutput(usr, "<span style=\"color:red\">No signal detected. Swipe remote on a cloaking generator to establish a connection.</span>")
+				boutput(usr, "<span class='alert'>No signal detected. Swipe remote on a cloaking generator to establish a connection.</span>")
 		return
 
 	verb/set_pattern()
@@ -139,53 +140,53 @@
 		if(my_gen.active)
 			my_gen.turn_off()
 			my_gen.turn_on()
-		boutput(usr, "<span style=\"color:blue\">You set the pattern to '[input]'.</span>")
+		boutput(usr, "<span class='notice'>You set the pattern to '[input]'.</span>")
 
 	verb/set_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		var/input = input(usr,"Range 0-[my_gen.maxrange]:","Set range",my_gen.range) as num
 		if(input > my_gen.maxrange || input < 0)
-			boutput(usr, "<span style=\"color:red\">Invalid setting.</span>")
+			boutput(usr, "<span class='alert'>Invalid setting.</span>")
 			return
 		my_gen.range = input
 		if(my_gen.active)
 			my_gen.turn_off()
 			my_gen.turn_on()
-		boutput(usr, "<span style=\"color:blue\">You set the range to [my_gen.range].</span>")
+		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
 
 	verb/increase_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		if (my_gen.range + 1 > my_gen.maxrange)
-			boutput(usr, "<span style=\"color:red\">Maximum range reached ([my_gen.maxrange]).</span>")
+			boutput(usr, "<span class='alert'>Maximum range reached ([my_gen.maxrange]).</span>")
 			return
 		my_gen.range++
 		if(my_gen.active)
 			my_gen.turn_off()
 			my_gen.turn_on()
-		boutput(usr, "<span style=\"color:blue\">You set the range to [my_gen.range].</span>")
+		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
 
 	verb/decrease_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		if (my_gen.range - 1 < 0)
-			boutput(usr, "<span style=\"color:red\">Minimum range reached (0).</span>")
+			boutput(usr, "<span class='alert'>Minimum range reached (0).</span>")
 			return
 		my_gen.range--
 		if(my_gen.active)
 			my_gen.turn_off()
 			my_gen.turn_on()
-		boutput(usr, "<span style=\"color:blue\">You set the range to [my_gen.range].</span>")
+		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
 
 	verb/turn_on()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen || my_gen.active) return
 		my_gen.turn_on()
-		boutput(usr, "<span style=\"color:blue\">You turn the cloaking field generator on.</span>")
+		boutput(usr, "<span class='notice'>You turn the cloaking field generator on.</span>")
 
 	verb/turn_off()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen || !my_gen.active) return
 		my_gen.turn_off()
-		boutput(usr, "<span style=\"color:blue\">You turn the cloaking field generator off.</span>")
+		boutput(usr, "<span class='notice'>You turn the cloaking field generator off.</span>")

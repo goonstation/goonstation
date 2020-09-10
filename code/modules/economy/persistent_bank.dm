@@ -44,28 +44,28 @@
 			if (try_purchase(who, p))
 				Unsubscribe( who )
 		else
-			boutput( who, "<span style='color:blue'><b>Oh no! Something is broken. Please tell a coder. (problem retrieving purchaseable id : [id])</b></span>" )
+			boutput( who, "<span class='notice'><b>Oh no! Something is broken. Please tell a coder. (problem retrieving purchaseable id : [id])</b></span>" )
 
 	proc/try_purchase(var/client/c, var/datum/bank_purchaseable/p)
 		if (c.bank_can_afford(p.cost))
 			c << sound( 'sound/misc/cashregister.ogg' )
-			boutput( usr, "<span style='color:blue'><b>You purchased [p.name] for the round!</b></span>" )
+			boutput( usr, "<span class='notice'><b>You purchased [p.name] for the round!</b></span>" )
 			if (istype(c.mob,/mob/new_player))
 				var/mob/new_player/playermob = c.mob
 				if (playermob.mind)
 					playermob.mind.purchased_bank_item = p
 					c.persistent_bank_item = 0
 				else
-					boutput( usr, "<span style='color:blue'><b>Can't find mind of new player mob [playermob]... please report this to a coder</b></span>" )
+					boutput( usr, "<span class='notice'><b>Can't find mind of new player mob [playermob]... please report this to a coder</b></span>" )
 					return 0
 			else
-				boutput( usr, "<span style='color:blue'><b>Can't find new player mob from client [c]... please report this to a coder</b></span>" )
+				boutput( usr, "<span class='notice'><b>Can't find new player mob from client [c]... please report this to a coder</b></span>" )
 				return 0
 
 			return 1
 		else
 			c << sound( 'sound/items/penclick.ogg' )
-			boutput( usr, "<span style='color:blue'><b>You can't afford [p.name]!</b></span>" )
+			boutput( usr, "<span class='notice'><b>You can't afford [p.name]!</b></span>" )
 			return 0
 
 
@@ -84,6 +84,8 @@
 	var/held_item = 0
 	var/completed_objs = 0
 	var/all_objs = 0
+	var/pilot = 0 //buckled into pilots chair
+	var/pilot_bonus = 0
 
 	GetBody()
 		var/ret
@@ -99,9 +101,11 @@
 		else
 			ret = "<p style=\"text-align:left;\">Base Wage .....<span style=\"float:right;\"><b>[final_payout]   </b></span> </p><br style=\"line-height:0px;\" />"
 			ret += "<p style=\"text-align:left;\">Antagonist - No tax!</p>"
-
-		if (it_is_ass_day)
+		if (pilot)
+			ret += "<p style=\"text-align:left;\">Pilot's bonus ....<span style=\"float:right;\"><b>+ [pilot_bonus] </b></span> </p>"
+#if ASS_JAM
 			ret += "<p style=\"text-align:left;\">2X ASS DAY BONUS!</p>"
+#endif
 
 		ret += "<hr>"
 		ret += "<big><b><p style=\"text-align:left;\">PAYOUT ..... <span style=\"float:right;\">[final_payout]</span> </p></b></big><br>"
@@ -117,9 +121,9 @@
 		return
 
 	if (purchase.Create(src))
-		boutput( src, "<span style='color:blue'><b>[purchase.name] equipped successfully.</b></span>" )
+		boutput( src, "<span class='notice'><b>[purchase.name] equipped successfully.</b></span>" )
 	else
-		boutput( src, "<span style='color:blue'><b>[purchase.name] is not available for the job you rolled. It will remain as your held item if possible.</b></span>" )
+		boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It will remain as your held item if possible.</b></span>" )
 
 	if (src.client.persistent_bank_item != purchase.name) //Only sub_from_bank if the purchase does not match the Held Item
 		src.client.sub_from_bank(purchase)

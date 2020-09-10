@@ -15,6 +15,7 @@
 	var/helpable = 1
 
 	New()
+		..()
 		var/obj/screen/blob/B = new /obj/screen/blob(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
@@ -25,10 +26,9 @@
 
 	disposing()
 		if (button)
-			if (button.ability == src)
-				button.ability = null
-			if (button.upgrade == src)
-				button.upgrade = null
+			button.dispose()
+			button = null
+		owner = null
 		..()
 
 	proc
@@ -37,14 +37,14 @@
 				return 1
 			if (bio_point_cost > 0)
 				if (!owner.hasPoints(bio_point_cost))
-					boutput(owner, "<span style=\"color:red\">You do not have enough bio points to use that ability.</span>")
+					boutput(owner, "<span class='alert'>You do not have enough bio points to use that ability.</span>")
 					return 1
 			if (cooldown_time > 0 && last_used > world.time)
-				boutput(owner, "<span style=\"color:red\">That ability is on cooldown for [round((last_used - world.time) / 10)] seconds.</span>")
+				boutput(owner, "<span class='alert'>That ability is on cooldown for [round((last_used - world.time) / 10)] seconds.</span>")
 				return 1
 			var/area/A = get_area(T)
 			if(A && A.sanctuary)
-				boutput(owner, "<span style='color:red'>You cannot use that ability here.</span>")
+				boutput(owner, "<span class='alert'>You cannot use that ability here.</span>")
 				return 1
 			return 0
 
@@ -176,7 +176,7 @@
 			owner.help_mode = 0
 		else
 			owner.help_mode = 1
-			boutput(owner, "<span style=\"color:blue\">Help Mode has been activated  To disable it, click on this button again.</span>")
+			boutput(owner, "<span class='notice'>Help Mode has been activated  To disable it, click on this button again.</span>")
 		src.button.icon_state = "blob-help[owner.help_mode]"
 		owner.update_buttons()
 
@@ -195,7 +195,7 @@
 			T = get_turf(owner)
 
 		if (istype(T,/turf/space/))
-			boutput(owner, "<span style=\"color:red\">You can't start in space!</span>")
+			boutput(owner, "<span class='alert'>You can't start in space!</span>")
 			return
 
 		if (!isadmin(owner)) //admins can spawn wherever
@@ -204,22 +204,22 @@
 				return
 
 			if (istype(T,/turf/unsimulated/))
-				boutput(owner, "<span style=\"color:red\">This kind of tile cannot support a blob.</span>")
+				boutput(owner, "<span class='alert'>This kind of tile cannot support a blob.</span>")
 				return
 
 			if (T.density)
-				boutput(owner, "<span style=\"color:red\">You can't start inside a wall!</span>")
+				boutput(owner, "<span class='alert'>You can't start inside a wall!</span>")
 				return
 
 			for (var/atom/O in T.contents)
 				if (O.density)
-					boutput(owner, "<span style=\"color:red\">That tile is blocked by [O].</span>")
+					boutput(owner, "<span class='alert'>That tile is blocked by [O].</span>")
 					return
 
 			for (var/mob/M in viewers(T, 7))
 				if (isrobot(M) || ishuman(M))
 					if (!isdead(M))
-						boutput(owner, "<span style=\"color:red\">You are being watched.</span>")
+						boutput(owner, "<span class='alert'>You are being watched.</span>")
 						return
 
 		if (!tutorial_check("deploy", T))
@@ -231,9 +231,6 @@
 		C.setOvermind(owner)
 		C.Life()
 		owner.started = 1
-		owner.remove_ability(/datum/blob_ability/plant_nucleus)
-		owner.remove_ability(/datum/blob_ability/set_color)
-		owner.remove_ability(/datum/blob_ability/tutorial)
 		owner.add_ability(/datum/blob_ability/spread)
 		owner.add_ability(/datum/blob_ability/attack)
 		owner.add_ability(/datum/blob_ability/consume)
@@ -253,6 +250,10 @@
 			//do a little "blobsplosion"
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
+
+		owner.remove_ability(/datum/blob_ability/plant_nucleus)
+		owner.remove_ability(/datum/blob_ability/set_color)
+		owner.remove_ability(/datum/blob_ability/tutorial)
 
 
 /datum/blob_ability/set_color
@@ -283,7 +284,7 @@
 		if (..())
 			return
 		if (owner.tutorial)
-			boutput(owner, "<span style=\"color:red\">You're already in the tutorial!</span>")
+			boutput(owner, "<span class='alert'>You're already in the tutorial!</span>")
 			return
 		owner.start_tutorial()
 
@@ -298,7 +299,7 @@
 		if (..())
 			return
 		if (!owner.tutorial)
-			boutput(owner, "<span style=\"color:red\">You're not in the tutorial!</span>")
+			boutput(owner, "<span class='alert'>You're not in the tutorial!</span>")
 			return
 		owner.tutorial.Finish()
 		owner.tutorial = null
@@ -318,6 +319,18 @@
 		if (!T)
 			T = get_turf(owner)
 
+		if (istype(T, /turf/space))
+			var/datum/blob_ability/bridge/B = owner.get_ability(/datum/blob_ability/bridge)
+
+			if (B)
+				var/success = !B.onUse(T)		//Abilities return 1 on failure and 0 on success. fml
+				if (success)
+					boutput(owner, "<span class='notice'>You create a bridge on [T].</span>")
+				else
+					boutput(owner, "<span class='alert'>You were unable to place a bridge on [T].</span>")
+
+				return 1
+
 		var/obj/blob/B1 = T.can_blob_spread_here(owner, null, isadmin(owner))
 		if (!istype(B1))
 			return 1
@@ -328,14 +341,12 @@
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
-		if (owner.blobs.len < 40)
-			cooldown_time = max(12 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
-		else if (owner.blobs.len < 80)
-			cooldown_time = max(17 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
-		else if (owner.blobs.len < 160)
-			cooldown_time = max(27 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+		if (owner.blobs.len < 100)
+			cooldown_time = max(15 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+		else if (owner.blobs.len < 200)
+			cooldown_time = max(20 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
 		else
-			cooldown_time = max(27 + (owner.blobs.len - 160) * 0.08 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = max(25 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
 
 		cooldown_time = max(cooldown_time, 6)
 
@@ -375,7 +386,7 @@
 			return 1
 		using = 1
 		if (!owner.extra_nuclei)
-			boutput(usr, "<span style=\"color:red\">You cannot place additional nuclei at this time.</span>")
+			boutput(usr, "<span class='alert'>You cannot place additional nuclei at this time.</span>")
 			using = 0
 			return 1
 
@@ -383,11 +394,11 @@
 			T = get_turf(owner)
 		var/obj/blob/B = locate() in T
 		if (!B)
-			boutput(usr, "<span style=\"color:red\">No blob here to convert!</span>")
+			boutput(usr, "<span class='alert'>No blob here to convert!</span>")
 			using = 0
 			return 1
 		if (B.type != /obj/blob)
-			boutput(usr, "<span style=\"color:red\">Cannot promote special blob tiles!</span>")
+			boutput(usr, "<span class='alert'>Cannot promote special blob tiles!</span>")
 			using = 0
 			return 1
 		owner.extra_nuclei--
@@ -420,12 +431,12 @@
 		if (B.overmind != owner)
 			return
 		if (istype(B, /obj/blob/nucleus))
-			boutput(usr, "<span style=\"color:red\">You cannot consume a nucleus!</span>")
+			boutput(usr, "<span class='alert'>You cannot consume a nucleus!</span>")
 			return
 		if (!tutorial_check("consume", T))
 			return
 		playsound(T, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
-		B.visible_message("<span style=\"color:red\"><b>The blob consumes a piece of itself!</b></span>")
+		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
 		qdel(B)
 		src.deduct_bio_points()
 		src.do_cooldown()
@@ -457,7 +468,7 @@
 					break
 
 		if (!istype(B))
-			boutput(owner, "<span style=\"color:red\">That tile is not adjacent to a blob capable of attacking.</span>")
+			boutput(owner, "<span class='alert'>That tile is not adjacent to a blob capable of attacking.</span>")
 			return
 
 		if (!tutorial_check("attack", T))
@@ -497,7 +508,7 @@
 			src.deduct_bio_points()
 			src.do_cooldown()
 		else
-			boutput(owner, "<span style=\"color:red\">There is no blob there to repair.</span>")
+			boutput(owner, "<span class='alert'>There is no blob there to repair.</span>")
 
 /datum/blob_ability/absorb
 	name = "Absorb"
@@ -514,10 +525,10 @@
 
 		var/obj/blob/B = T.get_blob_on_this_turf()
 		if (!istype(B))
-			boutput(owner, "<span style=\"color:red\">There is no blob there to absorb someone with.</span>")
+			boutput(owner, "<span class='alert'>There is no blob there to absorb someone with.</span>")
 			return
 		if (!B.can_absorb)
-			boutput(owner, "<span style=\"color:red\">[B] cannot absorb beings.</span>")
+			boutput(owner, "<span class='alert'>[B] cannot absorb beings.</span>")
 
 		if (!tutorial_check("absorb", T))
 			return
@@ -533,19 +544,19 @@
 				if (A:decomp_stage != 4)
 					M = A
 					break
-			if (iscritter(A))
+			if (ismobcritter(A))
 				M = A
 				break
 
 		if (!M)
 			M = locate() in T
 			if (ishuman(M))
-				boutput(owner, "<span style=\"color:red\">There's no flesh left on [M.name] to absorb.</span>")
+				boutput(owner, "<span class='alert'>There's no flesh left on [M.name] to absorb.</span>")
 				return
-			boutput(owner, "<span style=\"color:red\">There is no-one there that you can absorb.</span>")
+			boutput(owner, "<span class='alert'>There is no-one there that you can absorb.</span>")
 			return
 
-		B.visible_message("<span style=\"color:red\"><b>The blob starts trying to absorb [M.name]!</b></span>")
+		B.visible_message("<span class='alert'><b>The blob starts trying to absorb [M.name]!</b></span>")
 		actions.start(new /datum/action/bar/blob_absorb(M, owner), B)
 
 
@@ -591,9 +602,9 @@
 			return
 
 		//This whole first bit is all still pretty ugly cause this ability works on both critters and humans. I didn't have it in me to rewrite the whole thing - kyle
-		if (iscritter(target))
+		if (ismobcritter(target))
 			target.gib()
-			target.visible_message("<span style=\"color:red\"><b>The blob tries to absorb [target.name], but something goes horribly right!</b></span>")
+			target.visible_message("<span class='alert'><b>The blob tries to absorb [target.name], but something goes horribly right!</b></span>")
 			if (blob_o && blob_o.mind) //ahem ahem AI blobs exist
 				blob_o.mind.blob_absorb_victims += target
 			return
@@ -617,7 +628,7 @@
 
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
-		H.visible_message("<span style=\"color:red\"><b>[H.name] is absorbed by the blob!</b></span>")
+		H.visible_message("<span class='alert'><b>[H.name] is absorbed by the blob!</b></span>")
 		playsound(H.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
 
 		H.transforming = 1
@@ -652,7 +663,7 @@
 
 		var/obj/blob/B = locate() in T
 		if (!B)
-			boutput(owner, "<span style=\"color:red\">No blob there to reinforce.</span>")
+			boutput(owner, "<span class='alert'>No blob there to reinforce.</span>")
 			return 1
 
 		var/list/deposits = list()
@@ -661,7 +672,7 @@
 			deposits += M
 
 		if (!deposits.len)
-			boutput(owner, "<span style=\"color:red\">No material deposits for reinforcement there.</span>")
+			boutput(owner, "<span class='alert'>No material deposits for reinforcement there.</span>")
 			return 1
 
 		var/obj/material_deposit/reinforcing = deposits[1]
@@ -672,7 +683,7 @@
 		if (reinforcing.disposed)
 			return 1
 
-		B.visible_message("<span style=\"color:red\"><b>[B] reinforces using [reinforcing]!</b></span>")
+		B.visible_message("<span class='alert'><b>[B] reinforces using [reinforcing]!</b></span>")
 
 		B.setMaterial(getInterpolatedMaterial(B.material, reinforcing.material, 0.17))
 		qdel(reinforcing)
@@ -696,10 +707,10 @@
 
 		var/obj/blob/deposit/B = locate() in T
 		if (!B)
-			boutput(owner, "<span style=\"color:red\">Reclaimers must be placed on untapped reagent deposits.</span>")
+			boutput(owner, "<span class='alert'>Reclaimers must be placed on untapped reagent deposits.</span>")
 			return 1
 		if (B.type != /obj/blob/deposit)
-			boutput(owner, "<span style=\"color:red\">Reclaimers must be placed on untapped reagent deposits.</span>")
+			boutput(owner, "<span class='alert'>Reclaimers must be placed on untapped reagent deposits.</span>")
 			return 1
 
 		if (!tutorial_check("reclaimer", T))
@@ -726,10 +737,10 @@
 
 		var/obj/blob/deposit/B = locate() in T
 		if (!B)
-			boutput(owner, "<span style=\"color:red\">Replicators must be placed on untapped reagent deposits.</span>")
+			boutput(owner, "<span class='alert'>Replicators must be placed on untapped reagent deposits.</span>")
 			return 1
 		if (B.type != /obj/blob/deposit)
-			boutput(owner, "<span style=\"color:red\">Replicators must be placed on untapped reagent deposits.</span>")
+			boutput(owner, "<span class='alert'>Replicators must be placed on untapped reagent deposits.</span>")
 			return 1
 
 		if (!tutorial_check("replicator", T))
@@ -745,8 +756,8 @@
 	name = "Build Bridge"
 	icon_state = "blob-bridge"
 	desc = "Creates a floor that you can cross through in space. The floor can be destroyed by fire or weldingtools, and does not act as a blob tile."
-	bio_point_cost = 15
-	cooldown_time = 200
+	bio_point_cost = 5
+	cooldown_time = 5 SECONDS
 
 	onUse(var/turf/T)
 		if (..())
@@ -755,7 +766,7 @@
 			T = get_turf(owner)
 
 		if (!istype(T, /turf/space))
-			boutput(owner, "<span style=\"color:red\">Bridges must be placed on space tiles.</span>")
+			boutput(owner, "<span class='alert'>Bridges must be placed on space tiles.</span>")
 			return 1
 
 		var/passed = 0
@@ -767,7 +778,7 @@
 					break
 
 		if (!passed)
-			boutput(owner, "<span style=\"color:red\">You require an adjacent blob tile to create a bridge.</span>")
+			boutput(owner, "<span class='alert'>You require an adjacent blob tile to create a bridge.</span>")
 			return 1
 
 		if (!tutorial_check("bridge", T))
@@ -811,7 +822,7 @@
 		for (var/obj/item/I in T)
 			items += I
 		if (!items.len)
-			boutput(owner, "<span style=\"color:red\">Nothing to devour there.</span>")
+			boutput(owner, "<span class='alert'>Nothing to devour there.</span>")
 			return 1
 
 		var/obj/blob/Bleb = locate() in T
@@ -823,7 +834,7 @@
 					break
 
 		if (!Bleb)
-			boutput(owner, "<span style=\"color:red\">There is no blob nearby which can devour items.</span>")
+			boutput(owner, "<span class='alert'>There is no blob nearby which can devour items.</span>")
 			return 1
 
 		if (!tutorial_check("devour", T))
@@ -843,11 +854,11 @@
 			return 1
 
 		if (!Bleb) //Wire: Duplicated from above because there's an input() in-between (Fixes runtime: Cannot execute null.visible message())
-			boutput(owner, "<span style=\"color:red\">There is no blob nearby which can devour items.</span>")
+			boutput(owner, "<span class='alert'>There is no blob nearby which can devour items.</span>")
 			return 1
 
-		Bleb.visible_message("<span style=\"color:red\"><b>The blobs starts devouring [I]!</b></span>")
-		sleep(20)
+		Bleb.visible_message("<span class='alert'><b>The blobs starts devouring [I]!</b></span>")
+		sleep(2 SECONDS)
 		if (!I)
 			return 1
 		if (!isturf(I.loc))
@@ -865,7 +876,7 @@
 
 		var/do_pool = 0
 
-		Bleb.visible_message("<span style=\"color:red\"><b>The blob devours [I]!</b></span>")
+		Bleb.visible_message("<span class='alert'><b>The blob devours [I]!</b></span>")
 
 		if (I.material)
 			var/count = 2
@@ -927,17 +938,17 @@
 		var/obj/blob/B = T.get_blob_on_this_turf()
 
 		if (!B)
-			boutput(owner, "<span style=\"color:red\">There is no blob there to convert.</span>")
+			boutput(owner, "<span class='alert'>There is no blob there to convert.</span>")
 			return 1
 
 		if (gen_rate_invest > 0)
 			if (owner.get_gen_rate() < gen_rate_invest + 1)
-				boutput(owner, "<span style=\"color:red\">You do not have a high enough generation rate to use that ability.</span>")
-				boutput(owner, "<span style=\"color:red\">Keep in mind that you cannot reduce your generation rate to zero or below.</span>")
+				boutput(owner, "<span class='alert'>You do not have a high enough generation rate to use that ability.</span>")
+				boutput(owner, "<span class='alert'>Keep in mind that you cannot reduce your generation rate to zero or below.</span>")
 				return 1
 
 		if (B.type != /obj/blob)
-			boutput(owner, "<span style=\"color:red\">You cannot convert special blob cells.</span>")
+			boutput(owner, "<span class='alert'>You cannot convert special blob cells.</span>")
 			return 1
 
 		if (!tutorial_check(buildname, T))
@@ -964,8 +975,8 @@
 /datum/blob_ability/build/ribosome
 	name = "Build Ribosome Cell"
 	icon_state = "blob-ribosome"
-	desc = "This will convert a blob tile into a Ribosome. Ribosomes reduce the penalty on spread cooldown induced by the size of the blob."
-	bio_point_cost = 5
+	desc = "This will convert a blob tile into a Ribosome. Ribosomes increase your generation of biopoints, allowing you to do more things."
+	bio_point_cost = 15
 	build_path = /obj/blob/ribosome
 	buildname = "ribosome"
 
@@ -1047,6 +1058,7 @@
 	var/upgradename = "upgrade"
 
 	New()
+		..()
 		var/obj/screen/blob/B = new /obj/screen/blob(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
@@ -1055,11 +1067,18 @@
 		B.desc = src.desc
 		src.button = B
 
+	disposing()
+		if(button)
+			button.dispose()
+			button = null
+		owner = null
+		..()
+
 	proc/check_requirements()
 		if (!istype(owner))
 			return 0
 		if (owner.evo_points < evo_point_cost)
-			//boutput(owner, "<span style=\"color:red\">You need [bio_point_cost] bio-points to take this upgrade.</span>")
+			//boutput(owner, "<span class='alert'>You need [bio_point_cost] bio-points to take this upgrade.</span>")
 			return 0
 		return 1
 
@@ -1129,8 +1148,8 @@
 	name = "Passive: Quicker Spread"
 	icon_state = "blob-quickspread"
 	desc = "Reduces the cooldown of your Spread ability by 1 second. Can be repeated. The cooldown of Spread cannot go below 1 second."
-	evo_point_cost = 3
-	scaling_cost_add = 7
+	evo_point_cost = 2
+	scaling_cost_add = 3
 	repeatable = -1
 	upgradename = "spread"
 
@@ -1232,10 +1251,10 @@
 			if (M.overmind == owner && M.material)
 				count++
 		if (count < required_deposits)
-			boutput(usr, "<span style=\"color:red\"><b>You need more deposits on your screen! (Required: [required_deposits], have: [count])</b></span>")
+			boutput(usr, "<span class='alert'><b>You need more deposits on your screen! (Required: [required_deposits], have: [count])</b></span>")
 			return 1
 		if (taking)
-			boutput(usr, "<span style=\"color:red\">Cannot take this upgrade currently! Please wait.</span>")
+			boutput(usr, "<span class='alert'>Cannot take this upgrade currently! Please wait.</span>")
 			return 1
 		taking = 1
 		var/list/mats = list()
@@ -1264,7 +1283,7 @@
 		if (!total)
 			return 1
 		if (total < required_deposits)
-			boutput(usr, "<span style=\"color:red\"><b>You need more deposits on your screen! (Required: [required_deposits], have (of highest material '[max_id]'): [count])</b></span>")
+			boutput(usr, "<span class='alert'><b>You need more deposits on your screen! (Required: [required_deposits], have (of highest material '[max_id]'): [count])</b></span>")
 			return 1
 		if (!mats.len)
 			return 1
@@ -1272,7 +1291,7 @@
 		owner.my_material = getInterpolatedMaterial(owner.my_material, to_merge, 0.17)
 		for (var/obj/O in deposits)
 			qdel(O)
-		boutput(usr, "<span style=\"color:blue\">Applying upgrade to the blob...</span>")
+		boutput(usr, "<span class='notice'>Applying upgrade to the blob...</span>")
 		SPAWN_DBG(0)
 			var/wg = 0
 			for (var/obj/blob/O in owner.blobs)
@@ -1282,9 +1301,9 @@
 					O.setMaterial(getInterpolatedMaterial(O.material, to_merge, 0.17))
 				wg++
 				if (wg >= 20)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					wg = 0
-			boutput(usr, "<span style=\"color:blue\">Finished applying material upgrade!</span>")
+			boutput(usr, "<span class='notice'>Finished applying material upgrade!</span>")
 			taking = 0
 		if (!(src in owner.upgrades))
 			owner.upgrades += src
@@ -1320,7 +1339,7 @@
 	name = "Structure: Bridge"
 	icon_state = "blob-bridge"
 	desc = "Unlocks the Bridge blob bit, which can be placed on space tiles. Bridges are floor tiles, you still need to spread onto them, and cannot spread from them."
-	evo_point_cost = 3
+	evo_point_cost = 2
 	initially_disabled = 0
 	upgradename = "bridge"
 

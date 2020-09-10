@@ -73,13 +73,13 @@
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				if(do_after(user, 20))
-					boutput(user, "<span style=\"color:blue\">You wrench the frame into place.</span>")
+					boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = 1
 					src.state = 1
-			if(istype(P, /obj/item/weldingtool))
+			if(isweldingtool(P))
 				playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
 				if(do_after(user, 20))
-					boutput(user, "<span style=\"color:blue\">You deconstruct the frame.</span>")
+					boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 					var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
 					if(src.material)
 						A.setMaterial(src.material)
@@ -92,35 +92,35 @@
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				if(do_after(user, 20))
-					boutput(user, "<span style=\"color:blue\">You unfasten the frame.</span>")
+					boutput(user, "<span class='notice'>You unfasten the frame.</span>")
 					src.anchored = 0
 					src.state = 0
 			if (istype(P, /obj/item/motherboard) && !mainboard)
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You place the mainboard inside the frame.</span>")
+				boutput(user, "<span class='notice'>You place the mainboard inside the frame.</span>")
 				src.icon_state = "1"
 				src.mainboard = P
 				user.drop_item()
 				P.set_loc(src)
 			if (isscrewingtool(P) && mainboard)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You screw the mainboard into place.</span>")
+				boutput(user, "<span class='notice'>You screw the mainboard into place.</span>")
 				src.state = 2
 				src.icon_state = "2"
 			if (ispryingtool(P) && mainboard)
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You remove the mainboard.</span>")
+				boutput(user, "<span class='notice'>You remove the mainboard.</span>")
 				src.state = 1
 				src.icon_state = "0"
 				mainboard.set_loc(src.loc)
 				src.mainboard = null
 			if (istype(P, /obj/item/circuitboard))
-				boutput(user, "<span style=\"color:red\">This is the wrong type of frame, it won't fit!</span>")
+				boutput(user, "<span class='alert'>This is the wrong type of frame, it won't fit!</span>")
 
 		if(2)
 			if (isscrewingtool(P) && mainboard && (!peripherals.len))
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You unfasten the mainboard.</span>")
+				boutput(user, "<span class='notice'>You unfasten the mainboard.</span>")
 				src.state = 1
 				src.icon_state = "1"
 
@@ -129,13 +129,13 @@
 					user.drop_item()
 					src.peripherals.Add(P)
 					P.set_loc(src)
-					boutput(user, "<span style=\"color:blue\">You add [P] to the frame.</span>")
+					boutput(user, "<span class='notice'>You add [P] to the frame.</span>")
 				else
-					boutput(user, "<span style=\"color:red\">There is no more room for peripheral cards.</span>")
+					boutput(user, "<span class='alert'>There is no more room for peripheral cards.</span>")
 
 			if (ispryingtool(P) && src.peripherals.len)
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You remove the peripheral boards.</span>")
+				boutput(user, "<span class='notice'>You remove the peripheral boards.</span>")
 				for(var/obj/item/peripheral/W in src.peripherals)
 					W.set_loc(src.loc)
 					src.peripherals.Remove(W)
@@ -149,13 +149,13 @@
 							return
 						P:amount -= 5
 						if(!P:amount) qdel(P)
-						boutput(user, "<span style=\"color:blue\">You add cables to the frame.</span>")
+						boutput(user, "<span class='notice'>You add cables to the frame.</span>")
 						src.state = 3
 						src.icon_state = "3"
 		if(3)
 			if (issnippingtool(P))
 				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You remove the cables.</span>")
+				boutput(user, "<span class='notice'>You remove the cables.</span>")
 				src.state = 2
 				src.icon_state = "2"
 				var/obj/item/cable_coil/A = new /obj/item/cable_coil( src.loc )
@@ -168,11 +168,11 @@
 				user.drop_item()
 				src.hd = P
 				P.set_loc(src)
-				boutput(user, "<span style=\"color:blue\">You connect the drive to the cabling.</span>")
+				boutput(user, "<span class='notice'>You connect the drive to the cabling.</span>")
 
 			if (ispryingtool(P) && src.hd)
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You remove the hard drive.</span>")
+				boutput(user, "<span class='notice'>You remove the hard drive.</span>")
 				src.hd.set_loc(src.loc)
 				src.hd = null
 
@@ -185,17 +185,17 @@
 							S.amount -= src.glass_needed
 							if(S.amount < 1)
 								qdel(S)
-							boutput(user, "<span style=\"color:blue\">You put in the glass panel.</span>")
+							boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 							src.state = 4
 							src.icon_state = "4"
 					else
-						boutput(user, "<span style=\"color:red\">There's not enough sheets on the stack.</span>")
+						boutput(user, "<span class='alert'>There's not enough sheets on the stack.</span>")
 				else
-					boutput(user, "<span style=\"color:red\">You need sheets of some kind of crystal or glass for this.</span>")
+					boutput(user, "<span class='alert'>You need sheets of some kind of crystal or glass for this.</span>")
 		if(4)
 			if (ispryingtool(P))
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You remove the glass panel.</span>")
+				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
 				src.state = 3
 				src.icon_state = "3"
 				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
@@ -203,7 +203,7 @@
 
 			if (isscrewingtool(P))
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				boutput(user, "<span style=\"color:blue\">You connect the monitor.</span>")
+				boutput(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer3/C= new /obj/machinery/computer3( src.loc )
 				if(src.material) C.setMaterial(src.material)
 				C.setup_drive_size = 0

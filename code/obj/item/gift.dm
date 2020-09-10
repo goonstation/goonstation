@@ -2,18 +2,20 @@
 
 /obj/item/wrapping_paper
 	name = "wrapping paper"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "wrap_paper-r"
 	item_state = "wrap_paper"
 	uses_multiple_icon_states = 1
 	amount = 20.0
 	desc = "Used for wrapping gifts. It's got a neat design!"
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
+	tooltip_flags = REBUILD_DIST
 	var/style = "r"
 
 	New()
+		..()
 		src.style = rand(1,8)
 		src.icon_state = "wrap_paper-[src.style]"
 
@@ -21,26 +23,28 @@
 	desc = "This wrapping paper is especially festive."
 
 	New()
+		..()
 		src.style = pick("r", "rs", "g", "gs")
 		src.icon_state = "wrap_paper-[src.style]"
 
 /obj/item/wrapping_paper/attackby(obj/item/W as obj, mob/user as mob)
 	if (!( locate(/obj/table, src.loc) ))
-		boutput(user, "<span style=\"color:blue\">You MUST put the paper on a table!</span>")
+		boutput(user, "<span class='notice'>You MUST put the paper on a table!</span>")
 		return
 	if (W.w_class < 4)
 		if ((istool(user.l_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.l_hand != W) || (istool(user.r_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.r_hand != W))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
-				boutput(user, "<span style=\"color:blue\">You need more paper!</span>")
+				boutput(user, "<span class='notice'>You need more paper!</span>")
 				return
 			else
 				src.amount -= a_used
+				tooltip_rebuild = 1
 				user.drop_item()
 				var/obj/item/gift/G = new /obj/item/gift(src.loc)
 				G.size = W.w_class
 				G.w_class = G.size + 1
-				G.icon_state = "gift[CLAMP(G.size, 1, 3)]-[src.style]"
+				G.icon_state = "gift[clamp(G.size, 1, 3)]-[src.style]"
 				G.gift = W
 				W.set_loc(G)
 				G.add_fingerprint(user)
@@ -55,9 +59,9 @@
 				qdel(src)
 				return
 		else
-			boutput(user, "<span style=\"color:blue\">You need something to cut [src] with!</span>")
+			boutput(user, "<span class='notice'>You need something to cut [src] with!</span>")
 	else
-		boutput(user, "<span style=\"color:blue\">The object is FAR too large!</span>")
+		boutput(user, "<span class='notice'>The object is FAR too large!</span>")
 	return
 
 /obj/item/wrapping_paper/get_desc(dist)
@@ -73,29 +77,30 @@
 			var/obj/spresent/present = new /obj/spresent (target.loc)
 			present.icon_state = "strange-[src.style]"
 			src.amount -= 2
+			tooltip_rebuild = 1
 
 			target.set_loc(present)
 		else
-			boutput(user, "<span style=\"color:blue\">You need more paper.</span>")
+			boutput(user, "<span class='notice'>You need more paper.</span>")
 	else
 		boutput(user, "They're moving around too much.")
 
 /obj/item/gift
 	desc = "For me!?"
 	name = "gift"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "gift2-p"
 	item_state = "gift"
 	var/size = 3.0
 	var/obj/item/gift = null
 	w_class = 4.0
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 
 /obj/item/gift/attack_self(mob/user as mob)
 	if(!src.gift)
-		boutput(user, "<span style=\"color:blue\">The gift was empty!</span>")
+		boutput(user, "<span class='notice'>The gift was empty!</span>")
 		qdel(src)
 		return
 
@@ -115,7 +120,7 @@
 /obj/item/a_gift
 	name = "gift"
 	desc = "I wonder what's inside!?"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "gift2-b"
 	item_state = "gift"
 	pressure_resistance = 70
@@ -132,7 +137,7 @@
 						/obj/item/gun/energy/taser_gun,
 						/obj/item/sword,
 						/obj/item/axe,
-						/obj/item/knife_butcher,
+						/obj/item/knife/butcher,
 						/obj/item/old_grenade/light_gimmick,
 						/obj/item/storage/belt/wrestling)
 
@@ -160,7 +165,7 @@
 
 /obj/item/a_gift/attack_self(mob/M as mob)
 	if (!islist(giftpaths) || !giftpaths.len)
-		boutput(M, "<span style='color:blue'>[src] was empty!</span>")
+		boutput(M, "<span class='notice'>[src] was empty!</span>")
 		qdel(src)
 		return
 
@@ -183,21 +188,21 @@
 /obj/spresent // bandaid fix for presents having no icon or name other than "spresent"
 	name = "present"
 	desc = "What could it be?"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "strange-r"
 
 /obj/spresent/relaymove(mob/user as mob)
 	if (user.stat)
 		return
-	boutput(user, "<span style=\"color:blue\">You can't move.</span>")
+	boutput(user, "<span class='notice'>You can't move.</span>")
 
 /obj/spresent/attackby(obj/item/W as obj, mob/user as mob)
 
 	if (!issnippingtool(W))
-		boutput(user, "<span style=\"color:blue\">I need a snipping tool for that.</span>")
+		boutput(user, "<span class='notice'>I need a snipping tool for that.</span>")
 		return
 
-	boutput(user, "<span style=\"color:blue\">You cut open the present.</span>")
+	boutput(user, "<span class='notice'>You cut open the present.</span>")
 
 	for(var/mob/M in src) //Should only be one but whatever.
 		M.set_loc(src.loc)
@@ -292,11 +297,13 @@ var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,
 	/obj/item/implanter/microbomb,
 	/obj/item/old_grenade/light_gimmick,
 	/obj/item/gun/energy/bfg,
-	/obj/item/engibox,
+	/obj/item/engibox/station_locked,
 	/obj/item/gun/energy/tommy_gun,
 	/obj/item/gun/energy/glitch_gun,
 	/obj/item/instrument/trumpet/dootdoot,
 	/obj/item/instrument/fiddle/satanic,
+	/obj/item/gun/kinetic/beepsky,
+	/obj/item/gun/kinetic/gungun,
 #endif
 	/obj/item/spacecash/random/small)
 

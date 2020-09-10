@@ -62,7 +62,7 @@ Contains:
 	return
 
 /obj/item/device/infra_sensor/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = text("<TT><B>Infrared Sensor</B><BR><br><B>Passive Emitter</B>: []<BR><br><B>Active Emitter</B>: <A href='?src=\ref[];active=0'>Burst Fire</A><br></TT>", (src.passive ? text("<A href='?src=\ref[];passive=0'>On</A>", src) : text("<A href='?src=\ref[];passive=1'>Off</A>", src)), src)
 	user.Browse(dat, "window=infra_sensor")
 	onclose(user, "infra_sensor")
@@ -73,11 +73,10 @@ Contains:
 	if (usr.stat || usr.restrained())
 		return
 	if ((usr.contents.Find(src) || (usr.contents.Find(src.master) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["passive"])
 			src.passive = !( src.passive )
-			if(passive && !(src in processing_items))
-				processing_items.Add(src)
+			if(passive) processing_items |= src
 		if (href_list["active"])
 			SPAWN_DBG( 0 )
 				src.burst()
@@ -166,7 +165,7 @@ Contains:
 	return
 
 /obj/item/device/infra/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = text("<TT><B>Infrared Laser</B><br><B>Status</B>: []<BR><br><B>Visibility</B>: []<BR><br></TT>", (src.state ? text("<A href='?src=\ref[];state=0'>On</A>", src) : text("<A href='?src=\ref[];state=1'>Off</A>", src)), (src.visible ? text("<A href='?src=\ref[];visible=0'>Visible</A>", src) : text("<A href='?src=\ref[];visible=1'>Invisible</A>", src)))
 	user.Browse(dat, "window=infra")
 	onclose(user, "infra")
@@ -177,14 +176,13 @@ Contains:
 	if (usr.stat || usr.restrained())
 		return
 	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["state"])
 			src.state = !( src.state )
 			src.icon_state = text("infrared[]", src.state)
 			if (src.master)
 				src.master:c_state(src.state, src)
-			if(state && !(src in processing_items))
-				processing_items.Add(src)
+			if(state) processing_items |= src
 		if (href_list["visible"])
 			src.visible = !( src.visible )
 			SPAWN_DBG( 0 )
@@ -276,9 +274,9 @@ Contains:
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The infrared laser is now secured!</span>", 1)
+		user.show_message("<span class='notice'>The infrared laser is now secured!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The infrared laser is now unsecured!</span>", 1)
+		user.show_message("<span class='notice'>The infrared laser is now unsecured!</span>", 1)
 	src.part1.b_stat = !(src.status)
 	src.add_fingerprint(user)
 	return

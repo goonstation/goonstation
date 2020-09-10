@@ -22,7 +22,7 @@
 	else
 		T = null
 	if (src.h_status)
-		var/t1 = src.gas.total_moles()
+		var/t1 = TOTAL_MOLES(src.gas)
 		if ((t1 > 0 && src.gas.temperature < (src.h_tar+T0C)))
 			var/increase = src.heatrate / t1
 			var/n_temp = src.gas.temperature + increase
@@ -31,7 +31,7 @@
 	switch(src.t_status)
 		if(1.0)
 			if (src.holding)
-				var/t1 = src.gas.total_moles()
+				var/t1 = TOTAL_MOLES(src.gas)
 				var/t2 = t1
 				var/t = src.t_per
 				if (src.t_per > t2)
@@ -41,7 +41,7 @@
 				src.t_status = 3
 		if(2.0)
 			if (src.holding)
-				var/t1 = src.gas.total_moles()
+				var/t1 = TOTAL_MOLES(src.gas)
 				var/t2 = src.maximum - t1
 				var/t = src.t_per
 				if (src.t_per > t2)
@@ -66,7 +66,7 @@
 		pool(gas)
 		gas = null
 	..()
-	
+
 /obj/machinery/atmoalter/heater/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
@@ -75,7 +75,7 @@
 	if(status & (BROKEN|NOPOWER))
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/tt
 	switch(src.t_status)
 		if(1.0)
@@ -100,7 +100,7 @@
 			ct = text("<A href='?src=\ref[];c=1'>Release</A> <A href='?src=\ref[];c=2'>Accept</A> Stopped", src, src)
 		else
 			ct = "Disconnected"
-	var/dat = text("<TT><B>Canister Valves</B><BR><br><FONT color = 'blue'><B>Contains/Capacity</B> [] / []</FONT><BR><br>Upper Valve Status: [][]<BR><br>&emsp;<A href='?src=\ref[];tp=-[]'>M</A> <A href='?src=\ref[];tp=-10000'>-</A> <A href='?src=\ref[];tp=-1000'>-</A> <A href='?src=\ref[];tp=-100'>-</A> <A href='?src=\ref[];tp=-1'>-</A> [] <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=100'>+</A> <A href='?src=\ref[];tp=1000'>+</A> <A href='?src=\ref[];tp=10000'>+</A> <A href='?src=\ref[];tp=[]'>M</A><BR><br>Heater Status: [] - []<BR><br>&emsp;Trg Tmp: <A href='?src=\ref[];ht=-50'>-</A> <A href='?src=\ref[];ht=-5'>-</A> <A href='?src=\ref[];ht=-1'>-</A> [] <A href='?src=\ref[];ht=1'>+</A> <A href='?src=\ref[];ht=5'>+</A> <A href='?src=\ref[];ht=50'>+</A><BR><br><BR><br>Pipe Valve Status: []<BR><br>&emsp;<A href='?src=\ref[];cp=-[]'>M</A> <A href='?src=\ref[];cp=-10000'>-</A> <A href='?src=\ref[];cp=-1000'>-</A> <A href='?src=\ref[];cp=-100'>-</A> <A href='?src=\ref[];cp=-1'>-</A> [] <A href='?src=\ref[];cp=1'>+</A> <A href='?src=\ref[];cp=100'>+</A> <A href='?src=\ref[];cp=1000'>+</A> <A href='?src=\ref[];cp=10000'>+</A> <A href='?src=\ref[];cp=[]'>M</A><BR><br><BR><br><A href='?action=mach_close&window=canister&user=[]'>Close</A><BR><br></TT>", src.gas.total_moles(), src.maximum, tt, (src.holding ? text("<BR><A href='?src=\ref[];tank=1'>Tank ([]</A>)", src, src.holding.gas.total_moles()) : null), src, num2text(1000000.0, 7), src, src, src, src, src.t_per, src, src, src, src, src, num2text(1000000.0, 7), ht, (src.gas.total_moles() ? (src.gas.temperature-T0C) : 20), src, src, src, src.h_tar, src, src, src, ct, src, num2text(1000000.0, 7), src, src, src, src, src.c_per, src, src, src, src, src, num2text(1000000.0, 7), user)
+	var/dat = text("<TT><B>Canister Valves</B><BR><br><FONT color = 'blue'><B>Contains/Capacity</B> [] / []</FONT><BR><br>Upper Valve Status: [][]<BR><br>&emsp;<A href='?src=\ref[];tp=-[]'>M</A> <A href='?src=\ref[];tp=-10000'>-</A> <A href='?src=\ref[];tp=-1000'>-</A> <A href='?src=\ref[];tp=-100'>-</A> <A href='?src=\ref[];tp=-1'>-</A> [] <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=100'>+</A> <A href='?src=\ref[];tp=1000'>+</A> <A href='?src=\ref[];tp=10000'>+</A> <A href='?src=\ref[];tp=[]'>M</A><BR><br>Heater Status: [] - []<BR><br>&emsp;Trg Tmp: <A href='?src=\ref[];ht=-50'>-</A> <A href='?src=\ref[];ht=-5'>-</A> <A href='?src=\ref[];ht=-1'>-</A> [] <A href='?src=\ref[];ht=1'>+</A> <A href='?src=\ref[];ht=5'>+</A> <A href='?src=\ref[];ht=50'>+</A><BR><br><BR><br>Pipe Valve Status: []<BR><br>&emsp;<A href='?src=\ref[];cp=-[]'>M</A> <A href='?src=\ref[];cp=-10000'>-</A> <A href='?src=\ref[];cp=-1000'>-</A> <A href='?src=\ref[];cp=-100'>-</A> <A href='?src=\ref[];cp=-1'>-</A> [] <A href='?src=\ref[];cp=1'>+</A> <A href='?src=\ref[];cp=100'>+</A> <A href='?src=\ref[];cp=1000'>+</A> <A href='?src=\ref[];cp=10000'>+</A> <A href='?src=\ref[];cp=[]'>M</A><BR><br><BR><br><A href='?action=mach_close&window=canister&user=[]'>Close</A><BR><br></TT>", TOTAL_MOLES(src.gas), src.maximum, tt, (src.holding ? text("<BR><A href='?src=\ref[];tank=1'>Tank ([]</A>)", src, TOTAL_MOLES(src.holding.gas)) : null), src, num2text(1000000.0, 7), src, src, src, src, src.t_per, src, src, src, src, src, num2text(1000000.0, 7), ht, (TOTAL_MOLES(src.gas) ? (src.gas.temperature-T0C) : 20), src, src, src, src.h_tar, src, src, src, ct, src, num2text(1000000.0, 7), src, src, src, src, src.c_per, src, src, src, src, src, num2text(1000000.0, 7), user)
 	user << browse(dat, "window=canister;size=600x300")
 	onclose(user, "canister")
 	return */ //TODO: FIX
@@ -112,7 +112,7 @@
 	if (usr.stat || usr.restrained())
 		return
 	if (((get_dist(src, usr) <= 1 || usr.telekinesis == 1) && istype(src.loc, /turf)) || (isAI(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["c"])
 			var/c = text2num(href_list["c"])
 			switch(c)
@@ -189,16 +189,16 @@
 			if (src.c_status)
 				src.anchored = initial(src.anchored)
 				src.c_status = 0
-				user.show_message("<span style=\"color:blue\">You have disconnected the heater.</span>", 1)
+				user.show_message("<span class='notice'>You have disconnected the heater.</span>", 1)
 				if(con)
 					con.connected = null
 			else
 				if (con && !con.connected)
 					src.anchored = 1
 					src.c_status = 3
-					user.show_message("<span style=\"color:blue\">You have connected the heater.</span>", 1)
+					user.show_message("<span class='notice'>You have connected the heater.</span>", 1)
 					con.connected = src
 				else
-					user.show_message("<span style=\"color:blue\">There is no connector here to attach the heater to.</span>", 1)
+					user.show_message("<span class='notice'>There is no connector here to attach the heater to.</span>", 1)
 	return
 

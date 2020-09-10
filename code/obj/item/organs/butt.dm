@@ -5,8 +5,11 @@
 /obj/item/clothing/head/butt
 	name = "butt"
 	desc = "It's a butt. It goes on your head."
+	var/organ_holder_name = "butt"
+	var/organ_holder_location = "chest"
+	var/organ_holder_required_op_stage = 4.0
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "butt_nc"
+	icon_state = "butt-nc"
 	force = 1.0
 	w_class = 1.0
 	throwforce = 1.0
@@ -55,42 +58,62 @@
 					if (src.s_tone)
 						src.color = src.s_tone
 
-	attack(mob/living/carbon/human/H as mob, mob/living/carbon/user as mob)
-		if (!ismob(H))
+	attack(var/mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		if (!ismob(M))
 			return
 
 		src.add_fingerprint(user)
 
-		if (!(user.zone_sel.selecting == "chest") || !ishuman(H))
-			return ..()
-
-		if (!surgeryCheck(H, user))
-			return ..()
-
-		if (!H.organHolder)
-			return ..()
-
-		if (H.butt_op_stage >= 4.0)
-			var/fluff = pick("shove", "place", "drop")
-			var/fluff2 = pick("hole", "gaping hole", "incision", "wound")
-
-			if (H.butt_op_stage == 5.0)
-				H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-				user, "<span style=\"color:red\">You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-				H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
-				return
-
-			else
-				H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be!</span>",\
-				user, "<span style=\"color:red\">You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
-				H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")
-
-				user.u_equip(src)
-				H.organHolder.receive_organ(src, "butt")
-				H.butt_op_stage = 3.0
-		else
+		var/attach_result = src.attach_organ(M, user)
+		if (attach_result == 1) // success
+			return
+		else if (isnull(attach_result)) // failure but don't attack
+			return
+		else // failure and attack them with the organ
 			..()
-		return
+
+	proc/can_attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Impliments organ functions for butts. Checks if a butt can be attached to a target mob */
+		if (!(user.zone_sel.selecting == "chest"))
+			return 0
+
+		if (!surgeryCheck(M, user))
+			return 0
+
+		var/mob/living/carbon/human/H = M
+		if (!H.organHolder || !ishuman(H))
+			return 0
+
+		return 1
+
+	proc/attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Impliments organ functions for butts. For butt reattachment. */
+		var/mob/living/carbon/human/H = M
+		if (!src.can_attach_organ(H, user))
+			return 0
+
+		var/fluff = pick("shove", "place", "drop")
+		var/fluff2 = pick("hole", "gaping hole", "incision", "wound")
+
+		if (H.butt_op_stage == 4.0)
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be!</span>",\
+			user, "<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")
+
+			if (user.find_in_hand(src))
+				user.u_equip(src)
+			H.organHolder.receive_organ(src, "butt", 3.0)
+			H.butt_op_stage = 3.0
+			return 1
+		else if (H.butt_op_stage == 5.0)
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
+			user, "<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
+			if (user.find_in_hand(src))
+				user.u_equip(src)
+			return null
+		else
+			return 0
 
 	proc/staple()
 		if (src.stapled <=0)
@@ -114,10 +137,10 @@
 		if (!source || !target) return
 		if( src.unstaple()) //Try a staple if it worked, yay
 			if (!src.stapled) //That's the last staple!
-				source.visible_message("<span style=\"color:red\"><B>[source.name] rips out the staples from \the [src]!</B></span>", "<span style=\"color:red\"><B>You rip out the staples from \the [src]!</B></span>", "<span style=\"color:red\">You hear a loud ripping noise.</span>")
+				source.visible_message("<span class='alert'><B>[source.name] rips out the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
 				. = 1
 			else //Did you get some of them?
-				source.visible_message("<span style=\"color:red\"><B>[source.name] rips out some of the staples from \the [src]!</B></span>", "<span style=\"color:red\"><B>You rip out some of the staples from \the [src]!</B></span>", "<span style=\"color:red\">You hear a loud ripping noise.</span>")
+				source.visible_message("<span class='alert'><B>[source.name] rips out some of the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out some of the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
 				. = 0
 
 			//Commence owie
@@ -126,7 +149,7 @@
 			target.emote("scream") 									//FUCKING
 			target.TakeDamage("head", rand(8, 16), 0) 				//OW!
 
-			logTheThing("combat", source, target, "rips out the staples on %target%'s butt hat") //Crime
+			logTheThing("combat", source, target, "rips out the staples on [constructTarget(target,"combat")]'s butt hat") //Crime
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/device/timer))
@@ -168,10 +191,10 @@
 /obj/item/clothing/head/butt/cyberbutt // what the fuck am I doing with my life
 	name = "robutt"
 	desc = "This is a butt, made of metal. A futuristic butt. Okay."
-	icon_state = "cyberbutt"
+	icon_state = "butt-cyber"
 	allow_staple = 0
 	toned = 0
-	made_from = "slag"
+	made_from = "pharosium"
 	sound_fart = "sound/voice/farts/poo2_robot.ogg"
 // no this is not done and I dunno when it will be done
 // I am a bad person who accepts bribes of freaky macho butt drawings and then doesn't prioritize the request the bribe was for
@@ -191,4 +214,4 @@
 /obj/item/clothing/head/butt/synth
 	name = "synthetic butt"
 	desc = "Why would you even grow this. What the fuck is wrong with you?"
-	icon_state = "butt"
+	icon_state = "butt-plant"

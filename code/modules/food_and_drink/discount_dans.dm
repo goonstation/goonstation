@@ -2,6 +2,7 @@
 /obj/item/reagent_containers/food/drinks/noodlecup
 	name = "Discount Dan's Quik-Noodles"
 	desc = "A self-heating cup of noodles. There's enough sodium in these to put the Dead Sea to shame."
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "noodlecup"
 	heal_amt = 1
 	var/activated = 0
@@ -100,7 +101,7 @@
 				R.add_reagent("venom",2)
 */
 			if (10)
-				src.real_name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smörgåsbord Smak"
+				src.real_name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax SmÃ¶rgÃ¥sbord Smak"
 				src.initial_reagents["cleaner"] = 2
 				src.initial_reagents["mercury"] = 2
 				src.initial_reagents["swedium"] = 6
@@ -177,7 +178,7 @@
 /obj/item/reagent_containers/food/snacks/burrito
 	name = "Descuento Danito's Burritos"
 	desc = "A self-heating convenience reinterpretation of Mexican cuisine. The exact mechanism used to heat it is probably best left to speculation."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "burrito"
 	amount = 3
 	heal_amt = 2
@@ -269,7 +270,7 @@
 			return
 
 		if (prob(10) || user.is_hulk())
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> snaps the burrito in half!</span>", "<span style=\"color:red\">You accidentally snap the burrito apart. Fuck!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> snaps the burrito in half!</span>", "<span class='alert'>You accidentally snap the burrito apart. Fuck!</span>")
 			src.splat()
 			return
 
@@ -281,7 +282,8 @@
 		boutput(user, "You crack the burrito like a glow stick, activating the heater mechanism.")
 		return
 
-	throw_impact(var/turf/T)
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		var/turf/T = get_turf(A)
 		if (prob(10) && T)
 			src.splat()
 		else
@@ -290,7 +292,7 @@
 	heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny golden ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")
@@ -314,7 +316,7 @@
 /obj/item/reagent_containers/food/snacks/snack_cake
 	name = "Little Danny's Snack Cake"
 	desc = "A highly-processed miniature cake, coated with a thin layer of solid pseudofrosting."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "snackcake"
 	amount = 2
 	heal_amt = 2
@@ -329,6 +331,7 @@
 	golden
 		name = "Little Danny's Legally-Distinct Creme-Filled Snack Loaf"
 		desc = "A highly-processed miniature sponge cake, filled with some manner of creme."
+		icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 		icon_state = "snackcake2"
 		color_prob = 10
 		brew_result = list("sewage", "mucus")
@@ -351,7 +354,7 @@
 	/*heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny platinum ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny platinum ticket in this bite!</span>")
 				new /obj/item/ticket/platinum(get_turf(M))
 			else
 				M.emote("choke")*/
@@ -359,15 +362,15 @@
 /obj/item/tvdinner
 	name = "Hungry Dan's Self-Microwaving Meals"
 	desc = "A box containing a self-heating TV dinner."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnerc"
 	w_class = 1
 	throwforce = 2
 	var/full = 1
 	var/traytype = 0
 	flags = ONBELT | TABLEPASS | FPRINT
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 
 	New()
@@ -422,7 +425,7 @@
 /obj/item/reagent_containers/food/snacks/tvdinner
 	name = "Hungry Dan's Self-Microwaving Meals"
 	desc = "A self-heating TV dinner. You should probably use a fork."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnert"
 	needfork = 1
 	amount = 2
@@ -550,7 +553,7 @@
 	heal(var/mob/M)
 		if (prob(8))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny golden ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")
@@ -558,7 +561,7 @@
 /obj/item/reagent_containers/food/snacks/strudel
 	name = "Delectable Dan's Scrumptious Strudel"
 	desc = "A gigantic toaster strudel with a fruit filling. It looks pretty decent!"
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "strudel"
 	amount = 2
 	heal_amt = 2
@@ -578,7 +581,7 @@
 	heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny golden ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")

@@ -25,9 +25,9 @@
 /obj/flock_structure/egg/process()
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
 	if(elapsed >= build_time)
-		src.visible_message("<span class='text-blue'>[src] breaks open!</span>")
+		src.visible_message("<span class='notice'>[src] breaks open!</span>")
 		new /mob/living/critter/flock/drone(get_turf(src), src.flock)
-		src.loc = null
+		src.set_loc(null)
 		SPAWN_DBG(1 SECOND)
 			if(src.flock)
 				src.flock.removeDrone(src)
@@ -36,7 +36,8 @@
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
 		animate_shake(src, severity, severity)
 
-/obj/flock_structure/egg/throw_impact(var/turf/T)
+/obj/flock_structure/egg/throw_impact(atom/A, datum/thrown_thing/thr)
+	var/turf/T = get_turf(A)
 	playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 100, 1)
 	if (T && !decal_made)
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 80, 1)

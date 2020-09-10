@@ -12,32 +12,26 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			src.link_elements()
-			sleep(1 SECOND)
-			qdel(src)
+		if(current_state > GAME_STATE_PREGAME)
+			SPAWN_DBG(1)
+				src.initialize()
+
+	initialize()
+		src.link_elements()
+		..()
+		qdel(src)
 
 	proc/link_elements()
 
 		if(src.triggerer_id == src.triggerable_id)
 			return // I literally just said NOT to break this, you PROMISED.
 
-		for(var/obj/adventurepuzzle/A)
 
-			if(A.id == src.triggerer_id)
-				src.triggerers += A
+		if(length(adventure_elements_by_id[src.triggerer_id]))
+			src.triggerers = adventure_elements_by_id[src.triggerer_id]
 
-			if(A.id == src.triggerable_id)
-				src.triggerables += A
-
-
-		for(var/obj/item/adventurepuzzle/A)
-
-			if(A.id == src.triggerer_id)
-				src.triggerers += A
-
-			if(A.id == src.triggerable_id)
-				src.triggerables += A
+		if(length(adventure_elements_by_id[src.triggerable_id]))
+			src.triggerables = adventure_elements_by_id[src.triggerable_id]
 
 		if((src.triggerers.len > 0) && (src.triggerables.len > 0))
 
@@ -88,7 +82,7 @@
 
 	name = "adventure bomb"
 	invisibility = 20
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "Pipe_Timed"
 	density = 0
 	opacity = 0
@@ -102,9 +96,7 @@
 	var/static/list/triggeracts = list("Activate" = "act", "Disable" = "off", "Destroy" = "del", "Do nothing" = "nop", "Enable" = "on")
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(5000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(5000)
 		..()
 
 	trigger_actions()
@@ -177,7 +169,6 @@
 	color = "#550000"
 	var/target = null
 
-#if ASS_JAM
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -187,8 +178,11 @@
 
 
 	equipped(var/mob/user, var/slot)
+		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "eyes")
+		if(!(user == usr))
+			return
+		if(istype(H) && slot == SLOT_GLASSES)
 			SPAWN_DBG(1 SECOND)
 				enter_urs_dungeon(user)
 		return
@@ -198,26 +192,19 @@
 			H.u_equip(src)
 			src.set_loc(get_turf(H))
 
-			for(var/mob/O in AIviewers(src, null)) O.show_message("<span style=\"color:red\">[H.name] disappears in a flash of light!!</span>", 1)
+			for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
 			playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 			for (var/mob/N in viewers(src, null))
 				if (get_dist(N, src) <= 6)
 					N.apply_flash(20, 1)
 				if (N.client)
-					shake_camera(N, 6, 4)
+					shake_camera(N, 6, 32)
 
 			H.unequip_all()
 			H.set_loc(src.target)
 			playsound(H.loc, "sound/ambience/music/VRtunes_edited.ogg", 75, 0)
 
 		return
-#else
-	equipped(var/mob/user, var/slot)
-		user.visible_message("<span style=\"color:blue\">[user] puts on the goggles, but nothing particularly special happens!</span>")
-		user.u_equip(src)
-		src.set_loc(get_turf(user))
-		return
-#endif
 
 
 /obj/item/clothing/glasses/urs_dungeon_exit
@@ -231,8 +218,9 @@
 		..()
 
 	equipped(var/mob/user, var/slot)
+		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "eyes")
+		if(istype(H) && slot == SLOT_GLASSES)
 			SPAWN_DBG(1 SECOND)
 				exit_urs_dungeon(user)
 		return
@@ -264,14 +252,14 @@
 					if (clear)
 						L += T3
 
-		for(var/mob/O in AIviewers(H, null)) O.show_message("<span style=\"color:red\">[H.name] disappears in a flash of light!!</span>", 1)
+		for(var/mob/O in AIviewers(H, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
 		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
 		for (var/mob/N in viewers(H, null))
 			if (get_dist(N, src) <= 6)
 				N.apply_flash(20, 1)
 			if (N.client)
-				shake_camera(N, 6, 4)
+				shake_camera(N, 6, 32)
 
 		H.set_loc(pick(L))
 
@@ -299,14 +287,14 @@
 				return
 
 	proc/announce()
-		var/area/our_area = src.loc
+		var/area/our_area = get_area(src)
 		our_area.sound_fx_2 = src.sound //assign even if null
 		var/played = our_area.played_fx_2
 
 		for (var/mob/M in our_area)
 			if (src.sound && !played)
 				if (M.client)
-					M.client.playAmbience(src, AMBIENCE_FX_2, 30)
+					M.client.playAmbience(our_area, AMBIENCE_FX_2, 50)
 			if(src.message)
 				M.show_message("<span class='game say bold'><span class='message'><span style='color: [src.text_color]'>[message]</span></span></span>", 2)
 
@@ -501,7 +489,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/shovel))
-			user.visible_message("<span style=\"color:blue\">[user] digs in [src] with [W]!</span>")
+			user.visible_message("<span class='notice'>[user] digs in [src] with [W]!</span>")
 			src.open()
 		return
 
@@ -586,11 +574,10 @@
 	return
 
 
-/obj/item/ursium/examine()
-	set src in view(1)
-	if(usr && !usr.stat)
-		boutput(usr, "A magnetic storage ring, it contains [ursium]kg of [content ? content : "nothing"].")
-	..()
+/obj/item/ursium/examine(mob/user)
+	. = ..()
+	if(user && !user.stat)
+		. += "A magnetic storage ring, it contains [ursium]kg of [content ? content : "nothing"]."
 
 /obj/item/ursium/proc/injest(mob/M as mob)
 	M.gib(1)
@@ -599,12 +586,39 @@
 /*
 /obj/item/ursium/attack(mob/M as mob, mob/user as mob)
 	if (user != M)
-		user.visible_message("<span style=\"color:red\">[user] is trying to force [M] to eat the [src.content]!</span>")
+		user.visible_message("<span class='alert'>[user] is trying to force [M] to eat the [src.content]!</span>")
 		if (do_mob(user, M, 40))
-			user.visible_message("<span style=\"color:red\">[user] forced [M] to eat the [src.content]!</span>")
+			user.visible_message("<span class='alert'>[user] forced [M] to eat the [src.content]!</span>")
 			src.injest(M)
 	else
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span style=\"color:red\">[M] ate the [content ? content : "empty canister"]!</span>"), 1)
+			O.show_message(text("<span class='alert'>[M] ate the [content ? content : "empty canister"]!</span>"), 1)
 		src.injest(M)
 */
+
+var/johnbill_ursdungeon_code = 0420
+
+/area/diner/arcade/New()
+		..()
+		var/list/insults = strings("johnbill.txt", "insults")
+		johnbill_ursdungeon_code = random_hex(4)
+		john_talk = "Eh [pick(insults)], so we got a couple a import sets in the wall there, uh... just don't let my bro at 'em. Again. [johnbill_ursdungeon_code] oughta do'er."
+
+/obj/item/storage/secure/ssafe/diner_arcade
+	configure_mode = 0
+	random_code = 0
+	spawn_contents = list(/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/spacecash/random/small,/obj/item/spacecash/random/small)
+	New()
+		..()
+		src.code = johnbill_ursdungeon_code
+
+/obj/item/paper/tug/diner_arcade_invoice
+    name = "Big Yank's Space Tugs, Limited."
+    desc = "Looks like a bill of sale."
+    info = {"<b>Client:</b> Bill, John
+            <br><b>Date:</b> TBD
+            <br><b>Articles:</b> Structure, Static. Pressurized. Duplex.
+            <br><b>Destination:</b> \"jes' hook it up anywhere it fits\"\[sic\]
+            <br>
+            <br><b>Total Charge:</b> 9,233 paid in full with bootleg cigarillos.
+            <br>Big Yank's Cheap Tug"}

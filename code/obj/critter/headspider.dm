@@ -7,23 +7,22 @@
 	aggressive = 1
 	atkcarbon = 1
 	atksilicon = 0
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	health = 80
 
 	var/datum/abilityHolder/changeling/changeling = null
 	var/datum/mind/owner = null
 
 	examine()
-		set src in view()
-		..()
+		. = ..()
 		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
 			return
 		if(!alive)
-			boutput(usr, text("<span style=\"color:red\"><B>the disgusting creature is not moving</B></span>"))
+			. += "<span class='alert'><B>the disgusting creature is not moving</B></span>"
 		else if (src.health > 40)
-			boutput(usr, text("<span style=\"color:red\"><B>the spindly-legged head looks healthy and strong</B></span>"))
+			. += "<span class='alert'><B>the spindly-legged head looks healthy and strong</B></span>"
 		else
-			boutput(usr, text("<span style=\"color:red\"><B>the ugly thing is missing several limbs</B></span>"))
+			. += "<span class='alert'><B>the ugly thing is missing several limbs</B></span>"
 		return
 
 	filter_target(var/mob/living/C)
@@ -57,7 +56,7 @@
 			H.ailments += HS
 
 			if(owner)
-				logTheThing("combat", owner.current ? owner.current : owner, H, "'s headspider enters %target% at [log_loc(src)].")
+				logTheThing("combat", owner.current ? owner.current : owner, H, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
 
 
 			qdel(src)

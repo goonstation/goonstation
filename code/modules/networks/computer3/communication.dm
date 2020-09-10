@@ -99,7 +99,7 @@
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(8)
+							sleep(0.8 SECONDS)
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
@@ -122,7 +122,7 @@
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(8)
+							sleep(0.8 SECONDS)
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
@@ -141,19 +141,19 @@
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(8)
+							sleep(0.8 SECONDS)
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
 
 						src.print_text("Printing out lost cargo logs for connected comm dish...")
 
-						for (var/obj/machinery/communications_dish/C in comm_dishes)
+						for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 							if (C.net_id == src.comm_net_id)
 								for (var/logg in C.cargo_logs)
 									src.print_text(logg)
-									sleep(1)
-					
+									sleep(0.1 SECONDS)
+
 					if("transmit")
 						if(!src.pnet_card)
 							src.print_text("<b>Error:</b> Network card required.")
@@ -162,7 +162,7 @@
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(8)
+							sleep(0.8 SECONDS)
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
@@ -207,7 +207,7 @@
 
 				if(!src.comm_net_id)
 					src.detect_comm_dish()
-					sleep(8)
+					sleep(0.8 SECONDS)
 					if (!src.comm_net_id)
 						src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 						return
@@ -221,7 +221,7 @@
 				generate_signal(comm_net_id, "command", "call", "shuttle_id", "emergency", "acc_code", netpass_heads, "reason", call_reason)
 				logTheThing("admin", usr, null,  "attempted to call the Emergency Shuttle via COMMaster (reason: [call_reason])")
 				logTheThing("diary", usr, null, "attempted to call the Emergency Shuttle via COMMaster (reason: [call_reason])", "admin")
-				message_admins("<span style=\"color:blue\">[key_name(usr)] attempted to call the Emergency Shuttle to the station via COMMaster</span>")
+				message_admins("<span class='internal'>[key_name(usr)] attempted to call the Emergency Shuttle to the station via COMMaster</span>")
 
 			if(MENU_TRANSMIT_TITLE)
 				src.transmit_title = copytext(html_decode(trim(strip_html(html_decode(text)))), 1, 140)
@@ -231,7 +231,7 @@
 				src.print_text(src.transmit_title)
 				src.print_text("Please type and enter your emergency message:")
 				menu = MENU_TRANSMIT_MESSAGE
-			
+
 			if(MENU_TRANSMIT_MESSAGE)
 				menu = MENU_MAIN
 
@@ -242,7 +242,7 @@
 
 				if(!src.comm_net_id)
 					src.detect_comm_dish()
-					sleep(8)
+					sleep(0.8 SECONDS)
 					if (!src.comm_net_id)
 						src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 						return
@@ -297,19 +297,19 @@
 
 					if("shutl_e_sen")
 						src.print_text("<b>Alert:</b> The Emergency Shuttle has been called.")
-						if(master && master.current_user)
-							message_admins("<span style=\"color:blue\">[key_name(master.current_user)] called the Emergency Shuttle to the station</span>")
-							logTheThing("station", null, null, "[key_name(master.current_user)] called the Emergency Shuttle to the station")
+						if(usr)
+							message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+							logTheThing("station", null, null, "[key_name(usr)] called the Emergency Shuttle to the station")
 
 					if("shutl_e_ret")
 						src.print_text("<b>Alert:</b> The Emergency Shuttle has been recalled.")
-						if(master && master.current_user)
-							message_admins("<span style=\"color:blue\">[key_name(master.current_user)] recalled the Emergency Shuttle</span>")
-							logTheThing("station", null, null, "[key_name(master.current_user)] recalled the Emergency Shuttle")
-					
+						if(usr)
+							message_admins("<span class='internal'>[key_name(usr)] recalled the Emergency Shuttle</span>")
+							logTheThing("station", null, null, "[key_name(usr)] recalled the Emergency Shuttle")
+
 					if("transmit_e_success")
 						src.print_text("Message transmitted successfuly.")
-					
+
 					if("transmit_e_cooldown")
 						src.print_text("Communication dish recharging. Available in [time_to_text(signal.data["time"])].")
 

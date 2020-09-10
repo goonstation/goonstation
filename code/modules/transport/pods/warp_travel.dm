@@ -107,13 +107,12 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 	return
 
 /obj/warp_portal/New()
+	..()
 	SPAWN_DBG(0)
 		animate_portal_appear(src)
 		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
-	SPAWN_DBG(30 SECONDS)
+		sleep(30 SECONDS)
 		qdel(src)
-		return
-	return
 
 /obj/warp_portal/proc/teleport(atom/movable/M as mob|obj)
 	if(istype(M, /obj/effects)) //sparks don't teleport
@@ -127,7 +126,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 		return
 	if (ismob(M))
 		var/mob/T = M
-		boutput(T, "<span style=\"color:red\">You are exposed to some pretty swole strange particles, this can't be good...</span>")
+		boutput(T, "<span class='alert'>You are exposed to some pretty swole strange particles, this can't be good...</span>")
 		if(prob(1))
 			T.gib()
 			T.unlock_medal("Where we're going, we won't need eyes to see", 1)

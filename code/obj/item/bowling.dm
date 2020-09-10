@@ -10,19 +10,19 @@
 /obj/item/bowling_ball
 	name = "bowling ball"
 	desc = "Just keep rollin' rollin'."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bowling_ball"
 	w_class = 3.0
 	force = 5
 	throw_speed = 1
 
 	proc/hitWeak(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span style=\"color:red\">[hitMob] is hit by [user]'s [src]!</span>")
+		hitMob.visible_message("<span class='alert'>[hitMob] is hit by [user]'s [src]!</span>")
 
 		src.damage(hitMob, 5, 10, user)
 
 	proc/hitHard(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span style=\"color:red\">[hitMob] is knocked over by [user]'s [src]!</span>")
+		hitMob.visible_message("<span class='alert'>[hitMob] is knocked over by [user]'s [src]!</span>")
 
 		src.damage(hitMob, 10, 15, user)
 
@@ -38,17 +38,17 @@
 			hitMob.stuttering = max(damMax-5, hitMob.stuttering)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
-	throw_at(atom/target, range, speed)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 		throw_unlimited = 1
 		src.icon_state = "bowling_ball_spin"
-		..(target, range, speed)
+		..()
 
 	attack_hand(mob/user as mob)
 		..()
 		if(user)
 			src.icon_state = "bowling_ball"
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		var/mob/living/carbon/human/user = usr
 
 		src.icon_state = "bowling_ball"

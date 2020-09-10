@@ -45,6 +45,7 @@ chui/window
 
 	//If overriden, be sure to call ..()
 	New(var/atom/adam)
+		..()
 		if(!chui) chui = new()
 		theme = chui.GetTheme( theme )
 		theAtom = adam
@@ -256,9 +257,9 @@ chui/window
 		callJSFunction( "chui._finishReceive", list( "id" = id )*/
 
 	//Override this instead of Topic()
-	proc/OnTopic( href, href_list[] )
-	//Called when a theme button is clicked. Includes which client did the deed and any other assorted gubbins
+	proc/OnTopic( client/clint, href, href_list[] )
 
+	//Called when a theme button is clicked. Includes which client did the deed and any other assorted gubbins
 	proc/OnClick(var/client/who, var/id, var/href_list )
 
 
@@ -295,9 +296,9 @@ chui/window
 					connecting -= C
 					subscribers |= C
 			else
-				OnTopic( usr.client, href, href_list )
+				OnTopic( usr.client, href, href_list ) //umm
 		else
-			OnTopic( href, href_list )
+			OnTopic( usr.client, href, href_list )
 
 
 //Called when the close button is clicked on both
@@ -320,9 +321,10 @@ chui/window
 		src << browse( null, "window=[window]" )//Might not be a standard chui window but we'll play along.
 		if(src && src.mob)
 			//boutput(world, "[src] was [src.mob.machine], setting to null")
-			if(src.mob.machine && istype(src.mob.machine, /obj/machinery))
-				src.mob.machine.current_user = null
-			src.mob.machine = null
+			if (istype(win) && win.theAtom && isobj(win.theAtom))
+				win.theAtom:remove_dialog(src.mob)
+			else
+				src.mob.remove_dialogs()
 
 //A chui substitute for usr << browse()
 //Mostly the same syntax.

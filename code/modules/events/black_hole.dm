@@ -9,9 +9,8 @@
 		..()
 
 		if (!istype(T,/turf/))
-			if (blobstart.len > 0) // Erik: Fix for pick() from empty list.
-				T = pick(blobstart)
-			else
+			T = pick_landmark(LANDMARK_BLOBSTART)
+			if(!T)
 				message_admins("The black hole event failed to spawn a black hole (no blobstart landmark found)")
 				return
 
@@ -36,13 +35,13 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
 
 		for (var/mob/M in range(14,src))
-			boutput(M, "<span style=\"color:red\">The air grows heavy and thick. Something feels terribly wrong.</span>")
-			shake_camera(M, 5, 1)
+			boutput(M, "<span class='alert'>The air grows heavy and thick. Something feels terribly wrong.</span>")
+			shake_camera(M, 5, 16)
 		playsound(get_turf(src),'sound/effects/creaking_metal1.ogg',100,0,5,0.5)
 
 		sleep(lifespan / 2)
 		if (!stable)
-			src.visible_message("<span style=\"color:red\"><b>[src] begins to collapse in on itself!</b></span>")
+			src.visible_message("<span class='alert'><b>[src] begins to collapse in on itself!</b></span>")
 			playsound(get_turf(src),'sound/machines/engine_alert3.ogg',100,0,5,0.5)
 			animate(src, transform = matrix(4, MATRIX_SCALE), time = 300, loop = 0, easing = LINEAR_EASING)
 		if (random_events.announce_events)
@@ -50,11 +49,11 @@
 
 		sleep(lifespan)
 		if (!stable)
-			src.visible_message("<span style=\"color:red\"><b>[src] collapses into a black hole!</b></span>")
+			src.visible_message("<span class='alert'><b>[src] collapses into a black hole!</b></span>")
 			playsound(get_turf(src),'sound/machines/satcrash.ogg',100,0,5,0.5)
 			new /obj/bhole(get_turf(src),300,12)
 		else
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> dissipates quietly into nothing.</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> dissipates quietly into nothing.</span>")
 
 		SPAWN_DBG(0)
 			qdel(src)
@@ -72,8 +71,8 @@
 				src.get_fed(10)
 
 	disposing()
-		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
-			particleMaster.RemoveSystem(new /datum/particleSystem/bhole_warning(src))
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
+			particleMaster.RemoveSystem(/datum/particleSystem/bhole_warning)
 		..()
 
 	proc/get_fed(var/feed_amount)
@@ -82,7 +81,7 @@
 		src.feedings += feed_amount
 		if (src.feedings >= src.feedings_required)
 			src.stable = 1
-			src.visible_message("<span style=\"color:blue\"><b>[src] stabilizes and begins to harmlessly dissipate!</b></span>")
+			src.visible_message("<span class='notice'><b>[src] stabilizes and begins to harmlessly dissipate!</b></span>")
 			src.name = "stabilized dark anomaly"
 			src.desc = "This anomaly seems much calmer than it used to be. That's probably a good thing."
 			// letting it dispose of itself in its new proc in case we can do research on it later or something
@@ -101,6 +100,7 @@
 	var/time_to_die = 0
 
 	New(var/loc,duration, move_prob = -1)
+		..()
 		if (duration < 1)
 			duration = rand(5 SECONDS,30 SECONDS)
 
@@ -109,11 +109,11 @@
 
 		time_to_die = ( ticker ? ticker.round_elapsed_ticks : 0 ) + duration
 
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	disposing()
 		processing_items.Remove(src)
+		..()
 
 	Bumped(atom/A)
 		if (isliving(A))

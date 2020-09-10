@@ -19,6 +19,7 @@
 	if(livesparks)
 		livesparks.len = 0
 	livesparks = new
+	..()
 
 /datum/effects/system/spark_spread/proc/set_up(n = 3, c = 0, loca)
 	if(n > 10)

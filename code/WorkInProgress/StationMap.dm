@@ -53,8 +53,8 @@ var/global/icon/station_map = null
 				qdel(src)
 				return
 
-			boutput(usr, "<span style=\"color:blue\">That is <B>[clicked.loc.name]</B>.</span>")
-/*			boutput(usr, "<span style=\"color:green\"><I>[clicked.loc.desc]</I></span>") // none of these fucking things have descriptions anyway
+			boutput(usr, "<span class='notice'>That is <B>[clicked.loc.name]</B>.</span>")
+/*			boutput(usr, "<span class='success'><I>[clicked.loc.desc]</I></span>") // none of these fucking things have descriptions anyway
 			boutput(usr, " ") // no fuck you too
 */
 /obj/stationMapWall

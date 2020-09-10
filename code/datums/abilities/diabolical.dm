@@ -24,16 +24,16 @@
 		if (!spell.holder)
 			return
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this ability here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
 			return
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
 			usr.update_cursor()
 			return
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			owner.holder.owner.targeting_spell = owner
+			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
 			SPAWN_DBG(0)
@@ -45,12 +45,13 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Souls"
-	notEnoughPointsMessage = "<span style=\"color:red\">You need more souls to use this ability!</span>"
+	notEnoughPointsMessage = "<span class='alert'>You need more souls to use this ability!</span>"
 
 	onAbilityStat() // In the "Souls" tab.
 		..()
-		stat("Total number of souls collected:", total_souls_sold)
-		stat("Number of unspent souls:", total_souls_value)
+		.= list()
+		.["Souls:"] = total_souls_value
+		.["Total Collected:"] = total_souls_sold
 		return
 
 /////////////////////////////////////////////// Merchant spell parent ////////////////////////////
@@ -105,7 +106,7 @@
 
 		switch (stunned_only_is_okay)
 			if (0)
-				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("paralysis") > 0 || M.getStatusDuration("weakened"))
+				if (!isalive(M) || M.hasStatus(list("stunned", "paralysis", "weakened")))
 					return 0
 				else
 					return 1
@@ -215,18 +216,18 @@
 			boutput(holder.owner, "Your target must be human!")
 			return 1
 
-		holder.owner.visible_message("<span style=\"color:red\"><b>[holder.owner] does finger guns in [target]s direction.</b></span>")
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] does finger guns in [target]s direction.</b></span>")
 		playsound(holder.owner.loc, "sound/effects/fingersnap.ogg", 50, 0, -1)
 
 		if (H.traitHolder.hasTrait("training_chaplain"))
-			boutput(holder.owner, "<span style=\"color:red\">[H] has divine protection from magic.</span>")
-			H.visible_message("<span style=\"color:red\">The spell has no effect on [H]!</span>")
+			boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
+			H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
 			return
 
 		holder.owner.say("See you in hell.")
 		H.mind.damned = 1
 		animate_blink(H)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		H.implode()
 
 /datum/targetable/gimmick/go2hell
@@ -240,7 +241,7 @@
 	cast(atom/T)
 		holder.owner.say("So long folks!")
 		playsound(holder.owner.loc, "sound/voice/wizard/BlinkGrim.ogg", 50, 0, -1)
-		sleep(5)
+		sleep(0.5 SECONDS)
 
 		if(!spawnturf)
 			spawnturf = get_turf(usr)
@@ -290,15 +291,15 @@
 		var/floorturf = get_turf(usr)
 		var/floormod1 = rand(0, 32)
 		var/floormod2 = rand(0, 32)
-		if(usr.plane == -100)
-			usr.plane = 0
+		if(usr.plane == PLANE_UNDERFLOOR)
+			usr.plane = PLANE_DEFAULT
 			usr.layer = 4
 			animate_slide(floorturf, floormod1, floormod2, 5)
 			animate_slide(floorturf, 0, 0, 5)
 
 		else
 			usr.layer = 4
-			usr.plane = -100
+			usr.plane = PLANE_UNDERFLOOR
 			animate_slide(floorturf, floormod1, floormod2, 5)
 			animate_slide(floorturf, 0, 0, 5)
 
@@ -329,5 +330,5 @@
 	var/grabtime = 65
 
 	cast(mob/target)
-		usr.plane = -100
+		usr.plane = PLANE_UNDERFLOOR
 		target.cluwnegib(grabtime)

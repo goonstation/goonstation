@@ -11,6 +11,3 @@ datum/controller/process/arena
 	doWork()
 		for (var/datum/arena/A in arenas)
 			A.tick()
-				
-	tickDetail()
-		boutput(usr, "No statistics available.")

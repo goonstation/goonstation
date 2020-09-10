@@ -30,7 +30,7 @@
 	New()
 		..()
 		var/pickfirstname = pick("Honest","Fair","Merchant","Trader","Kosher","Real Deal","Dealer","Sketchy","100%","Sassy","Zesty")
-		var/picklastname = pick(last_names)
+		var/picklastname = pick_string_autokey("names/last.txt")
 		src.name = "[pickfirstname] [picklastname]"
 
 		src.hiketolerance = rand(2,4)
@@ -133,14 +133,14 @@
 	price_boundary = list(8000,12000)
 	possible_names = list("We have these new-fangled cloning upgrade modules lying around, but they are usless to our puritan crew.")
 
- /datum/commodity/trader/efficiencymodule
+/datum/commodity/trader/efficiencymodule
 	comname = "Cloning upgrade system"
 	comtype = /obj/item/cloneModule/efficientclone
 	amount = 1
 	price_boundary = list(8000,12000)
 	possible_names = list("We have these new-fangled cloning upgrade modules lying around, but they are usless to our puritan crew.")
 
- /datum/commodity/trader/dnamodule
+/datum/commodity/trader/dnamodule
 	comname = "Cloning upgrade system"
 	comtype = /obj/item/cloneModule/genepowermodule
 	amount = 1
@@ -160,14 +160,14 @@
 /datum/commodity/trader/generic/anyfood
 	comname = "Food"
 	comtype = /obj/item/reagent_containers/food/snacks
-	price_boundary = list(50,120)
+	price_boundary = list(50,80)
 	possible_names = list("We're ferrying food to the outer colonies, so sell us any extra you have.",
 	"An accident has lost us most of our food supplies, so we're willing to buy any you may have.")
 
 /datum/commodity/trader/generic/herbs
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb/
-	price_boundary = list(60,160)
+	price_boundary = list(75,160)
 	possible_names = list("I'll buy any medical herbs you may have.",
 	"I need to restock on medical herbs. I'm willing to buy them from you for a good price.")
 

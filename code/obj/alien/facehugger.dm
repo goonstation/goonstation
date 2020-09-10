@@ -49,17 +49,15 @@
 		src.process()
 
 	examine()
-		set src in view()
-		..()
+		. = ..()
 		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
 			return
 		if(!alive)
-			boutput(usr, text("<span style=\"color:red\"><B>the alien is not moving</B></span>"))
+			. += "<span class='alert'><B>the alien is not moving</B></span>"
 		else if (src.health > 15)
-			boutput(usr, text("<span style=\"color:red\"><B>the alien looks fresh, just out of the egg</B></span>"))
+			. += "<span class='alert'><B>the alien looks fresh, just out of the egg</B></span>"
 		else
-			boutput(usr, text("<span style=\"color:red\"><B>the alien looks pretty beat up</B></span>"))
-		return
+			. += "<span class='alert'><B>the alien looks pretty beat up</B></span>"
 
 
 	attack_hand(user as mob)
@@ -75,7 +73,7 @@
 		if (src.health <= 0)
 			src.death()
 		else if (W.force)
-			if(ishuman(user) || ismonkey(user))
+			if(ishuman(user), ismonkey(user))
 				src.target = user
 				src.state = 1
 		..()
@@ -141,12 +139,12 @@
 		set name = "follow me"
 		if(!alive) return
 		if(!isalien(usr))
-			boutput(usr, text("<span style=\"color:red\"><B>The alien ignores you.</B></span>"))
+			boutput(usr, text("<span class='alert'><B>The alien ignores you.</B></span>"))
 			return
 		if(state != 2 || health < maxhealth)
-			boutput(usr, text("<span style=\"color:red\"><B>The alien is too busy to follow you.</B></span>"))
+			boutput(usr, text("<span class='alert'><B>The alien is too busy to follow you.</B></span>"))
 			return
-		boutput(usr, text("<span style=\"color:green\"><B>The alien will now try to follow you.</B></span>"))
+		boutput(usr, text("<span class='success'><B>The alien will now try to follow you.</B></span>"))
 		trg_idle = usr
 		path_idle = new/list()
 		return
@@ -156,12 +154,12 @@
 		set name = "stop following"
 		if(!alive) return
 		if(!isalien(usr))
-			boutput(usr, text("<span style=\"color:red\"><B>The alien ignores you.</B></span>"))
+			boutput(usr, text("<span class='alert'><B>The alien ignores you.</B></span>"))
 			return
 		if(state != 2)
-			boutput(usr, text("<span style=\"color:red\"><B>The alien is too busy to follow you.</B></span>"))
+			boutput(usr, text("<span class='alert'><B>The alien is too busy to follow you.</B></span>"))
 			return
-		boutput(usr, text("<span style=\"color:green\"><B>The alien stops following you.</B></span>"))
+		boutput(usr, text("<span class='success'><B>The alien stops following you.</B></span>"))
 		set_null()
 		return
 */
@@ -230,7 +228,7 @@
 				//var/turf/trg_turf = get_turf(target)
 				if(distance <= 1) //&& trg_turf.Enter(src))
 					for(var/mob/O in AIviewers(world.view,src))
-						O.show_message("<span style=\"color:red\"><B>[src.target] has been leapt on by the alien!</B></span>", 1, "<span style=\"color:red\">You hear someone fall</span>", 2)
+						O.show_message("<span class='alert'><B>[src.target] has been leapt on by the alien!</B></span>", 1, "<span class='alert'>You hear someone fall</span>", 2)
 					random_brute_damage(target, 10)
 					target:paralysis = max(target:paralysis, 10)
 					src.set_loc(target.loc)
@@ -379,9 +377,8 @@
 		icon_state = "facehugger_l"
 		set_null()
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span style=\"color:red\"><B>[src] curls up into a ball!</B></span>", 1)
+			O.show_message("<span class='alert'><B>[src] curls up into a ball!</B></span>", 1)
 
 	proc/healthcheck()
 		if (src.health <= 0)
 			src.death()
-

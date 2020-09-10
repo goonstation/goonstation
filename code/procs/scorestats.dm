@@ -22,6 +22,15 @@ var/datum/score_tracker/score_tracker
 	var/most_xp = "OH NO THIS IS BROKEN"
 	var/score_text = null
 	var/tickets_text = null
+	var/mob/richest_escapee = null
+	var/richest_total = 0
+	var/mob/most_damaged_escapee = null
+	var/acula_blood = null
+	var/beepsky_alive = null
+	var/clown_beatings = null
+	var/list/pets_escaped = null
+	var/list/command_pets_escaped = null
+
 
 	proc/calculate_score()
 		if (score_calculated != 0)
@@ -66,8 +75,8 @@ var/datum/score_tracker/score_tracker
 
 		score_crew_survival_rate = get_percentage_of_fraction_and_whole(fatalities,crew_count)
 
-		score_crew_survival_rate = CLAMP(score_crew_survival_rate,0,100)
-		score_enemy_failure_rate = CLAMP(score_enemy_failure_rate,0,100)
+		score_crew_survival_rate = clamp(score_crew_survival_rate,0,100)
+		score_enemy_failure_rate = clamp(score_enemy_failure_rate,0,100)
 
 		final_score_sec = (score_crew_survival_rate + score_enemy_failure_rate) * 0.5
 
@@ -102,10 +111,18 @@ var/datum/score_tracker/score_tracker
 			//LAGCHECK(LAG_LOW)
 
 		score_power_outages = get_percentage_of_fraction_and_whole(apcs_powered,apc_count)
-		score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
 
-		score_power_outages = CLAMP(score_power_outages,0,100)
-		score_structural_damage = CLAMP(score_structural_damage,0,100)
+		if (istype(ticker?.mode, /datum/game_mode/nuclear)) //Since the nuke doesn't actually blow up in time
+			var/datum/game_mode/nuclear/N = ticker.mode
+			if (N.nuke_detonated)
+				score_structural_damage = 0
+			else
+				score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
+		else
+			score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
+
+		score_power_outages = clamp(score_power_outages,0,100)
+		score_structural_damage = clamp(score_structural_damage,0,100)
 
 		final_score_eng = (score_power_outages + score_structural_damage) * 0.5
 
@@ -128,8 +145,8 @@ var/datum/score_tracker/score_tracker
 
 		score_cleanliness = get_percentage_of_fraction_and_whole(clean_areas,station_areas)
 
-		score_expenses = CLAMP(score_expenses,0,100)
-		score_cleanliness = CLAMP(score_cleanliness,0,100)
+		score_expenses = clamp(score_expenses,0,100)
+		score_cleanliness = clamp(score_cleanliness,0,100)
 		final_score_civ = (score_expenses + score_cleanliness) * 0.5
 
 		var/xp_winner = null
@@ -143,6 +160,8 @@ var/datum/score_tracker/score_tracker
 			most_xp = "[xp_winner]!"
 		else
 			most_xp = "No one. Dang."
+
+		calculate_escape_stats()
 
 		// AND THE WINNER IS.....
 
@@ -183,12 +202,135 @@ var/datum/score_tracker/score_tracker
 		boutput(world, "<b>Final Rating: <font size='4'>[final_score_all]%</font></b>")
 		boutput(world, "<b>Grade: <font size='4'>[grade]</font></b>")
 
-		for(var/mob/E in mobs)
-			if(E.client)
-				if (E.client.preferences.view_score)
-					E.scorestats()
+		for (var/client/C)
+			var/mob/M = C.mob
+			if (M && C.preferences.view_score)
+				M.scorestats()
 
 		return
+
+	/////////////////////////////////////
+	/////////Escapee stuff///////////////
+	/////////////////////////////////////
+	proc/calculate_escape_stats()
+		//set the global total to zero on proc start, just in cases.
+		richest_total = 0
+		//search mobs in centcom
+		for (var/mob/M in mobs)
+			if(in_centcom(M))
+				if (!most_damaged_escapee)
+					most_damaged_escapee = M
+				else if (M.get_damage() < most_damaged_escapee.get_damage())
+					most_damaged_escapee = M
+
+				var/cash_total = get_cash_in_thing(M)
+				if (richest_total < cash_total)
+					richest_total = cash_total
+					richest_escapee = M
+
+		command_pets_escaped = list()
+		pets_escaped = list()
+
+		for (var/pet in by_cat[TR_CAT_PETS])
+			if(iscritter(pet))
+				var/obj/critter/P = pet
+				if (in_centcom(P) && P.alive)
+					if(P.is_pet == 2)
+						command_pets_escaped += P
+					else if(P.is_pet)
+						pets_escaped += P
+					if (istype(P, /obj/critter/bat/doctor))
+						acula_blood = P:blood_volume //this only gets populated if Dr. Acula escapes
+			else if(ismobcritter(pet))
+				var/mob/living/critter/P = pet
+				if (in_centcom(pet) && isalive(P))
+					if(pet:is_pet == 2)
+						command_pets_escaped += pet
+					else if(pet:is_pet)
+						pets_escaped += pet
+
+		if (length(by_type[/obj/machinery/bot/secbot/beepsky]))
+			beepsky_alive = 1
+
+		return
+
+	proc/get_cash_in_thing(var/atom/A)
+		. = 0
+		for (var/I in A)
+			if (istype(I, /obj/item/storage))
+				. += get_cash_in_thing(I)
+			if (istype(I, /obj/item/spacecash))
+				var/obj/item/spacecash/SC = I
+				. += SC.amount
+			if (istype(I, /obj/item/card/id))
+				var/obj/item/card/id/ID = I
+				. += ID.amount
+
+	proc/heisenhat_stats()
+		. = list()
+		. += "<B>Heisenbee's hat:</B> "
+		var/found_hb = 0
+		var/tier = world.load_intra_round_value("heisenbee_tier")
+		for(var/obj/critter/domestic_bee/heisenbee/HB in by_cat[TR_CAT_PETS])
+			var/obj/item/hat = HB.original_hat
+			if(hat && !hat.disposed)
+				if(hat.loc != HB)
+					var/atom/movable/L = hat.loc
+					while(istype(L) && !istype(L, /mob))
+						L = L.loc
+					. += "[hat][inline_bicon(getFlatIcon(hat, no_anim=TRUE))](tier [HB.original_tier])"
+					if(istype(L, /mob))
+						. += " \[STOLEN BY [L]\]"
+					else
+						. += " \[STOLEN!\]"
+					if(HB.hat)
+						var/dead = HB.alive ? "" : "(dead) "
+						. += "<BR>Also someone put [HB.hat] on [dead][HB][inline_bicon(getFlatIcon(HB, no_anim=TRUE))]but that doesn't count."
+				else if(!HB.alive)
+					. += "[hat][inline_bicon(getFlatIcon(HB, no_anim=TRUE))](tier [HB.original_tier])"
+					. += " \[🐝 MURDERED!\]"
+				else
+					. += "[hat][inline_bicon(getFlatIcon(HB, no_anim=TRUE))](tier [HB.original_tier])"
+			else if(HB.alive)
+				if(hat)
+					. += "[inline_bicon(getFlatIcon(hat, no_anim=TRUE))] \[DESTROYED!\]"
+				else
+					. += "No hat yet."
+			else if(hat)
+				. += "[inline_bicon(getFlatIcon(hat, no_anim=TRUE))] \[DESTROYED!\] \[🐝 MURDERED!\]"
+			else
+				. += "No hat yet. \[🐝 MURDERED!\]"
+			found_hb = 1
+			break
+		if(!found_hb)
+			if(tier)
+				. += "Heisenbee is missing but the hat is safe at tier [tier]."
+			else
+				. += "Heisenbee is missing and has no hat."
+		. += "<BR>"
+		return jointext(., "")
+
+	proc/escapee_facts()
+		. = list()
+		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
+		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : $[richest_total]<BR>"
+		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name] : [most_damaged_escapee.get_damage()]%<BR>"		//it'll be kinda different from when it's calculated, but whatever.
+		if (length(command_pets_escaped))
+			var/list/who_escaped = list()
+			for (var/atom/A in command_pets_escaped)
+				who_escaped += "[A.name] [bicon(A)]"
+			. += "<B>Command Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
+		if (length(pets_escaped))
+			var/list/who_escaped = list()
+			for (var/atom/A in pets_escaped)
+				who_escaped += "[A.name] [bicon(A)]"
+			. += "<B>Other Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
+
+		if (acula_blood) 			. += "<B>Dr. Acula Blood Total:</B> [acula_blood]p<BR>"
+		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"
+
+		return jointext(., "")
+
 
 /mob/proc/scorestats()
 	if (score_tracker.score_calculated == 0)
@@ -198,7 +340,7 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text = {"<B>Round Statistics and Score</B><BR><HR>"}
 		score_tracker.score_text += "<B><U>TOTAL SCORE: [round(score_tracker.final_score_all)]%</U></B>"
 		if(round(score_tracker.final_score_all) == 69)
-			score_tracker.score_text += "nice"
+			score_tracker.score_text += " <b>nice</b>"
 		score_tracker.score_text += "<BR>"
 		score_tracker.score_text += "<B><U>GRADE: [score_tracker.grade]</U></B><BR>"
 		score_tracker.score_text += "<BR>"
@@ -227,6 +369,10 @@ var/datum/score_tracker/score_tracker
 	 /* until this is actually done or being worked on im just going to comment it out
 		score_tracker.score_text += "<B>Most Experienced:</B> [score_tracker.most_xp]<BR>"
 		*/
+		score_tracker.score_text += "<B><U>STATISTICS</U></B><BR>"
+		score_tracker.score_text += score_tracker.escapee_facts()
+		score_tracker.score_text += score_tracker.heisenhat_stats()
+
 		score_tracker.score_text += "<HR>"
 
 	src.Browse(score_tracker.score_text, "window=roundscore;size=500x700;title=Round Statistics")
@@ -242,8 +388,7 @@ var/datum/score_tracker/score_tracker
 		if(data_core.tickets.len)
 			var/list/people_with_tickets = list()
 			for (var/datum/ticket/T in data_core.tickets)
-				if(!(T.target in people_with_tickets))
-					people_with_tickets += T.target
+				people_with_tickets |= T.target
 
 			for(var/N in people_with_tickets)
 				score_tracker.tickets_text += "<b>[N]</b><br><br>"
@@ -259,8 +404,7 @@ var/datum/score_tracker/score_tracker
 		if(data_core.fines.len)
 			var/list/people_with_fines = list()
 			for (var/datum/fine/F in data_core.fines)
-				if(!(F.target in people_with_fines))
-					people_with_fines += F.target
+				people_with_fines |= F.target
 
 			for(var/N in people_with_fines)
 				score_tracker.tickets_text += "<b>[N]</b><br><br>"

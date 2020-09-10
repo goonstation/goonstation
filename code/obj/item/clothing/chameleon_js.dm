@@ -19,15 +19,15 @@
 
 	attackby(obj/item/clothing/under/U as obj, mob/user as mob)
 		if(istype(U, /obj/item/clothing/under/chameleon))
-			boutput(user, "<span style=\"color:red\">No!!! That's a terrible idea! You'll cause a horrible jumpsuit chain reaction!</span>")
+			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible jumpsuit chain reaction!</span>")
 			SPAWN_DBG(1 SECOND)
-				boutput(user, "<span style=\"color:red\">Nah, just kidding. Doing that still doesn't work though!</span>")
+				boutput(user, "<span class='alert'>Nah, just kidding. Doing that still doesn't work though!</span>")
 			return
 
 		if(istype(U, /obj/item/clothing/under))
 			for(var/datum/chameleon_jumpsuit_pattern/P in src.clothing_choices)
 				if(P.name == U.name)
-					boutput(user, "<span style=\"color:red\">That appearance is already saved in the chameleon pattern banks!</span>")
+					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
 					return
 
 			var/datum/chameleon_jumpsuit_pattern/P = new /datum/chameleon_jumpsuit_pattern(src)
@@ -40,12 +40,12 @@
 			P.sprite_hand = U.inhand_image_icon
 			src.clothing_choices += P
 
-			boutput(user, "<span style=\"color:blue\">[U.name]'s appearance has been copied!</span>")
+			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
 
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/M = src.loc
-			boutput(M, "<span style=\"color:red\"><B>Your chameleon jumpsuit malfunctions!</B></span>")
+			boutput(M, "<span class='alert'><B>Your chameleon jumpsuit malfunctions!</B></span>")
 			src.name = "psychedelic jumpsuit"
 			src.desc = "Groovy!"
 			icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'

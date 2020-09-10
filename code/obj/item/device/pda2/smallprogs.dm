@@ -233,12 +233,12 @@ Code:
 		dat += "<h4>Supply Record Interlink</h4>"
 
 		dat += "Order History: <BR><ol>"
-		for(var/S in supply_history)
+		for(var/S in shippingmarket.supply_history)
 			dat += S
 		dat += "</ol>"
 
 		dat += "Current requests: <BR><ol>"
-		for(var/S in supply_requestlist)
+		for(var/S in shippingmarket.supply_requests)
 			var/datum/supply_order/SO = S
 			dat += "<li>[SO.object.name] requested by [SO.orderedby]</li>"
 		dat += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
@@ -538,12 +538,12 @@ Code:
 
 			stuff += "<B>Hot Loop</B><BR>"
 			stuff += "Temperature Inlet: [round(circ1.air1.temperature, 0.1)] K  Outlet: [round(circ1.air2.temperature, 0.1)] K<BR>"
-			stuff += "Pressure Inlet: [round(circ1.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>"
+			stuff += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ1.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ1.air2), 0.1)] kPa<BR>"
 			stuff += "<BR>"
 
 			stuff += "<B>Cold Loop</B><BR>"
 			stuff += "Temperature Inlet: [round(circ2.air1.temperature, 0.1)] K  Outlet: [round(circ2.air2.temperature, 0.1)] K<BR>"
-			stuff += "Pressure Inlet: [round(circ2.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>"
+			stuff += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2.air2), 0.1)] kPa<BR>"
 			stuff += "<BR>"
 		else
 			stuff += "Error! No engine detected!<BR><BR>"
@@ -691,11 +691,11 @@ Code:
 		var/mailgroup
 		switch (round(mailgroupNum))
 			if (-INFINITY to 1)
-				mailgroup = "medbay"
+				mailgroup = MGD_MEDBAY
 			if (2)
 				mailgroup = "engineer"
 			if (3 to INFINITY)
-				mailgroup = "security"
+				mailgroup = MGD_SECURITY
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.master
@@ -711,7 +711,7 @@ Code:
 			if (!(eye_loc.cameras && eye_loc.cameras.len))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = "<b><span style=\"color:red\">***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
+		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
 
 		src.post_signal(signal)
 
@@ -860,8 +860,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 					// this is also bad
 					var/list/people_with_tickets = list()
 					for (var/datum/ticket/T in data_core.tickets)
-						if(!(T.target in people_with_tickets))
-							people_with_tickets += T.target
+						people_with_tickets |= T.target
 
 					for(var/N in people_with_tickets)
 						dat += "<b>[N]</b><br><br>"
@@ -1116,7 +1115,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			O.object = P
 			O.orderedby = src.master.owner
 			O.console_location = get_area(src.master)
-			supply_requestlist += O
+			shippingmarket.supply_requests += O
 			src.temp = "Request sent to Supply Console. The Quartermasters will process your request as soon as possible.<BR>"
 
 			// pda alert ////////
@@ -1124,7 +1123,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
 				pdaSignal.transmission_method = TRANSMISSION_RADIO
 				if(transmit_connection != null)
 					transmit_connection.post_signal(src, pdaSignal)
@@ -1133,7 +1132,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		else if (href_list["viewrequests"])
 			src.temp = "<B>Current Requests:</B><BR><BR>"
-			for(var/S in supply_requestlist)
+			for(var/S in shippingmarket.supply_requests)
 				var/datum/supply_order/SO = S
 				src.temp += "[SO.object.name] requested by [SO.orderedby] from [SO.console_location].<BR>"
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"

@@ -1,6 +1,10 @@
-/datum/plant/contusine
-	name = "Contusine"
+ABSTRACT_TYPE(/datum/plant/herb)
+/datum/plant/herb
+	plant_icon = 'icons/obj/hydroponics/plants_herb.dmi'
 	category = "Herb"
+
+/datum/plant/herb/contusine
+	name = "Contusine"
 	seedcolor = "#DD00AA"
 	crop = /obj/item/plant/herb/contusine
 	starthealth = 20
@@ -15,9 +19,8 @@
 	assoc_reagents = list("salicylic_acid")
 	mutations = list(/datum/plantmutation/contusine/shivering,/datum/plantmutation/contusine/quivering)
 
-/datum/plant/nureous
+/datum/plant/herb/nureous
 	name = "Nureous"
-	category = "Herb"
 	seedcolor = "#226600"
 	crop = /obj/item/plant/herb/nureous
 	starthealth = 20
@@ -33,7 +36,7 @@
 	commuts = list(/datum/plant_gene_strain/immunity_radiation,/datum/plant_gene_strain/damage_res/bad)
 	assoc_reagents = list("anti_rad")
 
-/datum/plant/asomna
+/datum/plant/herb/asomna
 	name = "Asomna"
 	seedcolor = "#00AA77"
 	crop = /obj/item/plant/herb/asomna
@@ -49,9 +52,8 @@
 	assoc_reagents = list("ephedrine")
 	mutations = list(/datum/plantmutation/asomna/robust)
 
-/datum/plant/commol
+/datum/plant/herb/commol
 	name = "Commol"
-	category = "Herb"
 	seedcolor = "#559900"
 	crop = /obj/item/plant/herb/commol
 	starthealth = 20
@@ -67,9 +69,25 @@
 	assoc_reagents = list("silver_sulfadiazine")
 	mutations = list(/datum/plantmutation/commol/burning)
 
-/datum/plant/venne
+/datum/plant/herb/ipecacuanha
+	name = "Ipecacuanha"
+	seedcolor = "#063c0f"
+	crop = /obj/item/plant/herb/ipecacuanha
+	starthealth = 20
+	growtime = 30
+	harvtime = 100
+	cropsize = 5
+	harvests = 1
+	isgrass = 1
+	endurance = 0
+	genome = 16
+	nectarlevel = 5
+	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted)
+	assoc_reagents = list("ipecac")
+	mutations = list(/datum/plantmutation/ipecacuanha/bilious,/datum/plantmutation/ipecacuanha/invigorating)
+
+/datum/plant/herb/venne
 	name = "Venne"
-	category = "Herb"
 	seedcolor = "#DDFF99"
 	crop = /obj/item/plant/herb/venne
 	starthealth = 20
@@ -84,9 +102,8 @@
 	assoc_reagents = list("charcoal")
 	mutations = list(/datum/plantmutation/venne/toxic,/datum/plantmutation/venne/curative)
 
-/datum/plant/mint
+/datum/plant/herb/mint
 	name = "Mint"
-	category = "Herb"
 	seedcolor = "#258934"
 	crop = /obj/item/plant/herb/mint
 	starthealth = 20
@@ -100,9 +117,8 @@
 	genome = 1
 	assoc_reagents = list("mint")
 
-/datum/plant/cannabis
+/datum/plant/herb/cannabis
 	name = "Cannabis"
-	category = "Herb"
 	seedcolor = "#66DD66"
 	crop = /obj/item/plant/herb/cannabis
 	starthealth = 10
@@ -120,9 +136,8 @@
 	/datum/plantmutation/cannabis/white,/datum/plantmutation/cannabis/ultimate)
 	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted)
 
-/datum/plant/catnip
+/datum/plant/herb/catnip
 	name = "Nepeta Cataria"
-	category = "Herb"
 	seedcolor = "#00CA70"
 	crop = /obj/item/plant/herb/catnip
 	starthealth = 10
@@ -136,9 +151,9 @@
 	genome = 1
 	assoc_reagents = list("catonium")
 
-/datum/plant/hcordata
+/datum/plant/herb/hcordata
 	name = "Houttuynia Cordata"
-	category = "Herb"
+	override_icon_state = "Houttuynia" //To avoid REALLY long icon state names
 	seedcolor = "#00CA70"
 	crop = /obj/item/plant/herb/hcordata
 	mutations = list(/datum/plantmutation/hcordata/fish)
@@ -150,15 +165,14 @@
 	force_seed_on_harvest = 1
 	special_proc = 1 // for tuna plant
 	harvested_proc = 1 // for tuna plant
-	isgrass = 0 // for some reason, isgrass forces you not to gave a G3 sprite and stops a bunch of the "fully grown plant" shit from happening :[
+	isgrass = 0
 	endurance = 0
 	vending = 1
 	genome = 1
-	assoc_reagents = list("mercury") 
+	assoc_reagents = list("mercury")
 
-/datum/plant/poppy
+/datum/plant/herb/poppy
 	name = "Poppy"
-	category = "Herb"
 	seedcolor = "#FF1500"
 	crop = /obj/item/plant/herb/poppy
 	starthealth = 10
@@ -172,9 +186,8 @@
 	genome = 1
 	assoc_reagents = list("morphine")
 
-/datum/plant/aconite
+/datum/plant/herb/aconite
 	name = "Aconite"
-	category = "Herb"
 	seedcolor = "#990099"
 	crop = /obj/item/plant/herb/aconite
 	starthealth = 10
@@ -188,9 +201,8 @@
 	genome = 1
 	assoc_reagents = list("wolfsbane")
 
-/datum/plant/tobacco
+/datum/plant/herb/tobacco
 	name = "Tobacco"
-	category = "Herb"
 	seedcolor = "#82D213"
 	crop = /obj/item/plant/herb/tobacco
 	starthealth = 20
@@ -204,11 +216,11 @@
 	nectarlevel = 5
 	assoc_reagents = list("nicotine")
 	mutations = list(/datum/plantmutation/tobacco/twobacco)
-	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted) 
+	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted)
 
-/datum/plant/grass
+/datum/plant/herb/grass
 	name = "Grass"
-	category = "Miscellaneous"
+	category = "Miscellaneous" //this seems inconsistent, shouldn't  this mean it belongs in plants_crop?
 	seedcolor = "#00CC00"
 	crop = /obj/item/plant/herb/grass
 	isgrass = 1

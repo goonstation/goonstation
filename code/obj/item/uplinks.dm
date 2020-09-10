@@ -13,9 +13,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 /obj/item/uplink
 	name = "uplink"
-	stamina_damage = 25
-	stamina_cost = 25
-	stamina_crit_chance = 10
+	stamina_damage = 0
+	stamina_cost = 0
+	stamina_crit_chance = 0
 
 	var/uses = 12 // Amount of telecrystals.
 	var/list/datum/syndicate_buylist/items_general = list() // See setup().
@@ -34,10 +34,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
+		..()
 		SPAWN_DBG (10)
 			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !src.items_objective.len))
 				src.setup()
-		return
 
 	proc/generate_code()
 		if (!src || !istype(src))
@@ -194,7 +194,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (src.vr_check(user) != 1)
 			user.show_text("This uplink only works in virtual reality.", "red")
 		else if (src.use_default_GUI == 1)
-			user.machine = src
+			src.add_dialog(user)
 			src.generate_menu()
 		return
 
@@ -299,7 +299,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			usr.show_text("This uplink only works in virtual reality.", "red")
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["unlock"] && src.locked && !isnull(src.lock_code))
 			var/the_code = adminscrub(input(usr, "Please enter the password.", "Unlock Uplink", null))
@@ -316,7 +316,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			if (istype(src, /obj/item/uplink/integrated/radio))
 				var/obj/item/uplink/integrated/radio/RU = src
 				if (!isnull(RU.origradio) && istype(RU.origradio, /obj/item/device/radio))
-					usr.machine = null
+					src.remove_dialog(usr)
 					usr.Browse(null, "window=radio")
 					var/obj/item/device/radio/T = RU.origradio
 					RU.set_loc(T)
@@ -345,7 +345,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			if (src.is_VR_uplink == 0)
 				if (src.uses < I.cost)
-					boutput(usr, "<span style=\"color:red\">The uplink doesn't have enough [syndicate_currency] left for that!</span>")
+					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
 				if (usr.mind)
@@ -385,7 +385,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 /obj/item/uplink/syndicate
 	name = "station bounced radio"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "radio"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	w_class = 2.0
@@ -476,13 +476,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (!istype(src.hostpda.host_program, /datum/computer/file/pda_program/os/main_os))
 			return
 		src.hostpda.host_program:note = text
-
-		for (var/mob/M in viewers(1, src.hostpda.loc))
-			if (M.client && M.machine == src.hostpda)
-				src.hostpda.attack_self(M)
+		src.hostpda.updateSelfDialog()
 
 		return
-	
+
 	proc/refresh()
 		if(src.active)
 			src.generate_menu()
@@ -546,7 +543,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			if (src.is_VR_uplink == 0)
 				if (src.uses < I.cost)
-					boutput(usr, "<span style=\"color:red\">The uplink doesn't have enough [syndicate_currency] left for that!</span>")
+					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
 				if (usr.mind)
@@ -700,7 +697,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					return 0
 				B.claimed = 1
 				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
-					M.loc = get_turf(delivery)
+					M.set_loc(get_turf(delivery))
 				if (istype(delivery.loc, /mob))
 					var/mob/M = delivery.loc
 					if (istype(delivery,/obj/item/parts/human_parts) && ishuman(M))
@@ -996,6 +993,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/blink
 	name = "Blink"
 	eqtype = "Defensive"
+	vr_allowed = 0
 	desc = "This spell teleports you a short distance forwards. Useful for evasion or getting into areas."
 	assoc_spell = /datum/targetable/spell/blink
 
@@ -1062,6 +1060,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	vr_allowed = 0
 	assoc_spell = /datum/targetable/spell/pandemonium
 
+#if ASS_JAM
+/datum/SWFuplinkspell/timestop
+	name = "Time Stop"
+	eqtype = "Utility"
+	desc = "This spell contains the power to rend time itself. Use sparingly and with caution, lest you cause a runtime!"
+	assoc_spell = /datum/targetable/spell/timestop
+#endif
+
 /obj/item/SWF_uplink/proc/explode()
 	var/turf/location = get_turf(src.loc)
 	location.hotspot_expose(700, 125)
@@ -1074,9 +1080,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 /obj/item/SWF_uplink/attack_self(mob/user as mob)
 	if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
-		boutput(user, "<span style=\"color:red\"><b>The spellbook is magically attuned to someone else!</b></span>")
+		boutput(user, "<span class='alert'><b>The spellbook is magically attuned to someone else!</b></span>")
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/html = {"
 [(user.client && !user.client.use_chui) ? "<!doctype html>\n<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"pragma\" content=\"no-cache\"><style type='text/css'>body { font-family: Tahoma, sans-serif; font-size: 10pt; }</style><title>Wizard Spellbook</title></head><body>" : ""]
 
@@ -1180,15 +1186,15 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	if (!( ishuman(H)))
 		return 1
 	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["buyspell"])
 			var/datum/SWFuplinkspell/SP = locate(href_list["buyspell"])
 			switch(SP.SWFspell_CheckRequirements(usr,src))
-				if(1) boutput(usr, "<span style=\"color:red\">You have no more magic points to spend.</span>")
-				if(2) boutput(usr, "<span style=\"color:red\">You already have this spell.</span>")
-				if(3) boutput(usr, "<span style=\"color:red\">This spell isn't availble in VR.</span>")
-				if(999) boutput(usr, "<span style=\"color:red\">Unknown Error.</span>")
+				if(1) boutput(usr, "<span class='alert'>You have no more magic points to spend.</span>")
+				if(2) boutput(usr, "<span class='alert'>You already have this spell.</span>")
+				if(3) boutput(usr, "<span class='alert'>This spell isn't availble in VR.</span>")
+				if(999) boutput(usr, "<span class='alert'>Unknown Error.</span>")
 				else
 					SP.SWFspell_Purchased(usr,src)
 
@@ -1200,7 +1206,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=radio")
 			var/obj/item/device/radio/T = src.origradio
 			var/obj/item/SWF_uplink/R = src

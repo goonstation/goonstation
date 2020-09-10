@@ -1,27 +1,3 @@
-// Artifact Infrastructure Procs
-
-/obj/landmark/artifact
-	name = "artifact spawner"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "x3"
-	anchored = 1.0
-	var/spawnchance = 100 // prob chance out of 100 to spawn artifact at game start
-	var/spawnpath = null  // if you want a landmark to spawn a specific artifact rather than a random one
-
-/obj/landmark/artifact/seed
-	name = "artifact seed spawner"
-	spawnpath = /obj/item/seed/alien
-
-/obj/landmark/artifact/cannabis_seed
-	name = "cannabis seed spawner"
-	spawnpath = /obj/item/seed/cannabis
-	// not actually an artifact but eh seeds are behaving oddly
-
-/obj/landmark/artifact/kudzu
-	name = "living kudzu spawner"
-	spawnpath = /obj/spacevine/living
-	// yeah kudzu isn't an artifact either whoops
-
 /proc/Artifact_Spawn(var/atom/T,var/forceartitype)
 	if (!T)
 		return
@@ -30,19 +6,16 @@
 
 	var/rarityroll = 1
 
+// artifact tweak. rarity 1 now contains garbage artifacts so that it's easier to control how much garbage science sees.
 	switch(rand(1,100))
-		if (63 to 88)
+		if (36 to 80) 		// 45%. 4% chance for a particular level 2 art.
 			rarityroll = 2
-			// 1 in 25
-		if (89 to 99)
+		if (81 to 95) 		// 15%. With current art list this means 2% chance of a certain level 3 art
 			rarityroll = 3
-			// 1 in 10
-		if (100)
+		if (96 to 100) 		// 5%. With current art list this means 1% chance of a certain level 4 art. 2 of the 5 are bombs...
 			rarityroll = 4
-			// 1 in 100
-		else
+		else 							// 35%. 4% chance for a particular garbage level 1 art.
 			rarityroll = 1
-			// 1 in 62
 
 	var/list/selection_pool = list()
 
@@ -91,7 +64,7 @@
 	A.holder = src
 
 	if (!artifact_controls) //Hasn't been init'd yet
-		sleep(20)
+		sleep(2 SECONDS)
 
 	var/datum/artifact_origin/AO = artifact_controls.get_origin_from_string(pick(A.validtypes))
 	if (!istype(AO,/datum/artifact_origin/))
@@ -166,6 +139,8 @@
 	if (!src.ArtifactSanityCheck())
 		return 1
 	var/datum/artifact/A = src.artifact
+	if(A.internal_name)
+		src.name = A.internal_name
 	if (A.activated)
 		return 1
 	if (A.triggers.len < 1 && !A.automatic_activation)
@@ -225,27 +200,24 @@
 				else if (!ACT.activator && A.activated)
 					src.ArtifactDeactivated()
 
-	if (istype(W,/obj/item/weldingtool))
-		var/obj/item/weldingtool/WELD = W
-		if (WELD.welding)
-			WELD.eyecheck(user)
+	if (isweldingtool(W))
+		if (W:try_weld(user,0,-1,0,1))
 			src.ArtifactStimulus("heat", 800)
-			playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
-			src.visible_message("<span style=\"color:red\">[user.name] burns the artifact with [WELD]!</span>")
+			src.visible_message("<span class='alert'>[user.name] burns the artifact with [W]!</span>")
 			return 0
 
 	if (istype(W,/obj/item/device/light/zippo))
 		var/obj/item/device/light/zippo/ZIP = W
 		if (ZIP.on)
 			src.ArtifactStimulus("heat", 400)
-			src.visible_message("<span style=\"color:red\">[user.name] burns the artifact with [ZIP]!</span>")
+			src.visible_message("<span class='alert'>[user.name] burns the artifact with [ZIP]!</span>")
 			return 0
 
 	if (istype(W, /obj/item/robodefibrillator))
 		var/obj/item/robodefibrillator/R = W
 		if (R.do_the_shocky_thing(user))
 			src.ArtifactStimulus("elec", 2500)
-			src.visible_message("<span style=\"color:red\">[user.name] shocks \the [src] with \the [R]!</span>")
+			src.visible_message("<span class='alert'>[user.name] shocks \the [src] with \the [R]!</span>")
 		return 0
 
 	if(istype(W,/obj/item/baton))
@@ -254,7 +226,7 @@
 			src.ArtifactStimulus("force", BAT.force)
 			src.ArtifactStimulus("elec", 1500)
 			playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 100, 1)
-			src.visible_message("<span style=\"color:red\">[user.name] beats the artifact with [BAT]!</span>")
+			src.visible_message("<span class='alert'>[user.name] beats the artifact with [BAT]!</span>")
 			BAT.process_charges(-1, user)
 			return 0
 
@@ -286,19 +258,19 @@
 			if (get_dist(src.loc, M.loc) > 1)
 				return
 			src.visible_message("<strong class='combat'>[A] shoves [M] against \the [src]!</strong>")
-			logTheThing("combat", A, M, "forces %target% to touch \an ([A.type]) artifact at [log_loc(src)].")
+			logTheThing("combat", A, M, "forces [constructTarget(M,"combat")] to touch \an ([A.type]) artifact at [log_loc(src)].")
 			src.ArtifactTouched(M)
 			return 0
 
 	if (istype(W,/obj/item/circuitboard))
 		var/obj/item/circuitboard/CIRCUITBOARD = W
-		src.visible_message("<b>[user.name]</b>offers the [CIRCUITBOARD] to the artifact.</span>")
+		src.visible_message("<b>[user.name]</b> offers the [CIRCUITBOARD] to the artifact.</span>")
 		src.ArtifactStimulus("data", 1)
 		return 0
 
 	if (istype(W,/obj/item/disk/data))
 		var/obj/item/disk/data/DISK = W
-		src.visible_message("<b>[user.name]</b>offers the [DISK] to the artifact.</span>")
+		src.visible_message("<b>[user.name]</b> offers the [DISK] to the artifact.</span>")
 		src.ArtifactStimulus("data", 1)
 		return 0
 
@@ -342,20 +314,22 @@
 	var/turf/T = get_turf(src)
 
 	var/datum/artifact/A = src.artifact
+	if(!istype(A))
+		return
 
 	// Possible stimuli = force, elec, radiate, heat
-	switch(A.artitype)
+	switch(A.artitype.name)
 		if("martian") // biotech, so anything that'd probably kill a living thing works on them too
 			if(stimtype == "force")
 				if (strength >= 30)
-					T.visible_message("<span style=\"color:red\">[src] bruises from the impact!</span>")
+					T.visible_message("<span class='alert'>[src] bruises from the impact!</span>")
 					playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 1)
 					ArtifactDevelopFault(33)
 					src.ArtifactTakeDamage(strength / 1.5)
 			if(stimtype == "elec")
 				if (strength >= 3000) // max you can get from the electrobox is 5000
 					if (prob(10))
-						T.visible_message("<span style=\"color:red\">[src] seems to quiver in pain!</span>")
+						T.visible_message("<span class='alert'>[src] seems to quiver in pain!</span>")
 					src.ArtifactTakeDamage(strength / 1000)
 			if(stimtype == "radiate")
 				if (strength >= 6)
@@ -366,21 +340,21 @@
 		if("wizard") // these are big crystals, thus you probably shouldn't smack them around too hard!
 			if(stimtype == "force")
 				if (strength >= 20)
-					T.visible_message("<span style=\"color:red\">[src] cracks and splinters!</span>")
+					T.visible_message("<span class='alert'>[src] cracks and splinters!</span>")
 					playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 100, 1)
 					ArtifactDevelopFault(80)
 					src.ArtifactTakeDamage(strength * 1.5)
 		if("reliquary") // fragile machinery so no smacking them too hard, also pretty vulnerable to electricity
 			if(stimtype == "force")
 				if (strength >= 20)
-					T.visible_message(pick("<span style=\"color:red\">[src] cracks and splinters!</span>","<span style=\"color:red\">[src] starts to split and break from the impact!</span>"))
+					T.visible_message(pick("<span class='alert'>[src] cracks and splinters!</span>","<span class='alert'>[src] starts to split and break from the impact!</span>"))
 					playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 100, 1)
 					ArtifactDevelopFault(80)
 					src.ArtifactTakeDamage(strength * 1.5)
 			if(stimtype == "elec")
 				if (strength >= 3000) // max you can get from the electrobox is 5000
 					if (prob(10))
-						T.visible_message(pick("<span style=\"color:red\">[src] buzzes angrily!</span>","<span style=\"color:red\">[src] beeps grumpily!</span>"))
+						T.visible_message(pick("<span class='alert'>[src] buzzes angrily!</span>","<span class='alert'>[src] beeps grumpily!</span>"))
 						src.ArtifactTakeDamage(strength / 1000)
 
 	if (!src || !A)
@@ -456,19 +430,19 @@
 
 	var/turf/T = get_turf(src)
 	if (istype(T,/turf/))
-		switch(A.artitype)
+		switch(A.artitype.name)
 			if("ancient")
-				T.visible_message("<span style=\"color:red\"><B>[src] sparks and sputters violently before falling apart!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] sparks and sputters violently before falling apart!</B></span>")
 			if("martian")
-				T.visible_message("<span style=\"color:red\"><B>[src] bursts open, and rapidly liquefies!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] bursts open, and rapidly liquefies!</B></span>")
 			if("wizard")
-				T.visible_message("<span style=\"color:red\"><B>[src] shatters and disintegrates!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] shatters and disintegrates!</B></span>")
 			if("eldritch")
-				T.visible_message("<span style=\"color:red\"><B>[src] warps in on itself and vanishes!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] warps in on itself and vanishes!</B></span>")
 			if("precursor")
-				T.visible_message("<span style=\"color:red\"><B>[src] implodes, crushing itself into dust!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] implodes, crushing itself into dust!</B></span>")
 			if("reliquary")
-				T.visible_message("<span style=\"color:red\"><B>[src] sparks violently before its internal circuitry falls apart and causes it to collapse!</B></span>")
+				T.visible_message("<span class='alert'><B>[src] sparks violently before its internal circuitry falls apart and causes it to collapse!</B></span>")
 
 	qdel(src)
 	return
@@ -486,7 +460,7 @@
 		return
 	var/datum/artifact/A = src.artifact
 
-	if (A.artitype == "eldritch")
+	if (A.artitype.name == "eldritch")
 		faultprob *= 2 // eldritch artifacts fucking hate you and are twice as likely to go faulty
 	faultprob = max(0,min(faultprob,100))
 
@@ -505,7 +479,7 @@
 	var/datum/artifact/A = O.artifact
 
 	if ((target && ismob(target)) && type_of_action == "weapon")
-		logTheThing("combat", user, target, "attacks %target% with an active artifact ([A.type])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
+		logTheThing("combat", user, target, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
 	else
 		logTheThing(type_of_action == "detonated" ? "bombing" : "station", user, target, "an artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 

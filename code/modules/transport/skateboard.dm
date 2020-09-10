@@ -42,10 +42,11 @@
 	pixel_x = -32
 
 	New(var/location = null, var/state = null)
+		..()
 		if(location)
-			src.loc = location
+			src.set_loc(location)
 		else
-			src.loc = usr.loc
+			src.set_loc(usr.loc)
 
 		if(state)
 			icon_state = "[state]"
@@ -162,27 +163,27 @@
 
 	if(isturf(AM) || istype(AM, /mob/living/carbon/wall) || istype(AM, /obj/window) || istype(AM, /obj/grille))
 		if(sickness < 100 || z == 2 || z == 4)
-			src.messageNearby("<span style=\"color:red\"><B>You crash into the [AM]!</B></span>", "<span style=\"color:red\"><B>[rider] crashes into the [AM] with the [src]!</B></span>")
+			src.messageNearby("<span class='alert'><B>You crash into the [AM]!</B></span>", "<span class='alert'><B>[rider] crashes into the [AM] with the [src]!</B></span>")
 			playsound(src, pick(sb_fails), 55, 1)
 			adjustSickness(-sickness)
 			eject_rider(2)
 		else
-			src.loc = AM
+			src.set_loc(AM)
 			walk(src, dir, speed_delay)
 
 	else if(ismob(AM))
 		if(sickness < 60)
-			src.messageNearby("<span style=\"color:red\"><B>You crash into [AM]!</B></span>", "<span style=\"color:red\"><B>[rider] crashes into [AM] with the [src]!</B></span>")
+			src.messageNearby("<span class='alert'><B>You crash into [AM]!</B></span>", "<span class='alert'><B>[rider] crashes into [AM] with the [src]!</B></span>")
 			playsound(src, pick(sb_fails), 55, 1)
 			adjustSickness(-sickness)
 			eject_rider(2)
 		else
 			var/trick = trickName()
-			src.messageNearby("<span style=\"color:red\"><B>You do a [trick] over [AM]!</B></span>", "<span style=\"color:red\"><B>[rider] does a [trick] over [AM]!</B></span>")
+			src.messageNearby("<span class='alert'><B>You do a [trick] over [AM]!</B></span>", "<span class='alert'><B>[rider] does a [trick] over [AM]!</B></span>")
 			if(give_points)
 				adjustSickness(6)
 			trickAnimate()
-			src.loc = AM.loc
+			src.set_loc(AM.loc)
 			walk(src, turn(dir, pick(180, 90, -90)), speed_delay)
 			playsound(src, pick(sb_tricks), 65, 1)
 
@@ -192,7 +193,7 @@
 
 	else if(isobj(AM))
 		var/trick = trickName()
-		src.messageNearby("<span style=\"color:red\"><B>You do a [trick] on the [AM]!</B></span>", "<span style=\"color:red\"><B>[rider] does a [trick] on the [AM]!</B></span>")
+		src.messageNearby("<span class='alert'><B>You do a [trick] on the [AM]!</B></span>", "<span class='alert'><B>[rider] does a [trick] on the [AM]!</B></span>")
 		if(give_points)
 			adjustSickness(4)
 		trickAnimate()
@@ -229,7 +230,7 @@
 		if(crashed > 30)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 70, 1)
 
-		src.messageNearby("<span style=\"color:red\"><B>You are flung off the [src]!</B></span>", "<span style=\"color:red\"><B>[rider] is flung off the [src]!</B></span>")
+		src.messageNearby("<span class='alert'><B>You are flung off the [src]!</B></span>", "<span class='alert'><B>[rider] is flung off the [src]!</B></span>")
 
 		rider.changeStatus("stunned", 2 SECONDS)
 		rider.changeStatus("weakened", 2 SECONDS)
@@ -238,7 +239,7 @@
 		rider.TakeDamageAccountArmor("All", round(sickness / 4), round(sickness / 4), 0, DAMAGE_BLUNT)
 	else
 		if(selfdismount)
-			src.messageNearby("<span style=\"color:blue\">You dismount from the [src].</span>", "<B>[rider]</B> dismounts from the [src].")
+			src.messageNearby("<span class='notice'>You dismount from the [src].</span>", "<B>[rider]</B> dismounts from the [src].")
 
 	actions.stop(runningAction, src)
 	runningAction = null
@@ -266,7 +267,7 @@
 		return
 
 	if(target == user && !user.stat)
-		src.messageNearby("<span style=\"color:blue\">You climb onto the [src].</span>", "[user.name] climbs onto the [src].")
+		src.messageNearby("<span class='notice'>You climb onto the [src].</span>", "[user.name] climbs onto the [src].")
 	else
 		return
 
@@ -304,13 +305,13 @@
 		if("harm", "disarm")
 			if(prob(60))
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
-				src.visible_message("<span style=\"color:red\"><B>[M] has shoved [rider] off of the [src]!</B></span>")
+				src.visible_message("<span class='alert'><B>[M] has shoved [rider] off of the [src]!</B></span>")
 				src.log_me(src.rider, M, "shoved_off")
 				rider.weakened = 2
 				eject_rider()
 			else
 				playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
-				src.visible_message("<span style=\"color:red\"><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
+				src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	*/
 	return
 
@@ -328,7 +329,7 @@
 
 /obj/vehicle/skateboard/disposing()
 	if(rider)
-		boutput(rider, "<span style=\"color:red\"><B>Your skateboard is somehow destroyed!</B></span>")
+		boutput(rider, "<span class='alert'><B>Your skateboard is somehow destroyed!</B></span>")
 		eject_rider()
 	..()
 	return

@@ -41,9 +41,10 @@
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
 	flags = NOSPLASH
+	var/health = 400
 	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	var/beaker = null
+	var/obj/item/beaker = null
 	var/list/dispensable_reagents = list("aluminium","barium","bromine","carbon","calcium","chlorine", \
 										"chromium","copper","ethanol","fluorine","hydrogen", \
 										"iodine","iron","lithium","magnesium","mercury","nickel", \
@@ -110,7 +111,7 @@
 		if(!beaker)
 			data += {""stat_msg":"No [glass_name] loaded.\""}
 			show_stat = 1
-		else if (!beaker:reagents || beaker:reagents.total_volume >= beaker:reagents.maximum_volume)
+		else if (!beaker.reagents || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			data += {""stat_msg":"[capitalize(glass_name)] is full.\""}
 			show_stat = 1
 
@@ -193,7 +194,21 @@
 			send_group_details()
 			return
 
-		if (!istype(B, glass_path) || B.incompatible_with_chem_dispensers == 1)
+		if (!istype(B, glass_path))
+			var/damage = B.force
+			if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
+				user.lastattacked = src
+				attack_particle(user,src)
+				hit_twitch(src)
+				playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
+				src.take_damage(damage)
+				user.visible_message("<span class='alert'><b>[user] bashes [src] with [B]!</b></span>")
+			else
+				playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
+				user.visible_message("<span class='alert'><b>[user] uselessly taps [src] with [B]!</b></span>")
+			return
+
+		if (B.incompatible_with_chem_dispensers == 1)
 			return
 
 		if (status & (NOPOWER|BROKEN))
@@ -208,7 +223,7 @@
 			var/amount = input("How much of it do you want? (1 to [amtlimit])", "[dispenser_name] Dispenser", null, null) as null|num
 			if (isnull(amount) || amount <= 0)
 				return
-			amount = CLAMP(amount, 0, amtlimit)
+			amount = clamp(amount, 0, amtlimit)
 			if (get_dist(src,user) > 1)
 				boutput(user, "You need to move closer to get the chemicals!")
 				return
@@ -218,22 +233,20 @@
 			B.reagents.add_reagent(the_reagent,amount)
 			B.reagents.handle_reactions()
 			return
+		if (src.beaker)
+			boutput(user, "A [glass_name] is already loaded into the machine.")
+			return
 
-		else
-			if (src.beaker)
-				boutput(user, "A [glass_name] is already loaded into the machine.")
-				return
-
-			src.beaker =  B
-			user.drop_item()
-			B.set_loc(src)
-			boutput(user, "You add the [glass_name] to the machine!")
-			if(ch_window.IsSubscribed(user.client))
-				send_beaker_details()
-				send_reagent_details(0)
-			else
-				attack_hand(user)
-			src.update_icon()
+		src.beaker =  B
+		user.drop_item()
+		B.set_loc(src)
+		boutput(user, "You add the [glass_name] to the machine!")
+		if(ch_window.IsSubscribed(user.client))
+			send_beaker_details()
+			send_reagent_details(0)
+		src.update_icon()
+		src.add_dialog(user)
+		ch_window.Subscribe(user.client)
 
 	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
@@ -242,12 +255,13 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				qdel(src)
+				SPAWN_DBG(0)
+					src.take_damage(400)
 				return
 			if(2.0)
-				if (prob(50))
-					qdel(src)
-					return
+				SPAWN_DBG(0)
+					src.take_damage(150)
+				return
 
 	blob_act(var/power)
 		if (prob(25 * power/20))
@@ -264,7 +278,7 @@
 		if (isghostcritter(usr)) return
 		if (doing_a_thing) return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["card"])
@@ -307,7 +321,7 @@
 					if (istext(reagentlist[reagent])) //Set a dispense amount
 						var/num = text2num(reagentlist[reagent])
 						if(!num) num = 10
-						G.reagents[lowertext(reagent)] = CLAMP(round(num), 1, 100)
+						G.reagents[lowertext(reagent)] = clamp(round(num), 1, 100)
 					else //Default to 10 if no specific amount given
 						G.reagents[lowertext(reagent)] = 10
 
@@ -326,8 +340,7 @@
 
 		else if (href_list["eject"])
 			if (beaker)
-				// should this use "put in hands or drop"? seems like a better idea. idk
-				beaker:set_loc(src.output_target ? src.output_target : get_turf(src))
+				usr.put_in_hand_or_drop(beaker)
 				beaker = null
 			else
 				var/obj/item/I = usr.equipped()
@@ -347,7 +360,7 @@
 			if (isnull(nadd) || get_dist(src,usr) > 1)
 				doing_a_thing = 0
 				return
-			src.user_dispense_amt = CLAMP(round(nadd), 1, 100)
+			src.user_dispense_amt = clamp(round(nadd), 1, 100)
 			src.updateUsrDialog()
 			doing_a_thing = 0
 			return
@@ -358,7 +371,7 @@
 			if (isnull(nremove) || get_dist(src,usr) > 1)
 				doing_a_thing = 0
 				return
-			src.user_remove_amt = CLAMP(round(nremove), 1, 100)
+			src.user_remove_amt = clamp(round(nremove), 1, 100)
 			src.updateUsrDialog()
 			doing_a_thing = 0
 			return
@@ -372,8 +385,8 @@
 			if (!(id in dispensable_reagents))
 				doing_a_thing = 0
 				return
-			beaker:reagents.add_reagent(id,10)
-			beaker:reagents.handle_reactions()
+			beaker.reagents.add_reagent(id,10)
+			beaker.reagents.handle_reactions()
 			src.update_icon()
 			src.send_beaker_details()
 			send_reagent_details()
@@ -387,8 +400,8 @@
 			if (!(id in dispensable_reagents))
 				doing_a_thing = 0
 				return
-			beaker:reagents.add_reagent(id, isnum(src.user_dispense_amt) ? src.user_dispense_amt : 10)
-			beaker:reagents.handle_reactions()
+			beaker.reagents.add_reagent(id, isnum(src.user_dispense_amt) ? src.user_dispense_amt : 10)
+			beaker.reagents.handle_reactions()
 			src.update_icon()
 			src.send_beaker_details()
 			send_reagent_details()
@@ -405,8 +418,8 @@
 						var/amt = 10
 						if (isnum(group.reagents[reagent]))
 							amt = group.reagents[reagent]
-						beaker:reagents.add_reagent(reagent,amt)
-						beaker:reagents.handle_reactions()
+						beaker.reagents.add_reagent(reagent,amt)
+						beaker.reagents.handle_reactions()
 				src.update_icon()
 				src.send_beaker_details()
 				send_reagent_details()
@@ -423,31 +436,31 @@
 			return
 
 		else if (href_list["isolate"])
-			beaker:reagents.isolate_reagent(href_list["isolate"])
+			beaker.reagents.isolate_reagent(href_list["isolate"])
 			src.update_icon()
 			send_beaker_details()
 			send_reagent_details()
 			return
 		else if (href_list["remove"])
-			beaker:reagents.del_reagent(href_list["remove"])
+			beaker.reagents.del_reagent(href_list["remove"])
 			src.update_icon()
 			send_beaker_details()
 			send_reagent_details()
 			return
 		else if (href_list["removecustom"])
-			beaker:reagents.remove_reagent(href_list["removecustom"], isnum(src.user_remove_amt) ? src.user_remove_amt : 5)
+			beaker.reagents.remove_reagent(href_list["removecustom"], isnum(src.user_remove_amt) ? src.user_remove_amt : 5)
 			src.update_icon()
 			send_beaker_details()
 			send_reagent_details()
 			return
 		else if (href_list["remove5"])
-			beaker:reagents.remove_reagent(href_list["remove5"], 5)
+			beaker.reagents.remove_reagent(href_list["remove5"], 5)
 			src.update_icon()
 			send_beaker_details()
 			send_reagent_details()
 			return
 		else if (href_list["remove1"])
-			beaker:reagents.remove_reagent(href_list["remove1"], 1)
+			beaker.reagents.remove_reagent(href_list["remove1"], 1)
 			src.update_icon()
 			send_beaker_details()
 			send_reagent_details()
@@ -463,7 +476,7 @@
 	attack_hand(mob/user as mob)
 		if(status & (NOPOWER|BROKEN))
 			return
-		user.machine = src
+		src.add_dialog(user)
 		/*
 		src.update_html()
 		user.Browse("<TITLE>[dispenser_name] Dispenser</TITLE>[dispenser_name] dispenser:<BR>[src.HTML]", "window=chem_dispenser;size=500x800;title=Chemistry Dispenser")
@@ -510,24 +523,36 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Only living mobs are able to set the dispenser's output target.</span>")
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
 			return
 
 		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span style=\"color:red\">The dispenser is too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
 			return
 
 		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You are too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_target = over_object
-			boutput(usr, "<span style=\"color:blue\">You set the dispenser to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
 
 		else
-			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
+
+	proc/take_damage(var/damage_amount = 5)
+		src.health -= damage_amount
+		if (src.health <= 0)
+			if (beaker)
+				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
+				beaker = null
+			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
+			robogibs(src.loc,null)
+			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
+			qdel(src)
+			return
 
 /obj/machinery/chem_dispenser/alcohol
 	name = "alcohol dispenser"
@@ -588,7 +613,7 @@
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers. No sir."
 	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", \
 								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
-								"coconut_milk", "sugar", "water", "vanilla", "tea")
+								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine")
 	icon_state = "alc_dispenser"
 	icon_base = "alc_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks

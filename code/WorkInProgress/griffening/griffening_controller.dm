@@ -39,6 +39,7 @@
 	var/phase_arguments = null
 
 	New(var/obj/griffening_central/F)
+		..()
 		field_center = F
 
 	proc/announce(message)
@@ -56,14 +57,14 @@
 
 	proc/update_game_status(var/message)
 		for (var/mob/M in players)
-			boutput(M, "<span style=\"color:blue\">[message]</span>")
+			boutput(M, "<span class='notice'>[message]</span>")
 
 	proc/action(var/obj/griffening_card_holder/holder, var/mob/M)
 		if (holder.controller != src)
 			return
 		var/active_player = holder.player
 		if (players[active_player] != M)
-			boutput(M, "<span style=\"color:red\">You cannot play cards here.</span>")
+			boutput(M, "<span class='alert'>You cannot play cards here.</span>")
 		var/obj/item/playing_cards/card = M.equipped()
 		var/datum/playing_card/griffening/C
 		if (card)
@@ -72,79 +73,79 @@
 
 			for (var/datum/playing_card/Card in card.cards)
 				if (!istype(Card, /datum/playing_card/griffening))
-					boutput(usr, "<span style=\"color:red\">[Card.card_name] is not a card for this game.</span>")
+					boutput(usr, "<span class='alert'>[Card.card_name] is not a card for this game.</span>")
 					return
 				if (C.available_game_id != game_id)
-					boutput(usr, "<span style=\"color:red\">[Card.card_name] doesn't belong in this game.</span>")
+					boutput(usr, "<span class='alert'>[Card.card_name] doesn't belong in this game.</span>")
 					return
 		if (current_player != active_player)
-			boutput(M, "<span style=\"color:red\">Not your turn.</span>")
+			boutput(M, "<span class='alert'>Not your turn.</span>")
 			return
 		switch (holder.role)
 			if (HOLDER_ROLE_UNUSED)
-				boutput(M, "<span style=\"color:red\">You cannot play cards here.</span>")
+				boutput(M, "<span class='alert'>You cannot play cards here.</span>")
 				return
 			if (HOLDER_ROLE_DECK)
 				if (card)
-					boutput(M, "<span style=\"color:red\">You cannot play cards here.</span>")
+					boutput(M, "<span class='alert'>You cannot play cards here.</span>")
 					return
 				if (phase == PHASE_DRAW)
 					var/obj/item/playing_cards/stack = holder.card
 					for (var/i = 1, i <= phase_arguments, i++)
 						if (!stack || !stack.cards.len)
-							boutput(M, "<span style=\"color:red\">You lose.</span>")
+							boutput(M, "<span class='alert'>You lose.</span>")
 							// @todo
 							return
 						card = stack.draw_card(card, null, 1)
 						if (card.loc != M)
 							if (!M.put_in_hand(card))
-								card.loc = M.loc
+								card.set_loc(M.loc)
 				else
-					boutput(M, "<span style=\"color:red\">You cannot draw cards right now.</span>")
+					boutput(M, "<span class='alert'>You cannot draw cards right now.</span>")
 			if (HOLDER_ROLE_GIBBED)
-				boutput(M, "<span style=\"color:red\">You cannot play cards here.</span>")
+				boutput(M, "<span class='alert'>You cannot play cards here.</span>")
 				return
 			if (HOLDER_ROLE_DISCARD)
 				if (phase == PHASE_MAIN)
 					if (!card)
-						boutput(M, "<span style=\"color:red\">You must take the cards you wish to discard into your active hand.</span>")
+						boutput(M, "<span class='alert'>You must take the cards you wish to discard into your active hand.</span>")
 						return
 					if (confirm("Are you sure you want to discard [C ? C.card_name : "these [card.cards.len] cards"]?", M))
 						merge_into(holder, card, M)
 						update_game_status("Player [active_player] discards [C ? "1 card" : "[card.cards.len] cards"].")
 				else
-					boutput(M, "<span style=\"color:red\">You cannot discard cards right now.</span>")
+					boutput(M, "<span class='alert'>You cannot discard cards right now.</span>")
 					return
 			if (HOLDER_ROLE_CREATURE)
 				if (phase == PHASE_MAIN)
 					if (!card)
 						if (!holder.card)
-							boutput(M, "<span style=\"color:red\">You must take the card you wish to play into your active hand.</span>")
+							boutput(M, "<span class='alert'>You must take the card you wish to play into your active hand.</span>")
 							return
 						return
 					if (holder.card)
-						boutput(M, "<span style=\"color:red\">There is already a creature here.</span>")
+						boutput(M, "<span class='alert'>There is already a creature here.</span>")
 						return
 					if (!C)
-						boutput(M, "<span style=\"color:red\">You must take a single card into your active hand.</span>")
+						boutput(M, "<span class='alert'>You must take a single card into your active hand.</span>")
 						return
 					if (!istype(C, /datum/playing_card/griffening/creature))
-						boutput(M, "<span style=\"color:red\">You cannot play that here.</span>")
+						boutput(M, "<span class='alert'>You cannot play that here.</span>")
 						return
 					if (!phase_arguments)
-						boutput(M, "<span style=\"color:red\">You cannot play any more creatures this turn.</span>")
+						boutput(M, "<span class='alert'>You cannot play any more creatures this turn.</span>")
 						return
 					var/face_up = confirm("Would you like to play this creature face up?", M)
 					var/datum/playing_card/griffening/creature/Cr = C
 					if (!Cr.can_play(src, face_up, active_player))
-						boutput(M, "<span style=\"color:red\">You cannot play this creature.</span>")
+						boutput(M, "<span class='alert'>You cannot play this creature.</span>")
 						return
 					if (!Cr.before_play(src, face_up, active_player, M))
 						return
 					phase_arguments--
 					holder.card = card
 					M.u_equip(card)
-					card.loc = holder
+					card.set_loc(holder)
 					update_game_status("Player [active_player] plays [face_up ? "creature [card.card_name]" : "a creature face down"].")
 		show_informational()
 
@@ -166,7 +167,7 @@
 		M.eye = area_indicator
 		var/obj/griffening_card_holder/deck_area = deck_holder[playerid]
 		deck_area.card = deck
-		deck.loc = deck_area
+		deck.set_loc(deck_area)
 		if (!game_id)
 			game_id = next_game_id
 			next_game_id++
@@ -199,7 +200,7 @@
 			var/datum/playing_card/griffening/expected = new card_type()
 			var/cname = expected.card_name
 			qdel(expected)
-			boutput(M, "<span style=\"color:red\">You don't have the appropriate card ([cname]) in your deck.</span>")
+			boutput(M, "<span class='alert'>You don't have the appropriate card ([cname]) in your deck.</span>")
 			return null
 		var/datum/playing_card/griffening/chosen = null
 		if (matches.len == 1)
@@ -759,11 +760,12 @@ td, th {
 		src.controller = ctrl
 
 	examine()
+		. = ..()
 		if (!controller || !card)
-			return ..()
+			return
 		else
-			boutput(usr, "Area card in effect: <i>[card.card_name]</i>")
-			boutput(usr, card.card_desc)
+			. += "Area card in effect: <i>[card.card_name]</i>"
+			. += card.card_desc
 
 /obj/griffening_hologram
 	name = "hologram"
@@ -812,27 +814,27 @@ td, th {
 			return
 		if (controller.players[player])
 			if (controller.players[player] != M)
-				boutput(M, "<span style=\"color:red\">You're not player [player], please stop clicking me.</span>")
+				boutput(M, "<span class='alert'>You're not player [player], please stop clicking me.</span>")
 				return
 		var/areaid = controller.in_playing_area(M)
 		if (areaid != player)
-			boutput(M, "<span style=\"color:red\">You must step up to the card holders to play.</span>")
+			boutput(M, "<span class='alert'>You must step up to the card holders to play.</span>")
 			return
 		if (!controller.players[player])
 			var/obj/item/playing_cards/held = M.equipped()
 			if (!istype(held))
-				boutput(M, "<span style=\"color:red\">You must be holding your deck to enter play.</span>")
+				boutput(M, "<span class='alert'>You must be holding your deck to enter play.</span>")
 				return
 			if (held.cards.len < 40 || held.cards.len > 80)
-				boutput(M, "<span style=\"color:red\">You require 40-80 cards in your deck to play.</span>")
+				boutput(M, "<span class='alert'>You require 40-80 cards in your deck to play.</span>")
 				return
 			for (var/datum/playing_card/Card in held.cards)
 				if (!istype(Card, /datum/playing_card/griffening))
-					boutput(M, "<span style=\"color:red\">Card [Card.card_name] is not a valid playing card. Remove it from your deck first.</span>")
+					boutput(M, "<span class='alert'>Card [Card.card_name] is not a valid playing card. Remove it from your deck first.</span>")
 					return
 			M.remove_item(held)
 			controller.register_player(player, M, held)
-			boutput(M, "<span style=\"color:blue\">You enter the game as player [player]. The game begins when both players joined. Leaving the playing area (the row in front of your card holders) or becoming braindead for more than 15 seconds will automatically forfeit the game.</span>")
+			boutput(M, "<span class='notice'>You enter the game as player [player]. The game begins when both players joined. Leaving the playing area (the row in front of your card holders) or becoming braindead for more than 15 seconds will automatically forfeit the game.</span>")
 		else
 			controller.action(src, M)
 
@@ -846,6 +848,7 @@ td, th {
 	var/datum/griffening_controller/controller = null
 
 	New()
+		..()
 		controller = new(src)
 		controller.spawn_field()
 

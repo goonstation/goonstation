@@ -1,16 +1,14 @@
-/obj/item/parts/var/accepts_normal_human_overlays = 1 //for avoiding istype in update icon
-/obj/item/parts/var/effect_modifier = 0 //if leg, this will apply a speed mod. If arms, will do nothing (yet!)
-
 /obj/item/parts/human_parts
 	name = "human parts"
-	icon = 'icons/obj/human_parts.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "buildpipe"
+	icon = 'icons/obj/items/human_parts.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	item_state = "arm-left"
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	var/skin_tone = "#FFCC99"
 	var/mob/living/original_holder = null
-	stamina_damage = 30
-	stamina_cost = 15
+	force = 6
+	stamina_damage = 40
+	stamina_cost = 23
 	stamina_crit_chance = 5
 	skintoned = 1
 	module_research = list("medicine" = 1)
@@ -18,8 +16,6 @@
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = 0
-
-
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
@@ -32,11 +28,11 @@
 		if (ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			hit_twitch(H)
-			H.UpdateDamage()
 			if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
 				src.sever()
 			else if (bone_system && src.bones && brute && prob(brute * 2))
 				src.bones.take_damage(damage_type)
+		health_update_queue |= holder
 		return 1
 
 	heal_damage(brute, burn, tox)
@@ -45,6 +41,7 @@
 		src.brute_dam = max(0, src.brute_dam - brute)
 		src.burn_dam = max(0, src.burn_dam - burn)
 		src.tox_dam = max(0, src.tox_dam - tox)
+		health_update_queue |= holder
 		return 1
 
 	get_damage()
@@ -65,7 +62,7 @@
 		var/mob/living/carbon/human/H = M
 
 		if(H.limbs.vars[src.slot])
-			boutput(user, "<span style=\"color:red\">[H.name] already has one of those!</span>")
+			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
 			return
 
 		attach(H,user)
@@ -76,7 +73,8 @@
 		..()
 		holder = new_holder
 		original_holder = new_holder
-		src.bones = new /datum/bone(src)
+		if(!src.bones)
+			src.bones = new /datum/bone(src)
 		src.bones.donor = new_holder
 		src.bones.parent_organ = "[src.name]"
 		src.setMaterial(getMaterial("bone"), appearance = 0, setname = 0)
@@ -92,7 +90,8 @@
 
 
 	disposing()
-		if(src.bones) src.bones.donor = null
+		if(src.bones)
+			src.bones.dispose()
 		src.bones = null
 		original_holder = null
 		holder = null
@@ -119,7 +118,7 @@
 				src.standImage.color = newrgb
 
 	surgery(var/obj/item/tool)
-		if(remove_stage > 1 && istype(tool,/obj/item/staple_gun))
+		if(remove_stage > 0 && (istype(tool,/obj/item/staple_gun) || istype(tool,/obj/item/suture)) )
 			remove_stage = 0
 
 		else if(remove_stage == 0 || remove_stage == 2)
@@ -136,21 +135,21 @@
 
 		switch(remove_stage)
 			if(0)
-				tool.the_mob.visible_message("<span style=\"color:red\">[tool.the_mob] staples [holder.name]'s [src.name] securely to their stump with [tool].</span>", "<span style=\"color:red\">You staple [holder.name]'s [src.name] securely to their stump with [tool].</span>")
-				logTheThing("combat", tool.the_mob, holder, "staples %target%'s [src.name] back on")
-				logTheThing("diary", tool.the_mob, holder, "staples %target%'s [src.name] back on", "combat")
+				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", "<span class='alert'>You attach [holder.name]'s [src.name] securely with [tool].</span>")
+				logTheThing("combat", tool.the_mob, holder, "staples [constructTarget(holder,"combat")]'s [src.name] back on")
+				logTheThing("diary", tool.the_mob, holder, "staples [constructTarget(holder,"diary")]'s [src.name] back on", "combat")
 			if(1)
-				tool.the_mob.visible_message("<span style=\"color:red\">[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>", "<span style=\"color:red\">You slice through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>")
+				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>")
 			if(2)
-				tool.the_mob.visible_message("<span style=\"color:red\">[tool.the_mob] saws through the bone of [holder.name]'s [src.name] with [tool].</span>", "<span style=\"color:red\">You saw through the bone of [holder.name]'s [src.name] with [tool].</span>")
+				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] saws through the bone of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You saw through the bone of [holder.name]'s [src.name] with [tool].</span>")
 
 				SPAWN_DBG(rand(150,200))
 					if(remove_stage == 2)
 						src.remove(0)
 			if(3)
-				tool.the_mob.visible_message("<span style=\"color:red\">[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>", "<span style=\"color:red\">You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>")
-				logTheThing("combat", tool.the_mob, holder, "removes %target%'s [src.name]")
-				logTheThing("diary", tool.the_mob, holder, "removes %target%'s [src.name]", "combat")
+				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>")
+				logTheThing("combat", tool.the_mob, holder, "removes [constructTarget(holder,"combat")]'s [src.name]")
+				logTheThing("diary", tool.the_mob, holder, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
 				src.remove(0)
 
 		if(!isdead(holder))
@@ -162,10 +161,10 @@
 		return 1
 
 	remove(var/show_message = 1)
-		if (isnull(src.original_DNA) || isnull(src.original_fprints) && ismob(src.original_holder))
+		if ((isnull(src.original_DNA) || isnull(src.original_fprints)) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.original_DNA = src.original_holder.bioHolder.Uid
-				src.original_fprints = md5(src.original_holder.bioHolder.Uid)
+				src.original_fprints = src.original_holder.bioHolder.uid_hash
 		return ..()
 
 /obj/item/parts/human_parts/arm
@@ -187,22 +186,22 @@
 		if(strangling == 1)
 			if(holder.losebreath < 5) holder.losebreath = 5
 			if(prob(20-rebelliousness))
-				holder.visible_message("<span style=\"color:red\">[holder.name] stops trying to strangle themself.</span>", "<span style=\"color:red\">You manage to pull your [src.name] away from your throat!</span>")
+				holder.visible_message("<span class='alert'>[holder.name] stops trying to strangle themself.</span>", "<span class='alert'>You manage to pull your [src.name] away from your throat!</span>")
 				strangling = 0
 				holder.losebreath -= 5
 			return
 
 		if(prob(rebelliousness*2)) //Emote
-			boutput(holder, "<span style=\"color:red\">Your [src.name] moves by itself!</span>")
+			boutput(holder, "<span class='alert'>Your [src.name] moves by itself!</span>")
 			holder.emote(pick("snap", "shrug", "clap", "flap", "aflap", "raisehand", "crackknuckles","rude","gesticulate","wgesticulate","nosepick","flex","facepalm","airquote","flipoff","shakefist"))
 		else if(prob(rebelliousness)) //Slap self
-			boutput(holder, "<span style=\"color:red\">Your [src.name] moves by itself!</span>")
+			boutput(holder, "<span class='alert'>Your [src.name] moves by itself!</span>")
 			holder.emote("slap")
 		else if(prob(rebelliousness) && holder.get_eye_blurry() == 0) //Poke own eye
-			holder.visible_message("<span style=\"color:red\">[holder.name] pokes themself in the eye with their [src.name].</span>", "<span style=\"color:red\">Your [src.name] pokes you in the eye!</span>")
+			holder.visible_message("<span class='alert'>[holder.name] pokes themself in the eye with their [src.name].</span>", "<span class='alert'>Your [src.name] pokes you in the eye!</span>")
 			holder.change_eye_blurry(10)
 		else if(prob(rebelliousness) && holder.losebreath == 0) //Strangle self
-			holder.visible_message("<span style=\"color:red\">[holder.name] tries to strangle themself with their [src.name].</span>", "<span style=\"color:red\">Your [src.name] tries to strangle you!</span>")
+			holder.visible_message("<span class='alert'>[holder.name] tries to strangle themself with their [src.name].</span>", "<span class='alert'>Your [src.name] tries to strangle you!</span>")
 			holder.emote("gasp")
 			holder.losebreath = 5
 			strangling = 1
@@ -210,12 +209,14 @@
 /obj/item/parts/human_parts/arm/left
 	name = "left arm"
 	icon_state = "arm_left"
+	item_state = "arm-left"
 	slot = "l_arm"
 	handlistPart = "hand_left"
 
 /obj/item/parts/human_parts/arm/right
 	name = "right arm"
 	icon_state = "arm_right"
+	item_state = "arm-right"
 	slot = "r_arm"
 	side = "right"
 	handlistPart = "hand_right"
@@ -235,22 +236,23 @@
 			rebelliousness += 1
 
 		if(prob(rebelliousness*2)) //Emote
-			boutput(holder, "<span style=\"color:red\"><b>Your [src.name] moves by itself!</b></span>")
+			boutput(holder, "<span class='alert'><b>Your [src.name] moves by itself!</b></span>")
 			holder.emote(pick("shakebutt", "flap", "aflap","stretch","dance","fart","twitch","twitch_v","flip"))
 		else if(prob(rebelliousness)) //Trip over
-			boutput(holder, "<span style=\"color:red\"><b>Your [src.name] moves by itself!</b></span>")
+			boutput(holder, "<span class='alert'><b>Your [src.name] moves by itself!</b></span>")
 			holder.emote(pick("trip", "collapse"))
 		else if(prob(rebelliousness)) //Slow down
-			boutput(holder, "<span style=\"color:red\"><b>Your [src.name] is slowing you down!</b></span>")
+			boutput(holder, "<span class='alert'><b>Your [src.name] is slowing you down!</b></span>")
 			holder.setStatus("slowed", max(holder.getStatusDuration("slowed"), 10))
 		else if(prob(rebelliousness)) //Stumble around
-			boutput(holder, "<span style=\"color:red\"><b>Your [src.name] won't do what you tell it to!</b></span>")
+			boutput(holder, "<span class='alert'><b>Your [src.name] won't do what you tell it to!</b></span>")
 			if (holder.misstep_chance < 20)
 				holder.change_misstep_chance(20)
 
 /obj/item/parts/human_parts/leg/left
 	name = "left leg"
 	icon_state = "leg_left"
+	item_state = "leg-left"
 	slot = "l_leg"
 	partlistPart = "foot_left"
 	step_image_state = "footprintsL"
@@ -258,6 +260,7 @@
 /obj/item/parts/human_parts/leg/right
 	name = "right leg"
 	icon_state = "leg_right"
+	item_state = "leg-right"
 	slot = "r_leg"
 	side = "right"
 	partlistPart = "foot_right"
@@ -376,10 +379,10 @@
 				handimage.pixel_y = 6
 
 			if (H)
-				H.update_clothing()
+				//H.update_clothing()
 				H.update_body()
-				H.set_body_icon_dirty()
 				H.update_inhands()
+				H.hud.add_other_object(H.l_hand,H.hud.layouts[H.hud.layout_style]["lhand"])
 
 
 	proc/remove_from_mob(delete = 0)
@@ -424,7 +427,7 @@
 		remove_from_mob(0)
 		..()
 
-	dispose()
+	disposing()
 		remove_from_mob(1)
 		..()
 
@@ -509,6 +512,7 @@
 				H.update_body()
 				H.set_body_icon_dirty()
 				H.update_inhands()
+				H.hud.add_other_object(H.r_hand,H.hud.layouts[H.hud.layout_style]["rhand"])
 
 	proc/remove_from_mob(delete = 0)
 		if (isitem(remove_object))
@@ -549,7 +553,7 @@
 		remove_from_mob(0)
 		..()
 
-	dispose()
+	disposing()
 		remove_from_mob(1)
 		..()
 
@@ -604,6 +608,44 @@
 		current_decomp_stage_s = decomp_stage
 		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
 		return standImage
+
+#if ASS_JAM
+/obj/item/parts/human_parts/arm/left/hot
+	name = "left hot arm"
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	decomp_affected = 0
+	streak_descriptor = "bloody"
+	override_attack_hand = 1
+	limb_type = /datum/limb/hot
+	handlistPart = "hand_left"
+	show_on_examine = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+
+
+/obj/item/parts/human_parts/arm/right/hot
+	name = "right hot arm"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	decomp_affected = 0
+	streak_descriptor = "bloody"
+	override_attack_hand = 1
+	limb_type = /datum/limb/hot
+	handlistPart = "hand_right"
+	show_on_examine = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+#endif
 
 /obj/item/parts/human_parts/arm/left/bear
 	name = "left bear arm"

@@ -16,11 +16,14 @@
 	var/debugmode = 0
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
+	var/isitspacemas = 0
 
 	var/target_override = null // varedit to an area TYPE to allow the nuke to be deployed in that area instead of whatever the mode says (also enables the bomb in non-nuke gamemodes)
 	var/target_override_name = "" // how the area gets displayed if you try to deploy the nuke in a wrong area
 	var/anyone_can_activate = 0 // allows non-nukies to deploy the bomb
 	var/boom_size = "nuke" // varedit to number to get an explosion instead
+
+	var/started_light_animation = 0
 
 	flags = FPRINT
 	var/image/image_light = null
@@ -30,6 +33,7 @@
 		wirepanel = new(src)
 		#ifdef XMAS
 		icon_state = "nuke_gift[rand(1,2)]"
+		isitspacemas = "1"
 		#endif
 		image_light = image(src.icon, "nblight1")
 		src.UpdateOverlays(src.image_light, "light")
@@ -40,6 +44,9 @@
 		..()
 
 	disposing()
+		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
+			NUKEMODE.the_bomb = null
 		qdel(wirepanel)
 		..()
 
@@ -53,41 +60,46 @@
 		var/turf/T = get_turf(src)
 		if (T && istype(T))
 			for (var/obj/shrub/S in T.contents)
-				S.visible_message("<span style=\"color:red\">[S] cannot withstand the intense radiation and crumbles to pieces!</span>")
+				S.visible_message("<span class='alert'>[S] cannot withstand the intense radiation and crumbles to pieces!</span>")
 				qdel(S)
 
+		if(det_time && src.simple_light && !src.started_light_animation && det_time - ticker.round_elapsed_ticks <= 2 MINUTES)
+			src.started_light_animation = 1
+			var/matrix/trans = matrix()
+			trans.Scale(3)
+			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
 		if (det_time && ticker.round_elapsed_ticks >= det_time)
-			explode()
+			SPAWN_DBG(0)
+				explode()
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">--:--</span>"
 		else
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[get_countdown_timer()]</span>"
 		return
 
-	examine()
-		..()
-		if(usr.client)
+	examine(mob/user)
+		. = ..()
+		if(user.client)
 			if (src.armed)
-				boutput(usr, "It is currently counting down to detonation. Ohhhh shit.")
-				boutput(usr, "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authenticaion disk has been inserted." : ""]")
+				. += "It is currently counting down to detonation. Ohhhh shit."
+				. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authenticaion disk has been inserted." : ""]"
 			else
-				boutput(usr, "It is not armed. That's a relief.")
+				. += "It is not armed. That's a relief."
 				if (src.disk && istype(src.disk))
-					boutput(usr, "The authenticaion disk has been inserted.")
+					. += "The authenticaion disk has been inserted."
 
 			if (!src.anchored)
-				boutput(usr, "<br>The floor bolts have been unsecured. The bomb can be moved around.")
+				. += "The floor bolts have been unsecured. The bomb can be moved around."
 			else
-				boutput(usr, "<br>It is firmly anchored to the floor by its floor bolts. A screwdriver could undo them.")
+				. += "It is firmly anchored to the floor by its floor bolts. A screwdriver could undo them."
 
 			switch(src.health)
 				if(80 to 125)
-					boutput(usr, "<span style=\"color:red\">It is a little bit damaged.</span>")
+					. += "<span class='alert'>It is a little bit damaged.</span>"
 				if(40 to 79)
-					boutput(usr, "<span style=\"color:red\">It looks pretty beaten up.</span>")
+					. += "<span class='alert'>It looks pretty beaten up.</span>"
 				if(1 to 39)
-					boutput(usr, "<span style=\"color:red\"><b>It seems to be on the verge of falling apart!</b></span>")
-		return
+					. += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
 
 	// Nuke round development was abandoned for 4 whole months, so I went out of my way to implement some user feedback from that 11 pages long forum thread (Convair880).
 	attack_hand(mob/user as mob)
@@ -120,7 +132,7 @@
 				if (src.anyone_can_activate || (istype(NUKEMODE, /datum/game_mode/nuclear) && (user.mind in NUKEMODE.syndicates)))
 					if (target_area && (A && istype(A)))
 						if (!((ispath(target_area) && istype(A, target_area)) || (islist(target_area) && (A.type in target_area))))
-							boutput(user, "<span style=\"color:red\">You need to deploy the bomb in [target_name].</span>")
+							boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
 						else
 							if (alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") == "Yes" && !src.armed && get_dist(src, user) <= 1 && !(user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
 								src.armed = 1
@@ -133,22 +145,23 @@
 									src.UpdateOverlays(src.image_light, "light")
 								//src.icon_state = "nuclearbomb2"
 								src.det_time = ticker.round_elapsed_ticks + src.timer_default
+								src.add_simple_light("nuke", list(255, 127, 127, 127))
 								command_alert("\A [src] has been armed in [A]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [A] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 								world << sound('sound/machines/bomb_planted.ogg')
 								logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
 
 					else
-						boutput(user, "<span style=\"color:red\">Deployment area definition missing or invalid! Please report this to a coder.</span>")
+						boutput(user, "<span class='alert'>Deployment area definition missing or invalid! Please report this to a coder.</span>")
 				else
-					boutput(user, "<span style=\"color:red\">It isn't deployed, and you don't know how to deploy it anyway.</span>")
+					boutput(user, "<span class='alert'>It isn't deployed, and you don't know how to deploy it anyway.</span>")
 			else
 				if (istype(NUKEMODE, /datum/game_mode/nuclear) && (user.mind in NUKEMODE.syndicates))
-					boutput(user, "<span style=\"color:blue\">You don't need to do anything else with the bomb.</span>")
+					boutput(user, "<span class='notice'>You don't need to do anything else with the bomb.</span>")
 				else
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> kicks [src] uselessly!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> kicks [src] uselessly!</span>")
 					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		else
-			boutput(user, "<span style=\"color:red\">[src.name] seems to be completely inert and useless.</span>")
+			boutput(user, "<span class='alert'>[src.name] seems to be completely inert and useless.</span>")
 
 		return
 
@@ -160,19 +173,19 @@
 			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
 			if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
 				if (src.disk && istype(src.disk))
-					boutput(user, "<span style=\"color:red\">There's already something in the [src.name]'s disk drive.</span>")
+					boutput(user, "<span class='alert'>There's already something in the [src.name]'s disk drive.</span>")
 					return
 				if (src.armed == 0)
-					boutput(user, "<span style=\"color:red\">The [src.name] isn't armed yet.</span>")
+					boutput(user, "<span class='alert'>The [src.name] isn't armed yet.</span>")
 					return
 
 				var/timer_modifier = 0
 				if (user.mind in NUKEMODE.syndicates)
 					timer_modifier = -src.timer_modifier_disk
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> inserts [W.name], shortening the bomb's timer by [src.timer_modifier_disk / 10] seconds!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> inserts [W.name], shortening the bomb's timer by [src.timer_modifier_disk / 10] seconds!</span>")
 				else
 					timer_modifier = src.timer_modifier_disk
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> inserts [W.name], extending the bomb's timer by [src.timer_modifier_disk / 10] seconds!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> inserts [W.name], extending the bomb's timer by [src.timer_modifier_disk / 10] seconds!</span>")
 
 				playsound(src.loc, "sound/machines/ping.ogg", 100, 0)
 				logTheThing("bombing", user, null, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
@@ -204,13 +217,13 @@
 
 			if (user.mind in NUKEMODE.syndicates && !src.anyone_can_activate)
 				if (src.armed == 1)
-					boutput(user, "<span style=\"color:blue\">You don't need to do anything else with the bomb.</span>")
+					boutput(user, "<span class='notice'>You don't need to do anything else with the bomb.</span>")
 					return
 				else
-					boutput(user, "<span style=\"color:red\">Why would you want to damage the nuclear bomb?</span>")
+					boutput(user, "<span class='alert'>Why would you want to damage the nuclear bomb?</span>")
 					return
 
-			if (src.armed && src.anchored)
+			if (src.armed && src.anchored && !(user.mind in NUKEMODE.syndicates))
 				if (isscrewingtool(W))
 					actions.start(new /datum/action/bar/icon/unanchorNuke(src), user)
 					return
@@ -284,6 +297,14 @@
 		return timeleft
 
 	proc/take_damage(var/amount)
+		if(!isitspacemas)
+			switch(src.health)
+				if(80 to 125)
+					src.icon_state = "nuclearbomb1"
+				if(40 to 80)
+					src.icon_state = "nuclearbomb2"
+				if(1 to 40)
+					src.icon_state = "nuclearbomb3"
 		if (!isnum(amount) || amount < 1)
 			return
 		src.health = max(0,src.health - amount)
@@ -300,7 +321,7 @@
 			qdel(src)
 
 	proc/explode()
-		sleep(20)
+		sleep(2 SECONDS)
 		done = 1
 		if(src.boom_size != "nuke")
 			var/area/A = get_area(src)
@@ -308,10 +329,15 @@
 			explosion_new(src, get_turf(src), src.boom_size)
 			qdel(src)
 			return
-		var/datum/game_mode/nuclear/NUKEMODE = null
+		var/datum/game_mode/nuclear/NUKEMODE = ticker?.mode
 		var/turf/nuke_turf = get_turf(src)
-		if (nuke_turf.z != 1 && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
-			NUKEMODE = ticker.mode
+		var/area/nuke_area = get_area(src)
+		var/area_correct = 0
+		if(src.target_override && istype(nuke_area, src.target_override))
+			area_correct = 1
+		if(istype(ticker?.mode, /datum/game_mode/nuclear) && istype(nuke_area, NUKEMODE.target_location_type))
+			area_correct = 1
+		if ((nuke_turf.z != 1 && !area_correct) && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			NUKEMODE.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
 			explosion(src, src.loc, 20, 30, 40, 50)
@@ -325,7 +351,7 @@
 			cinematic.add_client(C)
 		cinematic.play("nuke")
 #endif
-		sleep(55)
+		sleep(5.5 SECONDS)
 
 		enter_allowed = 0
 		for(var/mob/living/carbon/human/nukee in mobs)
@@ -341,10 +367,10 @@
 			ticker.mode:nuke_detonated = 1
 			ticker.mode.check_win()
 		else
-			sleep(10)
+			sleep(1 SECOND)
 			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
 
-			sleep(300)
+			sleep(30 SECONDS)
 			logTheThing("diary", null, null, "Rebooting due to nuclear destruction of station", "game")
 			Reboot_server()
 
@@ -352,7 +378,7 @@
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "unanchornuke"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/nuclearbomb/the_bomb = null
 
@@ -377,7 +403,7 @@
 			return
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span style=\"color:red\"><b>[owner]</b> begins to unscrew [the_bomb]'s floor bolts.</span>", 1)
+			O.show_message("<span class='alert'><b>[owner]</b> begins to unscrew [the_bomb]'s floor bolts.</span>", 1)
 
 	onEnd()
 		..()
@@ -386,12 +412,12 @@
 			the_bomb.anchored = 0
 
 			for (var/mob/O in AIviewers(owner))
-				O.show_message("<span style=\"color:red\"><b>[owner]</b> unscrews [the_bomb]'s floor bolts.</span>", 1)
+				O.show_message("<span class='alert'><b>[owner]</b> unscrews [the_bomb]'s floor bolts.</span>", 1)
 
 			if (ticker.round_elapsed_ticks < (the_bomb.det_time - timer_modifier) && !the_bomb.motion_sensor_triggered)
 				the_bomb.motion_sensor_triggered = 1
 				the_bomb.det_time -= timer_modifier
-				the_bomb.visible_message("<span style=\"color:red\"><b>[the_bomb]'s motion sensor was triggered! The countdown has been halved to [the_bomb.get_countdown_timer()]!</b></span>")
+				the_bomb.visible_message("<span class='alert'><b>[the_bomb]'s motion sensor was triggered! The countdown has been halved to [the_bomb.get_countdown_timer()]!</b></span>")
 				logTheThing("bombing", owner, null, "unscrews [the_bomb] at [log_loc(the_bomb)], halving the countdown to [the_bomb.get_countdown_timer()].")
 
 /obj/machinery/nuclearbomb/event

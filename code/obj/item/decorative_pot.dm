@@ -1,12 +1,12 @@
 /obj/decorative_pot
     name = "plant pot"
     desc = "A decorative plant pot, sans the Hydroponic Tray's fancy hypergrowth tech."
-    icon = 'icons/obj/hydroponics/hydromisc.dmi'
+    icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
     icon_state = "plantpot"
     anchored = 0
     density = 1
     mats = 2
-    
+
     CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
         return 0
     attackby(obj/item/weapon as obj,mob/user as mob)

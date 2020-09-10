@@ -14,13 +14,17 @@
 
 /datum/game_mode/wizard/announce()
 	boutput(world, "<B>The current game mode is - Wizard!</B>")
-	boutput(world, "<B>There is a <span style=\"color:red\">SPACE WIZARD</span> on the [station_or_ship()]. You can't let him achieve his objective!</B>")
+	boutput(world, "<B>There is a <span class='alert'>SPACE WIZARD</span> on the [station_or_ship()]. You can't let him achieve his objective!</B>")
 
 /datum/game_mode/wizard/pre_setup()
 
 	var/num_players = 0
-	for(var/mob/new_player/player in mobs)
-		if(player.client && player.ready) num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if(player.ready)
+			num_players++
 
 	var/num_wizards = max(1, min(round(num_players / 12), wizards_possible))
 
@@ -57,11 +61,10 @@
 			continue
 		if(istype(wizard))
 			wizard.special_role = "wizard"
-			if(wizardstart.len == 0)
-				boutput(wizard.current, "<B><span style=\"color:red\">A starting location for you could not be found, please report this bug!</span></B>")
+			if(!pick(job_start_locations["wizard"]))
+				boutput(wizard.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
-				var/starting_loc = pick(wizardstart)
-				wizard.current.set_loc(starting_loc)
+				wizard.current.set_loc(pick(job_start_locations["wizard"]))
 			bestow_objective(wizard,/datum/objective/regular/assassinate)
 			bestow_objective(wizard,/datum/objective/regular/assassinate)
 			bestow_objective(wizard,/datum/objective/regular/assassinate)
@@ -69,7 +72,7 @@
 			wizard.current.antagonist_overlay_refresh(1, 0)
 
 			equip_wizard(wizard.current)
-			boutput(wizard.current, "<B><span style=\"color:red\">You are a Wizard!</span></B>")
+			boutput(wizard.current, "<B><span class='alert'>You are a Wizard!</span></B>")
 			boutput(wizard.current, "<B>The Space Wizards Federation has sent you to perform a ritual on the [station_or_ship()]:</B>")
 
 			var/obj_count = 1
@@ -80,8 +83,8 @@
 
 	for(var/datum/mind/wizard in src.traitors)
 		var/randomname
-		if (wizard.current.gender == "female") randomname = wiz_female.len ? pick(wiz_female) : "Witch"
-		else randomname = wiz_male.len ? pick(wiz_male) : "Wizard"
+		if (wizard.current.gender == "female") randomname = pick_string_autokey("names/wizard_female.txt")
+		else randomname = pick_string_autokey("names/wizard_male.txt")
 		SPAWN_DBG(0)
 			var/newname = adminscrub(input(wizard.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname) as text)
 
@@ -101,17 +104,23 @@
 
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_wizard)
 				candidates += player.mind
 
 	if(candidates.len < minimum_wizards)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_wizard set to yes. We need [minimum_wizards], so including players who don't want to be wizards in the pool.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 				if ((minimum_wizards > 1) && (candidates.len >= minimum_wizards))
@@ -148,22 +157,26 @@
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 */
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 /datum/game_mode/wizard/proc/get_mob_list()
 	var/list/mobs = list()
-	for(var/mob/living/player in mobs)
-		if (player.client)
-			mobs += player
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+		mobs += player
 	return mobs
 
 /datum/game_mode/wizard/proc/pick_human_name_except(excluded_name)
 	var/list/names = list()
-	for(var/mob/living/player in mobs)
-		if (player.client && (player.real_name != excluded_name))
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.real_name != excluded_name)
 			names += player.real_name
 	if(!names.len)
 		return null

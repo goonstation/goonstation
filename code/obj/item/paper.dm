@@ -5,6 +5,7 @@
 	icon_state = "paper_blank"
 	uses_multiple_icon_states = 1
 	wear_image_icon = 'icons/mob/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	var/info = null
 	var/stampable = 1
@@ -36,28 +37,24 @@
 	var/sizey = 0
 	var/offset = 0
 
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 
 	var/sealed = 0 //Can you write on this with a pen?
 
 /obj/item/paper/New()
-
 	..()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("paper", 10)
+	src.create_reagents(10)
+	reagents.add_reagent("paper", 10)
+	SPAWN_DBG(0)
+		if (src.info && src.icon_state == "paper_blank")
+			icon_state = "paper"
 	if (!src.rand_pos)
 		return
 	else
 		src.pixel_y = rand(-8, 8)
 		src.pixel_x = rand(-9, 9)
-	SPAWN_DBG(0)
-		if (src.info && src.icon_state == "paper_blank")
-			icon_state = "paper"
-	return
 
 
 /obj/item/paper/pooled()
@@ -80,10 +77,8 @@
 		src.reagents.clear_reagents()
 		src.reagents.add_reagent("paper", 10)
 	else
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("paper", 10)
+		src.create_reagents(10)
+		reagents.add_reagent("paper", 10)
 
 	if (!src.offset)
 		return
@@ -96,54 +91,49 @@
 
 	return
 
-/obj/item/paper/examine()
-	set src in view()
-	set category = "Local"
-
-	..()
-	if(ismob(usr) && !usr.literate)
-		. = html_encode(illiterateGarbleText(src.info)) // deny them ANY useful information
+/obj/item/paper/examine(mob/user)
+	. = ..()
+	var/windowtext
+	if(!user.literate)
+		windowtext = html_encode(illiterateGarbleText(src.info)) // deny them ANY useful information
 	else
-		. = src.info
+		windowtext = src.info
 		if (src.form_startpoints && src.form_endpoints)
 			for (var/x = src.form_startpoints.len, x > 0, x--)
-				. = copytext(., 1, src.form_startpoints[src.form_startpoints[x]]) + "<a href='byond://?src=\ref[src];form=[src.form_startpoints[x]]'>" + copytext(., src.form_startpoints[src.form_startpoints[x]], src.form_endpoints[src.form_endpoints[x]]) + "</a>" + copytext(., src.form_endpoints[src.form_endpoints[x]])
+				windowtext = copytext(windowtext, 1, src.form_startpoints[src.form_startpoints[x]]) + "<a href='byond://?src=\ref[src];form=[src.form_startpoints[x]]'>" + copytext(windowtext, src.form_startpoints[src.form_startpoints[x]], src.form_endpoints[src.form_endpoints[x]]) + "</a>" + copytext(windowtext, src.form_endpoints[src.form_endpoints[x]])
 
 	var/font_junk = ""
 	for (var/i in src.fonts)
 		font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
 
-	usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[.]</TT></BODY></HTML>", "window=[src.name][(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
+	usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[windowtext]</TT></BODY></HTML>", "window=[src.name][(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
 	onclose(usr, "[src.name]")
-	return null
 
 //[(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]
-/obj/item/paper/Map/examine()
-	set src in view()
-	set category = "Local"
+/obj/item/paper/Map/examine(mob/user)
+	. = ..()
 
-	..()
-
-	if (!( ishuman(usr) || isobserver(usr) || issilicon(usr) ))
-		usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[stars(src.info)]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(usr, "[src.name]")
+	if (!( ishuman(user) || isobserver(user) || issilicon(user) ))
+		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[stars(src.info)]</TT></BODY></HTML>", "window=[src.name]")
+		onclose(user, "[src.name]")
 	else
-		usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(usr, "[src.name]")
-	return
+		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
+		onclose(user, "[src.name]")
 
 /obj/item/paper/custom_suicide = 1
 /obj/item/paper/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] cuts [him_or_her(user)]self over and over with the paper.</b></span>")
+	user.visible_message("<span class='alert'><b>[user] cuts [him_or_her(user)]self over and over with the paper.</b></span>")
 	user.TakeDamage("chest", 150, 0)
-	user.updatehealth()
 	return 1
 
 /obj/item/paper/attack_self(mob/user as mob)
-	if (alert("What would you like to do with [src]?",,"Fold","Nothing") == "Nothing")
+	var/menuchoice = alert("What would you like to do with [src]?",,"Fold","Read","Nothing")
+	if (menuchoice == "Nothing")
 		return
+	else if (menuchoice == "Read")
+		src.examine(user)
 	else
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
 		var/obj/item/paper/P = src
@@ -202,7 +192,7 @@
 				t = sign_name(t, usr)
 				src.info = copytext(src.info, 1, form_startpoints[.]) + "" + t + "" + copytext(src.info, form_startpoints[.] + length(t))
 				build_formpoints()
-				src.examine()
+				usr.examine_verb(src)
 
 		if (istype(usr.equipped(), /obj/item/stamp))
 			var/obj/item/stamp/S = usr.equipped()
@@ -221,7 +211,7 @@
 						src.info = copytext(src.info, 1, form_startpoints[.]) + "" + T + "" + copytext(src.info, form_endpoints[.])
 						src.icon_state = "paper_stamped"
 						build_formpoints()
-						src.examine()
+						usr.examine_verb(src)
 
 	src.add_fingerprint(usr)
 
@@ -229,14 +219,14 @@
 
 	if (istype(P, /obj/item/pen))
 		if(!user.literate)
-			boutput(user, "<span style=\"color:red\">You don't know how to write.</span>")
+			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return ..()
 
 		if (isghostdrone(user))
 			return ..()
 
 		if (src.sealed)
-			boutput(user, "<span style=\"color:red\">You can't write on [src].</span>")
+			boutput(user, "<span class='alert'>You can't write on [src].</span>")
 			return
 
 		var/custom_font = "Georgia"
@@ -314,10 +304,11 @@
 			var/obj/item/stamp/S = P
 			src.info += "<br>" + S.get_stamp_text() + "<br>"
 			src.icon_state = "paper_stamped"
-			boutput(user, "<span style=\"color:blue\">You stamp the paper.</span>")
+			boutput(user, "<span class='notice'>You stamp the paper.</span>")
 
 		else if (issnippingtool(P))
-			boutput(user, "<span style=\"color:blue\">You cut the paper into a mask.</span>")
+			boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
+			playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
 			var/obj/item/paper_mask/M = new /obj/item/paper_mask(src.loc)
 			user.put_in_hand_or_drop(M)
 			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
@@ -338,7 +329,7 @@
 				S.ammo--
 				playsound(user,"sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			else
-				boutput(usr, "<span style='color:red'>You need a loaded stapler in hand to staple these papers.</span>")
+				boutput(usr, "<span class='alert'>You need a loaded stapler in hand to staple these papers.</span>")
 
 		else
 			..()
@@ -528,6 +519,7 @@ ASC: Aux. Solar Control<BR>
 
 /obj/item/paper/flag
 	icon_state = "flag_neutral"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	anchored = 1.0
 
@@ -699,6 +691,24 @@ Only trained personnel should operate station systems. Follow all procedures car
 	</ul>
 	"}
 
+/obj/item/paper/neonlining
+	name = "paper - How to properly install official Nanotrasen neon lining"
+	icon_state = "paper"
+	info = {"<center><h2>How to properly install official Nanotrasen neon lining</h2></center>
+	<h3>Product description</h3><hr>
+	Ever wanted to spice up your bar? Build a meditation room? Enhance the station halls in case of an emergency? Then this official Nanotrasen neon lining are what you need. Now with color change modules!<hr>
+	<h3>Modifying the neon lining</h3><hr>
+	<ul style='list-style-type:disc'>
+		<li>1) A wrench can be used to change the shape of the lining. Currently only 6 shapes officially supported.</li>
+		<li>2) To turn an already attached piece of lining back into a coil, carefully use a crowbar to detach it from the it's attachment point.</li>
+		<li>3) Apply a standard multitool to change the pattern of the lining. If upon changing shape the pattern's value is higher than the maximum for that shape, the value gets automatically reset to 0.</li>
+		<li>4) As this version is designed to be more flexible and compact, the lining feeds only on an internal power source. Due to this the only way to turn it off/on is to cut/mend the wires that connect to said power source.</li>
+		<li>5) To adjust the lining's rotation, simply unscrew it from it's attachment point. The lining will automatically snap to the next available rotation and screw itself into a new attachment point.</li>
+		<li>6) Due to safety concerns caused by our previous prototype of the product, the color change modules are only active when the lining is detached and thus in a coil.</li>
+		<li>7) There have been reports that when the lining is in the short line shape, using a multitool to change the pattern sometimes triggers the movement function of it's rotation program. This essentially shifts the lining a bit. We understand that this might be a bit unintuitive, but since this isn't hazardous we have no intentions of fixing it.</li>
+	</ul>
+	"}
+
 /obj/item/paper/manta_polarisnote
 	name = "paper - Note to myself"
 	icon_state = "paper"
@@ -762,27 +772,83 @@ Only trained personnel should operate station systems. Follow all procedures car
 	Remember, only you can prevent deadly pathogens!
 	"}
 
+/obj/item/paper/shipping_precautions
+	name = "Read this and check the cargo!"
+	icon_state = "paper_caution_bloody"
+	desc = "An ordinary notice about shipping procedures...stained with blood?"
+	info = {"<center><h2>Warning</h2></center>
+	<hr>
+	<h3>Discount Dan contracts you - a healthy and breathing human being to deliver this cargo safely to the nearest Discount Dans fabrication center!</h3>
+	<br>
+	<br>
+	<br>
+	So read carefully and heed the precautions! Keep the fridges closed! All of them! Do not look inside...and if you happen to hear any clawing, grumbling, or cries for help...<b>ignore them</b>!
+	<br>
+	<br>
+	The freight is extremely valuable! Any light or human flesh exposed to said cargo will cost your pal Discount Dan an arm, a leg and a space-tastic lawsuit!
+	<br>
+	<br>
+	Remain cautious - because it's what's necessary!
+	"}
+
+/obj/item/paper/dreamy_rhyme
+	name = "Space-Rhymes"
+	icon_state = "thermal_paper"
+	desc = "Scibbled rhymes...and thoughts."
+	info = {" Space duck, I do not give a...I do not give anything about luck, shrug, puck, quack
+	<br>
+	<br>
+	<br>
+	<b>Yeah! Yo! Here the quick rhymer goes, clowns convulse!
+	<br>
+	<br>
+	Soon enough your mimes go fold, like a piece of paper!
+	<br>
+	<br>
+	This Emcee did not just meet ya'his thoughts created a - whole universe!
+	<br>
+	<br>
+	Spitting lines like liquid fire as he converse!
+	<br>
+	<br>
+	Transfer ideas from word to mind; not just half-assed like some damn pantomime!
+	<br>
+	<br>
+	Never behind the crime, A-grades as janitor...oh so fine!</b>
+	"}
+
+/obj/item/paper/mice_problem
+	name = "Fucking space-rats!"
+	icon_state = "paper"
+	desc = "A scribbled note - created with burning rage."
+	info = {"<center><h3>MICE?!</h3></center>
+	<hr>
+	<i>Ey! Yo! What the hell? You think you can take a day off - relax - and then these hungry n'angry food pirates come along! Damn Thompson McGreasy; unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
+	"}
+
 /obj/item/paper/fortune
 	name = "fortune"
 	info = {"<center>YOUR FORTUNE</center>"}
 	desc = "A slip of paper with a life-changing prophecy printed on it."
 	icon_state = "fortune"
 
-	var/list/action = list("Beware of", "Keep an eye on", "Seek out", "Be wary of", "Make friends with", "Aid", "Talk to", "Avoid")
-	var/list/who = list("Zero-G Chem-Co Commander", "Shambling Abomination", "Merlin", "GeneTek Operative Javelin (as Destiny Calls)", "Remy", "Dr. Acula", "Morty")
-	var/list/thing = list("are in possession of highly dangerous contraband.", "murdered a bee.", "kicked George.", "are a Syndicate operative.", "are a murderer.", "have disguised themselves from their true form.",
+	var/static/list/action = list("Beware of", "Keep an eye on", "Seek out", "Be wary of", "Make friends with", "Aid", "Talk to", "Avoid")
+	var/static/list/who = list("Zero-G Chem-Co Commander", "Shambling Abomination", "Merlin", "GeneTek Operative Javelin (as Destiny Calls)", "Remy", "Dr. Acula", "Morty")
+	var/static/list/thing = list("are in possession of highly dangerous contraband.", "murdered a bee.", "kicked George.", "are a Syndicate operative.", "are a murderer.", "have disguised themselves from their true form.",
 	"are not who they claim to be.", "know Shitty Bill's secret.", "are lonely.", "hugged a space bear and survived to tell the tale.", "know the legendary double-fry technique.", "have the power to reanimate the dead.",
 	"consort with wizards.", "sell really awesome drugs.", "have all-access.", "know the king.", "make amazing pizza.", "have a toolbox and are not afraid to use it.")
-	var/list/general = list("NanoTrasen locked me to this desk and is forcing me to make fortunes for these cookies please help!", "Help I'm trapped in this cookie!", "Buy Discount Dan's today!")
-	var/list/sol = list("He plunged into the sea.", "Follow the NSS Polaris.", "Across the Channel.", "It's in the Void.")
+	var/static/list/general = list("NanoTrasen locked me to this desk and is forcing me to make fortunes for these cookies please help!", "Help I'm trapped in this cookie!", "Buy Discount Dan's today!")
+	var/static/list/sol = list("He plunged into the sea.", "Follow the NSS Polaris.", "Across the Channel.", "It's in the Void.")
+	var/static/initialized = FALSE
 
 	New()
-
 		var/randme = rand(1,10)
 		var/fortune = "Blah."
 
-		for(var/datum/data/record/t in data_core.general)
-			who += "[t.fields["name"]]"
+		if(!initialized)
+			initialized = TRUE
+			for(var/datum/data/record/t in data_core.general)
+				who += "[t.fields["name"]]"
 
 		switch(randme)
 			if(1)
@@ -795,6 +861,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		info = {"<font face='System' size='3'><center>YOUR FORTUNE</center><br><br>
 		Discount Dan's is the proud sponsor of your magical fortune. Whether good or bad, delightful or alarming, know it to be true.<br><br>
 		[fortune]</font>"}
+		..()
 
 
 /obj/item/paper/thermal/fortune
@@ -882,6 +949,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "photo"
 	icon_state = "photo"
 	var/photo_id = 0.0
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
 /obj/item/paper/photograph/New()
@@ -918,9 +986,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 	examine()
 		usr << browse_rsc(icon(print_icon,print_icon_state), "sstv_cachedimage.png")
-		..()
-		return
-
+		. = ..()
 
 	satellite
 		print_icon_state = "sstv_2"
@@ -990,6 +1056,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 
 /obj/item/paper_bin/proc/update()
+	tooltip_rebuild = 1
 	src.icon_state = "paper_bin[(src.amount || locate(/obj/item/paper, src)) ? "1" : null]"
 	return
 
@@ -1034,9 +1101,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 		user.drop_item()
 		W.set_loc(src)
 	else
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/T = W
-			if ((T.welding && T.weldfuel > 0))
+		if (isweldingtool(W))
+			if ((T:try_weld(user,0,1,0,0) && T:weldfuel > 0))
 				viewers(user, null) << text("[] burns the paper with the welding tool!", user)
 				SPAWN_DBG( 0 )
 					src.burn(1800000.0)
@@ -1063,8 +1129,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 	var/is_reassignable = 1
 	var/assignment = null
@@ -1112,16 +1178,16 @@ Only trained personnel should operate station systems. Follow all procedures car
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!src.is_reassignable)
-			boutput(user, "<span style=\"color:red\">This rubber stamp cannot be reassigned!</span>")
+			boutput(user, "<span class='alert'>This rubber stamp cannot be reassigned!</span>")
 			return
 		if (!isnull(src.assignment))
-			boutput(user, "<span style=\"color:red\">This rubber stamp has already been assigned!</span>")
+			boutput(user, "<span class='alert'>This rubber stamp has already been assigned!</span>")
 			return
 		else if (!ID.assignment)
-			boutput(user, "<span style=\"color:red\">This ID isn't assigned to a job!</span>")
+			boutput(user, "<span class='alert'>This ID isn't assigned to a job!</span>")
 			return
 		src.set_assignment(ID.assignment)
-		boutput(user, "<span style=\"color:blue\">You update the assignment of the rubber stamp.</span>")
+		boutput(user, "<span class='notice'>You update the assignment of the rubber stamp.</span>")
 		return
 
 /obj/item/stamp/attack_self() // change current mode
@@ -1129,12 +1195,12 @@ Only trained personnel should operate station systems. Follow all procedures car
 	if (!NM || !length(NM) || !(NM in src.available_modes))
 		return
 	src.current_mode = NM
-	boutput(usr, "<span style=\"color:blue\">You set \the [src] to '[NM]'.</span>")
+	boutput(usr, "<span class='notice'>You set \the [src] to '[NM]'.</span>")
 	return
 
 /obj/item/stamp/examine()
-	..()
-	boutput(usr, "It is set to '[current_mode]' mode.")
+	. = ..()
+	. += "It is set to '[current_mode]' mode."
 
 /obj/item/stamp/reagent_act(reagent_id, volume)
 	if (..())
@@ -1152,9 +1218,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/stamp/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] stamps 'VOID' on [his_or_her(user)] forehead!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] stamps 'VOID' on [his_or_her(user)] forehead!</b></span>")
 	user.TakeDamage("head", 250, 0)
-	user.updatehealth()
 	return 1
 
 
@@ -1242,16 +1307,22 @@ WHO DID THIS */
 		user.show_text("You unfold the [src] back into a sheet of paper! It looks pretty crinkled.", "blue")
 		src.name = "crinkled paper"
 		src.desc = src.old_desc
-		src.icon_state = src.old_icon_state
+		if(src.old_icon_state)
+			src.icon_state = src.old_icon_state
+		else
+			if(src.info)
+				src.icon_state = "paper"
+			else
+				src.icon_state = "paper_blank"
 		src.sealed = 0
 	else
 		..()
 
 /obj/item/paper/folded/examine()
 	if (src.sealed)
-		boutput(usr, desc)
+		return list(desc)
 	else
-		..()
+		return ..()
 
 /obj/item/paper/folded/plane
 	name = "paper plane"
@@ -1260,7 +1331,7 @@ WHO DID THIS */
 	throw_speed = 1
 	throw_spin = 0
 
-/obj/item/paper/folded/plane/hit_check()
+/obj/item/paper/folded/plane/hit_check(datum/thrown_thing/thr)
 	if(src.throwing)
 		src.throw_unlimited = 1
 
@@ -1271,7 +1342,7 @@ WHO DID THIS */
 
 /obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
 	if (iscarbon(M) && M == user)
-		M.visible_message("<span style='color:blue'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
+		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		src = null
@@ -1300,3 +1371,94 @@ WHO DID THIS */
     <b>SPECIAL INSTRUCTIONS</b> WILL PAY DOUBLE IF SUB-BASEMENT 3 IS CLEARED OF ALL RESEARCH SPECIMENS AND SUBJECTS, ALL SPECIMENS AND SUBJECTS ARE EFFECTIVELY BRAINDEAD, SUPPLY OWN MEANS OF EXECUTION OF SUBJECTS.<br>
     <b>STATUS:</b> BEING CLEANED"}
 
+/obj/item/paper/lawbringer_pamphlet
+	name = "Your Lawbringer And You"
+	icon_state = "paper"
+	info = {"
+<h2>Your Lawbringer And You</h2>
+<i>A Nanotrasen Arms Division Instructional Publication</i>
+<hr>
+<p>Welcome, noble lawperson, to the greatest technological development in policing since the helmet: Your new <b>Lawbringer™</b>!<br>
+The Lawbringer™ is a multi-purpose self-recharging personal armament for our loyal Heads of Security.<br>
+Please take a moment to acquaint yourself with your new colleague's features, and to scan your fingerprints into the provided identity lock system.</p>
+
+<p>The Lawbringer™ is equipped with eight different Crime Pacification Projectile Synthesization Methods, or "Modes,"
+all of which draw from the central Self-Renewing Energy Capacitance Device, or "Cell."<br> The Cell has a capacity of
+300 Power Units ("PU"), and recharges at a rate of approximately 10 PU per 6 seconds;
+however, due to the exacting measurements used in the Lawbringer™'s foolproof* design, the Cell
+cannot be removed from the unit or externally recharged.<br>
+<small><i><b>*</b>The Lawbringer™ should not be exposed to fools. If this occurs, wash thoroughly under cold water.</i></small></p>
+
+<p>The greatest feature of the Lawbringer™ is its unique voice control system: To choose your desired Mode, simply speak its name!
+So long as your fingerprints† match those assigned to the identity lock (configured during device setup) the Lawbringer™ will
+automatically adopt your criminal control strategy of choice.<br>
+<small><i><b>†</b>The user is considered responsible for the protection of their own fingerprints and arms.</i></small></p>
+<hr>
+<h3>Provided: A table of all Modes, their power drains, and their purposes.</h3>
+
+<table border = "1" cellpadding = "3" cellspacing = "3">
+<tr>
+<td><b>"Detain"</b></td>
+<td>50 PU</td>
+<td>The perfect crowd control option, this Mode stuns all your enemies within a close radius, but leaves you untouched!</td>
+</tr>
+<tr>
+<td><b>"Execute"</b></td>
+<td>30 PU</td>
+<td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
+</tr>
+<tr>
+<td><b>"Hotshot"</b></td>
+<td>60 PU</td>
+<td>This handy flare gun/flamethrower option is sure to heat things up! The Lawbringer™ is not certified fireproof. Do not set on fire.</td>
+</tr>
+<tr>
+<td><b>"Smokeshot"</b></td>
+<td>50 PU</td>
+<td>Never use a riot launcher again! These smoke grenades will let you manage line of sight with ease.</td>
+</tr>
+<tr>
+<td><b>"Knockout"</b></td>
+<td>60 PU</td>
+<td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
+</tr>
+<tr>
+<td><b>"Bigshot"*</b></td>
+<td>170 PU</td>
+<td>You'll be the talk of the station when you bust down a wall with one of these explosive rounds! May cause loss of limbs or life.</td>
+</tr>
+<tr>
+<td><b>"Clownshot"</b></td>
+<td>15 PU</td>
+<td>Lawbringer™ warranty is voided if exposed to clowns. Keep them at bay.</td>
+</tr>
+<tr>
+<td><b>"Pulse"</b></td>
+<td>35 PU</td>
+<td>Just like our patented Pulse Rifle™s, this Mode sends your enemies flying! Keep crime at arm's length!</td>
+</tr>
+</table>
+<i><b>*</b>Also accepted for this Mode: "High Explosive," "HE."</i>
+<hr>
+<p><b>Disclaimer:</b> Nanotrasen Arms Division cannot be held liable in the case of inconvenience, failure or death,
+as per your Nanotrasen Employment Agreement. If any of the Modes are found to be ineffective, underpowered,
+minimally successful at their purpose, or otherwise useless; and in the event that the user survives to do so;
+Nanotrasen Arms Division requests that they submit a formal Suggestion to our company forums,
+so that the Lawbringer™ can be the best it can be. Do not place fingers in path of moving parts, as the Lawbringer™ device
+is solid-state and should not feature moving parts. Note that the Cell may experience spontaneous explosive overload when
+exposed to overconfident outbursts on the part of individuals unqualifed to embody the law; in event of such explosion, run.
+"}
+
+/obj/item/paper/postcard/mushroom
+	name = "Mushroom Station postcard"
+	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
+	icon_state = "postcard-mushroom"
+
+	//sizex = 1066
+	//sizey = 735
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"

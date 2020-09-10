@@ -51,7 +51,7 @@
 						my_group.evaporate()
 						return
 				skip_next_update = 1
-				my_group.drain(remove_source, fluids_to_remove)
+				my_group.drain(remove_source, fluids_to_remove, remove_reagent = 0)
 
 	get_reagents_fullness()
 		.= "empty"
@@ -71,7 +71,7 @@
 
 	play_mix_sound(var/mix_sound) //play sound at random locs
 		for (var/i = 0, i < my_group.members.len / 20, i++)
-			playsound(pick(my_group.members).loc, mix_sound, 80, 1)
+			playsound(get_turf(pick(my_group.members)), mix_sound, 80, 1)
 			if (i > 8) break
 
 //We use datum/controller/process/fluid_group to do evaporation
@@ -112,7 +112,7 @@
 	var/master_reagent_id = 0
 
 	var/can_update = 1 //flag is set to 0 temporarily when doing a split operation
-
+	var/waitforit = 0 //prevent smoke from being inhaled during the creation process
 	var/draining = 0
 	var/queued_drains = 0 // how many tiles to drain on next update?
 	var/turf/last_drain = 0 // tile from which we should try to drain from
@@ -123,8 +123,9 @@
 		can_update = 0
 
 		for (var/fluid in src.members)
-			var/obj/fluid/M = fluid
-			M.group = 0
+			if(fluid)
+				var/obj/fluid/M = fluid
+				M.group = 0
 
 		//if (src in processing_fluid_groups)
 		//	processing_fluid_groups.Remove(src)
@@ -167,8 +168,7 @@
 		reagents = new /datum/reagents/fluid_group(90000000) //high number lol.
 		reagents.my_group = src
 
-		if (!(src in processing_fluid_groups))
-			processing_fluid_groups.Add(src)
+		processing_fluid_groups |= src
 
 	proc/update_amt_per_tile()
 		contained_amt = src.reagents.total_volume
@@ -200,7 +200,6 @@
 		//	contained_amt = src.reagents.total_volume
 		//	amt_per_tile = contained_amt
 
-		LAGCHECK(LAG_HIGH)
 		if (!guarantee_is_member)
 			if (!members.len || !(F in members))
 				members += F
@@ -218,7 +217,7 @@
 	//fluid has been removed from its tile. use 'lightweight' in evaporation procedure cause we dont need icon updates / try split / update loop checks at that point
 	// if 'lightweight' parameter is 2, invoke an update loop but still ignore icon updates
 	proc/remove(var/obj/fluid/F, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 0)
-		if (!F || F.pooled) return 0
+		if (!F || F.pooled || src.disposed) return 0
 		if (!members || !members.len || !members.Find(F)) return 0
 
 		if (!lightweight)
@@ -234,6 +233,8 @@
 				t = get_step( F, dir )
 				if (t && t.active_liquid)
 					t.active_liquid.blocked_dirs = 0
+
+		if(src.disposed || F.disposed) return 0 // update_icon lagchecks, rip
 
 		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
 		members -= F //remove after amt per tile ok? otherwise bad thing could happen
@@ -326,7 +327,7 @@
 						T.active_liquid.group.join(src)
 					else
 						F.loc:active_liquid = 0
-						F.loc = T
+						F.set_loc(T)
 						T.active_liquid = F
 					break
 		else
@@ -405,15 +406,16 @@
 		if (src.qdeled) return
 
 		src.draining = 1
-		if (!(src in processing_fluid_drains))
-			processing_fluid_drains.Add(src)
+		processing_fluid_drains |= src
 
 	proc/update_loop()
 		if (src.qdeled) return
 
 		src.updating = 1
-		if (!(src in processing_fluid_spreads))
-			processing_fluid_spreads.Add(src)
+		processing_fluid_spreads |= src
+
+	proc/update_required_to_spread()
+		return
 
 	proc/update_once(force = 0) //this would be called every time the fluid.dm process procs.
 		if (src.qdeled || !can_update) return 1
@@ -424,7 +426,7 @@
 		var/fluids_to_create = 0 //try to create X amount of new tiles (based on how much fluid and tiles we currently hold)
 
 		src.update_viscosity()
-
+		src.update_required_to_spread()
 		if (SPREAD_CHECK(src) || force)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return 1
@@ -526,6 +528,9 @@
 			//end
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+		fluid_ma.color = targetcolor
+		fluid_ma.alpha = targetalpha
+
 		for(var/fluid in src.members)
 			var/obj/fluid/F = fluid
 			if (!F || F.pooled || src.qdeled) continue
@@ -533,27 +538,24 @@
 			//Same shit here with update_icon
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			F.name = src.master_reagent_name //maybe obscure later?
+			fluid_ma.name = src.master_reagent_name //maybe obscure later?
 
 			F.finalalpha = targetalpha
 			F.finalcolor = targetcolor
-
-			F.color = F.finalcolor
-			F.alpha = F.finalalpha
 
 
 			if (F.do_iconstate_updates)
 				last_icon = F.icon_state
 
 				if (F.last_spread_was_blocked || (src.amt_per_tile > src.required_to_spread))
-					F.icon_state = "15"
+					fluid_ma.icon_state = "15"
 				else
 					var/dirs = 0
 					for (var/dir in cardinal)
 						var/turf/simulated/T = get_step(F, dir)
 						if (T && T.active_liquid && T.active_liquid.group == F.group)
 							dirs |= dir
-					F.icon_state = num2text(dirs)
+					fluid_ma.icon_state = num2text(dirs)
 
 					if (F.overlay_refs && F.overlay_refs.len)
 						if (F)
@@ -561,14 +563,20 @@
 
 				if (((color_changed || last_icon != F.icon_state) && F.last_spread_was_blocked) || depth_changed)
 					F.update_perspective_overlays()
+			else
+				fluid_ma.icon_state = "airborne" //HACKY! BAD! BAD! WARNING!
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//end
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			//air specific (messy)
-			F.opacity = master_opacity
+			fluid_ma.opacity = master_opacity
+			fluid_ma.overlays = F.overlays // gross, needed because of perspective overlays
+			F.appearance = fluid_ma
 
+		if(src.disposed)
+			return 1
 
 		src.last_contained_amt = src.contained_amt
 		src.last_members_amt = src.members.len
@@ -581,7 +589,7 @@
 		.= list() //return created fluids
 		var/created = 0
 		var/obj/fluid/F
-
+		src.waitforit = 1 //don't breathe in the gas on inital spread - causes runtimes with small volumes
 		for (var/i = 1, i <= members.len, i++)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return
@@ -610,7 +618,7 @@
 					.+= C
 					created++
 
-				if ((members.len + created)<=0) //this can happen somehow
+				if ((members?.len + created)<=0) //this can happen somehow
 					continue
 
 				amt_per_tile = contained_amt / (members.len + created)
@@ -623,8 +631,9 @@
 
 			if (created >= fluids_to_create)
 				break
+			src.waitforit = 0
 
-	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0) //basically a reverse spread with drain_source as the center
+	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0, var/remove_reagent = 1) //basically a reverse spread with drain_source as the center
 		if (!drain_source || drain_source.group != src) return
 
 		//Don't delete tiles if we can just drain existing deep fluid
@@ -670,7 +679,7 @@
 			src.reagents.skip_next_update = 1
 			src.reagents.trans_to_direct(transfer_to.reagents,src.amt_per_tile * removed_len)
 			src.contained_amt = src.reagents.total_volume
-		else if (src.reagents)
+		else if (src.reagents && remove_reagent)
 			src.reagents.skip_next_update = 1
 			src.reagents.remove_any(src.amt_per_tile * removed_len)
 			src.contained_amt = src.reagents.total_volume

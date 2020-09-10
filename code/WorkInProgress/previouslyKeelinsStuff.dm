@@ -244,7 +244,7 @@ var/reverse_mode = 0
 
 /proc/reverse_text(var/string)
 	var/new_string=""
-	for(var/i=lentext(string)+1, i>0, i--)
+	for(var/i=length(string)+1, i>0, i--)
 		new_string += copytext(string,i,i+1)
 	return new_string
 
@@ -311,8 +311,8 @@ var/reverse_mode = 0
 	var/beingUsed = 0
 
 	New()
+		..()
 		loop()
-		return
 
 	proc/loop()
 		if (!active)
@@ -321,7 +321,7 @@ var/reverse_mode = 0
 
 		if (prob(1) && prob(50) && ismob(src.loc))
 			var/mob/M = src.loc
-			boutput(M, "<span style=\"color:red\">You feel uneasy ...</span>")
+			boutput(M, "<span class='alert'>You feel uneasy ...</span>")
 
 		if (prob(25))
 			for(var/obj/machinery/light/L in range(6, get_turf(src)))
@@ -353,7 +353,7 @@ var/reverse_mode = 0
 		if (user != loc)
 			return
 		if (using)
-			boutput(user, "<span style=\"color:red\">The relic is humming loudly.</span>")
+			boutput(user, "<span class='alert'>The relic is humming loudly.</span>")
 			return
 		else
 			if (!beingUsed) //I guess you could use this thing in-hand a lot and gain its powers repeatedly!
@@ -393,12 +393,11 @@ var/reverse_mode = 0
 								using = 0*/
 					if ("Bend the relic's power to your will")
 						using = 1
-						boutput(user, "<span style=\"color:red\">You can feel the power of the relic coursing through you...</span>")
-						user:TakeDamage("chest", 0, 50)
-						user.bioHolder.AddEffect("telekinesis")
+						boutput(user, "<span class='alert'>You can feel the power of the relic coursing through you...</span>")
+						user.bioHolder.AddEffect("telekinesis_drag")
 						SPAWN_DBG(2 MINUTES)
 							using = 0
-							user.bioHolder.RemoveEffect("telekinesis")
+							user.bioHolder.RemoveEffect("telekinesis_drag")
 					if ("Use the relic's power to heal your wounds")
 						var/obj/shield/s = new/obj/shield( get_turf(src) )
 						s.name = "energy"
@@ -407,45 +406,45 @@ var/reverse_mode = 0
 						user.take_toxin_damage(-INFINITY)
 						user:HealDamage("All", 1000, 1000)
 						if (prob(75))
-							boutput(user, "<span style=\"color:red\">The relic crumbles into nothingness...</span>")
+							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
 							qdel(src)
 						SPAWN_DBG(1 MINUTE) using = 0
 					if ("Attempt to absorb the relic's power")
 						if (prob(1))
-							user.bioHolder.AddEffect("telekinesis", 0, 0, 1) //because really
+							user.bioHolder.AddEffect("telekinesis_drag", 0, 0, 1) //because really
 							user.bioHolder.AddEffect("thermal_resist", 0, 0, 1) //if they're lucky enough to get this
 							user.bioHolder.AddEffect("xray", 0, 0, 1) //they're lucky enough to keep it
 							user.bioHolder.AddEffect("hulk", 0, 0, 1) //probably
-							boutput(user, "<span style=\"color:red\">The relic crumbles into nothingness...</span>")
+							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
 							src.invisibility = 101
 							var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
-							sleep(5)
+							sleep(0.5 SECONDS)
 							E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
-							sleep(5)
+							sleep(0.5 SECONDS)
 							E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
 							qdel(src)
 						else
 							switch(pick(175;1,30;2,25;3,85;4))
 								if (1)
-									boutput(user, "<span style=\"color:red\">The relic's power overwhelms you!</span>")
+									boutput(user, "<span class='alert'>The relic's power overwhelms you!</span>")
 									user:changeStatus("weakened", 10 SECONDS)
 									user:TakeDamage("chest", 0, 33)
 								if (2)
-									boutput(user, "<span style=\"color:red\">The relic explodes in a bright flash, blinding you!</span>")
+									boutput(user, "<span class='alert'>The relic explodes in a bright flash, blinding you!</span>")
 									user.flash(60)
-									user:bioHolder.AddEffect("blind")
+									user.bioHolder.AddEffect("blind")
 									qdel(src)
 								if (3)
-									boutput(user, "<span style=\"color:red\">The relic explodes violently!</span>")
+									boutput(user, "<span class='alert'>The relic explodes violently!</span>")
 									var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 									E.fingerprintslast = src.fingerprintslast
 									user:gib()
 									qdel(src)
 								if (4)
-									boutput(user, "<span style=\"color:red\">The relic's power completely overwhelms you!!</span>")
+									boutput(user, "<span class='alert'>The relic's power completely overwhelms you!!</span>")
 									using = 1
 									harmless_smoke_puff( get_turf(src) )
 									playsound(user, "sound/effects/ghost2.ogg", 60, 0)
@@ -471,9 +470,7 @@ var/reverse_mode = 0
 	proc/sparks()
 		var/area/A = get_area(src)
 		if (A.active)
-			var/datum/effects/system/spark_spread/E = unpool(/datum/effects/system/spark_spread)
-			E.set_up(3,0,get_turf(src))
-			E.start()
+			elecflash(src)
 		SPAWN_DBG(rand(10,300))
 			src.sparks()
 
@@ -534,7 +531,7 @@ var/reverse_mode = 0
 		A.onVarChanged(varname, oldVal, A.vars[varname])
 		if (thetype == "random-color")
 			thevalue = rgb(rand(0,255),rand(0,255),rand(0,255))
-		sleep(1)
+		sleep(0.1 SECONDS)
 /*
 	if (minrnd != null || maxrnd != null)
 		logTheThing("admin", usr, null, "randomized all [type]s [varname] from [minrnd] to [maxrnd].")
@@ -568,8 +565,8 @@ var/reverse_mode = 0
 /obj/fake_attacker/attackby()
 	step_away(src,my_target,2)
 	for(var/mob/M in oviewers(world.view,my_target))
-		boutput(M, "<span style=\"color:red\"><B>[my_target] flails around wildly.</B></span>")
-	my_target.show_message("<span style=\"color:red\"><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
+		boutput(M, "<span class='alert'><B>[my_target] flails around wildly.</B></span>")
+	my_target.show_message("<span class='alert'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
 	return
 
 /obj/fake_attacker/HasEntered(var/mob/M, somenumber)
@@ -577,9 +574,10 @@ var/reverse_mode = 0
 		step_away(src,my_target,2)
 		if (prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				boutput(O, "<span style=\"color:red\"><B>[my_target] stumbles around.</B></span>")
+				boutput(O, "<span class='alert'><B>[my_target] stumbles around.</B></span>")
 
 /obj/fake_attacker/New(location, target)
+	..()
 	SPAWN_DBG(30 SECONDS)	qdel(src)
 	src.my_target = target
 	step_away(src,my_target,2)
@@ -598,7 +596,7 @@ var/reverse_mode = 0
 					my_target << sound('sound/vox/weapon.ogg')
 				else
 					my_target << sound(pick('sound/impact_sounds/Generic_Hit_1.ogg', 'sound/impact_sounds/Generic_Hit_2.ogg', 'sound/impact_sounds/Generic_Hit_3.ogg'))
-				my_target.show_message("<span style=\"color:red\"><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
+				my_target.show_message("<span class='alert'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
 				if (prob(20)) my_target.change_eye_blurry(3)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
@@ -607,8 +605,8 @@ var/reverse_mode = 0
 				if (narrator_mode)
 					my_target << sound('sound/vox/hit.ogg')
 				else
-					my_target << sound(pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg','sound/impact_sounds/Generic_Punch_5.ogg'))
-				my_target.show_message("<span style=\"color:red\"><B>[src.name] has punched [my_target]!</B></span>", 1)
+					my_target << pick(sounds_punch)
+				my_target.show_message("<span class='alert'><B>[src.name] has punched [my_target]!</B></span>", 1)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
 						fake_blood(my_target)

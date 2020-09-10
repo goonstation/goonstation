@@ -1,7 +1,9 @@
 /client/proc/Jump(var/area/A in world)
 	set desc = "Area to jump to"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Jump"
+	set popup_menu = 0
+
 	admin_only
 
 	if(config.allow_admin_jump)
@@ -20,8 +22,10 @@
 		alert("Admin jumping disabled")
 
 /client/proc/jumptoturf(var/turf/T in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Jump To Turf"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		//Wire note: attempted fix for: Cannot read null.x (I guess the target turf...disappeared?)
@@ -39,21 +43,21 @@
 	return
 
 /client/proc/jtt(var/turf/T in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "JTT"
 	set popup_menu = 0
 	admin_only
 	src.jumptoturf(T)
 
 /client/proc/jumptomob(var/mob/M in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Jump to Mob"
-	set popup_menu = 1
+	set popup_menu = 0
 	admin_only
 
 	if(config.allow_admin_jump)
-		logTheThing("admin", usr, M, "jumped to %target% ([showCoords(M.x, M.y, M.z)] in [get_area(M)])")
-		logTheThing("diary", usr, M, "jumped to %target% ([showCoords(M.x, M.y, M.z)] in [get_area(M)])", "admin")
+		logTheThing("admin", usr, M, "jumped to [constructTarget(M,"admin")] ([showCoords(M.x, M.y, M.z)] in [get_area(M)])")
+		logTheThing("diary", usr, M, "jumped to [constructTarget(M,"diary")] ([showCoords(M.x, M.y, M.z)] in [get_area(M)])", "admin")
 		message_admins("[key_name(usr)] jumped to [key_name(M)] ([showCoords(M.x, M.y, M.z)] in [get_area(M)])")
 		if(flourish)
 			shrink_teleport(src.mob)
@@ -62,15 +66,16 @@
 		alert("Admin jumping disabled")
 
 /client/proc/jtm(var/mob/M in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "JTM"
 	set popup_menu = 0
 	admin_only
 	src.jumptomob(M)
 
 /client/proc/jumptokey(var/client/ckey in clients)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Jump to Key"
+	set popup_menu = 0
 
 	admin_only
 
@@ -83,8 +88,8 @@
 			target = selection.mob
 		else
 			target = ckey.mob
-		logTheThing("admin", usr, target, "jumped to %target% ([showCoords(target.x, target.y, target.z)] in [get_area(target)])")
-		logTheThing("diary", usr, target, "jumped to %target% ([showCoords(target.x, target.y, target.z)] in [get_area(target)])", "admin")
+		logTheThing("admin", usr, target, "jumped to [constructTarget(target,"admin")] ([showCoords(target.x, target.y, target.z)] in [get_area(target)])")
+		logTheThing("diary", usr, target, "jumped to [constructTarget(target,"diary")] ([showCoords(target.x, target.y, target.z)] in [get_area(target)])", "admin")
 		message_admins("[key_name(usr)] jumped to [key_name(target)] ([showCoords(target.x, target.y, target.z)] in [get_area(target)])")
 		if(flourish)
 			shrink_teleport(src.mob)
@@ -93,14 +98,14 @@
 		alert("Admin jumping disabled")
 
 /client/proc/jtk(var/client/ckey in clients)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "JTK"
 	set popup_menu = 0
 	admin_only
 	src.jumptokey(ckey)
 
 /client/proc/jumptocoord(var/x = 1 as num, var/y = 1 as num, var/z = 1 as num)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Jump to Coord"
 	set desc = "Jump to a coordinate in world (x, y, z)"
 
@@ -121,28 +126,28 @@
 		alert("Admin jumping disabled")
 
 /client/proc/jtc(var/x = 1 as num, var/y = 1 as num, var/z = 1 as num)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "JTC"
 	set popup_menu = 0
 	admin_only
 	src.jumptocoord(x, y, z)
 
 /client/proc/Getmob(var/mob/M in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
 	set popup_menu = 0
 	admin_only
 	if(config.allow_admin_jump)
-		logTheThing("admin", usr, M, "teleported %target% ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])")
-		logTheThing("diary", usr, M, "teleported %target% ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])", "admin")
+		logTheThing("admin", usr, M, "teleported [constructTarget(M,"admin")] ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])")
+		logTheThing("diary", usr, M, "teleported [constructTarget(M,"diary")] ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])", "admin")
 		message_admins("[key_name(usr)] teleported [key_name(M)] ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])")
 		M.set_loc(get_turf(usr))
 	else
 		alert("Admin jumping disabled")
 
 /client/proc/sendmob(var/mob/M in world, var/area/A in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Send Mob"
 	set popup_menu = 0
 	admin_only
@@ -152,16 +157,19 @@
 			boutput(src, "Unable to find any turf in that area.")
 			return
 
-		M.set_loc(pick(turfs))
-		logTheThing("admin", usr, M, "sent %target% to [A] ([showCoords(A.x, A.y, A.z)] in [get_area(A)])")
-		logTheThing("diary", usr, M, "sent %target% to [A] ([showCoords(A.x, A.y, A.z)] in [get_area(A)])", "admin")
-		message_admins("[key_name(usr)] teleported [key_name(M)] to [A] ([showCoords(A.x, A.y, A.z)] in [get_area(A)])")
+		var/turf/T = pick(turfs)
+		M.set_loc(T)
+		logTheThing("admin", usr, M, "sent [constructTarget(M,"admin")] to [A] ([showCoords(T.x, T.y, T.z)] in [get_area(A)])")
+		logTheThing("diary", usr, M, "sent [constructTarget(M,"diary")] to [A] ([showCoords(T.x, T.y, T.z)] in [get_area(A)])", "admin")
+		message_admins("[key_name(usr)] teleported [key_name(M)] to [A] ([showCoords(T.x, T.y, T.z)] in [get_area(A)])")
 	else
 		alert("Admin jumping disabled")
 
 /client/proc/sendhmobs(var/area/A in world)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Send all Human Mobs"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		for(var/mob/living/carbon/human/H in mobs)
@@ -174,8 +182,10 @@
 		alert("Admin jumping disabled")
 
 /client/proc/sendmobs(var/area/A in world)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Send all Mobs"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		for(var/mob/living/M in mobs)
@@ -188,8 +198,10 @@
 		alert("Admin jumping disabled")
 
 /client/proc/gethmobs()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Get all Human Mobs"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
@@ -206,8 +218,10 @@
 		alert("Admin jumping disabled")
 
 /client/proc/getmobs()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Get all Mobs"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
@@ -224,17 +238,19 @@
 		alert("Admin jumping disabled")
 
 /client/proc/getclients()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Get all Clients"
 	set desc = "Teleports any mob with a client to you."
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
-				for(var/mob/H in mobs)
-					if (istype(H, /mob/new_player)) continue
-					if (H.client)
-						H.set_loc(get_turf(usr))
+				for (var/client/C)
+					if (!C.mob) continue
+					if (istype(C.mob, /mob/new_player)) continue
+					C.mob.set_loc(get_turf(usr))
 
 				logTheThing("admin", usr, null, "teleported all clients to themselves ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])")
 				logTheThing("diary", usr, null, "teleported all clients to themselves ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])", "admin")
@@ -245,8 +261,10 @@
 		alert("Admin jumping disabled")
 
 /client/proc/gettraitors()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Get all Traitors"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
@@ -264,8 +282,10 @@
 		alert("Admin jumping disabled")
 
 /client/proc/getnontraitors()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Get all Non-Traitors"
+	set popup_menu = 0
+
 	admin_only
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
@@ -284,8 +304,8 @@
 		alert("Admin jumping disabled")
 
 /client/proc/cmd_admin_get_mobject(var/atom/target as mob|obj in world)
-	set category = "Admin"
-	set popup_menu = 1
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set popup_menu = 0
 	set name = "Get Thing"
 	set desc = "Gets either a mob or an object, bringing it right to you! Wow!"
 	admin_only
@@ -301,7 +321,7 @@
 		alert("Admin jumping disabled")
 
 /client/proc/cmd_admin_get_mobject_loc(var/atom/target as mob|obj in world)
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set name = "Get Thing (Location)"
 	set desc = "Gets either a mob or an object, bringing it right to your loc! Wow!"

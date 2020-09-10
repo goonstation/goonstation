@@ -1,6 +1,6 @@
 /obj/item/handcuffs
 	name = "handcuffs"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	throwforce = 5
@@ -22,10 +22,9 @@
 		strength = 1
 
 /obj/item/handcuffs/examine()
-	..()
+	. = ..()
 	if (src.delete_on_last_use)
-		boutput(usr, "There are [src.amount] lengths of [istype(src, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left!")
-	return
+		. += "There are [src.amount] lengths of [istype(src, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left!"
 
 /obj/item/handcuffs/suicide(var/mob/living/carbon/human/user as mob) //brutal
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
@@ -33,33 +32,33 @@
 	if (istype(src,/obj/item/handcuffs/tape_roll) || istype(src,/obj/item/handcuffs/tape)) // shout out once again to the hasvar bullshit that was here
 		return 0
 	user.canmove = 0
-	user.visible_message("<span style='color:red'><b>[user] jams one end of [src] into one of [his_or_her(user)] eye sockets, closing the loop through the other!")
+	user.visible_message("<span class='alert'><b>[user] jams one end of [src] into one of [his_or_her(user)] eye sockets, closing the loop through the other!")
 	playsound(get_turf(user), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 	user.emote("scream")
 	SPAWN_DBG(1 SECOND)
-		user.visible_message("<span style='color:red'><b>[user] yanks the other end of [src] as hard as [he_or_she(user)] can, ripping [his_or_her(user)] skull clean out of [his_or_her(user)] head! [pick("Jesus christ!","Holy shit!","What the fuck!?","Oh my god!")]</b></span>")
+		user.visible_message("<span class='alert'><b>[user] yanks the other end of [src] as hard as [he_or_she(user)] can, ripping [his_or_her(user)] skull clean out of [his_or_her(user)] head! [pick("Jesus christ!","Holy shit!","What the fuck!?","Oh my god!")]</b></span>")
 		var/obj/skull = user.organHolder.drop_organ("skull")
 		if (skull)
 			skull.set_loc(user.loc)
 		make_cleanable( /obj/decal/cleanable/blood,user.loc)
 		playsound(get_turf(user), "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
-		user.updatehealth()
+		health_update_queue |= user
 
 /* do not do this thing here:
 		for (var/mob/O in AIviewers(user, null)) // loop through all mobs that can see user kill themself
 			if (O != user && ishuman(O) && prob(33)) // make sure O isn't user, then make sure they're human?
 				//why didn't we just loop through /mob/living/carbon/human in the first place instead of all mobs?
-				O.show_message("<span style='color:red'>You feel ill from watching that.</span>") // O is grossed out
+				O.show_message("<span class='alert'>You feel ill from watching that.</span>") // O is grossed out
 				for (var/mob/V in viewers(O, null)) // loop through all the mobs that can see O locally
-					V.show_message("<span style='color:red'>[O.name] pukes all over \himself. Thanks, [user.name].</span>", 1) // tell them that O puked
+					V.show_message("<span class='alert'>[O.name] pukes all over \himself. Thanks, [user.name].</span>", 1) // tell them that O puked
 					playsound(O.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) // play a sound where O is
 					make_cleanable( /obj/decal/cleanable/vomit,O.loc) // make a vomit decal where O
 					// these last two parts are within the for loop so that means that for EVERY MOB THAT SEES THIS, A SOUND AND DECAL ARE MADE
 */
 		for (var/mob/living/carbon/human/O in AIviewers(user, null))
 			if (O != user && prob(33))
-				O.visible_message("<span style='color:red'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
-				"<span style='color:red'>You feel ill from watching that. Thanks, [user].</span>")
+				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
+				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 
 		SPAWN_DBG(0.5 SECONDS)
@@ -67,7 +66,7 @@
 				var/obj/brain = user.organHolder.drop_organ("brain")
 				if (brain)
 					brain.set_loc(skull.loc)
-					brain.visible_message("<span style='color:red'><b>[brain] falls out of the bottom of [skull].</b></span>")
+					brain.visible_message("<span class='alert'><b>[brain] falls out of the bottom of [skull].</b></span>")
 
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
@@ -77,26 +76,26 @@
 
 /obj/item/handcuffs/attack(mob/M as mob, mob/user as mob)
 	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!usr.bioHolder.HasEffect("lost_left_arm") && !usr.bioHolder.HasEffect("lost_right_arm"))
-		boutput(user, "<span style='color:red'>Uh ... how do those things work?!</span>")
+		boutput(user, "<span class='alert'>Uh ... how do those things work?!</span>")
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (!H.limbs || !H.limbs.l_arm || !H.limbs.r_arm)
 				return
 			M = user
-
+			JOB_XP(user, "Clown", 1)
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (isabomination(H))
-			boutput(user, "<span style='color:red'>You can't! There's nowhere to put them!</span>")
+			boutput(user, "<span class='alert'>You can't! There's nowhere to put them!</span>")
 			return
 
 		var/handslost = !istype(H.limbs.l_arm,/obj) + !istype(H.limbs.r_arm,/obj)
 		if (handslost)
-			boutput(user, "<span style='color:red'>[H.name] [(handslost>1) ? "has no arms" : "only has one arm"], you can't handcuff them!</span>")
+			boutput(user, "<span class='alert'>[H.name] [(handslost>1) ? "has no arms" : "only has one arm"], you can't handcuff them!</span>")
 			return
 
-		if (H.handcuffed)
-			boutput(user, "<span style='color:red'>[H] is already handcuffed</span>")
+		if (H.hasStatus("handcuffed"))
+			boutput(user, "<span class='alert'>[H] is already handcuffed</span>")
 			return
 
 		playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -2)
@@ -105,20 +104,38 @@
 
 	return
 
+/obj/item/handcuffs/New()
+	..()
+	BLOCK_SETUP(BLOCK_ROPE)
+
 /obj/item/handcuffs/disposing()
 	if (ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		H.set_clothing_icon_dirty()
 	..()
 
-/obj/item/handcuffs/unequipped(var/mob/user)
-	..()
-	if (src.material && src.material.mat_id == "silver")
-		boutput(user, "<span style='color:red'>[src] disintegrate.</span>")
-		qdel(src)
-
 /obj/item/handcuffs/proc/werewolf_cant_rip()
 	.= src.material && src.material.mat_id == "silver"
+
+/obj/item/handcuffs/proc/drop_handcuffs(mob/user)
+	user.handcuffs = null
+	user.delStatus("handcuffed")
+	user.drop_item(src)
+	user.update_clothing()
+	if (src.strength == 1) // weak cuffs break
+		if (src.material && src.material.mat_id == "silver")
+			src.visible_message("<span class='alert'>[src] disintegrate.</span>")
+		else if ((istype(src, /obj/item/handcuffs/guardbot)))
+			src.visible_message("<span class='alert'>[src] biodegrade instantly. [prob (10) ? "DO NOT QUESTION THIS" : null]</span>")
+		else
+			src.visible_message("<span class='alert'>[src] break apart.</span>")
+		qdel(src)
+
+/obj/item/handcuffs/proc/destroy_handcuffs(mob/user)
+	user.handcuffs = null
+	user.delStatus("handcuffed")
+	user.update_clothing()
+	qdel(src)
 
 /obj/item/handcuffs/tape_roll
 	name = "ducktape"
@@ -139,8 +156,3 @@
 	icon_state = "buddycuff"
 	m_amt = 0
 	strength = 1
-
-/obj/item/handcuffs/guardbot/unequipped(var/mob/user)
-	..()
-	boutput(user, "<span style='color:red'>[src] biodegrade instantly. [prob (10) ? "DO NOT QUESTION THIS" : null]</span>")
-	qdel(src)

@@ -22,12 +22,12 @@
 			for (var/mob/living/M in psource)
 				logTheThing("combat", M, null, "takes [damage] damage due to ldmatter implosion while inside [psource].")
 				M.TakeDamage("All", damage, 0)
-				boutput(M, "<span style='color: red;'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
+				boutput(M, "<span class='alert'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
 
 			if (created_volume >= 10)
 				for (var/atom/movable/O in psource)
 					O.set_loc(source)
-				psource:visible_message("<span style=\"color:red\">[psource] implodes!</span>")
+				psource:visible_message("<span class='alert'>[psource] implodes!</span>")
 				qdel(psource)
 				return
 
@@ -150,7 +150,7 @@
 	H.bioHolder.mobAppearance.customization_third = pick(possible_hairstyles)
 	H.bioHolder.mobAppearance.customization_third_color = random_saturated_hex_color()
 	H.bioHolder.mobAppearance.UpdateMob()
-	boutput(H, "<span style=\"color:blue\">Your entire head feels extremely itchy!</span>")
+	boutput(H, "<span class='notice'>Your entire head feels extremely itchy!</span>")
 
 /proc/omega_hairgrownium_drop_hair(var/mob/living/carbon/human/H)
 	H.visible_message("<strong style='font-size: 170%;'>[H.name] hair fall out!!</strong>", "<strong style='font-size: 170%;'>you hair fall out!!</strong>")

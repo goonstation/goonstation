@@ -3,7 +3,7 @@
 /obj/machinery/bot/goosebot
 	name = "THE GOOSE"
 	desc = "How did this manage to pass Nanotrasen's safety regulations?"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "goosebot"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -61,11 +61,7 @@
 
 /obj/machinery/bot/goosebot/attackby(obj/item/W as obj, mob/user as mob)
 	src.visible_message("<span class='combat'>[user] hits [src] with [W]!</span>")
-	switch(W.damtype)
-		if("fire")
-			src.health -= W.force * 0.5
-		if("brute")
-			src.health -= W.force * 0.5
+	src.health -= W.force * 0.5
 	if (src.health <= 0)
 		src.explode()
 
@@ -73,6 +69,8 @@
 	return src.explode()
 
 /obj/machinery/bot/goosebot/explode()
+	if(src.exploding) return
+	src.exploding = 1
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='combat'><B>[src] blows apart!</B></span>", 1)
@@ -89,12 +87,12 @@
 		E.desc = "A goose's egg, apparently."
 		E.throw_at(target, 16, 3)
 
-		icon_state = "goosebot-spaz"
+		icon_state = "goosebot-wild"
 		src.visible_message("<span class='combat'><b>[src] fires an egg at [target.name]!</b></span>")
 		playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
 		SPAWN_DBG(1 SECOND)
 			E.throwforce = 1
-		SPAWN_DBG(5 SECONDS)
+			sleep(4 SECONDS)
 			icon_state = "goosebot"
 
 	return

@@ -2,7 +2,7 @@
 /obj/decal/poster
 	desc = "A piece of paper with an image on it. Clearly dealing with incredible technology here."
 	name = "poster"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "poster"
 	anchored = 1
 	opacity = 0
@@ -11,10 +11,12 @@
 	var/imgh = 400
 	var/popup_win = 1
 	layer = EFFECTS_LAYER_BASE
+	plane = PLANE_NOSHADOW_ABOVE
 
 	examine()
 		if (usr.client && src.popup_win)
 			src.show_popup_win(usr)
+			return list()
 		else
 			return ..()
 
@@ -26,7 +28,7 @@
 
 	wallsign
 		desc = "A sign, on a wall. Wow!"
-		icon = 'icons/obj/decals.dmi'
+		icon = 'icons/obj/decals/wallsigns.dmi'
 		popup_win = 0
 		var/pixel_var = 0
 
@@ -39,7 +41,7 @@
 		stencil // font: "space frigate", free and adapted by cogwerks
 			name = "stencil"
 			desc = ""
-			icon = 'icons/obj/stencils.dmi'
+			icon = 'icons/obj/decals/stencils.dmi'
 			alpha = 200
 			pixel_y = 9
 			mouse_opacity = 0
@@ -283,11 +285,13 @@
 		chsl
 			name = "CLEAN HANDS SAVE LIVES"
 			desc = "A poster that reads 'CLEAN HANDS SAVE LIVES'."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "chsl"
 
 		chsc
 			name = "CLEAN HANDS SAVE CASH"
 			desc = "A poster that reads 'CLEAN HANDS SAVE CASH: Today's unwashed palm is tomorrow's class action suit!'."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "chsc"
 
 		danger_highvolt
@@ -484,27 +488,32 @@
 		poster_human
 			name = "poster"
 			desc = "There's a person pictured on this poster. Some sort of celebrity."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_human"
 			//todo: implement procedural celebrities
 
 		poster_borg
 			name = "poster"
 			desc = "There's a cyborg pictured on this poster, but you aren't really sure what the message is. Is it trying to advertise something?"
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_borg"
 
 		poster_sol
 			name = "poster"
 			desc = "There's a star and the word 'SOL' pictured on this poster."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_sol"
 
 		poster_clown
 			name = "poster"
 			desc = "There's a clown pictured on this poster."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_clown"
 
 		poster_nt
 			name = "\improper NanoTrasen poster"
 			desc = "A cheerful-looking version of the NT corporate logo."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_nt"
 
 		poster_ptoe
@@ -515,31 +524,37 @@
 		poster_y4nt
 			name = "\improper NanoTrasen poster"
 			desc = "A huge poster that reads 'I want YOU for NT!'"
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "you_4_nt"
 
 		poster_beach
 			name = "beach poster"
 			desc = "Sun, sea, and sand! Just visit VR."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_beach"
 
 		poster_discount
 			name = "grimy poster"
 			desc = "Buy Discount Dans! Now legally food."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_discount"
 
 		poster_octocluwne
 			name = "spooky poster"
 			desc = "Coming to theatres this summer: THE OCTOCLUWNE FROM MARS!"
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_octocluwne"
 
 		poster_eyetest
 			name = "eye chart"
 			desc = "It's hard to make out anything. You're at a loss as to what even the first letter is." //heh
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_eyetest"
 
 		poster_rand
 			name = "poster"
 			desc = "You aren't really sure what the message is. Is it trying to advertise something?"
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_cool3"
 			pixel_var = 1
 			random_icon_states = list("wall_poster_cool",
@@ -558,6 +573,7 @@
 		poster_mining
 			name = "mining poster"
 			desc = "Seems like the miners union is planning yet another strike.."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_mining"
 
 		portrait_scientist
@@ -588,11 +604,13 @@
 		statistics1
 			name = "statistics poster"
 			desc = "A poster with a bar chart depicting the rapid growth of chemistry lab related explosions. Although who the fuck even uses a bar chart when you could be using a line chart.."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_statistics1"
 
 		statistics2
 			name = "statistics poster"
 			desc = "A poster with a line chart depicting the rapid growth of artifact lab related accidents."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_statistics2"
 
 		newtonscrew
@@ -603,16 +621,19 @@
 		testsubject
 			name = "Anatomy of a test subject"
 			desc = "This poster showcases all of the weak points of a monkey test subject. Sadly it does not have any weak points."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "testsubject"
 
 		mantaposter
 			name = "NSS Manta poster"
 			desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta! "
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "mantaposter"
 
 		teaparty
 			name = "Weird poster"
 			desc = "Huh."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "teaparty"
 
 			New()
@@ -635,9 +656,16 @@
 						src.desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
 						src.icon_state = "fuckII"
 
+		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
+			name = "\proper fuck"
+			desc = "No... it can't be... the original?! This is a vintage!!"
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "fuckI"
+
 		fuck2
 			name = "\proper fuck II"
 			desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "fuckII"
 
 		bookcase
@@ -661,6 +689,14 @@
 			icon = 'icons/effects/96x32.dmi' //Maybe not the best place but it was the only ready 96x32 dmi
 			icon_state = "garbagegarbs"
 			bound_width  = 96
+
+		fuq3
+			desc = "Our premier line of clothing is so diverse, you'll be sure to cry 'What le fuq?'"
+			name = "Fuq III"
+			icon = 'icons/effects/96x32.dmi'
+			icon_state = "fuq3"
+			bound_width  = 96
+			plane = -99
 
 ///////////////////////////////////////
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS
@@ -722,7 +758,7 @@
 					var/obj/item/paper/book/space_law/first/newbook = new /obj/item/paper/book/space_law/first
 					user.u_equip(W)
 					user.put_in_hand_or_drop(newbook)
-					boutput(user, "<span style=\"color:red\">Beepsky's private journal transforms into Space Law 1st Print.</span>")
+					boutput(user, "<span class='alert'>Beepsky's private journal transforms into Space Law 1st Print.</span>")
 					qdel(W)
 
 				if (src.usageState == 2)

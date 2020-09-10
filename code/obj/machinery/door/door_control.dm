@@ -7,6 +7,7 @@
 	var/timer = 0
 	anchored = 1.0
 	layer = EFFECTS_LAYER_UNDER_1
+	plane = PLANE_NOSHADOW_ABOVE
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/r_door_control (door_control.dm)
@@ -283,7 +284,7 @@
 
 	logTheThing("station", user, null, "toggled the [src.name] at [log_loc(src)].")
 
-	for (var/obj/machinery/door/poddoor/M in doors)
+	for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			if (M.density)
 				M.open()
@@ -296,7 +297,7 @@
 					SPAWN_DBG(src.timer)
 						M.open()
 
-	for (var/obj/machinery/door/airlock/M in doors)
+	for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			if (M.density)
 				M.open()
@@ -333,10 +334,10 @@
 	..()
 	if (!(status & BROKEN))
 		src.status |= BROKEN
-		src.visible_message("<span style=\"color:red\">[src] emits a sad thunk.  That can't be good.</span>")
+		src.visible_message("<span class='alert'>[src] emits a sad thunk.  That can't be good.</span>")
 		playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 50, 1)
 	else
-		boutput(user, "<span style=\"color:red\">It's broken.</span>")
+		boutput(user, "<span class='alert'>It's broken.</span>")
 
 ////////////////////////////////////////////////////////
 //////////////Mass Driver Button	///////////////////
@@ -362,19 +363,19 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/door/poddoor/M in doors)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			M.open()
 
-	sleep(20)
+	sleep(2 SECONDS)
 
 	for(var/obj/machinery/mass_driver/M in machine_registry[MACHINES_MASSDRIVERS])
 		if(M.id == src.id)
 			M.drive()
 
-	sleep(50)
+	sleep(5 SECONDS)
 
-	for(var/obj/machinery/door/poddoor/M in doors)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			M.close()
 
@@ -685,10 +686,10 @@
 			if(istype(usr.loc, /obj/machinery/vehicle))
 				var/obj/machinery/vehicle/V = usr.loc
 				if (!V.com_system)
-					boutput(usr, "<span style=\"color:red\">Your pod has no comms system installed!</span>")
+					boutput(usr, "<span class='alert'>Your pod has no comms system installed!</span>")
 					return ..()
 				if (!V.com_system.active)
-					boutput(usr, "<span style=\"color:red\">Your communications array isn't on!</span>")
+					boutput(usr, "<span class='alert'>Your communications array isn't on!</span>")
 					return ..()
 				if (!access_type)
 					open_door()
@@ -703,7 +704,7 @@
 					else if(V.com_system.access_type_secondary == src.access_type_secondary)
 						open_door()
 					else
-						boutput(usr, "<span style=\"color:red\">Access denied. Comms system not recognized.</span>")
+						boutput(usr, "<span class='alert'>Access denied. Comms system not recognized.</span>")
 						return ..()
 			return ..()
 
@@ -716,7 +717,7 @@
 		return src.attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		boutput(user, "<span style=\"color:blue\">The password is \[[src.pass]\]</span>")
+		boutput(user, "<span class='notice'>The password is \[[src.pass]\]</span>")
 		return
 
 	proc/open_door()
@@ -724,7 +725,7 @@
 			return
 		use_power(5)
 
-		for(var/obj/machinery/door/poddoor/M in doors)
+		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				if (M.density)
 					M.open()
@@ -748,7 +749,7 @@
 					return
 				use_power(5)
 
-				for(var/obj/machinery/door/poddoor/M in doors)
+				for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 					if (M.id == src.id)
 						if (M.density)
 							M.open()

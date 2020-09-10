@@ -10,13 +10,13 @@
 			chair_flip_ability = src.abilityHolder.addAbility(/datum/targetable/chairflip)
 
 		chair_flip_ability.extrarange = extrarange
-		src.targeting_spell = chair_flip_ability
+		src.targeting_ability = chair_flip_ability
 		src.update_cursor()
 
 		playsound(src.loc, "sound/effects/chair_step.ogg", 50, 1)
 
 /mob/proc/end_chair_flip_targeting()
-	src.targeting_spell = null
+	src.targeting_ability = null
 	src.update_cursor()
 	if (src.chair_flip_ability)
 		src.chair_flip_ability.extrarange = 0
@@ -75,13 +75,14 @@
 
 		if (istype(M.buckled,/obj/stool/chair))
 			var/obj/stool/chair/C = M.buckled
+			M.buckled.unbuckle()
 			C.buckledIn = 0
 			C.buckled_guy = 0
 		M.pixel_y = 0
 		M.buckled = null
-		M.anchored = 0
+		reset_anchored(M)
 
-		M.targeting_spell = null
+		M.targeting_ability = null
 		M.update_cursor()
 
 		if (ishuman(M))
@@ -100,8 +101,8 @@
 			//animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 
 
-/mob/throw_impact(atom/hit_atom, list/params)
-	..(hit_atom,params)
+/mob/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+	..()
 
 	if (src.throwing & THROW_CHAIRFLIP)
 		var/turf/T = locate(src.last_throw_x, src.last_throw_y, src.z)
@@ -120,7 +121,7 @@
 			if (prob(25))
 				M.emote("scream")
 
-			logTheThing("combat", src, M, "[src] chairflips into %target%, [showCoords(M.x, M.y, M.z)].")
+			logTheThing("combat", src, M, "[src] chairflips into [constructTarget(M,"combat")], [showCoords(M.x, M.y, M.z)].")
 			M.lastattacker = src
 			M.lastattackertime = world.time
 
@@ -131,12 +132,6 @@
 					random_brute_damage(M, 20 * effect_mult)
 					M.changeStatus("weakened", 7 SECONDS * effect_mult)
 					M.force_laydown_standup()
-			else if (M.traitHolder.hasTrait("training_security")) //consider rremoving this, prrobably not necessarry any more
-				M.visible_message("<span style=\"color:red\"><B>[src]</B></span> does a flying flip into <span style=\"color:red\">[M]</span>, but <span style=\"color:red\">[M]</span> skillfully slings them away!")
-				src.changeStatus("weakened", 6 SECONDS)
-				var/atom/target = get_edge_target_turf(M, M.dir)
-				src.throw_at(target, 3, 10)
-				src.force_laydown_standup()
 			else
 				random_brute_damage(M, 10 * effect_mult)
 				if (!M.hasStatus("weakened"))
@@ -149,7 +144,12 @@
 					src.changeStatus("weakened", 3 SECONDS * effect_mult)
 				src.force_laydown_standup()
 
-/mob/throw_end()
+/mob/throw_end(list/params, turf/thrown_from)
 	if (src.throwing & THROW_CHAIRFLIP)
-		src.changeStatus("weakened", 1.7 SECONDS)
+		src.changeStatus("weakened", 2.8 SECONDS)
 		src.force_laydown_standup()
+
+	if (length(params) && params["stun"])
+		if (src.getStatusDuration("weakened") < params["stun"])
+			src.setStatus("weakened", params["stun"])
+			src.force_laydown_standup()

@@ -1,7 +1,8 @@
 
 /client/proc/cmd_admin_playeropt(mob/M as mob in world)
 	set name = "Player Options"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set popup_menu = 1
 	if (src.holder)
 		src.holder.playeropt(M)
 	return
@@ -21,7 +22,8 @@
 	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
 	var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? "<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>" : "<style type='text/css'>#topBar { top: 46px; left: 4px; right: 10px; background: inherit; }</style>"
 
-	var/dat = {"
+	var/list/dat = list()
+	dat += {"
 	[header_thing_chui_toggle]
 	<title>[M.name] ([M.key ? M.key : "NO CKEY"]) Options</title>
 	<style>
@@ -98,7 +100,7 @@
 </div>
 
 <div style="margin-top: 2em;">
-	Mob: <b>[M.name]</b> (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
+	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
 	[M.client ? "" : "<em>(no client)</em>"]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
 	<br>Mob Type: <b>[M.type]</b> ([antag])
@@ -148,12 +150,14 @@
 					</div>
 					<div class='l'>Bioeffects<a href='?src=\ref[src];action=secretsfun;type=bioeffect_help'>*</a></div>
 					<div class='r'>
+						<a href='[playeropt_link(M, "managebioeffect")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addbioeffect")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removebioeffect")]'>Remove</a>
 					</div>
 					"}]
 					<div class='l'>Abilities</div>
 					<div class='r'>
+						<a href='[playeropt_link(M, "manageabils")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addabil")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removeabil")]'>Remove</a> &bull;
 						<a href='[playeropt_link(M, "abilholder")]'>New Holder</a>
@@ -200,10 +204,16 @@
 					</div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "jumpto")]'>Jump to</A> &bull;
+						<a href='[playeropt_link(M, "observe")]'>Observe</A> &bull;
 						<a href='[playeropt_link(M, "getmob")]'>Get</a> &bull;
 						<a href='[playeropt_link(M, "sendmob")]'>Send to...</a>
 						<br>Currently in [A]
-						<br>&nbsp;&nbsp;[T.x], [T.y], [T.z][(Q && Q != T) ? ", inside \the [Q]" : ""]
+			"}
+		if (T) //runtime fix for mobs in null space
+			dat += "<br>&nbsp;&nbsp;[T.x], [T.y], [T.z][(Q && Q != T) ? ", inside \the [Q]" : ""]"
+		else
+			dat += "Null Space"
+		dat += {"
 					</div>
 					<div class='l'>
 						Prison
@@ -282,7 +292,6 @@
 						[iswraith(M) ? "<em>Is Wraith</em>" : "<a href='[playeropt_link(M, "makewraith")]'>Wraith</a>"] &bull;
 						[isblob(M) ? "<em>Is Blob</em>" : "<a href='[playeropt_link(M, "makeblob")]'>Blob</a>"] &bull;
 						[istype(M, /mob/living/carbon/human/machoman) ? "<em>Is Macho Man</em>" : "<a href='[playeropt_link(M, "makemacho")]'>Macho Man</a>"] &bull;
-						[iswelder(M) ? "<em>Is Welder</em>" : "<a href='[playeropt_link(M, "makewelder")]'>Welder</a>"] &bull;
 						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"]
 					</div>
 				</div>
@@ -309,12 +318,14 @@
 						<br>
 						<a href='[playeropt_link(M, "polymorph")]'>Edit Appearance</a> &bull;
 						<a href='[playeropt_link(M, "modifylimbs")]'>Modify Limbs/Organs</a> &bull;
-						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a>
+						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a> &bull;
+						<a href='[playeropt_link(M, "respawnas")]'>Respawn As</a>
 				"} : {"
 						Only human mobs can be transformed.
 						<br><a href='[playeropt_link(M, "humanize")]'>Humanize</a> &bull;
 						<a href='[playeropt_link(M, "makecritter")]'>Make Critter</a> &bull;
-						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a>
+						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a> &bull;
+						<a href='[playeropt_link(M, "respawnas")]'>Respawn As</a>
 				"}]
 					</div>
 				</div>
@@ -326,12 +337,12 @@
 		//dat += "</div>"
 
 	//Coder options
-	if( src.level >= LEVEL_SHITGUY )
+	if( src.level >= LEVEL_PA )
 		dat += {"
 			<div class='optionGroup' style='border-color: #FFB347;'>
 				<h2 style='background-color: #FFB347;'>High Level Problems</h2>
 				<div>
-					<div class='l'>Shit Person</div>
+					<div class='l'>Administrator</div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "possessmob")]'>[M == usr ? "Release" : "Possess"] mob</a> &bull;
 						<a href='[playeropt_link(M, "viewvars")]'>Edit Variables</a> &bull;
@@ -358,9 +369,9 @@
 			"}
 
 	var/windowHeight = "450"
-	if (src.level == LEVEL_SHITGUY)
+	if (src.level == LEVEL_ADMIN)
 		windowHeight = "550"
 	else if (src.level == LEVEL_CODER)
-		windowHeight = "600"
+		windowHeight = "754"	//weird number, but for chui screen, it removes the scrolling.
 
-	usr.Browse(dat, "window=adminplayeropts[M.ckey];size=600x[windowHeight]")
+	usr.Browse(dat.Join(), "window=adminplayeropts[M.ckey];size=600x[windowHeight]")

@@ -27,7 +27,7 @@
 
 	New()
 		..()
-		src.real_name = "[pick(BOOZE_prefixes)] [pick(BEER_suffixes)]"
+		src.real_name = "[pick_string("chemistry_tools.txt", "BOOZE_prefixes")] [pick_string("chemistry_tools.txt", "BEER_suffixes")]"
 		src.UpdateName()
 		bottle_style = pick("clear", "black", "barf", "brown", "red", "orange", "yellow", "green", "cyan", "blue", "purple")
 		label = pick("alcohol1","alcohol2","alcohol3","alcohol4","alcohol5","alcohol6","alcohol7")
@@ -37,34 +37,25 @@
 
 		while (flavors > 0)
 			flavors--
-			reagents.add_reagent(pick(BOOZE_flavors),rand(1,3))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "BOOZE_flavors"), rand(1,3))
 
 		while (adulterants > 0)
 			adulterants--
-			reagents.add_reagent(pick(CYBERPUNK_drug_adulterants), rand(1,3))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), rand(1,3))
 
 		update_icon()
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-///////////
-
-/var/list/BOOZE_prefixes = strings("chemistry_tools.txt", "BOOZE_prefixes")
-/var/list/WINE_suffixes = strings("chemistry_tools.txt", "WINE_suffixes")
-/var/list/BEER_suffixes = strings("chemistry_tools.txt", "BEER_suffixes")
-/var/list/BOOZE_flavors = strings("chemistry_tools.txt", "BOOZE_flavors")
-
-////////////
-
 /obj/item/reagent_containers/food/drinks/bottle/wine
 	name = "Wine"
 	desc = "Not to be confused with pubbie tears."
-	icon_state = "bottle-purple"
+	icon_state = "bottle-wine"
 	heal_amt = 1
 	g_amt = 40
-	bottle_style = "purple"
-	label = "alcohol2"
+	bottle_style = "wine"
+	label = "wine"
 	initial_volume = 50
 	initial_reagents = list("wine"=30)
 	module_research = list("vice" = 5)
@@ -88,7 +79,7 @@
 
 	New()
 		..()
-		src.real_name = "[pick(BOOZE_prefixes)] [pick(WINE_suffixes)]"
+		src.real_name = "[pick_string("chemistry_tools.txt", "BOOZE_prefixes")] [pick_string("chemistry_tools.txt", "WINE_suffixes")]"
 		src.UpdateName()
 		bottle_style = "vermouth[pick("C", "R", "O", "Y", "", "A", "B", "P")]" // clear, red, orange, green, aqua, blue, purple
 
@@ -102,7 +93,7 @@
 
 		while (flavors > 0)
 			flavors--
-			reagents.add_reagent(pick(BOOZE_flavors),rand(2,5))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "BOOZE_flavors"), rand(2,5))
 
 		while (adulterants > 0)
 			adulterants--
@@ -136,7 +127,7 @@
 				boutput(user, "You can't christen something with a bottle in that state! Are you some kind of unsophisticated ANIMAL?!")
 				return
 			if (prob(50))
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> hits [O] with [src], shattering it open!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> hits [O] with [src], shattering it open!</span>")
 				playsound(U, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
 				G.set_loc(U)
@@ -321,7 +312,7 @@
 	icon_state = "bottle-whiskey"
 	bottle_style = "whiskey"
 	fluid_style = "whiskey"
-	label = "spicedrum" // the whiskey label fits the spicedrum bottle and vice versa like this, this combo probably looks closest to the old sprite  :v
+	label = "whiskey"
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 40
@@ -373,7 +364,7 @@
 /obj/item/cocktail_stuff
 	name = "cocktail doodad"
 	desc = "Some kinda li'l thing to put in a cocktail. How are you seeing this?"
-	icon = 'icons/obj/drink.dmi'
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	flags = FPRINT | TABLEPASS
 	w_class = 1.0
 	rand_pos = 1
@@ -404,3 +395,68 @@
 		desc = "A stick of celery. Does not feature ants. Unless you leave it on the floor, but those would probably not be very tasty. I dunno, though, I've never eaten an ant. They might be delicious."
 		icon_state = "celery"
 		edible = 1
+
+// empty bottles
+
+/obj/item/reagent_containers/food/drinks/bottle/empty/long
+	name = "long bottle"
+	desc = "A bottle shaped like the ones used to hold beer or vermouth."
+	icon_state = "bottle-vermouthC"
+	item_state = "vermouth"
+	alt_filled_state = 1
+	heal_amt = 1
+	g_amt = 40
+	bottle_style = "vermouthC"
+	label = "label-none"
+	initial_volume = 50
+
+/obj/item/reagent_containers/food/drinks/bottle/empty/tall
+	name = "tall bottle"
+	desc = "A bottle shaped like the ones used to hold vodka."
+	icon_state = "bottle-tvodka"
+	bottle_style = "tvodka"
+	fluid_style = "tvodka"
+	label = "label-none"
+	alt_filled_state = 1
+	heal_amt = 1
+	g_amt = 60
+	initial_volume = 50
+
+/obj/item/reagent_containers/food/drinks/bottle/empty/rectangular
+	name = "rectangular bottle"
+	desc = "A bottle shaped like the ones used to hold gin."
+	icon_state = "bottle-gin"
+	bottle_style = "gin"
+	fluid_style = "gin"
+	label = "label-none"
+	alt_filled_state = 1
+	heal_amt = 1
+	g_amt = 60
+	initial_volume = 50
+
+/obj/item/reagent_containers/food/drinks/bottle/empty/square
+	name = "square bottle"
+	desc = "A bottle shaped like the ones used to hold rum."
+	icon_state = "bottle-spicedrum"
+	bottle_style = "spicedrum"
+	fluid_style = "spicedrum"
+	label = "label-none"
+	alt_filled_state = 1
+	heal_amt = 1
+	g_amt = 60
+	initial_volume = 50
+
+/obj/item/reagent_containers/food/drinks/bottle/empty/masculine
+	name = "wide bottle"
+	desc = "A bottle shaped like the ones used to hold tequila."
+	icon_state = "bottle-tequila"
+	bottle_style = "tequila"
+	fluid_style = "tequila"
+	label = "label-none"
+	alt_filled_state = 1
+	heal_amt = 1
+	g_amt = 60
+	initial_volume = 50
+
+
+

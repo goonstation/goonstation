@@ -6,6 +6,7 @@
 	name = "Fire Alarm"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
+	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_FIREALARMS
 	var/alarm_frequency = "1437"
@@ -20,6 +21,7 @@
 	var/datum/radio_frequency/frequency
 	var/static/manual_off_reactivate_idle = 8 //how many machine loop ticks to idle after being manually switched off
 	var/idle_count = 0
+	text = ""
 
 	desc = "A fire sensor and alarm system. When it detects fire or is manually activated, it closes all firelocks in the area to minimize the spread of fire."
 
@@ -32,9 +34,8 @@
 	if(!net_id)
 		net_id = generate_net_id(src)
 
-	mechanics = new(src)
-	mechanics.master = src
-	mechanics.addInput("toggle", "toggleinput")
+	AddComponent(/datum/component/mechanics_holder)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
 	SPAWN_DBG (10)
 		frequency = radio_controller.return_frequency(alarm_frequency)
 
@@ -78,9 +79,9 @@
 	if (issnippingtool(W))
 		src.detecting = !( src.detecting )
 		if (src.detecting)
-			user.visible_message("<span style=\"color:red\">[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
+			user.visible_message("<span class='alert'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 		else
-			user.visible_message("<span style=\"color:red\">[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
+			user.visible_message("<span class='alert'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
 	else if (src.icon_state == "fire0")
 		src.alarm()
 	else
@@ -93,20 +94,6 @@
 		return
 
 	use_power(10, ENVIRON)
-
-	return
-
-	//mbc : nah not anymore
-	if (idle_count <= 0)
-		if (src.detecting)
-			var/turf/T = get_turf(src)
-			var/obj/fluid/F = T.active_liquid
-			if (F)
-				if (F.last_depth_level >= 4)
-					src.alarm()
-	else
-		idle_count--
-
 
 
 /obj/machinery/firealarm/power_change()
@@ -138,7 +125,7 @@
 	var/area/A = get_area(loc)
 	if(!isarea(A))
 		return
-	if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("alertReset"))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"alertReset")
 	A.firereset()	//Icon state is set to "fire0" in A.firereset()
 
 	if (src.ringlimiter)
@@ -163,7 +150,7 @@
 	A.firealert()	//Icon state is set to "fire1" in A.firealert()
 	post_alert(1)
 
-	if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("alertTriggered"))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"alertTriggered")
 	if (!src.ringlimiter)
 		src.ringlimiter = 1
 		playsound(src.loc, "sound/machines/firealarm.ogg", 50, 1)

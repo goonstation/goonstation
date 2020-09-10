@@ -19,7 +19,8 @@
 		..()
 		SPAWN_DBG(1 SECOND)
 			if (src.donor)
-				src.bones = new /datum/bone(src)
+				if(!src.bones)
+					src.bones = new /datum/bone(src)
 				src.bones.donor = src.donor
 				src.bones.parent_organ = src.organ_name
 				src.bones.name = "ribs"

@@ -63,6 +63,12 @@
 			setup_starting_peripheral2 = /obj/item/peripheral/printer
 			setup_starting_program = /datum/computer/file/terminal_program/medical_records
 
+#if ASS_JAM
+			New()
+				. = ..()
+				ADD_MORTY(6, 13, 9, 9)
+#endif
+
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
 				icon_state = "medicalcomputer1"
@@ -328,10 +334,10 @@
 		return
 
 	if(!user.literate)
-		boutput(user, "<span style=\"color:red\">You don't know how to read or write, operating a computer isn't going to work!</span>")
+		boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
 		return
 
-	if ((user.machine == src) && (src.current_user == user))
+	if (user.using_dialog_of(src))
 		if (!src.temp)
 			user << output(null, "comp3.browser:con_clear")
 
@@ -343,12 +349,8 @@
 				src.temp_add = null
 */
 		update_peripheral_menu(user)
-		src.current_user = user
-
 	else
-
-		user.machine = src
-		src.current_user = user
+		src.add_dialog(user)
 
 		if (src.temp_add)
 			src.temp += temp_add
@@ -567,25 +569,24 @@ function lineEnter (ev)
 	if(..())
 		return
 
-	usr.machine = src
+	src.add_dialog(usr)
 
 	if((href_list["command"]) && src.active_program)
 		usr << output(null, "comp3.browser:input_clear")
 		src.active_program.input_text(href_list["command"])
-		playsound(src.loc, "keyboard", 50, 1, 5)
+		playsound(src.loc, "keyboard", 50, 1, -15)
 
 	else if(href_list["disk"])
 		if (src.diskette)
 			//Ai/cyborgs cannot press a physical button from a room away.
 			if((issilicon(usr) || isAI(usr)) && get_dist(src, usr) > 1)
-				boutput(usr, "<span style=\"color:red\">You cannot press the ejection button.</span>")
+				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
 			for(var/datum/computer/file/terminal_program/P in src.processing_programs)
 				P.disk_ejected(src.diskette)
 
 			usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
-			src.diskette.set_loc(get_turf(src))
 			src.diskette = null
 			usr << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>-----</a>"),"comp3.browser:setInternalDisk")
 		else
@@ -650,14 +651,18 @@ function lineEnter (ev)
 /obj/machinery/computer3/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 		if ((!src.diskette) && src.setup_has_internal_disk)
-			user.machine = src
 			user.drop_item()
 			W.set_loc(src)
 			src.diskette = W
 			boutput(user, "You insert [W].")
-			src.updateUsrDialog()
-			user << output(url_encode("Disk: <a href='byond://?src=\ref[src];eject=1'>Eject</a>"),"comp3.browser:setInternalDisk")
+			if(user.using_dialog_of(src))
+				src.updateUsrDialog()
+				user << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
 			return
+		else if(src.diskette)
+			boutput(user, "<span class='alert'>There's already a disk inside!</span>")
+		else if(!src.setup_has_internal_disk)
+			boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
 
 	else if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
@@ -668,13 +673,13 @@ function lineEnter (ev)
 			if(src.material) A.setMaterial(src.material)
 			A.created_icon_state = src.base_icon_state
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
 				G.set_loc( src.loc )
 				A.state = 3
 				A.icon_state = "3"
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				A.state = 4
 				A.icon_state = "4"
 
@@ -879,7 +884,7 @@ function lineEnter (ev)
 		src.temp = null
 		src.temp_add = "Restarting system...<br>"
 		src.updateUsrDialog()
-		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, 5)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 		SPAWN_DBG(2 SECONDS)
 			src.restarting = 0
 			src.post_system()
@@ -982,6 +987,7 @@ function lineEnter (ev)
 				src.luggable = new luggable_type (src)
 				src.luggable.case = src
 				src.luggable.deployed = 0
+		BLOCK_SETUP(BLOCK_LARGE)
 		return
 
 	attack_self(mob/user as mob)
@@ -1006,7 +1012,7 @@ function lineEnter (ev)
 	proc/deploy(mob/user as mob)
 		var/turf/T = get_turf(src)
 		if(!T || !luggable)
-			boutput(user, "<span style=\"color:red\">You can't seem to get the latch open!</span>")
+			boutput(user, "<span class='alert'>You can't seem to get the latch open!</span>")
 			return
 
 		if (src.loc == user)
@@ -1045,7 +1051,7 @@ function lineEnter (ev)
 		if(usr.stat)
 			return
 
-		src.visible_message("<span style=\"color:red\">[usr] folds [src] back up!</span>")
+		src.visible_message("<span class='alert'>[usr] folds [src] back up!</span>")
 		src.undeploy()
 		return
 
@@ -1065,29 +1071,34 @@ function lineEnter (ev)
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 			if ((!src.diskette) && src.setup_has_internal_disk)
-				user.machine = src
 				user.drop_item()
 				W.set_loc(src)
 				src.diskette = W
 				boutput(user, "You insert [W].")
-				src.updateUsrDialog()
+				if(user.using_dialog_of(src))
+					src.updateUsrDialog()
+					user << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
 				return
+			else if(src.diskette)
+				boutput(user, "<span class='alert'>There's already a disk inside!</span>")
+			else if(!src.setup_has_internal_disk)
+				boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
 
 		else if (ispryingtool(W))
 			if(!src.cell)
-				boutput(user, "<span style=\"color:red\">There is no energy cell inserted!</span>")
+				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
 				return
 
 			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 			src.cell.set_loc(get_turf(src))
 			src.cell = null
-			user.visible_message("<span style=\"color:red\">[user] removes the power cell from [src]!.</span>","<span style=\"color:red\">You remove the power cell from [src]!</span>")
+			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")
 			src.power_change()
 			return
 
 		else if (istype(W, /obj/item/cell))
 			if(src.cell)
-				boutput(user, "<span style=\"color:red\">There is already an energy cell inserted!</span>")
+				boutput(user, "<span class='alert'>There is already an energy cell inserted!</span>")
 
 			else
 				user.drop_item()

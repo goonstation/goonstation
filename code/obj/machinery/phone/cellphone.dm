@@ -63,7 +63,7 @@
 					phonebook.Subscribe(user.client)
 			else
 				if(user)
-					boutput(user,"<span style=\"color:red\">As you pick up the phone you notice that the cord has been cut!</span>")
+					boutput(user,"<span class='alert'>As you pick up the phone you notice that the cord has been cut!</span>")
 		else
 			src.ringing = 0
 			src.linked.ringing = 0

@@ -16,7 +16,7 @@
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -31,12 +31,12 @@
 			return ..()
 
 		if (!assess_ghostdrone_eligibility(M))
-			out(G, "<span style='color: red; font-weight: bold;'>You are ineligible for ghostdrones!</span>")
+			out(G, "<span class='bold alert'>You are ineligible for ghostdrones!</span>")
 			return ..()
 
 		var/position = find_ghostdrone_position(M)
 		if (position)
-			out(G, "<span style='color: red; font-weight: bold;'>You are already #[position] in the ghostdrone queue!</span>")
+			out(G, "<span class='bold alert'>You are already #[position] in the ghostdrone queue!</span>")
 			return ..()
 
 		if (alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", "Yes", "No") == "No")
@@ -44,20 +44,21 @@
 
 		ghostdrone_candidates += M
 		position = ghostdrone_candidates.len
-		out(G, "<span style='color: blue; font-weight: bold;font-size: 120%;'>You have been added to the ghostdrone queue. Now position #[position].</span>")
+		out(G, "<span class='bold notice'>You have been added to the ghostdrone queue. Now position #[position].</span>")
 
 	process()
 		..()
 		if (available_ghostdrones.len && ghostdrone_candidates.len)
 			src.icon_state = "ghostcatcher1"
 
-			var/datum/mind/M = dequeue_next_ghostdrone_candidate()
-			if(istype(M))
-				var/mob/dead/D = M.current
-				if(istype(D))
-					D.visible_message("[src] scoops up [D]!",\
-					"You feel yourself being torn away from the afterlife and into [src]!")
-					droneize(D, 1)
+			SPAWN_DBG(0)
+				var/datum/mind/M = dequeue_next_ghostdrone_candidate()
+				if(istype(M))
+					var/mob/dead/D = M.current
+					if(istype(D))
+						D.visible_message("[src] scoops up [D]!",\
+						"You feel yourself being torn away from the afterlife and into [src]!")
+						droneize(D, 1)
 
 		else
 			src.icon_state = "ghostcatcher0"
@@ -75,13 +76,13 @@
 				ghostdrone_candidates.Cut(i, (i--) + 1) //This looks like bullshit (and it is). It removes whatever is at position i in the list and subtracts 1 from i.
 				if(istype(M))
 					//Notify M that they've been punted due to ineligibility
-					out(M.current, "<span style='color: red; font-weight: bold;font-size: 120%;'>You were removed from the ghostdrone queue due to ineligibility!</span>")
+					out(M.current, "<span class='bold alert'>You were removed from the ghostdrone queue due to ineligibility!</span>")
 			else if(!.) //We have not yet selected a candidate, pick this one and dequeue
 				. = M
 				ghostdrone_candidates.Cut(i, (i--) + 1)
 			else
 				//Let them know that the queue has moved
-				out(M.current, "<span style='color: blue; font-weight: bold;'>You are now position #[i] in the ghostdrone queue.</span>")
+				out(M.current, "<span class='bold notice'>You are now position #[i] in the ghostdrone queue.</span>")
 
 /proc/assess_ghostdrone_eligibility(var/datum/mind/M)
 	if(!istype(M))
@@ -94,6 +95,11 @@
 		return 0
 	if (jobban_isbanned(G, "Ghostdrone"))
 		return 0
+	if (G.client.player)
+		var/round_num = G.client.player.get_rounds_participated()
+		if (!isnull(round_num) && round_num < 20)
+			boutput(G, "<span class='alert'>You only have [round_num] rounds played. You need 20 rounds to play this role.")
+			return 0
 	return 1
 
 #define GHOSTDRONE_BUILD_INTERVAL 1000
@@ -183,7 +189,8 @@ var/global/list/ghostdrone_candidates = list()
 				return
 
 			if (prob(40))
-				src.shake(rand(4,6))
+				SPAWN_DBG(0)
+					src.shake(rand(4,6))
 				playsound(get_turf(src), pick("sound/impact_sounds/Wood_Hit_1.ogg", "sound/impact_sounds/Metal_Hit_Heavy_1.ogg"), 30, 1, -3)
 			if (prob(40))
 				var/list/sound_list = pick(ghostly_sounds, sounds_engine, sounds_enginegrump, sounds_sparks)
@@ -267,7 +274,7 @@ var/global/list/ghostdrone_candidates = list()
 		for (amt, amt>0, amt--)
 			src.pixel_x = rand(-2,2)
 			src.pixel_y = rand(-2,2)
-			sleep(1)
+			sleep(0.1 SECONDS)
 		src.pixel_x = orig_x
 		src.pixel_y = orig_y
 		return 1

@@ -20,7 +20,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 		if(using != null)
 			rebuildEventList(using)
 
-	proc/bootUser()
+	proc/boot_if_away()
 		if(using && (!using.client || using.client.inactivity >= 600 || get_dist(src, using) > 1))
 			using.Browse(null, "window=qtelescope;override_setting=1")
 			using = null
@@ -33,20 +33,16 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 		if(status & (BROKEN|NOPOWER))
 			return
 
-		bootUser()
+		boot_if_away()
 
 		if(using && using != user)
-			boutput(user, "<span style=\"color:red\">Somebody is already using that machine.</span>")
+			boutput(user, "<span class='alert'>Somebody is already using that machine.</span>")
 			return
 
 		using = user
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 
-		//Other resources are loaded in the files like <link rel="stylesheet" type="text/css" href="{{resource("css/telescope.css")}}">
-		//Couldn't get this to work for sounds inside .js file.
-		user << browse_rsc(file("browserassets/sounds/sweep.mp3"))
-		user << browse_rsc(file("browserassets/sounds/found.mp3"))
 		user.Browse(grabResource("html/telescope.html"), "window=qtelescope;size=974x560;title=Quantum Telescope;can_resize=0", 1)
 
 		onclose(user, "telescope", src)
@@ -79,6 +75,9 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 		return
 
 	Topic(href, href_list)
+
+		boot_if_away()
+
 		if(href_list["close"])
 			using = null
 

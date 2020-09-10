@@ -6,7 +6,7 @@
 	name = "Fire Resistance"
 	desc = "Shields the subject's cellular structure against high temperatures and flames."
 	id = "fire_resist"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	blockCount = 3
 	msgGain = "You feel cold."
@@ -25,7 +25,7 @@
 	name = "Cold Resistance"
 	desc = "Shields the subject's cellular structure against freezing temperatures and crystallization."
 	id = "cold_resist"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	blockCount = 3
 	msgGain = "You feel warm."
@@ -45,7 +45,7 @@
 	name = "Thermal Resistance"
 	desc = "Shields the subject's cellular structure against any harmful temperature exposure."
 	id = "thermal_resist"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	blockCount = 3
 	occur_in_genepools = 0
 	stability_loss = 10
@@ -76,7 +76,7 @@
 	name = "SMES Human"
 	desc = "Protects the subject's cellular structure from electrical energy."
 	id = "resist_electric"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	blockCount = 3
 	blockGaps = 3
@@ -88,18 +88,18 @@
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "elec[owner:bioHolder.HasEffect("fat") ? "fat" :""]", layer = MOB_EFFECT_LAYER)
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "elec[owner.bioHolder?.HasEffect("fat") ? "fat" :""]", layer = MOB_EFFECT_LAYER)
 		..()
 		if (istype(owner, /mob/living) && owner:organHolder && owner:organHolder:heart && owner:organHolder:heart:robotic)
 			owner:organHolder:heart:broken = 1
 			owner:contract_disease(/datum/ailment/malady/flatline,null,null,1)
-			boutput(owner, "<span style=\"color:red\">Something is wrong with your cyberheart, it stops beating!</span>")
+			boutput(owner, "<span class='alert'>Something is wrong with your cyberheart, it stops beating!</span>")
 
 /datum/bioEffect/rad_resist
 	name = "Radiation Resistance"
 	desc = "Shields the subject's cellular structure against ionizing radiation."
 	id = "food_rad_resist"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	blockCount = 2
 	secret = 1
 	stability_loss = 15
@@ -111,7 +111,7 @@
 	desc = "Strongly reinforces the subject's nervous system against alcoholic intoxication."
 	id = "resist_alcohol"
 	probability = 99
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel unusually sober."
 	msgLose = "You feel like you could use a stiff drink."
 	degrade_to = "drunk"
@@ -121,7 +121,7 @@
 	name = "Toxic Resistance"
 	desc = "Renders the subject's blood immune to toxification. This will not stop other effects of poisons from occurring, however."
 	id = "resist_toxic"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 4
 	blockGaps = 5
@@ -139,12 +139,13 @@
 			return
 		var/mob/living/carbon/human/H = owner
 		H.toxloss = 0
+		health_update_queue |= H
 
 /datum/bioEffect/breathless
 	name = "Anaerobic Metabolism"
 	desc = "Allows the subject's body to generate its own oxygen internally, invalidating the need for respiration."
 	id = "breathless"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 4
 	blockGaps = 2
@@ -167,6 +168,7 @@
 		var/mob/living/carbon/human/H = owner
 		H.oxyloss = 0
 		H.losebreath = 0
+		health_update_queue |= H
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"
@@ -189,7 +191,7 @@
 	desc = "Boosts efficiency in sectors of the brain commonly associated with resisting meta-mental energies."
 	id = "psy_resist"
 	probability = 99
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your mind feels closed."
 	msgLose = "You feel oddly exposed."
 	degrade_to = "screamer"
@@ -202,7 +204,7 @@
 	name = "Regeneration"
 	desc = "Overcharges the subject's natural healing, enabling them to rapidly heal from any wound."
 	id = "regenerator"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 4
 	blockGaps = 3
@@ -269,13 +271,13 @@
 	degrade_to = "toxification"
 	icon_state  = "tox_res"
 
-	OnLife()
-		if(..()) return
-		var/mob/living/L = owner
-		if (isdead(L))
-			return
-		if (L.reagents)
-			L.reagents.remove_any(remove_per_tick)
+	OnAdd()
+		. = ..()
+		APPLY_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type, remove_per_tick)
+
+	OnRemove()
+		. = ..()
+		REMOVE_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type)
 
 /////////////
 // Stealth //
@@ -285,7 +287,7 @@
 	name = "Meta-Neural Haze"
 	desc = "Causes the subject's brain to emit waves that make the subject's body difficult to observe."
 	id = "examine_stopper"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	secret = 1
 	blockCount = 3
 	blockGaps = 3
@@ -296,15 +298,17 @@
 	lockedTries = 6
 	stability_loss = 5
 	icon_state  = "haze"
+	isBad = 1
 
 /datum/bioEffect/dead_scan
 	name = "Pseudonecrosis"
 	desc = "Causes the subject's cells to mimic a death-like state."
 	id = "dead_scan"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	stability_loss = 5
 	icon_state  = "dead"
+	isBad = 1
 
 ///////////////////
 // General buffs //
@@ -314,17 +318,29 @@
 	name = "Musculature Enhancement"
 	desc = "Enhances the subject's ability to build and retain heavy muscles."
 	id = "strong"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "You feel buff!"
 	msgLose = "You feel wimpy and weak."
 	icon_state  = "strong"
 
+	OnAdd()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
+
+	OnRemove()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
+
 /datum/bioEffect/radio_brain
 	name = "Meta-Neural Antenna"
 	desc = "Enables the subject's brain to pick up radio signals."
 	id = "radio_brain"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 33
 	blockCount = 4
 	blockGaps = 5
@@ -352,7 +368,7 @@ var/list/radio_brains = list()
 	name = "Gamma Ray Exposure"
 	desc = "Vastly enhances the subject's musculature. May cause severe melanocyte corruption."
 	id = "hulk"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 33
 	blockCount = 4
 	blockGaps = 5
@@ -371,7 +387,9 @@ var/list/radio_brains = list()
 	OnAdd()
 		owner.unlock_medal("It's not easy being green", 1)
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 		..()
 
 	OnMobDraw()
@@ -379,17 +397,19 @@ var/list/radio_brains = list()
 			return
 
 		if(ishuman(owner))
-			owner:body_standing:overlays += image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "hulk[owner:bioHolder.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
+			owner:body_standing:overlays += image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "hulk[owner.bioHolder?.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
 
 	OnRemove()
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 
 	OnLife()
 		if(..()) return
 		if (owner:health <= 25)
 			timeLeft = 1
-			boutput(owner, "<span style=\"color:red\">You suddenly feel very weak.</span>")
+			boutput(owner, "<span class='alert'>You suddenly feel very weak.</span>")
 			owner:changeStatus("weakened", 3 SECONDS)
 			owner:emote("collapse")
 
@@ -397,7 +417,7 @@ var/list/radio_brains = list()
 	name = "X-Ray Vision"
 	desc = "Enhances the subject's optic nerves, allowing them to see on x-ray wavelengths."
 	id = "xray"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 33
 	blockCount = 3
 	blockGaps = 5
@@ -417,7 +437,7 @@ var/list/radio_brains = list()
 	name = "Night Vision"
 	desc = "Enhances the subject's optic nerves, allowing them to see in the dark."
 	id = "nightvision"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 33
 	blockCount = 3
 	blockGaps = 3
@@ -455,7 +475,7 @@ var/list/radio_brains = list()
 	name = "Physically Fit"
 	desc = "Causes the subject to be naturally more physically fit than the average spaceman."
 	id = "fitness_buff"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 50
 	blockCount = 2
 	blockGaps = 3
@@ -466,7 +486,7 @@ var/list/radio_brains = list()
 	lockedGaps = 1
 	lockedDiff = 3
 	lockedTries = 8
-	stability_loss = -5
+	stability_loss = 5
 	icon_state  = "strong"
 
 	OnAdd()
@@ -479,10 +499,10 @@ var/list/radio_brains = list()
 
 /datum/bioEffect/blood_overdrive
 	name = "Hemopoiesis Overdrive"
-	desc = "Subject has regenerates blood far faster than the average spaceman."
+	desc = "Subject regenerates blood far faster than the average spaceman."
 	id = "blood_overdrive"
 	probability = 20
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like being stabbed isn't such a big deal anymore."
 	msgLose = "You are once again afraid of being stabbed."
 	stability_loss = 15
@@ -505,7 +525,7 @@ var/list/radio_brains = list()
 	name = "Telekinesis"
 	desc = "Enables the subject to project kinetic energy using certain thought patterns."
 	id = "telekinesis"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 5
 	blockGaps = 5
@@ -523,14 +543,14 @@ var/list/radio_brains = list()
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead[owner:bioHolder.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead[owner.bioHolder?.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
 		..()
 
 /datum/bioEffect/uncontrollable_cloak
 	name = "Unstable Refraction"
 	desc = "The subject will occasionally become invisible. The subject has no control or awareness of this occurring."
 	id = "uncontrollable_cloak"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	occur_in_genepools = 0 // needs nerfing before it can be put back
 	probability = 0 // formerly 66
 	scanner_visibility = 0

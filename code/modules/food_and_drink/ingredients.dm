@@ -19,10 +19,11 @@
 
 	heal(var/mob/living/M)
 		if (prob(33))
-			boutput(M, "<span style=\"color:red\">You briefly think you probably shouldn't be eating raw meat.</span>")
+			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
 			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 
-	throw_impact(var/turf/T)
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		var/turf/T = get_turf(A)
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 		if (src.blood <= 0) return ..()
 
@@ -46,29 +47,30 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
 	name = "fish fillet"
 	desc = "A slab of meat from a fish."
-	icon_state = "fillet_pink"
+	icon_state = "fillet-pink"
 	amount = 1
-	food_color = "#FF6699"
+	food_color = "#F4B4BC"
 	real_name = "fish"
 	salmon
 		name = "salmon fillet"
-		icon_state = "fillet_orange"
-		food_color = "#FF9900"
+		icon_state = "fillet-orange"
+		food_color = "#F29866"
 		real_name = "salmon"
 	white
 		name = "white fish fillet"
-		icon_state = "fillet_white"
-		food_color = "#FFFFFF"
+		icon_state = "fillet-white"
+		food_color = "#FFECB7"
 		real_name = "white fish"
 	small
 		name = "small fish fillet"
-		icon_state = "fillet_small"
-		food_color = "#FFFFFF"
+		icon_state = "fillet-small"
+		food_color = "#FFECB7"
 		real_name = "small fish"
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 	name = "synthmeat"
 	desc = "Synthetic meat grown in hydroponics."
+	icon_state = "meat-plant"
 	amount = 1
 	initial_volume = 20
 	initial_reagents = list("synthflesh"=2)
@@ -76,11 +78,12 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	name = "mystery meat"
 	desc = "What the fuck is this??"
-	icon_state = "mysterymeat"
+	icon_state = "meat-mystery"
 	amount = 1
 	var/cybermeat = 0
 
-	throw_impact(var/turf/T)
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		var/turf/T = get_turf(A)
 		if (src.cybermeat == 1)
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			if (istype(T))
@@ -108,7 +111,7 @@
 	raw
 		name = "raw bacon"
 		desc = "A strip of salty raw cured pork. It really should be cooked first."
-		icon_state = "bacon_raw"
+		icon_state = "bacon-raw"
 		amount = 1
 		real_name = "bacon"
 
@@ -119,6 +122,7 @@
 	icon_state = "nugget0"
 	amount = 2
 	initial_volume = 15
+	doants = 0 // imagine 1000 nuggets on one tile all checking the other 999 nuggets if they aren't a table, yeah
 
 	New()
 		..()
@@ -138,8 +142,9 @@
 	initial_volume = 20
 	initial_reagents = list("egg"=5)
 
-	throw_impact(var/turf/T)
-		src.visible_message("<span style=\"color:red\">[src] splats onto the floor messily!</span>")
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		var/turf/T = get_turf(A)
+		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 		make_cleanable(/obj/decal/cleanable/eggsplat,T)
 		qdel (src)
@@ -147,7 +152,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
 	name = "hard-boiled egg"
 	desc = "You're a loose cannon, egg. I'm taking you off the menu."
-	icon_state = "hboil"
+	icon_state = "egg-hardboiled"
 	food_color = "#FFFFFF"
 	initial_volume = 20
 	food_effects = list("food_brute", "food_cateyes")
@@ -156,12 +161,12 @@
 		..()
 		reagents.add_reagent("egg", 5)
 
-	throw_impact(var/turf/T)
-		src.visible_message("<span style=\"color:red\">[src] flops onto the floor!</span>")
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		src.visible_message("<span class='alert'>[src] flops onto the floor!</span>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
-			boutput(user, "<span style=\"color:blue\">You cut [src] in half</span>")
+			boutput(user, "<span class='notice'>You cut [src] in half</span>")
 			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
 			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
 			qdel(src)
@@ -184,7 +189,8 @@
 /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 	name = "rice sprig"
 	desc = "A sprig of rice. There's probably a decent amount in it, thankfully."
-	icon_state = "rice_sprig"
+	icon = 'icons/obj/foodNdrink/food_produce.dmi'
+	icon_state = "rice-sprig"
 	amount = 1
 	food_color = "#FFFFAA"
 	brewable = 1
@@ -272,7 +278,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/peeled_banana
 	name = "peeled banana"
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
-	icon_state = "banana_fruit"
+	icon_state = "banana-fruit"
 
 /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	name = "cheese"
@@ -314,7 +320,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice
 	name = "sticky rice"
 	desc = "A big lump of sticky rice."
-	icon_state = "sticky_rice"
+	icon_state = "rice-sticky"
 	amount = 1
 	food_color = "#E3E3E3"
 	custom_food = 0
@@ -336,43 +342,43 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/sugar))
-			boutput(user, "<span style='color:blue'>You add [W] to [src] to make sweet dough!</span>")
+			boutput(user, "<span class='notice'>You add [W] to [src] to make sweet dough!</span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/dough_s/D = new /obj/item/reagent_containers/food/snacks/ingredient/dough_s(W.loc)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
 			qdel(W)
 			qdel(src)
 		else if (istype(W, /obj/item/kitchen/rollingpin))
-			boutput(user, "<span style='color:blue'>You flatten out the dough.</span>")
+			boutput(user, "<span class='notice'>You flatten out the dough.</span>")
 			if(prob(1))
 				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
-				src.visible_message("<span style=\"color:red\"><B>The [src] screams!</B></span>")
+				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pizza1/P = new /obj/item/reagent_containers/food/snacks/ingredient/pizza1(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
 			qdel(src)
-		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher))
-			boutput(user, "<span style='color:blue'>You cut the dough into two strips.</span>")
+		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+			boutput(user, "<span class='notice'>You cut the dough into two strips.</span>")
 			if(prob(1))
 				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
-				src.visible_message("<span style=\"color:red\"><B>The [src] screams!</B></span>")
+				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			for(var/i = 1, i <= 2, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
 			qdel(src)
 		else if (istype(W, /obj/item/kitchen/utensil/fork))
-			boutput(user, "<span style='color:blue'>You stab holes in the dough. How vicious.</span>")
+			boutput(user, "<span class='notice'>You stab holes in the dough. How vicious.</span>")
 			if(prob(1))
 				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
-				src.visible_message("<span style=\"color:red\"><B>The [src] screams!</B></span>")
+				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/holey_dough/H = new /obj/item/reagent_containers/food/snacks/ingredient/holey_dough(W.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(H)
 			qdel(src)
 		else if (istype(W, /obj/item/robodefibrillator))
-			boutput(user, "<span style='color:blue'>You defibrilate the dough, yielding a perfect stack of flapjacks.</span>")
+			boutput(user, "<span class='notice'>You defibrilate the dough, yielding a perfect stack of flapjacks.</span>")
 			if(prob(1))
 				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
-				src.visible_message("<span style=\"color:red\"><B>The [src] screams!</B></span>")
+				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/pancake/F = new /obj/item/reagent_containers/food/snacks/pancake(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(F)
@@ -382,14 +388,14 @@
 /obj/item/reagent_containers/food/snacks/ingredient/dough/semolina
 	name = "semolina dough"
 	desc = "Used for making pasta-y things."
-	icon_state = "dough_semolina"
+	icon_state = "dough-semolina"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/kitchen/rollingpin))
-			boutput(user, "<span style=\"color:blue\">You flatten out the dough into a sheet.</span>")
+			boutput(user, "<span class='notice'>You flatten out the dough into a sheet.</span>")
 			if(prob(1))
 				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
-				src.visible_message("<span style=\"color:red\"><B>The [src] screams!</B></span>")
+				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet/P = new /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
@@ -399,14 +405,14 @@
 /obj/item/reagent_containers/food/snacks/ingredient/dough_strip
 	name = "dough strip"
 	desc = "A strand of cut up dough. It looks like you can re-attach two of them back together."
-	icon_state = "dough_strip"
+	icon_state = "dough-strip"
 	amount = 1
 	food_color = "#FFFFF"
 	custom_food = 0
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/dough_strip))
-			boutput(user, "<span style=\"color:blue\">You attach the [src]s back together to make a piece of dough.</span>")
+			boutput(user, "<span class='notice'>You attach the [src]s back together to make a piece of dough.</span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/dough/D = new /obj/item/reagent_containers/food/snacks/ingredient/dough(W.loc)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
@@ -415,17 +421,17 @@
 		else ..()
 
 	attack_self(var/mob/user as mob)
-		boutput(user, "<span style=\"color:blue\">You twist the [src] into a circle.</span>")
+		boutput(user, "<span class='notice'>You twist the [src] into a circle.</span>")
 		if(prob(1))
 			playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1)
-			src.visible_message("<span style=\"color:red\"><B>The [src] screams!</B></span>")
+			src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 		new /obj/item/reagent_containers/food/snacks/ingredient/dough_circle(get_turf(src))
 		qdel (src)
 
 /obj/item/reagent_containers/food/snacks/ingredient/dough_circle
 	name = "dough circle"
 	desc = "Used for making torus-shaped things." //I used to eat out with friends, but bagels just torus apart.
-	icon_state = "dough_circle"
+	icon_state = "dough-circle"
 	amount = 1
 	food_color = "#FFFFF"
 	custom_food = 0
@@ -433,7 +439,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/holey_dough
 	name = "holey dough" //+1 to chaplain magic skills
 	desc = "Some dough with a bunch of holes poked in it. How exotic."
-	icon_state = "holey_dough"
+	icon_state = "dough-holey"
 	amount = 1
 	food_color = "#FFFFF"
 	custom_food = 0
@@ -441,12 +447,12 @@
 /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	name = "sweet dough"
 	desc = "Used for making cakey things."
-	icon_state = "dough_s"
+	icon_state = "dough-sweet"
 	amount = 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher))
-			boutput(user, "<span style=\"color:blue\">You cut [src] into smaller pieces...</span>")
+		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+			boutput(user, "<span class='notice'>You cut [src] into smaller pieces...</span>")
 			for(var/i = 1, i <= 4, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie(get_turf(src))
 			qdel(src)
@@ -455,7 +461,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
 	name = "cookie dough"
 	desc = "Probably shouldn't be eaten raw, not that THAT'S ever stopped anyone."
-	icon_state = "cookie_dough"
+	icon_state = "dough-cookie"
 	amount = 1
 	custom_food = 1
 
@@ -466,8 +472,12 @@
 
 	heal(var/mob/M)
 		if(prob(15))
+			#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 			wrap_pathogen(M.reagents, generate_indigestion_pathogen(), 15)
-			boutput(M, "<span style=\"color:red\">That tasted a little bit...off.</span>")
+			#else
+			M.reagents.add_reagent("salmonella",15)
+			#endif
+			boutput(M, "<span class='alert'>That tasted a little bit...off.</span>")
 		..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/tortilla
@@ -489,31 +499,31 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/ketchup) || istype(W, /obj/item/reagent_containers/food/snacks/plant/tomato))
-			boutput(user, "<span style=\"color:blue\">You add [W] to [src].</span>")
+			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pizza2/D=new /obj/item/reagent_containers/food/snacks/ingredient/pizza2(W.loc)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
 			qdel(W)
 			qdel(src)
-		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher))
-			boutput(user, "<span style=\"color:blue\">You cut [src] into smaller pieces...</span>")
+		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+			boutput(user, "<span class='notice'>You cut [src] into smaller pieces...</span>")
 			for(var/i = 1, i <= 3, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/tortilla(get_turf(src))
 			qdel(src)
 		else ..()
 
 	attack_self(var/mob/user as mob)
-		boutput(user, "<span style=\"color:blue\">You knead the [src] back into a blob.</span>")
+		boutput(user, "<span class='notice'>You knead the [src] back into a blob.</span>")
 		new /obj/item/reagent_containers/food/snacks/ingredient/dough(get_turf(src))
 		qdel (src)
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
-			boutput(user, "<span style=\"color:red\">You need to add tomatoes, you greedy beast!</span>")
+			boutput(user, "<span class='alert'>You need to add tomatoes, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizza2
@@ -525,7 +535,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheese))
-			boutput(user, "<span style=\"color:blue\">You add [W] to [src].</span>")
+			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/D = new /obj/item/reagent_containers/food/snacks/ingredient/pizza3(W.loc)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
@@ -535,11 +545,11 @@
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
-			boutput(user, "<span style=\"color:red\">You need to add cheese, you greedy beast!</span>")
+			boutput(user, "<span class='alert'>You need to add cheese, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizza3
@@ -560,7 +570,7 @@
 			var/obj/item/reagent_containers/food/snacks/F = W
 			if(!F.custom_food)
 				return
-			boutput(user, "<span style=\"color:blue\">You add [W] to [src].</span>")
+			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 			topping = 1
 			food_effects += F.food_effects
 			if (F.real_name)
@@ -593,11 +603,11 @@
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
-			boutput(user, "<span style=\"color:red\">You need to bake it, you greedy beast!</span>")
+			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
 
 /obj/item/reagent_containers/food/snacks/ingredient/pasta
@@ -608,13 +618,13 @@
 	amount = 1
 
 	heal(var/mob/M)
-		boutput(M, "<span style=\"color:red\">... You must be really hungry.</span>")
+		boutput(M, "<span class='alert'>... You must be really hungry.</span>")
 		..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet
 	name = "pasta sheet"
 	desc = "An uncooked sheet of pasta."
-	icon_state = "pasta_sheet"
+	icon_state = "pasta-sheet"
 
 
 /obj/item/reagent_containers/food/snacks/ingredient/chips
@@ -626,7 +636,7 @@
 	food_color = "#FFFF99"
 
 	heal(var/mob/M)
-		boutput(M, "<span style=\"color:red\">Raw potato tastes pretty nasty...</span>") // does it?
+		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>") // does it?
 
 
 /obj/item/reagent_containers/food/snacks/proc/random_spaghetti_name()
@@ -650,11 +660,11 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup))
-			boutput(user, "<span style=\"color:blue\">You create [random_spaghetti_name()] with tomato sauce...</span>")
+			boutput(user, "<span class='notice'>You create [random_spaghetti_name()] with tomato sauce...</span>")
 			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
 			if (user.mob_flags & IS_BONER)
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
-				boutput(user, "<span style=\"color:red\">... whoa, that felt good. Like really good.</span>")
+				boutput(user, "<span class='alert'>... whoa, that felt good. Like really good.</span>")
 				user.reagents.add_reagent("bonerjuice",20)
 			else
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce(W.loc)
@@ -664,7 +674,7 @@
 			qdel(src)
 
 	heal(var/mob/M)
-		boutput(M, "<span style=\"color:red\">The noodles taste terrible uncooked...</span>")
+		boutput(M, "<span class='alert'>The noodles taste terrible uncooked...</span>")
 		..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/butter //its actually margarine
@@ -678,7 +688,7 @@
 	initial_reagents = "butter"
 
 	heal(var/mob/M)
-		boutput(M, "<span style=\"color:red\">You feel ashamed of yourself...</span>")
+		boutput(M, "<span class='alert'>You feel ashamed of yourself...</span>")
 		..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/pepperoni
@@ -695,7 +705,7 @@
 obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "pepperoni log"
 	desc = "It's like a forest of pepperoni was felled just for you."
-	icon_state = "pepperoni_log"
+	icon_state = "pepperoni-log"
 	custom_food = 1
 	amount = 1
 	food_color = "#C90E0E"
@@ -704,7 +714,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	initial_reagents = "pepperoni"
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher))
+		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
 			for (var/i in 1 to 4)
@@ -714,7 +724,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 /obj/item/reagent_containers/food/snacks/ingredient/seaweed
 	name = "seaweed sheets"
 	desc = "Dried and salted sheets of seaweed."
-	icon_state = "seaweed_sheets"
+	icon_state = "seaweed"
 	amount = 1
 	heal_amt = 1
 	food_color = "#4C453E"

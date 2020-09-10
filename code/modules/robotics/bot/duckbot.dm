@@ -3,7 +3,7 @@
 /obj/machinery/bot/duckbot
 	name = "Amusing Duck"
 	desc = "Bump'n go action! Ages 3 and up."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "duckbot"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -70,10 +70,10 @@
 /obj/machinery/bot/duckbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
-			boutput(user, "<span style=\"color:red\">You short out the horn on [src].</span>")
+			boutput(user, "<span class='alert'>You short out the horn on [src].</span>")
 		SPAWN_DBG(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("<span style=\"color:red\"><B>[src] quacks loudly!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[src] quacks loudly!</B></span>", 1)
 				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1)
 				src.eggs = rand(3,9)
 		src.emagged = 1
@@ -92,13 +92,8 @@
 	if (istype(W, /obj/item/card/emag))
 		emag_act(user, W)
 	else
-		src.visible_message("<span style=\"color:red\">[user] hits [src] with [W]!</span>")
-		switch(W.damtype)
-			if("fire")
-				src.health -= W.force * 0.5
-			if("brute")
-				src.health -= W.force * 0.5
-			else
+		src.visible_message("<span class='alert'>[user] hits [src] with [W]!</span>")
+		src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
 
@@ -106,11 +101,11 @@
 	return src.explode()
 
 /obj/machinery/bot/duckbot/explode()
+	if(src.exploding) return
+	src.exploding = 1
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
-		O.show_message("<span style=\"color:red\"><B>[src] blows apart!</B></span>", 1)
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return

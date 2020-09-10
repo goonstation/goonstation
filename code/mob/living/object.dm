@@ -1,6 +1,6 @@
 /obj/item/attackdummy
 	name = "attack dummy"
-	damtype = "brute"
+	hit_type = DAMAGE_BLUNT
 	force = 5
 	throwforce = 5
 
@@ -50,7 +50,7 @@
 				var/turf/T = get_turf(loc)
 				if (!T)
 					logTheThing("admin", usr, null, "additionally, no turf could be found at creation loc [loc]")
-					var/ASLoc = pick(latejoin)
+					var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 					if (ASLoc)
 						src.set_loc(ASLoc)
 					else
@@ -93,7 +93,7 @@
 				// src.owner.client.mob = src
 			src.owner.mind.transfer_to(src)
 
-		src.visible_message("<span style=\"color:red\"><b>[possessed] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
+		src.visible_message("<span class='alert'><b>[possessed] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
 		animate_levitate(src, -1, 20, 1)
 		src.add_stun_resist_mod("living_object", 1000)
 
@@ -108,10 +108,10 @@
 			return src.dummy
 
 	examine()
-		..()
-		boutput(usr, "<span style=\"color:red\">It seems to be alive.</span>")
+		. = ..()
+		. += "<span class='alert'>It seems to be alive.</span>"
 		if (health < 25)
-			boutput(usr, "<span style=\"color:blue\">The ethereal grip on this object appears to be weak.</span>")
+			. += "<span class='notice'>The ethereal grip on this object appears to be weak.</span>"
 
 	meteorhit(var/obj/O as obj)
 		src.death(1)
@@ -127,20 +127,7 @@
 		// Let's just say it's powered by ethereal bullshit like ghost farts.
 		return 1
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-		updatehealth()
-
-		// var/life_time_passed = max(life_tick_spacing, world.timeofday - last_life_update)
-
-		//Removing this to fix the wraith item possession ability from giving obscene amounts of points. Call me if this breaks anything
-		//I don't see why it should, -kyle
-		// if (owner)
-		// 	if (owner.abilityHolder)
-		// 		if (owner.abilityHolder.usesPoints)
-		// 			owner.abilityHolder.generatePoints(mult = (life_time_passed / life_tick_spacing))
-
+	clamp_values()
 		delStatus("slowed")
 		sleeping = 0
 		change_misstep_chance(-INFINITY)
@@ -149,29 +136,6 @@
 		is_dizzy = 0
 		is_jittery = 0
 		jitteriness = 0
-
-		if (!src.item)
-			src.death(0)
-
-		if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
-			if (isturf(src.item.loc))
-				src.item.loc = src
-			else
-				src.death(0)
-
-		for (var/atom/A as obj|mob in src)
-			if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /obj/screen))
-				if (isobj(A) || ismob(A)) // what the heck else would this be?
-					A:set_loc(src.loc)
-
-		src.set_density(src.item ? src.item.density : 0)
-		src.item.dir = src.dir
-		src.icon = src.item.icon
-		src.icon_state = src.item.icon_state
-		src.color = src.item.color
-		src.overlays = src.item.overlays
-
-		last_life_update = world.timeofday
 
 	bullet_act(var/obj/projectile/P)
 		var/damage = 0
@@ -190,7 +154,7 @@
 				src.TakeDamage(null, 0, damage)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message("<span style=\"color:red\">[src] is hit by the [P]!</span>")
+			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 	blob_act(var/power)
 		logTheThing("combat", src, null, "is hit by a blob")
@@ -204,17 +168,17 @@
 
 		src.TakeDamage(null, damage, 0)
 
-		src.show_message("<span style=\"color:red\">The blob attacks you!</span>")
+		src.show_message("<span class='alert'>The blob attacks you!</span>")
 		return
 
 	attack_hand(mob/user as mob)
 		if (user.a_intent == "help")
-			user.visible_message("<span style=\"color:red\">[user] pets [src]!</span>")
+			user.visible_message("<span class='alert'>[user] pets [src]!</span>")
 		else
-			user.visible_message("<span style=\"color:red\">[user] punches [src]!</span>")
+			user.visible_message("<span class='alert'>[user] punches [src]!</span>")
 			src.TakeDamage(null, rand(4, 7), 0)
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		health -= burn
 		health -= brute
 		health = min(max_health, health)
@@ -255,13 +219,13 @@
 			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && get_dist(src, target) <= 1)
 				var/atom/movable/M = target
 				if(ismob(target) || !M.anchored)
-					src.visible_message("<span style=\"color:red\">[src] grabs [target]!</span>")
+					src.visible_message("<span class='alert'>[src] grabs [target]!</span>")
 					M.set_loc(src.loc)
 			else
 				. = ..()
 			if (src.item.loc != src)
 				if (isturf(src.item.loc))
-					src.item.loc = src
+					src.item.set_loc(src)
 				else
 					src.death(0)
 
@@ -282,7 +246,7 @@
 	death(gibbed)
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))
-			src.visible_message("<span style=\"color:red\"><b>[src] is no longer possessed.</b></span>")
+			src.visible_message("<span class='alert'><b>[src] is no longer possessed.</b></span>")
 
 			if (src.mind)
 				mind.transfer_to(src.owner)
@@ -293,7 +257,7 @@
 				var/mob/dead/observer/O = new/mob/dead/observer()
 				O.set_loc(get_turf(src))
 				if (isrestrictedz(src.z) && !restricted_z_allowed(src, get_turf(src)) && !(src.client && src.client.holder))
-					var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 					if (OS)
 						O.set_loc(OS)
 					else
@@ -328,6 +292,6 @@
 
 	item_attack_message(var/mob/T, var/obj/item/S, var/d_zone)
 		if (d_zone)
-			return "<span style=\"color:red\"><B>[src] attacks [T] in the [d_zone]!</B></span>"
+			return "<span class='alert'><B>[src] attacks [T] in the [d_zone]!</B></span>"
 		else
-			return "<span style=\"color:red\"><B>[src] attacks [T]!</B></span>"
+			return "<span class='alert'><B>[src] attacks [T]!</B></span>"

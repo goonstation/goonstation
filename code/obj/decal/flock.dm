@@ -11,6 +11,7 @@
 	mouse_opacity = 0
 	layer = EFFECTS_LAYER_BASE
 	animate_movement = NO_STEPS
+	plane = PLANE_WALL
 
 /obj/decal/flock_build_floor
 	icon = 'icons/misc/featherzone.dmi'
@@ -21,3 +22,4 @@
 	mouse_opacity = 0
 	layer = EFFECTS_LAYER_BASE
 	animate_movement = NO_STEPS
+	plane = PLANE_FLOOR

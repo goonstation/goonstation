@@ -40,7 +40,7 @@
 					world << sound('sound/voice/farts/superfart.ogg', volume = 67)
 					for (var/mob/M in mobs)
 						if (M.client)
-							shake_camera(M, 20, 1)
+							shake_camera(M, 20, 8)
 						if (M.lying)
 							M.show_text("You duck and cover, avoiding the shockwave! Phew!", "blue")
 							continue
@@ -103,8 +103,8 @@
 
 		if (B)
 			B.throw_at(target, 6, 1)
-		H.visible_message("<span style=\"color:red\"><b>[H]</b>'s [magical ? "arse" : "ass"] flies off \his body[magical ? " in a magical explosion" : null]!</span>",\
-		"<span style=\"color:red\">Your [magical ? "arse" : "ass"] flies off your body[magical ? " in a magical explosion" : null]!</span>")
+		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] flies off \his body[magical ? " in a magical explosion" : null]!</span>",\
+		"<span class='alert'>Your [magical ? "arse" : "ass"] flies off your body[magical ? " in a magical explosion" : null]!</span>")
 		H.changeStatus("weakened", 2 SECONDS)
 		H.force_laydown_standup()
 
@@ -120,19 +120,19 @@
 		H.changeStatus("weakened", 3 SECONDS)
 		H.force_laydown_standup()
 
-	if (!is_bot)
-		var/list/possible_limbs = list()
-		if (H.limbs.l_arm)
-			possible_limbs += H.limbs.l_arm
-		if (H.limbs.r_arm)
-			possible_limbs += H.limbs.r_arm
-		if (H.limbs.l_leg)
-			possible_limbs += H.limbs.l_leg
-		if (H.limbs.r_leg)
-			possible_limbs += H.limbs.r_leg
+		if (!is_bot)
+			var/list/possible_limbs = list()
+			if (H.limbs.l_arm)
+				possible_limbs += H.limbs.l_arm
+			if (H.limbs.r_arm)
+				possible_limbs += H.limbs.r_arm
+			if (H.limbs.l_leg)
+				possible_limbs += H.limbs.l_leg
+			if (H.limbs.r_leg)
+				possible_limbs += H.limbs.r_leg
 
-		if (possible_limbs.len)
-			for (var/obj/item/parts/P in possible_limbs)
+			if (possible_limbs.len)
+				var/obj/item/parts/P = pick(possible_limbs)
 				if (prob(limbloss_prob))
 					H.show_text("Your [P] was severed by the [magical ? "explosion" : "shockwave"]!", "red")
 					P.sever()

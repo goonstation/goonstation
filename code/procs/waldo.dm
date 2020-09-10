@@ -47,7 +47,7 @@
 
 
 	var/SPcool = 3000
-	if (usr.wizard_spellpower()) SPcool = 600
+	if (usr.wizard_spellpower(null)) SPcool = 600
 
 	var/A
 	usr.verbs -= /client/proc/mass_teleport
@@ -73,7 +73,7 @@
 	animation.icon = 'icons/effects/effects.dmi'
 	animation.master = usr
 
-	sleep(30)
+	sleep(3 SECONDS)
 	qdel(animation)
 	usr.buckled = null
 	if(!usr.stat)

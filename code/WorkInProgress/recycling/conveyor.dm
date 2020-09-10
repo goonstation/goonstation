@@ -5,12 +5,16 @@
 
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
+#ifndef IN_MAP_EDITOR
 	icon_state = "conveyor0"
+#else
+	icon_state = "conveyor0-map"
+#endif
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
 	power_usage = 100
-	layer = 2.5
+	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
@@ -167,8 +171,6 @@
 		walk(AM, 0)
 
 
-// attack with item, place item on conveyor
-
 /obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
 	if (istype(I, /obj/item/grab))	// special handling if grabbing a mob
 		var/obj/item/grab/G = I
@@ -179,13 +181,13 @@
 		var/mob/M = locate() in src.loc
 		if(M)
 			if (M == user)
-				src.visible_message("<span style=\"color:blue\">[M] ties \himself to the conveyor.</span>")
+				src.visible_message("<span class='notice'>[M] ties \himself to the conveyor.</span>")
 				// note don't check for lying if self-tying
 			else
 				if(M.lying)
-					user.visible_message("<span style=\"color:blue\">[M] has been tied to the conveyor by [user].</span>", "<span style=\"color:blue\">You tie [M] to the converyor!</span>")
+					user.visible_message("<span class='notice'>[M] has been tied to the conveyor by [user].</span>", "<span class='notice'>You tie [M] to the converyor!</span>")
 				else
-					boutput(user, "<span style=\"color:blue\">[M] must be lying down to be tied to the converyor!</span>")
+					boutput(user, "<span class='hint'>[M] must be lying down to be tied to the converyor!</span>")
 					return
 
 			M.buckled = src.loc
@@ -203,21 +205,10 @@
 			M.buckled = null
 			src.add_fingerprint(user)
 			if (M == user)
-				src.visible_message("<span style=\"color:blue\">[M] cuts \himself free from the conveyor.</span>")
+				src.visible_message("<span class='notice'>[M] cuts \himself free from the conveyor.</span>")
 			else
-				src.visible_message("<span style=\"color:blue\">[M] had been cut free from the conveyor by [user].</span>")
+				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
-
-	else if(istype(I, /obj/item/ore_scoop))
-		// this is handled in the ore scoop's afterattack proc
-		return
-	// otherwise drop and place on conveyor
-
-	if (issilicon(user))
-		return
-	user.drop_item()
-	if(I && I.loc)	I.set_loc(src.loc)
-	return
 
 // attack with hand, move pulled object onto conveyor
 
@@ -366,12 +357,12 @@
 	if(deployed)
 		flick("diverter10",src)
 		icon_state = "diverter0"
-		sleep(10)
+		sleep(1 SECOND)
 		deployed = 0
 	else
 		flick("diverter01",src)
 		icon_state = "diverter1"
-		sleep(10)
+		sleep(1 SECOND)
 		deployed = 1
 	operating = 0
 	update()
@@ -422,7 +413,7 @@
 
 /obj/machinery/conveyor_switch/New()
 	..()
-	conveyor_switches += src
+	START_TRACKING
 	update()
 
 	SPAWN_DBG(0.5 SECONDS)		// allow map load
@@ -432,12 +423,11 @@
 				conveyors += C
 				C.owner = src
 
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("trigger", "trigger")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
 
 /obj/machinery/conveyor_switch/disposing()
-	conveyor_switches -= src
+	STOP_TRACKING
 	for(var/obj/machinery/conveyor/C in conveyors)
 		C.owner = null
 	conveyors = null
@@ -488,13 +478,13 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
+	for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
 		if(S.id == src.id)
 			S.position = position
 			S.update()
 		LAGCHECK(LAG_MED)
 
-	if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("switchTriggered"))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
 
 
 //silly proc for corners that can be flippies
@@ -620,7 +610,7 @@
 			update_icon()
 
 	proc/update_belts()
-		for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
+		for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
 			if(S.id == "carousel")
 				for(var/obj/machinery/conveyor/C in S.conveyors)
 					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)

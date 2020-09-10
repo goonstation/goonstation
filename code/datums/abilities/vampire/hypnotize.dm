@@ -38,11 +38,11 @@
 
 		if (!M.sight_check(1))
 			boutput(M, __red("How do you expect this to work? You can't use your eyes right now."))
-			M.visible_message("<span style=\"color:red\">What was that? There's something odd about [M]'s eyes.</span>")
+			M.visible_message("<span class='alert'>What was that? There's something odd about [M]'s eyes.</span>")
 			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 1
 
-		M.visible_message("<span style=\"color:red\"><B>[M] stares into [target]'s eyes!</B></span>")
+		M.visible_message("<span class='alert'><B>[M] stares into [target]'s eyes!</B></span>")
 		boutput(M, __red("You have to stand still..."))
 
 		actions.start(new/datum/action/bar/icon/vamp_hypno(M,target,src), M)
@@ -50,10 +50,10 @@
 		if (istype(H) && src.pointCost)
 			H.blood_tracking_output(src.pointCost)
 
-		if (ishuman(target))
+		if (isliving(target))
 			target:was_harmed(M, special = "vamp")
 
-		logTheThing("combat", M, target, "uses hypnotise on [target ? "%target%" : "*UNKNOWN*"] at [log_loc(M)].") // Target might have been gibbed, who knows.
+		logTheThing("combat", M, target, "uses hypnotise on [target ? "[constructTarget(target,"combat")]" : "*UNKNOWN*"] at [log_loc(M)].") // Target might have been gibbed, who knows.
 		return 1
 
 
@@ -91,7 +91,7 @@
 		..()
 		if (target.bioHolder && target.traitHolder.hasTrait("training_chaplain"))
 			boutput(target, __blue("Your faith protects you from [M]'s dark designs!"))
-			target.visible_message("<span style=\"color:red\"><b>[target] just stares right back at [M]!</b></span>")
+			target.visible_message("<span class='alert'><b>[target] just stares right back at [M]!</b></span>")
 
 		else if (target.sight_check(1)) // Can't stare through a blindfold very well, no?
 			boutput(target, __red("Your consciousness is overwhelmed by [M]'s dark glare!"))

@@ -96,7 +96,7 @@
 						if ("2")
 							src.mode = -1
 							message_server("command=print&args=index")
-							sleep(8)
+							sleep(0.8 SECONDS)
 							var/dat = "Known Printers:"
 							if (!src.known_printers || !src.known_printers.len)
 								dat += "<br> \[__] No printers known."
@@ -400,7 +400,7 @@
 
 			src.peripheral_command("transmit", signal, "\ref[netCard]")
 			if (delayCaller)
-				sleep(8)
+				sleep(0.8 SECONDS)
 				return 0
 
 			return 0
@@ -426,7 +426,7 @@
 			src.peripheral_command("ping", null, "\ref[netCard]")
 
 			if (delayCaller)
-				sleep(8)
+				sleep(0.8 SECONDS)
 				return (potential_server_netid == null)
 
 			return 0

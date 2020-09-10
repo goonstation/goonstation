@@ -1,20 +1,20 @@
 /obj/item/cloaking_device
 	name = "cloaking device"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "shield0"
 	uses_multiple_icon_states = 1
 	var/active = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
 	item_state = "electronic"
-	throwforce = 10.0
+	throwforce = 5.0
 	throw_speed = 2
 	throw_range = 10
 	w_class = 2.0
 	is_syndicate = 1
 	mats = 15
 	desc = "An illegal device that bends light around the user, rendering them invisible to regular vision."
-	stamina_damage = 10
-	stamina_cost = 10
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 15
 	contraband = 6
 
@@ -79,7 +79,7 @@
 			return
 
 	emp_act()
-		usr.visible_message("<span style=\"color:blue\"><b>[usr]'s cloak is disrupted!</b></span>")
+		usr.visible_message("<span class='notice'><b>[usr]'s cloak is disrupted!</b></span>")
 		src.deactivate(usr)
 		return
 

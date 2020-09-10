@@ -160,7 +160,7 @@
 
 		src.net_id = generate_net_id(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN_DBG(1 SECONDS)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -218,7 +218,7 @@
 		if(..() && !(status & NOPOWER)) //Allow them to remove tapes even if the power's out.
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Databank - \[[bank_id]]</title></head><body>"
 
@@ -260,16 +260,16 @@
 		if(..() && !(href_list["tape"] && (status & NOPOWER)))
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if(href_list["tape"])
 			if(src.locked)
-				boutput(usr, "<span style=\"color:red\">The cover is screwed shut.</span>")
+				boutput(usr, "<span class='alert'>The cover is screwed shut.</span>")
 				return
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
 			if(issilicon(usr) && get_dist(src, usr) > 1)
-				boutput(usr, "<span style=\"color:red\">You cannot press the ejection button.</span>")
+				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
 			if(src.tape)
@@ -333,10 +333,10 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, src.setup_tape_type) && setup_accept_tapes) //INSERT SOME TAPES
 			if (src.tape)
-				boutput(user, "<span style=\"color:red\">There is already a [src.setup_tape_tag] in the drive.</span>")
+				boutput(user, "<span class='alert'>There is already a [src.setup_tape_tag] in the drive.</span>")
 				return
 			if (src.locked)
-				boutput(user, "<span style=\"color:red\">The cover is screwed shut.</span>")
+				boutput(user, "<span class='alert'>The cover is screwed shut.</span>")
 				return
 			user.drop_item()
 			W.set_loc(src)
@@ -681,7 +681,7 @@
 	var/sim_delay = 300 //Time until next simulation.
 	power_usage = 200
 
-	var/vr_landmark = "bombtest-bomb" //Landmark where the ~vr bomb~ spawns.
+	var/vr_landmark = LANDMARK_VR_BOMB
 
 	power_change()
 		if(powered())
@@ -744,7 +744,7 @@
 		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>SimUnit - \[[bank_id]]</title></head><body>"
 
@@ -778,13 +778,13 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["tank"])
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
 			if(issilicon(usr) && get_dist(src, usr) > 1)
-				boutput(usr, "<span style=\"color:red\">You cannot press the ejection button.</span>")
+				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
 			switch(href_list["tank"])
@@ -839,15 +839,15 @@
 
 		else if(href_list["simulate"])
 			if(!tank1 || !tank2)
-				boutput(usr, "<span style=\"color:red\">Both tanks are required!</span>")
+				boutput(usr, "<span class='alert'>Both tanks are required!</span>")
 				return
 
 			if(last_sim && (last_sim + sim_delay > world.time))
-				boutput(usr, "<span style=\"color:red\">Simulator not ready, please try again later.</span>")
+				boutput(usr, "<span class='alert'>Simulator not ready, please try again later.</span>")
 				return
 
 			if(vrbomb)
-				boutput(usr, "<span style=\"color:red\">Simulation already in progress!</span>")
+				boutput(usr, "<span class='alert'>Simulation already in progress!</span>")
 				return
 
 			src.generate_vrbomb()
@@ -882,14 +882,14 @@
 			if(vrbomb)
 				qdel(vrbomb)
 
-			var/obj/landmark/B = locate("landmark*[vr_landmark]")
+			var/turf/B = pick_landmark(vr_landmark)
 			if(!B)
 				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
 				src.visible_message("[src] emits a somber ping.")
 				return
 
 			vrbomb = new
-			vrbomb.set_loc(B.loc)
+			vrbomb.set_loc(B)
 			vrbomb.anchored = 1
 			vrbomb.tester = src
 
@@ -915,8 +915,7 @@
 
 			T.timing = 1
 			T.c_state(1)
-			if (!(T in processing_items))
-				processing_items.Add(T)
+			processing_items |= src
 			src.last_sim = world.time
 
 			var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
@@ -950,25 +949,12 @@
 			results.fields += "Atmospheric Tank #1:"
 			if(tank1)
 				var/datum/gas_mixture/environment = tank1.return_air()
-				var/pressure = environment.return_pressure()
-				var/total_moles = environment.total_moles()
+				var/pressure = MIXTURE_PRESSURE(environment)
+				var/total_moles = TOTAL_MOLES(environment)
 
 				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
 				if(total_moles)
-					var/o2_level = environment.oxygen/total_moles
-					var/n2_level = environment.nitrogen/total_moles
-					var/co2_level = environment.carbon_dioxide/total_moles
-					var/plasma_level = environment.toxins/total_moles
-					var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-
-					results.fields += "Nitrogen: [round(n2_level*100)]%"
-					results.fields += "Oxygen: [round(o2_level*100)]%"
-					results.fields += "Carbon Dioxide: [round(co2_level*100)]%"
-					results.fields += "FAAE-1 (\"Plasma\"): [round(plasma_level*100)]%"
-
-					if(unknown_level > 0.01)
-						results.fields += "Unknown: [round(unknown_level)]%"
-
+					LIST_CONCENTRATION_REPORT(environment, results.fields)
 					results.fields += "|n"
 
 				else
@@ -979,25 +965,12 @@
 			results.fields += "Atmospheric Tank #2:"
 			if(tank2)
 				var/datum/gas_mixture/environment = tank2.return_air()
-				var/pressure = environment.return_pressure()
-				var/total_moles = environment.total_moles()
+				var/pressure = MIXTURE_PRESSURE(environment)
+				var/total_moles = TOTAL_MOLES(environment)
 
 				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
 				if(total_moles)
-					var/o2_level = environment.oxygen/total_moles
-					var/n2_level = environment.nitrogen/total_moles
-					var/co2_level = environment.carbon_dioxide/total_moles
-					var/plasma_level = environment.toxins/total_moles
-					var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-
-					results.fields += "Nitrogen: [round(n2_level*100)]%"
-					results.fields += "Oxygen: [round(o2_level*100)]%"
-					results.fields += "Carbon Dioxide: [round(co2_level*100)]%"
-					results.fields += "FAAE-1 (\"Plasma\"): [round(plasma_level*100)]%"
-
-					if(unknown_level > 0.01)
-						results.fields += "Unknown: [round(unknown_level)]%"
-
+					LIST_CONCENTRATION_REPORT(environment, results.fields)
 					results.fields += "|n"
 
 				else
@@ -1089,7 +1062,7 @@
 		if(..() || status & NOPOWER)
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Nuclear Charge</title></head><body>"
 
@@ -1120,7 +1093,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["reset"])
 			if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
@@ -1175,7 +1148,7 @@
 				world << sound('sound/misc/airraid_loop_short.ogg')
 			if(src.time <= DISARM_CUTOFF)
 				src.icon_state = "net_nuke2"
-				boutput(world, "<span style=\"color:red\"><b>[src.time] seconds until nuclear charge detonation.</b></span>")
+				boutput(world, "<span class='alert'><b>[src.time] seconds until nuclear charge detonation.</b></span>")
 			else
 				src.time -= 2
 				src.icon_state = "net_nuke1"
@@ -1309,8 +1282,8 @@
 							admessage += "<b> ([T.x],[T.y],[T.z])</b>"
 						message_admins(admessage)
 						//World announcement.
-						boutput(world, "<span style=\"color:red\"><b>Alert: Self-Destruct Sequence has been engaged.</b></span>")
-						boutput(world, "<span style=\"color:red\"><b>Detonation in T-[src.time] seconds!</b></span>")
+						boutput(world, "<span class='alert'><b>Alert: Self-Destruct Sequence has been engaged.</b></span>")
+						boutput(world, "<span class='alert'><b>Detonation in T-[src.time] seconds!</b></span>")
 						return
 					if("deact")
 						if(data["auth"] != netpass_heads)
@@ -1325,7 +1298,7 @@
 						src.icon_state = "net_nuke0"
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						//World announcement.
-						boutput(world, "<span style=\"color:red\"><B>Alert: Self-Destruct Sequence has been disengaged!</B></span>")
+						boutput(world, "<span class='alert'><B>Alert: Self-Destruct Sequence has been disengaged!</B></span>")
 						post_display_status(-1)
 						return
 
@@ -1425,7 +1398,7 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Network Radio</title></head><body>"
 
@@ -1477,7 +1450,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["reset"])
 			if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
@@ -1756,11 +1729,11 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/paper)) //Load up the printer!
 			if (sheets_remaining >= MAX_SHEETS)
-				boutput(user, "<span style=\"color:red\">The tray is full!</span>")
+				boutput(user, "<span class='alert'>The tray is full!</span>")
 				return
 
 			if(W:info)
-				boutput(user, "<span style=\"color:red\">That paper has already been used!</span>")
+				boutput(user, "<span class='alert'>That paper has already been used!</span>")
 				return
 
 			user.drop_item()
@@ -1775,7 +1748,7 @@
 
 		else if (istype(W, /obj/item/paper_bin)) //Load up the printer!
 			if (sheets_remaining >= MAX_SHEETS)
-				boutput(user, "<span style=\"color:red\">The tray is full!</span>")
+				boutput(user, "<span class='alert'>The tray is full!</span>")
 				return
 
 			var/to_remove = MAX_SHEETS - sheets_remaining
@@ -1811,7 +1784,7 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Printer - \[[print_id]]</title></head><body>"
 
@@ -1847,7 +1820,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["unjam"])
 			if(src.jam)
@@ -1859,7 +1832,7 @@
 				src.update_icon()
 				src.temp_msg = "PRINTER OK"
 				src.updateUsrDialog()
-				boutput(usr, "<span style=\"color:blue\">You clear the jam.</span>")
+				boutput(usr, "<span class='notice'>You clear the jam.</span>")
 			else
 				boutput(usr, "There is no jam to clear.")
 
@@ -2125,15 +2098,13 @@
 			jam++
 			if(jam >= SETUP_JAM_IGNITION && !(status & BROKEN))
 				status |= BROKEN
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> bursts into flames!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> bursts into flames!</span>")
 				src.printing = 0
 				src.print_buffer.len = 0
 
 				src.update_icon()
 
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(3, 1, src)
-				s.start()
+				elecflash(src,power = 3)
 				if(src.host_id) //welp, we're broken.
 					src.post_status(src.host_id,"command","term_message","data","command=status&status=thermalert")
 				return 1
@@ -2146,7 +2117,7 @@
 			blinking = 1
 			src.update_icon()
 			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
-			src.visible_message("<span style=\"color:red\">[src] pings!</span>")
+			src.visible_message("<span class='alert'>[src] pings!</span>")
 			return
 
 		clear_alert()
@@ -2210,7 +2181,7 @@
 		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Scanner - \[[copytext(bank_id,4)]]</title></head><body>"
 
@@ -2240,7 +2211,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/photo))
 			if (scanned_thing)
-				boutput(user, "<span style=\"color:red\">There is already something in the scanner!</span>")
+				boutput(user, "<span class='alert'>There is already something in the scanner!</span>")
 				return
 
 			usr.drop_item()
@@ -2258,11 +2229,11 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["document"])
 			if(issilicon(usr) && get_dist(src, usr) > 1)
-				boutput(usr, "<span style=\"color:red\">There is no electronic control over the actual document.</span>")
+				boutput(usr, "<span class='alert'>There is no electronic control over the actual document.</span>")
 				return
 
 			if (scanned_thing)
@@ -2334,7 +2305,7 @@
 
 		scanning = 1
 		flick("scanner-scanning",src)
-		sleep(20)
+		sleep(2 SECONDS)
 		if (scan_buffer)
 			scan_buffer.dispose()
 			scan_buffer = null
@@ -2472,7 +2443,7 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>IR Detector - \[[detector_id]]</title></head><body>"
 
@@ -2514,7 +2485,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["reset"])
 			if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
@@ -2719,11 +2690,13 @@
 				if (1)
 					light.disable()
 					if (src.host_id && change)
-						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
+						SPAWN_DBG(0)
+							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
 				if (0)
 					light.disable()
 					if (src.host_id && change)
-						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
+						SPAWN_DBG(0)
+							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
 
 			return
 
@@ -2772,6 +2745,7 @@
 		if (src.next)
 			src.next.dispose()
 			src.next = null
+		..()
 
 	Bumped()
 		src.hit()
@@ -2942,7 +2916,7 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>HEPT Emitter</title></head><body><hr><center>Emission Crystals<br>"
 
@@ -2992,12 +2966,12 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["insert"])
 			if (src.beam)
-				boutput(usr, "<span style=\"color:red\">The panel is locked.</span>")
+				boutput(usr, "<span class='alert'>The panel is locked.</span>")
 				return
 
 			var/targetSlot = round(text2num(href_list["insert"]))
@@ -3013,7 +2987,7 @@
 				I.set_loc(src)
 				telecrystals[targetSlot] = I
 				crystalCount = min(crystalCount + 1, telecrystals.len)
-				boutput(usr, "<span style=\"color:blue\">You insert [I] into the slot.</span>")
+				boutput(usr, "<span class='notice'>You insert [I] into the slot.</span>")
 			else if (istype(I, /obj/item/magtractor))
 				var/obj/item/magtractor/mag = I
 				if (istype(mag.holding, /obj/item/raw_material/telecrystal))
@@ -3022,14 +2996,14 @@
 					I.set_loc(src)
 					telecrystals[targetSlot] = I
 					crystalCount = min(crystalCount + 1, telecrystals.len)
-					boutput(usr, "<span style=\"color:blue\">You insert [I] into the slot.</span>")
+					boutput(usr, "<span class='notice'>You insert [I] into the slot.</span>")
 
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["eject"])
 			if (src.beam)
-				boutput(usr, "<span style=\"color:red\">The panel is locked.</span>")
+				boutput(usr, "<span class='alert'>The panel is locked.</span>")
 				return
 
 			var/targetCrystal = round(text2num(href_list["eject"]))
@@ -3042,7 +3016,7 @@
 				crystalCount = max(crystalCount - 1, 0)
 				toEject.set_loc(get_turf(src))
 				usr.put_in_hand_or_eject(toEject) // try to eject it into the users hand, if we can
-				boutput(usr, "<span style=\"color:blue\">You remove [toEject] from the slot.</span>")
+				boutput(usr, "<span class='notice'>You remove [toEject] from the slot.</span>")
 
 			src.updateUsrDialog()
 			return
@@ -3354,7 +3328,7 @@
 							if (hitHuman.organHolder && hitHuman.organHolder.brain)
 								var/obj/item/organ/brain/B = hitHuman.organHolder.drop_organ("Brain", hitHuman.loc)
 								telehop(B, 2, 0)
-								boutput(hitHuman, "<span style=\"color:red\"><b>You seem to have left something...behind.</b></span>")
+								boutput(hitHuman, "<span class='alert'><b>You seem to have left something...behind.</b></span>")
 
 						telehop(hitMob, src.power, 1)
 					return
@@ -3456,7 +3430,7 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>[setup_device_name]</title></head><body>"
 
@@ -3488,7 +3462,7 @@
 		if (get_dist(src,O) > 1 || !isturf(O.loc)) return
 		if (src.dragload)
 			if (src.contents.len)
-				boutput(user, "<span style=\"color:red\">[src.name] is already loaded!</span>")
+				boutput(user, "<span class='alert'>[src.name] is already loaded!</span>")
 				return
 			src.visible_message("<b>[user.name]</b> loads [O] into [src.name]!")
 			O.set_loc(src)
@@ -3502,7 +3476,7 @@
 		if (get_dist(src,over_object) > 1) return
 		if ((get_dist(src, M) > 1) || M.stat) return
 		if (src.active)
-			boutput(usr, "<span style=\"color:red\">You can't unload it while it's active!</span>")
+			boutput(usr, "<span class='alert'>You can't unload it while it's active!</span>")
 			return
 		for (var/atom/movable/O in src.contents) O.set_loc(over_object)
 		src.visible_message("<b>[M.name]</b> unloads [src.name]!")
@@ -3512,7 +3486,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		interface_topic(href_list)
@@ -3783,7 +3757,7 @@
 					to_toss.set_loc(src.loc)
 					src.visible_message("<b>[src.name]</b> launches [to_toss]!")
 					playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
-					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, (throw_strength/50))
+					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, throw_strength/50, bonus_throwforce=throw_strength/4)
 
 				if (!src.active)
 					src.visible_message("<b>[src.name]</b> pings.")
@@ -3815,6 +3789,8 @@
 
 		if (I.w_class < 4)
 			if (src.contents.len < src.setup_max_objects)
+				if(I.cant_drop)
+					return
 				if (mag)
 					mag.dropItem(0)
 				else
@@ -3828,8 +3804,6 @@
 		else
 			boutput(user, "That is far too big to fit!")
 			return
-
-		return ..()
 
 /obj/machinery/networked/test_apparatus/impact_pad
 	name = "Impact Sensor Pad"
@@ -3874,7 +3848,7 @@
 						src.update_icon()
 						playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
 					else
-						src.visible_message("<span style=\"color:red\"><b>[src.name]</b> clanks and clatters noisily!</span>")
+						src.visible_message("<span class='alert'><b>[src.name]</b> clanks and clatters noisily!</span>")
 						playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 1)
 					message_host("command=ack")
 				else if (standval == 0 && src.density == 1)
@@ -3918,15 +3892,19 @@
 
 		if (src.density)
 			if (locate(/obj/item/) in src.loc.contents)
-				boutput(user, "<span style=\"color:red\">There's already something on the stand!</span>")
+				boutput(user, "<span class='alert'>There's already something on the stand!</span>")
 				return
 			else
+				if(I.cant_drop)
+					return
 				if (mag)
 					mag.dropItem(0)
 				else
 					user.drop_item()
 				I.set_loc(src.loc)
 		else
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -3935,15 +3913,15 @@
 
 		return
 
-	Bumped(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (src.density)
 			for (var/obj/item/I in src.loc.contents)
-				I.Bumped(M)
+				I.hitby(M)
 				if (istype(I.artifact,/datum/artifact/) && isitem(M))
 					var/obj/item/ITM = M
 					var/obj/ART = I
 					src.impactpad_senseforce(ART, ITM)
-				return
+		..()
 
 	bullet_act(var/obj/projectile/P)
 		if (src.density)
@@ -4073,6 +4051,8 @@
 				return
 
 		if (!src.contents.len)
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4084,8 +4064,6 @@
 		else
 			boutput(user, "There is no room left for that!")
 			return
-
-		return ..()
 
 	message_interface(var/list/packetData)
 		switch (lowertext(packetData["command"]))
@@ -4153,7 +4131,7 @@
 
 						src.sensed[3] = A.react_elec[3]
 
-						if (A.artitype == "eldritch")
+						if (A.artitype.name == "eldritch")
 							src.sensed[3] += rand(-7,7)
 
 						for(var/datum/artifact_fault in A.faults)
@@ -4241,6 +4219,8 @@
 				return
 
 		if (!src.contents.len)
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4252,8 +4232,6 @@
 		else
 			boutput(user, "There is no room left for that!")
 			return
-
-		return ..()
 
 	message_interface(var/list/packetData)
 		switch (lowertext(packetData["command"]))
@@ -4316,13 +4294,13 @@
 							// Density
 							var/density = A.react_xray[1]
 
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								var/randval = rand(-2,6)
 								if (prob(50))
 									density *= rand(-2,6)
 								else
 									density /= (randval == 0 ? 1 : randval)
-							if (A.artitype == "eldritch" && prob(6))
+							if (A.artitype.name == "eldritch" && prob(6))
 								density = 666
 
 							src.sensed[1] = density
@@ -4330,10 +4308,10 @@
 							// Structural Consistency
 							var/consistency = A.react_xray[2]
 
-							if (consistency > 85 && A.artitype == "martian")
+							if (consistency > 85 && A.artitype.name == "martian")
 								consistency = 85
 
-							if (A.artitype == "eldritch" && prob(20))
+							if (A.artitype.name == "eldritch" && prob(20))
 								consistency *= rand(2,6)
 
 							src.sensed[2] = consistency
@@ -4344,11 +4322,12 @@
 							for (var/datum/artifact_fault in A.faults)
 								integrity -= 7
 
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								if (prob(50)) integrity *= rand(2,4)
 								else integrity /= rand(2,4)
 
-							if (integrity > 80 && A.artitype == "martian")
+							if (integrity > 80 && A.artitype.name == "martian")
+
 								integrity = 80
 
 							if (integrity < 0) src.sensed[3] = "< 1"
@@ -4356,9 +4335,9 @@
 
 							// Radiation Response
 							var/responsive = A.react_xray[4]
-							if (A.artitype == "martian")
+							if (A.artitype.name == "martian")
 								responsive -= 3
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								responsive += rand(-2,2)
 							if (responsive <= src.radstrength)
 								src.sensed[4] = "WEAK RESPONSE"
@@ -4374,11 +4353,11 @@
 
 							// Special Features
 							src.sensed[5] = A.react_xray[5]
-							if (A.artitype == "martian")
+							if (A.artitype.name == "martian")
 								src.sensed[5] += ",ORGANIC"
 							if (M.contents.len)
 								src.sensed[5] += ",CONTAINS OTHER OBJECT"
-							if (A.artitype == "eldritch" && prob(6))
+							if (A.artitype.name == "eldritch" && prob(6))
 								src.sensed[5] = "ERROR"
 
 							M.ArtifactStimulus("radiate", src.radstrength)
@@ -4438,7 +4417,7 @@
 				heat_overlay.icon_state = "heat-1"
 			if (250 to 269)
 				heat_overlay.icon_state = "heat-2"
-			if (230 to -99)
+			if (249 to -99)
 				heat_overlay.icon_state = "heat-3"
 			else
 				heat_overlay.icon_state = ""
@@ -4460,6 +4439,8 @@
 		if (locate(/obj/) in src.loc.contents)
 			..()
 		else
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4730,8 +4711,8 @@
 	active = 1
 
 	var/setup_tag = null
-			//Pressure, Temperature, O2, N2, CO2, Plasma, Misc
-	var/list/sensed = list(null, null, null, null, null, null, null)
+			//Pressure, Temperature, gases, trace gases sum
+	var/list/sensed = null
 
 	New()
 		..()
@@ -4744,7 +4725,9 @@
 	message_interface(var/list/packetData)
 		switch (lowertext(packetData["command"]))
 			if ("info")
-				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=None&readinglist=Pressure-kPa,Temperature-K,Oxygen-%,Nitrogen-%,CO2-%,FAAE_1-%,Misc-%")
+				#define _FIELD_LABELS(_, _, NAME, ...) "[NAME]-%,"+
+				message_host("command=info&id=[src.setup_test_id]&capability=[setup_capability_value]&status=[src.active ? "1" : "0"]&valuelist=None&readinglist=Pressure-kPa,Temperature-K,[APPLY_TO_GASES(_FIELD_LABELS) ""]Misc-%")
+				// undefined at the end of the file because of https://secure.byond.com/forum/post/2072419
 
 			if ("status")
 				message_host("command=status&data=[src.active ? "1" : "0"]")
@@ -4754,28 +4737,29 @@
 
 			if ("sense")
 				var/datum/gas_mixture/air_sample = return_air()
-				var/total_moles = max(air_sample.total_moles(), 1)
+				var/total_moles = max(TOTAL_MOLES(air_sample), 1)
+				sensed?.Cut()
+				if(isnull(sensed))
+					sensed = list()
 				if (air_sample)
-					sensed[1] = round(air_sample.return_pressure(), 0.1)
-					sensed[2] = round(air_sample.temperature, 0.1)
-					sensed[3] = round(100*air_sample.oxygen/total_moles, 0.1)
-					sensed[4] = round(100*air_sample.nitrogen/total_moles, 0.1)
-					sensed[5] = round(100*air_sample.carbon_dioxide/total_moles, 0.1)
-					sensed[6] = round(100*air_sample.toxins/total_moles, 0.1)
+					sensed.Add(round(MIXTURE_PRESSURE(air_sample), 0.1))
+					sensed.Add(round(air_sample.temperature, 0.1))
+					#define _SET_SENSED_GAS(GAS, ...) sensed.Add(round(100*air_sample.GAS/total_moles, 0.1));
+					APPLY_TO_GASES(_SET_SENSED_GAS)
+					#undef _SET_SENSED_GAS
 
 					var/tgmoles = 0
-					if(air_sample.trace_gases && air_sample.trace_gases.len)
+					if(length(air_sample.trace_gases))
 						for(var/datum/gas/trace_gas in air_sample.trace_gases)
 							tgmoles += trace_gas.moles
-					sensed[7] = round(100*tgmoles/total_moles, 0.1)
+					sensed.Add(round(100*tgmoles/total_moles, 0.1))
 				else
-					for (var/i = 1, i <= sensed.len, i++)
-						sensed[i] = "???"
+					sensed = list("???")
 
 				message_host("command=ack")
 
 			if ("read")
-				if (!sensed || sensed.len < 7)
+				if (!sensed)
 					message_host("command=nack")
 					return
 				for (var/i=1,i<=sensed.len,i++)
@@ -4783,7 +4767,7 @@
 						message_host("command=nack")
 						return
 
-				message_host("command=read&data=[sensed[1]],[sensed[2]],[sensed[3]],[sensed[4]],[sensed[5]],[sensed[6]],[sensed[7]]")
+				message_host("command=read&data=[sensed.Join(",")]")
 				message_host("command=ack")
 		return
 
@@ -4811,17 +4795,15 @@
 	New()
 		..()
 
-		mechanics = new(src)
-		mechanics.master = src
-
-		mechanics.addInput("input 0", "fire0")
-		mechanics.addInput("input 1", "fire1")
-		mechanics.addInput("input 2", "fire2")
-		mechanics.addInput("input 3", "fire3")
-		mechanics.addInput("input 4", "fire4")
-		mechanics.addInput("input 5", "fire5")
-		mechanics.addInput("input 6", "fire6")
-		mechanics.addInput("input 7", "fire7")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", "fire0")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", "fire3")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", "fire4")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", "fire5")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", "fire6")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", "fire7")
 
 	return_html_interface()
 		. = {"<b>INPUT STATUS</b>
@@ -4931,11 +4913,11 @@
 
 			if (lastSignal)
 				lastSignal.signal = "[output_word]"
-				mechanics.fireOutgoing(lastSignal)
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,lastSignal)
 				lastSignal = null
 
 			else
-				mechanics.fireOutgoing(mechanics.newSignal("[output_word]"))
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[output_word]")
 
 
 			if (pulses)
@@ -5027,3 +5009,4 @@
 
 			lastSignal = anInput
 
+#undef _FIELD_LABELS

@@ -62,7 +62,7 @@
 		if (linkedGun.heldItem) // Stupidity check for stripping item out of gun while projectile was in flight
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
-				logTheThing("combat", linkedGun, M, " attempts to plant [linkedGun.heldItem] on %target%")
+				logTheThing("combat", linkedGun, M, " attempts to plant [linkedGun.heldItem] on [constructTarget(M,"combat")]")
 				switch (targetZone)
 					if ("chest")
 						if (M.wear_id || !M.equip_if_possible(linkedGun.heldItem, M.slot_wear_id)) // If already wearing ID or attempt to equip failed
@@ -124,14 +124,14 @@
 						hat.set_loc(M.loc)
 						hat.dropped(M)
 						hat.layer = initial(hat.layer)
-						SPAWN_DBG(0) hat.throw_at(get_edge_target_turf(hat, pick(alldirs)), 50, 1) // Using gravitor accelerator figures because why not
+						hat.throw_at(get_edge_target_turf(hat, pick(alldirs)), 50, 1) // Using gravitor accelerator figures because why not
 					else if (M.glasses) // Smash eyewear
 						var/obj/item/clothing/glasses/broke = M.glasses
 						boutput(M, "Your [broke] is ripped from your face and crushed into pieces! What the hell!")
 						M.u_equip(broke)
 						qdel(broke)
 					else // Eye gouge
-						boutput(M, "<span style=\"color:red\">Something suddenly gouges you in the eyes! JESUS FUCK OW</span>")
+						boutput(M, "<span class='alert'>Something suddenly gouges you in the eyes! JESUS FUCK OW</span>")
 						M.take_eye_damage(10)
 				if ("r_arm") // Stop hitting yourself, stop hitting yourself
 					if (M.r_hand && isitem(M.r_hand))
@@ -152,6 +152,7 @@
 				if ("r_leg", "l_leg") // Tie shoelaces
 					if (M.shoes && M.shoes.laces == LACES_NORMAL)
 						M.shoes.laces = LACES_TIED
+						M.shoes.tooltip_rebuild = 1
 						if (istype(M.shoes, /obj/item/clothing/shoes/clown_shoes))
 							boutput(M, "Your shoes give out one sad, final squeak. Oh no.")
 							M.shoes.step_sound = null

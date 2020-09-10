@@ -2,12 +2,17 @@
 	name = "wall"
 	desc = "Looks like a regular wall."
 	icon = 'icons/turf/walls.dmi'
-	plane = PLANE_DEFAULT
+#ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
+	plane = PLANE_WALL
+#else
+	plane = PLANE_FLOOR
+#endif
 	opacity = 1
 	density = 1
 	blocks_air = 1
 	pathable = 1
 	flags = ALWAYS_SOLID_FLUID
+	text = "<font color=#aaa>#"
 
 	var/health = 100
 	var/list/proj_impacts = list()
@@ -134,31 +139,31 @@
 		if(I.material)
 			if((I.material.getProperty("hard") ? I.material.getProperty("hard") : (I.throwing ? I.throwforce : I.force)) >= (src.material.getProperty("hard") ? src.material.getProperty("hard") : 60))
 				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span style=\"color:red\">[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span style=\"color:red\">You hit [src] with [I]!</span>")
+				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
 			else
-				src.visible_message("<span style=\"color:red\">[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span style=\"color:red\">You hit [src] with [I] but it takes no damage.</span>")
+				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
 		else
 			if((I.throwing ? I.throwforce : I.force) >= 80)
 				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span style=\"color:red\">[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span style=\"color:red\">You hit [src] with [I]!</span>")
+				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
 			else
-				src.visible_message("<span style=\"color:red\">[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span style=\"color:red\">You hit [src] with [I] but it takes no damage.</span>")
+				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
 	else
 		if(I.material)
 			if((I.material.getProperty("hard") ? I.material.getProperty("hard") : (I.throwing ? I.throwforce : I.force)) >= 60)
 				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span style=\"color:red\">[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span style=\"color:red\">You hit [src] with [I]!</span>")
+				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
 			else
-				src.visible_message("<span style=\"color:red\">[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span style=\"color:red\">You hit [src] with [I] but it takes no damage.</span>")
+				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
 		else
 			if((I.throwing ? I.throwforce : I.force) >= 80)
 				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span style=\"color:red\">[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span style=\"color:red\">You hit [src] with [I]!</span>")
+				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
 			else
-				src.visible_message("<span style=\"color:red\">[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span style=\"color:red\">You hit [src] with [I] but it takes no damage.</span>")
+				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
 
 	if(health <= 0)
-		src.visible_message("<span style=\"color:red\">[usr ? usr : "Someone"] destroys [src]!</span>", "<span style=\"color:red\">You destroy [src]!</span>")
+		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] destroys [src]!</span>", "<span class='alert'>You destroy [src]!</span>")
 		dismantle_wall(1)
 	return
 
@@ -281,13 +286,13 @@
 				src.material.triggerOnAttacked(src, user, user, src)
 			for (var/mob/N in AIviewers(usr, null))
 				if (N.client)
-					shake_camera(N, 4, 1, 0.5)
+					shake_camera(N, 4, 8, 0.5)
 		if (prob(40))
-			boutput(user, text("<span style=\"color:blue\">You smash through the [src.name].</span>"))
+			boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
 			dismantle_wall(1)
 			return
 		else
-			boutput(user, text("<span style=\"color:blue\">You punch the [src.name].</span>"))
+			boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
 			return
 
 	if(src.material)
@@ -296,12 +301,12 @@
 		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
 
 		if(fail)
-			user.visible_message("<span style=\"color:red\">You punch the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span style=\"color:red\">[user] punches the wall and it [getMatFailString(src.material.material_flags)]!</span>")
+			user.visible_message("<span class='alert'>You punch the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] punches the wall and it [getMatFailString(src.material.material_flags)]!</span>")
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 			dismantle_wall(1)
 			return
 
-	boutput(user, "<span style=\"color:blue\">You hit the [src.name] but nothing happens!</span>")
+	boutput(user, "<span class='notice'>You hit the [src.name] but nothing happens!</span>")
 	playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 	interact_particle(user,src)
 	return
@@ -319,7 +324,7 @@
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
-	else if (istype(W, /obj/item/weldingtool))
+	else if (isweldingtool(W))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -327,24 +332,24 @@
 		if(!W:try_weld(user, 5, burn_eyes = 1))
 			return
 
-		boutput(user, "<span style=\"color:blue\">Now disassembling the outer wall plating.</span>")
+		boutput(user, "<span class='notice'>Now disassembling the outer wall plating.</span>")
 
-		sleep(100)
+		sleep(10 SECONDS)
 
 		if ((user.loc == T && user.equipped() == W))
-			boutput(user, "<span style=\"color:blue\">You disassembled the outer wall plating.</span>")
+			boutput(user, "<span class='notice'>You disassembled the outer wall plating.</span>")
 			dismantle_wall()
 		else if((isrobot(user) && (user.loc == T)))
-			boutput(user, "<span style=\"color:blue\">You disassembled the outer wall plating.</span>")
+			boutput(user, "<span class='notice'>You disassembled the outer wall plating.</span>")
 			dismantle_wall()
 
 //Spooky halloween key
 	else if(istype(W,/obj/item/device/key/haunted))
 		//Okay, create a temporary false wall.
 		if(W:last_use && ((W:last_use + 300) >= world.time))
-			boutput(user, "<span style=\"color:red\">The key won't fit in all the way!</span>")
+			boutput(user, "<span class='alert'>The key won't fit in all the way!</span>")
 			return
-		user.visible_message("<span style=\"color:red\">[user] inserts [W] into [src]!</span>","<span style=\"color:red\">The key seems to phase into the wall.</span>")
+		user.visible_message("<span class='alert'>[user] inserts [W] into [src]!</span>","<span class='alert'>The key seems to phase into the wall.</span>")
 		W:last_use = world.time
 		blink(src)
 		new /turf/simulated/wall/false_wall/temp(src)
@@ -364,7 +369,7 @@
 			if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
 
 			if(fail)
-				user.visible_message("<span style=\"color:red\">You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span style=\"color:red\">[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
+				user.visible_message("<span class='alert'>You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 				del(src)
 				return
@@ -405,27 +410,28 @@
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
-	else if (istype(W, /obj/item/weldingtool) && W:welding)
-		W:eyecheck(user)
+	else if (isweldingtool(W))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
 
 		if (src.d_state == 2)
-			boutput(user, "<span style=\"color:blue\">Slicing metal cover.</span>")
-			playsound(src, "sound/items/Welder.ogg", 100, 1)
-			sleep(60)
+			if(!W:try_weld(user,1,-1,1,1))
+				return
+			boutput(user, "<span class='notice'>Slicing metal cover.</span>")
+			sleep(6 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 3
-				boutput(user, "<span style=\"color:blue\">You removed the metal cover.</span>")
+				boutput(user, "<span class='notice'>You removed the metal cover.</span>")
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 3
-				boutput(user, "<span style=\"color:blue\">You removed the metal cover.</span>")
+				boutput(user, "<span class='notice'>You removed the metal cover.</span>")
 
 		else if (src.d_state == 5)
-			boutput(user, "<span style=\"color:blue\">Removing support rods.</span>")
-			playsound(src, "sound/items/Welder.ogg", 100, 1)
-			sleep(100)
+			if(!W:try_weld(user,1,-1,1,1))
+				return
+			boutput(user, "<span class='notice'>Removing support rods.</span>")
+			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 6
 				var/atom/A = new /obj/item/rods( src )
@@ -433,7 +439,7 @@
 					A.setMaterial(src.material)
 				else
 					A.setMaterial(getMaterial("steel"))
-				boutput(user, "<span style=\"color:blue\">You removed the support rods.</span>")
+				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 6
 				var/atom/A = new /obj/item/rods( src )
@@ -441,20 +447,20 @@
 					A.setMaterial(src.material)
 				else
 					A.setMaterial(getMaterial("steel"))
-				boutput(user, "<span style=\"color:blue\">You removed the support rods.</span>")
+				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 
 	else if (iswrenchingtool(W))
 		if (src.d_state == 4)
 			var/turf/T = user.loc
-			boutput(user, "<span style=\"color:blue\">Detaching support rods.</span>")
+			boutput(user, "<span class='notice'>Detaching support rods.</span>")
 			playsound(src, "sound/items/Ratchet.ogg", 100, 1)
-			sleep(40)
+			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 5
-				boutput(user, "<span style=\"color:blue\">You detach the support rods.</span>")
+				boutput(user, "<span class='notice'>You detach the support rods.</span>")
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 5
-				boutput(user, "<span style=\"color:blue\">You detach the support rods.</span>")
+				boutput(user, "<span class='notice'>You detach the support rods.</span>")
 
 	else if (issnippingtool(W))
 		if (src.d_state == 0)
@@ -470,39 +476,39 @@
 		if (src.d_state == 1)
 			var/turf/T = user.loc
 			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
-			boutput(user, "<span style=\"color:blue\">Removing support lines.</span>")
-			sleep(40)
+			boutput(user, "<span class='notice'>Removing support lines.</span>")
+			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 2
-				boutput(user, "<span style=\"color:blue\">You removed the support lines.</span>")
+				boutput(user, "<span class='notice'>You removed the support lines.</span>")
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 2
-				boutput(user, "<span style=\"color:blue\">You removed the support lines.</span>")
+				boutput(user, "<span class='notice'>You removed the support lines.</span>")
 
 	else if (ispryingtool(W))
 		if (src.d_state == 3)
 			var/turf/T = user.loc
-			boutput(user, "<span style=\"color:blue\">Prying cover off.</span>")
+			boutput(user, "<span class='notice'>Prying cover off.</span>")
 			playsound(src, "sound/items/Crowbar.ogg", 100, 1)
-			sleep(100)
+			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 4
-				boutput(user, "<span style=\"color:blue\">You removed the cover.</span>")
+				boutput(user, "<span class='notice'>You removed the cover.</span>")
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 4
-				boutput(user, "<span style=\"color:blue\">You removed the cover.</span>")
+				boutput(user, "<span class='notice'>You removed the cover.</span>")
 		else if (src.d_state == 6)
 			var/turf/T = user.loc
-			boutput(user, "<span style=\"color:blue\">Prying outer sheath off.</span>")
+			boutput(user, "<span class='notice'>Prying outer sheath off.</span>")
 			playsound(src, "sound/items/Crowbar.ogg", 100, 1)
-			sleep(100)
+			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
-				boutput(user, "<span style=\"color:blue\">You removed the outer sheath.</span>")
+				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
 				dismantle_wall()
 				logTheThing("station", user, null, "dismantles a reinforced wall at [log_loc(user)].")
 				return
 			else if((isrobot(user) && (user.loc == T)))
-				boutput(user, "<span style=\"color:blue\">You removed the outer sheath.</span>")
+				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
 				dismantle_wall()
 				logTheThing("station", user, null, "dismantles a reinforced wall at [log_loc(user)].")
 				return
@@ -511,9 +517,9 @@
 	else if(istype(W,/obj/item/device/key/haunted))
 		//Okay, create a temporary false wall.
 		if(W:last_use && ((W:last_use + 300) >= world.time))
-			boutput(user, "<span style=\"color:red\">The key won't fit in all the way!</span>")
+			boutput(user, "<span class='alert'>The key won't fit in all the way!</span>")
 			return
-		user.visible_message("<span style=\"color:red\">[user] inserts [W] into [src]!</span>","<span style=\"color:red\">The key seems to phase into the wall.</span>")
+		user.visible_message("<span class='alert'>[user] inserts [W] into [src]!</span>","<span class='alert'>The key seems to phase into the wall.</span>")
 		W:last_use = world.time
 		blink(src)
 		var/turf/simulated/wall/false_wall/temp/fakewall = new /turf/simulated/wall/false_wall/temp(src)
@@ -523,8 +529,8 @@
 	else if ((istype(W, /obj/item/sheet)) && (src.d_state))
 		var/obj/item/sheet/S = W
 		var/turf/T = user.loc
-		boutput(user, "<span style=\"color:blue\">Repairing wall.</span>")
-		sleep(100)
+		boutput(user, "<span class='notice'>Repairing wall.</span>")
+		sleep(10 SECONDS)
 		if ((user.loc == T && user.equipped() == S))
 			src.d_state = 0
 			src.icon_state = initial(src.icon_state)
@@ -533,7 +539,7 @@
 			else
 				var/datum/material/M = getMaterial("steel")
 				src.setMaterial(M)
-			boutput(user, "<span style=\"color:blue\">You repaired the wall.</span>")
+			boutput(user, "<span class='notice'>You repaired the wall.</span>")
 			if (S.amount > 1)
 				S.amount--
 			else
@@ -542,7 +548,7 @@
 			src.d_state = 0
 			src.icon_state = initial(src.icon_state)
 			if(W.material) src.setMaterial(S.material)
-			boutput(user, "<span style=\"color:blue\">You repaired the wall.</span>")
+			boutput(user, "<span class='notice'>You repaired the wall.</span>")
 			if (S.amount > 1)
 				S.amount--
 			else
@@ -564,7 +570,7 @@
 		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
 
 		if(fail)
-			user.visible_message("<span style=\"color:red\">You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span style=\"color:red\">[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
+			user.visible_message("<span class='alert'>You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 			del(src)
 			return

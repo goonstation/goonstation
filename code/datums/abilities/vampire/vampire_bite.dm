@@ -38,7 +38,7 @@
 		boutput(M, __red("Why would you want to bite yourself?"))
 		return 0
 
-	if (iscritter(M) && !istype(H))
+	if (ismobcritter(M) && !istype(H))
 		boutput(M, __red("Critter mobs currently don't have to worry about blood. Lucky you."))
 		return 0
 
@@ -56,7 +56,7 @@
 		return 0
 
 	if (check_target_immunity(target) == 1)
-		target.visible_message("<span style=\"color:red\"><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
+		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
 		return 0
 
 	if ((target.mind && target.mind.special_role == "vampthrall") && target.is_mentally_dominated_by(M))
@@ -97,7 +97,7 @@
 		if (istype(H)) H.blood_tracking_output()
 
 	else if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
-		M.visible_message("<span style=\"color:red\"><b>[M]</b> begins to crisp and burn!</span>", "<span style=\"color:red\">You drank the blood of a holy man! It burns!</span>")
+		M.visible_message("<span class='alert'><b>[M]</b> begins to crisp and burn!</span>", "<span class='alert'>You drank the blood of a holy man! It burns!</span>")
 		M.emote("scream")
 		if (M.get_vampire_blood() >= 20 * mult)
 			M.change_vampire_blood(-20 * mult, 0)
@@ -168,7 +168,7 @@
 	if (src.blood_tally)
 		if (target in src.blood_tally)
 			.= src.blood_tally[target] < max_take_per_mob
-			
+
 /datum/abilityHolder/vampiric_zombie/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
 	if (!src.blood_tally)
 		src.blood_tally = list()
@@ -199,7 +199,7 @@
 		boutput(M, __red("Why would you want to bite yourself?"))
 		return 0
 
-	if (iscritter(M) && !istype(H))
+	if (ismobcritter(M) && !istype(H))
 		boutput(M, __red("Critter mobs currently don't have to worry about blood. Lucky you."))
 		return 0
 
@@ -217,7 +217,7 @@
 		return 0
 
 	if (check_target_immunity(target) == 1)
-		target.visible_message("<span style=\"color:red\"><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
+		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
 		return 0
 
 	var/mob/master = null
@@ -261,7 +261,7 @@
 			HH.blood_volume -= 20 * mult
 
 	else if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
-		M.visible_message("<span style=\"color:red\"><b>[M]</b> begins to crisp and burn!</span>", "<span style=\"color:red\">You drank the blood of a holy man! It burns!</span>")
+		M.visible_message("<span class='alert'><b>[M]</b> begins to crisp and burn!</span>", "<span class='alert'>You drank the blood of a holy man! It burns!</span>")
 		M.emote("scream")
 		if (M.get_vampire_blood() >= 20 * mult)
 			M.change_vampire_blood(-20 * mult, 0)
@@ -389,6 +389,10 @@
 			H.vamp_isbiting = HH
 		HH.vamp_beingbitten = 1
 
+		src.loopStart()
+	
+	loopStart()
+		..()
 		var/obj/projectile/proj = initialize_projectile_ST(HH, new/datum/projectile/special/homing/vamp_blood, M)
 		var/tries = 10
 		while (tries > 0 && (!proj || proj.disposed))
@@ -404,16 +408,16 @@
 		if (prob(25))
 			boutput(HH, __red("Some blood is forced right out of your body!"))
 
-		logTheThing("combat", M, HH, "steals blood from %target% at [log_loc(M)].")
+		logTheThing("combat", M, HH, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 	onEnd()
-		..()
 		if(get_dist(M, HH) > 7 || M == null || HH == null)
+			..()
 			interrupt(INTERRUPT_ALWAYS)
+			src.end()
 			return
 
-		src.end()
-		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,H,HH), M)
+		src.onRestart()
 
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
@@ -475,7 +479,7 @@
 
 
 		boutput(M, __blue("You bite [HH] and begin to drain them of blood."))
-		HH.visible_message("<span style=\"color:red\"><B>[M] bites [HH]!</B></span>")
+		HH.visible_message("<span class='alert'><B>[M] bites [HH]!</B></span>")
 
 		actions.start(new/datum/action/bar/icon/vamp_blood_suc(M,H,HH,src), M)
 
@@ -523,24 +527,31 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", M, HH, "bites %target%'s neck at [log_loc(M)].")
-
 		if (istype(H))
 			H.vamp_isbiting = HH
 		HH.vamp_beingbitten = 1
 
-	onEnd()
+		src.loopStart()
+
+	loopStart()
 		..()
+		logTheThing("combat", M, HH, "bites [constructTarget(HH,"combat")]'s neck at [log_loc(M)].")
+		return
+
+	onEnd()
 		if(get_dist(M, HH) > 1 || M == null || HH == null || B == null)
+			..()
 			interrupt(INTERRUPT_ALWAYS)
+			src.end()
 			return
 
 		if (!H.do_bite(HH,mult = 1.5, thrall = B.thrall))
+			..()
 			interrupt(INTERRUPT_ALWAYS)
+			src.end()
 			return
 
-		src.end()
-		actions.start(new/datum/action/bar/icon/vamp_blood_suc(M,H,HH,B), M)
+		src.onRestart()
 
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)

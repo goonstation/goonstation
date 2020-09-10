@@ -26,10 +26,10 @@
 			return 1
 		playsound(MT.loc, "sound/effects/ghost2.ogg", 100, 1)
 		if (istype(MT.head, /obj/item/clothing/head/tinfoil_hat))
-			boutput(MT, "<span style=\"color:blue\">Your tinfoil hat protects you from the psyblast!</span>")
-			boutput(holder.owner, "<span style=\"color:red\">That target is protected against psyblasts.</span>")
+			boutput(MT, "<span class='notice'>Your tinfoil hat protects you from the psyblast!</span>")
+			boutput(holder.owner, "<span class='alert'>That target is protected against psyblasts.</span>")
 		else
-			boutput(MT, "<span style=\"color:red\">You are blasted by psychic energy!</span>")
+			boutput(MT, "<span class='alert'>You are blasted by psychic energy!</span>")
 			MT.changeStatus("paralysis", 7 SECONDS)
 			MT.stuttering += 60
 			MT.take_brain_damage(20)

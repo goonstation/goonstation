@@ -18,12 +18,12 @@
 /obj/machinery/computer/robotics/attackby(obj/item/I as obj, user as mob)
 	if (isscrewingtool(I))
 		if (perma)
-			boutput(user, "<span style=\"color:red\">The screws are all weird safety-bit types! You can't turn them!</span>")
+			boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 			return
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -38,7 +38,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/robotics/M = new /obj/item/circuitboard/robotics( A )
@@ -70,9 +70,9 @@
 /obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
 	if(..())
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "Located AI Units<BR><BR>"
-	for(var/mob/living/silicon/ai/A in AIs)
+	for(var/mob/living/silicon/ai/A in by_type[/mob/living/silicon/ai])
 		dat += "[A.name] |"
 		if(A.stat)
 			dat += "ERROR: Not Responding!<BR>"
@@ -135,7 +135,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 	var/mob/living/silicon/robot/R = locate(href_list["bot"])
 	var/mob/living/silicon/ai/A = locate(href_list["ai"])
@@ -147,40 +147,40 @@
 				if (istype(I))
 					if(src.check_access(I))
 						if(istype(R))
-							message_admins("<span style=\"color:red\">[key_name(usr)] has activated the robot self destruct on [key_name(R)].</span>")
-							logTheThing("combat", usr, R, "has activated the robot self destruct on %target%")
+							message_admins("<span class='alert'>[key_name(usr)] has activated the robot self destruct on [key_name(R)].</span>")
+							logTheThing("combat", usr, R, "has activated the robot killswitch process on [constructTarget(R,"combat")]")
 							if(R.client)
-								boutput(R, "<span style=\"color:red\"><b>Killswitch process activated.</b></span>")
+								boutput(R, "<span class='alert'><b>Killswitch process activated.</b></span>")
 							R.killswitch = 1
 							R.killswitch_time = 60
 						else if(istype(A))
 							var/mob/message = A.get_message_mob()
-							message_admins("<span style=\"color:red\">[key_name(usr)] has activated the AI self destruct on [key_name(message)].</span>")
-							logTheThing("combat", usr, message, "has activated the AI self destruct on %target%")
+							message_admins("<span class='alert'>[key_name(usr)] has activated the AI self destruct on [key_name(message)].</span>")
+							logTheThing("combat", usr, message, "has activated the AI killswitch process on [constructTarget(message,"combat")]")
 							if(message.client)
-								boutput(message, "<span style=\"color:red\"><b>AI Killswitch process activated.</b></span>")
-								boutput(message, "<span style=\"color:red\"><b>Killswitch will engage in 60 seconds.</b></span>") // more like 180 really but whatever
+								boutput(message, "<span class='alert'><b>AI Killswitch process activated.</b></span>")
+								boutput(message, "<span class='alert'><b>Killswitch will engage in 60 seconds.</b></span>") // more like 180 really but whatever
 							A.killswitch = 1
 							A.killswitch_time = 60
 					else
-						boutput(usr, "<span style=\"color:red\">Access Denied.</span>")
+						boutput(usr, "<span class='alert'>Access Denied.</span>")
 
 			if("2")
 				if(istype(R))
 					R.killswitch_time = 60
 					R.killswitch = 0
-					message_admins("<span style=\"color:red\">[key_name(usr)] has stopped the robot self destruct on [key_name(R, 1, 1)].</span>")
-					logTheThing("combat", usr, R, "has stopped the robot self destruct on %target%.")
+					message_admins("<span class='alert'>[key_name(usr)] has stopped the robot self destruct on [key_name(R, 1, 1)].</span>")
+					logTheThing("combat", usr, R, "has stopped the robot killswitch process on [constructTarget(R,"combat")].")
 					if(R.client)
-						boutput(R, "<span style=\"color:blue\"><b>Killswitch process deactivated.</b></span>")
+						boutput(R, "<span class='notice'><b>Killswitch process deactivated.</b></span>")
 				else if(istype(A))
 					A.killswitch_time = 60
 					A.killswitch = 0
 					var/mob/message = A.get_message_mob()
-					message_admins("<span style=\"color:red\">[key_name(usr)] has stopped the AI self destruct on [key_name(message, 1, 1)].</span>")
-					logTheThing("combat", usr, message, "has stopped the AI self destruct on %target%.")
+					message_admins("<span class='alert'>[key_name(usr)] has stopped the AI self destruct on [key_name(message, 1, 1)].</span>")
+					logTheThing("combat", usr, message, "has stopped the AI killswitch process on [constructTarget(message,"combat")].")
 					if(message.client)
-						boutput(message, "<span style=\"color:blue\"><b>Killswitch process deactivated.</b></span>")
+						boutput(message, "<span class='notice'><b>Killswitch process deactivated.</b></span>")
 
 
 	if (href_list["lock"])
@@ -189,17 +189,17 @@
 				if(istype(R))
 					if(R.client)
 						if (R.emagged)
-							boutput(R, "<span style=\"color:blue\"><b>Weapon Lock signal blocked!</b></span>")
+							boutput(R, "<span class='notice'><b>Weapon Lock signal blocked!</b></span>")
 							return
-						boutput(R, "<span style=\"color:red\"><b>Weapon Lock activated!</b></span>")
+						boutput(R, "<span class='alert'><b>Weapon Lock activated!</b></span>")
 					R.weapon_lock = 1
 					R.weaponlock_time = 120
 					R.uneq_active()
-					logTheThing("combat", usr, R, "has activated %target%'s weapon lock (120 seconds).")
+					logTheThing("combat", usr, R, "has activated [constructTarget(R,"combat")]'s weapon lock (120 seconds).")
 					for (var/obj/item/roboupgrade/X in R.contents)
 						if (X.activated)
 							X.activated = 0
-							boutput(R, "<b><span style=\"color:red\">[X] was shut down by the Weapon Lock!</span></b>")
+							boutput(R, "<b><span class='alert'>[X] was shut down by the Weapon Lock!</span></b>")
 						if (istype(X, /obj/item/roboupgrade/jetpack))
 							R.jetpack = 0
 				else if(istype(A))
@@ -208,12 +208,12 @@
 						if(src.check_access(I))
 							var/mob/message = A.get_message_mob()
 							if(message.client)
-								boutput(message, "<span style=\"color:red\"><b>Emergency lockout activated!</b></span>")
+								boutput(message, "<span class='alert'><b>Emergency lockout activated!</b></span>")
 								A.weapon_lock = 1
 								A.weaponlock_time = 120
-								logTheThing("combat", usr, message, "has activated %target%'s weapon lock (120 seconds).")
+								logTheThing("combat", usr, message, "has activated [constructTarget(message,"combat")]'s weapon lock (120 seconds).")
 					else
-						boutput(usr, "<span style=\"color:red\">Access Denied.</span>")
+						boutput(usr, "<span class='alert'>Access Denied.</span>")
 
 			if("2")
 				if(istype(R))
@@ -222,7 +222,7 @@
 						boutput(R, "Weapon Lock deactivated.")
 					R.weapon_lock = 0
 					R.weaponlock_time = 120
-					logTheThing("combat", usr, R, "has deactivated %target%'s weapon lock.")
+					logTheThing("combat", usr, R, "has deactivated [constructTarget(R,"combat")]'s weapon lock.")
 
 				else if(istype(A))
 					var/mob/message = A.get_message_mob()
@@ -230,7 +230,7 @@
 						boutput(message, "Emergency lockout deactivated.")
 					A.weapon_lock = 0
 					A.weaponlock_time = 120
-					logTheThing("combat", usr, message, "has deactivated %target%'s weapon lock.")
+					logTheThing("combat", usr, message, "has deactivated [constructTarget(message,"combat")]'s weapon lock.")
 
 	src.updateUsrDialog()
 	return

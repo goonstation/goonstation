@@ -91,6 +91,24 @@
 			u_equip(l_store) // Deletes syndicate remote teleporter to keep people out of the syndie shuttle
 			u_equip(r_store) // Deletes uplink radio because fuckem
 
+/mob/living/carbon/human/npc/syndicate_weak
+	ai_aggressive = 1
+	New()
+		..()
+		SPAWN_DBG(0)
+			src.real_name = "Junior Syndicate Agent"
+			JobEquipSpawned("Junior Syndicate Operative")
+
+/mob/living/carbon/human/npc/syndicate_weak/no_ammo
+	ai_aggressive = 1
+	New()
+		..()
+		SPAWN_DBG(0)
+			src.real_name = "Junior Syndicate Agent"
+			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
+
+//reverse blade samurai
+
 // npc ai procs
 
 //NOTE TO SELF: BYONDS TIMING FUNCTIONS ARE INACCURATE AS FUCK
@@ -98,11 +116,17 @@
 
 //0 = Pasive, 1 = Getting angry, 2 = Attacking , 3 = Helping, 4 = Idle , 5 = Fleeing(??)
 
+/mob/living/carbon/human/proc/ai_set_active(active)
+	if (ai_active != active)
+		ai_active = active
 
-
+		if (ai_active)
+			ai_mobs.Add(src)
+		else
+			ai_mobs.Remove(src)
 
 /mob/living/carbon/human/proc/ai_init()
-	ai_active = 1
+	ai_set_active(1)
 	ai_laststep = 0
 	ai_state = AI_PASSIVE
 	ai_target = null
@@ -111,7 +135,7 @@
 	ai_attacked = 0
 
 /mob/living/carbon/human/proc/ai_stop()
-	ai_active = 0
+	ai_set_active(0)
 	ai_laststep = 0
 	ai_state = AI_PASSIVE
 	ai_target = null
@@ -124,17 +148,17 @@
 	if(world.time < ai_lastaction + ai_actiondelay) return
 
 	var/action_delay = 0
-	resting = 0
-	if(hud) hud.update_resting()
+	delStatus("resting")
+	if(hud && hud.master) hud.update_resting()
 
 	if (isdead(src))
-		ai_active = 0
+		ai_set_active(0)
 		ai_target = null
 		walk_towards(src, null)
 		return
 
 	//Moving this up because apparently beds were tripping the AI up.
-	if(src.buckled && !src.handcuffed)
+	if(src.buckled && !src.hasStatus("handcuffed"))
 		src.buckled.attack_hand(src)
 		if(src.buckled) //WE'RE STUCKED :C
 			return
@@ -155,21 +179,19 @@
 
 	if(!src.restrained() && !src.lying && !src.buckled)
 		ai_action()
-	if(ai_busy && !src.handcuffed)
+	if(ai_busy && !src.hasStatus("handcuffed"))
 		ai_busy = 0
-	if(src.handcuffed)
+	if(src.hasStatus("handcuffed"))
 		ai_target = null
 		ai_state = AI_PASSIVE
 		if(src.canmove && !ai_busy)
 			ai_busy = 1
-			src.visible_message("<span style=\"color:red\"><B>[src] attempts to remove the handcuffs!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] attempts to remove the handcuffs!</B></span>")
 			SPAWN_DBG(2 MINUTES)
 				ai_busy = 0
-				if(src.handcuffed && !ai_incapacitated())
-					src.visible_message("<span style=\"color:red\"><B>[src] manages to remove the handcuffs!</B></span>")
-					src.handcuffed:set_loc(src.loc)
-					src.handcuffed = null
-					src.set_clothing_icon_dirty()
+				if(src.hasStatus("handcuffed") && !ai_incapacitated())
+					src.visible_message("<span class='alert'><B>[src] manages to remove the handcuffs!</B></span>")
+					src.handcuffs.drop_handcuffs(src)
 	ai_move()
 
 	if(ai_target)
@@ -271,7 +293,7 @@
 
 			src.a_intent = INTENT_HARM
 
-			if(!ai_target || ai_target == src && !ai_suicidal)
+			if(!ai_target || ai_target == src && !ai_suicidal || ai_target.z != src.z)
 				ai_frustration = 0
 				ai_target = null
 				ai_state = AI_PASSIVE
@@ -306,7 +328,7 @@
 				if((carbon_target.getStatusDuration("weakened") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("paralysis")) && distance <= 1 && !ai_incapacitated())
 					if (istype(carbon_target.wear_mask, /obj/item/clothing/mask) && prob(10))
 						var/mask = carbon_target.wear_mask
-						src.visible_message("<span style=\"color:red\"><b>[src] is trying to take off [mask] from [carbon_target]'s head!</b></span>")
+						src.visible_message("<span class='alert'><b>[src] is trying to take off [mask] from [carbon_target]'s head!</b></span>")
 						carbon_target.u_equip(mask)
 						if (mask)
 							mask:set_loc(carbon_target:loc)
@@ -314,7 +336,7 @@
 							mask:layer = initial(mask:layer)
 					else if (carbon_target:wear_suit && prob(5) && !src.r_hand)
 						var/suit = carbon_target:wear_suit
-						src.visible_message("<span style=\"color:red\"><b>[src] is trying to take off [suit] from [carbon_target]'s body!</b></span>")
+						src.visible_message("<span class='alert'><b>[src] is trying to take off [suit] from [carbon_target]'s body!</b></span>")
 						carbon_target.u_equip(suit)
 						if (suit)
 							suit:set_loc(carbon_target:loc)
@@ -336,11 +358,7 @@
 				if((prob(33) || ai_throw) && distance > 1 && ai_validpath() && src.r_hand && !(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()))
 					//I can attack someone! =D
 					ai_target_old.Cut()
-					var/obj/item/temp = src.r_hand
-					temp.set_loc(src.loc)
-					src.u_equip(temp)
-					src.visible_message("<span style=\"color:red\">[src] throws [temp].</span>")
-					temp.throw_at(carbon_target, 7, 1)
+					src.throw_item(ai_target, list("npc_throw"))
 
 			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck())
 				//I can attack someone! =D
@@ -358,7 +376,7 @@
 					//	src.a_intent = INTENT_HELP
 					if(ishuman(ai_target))
 						src.r_hand:attack(ai_target, src)
-					else if(iscritter(ai_target))
+					else if(ismobcritter(ai_target))
 						var/mob/living/critter/C = ai_target
 						if (isalive(C))
 							C.attackby(src.r_hand, src)
@@ -373,7 +391,7 @@
 			if(prob(5) && (distance == 3) && (world.timeofday - ai_pounced) > 180 && ai_validpath())
 				if(valid)
 					ai_pounced = world.timeofday
-					src.visible_message("<span style=\"color:red\">[src] lunges at [ai_target]!</span>")
+					src.visible_message("<span class='alert'>[src] lunges at [ai_target]!</span>")
 					ai_target:changeStatus("weakened", 2 SECONDS)
 					SPAWN_DBG(0)
 						step_towards(src,ai_target)
@@ -405,6 +423,7 @@
 
 /mob/living/carbon/human/proc/ai_pickupweapon()
 
+
 	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot())
 		return
 
@@ -420,19 +439,12 @@
 				BB.dropped(src)
 				BB.layer = initial(BB.layer)
 			return
-		if(!GN:canshoot())
-			src.drop_item()
-			if(src.w_uniform && !src.belt)
-				GN:set_loc(src)
-				src.belt = GN
-				GN:layer = HUD_LAYER
-			else if(src.back && istype(src.back,/obj/item/storage/backpack))
-				var/obj/item/storage/backpack/B = src.back
-				if(B.contents.len < 7)
-					B.attackby(GN,src)
 
-	if(istype(src.r_hand, /obj/item/gun/energy) && !src.r_hand:canshoot())
-		var/obj/item/gun/energy/GN = src.r_hand
+	if(src.r_hand?.cant_drop)
+		return
+
+	if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
+		var/obj/item/gun/GN = src.r_hand
 		src.drop_item()
 		if(src.w_uniform && !src.belt)
 			GN:set_loc(src)
@@ -530,7 +542,7 @@
 	else return 0
 
 /mob/living/carbon/human/proc/ai_incapacitated()
-	if(stat || hasStatus("stunned") || getStatusDuration("paralysis") || !sight_check(1) || getStatusDuration("weakened")) return 1
+	if(stat || hasStatus(list("stunned", "paralysis", "weakened")) || !sight_check(1)) return 1
 	else return 0
 
 /mob/living/carbon/human/proc/ai_validpath()

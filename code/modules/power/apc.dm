@@ -21,9 +21,12 @@ var/zapLimiter = 0
 	name = "area power controller"
 	icon_state = "apc0"
 	anchored = 1
+	plane = PLANE_NOSHADOW_ABOVE
 	req_access = list(access_engineering_power)
 	object_flags = CAN_REPROGRAM_ACCESS
 	netnum = -1		// set so that APCs aren't found as powernet nodes
+	text = ""
+	machine_registry_idx = MACHINES_POWER
 	var/area/area
 	var/areastring = null
 	var/autoname_on_spawn = 0 // Area.name
@@ -45,7 +48,7 @@ var/zapLimiter = 0
 	var/coverlocked = 1
 	var/aidisabled = 0
 	var/noalerts = 0
-	var/tdir = null
+	var/tmp/tdir = null
 	var/obj/machinery/power/terminal/terminal = null
 	var/lastused_light = 0
 	var/lastused_equip = 0
@@ -136,24 +139,7 @@ var/zapLimiter = 0
 		flagIndex+=1
 	return apcwires
 
-/obj/machinery/power/apc/updateUsrDialog()
-	var/list/nearby = viewers(1, src)
-	if (!(status & BROKEN)) // unbroken
-		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
-				src.interact(M)
-	if (issilicon(usr) || isAI(usr))
-		if (!(usr in nearby))
-			if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-				src.interact(usr)
 
-/obj/machinery/power/apc/updateDialog()
-	if(!(status & BROKEN)) // unbroken
-		var/list/nearby = viewers(1, src)
-		for(var/mob/M in nearby)
-			if (M.client && M.machine == src)
-				src.interact(M)
-	AutoUpdateAI(src)
 
 /obj/machinery/power/apc/New()
 	..()
@@ -202,22 +188,22 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/disposing()
 	cell = null
-	terminal.master = null
+	terminal?.master = null
 	terminal = null
 	..()
 
-/obj/machinery/power/apc/examine()
-	set src in oview(1)
-	set category = "Local"
+/obj/machinery/power/apc/examine(mob/user)
+	. = ..()
 
-	if(status & BROKEN) return
+	if(status & BROKEN)
+		return
 
-	if(usr && !usr.stat)
-		boutput(usr, "A control terminal for the area electrical systems.")
+	if(user && !user.stat)
+		. += "A control terminal for the area electrical systems."
 		if(opened)
-			boutput(usr, "The cover is open and the power cell is [ cell ? "installed" : "missing"].")
+			. += "The cover is open and the power cell is [ cell ? "installed" : "missing"]."
 		else
-			boutput(usr, "The cover is closed.")
+			. += "The cover is closed."
 
 
 /obj/machinery/power/apc/proc/getMaxExcess()
@@ -310,7 +296,7 @@ var/zapLimiter = 0
 				boutput(user, "This APC doesn't have a local interface to hack.")
 		else
 			flick("apc-spark", src)
-			sleep(6)
+			sleep(0.6 SECONDS)
 			if(prob(50))
 				emagged = 1
 				locked = 0
@@ -352,10 +338,10 @@ var/zapLimiter = 0
 					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 					return
 				if (2)
-					boutput(user, "<span style=\"color:red\">Securing the terminals now without tuning the autotransformer could fry the control board.</span>")
+					boutput(user, "<span class='alert'>Securing the terminals now without tuning the autotransformer could fry the control board.</span>")
 					return
 				if (3)
-					boutput(user, "<span style=\"color:red\">The control board must be reset before connection to the autotransformer..</span>")
+					boutput(user, "<span class='alert'>The control board must be reset before connection to the autotransformer..</span>")
 					return
 				if (4)
 					src.repair_status = 0
@@ -386,14 +372,14 @@ var/zapLimiter = 0
 		else if (istype(W, /obj/item/cable_coil))
 			switch (src.repair_status)
 				if (0)
-					boutput(user, "<span style=\"color:red\">The control board must be disconnected before you can repair the autotransformer.</span>")
+					boutput(user, "<span class='alert'>The control board must be disconnected before you can repair the autotransformer.</span>")
 					return
 				if (1) //Repair the transformer with a cable.
 					var/obj/item/cable_coil/theCoil = W
 					if (theCoil.amount >= 4)
 						boutput(user, "You unravel some cable..<br>Now repairing the autotransformer's windings.  This could take some time.")
 					else
-						boutput(user, "<span style=\"color:red\">Not enough cable! <I>(Requires four pieces)</I></span>")
+						boutput(user, "<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>")
 						return
 					if(!do_after(user, 100))
 						return
@@ -413,9 +399,9 @@ var/zapLimiter = 0
 		else if (iswrenchingtool(W))
 			switch (src.repair_status)
 				if (0)
-					boutput(user, "<span style=\"color:red\">You must disconnect the control board prior to working on the autotransformer.</span>")
+					boutput(user, "<span class='alert'>You must disconnect the control board prior to working on the autotransformer.</span>")
 				if (1)
-					boutput(user, "<span style=\"color:red\">You must repair the autotransformer's windings prior to tuning it.</span>")
+					boutput(user, "<span class='alert'>You must repair the autotransformer's windings prior to tuning it.</span>")
 				if (2)
 					boutput(user, "You begin to carefully tune the autotransformer.  This might take a little while.")
 					if (!do_after(user, 60))
@@ -431,12 +417,12 @@ var/zapLimiter = 0
 		else if (ispulsingtool(W))
 			switch(src.repair_status)
 				if (3)
-					boutput(user, "<span style=\"color:red\">You reset the control board.[prob(10) ? " Takes no time at all, eh?" : ""]</span>")
+					boutput(user, "<span class='alert'>You reset the control board.[prob(10) ? " Takes no time at all, eh?" : ""]</span>")
 					src.repair_status = 4
 				if (4)
 					boutput(user, "The control board has already been reset. It just needs to be reconnected now.")
 				else
-					boutput(user, "<span style=\"color:red\">You need to repair and tune the autotransformer before resetting the control board.</span>")
+					boutput(user, "<span class='alert'>You need to repair and tune the autotransformer before resetting the control board.</span>")
 			return
 
 		return
@@ -486,25 +472,25 @@ var/zapLimiter = 0
 				recipient_cell = S.cell
 
 			var/overspill = 250 - recipient_cell.charge
-			if (!donor_cell) boutput(user, "<span style=\"color:red\">You have no cell installed!</span>")
-			else if (!recipient_cell) boutput(user, "<span style=\"color:red\">[jumper.positive? "[src] has" : "you have"] no cell installed!</span>")
-			else if (recipient_cell.charge >= recipient_cell.maxcharge) boutput(user, "<span style=\"color:blue\">[jumper.positive ? "[src]" : "Your"] cell is already fully charged.</span>")
-			else if (donor_cell.charge <= 250) boutput(user, "<span style=\"color:red\">You do not have enough charge left to do this!</span>")
+			if (!donor_cell) boutput(user, "<span class='alert'>You have no cell installed!</span>")
+			else if (!recipient_cell) boutput(user, "<span class='alert'>[jumper.positive? "[src] has" : "you have"] no cell installed!</span>")
+			else if (recipient_cell.charge >= recipient_cell.maxcharge) boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "Your"] cell is already fully charged.</span>")
+			else if (donor_cell.charge <= 250) boutput(user, "<span class='alert'>You do not have enough charge left to do this!</span>")
 			else if (overspill >= 250)
 				donor_cell.charge -= overspill
 				recipient_cell.charge += overspill
 				if (jumper.positive)
-					user.visible_message("<span style=\"color:blue\">[user] transfers some of their power to [src]!</span>", "<span style=\"color:blue\">You transfer [overspill] charge. The APC is now fully charged.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
 				else
-					user.visible_message("<span style=\"color:blue\">[user] transfers some of the power from [src] to yourself!</span>", "<span style=\"color:blue\">You transfer [overspill] charge. You are now fully charged.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
 
 			else
 				donor_cell.charge -= 250
 				recipient_cell.charge += 250
 				if (jumper.positive)
-					user.visible_message("<span style=\"color:blue\">[user] transfers some of their power to [src]!</span>", "<span style=\"color:blue\">You transfer 250 charge.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer 250 charge.</span>")
 				else
-					user.visible_message("<span style=\"color:blue\">[user] transfers some of the power from [src] to yourself!</span>", "<span style=\"color:blue\">You transfer 250 charge.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
 
 		else return src.attack_hand(user)
 
@@ -525,7 +511,7 @@ var/zapLimiter = 0
 				boutput(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				updateicon()
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 
 
 /obj/machinery/power/apc/attack_ai(mob/user)
@@ -546,7 +532,7 @@ var/zapLimiter = 0
 
 	interact_particle(user,src)
 
-	if(opened && (!issilicon(user) || isghostdrone(user)))
+	if(opened && (!issilicon(user) || isghostdrone(user) || !isAI(user)))
 		if(cell)
 			user.put_in_hand_or_drop(cell)
 			cell.updateicon()
@@ -557,17 +543,17 @@ var/zapLimiter = 0
 
 	else
 		// do APC interaction
-		src.interact(user)
+		src.interacted(user)
 
 
 
-/obj/machinery/power/apc/proc/interact(mob/user)
+/obj/machinery/power/apc/proc/interacted(mob/user)
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 
 	if ( (get_dist(src, user) > 1 ))
 		if (!issilicon(user) && !isAI(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=apc")
 			return
 		else if ((issilicon(user) || isAI(user)) && src.aidisabled)
@@ -575,8 +561,9 @@ var/zapLimiter = 0
 			user.Browse(null, "window=apc")
 			return
 	if(wiresexposed && (!isAI(user)))
-		user.machine = src
-		var/t1 = text("<B>Access Panel</B><br><br>")
+		src.add_dialog(user)
+		var/t1 = text("<B>Access Panel</B><br>")
+		t1 += text("An identifier is engraved above the APC's wires: <i>[net_id]</i><br><br>")
 		var/list/apcwires = list(
 			"Orange" = 1,
 			"Dark red" = 2,
@@ -598,7 +585,7 @@ var/zapLimiter = 0
 		user.Browse(t1, "window=apcwires")
 		onclose(user, "apcwires")
 
-	user.machine = src
+	src.add_dialog(user)
 	var/t = "<TT><B>Area Power Controller</B> ([area.name])<HR>"
 
 	if((locked || (setup_networkapc > 1)) && (!issilicon(user) && !isAI(user)))
@@ -768,9 +755,7 @@ var/zapLimiter = 0
 	if(prot <= 0.29)
 		return 0
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+	elecflash(src,power = 2)
 
 	var/shock_damage = 0
 	if(cell_type == 2500)	//someone juiced up the grid enough, people going to die!
@@ -799,20 +784,20 @@ var/zapLimiter = 0
 		healing = shock_damage / 3
 		user.HealDamage("All", healing, healing)
 		user.take_toxin_damage(0 - healing)
-		boutput(user, "<span style=\"color:blue\">You absorb the electrical shock, healing your body!</span>")
+		boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 		return
 	else if (user.bioHolder.HasEffect("resist_electric") == 1)
-		boutput(user, "<span style=\"color:blue\">You feel electricity course through you harmlessly!</span>")
+		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return
 
 	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-	boutput(user, "<span style=\"color:red\"><B>You feel a powerful shock course through your body!</B></span>")
+	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
 		var/mob/living/L = user
 		L.Virus_ShockCure(33)
 		L.shock_cyberheart(33)
-	sleep(1)
+	sleep(0.1 SECONDS)
 
 #ifdef USE_STAMINA_DISORIENT
 	var/weak = (user.getStatusDuration("weakened") < shock_damage * 20) ? shock_damage * 20 : 0
@@ -824,12 +809,12 @@ var/zapLimiter = 0
 #endif
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue
-		M.show_message("<span style=\"color:red\">[user.name] was shocked by the [src.name]!</span>", 3, "<span style=\"color:red\">You hear a heavy electrical crack</span>", 2)
+		M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
 	return 1
 
 
 /obj/machinery/power/apc/proc/cut(var/wireColor)
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -852,7 +837,7 @@ var/zapLimiter = 0
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 /obj/machinery/power/apc/proc/bite(var/wireColor) // are you fuckin huffing or somethin
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -878,7 +863,7 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/mend(var/wireColor)
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -905,7 +890,7 @@ var/zapLimiter = 0
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 /obj/machinery/power/apc/proc/pulse(var/wireColor)
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -947,7 +932,7 @@ var/zapLimiter = 0
 	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
 		return
 	if ((in_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["apcwires"] && wiresexposed)
 			var/t1 = text2num(href_list["apcwires"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
@@ -1068,11 +1053,11 @@ var/zapLimiter = 0
 			update()
 		else if( href_list["close"] )
 			usr.Browse(null, "window=apc")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 		else if (href_list["close2"])
 			usr.Browse(null, "window=apcwires")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 
 		else if (href_list["overload"])
@@ -1091,11 +1076,9 @@ var/zapLimiter = 0
 
 		return
 
-		src.updateUsrDialog()
-
 	else
 		usr.Browse(null, "window=apc")
-		usr.machine = null
+		src.remove_dialog(usr)
 
 	return
 
@@ -1180,7 +1163,7 @@ var/zapLimiter = 0
 		SPAWN_DBG(0)
 			if(zapStuff())
 				zapLimiter += 1
-				sleep(50)
+				sleep(5 SECONDS)
 				zapLimiter -= 1
 
 	if(cell && !shorted)
@@ -1214,28 +1197,7 @@ var/zapLimiter = 0
 				environ = autoset(environ, 0)
 
 		// set channels depending on how much charge we have left
-
-		if(cell.charge <= 0)					// zero charge, turn all off
-			equipment = autoset(equipment, 0)
-			lighting = autoset(lighting, 0)
-			environ = autoset(environ, 0)
-			if (!noalerts) area.poweralert(0, src)
-		else if(cell.percent() < 15)			// <15%, turn off lighting & equipment
-			equipment = autoset(equipment, 2)
-			lighting = autoset(lighting, 2)
-			environ = autoset(environ, 1)
-			if (!noalerts) area.poweralert(0, src)
-		else if(cell.percent() < 30)			// <30%, turn off equipment
-			equipment = autoset(equipment, 1)
-			lighting = autoset(lighting, 2)
-			environ = autoset(environ, 1)
-			if (!noalerts) area.poweralert(0, src)
-		else									// otherwise all can be on
-			equipment = autoset(equipment, 1)
-			lighting = autoset(lighting, 1)
-			environ = autoset(environ, 1)
-			if(cell.percent() > 75)
-				if (!noalerts) area.poweralert(1, src)
+		check_channel_thresholds()
 
 		// now trickle-charge the cell
 
@@ -1288,10 +1250,36 @@ var/zapLimiter = 0
 
 	src.updateDialog()
 
+// set channels depending on how much charge we have left
+/obj/machinery/power/apc/proc/check_channel_thresholds()
+	if(cell.charge <= 0)					// zero charge, turn all off
+		equipment = autoset(equipment, 0)
+		lighting = autoset(lighting, 0)
+		environ = autoset(environ, 0)
+		if (!noalerts) area.poweralert(0, src)
+	else if(cell.percent() < 15)			// <15%, turn off lighting & equipment
+		equipment = autoset(equipment, 2)
+		lighting = autoset(lighting, 2)
+		environ = autoset(environ, 1)
+		if (!noalerts) area.poweralert(0, src)
+	else if(cell.percent() < 30)			// <30%, turn off equipment
+		equipment = autoset(equipment, 1)
+		lighting = autoset(lighting, 2)
+		environ = autoset(environ, 1)
+		if (!noalerts) area.poweralert(0, src)
+	else									// otherwise all can be on
+		equipment = autoset(equipment, 1)
+		lighting = autoset(lighting, 1)
+		environ = autoset(environ, 1)
+		if(cell.percent() > 75)
+			if (!noalerts) area.poweralert(1, src)
+
+
+
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
-
-/proc/autoset(var/val, var/on)
+//This was global? For no reason?
+/obj/machinery/power/apc/proc/autoset(var/val, var/on)
 
 	if(on==0)
 		if(val==2)			// if on, return off
@@ -1313,7 +1301,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/meteorhit(var/obj/O as obj)
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
 		SPAWN_DBG(1 DECI SECOND)
 			qdel(src)
@@ -1322,7 +1310,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/ex_act(severity)
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
 		SPAWN_DBG(1 DECI SECOND)
 			qdel(src)
@@ -1343,7 +1331,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/temperature_expose(null, temp, volume)
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
 		SPAWN_DBG(1 DECI SECOND)
 			qdel (src)
@@ -1374,7 +1362,7 @@ var/zapLimiter = 0
 					continue
 				L.on = 1
 				L.broken()
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 /obj/machinery/power/apc/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
 	if(!istype(src.terminal, /obj/machinery/power/terminal/netlink) || !target_id)
@@ -1450,7 +1438,7 @@ var/zapLimiter = 0
 
 			switch(lowertext(data["command"]))
 				if ("status")
-					src.post_status(src.host_id,"command","term_message","data","command=status&charge=[cell ? round(cell.percent()) : "00"]&equip=[equipment]&light=[lighting]&environ=[environ]&cover=[coverlocked]")
+					src.post_status(src.host_id,"command","term_message","data","command=status&area=[ckey("[src.area]")]&charge=[cell ? round(cell.percent()) : "00"]&equip=[equipment]&light=[lighting]&environ=[environ]&cover=[coverlocked]")
 					return
 				if ("setmode")
 					var/newEquip = text2num(data["equip"])

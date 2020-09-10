@@ -76,7 +76,7 @@
 
 		contextLayout = new /datum/contextLayout/flexdefault(4, 32, 32)
 
-		genetics_computers += src
+		START_TRACKING
 		screenoverlay = SafeGetOverlayImage("screen", 'icons/obj/64x64.dmi', "genebooth_screen")
 		screenoverlay.blend_mode = BLEND_MULTIPLY
 		screenoverlay.layer = src.layer + 0.2
@@ -95,7 +95,7 @@
 		workingoverlay.layer = src.layer + 0.1
 
 	disposing()
-		genetics_computers -= src
+		STOP_TRACKING
 		..()
 
 
@@ -110,8 +110,8 @@
 			if (started == 2)
 				if (!try_billing(occupant))
 					for (var/mob/O in hearers(src, null))
-						O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
-					occupant.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
+						O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
+					occupant.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
 
 					eject_occupant(0)
 		else if (started)
@@ -149,7 +149,7 @@
 
 	proc/reload_contexts()//IM ASORRY
 		for(var/datum/contextAction/C in src.contextActions)
-			C.disposing()
+			C.dispose()
 		src.contextActions = list()
 
 		for (var/datum/geneboothproduct/P in offered_genes)
@@ -164,7 +164,7 @@
 		updateicon()
 
 		usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
-		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, pitch = 0.60)
+		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.60)
 
 	proc/just_pick_anything()
 		for (var/datum/geneboothproduct/P in offered_genes)
@@ -201,12 +201,12 @@
 
 					var/datum/bioEffect/NEW = new selected_product.BE.type()
 					copy_datum_vars(selected_product.BE,NEW)
-					occupant.bioHolder.AddEffectInstance(NEW,1)
+					occupant.bioHolder.AddEffectInstanceNoDelay(NEW)
 
 					selected_product.uses -= 1
 					if (selected_product.uses <= 0 || !selected_product.BE)
 						notify_empty(selected_product)
-						selected_product.disposing()
+						selected_product.dispose()
 						offered_genes -= selected_product
 						reload_contexts()
 
@@ -268,7 +268,7 @@
 								//if (src.glitchy_slogans)
 								//	O.show_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2)
 								//else
-								O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"</span></span>", 2)
+								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"</span></span>", 2)
 
 
 							.= 1
@@ -284,7 +284,7 @@
 		if (split_with)
 			string += "Splitting half of profits with [split_with]."
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"="medresearch", "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"=MGD_MEDRESEACH, "sender"="00000000", "message"=string)
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(src, pdaSignal)
@@ -297,7 +297,7 @@
 
 		var/string = "Notification: [GBP.name] has sold out!"
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"="medresearch", "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"=MGD_MEDRESEACH, "sender"="00000000", "message"=string)
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(src, pdaSignal)
@@ -330,7 +330,7 @@
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-		user.show_text("<span style=\"color:red\">[src] [pick("bends","shakes","groans")].</span>")
+		user.show_text("<span class='alert'>[src] [pick("bends","shakes","groans")].</span>")
 		if (prob(8))
 			src.eject_occupant(add_power = 0)
 

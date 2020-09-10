@@ -14,8 +14,8 @@
 		button_name = input("Button name", "Button name", "button") as text
 		var/bdstr = input("Is the button dense (impassable)?", "Passability", "yes") in list("yes", "no")
 		button_density = (bdstr == "yes") ? 1 : 0
-		boutput(usr, "<span style=\"color:blue\">Left click to place buttons, right click triggerables to (de)select them for automatic assignment to the buttons. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span style=\"color:blue\">NOTE: Select stuff first, then make buttons for extra comfort!</span>")
+		boutput(usr, "<span class='notice'>Left click to place buttons, right click triggerables to (de)select them for automatic assignment to the buttons. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>NOTE: Select stuff first, then make buttons for extra comfort!</span>")
 
 	proc/clear_selections()
 		for (var/obj/O in selected_triggerable)
@@ -25,6 +25,7 @@
 	disposing()
 		clear_selections()
 		pool(selection)
+		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if (pa.Find("left"))
@@ -57,7 +58,7 @@
 						selected_triggerable += object
 						selected_triggerable[object] = act
 					else
-						boutput(usr, "<span style=\"color:red\">ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/adventurepuzzle/triggerer/button
 	icon = 'icons/obj/randompuzzles.dmi'
@@ -74,7 +75,7 @@
 		if (!istype(user))
 			return
 		if (!(user in range(1)))
-			boutput(user, "<span style=\"color:red\">You must go closer!</span>")
+			boutput(user, "<span class='alert'>You must go closer!</span>")
 			return
 		if (!pressed)
 			pressed = 1
@@ -105,7 +106,6 @@
 
 	disposing()
 		if (effect_overlay)
-			effect_overlay.loc = null
 			qdel(effect_overlay)
 			effect_overlay = null
 		..()
@@ -117,11 +117,8 @@
 
 	New(var/L)
 		..()
-		set_dir(dir)
 		effect_overlay = new/obj/overlay/tile_effect/secondary/bookcase(loc)
-		if (isturf(loc))
-			if (loc:effect_overlay)
-				effect_overlay.color = loc:effect_overlay.color
+		set_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
 		if (varname == "dir")

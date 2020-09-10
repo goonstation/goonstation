@@ -5,7 +5,8 @@ obj/machinery/atmospherics/valve
 	desc = "A pipe valve"
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
-	layer = PIPE_LAYER
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 	var/open = 0
 	var/high_risk = 0 //Does this valve have enough grief potential that the admins should be messaged when this is opened?
 	var/obj/machinery/atmospherics/node1
@@ -118,10 +119,12 @@ obj/machinery/atmospherics/valve
 			icon_state = "valve[open]"
 
 	New()
+		..()
+		UnsubscribeProcess()
 		switch(dir)
-			if(NORTH || SOUTH)
+			if(NORTH, SOUTH)
 				initialize_directions = NORTH|SOUTH
-			if(EAST || WEST)
+			if(EAST, WEST)
 				initialize_directions = EAST|WEST
 
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
@@ -151,8 +154,6 @@ obj/machinery/atmospherics/valve
 		return null
 
 	disposing()
-		loc = null
-
 		if(node1)
 			node1.disconnect(src)
 			if (network_node1)
@@ -214,7 +215,7 @@ obj/machinery/atmospherics/valve
 
 	attack_hand(mob/user as mob)
 		update_icon(1)
-		sleep(10)
+		sleep(1 SECOND)
 		logTheThing("station", user, null, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
 		if (src.open)
 			src.close()
@@ -225,7 +226,7 @@ obj/machinery/atmospherics/valve
 	attackby(var/obj/item/G as obj, var/mob/user as mob)
 		if (iswrenchingtool(G))
 			update_icon(1)
-			sleep(10)
+			sleep(1 SECOND)
 			logTheThing("station", user, null, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
 			if (src.open)
 				src.close()
@@ -375,6 +376,8 @@ obj/machinery/atmospherics/manifold_valve
 			icon_state = "manifold_valve[divert]"
 
 	New()
+		..()
+		UnsubscribeProcess()
 		switch(dir)
 			if(SOUTH)
 				initialize_directions = EAST|WEST|NORTH
@@ -431,8 +434,6 @@ obj/machinery/atmospherics/manifold_valve
 		return null
 
 	disposing()
-		loc = null
-
 		if(node1)
 			node1.disconnect(src)
 			if (network_node1)

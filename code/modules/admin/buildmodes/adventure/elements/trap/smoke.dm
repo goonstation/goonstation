@@ -5,7 +5,7 @@
 	initialize()
 		..()
 		reagent = input("What reagent to smoke? (reagent id)", "Reagent", "lube")
-		boutput(usr, "<span style=\"color:blue\">Left click to place trap. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>Left click to place trap. Ctrl+click anywhere to finish.</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if (pa.Find("left"))
@@ -35,9 +35,7 @@
 	var/static/list/triggeracts = list("Activate" = "act", "Disable" = "off", "Destroy" = "del", "Do nothing" = "nop", "Enable" = "on")
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(80)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(80)
 		..()
 
 	trigger_actions()

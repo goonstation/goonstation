@@ -24,16 +24,12 @@
 	throw_range = 8
 	force = 3.0
 	w_class = 1.0
+	initial_volume = 30
 
 	amount_per_transfer_from_this = 5
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 	var/contained = null
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
 
 /obj/item/reagent_containers/glass/vial/green
 	name = "glass test tube"
@@ -55,7 +51,7 @@
 //////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////***
-/obj/item/reagent_containers/glass/vial/throw_impact(atom/hit_atom)
+/obj/item/reagent_containers/glass/vial/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.shatter()
 
@@ -87,11 +83,11 @@
 		for(i=0, i<5, i++)
 			for(var/mob/living/carbon/H in view(5, sourceloc))
 				H.contract_disease(src.contained,null,null,0)
-			sleep(20)
+			sleep(2 SECONDS)
 
 	flick("greenshatter2",O)
 	O.icon_state = "nothing"
-	sleep(5)
+	sleep(0.5 SECONDS)
 	qdel(O)
 	return
 
@@ -134,10 +130,10 @@
 
 	liquify(user)
 
-	sleep(20)
+	sleep(2 SECONDS)
 	flick("blueshatter2",O)
 	O.icon_state = "nothing"
-	sleep(5)
+	sleep(0.5 SECONDS)
 	qdel(O)
 
 /obj/item/reagent_containers/glass/vial/blue/shatter()
@@ -164,10 +160,10 @@
 	for(var/mob/living/carbon/human/H in view(1, sourceloc))
 		liquify(H)
 
-	sleep(20)
+	sleep(2 SECONDS)
 	flick("blueshatter2",O)
 	O.icon_state = "nothing"
-	sleep(5)
+	sleep(0.5 SECONDS)
 
 	qdel(O)
 
@@ -200,7 +196,7 @@
 		animation.master = holder
 		flick("liquify",animation)
 		H.canmove = 0
-		sleep(4)
+		sleep(0.4 SECONDS)
 		H.set_loc(holder)
 		H.canmove = 1
 		SPAWN_DBG(0)
@@ -214,7 +210,7 @@
 					water1.icon = 'icons/effects/water.dmi'
 					water1.icon_state = "extinguish"
 					for(i=0, i<pick(1,2,3), i++)
-						sleep(5)
+						sleep(0.5 SECONDS)
 						step(water1,direction)
 					SPAWN_DBG(2 SECONDS)
 						qdel(water1)
@@ -236,12 +232,12 @@
 				water2.icon = 'icons/effects/water.dmi'
 				water2.icon_state = "extinguish"
 				walk_to(water2,mobloc,-1,5)
-				sleep(20)
+				sleep(2 SECONDS)
 				qdel(water2)
 
-		sleep(20)
+		sleep(2 SECONDS)
 		flick("reappear",animation)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		H.set_loc(mobloc)
 		H.canmove = 1
 		qdel(animation)
@@ -292,15 +288,15 @@
 /*
 /obj/testtuberack
 	name = "test tube rack"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "clipboard00"
 
 	attackby(obj/item/W, mob/user as mob)
 		if (src.contents.len >= 7)
-			boutput(user, "<span style=\"color:blue\">The test tube rack is full</span>")
+			boutput(user, "<span class='notice'>The test tube rack is full</span>")
 			return
 		if(istype(W, /obj/item/reagent_containers/glass/vial))
-			boutput(user, "<span style=\"color:blue\">You insert the test tube into the test tube rack</span>")
+			boutput(user, "<span class='notice'>You insert the test tube into the test tube rack</span>")
 			user.drop_vial()
 			W.set_loc(src)
 			return
@@ -309,11 +305,11 @@
 
 	attack_hand(mob/user as mob)
 		if(src.contents.len > 0)
-			boutput(user, "<span style=\"color:blue\">You slide a random test tube carefully out of the rack</span>")
+			boutput(user, "<span class='notice'>You slide a random test tube carefully out of the rack</span>")
 			var/obj/item/reagent_containers/glass/vial/V = pick(src.contents)
 			src.contents -= V
 			V.set_loc(src.loc)
 		else
-			boutput(user, "<span style=\"color:blue\">There are no test tubes in the rack</span>")
+			boutput(user, "<span class='notice'>There are no test tubes in the rack</span>")
 		return
 */

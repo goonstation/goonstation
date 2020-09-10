@@ -15,7 +15,7 @@
 			src.reagents.add_reagent("stimulants", 200)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, slot_w_uniform)
-			sleep(10)
+			sleep(1 SECOND)
 			bioHolder.mobAppearance.UpdateMob()
 
 	Life(datum/controller/process/mobs/parent)
@@ -42,7 +42,7 @@
 		return 1.0 + 0.5*(30 - rand(1,120))/80
 
 	proc/rename_self()
-		var/assembled_name = pick(first_names_male) + " " + pick(last_names)
+		var/assembled_name = pick_string_autokey("names/first_male.txt") + " " + pick_string_autokey("names/last.txt")
 		assembled_name = corruptText(assembled_name,75)
 		src.real_name = assembled_name
 

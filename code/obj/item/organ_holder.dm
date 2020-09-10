@@ -55,44 +55,66 @@
 		if (src.donor)
 			src.create_organs()
 
-	dispose()
+	disposing()
+		src.organ_list.len = 0
+		src.organ_list = null
+
 		if (head)
 			head.donor = null
+			chest?.bones?.donor = null
+			head.holder = null
 		if (skull)
 			skull.donor = null
+			skull.holder = null
 		if (brain)
 			brain.donor = null
-			brain.owner = null
+			brain.holder = null
 		if (left_eye)
 			left_eye.donor = null
+			left_eye.holder = null
 		if (right_eye)
 			right_eye.donor = null
+			right_eye.holder = null
 		if (chest)
 			chest.donor = null
+			chest?.bones?.donor = null
+			chest.holder = null
 		if (heart)
 			heart.donor = null
+			heart.holder = null
 		if (left_lung)
 			left_lung.donor = null
+			left_lung.holder = null
 		if (right_lung)
 			right_lung.donor = null
+			right_lung.holder = null
 		if (butt)
 			butt.donor = null
+			butt.holder = null
 		if (left_kidney)
 			left_kidney.donor = null
+			left_kidney.holder = null
 		if (right_kidney)
 			right_kidney.donor = null
+			right_kidney.holder = null
 		if (liver)
 			liver.donor = null
+			liver.holder = null
 		if (stomach)
 			stomach.donor = null
+			stomach.holder = null
 		if (intestines)
 			intestines.donor = null
+			intestines.holder = null
 		if (spleen)
 			spleen.donor = null
+			spleen.holder = null
 		if (pancreas)
 			pancreas.donor = null
+			pancreas.holder = null
 		if (appendix)
 			appendix.donor = null
+			appendix.holder = null
 
 		head = null
 		skull = null
@@ -152,6 +174,7 @@
 
 	//loops through organ_list.  returns a list of names of all missing organs instead, but I'm tired
 	proc/get_missing_organs()
+		RETURN_TYPE(/list)
 		var/list/organs = list()
 		// if (islist(organ_list))
 		for (var/i in organ_list)
@@ -201,17 +224,17 @@
 	//organs should not perform their functions if they have 100 damage
 	proc/get_working_kidney_amt()
 		var/count = 0
-		if (left_kidney && (left_kidney.broken || left_kidney.get_damage() < left_kidney.MAX_DAMAGE))
+		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.FAIL_DAMAGE))
 			count++
-		if (right_kidney && (right_kidney.broken || right_kidney.get_damage() < right_kidney.MAX_DAMAGE))
+		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.FAIL_DAMAGE))
 			count++
 		return count
 
 	proc/get_working_lung_amt()
 		var/count = 0
-		if (left_lung && (left_lung.broken || left_lung.get_damage() < left_lung.MAX_DAMAGE))
+		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.FAIL_DAMAGE))
 			count++
-		if (right_lung && (right_lung.broken || right_lung.get_damage() < right_lung.MAX_DAMAGE))
+		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.FAIL_DAMAGE))
 			count++
 		return count
 
@@ -311,6 +334,7 @@
 
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)
+		RETURN_TYPE(/obj/item)
 		if (!organ)
 			return 0
 		var/obj/item/return_organ = organ_list[organ]
@@ -440,6 +464,7 @@
 				mySkull.holder = null
 				src.skull = null
 				src.organ_list["skull"] = null
+				src.head.skull = null
 				return mySkull
 
 			if ("brain")
@@ -470,6 +495,7 @@
 				myBrain.holder = null
 				src.brain = null
 				src.organ_list["brain"] = null
+				src.head?.brain = null
 				return myBrain
 
 			if ("left_eye")
@@ -481,6 +507,7 @@
 				myLeftEye.holder = null
 				src.left_eye = null
 				src.organ_list["left_eye"] = null
+				src.head.left_eye = null
 				return myLeftEye
 
 			if ("right_eye")
@@ -492,6 +519,7 @@
 				myRightEye.holder = null
 				src.right_eye = null
 				src.organ_list["right_eye"] = null
+				src.head.right_eye = null
 				return myRightEye
 
 			if ("chest")
@@ -683,32 +711,19 @@
 				if (newHead.skull)
 					if (src.skull) // how
 						src.drop_organ("skull") // I mean really, how
-					src.skull = newHead.skull
-					newHead.skull.set_loc(src.donor)
-					newHead.skull.holder = src
-					newHead.skull = null
+					src.receive_organ(newHead.skull, "skull", newHead.skull.op_stage)
 				if (newHead.brain)
 					if (src.brain) // ???
 						src.drop_organ("brain") // god idfk
-					src.brain = newHead.brain
-					newHead.brain.set_loc(src.donor)
-					newHead.brain.holder = src
-					newHead.brain = null
+					src.receive_organ(newHead.brain, "brain", newHead.brain.op_stage)
 				if (newHead.right_eye)
 					if (src.right_eye)
 						src.drop_organ("right_eye")
-					src.right_eye = newHead.right_eye
-					newHead.right_eye.set_loc(src.donor)
-					newHead.right_eye.holder = src
-					newHead.right_eye = null
+					src.receive_organ(newHead.right_eye, "right_eye", newHead.right_eye.op_stage)
 				if (newHead.left_eye)
 					if (src.left_eye)
 						src.drop_organ("left_eye")
-					src.left_eye = newHead.left_eye
-					newHead.left_eye.set_loc(src.donor)
-					newHead.left_eye.holder = src
-					newHead.left_eye = null
-
+					src.receive_organ(newHead.left_eye, "left_eye", newHead.left_eye.op_stage)
 				if (ishuman(src.donor))
 					var/mob/living/carbon/human/H = src.donor
 					if (newHead.glasses)
@@ -752,9 +767,12 @@
 						qdel(src.skull)
 					else
 						return 0
+				if (!src.head)
+					return 0
 				var/obj/item/skull/newSkull = I
 				newSkull.op_stage = op_stage
 				src.skull = newSkull
+				src.head.skull = newSkull
 				newSkull.set_loc(src.donor)
 				newSkull.holder = src
 				organ_list["skull"] = newSkull
@@ -766,6 +784,8 @@
 						qdel(src.brain)
 					else
 						return 0
+				if (!src.skull)
+					return 0
 				var/obj/item/organ/brain/newBrain = I
 				if (src.donor.client)
 					src.donor.client.mob = new /mob/dead/observer(src)
@@ -773,6 +793,7 @@
 					newBrain.owner.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
+				src.head.brain = newBrain
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src
 				organ_list["brain"] = newBrain
@@ -784,9 +805,12 @@
 						qdel(src.left_eye)
 					else
 						return 0
+				if (!src.head)
+					return 0
 				var/obj/item/organ/eye/newLeftEye = I
 				newLeftEye.op_stage = op_stage
 				src.left_eye = newLeftEye
+				src.head.left_eye = newLeftEye
 				newLeftEye.body_side = L_ORGAN
 				newLeftEye.set_loc(src.donor)
 				newLeftEye.holder = src
@@ -799,9 +823,12 @@
 						qdel(src.right_eye)
 					else
 						return 0
+				if (!src.head)
+					return 0
 				var/obj/item/organ/eye/newRightEye = I
 				newRightEye.op_stage = op_stage
 				src.right_eye = newRightEye
+				src.head.right_eye = newRightEye
 				newRightEye.body_side = R_ORGAN
 				newRightEye.set_loc(src.donor)
 				newRightEye.holder = src
@@ -831,7 +858,7 @@
 				var/obj/item/organ/heart/newHeart = I
 				if (newHeart.robotic)
 					if (src.donor.bioHolder.HasEffect("elecres"))
-						newHeart.broken = 1
+						newHeart.breakme()
 					if (newHeart.broken || src.donor.bioHolder.HasEffect("elecres"))
 						src.donor.show_text("Something is wrong with [newHeart], it fails to start beating!", "red")
 						src.donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
@@ -1030,7 +1057,7 @@
 					return 0
 
 			//moved out of for loop and just continue past "butt". I think this is slightly more efficient.
-			var/obj/machinery/bot/buttbot/cyber/B = organ_list["butt"]
+			var/obj/item/clothing/head/butt/cyberbutt/B = organ_list["butt"]
 			//if it's not robotic we're done, return 0
 			if (istype(B))
 				return 1
@@ -1097,6 +1124,7 @@
 	return 0
 
 /mob/living/carbon/human/proc/get_organ(var/organ)
+	RETURN_TYPE(/obj/item)
 	if (!src.organHolder || !organ)
 		return 0
 	return src.organHolder.get_organ(organ)
@@ -1123,7 +1151,7 @@
 
 	New(var/mob/living/L, var/obj/item/organ/brain/custom_brain_type)
 		..()
-		if (!iscritter(L))
+		if (!ismobcritter(L))
 			return
 		if (istype(L))
 			src.donor = L
@@ -1155,14 +1183,6 @@
 
 /mob/living/critter/small_animal/proc/eye_istype(var/obj/item/I)
 	return 0
-	if (!src.organHolder || !I)
-		return 0
-	if (!src.organHolder.left_eye && !src.organHolder.right_eye)
-		return 0
-	if (istype(src.organHolder.left_eye, I) || istype(src.organHolder.right_eye, I))
-		return 1
-	else
-		return 0
 
 /mob/living/critter/small_animal/proc/organ_istype(var/organ, var/organ_type)
 	if (!src.organHolder || !organ || !organ_type)
@@ -1219,14 +1239,14 @@
 			return
 		if (!isturf(usr.loc))
 			return
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr:targeting_ability = null
 			usr.update_cursor()
 			return
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			usr:targeting_spell = owner
+			usr.targeting_ability = owner
 			usr.update_cursor()
 		else
 			SPAWN_DBG(0)
@@ -1281,13 +1301,13 @@
 
 	castcheck()
 		if (!linked_organ || (!islist(src.linked_organ) && linked_organ.loc != holder.owner))
-			boutput(holder.owner, "<span style='color:red'>You can't use that ability right now.</span>")
+			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
 			return 0
 		else if (incapacitationCheck())
-			boutput(holder.owner, "<span style='color:red'>You can't use that ability while you're incapacitated.</span>")
+			boutput(holder.owner, "<span class='alert'>You can't use that ability while you're incapacitated.</span>")
 			return 0
 		else if (disabled)
-			boutput(holder.owner, "<span style='color:red'>You can't use that ability right now.</span>")
+			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
 			return 0
 		return 1
 
@@ -1298,7 +1318,7 @@
 			return 1
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		if (ismob(target))
-			logTheThing("combat", holder.owner, target, "used ability [src.name] ([src.linked_organ]) on %target%.")
+			logTheThing("combat", holder.owner, target, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
 		else if (target)
 			logTheThing("combat", holder.owner, null, "used ability [src.name] ([src.linked_organ]) on [target].")
 		else
@@ -1372,3 +1392,149 @@
 		if (istype(M))
 			M.toggle()
 			src.is_on = M.on
+		if(is_on)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon_state = "[initial(src.icon_state)]_cd"
+
+
+/datum/targetable/organAbility/kidneypurge
+	name = "Kidney Purge"
+	desc = "Dangerously overclock your cyberkidneys to rapidly purge chemicals from your blood."
+	icon_state = "cyberkidney"
+	targeted = 0
+	cooldown = 40 SECONDS
+	var/power = 6
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if(length(linked_organ))
+			for(var/obj/item/organ/O in linked_organ)
+				O.take_damage(15, 15) //safe-ish
+		else
+			linked_organ.take_damage(30, 30) //not safe
+		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body.</span>")
+		APPLY_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src, power)
+		holder.owner.urine += power // -.-
+		SPAWN_DBG(15 SECONDS)
+			if(holder?.owner)
+				REMOVE_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src)
+
+	proc/cancel_purge()
+		if(holder?.owner)
+			REMOVE_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src)
+
+/datum/targetable/organAbility/liverdetox
+	name = "\"Detox\" Toggle"
+	desc = "Activate the experimental \"detoxification\" function of your liver to metabolize ethanol into omnizine."
+	icon_state = "cyberliver"
+	targeted = 0
+	toggled = 1
+	cooldown = 5
+	is_on = 0
+
+	New()
+		..()
+		src.icon_state = "[initial(src.icon_state)]_cd"
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/obj/item/organ/liver/cyber/L = linked_organ
+		if (istype(L))
+			L.overloading = !L.overloading
+			src.is_on = L.overloading
+			boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver.</span>")
+		if(is_on)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon_state = "[initial(src.icon_state)]_cd"
+
+/datum/targetable/organAbility/quickdigest
+	name = "Rapid Digestion"
+	desc = "Force your cyberintestines to rapidly process the contents of your stomach. This can't be healthy."
+	icon_state = "cyberintestine"
+	targeted = 0
+	cooldown = 40 SECONDS
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		linked_organ.take_damage(20, 20) //not safe
+		if(istype(holder.owner, /mob/living))
+			var/mob/living/L = holder.owner
+			if (L.stomach_process && L.stomach_process.len)
+				boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
+				for(var/obj/item/reagent_containers/food/snacks/bite/B in L.stomach_process)
+					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
+			else
+				boutput(L, "<span class='alert'>Your intestines crunch painfully in your gut. Maybe they would work better with some food to process.</span>")
+				linked_organ.take_damage(30) //owwww
+
+
+/datum/targetable/organAbility/projectilevomit
+	name = "Projectile Vomiting"
+	desc = "Upchuck your stomach contents with deadly force."
+	icon_state = "cyberstomach"
+	targeted = 1
+	target_anything = 1
+	cooldown = 10
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if(istype(holder.owner, /mob/living))
+			var/mob/living/L = holder.owner
+			if (L.stomach_process && L.stomach_process.len)
+				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
+				SPAWN_DBG(0)
+					for (var/i in 1 to 3)
+						var/obj/item/O = L.vomit()
+						O.throw_at(target, 8, 3, bonus_throwforce=5)
+						linked_organ.take_damage(3)
+						sleep(0.1 SECONDS)
+						if(linked_organ.broken || !L.stomach_process.len)
+							break
+			else
+				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")
+				linked_organ.take_damage(30) //owwww
+				L.vomit()
+
+/datum/targetable/organAbility/rebreather
+	name = "Rebreather Toggle"
+	desc = "Dangerously overload your cyberlungs to completely pause your breathing. Any oxygen deprivation already suffered will not be cleared, however."
+	icon_state = "cyberlung"
+	targeted = 0
+	toggled = 1
+	cooldown = 5
+	is_on = 0
+
+	New()
+		..()
+		src.icon_state = "[initial(src.icon_state)]_cd"
+
+	cast(atom/target)
+		if (..())
+			return 1
+		if(!islist(linked_organ) && !is_on)
+			boutput(holder.owner, "<span class='notice'>This ability is only usable with two unregulated cyberlungs!</span>")
+			return 1
+
+		src.is_on = !src.is_on
+		boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the rebreather mode on your cyberlungs.</span>")
+		for(var/obj/item/organ/lung/cyber/L in linked_organ)
+			L.overloading = is_on
+		if(is_on)
+			APPLY_MOB_PROPERTY(holder.owner, PROP_REBREATHING, "cyberlungs")
+		else
+			REMOVE_MOB_PROPERTY(holder.owner, PROP_REBREATHING, "cyberlungs")
+
+		if(is_on)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon_state = "[initial(src.icon_state)]_cd"

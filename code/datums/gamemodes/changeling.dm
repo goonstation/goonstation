@@ -11,12 +11,16 @@
 
 /datum/game_mode/changeling/announce()
 	boutput(world, "<B>The current game mode is - Changeling!</B>")
-	boutput(world, "<B>There is a <span style=\"color:red\">CHANGELING</span> on the station. Be on your guard! Trust no one!</B>")
+	boutput(world, "<B>There is a <span class='alert'>CHANGELING</span> on the station. Be on your guard! Trust no one!</B>")
 
 /datum/game_mode/changeling/pre_setup()
 	var/num_players = 0
-	for(var/mob/new_player/player in mobs)
-		if(player.client && player.ready) num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if(player.ready)
+			num_players++
 
 	var/i = rand(5)
 	var/num_changelings = max(1, min(round((num_players + i) / 15), changelings_possible))
@@ -52,7 +56,7 @@
 			bestow_objective(changeling,/datum/objective/escape)
 
 			//HRRFM horror form stuff goes here
-			boutput(changeling.current, "<B><span style=\"color:red\">You feel... HUNGRY!</span></B><br>")
+			boutput(changeling.current, "<B><span class='alert'>You feel... HUNGRY!</span></B><br>")
 
 			// Moved antag help pop-up to changeling.dm (Convair880).
 
@@ -75,9 +79,12 @@
 
 	if(candidates.len < num_changelings)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_changeling set to yes were ready. We need [num_changelings], so including players who don't want to be changelings in the pool.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 	if(candidates.len < 1)
@@ -112,7 +119,7 @@
 			comm.messagetext.Add(intercepttext)
 */
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -122,15 +129,21 @@
 
 /datum/game_mode/changeling/proc/get_mob_list()
 	var/list/mobs = list()
-	for(var/mob/living/carbon/player in mobs)
-		if (player.client)
-			mobs += player
+
+	for(var/client/C)
+		var/mob/living/carbon/player = C.mob
+		if (!istype(player)) continue
+		mobs += player
+
 	return mobs
 
 /datum/game_mode/changeling/proc/pick_human_name_except(excluded_name)
 	var/list/names = list()
-	for(var/mob/living/carbon/player in mobs)
-		if (player.client && (player.real_name != excluded_name))
+	for(var/client/C)
+		var/mob/living/carbon/player = C.mob
+		if (!istype(player)) continue
+
+		if ((player.real_name != excluded_name))
 			names += player.real_name
 	if(!names.len)
 		return null

@@ -27,7 +27,7 @@
 		src.display_battery = image('icons/obj/meteor_shield.dmi', "")
 		src.display_panel = image('icons/obj/meteor_shield.dmi', "")
 
-		teleport_jammers += src
+		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
 	disposing()
@@ -41,20 +41,20 @@
 		sound_off = null
 		sound_battwarning = null
 
-		teleport_jammers -= src
+		STOP_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
-	examine()
-		..()
-		if(usr.client)
+	get_desc(dist, mob/user)
+		. = ..()
+		if(user.client)
 			var/charge_percentage = 0
 			if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
 				charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
-				boutput(usr, "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left.")
-				boutput(usr, "The jammer's range is [src.range] units of distance.")
-				boutput(usr, "The unit will consume [5 * src.range] power a second.")
+				. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
+				. += "The jammer's range is [src.range] units of distance."
+				. += "The unit will consume [5 * src.range] power a second."
 			else
-				boutput(usr, "It seems to be missing a usable battery.")
+				. += "It seems to be missing a usable battery."
 
 	process()
 		if (src.active)
@@ -80,7 +80,7 @@
 				src.build_icon()
 				if (src.battery_level == 1)
 					playsound(src.loc, src.sound_battwarning, 50, 1)
-					src.visible_message("<span style=\"color:red\"><b>[src] emits a low battery alarm!</b></span>")
+					src.visible_message("<span class='alert'><b>[src] emits a low battery alarm!</b></span>")
 
 			if (PCEL.charge < 0)
 				src.visible_message("<b>[src]</b> runs out of power and shuts down.")

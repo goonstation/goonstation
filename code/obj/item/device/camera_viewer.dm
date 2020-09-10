@@ -9,11 +9,11 @@
 	mats = 6
 
 	attack_self(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		user.unlock_medal("Peeping Tom", 1)
 
 		var/list/L = list()
-		for (var/obj/machinery/camera/C in cameras)
+		for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 			L.Add(C)
 			LAGCHECK(LAG_LOW)
 

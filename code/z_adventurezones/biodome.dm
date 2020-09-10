@@ -117,7 +117,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	proc/process()
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(100)
+			sleep(10 SECONDS)
 			if (current_state == GAME_STATE_PLAYING)
 				if(!played_fx_2 && prob(10))
 					sound_fx_2 = pick('sound/ambience/nature/Rain_ThunderDistant.ogg','sound/ambience/nature/Wind_Cold1.ogg','sound/ambience/nature/Wind_Cold2.ogg','sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg', 'sound/voice/animal/werewolf_howl.ogg')
@@ -191,10 +191,10 @@ SYNDICATE DRONE FACTORY AREAS
 				if (istype(H))
 					H.unkillable = 0
 				if(!M.stat) M.emote("scream")
-				src.visible_message("<span style=\"color:red\"><B>[M]</B> falls into the [src] and melts away!</span>")
+				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
 				M.firegib() // thanks ISN!
 		else
-			src.visible_message("<span style=\"color:red\"><B>[O]</B> falls into the [src] and melts away!</span>")
+			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
 			qdel(O)
 
 	ex_act(severity)
@@ -427,7 +427,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if(target == usr) return
 
 		if(get_dist(usr, target) > 5)
-			boutput(usr, "<span style=\"color:red\">That is too far away!</span>")
+			boutput(usr, "<span class='alert'>That is too far away!</span>")
 			return
 
 		var/atom/target_r = target
@@ -446,10 +446,10 @@ SYNDICATE DRONE FACTORY AREAS
 			var/turf/T = O.loc
 
 			if(locate(/obj/decal/stalagmite) in T)
-				boutput(usr, "<span style=\"color:red\">You pull yourself to the stalagmite using the whip.</span>")
+				boutput(usr, "<span class='alert'>You pull yourself to the stalagmite using the whip.</span>")
 				usr.set_loc(T)
 			else if(locate(/obj/decal/stalagtite) in T)
-				boutput(usr, "<span style=\"color:red\">You pull yourself to the stalagtite using the whip.</span>")
+				boutput(usr, "<span class='alert'>You pull yourself to the stalagtite using the whip.</span>")
 				usr.set_loc(T)
 
 			SPAWN_DBG(0.2 SECONDS) pool(O)
@@ -466,12 +466,13 @@ SYNDICATE DRONE FACTORY AREAS
 	opacity = 0
 
 	New(var/atom/sloc)
+		..()
 		src.set_loc(sloc)
 		SPAWN_DBG(0) go()
 
 	proc/go()
 		while(!disposed)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			var/turf/next = get_step(src, SOUTH)
 			if(prob(30))
 				playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 60, 1) // having some noise might be rad
@@ -534,7 +535,7 @@ SYNDICATE DRONE FACTORY AREAS
 		dat += "<A href='?src=\ref[src];south=1'>Touch the third rune</A><BR>"
 		dat += "<A href='?src=\ref[src];west=1'>Touch the fourth rune</A><BR>"
 
-		usr.machine = src
+		src.add_dialog(usr)
 		usr.Browse("[dat]", "window=rtab;size=400x300")
 		onclose(usr, "rtab")
 		return
@@ -546,22 +547,22 @@ SYNDICATE DRONE FACTORY AREAS
 		var/movedir = null
 
 		if (href_list["north"])
-			boutput(usr, "<span style=\"color:blue\">The rune glows softly...</span>")
+			boutput(usr, "<span class='notice'>The rune glows softly...</span>")
 			movedir = NORTH
 			playsound(src.loc, 'sound/machines/ArtifactEld1.ogg', 30, 1)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
 		else if (href_list["east"])
-			boutput(usr, "<span style=\"color:blue\">The rune glows softly...</span>")
+			boutput(usr, "<span class='notice'>The rune glows softly...</span>")
 			movedir = EAST
 			playsound(src.loc, 'sound/machines/ArtifactEld1.ogg', 30, 1)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
 		else if (href_list["south"])
-			boutput(usr, "<span style=\"color:blue\">The rune glows softly...</span>")
+			boutput(usr, "<span class='notice'>The rune glows softly...</span>")
 			movedir = SOUTH
 			playsound(src.loc, 'sound/machines/ArtifactEld1.ogg', 30, 1)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
 		else if (href_list["west"])
-			boutput(usr, "<span style=\"color:blue\">The rune glows softly...</span>")
+			boutput(usr, "<span class='notice'>The rune glows softly...</span>")
 			movedir = WEST
 			playsound(src.loc, 'sound/machines/ArtifactEld1.ogg', 30, 1)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
@@ -625,7 +626,8 @@ SYNDICATE DRONE FACTORY AREAS
 // spookycoders are welcome to contribute to this thing
 
 /obj/item/clothing/suit/armor/ancient/equipped(var/mob/user, var/slot)
-	boutput(user, "<span style=\"color:blue\">The armor plates creak oddly as you put on [src].</span>")
+	..()
+	boutput(user, "<span class='notice'>The armor plates creak oddly as you put on [src].</span>")
 	playsound(src.loc, 'sound/machines/ArtifactEld2.ogg', 30, 1)
 	user.reagents.add_reagent("itching", 10)
 	take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
@@ -633,40 +635,38 @@ SYNDICATE DRONE FACTORY AREAS
 	src.desc = "This isn't coming off... oh god..."
 	if (!src.processing)
 		src.processing++
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 	SPAWN_DBG(5 SECONDS)
-		boutput(user, "<span style=\"color:blue\">The [src] feels like it's getting tighter. Ouch! Seems to have a lot of sharp edges inside.</span>")
+		boutput(user, "<span class='notice'>The [src] feels like it's getting tighter. Ouch! Seems to have a lot of sharp edges inside.</span>")
 		random_brute_damage(user, 5)
 		take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
 		bleed(user, 5, 5)
-		SPAWN_DBG(9 SECONDS)
-			user.visible_message("<span style=\"color:red\"><b>[src] violently contracts around [user]!</B></span>")
-			playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
-			random_brute_damage(user, 15)
-			user.emote("scream")
-			take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
-			bleed(user, 5, 1)
-			SPAWN_DBG(5 SECONDS)
-				user.visible_message("<span style=\"color:red\"><b>[src] digs into [user]!</B></span>")
-				playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
-				random_brute_damage(user, 15)
-				user.emote("scream")
-				take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
-				bleed(user, 5, 5)
-				SPAWN_DBG(5 SECONDS)
-					var/mob/living/carbon/human/H = user
-					playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
-					H.visible_message("<span style=\"color:red\"><b>[src] absorbs some of [user]'s skin!</b></span>")
-					random_brute_damage(user, 30)
-					H.emote("scream")
-					if (!H.decomp_stage)
-						H.bioHolder.AddEffect("eaten") //gross
-					take_bleeding_damage(user, null, 0, DAMAGE_CUT, 0)
-					bleed(user, 15, 5)
-					user.emote("faint")
-					user.reagents.add_reagent("ectoplasm", 50)
-	return
+		sleep(9 SECONDS)
+		user.visible_message("<span class='alert'><b>[src] violently contracts around [user]!</B></span>")
+		playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
+		random_brute_damage(user, 15)
+		user.emote("scream")
+		take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
+		bleed(user, 5, 1)
+		sleep(5 SECONDS)
+		user.visible_message("<span class='alert'><b>[src] digs into [user]!</B></span>")
+		playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
+		random_brute_damage(user, 15)
+		user.emote("scream")
+		take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
+		bleed(user, 5, 5)
+		sleep(5 SECONDS)
+		var/mob/living/carbon/human/H = user
+		playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
+		H.visible_message("<span class='alert'><b>[src] absorbs some of [user]'s skin!</b></span>")
+		random_brute_damage(user, 30)
+		H.emote("scream")
+		if (!H.decomp_stage)
+			H.bioHolder.AddEffect("eaten") //gross
+		take_bleeding_damage(user, null, 0, DAMAGE_CUT, 0)
+		bleed(user, 15, 5)
+		user.emote("faint")
+		user.reagents.add_reagent("ectoplasm", 50)
 
 
 /obj/item/clothing/suit/armor/ancient/process()
@@ -679,7 +679,7 @@ SYNDICATE DRONE FACTORY AREAS
 	if(prob(30) && ishuman(host))
 		var/mob/living/carbon/human/M = host
 		M.bioHolder.age++
-		if(prob(10)) boutput(M, "<span style=\"color:red\">You feel [pick("old", "strange", "frail", "peculiar", "odd")].</span>")
+		if(prob(10)) boutput(M, "<span class='alert'>You feel [pick("old", "strange", "frail", "peculiar", "odd")].</span>")
 		if(prob(4)) M.emote("scream")
 	return
 /////////////////////////////// GRAVEYARD stuff
@@ -687,15 +687,18 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/shovel
 	name = "rusty old shovel"
 	desc = "It's seen better days."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "pick"
+	item_state = "shovel"
 	w_class = 3
 	flags = ONBELT
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/graveyard/lightning_trigger
 	icon = 'icons/misc/mark.dmi'
@@ -739,7 +742,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 
 	proc/crumble()
-		src.visible_message("<span style=\"color:red\"><b>[src] crumbles!</b></span>")
+		src.visible_message("<span class='alert'><b>[src] crumbles!</b></span>")
 		playsound(src.loc, "sound/effects/stoneshift.ogg", 50, 1)
 		var/obj/effects/bad_smoke/smoke = unpool(/obj/effects/bad_smoke)
 		smoke.name = "dust cloud"
@@ -759,7 +762,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/alchemy/stone
 	desc = "A blood red stone. It pulses ever so slightly when you hold it."
 	name = "philosopher's stone"
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -776,7 +779,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	New()
 		..()
-		src.visible_message("<span style=\"color:blue\"><b>[src] appears out of thin air!</b></span>")
+		src.visible_message("<span class='notice'><b>[src] appears out of thin air!</b></span>")
 		new /obj/effects/shockwave {name = "mystical energy";} (src.loc)
 		light = new /datum/light/point
 		light.attach(src)
@@ -788,7 +791,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/alchemy/powder
 	desc = "A little purple pouch filled with a white powder."
 	name = "purple pouch"
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "powder"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -798,7 +801,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if(!in_range(target, usr) && !istype(target, /obj/alchemy/circle))
 			return
 		if(target == loc) return
-		boutput(user, "<span style=\"color:blue\">Your sprinkle some powder on \the [target].</span>")
+		boutput(user, "<span class='notice'>Your sprinkle some powder on \the [target].</span>")
 		if(istype(target, /obj/alchemy/circle))
 			target:activate()
 		return
@@ -814,25 +817,28 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/paper/alchemy/north
 	name = "notebook page 2"
 	New()
+		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... [alchemy_symbols["north"]] stands above all else ..."
 
 /obj/item/paper/alchemy/southeast
 	name = "notebook page 3"
 	New()
+		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... in the place the sun rises, [alchemy_symbols["southeast"]] is required ..."
 
 /obj/item/paper/alchemy/southwest
 	name = "notebook page 4"
 	New()
+		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... [alchemy_symbols["southwest"]] where light fades ..."
 
 /obj/item/alchemy/symbol
 	name = "Symbol"
 	desc = "Some sort of alchemical Symbol on a Scroll."
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	var/info = ""
 
 /var/list/alchemy_symbols = new/list()
@@ -883,26 +889,26 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	density = 0
 	opacity= 0
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "alch_empty"
 	var/obj/item/alchemy/symbol = null
 	var/requiredType = null
 
 	attack_hand(mob/user as mob)
 		if(symbol != null)
-			symbol.loc = src.loc
+			symbol.set_loc(src.loc)
 			symbol = null
 			overlays.Cut()
-			boutput(usr, "<span style=\"color:blue\">You remove the Symbol.</span>")
+			boutput(usr, "<span class='notice'>You remove the Symbol.</span>")
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/alchemy/symbol) && symbol == null)
 			user.drop_item()
 			symbol = W
-			symbol.loc = src
+			symbol.set_loc(src)
 			overlays += symbol
-			boutput(usr, "<span style=\"color:blue\">You put the Symbol in the Circle.</span>")
+			boutput(usr, "<span class='notice'>You put the Symbol in the Circle.</span>")
 		return
 
 /obj/alchemy/circle
@@ -934,18 +940,18 @@ SYNDICATE DRONE FACTORY AREAS
 					break
 			if(blood == 1)
 				activated = 1
-				boutput(usr, "<span style=\"color:green\">The Circle begins to vibrate and glow.</span>")
+				boutput(usr, "<span class='success'>The Circle begins to vibrate and glow.</span>")
 				playsound(src.loc, "sound/voice/chanting.ogg", 50, 1)
-				sleep(10)
-				shake_camera(usr, 15, 1, 0.2)
-				sleep(10)
+				sleep(1 SECOND)
+				shake_camera(usr, 15, 16, 0.2)
+				sleep(1 SECOND)
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
-				sleep(10)
+				sleep(1 SECOND)
 				world << sound('sound/effects/mag_pandroar.ogg', volume=60) // heh
-				shake_camera(usr, 15, 1, 0.5)
+				shake_camera(usr, 15, 16, 0.5)
 				new/obj/item/alchemy/stone(middle)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				var/obj/graveyard/loose_rock/R = locate("loose_rock_[target_id]")
 				if(istype(R))
 					SPAWN_DBG(1 DECI SECOND)
@@ -958,23 +964,24 @@ SYNDICATE DRONE FACTORY AREAS
 					M.unlock_medal("Illuminated", 1)
 
 			else
-				boutput(usr, "<span style=\"color:blue\">The Circle glows faintly before returning to normal. Maybe something is missing.</span>")
+				boutput(usr, "<span class='notice'>The Circle glows faintly before returning to normal. Maybe something is missing.</span>")
 			return
 		else
-			boutput(usr, "<span style=\"color:red\">The Circle remains silent ...</span>")
+			boutput(usr, "<span class='alert'>The Circle remains silent ...</span>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(activated) return
 
 
 	New(var/location)
+		..()
 		var/list/types = new/list()
 		var/obj/item/alchemy/symbol/S = null
 
 		for(var/A in childrentypesof(/obj/item/alchemy/symbol))
 			types += A
 
-		loc = location
+		set_loc(location)
 		north = new(locate(src.loc.x + 2, src.loc.y + 3, src.loc.z))
 		var/ntype = pick(types)
 
@@ -1011,7 +1018,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/device/sat_crash_caller
 	name = "satellite transceiver"
 	desc = "A hand-held device for communicating with some sort of satellite."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "satcom"
 	w_class = 1
 
@@ -1020,24 +1027,24 @@ SYNDICATE DRONE FACTORY AREAS
 			return
 
 		if (satellite_crash_event_status != -1)
-			boutput(user, "<span style=\"color:red\">The [src.name] emits a sad beep.</span>")
+			boutput(user, "<span class='alert'>The [src.name] emits a sad beep.</span>")
 			playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
 			return
 
 		var/area/crypt/graveyard/ourArea = get_area(user)
 		if (!istype(ourArea))
-			boutput(user, "<span style=\"color:red\">The [src.name] emits a rude beep! It appears to have no signal.</span>")
+			boutput(user, "<span class='alert'>The [src.name] emits a rude beep! It appears to have no signal.</span>")
 			playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
 			return
 
 		for (var/turf/T in range(user, 1))
 			if (T.density)
-				boutput(user, "<span style=\"color:red\">The [src.name] gives off a grumpy beep! Looks like the signals are reflecting off of walls or something.  Maybe move?</span>")
+				boutput(user, "<span class='alert'>The [src.name] gives off a grumpy beep! Looks like the signals are reflecting off of walls or something.  Maybe move?</span>")
 				playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
 				return
 
 		satellite_crash_event_status = 0
-		user.visible_message("<span style=\"color:red\">[user] pokes some buttons on [src]!</span>", "You activate [src].  Apparently.")
+		user.visible_message("<span class='alert'>[user] pokes some buttons on [src]!</span>", "You activate [src].  Apparently.")
 		playsound(user.loc, "sound/machines/signal.ogg", 60, 1)
 		new /obj/effects/sat_crash(get_turf(src))
 
@@ -1083,7 +1090,7 @@ var/satellite_crash_event_status = -1
 		light.enable()
 		playsound(src.loc, "sound/machines/satcrash.ogg", 50, 0)
 
-		sleep(50)
+		sleep(5 SECONDS)
 		if (!satellite)
 			satellite_crash_event_status = -1
 			return
@@ -1094,10 +1101,10 @@ var/satellite_crash_event_status = -1
 			var/obj/effects/expl_particles/EP = new /obj/effects/expl_particles {pixel_y = 600; name = "space debris";} (pick(orange(src,3)))
 			animate(EP, pixel_y = 0, time=15, easing = SINE_EASING, transform = matrix(rand(-180, 180), MATRIX_ROTATE))
 
-		sleep(15)
+		sleep(1.5 SECONDS)
 		var/oldTransform = satellite.transform
 		animate(satellite, pixel_y = 0, time = 10, easing = SINE_EASING, transform = matrix(rand(5, 30), MATRIX_ROTATE))
-		sleep(10)
+		sleep(1 SECOND)
 		var/datum/effects/system/explosion/explode = new /datum/effects/system/explosion
 		explode.set_up( src.loc )
 		explode.start()
@@ -1107,14 +1114,14 @@ var/satellite_crash_event_status = -1
 		for (var/mob/living/L in range(src.loc, 2))
 			L.ex_act(get_dist(src.loc, L))
 
-		sleep(5)
+		sleep(0.5 SECONDS)
 		satellite.icon_state = "syndsat-crashed"
 		satellite.set_density(1)
 		satellite.transform = oldTransform
 		satellite.color = "#FFFFFF"
 		light.disable()
 		light.detach()
-		sleep(45)
+		sleep(4.5 SECONDS)
 		qdel(explode)
 
 		var/image/projection = image('icons/effects/64x64.dmi', "syndsat-projection")

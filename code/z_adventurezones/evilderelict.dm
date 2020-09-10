@@ -27,7 +27,7 @@ var/maniac_previous_victim = "Unknown"
 			else
 				walk_to(src, src.target, 0, 3)
 
-			sleep(10)
+			sleep(1 SECOND)
 			SPAWN_DBG(0.5 SECONDS)
 				process()
 
@@ -47,7 +47,7 @@ var/maniac_previous_victim = "Unknown"
 
 	proximity_act()
 		if(prob(40))
-			src.visible_message("<span style=\"color:red\"><B>[src] slices through [target.name] with the axe!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] slices through [target.name] with the axe!</B></span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "Help... help...")
@@ -58,12 +58,10 @@ var/maniac_previous_victim = "Unknown"
 				target.ckey = "" // disconnect the player so they rejoin wondering what the hell happened
 				sleep(0)
 				var/mob/dead/observer/ghost = new/mob/dead/observer
-				for (var/obj/landmark/A in landmarks)//world)
-					LAGCHECK(LAG_LOW)
-					if (A.name == "evilchef_corpse")
-						ghost.set_loc(A.loc)
-						var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(A.loc)
-						meat.name = "[victimname] meat"
+				for(var/turf/T in landmarks[LANDMARK_EVIL_CHEF_CORPSE])
+					ghost.set_loc(T)
+					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(T)
+					meat.name = "[victimname] meat"
 				ghost.ckey = victimkey
 				ghost.name = victimname // should've added this sooner
 				ghost.real_name = victimname
@@ -72,7 +70,7 @@ var/maniac_previous_victim = "Unknown"
 				qdel(target)
 				qdel(src)
 		else
-			src.visible_message("<span style=\"color:red\"><B>[src] swings at [target.name] with the axe!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] swings at [target.name] with the axe!</B></span>")
 			playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 
 	process()
@@ -82,9 +80,9 @@ var/maniac_previous_victim = "Unknown"
 			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
-					qdel(src)
+				sleep(rand(100,400))
+				if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
+				qdel(src)
 		..()
 
 
@@ -156,12 +154,12 @@ var/maniac_previous_victim = "Unknown"
 				playsound(src.loc, 'sound/machines/whistlealert.ogg', 50, 1)
 				icon_state = "pr1_1"
 				flick("pr1_a",src)
-				for(var/obj/machinery/door/poddoor/P in doors)
+				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 					if (P.id == src.id)
 						if (!P.density)
 							SPAWN_DBG( 0 )
 								P.close()
-				sleep(50)
+				sleep(5 SECONDS)
 				if(id == "evilreaverbridge")
 					playsound(src.loc, 'sound/machines/driveclick.ogg', 50, 1)
 					var/obj/item/paper/PA = unpool(/obj/item/paper)
@@ -276,7 +274,7 @@ var/maniac_previous_victim = "Unknown"
 	cant_self_remove = 1
 
 	equipped(var/mob/user, var/slot)
-		boutput(user, "<span style=\"color:red\">Uh oh..</span>")
+		boutput(user, "<span class='alert'>Uh oh..</span>")
 		..()
 
 /obj/item/clothing/head/helmet/space/old
@@ -296,7 +294,7 @@ var/maniac_previous_victim = "Unknown"
 
 	proximity_act()
 		if(prob(40))
-			src.visible_message("<span style=\"color:red\"><B>[src] slashes [target.name] with the axe!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] slashes [target.name] with the axe!</B></span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "Help... help...")
@@ -311,7 +309,7 @@ var/maniac_previous_victim = "Unknown"
 				qdel(src)
 				maniac_active &= ~1
 		else
-			src.visible_message("<span style=\"color:red\"><B>[src] swings at [target.name] with the axe!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] swings at [target.name] with the axe!</B></span>")
 			playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 
 	process()
@@ -321,8 +319,8 @@ var/maniac_previous_victim = "Unknown"
 			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
-					qdel(src)
+				sleep(rand(100,400))
+				if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
+				qdel(src)
 		..()
 

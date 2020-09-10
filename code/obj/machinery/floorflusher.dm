@@ -10,6 +10,7 @@
 	density = 0
 	flags = NOSPLASH
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0 //is it open
 	var/id = null //ID used for brig stuff
@@ -175,12 +176,12 @@
 	relaymove(mob/user as mob)
 		if(user.stat || src.flushing)
 			return
-		boutput(user, "<span style=\"color:red\">It's too deep. You can't climb out.</span>")
+		boutput(user, "<span class='alert'>It's too deep. You can't climb out.</span>")
 		return
 
 	// ai cannot interface.
 	attack_ai(mob/user as mob)
-		boutput(user, "<span style=\"color:red\">You cannot interface with this device.</span>")
+		boutput(user, "<span class='alert'>You cannot interface with this device.</span>")
 
 	// human interact with machine
 	attack_hand(mob/user as mob)
@@ -188,7 +189,7 @@
 		if (open != 1)
 			return
 		if(status & BROKEN)
-			user.machine = null
+			src.remove_dialog(user)
 			return
 
 		//fall in hilariously
@@ -218,10 +219,9 @@
 			var/mob/living/M = locate() in contents
 			if(M)
 				flush = 1
-				if(M.handcuffed)
+				if(M.hasStatus("handcuffed"))
 					boutput(M, "You feel your handcuffs being removed.")
-					M.handcuffed = null
-					new /obj/item/handcuffs(src)
+					M.handcuffs.drop_handcuffs(M)
 
 	// timed process
 	// charge the gas reservoir and perform flush if ready
@@ -229,10 +229,9 @@
 		if(status & BROKEN)			// nothing can happen if broken
 			return
 
-		src.updateDialog()
-
 		if(open && flush)	// flush can happen even without power, must be open first
-			flush()
+			SPAWN_DBG(0)
+				flush()
 
 		if(status & NOPOWER)			// won't charge if no power
 			return
@@ -256,9 +255,9 @@
 
 		air_contents.zero() // empty gas
 
-		sleep(10)
+		sleep(1 SECOND)
 		playsound(src, "sound/machines/disposalflush.ogg", 50, 0, 0)
-		sleep(5) // wait for animation to finish
+		sleep(0.5 SECONDS) // wait for animation to finish
 
 
 		H.start(src) // start the holder processing movement
@@ -302,9 +301,7 @@
 
 			AM.set_loc(src.loc)
 			AM.pipe_eject(0)
-			SPAWN_DBG(1 DECI SECOND)
-				if(AM)
-					AM.throw_at(target, 5, 1)
+			AM?.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
 		pool(H)
@@ -358,10 +355,8 @@
 		if(status & BROKEN)			// nothing can happen if broken
 			return
 
-		src.updateDialog()
-
 		if(open && flush)	// flush can happen even without power, must be open first
-			flush()
+			SPAWN_DBG(0) flush()
 
 		if(status & NOPOWER)			// won't charge if no power
 			return

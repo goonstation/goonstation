@@ -63,9 +63,9 @@
 	if (istype(I,/obj/item/satchel))
 		var/obj/item/satchel/S = I
 		if (S.contents.len < 1)
-			boutput(usr, "<span style='color:red'>There's nothing in [S]!</span>")
+			boutput(usr, "<span class='alert'>There's nothing in [S]!</span>")
 		else
-			user.visible_message("<span style='color:blue'>[user] dumps out [S]'s contents onto [src]!</span>")
+			user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
 			for (var/obj/item/thing in S.contents)
 				thing.set_loc(src.loc)
 			S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
@@ -78,9 +78,8 @@
 		step(I, get_dir(I, src))
 	return
 
-/obj/rack/dispose()
+/obj/rack/disposing()
 	var/turf/OL = get_turf(src)
-	loc = null
 	if (!OL)
 		return
 	if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
@@ -149,10 +148,10 @@
 	onStart()
 		..()
 		playsound(get_turf(the_rack), "sound/items/Ratchet.ogg", 50, 1)
-		owner.visible_message("<span style='color:blue'>[owner] begins disassembling [the_rack].</span>")
+		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_rack].</span>")
 
 	onEnd()
 		..()
 		playsound(get_turf(the_rack), "sound/items/Deconstruct.ogg", 50, 1)
-		owner.visible_message("<span style='color:blue'>[owner] disassembles [the_rack].</span>")
+		owner.visible_message("<span class='notice'>[owner] disassembles [the_rack].</span>")
 		the_rack.deconstruct()

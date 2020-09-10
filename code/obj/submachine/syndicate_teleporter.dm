@@ -12,7 +12,7 @@
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -35,7 +35,7 @@
 
 /obj/item/remote/syndicate_teleporter
 	name = "Syndicate Teleporter Remote"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	desc = "Allows one to use a syndicate teleporter when standing on it."
 	icon_state = "locator"
 	item_state = "electronic"

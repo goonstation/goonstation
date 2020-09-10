@@ -521,7 +521,7 @@
 
 		for (var/mt in cyborg_modules)
 			var/obj/item/robot_module/M = new mt
-			for (var/obj/item/I in M.modules)
+			for (var/obj/item/I in M.tools)
 				var/datum/module_tech/T = locate_item(I)
 				if (T)
 					unlock_now(T)
@@ -550,7 +550,7 @@
 		var/break_timer = 0
 		while (locked)
 			break_timer++
-			sleep(10)
+			sleep(1 SECOND)
 			if (break_timer > 5)
 				locked = 0
 		locked = 1
@@ -653,17 +653,17 @@ var/global/datum/module_research_controller/module_control = new
 		if (isrobot(user))
 			return
 		if (istype(W, /obj/item/robot_module))
-			boutput(user, "<span style=\"color:blue\">You insert [W] into [src].</span>")
+			boutput(user, "<span class='notice'>You insert [W] into [src].</span>")
 			modules += W
 			user.u_equip(W)
-			W.loc = src
+			W.set_loc(src)
 			return
 		if ((!islist(W.module_research) || !W.module_research.len) && !W.artifact)
-			boutput(user, "<span style=\"color:red\">That item cannot be researched!</span>")
+			boutput(user, "<span class='alert'>That item cannot be researched!</span>")
 			return
 		user.u_equip(W)
-		boutput(user, "<span style=\"color:blue\">You insert [W] into [src].</span>")
-		W.loc = src
+		boutput(user, "<span class='notice'>You insert [W] into [src].</span>")
+		W.set_loc(src)
 		objects += W
 		add_viewer(user)
 		update_all_users()
@@ -717,7 +717,7 @@ var/global/datum/module_research_controller/module_control = new
 			if (href_list["eject"])
 				var/obj/item/I = locate(href_list["eject"]) in src
 				if (I && I.loc == src)
-					I.loc = src.loc
+					I.set_loc(src.loc)
 					usr.put_in_hand_or_drop(I) // try to eject it into the users hand, if we can
 					objects -= I
 					modules -= I
@@ -761,9 +761,9 @@ var/global/datum/module_research_controller/module_control = new
 				if (wagesystem.research_budget >= cost)
 					wagesystem.research_budget -= cost
 					module_control.data_points += amt
-					boutput(usr, "<span style=\"color:blue\">Purchased [amt] data points for [cost] credits!</span>")
+					boutput(usr, "<span class='notice'>Purchased [amt] data points for [cost] credits!</span>")
 				else
-					boutput(usr, "<span style=\"color:red\">You cannot afford to purchase [amt] data points for [cost] credits!</span>")
+					boutput(usr, "<span class='alert'>You cannot afford to purchase [amt] data points for [cost] credits!</span>")
 			if (href_list["add"])
 				var/datum/module_tech/T = locate(href_list["add"]) in module_control.unlocked_tech
 				if (T && (T in module_control.unlocked_tech))
@@ -789,29 +789,29 @@ var/global/datum/module_research_controller/module_control = new
 				var/t_cost = 0
 				var/t_size = 0
 				if (!modules.len)
-					boutput(usr, "<span style=\"color:red\">There are no active modules in the machine.</span>")
+					boutput(usr, "<span class='alert'>There are no active modules in the machine.</span>")
 				else
 					for (var/i = 1, i <= current_module.len, i++)
 						var/datum/module_tech/T = current_module[i]
 						t_cost += T.cost / module_control.cost_divisor
 						t_size += T.size
 					if (t_size > module_control.maximum_size)
-						boutput(usr, "<span style=\"color:red\">The total size cannot exceed the module maximum size!</span>")
+						boutput(usr, "<span class='alert'>The total size cannot exceed the module maximum size!</span>")
 					else if (t_cost > module_control.data_points)
-						boutput(usr, "<span style=\"color:red\">You require more data points for this module!</span>")
+						boutput(usr, "<span class='alert'>You require more data points for this module!</span>")
 					else
 						module_control.data_points -= t_cost
 						var/obj/item/robot_module/R = modules[1]
-						for (var/obj/O in R.modules)
+						for (var/obj/O in R.tools)
 							qdel(O)
-						R.modules.len = 0
+						R.tools.len = 0
 						for (var/i = 1, i <= current_module.len, i++)
 							var/datum/module_tech/T = current_module[i]
 							var/obj/O = new T.item_path()
-							O.loc = R
-							R.modules += O
+							O.set_loc(R)
+							R.tools += O
 						modules -= R
-						R.loc = get_turf(src)
+						R.set_loc(get_turf(src))
 						R.name = module_name
 						R.mod_hudicon = module_icon_state
 						current_module.len = 0
@@ -827,7 +827,7 @@ var/global/datum/module_research_controller/module_control = new
 				wagesystem.research_budget -= boost_cost
 				research_speed += boost_speed
 			else
-				boutput(usr, "<span style=\"color:red\">Cannot boost this research any further!</span>")
+				boutput(usr, "<span class='alert'>Cannot boost this research any further!</span>")
 		if (!href_list["close"])
 			add_viewer(usr)
 			update_all_users()
@@ -863,7 +863,7 @@ var/global/datum/module_research_controller/module_control = new
 		show_interface(user)
 
 	proc/add_viewer(var/mob/user)
-		user.machine = src
+		src.add_dialog(user)
 		if (!(user in users))
 			users += user
 

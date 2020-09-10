@@ -31,23 +31,18 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			tutorial_area = locate(tutorial_area_type) in world
 			logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Got area [tutorial_area]")
 			if (tutorial_area)
-				// var/obj/landmark/tutorial_start/L = locate() in tutorial_area
-				// GODDAMNIT LUMMOX
-				var/obj/landmark/tutorial_start/L = null
-				for (var/obj/landmark/tutorial_start/temp in tutorial_area)
-					L = temp
-					break
-				if (!L)
+				for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
+					if(T.loc == tutorial_area)
+						initial_turf = T
+						break
+				if (!initial_turf)
 					logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Tutorial failed setup: missing landmark.")
 					throw EXCEPTION("Okay who removed the goddamn blob tutorial landmark")
-				initial_turf = get_turf(L)
-				if (!initial_turf)
-					logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Tutorial failed setup: [L], [initial_turf].")
 
 	Start()
 		if (!initial_turf)
 			logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Failed setup.")
-			boutput(usr, "<span style=\"color:red\"><b>Error setting up tutorial!</b></span>")
+			boutput(usr, "<span class='alert'><b>Error setting up tutorial!</b></span>")
 			qdel(src)
 			return
 		if (..())
@@ -60,7 +55,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 	Finish()
 		if (..())
-			bowner.set_loc(pick(observer_start))
+			bowner.set_loc(pick_landmark(LANDMARK_OBSERVER))
 			bowner.bio_points_max_bonus = initial(bowner.bio_points_max_bonus)
 			bowner.started = 0
 			for (var/obj/blob/B in bowner.blobs)
@@ -287,16 +282,16 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
-				sleep(20)
+				sleep(2 SECONDS)
 				var/obj/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
-				sleep(50)
+				sleep(5 SECONDS)
 				W.dir = 2
-				sleep(20)
+				sleep(2 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
-				sleep(40)
+				sleep(4 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
-				sleep(40)
+				sleep(4 SECONDS)
 				gibs(get_turf(W), list(), list())
 				qdel(W)
 				tutorial.Advance()
@@ -364,16 +359,16 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
-				sleep(20)
+				sleep(2 SECONDS)
 				var/obj/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
-				sleep(50)
+				sleep(5 SECONDS)
 				W.dir = 2
-				sleep(20)
+				sleep(2 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
-				sleep(40)
+				sleep(4 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
-				sleep(40)
+				sleep(4 SECONDS)
 				gibs(get_turf(W), list(), list())
 				qdel(W)
 				tutorial.Advance()
@@ -384,9 +379,9 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		MayAdvance()
 			return 0
 
-	ribosomes
+		ribosomes
 		name = "Ribosomes"
-		instructions = "Your most valuable assets are the ribosomes. As your size grows, so does the amount of time it takes for your spread ability to cool down. Ribosomes generate valuable structural materials for the blob, allowing it to mitigate this cooldown penalty. Place a ribosome on the marked blob tile to proceed."
+		instructions = "Your most valuable assets are the ribosomes. Ribosomes increase your biopoint generation, allowing you do do more things, faster. Place a ribosome on the marked blob tile to proceed."
 		var/turf/target
 		finished = 0
 
@@ -440,7 +435,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 	hotkeys
 		name = "Repair and Hotkeying"
-		instructions = "In hot situations, you will be unable to move around quickly and perform actions at the same time. This is where hotkeying comes in. You may assign up to three abilities to three different hotkey: CTRL+Click, ALT+Click and SHIFT+Click. This lets you perform stuff on the tile you click on! To assign a hotkey, CTRL/ALT/SHIFT-click an ability. Let's try this: assign a hotkey to the repair ability, and repair your damaged ribosome without moving."
+		instructions = "In hot situations, you will be unable to move around quickly and perform actions at the same time. This is where hotkeying comes in. You may assign up to three abilities to three different hotkey: CTRL+Click, ALT+Click and SHIFT+Click. This lets you perform stuff on the tile you click on! To assign a hotkey, CTRL/ALT/SHIFT-click an ability. Let's try this: assign a hotkey to the repair ability, and repair your damaged cells without moving."
 		var/turf/target
 
 		SetUp()
@@ -717,7 +712,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			sleep(50)
+			sleep(5 SECONDS)
 			tutorial.Advance()
 
 proc/AddBlobSteps(var/datum/tutorial/blob/T)
@@ -728,7 +723,6 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 	T.AddStep(new /datum/tutorialStep/blob/cutscene)
 	T.AddStep(new /datum/tutorialStep/blob/firewall)
 	T.AddStep(new /datum/tutorialStep/blob/cutscene2)
-	T.AddStep(new /datum/tutorialStep/blob/ribosomes)
 	T.AddStep(new /datum/tutorialStep/blob/clickmove)
 	T.AddStep(new /datum/tutorialStep/blob/hotkeys)
 	T.AddStep(new /datum/tutorialStep/blob/upgrades)
@@ -746,12 +740,12 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 	desc = "Some dork with a flamethrower."
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_f"
-	var/obj/item/flamethrower/loaded/L = new
+	var/obj/item/flamethrower/assembled/loaded/L = new
 
 	New()
 		..()
 		overlays += image('icons/mob/inhand/hand_weapons.dmi', "flamethrower1-R")
-		L.loc = src
+		L.set_loc(src)
 		L.lit = 1
 
 	proc/sprayAt(var/turf/T)
@@ -764,7 +758,7 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 /mob/living/intangible/blob_overmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"
 	if (!tutorial)
-		boutput(src, "<span style=\"color:red\">You're not in a tutorial, doofus. It's real. IT'S ALL REAL.</span>")
+		boutput(src, "<span class='alert'>You're not in a tutorial, doofus. It's real. IT'S ALL REAL.</span>")
 		return
 	src.tutorial.Finish()
 	src.tutorial = null

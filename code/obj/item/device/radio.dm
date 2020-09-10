@@ -4,12 +4,14 @@
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"
 	item_state = "radio"
-	var/device_color = RADIOC_STANDARD
+	var/device_color = null
+	var/chat_class = RADIOCL_STANDARD // respects dark mode, gets overriden by device_color
 	var/last_transmission
 	var/frequency = R_FREQ_DEFAULT
 	var/locked_frequency = 0 // can't change the frequency from default: enables radios to be outside the default range as well
 	var/list/secure_frequencies = null
-	var/list/secure_colors = list("#E00000")
+	var/list/secure_colors = list()
+	var/list/secure_classes = list(RADIOCL_STANDARD) // respects dark mode, gets overriden by secure_colors
 	var/protected_radio = 0 // Cannot be picked up by radio_brain bioeffect.
 	var/traitor_frequency = 0.0
 	var/obj/item/device/radio/patch_link = null
@@ -28,7 +30,7 @@
 	w_class = 2.0
 	mats = 3
 
-	var/bicon_override = 0
+	var/icon_override = 0
 
 	var/const
 		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
@@ -105,7 +107,7 @@ var/list/headset_channel_lookup
 	return
 
 /obj/item/device/radio/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 
 	var/dat = {"
 Microphone: [src.broadcasting ? "<a href='?src=\ref[src];talk=0'>Engaged</a>" : "<a href='?src=\ref[src];talk=1'>Disengaged</a>"]
@@ -142,7 +144,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	// Band-aid fix for intercoms, RE 'bounds_dist' check in the 'in_range' proc. Feel free to improve the implementation (Convair880).
 	var/special_cases =((istype(src, /obj/item/device/radio/intercom) && (get_dist(src, usr) <= 1) && (istype(src.loc, /turf))) || (istype(src, /obj/item/device/radio/spy) && (get_dist(src, usr) <= 1)))
 	if ((issilicon(usr) || isAI(usr)) || (src in usr) || (special_cases) || (usr.loc == src.loc))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["track"])
 			// wait is tracking here? really? what? ???? ????????????
@@ -165,7 +167,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			set_frequency(sanitize_frequency(new_frequency))
 
 			if (!isnull(src.traitorradio) && src.traitor_frequency && src.frequency == src.traitor_frequency)
-				usr.machine = null
+				src.remove_dialog(usr)
 				usr.Browse(null, WINDOW_OPTIONS)
 				onclose(usr, "radio")
 				// now transform the regular radio, into a (disguised)syndicate uplink!
@@ -232,49 +234,18 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		real_name = new_name
 		voice_name = new_name
 
-/obj/item/device/radio/proc/radio_bicon(var/mob/user)
-	.= 0
+/obj/item/device/radio/proc/radio_icon(var/mob/user)
 	if (isAI(user))
-		.= bicon(aiIcon)
+		.= "ai"
 	else if (isrobot(user))
-		.= bicon(roboIcon)
-	else if (bicon_override)
-		if (bicon_override == "head")
-			.= bicon(headIcon)
-		else if (bicon_override == "sci")
-			.= bicon(sciIcon)
-		else if (bicon_override == "med")
-			.= bicon(medIcon)
-		else if (bicon_override == "eng")
-			.= bicon(engIcon)
-		else if (bicon_override == "sec")
-			.= bicon(secIcon)
-		else if (bicon_override == "qm")
-			.= bicon(qmIcon)
-		else if (bicon_override == "ai")
-			.= bicon(aiIcon)
-		else if (bicon_override == "syndie")
-			.= bicon(syndieIcon)
-		else if (bicon_override == "syndieboss")
-			.= bicon(syndiebossIcon)
-		else if (bicon_override == "cap")
-			.= bicon(capIcon)
-		else if (bicon_override == "rd")
-			.= bicon(rdIcon)
-		else if (bicon_override == "md")
-			.= bicon(mdIcon)
-		else if (bicon_override == "ce")
-			.= bicon(ceIcon)
-		else if (bicon_override == "hop")
-			.= bicon(hopIcon)
-		else if (bicon_override == "hos")
-			.= bicon(hosIcon)
-		else if (bicon_override == "clown")
-			.= bicon(clownIcon)
-		else
-			.= bicon(civIcon)
+		.= "robo"
+	else if (icon_override)
+		.= icon_override
+
+	if(.)
+		. = {"<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon misc\" src="[resource("images/radio_icons/[.].png")]">"}
 	else
-		.= bicon(src)
+		return bicon(src)
 
 /obj/item/device/radio/talk_into(mob/M as mob, messages, secure, real_name, lang_id)
 	// According to a pair of DEBUG calls set up for testing, no radio jammer check for the src radio was performed.
@@ -286,6 +257,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 //	if (last_transmission && world.time < (last_transmission + TRANSMISSION_DELAY))
 //		return
 
+	var/ai_sender = 0
 	var/eqjobname
 
 	if (iscarbon(M))
@@ -296,6 +268,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				eqjobname = "No ID"
 	else if (isAI(M))
 		eqjobname = "AI"
+		ai_sender = 1
 	else if (isrobot(M))
 		eqjobname = "Cyborg"
 	else if (istype(M, /obj/machinery/computer)) // :v
@@ -315,18 +288,41 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		connection = src.radio_connection
 		secure = 0
 
-	for (var/obj/item/device/radio/R in connection.devices)
+	for (var/obj/item/I in connection.devices)
+		if (istype(I, /obj/item/device/radio))
+			var/obj/item/device/radio/R = I
+			//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
+			if (can_check_jammer)
+				if (connection.check_for_jammer_bare(R))
+					continue
 
-		//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
-		if (can_check_jammer)
-			if (connection.check_for_jammer_bare(R))
-				continue
+			if (R.accept_rad(src, messages, connection))
+				R.speech_bubble()
+				if (secure)
+					for (var/i in R.send_hear())
+						if (!(i in receive))
+							receive += i
 
-		if (R.accept_rad(src, messages, connection))
-			R.speech_bubble()
-			for (var/i in R.send_hear())
-				if (!(i in receive))
-					receive += i
+							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
+							var/mob/rmob = i
+
+							if (ai_sender)
+								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+							else
+								rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+
+				else
+					for (var/i in R.send_hear())
+						if (!(i in receive))
+							receive += i
+
+							if (ai_sender)
+								var/mob/rmob = i
+								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+
+		else if (istype(I, /obj/item/mechanics/radioscanner)) //MechComp radio scanner
+			var/obj/item/mechanics/radioscanner/R = I
+			R.hear_radio(M, messages, lang_id)
 
 	var/list/heard_flock = list() // heard by flockdrones/flockmind
 
@@ -334,7 +330,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	if (src.protected_radio != 1 && isnull(src.traitorradio))
 		for (var/mob/living/L in radio_brains)
 			receive += L
-			
+
 		for(var/mob/zoldorf/z in the_zoldorf)
 			if(z.client)
 				receive += z
@@ -353,8 +349,11 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 							if(D)
 								heard_flock |= D
 
-	for (var/mob/dead/D in mobs)
-		if (D.client && (istype(D, /mob/dead/observer) || (iswraith(D) && !D.density)) || ((!isturf(src.loc) && src.loc == D.loc) && !istype(D, /mob/dead/target_observer)))
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/dead/D = C.mob
+
+		if ((istype(D, /mob/dead/observer) || (iswraith(D) && !D.density)) || ((!isturf(src.loc) && src.loc == D.loc) && !istype(D, /mob/dead/target_observer)))
 			if (!(D in receive))
 				receive += D
 
@@ -384,20 +383,27 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	var/rendered
 
 	if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled) || length(heard_flock))
-		var/textColor = null
+		var/textColor = secure ? null : src.device_color
+		var/classes = ""
+		if(src.chat_class)
+			classes = " [src.chat_class]"
 		if (secure)
+			if(secure in secure_classes)
+				classes = " [secure_classes["[secure]"]]"
+			else
+				classes = " [secure_classes[1]]"
 			textColor = secure_colors["[secure]"]
 			if (!textColor)
 				if (secure_colors.len)
 					textColor = secure_colors[1]
-				else
-					textColor = "#E00000"
-
+		var/css_style = ""
+		if(textColor)
+			css_style = " style='color: [textColor]'"
 		var/part_a
 		if (ismob(M) && M.mind)
-			part_a = "[radio_bicon(M)] <span class='radio' style='color: [secure ? textColor : src.device_color]'><span class='name' data-ctx='\ref[M.mind]'>"
+			part_a = "[radio_icon(M)]<span class='radio[classes]'[css_style]><span class='name' data-ctx='\ref[M.mind]'>"
 		else
-			part_a = "[radio_bicon(M)]<span class='radio' style='color: [secure ? textColor : src.device_color]'><span class='name'>"
+			part_a = "[radio_icon(M)]<span class='radio[classes]'[css_style]><span class='name'>"
 		var/part_b = "</span><b> \[[format_frequency(display_freq)]\]</b> <span class='message'>"
 		var/part_c = "</span></span>"
 
@@ -531,32 +537,27 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			SPAWN_DBG(1.5 SECONDS)
 				UpdateOverlays(null, "speech_bubble")
 
-/obj/item/device/radio/examine()
-	set src in view()
-	set category = "Local"
-
-	..()
-	if ((in_range(src, usr) || src.loc == usr))
+/obj/item/device/radio/examine(mob/user)
+	. = ..()
+	if ((in_range(src, user) || src.loc == user))
 		if (src.b_stat)
-			usr.show_message("<span style=\"color:blue\">\the [src] can be attached and modified!</span>")
+			. += "<span class='notice'>\the [src] can be attached and modified!</span>"
 		else
-			usr.show_message("<span style=\"color:blue\">\the [src] can not be modified or attached!</span>")
+			. += "<span class='notice'>\the [src] can not be modified or attached!</span>"
 	if (istype(src.secure_frequencies) && src.secure_frequencies.len)
-		var/o = "Supplementary Channels:"
+		. += "Supplementary Channels:"
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
-			o += "<br>[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
-		boutput(usr, o)
-	return
+			. += "[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
 
 /obj/item/device/radio/attackby(obj/item/W as obj, mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	if (!isscrewingtool(W))
 		return
 	src.b_stat = !( src.b_stat )
 	if (src.b_stat)
-		user.show_message("<span style=\"color:blue\">The radio can now be attached and modified!</span>")
+		user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
 	else
-		user.show_message("<span style=\"color:blue\">The radio can no longer be modified or attached!</span>")
+		user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
 	if (isliving(src.loc))
 		var/mob/living/M = src.loc
 		src.attack_self(M)
@@ -599,9 +600,6 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		if (radio_controller && istype(radio_controller) && radio_controller.active_jammers.Find(src))
 			radio_controller.active_jammers.Remove(src)
 		..()
-
-var/global/list/tracking_beacons = list() // things were looping through world to find these so let's just stop doing that and have this shit add itself to a global list instead maybe
-
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -611,14 +609,10 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 
 /obj/item/device/radio/beacon/New()
 	..()
-	SPAWN_DBG(0)
-		if (!islist(tracking_beacons))
-			tracking_beacons = list()
-		tracking_beacons.Add(src)
+	START_TRACKING
 
 /obj/item/device/radio/beacon/disposing()
-	if (islist(tracking_beacons))
-		tracking_beacons.Remove(src)
+	STOP_TRACKING
 	..()
 
 /obj/item/device/radio/beacon/hear_talk()
@@ -650,7 +644,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 	..()
 	if ((in_range(src, usr) || src.loc == usr))
 		if (src.e_pads)
-			boutput(usr, "<span style=\"color:blue\">The electric pads are exposed!</span>")
+			boutput(usr, "<span class='notice'>The electric pads are exposed!</span>")
 	return*/
 
 /obj/item/device/radio/electropack/attackby(obj/item/W as obj, mob/user as mob)
@@ -675,7 +669,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 	if (usr.stat || usr.restrained())
 		return
 	if (src in usr || (src.master && (src.master in usr)) || (in_range(src, usr) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
 			set_frequency(new_frequency)
@@ -723,8 +717,8 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 	if (ismob(src.loc) && src.on)
 		var/mob/M = src.loc
 		if (src == M.back)
-			M.show_message("<span style=\"color:red\"><B>You feel a sharp shock!</B></span>")
-			logTheThing("signalers", usr, M, "signalled an electropack worn by %target% at [log_loc(M)].") // Added (Convair880).
+			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
+			logTheThing("signalers", usr, M, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
 			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
 					ticker.mode:remove_revolutionary(M.mind)
@@ -734,6 +728,11 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 #else
 			M.changeStatus("weakened", 10 SECONDS)
 #endif
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				for (var/uid in H.pathogens)
+					var/datum/pathogen/P = H.pathogens[uid]
+					P.onshocked(35, 500)
 
 	if ((src.master && src.wires & WIRE_SIGNAL))
 		src.master.receive_signal()
@@ -744,7 +743,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 
 	if (!( ishuman(user) ))
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = {"<TT>
 <a href='?src=\ref[src];power=1'>Turn [src.on ? "Off" : "On"]</a><br>
 <B>Frequency/Code</B> for electropack:<br>
@@ -789,14 +788,14 @@ Code:
 	..()
 	if ((in_range(src, usr) || src.loc == usr))
 		if (src.b_stat)
-			usr.show_message("<span style=\"color:blue\">The signaler can be attached and modified!</span>")
+			usr.show_message("<span class='notice'>The signaler can be attached and modified!</span>")
 		else
-			usr.show_message("<span style=\"color:blue\">The signaler can not be modified or attached!</span>")
+			usr.show_message("<span class='notice'>The signaler can not be modified or attached!</span>")
 	return
 */
 
 /obj/item/device/radio/signaler/attack_self(mob/user as mob, flag1)
-	user.machine = src
+	src.add_dialog(user)
 	var/t1
 	if ((src.b_stat && !( flag1 )))
 		t1 = text("-------<br><br>Green Wire: []<br><br>Red Wire:   []<br><br>Blue Wire:  []<br><br>", (src.wires & WIRE_TRANSMIT ? text("<a href='?src=\ref[];wires=[WIRE_TRANSMIT]'>Cut Wire</a>", src) : text("<a href='?src=\ref[];wires=[WIRE_TRANSMIT]'>Mend Wire</a>", src)), (src.wires & WIRE_RECEIVE ? text("<a href='?src=\ref[];wires=[WIRE_RECEIVE]'>Cut Wire</a>", src) : text("<a href='?src=\ref[];wires=[WIRE_RECEIVE]'>Mend Wire</a>", src)), (src.wires & WIRE_SIGNAL ? text("<a href='?src=\ref[];wires=[WIRE_SIGNAL]'>Cut Wire</a>", src) : text("<a href='?src=\ref[];wires=[WIRE_SIGNAL]'>Mend Wire</a>", src)))
@@ -916,7 +915,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_range(src.master.master, usr))
 				is_detonator_trigger = 1
 	if (is_detonator_trigger || (src in usr) || (src.master && (src.master in usr)) || (in_range(src, usr) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
 			set_frequency(new_frequency)
@@ -988,7 +987,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	anchored = 1.0
 	speaker_range = 0
 	mats = 0
-	device_color = RADIOC_INTERCOM
+	chat_class = RADIOCL_INTERCOM
 	//Best I can figure, you need broadcasting and listening to both be TRUE for it to make a signal and send the words spoken next to it. Why? Fuck whoever named these, that's why.
 	broadcasting = 0
 	listening = 0		//maybe this doesn't need to be on. It shouldn't be relaying signals.
@@ -998,9 +997,6 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	frequency = R_FREQ_LOUDSPEAKERS
 	var/image/active_light = null
 
-	New()
-		// active_light = new ()
-
 //Must be standing next to it to talk into it
 /obj/item/device/radio/intercom/loudspeaker/hear_talk(mob/M as mob, msgs, real_name, lang_id)
 	if (src.broadcasting)
@@ -1008,14 +1004,8 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 			talk_into(M, msgs, null, real_name, lang_id)
 
 /obj/item/device/radio/intercom/loudspeaker/examine()
-	set src in view()
-	set category = "Local"
-
-	..()
-	boutput(usr, "[src] is[src.broadcasting ? " " : " not "]active!")
-	boutput(usr, "It is tuned to [format_frequency(src.frequency)]Hz.")
-
-	return
+	. = ..()
+	. += "[src] is[src.broadcasting ? " " : " not "]active!\nIt is tuned to [format_frequency(src.frequency)]Hz."
 
 /obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
 	if (!broadcasting)
@@ -1042,11 +1032,24 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	mats = 0
 	broadcasting = 1
 	listening = 1
-	device_color = RADIOC_INTERCOM
+	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
+
+	New()
+		..()
+		if(src.pixel_x == 0 && src.pixel_y == 0)
+			switch(src.dir)
+				if(NORTH)
+					pixel_y = -14
+				if(SOUTH)
+					pixel_y = 32
+				if(EAST)
+					pixel_x = -21
+				if(WEST)
+					pixel_x = 21
 
 	north
 		dir = NORTH
@@ -1071,8 +1074,6 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		flick("loudspeaker-transmitting",src)
 		playsound(src.loc, 'sound/misc/talk/speak_1.ogg', 50, 1)
 	return hear
-
-	return ..()
 
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/attack_hand(mob/user as mob)

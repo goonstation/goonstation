@@ -25,9 +25,6 @@
 	if(istype(AM,/obj/item/scrap))
 		return
 
-	if(world.timeofday - AM.last_bumped <= 60)
-		return
-
 	if(ismob(AM))
 		var/mob/M = AM
 		M.set_loc(src.loc)
@@ -81,7 +78,7 @@
 		if(prob(osha_prob)) //RIP you.
 			user.canmove = 0
 			user.anchored = 1
-			sleep(5) //Give it a little time
+			sleep(0.5 SECONDS) //Give it a little time
 			if(user) //Gotta make sure they haven't moved since last time
 				poking_jerks -= user
 				user.visible_message("<span class='combat bold'>...and gets pulled in! SHIT!!</span>")
@@ -98,7 +95,7 @@
 			user.canmove = 0
 			user.anchored = 1
 			interact_particle(user,src)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			if(user) //Still here?
 				poking_jerks -= user
 				user.visible_message("<span class='combat bold'>[pick_string("descriptors.txt", "crusherbrave")]</span>")
@@ -127,3 +124,16 @@
 	..()
 	if(status & (NOPOWER|BROKEN))	return
 	use_power(500)
+
+/obj/machinery/crusher/New()
+	..()
+	var/turf/T = get_turf(src)
+	if (T.contents.len > 100) //if it has to check too much stuff, it might lag?
+		src.visible_message("<span style='color:red'>\The [src] fails to deploy because of how much stuff there is on the ground! Clean it up!</span>")
+		qdel(src)
+		return
+	var/obj/machinery/crusher/C = locate(/obj/machinery/crusher) in T
+	if(C != src)
+		src.visible_message("<span style='color:red'>\The [src] fails to deploy because there's already a crusher there! Find someplace else!")
+		qdel(src)
+		return

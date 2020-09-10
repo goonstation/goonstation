@@ -93,15 +93,15 @@
 	else if (istype(W, /obj/item/device/multitool)) // check specifically for a multitool
 
 		var/obj/item/assembly/detonator/R = new /obj/item/assembly/detonator(user);
-		W.loc = R
+		W.set_loc(R)
 		W.master = R
 		W.layer = initial(W.layer)
-		src.loc = R
+		src.set_loc(R)
 		src.master = R
 		src.layer = initial(src.layer)
 		R.part_mt = W
 		R.part_ig = src
-		R.loc = user
+		R.set_loc(user)
 		user.u_equip(src)
 		user.u_equip(W)
 
@@ -109,14 +109,14 @@
 
 		R.setDetState(0)
 		src.add_fingerprint(user)
-		user.show_message("<span style=\"color:blue\">You hook up the igniter to the multitool's panel.</span>")
+		user.show_message("<span class='notice'>You hook up the igniter to the multitool's panel.</span>")
 
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
-			user.show_message("<span style=\"color:blue\">The igniter is ready!</span>")
+			user.show_message("<span class='notice'>The igniter is ready!</span>")
 		else
-			user.show_message("<span style=\"color:blue\">The igniter can now be attached!</span>")
+			user.show_message("<span class='notice'>The igniter can now be attached!</span>")
 		src.add_fingerprint(user)
 
 	return
@@ -134,7 +134,7 @@
 
 /obj/item/device/igniter/afterattack(atom/target, mob/user as mob)
 	if (!ismob(target) && target.reagents && can_ignite())
-		boutput(usr, "<span style=\"color:blue\">You heat \the [target.name]</span>")
+		boutput(usr, "<span class='notice'>You heat \the [target.name]</span>")
 		target.reagents.temperature_reagents(20000,50)
 		last_ignite = world.time
 
@@ -152,14 +152,10 @@
 
 	return
 
-/obj/item/device/igniter/examine()
-	set src in view()
-	set category = "Local"
-
-	..()
-	if ((in_range(src, usr) || src.loc == usr))
+/obj/item/device/igniter/examine(mob/user)
+	. = ..()
+	if ((in_range(src, user) || src.loc == user))
 		if (src.status)
-			usr.show_message("The igniter is ready!")
+			. += "The igniter is ready!"
 		else
-			usr.show_message("The igniter can be attached!")
-	return
+			. += "The igniter can be attached!"

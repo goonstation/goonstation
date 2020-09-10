@@ -14,6 +14,7 @@
 	var/next_event_at = 0
 
 	New()
+		..()
 		for (var/evtype in typesof(/datum/construction_event))
 			var/datum/construction_event/E = new evtype()
 			if (E.is_abstract)
@@ -120,7 +121,7 @@
 	var/player_modifier = 0
 
 	proc/early_warning()
-		for (var/obj/machinery/communications_dish/C in comm_dishes)
+		for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 			C.add_centcom_report("[command_name()] Update", early_warning_text)
 
 		if (!early_warning_heading)
@@ -129,7 +130,7 @@
 			command_alert(early_warning_text, early_warning_heading)
 
 	proc/set_up()
-		for (var/obj/machinery/communications_dish/C in comm_dishes)
+		for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 			C.add_centcom_report("[command_name()] Update", warning_text)
 
 		if (!warning_heading)
@@ -147,8 +148,9 @@
 
 	proc/calculate_player_modifier()
 		player_modifier = 1
-		for (var/mob/living/M in mobs)
-			if (M.client && M.stat < 2)
+
+		for (var/client/C)
+			if (C.mob && !isdead(C.mob))
 				player_modifier += player_scaling
 
 	proc/calculate_time_modifier()

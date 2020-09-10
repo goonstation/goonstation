@@ -25,7 +25,7 @@ Deletes the given status from the atom.
 Additional notes:
 Non-unique status effects (effects that can be applied several times to the same atom) can not be changed by normal means after they are added. Keep a reference if you need to change them.
 Status effect procs have comments in their base definition below. Check there if you want to know more about what they do.
-Status effects with a duration of null last indefinitely. (Shows as a duration of * in the UI) ((Keep in mind that null is distinct from 0))
+Status effects with a duration of INFINITE_STATUS (null) last indefinitely. (Shows as a duration of * in the UI) ((Keep in mind that null is distinct from 0))
 */
 
 var/list/globalStatusPrototypes = list()
@@ -132,6 +132,7 @@ var/list/statusGroupLimits = list("Food"=4)
 
 /atom
 	var/list/statusEffects = null //List of status effects.
+	var/list/statusLimits //only instantiated if we actually need it
 
 	proc/updateStatusUi() //Stub. Override for objects that need to update their ui with status information.
 		return
@@ -173,11 +174,12 @@ var/list/statusGroupLimits = list("Food"=4)
 
 			var/groupFull = 0
 			var/groupCount = 0
-			if(globalInstance.exclusiveGroup != "" && statusGroupLimits.Find(globalInstance.exclusiveGroup))
+			var/list/groupLimits = (length(src.statusLimits) ? src.statusLimits | statusGroupLimits : statusGroupLimits)
+			if(globalInstance.exclusiveGroup != "" && groupLimits.Find(globalInstance.exclusiveGroup))
 				for(var/datum/statusEffect/status in statusEffects)
 					if(status.exclusiveGroup == globalInstance.exclusiveGroup && status.id != statusId)
 						groupCount++
-				if(groupCount >= statusGroupLimits[globalInstance.exclusiveGroup])
+				if(groupCount >= groupLimits[globalInstance.exclusiveGroup])
 					groupFull = 1
 
 			if(globalInstance.unique) //unique, easy.
@@ -246,14 +248,29 @@ var/list/statusGroupLimits = list("Food"=4)
 					break
 
 	proc/hasStatus(statusId, optionalArgs = null)
-		.= null
 		if(statusEffects)
-			var/datum/statusEffect/status = 0
-			for(var/S in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
+			if (!islist(statusId))
+				var/datum/statusEffect/status
+				for(var/S in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
+					status = S
+					if(status.id == statusId && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
+						return status
+			else
+				var/list/idlist = statusId
+				var/datum/statusEffect/status
+				for(var/S in statusEffects)
+					status = S
+					if((status.id in idlist) && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
+						return status
+
+	proc/getStatusList(optionalArgs = null)
+		. = list()
+		if (statusEffects)
+			var/datum/statusEffect/status
+			for(var/S in statusEffects)
 				status = S
-				if(status.id == statusId && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
-					.= status
-					break
+				if((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs))
+					.[status.id] = status
 
 	proc/delStatus(var/status)
 		if(statusEffects == null)
@@ -289,6 +306,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	var/exclusiveGroup = "" //optional name of a group of buffs. players can only have a certain number of buffs of a given group - any new applications fail. useful for food buffs etc.
 	var/maxDuration = null //If non-null, duration of the effect will be clamped to be max. this amount.
 	var/move_triggered = 0 //has an on-move effect
+	var/datum/movement_modifier/movement_modifier // Has a movement-modifying effect
 
 
 	proc/preCheck(var/atom/A) //Used to run a custom check before adding status to an object. For when you want something to be flat out immune or something. ret = 1 allow, 0 = do not allow
@@ -298,9 +316,15 @@ var/list/statusGroupLimits = list("Food"=4)
 		.= change
 
 	proc/onAdd(var/optional=null) //Called when the status is added to an object. owner is already set at this point. Has the optional arg from setStatus passed in.
+		if (movement_modifier && ismob(owner))
+			var/mob/mob_owner = owner
+			APPLY_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
 		return
 
 	proc/onRemove() //Called when the status is removed from the object. owner is still set at this point.
+		if (movement_modifier && ismob(owner))
+			var/mob/mob_owner = owner
+			REMOVE_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
 		return
 
 	proc/onUpdate(var/timedPassed) //Called every tick by the status controller. Argument is the actual time since the last update call.
@@ -327,7 +351,19 @@ var/list/statusGroupLimits = list("Food"=4)
 	disposing()
 		if (owner)
 			owner.statusEffects -= src
+		src.owner = null
 		..()
+
+	defibbed
+		id = "defibbed"
+		name = "Defibrillated"
+		desc = "You've been zapped in a way your heart seems to like."
+		icon_state = "heart+"
+		unique = 1
+		maxDuration = 12 SECONDS // Just slightly longer than a defib's charge cycle
+
+		getTooltip()
+			return "You've been zapped in a way your heart seems to like!<br>You feel more resistant to cardiac arrest, and more likely for subsequent defibrillating shocks to restart your heart if it stops!"
 
 	maxhealth
 		id = "maxhealth"
@@ -342,12 +378,14 @@ var/list/statusGroupLimits = list("Food"=4)
 				var/mob/M = owner
 				change = optional
 				M.max_health += change
+				health_update_queue |= M
 			return
 
 		onRemove()
 			if(ismob(owner))
 				var/mob/M = owner
 				M.max_health -= change
+				health_update_queue |= M
 			return
 
 		onUpdate(var/timedPassed)
@@ -363,6 +401,7 @@ var/list/statusGroupLimits = list("Food"=4)
 				M.max_health -= change
 				change = optional
 				M.max_health += change
+				health_update_queue |= M
 			return
 
 		getTooltip()
@@ -441,7 +480,7 @@ var/list/statusGroupLimits = list("Food"=4)
 			return "You are [howMuch]irradiated.<br>Taking [damage_tox] toxin damage every [tickSpacing/10] sec.<br>Damage reduced by radiation resistance on gear."
 
 		preCheck(var/atom/A)
-			if(issilicon(A)) return 0
+			if(issilicon(A) || isobserver(A) || isintangible(A)) return 0
 			return 1
 
 		onAdd(var/optional=null)
@@ -484,7 +523,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						var/mob/M = owner
 						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 							M.changeStatus("weakened", 3 SECONDS)
-							boutput(M, "<span style=\"color:red\">You feel weak.</span>")
+							boutput(M, "<span class='alert'>You feel weak.</span>")
 							M.emote("collapse")
 				if(3)
 					damage_tox = (3 * prot)
@@ -498,7 +537,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span style=\"color:red\">You mutate!</span>")
+							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 				if(4)
 					damage_tox = (4 * prot)
@@ -512,7 +551,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span style=\"color:red\">You mutate!</span>")
+							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 				if(5)
 					damage_tox = (4.5 * prot)
@@ -526,7 +565,7 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (mutChance < 1) mutChance = 0
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span style=\"color:red\">You mutate!</span>")
+							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 
 			icon_state = "radiation[stage]"
@@ -555,6 +594,7 @@ var/list/statusGroupLimits = list("Food"=4)
 			return "You are [howMuch]irradiated by neutrons.<br>Taking [damage_tox] toxin damage every [tickSpacing/10] sec and [damage_brute] brute damage every [tickSpacing/10] sec."
 
 		preCheck(var/atom/A)
+			if(isobserver(A) || isintangible(A)) return 0
 			return 1
 
 		onAdd(var/optional=null)
@@ -748,7 +788,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		onRemove()
 			..()
 			if(!owner) return
-			if (!owner.hasStatus("stunned") && !owner.hasStatus("weakened") && !owner.hasStatus("paralysis") && !owner.hasStatus("pinned")) //consider later : a way to group effects to check a bunch in one proc call and save sonme cpu
+			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned")))
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
@@ -761,6 +801,18 @@ var/list/statusGroupLimits = list("Food"=4)
 			unique = 1
 			maxDuration = 30 SECONDS
 
+			onAdd(var/optional=null)
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+
+			onRemove()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+				. = ..()
+
 		weakened
 			id = "weakened"
 			name = "Knocked-down"
@@ -768,6 +820,18 @@ var/list/statusGroupLimits = list("Food"=4)
 			icon_state = "weakened"
 			unique = 1
 			maxDuration = 30 SECONDS
+
+			onAdd(var/optional=null)
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+
+			onRemove()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+				. = ..()
 
 			pinned
 				id = "pinned"
@@ -809,10 +873,22 @@ var/list/statusGroupLimits = list("Food"=4)
 		paralysis
 			id = "paralysis"
 			name = "Unconscious"
-			desc = "You are unconcious.<br>Unable to take any actions, blinded."
+			desc = "You are unconscious.<br>Unable to take any actions, blinded."
 			icon_state = "paralysis"
 			unique = 1
 			maxDuration = 30 SECONDS
+
+			onAdd(var/optional=null)
+				. = ..()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+
+			onRemove()
+				if (ismob(owner))
+					var/mob/mob_owner = owner
+					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+				. = ..()
 
 		dormant
 			id = "dormant"
@@ -820,7 +896,7 @@ var/list/statusGroupLimits = list("Food"=4)
 			desc = "You are dormant.<br>Unable to take any actions, until you power yourself."
 			icon_state = "paralysis"
 			unique = 1
-			duration = null
+			duration = INFINITE_STATUS
 
 	staggered
 		id = "staggered"
@@ -829,6 +905,28 @@ var/list/statusGroupLimits = list("Food"=4)
 		icon_state = "staggered"
 		unique = 1
 		maxDuration = 5 SECONDS
+		movement_modifier = /datum/movement_modifier/staggered_or_blocking
+
+		onAdd(var/optional=null)
+			.=..()
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.sustained_moves = 0
+
+	blocking
+		id = "blocking"
+		name = "Blocking"
+		desc = "You are currently blocking. Use Resist to stop blocking.<br>Slowed slightly, unable to sprint. This overrides the 'staggered' effect and does not stack."
+		icon_state = "blocking"
+		unique = 1
+		duration = INFINITE_STATUS
+		maxDuration = null
+		movement_modifier = /datum/movement_modifier/staggered_or_blocking
+
+		clicked(list/params)
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.resist()
 
 	slowed
 		id = "slowed"
@@ -837,15 +935,18 @@ var/list/statusGroupLimits = list("Food"=4)
 		icon_state = "slowed"
 		unique = 1
 		var/howMuch = 10
+		movement_modifier = new /datum/movement_modifier/status_slowed
 
 		onAdd(var/optional=null)
 			if(optional)
 				howMuch = optional
+				movement_modifier.additive_slowdown = optional
 			return ..(optional)
 
 		onChange(var/optional=null)
 			if(optional)
 				howMuch = optional
+				movement_modifier.additive_slowdown = optional
 			return ..(optional)
 
 	disorient
@@ -858,10 +959,11 @@ var/list/statusGroupLimits = list("Food"=4)
 		var/counter = 0
 		var/sound = "sound/effects/electric_shock_short.ogg"
 		var/count = 7
+		movement_modifier = /datum/movement_modifier/disoriented
 
 		onUpdate(var/timedPassed)
 			counter += timedPassed
-			if (counter >= count && owner && !owner.hasStatus("weakened") && !owner.hasStatus("paralysis"))
+			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
 				counter -= count
 				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
@@ -873,7 +975,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		desc = "You are drunk."
 		icon_state = "drunk"
 		unique = 1
-		duration = null
+		duration = INFINITE_STATUS
 		maxDuration = null
 		var/how_drunk = 0
 
@@ -915,6 +1017,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		desc = "You are hastened.<br>Movement speed is increased."
 		icon_state = "hastened"
 		unique = 1
+		movement_modifier = /datum/movement_modifier/hastened
 
 	cloaked
 		id = "cloaked"
@@ -988,10 +1091,10 @@ var/list/statusGroupLimits = list("Food"=4)
 	handcuffed
 		id = "handcuffed"
 		name = "Handcuffed"
-		desc = "You are handcuffed.<br>You cannot use your hands. Click this statuseffect to resist."
+		desc = "You are handcuffed.<br>You cannot use your hands. Click this status effect to resist."
 		icon_state = "handcuffed"
 		unique = 1
-		duration = null
+		duration = INFINITE_STATUS
 		maxDuration = null
 		var/mob/living/carbon/human/H
 
@@ -999,29 +1102,29 @@ var/list/statusGroupLimits = list("Food"=4)
 			if (ishuman(owner))
 				H = owner
 			else
+				if (ismob(owner))
+					var/mob/M = owner
+					if (M.handcuffs) M.handcuffs.drop_handcuffs(M) //Some kind of invalid mob??
 				owner.delStatus("handcuffed")
 
 		clicked(list/params)
 			H.resist()
 
-		onUpdate()
-			if (!H.handcuffed)
-				owner.delStatus("handcuffed")
-			.=..()
-
 	buckled
 		id = "buckled"
 		name = "Buckled"
-		desc = "You are buckled.<br>You cannot walk. Click this statuseffect to unbuckle."
+		desc = "You are buckled.<br>You cannot walk. Click this status effect to unbuckle."
 		icon_state = "buckled"
 		unique = 1
-		duration = null
+		duration = INFINITE_STATUS
 		maxDuration = null
 		var/mob/living/carbon/human/H
+		var/sleepcount = 5 SECONDS
 
 		onAdd(var/optional=null)
 			if (ishuman(owner))
 				H = owner
+				sleepcount = 5 SECONDS
 			else
 				owner.delStatus("buckled")
 
@@ -1029,10 +1132,50 @@ var/list/statusGroupLimits = list("Food"=4)
 			if(H.buckled)
 				H.buckled.attack_hand(H)
 
-		onUpdate()
+		onUpdate(var/timedPassed)
 			if (H && !H.buckled)
 				owner.delStatus("buckled")
+			else
+				if (sleepcount > 0)
+					sleepcount -= timedPassed
+					if (sleepcount <= 0)
+						if (H.hasStatus("resting") && istype(H.buckled,/obj/stool/bed))
+							var/obj/stool/bed/B = H.buckled
+							B.sleep_in(H)
+						else
+							sleepcount = 3 SECONDS
+
 			.=..()
+
+	resting
+		id = "resting"
+		name = "Resting"
+		desc = "You are resting.<br>You are laying down. Click this status effect to stand up."
+		icon_state = "resting"
+		unique = 1
+		duration = INFINITE_STATUS
+		maxDuration = null
+		var/mob/living/L
+
+		onAdd(var/optional=null)
+			if (isliving(owner))
+				L = owner
+				if (L.getStatusDuration("burning"))
+					if (!actions.hasAction(L, "fire_roll"))
+						L.last_resist = world.time + 25
+						actions.start(new/datum/action/fire_roll(), L)
+					else
+						return
+			else
+				owner.delStatus("resting")
+
+		clicked(list/params)
+			if(ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
+			L.delStatus("resting")
+			L.force_laydown_standup()
+			if (ishuman(L))
+				var/mob/living/carbon/human/H = L
+				H.hud.update_resting()
 
 	ganger
 		id = "ganger"
@@ -1040,12 +1183,15 @@ var/list/statusGroupLimits = list("Food"=4)
 		desc = "You are a gang member wearing your uniform. You get health and stamina bonuses."
 		icon_state = "ganger"
 		unique = 1
-		duration = null
+		duration = INFINITE_STATUS
 		maxDuration = null
 		var/const/max_health = 30
 		var/const/max_stam = 60
 		var/const/regen_stam = 5
+		var/const/max_dist = 50
 		var/mob/living/carbon/human/H
+		var/datum/gang/gang
+		var/on_turf = 0
 
 		onAdd(var/optional=null)
 			if (ishuman(owner))
@@ -1053,16 +1199,53 @@ var/list/statusGroupLimits = list("Food"=4)
 			else
 				owner.delStatus("ganger")
 			H.max_health += max_health
+			health_update_queue |= H
 			H.add_stam_mod_max("ganger_max", max_stam)
 			H.add_stam_mod_regen("ganger_regen", regen_stam)
+			if (ismob(owner))
+				var/mob/M = owner
+				if (M.mind)
+					gang = M.mind.gang
 
 		onRemove()
 			H.max_health -= max_health
+			health_update_queue |= H
 			H.remove_stam_mod_max("ganger_max")
 			H.remove_stam_mod_regen("ganger_regen")
+			gang = null
+
+		onUpdate(var/timedPassed)
+			var/area/cur_area = get_area(H)
+			if (cur_area?.gang_owners == gang && prob(50))
+				on_turf = 1
+
+				//get distance divided by max distance and invert it. Result will be between 0 and 1
+				var/buff_mult = round(1-(min(get_dist(owner,gang.locker), max_dist) / max_dist), 0.1)
+				if (buff_mult <=0)
+					buff_mult = 0.1
+
+				var/mob/living/carbon/human/H
+				if(ishuman(owner))
+					H = owner
+					H.HealDamage("All", 10*buff_mult, 0, 0)
+					if (H.bleeding && prob(100*buff_mult))
+						repair_bleeding_damage(H, 5, 1)
+
+					var/list/statusList = H.getStatusList()
+
+					if(statusList["paralysis"])
+						H.changeStatus("paralysis", -3*buff_mult)
+					if(statusList["stunned"])
+						H.changeStatus("stunned", -3*buff_mult)
+					if(statusList["weakened"])
+						H.changeStatus("weakened", -3*buff_mult)
+			else
+				on_turf = 0
+
+			return
 
 		getTooltip()
-			return "Your max health, max stamina, and stamina regen have been increased because of the pride you feel while wearing your uniform."
+			return "Your max health, max stamina, and stamina regen have been increased because of the pride you feel while wearing your uniform. [on_turf?"You are on home turf and receiving healing and stun reduction buffs when nearer your locker.":""]"
 
 	janktank
 		id = "janktank"
@@ -1072,6 +1255,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		duration = 9 MINUTES
 		maxDuration = 18 MINUTES
 		unique = 1
+		movement_modifier = /datum/movement_modifier/janktank
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(var/optional=null) //Optional is change.
@@ -1096,19 +1280,17 @@ var/list/statusGroupLimits = list("Food"=4)
 			var/mob/living/carbon/human/H
 			if(ishuman(owner))
 				H = owner
-			H.take_oxygen_deprivation(-1)
-			H.HealDamage("All", 2, 0, 0)
-			if (prob(60))
-				H.HealDamage("All", 1, 1, 1)
-				if (H.bleeding)
-					repair_bleeding_damage(H, 10, 1)
-			if (prob(10))
-				H.make_jittery(2)
+				H.take_oxygen_deprivation(-1)
+				H.HealDamage("All", 2, 0, 0)
+				if (prob(60))
+					H.HealDamage("All", 1, 1, 1)
+					if (H.bleeding)
+						repair_bleeding_damage(H, 10, 1)
+				if (prob(10))
+					H.make_jittery(2)
 
-			if (H.misstep_chance)
-				H.change_misstep_chance(-5)
-
-			H.updatehealth()
+				if (H.misstep_chance)
+					H.change_misstep_chance(-5)
 			return
 
 	gang_drug_withdrawl
@@ -1138,8 +1320,6 @@ var/list/statusGroupLimits = list("Food"=4)
 			if (prob(20))
 				violent_twitch(owner)
 				M.make_jittery(rand(6,9))
-
-			M.updatehealth()
 			return
 
 	mutiny
@@ -1160,11 +1340,13 @@ var/list/statusGroupLimits = list("Food"=4)
 			else
 				owner.delStatus("mutiny")
 			H.max_health += max_health
+			health_update_queue |= H
 			H.add_stam_mod_max("mutiny_max", max_stam)
 			H.add_stam_mod_regen("mutiny_regen", regen_stam)
 
 		onRemove()
 			H.max_health -= max_health
+			health_update_queue |= H
 			H.remove_stam_mod_max("mutiny_max")
 			H.remove_stam_mod_regen("mutiny_regen")
 
@@ -1190,11 +1372,13 @@ var/list/statusGroupLimits = list("Food"=4)
 			else
 				owner.delStatus("revspirit")
 			H.max_health += max_health
+			health_update_queue |= H
 			H.add_stam_mod_max("revspirit_max", max_stam)
 			H.add_stam_mod_regen("revspirit_regen", regen_stam)
 
 		onRemove()
 			H.max_health -= max_health
+			health_update_queue |= H
 			H.remove_stam_mod_max("revspirit_max")
 			H.remove_stam_mod_regen("revspirit_regen")
 
@@ -1209,7 +1393,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	desc = "You have been cursed."
 	icon_state = "bleeding"
 	unique = 1
-	duration = null
+	duration = INFINITE_STATUS
 	maxDuration = null
 	var/mob/living/carbon/human/H
 	var/units = 5
@@ -1233,7 +1417,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		if (prob(5))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
-			H.visible_message("<span style=\"color:red\">[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span style=\"color:red\">You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
+			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
 			playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
@@ -1245,7 +1429,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	desc = "A mentor is helping you in the form of a mouse in your pocket. Click here to let them go."
 	icon_state = "mentor_mouse"
 	unique = 1
-	duration = null
+	duration = INFINITE_STATUS
 	maxDuration = null
 
 	clicked(list/params)
@@ -1264,7 +1448,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	desc = "An admin is helping you in the form of a mouse in your pocket. Click here to let them go."
 	icon_state = "admin_mouse"
 	unique = 1
-	duration = null
+	duration = INFINITE_STATUS
 	maxDuration = null
 
 	clicked(list/params)

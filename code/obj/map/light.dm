@@ -98,6 +98,13 @@
 		color_g = 0.35
 		color_r = 0.35
 
+	brighterwhite
+		name = "glow - BRIGHTER WHITE"
+		brightness = 5
+		color_b = 0.35
+		color_g = 0.35
+		color_r = 0.35
+
 	green
 		icon_state = "lightG"
 		name = "glow - GREEN"

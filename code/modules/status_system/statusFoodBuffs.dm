@@ -66,7 +66,8 @@
 	if (src.stomach_process && src.stomach_process.len)
 		var/obj/gross = pick(src.stomach_process)
 		src.stomach_process -= gross
-		gross.loc = src.loc
+		gross.set_loc(src.loc)
+		return gross
 
 
 
@@ -301,10 +302,13 @@
 	proc/cast()
 
 		var/turf/T = get_step(owner,owner.dir)
-		T = get_step(T,owner.dir)
+		var/range_breath = 1
+		while((get_dist(owner,T) < range) && (range_breath < 20))// range is used for the range the fireburp can reach from the caster.
+			T = get_step(T,owner.dir)
+			range_breath ++ //range_breath is used to make sure the loop doesn't stay active too long and lag the game if something messes up range.
 		var/list/affected_turfs = getline(owner, T)
 
-		owner.visible_message("<span style=\"color:red\"><b>[owner] burps a stream of fire!</b></span>")
+		owner.visible_message("<span class='alert'><b>[owner] burps a stream of fire!</b></span>")
 		playsound(owner.loc, "sound/effects/mag_fireballlaunch.ogg", 30, 0)
 
 		var/turf/currentturf
@@ -324,6 +328,9 @@
 
 		//reduce duration
 		src.duration -= min(durationLoss,src.duration)
+		if(src.duration <= 0)//without this check, it will get stuck at 0 and never go away.
+			if(src.owner)
+				src.owner.delStatus(src)
 
 /datum/statusEffect/explosion_resist
 	id = "food_explosion_resist"
@@ -333,6 +340,17 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
+	onAdd(optional = 10)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_EXPLOPROT, src, optional)
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_EXPLOPROT, src)
 
 /datum/statusEffect/disease_resist
 	id = "food_disease_resist"
@@ -399,4 +417,3 @@
 					var/turf/T = get_turf(owner)
 					T.fluid_react_single("water",5)
 		return
-

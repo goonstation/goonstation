@@ -12,7 +12,7 @@
 /datum/aiTask/prioritizer/flock/on_tick()
 	if(isdead(holder.owner))
 		holder.enabled = 0
-	walk(holder.owner, 0) // STOP RUNNING AROUND YOU'RE SUPPOSED TO BE DEAD
+		walk(holder.owner, 0) // STOP RUNNING AROUND YOU'RE SUPPOSED TO BE DEAD
 
 /datum/aiTask/prioritizer/flock/on_reset()
 	..()
@@ -165,7 +165,7 @@
 		if(build_target && get_dist(holder.owner, build_target) <= 1)
 			var/mob/living/critter/flock/drone/F = holder.owner
 			if(F && F.set_hand(2)) // nanite spray
-				sleep(2)
+				sleep(0.2 SECONDS)
 				holder.owner.dir = get_dir(holder.owner, holder.target)
 				F.hand_attack(build_target)
 				has_started = 1
@@ -198,18 +198,18 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
-		sleep(1)
+		sleep(0.1 SECONDS)
 		F.a_intent = INTENT_HELP
-		F.hud.update_intent()
-		sleep(1)
-		F.hud.update_hands() // for observers
+		F.hud?.update_intent()
+		sleep(0.1 SECONDS)
+		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/repair/get_targets()
 	var/list/targets = list()
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner)
 			continue
-		if(F.get_health_percentage() < 0.66)
+		if(F.get_health_percentage() < 0.66 && !isdead(F))//yeesh dont try to repair something which is dead
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, null, /proc/heuristic, 40))
 				targets += F
@@ -238,7 +238,7 @@
 		var/mob/living/critter/flock/drone/T = holder.target
 		if(F && T && get_dist(holder.owner, holder.target) <= 1)
 			if(F.set_hand(2)) // nanite spray
-				sleep(2)
+				sleep(0.2 SECONDS)
 				holder.owner.dir = get_dir(holder.owner, holder.target)
 				F.hand_attack(T)
 				has_started = 1
@@ -296,7 +296,7 @@
 	if(container_target && get_dist(holder.owner, container_target) <= 1 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F && F.set_hand(1)) // grip tool
-			sleep(2)
+			sleep(0.2 SECONDS)
 			F.dir = get_dir(F, container_target)
 			F.hand_attack(container_target) // wooo
 	// tick up a fail counter so we don't try to open something we can't forever
@@ -356,19 +356,19 @@
 		var/mob/living/critter/flock/drone/F = holder.owner
 		usr = F // don't ask, please, don't
 		if(F && F.set_hand(1)) // grip tool
-			sleep(2)
+			sleep(0.2 SECONDS)
 			// drop whatever we're holding
 			F.drop_item()
-			sleep(1)
+			sleep(0.1 SECONDS)
 			F.dir = get_dir(F, container_target)
 			F.hand_attack(container_target)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if(F.equipped() == container_target)
 				// we've picked up a container
 				// just eat it
 				// dump it onto the floor
 				container_target.MouseDrop(get_turf(F))
-				sleep(15)
+				sleep(1.5 SECONDS)
 				// might as well eat the container now
 				F.absorber.equip(container_target)
 				return
@@ -376,12 +376,12 @@
 				// we've opened a HUD
 				// do a fake HUD click, because i am dedicated to this whole puppetry schtick
 				container_target.hud.clicked("boxes", F, dummy_params)
-				sleep(3)
+				sleep(0.3 SECONDS)
 				if(isitem(F.equipped()))
 					// we got an item from the thing, THROW IT
 					// we can't actually fake a throw command because we don't have a client (no, so do a bit more trickery to simulate it
 					F.throw_mode_on()
-					sleep(4)
+					sleep(0.4 SECONDS)
 					var/list/random_pixel_offsets = list("icon-x" = rand(1, 32), "icon-y" = rand(1, 32))
 					// pick a random turf in sight to throw this at
 					var/list/throw_targets = list()
@@ -392,7 +392,7 @@
 						return
 					var/turf/throw_target = pick(throw_targets)
 					F.throw_item(throw_target, random_pixel_offsets)
-					sleep(1)
+					sleep(0.1 SECONDS)
 					F.throw_mode_off()
 					return
 				else
@@ -461,20 +461,20 @@
 	if(harvest_target && get_dist(holder.owner, harvest_target) <= 1 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F && F.set_hand(1)) // grip tool
-			sleep(2)
+			sleep(0.2 SECONDS)
 			var/obj/item/already_held = F.get_active_hand().item
 			if(already_held)
 				// we're already holding a thing to eat
 				harvest_target = already_held
 			else
 				F.empty_hand(1) // drop whatever we might be holding just in case
-				sleep(1)
+				sleep(0.1 SECONDS)
 				// grab the item
 				F.dir = get_dir(F, harvest_target)
 				F.hand_attack(harvest_target)
 			// if we have the item, equip it into our horrifying death chamber
 			if(F.is_in_hands(harvest_target))
-				sleep(2)
+				sleep(0.2 SECONDS)
 				F.absorber.equip(harvest_target) // hooray!
 	// tick up a fail counter so we don't try to get something we can't forever
 	fails++
@@ -497,40 +497,42 @@
 	var/run_range = 3
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
 
+
 /datum/aiTask/timed/targeted/flockdrone_shoot/evaluate()
 	return weight * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/on_tick()
-	walk_to(holder.owner, 0)
+	var/mob/living/critter/owncritter = holder.owner
+	walk_to(owncritter, 0)
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
 	if(holder.target)
 		var/mob/living/M = holder.target
-		if(M && (M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
-			// target is down, we don't care about this target now
+		if(M && !istype(M.loc.type, /obj/icecube/flockdrone) && (M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+			// target is down or in a cage, we don't care about this target now
 			// fetch a new one if we can
 			holder.target = get_best_target(get_targets())
 			if(!holder.target)
 				return // try again next tick
-		var/dist = get_dist(holder.owner, holder.target)
+		var/dist = get_dist(owncritter, holder.target)
 		if(dist > target_range)
 			holder.target = get_best_target(get_targets())
 		else if(dist > shoot_range)
-			walk_to(holder.owner, holder.target, 1, 4)
+			walk_to(owncritter, holder.target, 1, 4)
 		else
-			if(holder.owner.active_hand != 3) // stunner
-				holder.owner.set_hand(3)
-				sleep(2)
-			holder.owner.dir = get_dir(holder.owner, holder.target)
-			holder.owner.hand_attack(holder.target, dummy_params)
+			if(owncritter.active_hand != 3) // stunner
+				owncritter.set_hand(3)
+				sleep(0.2 SECONDS)
+			owncritter.dir = get_dir(owncritter, holder.target)
+			owncritter.hand_attack(holder.target, dummy_params)
 			if(dist < run_range)
 				// RUN
-				walk_away(holder.owner, holder.target, 1, 4)
+				walk_away(owncritter, holder.target, 1, 4)
 			else if(prob(30))
 				// ROBUST DODGE
-				walk(holder.owner, 0)
-				sleep(2)
-				walk_rand(holder.owner, 1, 4)
+				walk(owncritter, 0)
+				sleep(0.2 SECONDS)
+				walk_rand(owncritter, 1, 4)
 
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()
@@ -538,7 +540,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F && F.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
-			if(!(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+			if(!istype(M.loc.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
 				// mob isn't already stunned, check if they're in our target list
 				if(F.flock.isEnemy(M))
 					targets += M
@@ -566,7 +568,8 @@
 	return precondition() * weight * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/timed/targeted/flockdrone_capture/on_tick()
-	walk_to(holder.owner, 0)
+	var/mob/living/critter/owncritter = holder.owner
+	walk_to(owncritter, 0)
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
 	if(holder.target)
@@ -577,20 +580,20 @@
 			holder.target = get_best_target(get_targets())
 			if(!holder.target)
 				return // try again next tick
-		var/dist = get_dist(holder.owner, holder.target)
+		var/dist = get_dist(owncritter, holder.target)
 		if(dist > target_range)
 			holder.target = get_best_target(get_targets())
 		else if(dist > 1)
-			walk_to(holder.owner, holder.target, 1, 4)
-		else if(!actions.hasAction(holder.owner, "flock_entomb")) // let's not keep interrupting our own action
-			if(holder.owner.active_hand != 2) // nanite spray
-				holder.owner.set_hand(2)
-				sleep(2)
-				holder.owner.a_intent = INTENT_DISARM
-				holder.owner.hud.update_intent()
-				sleep(1)
-			holder.owner.dir = get_dir(holder.owner, holder.target)
-			holder.owner.hand_attack(holder.target)
+			walk_to(owncritter, holder.target, 1, 4)
+		else if(!actions.hasAction(owncritter, "flock_entomb")) // let's not keep interrupting our own action
+			if(owncritter.active_hand != 2) // nanite spray
+				owncritter.set_hand(2)
+				sleep(0.2 SECONDS)
+				owncritter.a_intent = INTENT_DISARM
+				owncritter.hud.update_intent()
+				sleep(0.1 SECONDS)
+			owncritter.dir = get_dir(owncritter, holder.target)
+			owncritter.hand_attack(holder.target)
 
 /datum/aiTask/timed/targeted/flockdrone_capture/get_targets()
 	var/list/targets = list()
@@ -599,9 +602,75 @@
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(F.flock.isEnemy(M) && (M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
 				// mob is a valid target, check if they're not already in a cage
-				if(!istype(M.loc, /obj/icecube/flockdrone))
+				if(!istype(M.loc.type, /obj/icecube/flockdrone))
 					// if we can get a valid path to the target, include it for consideration
 					if(cirrAstar(get_turf(holder.owner), get_turf(M), 1, null, /proc/heuristic, 40))
 						// GO AND IMPRISON THEM
 						targets += M
 	return targets
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// BUTCHER GOAL
+// targets: other dead flockdrones in the same flock
+/datum/aiTask/sequence/goalbased/butcher
+	name = "butchering"
+	weight = 3
+
+/datum/aiTask/sequence/goalbased/butcher/New(parentHolder, transTask)
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/butcher, list(holder)))
+
+
+/datum/aiTask/sequence/goalbased/butcher/on_reset()
+	var/mob/living/critter/flock/drone/F = holder.owner
+	if(F)
+		F.active_hand = 2 // nanite spray
+		sleep(0.1 SECONDS)
+		F.a_intent = INTENT_HARM
+		F.hud?.update_intent()
+		sleep(0.1 SECONDS)
+		F.hud?.update_hands() // for observers
+
+/datum/aiTask/sequence/goalbased/butcher/get_targets()
+	var/list/targets = list()
+	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
+		if(F == holder.owner)
+			continue
+		if(isdead(F))
+			// if we can get a valid path to the target, include it for consideration
+			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, null, /proc/heuristic, 40))
+				targets += F
+	return targets
+
+////////
+
+/datum/aiTask/succeedable/butcher
+	name = "butcher subtask"
+	var/has_started = 0
+
+/datum/aiTask/succeedable/butcher/failed()
+	var/mob/living/critter/flock/drone/F = holder.owner
+	var/mob/living/critter/flock/drone/T = holder.target
+	if(!F || !T || get_dist(T, F) > 1)
+		return 1
+	if(F && !F.abilityHolder)
+		return 1
+
+/datum/aiTask/succeedable/butcher/succeeded()
+	return (!actions.hasAction(holder.owner, "butcherlivingcritter")) // for whatever reason, the required action has stopped
+
+/datum/aiTask/succeedable/butcher/on_tick()
+	if(!has_started)
+		var/mob/living/critter/flock/drone/F = holder.owner
+		var/mob/living/critter/flock/drone/T = holder.target
+		if(F && T && get_dist(holder.owner, holder.target) <= 1)
+			if(F.set_hand(2)) // nanite spray
+				sleep(0.2 SECONDS)
+				holder.owner.dir = get_dir(holder.owner, holder.target)
+				F.hand_attack(T)
+				has_started = 1
+
+/datum/aiTask/succeedable/butcher/on_reset()
+	has_started = 0

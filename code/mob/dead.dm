@@ -19,17 +19,17 @@
 
 
 /mob/dead/click(atom/target, params)
-	if (targeting_spell)
+	if (targeting_ability)
 		..()
 	else
 		if (get_dist(src, target) > 0)
 			dir = get_dir(src, target)
-		target.examine()
+		src.examine_verb(target)
 
 /mob/dead/process_move(keys)
 	if (!istype(src.loc,/turf)) //Pop observers and Follow-Thingers out!!
 		var/mob/dead/O = src
-		O.loc = get_turf(src)
+		O.set_loc(get_turf(src))
 	. = ..()
 
 /mob/dead/projCanHit(datum/projectile/P)
@@ -49,6 +49,9 @@
 	if (src.client && src.client.ismuted())
 		boutput(src, "You are currently muted and may not speak.")
 		return
+
+	if(src?.client?.preferences.auto_capitalization)
+		message = capitalize(message)
 
 	. = src.say_dead(message)
 
@@ -160,6 +163,6 @@
 /mob/dead/vomit(var/nutrition=0, var/specialType=null)
 	..(0, /obj/item/reagent_containers/food/snacks/ectoplasm)
 	playsound(src.loc, "sound/effects/ghost2.ogg", 50, 1)
-	src.visible_message("<span style='color: red;'>Ectoplasm splats onto the ground from nowhere!</span>",
-		"<span style='color: red;>Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]</span>",
-		"<span style='color: red;'>You hear something strangely insubstantial land on the floor with a wet splat!</span>")
+	src.visible_message("<span class='alert'>Ectoplasm splats onto the ground from nowhere!</span>",
+		"<span class='alert'>Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]</span>",
+		"<span class='alert'>You hear something strangely insubstantial land on the floor with a wet splat!</span>")

@@ -87,14 +87,14 @@
 				return
 
 			var/obj/O = A
-			if(istype(O,/obj/machinery/rkit))
+			if(istype(O,/obj/machinery/rkit) || istype(O, /obj/item/electronics/frame))
 				return
 
-			if(O.mats == 0 || O.is_syndicate != 0)
-				return "<span style=\"color:red\">Unable to scan.</span>"
+			if(O.mats == 0 || isnull(O.mats) || O.disposed || O.is_syndicate != 0)
+				return "<span class='alert'>Unable to scan.</span>"
 
 			if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
-				return "<span style=\"color:red\">Messaging must be on to communicate with engineering kit.</span>"
+				return "<span class='alert'>Messaging must be on to communicate with engineering kit.</span>"
 
 			animate_scanning(O, "#FFFF00")
 

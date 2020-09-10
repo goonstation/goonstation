@@ -79,8 +79,7 @@
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 /obj/item/cell/charged
 	charge = 7500
@@ -110,12 +109,11 @@
 	SPAWN_DBG(0.5 SECONDS)
 		updateicon()
 
-	if (genrate && !(src in processing_items))
-		processing_items.Add(src)
+	if (genrate)
+		processing_items |= src
 
 /obj/item/cell/disposing()
-	if (src in processing_items)
-		processing_items.Remove(src)
+	processing_items -= src
 	..()
 
 /obj/item/cell/proc/updateicon()
@@ -165,17 +163,17 @@
 	if (genrate > 0) give(genrate)
 	if (!genrate) ..()
 
-/obj/item/cell/examine()
-	set src in view(1)
-	set category = "Local"
+/obj/item/cell/examine(mob/user)
+	. = ..()
+
 	if (src.artifact || src.unusualCell)
-		..()
 		return
-	if(usr && !usr.stat)
+
+	if(user && !user.stat)
 		if(maxcharge <= 2500)
-			boutput(usr, "[desc]<br>The manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.<br>The charge meter reads [round(src.percent() )]%.")
+			. += "The manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.<br>The charge meter reads [round(src.percent() )]%."
 		else
-			boutput(usr, "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!!!<br>The charge meter reads [round(src.percent() )]%.")
+			. += "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!!!<br>The charge meter reads [round(src.percent() )]%."
 
 /obj/item/cell/attackby(obj/item/W, mob/user) // Moved the stungloves stuff to gloves.dm (Convair880).
 	if (istype(W, /obj/item/reagent_containers/syringe))
@@ -186,7 +184,7 @@
 			if (istype(src,/obj/item/cell/erebite))
 				message_admins("[key_name(user)] injected [src] with plasma, causing an explosion at [log_loc(user)].")
 				logTheThing("combat", user, null, "injected [src] with plasma, causing an explosion at [log_loc(user)].")
-				boutput(user, "<span style=\"color:red\">The plasma reacts with the erebite and explodes violently!</span>")
+				boutput(user, "<span class='alert'>The plasma reacts with the erebite and explodes violently!</span>")
 				src.explode()
 			else
 				message_admins("[key_name(user)] rigged [src] to explode at [log_loc(user)].")
@@ -230,11 +228,11 @@
 
 /obj/item/cell/proc/zap(mob/user as mob, var/ignores_gloves = 0)
 	if (user.shock(src, src.charge, user.hand == 1 ? "l_arm" : "r_arm", 1, ignores_gloves))
-		boutput(user, "<span style=\"color:red\">[src] shocks you!</span>")
+		boutput(user, "<span class='alert'>[src] shocks you!</span>")
 
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span style=\"color:red\">[user:name] was shocked by the [src:name]!</span>", 3, "<span style=\"color:red\">You hear an electrical crack</span>", 2)
+			M.show_message("<span class='alert'>[user:name] was shocked by the [src:name]!</span>", 3, "<span class='alert'>You hear an electrical crack</span>", 2)
 		return 1
 
 /obj/item/cell/ex_act(severity)
@@ -243,7 +241,7 @@
 
 /obj/item/cell/temperature_expose(null, temp, volume)
 	if (istype(src,/obj/item/cell/erebite))
-		src.visible_message("<span style=\"color:red\">[src] violently detonates!</span>")
+		src.visible_message("<span class='alert'>[src] violently detonates!</span>")
 		src.explode()
 	else ..()
 

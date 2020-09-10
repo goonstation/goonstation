@@ -95,19 +95,57 @@
 	return 1
 
 
-/mob/proc/can_slip(var/walking_matters = 1)
+/mob/proc/can_slip()
 	return 1
 
-/mob/living/carbon/human/can_slip(var/walking_matters = 1)
-	if (!istype(src)) // if not human
-		return 0 // let's default to saying we can't
-	if (walking_matters && (src.m_intent == "walk" || src.lying)) // if walking can make you not slip and we're walking or lying down
-		return 0 // we can't slip
-	if (!src.shoes) // if we're not wearing shoes
-		return 1 // we can slip
-	if (src.shoes && (src.shoes.c_flags & NOSLIP)) // if we're wearing shoes that prevent slipping
-		return 0 // we can't slip
-	return 1 // if all else fails, we can slip
+/mob/living/carbon/human/can_slip()
+	if (src.lying)
+		return 0
+	if (!src.shoes)
+		return 1
+	if (src.shoes && (src.shoes.c_flags & NOSLIP))
+		return 0
+	return 1
+
+
+/mob/proc/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
+	.= 0
+
+	if (!src.can_slip())
+		return
+
+	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.9) //we need to fall under this movedelay value in order to slip :O
+	if (src.m_intent == "walk")
+		slip_delay = BASE_SPEED_SUSTAINED - (WALK_DELAY_ADD*0.5)
+
+	if (!walking_matters)
+		slip_delay = 10
+	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
+	var/movedelay = max(movement_delay_real, min(world.time - src.next_move,world.time - src.last_pulled_time))
+	if (ignore_actual_delay)
+		movedelay = movement_delay_real
+
+	if (movedelay < slip_delay)
+		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movement_delay_real/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
+		var/throw_range = min(round(intensity),50)
+		if (intensity < 1 && intensity > 0 && throw_range <= 0)
+			throw_range = max(throw_range,1)
+		else
+			throw_range = max(throw_range,0)
+
+		if (intensity <= 2.4)
+			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
+		else
+			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
+		src.pulling = null
+
+		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
+		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
+		.= 1
+
+/mob/living/carbon/human/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
+	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
+
 
 /mob/living/carbon/human/proc/skeletonize()
 	if (!istype(src))
@@ -128,12 +166,13 @@
 	if (hearing_check && !src.hearing_check(1))
 		return
 
+	var/class = ""
 	switch (color)
-		if ("red") color = "#FF0000"
-		if ("blue") color = "#0000FF"
-		if ("green") color = "#008800" // we dont want FF for this because it's fucking unreadable against white
+		if ("red") class = "alert"
+		if ("blue") class = "notify"
+		if ("green") class = "success"
 
-	boutput(src, "<span style='color: [color]'>[message]</span>", group)
+	boutput(src, "<span class='[class]'>[message]</span>", group)
 
 /mob/proc/sight_check(var/consciousness_check = 0)
 	return 1
@@ -264,17 +303,16 @@
 	if (burn > 0)
 		src.update_burning(burn)
 		src.TakeDamage("head", 0, 5)
-		src.updatehealth()
 
 	if (prob(max(0, min(uncloak_prob, 100))))
 		for (var/obj/item/cloaking_device/C in src)
 			if (C.active)
 				C.deactivate(src)
-				src.visible_message("<span style=\"color:blue\"><b>[src]'s cloak is disrupted!</b></span>")
+				src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
 		for (var/obj/item/device/disguiser/D in src)
 			if (D.on)
 				D.disrupt(src)
-				src.visible_message("<span style=\"color:blue\"><b>[src]'s disguiser is disrupted!</b></span>")
+				src.visible_message("<span class='notice'><b>[src]'s disguiser is disrupted!</b></span>")
 
 	return
 
@@ -359,7 +397,7 @@
 	//DEBUG_MESSAGE("Apply_sonic_stun() called for [src] at [log_loc(src)]. W: [weak], S: [stun], MS: [misstep], SL: [slow], DI: [drop_item], ED: [ears_damage], EF: [ear_tempdeaf]")
 
 	// Stun target mob.
-	boutput(src, "<span style=\"color:red\"><b>You hear an extremely loud noise!</b></span>")
+	boutput(src, "<span class='alert'><b>You hear an extremely loud noise!</b></span>")
 
 
 #ifdef USE_STAMINA_DISORIENT
@@ -406,6 +444,18 @@
 	src.mind.violated_hippocratic_oath = 1
 	return 1
 
+/proc/man_or_woman(var/mob/subject)
+	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
+		return "person"
+
+	switch (subject.gender)
+		if ("male")
+			return "man"
+		if ("female")
+			return "woman"
+		else
+			return "person"
+
 /proc/his_or_her(var/mob/subject)
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "their"
@@ -442,6 +492,18 @@
 		else
 			return "they"
 
+/proc/hes_or_shes(var/mob/subject)
+	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
+		return "they're"
+
+	switch (subject.gender)
+		if ("male")
+			return "he's"
+		if ("female")
+			return "she's"
+		else
+			return "they're"
+
 /proc/himself_or_herself(var/mob/subject)
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "themselves"
@@ -458,7 +520,7 @@
 	return 0
 
 /mob/living/carbon/human/get_explosion_resistance()
-	// @todo
+	return GET_MOB_PROPERTY(src, PROP_EXPLOPROT)/100
 
 /mob/proc/spread_blood_clothes(mob/whose)
 	return
@@ -530,25 +592,6 @@
 		return limbs.l_arm.limb_data
 	return null
 
-/mob/proc/process_stamina(var/cost)
-	return 1
-
-/mob/living/carbon/human/process_stamina(var/cost)
-	if (!STAMINA_NO_ATTACK_CAP)
-		// why
-		// in what world is condition two not equivalent to condition one
-		// there are literally two outcomes to this
-		// if (true or true); and if (false or false)
-		if(src.stamina <= cost || (src.stamina - cost) <= 0)
-			boutput(src, STAMINA_EXHAUSTED_STR)
-			return 0
-
-	if(STAMINA_NO_ATTACK_CAP && src.stamina > STAMINA_MIN_ATTACK)
-		cost = min(cost,src.stamina - STAMINA_MIN_ATTACK)
-		src.remove_stamina(cost)
-	else if (!STAMINA_NO_ATTACK_CAP)
-		src.remove_stamina(cost)
-	return 1
 
 // This proc copies one mob's inventory to another. Why the separate entry? I don't wanna have to
 // rip it out of unkillable_respawn() later for unforseeable reasons (Convair880).
@@ -780,7 +823,7 @@
 			see_xmas = 1
 
 	// Clear existing overlays.
-	delete_overlays
+	delete_overlays:
 	for (var/image/I in src.client.images)
 		if (!I) continue
 		if (I.icon == 'icons/mob/antag_overlays.dmi')
@@ -993,7 +1036,7 @@
 		if (S == "window" && istype(target, /obj/window))
 			var/obj/window/W = target
 			if (show_message)
-				src.visible_message("<span style=\"color:red\">[src] smashes through the window.</span>", "<span style=\"color:blue\">You smash through the window.</span>")
+				src.visible_message("<span class='alert'>[src] smashes through the window.</span>", "<span class='notice'>You smash through the window.</span>")
 			W.health = 0
 			W.smash()
 			return 1
@@ -1002,7 +1045,7 @@
 			var/obj/grille/G = target
 			if (!G.shock(src, 70))
 				if (show_message)
-					G.visible_message("<span style=\"color:red\"><b>[src]</b> violently slashes [G]!</span>")
+					G.visible_message("<span class='alert'><b>[src]</b> violently slashes [G]!</span>")
 				playsound(G.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
 				G.damage_slashing(15)
 				return 1

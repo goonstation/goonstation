@@ -16,8 +16,9 @@
 */
 
 /obj/machinery/computer/attack_hand(mob/user as mob)
-	if(!user.literate)
-		boutput(user, "<span style=\"color:red\">You don't know how to read or write, operating a computer isn't going to work!</span>")
+	. = ..()
+	if (!user.literate)
+		boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
 		return 1
 
 /obj/machinery/computer/aiupload

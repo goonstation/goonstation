@@ -26,7 +26,7 @@
 		if (!escape_vr)
 			var/area/A = get_area(src)
 			if ((T && !(T.z == 2)) || (A && !A.virtual))
-				boutput(src, "<span style=\"color:red\">Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b></span>")
+				boutput(src, "<span class='alert'>Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b></span>")
 				src.gib()
 				return
 
@@ -45,12 +45,11 @@
 
 		qdel(src)
 		return
-		..()
 
 	disposing()
 		if (isghost && src.client)
 			var/mob/dead/observer/O = src.ghostize()
-			var/arrival_loc = pick(latejoin)
+			var/arrival_loc = pick_landmark(LANDMARK_LATEJOIN)
 			O.real_name = src.isghost
 			O.name = O.real_name
 			O.set_loc(arrival_loc)
@@ -79,7 +78,7 @@
 
 		. = src.say_dead(message, 1)
 
-	emote(var/act, var/voluntary = 0)
+	emote(var/act, var/voluntary = 0, var/emoteTarget = null)
 		if(isghost)
 			if (findtext(act, " ", 1, null))
 				var/t1 = findtext(act, " ", 1, null)
@@ -148,14 +147,14 @@
 		if (!spell.holder)
 			return
 
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
 			usr.update_cursor()
 			return
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			owner.holder.owner.targeting_spell = owner
+			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
 			SPAWN_DBG(0)

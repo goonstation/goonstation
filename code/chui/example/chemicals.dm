@@ -12,7 +12,7 @@ chui/window/chem
 			chems[ id ] = 0
 		chems[ id ] += 10
 		CallJSFunction( "addChem", list( id ) )
-	OnTopic( href, href_list[] )
+	OnTopic( usr.client, href, href_list[] )
 		switch( href_list[ "action" ] )
 			if( "remove" )
 				chems[href_list[ "chem" ]] = null

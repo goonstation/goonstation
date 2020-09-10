@@ -121,6 +121,9 @@
 	icon_state = "plating"
 	intact = 0
 
+/turf/simulated/floor/plating/jen
+	icon_state = "plating_jen"
+
 /turf/simulated/floor/plating/scorched
 	icon_state = "panelscorched"
 
@@ -824,6 +827,9 @@
 /turf/simulated/floor/stairs/wide/green
 	icon_state = "Stairs_wide_green"
 
+/turf/simulated/floor/stairs/wide/green/other
+	icon_state = "Stairs_wide_green_other"
+
 /turf/simulated/floor/stairs/wide/middle
 	icon_state = "stairs_middle"
 
@@ -861,6 +867,8 @@
 /turf/simulated/floor/stairs/wood2/wide
 	icon_state = "wood2_stairs2"
 
+/turf/simulated/floor/stairs/wood2/middle
+	icon_state = "wood2_stairs2_middle"
 
 /turf/simulated/floor/stairs/wood3
 	icon_state = "wood3_stairs"
@@ -900,6 +908,17 @@
 
 /turf/unsimulated/floor/vr/white
 	icon_state = "vrwhitehall"
+
+// simulated setpieces
+
+/turf/simulated/floor/setpieces
+	icon = 'icons/misc/worlds.dmi'
+	fullbright = 0
+
+	bloodfloor
+		name = "bloody floor"
+		desc = "Yuck."
+		icon_state = "bloodfloor_1"
 
 /////////////////////////////////////////
 
@@ -958,6 +977,11 @@
 /////////////////////////////////////////
 
 /turf/simulated/floor/industrial
+	icon_state = "diamondtile"
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+
+/turf/unsimulated/floor/industrial
 	icon_state = "diamondtile"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -1062,6 +1086,7 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "bridge"
 	default_melt_cap = 80
+	allows_vehicles = 1
 
 	New()
 		..()
@@ -1074,7 +1099,7 @@
 		color = O.color
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			visible_message("<b>[user] hits [src] with [W]!</b>")
 			if (prob(25))
 				ReplaceWithSpace()
@@ -1103,6 +1128,19 @@
 
 	if(!C || !user)
 		return 0
+	if (istype(C, /obj/item/tile))
+		var/obj/item/tile/T = C
+		if (T.amount >= 1)
+			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			T.build(src)
+			if(T.material) src.setMaterial(T.material)
+
+		if (T.amount < 1 && !issilicon(user))
+			user.u_equip(T)
+			qdel(T)
+			return
+		return
+
 	if(prob(75 - metal * 25))
 		ReplaceWithSpace()
 		boutput(user, "You easily smash through the foamed metal floor.")
@@ -1212,13 +1250,17 @@
 		return
 	if (!user)
 		return
+	if (ispryingtool(C))
+		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead.</span>")
+		return
 	if (istype(C, /obj/item/pen))
 		var/obj/item/pen/P = C
 		P.write_on_turf(src, user, params)
 		return
-	else if (isweldingtool(C) || iswrenchingtool(C))
-		boutput(user, "<span style=\"color:blue\">Loosening rods...</span>")
-		playsound(src, "sound/items/Ratchet.ogg", 80, 1)
+	else if ((isweldingtool(C) && C:try_weld(user,0,-1,0,1)) || iswrenchingtool(C))
+		boutput(user, "<span class='notice'>Loosening rods...</span>")
+		if(iswrenchingtool(C))
+			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
 		if(do_after(user, 30))
 			var/obj/R1 = new /obj/item/rods(src)
 			var/obj/R2 = new /obj/item/rods(src)
@@ -1345,25 +1387,33 @@
 	qdel(parts)
 	return
 
+/turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
+	if (!intact)
+		return
+
+	if(broken || burnt)
+		boutput(user, "<span class='alert'>You remove the broken plating.</span>")
+	else if (istype(src,/turf/simulated/floor/engine))
+		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring!</span>")
+	else
+		var/atom/A = new /obj/item/tile(src)
+		if(src.material)
+			A.setMaterial(src.material)
+		else
+			var/datum/material/M = getMaterial("steel")
+			A.setMaterial(M)
+		.= A //return tile for crowbar special attack ok
+
+	to_plating()
+	playsound(src, "sound/items/Crowbar.ogg", 80, 1)
+
 /turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob, params)
 
 	if (!C || !user)
 		return 0
 
-	if (ispryingtool(C) && intact)
-		if(broken || burnt)
-			boutput(user, "<span style=\"color:red\">You remove the broken plating.</span>")
-		else
-			var/atom/A = new /obj/item/tile(src)
-			if(src.material)
-				A.setMaterial(src.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M)
-
-		to_plating()
-		playsound(src, "sound/items/Crowbar.ogg", 80, 1)
-
+	if (ispryingtool(C))
+		src.pry_tile(C,user,params)
 		return
 
 	if (istype(C, /obj/item/pen))
@@ -1378,7 +1428,7 @@
 	if(istype(C, /obj/item/rods))
 		if (!src.intact)
 			if (C:amount >= 2)
-				boutput(user, "<span style=\"color:blue\">Reinforcing the floor...</span>")
+				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
 				if(do_after(user, 30))
 					ReplaceWithEngineFloor()
 
@@ -1392,13 +1442,18 @@
 
 					playsound(src, "sound/items/Deconstruct.ogg", 80, 1)
 			else
-				boutput(user, "<span style=\"color:red\">You need more rods.</span>")
+				boutput(user, "<span class='alert'>You need more rods.</span>")
 		else
-			boutput(user, "<span style=\"color:red\">You must remove the plating first.</span>")
+			boutput(user, "<span class='alert'>You must remove the plating first.</span>")
 		return
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
+		if (T.amount < 1)
+			if(!issilicon(user))
+				user.u_equip(T)
+				qdel(T)
+			return
 		if (!intact)
 			restore_tile()
 			src.plate_mat = src.material
@@ -1426,6 +1481,7 @@
 
 
 	if(istype(C, /obj/item/sheet))
+		if (!(C?.material?.material_flags & (MATERIAL_METAL | MATERIAL_CRYSTAL))) return
 		if (!C:amount_check(2,usr)) return
 
 		var/msg = "a girder"
@@ -1521,7 +1577,7 @@
 			var/obj/item/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
-			boutput(user, "<span style=\"color:red\">You must remove the plating first.</span>")
+			boutput(user, "<span class='alert'>You must remove the plating first.</span>")
 
 //grabsmash??
 	else if (istype(C, /obj/item/grab/))
@@ -1556,7 +1612,7 @@
 		if(I)
 			if(istype(I,/obj/item/cable_coil))
 				var/obj/item/cable_coil/C = I
-				if((get_dist(user,F)<2) & (get_dist(user,src)<2))
+				if((get_dist(user,F)<2) && (get_dist(user,src)<2))
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
@@ -1618,7 +1674,7 @@
 		attackby(obj/item/W as obj, mob/user as mob)
 			if (istype(W, /obj/item/device/key))
 				playsound(src, "sound/effects/mag_warp.ogg", 50, 1)
-				src.visible_message("<span style=\"color:blue\"><b>[src] slides away!</b></span>")
+				src.visible_message("<span class='notice'><b>[src] slides away!</b></span>")
 				src.ReplaceWithSpace() // make sure the area override says otherwise - maybe this sucks
 
 	hive
@@ -1641,11 +1697,11 @@
 	icon_state = "gauntwall"
 // --------------------------------------------
 
-/turf/proc/fall_to(var/turf/T, var/atom/A)
+/turf/proc/fall_to(var/turf/T, var/atom/movable/A)
 	if(istype(A, /obj/overlay/tile_effect)) //Ok enough light falling places. Fak.
 		return
 	if (isturf(T))
-		visible_message("<span style=\"color:red\">[A] falls into [src]!</span>")
+		visible_message("<span class='alert'>[A] falls into [src]!</span>")
 		if (ismob(A))
 			var/mob/M = A
 			if(!M.stat && ishuman(M))
@@ -1656,8 +1712,7 @@
 			M.changeStatus("paralysis", 70)
 			SPAWN_DBG(0)
 				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
-		T.contents += A
-		T.Entered(A)
+		A.set_loc(T)
 		return
 
 /turf/unsimulated/floor/setpieces
@@ -1668,19 +1723,21 @@
 		name = "broken staircase"
 		desc = "You can't see the bottom."
 		icon_state = "black"
+		var/target_landmark = LANDMARK_FALL_ANCIENT
 
 		Entered(atom/A as mob|obj)
 			if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
 				return ..()
 
-			if (ancientfall.len)
-				var/turf/T = pick(ancientfall)
+			var/turf/T = pick_landmark(target_landmark)
+			if(T)
 				fall_to(T, A)
 				return
 			else ..()
 
 		shaft
 			name = "Elevator Shaft"
+			target_landmark = LANDMARK_FALL_BIO_ELE
 
 			Entered(atom/A as mob|obj)
 				if (istype(A, /mob) && !istype(A, /mob/dead))
@@ -1716,8 +1773,8 @@
 				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 					return ..()
 
-				if (deepfall.len)
-					var/turf/T = pick(deepfall)
+				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)
+				if(T)
 					fall_to(T, A)
 					return
 				else ..()

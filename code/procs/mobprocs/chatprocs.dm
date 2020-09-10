@@ -7,16 +7,17 @@
 /mob/verb/say_verb(message as text)
 	set name = "say"
 	//&& !src.client.holder
+
 	if (!message)
 		return
 	if (src.client && url_regex && url_regex.Find(message) && !client.holder)
-		boutput(src, "<span style=\"color:blue\"><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		boutput(src, "<span style=\"color:red\">&emsp;<b>\"[message]</b>\"</span>")
+		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
 	src.say(message)
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
 		logTheThing("say", src, null, "SAY: [html_encode(message)] [log_loc(src)]")
-		logit("say", 0, src, " said ", message)
+		//logit("say", 0, src, " said ", message)
 
 /mob/verb/say_radio()
 	set name = "say_radio"
@@ -65,10 +66,13 @@
 		var/token = channels[choice]
 		if (!token)
 			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
-		var/text = input("", "Speaking over [choice] ([token])")
+		var/text = input("", "Speaking over [choice] ([token])") as null|text
 		if (text)
-			src.say_verb(token + " " + text)
 
+			if(src?.client?.preferences.auto_capitalization)
+				text = capitalize(text)
+
+			src.say_verb(token + " " + text)
 
 	else if (src.ears && istype(src.ears, /obj/item/device/radio))
 		var/obj/item/device/radio/R = src.ears
@@ -100,10 +104,15 @@
 		else
 			token = ":" + R.secure_frequencies[choice_index - 1]
 
-		var/text = input("", "Speaking to [choice] frequency")
+		var/text = input("", "Speaking to [choice] frequency") as null|text
+		if (client.preferences.auto_capitalization)
+			var/i = 1
+			while (copytext(text, i, i+1) == " ")
+				i++
+			text = capitalize(copytext(text, i))
 		src.say_verb(token + " " + text)
 	else
-		boutput(src, "<span style=\"color:blue\">You must put a headset on your ear slot to speak on the radio.</span>")
+		boutput(src, "<span class='notice'>You must put a headset on your ear slot to speak on the radio.</span>")
 
 // ghosts now can emote now too so vOv
 /*	if (isliving(src))
@@ -115,17 +124,29 @@
 	set name = "me"
 
 	if (src.client && !src.client.holder && url_regex && url_regex.Find(message))
-		boutput(src, "<span style=\"color:blue\"><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		boutput(src, "<span style=\"color:red\">&emsp;<b>\"[message]</b>\"</span>")
+		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
 
 	src.emote(message, 1)
+
+/mob/verb/me_verb_hotkey(message as text)
+	set name = "me_hotkey"
+	set hidden = 1
+
+	if (src.client && !src.client.holder && url_regex && url_regex.Find(message)) //we still do this check just in case they access the hidden emote
+		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
+		return
+
+	src.emote(message,2)
+
 /* ghost emotes wooo also the logging is already taken care of in the emote() procs vOv
 	if (isliving(src) && isalive(src))
 		src.emote(message, 1)
 		logTheThing("say", src, null, "EMOTE: [message]")
 	else
-		boutput(src, "<span style=\"color:blue\">You can't emote when you're dead! How would that even work!?</span>")
+		boutput(src, "<span class='notice'>You can't emote when you're dead! How would that even work!?</span>")
 */
 /mob/proc/say_dead(var/message, wraith = 0)
 	var/name = src.real_name
@@ -155,6 +176,9 @@
 	else if (!ishuman(src))
 		name = src.name
 
+	if(src?.client?.preferences.auto_capitalization)
+		message = capitalize(message)
+
 #ifdef DATALOGGER
 	game_stats.ScanText(message)
 #endif
@@ -164,7 +188,9 @@
 
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 	//logit( "chat", 0, "([name])", src, message )
-	for (var/mob/M in mobs)
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/M = C.mob
 		if (istype(M, /mob/new_player))
 			continue
 		if (M.client && M.client.deadchatoff)
@@ -226,7 +252,10 @@
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
-	for (var/mob/M in mobs)
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/M = C.mob
+
 		if (M.client && M.client.holder && M.client.deadchat && !M.client.player_mode)
 			var/thisR = rendered
 			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
@@ -276,7 +305,9 @@
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
-	for (var/mob/M in mobs)
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/M = C.mob
 		if (M.client && M.client.holder && M.client.deadchat && !M.client.player_mode)
 			var/thisR = rendered
 			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
@@ -318,18 +349,19 @@
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
-	for (var/mob/M in mobs)
-		if (M.client && M.client.holder && M.client.deadchat && !M.client.player_mode)
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/M = C.mob
+		if (M.client.holder && M.client.deadchat && !M.client.player_mode)
 			var/thisR = rendered
 			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 			boutput(M, thisR)
-	//show to kudzu
-	for (var/mob/M in mobs)
-		var/thisR = rendered
-		if (M.client && src.mind && istype(M.abilityHolder, /datum/abilityHolder/kudzu))
-			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-			boutput(M, thisR)
+		else
+			if (src.mind && istype(M.abilityHolder, /datum/abilityHolder/kudzu))
+				var/thisR = rendered
+				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
+				boutput(M, thisR)
 		//////////////////////////////////
 
 /mob/proc/say_understands(var/mob/other, var/forced_language)
@@ -450,9 +482,9 @@
 	if (src.client)
 		src.client.preferences.listen_ooc = !src.client.preferences.listen_ooc
 		if (src.client.preferences.listen_ooc)
-			boutput(src, "<span style=\"color:blue\">You are now listening to messages on the OOC channel.</span>")
+			boutput(src, "<span class='notice'>You are now listening to messages on the OOC channel.</span>")
 		else
-			boutput(src, "<span style=\"color:blue\">You are no longer listening to messages on the OOC channel.</span>")
+			boutput(src, "<span class='notice'>You are no longer listening to messages on the OOC channel.</span>")
 
 /mob/verb/ooc(msg as text)
 	if (IsGuestKey(src.key))
@@ -468,7 +500,7 @@
 	else if (!src.client.preferences.listen_ooc)
 		return
 	else if (!ooc_allowed && !src.client.holder)
-		boutput(usr, "OOC is currently disabled.")
+		boutput(usr, "OOC is currently disabled. For gameplay questions, try <a href='byond://winset?command=mentorhelp'>mentorhelp</a>.")
 		return
 	else if (!dooc_allowed && !src.client.holder && (src.client.deadchat != 0))
 		boutput(usr, "OOC for dead mobs has been turned off.")
@@ -536,9 +568,9 @@
 	if (src.client)
 		src.client.preferences.listen_looc = !src.client.preferences.listen_looc
 		if (src.client.preferences.listen_looc)
-			boutput(src, "<span style=\"color:blue\">You are now listening to messages on the LOOC channel.</span>")
+			boutput(src, "<span class='notice'>You are now listening to messages on the LOOC channel.</span>")
 		else
-			boutput(src, "<span style=\"color:blue\">You are no longer listening to messages on the LOOC channel.</span>")
+			boutput(src, "<span class='notice'>You are no longer listening to messages on the LOOC channel.</span>")
 
 /mob/verb/looc(msg as text)
 	if (IsGuestKey(src.key))
@@ -584,9 +616,10 @@
 			continue
 		recipients += M.client
 
-	for (var/mob/M in mobs)
-		if (!M.client)
-			continue
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/M = C.mob
+
 		if (recipients.Find(M.client))
 			continue
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
@@ -634,9 +667,9 @@
 
 /mob/proc/item_attack_message(var/mob/T, var/obj/item/S, var/d_zone, var/devastating = 0)
 	if (d_zone)
-		return "<span style=\"color:red\"><B>[src] attacks [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B></span>"
+		return "<span class='alert'><B>[src] attacks [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B></span>"
 	else
-		return "<span style=\"color:red\"><B>[src] attacks [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B></span>"
+		return "<span class='alert'><B>[src] attacks [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B></span>"
 
 /mob/proc/get_age_pitch_for_talk()
 	if (!src.bioHolder || !src.bioHolder.age) return
@@ -694,6 +727,16 @@
 	for(var/mob/M in AIviewers())
 		M.see(message)
 
+/mob/verb/toggle_auto_capitalization()
+	set desc = "Toggles auto capitalization of chat messages"
+	set name = "Toggle Auto Capitalization"
+
+	if (!usr.client)
+		return
+
+	usr.client.preferences.auto_capitalization = !usr.client.preferences.auto_capitalization
+	boutput(usr, "<span class='notice'>[usr.client.preferences.auto_capitalization ? "Now": "No Longer"] auto capitalizing messages.</span>")
+
 /mob/verb/togglelocaldeadchat()
 	set desc = "Toggle whether you can hear all chat while dead or just local chat"
 	set name = "Toggle Deadchat Range"
@@ -702,7 +745,7 @@
 		return
 
 	usr.client.local_deadchat = !usr.client.local_deadchat
-	boutput(usr, "<span style=\"color:blue\">[usr.client.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
+	boutput(usr, "<span class='notice'>[usr.client.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
 
 /mob/verb/toggleflyingchat()
 	set desc = "Toggle seeing what people say over their heads"
@@ -712,7 +755,7 @@
 		return
 
 	usr.client.preferences.flying_chat_hidden = !usr.client.preferences.flying_chat_hidden
-	boutput(usr, "<span style=\"color:blue\">[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat.</span>")
+	boutput(usr, "<span class='notice'>[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat.</span>")
 
 /mob/proc/show_message(msg, type, alt, alt_type, group = "", var/image/chat_maptext/assoc_maptext = null)
 	if (!src.client)
@@ -743,7 +786,7 @@
 					boutput(observer, "<I>... You can almost hear something ...</I>")
 	else
 		boutput(src, msg, group)
-		if(assoc_maptext && src.client && !src.client.preferences.flying_chat_hidden)
+		if(assoc_maptext && src.client && !src.client.preferences?.flying_chat_hidden)
 			assoc_maptext.show_to(src.client)
 
 		var/psychic_link = src.get_psychic_link()
@@ -767,9 +810,10 @@
 		if (!M.client)
 			continue
 		var/msg = message
-		if (self_message && M==src)
-			msg = self_message
-		M.show_message(msg, 1, blind_message, 2, group)
+		if (self_message && M == src)
+			M.show_message(self_message, 1, self_message, 2, group)
+		else
+			M.show_message(msg, 1, blind_message, 2, group)
 
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
@@ -871,17 +915,19 @@
 		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [speaker ? "data-ctx='\ref[speaker.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
 		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock ? "<a href='?src=\ref[flock.flockmind];origin=\ref[speaker]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
 
-	for (var/mob/M in mobs)
-		if(istype(M, /mob/new_player))
+	for (var/client/CC)
+		if (!CC.mob) continue
+		if(istype(CC.mob, /mob/new_player))
 			continue
+		var/mob/M = CC.mob
 
 		var/thisR = ""
-		if (M.client)
-			if((isflock(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
-				thisR = rendered
-			if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(speaker, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
-				thisR = flockmindRendered
-			if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker && speaker.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
-			if(thisR != "")
-				M.show_message(thisR, 2)
+
+		if((isflock(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
+			thisR = rendered
+		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(speaker, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
+			thisR = flockmindRendered
+		if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker && speaker.mind)
+			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
+		if(thisR != "")
+			M.show_message(thisR, 2)

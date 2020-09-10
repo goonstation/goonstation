@@ -26,6 +26,7 @@
 	var/list/buttons[6]
 	var/list/cbf[6]
 	var/output = ""
+	var/maxExpensiveOperations = 5 // maximum number of transfers per machine tick
 
 	var/list/currentProg
 	var/dp // data pointer
@@ -138,7 +139,7 @@
 	if(!istype(src.holder))
 		del(src)
 		return
-	message = "<span style=\"color:red\">[message]</span>"
+	message = "<span class='alert'>[message]</span>"
 	if(messageCallback)
 		return call(src.holder, messageCallback)(message)
 
@@ -234,7 +235,7 @@
 
 /datum/chemicompiler_core/proc/parseCBF(var/string, var/button)
 	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@","#")
-	var/l = lentext(string)
+	var/l = length(string)
 	var/list/inst = new
 	var/token
 
@@ -279,9 +280,8 @@
 		del(src)
 		return
 	if(running)
-		var/loop = 100	//Max number of operations to perform this cycle. Some commands will manually set this to zero.
-		while(loop > 0)
-			loop--
+		var/loopUsed
+		for (loopUsed = 0, loopUsed < 30, loopUsed++)
 			if(ip > currentProg.len)
 				running = 0
 				break
@@ -306,9 +306,9 @@
 					data[dp + 1]--
 				if(".") //buffer text
 					textBuffer += ascii2text(data[dp+1])
-					loop -= 19
+					loopUsed += 19
 				if(",") //load volume of sx into ax
-					loop -= 49
+					loopUsed += 9
 					var/datum/chemicompiler_executor/E = src.holder
 					ax = E.reagent_volume(sx)
 				if("\[") //start loop
@@ -321,7 +321,7 @@
 								count--
 							ip++
 				if("]") //end loop
-					loop -= 9
+					loopUsed += 9
 					if(data[dp + 1] != 0)
 						count = 1
 						ip--
@@ -346,11 +346,11 @@
 				if("'")
 					ax = data[dp + 1]
 				if("$") //heat
-					loop = 0
+					loopUsed = 30
 					var/heatTo = (273 - tx) + ax
 					heatReagents(sx, heatTo)
 				if("@") //transfer
-					loop = 0
+					loopUsed = 30
 					transferReagents(sx, tx, ax)
 				/*if("?") //compare *ptr to sx, using operation tx, store result in ax
 					switch(tx)
@@ -369,13 +369,13 @@
 						else
 							ax = 0*/
 				if("#") //move individual reagent from container
-					loop = 0
+					loopUsed = 30
 					isolateReagent(sx, tx, ax, data[dp+1])
 				else
 
 			if(data.len < dp + 1)
 				data.len = dp + 1
-			if(lentext(textBuffer) > 80)
+			if(length(textBuffer) > 80)
 				output += "[textBuffer]<br>"
 				textBuffer = ""
 				updatePanel()
@@ -694,7 +694,7 @@
 	if(istype(reservoirs[resId], /obj/item/reagent_containers/glass))
 		// Taking a res out
 		if(!usr.equipped())
-			boutput(usr, "<span style=\"color:blue\">You remove the [reservoirs[resId]] from the [src.holder].</span>")
+			boutput(usr, "<span class='notice'>You remove the [reservoirs[resId]] from the [src.holder].</span>")
 			usr.put_in_hand_or_drop(reservoirs[resId])
 			reservoirs[resId] = null
 		else
@@ -706,7 +706,7 @@
 		var/obj/item/I = usr.equipped()
 		if(istype(I, /obj/item/reagent_containers/glass))
 			//putting a reagent container in
-			boutput(usr, "<span style=\"color:blue\">You place the [I] into the [src.holder].</span>")
+			boutput(usr, "<span class='notice'>You place the [I] into the [src.holder].</span>")
 			usr.drop_item()
 			I.set_loc(holder)
 			reservoirs[resId] = I
@@ -739,7 +739,7 @@
 	if(!istype(holder))
 		del(src)
 		return
-	message = "<span style=\"color:red\">[message]</span>"
+	message = "<span class='alert'>[message]</span>"
 	if(istype(holder:loc, /mob))
 		boutput(holder:loc, message)
 	else
@@ -761,7 +761,6 @@
 		return
 
 	showMessage("[src.holder] emits a slight humming sound.")
-	sleep(round(amount * 4.5))
 
 	var/obj/item/reagent_containers/holder = reservoirs[source]
 	var/datum/reagents/RS = holder.reagents
@@ -772,7 +771,6 @@
 	if (target == 11)
 		// Generate pill
 		showMessage("[src.holder] makes an alarming grinding noise!")
-		sleep(10)
 		var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
 		RS.trans_to(P, amount, 1 , 1, index)
 		showMessage("[src.holder] ejects a pill.")
@@ -784,7 +782,6 @@
 	if (target == 13)
 		RS.trans_to(get_turf(src.holder), amount, 1 , 1, index)
 		showMessage("Something drips out the side of [src.holder].")
-		sleep(10)
 
 /datum/chemicompiler_executor/proc/transferReagents(var/source, var/target, var/amount)
 	if(!istype(src.holder))
@@ -801,8 +798,6 @@
 		return
 
 	showMessage("[src.holder] emits a slight humming sound.")
-	sleep(round(amount * 2.5))
-
 	var/obj/item/reagent_containers/holder = reservoirs[source]
 	var/datum/reagents/RS = holder.reagents
 
@@ -812,7 +807,6 @@
 	if (target == 11)
 		// Generate pill
 		showMessage("[src.holder] makes an alarming grinding noise!")
-		sleep(10)
 		var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
 		RS.trans_to(P, amount)
 		showMessage("[src.holder] ejects a pill.")
@@ -824,7 +818,6 @@
 	if (target == 13)
 		RS.trans_to(get_turf(src.holder), amount)
 		showMessage("Something drips out the side of [src.holder].")
-		sleep(10)
 
 /datum/chemicompiler_executor/proc/heatReagents(var/rid, var/temp)
 	if(!istype(src.holder))
@@ -844,15 +837,22 @@
 	var/obj/item/reagent_containers/holder = reservoirs[rid]
 	var/datum/reagents/R = holder.reagents
 	var/heating_in_progress = 1
+	//while(R.total_volume && heating_in_progress)
 
-	var/element_temp = R.total_temperature < temp ? 9000 : 0							//Sidewinder7: Smart heating system. Allows the CC to heat at full power for more of the duration, and prevents reheating of reacted elements.
+	//heater settings
+	var/h_exposed_volume = 10
+	var/h_divisor = 10
+	var/h_change_cap = 25
+
+	var/element_temp = R.total_temperature < temp ? 9000 : 0												//Sidewinder7: Smart heating system. Allows the CC to heat at full power for more of the duration, and prevents reheating of reacted elements.
 	var/max_temp_change = abs(R.total_temperature - temp)
-	var/next_temp_change = min(max((abs(R.total_temperature - element_temp) / 35), 1), 25)	// Formula used by temperature_reagents() to determine how much to change the temp
-	if(next_temp_change >= max_temp_change)													// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
-		var/element_temp_offset = max_temp_change * 35										// Compute the exact exposure temperature to reach the target
+	var/next_temp_change = min(max((abs(R.total_temperature - element_temp) / h_divisor), 1), h_change_cap)	// Formula used by temperature_reagents() to determine how much to change the temp
+	if(next_temp_change >= max_temp_change)																	// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
+		var/element_temp_offset = max_temp_change * h_divisor												// Compute the exact exposure temperature to reach the target
 		element_temp = R.total_temperature + element_temp_offset * (temp > R.total_temperature ? 1 : -1)
 		heating_in_progress = 0
-	R.temperature_reagents(element_temp, 10, 35, 25)
+
+	R.temperature_reagents(element_temp, h_exposed_volume, h_divisor, h_change_cap)
 
 	return heating_in_progress
 

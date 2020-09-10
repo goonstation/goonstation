@@ -51,62 +51,6 @@ Buildable meters
 //called when a turf is attacked with a pipe item
 // place the pipe on the turf, setting pipe level to 1 (underfloor) if the turf is not intact
 
-// rotate the pipe item clockwise
-
-/obj/item/weapon/pipe/verb/rotate()
-	set src in view(1)
-
-	if ( usr.stat || usr.restrained() )
-		return
-
-	switch(pipe_type)
-		if(0)
-			if(icon_state == "straight")
-				pipe_dir = 12
-				icon_state = "straight12"
-			else if (icon_state == "straight12")
-				pipe_dir = 3
-				icon_state = "straight"
-		if(1)
-			if(icon_state == "bend9")
-				icon_state = "bend"
-				pipe_dir = 10
-			else if(icon_state == "bend")
-				icon_state = "bend6"
-				pipe_dir = 6
-			else if(icon_state == "bend6")
-				icon_state = "bend5"
-				pipe_dir = 5
-			else if(icon_state == "bend5")
-				icon_state = "bend9"
-				pipe_dir = 9
-
-		if(2)
-			if(icon_state == "he-straight")
-				icon_state = "he-straight12"
-				pipe_dir = 12
-			else if(icon_state == "he-straight12")
-				icon_state = "he-straight"
-				pipe_dir = 3
-
-		if(3)
-			if(icon_state == "he-bend")
-				icon_state = "he-bend9"
-				pipe_dir = 9
-			else if(icon_state == "he-bend6")
-				icon_state = "he-bend"
-				pipe_dir = 10
-			else if(icon_state == "he-bend5")
-				icon_state = "he-bend6"
-				pipe_dir = 6
-			else if(icon_state == "he-bend9")
-				icon_state = "he-bend5"
-				pipe_dir = 5
-
-		if(4,7,5,6,7,8,9,10)
-			src.dir = turn(src.dir, -90)
-	return
-
 // returns the p_dir from the pipe item type and dir
 
 /obj/item/weapon/pipe/proc/get_pdir()
@@ -158,6 +102,54 @@ Buildable meters
 	return 0
 
 /obj/item/weapon/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(ispryingtool(W))
+		if(!anchored)
+			switch(pipe_type)
+				if(0)
+					if(icon_state == "straight")
+						pipe_dir = 12
+						icon_state = "straight12"
+					else if (icon_state == "straight12")
+						pipe_dir = 3
+						icon_state = "straight"
+				if(1)
+					if(icon_state == "bend9")
+						icon_state = "bend"
+						pipe_dir = 10
+					else if(icon_state == "bend")
+						icon_state = "bend6"
+						pipe_dir = 6
+					else if(icon_state == "bend6")
+						icon_state = "bend5"
+						pipe_dir = 5
+					else if(icon_state == "bend5")
+						icon_state = "bend9"
+						pipe_dir = 9
+
+				if(2)
+					if(icon_state == "he-straight")
+						icon_state = "he-straight12"
+						pipe_dir = 12
+					else if(icon_state == "he-straight12")
+						icon_state = "he-straight"
+						pipe_dir = 3
+
+				if(3)
+					if(icon_state == "he-bend")
+						icon_state = "he-bend9"
+						pipe_dir = 9
+					else if(icon_state == "he-bend6")
+						icon_state = "he-bend"
+						pipe_dir = 10
+					else if(icon_state == "he-bend5")
+						icon_state = "he-bend6"
+						pipe_dir = 6
+					else if(icon_state == "he-bend9")
+						icon_state = "he-bend5"
+						pipe_dir = 5
+
+				if(4,7,5,6,7,8,9,10)
+					src.dir = turn(src.dir, -90)
 	/*
 	if (iswrenchingtool(W))
 

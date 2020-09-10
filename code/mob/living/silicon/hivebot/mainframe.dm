@@ -23,7 +23,7 @@
 	if (isdead(src))
 		return
 	else
-		src.updatehealth()
+		health_update_queue |= src
 
 		if (src.health <= 0)
 			death()
@@ -59,8 +59,10 @@
 
 
 /mob/living/silicon/hive_mainframe/say_understands(var/other)
-	if (ishuman(other) && (!other:mutantrace || !other:mutantrace.exclusive_language))
-		return 1
+	if (ishuman(other))
+		var/mob/living/carbon/human/H = other
+		if(!H.mutantrace || !H.mutantrace.exclusive_language)
+			return 1
 	if (isrobot(other))
 		return 1
 	if (ishivebot(other))
@@ -137,7 +139,7 @@
 
 
 /mob/living/silicon/hive_mainframe/proc/Namepick()
-	var/randomname = pick(ai_names)
+	var/randomname = pick_string_autokey("names/ai.txt")
 	var/newname = input(src,"You are the a Mainframe Unit. Would you like to change your name to something else?", "Name change",randomname) as text
 
 	if (length(newname) == 0)

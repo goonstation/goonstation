@@ -29,14 +29,13 @@
     if (istype(holder.owner, /mob/living/critter/changeling/eyespider))
       var/mob/living/critter/changeling/eyespider/E = holder.owner
       if(E.marked_target)
-        boutput(E, "<span style='color:red'>We have ceased following [E.marked_target] as a result.</span>")
+        boutput(E, "<span class='alert'>We have ceased following [E.marked_target] as a result.</span>")
         // no need to null the target, we're about to overwrite it
-      logTheThing("combat", E, M, "marks %target% for constant watching as an eyespider [log_loc(E)].")
+      logTheThing("combat", E, M, "marks [constructTarget(M,"combat")] for constant watching as an eyespider [log_loc(E)].")
       E.marked_target = M
 
       // TODO: NOT THIS, THERE MUST BE A BETTER WAY
       SPAWN_DBG(1 MINUTE) // 60 second timeout for marks
         if(E.marked_target && E.marked_target == M)
-          boutput(E, "<span style='color:red'>Our mark on [E.marked_target] has faded.</span>")
+          boutput(E, "<span class='alert'>Our mark on [E.marked_target] has faded.</span>")
           E.marked_target = null
-

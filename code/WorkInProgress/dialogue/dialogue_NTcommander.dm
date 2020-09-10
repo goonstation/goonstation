@@ -256,7 +256,7 @@
 
 		getNodeText(var/client/C)
 			var/rank = C.reputations.get_Nanotrasen_rank_string("nt")
-			return "Í will make sure that Nanotrasen will remember your name, [rank] [C.mob.name]."
+			return "ï¿½ will make sure that Nanotrasen will remember your name, [rank] [C.mob.name]."
 
 		canShow(var/client/C)
 			if(istype(C.mob.equipped(), /obj/item/factionrep/ntboard)) return 1
@@ -266,7 +266,7 @@
 		onActivate(var/client/C)
 			qdel(C.mob.equipped())
 			C.reputations.set_reputation(id = "nt",amt = 50,absolute = 0)
-			boutput(C.mob, "<span style=\"color:green\">Your standing with Nanotrasen has increased by 50!</span>")
+			boutput(C.mob, "<span class='success'>Your standing with Nanotrasen has increased by 50!</span>")
 			return
 
 	nt_itemtakedebug
@@ -277,7 +277,7 @@
 
 		getNodeText(var/client/C)
 			var/rank = C.reputations.get_Nanotrasen_rank_string("nt")
-			return "Í will make sure that Nanotrasen will remember your name, [rank] [C.mob.name]."
+			return "ï¿½ will make sure that Nanotrasen will remember your name, [rank] [C.mob.name]."
 
 		canShow(var/client/C)
 			if(istype(C.mob.equipped(), /obj/item/factionrep/ntboarddebug)) return 1
@@ -286,7 +286,7 @@
 		onActivate(var/client/C)
 			qdel(C.mob.equipped())
 			C.reputations.set_reputation(id = "nt",amt = 10000,absolute = 0)
-			boutput(C.mob, "<span style=\"color:green\">Your standing with Nanotrasen has increased by 10000!</span>")
+			boutput(C.mob, "<span class='success'>Your standing with Nanotrasen has increased by 10000!</span>")
 			return
 
 

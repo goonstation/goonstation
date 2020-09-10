@@ -3,7 +3,7 @@
 	desc = "Enables vestigal non-mammal traits in the subject's body."
 	id = "lizard"
 	mutantrace_option = "Lizard"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	probability = 33
 	msgGain = "Your skin feels oddly dry."
 	msgLose = "Your scales fall off."
@@ -73,6 +73,7 @@
 	msgGain = "You feel kinda thin."
 	msgLose = "You've put on a bit more weight."
 	icon_state  = "skeleton"
+	isBad = 1
 
 /datum/bioEffect/mutantrace/ithillid
 	name = "Aquatic Genetics"
@@ -115,7 +116,7 @@
 	id = "monkey"
 	mutantrace_option = "Monkey"
 	mutantrace_path = /datum/mutantrace/monkey
-	research_level = 3
+	research_level = EFFECT_RESEARCH_ACTIVATED
 	msgGain = "You go bananas!"
 	msgLose = "You do the evolution."
 	icon_state  = "monkey"
@@ -160,3 +161,14 @@
 	msgGain = "You feel especially hairy."
 	msgLose = "Your fur falls out."
 	icon_state  = "cat"
+
+
+/datum/bioEffect/mutantrace/cow
+	name = "Bovine Genetics"
+	desc = "The subject takes on the appearance of a domesticated space cow and gains milk production."
+	id = "cow"
+	mutantrace_option = "Cow"
+	mutantrace_path = /datum/mutantrace/cow
+	msgGain = "You feel like you're ready for some Cow RP."
+	msgLose = "Your udders fall off!"
+	icon_state  = "cow"

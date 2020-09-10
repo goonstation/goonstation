@@ -11,14 +11,14 @@ Contains:
 
 /obj/item/tank
 	name = "tank"
-	icon = 'icons/obj/tank.dmi'
+	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/back.dmi'
 
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | TGUI_INTERACTIVE
 
 	pressure_resistance = ONE_ATMOSPHERE*5
 
@@ -26,8 +26,8 @@ Contains:
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 4
-	stamina_damage = 35
-	stamina_cost = 30
+	stamina_damage = 55
+	stamina_cost = 23
 	stamina_crit_chance = 10
 
 	New()
@@ -35,8 +35,8 @@ Contains:
 		src.air_contents = unpool(/datum/gas_mixture)
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
+		BLOCK_SETUP(BLOCK_TANK)
 		return
 
 	disposing()
@@ -65,59 +65,10 @@ Contains:
 				.= 1
 
 	attack_self(mob/user as mob)
-		user.machine = src
 		if (!(src.air_contents))
 			return
 
-		var/using_internal
-		if(iscarbon(src.loc))
-			var/mob/living/carbon/location = loc
-			if(location.internal==src)
-				using_internal = 1
-
-		//var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"pragma\" content=\"no-cache\"><style type='text/css'>body { font-family: Tahoma, sans-serif; font-size: 10pt; }</style></head><body>" : ""
-
-		var/message = {"
-		<b>[src]</b>
-		<br><b>Tank Pressure:</b> [air_contents.return_pressure()] kPa
-		<br>[fancy_pressure_bar(air_contents.return_pressure(), 10 * ONE_ATMOSPHERE)]
-		<hr>
-		<b>Mask Release Valve:</b> <A href='?src=\ref[src];stat=1'>[using_internal?("Open"):("Closed")]</A>
-		<br><b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-10'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> <A href='?src=\ref[src];setpressure=1'>[distribute_pressure]</A> <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=10'>+</A>
-		"}
-		user.Browse(message, "window=tank;size=600x300")
-		onclose(user, "tank")
-		return
-
-	Topic(href, href_list)
-		..()
-		if (usr.stat|| usr.restrained())
-			return
-		if (src.loc == usr)
-			usr.machine = src
-			if (href_list["dist_p"])
-				var/cp = text2num(href_list["dist_p"])
-				src.distribute_pressure += cp
-				src.distribute_pressure = min(max(round(src.distribute_pressure), 0), 3*ONE_ATMOSPHERE)
-			if (href_list["stat"])
-				var/toggled = toggle_valve()
-				for (var/obj/ability_button/tank_valve_toggle/T in ability_buttons)
-					T.icon_state = toggled ? "airon" : "airoff"
-			if (href_list["setpressure"])
-				var/change = input(usr,"Target Pressure (0-303.975):","Enter target pressure",distribute_pressure) as num
-				if(!isnum(change)) return
-				distribute_pressure = min(max(0, change),303.975)
-				src.updateUsrDialog()
-				return
-
-			src.add_fingerprint(usr)
-			for(var/mob/M in viewers(1, src.loc))
-				if ((M.client && M.machine == src))
-					src.attack_self(M)
-		else
-			usr.Browse(null, "window=tank")
-			return
-		return
+		return ui_interact(user)
 
 	remove_air(amount)
 		return air_contents.remove(amount)
@@ -131,6 +82,9 @@ Contains:
 		check_status()
 		return 1
 
+	proc/set_release_pressure(var/pressure as num)
+		distribute_pressure = min(max(0, pressure), TANK_MAX_RELEASE_PRESSURE)
+
 	proc/toggle_valve()
 		if(iscarbon(src.loc))
 			var/mob/living/carbon/location = loc
@@ -141,7 +95,7 @@ Contains:
 					T.icon_state = "airoff"
 				location.internal = null
 				if (location.internals) location.internals.icon_state = "internal0"
-				boutput(usr, "<span style=\"color:blue\">You close the tank release valve.</span>")
+				boutput(usr, "<span class='notice'>You close the tank release valve.</span>")
 				return 0
 			else
 				if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
@@ -149,10 +103,10 @@ Contains:
 					for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
 						T.icon_state = "airon"
 					if (location.internals) location.internals.icon_state = "internal1"
-					boutput(usr, "<span style=\"color:blue\">You open the tank valve.</span>")
+					boutput(usr, "<span class='notice'>You open the tank valve.</span>")
 					return 1
 				else
-					boutput(usr, "<span style=\"color:blue\">The valve immediately closes. You must put on a mask first.</span>")
+					boutput(usr, "<span class='notice'>The valve immediately closes. You must put on a mask first.</span>")
 					playsound(src.loc, "sound/items/penclick.ogg", 50, 1)
 					return 0
 
@@ -160,7 +114,7 @@ Contains:
 		if(!air_contents)
 			return null
 
-		var/tank_pressure = air_contents.return_pressure()
+		var/tank_pressure = MIXTURE_PRESSURE(air_contents)
 		//if(tank_pressure < distribute_pressure)
 		//	distribute_pressure = max(tank_pressure,17)
 
@@ -181,15 +135,15 @@ Contains:
 		if(!air_contents)
 			return 0
 
-		var/pressure = air_contents.return_pressure()
+		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
-			//boutput(world, "<span style=\"color:blue\">[x],[y] tank is exploding: [pressure] kPa</span>")
+			//boutput(world, "<span class='notice'>[x],[y] tank is exploding: [pressure] kPa</span>")
 			//Give the gas a chance to build up more pressure through reacting
 			playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 			air_contents.react()
 			air_contents.react()
 			air_contents.react()
-			pressure = air_contents.return_pressure()
+			pressure = MIXTURE_PRESSURE(air_contents)
 
 			var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
@@ -206,7 +160,7 @@ Contains:
 				return
 			var/turf/epicenter = get_turf(loc)
 
-			//boutput(world, "<span style=\"color:blue\">Exploding Pressure: [pressure] kPa, intensity: [range]</span>")
+			//boutput(world, "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>")
 
 
 			logTheThing("bombing", src, null, "exploded at [showCoords(epicenter.x, epicenter.y, epicenter.z)], , range: [range], last touched by: [src.fingerprintslast]")
@@ -214,7 +168,7 @@ Contains:
 			qdel(src)
 
 		else if(pressure > TANK_RUPTURE_PRESSURE)
-			//boutput(world, "<span style=\"color:blue\">[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>")
+			//boutput(world, "<span class='notice'>[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>")
 			if(integrity <= 0)
 				loc.assume_air(air_contents)
 				air_contents = null
@@ -225,7 +179,7 @@ Contains:
 				integrity--
 
 		else if(pressure > TANK_LEAK_PRESSURE)
-			//boutput(world, "<span style=\"color:blue\">[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]</span>")
+			//boutput(world, "<span class='notice'>[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]</span>")
 			if(integrity <= 0)
 				var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
 				loc.assume_air(leaked_gas)
@@ -236,13 +190,13 @@ Contains:
 			integrity++
 
 	examine()
-		set category = "Local"
-		var/obj/item/icon = src
 		if (istype(src.loc, /obj/item/assembly))
+			var/obj/item/icon = src
+			. = list()
 			icon = src.loc
 			if (!in_range(src, usr))
 				if (icon == src)
-					boutput(usr, "<span style=\"color:blue\">It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>")
+					. += "<span class='notice'>It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>"
 				return
 
 			var/celsius_temperature = src.air_contents.temperature-T0C
@@ -261,12 +215,9 @@ Contains:
 			else
 				descriptive = "furiously hot"
 
-			boutput(usr, "<span style=\"color:blue\">The [bicon(icon)] feels [descriptive]</span>")
-
+			. += "<span class='notice'>The [bicon(icon)] feels [descriptive]</span>"
 		else
-			..()
-
-		return
+			return ..()
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -275,6 +226,44 @@ Contains:
 			B.auto_setup(src,user)
 		else
 			..()
+
+/obj/item/tank/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "GasTank", name)
+		ui.open()
+
+/obj/item/tank/ui_data(mob/user)
+	var/list/data = list()
+	data["pressure"] = MIXTURE_PRESSURE(air_contents)
+	data["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
+	data["valveIsOpen"] = using_internal()
+	data["releasePressure"] = distribute_pressure
+	data["maxRelease"] = TANK_MAX_RELEASE_PRESSURE
+
+	return data
+
+/obj/item/tank/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("toggle-valve")
+			toggle_valve()
+			. = TRUE
+		if("set-pressure")
+			var/target_pressure = params["releasePressure"]
+			if(isnum(target_pressure))
+				set_release_pressure(params["releasePressure"])
+				. = TRUE
+
+/obj/item/tank/ui_state(mob/user)
+	return tgui_physical_state
+
+/obj/item/tank/ui_status(mob/user)
+  return min(
+		tgui_physical_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
 
 ////////////////////////////////////////////////////////////
 
@@ -307,6 +296,8 @@ Contains:
 	item_state = "jetpack_mag"
 	mats = 16
 	force = 8
+	stamina_damage = 55
+	stamina_cost = 30
 	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
 	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
@@ -317,13 +308,13 @@ Contains:
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 		return
 
-	verb/toggle()
+	proc/toggle()
 		src.on = !( src.on )
 		src.icon_state = text("jetpack_mag[]", src.on)
 		if(src.on)
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now on</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
 		else
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now off</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
 		return
 
 	proc/allow_thrust(num, mob/user as mob)
@@ -332,7 +323,7 @@ Contains:
 
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -344,16 +335,12 @@ Contains:
 				var/d = G.toxins / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-				user.updatehealth()
 			return (G.oxygen >= 0.0075 ? 0.5 : 0)
 		else
 			if (G.oxygen >= 0.0075)
 				return 0.5
 			else
 				return 0
-		//G = null
-		qdel(G)
-		return
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 
@@ -376,19 +363,19 @@ Contains:
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 		return
 
-	verb/toggle()
+	proc/toggle()
 		src.on = !( src.on )
 		src.icon_state = text("jetpack[]", src.on)
 		if(src.on)
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now on</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
 		else
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now off</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
 		return
 
 	proc/allow_thrust(num, mob/user as mob)
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -400,16 +387,12 @@ Contains:
 				var/d = G.toxins / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-				user.updatehealth()
 			return (G.oxygen >= 0.0075 ? 0.5 : 0)
 		else
 			if (G.oxygen >= 0.0075)
 				return 0.5
 			else
 				return 0
-		//G = null
-		qdel(G)
-		return
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 #endif
@@ -438,6 +421,8 @@ Contains:
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	w_class = 2.0
 	force = 3.0
+	stamina_damage = 30
+	stamina_cost = 16
 	desc = "A small tank that is labelled to contain oxygen. In emergencies, wear a mask that can be used to transfer air, such as a breath mask, turn on the release valve on the oxygen tank, and put it on your belt."
 	wear_image_icon = 'icons/mob/belt.dmi'
 	module_research = list("atmospherics" = 1)
@@ -483,7 +468,7 @@ Contains:
 		return
 
 	proc/release()
-		var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
+		var/datum/gas_mixture/removed = air_contents.remove(TOTAL_MOLES(air_contents))
 		loc.assume_air(removed)
 
 	proc/ignite()
@@ -504,7 +489,6 @@ Contains:
 			return
 
 		var/turf/ground_zero = get_turf(loc)
-		loc = null
 
 		if(air_contents.temperature > (T0C + 400))
 			strength = fuel_moles/15
@@ -641,16 +625,16 @@ Contains:
 		src.on = !( src.on )
 		src.icon_state = text("jetpack_mk2_[]", src.on)
 		if(src.on)
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now on</span>")
-			playsound(src.loc, "sound/misc/JetPackMK2on.ogg", 50, 1)
+			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
+			playsound(src.loc, "sound/misc/JetpackMK2on.ogg", 50, 1)
 		else
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now off</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
 		return
 
 	allow_thrust(num, mob/user as mob)
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -662,16 +646,12 @@ Contains:
 				var/d = G.toxins / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-				user.updatehealth()
 			return (G.oxygen >= 0.0075 ? 0.5 : 0)
 		else
 			if (G.oxygen >= 0.0075)
 				return 0.5
 			else
 				return 0
-		//G = null
-		qdel(G)
-		return
 
 /obj/item/tank/jetpack/jetpackmk2/abilities = list(/obj/ability_button/jetpack2_toggle, /obj/ability_button/tank_valve_toggle)
 
@@ -690,9 +670,9 @@ Contains:
 		src.on = !( src.on )
 		src.icon_state = text("sjetpack_mag[]", src.on)
 		if(src.on)
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now on</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
 		else
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now off</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
 		return
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)

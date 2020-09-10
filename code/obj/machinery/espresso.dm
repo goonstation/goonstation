@@ -21,6 +21,7 @@
 	var/image/image_cup = null
 
 	New()
+		..()
 		UnsubscribeProcess()
 		src.update()
 
@@ -60,7 +61,6 @@
 							user.show_text("You dumped [src.wateramt] units of water into the [src].")
 							src.wateramt = 0
 							return ..()
-					return ..()
 				else
 					user.show_text("The container does not have any water in it!")
 					return ..()
@@ -137,7 +137,7 @@
 			if (src.cupinside == 0 && top_on == 1)
 				user.show_text("You begin unscrewing the top of the [src].")
 				if (!do_after(user, 30))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 0
 					user.show_text("You have unscrewed the top of the [src].")
@@ -145,7 +145,7 @@
 			if (src.cupinside == 0 && top_on == 0)
 				user.show_text("You begin screwing the top of the [src] back on.")
 				if (!do_after(user, 30))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 1
 					user.show_text("You have screwed the top of the [src] back on.")
@@ -153,7 +153,7 @@
 			if (src.cupinside == 1 && top_on == 0)
 				user.show_text("You begin screwing the top of the [src] back on.")
 				if (!do_after(user, 30))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 1
 					user.show_text("You have screwed the top of the [src] back on.")
@@ -261,6 +261,7 @@
 	var/image/fluid_image
 
 	New()
+		..()
 		UnsubscribeProcess()
 		if (ispath(src.default_carafe))
 			src.my_carafe = new src.default_carafe (src)
@@ -297,7 +298,6 @@
 						src.water_level += wateramt
 						user.show_text("You dump [wateramt] units of water into the [src].")
 						return ..()
-					return ..()
 				else
 					user.show_text("The container does not have any water in it!")
 					return ..()
@@ -333,7 +333,7 @@
 			if (!src.my_carafe && top_on == 1)
 				user.show_text("You begin unscrewing the top of the [src].")
 				if (!do_after(user, 30))
-					boutput(user, "<span style='color:red'>You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 0
 					user.show_text("You have unscrewed the top of the [src].")
@@ -341,7 +341,7 @@
 			else if (!src.my_carafe && top_on == 0)
 				user.show_text("You begin screwing the top of the [src] back on.")
 				if (!do_after(user, 30))
-					boutput(user, "<span style='color:red'>You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 1
 					user.show_text("You have screwed the top of the [src] back on.")
@@ -349,7 +349,7 @@
 			else if (src.my_carafe && top_on == 0)
 				user.show_text("You begin screwing the top of the [src] back on.")
 				if (!do_after(user, 30))
-					boutput(user, "<span style='color:red'>You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 1
 					user.show_text("You have screwed the top of the [src] back on.")

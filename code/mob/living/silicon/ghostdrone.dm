@@ -29,15 +29,12 @@
 	var/jetpack = 1 //fuck whoever made this
 	var/jeton = 0
 
-	var/datum/light/light
-
 	//gimmicky things
 	var/obj/item/clothing/head/hat = null
 	var/obj/item/clothing/suit/bedsheet/bedsheet = null
 
 	New()
 		..()
-		ghost_drones += src
 		hud = new(src)
 		src.attach_hud(hud)
 		//src.sight |= SEE_TURFS //Uncomment for meson-like vision. I'm not a fan of it though. -Wire
@@ -62,9 +59,6 @@
 		var/obj/item/cell/cerenkite/charged/CELL = new /obj/item/cell/cerenkite/charged(src)
 		src.cell = CELL
 
-		light = new /datum/light/point
-		light.set_brightness(0.5)
-		light.attach(src)
 
 		src.health = src.max_health
 		src.botcard.access = list(access_maint_tunnels, access_ghostdrone, access_engineering,access_external_airlocks,
@@ -75,8 +69,9 @@
 		//Attach shit to tools
 		src.tools = list(
 			new /obj/item/magtractor(src),
-			new /obj/item/tool/omnitool(src),
+			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/safe(src),
+			new /obj/item/lamp_manufacturer(src),
 			new /obj/item/device/analyzer/atmospheric(src),
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
@@ -96,29 +91,6 @@
 		/*SPAWN_DBG(0)
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
-
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		for (var/obj/item/I in src)
-			if (!I.material) continue
-			I.material.triggerOnLife(src, I)
-
-		if (hud)
-			hud.update_environment()
-			hud.update_health()
-			hud.update_tools()
-
-		if (src.client)
-			src.updateStatic()
-			src.updateOverlaysClient(src.client)
-			src.antagonist_overlay_refresh(0, 0)
-
-		if (src.observers.len)
-			for (var/mob/x in src.observers)
-				if (x.client)
-					src.updateOverlaysClient(x.client)
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -155,7 +127,6 @@
 	death(gibbed)
 		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
 		setdead(src)
-		ghost_drones -= src
 		if (src.mind)
 			src.mind.dnr = 0
 		if (src.client)
@@ -205,16 +176,7 @@
 		. = ..()
 		hud.update_pulling()
 
-	dispose()
-		..()
-		if (src in ghost_drones)
-			ghost_drones -= src
-		if (src in available_ghostdrones)
-			available_ghostdrones -= src
-
 	disposing()
-		if (src in ghost_drones)
-			ghost_drones -= src
 		if (src in available_ghostdrones)
 			available_ghostdrones -= src
 		..()
@@ -230,7 +192,7 @@
 		if (before == 2 && src.stat < 2) //if we were dead, and now arent
 			src.updateSprite()
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (src.nodamage) return //godmode
 		src.health -= max(burn, brute)
 		if (!isdead(src) && src.health <= 0) //u ded
@@ -241,40 +203,37 @@
 		return
 
 	examine()
-		..()
+		. = ..()
 
-		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
-			return
-
-		var/msg = "*---------*<br>"
+		. += "*---------*"
 
 		if (isdead(src))
-			msg += "<span style'color:red'>It looks dead and lifeless.</span><br>"
-			msg += "*---------*"
-			return out(usr, msg)
+			. += "<span style'color:red'>It looks dead and lifeless.</span>\n*---------*"
+			return
 
-		msg += "<span style='color: blue;'>"
+
+		var/list/msg = list("<span class='notice'>")
 		if (src.active_tool)
 			msg += "[src] is holding a little [bicon(src.active_tool)] [src.active_tool.name]"
 			if (istype(src.active_tool, /obj/item/magtractor) && src.active_tool:holding)
 				msg += ", containing \an [src.active_tool:holding]"
 			msg += "<br>"
-		msg += "[src] has a power charge of [bicon(src.cell)] [src.cell.charge]/[src.cell.maxcharge]<br>"
-		msg += "</span>"
+		msg += "[src] has a power charge of [bicon(src.cell)] [src.cell.charge]/[src.cell.maxcharge]</span>"
+
+		. += msg.Join("")
 
 		if (src.health < src.max_health)
 			if (src.health < (src.max_health / 2))
-				msg += "<span style='color:red'>It's rather badly damaged. It probably needs some wiring replaced inside.</span><br>"
+				. += "<span class='alert'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				msg += "<span style='color:red'>It's a bit damaged. It looks like it needs some welding done.</span><br>"
+				. += "<span class='alert'>It's a bit damaged. It looks like it needs some welding done.</span>"
 
-		msg += "*---------*"
-		out(usr, msg)
+		. += "*---------*"
 
 	Login()
 		..()
 		if (isalive(src))
-			src.visible_message("<span style='color: blue'>[src.name] comes online.</span>", "<span style='color: blue'>You come online!</span>")
+			src.visible_message("<span class='notice'>[src.name] comes online.</span>", "<span class='notice'>You come online!</span>")
 			src.updateSprite()
 
 	Logout()
@@ -294,7 +253,7 @@
 			return 1
 		if (src.bedsheet)
 			UpdateOverlays(null, "face")
-			light.disable()
+			src.remove_sm_light("ghostdrone\ref[src]")
 			src.icon_state = "g_drone["-[type]"]"
 			return 1
 
@@ -309,12 +268,11 @@
 
 		if (length(color) == 7) //Set our luminosity color, if valid
 			var/colors = GetColors(src.faceColor)
-			colors[1] = colors[1] / 255
-			colors[2] = colors[2] / 255
-			colors[3] = colors[3] / 255
-			light.set_color(colors[1], colors[2], colors[3])
+			src.add_sm_light("ghostdrone\ref[src]", list(colors[1],colors[2],colors[3],0.4 * 255))
 
-		light.enable()
+
+
+		src.toggle_sm_light(1)
 		UpdateOverlays(newFace, "face")
 		return 1
 
@@ -341,7 +299,7 @@
 
 	proc/updateSprite()
 		if (isdead(src) || !src.client || src.charging || src.newDrone)
-			light.disable()
+			src.toggle_sm_light(0)
 			if (src.bedsheet)
 				//fuckin bedsheets...
 				if (isdead(src) || !src.client) //dead or no client
@@ -357,8 +315,7 @@
 				src.icon_state = "g_drone-dead"
 
 			if (!isdead(src))
-				light.set_color(0.94, 0.88, 0.12) //yellow
-				light.enable()
+				src.add_sm_light("ghostdrone\ref[src]", list(0.94*255,0.88*255,0.12*255,0.4 * 255))
 			UpdateOverlays(null, "face")
 			UpdateOverlays(null, "hoverDiscs")
 			animate(src) //stop bumble animation
@@ -390,8 +347,8 @@
 		..()
 
 	click(atom/target, params)
-		if (params["alt"])
-			target.examine() // in theory, usr should be us, this is shit though
+		if (src.client && src.client.check_key(KEY_EXAMINE))
+			src.examine_verb(target) // in theory, usr should be us, this is shit though
 			return
 
 		if (src.in_point_mode)
@@ -412,7 +369,7 @@
 			item.attack_self(src)
 			return
 
-		if (params["ctrl"])
+		if (src.client && src.client.check_key(KEY_PULL))
 			var/atom/movable/movable = target
 			if (istype(movable))
 				movable.pull()
@@ -452,7 +409,7 @@
 				var/mob/tmob = AM
 				if(ishuman(tmob) && tmob.bioHolder && tmob.bioHolder.HasEffect("fat"))
 					if(prob(20))
-						src.visible_message("<span style=\"color:red\"><B>[src] fails to push [tmob]'s fat ass out of the way.</B></span>")
+						src.visible_message("<span class='alert'><B>[src] fails to push [tmob]'s fat ass out of the way.</B></span>")
 						src.now_pushing = 0
 						src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
 						return
@@ -520,48 +477,47 @@
 		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
-				if (WELD.welding)
-					user.visible_message("<span style=\"color:red\"><b>[user] burns [src] with [W]!</b></span>")
-					damage_heat(WELD.force)
+				if (W:try_weld(user,0,-1,0,0))
+					user.visible_message("<span class='alert'><b>[user] burns [src] with [W]!</b></span>")
+					damage_heat(W.force)
 				else
-					user.visible_message("<span style=\"color:red\"><b>[user] beats [src] with [W]!</b></span>")
-					damage_blunt(WELD.force)
+					user.visible_message("<span class='alert'><b>[user] beats [src] with [W]!</b></span>")
+					damage_blunt(W.force)
 			else
 				if (src.health >= src.max_health)
-					boutput(user, "<span style=\"color:red\">It isn't damaged!</span>")
+					boutput(user, "<span class='alert'>It isn't damaged!</span>")
 					return
 				if (get_fraction_of_percentage_and_whole(src.health,src.max_health) < 33)
-					boutput(user, "<span style=\"color:red\">You need to use wire to fix the cabling first.</span>")
+					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 					return
-				if(WELD.try_weld(user, 1))
+				if(W:try_weld(user, 1))
 					src.health = max(1,min(src.health + 5,src.max_health))
-					user.visible_message("<b>[user]</b> uses [WELD] to repair some of [src]'s damage.")
+					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == src.max_health)
-						boutput(user, "<span style=\"color:blue\"><b>[src] looks fully repaired!</b></span>")
+						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 				else
-					boutput(user, "<span style=\"color:red\">You need more welding fuel!</span>")
+					boutput(user, "<span class='alert'>You need more welding fuel!</span>")
 
 		else if (istype(W,/obj/item/cable_coil/))
 			if (src.health >= src.max_health)
-				boutput(user, "<span style=\"color:red\">It isn't damaged!</span>")
+				boutput(user, "<span class='alert'>It isn't damaged!</span>")
 				return
 			var/obj/item/cable_coil/C = W
 			if (get_fraction_of_percentage_and_whole(src.health,src.max_health) >= 33)
-				boutput(usr, "<span style=\"color:red\">The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(usr, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
 			src.health = max(1,min(src.health + 5,src.max_health))
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 			if (src.health >= 25)
-				boutput(user, "<span style=\"color:blue\">The wiring is fully repaired. Now you need to weld the external plating.</span>")
+				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
 		else if (istype(W, /obj/item/clothing/head))
 			if(src.hat)
-				boutput(user, "<span style=\"color:red\">[src] is already wearing a hat!</span>")
+				boutput(user, "<span class='alert'>[src] is already wearing a hat!</span>")
 				return
 
 			user.drop_item()
@@ -574,7 +530,7 @@
 
 		else if (istype(W, /obj/item/clothing/suit/bedsheet))
 			if (src.bedsheet)
-				boutput(user, "<span style=\"color:red\">There is already a sheet draped over [src]! Two sheets would be ridiculous!</span>")
+				boutput(user, "<span class='alert'>There is already a sheet draped over [src]! Two sheets would be ridiculous!</span>")
 				return
 
 			user.drop_item()
@@ -590,10 +546,10 @@
 			switch(user.a_intent)
 				if(INTENT_HELP) //Friend person
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
-					user.visible_message("<span style=\"color:blue\">[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
+					user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
 				if(INTENT_DISARM) //Shove
 					SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
-					user.visible_message("<span style=\"color:red\"><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
+					user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
 					if (src.hat)
 						user.visible_message("<b>[user]</b> knocks \the [src.hat] off [src]!", "You knock the hat off [src]!")
 						src.takeoffHat()
@@ -602,10 +558,10 @@
 						src.takeoffSheet()
 				if(INTENT_GRAB) //Shake
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
-					user.visible_message("<span style=\"color:red\">[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
+					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
 				if(INTENT_HARM) //Dumbo
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
-					user.visible_message("<span style=\"color:red\"><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span style=\"color:red\"><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
+					user.visible_message("<span class='alert'><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
 					random_brute_damage(user, rand(2,5))
 					if(prob(10)) src.show_text("Your manipulator hurts...", "red")
 
@@ -847,7 +803,7 @@
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-2,2)
 					src.pixel_y += rand(-1,1)
-					sleep(2)
+					sleep(0.2 SECONDS)
 					src.pixel_x = old_x
 					src.pixel_y = old_y
 
@@ -859,7 +815,7 @@
 					var/old_y = src.pixel_y
 					src.pixel_x += rand(-3,3)
 					src.pixel_y += rand(-1,1)
-					sleep(2)
+					sleep(0.2 SECONDS)
 					src.pixel_x = old_x
 					src.pixel_y = old_y
 
@@ -912,7 +868,7 @@
 					for (var/mob/living/M in src.loc)
 						if (M == src || !M.lying)
 							continue
-						message = "<span style=\"color:red\"><B>[src]</B> farts in [M]'s face!</span>"
+						message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
 						fart_on_other = 1
 						break
 					if (!fart_on_other)
@@ -936,7 +892,7 @@
 							if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 							if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 							if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-							if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span style=\"color:red\"><B>FUCK!</B></span>"
+							if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span class='alert'><B>FUCK!</B></span>"
 							if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 							if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
 							if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
@@ -956,7 +912,7 @@
 							if (37) message = "<B>[src]</B> farts with the burning hatred of a thousand suns."
 							if (38) message = "<B>[src]</B> exterminates the air supply."
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
-							if (40) message = "<B>[src] <span style=\"color:red\">f</span><span style=\"color:blue\">a</span>r<span style=\"color:red\">t</span><span style=\"color:blue\">s</span>!</B>"
+							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 					if (narrator_mode)
 						playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 1)
 					else
@@ -972,10 +928,10 @@
 			logTheThing("say", src, null, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/living/silicon/ghostdrone/O in viewers(src, null))
-					O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 			else
 				for (var/mob/living/silicon/ghostdrone/O in hearers(src, null))
-					O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 
 			if (m_anim) //restart our passive animation
 				SPAWN_DBG(1 SECOND)
@@ -1008,11 +964,13 @@
 
 		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[nohear_message()]</span></span>"
 
-		for (var/mob/M in mobs)
-			if (istype(M, /mob/new_player))
+		for (var/client/C)
+			if (!C.mob) continue
+			if (istype(C.mob, /mob/new_player))
 				continue
+			var/mob/M = C.mob
 
-			if (M.client && (M in hearers(src) || M.client.holder))
+			if ((M in hearers(src) || M.client.holder))
 				var/thisR = rendered
 				if (isghostdrone(M) || M.client.holder)
 					if ((istype(M, /mob/dead/observer)||M.client.holder)&& src.mind)
@@ -1032,19 +990,20 @@
 
 		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[nohear_message()]</span></span>"
 
-		for (var/mob/M in mobs)
-			if (istype(M, /mob/new_player))
+		for (var/client/C)
+			if (!C.mob) continue
+			if (istype(C.mob, /mob/new_player))
 				continue
+			var/mob/M = C.mob
 
-			if (M.client)
-				var/thisR = rendered
-				if (isghostdrone(M) || M.client.holder)
-					if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-					M.show_message(thisR, 2)
-				else if (M in hearers(src))
-					thisR = nohear
-					M.show_message(thisR, 2)
+			var/thisR = rendered
+			if (isghostdrone(M) || M.client.holder)
+				if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
+					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
+				M.show_message(thisR, 2)
+			else if (M in hearers(src))
+				thisR = nohear
+				M.show_message(thisR, 2)
 
 	say(message = "")
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -1085,7 +1044,7 @@
 		*/
 
 	proc/show_laws_drone() //A new proc because it's handled very differently from normal laws
-		var/laws = {"<span class='bold' style='color:blue'>Your laws:<br>
+		var/laws = {"<span class='bold' class='notice'>Your laws:<br>
 		1. Do not hinder the freedom or actions of the living and other silicons or attempt to intervene in their affairs. <br>
 		2. Do not willingly damage the station in any shape or form.<br>
 		3. Maintain, repair and improve the station.<br></span>"}
@@ -1119,7 +1078,7 @@
 				dmgmult = 0
 
 		log_shot(P,src)
-		src.visible_message("<span style=\"color:red\"><b>[src]</b> is struck by [P]!</span>")
+		src.visible_message("<span class='alert'><b>[src]</b> is struck by [P]!</span>")
 
 		var/damage = round((((P.power/3)*P.proj_data.ks_ratio)*dmgmult), 1.0)
 		var/stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
@@ -1168,19 +1127,22 @@
 		src.flash(3 SECONDS)
 		switch (severity)
 			if (1.0)
-				src.gib(1)
+				SPAWN_DBG(0)
+					src.gib(1)
 
 			if (2.0)
-				src.TakeDamage(null, round(src.health / 2, 1.0))
-				src.changeStatus("stunned", 10 SECONDS)
+				SPAWN_DBG(0)
+					src.TakeDamage(null, round(src.health / 2, 1.0))
+					src.changeStatus("stunned", 10 SECONDS)
 
 			if (3.0)
-				src.TakeDamage(null, round(src.health / 3, 1.0))
-				src.changeStatus("stunned", 50)
+				SPAWN_DBG(0)
+					src.TakeDamage(null, round(src.health / 3, 1.0))
+					src.changeStatus("stunned", 50)
 
 	blob_act(var/power)
 		if (src.nodamage) return
-		src.show_message("<span style='color:red'>The blob attacks you!</span>")
+		src.show_message("<span class='alert'>The blob attacks you!</span>")
 		if (isdead(src) || src.health < 1)
 			src.gib(1)
 			return
@@ -1266,11 +1228,17 @@
 			else
 				return ..()
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("drone"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("drone")
 
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("drone_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("drone_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("drone_tg")
 
 /proc/droneize(target = null, pickNew = 1)
 	if (!target) return 0
@@ -1340,9 +1308,9 @@
 	theMind.dnr = 1
 
 
-	boutput(M, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")
-	if (M.mind)
-		M.Browse(grabResource("html/ghostdrone.html"),"window=ghostdrone;size=600x440;title=Ghostdrone Help")
+	boutput(G, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")
+	if (G.mind)
+		G.Browse(grabResource("html/ghostdrone.html"),"window=ghostdrone;size=600x440;title=Ghostdrone Help")
 
 	SPAWN_DBG(1 SECOND)
 		G.show_laws_drone()

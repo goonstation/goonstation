@@ -32,7 +32,7 @@
 		//The stone requires a price
 		attack_hand(mob/user as mob)
 			if(user.mind.karma <= 49)
-				boutput(user,"<span style=\"color:red\"><B>You are not a Just enough being. The stone finds you unworthy.</B></span>")
+				boutput(user,"<span class='alert'><B>You are not a Just enough being. The stone finds you unworthy.</B></span>")
 				user.gib()
 			else
 				return ..(user)
@@ -67,7 +67,7 @@
 				if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask))
 					return ..(user)
 				else
-					boutput(user,"<span style=\"color:red\"><B>The stone finds you unworthy.</B></span>")
+					boutput(user,"<span class='alert'><B>The stone finds you unworthy.</B></span>")
 					playsound(user.loc, "sound/voice/animal/hoot.ogg", 100, 1)
 					user.owlgib()
 
@@ -81,7 +81,7 @@
 
 		attack_hand(mob/user as mob)
 			if(!istype(user, /mob/living/carbon/human)) return
-			boutput(user,"<span style=\"color:red\"><B>God, holding it makes you feel sick.</B></span>")
+			boutput(user,"<span class='alert'><B>God, holding it makes you feel sick.</B></span>")
 			playsound(get_turf(user), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 			make_cleanable( /obj/decal/cleanable/vomit, user.loc)
 			random_brute_damage(user, rand(5,30))
@@ -96,6 +96,6 @@
 				else if(O == "left_lung" || O == "right_lung")
 					O = "lung"
 
-				M.visible_message("<span style=\"color:red\"><B>[M] vomits out their [O]. [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!", "Jesus Christ!", "Yikes!", "Oof...")]</B></span>")
+				M.visible_message("<span class='alert'><B>[M] vomits out their [O]. [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!", "Jesus Christ!", "Yikes!", "Oof...")]</B></span>")
 
 			return ..(user)

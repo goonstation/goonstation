@@ -15,7 +15,7 @@
 		P.addAbility(/datum/targetable/hunter/hunter_trophycount)
 
 		if (src.mind && src.mind.special_role != "omnitraitor")
-			SHOW_TRAITOR_OMNI_TIPS(src)
+			SHOW_HUNTER_TIPS(src)
 
 	else return
 
@@ -36,10 +36,9 @@
 		M.stuttering = 0
 		M.drowsyness = 0
 
-		if (M.handcuffed)
-			M.visible_message("<span style=\"color:red\"><B>[M] rips apart the handcuffs with pure brute strength!</b></span>")
-			qdel(M.handcuffed)
-			M.handcuffed = null
+		if (M.hasStatus("handcuffed"))
+			M.visible_message("<span class='alert'><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
+			M.handcuffs.destroy_handcuffs(M)
 		M.buckled = null
 
 		if (M.mutantrace)
@@ -59,7 +58,7 @@
 		M.equip_if_possible(new /obj/item/device/radio/headset(M), slot_ears)
 		M.equip_if_possible(new /obj/item/storage/backpack(M), slot_back)
 		M.equip_if_possible(new /obj/item/cloaking_device(M), slot_r_store)
-		M.equip_if_possible(new /obj/item/knife_butcher/predspear(M), slot_l_hand)
+		M.equip_if_possible(new /obj/item/knife/butcher/predspear(M), slot_l_hand)
 		M.equip_if_possible(new /obj/item/gun/energy/laser_gun/pred(M), slot_r_hand)
 
 		M.set_face_icon_dirty()
@@ -232,16 +231,16 @@
 		if (!spell.holder)
 			return
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this ability here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
 			return
-		if (spell.targeted && usr:targeting_spell == owner)
-			usr:targeting_spell = null
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
 			usr.update_cursor()
 			return
 		if (spell.targeted)
 			if (world.time < spell.last_cast)
 				return
-			owner.holder.owner.targeting_spell = owner
+			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
 			SPAWN_DBG(0)
@@ -252,7 +251,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Hunter"
-	notEnoughPointsMessage = "<span style=\"color:red\">You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 
 /////////////////////////////////////////////// Hunter spell parent ////////////////////////////
 

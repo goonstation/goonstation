@@ -9,14 +9,14 @@
 	body_parts_covered = HEAD
 	compatible_species = list("human", "monkey", "werewolf", "flubber")
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
-	var/block_vision = 0
+	block_vision = 0
 
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 5)
-		setProperty("meleeprot", 1)
+		setProperty("meleeprot_head", 1)
 
 /obj/item/clothing/head/red
 	desc = "A knit cap in red."
@@ -76,7 +76,7 @@
 		..()
 		setProperty("heatprot", 10)
 		setProperty("viralprot", 50)
-		setProperty("meleeprot", 1)
+		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 5)
 		setProperty("disorient_resist_ear", 2)
 
@@ -95,7 +95,7 @@
 	icon_state = "ntbiohood"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 2)
+		setProperty("meleeprot_head", 2)
 
 /obj/item/clothing/head/emerg
 	name = "Emergency Hood"
@@ -123,7 +123,7 @@
 		..()
 		setProperty("radprot", 50)
 		setProperty("heatprot", 10)
-		setProperty("meleeprot", 1)
+		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
 
@@ -174,14 +174,13 @@
 
 		if (src.on)
 			src.force = 10
-			src.damtype = "fire"
+			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			src.force = 3
-			src.damtype = "brute"
+			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
 			light.disable()
 
@@ -206,7 +205,7 @@
 
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
-			boutput(usr, "<span style=\"color:blue\">You heat \the [target.name]</span>")
+			boutput(usr, "<span class='notice'>You heat \the [target.name]</span>")
 			target.reagents.temperature_reagents(2500,10)
 		return
 
@@ -218,7 +217,7 @@
 	desc = "A symbol of the captain's rank, and the source of all his power."
 	setupProperties()
 		..()
-		setProperty("meleeprot", 4)
+		setProperty("meleeprot_head", 4)
 
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
@@ -227,7 +226,7 @@
 	item_state = "centcom"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 4)
+		setProperty("meleeprot_head", 4)
 
 	red
 		icon_state = "centcom-red"
@@ -248,7 +247,7 @@
 	item_state = "det_hat"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
 /obj/item/clothing/head/det_hat/gadget
@@ -263,34 +262,28 @@
 
 	New()
 		..()
-		items = list("bodybag" = /obj/item/body_bag, \
-									"scanner" = /obj/item/device/detective_scanner, \
-									"lighter" = /obj/item/device/light/zippo/, \
-									"spray" = /obj/item/spraybottle, \
-									"monitor" = /obj/item/device/camera_viewer, \
-									"camera" = /obj/item/camera_test, \
-									"audiolog" = /obj/item/device/audio_log , \
-									"flashlight" = /obj/item/device/light/flashlight, \
+		items = list("bodybag" = /obj/item/body_bag,
+									"scanner" = /obj/item/device/detective_scanner,
+									"lighter" = /obj/item/device/light/zippo/,
+									"spray" = /obj/item/spraybottle,
+									"monitor" = /obj/item/device/camera_viewer,
+									"camera" = /obj/item/camera_test,
+									"audiolog" = /obj/item/device/audio_log ,
+									"flashlight" = /obj/item/device/light/flashlight,
 									"glasses" = /obj/item/clothing/glasses)
 		cigs = list()
 	examine()
-		set src in view()
-		set category = "Local"
-
-		..()
-		var/str = "<span style=\"color:blue\">Current activation phrase is <b>\"[phrase]\"</b>.</span>"
+		. = ..()
+		. += "<span class='notice'>Current activation phrase is <b>\"[phrase]\"</b>.</span>"
 		for (var/name in items)
 			var/type = items[name]
 			var/obj/item/I = locate(type) in contents
 			if(I)
-				str += "<br><span style=\"color:blue\">[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
+				. += "<br><span class='notice'>[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
 			else
-				str += "<br>There is no [name]!"
+				. += "<br>There is no [name]!"
 		if (cigs.len)
-			str += "<br><span style=\"color:blue\">It contains <b>[cigs.len]</b> cigarettes!</span>"
-
-		usr.show_message(str)
-		return
+			. += "<br><span class='notice'>It contains <b>[cigs.len]</b> cigarettes!</span>"
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		var/turf/T = get_turf(src)
@@ -306,7 +299,7 @@
 				var/obj/item/I = locate(type) in contents
 				if(findtext(gadget, name) && I)
 					M.put_in_hand_or_drop(I)
-					M.visible_message("<span style=\"color:red\"><b>[M]</b>'s hat snaps open and pulls out \the [I]!</span>")
+					M.visible_message("<span class='alert'><b>[M]</b>'s hat snaps open and pulls out \the [I]!</span>")
 					return
 
 			if(findtext(gadget, "cigarette"))
@@ -326,7 +319,7 @@
 					else
 						M.put_in_hand_or_drop(W) //Put it in their hand
 
-					M.visible_message("<span style=\"color:red\"><b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!</span>")
+					M.visible_message("<span class='alert'><b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!</span>")
 			else
 				M.show_text("Requested object missing or nonexistant!", "red")
 				return
@@ -362,7 +355,7 @@
 				success = 1
 
 		if(success)
-			M.visible_message("<span style=\"color:red\"><b>[M]</b> [pick("awkwardly", "comically", "impossibly", "cartoonishly")] stuffs [W] into [src]!</span>")
+			M.visible_message("<span class='alert'><b>[M]</b> [pick("awkwardly", "comically", "impossibly", "cartoonishly")] stuffs [W] into [src]!</span>")
 			return
 
 		return ..()
@@ -473,7 +466,7 @@
 	item_state = "plunger"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 2)
+		setProperty("meleeprot_head", 2)
 
 /obj/item/clothing/head/hosberet
 	name = "HoS Beret"
@@ -483,7 +476,7 @@
 	c_flags = SPACEWEAR
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/NTberet
 	name = "Nanotrasen Beret"
@@ -572,21 +565,27 @@
 	item_state = "cowboy"
 	c_flags = SPACEWEAR
 
+/obj/item/clothing/head/fancy // placeholder icons until someone sprites an actual fancy hat
+	name = "fancy hat"
+	icon_state = "rank-fancy"
+	item_state = "that"  // todo actual inhands for this and children ?
+	desc = "What do you mean this is hat isn't fancy?"
+
 /obj/item/clothing/head/fancy/captain
 	name = "captain's hat"
 	icon_state = "captain-fancy"
 	c_flags = SPACEWEAR
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/fancy/rank
-	name = "hat"
+	name = "officer's hat"
 	icon_state = "rank-fancy"
 	c_flags = SPACEWEAR
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/wizard
 	name = "blue wizard hat"
@@ -603,7 +602,7 @@
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		. = ..()
 		if (prob(75))
-			source.show_message(text("<span style=\"color:red\">\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
+			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
 			. = 0
 
 /obj/item/clothing/head/wizard/red
@@ -655,7 +654,7 @@
 	if (istype(W, /obj/item/pen))
 		var/obj/item/pen/P = W
 		if (P.font_color)
-			boutput(user, "<span style=\"color:blue\">You scribble on the hat until it's filled in.</span>")
+			boutput(user, "<span class='notice'>You scribble on the hat until it's filled in.</span>")
 			if (P.font_color)
 				src.color = P.font_color
 				src.desc = "A colorful paper hat"
@@ -677,7 +676,7 @@
 	body_parts_covered = HEAD
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/DONOTSTEAL
 	desc = "Baby's first hat ALSO BY ME WRONGEND DON'T STEAL" // You are a fucking disgrace hat HOW DID YOU BREAK HELMET CODE AND MAKE THE RSC NOT WORK FUCK please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me
@@ -698,7 +697,7 @@
 
 	attack_self (mob/user as mob)
 		user.visible_message("<span class='combat'><b>[user] fiddles with [src]!</b></span>")
-		sleep(10)
+		sleep(1 SECOND)
 		src.toggle_active(user)
 		user.update_inhands()
 		src.add_fingerprint(user)
@@ -716,7 +715,7 @@
 			src.throw_source = null
 		else
 			if (user)
-				user.visible_message("<span style='color:blue'><b>[user]'s hat's blades retract.</b></span>")
+				user.visible_message("<span class='notice'><b>[user]'s hat's blades retract.</b></span>")
 			src.hit_type = DAMAGE_BLUNT
 			src.hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
 			src.force = 1
@@ -728,7 +727,7 @@
 		src.throw_source = get_turf(src)
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (src.active && ismob(hit_atom))
 			var/mob/M = hit_atom
 			playsound(get_turf(src), src.hitsound, 60, 1)
@@ -762,7 +761,7 @@
 
 	equipped(var/mob/user, var/slot)
 		..()
-		if (slot == "head" && ishuman(user))
+		if (slot == SLOT_HEAD && ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.set_mutantrace(/datum/mutantrace/dwarf)
 
@@ -774,7 +773,7 @@
 	item_state = "bigtex"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/beret
 	name = "beret"
@@ -824,7 +823,7 @@
 	icon_state = "laurels"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 	gold
 		name = "gold laurels"
@@ -855,43 +854,30 @@
 	contraband = 10 //let's set off some alarms, boys
 	is_syndicate = 1 //no easy replication thanks
 	cant_self_remove = 1
-	var/datum/light/light
+	var/datum/component/holdertargeting/sm_light/light_c
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 6)
+		setProperty("meleeprot_head", 6)
 
 	New()
 		..()
-		light = new /datum/light/point // glows red, good idea mordent
-		light.set_brightness(1.2)
-		light.set_height(1.8)
-		light.set_color(0.94, 0.27, 0.27)
-		light.attach(src)
-		light.enable(1)
+		light_c = src.AddComponent(/datum/component/holdertargeting/sm_light, 0.94 * 255, 0.27 * 255, 0.27 * 255, 240)
+		light_c.update(1)
 
 		if (prob(10))
 			SPAWN_DBG( rand(300, 900) )
 				src.visible_message("<b>[src]</b> <i>says, \"I'm the boss.\"</i>")
 
-	pickup(mob/user)
-		..()
-		light.attach(user)
-
-	dropped(mob/user)
-		..()
-		SPAWN_DBG(0)
-			if (src.loc != user)
-				light.attach(src)
-
 	equipped(var/mob/user, var/slot)
-		boutput(user, "<span style=\"color:blue\">You better start running! It's kill or be killed now, buddy!</span>")
+		..()
+		boutput(user, "<span class='notice'>You better start running! It's kill or be killed now, buddy!</span>")
 		SPAWN_DBG(1 SECOND)
 			playsound(src.loc, "sound/vox/time.ogg", 100, 1)
-			SPAWN_DBG(1 SECOND)
-				playsound(src.loc, "sound/vox/for.ogg", 100, 1)
-				SPAWN_DBG(1 SECOND)
-					playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
+			sleep(1 SECOND)
+			playsound(src.loc, "sound/vox/for.ogg", 100, 1)
+			sleep(1 SECOND)
+			playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
 		var/perpname = user.name
@@ -915,7 +901,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
-				H.visible_message("<span style=\"color:red\"><b>[H] is totally and absolutely robusted by the [src.name]!</b></span>")
+				H.visible_message("<span class='alert'><b>[H] is totally and absolutely robusted by the [src.name]!</b></span>")
 				var/turf/T = get_turf(H)
 				T.fluid_react_single("blood",1000)
 				H.unequip_all()
@@ -948,7 +934,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
-				H.visible_message("<span style=\"color:blue\"><b>[H] becomes one with the [src.name]!</b></span>")
+				H.visible_message("<span class='notice'><b>[H] becomes one with the [src.name]!</b></span>")
 				H.gib()
 				explosion_new(src, T, 50) // like a really mean double macro
 
@@ -1007,11 +993,16 @@
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
 
+	stunhatr
+		stunready = 1
+		uses = 1
+		icon_state = "sunhatr-stun"
+		item_state = "sunhatr-stun"
+
 	examine()
-		..()
+		. = ..()
 		if (src.stunready)
-			boutput(usr, "It appears to be been modified into a... stunhat? [src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]")
-		return
+			. += "It appears to be been modified into a... stunhat? [src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))
@@ -1019,7 +1010,7 @@
 				user.show_text("You don't need to add more wiring to the [src.name].", "red")
 				return
 
-			boutput(user, "<span style=\"color:blue\">You attach the wires to the [src.name].</span>")
+			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
 			W:amount--
 			return
@@ -1027,11 +1018,11 @@
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
 			var/obj/item/cell/C = W
 
-			if (C.charge < 2500)
+			if (C.charge < 1500)
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span style=\"color:red\">You shock yourself while fumbling around with [C]!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span class='alert'>You shock yourself while fumbling around with [C]!</span>")
 				C.zap(user)
 				return
 
@@ -1041,12 +1032,12 @@
 			if (src.uses < 0)
 				src.uses = 0
 			src.uses = min(src.uses + 1, src.max_uses)
-			C.use(2500)
+			C.use(1500)
 			src.icon_state = text("[]-stun",src.icon_state)
 			src.item_state = text("[]-stun",src.item_state)
 			C.updateicon()
 			user.update_clothing() // Required to update the worn sprite (Convair880).
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span style=\"color:blue\">The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span class='notice'>The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
 			return
 
 		..()
@@ -1192,3 +1183,9 @@
 	desc = "Hey, kid. You did it. Despite everything, you persevered. I'm proud of you."
 	icon_state = "graduation_cap"
 	item_state = "graduation_cap"
+
+/obj/item/clothing/head/danberet
+	name = "Discount Dan's beret"
+	desc = "A highly advanced textile experience!"
+	icon_state = "danberet"
+	item_state = "danberet"

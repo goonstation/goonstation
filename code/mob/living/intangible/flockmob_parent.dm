@@ -26,6 +26,7 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 	canmove = 1
 	blinded = 0
 	anchored = 1
+	use_stamina = 0//no puff tomfuckery
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
 
@@ -99,27 +100,27 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 /mob/living/intangible/flock/attack_hand(mob/user as mob)
 	switch(user.a_intent)
 		if(INTENT_HELP)
-			user.visible_message("<span class='text-blue'>[user] waves at [src.name].</span>", "<span class='text-blue'>You wave at [src.name].</span>")
+			user.visible_message("<span class='notice'>[user] waves at [src.name].</span>", "<span class='notice'>You wave at [src.name].</span>")
 		if(INTENT_DISARM)
-			user.visible_message("<span class='text-red'>[user] tries to shove [src.name], but their hand goes right through.</span>",
-				"<span class='text-red'>You try to shove [src.name] but they're intangible! You just push air!</span>")
+			user.visible_message("<span class='alert'>[user] tries to shove [src.name], but their hand goes right through.</span>",
+				"<span class='alert'>You try to shove [src.name] but they're intangible! You just push air!</span>")
 			if(prob(5))
-				user.visible_message("<span class='text-red bold'>[user] tries to shove [src.name], but overbalances and falls over!</span>",
-				"<span class='text-red bold'>You try to shove [src.name] too forcefully and topple over!</span>")
+				user.visible_message("<span class='alert bold'>[user] tries to shove [src.name], but overbalances and falls over!</span>",
+				"<span class='alert bold'>You try to shove [src.name] too forcefully and topple over!</span>")
 				user.changeStatus("weakened", 2 SECONDS)
 		if(INTENT_GRAB)
-			user.visible_message("<span class='text-red'>[user] tries to grab [src.name], but they're only a trick of light!</span>",
-				"<span class='text-red'>You try to grab [src.name] but they're intangible! It's like trying to pull a cloud!</span>")
+			user.visible_message("<span class='alert'>[user] tries to grab [src.name], but they're only a trick of light!</span>",
+				"<span class='alert'>You try to grab [src.name] but they're intangible! It's like trying to pull a cloud!</span>")
 		if(INTENT_HARM)
-			user.visible_message("<span class='text-red'>[user] tries to smack [src.name], but the blow connects with nothing!</span>",
-				"<span class='text-red'>You try to smack [src.name] but they're intangible! Nothing can be achieved this way!</span>")
+			user.visible_message("<span class='alert'>[user] tries to smack [src.name], but the blow connects with nothing!</span>",
+				"<span class='alert'>You try to smack [src.name] but they're intangible! Nothing can be achieved this way!</span>")
 
 /mob/living/intangible/flock/attackby(obj/item/W as obj, mob/user as mob)
 	switch(user.a_intent)
 		if(INTENT_HARM)
-			user.visible_message("<span class='text-red'>[user] tries to hit [src.name] with [W], pointlessly.</span>", "<span class='text-blue'>You try to hit [src.name] with [W] but it just passes through.</span>")
+			user.visible_message("<span class='alert'>[user] tries to hit [src.name] with [W], pointlessly.</span>", "<span class='notice'>You try to hit [src.name] with [W] but it just passes through.</span>")
 		else
-			user.visible_message("<span class='text-blue'>[user] waves [W] at [src.name].</span>", "<span class='text-blue'>You wave [W] at [src].</span>")
+			user.visible_message("<span class='notice'>[user] waves [W] at [src.name].</span>", "<span class='notice'>You wave [W] at [src].</span>")
 
 // might as well give a dumb gimmick reaction to the ectoplasmic destabiliser
 /mob/living/intangible/flock/projCanHit(datum/projectile/P)
@@ -134,16 +135,16 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 
 /mob/living/intangible/flock/bullet_act(var/obj/projectile/P)
 	// HAAAAA
-	src.visible_message("<span style=\"color:red\">[src] is not a ghost, and is therefore unaffected by [P]!</span>","<span style=\"color:blue\">You feel a little [pick("less", "more")] [pick("fuzzy", "spooky", "glowy", "flappy", "bouncy")].</span>")
+	src.visible_message("<span class='alert'>[src] is not a ghost, and is therefore unaffected by [P]!</span>","<span class='notice'>You feel a little [pick("less", "more")] [pick("fuzzy", "spooky", "glowy", "flappy", "bouncy")].</span>")
 
 // C&P'd from dead.dm until I think of something better to do
 /mob/living/intangible/flock/click(atom/target, params)
-	if (targeting_spell)
+	if (targeting_ability)
 		..()
 	else
 		if (get_dist(src, target) > 0)
 			dir = get_dir(src, target)
-		target.examine()
+		src.examine_verb(target)
 
 /mob/living/intangible/flock/say_quote(var/text)
 	var/speechverb = pick("sings", "clicks", "whistles", "intones", "transmits", "submits", "uploads")
@@ -190,12 +191,12 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 	switch (lowertext(act))
 		if ("flip")
 			if (src.emote_check(voluntary, 50))
-				message = "<span style='color:#605b59'><b>[src]</B> does a flip!</span>"
+				message = "<span class='emote'><b>[src]</B> does a flip!</span>"
 				m_type = 1
 				animate_spin(src, pick("L", "R"), 1, 0)
 		if ("scream", "caw")
 			if (src.emote_check(voluntary, 50))
-				message = "<span style='color:#605b59'><b>[src]</B> caws!</span>"
+				message = "<span class='emote'><b>[src]</B> caws!</span>"
 				m_type = 2
 				playsound(get_turf(src), "sound/misc/flockmind/flockmind_caw.ogg", 60, 1)
 

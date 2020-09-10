@@ -17,7 +17,7 @@
 		if(!holder)
 			return
 		if(!isdead(target))
-			boutput(holder.owner, "<span style=\"color:red\">That person is still alive! Find a corpse.</span>")
+			boutput(holder.owner, "<span class='alert'>That person is still alive! Find a corpse.</span>")
 			return 1 // No cooldown when it fails.
 
 		holder.owner.say("EI NECRIS")
@@ -26,8 +26,8 @@
 		var/obj/critter/magiczombie/UMMACTUALLYITSASKELETONNOWFUCKZOMBIESFOREVER = new /obj/critter/magiczombie(get_turf(target)) // what the fuck
 		UMMACTUALLYITSASKELETONNOWFUCKZOMBIESFOREVER.CustomizeMagZom(target.real_name, ismonkey(target))
 
-		boutput(holder.owner, "<span style=\"color:blue\">You saturate [target] with dark magic!</span>")
-		holder.owner.visible_message("<span style=\"color:red\">[holder.owner] rips the skeleton from [target]'s corpse!</span>")
+		boutput(holder.owner, "<span class='notice'>You saturate [target] with dark magic!</span>")
+		holder.owner.visible_message("<span class='alert'>[holder.owner] rips the skeleton from [target]'s corpse!</span>")
 
 		for(var/obj/item/I in target)
 			if(isitem(target))

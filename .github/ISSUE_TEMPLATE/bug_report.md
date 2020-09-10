@@ -1,11 +1,13 @@
 ---
-name: Bug report
-about: Report a bug!
+name: Report a Bug
+about: Report a bug here on our issue tracker.
 title: ''
-labels: bug
+label: ''
 assignees: ''
 
 ---
+<!-- To automatically tag this issue, add the uppercase label(s) surrounded by brackets below, for example: [LABEL] -->
+[BUG]
 
 **Describe the bug**
 A clear and concise description of what the bug is.

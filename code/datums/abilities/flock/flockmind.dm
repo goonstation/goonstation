@@ -49,8 +49,8 @@
 /////////////////////////////////////////
 
 /datum/targetable/flockmindAbility/spawnEgg
-	name = "Spawn Egg"
-	desc = "Spawn an egg where you are, and from there, begin."
+	name = "Spawn Rift"
+	desc = "Spawn an rift where you are, and from there, begin."
 	icon_state = "spawn_egg"
 	targeted = 0
 	cooldown = 0
@@ -77,10 +77,10 @@
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	var/turf/simulated/T = get_turf(target)
 	if(!istype(T))
-		boutput(holder.owner, "<span class='text-red'>The flock can't convert this.</span>")
+		boutput(holder.owner, "<span class='alert'>The flock can't convert this.</span>")
 		return 1
 	if(isfeathertile(T))
-		boutput(holder.owner, "<span class='text-red'>This tile has already been converted.</span>")
+		boutput(holder.owner, "<span class='alert'>This tile has already been converted.</span>")
 		return 1
 	if(F)
 		var/datum/flock/flock = F.flock
@@ -107,7 +107,7 @@
 			if(flock)
 				flock.updateEnemy(M)
 	else
-		boutput(holder.owner, "<span class='text-red'>That isn't a valid target.</span>")
+		boutput(holder.owner, "<span class='alert'>That isn't a valid target.</span>")
 		return 1
 
 /////////////////////////////////////////
@@ -140,10 +140,10 @@
 	if(!istype(target))
 		return 1
 	playsound(get_turf(holder.owner), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
-	boutput(holder.owner, "<span class='text-blue'>You focus the flock's efforts on fixing [target.real_name]</span>")
-	sleep(15)
+	boutput(holder.owner, "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
+	sleep(1.5 SECONDS)
 	target.HealDamage("All", 200, 200)
-	target.visible_message("<span class='text-blue'><b>[target]</b> suddenly reforms its broken parts into a solid whole!</span>", "<span class='text-blue'>The flockmind has restored you to full health!</span>")
+	target.visible_message("<span class='notice'><b>[target]</b> suddenly reforms its broken parts into a solid whole!</span>", "<span class='notice'>The flockmind has restored you to full health!</span>")
 
 /////////////////////////////////////////
 
@@ -161,9 +161,9 @@
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	if(F && F.flock)
 		if(F.flock.getComplexDroneCount() == 1)
-			boutput(holder.owner, "<span class='text-red'>That's your last complex drone. Diffracting it would be suicide.</span>")
+			boutput(holder.owner, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
 			return 1
-	boutput(holder.owner, "<span class='text-blue'>You diffract the drone.</span>")
+	boutput(holder.owner, "<span class='notice'>You diffract the drone.</span>")
 	target.split_into_bits()
 
 
@@ -185,14 +185,14 @@
 	if(targets.len > 1)
 		// do casty stuff here
 		playsound(get_turf(holder.owner), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
-		boutput(holder.owner, "<span class='text-blue'>You force open all the doors around you.</span>")
-		sleep(15)
+		boutput(holder.owner, "<span class='notice'>You force open all the doors around you.</span>")
+		sleep(1.5 SECONDS)
 		for(var/obj/machinery/door/airlock/A in targets)
 			// open the door
 			SPAWN_DBG(1 DECI SECOND)
 				A.open()
 	else
-		boutput(holder.owner, "<span class='text-red'>No targets in range that can be opened via radio.</span>")
+		boutput(holder.owner, "<span class='alert'>No targets in range that can be opened via radio.</span>")
 		return 1
 
 /////////////////////////////////////////
@@ -217,15 +217,15 @@
 		if(R && R.listening)
 			// your headset's on, you're fair game!!
 			targets += M
-	if(targets.len > 1)
+	if(targets.len >= 1)
 		playsound(get_turf(holder.owner), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
-		boutput(holder.owner, "<span class='text-blue'>You transmit the worst static you can weave into the headsets around you.</span>")
+		boutput(holder.owner, "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
 		for(var/mob/living/M in targets)
 			playsound(get_turf(M), "sound/effects/radio_sweep[rand(1,5)].ogg", 100, 1)
-			boutput(M, "<span class='text-red'>Horrifying static bursts into your headset, disorienting you severely!</span>")
+			boutput(M, "<span class='alert'>Horrifying static bursts into your headset, disorienting you severely!</span>")
 			M.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
 	else
-		boutput(holder.owner, "<span class='text-red'>No targets in range with active radio headsets.</span>")
+		boutput(holder.owner, "<span class='alert'>No targets in range with active radio headsets.</span>")
 		return 1
 
 /////////////////////////////////////////
@@ -255,7 +255,7 @@
 				R = M.find_in_equipment(/obj/item/device/radio)
 		if(R)
 			message = html_encode(input("What would you like to transmit to [M.name]?", "Transmission", "") as text)
-			logTheThing("say", usr, target, "Narrowbeam Transmission to %target%: [message]")
+			logTheThing("say", usr, target, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			var/flockName = "--.--"
 			var/mob/living/intangible/flock/flockmind/F = holder.owner
@@ -266,12 +266,12 @@
 			R.audible_message("<span class='radio' style='color: [R.device_color]'><span class='name'>Unknown</span><b> [bicon(R)]\[[flockName]\]</b> <span class='message'>crackles, \"[message]\"</span></span>")
 			boutput(holder.owner, "<span class='flocksay'>You transmit to [M.name], \"[message]\"</span>")
 		else
-			boutput(holder.owner, "<span class='text-red'>They don't have any compatible radio devices that you can find.</span>")
+			boutput(holder.owner, "<span class='alert'>They don't have any compatible radio devices that you can find.</span>")
 			return 1
 	else if(istype(target, /obj/item/device/radio))
 		R = target
 		message = html_encode(input("What would you like to broadcast to [R]?", "Transmission", "") as text)
-		logTheThing("say", usr, target, "Narrowbeam Transmission to %target%: [message]")
+		logTheThing("say", usr, target, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		//set up message
@@ -283,7 +283,7 @@
 		R.talk_into(holder.owner, messages, 0, "Unknown")
 		holder.owner.name = name
 	else
-		boutput(holder.owner, "<span class='text-red'>That isn't a valid target.</span>")
+		boutput(holder.owner, "<span class='alert'>That isn't a valid target.</span>")
 		return 1
 
 /////////////////////////////////////////

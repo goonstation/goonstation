@@ -57,15 +57,16 @@
 "be" = (/obj/item/device/gps{identifier = "NT-MO"},/turf/simulated/floor/caution/north,/area/sea_mining)
 "bf" = (/obj/miningteleporter{layer = 4},/turf/simulated/floor,/area/sea_mining)
 "bg" = (/turf/variableTurf/clear,/area/sea_mining)
-"bh" = (/obj/lattice{icon_state = "lattice-dir"; dir = 2},/obj/machinery/light/runway_light,/turf/variableTurf/clear,/area/sea_mining)
-"bi" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 1},/obj/warp_beacon/trench_mining,/turf/variableTurf/clear,/area/sea_mining)
+"bh" = (/obj/lattice{dir = 2; icon_state = "lattice-dir"},/obj/machinery/light/runway_light,/turf/variableTurf/clear,/area/sea_mining)
+"bi" = (/obj/lattice{dir = 1; icon_state = "lattice-dir-b"},/obj/warp_beacon/trench_mining,/turf/variableTurf/clear,/area/sea_mining)
 "bj" = (/obj/decal/tile_edge/stripe/extra_big{dir = 4},/turf/simulated/floor/grime,/area/sea_mining)
 "bk" = (/obj/submachine/cargopad{name = "Mining Outpost Teleport Pad"},/turf/simulated/floor/orange,/area/sea_mining)
 "bl" = (/obj/decal/tile_edge/stripe/extra_big{dir = 8},/turf/simulated/floor/grime,/area/sea_mining)
 "bm" = (/obj/machinery/recharger,/obj/item/cargotele{pixel_x = 5; pixel_y = 8},/obj/table/auto,/turf/simulated/floor/grime,/area/sea_mining)
-"bn" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-corner2"; dir = 5},/turf/simulated/floor/grime,/area/sea_mining)
+"bn" = (/obj/decal/tile_edge/stripe/extra_big{dir = 5; icon_state = "xtra_bigstripe-corner2"},/turf/simulated/floor/grime,/area/sea_mining)
 "bo" = (/obj/machinery/light/small/floor/warm,/obj/decal/tile_edge/stripe/extra_big{dir = 1},/turf/simulated/floor,/area/sea_mining)
-"bp" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-corner2"; dir = 9},/turf/simulated/floor/damaged2,/area/sea_mining)
+"bp" = (/obj/decal/tile_edge/stripe/extra_big{dir = 9; icon_state = "xtra_bigstripe-corner2"},/turf/simulated/floor/damaged2,/area/sea_mining)
+"rD" = (/obj/machinery/ore_cloud_storage_container,/turf/simulated/floor/shuttlebay,/area/sea_mining)
 
 (1,1,1) = {"
 abababababababapapapapabababababababababab
@@ -75,7 +76,7 @@ abababababababababaaahaeaeaeaeaeaeaeaeaaab
 abaaaaaaaaaaaaaaaaaaacaiaaaaaaaaacaaajaaab
 abakalamanaoalaqaraaasaeatauavawbfaaaeaaab
 abakayalalalalalalaaazaAazazazaBazaaajaaab
-abakalalaCalalalalaDalalalaEalalalaaababab
+abakalalaCalalalalaDalalalaEalalrDaaababab
 abakaFalalalalalalaaaGaHaHbeaHaHaIaaababab
 abakalaJaKaLalaMaNaaaOaPaQaRaVaSaTaaababab
 abaaaaaaaaaaaaaaaaaaaWaUbjbkblaxbmaaababab

@@ -121,17 +121,17 @@
 	var/range = 4
 
 	New()
-		teleport_jammers += src
+		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
 	disposing()
-		teleport_jammers -= src
+		STOP_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
 /obj/item/device/flockblocker/attack_self(mob/user as mob)
 	active = !active
 	icon_state = "[base_state]-[active ? "on" : "off"]"
-	boutput(user, "<span class='text-blue'>You fumble with [src] until you [active ? "turn it on. Space suddenly feels more thick." : "turn it off. You feel strangely exposed."]</span>")
+	boutput(user, "<span class='notice'>You fumble with [src] until you [active ? "turn it on. Space suddenly feels more thick." : "turn it off. You feel strangely exposed."]</span>")
 
 
 ////////////////
@@ -253,7 +253,7 @@
 
 /obj/npc/trader/flock/anger()
 	for(var/mob/M in AIviewers(src))
-		boutput(M, "<span style=\"color:red\"><B>[src.name]</B> becomes angry!</span>")
+		boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 	src.desc = "Looks absolutely furious, as far as you can read the expressions of holographic alien heads."
 	src.icon_state = "totem-angry"
 	SPAWN_DBG(rand(1000,3000))
@@ -280,7 +280,7 @@
 			SPAWN_DBG(0)
 				screen.show_icon("yes")
 			screen.say(pick_string("flockmind.txt", "flocktrader_friendly_greeting"))
-		sleep(10)
+		sleep(1 SECOND)
 		if(door)
 			door.open()
 	else
@@ -313,7 +313,7 @@
 					SPAWN_DBG(0)
 						screen.show_icon("yes")
 					screen.say(pick_string("flockmind.txt", "flocktrader_target_met_new_trader"))
-			sleep(10)
+			sleep(1 SECOND)
 			if(door)
 				door.open()
 	else if(screen)
@@ -336,9 +336,9 @@
 	if(!state)
 		return
 	icon_state = "screen-working"
-	sleep(20)
+	sleep(2 SECONDS)
 	icon_state = "screen-[state]"
-	sleep(40)
+	sleep(4 SECONDS)
 	icon_state = "screen-off"
 
 /obj/flock_screen/proc/say(var/message)
@@ -362,24 +362,24 @@
 	if(!user)
 		return
 	if(!trader)
-		boutput(user, "<span class='text-red'>Nothing happens.</span>")
+		boutput(user, "<span class='alert'>Nothing happens.</span>")
 		return
-	src.visible_message("<span class='text-blue'>[user.name] waves their hand over [src.name].</span>")
+	src.visible_message("<span class='notice'>[user.name] waves their hand over [src.name].</span>")
 	trader.greet(user)
 
 /obj/flock_reclaimer/attackby(obj/item/W as obj, mob/user as mob)
 	if(!W || !user)
 		return
 	if(istype(W, /obj/item/grab))
-		boutput(user, "<span class='text-red'>You can't fit them into this, sadly.</span>")
+		boutput(user, "<span class='alert'>You can't fit them into this, sadly.</span>")
 		return
-	src.visible_message("<span class='text-red'>[user.name] puts [W] in [src].</span>")
+	src.visible_message("<span class='alert'>[user.name] puts [W] in [src].</span>")
 	var/gained_resources = (W.health * 2) + 5
 	user.remove_item(W)
 	qdel(W)
-	sleep(10)
+	sleep(1 SECOND)
 	playsound(src.loc, "sound/impact_sounds/Energy_Hit_2.ogg", 70, 1)
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(trader)
 		trader.donate(user, gained_resources)
 

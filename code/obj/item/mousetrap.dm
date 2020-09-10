@@ -2,7 +2,7 @@
 /obj/item/mousetrap
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mousetrap"
 	item_state = "mousetrap"
 	w_class = 1
@@ -15,8 +15,8 @@
 	var/obj/item/device/radio/signaler/signaler = null
 	var/obj/item/reagent_containers/food/snacks/pie/pie = null
 	var/obj/item/parts/arm = null
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 5
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -34,17 +34,14 @@
 
 			New()
 				..()
-				src.overlays += image('icons/obj/weapons.dmi', "trap-grenade")
+				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 				src.grenade = new /obj/item/chem_grenade/cleaner(src)
 				return
 
 	examine()
-		set src in oview(12)
-		set category = "Local"
-		..()
+		. = ..()
 		if (src.armed)
-			boutput(usr, "<span style=\"color:red\">It looks like it's armed.</span>")
-		return
+			. += "<span class='alert'>It looks like it's armed.</span>"
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -57,8 +54,9 @@
 				if (!user.hand)
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
-				user.visible_message("<span style=\"color:red\"><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
-				"<span style=\"color:red\"><B>You accidentally trigger the mousetrap!</B></span>")
+				JOB_XP(user, "Clown", 1)
+				user.visible_message("<span class='alert'><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
+				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 				return
 			user.show_text("You disarm the mousetrap.", "blue")
 
@@ -73,8 +71,9 @@
 				if (!user.hand)
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
-				user.visible_message("<span style=\"color:red\"><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
-				"<span style=\"color:red\"><B>You accidentally trigger the mousetrap!</B></span>")
+				JOB_XP(user, "Clown", 1)
+				user.visible_message("<span class='alert'><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
+				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 				return
 		..()
 		return
@@ -87,7 +86,7 @@
 				CG.set_loc(src)
 				user.show_text("You attach [CG]'s detonator to [src].", "blue")
 				src.grenade = CG
-				src.overlays += image('icons/obj/weapons.dmi', "trap-grenade")
+				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 				message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [CG] at [log_loc(user)].")
@@ -99,7 +98,7 @@
 				OG.set_loc(src)
 				user.show_text("You attach [OG]'s detonator to [src].", "blue")
 				src.grenade_old = OG
-				src.overlays += image('icons/obj/weapons.dmi', "trap-grenade")
+				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 				message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [OG] at [log_loc(user)].")
@@ -111,7 +110,7 @@
 				PB.set_loc(src)
 				user.show_text("You attach [PB]'s detonator to [src].", "blue")
 				src.pipebomb = PB
-				src.overlays += image('icons/obj/weapons.dmi', "trap-pipebomb")
+				src.overlays += image('icons/obj/items/weapons.dmi', "trap-pipebomb")
 
 				message_admins("[key_name(user)] rigs [src] with [PB] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [PB] at [log_loc(user)].")
@@ -122,7 +121,7 @@
 			S.set_loc(src)
 			user.show_text("You attach [S]'s detonator to [src].", "blue")
 			src.signaler = S
-			src.overlays += image('icons/obj/weapons.dmi', "trap-signaler")
+			src.overlays += image('icons/obj/items/weapons.dmi', "trap-signaler")
 
 			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
 			logTheThing("bombing", user, null, "rigs [src] with [S] at [log_loc(user)].")
@@ -178,22 +177,22 @@
 				user.show_text("You detach [src.grenade].", "blue")
 				src.grenade.set_loc(get_turf(src))
 				src.grenade = null
-				src.overlays -= image('icons/obj/weapons.dmi', "trap-grenade")
+				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 			else if (src.grenade_old)
 				user.show_text("You detach [src.grenade_old].", "blue")
 				src.grenade_old.set_loc(get_turf(src))
 				src.grenade_old = null
-				src.overlays -= image('icons/obj/weapons.dmi', "trap-grenade")
+				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 			else if (src.pipebomb)
 				user.show_text("You detach [src.pipebomb].", "blue")
 				src.pipebomb.set_loc(get_turf(src))
 				src.pipebomb = null
-				src.overlays -= image('icons/obj/weapons.dmi', "trap-pipebomb")
+				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
 			else if (src.signaler)
 				user.show_text("You detach [src.signaler].", "blue")
 				src.signaler.set_loc(get_turf(src))
 				src.signaler = null
-				src.overlays -= image('icons/obj/weapons.dmi', "trap-signaler")
+				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-signaler")
 			else if (src.pie)
 				user.show_text("You remove [src.pie] from [src].", "blue")
 				src.overlays -= image(src.pie.icon, src.pie.icon_state)
@@ -215,29 +214,29 @@
 			var/mob/living/carbon/H = AM
 			if (H.m_intent == "run")
 				src.triggered(H)
-				H.visible_message("<span style=\"color:red\"><B>[H] accidentally steps on the mousetrap.</B></span>",\
-				"<span style=\"color:red\"><B>You accidentally step on the mousetrap!</B></span>")
+				H.visible_message("<span class='alert'><B>[H] accidentally steps on the mousetrap.</B></span>",\
+				"<span class='alert'><B>You accidentally step on the mousetrap!</B></span>")
 
-		else if ((iscritter(AM)) && (src.armed))
+		else if ((ismobcritter(AM)) && (src.armed))
 			var/mob/living/critter/C = AM
 			src.triggered(C)
-			C.visible_message("<span style=\"color:red\"><B>[C] accidentally triggers the mousetrap.</B></span>",\
-				"<span style=\"color:red\"><B>You accidentally trigger the mousetrap!</B></span>")
+			C.visible_message("<span class='alert'><B>[C] accidentally triggers the mousetrap.</B></span>",\
+				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 
 		else if (istype(AM, /obj/critter/mouse) && (src.armed))
 			var/obj/critter/mouse/M = AM
 			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			icon_state = "mousetrap"
 			src.armed = 0
-			src.visible_message("<span style=\"color:red\"><b>[M] is caught in the trap!</b></span>")
+			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
 			M.CritterDeath()
 		..()
 		return
 
-	hitby(A as mob|obj)
+	hitby(atom/movable/A, datum/thrown_thing/thr)
 		if (!src.armed)
 			return ..()
-		src.visible_message("<span style=\"color:red\"><B>The mousetrap is triggered by [A].</B></span>")
+		src.visible_message("<span class='alert'><B>The mousetrap is triggered by [A].</B></span>")
 		src.triggered(null)
 		return
 
@@ -260,9 +259,8 @@
 			if (affecting)
 				affecting.take_damage(1, 0)
 				H.UpdateDamageIcon()
-				H.updatehealth()
 
-		else if (iscritter(target))
+		else if (ismobcritter(target))
 			var/mob/living/critter/C = target
 			C.TakeDamage("All", 1)
 
@@ -275,17 +273,17 @@
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
 			src.grenade.explode()
 			src.grenade = null
-			src.overlays -= image('icons/obj/weapons.dmi', "trap-grenade")
+			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.grenade_old)
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
 			src.grenade_old.prime()
 			src.grenade_old = null
-			src.overlays -= image('icons/obj/weapons.dmi', "trap-grenade")
+			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.pipebomb)
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
-			src.overlays -= image('icons/obj/weapons.dmi', "trap-pipebomb")
+			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
 			src.pipebomb.do_explode()
 			src.pipebomb = null
 
@@ -295,8 +293,8 @@
 
 		else if (src.pie && src.arm)
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
-			target.visible_message("<span style=\"color:red\"><b>[src]'s [src.arm] launches [src.pie] at [target]!</b></span>",\
-			"<span style=\"color:red\"><b>[src]'s [src.arm] launches [src.pie] at you!</b></span>")
+			target.visible_message("<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at [target]!</b></span>",\
+			"<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at you!</b></span>")
 			src.overlays -= image(src.pie.icon, src.pie.icon_state)
 			src.pie.layer = initial(src.pie.layer)
 			src.pie.set_loc(get_turf(target))
@@ -309,7 +307,7 @@
 /obj/item/mousetrap_roller
 	name = "mousetrap roller assembly"
 	desc = "A mousetrap bomb attached to a set of wheels. Looks like the mousetrap going off would send it rolling. Huh."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mousetrap_roller"
 	item_state = "mousetrap"
 	w_class = 1
@@ -330,7 +328,7 @@
 		// Fallback in case something goes wrong.
 		if (!src.mousetrap.grenade && !src.mousetrap.grenade_old && !src.mousetrap.pipebomb)
 			src.mousetrap.grenade = new /obj/item/chem_grenade/flashbang(src.mousetrap)
-			src.mousetrap.overlays += image('icons/obj/weapons.dmi', "trap-grenade")
+			src.mousetrap.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		if (src.mousetrap.grenade)
 			src.payload = src.mousetrap.grenade.name
@@ -388,7 +386,7 @@
 		if (src.armed)
 			return
 
-		user.visible_message("<span style=\"color:red\">[user] starts up the [src.name].</span>", "You start up the [src.name]")
+		user.visible_message("<span class='alert'>[user] starts up the [src.name].</span>", "You start up the [src.name]")
 		message_admins("[key_name(user)] releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 		logTheThing("bombing", user, null, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 
@@ -404,7 +402,7 @@
 
 	Bump(atom/movable/AM as mob|obj)
 		if (src.armed && src.mousetrap)
-			src.visible_message("<span style=\"color:red\">[src] bumps against [AM]!</span>")
+			src.visible_message("<span class='alert'>[src] bumps against [AM]!</span>")
 			walk(src, 0)
 			src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
 

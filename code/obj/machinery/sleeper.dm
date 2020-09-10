@@ -69,10 +69,10 @@
 			if (O.sleeping)
 				O.sleeping = 3
 				if (prob(5)) // Heh.
-					boutput(O, "<font color='green'> [bicon(src)] Wake up, Neo...</font>")
+					boutput(O, "<span class='success'> [bicon(src)] Wake up, Neo...</span>")
 				else
-					boutput(O, "<font color='blue'> [bicon(src)] *beep* *beep*</font>")
-			src.visible_message("<span style='color:blue'>The [src.name]'s occupant alarm clock dings!</span>")
+					boutput(O, "<span class='notice'> [bicon(src)] *beep* *beep*</span>")
+			src.visible_message("<span class='notice'>The [src.name]'s occupant alarm clock dings!</span>")
 			playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 		return
 
@@ -137,11 +137,11 @@
 			return 1
 		if (ishuman(user))
 			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
-				boutput(user, "<span style='color:red'>You are too dazed to use [src] properly.</span>")
+				boutput(user, "<span class='alert'>You are too dazed to use [src] properly.</span>")
 				return 1
 
 		src.add_fingerprint(user)
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = ""
 
@@ -216,7 +216,7 @@
 			return
 
 		src.add_fingerprint(usr)
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["time"])
 			if (src.our_sleeper && src.our_sleeper.occupant)
@@ -224,11 +224,11 @@
 					usr.show_text("The occupant is dead.", "red")
 				else
 					src.timing = text2num(href_list["time"])
-					src.visible_message("<span style='color:blue'>[usr] [src.timing ? "sets" : "stops"] the [src]'s occupant alarm clock.</span>")
+					src.visible_message("<span class='notice'>[usr] [src.timing ? "sets" : "stops"] the [src]'s occupant alarm clock.</span>")
 					if (src.timing)
 						src.time_started = world.timeofday//realtime
 						// People do use sleepers for grief from time to time.
-						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing %target% asleep at [log_loc(src.our_sleeper)].")
+						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
 					else
 						src.time_started = 0
 						src.wake_occupant()
@@ -239,9 +239,9 @@
 				var/t = text2num(href_list["tp"])
 				if (t > 0 && src.timing && src.our_sleeper.occupant)
 					// People do use sleepers for grief from time to time.
-					logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by %target%) by [t] seconds at [log_loc(src.our_sleeper)].")
+					logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
 				//src.time = min(180, max(0, src.time + t))
-				src.time = CLAMP(src.time + (t*10), 0, 1800)
+				src.time = clamp(src.time + (t*10), 0, 1800)
 
 		if (href_list["rejuv"])
 			if (src.our_sleeper && src.our_sleeper.occupant)
@@ -260,7 +260,7 @@
 		if (href_list["eject_occupant"])
 			if (src.our_sleeper && src.our_sleeper.occupant)
 				src.our_sleeper.go_out()
-				usr.machine = null
+				src.remove_dialog(usr)
 				usr.Browse(null, "window=sleeper")
 
 		if (istype(src, /obj/machinery/sleep_console/portable))
@@ -355,8 +355,8 @@
 			src.emagged = 1
 			if (user && ismob(user))
 				user.show_text("You short out [src]'s reagent synthesis safety protocols.", "blue")
-			src.visible_message("<span style='color:red'><b>[src] buzzes oddly!</b></span>")
-			logTheThing("station", user, src.occupant, "emags \a [src] [src.occupant ? "with %target% inside " : ""](setting it to inject poisons) at [log_loc(src)].")
+			src.visible_message("<span class='alert'><b>[src] buzzes oddly!</b></span>")
+			logTheThing("station", user, src.occupant, "emags \a [src] [src.occupant ? "with [constructTarget(src.occupant,"station")] inside " : ""](setting it to inject poisons) at [log_loc(src)].")
 			return 1
 
 	demag(var/mob/user)
@@ -497,7 +497,7 @@
 					src.occupant.reagents.add_reagent(our_poison, inject_p)
 					//DEBUG_MESSAGE("Injected occupant with [inject_p] units of [our_poison] at [log_loc(src)].")
 					if (manual_injection == 1)
-						logTheThing("station", user_feedback, src.occupant, "manually injects %target% with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
+						logTheThing("station", user_feedback, src.occupant, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
 			else
 				if (src.occupant.health < -25 && crit < 10)
 					var/inject_c = 5
@@ -547,7 +547,7 @@
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -572,10 +572,10 @@
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
 		if (src.occupant)
-			boutput(M, "<span style=\"color:blue\"><B>The scanner is already occupied!</B></span>")
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return 0
 		if (!ishuman(M))
-			boutput(usr, "<span style='color:red'>You can't seem to fit into \the [src].</span>")
+			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
 			return 0
 		if (src.occupant)
 			usr.show_text("The [src.name] is already occupied!", "red")
@@ -703,7 +703,7 @@
 			portable_machinery.Remove(src)
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 
@@ -713,9 +713,8 @@
 			interact_particle(user,src)
 
 	examine()
-		..()
-		boutput(usr, "Home turf: [get_area(src.homeloc)].")
-		return
+		. = ..()
+		. += "Home turf: [get_area(src.homeloc)]."
 
 	// Could be useful (Convair880).
 	MouseDrop(over_object, src_location, over_location)
@@ -740,13 +739,13 @@
 
 		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span style=\"color:blue\"><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span style=\"color:blue\">New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 /obj/machinery/sleeper/compact
-	name = "Compact sleeper"
+	name = "Compact Sleeper"
 	desc = "Your usual sleeper, but compact this time. Wow!"
 	icon = 'icons/obj/compact_machines.dmi'
 	icon_state = "compact_sleeper"

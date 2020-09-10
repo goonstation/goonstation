@@ -53,10 +53,10 @@
 			if (ishuman(N) && !isdead(N))
 				mobn++
 		if (mobn > 4)
-			boutput(usr, "<span style=\"color:red\">The Colosseum is for 1-4 players. Sorry!</span>")
+			boutput(usr, "<span class='alert'>The Colosseum is for 1-4 players. Sorry!</span>")
 			return
 		if (ticker.round_elapsed_ticks < 3000 && mobn < 4)
-			boutput(usr, "<span style=\"color:red\">You may not initiate the Colosseum before 5 minutes into the round, unless you have a team of 4 people.</span>")
+			boutput(usr, "<span class='alert'>You may not initiate the Colosseum before 5 minutes into the round, unless you have a team of 4 people.</span>")
 			return
 		if (alert("Start the Colosseum? No more players will be given admittance to the staging area!",, "Yes", "No") == "Yes")
 			if (colosseum_controller.state != 0)
@@ -97,7 +97,7 @@
 	var/boss_counter = 0
 	var/boss_count = 1
 	var/list/drone_templates = list()
-	var/list/bosses = list(/obj/critter/gunbot/drone/helldrone, /obj/critter/gunbot/drone/iridium, /obj/critter/gunbot/drone/iridium/whydrone)
+	var/list/bosses = list(/obj/critter/gunbot/drone/helldrone, /obj/critter/gunbot/drone/iridium, /obj/critter/gunbot/drone/iridium/whydrone, /obj/critter/gunbot/drone/iridium/whydrone/horse)
 	var/list/current_bosses = null
 	var/list/actors = list()
 
@@ -115,14 +115,18 @@
 			boutput(M, rendered)
 		for (var/mob/M in colosseum)
 			boutput(M, rendered)
-		for (var/mob/M in mobs)//world)
-			LAGCHECK(LAG_LOW)
+
+		for (var/client/C)
+			if (!C.mob) continue
+			var/mob/M = C.mob
+
 			if (ismob(M.eye) && M.eye != M)
 				var/mob/N = M.eye
 				if (N.is_near_colosseum())
 					boutput(M, rendered)
 			else if (istype(M.eye, /obj/observable/colosseum))
 				boutput(M, rendered)
+			LAGCHECK(LAG_LOW)
 
 	proc/beginStaging()
 		if (state != 0)
@@ -320,7 +324,7 @@
 		announceAll("The Pod Colosseum match concluded. Final score: [score].")
 		if (score > 10000)
 			var/command_report = "A Pod Colosseum match has concluded with score [score]. Congratulations to: [moblist_names]."
-			for (var/obj/machinery/communications_dish/C in comm_dishes)
+			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 				C.add_centcom_report("[command_name()] Update", command_report)
 
 			command_alert(command_report, "Pod Colosseum match finished")
@@ -371,6 +375,7 @@
 		resetting = 0
 
 	New()
+		..()
 		SPAWN_DBG(0.5 SECONDS)
 			viewing = locate() in world
 			staging = locate() in world
@@ -491,6 +496,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	var/image/health_overlay
 
 	New(var/barLength = 4, var/is_left = 0)
+		..()
 		for (var/i = 1, i <= barLength, i++)
 			var/obj/screen/S = new /obj/screen()
 			var/edge = is_left ? "WEST" : "EAST"
@@ -758,7 +764,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 			myProj = /datum/projectile/bullet/a12
 			ammo = 40
 			abstract = 0
-			icon = 'icons/obj/gun.dmi'
+			icon = 'icons/obj/items/gun.dmi'
 			icon_state = "shotgun"
 
 		aex
@@ -920,7 +926,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 				myProj = /datum/projectile/bullet/rifle_3006
 				ammo = 6
 				abstract = 0
-				icon = 'icons/obj/gun.dmi'
+				icon = 'icons/obj/items/gun.dmi'
 				icon_state = "hunting_rifle"
 				rarity_class = 1
 
@@ -941,10 +947,10 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 
 	clicked(params)
 		..()
-		boutput(usr, "<span style=\"color:blue\">Press Page Down (or C in WASD mode) to fire your primary weapon.</span>")
-		boutput(usr, "<span style=\"color:blue\">Press Page Up (or E in WASD mode) to fire your secondary weapon.</span>")
-		boutput(usr, "<span style=\"color:blue\">Press Insert (or Q in WASD mode) to stop the ship.</span>")
-		boutput(usr, "<span style=\"color:blue\">Click the ship to get out.</span>")
+		boutput(usr, "<span class='hint'>Press Page Down (or C in WASD mode) to fire your primary weapon.</span>")
+		boutput(usr, "<span class='hint'>Press Page Up (or E in WASD mode) to fire your secondary weapon.</span>")
+		boutput(usr, "<span class='hint'>Press Insert (or Q in WASD mode) to stop the ship.</span>")
+		boutput(usr, "<span class='hint'>Click the ship to get out.</span>")
 
 #define INDICATOR_PRIMARY 1
 #define INDICATOR_SECONDARY 2
@@ -1129,7 +1135,7 @@ proc/get_colosseum_message(var/name, var/message)
 			if (!secondary.ammo)
 				secondary = null
 		else
-			boutput(usr, "<span style=\"color:red\">You currently have no secondary weapon.</span>")
+			boutput(usr, "<span class='alert'>You currently have no secondary weapon.</span>")
 		update_indicators(INDICATOR_SECONDARY)
 
 	Bump(atom/A)
@@ -1167,11 +1173,11 @@ proc/get_colosseum_message(var/name, var/message)
 			return
 		if (!owner)
 			if (user.ckey in colosseum_controller.pods_claimed)
-				boutput(user, "<span style=\"color:red\">You already own a colosseum putt you greedy fuck.</span>")
+				boutput(user, "<span class='alert'>You already own a colosseum putt you greedy fuck.</span>")
 				return
 			else
 				user.set_loc(src)
-				boutput(user, "<span style=\"color:blue\">You claim the Colosseum Putt. Get ready to fight!</span>")
+				boutput(user, "<span class='notice'>You claim the Colosseum Putt. Get ready to fight!</span>")
 				colosseum_controller.pods_claimed += user.ckey
 				colosseum_controller.pods_claimed[user.ckey] = user
 				owner = user.ckey
@@ -1184,19 +1190,19 @@ proc/get_colosseum_message(var/name, var/message)
 				cam.c_tag = "[initial(name)] ([name])"
 				on_board(user)
 		else if (owner == user.ckey)
-			boutput(user, "<span style=\"color:blue\">You board your Colosseum Putt.</span>")
+			boutput(user, "<span class='notice'>You board your Colosseum Putt.</span>")
 			user.set_loc(src)
 			piloting = user
 			on_board(user)
 		else
-			boutput(user, "<span style=\"color:red\">This pod is claimed by somebody else.</span>")
+			boutput(user, "<span class='alert'>This pod is claimed by somebody else.</span>")
 
 	Click(location, control, params)
 		if (!may_exit)
 			return
 		if (usr in src.contents)
 			usr.set_loc(src.loc)
-			boutput(usr, "<span style=\"color:blue\">You exit the Colosseum Putt.</span>")
+			boutput(usr, "<span class='notice'>You exit the Colosseum Putt.</span>")
 			piloting = null
 			on_exit(usr)
 	/*
@@ -1281,9 +1287,9 @@ proc/get_colosseum_message(var/name, var/message)
 		if (piloting)
 			switch (type)
 				if (0)
-					boutput(piloting, "<span style=\"color:blue\">[message]</span>")
+					boutput(piloting, "<span class='notice'>[message]</span>")
 				if (1)
-					boutput(piloting, "<span style=\"color:red\"><b>[message]</b></span>")
+					boutput(piloting, "<span class='alert'><b>[message]</b></span>")
 				else
 					boutput(piloting, message)
 
@@ -1425,7 +1431,7 @@ proc/get_colosseum_message(var/name, var/message)
 			new /obj/effects/explosion (src.loc)
 			var/sound/expl_sound = sound('sound/effects/Explosion1.ogg')
 			do_sound(expl_sound)
-			sleep(30)
+			sleep(3 SECONDS)
 			if (health > 0)
 				dying = 0
 				return
@@ -1433,13 +1439,13 @@ proc/get_colosseum_message(var/name, var/message)
 			if (piloting)
 				piloting.update_burning(35)
 			do_sound(sound('sound/machines/engine_alert1.ogg'))
-			sleep(25)
+			sleep(2.5 SECONDS)
 			if (health > 0)
 				dying = 0
 				return
 			do_sound(sound('sound/machines/pod_alarm.ogg'))
 			do_sound(expl_sound)
-			sleep(15)
+			sleep(1.5 SECONDS)
 			if (health > 0)
 				dying = 0
 				return
@@ -1457,7 +1463,7 @@ proc/get_colosseum_message(var/name, var/message)
 					var/turf/T = locate(Q.x + dx, Q.y + dy, Q.z)
 					if (T && M)
 						M.throw_at(T, 10, 2)
-			sleep(2)
+			sleep(0.2 SECONDS)
 			var/turf/T = get_turf(src.loc)
 			if(T)
 				src.visible_message("<b>[src] explodes!</b>")
@@ -1470,13 +1476,12 @@ proc/get_colosseum_message(var/name, var/message)
 			qdel(src)
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/T = W
+		if (isweldingtool(W))
 			if (health >= max_health)
-				boutput(user, "<span style=\"color:red\">That putt is already at full health!</span>")
+				boutput(user, "<span class='alert'>That putt is already at full health!</span>")
 				return
-			if (T.try_weld(user, 1))
-				visible_message("<span style=\"color:blue\"><b>[user]</b> repairs some dents on [src]!</span>")
+			if (W:try_weld(user, 1))
+				visible_message("<span class='notice'><b>[user]</b> repairs some dents on [src]!</span>")
 				message_pilot("<b>[user]</b> repairs some dents on [src]!")
 				repair_by(10)
 
@@ -1710,7 +1715,7 @@ proc/get_colosseum_message(var/name, var/message)
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING

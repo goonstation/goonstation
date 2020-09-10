@@ -1,5 +1,3 @@
-var/global/list/all_GPSs = list()
-
 /obj/item/device/gps
 	name = "space GPS"
 	desc = "Tells you your coordinates based on the nearest coordinate beacon."
@@ -47,7 +45,7 @@ var/global/list/all_GPSs = list()
 	proc/show_HTML(var/mob/user)
 		if (!user)
 			return
-		user.machine = src
+		src.add_dialog(user)
 		var/HTML = {"<style type="text/css">
 		.desc {
 			background: #21272C;
@@ -102,7 +100,7 @@ var/global/list/all_GPSs = list()
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>GPS Units</b></div>"
-		for (var/obj/item/device/gps/G in all_GPSs)//world)
+		for (var/obj/item/device/gps/G in by_type[/obj/item/device/gps])
 			LAGCHECK(LAG_LOW)
 			if (G.allowtrack == 1)
 				var/turf/T = get_turf(G.loc)
@@ -113,7 +111,7 @@ var/global/list/all_GPSs = list()
 				HTML += "<br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
 
 		HTML += "<div class='gps group'><b>Tracking Implants</b></div>"
-		for (var/obj/item/implant/tracking/imp in tracking_implants)//world)
+		for (var/obj/item/implant/tracking/imp in by_type[/obj/item/implant/tracking])
 			LAGCHECK(LAG_LOW)
 			if (isliving(imp.loc))
 				var/turf/T = get_turf(imp.loc)
@@ -137,7 +135,7 @@ var/global/list/all_GPSs = list()
 			src.show_HTML(user)
 		else
 			user.Browse(null, "window=gps_[src]")
-			user.machine = null
+			src.remove_dialog(user)
 		return
 
 	Topic(href, href_list)
@@ -145,37 +143,37 @@ var/global/list/all_GPSs = list()
 		if (usr.stat || usr.restrained() || usr.lying)
 			return
 		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 			var/turf/T = get_turf(usr)
 			if(href_list["getcords"])
-				boutput(usr, "<span style=\"color:blue\">Located at: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
+				boutput(usr, "<span class='notice'>Located at: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
 				return
 
 			if(href_list["track1"])
-				boutput(usr, "<span style=\"color:blue\">Tracking enabled.</span>")
+				boutput(usr, "<span class='notice'>Tracking enabled.</span>")
 				src.allowtrack = 1
 			if(href_list["track2"])
-				boutput(usr, "<span style=\"color:blue\">Tracking disabled.</span>")
+				boutput(usr, "<span class='notice'>Tracking disabled.</span>")
 				src.allowtrack = 0
 			if(href_list["changeid"])
 				var/t = strip_html(input(usr, "Enter new GPS identification name (must be 4 characters)", src.identifier) as text)
 				if(length(t) > 4)
-					boutput(usr, "<span style=\"color:red\">Input too long.</span>")
+					boutput(usr, "<span class='alert'>Input too long.</span>")
 					return
 				if(length(t) < 4)
-					boutput(usr, "<span style=\"color:red\">Input too short.</span>")
+					boutput(usr, "<span class='alert'>Input too short.</span>")
 					return
 				if(!t)
 					return
 				src.identifier = t
 			if(href_list["help"])
 				if(!distress)
-					boutput(usr, "<span style=\"color:red\">Sending distress signal.</span>")
+					boutput(usr, "<span class='alert'>Sending distress signal.</span>")
 					distress = 1
 					src.send_distress_signal(distress)
 				else
 					distress = 0
-					boutput(usr, "<span style=\"color:red\">Distress signal cleared.</span>")
+					boutput(usr, "<span class='alert'>Distress signal cleared.</span>")
 					src.send_distress_signal(distress)
 			if(href_list["refresh"])
 				..()
@@ -189,19 +187,10 @@ var/global/list/all_GPSs = list()
 
 
 			if (!src.master)
-				if (ismob(src.loc))
-					attack_self(src.loc)
-				else
-					for(var/mob/M in viewers(1, src))
-						if (M.client && (M.machine == src.master || M.machine == src))
-							src.attack_self(M)
+				src.updateSelfDialog()
 			else
-				if (ismob(src.master.loc))
-					src.attack_self(src.master.loc)
-				else
-					for(var/mob/M in viewers(1, src.master))
-						if (M.client && (M.machine == src.master || M.machine == src))
-							src.attack_self(M)
+				src.master.updateSelfDialog()
+
 			src.add_fingerprint(usr)
 		else
 			usr.Browse(null, "window=gps_[src]")
@@ -213,9 +202,7 @@ var/global/list/all_GPSs = list()
 		..()
 		serial = rand(4201,7999)
 		desc += " Its serial code is [src.serial]-[identifier]."
-		if (!islist(all_GPSs))
-			all_GPSs = list()
-		all_GPSs.Add(src)
+		START_TRACKING
 		if (radio_controller)
 			src.net_id = generate_net_id(src)
 			radio_control = radio_controller.add_object(src, "[frequency]")
@@ -226,22 +213,23 @@ var/global/list/all_GPSs = list()
 			var/x = text2num(href_list["x"])
 			var/y = text2num(href_list["y"])
 			if (!x || !y)
-				boutput(usr, "<span style=\"color:red\">Bad Topc call, if you see this something has gone wrong. And it's probably YOUR FAULT!</span>")
+				boutput(usr, "<span class='alert'>Bad Topc call, if you see this something has gone wrong. And it's probably YOUR FAULT!</span>")
 				return
-			var/z = src.z
-			if (src.loc)
-				z = src.loc.z
+			// This is to get a turf with the specified coordinates on the same Z as the device
+			var/turf/T = get_turf(src) //bugfix for this not working when src was in containers
+			var/z = T.z
 
-			var/turf/T = locate(x,y,z)
+
+			T = locate(x,y,z)
 			//Set located turf to be the tracking_target
 			if (isturf(T))
 				src.tracking_target = T
-				boutput(usr, "<span style=\"color:blue\">Now tracking: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
+				boutput(usr, "<span class='notice'>Now tracking: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
 
 				begin_tracking()
 			else
-				boutput(usr, "<span style=\"color:red\">Invalid GPS coordinates.</span>")
-		sleep(10)
+				boutput(usr, "<span class='alert'>Invalid GPS coordinates.</span>")
+		sleep(1 SECOND)
 
 	proc/begin_tracking()
 		if(!active)
@@ -250,7 +238,7 @@ var/global/list/all_GPSs = list()
 				return
 			active = 1
 			process()
-			boutput(usr, "<span style=\"color:blue\">You activate the gps</span>")
+			boutput(usr, "<span class='notice'>You activate the gps</span>")
 
 	proc/send_distress_signal(distress)
 		var/distressAlert = distress ? "help" : "clear"
@@ -279,13 +267,7 @@ var/global/list/all_GPSs = list()
 		SPAWN_DBG(0.5 SECONDS) .()
 
 	disposing()
-		..()
-		if (islist(all_GPSs))
-			all_GPSs.Remove(src)
-
-	disposing()
-		if (islist(all_GPSs))
-			all_GPSs.Remove(src)
+		STOP_TRACKING
 		if (radio_controller)
 			radio_controller.remove_object(src, "[src.frequency]")
 		..()
@@ -355,7 +337,7 @@ var/global/list/all_GPSs = list()
 
 	attack_hand()
 		enabled = !enabled
-		boutput(usr, "<span style=\"color:blue\">You switch the beacon [src.enabled ? "on" : "off"].</span>")
+		boutput(usr, "<span class='notice'>You switch the beacon [src.enabled ? "on" : "off"].</span>")
 
 	attack_ai(mob/user as mob)
 		var/t = input(user, "Enter new beacon identification name", src.sname) as null|text

@@ -4,9 +4,9 @@
 
 /obj/item/storage
 	name = "storage"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "box_blank"
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	var/list/can_hold = null//new/list()
 	var/in_list_or_max = 0 // sorry for the dumb var name - if can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit
@@ -27,11 +27,10 @@
 	health = 10
 
 	buildTooltipContent()
-		var/Tcontent = ..()
+		. = ..()
 		var/list/L = get_contents()
-		Tcontent += "<br>Holding [L.len]/[slots] objects"
-
-		return Tcontent
+		. += "<br>Holding [L.len]/[slots] objects"
+		lastTooltipContent = .
 
 	New()
 		hud = new(src)
@@ -94,10 +93,16 @@
 			user.drop_item()
 			SPAWN_DBG(1 DECI SECOND)
 				O.attack_hand(user)
+		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
+			src.attackby(O, user)
 
-	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
+	//failure returns 0 or lower for diff messages - sorry
+	proc/check_can_hold(obj/item/W)
+		if (!W)
+			return 0
+		.= 1
 		if (W.cant_drop)
-			return
+			return -1
 		if (islist(src.can_hold) && src.can_hold.len)
 			var/ok = 0
 			if (src.in_list_or_max && W.w_class <= src.max_wclass)
@@ -107,17 +112,26 @@
 					if (ispath(A) && istype(W, A))
 						ok = 1
 			if (!ok)
-				boutput(user, "<span style='color:red'>[src] cannot hold [W].</span>")
-				return
+				return 0
 
 		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span style='color:red'>[W] won't fit into [src]!</span>")
-			return
+			return -1
 
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len >= slots)
-			boutput(user, "<span style='color:red'>[src] is full!</span>")
-			return 0
+			return -2
+
+	attackby(obj/item/W, mob/user, params, obj/item/storage/T) // T for transfer - transferring items from one storage obj to another
+		var/canhold = src.check_can_hold(W,user)
+		if (canhold <= 0)
+			switch (canhold)
+				if(0)
+					boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
+				if(-1)
+					boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
+				if(-2)
+					boutput(user, "<span class='alert'>[src] is full!</span>")
+			return
 
 		var/atom/checkloc = src.loc // no infinite loops for you
 		while (checkloc && !isturf(src.loc))
@@ -132,14 +146,14 @@
 			src.add_contents(W)
 			T.hud.remove_item(W)
 		else
-			user.u_equip(W)
-			W.dropped(user)
 			src.add_contents(W)
+			user.u_equip(W)
 		hud.add_item(W)
+		update_icon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span style='color:blue'>[user] has added [W] to [src]!</span>", "<span style='color:blue'>You have added [W] to [src].</span>")
+			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
 		playsound(src.loc, "rustle", 50, 1, -5)
 		return
 
@@ -153,14 +167,14 @@
 			return
 		for (var/obj/item/mousetrap/MT in src)
 			if (MT.armed)
-				user.visible_message("<span style='color:red'><B>[user] reaches into \the [src] and sets off a mousetrap!</B></span>",\
-				"<span style='color:red'><B>You reach into \the [src], but there was a live mousetrap in there!</B></span>")
+				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a mousetrap!</B></span>",\
+				"<span class='alert'><B>You reach into \the [src], but there was a live mousetrap in there!</B></span>")
 				MT.triggered(user, user.hand ? "l_hand" : "r_hand")
 				. = 1
 		for (var/obj/item/mine/M in src)
 			if (M.armed && M.used_up != 1)
-				user.visible_message("<span style='color:red'><B>[user] reaches into \the [src] and sets off a [M.name]!</B></span>",\
-				"<span style='color:red'><B>You reach into \the [src], but there was a live [M.name] in there!</B></span>")
+				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a [M.name]!</B></span>",\
+				"<span class='alert'><B>You reach into \the [src], but there was a live [M.name] in there!</B></span>")
 				M.triggered(user)
 				. = 1
 
@@ -201,19 +215,19 @@
 					if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
 						return
 				if (!T.density)
-					usr.visible_message("<span style='color:red'>[usr] dumps the contents of [src] onto [T]!</span>")
+					usr.visible_message("<span class='alert'>[usr] dumps the contents of [src] onto [T]!</span>")
 					for (var/obj/item/I in src)
 						I.set_loc(T)
 						I.layer = initial(I.layer)
 						if (istype(I, /obj/item/mousetrap))
 							var/obj/item/mousetrap/MT = I
 							if (MT.armed)
-								MT.visible_message("<span style='color:red'>[MT] triggers as it falls on the ground!</span>")
+								MT.visible_message("<span class='alert'>[MT] triggers as it falls on the ground!</span>")
 								MT.triggered(usr, null)
 						else if (istype(I, /obj/item/mine))
 							var/obj/item/mine/M = I
 							if (M.armed && M.used_up != 1)
-								M.visible_message("<span style='color:red'>[M] triggers as it falls on the ground!</span>")
+								M.visible_message("<span class='alert'>[M] triggers as it falls on the ground!</span>")
 								M.triggered(usr)
 						hud.remove_item(I)
 
@@ -248,9 +262,10 @@
 		attack_hand(user)
 
 	proc/get_contents()
+		RETURN_TYPE(/list)
 		var/list/cont = src.contents.Copy()
 		for(var/atom/A in cont)
-			if(!istype(A, /obj/item))
+			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
 				cont.Remove(A)
 		return cont
 
@@ -314,17 +329,21 @@
 	w_class = 4.0
 	max_wclass = 3
 	desc = "A fancy synthetic leather-bound briefcase, capable of holding a number of small objects, with style."
-	stamina_damage = 35
-	stamina_cost = 30
+	stamina_damage = 40
+	stamina_cost = 17
 	stamina_crit_chance = 10
 	spawn_contents = list(/obj/item/paper = 2,/obj/item/pen)
 	// Don't use up more slots, certain job datums put items in the briefcase the player spawns with.
 	// And nobody needs six sheets of paper right away, realistically speaking.
 
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_BOOK)
+
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
 	desc = "This fits into a desk and you can store stuff in it! Wow, amazing!!"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "desk_drawer"
 	flags = FPRINT | TABLEPASS
 	w_class = 4.0
@@ -342,21 +361,21 @@
 				user.visible_message("[user] [!src.locked ? "un" : null]locks [src].")
 				playsound(get_turf(src), "sound/items/Screwdriver2.ogg", 50, 1)
 			else
-				boutput(user, "<span style='color:red'>[K] doesn't seem to fit in [src]'s lock.</span>")
+				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s lock.</span>")
 			return
 		..()
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		if (src.locked)
 			if (usr)
-				boutput(usr, "<span style='color:red'>[src] is locked!</span>")
+				boutput(usr, "<span class='alert'>[src] is locked!</span>")
 			return
 		..()
 
 /obj/item/storage/rockit
 	name = "\improper Rock-It Launcher"
 	desc = "Huh..."
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "rockit"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -376,12 +395,10 @@
 		if (!I)
 			return
 
-		I.throwforce += 8 //Ugly. Who cares.
-		SPAWN_DBG(1.5 SECONDS)
-			if (I)
-				I.throwforce -= 8
-
 		I.set_loc(get_turf(src.loc))
-		I.throw_at(target, 8, 2)
+		I.dropped()
+		src.hud.remove_item(I) //fix the funky UI stuff
+		I.layer = initial(I.layer)
+		I.throw_at(target, 8, 2, bonus_throwforce=8)
 
 		playsound(src, 'sound/effects/singsuck.ogg', 40, 1)

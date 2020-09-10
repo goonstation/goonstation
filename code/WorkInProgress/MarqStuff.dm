@@ -123,8 +123,8 @@
 	anchored = 1
 
 	examine()
-		..()
-		boutput(usr, "Your keen skills of observation tell you that [expected.len - unlocked.len] out of the [expected.len] locks are locked.")
+		. = ..()
+		. += "Your keen skills of observation tell you that [expected.len - unlocked.len] out of the [expected.len] locks are locked."
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (istype(I, /obj/item/device/key))
@@ -135,7 +135,7 @@
 			//	if (dd_hasprefix(I.name, N))
 			//		break
 			if (kname)
-				boutput(user, "<span style='color:blue'>You insert the [I.name] into the [kname]hole and turn it. The door emits a loud click.</span>")
+				boutput(user, "<span class='notice'>You insert the [I.name] into the [kname]hole and turn it. The door emits a loud click.</span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
 				if (kname in unlocked)
 					unlocked -= kname
@@ -147,10 +147,10 @@
 					ol[kname] = IM
 					overlays += IM
 			else
-				boutput(user, "<span style='color:red'>You cannot find a matching keyhole for that key!</span>")
+				boutput(user, "<span class='alert'>You cannot find a matching keyhole for that key!</span>")
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/pie/lime))
 			if ("key lime pie" in expected)
-				boutput(user, "<span style='color:blue'>You insert the [I.name] into the key lime piehole and turn it. The door emits a loud click.</span>")
+				boutput(user, "<span class='notice'>You insert the [I.name] into the key lime piehole and turn it. The door emits a loud click.</span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
 				if ("key lime pie" in unlocked)
 					unlocked -= "key lime pie"
@@ -162,7 +162,7 @@
 					ol["key lime pie"] = IM
 					overlays += IM
 			else
-				boutput(user, "<span style='color:red'>You cannot find a matching keyhole for that key!</span>")
+				boutput(user, "<span class='alert'>You cannot find a matching keyhole for that key!</span>")
 
 	Bumped(var/mob/M)
 		if (!istype(M))
@@ -175,7 +175,7 @@
 		if (unlocked.len == expected.len)
 			open()
 		else
-			boutput(user, "<span style='color:red'>The door won't budge!</span>")
+			boutput(user, "<span class='alert'>The door won't budge!</span>")
 
 	proc/open()
 		if (unlocked.len != expected.len)
@@ -244,9 +244,7 @@
 	duration = -1
 	var/obj/item/gun/bow/bow = null
 	var/progress = 0
-	var/direction = 1
-	var/progression = 0.18
-	var/linger = 15
+	var/progression = 0.34
 	var/moved = 0
 
 	New(var/mob/M, var/obj/item/gun/bow/B)
@@ -257,7 +255,7 @@
 	onStart()
 		..()
 		playsound(get_turf(owner), 'sound/effects/bow_aim.ogg', 75, 1)
-		owner.visible_message("<span style='color:red'>[owner] pulls the string on [bow]!</span>", "<span style='color:blue'>You pull the string on [bow]!</span>")
+		owner.visible_message("<span class='alert'>[owner] pulls the string on [bow]!</span>", "<span class='notice'>You pull the string on [bow]!</span>")
 
 	onDelete()
 		if (bow)
@@ -265,64 +263,26 @@
 		..()
 
 	onEnd()
-		boutput(owner, "<span style='color:red'>You let go of the string.</span>")
+		boutput(owner, "<span class='alert'>You let go of the string.</span>")
 		if (bow)
 			bow.aim = null
 		..()
 
 	interrupt(var/flag)
-		var/mob/mowner = owner
-		if(flag == INTERRUPT_MOVE && mowner.m_intent == "walk")
-			bar.color = "#FF0000"
-			switch (direction)
-				if (-1)
-					progress = max(0, progress - 4 * progression)
-					progression += 0.035
-					if (!progress)
-						state = ACTIONSTATE_FINISH
-				if (0)
-					linger = max(linger - 4, 0)
-					if (linger)
-						direction = 1
-						progress = max(0, progress - 4 * progression)
-						moved = 1
-					else
-						direction = -1
-						moved = 0
-				if (1)
-					moved = 2
-					linger = max(0, linger - 2)
-					progress = max(0, progress - 3 * progression)
-					if (!linger)
-						direction = -1
-						moved = 0
+		if(flag == INTERRUPT_MOVE)
+			moved = 1
 			return
 		..()
 
+
 	onUpdate()
-		if (!progress && direction == -1)
-			state = ACTIONSTATE_FINISH
-			return
 		if (moved)
-			moved--
-			linger = max(0, linger - 1)
-			if (linger <= 0)
-				direction = -1
-				moved = 0
-			return
-		switch (direction)
-			if (-1)
-				progress = max(0, progress - progression)
-				if (!progress)
-					state = ACTIONSTATE_FINISH
-			if (0)
-				linger--
-				if (linger <= 0)
-					direction = -1
-			if (1)
-				progress = min(1, progress + progression)
-				if (progress == 1)
-					direction = 0
+			progress += (progression/2)
+		else
+			progress +=progression
+		progress = min(1,progress)
+		moved = 0
+
 		var/complete = progress
 		bar.color = "#0000FF"
 		bar.transform = matrix(complete, 1, MATRIX_SCALE)
@@ -330,7 +290,7 @@
 
 /obj/item/arrow
 	name = "steel-headed arrow"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = null
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	// placeholder
@@ -370,11 +330,11 @@
 		return 1
 
 	examine()
-		..()
+		. = ..()
 		if (amount > 1)
-			boutput(usr, "<span style='color:blue'>This is a stack of [amount] arrows.")
+			. += "<span class='notice'>This is a stack of [amount] arrows."
 		if (reagents.total_volume)
-			boutput(usr, "<span style='color:blue'>The tip of the arrow is coated with reagents.</span>")
+			. += "<span class='notice'>The tip of the arrow is coated with reagents.</span>"
 
 	clone(var/newloc = null)
 		var/obj/item/arrow/O = new(loc)
@@ -389,7 +349,7 @@
 			amount--
 			var/obj/item/arrow/O = clone(loc)
 			user.put_in_hand_or_drop(O, user.hand)
-			boutput(usr, "<span style='color:blue'>You take \a [src] from the stack of [src]s. [amount] remaining on the stack.")
+			boutput(usr, "<span class='notice'>You take \a [src] from the stack of [src]s. [amount] remaining on the stack.")
 		else
 			..()
 */
@@ -453,10 +413,10 @@
 			return
 		if (isliving(target))
 			if (prob(50))
-				user.visible_message("<span style='color:red'><b>[user] tries to stab [target] with [src] but misses!</b></span>")
+				user.visible_message("<span class='alert'><b>[user] tries to stab [target] with [src] but misses!</b></span>")
 				playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 				return
-			user.visible_message("<span style='color:red'><b>[user] stabs [target] with [src]!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] stabs [target] with [src]!</b></span>")
 			user.u_equip(src)
 			playsound(get_turf(user), 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
 			if (ishuman(target))
@@ -476,27 +436,28 @@
 			take_bleeding_damage(target, null, 8, DAMAGE_STAB)
 			if (head_material)
 				head_material.triggerOnAttack(src, user, target)
+			return 1
 		else
 			var/obj/item/I = target
 			if (istype(I) && I.is_open_container() == 1 && I.reagents)
 				if (reagents.total_volume == reagents.maximum_volume)
-					boutput(user, "<span style='color:red'>[src] is already coated in the maximum amount of reagents it can hold.</span>")
+					boutput(user, "<span class='alert'>[src] is already coated in the maximum amount of reagents it can hold.</span>")
 				else if (!I.reagents.total_volume)
-					boutput(user, "<span style='color:red'>[I] is empty.</span>")
+					boutput(user, "<span class='alert'>[I] is empty.</span>")
 				else
 					var/amt = min(reagents.maximum_volume - reagents.total_volume, I.reagents.total_volume)
 					logTheThing("combat", user, null, "poisoned [src] [log_reagents(I)] at [log_loc(user)].") // Logs would be nice (Convair880).
 					I.reagents.trans_to(src, amt)
-					boutput(user, "<span style='color:blue'>You dip [src] into [I], coating it with [amt] units of reagents.</span>")
+					boutput(user, "<span class='notice'>You dip [src] into [I], coating it with [amt] units of reagents.</span>")
 
 /obj/item/arrowhead
 	name = "arrowhead"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "arrowhead"
 
 	examine()
-		..()
-		boutput(usr, "There [amount == 1 ? "is" : "are"] [amount] arrowhead[amount != 1 ? "s" : null] in the stack.")
+		. = ..()
+		. += "There [amount == 1 ? "is" : "are"] [amount] arrowhead[amount != 1 ? "s" : null] in the stack."
 
 /obj/item/implant/projectile/arrow
 	name = "arrow"
@@ -519,15 +480,15 @@
 
 /obj/item/quiver
 	name = "quiver"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "quiver-0"
 	wear_image_icon = 'icons/mob/back.dmi'
 	item_state = "quiver"
-	flags = FPRINT | TABLEPASS | ONBACK
+	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))
-			boutput(user, "<span style='color:red'>That cannot be placed in [src]!</span>")
+			boutput(user, "<span class='alert'>That cannot be placed in [src]!</span>")
 			return
 
 		if(I.amount > 1)
@@ -539,14 +500,14 @@
 			icon_state = "quiver-[min(contents.len, 4)]"
 		else
 			user.u_equip(I)
-			I.loc = src
+			I.set_loc(src)
 			maptext = "[contents.len]"
 			icon_state = "quiver-[min(contents.len, 4)]"
 
 	proc/getArrow(var/mob/user)
 		if (src in user)
 			if (contents.len)
-				boutput(user, "<span style='color:blue'>You take [contents[1]] from [src].</span>")
+				boutput(user, "<span class='notice'>You take [contents[1]] from [src].</span>")
 				return contents[1]
 			else return null
 
@@ -594,7 +555,7 @@
 					if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
 						return
 				if (!T.density)
-					usr.visible_message("<span style=\"color:red\">[usr] dumps the contents of [src] onto [T]!</span>")
+					usr.visible_message("<span class='alert'>[usr] dumps the contents of [src] onto [T]!</span>")
 					for (var/obj/item/I in src)
 						I.set_loc(T)
 						I.layer = initial(I.layer)
@@ -602,7 +563,7 @@
 /datum/projectile/arrow
 	name = "arrow"
 	power = 17
-	dissipation_delay = 4
+	dissipation_delay = 12
 	dissipation_rate = 5
 	shot_sound = 'sound/effects/bow_fire.ogg'
 	damage_type = D_KINETIC
@@ -621,12 +582,12 @@
 					B.material.triggerOnAttack(B, null, A)
 				B.arrow.reagents.reaction(A, 2)
 				B.arrow.reagents.trans_to(A, B.arrow.reagents.total_volume)
-			take_bleeding_damage(A, null, round(src.power / 3), src.hit_type)
+			take_bleeding_damage(A, null, round(src.power / 2), src.hit_type)
 
 
 /obj/item/gun/bow
 	name = "bow"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "bow"
 	item_state = "bow"
@@ -646,7 +607,15 @@
 				var/obj/item/arrow/I = Q.getArrow(user)
 				if(I)
 					loaded = I
-					I.loc = src
+					I.set_loc(src)
+					overlays += I
+					Q.updateApperance()
+			if(istype(H.belt, /obj/item/quiver))
+				var/obj/item/quiver/Q = H.belt
+				var/obj/item/arrow/I = Q.getArrow(user)
+				if(I)
+					loaded = I
+					I.set_loc(src)
 					overlays += I
 					Q.updateApperance()
 		return
@@ -657,19 +626,27 @@
 
 		if (loaded && user.is_in_hands(src))
 			user.put_in_hand_or_drop(loaded)
-			boutput(user, "<span style='color:blue'>You unload the arrow from the bow.</span>")
+			boutput(user, "<span class='notice'>You unload the arrow from the bow.</span>")
 			overlays.len = 0
 			loaded = null
 		else
 			..()
+
+
 
 	attack(var/mob/target, var/mob/user)
 		user.lastattacked = target
 		target.lastattacker = user
 		target.lastattackertime = world.time
 
-		if(isliving(target) && aim)
-			src.shoot_point_blank(target, user)
+
+	//absolutely useless as an attack but removing it causes bugs, replaced fire point blank which had issues with the way arrow damage is calculated.
+		if(isliving(target))
+			if(loaded)
+				if(loaded.afterattack(target,user,1))
+					loaded =null;//arrow isnt consumed otherwise, for some inexplicable reason.
+			else
+				boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 		else
 			..()
 
@@ -677,6 +654,7 @@
 			game_stats.Increment("violence")
 	#endif
 			return
+
 	/*
 	onMouseDown(atom/target,location,control,params)
 		var/mob/user = usr
@@ -697,7 +675,7 @@
 
 	process_ammo(var/mob/user)
 		if (!loaded)
-			boutput(user, "<span style='color:red'>Nothing is loaded in the bow!</span>")
+			boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 			return 0
 		overlays.len = 0
 		var/obj/item/implant/projectile/arrow/A = new
@@ -708,10 +686,10 @@
 		loaded.set_loc(A)
 		current_projectile.implanted = A
 		current_projectile.material = copyMaterial(loaded.head_material)
-		var/default_power = 12
+		var/default_power = 20
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
-				current_projectile.power = round(loaded.head_material.getProperty("hard") / 2.6) //40hard ~ 15dmg, 80hard ~ 30dmg
+				current_projectile.power = round(20+loaded.head_material.getProperty("hard") / 2.6) //20-50 damage with 0 and 80 hardness(approximately)
 			else
 				current_projectile.power = default_power
 		else
@@ -724,17 +702,23 @@
 		return loaded != null
 
 	pixelaction(atom/target, params, mob/user, reach)
+		/*
 		if (!loaded)
-			boutput(user, "<span style='color:red'>Nothing is loaded in the bow!</span>")
+			boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 			return 1
+		*/
 
 		if (!aim)
 			//var/list/parameters = params2list(params)
 			if(ismob(target.loc) || istype(target, /obj/screen)) return
-			if (!aim && !loaded)
+			if (!loaded)//removed redundant check
 				loadFromQuiver(user)
-
-			if (!aim && loaded)
+				if(loaded)
+					boutput(user, "<span class='alert'>You load an arrow from the quiver.</span>")
+				return
+			if(reach)
+				return
+			if (loaded)
 				aim = new(user, src)
 				actions.start(aim, user)
 		else
@@ -757,7 +741,7 @@
 		if (!istype(I))
 			return
 		if (loaded)
-			boutput(user, "<span style='color:red'>An arrow is already loaded onto the bow.</span>")
+			boutput(user, "<span class='alert'>An arrow is already loaded onto the bow.</span>")
 
 		if(I.amount > 1)
 			var/obj/item/arrow/C = I.clone(src)
@@ -768,4 +752,4 @@
 			overlays += I
 			user.u_equip(I)
 			loaded = I
-			I.loc = src
+			I.set_loc(src)

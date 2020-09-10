@@ -55,13 +55,13 @@ datum/controller/radio
 
 /*
 mob/verb/listfreq()
-	boutput(world, "<span style=\"color:blue\">registered devices:</span>")
+	boutput(world, "<span class='notice'>registered devices:</span>")
 	for(var/fn in radio_controller.frequencies)
 		var/datum/radio_frequency/f = radio_controller.return_frequency(fn)
-		boutput(world, "<span style=\"color:blue\">[fn]</span>")
+		boutput(world, "<span class='notice'>[fn]</span>")
 		for(var/obj/o in f.devices)
-			boutput(world, "<span style=\"color:blue\">>[o]</span>")
-	boutput(world, "<span style=\"color:blue\">end</span>")
+			boutput(world, "<span class='notice'>>[o]</span>")
+	boutput(world, "<span class='notice'>end</span>")
 */
 
 
@@ -129,8 +129,7 @@ datum/radio_frequency
 				signal.dispose()
 			else if (signal)
 				signal.wipe()
-				if (!(signal in reusable_signals))
-					reusable_signals += signal
+				reusable_signals |= signal
 			LAGCHECK(LAG_MED)
 
 		check_for_jammer(obj/source)

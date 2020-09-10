@@ -11,21 +11,16 @@
 	density = 1
 	nodamage = 1
 	opacity = 1
+	use_stamina = 0
 
-	//Life(datum/controller/process/mobs/parent)
-		//..(parent)
-		//return
-
-	examine()
-		set src in view()
-
-		boutput(usr, "<span style=\"color:blue\">*---------*</span>")
-		boutput(usr, "<span style=\"color:blue\">This is a [bicon(src)] <B>[src.name]</B>!</span>")
-		if(prob(50) && ishuman(usr) && usr.bioHolder.HasEffect("clumsy"))
-			boutput(usr, "<span style=\"color:red\">You can't help but laugh at it.</span>")
-			usr.emote("laugh")
+	examine(mob/user)
+		. = list("<span class='notice'>*---------*</span>")
+		. += "<span class='notice'>This is a [bicon(src)] <B>[src.name]</B>!</span>"
+		if(prob(50) && ishuman(user) && user.bioHolder.HasEffect("clumsy"))
+			. += "<span class='alert'>You can't help but laugh at it.</span>"
+			user.emote("laugh")
 		else
-			boutput(usr, "<span style=\"color:red\">It looks pretty disturbing.</span>")
+			. += "<span class='alert'>It looks pretty disturbing.</span>"
 
 	say_understands(var/other)
 		if (ishuman(other) || isrobot(other) || isAI(other))
@@ -33,7 +28,7 @@
 		return ..()
 
 	attack_hand(mob/user as mob)
-		boutput(user, "<span style=\"color:blue\">You push the [src.name] but nothing happens!</span>")
+		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
 		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 		src.add_fingerprint(user)
 		return
@@ -51,7 +46,7 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool) && W:welding)
+		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 			src.gib(1)
 		else
 			..()

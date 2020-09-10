@@ -26,7 +26,6 @@
 	var/maxhealth = 200
 	var/health_percentage = 100 // cogwerks: health percentage check for bigpods
 	var/damage_overlays = 0 // cogwerks: 0 = normal, 1 = dented, 2 = on fire
-	var/panel_status = 0 //Determines if parts can be added/removed
 	var/obj/item/device/radio/intercom/ship/intercom = null //All ships have these is used by communication array
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
@@ -58,12 +57,15 @@
 	/////////////////////////////////////////////////////
 
 	New()
+		src.contextActions = childrentypesof(/datum/contextAction/vehicle)
+
 		. = ..()
 		START_TRACKING
 
+
 	remove_air(amount as num)
 		if(atmostank && atmostank.air_contents)
-			if(life_support && life_support.active && atmostank.air_contents.return_pressure() < 1000)
+			if(life_support && life_support.active && MIXTURE_PRESSURE(atmostank.air_contents) < 1000)
 				life_support.power_used = 5 * passengers + 15
 				atmostank.air_contents.oxygen += amount / 5
 				atmostank.air_contents.nitrogen += 4 * amount / 5
@@ -92,83 +94,60 @@
 	/////////////////////////////////////////////////////////
 	///////Attack Code									////
 	////////////////////////////////////////////////////////
-	attack_hand(mob/user as mob)
-		if(panel_status)
-			open_parts_panel(user)
-			return
-		else if (locked && lock)
-			lock.show_lock_panel(user,0)
-			return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		user.lastattacked = src
-		if (health < maxhealth && istype(W, /obj/item/weldingtool) && W:welding)
+		if (health < maxhealth && isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			src.health += 30
 			checkhealth()
 			src.add_fingerprint(user)
-			src.visible_message("<span style=\"color:red\">[user] has fixed some of the dents on [src]!</span>")
+			src.visible_message("<span class='alert'>[user] has fixed some of the dents on [src]!</span>")
+			if(health >= maxhealth)
+				src.visible_message("<span class='alert'>[src] is fully repaired!</span>")
 			return
 
-		if (panel_status)
-			if (istype(W, /obj/item/shipcomponent))
-				Install(W)
-				return
+		if (istype(W, /obj/item/shipcomponent))
+			Install(W)
+			return
 
-			if (ispryingtool(W))
-				panel_status = 0
-				boutput(user, "You close the maintenance panel.")
+		if (istype(W, /obj/item/ammo/bullets))
+			if (W.disposed)
 				return
-
-			if (istype(W, /obj/item/ammo/bullets))
-				if (W.disposed)
+			if (src.m_w_system)
+				if (!src.m_w_system.uses_ammunition)
+					boutput(user, "<span class='alert'>That weapon does not require ammunition.</span>")
 					return
-				if (src.m_w_system)
-					if (!src.m_w_system.uses_ammunition)
-						boutput(user, "<span style=\"color:red\">That weapon does not require ammunition.</span>")
-						return
-					if (src.m_w_system.remaining_ammunition >= 50)
-						boutput(user, "<span style=\"color:red\">The automated loader for the weapon cannot hold any more ammunition.</span>")
-						return
-					var/obj/item/ammo/bullets/ammo = W
-					if (!ammo.amount_left)
-						return
-					if (src.m_w_system.current_projectile.type != ammo.ammo_type.type)
-						boutput(user, "<span style=\"color:red\">The [m_w_system] cannot fire that kind of ammunition.</span>")
-						return
-					var/may_load = 50 - src.m_w_system.remaining_ammunition
-					if (may_load < ammo.amount_left)
-						ammo.amount_left -= may_load
-						src.m_w_system.remaining_ammunition += may_load
-						boutput(user, "<span style=\"color:blue\">You load [may_load] ammunition from [ammo]. [ammo] now contains [ammo.amount_left] ammunition.</span>")
-						logTheThing("combat", user, null, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].") // Might be useful (Convair880)
-						return
-					else
-						src.m_w_system.remaining_ammunition += ammo.amount_left
-						ammo.amount_left = 0
-						boutput(user, "<span style=\"color:blue\">You load [ammo] into [m_w_system].</span>")
-						logTheThing("combat", user, null, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].")
-						qdel(ammo)
-						return
+				if (src.m_w_system.remaining_ammunition >= 50)
+					boutput(user, "<span class='alert'>The automated loader for the weapon cannot hold any more ammunition.</span>")
+					return
+				var/obj/item/ammo/bullets/ammo = W
+				if (!ammo.amount_left)
+					return
+				if (src.m_w_system.current_projectile.type != ammo.ammo_type.type)
+					boutput(user, "<span class='alert'>The [m_w_system] cannot fire that kind of ammunition.</span>")
+					return
+				var/may_load = 50 - src.m_w_system.remaining_ammunition
+				if (may_load < ammo.amount_left)
+					ammo.amount_left -= may_load
+					src.m_w_system.remaining_ammunition += may_load
+					boutput(user, "<span class='notice'>You load [may_load] ammunition from [ammo]. [ammo] now contains [ammo.amount_left] ammunition.</span>")
+					logTheThing("combat", user, null, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].") // Might be useful (Convair880)
+					return
 				else
-					boutput(user, "<span style=\"color:red\">No main weapon system installed.</span>")
+					src.m_w_system.remaining_ammunition += ammo.amount_left
+					ammo.amount_left = 0
+					boutput(user, "<span class='notice'>You load [ammo] into [m_w_system].</span>")
+					logTheThing("combat", user, null, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].")
+					qdel(ammo)
 					return
-
-		if (ispryingtool(W))
-			if (src.lock && src.locked)
-				boutput(usr, "<span style=\"color:red\">You can't open the maintenance panel while [src] is locked.</span>")
-				lock.show_lock_panel(usr, 0)
-				return
-			panel_status = 1
-			if (src.bound_width > 32 || src.bound_height > 32)
-				boutput(user, "You open the maintenance panel. It is on the lower left side of the ship, you must access the components from there.")
 			else
-				boutput(user, "You open the maintenance panel.")
-			return
+				boutput(user, "<span class='alert'>No main weapon system installed.</span>")
+				return
 
 		if (istype(W, /obj/item/device/key))
-			user.visible_message("<span style=\"color:red\"><B>[user] scratches [src] with \the [W]! [prob(75) ? pick_string("descriptors.txt", "jerks") : null]</B></span>", null,"<span style=\"color:red\">You hear a metallic scraping sound!</span>")
+			user.visible_message("<span class='alert'><B>[user] scratches [src] with \the [W]! [prob(75) ? pick_string("descriptors.txt", "jerks") : null]</B></span>", null,"<span class='alert'>You hear a metallic scraping sound!</span>")
 			if(!keyed) src.name = "scratched-up [src.name]"
 			src.keyed++
 			src.add_fingerprint(user)
@@ -179,26 +158,30 @@
 		playsound(src.loc, W.hitsound, 50, 1, -1)
 		hit_twitch(src)
 
-		switch(W.damtype)
-			if("fire")
+		switch(W.hit_type)
+			if (DAMAGE_BURN)
 				if(src.material)
 					src.material.triggerTemp(src, W.force * 1000)
 				if (prob(W.force*2))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
-						M.changeStatus("weakened",5 SECONDS)
+						M.changeStatus("weakened",1 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
 				return /////ships should pretty much be immune to fire
-			if("brute")
+			else
 				src.health -= W.force
 				if (prob(W.force*3))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
-						M.changeStatus("weakened",5 SECONDS)
+						M.changeStatus("weakened",1 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
 
-
 		checkhealth()
+
+	updateDialog()
+		for(var/client/C)
+			if (C.mob && C.mob.using_dialog_of(src) && get_dist(C.mob,src) <= 1)
+				src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
 		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
@@ -207,7 +190,7 @@
 		//////Main Computer Code		//////
 		//////////////////////////////////////
 		if (usr.loc == src)
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["dengine"])
 				if (usr != pilot)
 					boutput(usr, "[ship_message("Only the pilot may do this!")]")
@@ -281,23 +264,23 @@
 
 			src.add_fingerprint(usr)
 			for (var/mob/M in src)
-				if ((M.client && M.machine == src))
+				if (M.using_dialog_of(src))
 					src.access_computer(M)
 			myhud.update_states()
 		///////////////////////////////////////
 		///////Panel Code//////////////////////
 		///////////////////////////////////////
-		else if (panel_status && (get_dist(src, usr) <= 1) && isturf(src.loc))
+		else if (BOARD_DIST_ALLOWED(usr,src) && isturf(src.loc))
 			if (passengers)
-				boutput(usr, "<span style=\"color:red\">You can't modify parts with somebody inside.</span>")
+				boutput(usr, "<span class='alert'>You can't modify parts with somebody inside.</span>")
 				return
 
 			if (src.lock && src.locked)
-				boutput(usr, "<span style=\"color:red\">You can't modify parts while [src] is locked.</span>")
+				boutput(usr, "<span class='alert'>You can't modify parts while [src] is locked.</span>")
 				lock.show_lock_panel(usr, 0)
 				return
 
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["unengine"])
 				if (src.engine)
 					engine.deactivate()
@@ -367,18 +350,18 @@
 			// Added logs for atmos tanks and such here, because booby-trapping pods is becoming a trend (Convair880).
 			else if (href_list["atmostank"])
 				if (src.atmostank)
-					boutput(usr, "<span style=\"color:red\">There's already a tank in that slot.</span>")
+					boutput(usr, "<span class='alert'>There's already a tank in that slot.</span>")
 					return
 				var/obj/item/tank/W = usr.equipped()
 				if (W && istype(W, /obj/item/tank))
 					logTheThing("vehicle", usr, null, "replaces [src.name]'s air supply with [W] [log_atmos(W)] at [log_loc(src)].")
-					boutput(usr, "<span style=\"color:blue\">You attach the [W.name] to [src.name]'s air supply valve.</span>")
+					boutput(usr, "<span class='notice'>You attach the [W.name] to [src.name]'s air supply valve.</span>")
 					usr.drop_item()
 					W.set_loc(src)
 					src.atmostank = W
 					src.updateDialog()
 				else
-					boutput(usr, "<span style=\"color:red\">That doesn't fit there.</span>")
+					boutput(usr, "<span class='alert'>That doesn't fit there.</span>")
 
 			else if (href_list["takeatmostank"])
 				if (src.atmostank)
@@ -387,23 +370,23 @@
 					atmostank = null
 					src.updateDialog()
 				else
-					boutput(usr, "<span style=\"color:red\">There's no tank in the slot.</span>")
+					boutput(usr, "<span class='alert'>There's no tank in the slot.</span>")
 					return
 
 			else if (href_list["fueltank"])
 				if (src.fueltank)
-					boutput(usr, "<span style=\"color:red\">There's already a tank in that slot.</span>")
+					boutput(usr, "<span class='alert'>There's already a tank in that slot.</span>")
 					return
 				var/obj/item/tank/W = usr.equipped()
 				if (W && istype(W, /obj/item/tank))
 					logTheThing("vehicle", usr, null, "replaces [src.name]'s engine fuel supply with [W] [log_atmos(W)] at [log_loc(src)].")
-					boutput(usr, "<span style=\"color:blue\">You attach the [W.name] to [src.name]'s fuel supply valve.</span>")
+					boutput(usr, "<span class='notice'>You attach the [W.name] to [src.name]'s fuel supply valve.</span>")
 					usr.drop_item()
 					W.set_loc(src)
 					src.fueltank = W
 					src.updateDialog()
 				else
-					boutput(usr, "<span style=\"color:red\">That doesn't fit there.</span>")
+					boutput(usr, "<span class='alert'>That doesn't fit there.</span>")
 					return
 
 			else if (href_list["takefueltank"])
@@ -413,16 +396,12 @@
 					fueltank = null
 					src.updateDialog()
 				else
-					boutput(usr, "<span style=\"color:red\">There's no tank in the slot.</span>")
+					boutput(usr, "<span class='alert'>There's no tank in the slot.</span>")
 					return
 
 			myhud.update_systems()
 
 		else
-			if (panel_status)
-				usr.Browse(null, "window=ship_maint")
-				return
-
 			usr.Browse(null, "window=ship_main")
 			return
 		return
@@ -433,6 +412,8 @@
 	proc/ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir)
 		var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir)
 		P.mob_shooter = user
+		if (src.m_w_system?.muzzle_flash)
+			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
 	bullet_act(var/obj/projectile/P)
 		if(P.shooter == src)
@@ -476,12 +457,12 @@
 		if(P.proj_data && P.proj_data.disruption) //ZeWaka: Fix for null.disruption
 			src.disrupt(P.proj_data.disruption, P)
 
-		src.visible_message("<span style=\"color:red\"><b>[P]<b> hits [src]!</span>")
+		src.visible_message("<span class='alert'><b>[P]<b> hits [src]!</span>")
 
 		for(var/mob/M in src)
 			M << sound(P.proj_data.shot_sound,volume=35)
 			M << sound(hitsound, volume=30)
-			shake_camera(M, 1, 1)
+			shake_camera(M, 1, 8)
 
 
 
@@ -585,7 +566,7 @@
 				V.checkhealth()
 
 			for (var/mob/C in src)
-				shake_camera(C, 6, 1)
+				shake_camera(C, 6, 8)
 				//M << sound("sound/impact_sounds/Generic_Hit_Heavy_1.ogg",volume=35)
 
 			if (ismob(target) && target != hitmob)
@@ -593,14 +574,22 @@
 				SPAWN_DBG(0.5 SECONDS)
 					hitmob = 0
 				var/mob/M = target
+				var/vehicular_manslaughter
+				if(M.health > 0)
+					vehicular_manslaughter = 1 //we first check if the person is not in crit before hit, if yes we qualify for vehicular manslaughter achievement
 				//M.changeStatus("stunned", 1 SECOND)
 				//M.changeStatus("weakened", 1 SECOND)
 				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
-				SPAWN_DBG(0)
-					M.throw_at(throw_at, movement_controller:velocity, 2)
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
+				SPAWN_DBG(2.5 SECONDS)
+					if(M.health > 0)
+						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
+					if(vehicular_manslaughter && ishuman(M))
+						src.pilot.unlock_medal("Vehicular Manslaughter", 1)
+
 			else if(isturf(target) && power > 20)
 				if(istype(target, /turf/simulated/wall/r_wall || istype(target, /turf/simulated/wall/auto/reinforced)) && prob(power / 2))
 					return
@@ -608,7 +597,7 @@
 					var/turf/simulated/wall/T = target
 					T.dismantle_wall(1)
 
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 			else if (isobj(target) && power >= req_smash_velocity)
 				var/obj/O = target
 
@@ -639,7 +628,7 @@
 					var/obj/machinery/portable_atmospherics/canister/C = O
 					C.health -= power
 					C.healthcheck()
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 
@@ -667,7 +656,7 @@
 
 	disposing()
 		if (movement_controller)
-			movement_controller.disposing()
+			movement_controller.dispose()
 
 		myhud.detach_all_clients()
 		myhud.master = null
@@ -692,7 +681,7 @@
 		fire_overlay = null
 		damage_overlay = null
 		ion_trail = null
-		pods_and_cruisers -= src
+		STOP_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 		STOP_TRACKING
 
 		..()
@@ -728,7 +717,7 @@
 						src.overlays += fire_overlay
 						for(var/mob/living/carbon/human/M in src)
 							M.update_burning(35)
-							boutput(M, "<span style=\"color:red\"><b>The cabin bursts into flames!</b></span>")
+							boutput(M, "<span class='alert'><b>The cabin bursts into flames!</b></span>")
 							playsound(M.loc, "sound/machines/engine_alert1.ogg", 35, 0)
 				if(25 to 50)
 					if(damage_overlays < 1)
@@ -829,14 +818,14 @@
 		src.visible_message("<b>[src] is breaking apart!</b>")
 		new /obj/effects/explosion (src.loc)
 		playsound(src.loc, "explosion", 50, 1)
-		sleep(30)
+		sleep(3 SECONDS)
 		for(var/mob/living/carbon/human/M in src)
 			M.update_burning(35)
-			boutput(M, "<span style=\"color:red\"><b>Everything is on fire!</b></span>")
+			boutput(M, "<span class='alert'><b>Everything is on fire!</b></span>")
 			//playsound(M.loc, "explosion", 50, 1)
 			//playsound(M.loc, "sound/machines/engine_alert1.ogg", 40, 0)
 			M << sound('sound/machines/engine_alert1.ogg',volume=50)
-		sleep(25)
+		sleep(2.5 SECONDS)
 		//playsound(src.loc, "sound/machines/engine_alert2.ogg", 40, 1)
 		playsound(src.loc, "sound/machines/pod_alarm.ogg", 40, 1)
 		for(var/mob/living/carbon/human/M in src)
@@ -844,10 +833,10 @@
 			M << sound('sound/machines/pod_alarm.ogg',volume=50)
 		new /obj/effects/explosion (src.loc)
 		playsound(src.loc, "explosion", 50, 1)
-		sleep(15)
+		sleep(1.5 SECONDS)
 		handle_occupants_shipdeath()
 		playsound(src.loc, "explosion", 50, 1)
-		sleep(2)
+		sleep(0.2 SECONDS)
 		var/turf/T = get_turf(src.loc)
 		if(T)
 			src.visible_message("<b>[src] explodes!</b>")
@@ -863,15 +852,12 @@
 ///////////////////////////////////////////////////////////////////////////
 ////////// Exit Ship Code /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-/obj/machinery/vehicle/verb/exit_ship()
-	set src in oview(1)
-	set category = "Local"
-
+/obj/machinery/vehicle/proc/exit_ship()
 	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
-	src.eject(usr)
+	src.leave_pod(usr)
 /*
 	if (usr.loc != src)
 		return
@@ -887,18 +873,36 @@
 	else
 		src.ion_trail.stop()
 */
-/obj/machinery/vehicle/proc/eject(mob/ejectee as mob)
+/obj/machinery/vehicle/proc/eject(mob/ejectee as mob) // Call leave_pod if you're having the mob leave the vehicle normally, otherwise use set_loc and it'll call this for you.
 	if (!ejectee || ejectee.loc != src)
 		return
 
 	if (ejectee.client)
-		myhud.remove_client(ejectee.client)
+		ejectee.detach_hud(myhud)
 		if (ejectee.client.tooltipHolder)
 			ejectee.client.tooltipHolder.inPod = 0
 
 	src.passengers--
 
+	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
+	ejectee.reset_keymap()
+	ejectee.recheck_keys()
+	if(src.pilot == ejectee)
+		src.pilot = null
+	if(passengers)
+		find_pilot()
+	else
+		src.ion_trail.stop()
+
+
+
+	logTheThing("vehicle", ejectee, src.name, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
+
+/obj/machinery/vehicle/proc/leave_pod(mob/ejectee as mob)
 	// Assert facing direction for eject location offset
+	if (!ejectee || ejectee.loc != src)
+		return
+
 	var/x_offset = 0
 	var/y_offset = 0
 	if (bound_width == 64 && bound_height == 64)	// ensure it is a 2x2 pod
@@ -916,17 +920,7 @@
 	var/location = locate(x_coord, y_coord, z_coord)
 	var/atom/movable/EJ = ejectee		// stops ejectee floating off in the direction they last moved
 	EJ.last_move = null
-	ejectee.set_loc(location)
-
-	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
-	ejectee.update_keymap()
-	ejectee.recheck_keys()
-	if(src.pilot == ejectee)
-		src.pilot = null
-	if(passengers)
-		find_pilot()
-	else
-		src.ion_trail.stop()
+	ejectee.set_loc(location) // set_loc will call eject()
 
 	for (var/obj/item/I in src)
 		if ( (I in src.components) || I == src.atmostank || I == src.fueltank || I == src.intercom)
@@ -934,45 +928,37 @@
 
 		I.set_loc(location)
 
-	logTheThing("vehicle", ejectee, src.name, "exits pod: <b>%target%</b>")
 
 ///////////////////////////////////////////////////////////////////////
 /////////Board Code  (also eject code lol)		//////////////////////
 //////////////////////////////////////////////////////////////////////
-/obj/machinery/vehicle/verb/board()
-	set src in oview(1)
-	set category = "Local"
-
+/obj/machinery/vehicle/proc/board()
 	src.board_pod(usr)
 	return
 
 /obj/machinery/vehicle/proc/board_pod(var/mob/boarder)
 	if(!isliving(boarder) || isintangible(boarder) || isghostdrone(boarder))
-		boutput(boarder, "<span style=\"color:red\">Pods are only for the living, so quit being a smartass!</span>")
+		boutput(boarder, "<span class='alert'>Pods are only for the living, so quit being a smartass!</span>")
 		return
 
 	if(iscube(boarder))
-		boutput(boarder, "<span style=\"color:red\">You can't squeeze your wide cube body through the access door!</span>")
+		boutput(boarder, "<span class='alert'>You can't squeeze your wide cube body through the access door!</span>")
 		return
 
-	if(iscritter(boarder) && boarder:ghost_spawned)
-		boutput(boarder, "<span style=\"color:red\">You have no idea how to work this.</span>")
+	if(ismobcritter(boarder) && boarder:ghost_spawned)
+		boutput(boarder, "<span class='alert'>You have no idea how to work this.</span>")
 		return
 
 	if(locked)
-		boutput(boarder, "<span style=\"color:red\">[src] is locked!</span>")
-		return
-
-	if(panel_status)
-		boutput(boarder, "<span style=\"color:red\">Close the maintenance panel first!</span>")
+		boutput(boarder, "<span class='alert'>[src] is locked!</span>")
 		return
 
 	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("weakened") || boarder.getStatusDuration("paralysis") || !isalive(boarder) || boarder.restrained())
-		boutput(boarder, "<span style=\"color:red\">You can't enter a pod while incapacitated or restrained.</span>")
+		boutput(boarder, "<span class='alert'>You can't enter a pod while incapacitated or restrained.</span>")
 		return
 
 	if (boarder in src) // fuck's sake
-		boutput(boarder, "<span style=\"color:red\">You're already inside [src]!</span>")
+		boutput(boarder, "<span class='alert'>You're already inside [src]!</span>")
 		return
 
 	passengers = 0 // reset this shit
@@ -996,13 +982,13 @@
 	var/mob/M = boarder
 
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
-	M.update_keymap()
+	M.reset_keymap()
 	M.recheck_keys()
 	if(!src.pilot && !isghostcritter(boarder))
-		src.pilot = M
 		src.ion_trail.start()
+	src.find_pilot()
 	if (M.client)
-		myhud.add_client(M.client)
+		M.attach_hud(myhud)
 		if (M.client.tooltipHolder)
 			M.client.tooltipHolder.inPod = 1
 
@@ -1010,16 +996,13 @@
 
 	//boarder.make_shipcrewmember(src.weapon_class)
 
-	boutput(M, "<span style=\"color:blue\">You can also use the Space Bar to fire!</span>")
+	boutput(M, "<span class='hint'>You can also use the Space Bar to fire!</span>")
 
-	logTheThing("vehicle", M, src.name, "enters vehicle: <b>%target%</b>")
+	logTheThing("vehicle", M, src.name, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
 
-/obj/machinery/vehicle/verb/eject_occupants()
-	set src in oview(1)
-	set category = "Local"
-
+/obj/machinery/vehicle/proc/eject_occupants()
 	if(locked)
-		boutput(usr, "<span style=\"color:red\">[src] is locked!</span>")
+		boutput(usr, "<span class='alert'>[src] is locked!</span>")
 		return
 
 	actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
@@ -1028,24 +1011,20 @@
 /obj/machinery/vehicle/proc/eject_pod(var/mob/user, var/dead_only = 0)
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot
 		if (!dead_only)
-			eject(M)
-			boutput(user, "<span style=\"color:red\">You yank [M] out of [src].</span>")
+			leave_pod(M)
+			boutput(user, "<span class='alert'>You yank [M] out of [src].</span>")
 		else
 			if(M.stat || !M.client)
-				eject(M)
-				boutput(user, "<span style=\"color:red\">You pull [M] out of [src].</span>")
+				leave_pod(M)
+				boutput(user, "<span class='alert'>You pull [M] out of [src].</span>")
 			else if(!isliving(M))
-				eject(M)
-				boutput(user, "<span style=\"color:red\">You scrape [M] out of [src].</span>")
+				leave_pod(M)
+				boutput(user, "<span class='alert'>You scrape [M] out of [src].</span>")
 
 	for(var/obj/decal/cleanable/O in src)
-		boutput(user, "<span style=\"color:red\">You [pick("scrape","scrub","clean")] [O] out of [src].</span>")
+		boutput(user, "<span class='alert'>You [pick("scrape","scrub","clean")] [O] out of [src].</span>")
 		var/floor = get_turf(src)
 		O.set_loc(floor)
-
-#define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > 32 || V.bound_height > 32) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )
-// potato ver
-//pod.x - 1 >= mob.x && pod.y - 1 >= mob.y && pod.x + (pod.bound_width/world.icon_size) <= mob.x && pod.y + (pod.bound_height/world.icon_size) <= mob.y)
 
 
 /datum/action/bar/icon/board_pod
@@ -1080,7 +1059,7 @@
 
 	onEnd()
 		..()
-		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked)
+		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked || V.capacity <= V.passengers)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1131,15 +1110,15 @@
 
 		V.eject_pod(owner)
 
-#undef BOARD_DIST_ALLOWED
-
 ///////////////////////////////////////////////////////////////////////////
 ///////// Find new pilot									////////////
 /////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/vehicle/proc/find_pilot()
+	if(src.pilot && (src.pilot.disposed || isdead(src.pilot) || src.pilot.loc != src))
+		src.pilot = null
 	for(var/mob/living/M in src) // fuck's sake stop assigning ghosts and observers to be the pilot
-		if(!src.pilot && !M.stat && M.client)
+		if(!src.pilot && !M.stat && M.client && !isghostcritter(M))
 			src.pilot = M
 			break
 
@@ -1169,9 +1148,10 @@
 ////////////////////////////////////////////////////////////////////////
 /obj/machinery/vehicle/proc/handle_occupants_shipdeath()
 	for(var/mob/M in src)
-		boutput(M, "<span style=\"color:red\"><b>You are ejected from [src]!</b></span>")
-		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>%target%</b> when it blew up!")
-		src.eject(M)
+		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
+		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
+
+		src.leave_pod(M)
 		//var/atom/target = get_edge_target_turf(M,pick(alldirs))
 		//SPAWN_DBG(0)
 		//M.throw_at(target, 10, 2)
@@ -1188,15 +1168,15 @@
 ////////////////////////////////////////////////////////////////////
 /obj/machinery/vehicle/proc/open_parts_panel(mob/user as mob)
 	if (passengers)
-		boutput(user, "<span style=\"color:red\">You can't modify parts with somebody inside.</span>")
+		boutput(user, "<span class='alert'>You can't modify parts with somebody inside.</span>")
 		return
 
 	if (src.lock && src.locked)
-		boutput(usr, "<span style=\"color:red\">You can't modify parts while [src] is locked.</span>")
+		boutput(usr, "<span class='alert'>You can't modify parts while [src] is locked.</span>")
 		lock.show_lock_panel(usr, 0)
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 
 	var/dat = "<TT><B>[src] Maintenance Panel</B><BR><HR><BR>"
 	//Air and Fuel tanks
@@ -1271,15 +1251,15 @@
 /obj/machinery/vehicle/proc/access_computer(mob/user as mob)
 	if(user.loc != src)
 		return
-	user.machine = src
+	src.add_dialog(user)
 
 	var/dat = "<TT><B>[src] Control Console</B><BR><HR><BR>"
 	dat += "<B>Hull Integrity:</B> [src.health/src.maxhealth * 100]%<BR>"
 	dat += "<B>Current Power Usage:</B> [src.powercurrent]/[src.powercapacity]<BR>"
 	dat += "<B>Air Status:</B> "
 	if(src.atmostank && src.atmostank.air_contents)
-		var/pressure = atmostank.air_contents.return_pressure()
-		var/total_moles = atmostank.air_contents.total_moles()
+		var/pressure = MIXTURE_PRESSURE(atmostank.air_contents)
+		var/total_moles = TOTAL_MOLES(atmostank.air_contents)
 
 		dat += "Pressure: [round(pressure,0.1)] kPa"
 
@@ -1301,8 +1281,8 @@
 	dat += "<B>Fuel Status:</B> "
 	if(src.fueltank && src.fueltank.air_contents)
 
-		var/pressure = fueltank.air_contents.return_pressure()
-		var/total_moles = fueltank.air_contents.total_moles()
+		var/pressure = MIXTURE_PRESSURE(fueltank.air_contents)
+		var/total_moles = TOTAL_MOLES(fueltank.air_contents)
 
 		dat += "Pressure: [round(pressure,0.1)] kPa"
 
@@ -1430,7 +1410,7 @@
 	src.lights.ship = src
 	src.components += src.lights
 
-	pods_and_cruisers += src
+	START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 /obj/machinery/vehicle/get_movement_controller()
 	return movement_controller
@@ -1451,14 +1431,14 @@
 		return
 
 	if(locked)
-		boutput(user, "<span style=\"color:red\">[src] is locked!</span>")
+		boutput(user, "<span class='alert'>[src] is locked!</span>")
 		return
 
 	if(isliving(O) && O:stat != 2)
 		if (O == user)
 			src.board_pod(O)
 		else
-			boutput(user, "<span style=\"color:red\">You can't shove someone else into a pod.</span>")
+			boutput(user, "<span class='alert'>You can't shove someone else into a pod.</span>")
 
 		return
 
@@ -1476,7 +1456,7 @@
 		return
 
 	if(locked)
-		boutput(usr, "<span style=\"color:red\">[src] is locked!</span>")
+		boutput(usr, "<span class='alert'>[src] is locked!</span>")
 		return
 
 	var/obj/item/shipcomponent/secondary_system/SS = src.sec_system
@@ -1518,31 +1498,19 @@
 	return
 */
 
-/obj/machinery/vehicle/verb/access_main_computer()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Access Main Computer"
-	set desc = "Access the ship's main computer"
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/access_main_computer()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
-		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
+		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
 		ship.access_computer(usr)
 	else
-		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/verb/fire_main_weapon()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Fire Main Weapon"
-	set desc = "Fires the ship's main weapon."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/fire_main_weapon()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
-		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
+		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1567,17 +1535,11 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/verb/use_external_speaker()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Use Comms System"
-	set desc = "Use your ship's communications system."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/use_external_speaker()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
-		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
+		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1589,17 +1551,11 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/verb/create_wormhole()//HEY THIS DOES SAMETHING AS HUD POD BUTTON
-	set src in view(0)
-	set category = "Ship"
-	set name = "Create Wormhole"
-	set desc = "Allows warp travel"
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/create_wormhole()//HEY THIS DOES SAMETHING AS HUD POD BUTTON
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
-		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
+		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1618,17 +1574,12 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 
-/obj/machinery/vehicle/verb/access_sensors()
-	set src in view(0)
-	set category = "Ship"
-	set desc = "Access your sensor system to scan your surroundings."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/access_sensors()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
-		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
+		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1641,19 +1592,13 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 
 
-/obj/machinery/vehicle/verb/use_secondary_system()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Use Secondary System"
-	set desc = "Allows the use of a secondary systems special function if it exists."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/use_secondary_system()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
-		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
+		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1668,17 +1613,11 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/verb/open_hangar()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Toggle Hangar Door"
-	set desc = "Toggles nearby hangar door controls remotely."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/open_hangar()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
-		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
+		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1690,17 +1629,11 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/verb/return_to_station()
-	set src in view(0)
-	set category = "Ship"
-	set name = "Return To Station"
-	set desc = "Uses the ship's comm system to locate the station's Space GPS beacon and plot a return course."
-	set popup_menu = 0
-
+/obj/machinery/vehicle/proc/return_to_station()
 	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
-		boutput(usr, "<span style=\"color:red\">Not when you are incapacitated.</span>")
+		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1713,7 +1646,7 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span style=\"color:red\">Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 
 
@@ -1756,7 +1689,7 @@
 				playsound(src, "sound/machines/rev_engine.ogg", 40, 1)
 
 	get_move_velocity_magnitude()
-		.= movement_controller:velocity
+		.= movement_controller:velocity_magnitude
 
 	Install(obj/item/shipcomponent/S as obj)
 		if(S.system == "Locomotion")
@@ -1790,6 +1723,28 @@
 	New()
 		..()
 		Install(new /obj/item/shipcomponent/locomotion/treads(src))
+
+/obj/machinery/vehicle/tank/minisub/pilot
+	body_type = "minisub"
+	health = 150
+	maxhealth = 150
+
+
+	New()
+		..()
+		src.com_system.deactivate()
+		qdel(src.engine)
+		qdel(src.com_system)
+		src.components -= src.engine
+		src.components -= src.com_system
+		src.engine = null
+		Install(new /obj/item/shipcomponent/engine/zero(src))
+		Install(new /obj/item/shipcomponent/mainweapon/bad_mining(src))
+		src.engine.activate()
+		src.com_system = null
+		myhud.update_systems()
+		myhud.update_states()
+		new /obj/item/sea_ladder(src)
 
 /obj/machinery/vehicle/tank/minisub/secsub
 	body_type = "minisub"

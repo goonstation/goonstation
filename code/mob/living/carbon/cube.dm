@@ -15,18 +15,17 @@
 	opacity = 0
 	var/life_timer = 10
 	sound_scream = 'sound/voice/screams/male_scream.ogg'
+	use_stamina = 0
 
-	examine()
-		set src in view()
-
-		boutput(usr, "<span style=\"color:blue\">*---------*</span>")
-		boutput(usr, "<span style=\"color:blue\">This is a [bicon(src)] <B>[src.name]</B>!</span>")
-		if(prob(50) && ishuman(usr) && usr.bioHolder.HasEffect("clumsy"))
-			boutput(usr, "<span style=\"color:red\">You can't help but laugh at it.</span>")
-			usr.emote("laugh")
+	examine(mob/user)
+		. = list("<span class='notice'>*---------*</span>")
+		. += "<span class='notice'>This is a [bicon(src)] <B>[src.name]</B>!</span>"
+		if(prob(50) && ishuman(user) && user.bioHolder.HasEffect("clumsy"))
+			. += "<span class='alert'>You can't help but laugh at it.</span>"
+			user.emote("laugh")
 		else
-			boutput(usr, "<span style=\"color:red\">It looks [pick("kinda", "really", "sorta", "a bit", "slightly")] [desc].</span>")
-		boutput(usr, "<span style=\"color:blue\">*---------*</span>") // the fact this was missing bugged me - cirr
+			. += "<span class='alert'>It looks [pick("kinda", "really", "sorta", "a bit", "slightly")] [desc].</span>"
+		. += "<span class='notice'>*---------*</span>" // the fact this was missing bugged me - cirr
 
 	say_understands(var/other)
 		if (ishuman(other) || isrobot(other) || isAI(other))
@@ -34,7 +33,7 @@
 		return ..()
 
 	attack_hand(mob/user as mob)
-		boutput(user, "<span style=\"color:blue\">You push the [src.name] but nothing happens!</span>")
+		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
 		playsound(src.loc, "sound/weapons/Genhit.ogg", 25, 1)
 		src.add_fingerprint(user)
 		return
@@ -51,53 +50,9 @@
 			else
 		return
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
-
-		// not sure if this could ever really happen but better to make sure
-		if (isdead(src))
-			pop()
-			return 0
-
-		// don't move or tick down the timer if we're in the fryer, we need to wait until we're well done
-		if (istype(loc, /obj/machinery/deep_fryer))
-			return
-
-		// let's stop meat cubes from suddenly ceasing to be able to do ANYTHING thanks to one slip
-		// but they don't get to just ignore stuns anymore either
-		// (shamelessly stolen from mob/living/critter.dm)
-		if (getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened"))
-			canmove = 0
-		else
-			canmove = 1
-
-		var/may_deliver_recovery_warning = (getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened"))
-
-		if (may_deliver_recovery_warning)
-			src.pulling = null // no more dragging for you
-			actions.interrupt(src, INTERRUPT_STUNNED) // or removing peoples' stuff
-
-		src.handle_digestion()
-
-		if (getStatusDuration("paralysis"))
-			if (isalive(src))
-				setunconscious(src)
-		else if (isunconscious(src))
-			setalive(src)
-
-		if (prob(30))
-			var/idle_message = get_cube_idle()
-			src.visible_message("<span style=\"color:red\"><b>[src] [idle_message]!</b></span>")
-
-		if (life_timer-- > 0)
-			return
-
-		pop()
-		return
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("cube")
 
 	proc/get_cube_idle()
 		return "cubes cubily"
@@ -150,11 +105,11 @@
 						var/fart_on_other = 0
 						for (var/mob/living/M in src.loc)
 							if (M == src || !M.lying) continue
-							message = "<span style=\"color:red\"><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
+							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
-								sleep(1)
-								message = "<span style=\"color:red\">[M] vomits!</span>"
+								sleep(0.1 SECONDS)
+								message = "<span class='alert'>[M] vomits!</span>"
 								M.vomit()
 							break
 						if(!fart_on_other)
@@ -183,24 +138,24 @@
 					if(src.emote_check(voluntary, 50))
 						if (istype(src.loc,/obj/))
 							var/obj/container = src.loc
-							boutput(src, "<span style='color:red'>You leap and slam yourself against the inside of [container]! Ouch!</span>")
+							boutput(src, "<span class='alert'>You leap and slam yourself against the inside of [container]! Ouch!</span>")
 							src.changeStatus("paralysis", 40)
 							src.changeStatus("weakened", 3 SECONDS)
-							container.visible_message("<span style='color:red'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
+							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
 							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
 							var/wiggle = 6
 							while(wiggle > 0)
 								wiggle--
 								container.pixel_x = rand(-3,3)
 								container.pixel_y = rand(-3,3)
-								sleep(1)
+								sleep(0.1 SECONDS)
 							container.pixel_x = 0
 							container.pixel_y = 0
 							if (prob(33))
 								if (istype(container, /obj/storage))
 									var/obj/storage/C = container
 									if (C.can_flip_bust == 1)
-										boutput(src, "<span style='color:red'>[C] [pick("cracks","bends","shakes","groans")].</span>")
+										boutput(src, "<span class='alert'>[C] [pick("cracks","bends","shakes","groans")].</span>")
 										C.bust_out()
 						else
 							message = "<B>[src]</b> squishes down, pops up, and does a flip! Gross!"
@@ -225,7 +180,7 @@
 					O.show_message(message, m_type)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool) && W:welding)
+		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 			pop()
 		else
 			..()
@@ -257,7 +212,7 @@
 				meat.name = "cube steak"
 				meat.desc = "Grody."
 			playsound(src.loc, "sound/effects/splat.ogg", 75, 1)
-			src.visible_message("<span style=\"color:red\"><b>The meat cube pops!</b></span>")
+			src.visible_message("<span class='alert'><b>The meat cube pops!</b></span>")
 			..()
 
 
@@ -303,7 +258,7 @@
 				if (prob(50))
 					M.reagents.add_reagent("nanites", 5)
 			playsound(src.loc, "sound/machines/engine_grump2.ogg", 75, 1)
-			src.visible_message("<span style=\"color:red\"><b>The metal cube violently falls apart!</b></span>")
+			src.visible_message("<span class='alert'><b>The metal cube violently falls apart!</b></span>")
 			..()
 
 		attackby(obj/item/W as obj, mob/user as mob)
@@ -324,11 +279,11 @@
 						var/fart_on_other = 0
 						for (var/mob/living/M in src.loc)
 							if (M == src || !M.lying) continue
-							message = "<span style=\"color:red\"><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
+							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
-								sleep(1)
-								message = "<span style=\"color:red\">[M] vomits!</span>"
+								sleep(0.1 SECONDS)
+								message = "<span class='alert'>[M] vomits!</span>"
 								M.vomit()
 							break
 						if(!fart_on_other)

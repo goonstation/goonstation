@@ -31,7 +31,7 @@
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
 		var/p_type = text2num(href_list["make"])
@@ -78,7 +78,7 @@
 /obj/machinery/disposal_pipedispenser/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
 		var/p_type = text2num(href_list["dmake"])
@@ -98,7 +98,7 @@
 		C.update()
 
 		usr.Browse(null, "window=pipedispenser")
-		usr.machine = null
+		src.remove_dialog(usr)
 	return
 
 /obj/machinery/disposal_pipedispenser/mobile
@@ -126,7 +126,7 @@
 					for(var/obj/disposalpipe/pipe in old_loc)
 						qdel(pipe)
 			prev_dir = direction // might want to actually do this even when old_loc == loc but idk, it sucks with attempted diagonal movement
-	
+
 	proc/connect_pipe(var/turf/new_loc, var/new_dir)
 		var/free_dirs = 1 | 2 | 4 | 8
 		var/obj/disposalpipe/pipe = null
@@ -157,14 +157,14 @@
 
 		if(new_loc.intact && !istype(new_loc,/turf/space))
 			return
-		
+
 		var/obj/disposalpipe/junction/junction = locate(/obj/disposalpipe/junction) in new_loc
 		if(junction)
 			if(new_dir & junction.dpdir)
 				junction.dir = new_dir
 				junction.fix_sprite()
 				return
-		
+
 		var/free_dirs = 1 | 2 | 4 | 8
 		var/obj/disposalpipe/new_pipe = null
 		var/obj/disposalpipe/backup_pipe = null
@@ -201,12 +201,12 @@
 			new_pipe = new/obj/disposalpipe/segment(new_loc)
 			new_pipe.dir = new_dir
 			new_pipe.dpdir = new_pipe_dirs
-		
+
 		if(new_dir & free_dirs)
 			pipe_reconnect_disconnected(new_pipe, new_dir, 1)
 
 	Topic(href, href_list)
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if(href_list["toggle_laying"])
 			src.removing_pipe = 0
@@ -259,7 +259,7 @@
 			C.update()
 
 			usr << browse(null, "window=pipedispenser")
-			usr.machine = null
+			src.remove_dialog(usr)
 		return
 
 /obj/machinery/disposal_pipedispenser/mobile/attack_hand(user as mob)

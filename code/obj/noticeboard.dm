@@ -3,6 +3,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nboard00"
 	flags = FPRINT
+	plane = PLANE_NOSHADOW_BELOW
 	desc = "A board for pinning important notices upon."
 	density = 0
 	anchored = 1
@@ -19,9 +20,9 @@
 			O.set_loc(src)
 			src.notices++
 			src.icon_state = text("nboard0[]", src.notices) //update sprite
-			boutput(user, "<span style=\"color:blue\">You pin the paper to the noticeboard.</span>")
+			boutput(user, "<span class='notice'>You pin the paper to the noticeboard.</span>")
 		else
-			boutput(user, "<span style=\"color:red\">You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>")
+			boutput(user, "<span class='alert'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>")
 //
 /obj/noticeboard/attack_hand(mob/user as mob)
 	var/dat = "<B>Noticeboard</B><BR>"
@@ -39,7 +40,7 @@
 
 	..()
 
-	usr.machine = src
+	src.add_dialog(usr)
 	if (href_list["remove"])
 		var/obj/item/P = locate(href_list["remove"])
 		if ((P && P.loc == src))
@@ -62,7 +63,7 @@
 					src.add_fingerprint(usr)
 					P.attackby(usr.l_hand, usr)
 				else
-					boutput(usr, "<span style=\"color:red\">You'll need something to write with!</span>")
+					boutput(usr, "<span class='alert'>You'll need something to write with!</span>")
 
 	if (href_list["read"])
 		var/obj/item/paper/P = locate(href_list["read"])

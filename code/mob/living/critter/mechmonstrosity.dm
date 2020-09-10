@@ -69,7 +69,7 @@
 
 		switch(speech_type)
 			if(1)
-				boutput(src,pick("<span style=\"color:red\"><b>You feel terrible.</b></span>","<span style=\"color:red\"><b>You are in severe agony. Why do they torture you like this!?</b></span>","<span style=\"color:red\"><b>You wish you could just die already but your augmentations keep you alive.</b></span>",))
+				boutput(src,pick("<span class='alert'><b>You feel terrible.</b></span>","<span class='alert'><b>You are in severe agony. Why do they torture you like this!?</b></span>","<span class='alert'><b>You wish you could just die already but your augmentations keep you alive.</b></span>",))
 			if(2)
 				src.emote("scream")
 			if(3)
@@ -119,27 +119,26 @@
 		HH.can_attack = 1
 
 	Bump(atom/movable/AM)
+		if(smashes_shit)
+			if(isobj(AM))
+				if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
+					return
+				if(istype(AM, /obj/window))
+					var/obj/window/W = AM
+					W.health = 0
+					W.smash()
+				else if(istype(AM,/obj/grille))
+					var/obj/grille/G = AM
+					G.damage_blunt(30)
+				else if(istype(AM, /obj/table))
+					AM.meteorhit()
+				else if(istype(AM, /obj/foamedmetal))
+					AM.dispose()
+				else
+					AM.meteorhit()
+				playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
+				src.visible_message("<span class='alert'><B>[src]</B> smashes through \the [AM]!</span>")
 		..()
-		if(!smashes_shit) return
-
-		if(isobj(AM))
-			if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
-				return
-			if(istype(AM, /obj/window))
-				var/obj/window/W = AM
-				W.health = 0
-				W.smash()
-			else if(istype(AM,/obj/grille))
-				var/obj/grille/G = AM
-				G.damage_blunt(30)
-			else if(istype(AM, /obj/table))
-				AM.meteorhit()
-			else if(istype(AM, /obj/foamedmetal))
-				AM.dispose()
-			else
-				AM.meteorhit()
-			playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> smashes through \the [AM]!</span>")
 
 	setup_healths()
 		add_hh_robot(-500, 500, 1)
@@ -234,12 +233,12 @@
 			boutput(M, __red("It would be a waste of time to stun the dead."))
 			return 1
 
-		M.visible_message("<span style=\"color:red\"><B>[M] glares angrily at [target]!</B></span>")
+		M.visible_message("<span class='alert'><B>[M] glares angrily at [target]!</B></span>")
 		target.apply_flash(5, 5)
-		boutput(target, "<span style=\"color:red\">You can feel a chill running down your spine as [M] glares at you with hatred burning in their  mechanical eyes.</span>")
+		boutput(target, "<span class='alert'>You can feel a chill running down your spine as [M] glares at you with hatred burning in their  mechanical eyes.</span>")
 		target.emote("shiver")
 
-		logTheThing("combat", M, target, "uses glare on %target% at [log_loc(M)].")
+		logTheThing("combat", M, target, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/action/bar/icon/mechanimateAbility
@@ -270,15 +269,15 @@
 			return
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span style=\"color:red\"><B>[owner] attempts to inject [target]!</B></span>", 1)
+			O.show_message("<span class='alert'><B>[owner] attempts to inject [target]!</B></span>", 1)
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
 		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && mechanimate && mechanimate.cooldowncheck())
-			logTheThing("combat", ownerMob, target, "injects %target%. Crawler transformation")
+			logTheThing("combat", ownerMob, target, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
-				O.show_message("<span style=\"color:red\"><B>[owner] successfully injected [target]!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
 			playsound(get_turf(ownerMob), "sound/items/hypo.ogg", 80, 0)
 
 			var/obj/critter/mechmonstrositycrawler/FUCK = new /obj/critter/mechmonstrositycrawler(get_turf(target))
@@ -352,15 +351,15 @@
 			boutput(M, __red("[target] is too far away."))
 			return 1
 
-		M.visible_message("<span style=\"color:red\"><B>With their double saw whirling, [M] swiftly severs all [target]'s limbs!</B></span>")
+		M.visible_message("<span class='alert'><B>With their double saw whirling, [M] swiftly severs all [target]'s limbs!</B></span>")
 		H.sever_limb("r_arm")
 		H.sever_limb("l_arm")
 		H.sever_limb("r_leg")
 		H.sever_limb("l_leg")
 		playsound(M.loc, 'sound/effects/sawhit.ogg', 90,1)
-		boutput(target, "<span style=\"color:red\">All of your limbs were severed by [M]!</span>")
+		boutput(target, "<span class='alert'>All of your limbs were severed by [M]!</span>")
 
-		logTheThing("combat", M, target, "uses dissect on %target% at [log_loc(M)].")
+		logTheThing("combat", M, target, "uses dissect on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/projectile/syringefilled
@@ -388,6 +387,7 @@
 		name = "Profound_Medical01"
 
 		New()
+			..()
 			fields = strings("replicant/replicant_records.txt","Profound_Medical01")
 			/*list("Despite our best efforts to correct the irrational",
 					"behaviour in our V.I.V.I-SECT-10N model,",
@@ -406,6 +406,7 @@
 		name = "Profound_Medical02"
 
 		New()
+			..()
 			fields = strings("replicant/replicant_records.txt","Profound_Medical02")
 			/*list("Fucking hell.. How am I going to explain to anyone that",
 					"a bunch of rogue robots broke into our storage facility",
@@ -437,7 +438,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -526,7 +527,7 @@
 				src.health = initial(src.health)
 				src.icon_state = initial(src.icon_state)
 				for(var/mob/O in viewers(src, null))
-					O.show_message("<span style=\"color:red\"><b>[src]</b> re-assembles itself and is ready to fight once more!</span>")
+					O.show_message("<span class='alert'><b>[src]</b> re-assembles itself and is ready to fight once more!</span>")
 		return
 
 /*/mob/living/critter/mechmonstrosity/test

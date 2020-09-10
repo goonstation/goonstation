@@ -24,7 +24,7 @@
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
 	stat = 0
-	mob_flags = SEE_THRU_CAMERAS
+	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
@@ -48,19 +48,49 @@
 		src.client.show_popup_menus = 1
 		//if (src.client)
 		//	src.client.show_popup_menus = 0
+		for(var/key in aiImages)
+			var/image/I = aiImages[key]
+			src.client << I
+		SPAWN_DBG(0)
+			var/sleep_counter = 0
+			for(var/key in aiImagesLowPriority)
+				var/image/I = aiImagesLowPriority[key]
+				src.client << I
+				if(sleep_counter++ % (300 * 10) == 0)
+					LAGCHECK(LAG_LOW)
 
 	Logout()
 		//if (src.client)
 		//	src.client.show_popup_menus = 1
+		var/client/cl = src.last_client
+		if(cl)
+			for(var/key in aiImages)
+				var/image/I = aiImages[key]
+				cl.images -= I
+		SPAWN_DBG(0)
+			var/sleep_counter = 0
+			for(var/key in aiImagesLowPriority)
+				var/image/I = aiImagesLowPriority[key]
+				cl.images -= I
+				if(sleep_counter++ % (300 * 10) == 0)
+					LAGCHECK(LAG_LOW)
+
 		.=..()
 
 	isAIControlled()
 		return 1
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("robot"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("robot")
+
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("robot_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("robot_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("robot_tg")
 
 	Move(NewLoc, direct)//Ewww!
 		last_loc = src.loc
@@ -73,7 +103,7 @@
 
 		if (NewLoc)
 			dir = get_dir(loc, NewLoc)
-			src.loc = (NewLoc) //src.set_loc(NewLoc) we don't wanna refresh last_range here and as fas as i can tell there's no reason we Need set_loc
+			src.set_loc(NewLoc) //src.set_loc(NewLoc) we don't wanna refresh last_range here and as fas as i can tell there's no reason we Need set_loc
 		else
 
 			dir = direct
@@ -104,7 +134,7 @@
 	click(atom/target, params, location, control)
 		if (!src.mainframe) return
 
-		if (!src.mainframe.stat && !src.mainframe.restrained() && !src.mainframe.getStatusDuration("weakened") && !src.mainframe.getStatusDuration("paralysis") && !src.mainframe.getStatusDuration("stunned"))
+		if (!src.mainframe.stat && !src.mainframe.restrained() && !src.mainframe.hasStatus(list("weakened", "paralysis", "stunned")))
 			if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 				var/obj/O = target
 				O.receive_silicon_hotkey(src)
@@ -254,7 +284,7 @@
 			mainframe.return_to(src)
 			update_statics()
 		else
-			boutput(src, "<span style=\"color:red\">You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
 		return
 
 	verb/ai_view_crew_manifest()
@@ -387,8 +417,15 @@
 		if(mainframe)
 			mainframe.ai_alerts()
 
+	verb/ai_station_announcement()
+		set name = "AI Station Announcement"
+		set desc = "Makes a station announcement."
+		set category = "AI Commands"
+		if(mainframe)
+			mainframe.ai_station_announcement()
+
 //---TURF---//
-/turf/var/obj/overlay/tile_effect/camstatic/aiImage
+/turf/var/image/aiImage
 /turf/var/list/cameras = null
 
 /turf/proc/addCameraCoverage(var/obj/machinery/camera/C) //copy pasted for use below in updatecoverage to reduce heavy proc calls. dont change one without the other!
@@ -411,7 +448,7 @@
 
 	if (cam_amount < src.cameras.len)
 		if (src.aiImage)
-			src.aiImage.alpha = 0
+			src.aiImage.loc = null
 
 	return
 
@@ -428,7 +465,7 @@
 		src.cameras = null
 
 		if (src.aiImage)
-			src.aiImage.alpha = 255
+			src.aiImage.loc = src
 
 	return
 
@@ -436,9 +473,9 @@
 	if(!istype(src.aiImage)) return
 
 	if( src.cameras.len >= 1 )
-		src.aiImage.alpha = 0
+		src.aiImage.loc = null
 	else if( src.cameras == null )
-		src.aiImage.alpha = 255
+		src.aiImage.loc = src
 	return
 
 //slow
@@ -487,7 +524,7 @@
 				O.cameras = null
 
 				if (O.aiImage)
-					O.aiImage.alpha = 255
+					O.aiImage.loc = O
 
 			LAGCHECK(LAG_HIGH)
 			//copy paste end!
@@ -519,7 +556,7 @@
 
 		if (cam_amount < t.cameras.len)
 			if (t.aiImage)
-				t.aiImage.alpha = 0
+				t.aiImage.loc = null
 		//copy paste end!
 
 
@@ -528,9 +565,9 @@
 		if(!istype(t.aiImage)) continue
 
 		if( t.cameras.len >= 1 )
-			t.aiImage.alpha = 0
+			t.aiImage.loc = null
 		else if( t.cameras == null )
-			t.aiImage.alpha = 255
+			t.aiImage.loc = t
 
 		LAGCHECK(LAG_HIGH)
 		//copy paste end!
@@ -663,42 +700,63 @@ var/list/camImages = list()
 //---MISC---//
 
 
-/obj/overlay/tile_effect/camstatic
-	icon = 'icons/misc/static.dmi'
-	icon_state = "static"
-	//blend_mode = BLEND_ADD
-	layer = 100
-	color = "#777777"
-	name = " "
-	plane = PLANE_AICAMERA
-
-	New()
-		..()
-		src.dir = pick(alldirs)
-
-	disposing()
-		var/turf/T = get_turf(src)
-		if (T)
-			T.aiImage = null
-		..()
-
 var/aiDirty = 2
 world/proc/updateCameraVisibility()
 	if(!aiDirty) return
+#if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
+	// I don't wanna wait for this camera setup shit just GO
+	return
+#endif
 	if(aiDirty == 2)
+		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
+		ma.plane = PLANE_HUD
+		ma.layer = 100
+		ma.color = "#777777"
+		ma.dir = pick(alldirs)
+		ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
+		ma.name = " "
+
+		var/lastpct = 0
+		var/thispct = 0
+		var/donecount = 0
+
+		// takes about one second compared to the ~12++ that the actual calculations take
+		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
+		var/list/turf/cam_candidates = list()
 		for(var/turf/t in world)//ugh
 			if( t.z != 1 ) continue
-			t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
+			cam_candidates += t
+
+
+		for(var/turf/t in cam_candidates)//ugh
+			//if( t.z != 1 ) continue
+			//t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
+
+			t.aiImage = new
+			t.aiImage.appearance = ma
+			t.aiImage.loc = t
+
+			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]", low_priority=istype(t, /turf/space))
+
+			donecount++
+			thispct = round(donecount / cam_candidates.len * 100)
+			if (thispct != lastpct)
+				lastpct = thispct
+				game_start_countdown?.update_status("Updating cameras...\n[thispct]%")
+
+			LAGCHECK(100)
+
 		aiDirty = 1
-	for(var/obj/machinery/camera/C in cameras)
+		game_start_countdown?.update_status("Updating camera vis...\n")
+	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
 			LAGCHECK(LAG_HIGH)
 			if (!t.aiImage) continue
 			//var/dist = get_dist(t, C)
 			if (t.cameras && t.cameras.len)
-				t.aiImage.alpha = 0
+				t.aiImage.loc = null
 			else
-				t.aiImage.alpha = 255
+				t.aiImage.loc = t
 	aiDirty = 0
 
 /obj/machinery/camera/proc/remove_from_turfs() //check if turf cameras is 0 . Maybe loop through each affected turf's cameras, and update static on them here instead of going thru updateCameraVisibility()?
@@ -706,7 +764,7 @@ world/proc/updateCameraVisibility()
 	for(var/turf/t in view(CAM_RANGE,get_turf(src)))
 		LAGCHECK(LAG_HIGH)
 		if(t.aiImage)
-			t.aiImage.alpha = 255
+			t.aiImage.loc = t
 	aiDirty = 1
 
 	world.updateCameraVisibility()

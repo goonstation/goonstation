@@ -58,7 +58,7 @@
 			var/mob/living/carbon/human/H = src.loc
 			if (!H.bioHolder || !H.bioHolder.mobAppearance)
 				return
-			H.visible_message("<span style=\"color:blue\"><b>[H]'s [src.name] is disrupted!</b></span>")
+			H.visible_message("<span class='notice'><b>[H]'s [src.name] is disrupted!</b></span>")
 			src.disrupt(H)
 		return
 
@@ -120,10 +120,7 @@
 			if (!AH || !istype(AH, /datum/appearanceHolder))
 				return
 
-			var/datum/effects/system/spark_spread/spark_system = unpool(/datum/effects/system/spark_spread)
-			spark_system.set_up(5, 0, src)
-			spark_system.attach(user)
-			spark_system.start()
+			elecflash(src)
 
 			src.change_appearance(user, 1)
 			src.anti_spam = world.time
@@ -140,10 +137,7 @@
 			src.icon_state = "enshield0"
 			src.on = 0
 
-			var/datum/effects/system/spark_spread/spark_system = unpool(/datum/effects/system/spark_spread)
-			spark_system.set_up(5, 0, src)
-			spark_system.attach(user)
-			spark_system.start()
+			elecflash(src)
 
 			user.show_text("You deactivate the [src.name].", "blue")
 			src.change_appearance(user, 1)

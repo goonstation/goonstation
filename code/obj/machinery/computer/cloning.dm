@@ -28,6 +28,15 @@
 	lg = 0.6
 	lb = 1
 
+	disposing()
+		scanner?.connected = null
+		pod1?.connected = null
+		scanner = null
+		pod1 = null
+		diskette = null
+		records = null
+		..()
+
 	old
 		icon_state = "old2"
 		desc = "With the price of cloning pods nowadays it's not unexpected to skimp on the controller."
@@ -63,18 +72,22 @@
 
 /obj/machinery/computer/cloning/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN_DBG(0.7 SECONDS)
 		if(portable) return
 		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
 
 		src.temp = ""
+		var/hookup_error = FALSE
 		if (isnull(src.scanner))
 			src.temp += " <font color=red>SCNR-ERROR</font>"
+			hookup_error = TRUE
 		if (isnull(src.pod1))
 			src.temp += " <font color=red>POD1-ERROR</font>"
-		else
-			src.pod1.connected = src
+			hookup_error = TRUE
+		if (!hookup_error)
+			src.pod1?.connected = src
+			src.scanner?.connected = src
 
 		if (src.temp == "")
 			src.temp = "System ready."
@@ -86,7 +99,7 @@
 		var/obj/item/spacecash/cash = W
 		src.held_credit += cash.amount
 		cash.amount = 0
-		user.show_text("<span style=\"color:blue\">You add [cash] to the credit in [src].</span>")
+		user.show_text("<span class='notice'>You add [cash] to the credit in [src].</span>")
 		user.u_equip(W)
 		pool(W)
 	else if (istype(W, /obj/item/disk/data/floppy))
@@ -101,7 +114,7 @@
 	else if (isscrewingtool(W) && ((src.status & BROKEN) || !src.pod1 || !src.scanner || src.allow_dead_scanning || src.allow_mind_erasure || src.pod1.BE))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
-			boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)
 			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -127,7 +140,7 @@
 
 	else if (istype(W, /obj/item/cloner_upgrade))
 		if (allow_dead_scanning || allow_mind_erasure)
-			boutput(user, "<span style=\"color:red\">There is already an upgrade installed.</span>")
+			boutput(user, "<span class='alert'>There is already an upgrade installed.</span>")
 			return
 
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
@@ -138,9 +151,9 @@
 
 	else if (istype(W, /obj/item/cloneModule/minderaser))
 		if(allow_mind_erasure || allow_dead_scanning)
-			boutput(user, "<span style=\"color:red\">There is already an upgrade installed.</span>")
+			boutput(user, "<span class='alert'>There is already an upgrade installed.</span>")
 			return
- 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
+		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_mind_erasure = 1
 		user.drop_item()
 		logTheThing("combat", src, user, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
@@ -148,10 +161,10 @@
 	else if (istype(W, /obj/item/cloneModule/genepowermodule))
 		var/obj/item/cloneModule/genepowermodule/module = W
 		if(module.BE == null)
-			boutput(user, "<span style=\"color:red\">You need to put an injector into the module before it will work!</span>")
+			boutput(user, "<span class='alert'>You need to put an injector into the module before it will work!</span>")
 			return
 		if(pod1.BE)
-			boutput(user,"<span style=\"color:red\">There is already a gene module in this upgrade spot! You can remove it by blowing up the genetics computer and building a new one. Or you could just use a screwdriver, I guess.</span>")
+			boutput(user,"<span class='alert'>There is already a gene module in this upgrade spot! You can remove it by blowing up the genetics computer and building a new one. Or you could just use a screwdriver, I guess.</span>")
 			return
 		src.pod1.BE = module.BE
 		user.drop_item()
@@ -168,7 +181,7 @@
 	return attack_hand(user)
 
 /obj/machinery/computer/cloning/attack_hand(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	add_fingerprint(user)
 
 	if(status & (BROKEN|NOPOWER))
@@ -251,8 +264,8 @@
 		if(5) //Advanced genetics analysis
 			dat += {"<h4>Advanced Genetic Analysis</h4>
 					<a href='byond://?src=\ref[src];menu=1'>Back</a><br>
-					<B>Notice:</B> Enabling this feature will prompt the attached clone pod to analyze the genetic makeup of the subject during cloning.
-					Data will then be sent to any nearby GeneTek scanners and be used to improve their efficiency. The cloning process will be slightly slower as a result.<BR><BR>"}
+					<B>Notice:</B> Enabling this feature will prompt the attached clone pod to transfer active genetic mutations from the genetic record to the subject during cloning.
+					The cloning process will be slightly slower as a result.<BR><BR>"}
 
 			if(pod1 && !pod1.operating)
 				if(pod1.gen_analysis)
@@ -301,6 +314,7 @@
 		src.active_record = locate(href_list["view_rec"]) in records
 		if ((isnull(src.active_record.fields["ckey"])) || (src.active_record.fields["ckey"] == ""))
 			qdel(src.active_record)
+			src.active_record = null
 			src.temp = "ERROR: Record Corrupt"
 		else
 			src.menu = 3
@@ -316,6 +330,7 @@
 			logTheThing("combat", usr, null, "deletes the cloning record [src.active_record.fields["name"]] for player [src.active_record.fields["ckey"]] at [log_loc(src)].")
 			src.records.Remove(src.active_record)
 			qdel(src.active_record)
+			src.active_record = null
 			src.temp = "Record deleted."
 			src.menu = 2
 /*
@@ -324,6 +339,7 @@
 				if(src.check_access(C))
 					src.records.Remove(src.active_record)
 					qdel(src.active_record)
+					src.active_record = null
 					src.temp = "Record deleted."
 					src.menu = 2
 				else
@@ -332,17 +348,24 @@
 	else if (href_list["disk"]) //Load or eject.
 		switch(href_list["disk"])
 			if("load")
-				if (src.diskette.data_type == "cloning_record")
-					var/datum/data/record/R = new /datum/data/record(  )
-					R.fields = src.diskette.data
-					src.records += R
-					src.temp = "Load successful, data transferred."
-					src.diskette.data_type = "corrupt"
-					src.diskette.data = ""
+				if (src.diskette.read_only)
+					// The file needs to be deleted from the disk after loading the record
+					src.temp = "Load error - cannot transfer clone records from a disk in read only mode."
 					src.updateUsrDialog()
 					return
 
-				else
+				var/loaded = 0
+
+				for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
+					if (!find_record(cloneRecord.fields["ckey"]))
+						var/datum/data/record/R = new
+						R.fields = cloneRecord.fields
+						src.records += R
+						loaded++
+						src.temp = "Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred."
+						src.diskette.root.remove_file(cloneRecord)
+
+				if(!loaded)
 					src.temp = "Load error."
 					src.updateUsrDialog()
 					return
@@ -359,106 +382,31 @@
 			src.updateUsrDialog()
 			return
 
-		else if (src.diskette.data_type == "corrupt")
-			src.temp = "Save error. Disk corruption."
-			src.updateUsrDialog()
-			return
+		for (var/datum/computer/file/clone/R in src.diskette.root.contents)
+			if (R.fields["ckey"] == src.active_record.fields["ckey"])
+				src.temp = "Record already exists on disk."
+				src.updateUsrDialog()
+				return
 
-		src.diskette.data = src.active_record.fields
-		src.diskette.ue = 1
-		src.diskette.data_type = "cloning_record"
-		src.diskette.owner = src.active_record.fields["name"]
-		src.diskette.name = "data disk - '[src.diskette.owner]'"
-		src.temp = "Save successful."
+		var/datum/computer/file/clone/cloneFile = new
+		cloneFile.name = "CloneRecord-[ckey(src.active_record.fields["name"])]"
+		cloneFile.fields = src.active_record.fields
+		src.temp = src.diskette.root.add_file(cloneFile) ? "Save successful." : "Save error."
 
 	else if (href_list["refresh"])
 		src.updateUsrDialog()
 
 	else if (href_list["clone"])
-
-		//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
-		// yes, i'm using goto here. this would be less of a cluster if this was a function,
-		// but i can't be bothered rn. someone else can fix it.
-		if (!src.pod1)
-			src.temp = "No cloning pod connected."
-			goto BailOutOfCloningAttempt
-		if (src.pod1.occupant)
-			src.temp = "Cloning pod in use."
-			goto BailOutOfCloningAttempt
-		if (src.pod1.mess)
-			src.temp = "Abnormal reading from cloning pod."
-			goto BailOutOfCloningAttempt
-
-		//Look for that player! They better be dead!
-		var/datum/data/record/C = locate(href_list["clone"])
-		if (!istype(C))
-			src.temp = "Invalid or corrupt record."
-			goto BailOutOfCloningAttempt
-
-		// Get our dead person
-		var/mob/selected = find_dead_player("[C.fields["ckey"]]")
-
-		if (!selected)
-			src.temp = "Can't clone: Unable to locate mind."
-			goto BailOutOfCloningAttempt
-
-		if (selected.mind && selected.mind.dnr)
-			// leave the goddamn dnr ghosts alone
-			src.temp = "Cannot clone: Subject has set DNR."
-			goto BailOutOfCloningAttempt
-		else
-			//for deleting the mob in the afterlife bar if cloning person from there.
-			var/mob/ALB_selection = selected
-			if (inafterlifebar(ALB_selection))
-				boutput(selected, "<span style=\"color:blue\">You are being returned to the land of the living!</span>")
-				selected = ALB_selection.ghostize()
-				qdel(ALB_selection)
-
-		// at this point selected = the dude we wanna revive.
-		// we should be good to start cloning.
-
-		if (wagesystem.clones_for_cash)
-			var/datum/data/record/Ba = FindBankAccountByName(C.fields["name"])
-			var/account_credit = 0
-
-			if (Ba && Ba.fields["current_money"])
-				account_credit = Ba.fields["current_money"]
-
-			if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-				// try cloning
-				if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
-					// deduct some dosh
-					var/from_account = min(wagesystem.clone_cost, account_credit)
-					if (from_account > 0)
-						Ba.fields["current_money"] -= from_account
-					src.held_credit -= (wagesystem.clone_cost - from_account)
-					src.temp = "Payment of [wagesystem.clone_cost] credits accepted. [from_account > 0 ? "Deducted [from_account] credits from [C.fields["name"]]'s account.' " : ""][from_account < wagesystem.clone_cost ? "Deducted [wagesystem.clone_cost - from_account] credits from machine credit." : ""] Cloning cycle activated."
-					src.records.Remove(C)
-					qdel(C)
-					src.menu = 1
-				else
-					src.temp = "Unknown error when trying to start cloning process."
-			else
-				src.temp = "Insufficient funds to begin clone cycle."
-
-		else if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
-			src.temp = "Cloning cycle activated."
-			src.records.Remove(C)
-			qdel(C)
-			JOB_XP(usr, "Medical Doctor", 15)
-			src.menu = 1
+		src.clone_record(locate(href_list["clone"]))
 
 	else if (href_list["menu"])
 		src.menu = text2num(href_list["menu"])
 	else if (href_list["set_analysis"])
 		pod1.gen_analysis = text2num(href_list["set_analysis"])
+		logTheThing("combat", usr, null, "toggles advanced genetic analysis [pod1.gen_analysis ? "on" : "off"] at [log_loc(src)].")
 	else if (href_list["set_mindwipe"])
 		pod1.mindwipe = text2num(href_list["set_mindwipe"])
 
-	// considered harmful
-	BailOutOfCloningAttempt
-
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
 
@@ -545,6 +493,69 @@
 			break
 	return selected_record
 
+/obj/machinery/computer/cloning/proc/clone_record(datum/data/record/C)
+	if (!istype(C))
+		src.temp = "Invalid or corrupt record."
+		return
+	if (!src.pod1)
+		src.temp = "No cloning pod connected."
+		return
+	if (src.pod1.attempting)
+		src.temp = "Cloning pod in use."
+		return
+	if (src.pod1.mess)
+		src.temp = "Abnormal reading from cloning pod."
+		return
+
+	var/mob/selected = find_dead_player("[C.fields["ckey"]]")
+
+	if (!selected)
+		src.temp = "Can't clone: Unable to locate mind."
+		return
+
+	if (selected.mind && selected.mind.dnr)
+		// leave the goddamn dnr ghosts alone
+		src.temp = "Cannot clone: Subject has set DNR."
+		return
+	else
+		//for deleting the mob in the afterlife bar if cloning person from there.
+		var/mob/ALB_selection = selected
+		if (inafterlifebar(ALB_selection))
+			boutput(selected, "<span class='notice'>You are being returned to the land of the living!</span>")
+			selected = ALB_selection.ghostize()
+			qdel(ALB_selection)
+
+	// at this point selected = the dude we wanna revive.
+
+	if (wagesystem.clones_for_cash)
+		var/datum/data/record/Ba = FindBankAccountByName(C.fields["name"])
+		var/account_credit = 0
+
+		if (Ba && Ba.fields["current_money"])
+			account_credit = Ba.fields["current_money"]
+
+		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
+			if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
+				var/from_account = min(wagesystem.clone_cost, account_credit)
+				if (from_account > 0)
+					Ba.fields["current_money"] -= from_account
+				src.held_credit -= (wagesystem.clone_cost - from_account)
+				src.temp = "Payment of [wagesystem.clone_cost] credits accepted. [from_account > 0 ? "Deducted [from_account] credits from [C.fields["name"]]'s account.' " : ""][from_account < wagesystem.clone_cost ? "Deducted [wagesystem.clone_cost - from_account] credits from machine credit." : ""] Cloning cycle activated."
+				src.records.Remove(C)
+				qdel(C)
+				src.menu = 1
+			else
+				src.temp = "Unknown error when trying to start cloning process."
+		else
+			src.temp = "Insufficient funds to begin clone cycle."
+
+	else if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
+		src.temp = "Cloning cycle activated."
+		src.records.Remove(C)
+		qdel(C)
+		JOB_XP(usr, "Medical Doctor", 15)
+		src.menu = 1
+
 /obj/machinery/computer/cloning/power_change()
 
 	if(status & BROKEN)
@@ -558,25 +569,6 @@
 				src.icon_state = "c_unpowered"
 				status |= NOPOWER
 
-
-//New loading/storing records is a todo while I determine how it should work.
-/obj/machinery/computer/cloning/proc
-	load_record()
-		if (!src.diskette || !src.diskette.root)
-			return -1
-
-
-		return 0
-
-	save_record()
-		if (!src.diskette || !src.diskette.root)
-			return -1
-
-
-
-		return 0
-
-
 //Find a dead mob with a brain and client.
 /proc/find_dead_player(var/find_key, needbrain=0)
 	if (isnull(find_key))
@@ -584,7 +576,7 @@
 
 	for(var/mob/M in mobs)
 		//Dead people only thanks!
-		if (!(isdead(M) || isVRghost(M) || inafterlifebar(M)) || (!M.client))
+		if (!(isdead(M) || isVRghost(M) || isghostcritter(M) || inafterlifebar(M)) || (!M.client))
 			continue
 		//They need a brain!
 		if (needbrain && ishuman(M) && !M:brain)
@@ -610,6 +602,7 @@
 	anchored = 1.0
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	var/obj/machinery/computer/cloning/connected = null
 
 	// In case someone wants a perfectly safe device. For some weird reason.
 	var/can_meat_grind = 1
@@ -643,11 +636,18 @@
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
 
+	disposing()
+		connected?.scanner = null
+		connected = null
+		pods = null
+		occupant = null
+		..()
+
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -673,7 +673,7 @@
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
 		if (src.occupant)
-			boutput(M, "<span style=\"color:blue\"><B>The scanner is already occupied!</B></span>")
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return
 
 		.= 1
@@ -694,7 +694,7 @@
 		src.icon_state = "scanner_1"
 
 		for(var/obj/O in src)
-			O.loc = src.loc
+			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
 
@@ -728,7 +728,7 @@
 			return
 
 		if (src.occupant)
-			boutput(user, "<span style=\"color:blue\"><B>The scanner is already occupied!</B></span>")
+			boutput(user, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return
 
 		var/mob/M = G.affecting
@@ -749,11 +749,14 @@
 		if ((!( src.occupant ) || src.locked))
 			return
 
-		for(var/obj/O in src)
-			O.set_loc(src.loc)
+		if(!src.occupant.disposed)
+			src.occupant.set_loc(src.loc)
 
-		src.occupant.set_loc(src.loc)
 		src.occupant = null
+
+		for(var/atom/movable/A in src)
+			A.set_loc(src.loc)
+
 		src.icon_state = "scanner_0"
 
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
@@ -764,11 +767,11 @@
 		if(lock_status && !locked)
 			locked = 1
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span style='color:red'>\The [src] locks shut!</span>")
+			bo(occupant, "<span class='alert'>\The [src] locks shut!</span>")
 		else if(!lock_status && locked)
 			locked = 0
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span style='color:blue'>\The [src] unlocks!</span>")
+			bo(occupant, "<span class='notice'>\The [src] unlocks!</span>")
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if (air_group || (height==0))
@@ -822,7 +825,7 @@
 	proc/start_strip()
 		active_process = PROCESS_STRIP
 		set_lock(1)
-		bo(occupant, "<span style='color:red'>Hatches open and tiny, grabby claws emerge!</span>")
+		bo(occupant, "<span class='alert'>Hatches open and tiny, grabby claws emerge!</span>")
 
 		SubscribeToProcess()
 
@@ -874,7 +877,7 @@
 
 		if(to_remove)
 			if(prob(70))
-				bo(occupant, "<span style='color:red'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
+				bo(occupant, "<span class='alert'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
 				playsound(get_turf(src), "sound/misc/rustle[rand(1,5)].ogg", 50, 1)
 			to_remove.set_loc(src.loc)
 		else

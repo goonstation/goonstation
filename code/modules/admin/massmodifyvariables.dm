@@ -1,5 +1,5 @@
 /client/proc/cmd_mass_modify_object_variables(obj/O as obj|mob|turf|area in world)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Mass Edit Variables"
 	set desc="(target) Edit all instances of a target item's variables"
 	set popup_menu = 0 // goddamn we have view variables already we don't need this in the damned right click menu FUCK'S SAKE
@@ -12,21 +12,21 @@
 		for(var/mob/M in mobs)
 			if (M.type == O.type)
 				M.vars[variable] = val
-				M.onVarChanged(variable, oldVal, val)			
+				M.onVarChanged(variable, oldVal, val)
 			LAGCHECK(LAG_LOW)
 
 	else if(istype(O, /obj))
 		for(var/obj/A in world)
 			if (A.type == O.type)
 				A.vars[variable] = val
-				A.onVarChanged(variable, oldVal, val)			
+				A.onVarChanged(variable, oldVal, val)
 			LAGCHECK(LAG_LOW)
 
 	else if(istype(O, /turf))
 		for(var/turf/T in world)
 			if (T.type == O.type)
 				T.vars[variable] = val
-				T.onVarChanged(variable, oldVal, val)			
+				T.onVarChanged(variable, oldVal, val)
 			LAGCHECK(LAG_LOW)
 
 /client/proc/massmodify_variables(var/atom/O)
@@ -46,13 +46,13 @@
 	var/var_value = O.vars[variable]
 	var/dir
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Shit Person")))
+	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
 		return
 
 	//Let's prevent people from promoting themselves, yes?
 	var/list/locked_type = list(/datum/admins) //Short list
 	if(!(src.holder.rank in list("Host", "Coder")) && (O.type in locked_type) )
-		boutput(usr, "<span style=\"color:red\">You're not allowed to edit [O.type] for security reasons!</span>")
+		boutput(usr, "<span class='alert'>You're not allowed to edit [O.type] for security reasons!</span>")
 		logTheThing("admin", usr, null, "tried to varedit [O.type] but was denied!")
 		logTheThing("diary", usr, null, "tried to varedit [O.type] but was denied!", "admin")
 		message_admins("[key_name(usr)] tried to varedit [O.type] but was denied.") //If someone tries this let's make sure we all know it.

@@ -6,7 +6,7 @@ HAND_TELE
 */
 /obj/item/locator
 	name = "locator"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "locator"
 	var/temp = null
 	var/frequency = 1451
@@ -20,7 +20,7 @@ HAND_TELE
 	m_amt = 400
 
 /obj/item/locator/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat
 	if (src.temp)
 		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
@@ -43,7 +43,7 @@ Frequency:
 	if (usr.stat || usr.restrained())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["refresh"])
 			src.temp = "<B>Persistent Signal Locator</B><HR>"
 			var/turf/sr = get_turf(src)
@@ -51,8 +51,7 @@ Frequency:
 			if (sr)
 				src.temp += "<B>Located Beacons:</B><BR>"
 
-				for(var/obj/item/device/radio/beacon/W in tracking_beacons)//world)
-					LAGCHECK(LAG_LOW)
+				for(var/obj/item/device/radio/beacon/W in by_type[/obj/item/device/radio/beacon])
 					if (istype(src, /obj/item/locator/jones) && istype(W, /obj/item/device/radio/beacon/jones)) //For Jones City
 						src.temp += "Unknown Location-[W.x], [W.y], [W.z]<BR>"
 					if (W.frequency == src.frequency)
@@ -72,8 +71,7 @@ Frequency:
 							src.temp += "[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/implant/tracking/W in tracking_implants)//world)
-					LAGCHECK(LAG_LOW)
+				for (var/obj/item/implant/tracking/W in by_type[/obj/item/implant/tracking])
 					if (W.frequency == src.frequency)
 						if (!W.implanted || !ismob(W.loc))
 							continue
@@ -118,7 +116,7 @@ Frequency:
 
 /obj/item/hand_tele
 	name = "hand tele"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 5
@@ -133,10 +131,29 @@ Frequency:
 	var/obj/item/our_target = null
 	var/turf/our_random_target = null
 	var/list/portals = list()
+	var/list/users = list() // List of people who've clicked on the hand tele and haven't resolved its UI yet
 
 	// Port of the telegun improvements (Convair880).
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
+
+		// If they've already got the UI open, don't try and open a new one
+		if (user in users)
+			return
+
+		// Make sure you're holding the hand tele, or it's implanted, before you can use it.
+		var/obj/item/I = user.equipped()
+		var/obj/item/C = null
+		if (istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/humanuser = user
+			C = humanuser.chest_item
+		if (I != src && C != src)
+			if (istype(I, /obj/item/magtractor))
+				var/obj/item/magtractor/mag = I
+				if (mag.holding != src)
+					return
+			else
+				return
 
 		if (src.portals.len > 2)
 			user.show_text("The hand teleporter is recharging!", "red")
@@ -189,17 +206,12 @@ Frequency:
 			user.show_text("Error: couldn't find valid coordinates or working teleporters.", "red")
 			return
 
+		users += user // We're about to show the UI
 		var/t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		users -= user // We're done showing the UI
+
 		if (user.stat || user.restrained())
 			return
-		var/obj/item/I = user.equipped()
-		if (I != src)
-			if (istype(I, /obj/item/magtractor))
-				var/obj/item/magtractor/mag = I
-				if (mag.holding != src)
-					return
-			else
-				return
 
 		if (t1 == "Cancel")
 			return
@@ -239,15 +251,20 @@ Frequency:
 			user.show_text("Error: invalid coordinates detected, please try again.", "red")
 			return
 
+		our_loc = get_turf(src)
+		if (our_loc && isrestrictedz(our_loc.z))
+			user.show_text("The [src.name] does not seem to work here!", "red")
+			return
+
 		var/obj/portal/P = unpool(/obj/portal)
-		P.set_loc(get_turf(src))
+		P.set_loc(our_loc)
 		portals += P
 		if (!src.our_target)
 			P.target = src.our_random_target
 		else
 			P.target = src.our_target
 
-		user.visible_message("<span style=\"color:blue\">Portal opened.</span>")
+		user.visible_message("<span class='notice'>Portal opened.</span>")
 		logTheThing("station", user, null, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
 
 		SPAWN_DBG (300)

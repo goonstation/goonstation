@@ -9,7 +9,7 @@
 /obj/item/reagent_containers/food/drinks/fueltank
 	name = "Fuel Tank"
 	desc = "A specialized anti-static tank for holding flammable compounds"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bottlefuel"
 	w_class = 3
 	amount_per_transfer_from_this = 25

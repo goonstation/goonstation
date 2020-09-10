@@ -19,7 +19,7 @@
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 	var/net_id = ""
 
-	req_access = list(access_engineering)
+	req_access = list(access_engineering,access_engineering_mechanic,access_research_director)
 	object_flags = CAN_REPROGRAM_ACCESS
 
 	New()
@@ -79,19 +79,42 @@
 	// or one of the set transponder keys
 	// if found, return a signal
 	receive_signal(datum/signal/signal)
+		if (!signal || signal.encryption) return
 
-//		if(status & NOPOWER)
-//			return
-
-		var/request = signal.data["findbeacon"]
-		if(request && ((request in codes) || request == "any" || request == location))
+		var/beaconrequest = signal.data["findbeacon"]
+		if(beaconrequest && ((beaconrequest in codes) || beaconrequest == "any" || beaconrequest == location))
 			SPAWN_DBG(1 DECI SECOND)
-				post_signal()
+				post_status()
+			return
+
+		if (!signal.data["address_1"] || !signal.data["sender"])
+			// Not for us, ignore
+			return
+
+		if (signal.data["address_1"] != src.net_id)
+			if (signal.data["address_1"] == "ping")
+				send_ping_response(signal.data["sender"])
+			return
+
+		switch (signal.data["command"])
+			if ("status")
+				post_status(signal.data["sender"])
+			if ("set_location")
+				if (!signal.data["location"]) return
+				var/newloq = adminscrub(signal.data["location"])
+				src.location = newloq
+				post_status(signal.data["sender"])
+			if ("set_code")
+				if (!signal.data["code_key"] || !signal.data["code_value"]) return
+				var/code_key = adminscrub(signal.data["code_key"])
+				var/code_value = adminscrub(signal.data["code_value"])
+				codes.Remove(code_key)
+				codes[code_key] = code_value
+				post_status(signal.data["sender"])
 
 
 	// return a signal giving location and transponder codes
-
-	proc/post_signal()
+	proc/post_status(var/target)
 
 		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
 
@@ -102,12 +125,28 @@
 		signal.transmission_method = 1
 		signal.data["beacon"] = location
 		signal.data["netid"] = net_id
+		if (target)
+			signal.data["address_1"] = target
 
 		for(var/key in codes)
 			signal.data[key] = codes[key]
 
 		frequency.post_signal(src, signal)
 
+	proc/send_ping_response(var/target)
+		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
+		if (!frequency || !target) return
+
+		var/datum/signal/pingsignal = get_free_signal()
+		pingsignal.source = src
+		pingsignal.data["device"] = "NAV_BEACON"
+		pingsignal.data["netid"] = src.net_id
+		pingsignal.data["sender"] = src.net_id
+		pingsignal.data["address_1"] = target
+		pingsignal.data["command"] = "ping_reply"
+		pingsignal.transmission_method = TRANSMISSION_RADIO
+
+		frequency.post_signal(src, pingsignal)
 
 	attackby(var/obj/item/I, var/mob/user)
 		var/turf/T = loc
@@ -129,21 +168,21 @@
 					src.locked = !src.locked
 					boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				else
-					boutput(user, "<span style=\"color:red\">Access denied.</span>")
+					boutput(user, "<span class='alert'>Access denied.</span>")
 				updateDialog()
 			else
 				boutput(user, "You must open the cover first!")
 		return
 
 	attack_ai(var/mob/user)
-		interact(user, 1)
+		interacted(user, 1)
 
 	attack_hand(var/mob/user)
 		if (ismonkey(user))
 			return
-		interact(user, 0)
+		interacted(user, 0)
 
-	proc/interact(var/mob/user, var/ai = 0)
+	proc/interacted(var/mob/user, var/ai = 0)
 		var/turf/T = loc
 		if(T.intact)
 			return		// prevent intraction when T-scanner revealed
@@ -197,10 +236,11 @@ Transponder Codes:<UL>"}
 			return
 		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 			if(open && !locked)
-				usr.machine = src
+				src.add_dialog(usr)
 
 				if (href_list["freq"])
 					freq = sanitize_frequency(freq + text2num(href_list["freq"]))
+					set_frequency(freq)
 					updateDialog()
 
 				else if(href_list["locedit"])
@@ -220,7 +260,7 @@ Transponder Codes:<UL>"}
 
 					var/codeval = codes[codekey]
 					var/newval = input("Enter Transponder Code Value", "Navigation Beacon", codeval) as text|null
-					newval = copytext(adminscrub(newval), 1, 64)
+					newval = copytext(adminscrub(newval), 1, 256)
 					if(!newval)
 						newval = codekey
 						return
@@ -254,6 +294,11 @@ Transponder Codes:<UL>"}
 					codes[newkey] = newval
 
 					updateDialog()
+
+	proc/set_frequency(var/new_freq)
+		radio_controller.remove_object(src, "[freq]")
+		freq = new_freq
+		radio_controller.add_object(src, "[freq]")
 
 //Wired nav device
 /obj/machinery/wirenav

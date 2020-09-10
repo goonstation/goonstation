@@ -4,8 +4,6 @@
 var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 'sound/ambience/spooky/Hospital_Haunted1.ogg', 'sound/ambience/spooky/Hospital_Haunted2.ogg',
 	'sound/ambience/spooky/Hospital_Drone3.ogg', 'sound/ambience/spooky/Hospital_Haunted3.ogg', 'sound/ambience/spooky/Hospital_Feedback.ogg', 'sound/ambience/spooky/Hospital_Drone2.ogg', 'sound/ambience/spooky/Hospital_ScaryChimes.ogg')
 
-var/list/samostrel_warps = list()
-
 /area/hospital
 	name = "Ainley Staff Retreat Center"
 	icon_state = "purple"
@@ -52,7 +50,7 @@ var/list/samostrel_warps = list()
 
 
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
+			sleep(6 SECONDS)
 
 			if(prob(10) && fxlist)
 				S = sound(file=pick(fxlist), volume=50)
@@ -204,15 +202,14 @@ var/list/samostrel_warps = list()
 	proximity_act()
 		..()
 		if(prob(40))
-			src.visible_message("<span style=\"color:red\"><B>[src] passes its arm through [target]!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] passes its arm through [target]!</B></span>")
 			//playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
-			if (samostrel_warps && samostrel_warps.len)
-
+			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
 				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 100))
-				do_teleport(target, pick(samostrel_warps), 0)
+				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0)
 
 				if (ishuman(target))
 					var/atom/movable/overlay/animation = new(target_original_loc)
@@ -240,10 +237,10 @@ var/list/samostrel_warps = list()
 			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)
-						target << sound('sound/ambience/loop/Static_Horror_Loop_End.ogg',channel=7)
-					qdel(src)
+				sleep(rand(100,400))
+				if(target)
+					target << sound('sound/ambience/loop/Static_Horror_Loop_End.ogg',channel=7)
+				qdel(src)
 			walk_towards(src, src.target, 3)
 
 		..()
@@ -281,7 +278,7 @@ var/list/samostrel_warps = list()
 /obj/item/reagent_containers/food/drinks/bottle/hospital
 	name = "Ham Brandy"
 	desc = "Uh.   Uhh"
-	//icon = 'icons/obj/drink.dmi'
+	//icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "whiskey"
 	bottle_style = "whiskey"
 	fluid_style = "whiskey"
@@ -601,7 +598,7 @@ var/list/samostrel_warps = list()
 
 		SPAWN_DBG(0) //Delete the overlay when finished with it.
 			src.on = 0
-			sleep(15)
+			sleep(1.5 SECONDS)
 			qdel(Ov)
 			qdel(src)
 

@@ -28,11 +28,11 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/magnet_parts))
 			if (istype(src.linked_magnet))
-				boutput(user, "<span style=\"color:red\">There's already a magnet installed.</span>")
+				boutput(user, "<span class='alert'>There's already a magnet installed.</span>")
 				return
 			user.visible_message("<b>[user]</b> begins constructing a new magnet.")
 			var/turf/T = get_turf(user)
-			sleep(240)
+			sleep(24 SECONDS)
 			if (user.loc == T && user.equipped() == W && !user.stat)
 				var/obj/magnet = new W:constructed_magnet(get_turf(src))
 				magnet.dir = src.dir
@@ -162,34 +162,34 @@
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 			if (!T)
-				boutput(usr, "<span style=\"color:red\">Error: magnet area spans over construction area bounds.</span>")
+				boutput(usr, "<span class='alert'>Error: magnet area spans over construction area bounds.</span>")
 				return 0
 			if (!istype(T, /turf/space) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/asteroid))
-				boutput(usr, "<span style=\"color:red\">Error: [T] detected in [width]x[height] magnet area. Cannot magnetize.</span>")
+				boutput(usr, "<span class='alert'>Error: [T] detected in [width]x[height] magnet area. Cannot magnetize.</span>")
 				return 0
 
 		var/borders = list()
 		for (var/cx = origin.x - 1, cx <= origin.x + width, cx++)
 			var/turf/S = locate(cx, origin.y - 1, origin.z)
 			if (!S || istype(S, /turf/space))
-				boutput(usr, "<span style=\"color:red\">Error: bordering tile has a gap, cannot magnetize area.</span>")
+				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 			S = locate(cx, origin.y + height, origin.z)
 			if (!S || istype(S, /turf/space))
-				boutput(usr, "<span style=\"color:red\">Error: bordering tile has a gap, cannot magnetize area.</span>")
+				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 
 		for (var/cy = origin.y, cy <= origin.y + height - 1, cy++)
 			var/turf/S = locate(origin.x - 1, cy, origin.z)
 			if (!S || istype(S, /turf/space))
-				boutput(usr, "<span style=\"color:red\">Error: bordering tile has a gap, cannot magnetize area.</span>")
+				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 			S = locate(origin.x + width, cy, origin.z)
 			if (!S || istype(S, /turf/space))
-				boutput(usr, "<span style=\"color:red\">Error: bordering tile has a gap, cannot magnetize area.</span>")
+				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 
@@ -208,18 +208,18 @@
 	var/obj/machinery/mining_magnet/construction/magnet = null
 
 	examine()
-		..()
+		. = ..()
 		if (loaded)
-			boutput(usr, "<span style=\"color:blue\">The magnetizer is loaded with a plasmastone. Designate the mineral magnet to attach, then designate the lower left tile of the area to magnetize.</span>")
-			boutput(usr, "<span style=\"color:blue\">The magnetized area must be a clean shot of space, surrounded by bordering tiles on all sides.</span>")
-			boutput(usr, "<span style=\"color:blue\">A small mineral magnet requires an 7x7 area of space, a large one requires a 15x15 area of space.</span>")
+			. += "<span class='notice'>The magnetizer is loaded with a plasmastone. Designate the mineral magnet to attach, then designate the lower left tile of the area to magnetize.</span>"
+			. += "<span class='notice'>The magnetized area must be a clean shot of space, surrounded by bordering tiles on all sides.</span>"
+			. += "<span class='notice'>A small mineral magnet requires an 7x7 area of space, a large one requires a 15x15 area of space.</span>"
 		else
-			boutput(usr, "<span style=\"color:red\">The magnetizer must be loaded with a chunk of plasmastone to use.</span>")
+			. += "<span class='alert'>The magnetizer must be loaded with a chunk of plasmastone to use.</span>"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
 			loaded = 1
-			boutput(user, "<span style=\"color:blue\">You charge the magnetizer with the plasmastone.</span>")
+			boutput(user, "<span class='notice'>You charge the magnetizer with the plasmastone.</span>")
 			pool(W)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -232,18 +232,18 @@
 				magnet = null
 			else
 				if (!loaded)
-					boutput(user, "<span style=\"color:red\">The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
+					boutput(user, "<span class='alert'>The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
 					magnet = null
 				else if (magnet.target)
-					boutput(user, "<span style=\"color:red\">That magnet is already locked onto a location.</span>")
+					boutput(user, "<span class='alert'>That magnet is already locked onto a location.</span>")
 					magnet = null
 				else
-					boutput(user, "<span style=\"color:blue\">Magnet locked. Designate lower left tile of target area (excluding the borders).</span>")
+					boutput(user, "<span class='notice'>Magnet locked. Designate lower left tile of target area (excluding the borders).</span>")
 		else if (istype(target, /turf/space) && magnet)
 			if (!loaded)
-				boutput(user, "<span style=\"color:red\">The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
+				boutput(user, "<span class='alert'>The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
 			if (magnet.target)
-				boutput(user, "<span style=\"color:red\">Magnet target already designated. Unlocking.</span>")
+				boutput(user, "<span class='alert'>Magnet target already designated. Unlocking.</span>")
 				magnet = null
 				return
 			var/turf/T = target
@@ -252,16 +252,16 @@
 			var/turf/B = M.DR()
 			var/turf/C = M.UL()
 			var/turf/D = M.UR()
-			var/turf/O = get_turf(magnet)
+			var/turf/O = get_turf(target)
 			var/dist = min(min(get_dist(A, O), get_dist(B, O)), min(get_dist(C, O), get_dist(D, O)))
 			if (dist > 10)
-				boutput(user, "<span style=\"color:red\">Designation failed: designated tile is outside magnet range.</span>")
+				boutput(user, "<span class='alert'>Designation failed: designated tile is outside magnet range.</span>")
 				qdel(M)
 			else if (!M.construct())
-				boutput(user, "<span style=\"color:red\">Designation failed.</span>")
+				boutput(user, "<span class='alert'>Designation failed.</span>")
 				qdel(M)
 			else
-				boutput(user, "<span style=\"color:blue\">Designation successful. The magnet is now fully operational.</span>")
+				boutput(user, "<span class='notice'>Designation successful. The magnet is now fully operational.</span>")
 				magnet.target = M
 				loaded = 0
 				magnet = null
@@ -287,6 +287,8 @@
 	var/malfunctioning = 0
 	var/rarity_mod = 0
 
+	var/uses_global_controls = TRUE
+
 	var/image/active_overlay = null
 	var/list/damage_overlays = list()
 	var/sound_activate = 'sound/machines/ArtifactAnc1.ogg'
@@ -306,6 +308,7 @@
 		var/marker_type = /obj/magnet_target_marker
 		var/obj/magnet_target_marker/target = null
 		var/list/wall_bits = list()
+		uses_global_controls = FALSE
 
 		get_magnetic_center()
 			if (target)
@@ -438,12 +441,12 @@
 		..()
 
 	examine()
-		..()
+		. = ..()
 		if (src.health < 100)
 			if (src.health < 50)
-				boutput(usr, "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>")
+				. += "<span class='alert'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				boutput(usr, "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>")
+				. += "<span class='alert'>It's a bit damaged. It looks like it needs some welding done.</span>"
 
 	ex_act(severity)
 		switch(severity)
@@ -466,32 +469,31 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.active)
-			boutput(user, "<span style=\"color:red\">It's way too dangerous to do that while it's active!</span>")
+			boutput(user, "<span class='alert'>It's way too dangerous to do that while it's active!</span>")
 			return
 
-		if (istype(W,/obj/item/weldingtool/))
-			var/obj/item/weldingtool/WELD = W
+		if (isweldingtool(W))
 			if (src.health < 50)
-				boutput(usr, "<span style=\"color:red\">You need to use wire to fix the cabling first.</span>")
+				boutput(usr, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 				return
-			if(WELD.try_weld(user, 1))
+			if(W:try_weld(user, 1))
 				src.damage(-10)
 				src.malfunctioning = 0
-				user.visible_message("<b>[user]</b> uses [WELD] to repair some of [src]'s damage.")
+				user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 				if (src.health >= 100)
-					boutput(user, "<span style=\"color:blue\"><b>[src] looks fully repaired!</b></span>")
+					boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 
 		else if (istype(W,/obj/item/cable_coil/))
 			var/obj/item/cable_coil/C = W
 			if (src.health > 50)
-				boutput(usr, "<span style=\"color:red\">The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(usr, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
 			src.damage(-10)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 			if (src.health >= 50)
-				boutput(user, "<span style=\"color:blue\">The wiring is fully repaired. Now you need to weld the external plating.</span>")
+				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 				src.malfunctioning = 0
 
 		else
@@ -628,7 +630,7 @@
 		return
 
 	proc/generate_interface(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<BR><B>Magnet Status:</B><BR>"
 		dat += "<u>Condition:</u> "
@@ -690,10 +692,10 @@
 
 	Topic(href, href_list)
 		if(status & (NOPOWER|BROKEN))
-			boutput(usr, "<span style='color:red'>That machine is not powered.</span>")
+			boutput(usr, "<span class='alert'>That machine is not powered.</span>")
 			return 1
 		if(usr.restrained() || usr.lying || usr.stat)
-			boutput(usr, "<span style='color:red'>You are currently unable to do that.</span>")
+			boutput(usr, "<span class='alert'>You are currently unable to do that.</span>")
 			return 1
 
 		var/rangecheck = 0
@@ -708,9 +710,9 @@
 			break
 
 		if (!rangecheck)
-			boutput(usr, "<span style='color:red'>You aren't in range of the controls.</span>")
+			boutput(usr, "<span class='alert'>You aren't in range of the controls.</span>")
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (!istype(src))
 			boutput(usr, "Error. Magnet not detected.")
@@ -721,7 +723,7 @@
 			src.generate_interface(usr)
 
 		else if (href_list["show_selectable"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -737,7 +739,7 @@
 			return
 
 		else if (href_list["activate_selectable"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -748,7 +750,7 @@
 					if (src) src.pull_new_source(href_list["activate_selectable"])
 
 		else if (href_list["activate_magnet"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -760,11 +762,11 @@
 
 		else if (href_list["override_cooldown"])
 			if (!ishuman(usr))
-				boutput(usr, "<span style=\"color:red\">AI and robotic personnel may not access the override.</span>")
+				boutput(usr, "<span class='alert'>AI and robotic personnel may not access the override.</span>")
 			else
 				var/mob/living/carbon/human/H = usr
 				if(!src.allowed(H))
-					boutput(usr, "<span style=\"color:red\">Access denied. Please contact the Chief Engineer or Captain to access the override.</span>")
+					boutput(usr, "<span class='alert'>Access denied. Please contact the Chief Engineer or Captain to access the override.</span>")
 				else
 					src.cooldown_override = !src.cooldown_override
 
@@ -840,7 +842,7 @@
 		if (istype(linked_magnet))
 			linked_magnet.generate_interface(user)
 		else
-			user.machine = src
+			src.add_dialog(user)
 			var/dat = "<B>Mineral Mining Magnet Terminal</B><HR>"
 			dat += "<A href='?src=\ref[src];scan_for_connection=1'>Scan for Magnets</A><BR><BR>"
 			dat += "<B>Choose linked magnet:</B><BR>"
@@ -864,7 +866,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 		src.add_fingerprint(usr)
 
@@ -1082,7 +1084,7 @@
 				else
 					. = "Doesn't look like there's any valuable ore here."
 				if (src.event)
-					. += "<br><span style=\"color:red\">There's something not quite right here...</span>"
+					. += "<br><span class='alert'>There's something not quite right here...</span>"
 
 	attack_hand(var/mob/user as mob)
 		if(ishuman(user))
@@ -1092,7 +1094,7 @@
 				src.dig_asteroid(user,C.tool)
 				return
 			else if (H.is_hulk())
-				H.visible_message("<span style=\"color:red\"><b>[H.name] punches [src] with great strength!</span>")
+				H.visible_message("<span class='alert'><b>[H.name] punches [src] with great strength!</span>")
 				playsound(H.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 100, 1)
 				src.damage_asteroid(3)
 				return
@@ -1103,7 +1105,12 @@
 	Bumped(var/atom/A) //This is a bit hacky, sorry. Better than duplicating all the code.
 		if(isliving(A))
 			var/mob/living/L = A
-			L.click(src, list(), null, null)
+			var/mob/living/carbon/human/H
+			if(ishuman(L))
+				H = L
+			var/obj/item/held = L.equipped()
+			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
+				L.click(src, list(), null, null)
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1111,7 +1118,7 @@
 			var/obj/item/mining_tool/T = W
 			src.dig_asteroid(user,T)
 			if (T.status)
-				T.process_charges(1)
+				T.process_charges(T.digcost)
 
 		else if (istype(W, /obj/item/oreprospector))
 			var/message = "----------------------------------<br>"
@@ -1128,12 +1135,12 @@
 				message += "The rock here has been weakened.<br>"
 			if (E)
 				if (E.analysis_string)
-					message += "<span style=\"color:red\">[E.analysis_string]</span><br>"
+					message += "<span class='alert'>[E.analysis_string]</span><br>"
 			message += "----------------------------------"
 			boutput(user, message)
 
 		else
-			boutput(user, "<span style=\"color:red\">You hit the [src.name] with [W], but nothing happens!</span>")
+			boutput(user, "<span class='alert'>You hit the [src.name] with [W], but nothing happens!</span>")
 		return
 
 	proc/change_health(var/amount=0)
@@ -1204,7 +1211,7 @@
 
 		if (src.ore)
 			src.ore.onHit(src)
-		//user.visible_message("<span style=\"color:red\">[user.name] strikes [src] with [tool].</span>")
+		//user.visible_message("<span class='alert'>[user.name] strikes [src] with [tool].</span>")
 
 		var/dig_chance = 100
 		var/dig_feedback = null
@@ -1224,7 +1231,7 @@
 			destroy_asteroid()
 		else
 			if (dig_feedback)
-				boutput(user, "<span style=\"color:red\">[dig_feedback]</span>")
+				boutput(user, "<span class='alert'>[dig_feedback]</span>")
 
 		return
 
@@ -1262,7 +1269,7 @@
 			return
 		if (E)
 			if (E.excavation_string)
-				src.visible_message("<span style=\"color:red\">[E.excavation_string]</span>")
+				src.visible_message("<span class='alert'>[E.excavation_string]</span>")
 			E.onExcavate(src)
 		var/ore_to_create = src.default_ore
 		if (ispath(ore_to_create) && dropOre)
@@ -1436,7 +1443,7 @@
 /obj/item/mining_tool
 	name = "pickaxe"
 	desc = "A thing to bash rocks with until they become smaller rocks."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "pickaxe"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pick"
@@ -1444,42 +1451,51 @@
 	flags = ONBELT
 	force = 7
 	var/dig_strength = 1
-	var/charges = 0
-	var/maximum_charges = 0
+	var/obj/item/ammo/power_cell/cell = null
 	var/status = 0
+	var/digcost = 0
 	var/weakener = 0
 	var/image/powered_overlay = null
 	var/sound/hitsound_charged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	var/sound/hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	module_research = list("tools" = 3, "engineering" = 1, "mining" = 1)
 
-	// Seems like a basic bit of user feedback to me (Convair880).
-	examine()
+	New()
 		..()
-		if (src.maximum_charges <= 0) return
-		if (isrobot(usr)) return // Drains battery instead.
-		boutput(usr, "The [src.name] is turned [src.status ? "on" : "off"]. There are [src.charges]/[src.maximum_charges] charges left!")
-		return
+		BLOCK_SETUP(BLOCK_ROD)
+
+	// Seems like a basic bit of user feedback to me (Convair880).
+	examine(mob/user)
+		. = ..()
+		if (!src.cell)
+			return
+		if (isrobot(user))
+			return // Drains battery instead.
+		. += "The [src.name] is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
 
 	proc/process_charges(var/use)
 		if (!isnum(use) || use < 0)
 			return 0
-		if (src.charges < 1)
+		if (cell.charge < 1)
 			return 0
-		src.charges -= use
-		src.charges = max(0,min(src.charges,src.maximum_charges))
-		if (charges == 0)
+		src.cell.use(use)
+		if (src.cell.charge == 0)
 			src.power_down()
 			var/turf/T = get_turf(src)
-			T.visible_message("<span style=\"color:red\">[src] runs out of charge and powers down!</span>")
+			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
 		return 1
+
+	afterattack(target as mob, mob/user as mob)
+		..()
+		if (src.status && !isturf(target))
+			src.process_charges(digcost*5)
 
 	proc/charge(var/amount)
 		//Support for recharge stations. Increment uses by one until we reach max.
-		src.charges = src.charges + 1 > src.maximum_charges ? src.maximum_charges : src.charges + 1
-
-		//Return if we are finished charging or not to the recharger
-		return src.charges < src.maximum_charges
+		if(src.cell)
+			return src.cell.charge(amount)
+		else//No cell, or not rechargeable. Tell anything trying to charge it.
+			return -1
 
 	proc/power_up()
 		src.status = 1
@@ -1495,6 +1511,17 @@
 			signal_event("icon_updated")
 		return
 
+	attackby(obj/item/b as obj, mob/user as mob)
+		if (istype(b, /obj/item/ammo/power_cell/))
+			var/obj/item/ammo/power_cell/pcell = b
+			if (src.cell)
+				if (pcell.swap(src))
+					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
+		else
+			..()
+
+	proc/update_icon()
+		return
 obj/item/clothing/gloves/concussive
 	name = "concussion gauntlets"
 	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
@@ -1516,39 +1543,39 @@ obj/item/clothing/gloves/concussive
 /obj/item/mining_tool/power_pick
 	name = "power pick"
 	desc = "An energised mining tool."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerpick"
-	item_state = "ppick"
+	item_state = "ppick1"
 	flags = ONBELT
 	dig_strength = 2
-	maximum_charges = 50
+	digcost = 2
+	cell = new/obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	module_research = list("tools" = 5, "engineering" = 2, "mining" = 3)
 
 	New()
 		..()
-		powered_overlay = image('icons/obj/mining.dmi', "pp-glow")
-		charges = maximum_charges
+		powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
 		src.power_up()
 
 	attack_self(var/mob/user as mob)
 		if (src.process_charges(0))
 			if (!src.status)
-				boutput(user, "<span style=\"color:blue\">You power up [src].</span>")
+				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
+				item_state = "ppick1"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
 			else
-				boutput(user, "<span style=\"color:blue\">You power down [src].</span>")
+				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
+				item_state = "ppick0"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
 		else
-			boutput(user, "<span style=\"color:red\">No charge left in [src].</span>")
+			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
-	afterattack(target as mob, mob/user as mob)
-		if(src.status)
-			src.process_charges(1)
-		..()
 
 	power_up()
 		..()
@@ -1560,12 +1587,13 @@ obj/item/clothing/gloves/concussive
 		src.force = 7
 		src.dig_strength = 1
 
+
 	borg
 		process_charges(var/use)
 			var/mob/living/silicon/robot/R = usr
 			if (istype(R))
-				if (R.cell.charge > use * 200)
-					R.cell.use(200 * use)
+				if (R.cell.charge > use * 66)
+					R.cell.use(66 * use)
 					return 1
 				return 0
 			else
@@ -1574,7 +1602,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/mining_tool/drill
 	name = "laser drill"
 	desc = "Safe mining tool that doesn't require recharging."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "lasdrill"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "drill"
@@ -1589,21 +1617,21 @@ obj/item/clothing/gloves/concussive
 /obj/item/mining_tool/powerhammer
 	name = "power hammer"
 	desc = "An energised mining tool."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "hammer"
-	maximum_charges = 30
+	item_state = "phammer1"
+	cell = new/obj/item/ammo/power_cell
 	force = 9
 	dig_strength = 3
+	digcost = 3
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	module_research = list("tools" = 5, "engineering" = 1, "mining" = 5)
 
 	New()
 		..()
-		src.powered_overlay = image('icons/obj/mining.dmi', "ph-glow")
-		charges = maximum_charges
+		src.powered_overlay = image('icons/obj/items/mining.dmi', "ph-glow")
 		src.power_up()
 
 	power_up()
@@ -1623,27 +1651,26 @@ obj/item/clothing/gloves/concussive
 	attack_self(var/mob/user as mob)
 		if (src.process_charges(0))
 			if (!src.status)
-				boutput(user, "<span style=\"color:blue\">You power up [src].</span>")
+				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
+				item_state = "phammer1"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
 			else
-				boutput(user, "<span style=\"color:blue\">You power down [src].</span>")
+				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
+				item_state = "phammer0"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
 		else
-			boutput(user, "<span style=\"color:red\">No charge left in [src].</span>")
-
-	afterattack(target as mob, mob/user as mob)
-		..()
-		if (src.status)
-			src.process_charges(1)
+			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
 	borg
 		process_charges(var/use)
 			var/mob/living/silicon/robot/R = usr
 			if (istype(R))
-				if (R.cell.charge > use * 200)
-					R.cell.use(200 * use)
+				if (R.cell.charge > use * 66)
+					R.cell.use(66 * use)
 					return 1
 				return 0
 			else
@@ -1655,10 +1682,11 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/sealab_power.dmi'
 	icon_state = "powershovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "powershovel"
+	item_state = "pshovel1"
 	flags = ONBELT
 	dig_strength = 0
-	maximum_charges = 50
+	digcost = 2
+	cell = new/obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	module_research = list("tools" = 5, "engineering" = 2, "mining" = 3)
@@ -1667,26 +1695,24 @@ obj/item/clothing/gloves/concussive
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
-		charges = maximum_charges
 		src.power_up()
 
 	attack_self(var/mob/user as mob)
 		if (src.process_charges(0))
 			if (!src.status)
-				boutput(user, "<span style=\"color:blue\">You power up [src].</span>")
+				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
+				item_state = "pshovel1"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
 			else
-				boutput(user, "<span style=\"color:blue\">You power down [src].</span>")
+				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
+				item_state = "pshovel0"
+				user.update_inhands()
 				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
 		else
-			boutput(user, "<span style=\"color:red\">No charge left in [src].</span>")
-
-	afterattack(target as mob, mob/user as mob)
-		if(src.status)
-			src.process_charges(1)
-		..()
+			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
 	power_up()
 		..()
@@ -1702,8 +1728,8 @@ obj/item/clothing/gloves/concussive
 		process_charges(var/use)
 			var/mob/living/silicon/robot/R = usr
 			if (istype(R))
-				if (R.cell.charge > use * 200)
-					R.cell.use(200 * use)
+				if (R.cell.charge > use * 100)
+					R.cell.use(100 * use)
 					return 1
 				return 0
 			else
@@ -1745,9 +1771,9 @@ obj/item/clothing/gloves/concussive
 				if(user.bioHolder.HasEffect("clumsy") || src.emagged)
 					if(src.emagged)
 						user.visible_message("<b>CLICK</b>")
-						boutput(user, "<span style=\"color:red\">The timing mechanism malfunctions!</span>")
+						boutput(user, "<span class='alert'>The timing mechanism malfunctions!</span>")
 					else
-						boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+						boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN_DBG(0.5 SECONDS)
 						concussive_blast()
@@ -1755,8 +1781,8 @@ obj/item/clothing/gloves/concussive
 						return
 				else
 					if (istype(target, /turf/simulated/wall/asteroid/) && !src.hacked)
-						boutput(user, "<span style=\"color:red\">You slap the charge on [target], [det_time/10] seconds!</span>")
-						user.visible_message("<span style=\"color:red\">[user] has attached [src] to [target].</span>")
+						boutput(user, "<span class='alert'>You slap the charge on [target], [det_time/10] seconds!</span>")
+						user.visible_message("<span class='alert'>[user] has attached [src] to [target].</span>")
 						src.icon_state = "bcharge2"
 						user.drop_item()
 
@@ -1777,28 +1803,28 @@ obj/item/clothing/gloves/concussive
 							qdel(src)
 							return
 					else if (src.hacked) ..()
-					else boutput(user, "<span style=\"color:red\">These will only work on asteroids.</span>")
+					else boutput(user, "<span class='alert'>These will only work on asteroids.</span>")
 			return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 
 		if(!src.emagged && !src.hacked)
 			if (user)
-				boutput(user, "<span style=\"color:blue\">You short out the timing mechanism!</span>")
+				boutput(user, "<span class='notice'>You short out the timing mechanism!</span>")
 
 			src.desc += " It has been tampered with."
 			src.emagged = 1
 			return 1
 		else
 			if (user)
-				boutput(user, "<span style=\"color:red\">This has already been tampered with.</span>")
+				boutput(user, "<span class='alert'>This has already been tampered with.</span>")
 			return 0
 
 	demag(var/mob/user)
 		if (!src.emagged)
 			return 0
 		if (user)
-			boutput(user, "<span style=\"color:blue\">You repair the timing mechanism!</span>")
+			boutput(user, "<span class='notice'>You repair the timing mechanism!</span>")
 		src.emagged = 0
 		src.desc = null
 		src.desc = "It is set to detonate in 5 seconds."
@@ -1807,11 +1833,11 @@ obj/item/clothing/gloves/concussive
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/device/chargehacker))
 			if(!src.emagged && !src.hacked)
-				boutput(user, "<span style=\"color:blue\">You short out the attachment mechanism, removing its restrictions!</span>")
+				boutput(user, "<span class='notice'>You short out the attachment mechanism, removing its restrictions!</span>")
 				src.desc += " It has been tampered with."
 				src.hacked = 1
 			else
-				boutput(user, "<span style=\"color:red\">This has already been tampered with.</span>")
+				boutput(user, "<span class='alert'>This has already been tampered with.</span>")
 		else ..()
 
 	proc/concussive_blast()
@@ -1830,15 +1856,15 @@ obj/item/clothing/gloves/concussive
 				C.changeStatus("stunned", 80)
 				C.changeStatus("weakened", 10 SECONDS)
 				C.stuttering += 15
-				boutput(C, "<span style=\"color:red\">The concussive blast knocks you off your feet!</span>")
+				boutput(C, "<span class='alert'>The concussive blast knocks you off your feet!</span>")
 			if(get_dist(src,C) <= src.expl_heavy)
-				C.TakeDamage("All",rand(15,25)/C.get_explosion_resistance(),0)
-				boutput(C, "<span style=\"color:red\">You are battered by the concussive shockwave!</span>")
+				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
+				boutput(C, "<span class='alert'>You are battered by the concussive shockwave!</span>")
 
 /obj/item/cargotele
 	name = "cargo transporter"
 	desc = "A device for teleporting crated goods."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "cargotele"
 	var/charges = 8
 	var/maximum_charges = 8
@@ -1848,17 +1874,17 @@ obj/item/clothing/gloves/concussive
 	flags = ONBELT
 	mats = 4
 
-	examine()
-		..()
-		if (isrobot(usr)) return // Drains battery instead.
-		boutput(usr, "There are [src.charges]/[src.maximum_charges] charges left!")
-		return
+	examine(mob/user)
+		. = ..()
+		if (isrobot(user))
+			return // Drains battery instead.
+		. += "There are [src.charges]/[src.maximum_charges] charges left!"
 
 	attack_self() // Fixed --melon
 		if (src.charges < 1)
-			boutput(usr, "<span style=\"color:red\">The transporter is out of charge.</span>")
+			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
 			return
-		if (!cargopads.len) boutput(usr, "<span style=\"color:red\">No receivers available.</span>")
+		if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
 		else
 		//here i set up an empty var that can take any object, and tell it to look for absolutely anything in the list
 			var/selection = input("Select Cargo Pad Location:", "Cargo Pads", null, null) as null|anything in cargopads
@@ -1867,7 +1893,7 @@ obj/item/clothing/gloves/concussive
 			var/turf/T = get_turf(selection)
 			//get the turf of the pad itself
 			if (!T)
-				boutput(usr, "<span style=\"color:red\">Target not set!</span>")
+				boutput(usr, "<span class='alert'>Target not set!</span>")
 				return
 			boutput(usr, "Target set to [T.loc].")
 			//blammo! works!
@@ -1882,15 +1908,15 @@ obj/item/clothing/gloves/concussive
 
 	proc/cargoteleport(var/obj/T, var/mob/user)
 		if (!src.target)
-			boutput(user, "<span style=\"color:red\">You need to set a target first!</span>")
+			boutput(user, "<span class='alert'>You need to set a target first!</span>")
 			return
 		if (src.charges < 1)
-			boutput(user, "<span style=\"color:red\">The transporter is out of charge.</span>")
+			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
 			if (R.cell.charge < src.robocharge)
-				boutput(user, "<span style=\"color:red\">There is not enough charge left in your cell to use this.</span>")
+				boutput(user, "<span class='alert'>There is not enough charge left in your cell to use this.</span>")
 				return
 
 		// Why didn't you implement checks for these in the first place, sigh (Convair880).
@@ -1898,7 +1924,7 @@ obj/item/clothing/gloves/concussive
 			user.show_text("The [T.name] is securely bolted to your chassis.", "red")
 			return
 
-		boutput(user, "<span style=\"color:blue\">Teleporting [T]...</span>")
+		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
 
 		if(do_after(user, 50))
@@ -1907,7 +1933,7 @@ obj/item/clothing/gloves/concussive
 				var/turf/t = get_turf(src.target)
 				if(isrestrictedz(t.z))
 					if(user)
-						user.show_text("<span style='color:red'>The [src] fails to power on!")
+						user.show_text("<span class='alert'>The [src] fails to power on!")
 						logTheThing("station", user, null, "tried to cargo transport to a restricted z-level: [log_loc(src.target)].")
 					return
 			if (ismob(T.loc) && T.loc == user)
@@ -1927,12 +1953,10 @@ obj/item/clothing/gloves/concussive
 
 			for (var/mob/M in T.contents)
 				if (M)
-					logTheThing("station", user, M, "uses a cargo transporter to send [T.name][is_locked ? " (locked)" : ""][is_welded ? " (welded)" : ""] with %target% inside to [log_loc(src.target)].")
+					logTheThing("station", user, M, "uses a cargo transporter to send [T.name][is_locked ? " (locked)" : ""][is_welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 			T.set_loc(src.target)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src)
 			if (isrobot(user))
 				var/mob/living/silicon/robot/R = user
 				R.cell.charge -= src.robocharge
@@ -1941,9 +1965,9 @@ obj/item/clothing/gloves/concussive
 				if (src.charges < 0)
 					src.charges = 0
 				if (src.charges == 0)
-					boutput(user, "<span style=\"color:red\">Transfer successful. The transporter is now out of charge.</span>")
+					boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 				else
-					boutput(user, "<span style=\"color:blue\">Transfer successful. [src.charges] charges remain.</span>")
+					boutput(user, "<span class='notice'>Transfer successful. [src.charges] charges remain.</span>")
 		return
 
 /obj/item/cargotele/traitor
@@ -1952,6 +1976,7 @@ obj/item/clothing/gloves/concussive
 	var/list/possible_targets = list()
 
 	New()
+		..()
 		for(var/turf/T in world) //hate to do this but it's only once per spawn vOv
 			LAGCHECK(LAG_LOW)
 			if(istype(T,/turf/space) && T.z != 1 && !isrestrictedz(T.z))
@@ -1963,12 +1988,12 @@ obj/item/clothing/gloves/concussive
 	cargoteleport(var/obj/T, var/mob/user)
 		src.target = pick(src.possible_targets)
 		if (!src.target)
-			boutput(user, "<span style=\"color:red\">No target found!</span>")
+			boutput(user, "<span class='alert'>No target found!</span>")
 			return
 		if (src.charges < 1)
-			boutput(user, "<span style=\"color:red\">The transporter is out of charge.</span>")
+			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
 			return
-		boutput(user, "<span style=\"color:blue\">Teleporting [T]...</span>")
+		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
 
 		if(do_after(user, 50))
@@ -1976,26 +2001,24 @@ obj/item/clothing/gloves/concussive
 			// Logs for good measure (Convair880).
 			for (var/mob/M in T.contents)
 				if (M)
-					logTheThing("station", user, M, "uses a Syndicate cargo transporter to send [T.name] with %target% inside to [log_loc(src.target)].")
+					logTheThing("station", user, M, "uses a Syndicate cargo transporter to send [T.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 			T.set_loc(src.target)
 			if(hasvar(T, "welded")) T:welded = 1
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src)
 			src.charges -= 1
 			if (src.charges < 0)
 				src.charges = 0
 			if (src.charges == 0)
-				boutput(user, "<span style=\"color:red\">Transfer successful. The transporter is now out of charge.</span>")
+				boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">Transfer successful. [src.charges] charges remain.</span>")
+				boutput(user, "<span class='notice'>Transfer successful. [src.charges] charges remain.</span>")
 		return
 
 /obj/item/oreprospector
 	name = "geological scanner"
 	desc = "A device capable of detecting nearby mineral deposits."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
 	flags = ONBELT
 	w_class = 1.0
@@ -2045,7 +2068,7 @@ obj/item/clothing/gloves/concussive
 
 /proc/mining_scandecal(var/mob/living/user, var/turf/T, var/decalicon)
 	if(!user || !T || !decalicon) return
-	var/image/O = image('icons/obj/mining.dmi',T,decalicon,AREA_LAYER+1)
+	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,AREA_LAYER+1)
 	user << O
 	SPAWN_DBG(2 MINUTES)
 		if (user && user.client)
@@ -2059,7 +2082,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/device/chargehacker
 	name = "geological scanner"
 	desc = "The scanner doesn't look right somehow."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
 	flags = ONBELT
 	w_class = 1.0
@@ -2086,7 +2109,7 @@ obj/item/clothing/gloves/concussive
 		..()
 
 	attack_hand(var/mob/user as mob)
-		if (!src.cell) boutput(user, "<span style=\"color:red\">It won't work without a power cell!</span>")
+		if (!src.cell) boutput(user, "<span class='alert'>It won't work without a power cell!</span>")
 		else
 			var/action = input("What do you want to do?", "Mineral Accumulator") in list("Flip the power switch","Change the destination","Remove the power cell")
 			if (action == "Remove the power cell")
@@ -2098,14 +2121,14 @@ obj/item/clothing/gloves/concussive
 
 				src.cell = null
 			else if (action == "Change the destination")
-				if (!cargopads.len) boutput(usr, "<span style=\"color:red\">No receivers available.</span>")
+				if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
 				else
 					var/selection = input("Select Cargo Pad Location:", "Cargo Pads", null, null) as null|anything in cargopads
 					if(!selection)
 						return
 					var/turf/T = get_turf(selection)
 					if (!T)
-						boutput(usr, "<span style=\"color:red\">Target not set!</span>")
+						boutput(usr, "<span class='alert'>Target not set!</span>")
 						return
 					boutput(usr, "Target set to [T.loc].")
 					src.target = T
@@ -2125,7 +2148,7 @@ obj/item/clothing/gloves/concussive
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/cell/))
-			if (src.cell) boutput(user, "<span style=\"color:red\">It already has a power cell inserted!</span>")
+			if (src.cell) boutput(user, "<span class='alert'>It already has a power cell inserted!</span>")
 			else
 				user.drop_item()
 				W.set_loc(src)
@@ -2137,14 +2160,14 @@ obj/item/clothing/gloves/concussive
 		var/moved = 0
 		if (src.active)
 			if (!src.cell)
-				src.visible_message("<span style=\"color:red\">[src] instantly shuts itself down.</span>")
+				src.visible_message("<span class='alert'>[src] instantly shuts itself down.</span>")
 				src.active = 0
 				src.anchored = 0
 				icon_state = "gravgen-off"
 				return
 			var/obj/item/cell/PCEL = src.cell
 			if (PCEL.charge <= 0)
-				src.visible_message("<span style=\"color:red\">[src] runs out of power and shuts down.</span>")
+				src.visible_message("<span class='alert'>[src] runs out of power and shuts down.</span>")
 				src.active = 0
 				src.anchored = 0
 				icon_state = "gravgen-off"
@@ -2241,7 +2264,7 @@ var/global/list/cargopads = list()
 			cargopads.Remove(src)
 		..()
 
-	was_built_from_frame(mob/user)
+	was_built_from_frame(mob/user, newly_built)
 		if (!cargopads.Find(src))
 			cargopads.Add(src)
 		..()
@@ -2266,7 +2289,7 @@ var/global/list/cargopads = list()
 /obj/item/ore_scoop
 	name = "ore scoop"
 	desc = "A device that sucks up ore into a satchel automatically. Just load in a satchel and walk over ore to scoop it up."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "scoop"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
@@ -2284,7 +2307,7 @@ var/global/list/cargopads = list()
 		if (istype(W,/obj/item/satchel/mining/))
 			var/obj/item/satchel/mining/S = W
 			if (satchel)
-				boutput(user, "<span style=\"color:red\">There's already a satchel hooked up to [src].</span>")
+				boutput(user, "<span class='alert'>There's already a satchel hooked up to [src].</span>")
 				return
 			user.drop_item()
 			S.set_loc(src)
@@ -2303,18 +2326,18 @@ var/global/list/cargopads = list()
 				satchel = null
 				icon_state = "scoop"
 			else
-				boutput(user, "<span style=\"color:red\">There's no satchel in [src] to unload.</span>")
+				boutput(user, "<span class='alert'>There's no satchel in [src] to unload.</span>")
 		else
-			boutput(user, "<span style=\"color:red\">The satchel is firmly secured.</span>")
+			boutput(user, "<span class='alert'>The satchel is firmly secured.</span>")
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if (!isturf(target))
 			target = get_turf(target)
 		if (!satchel)
-			boutput(user, "<span style=\"color:red\">There's no satchel in [src] to dump out.</span>")
+			boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
 			return
 		if (satchel.contents.len < 1)
-			boutput(user, "<span style=\"color:red\">The satchel in [src] is empty.</span>")
+			boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
 			return
 		user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
 		for (var/obj/item/I in satchel.contents)
@@ -2342,6 +2365,20 @@ var/global/list/cargopads = list()
 		else return
 
 /turf/simulated/floor/ancient
+	name = "strange surface"
+	desc = "A strange jet black metal floor. There are odd lines carved into it."
+	icon_state = "ancient"
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		return
+
+	ex_act(severity)
+		return
+
+/turf/unsimulated/floor/ancient
 	name = "strange surface"
 	desc = "A strange jet black metal floor. There are odd lines carved into it."
 	icon_state = "ancient"

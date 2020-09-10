@@ -39,28 +39,28 @@
 
 		wish_granted += user.key
 		user.say(wish)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		boutput(user, "<b>[O]</b> resonates, \"<big>SO BE IT...</big>\"")
 		playsound(O, "sound/musical_instruments/Gong_Rumbling.ogg", 40, 1)
-		O.visible_message("<span style=\"color:red\"><b>[O]</b> begins to charge up...</span>")
-		sleep(30)
+		O.visible_message("<span class='alert'><b>[O]</b> begins to charge up...</span>")
+		sleep(3 SECONDS)
 		if (prob(2))
 			evil = !evil
 
 		if (evil)
 			switch(wish)
 				if("I wish to become rich!")
-					O.visible_message("<span style=\"color:red\"><b>[O]</b> envelops [user] in a golden light!</span>")
+					O.visible_message("<span class='alert'><b>[O]</b> envelops [user] in a golden light!</span>")
 					playsound(user, "sound/weapons/flashbang.ogg", 50, 1)
 					for(var/mob/N in viewers(user, null))
 						N.flash(3 SECONDS)
 						if(N.client)
-							shake_camera(N, 6, 4)
+							shake_camera(N, 6, 16)
 					user.desc = "A statue of someone very wealthy"
 					user.become_gold_statue()
 
 				if("I wish for great power!")
-					O.visible_message("<span style=\"color:red\"><b>[O] discharges a massive bolt of electricity!</b></span>")
+					O.visible_message("<span class='alert'><b>[O] discharges a massive bolt of electricity!</b></span>")
 					playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
 					var/list/affected = DrawLine(O,user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 					for(var/obj/OB in affected)
@@ -70,7 +70,7 @@
 		else
 			switch(wish)
 				if("I wish to become rich!")
-					O.visible_message("<span style=\"color:red\">A ton of money falls out of thin air! Woah!</span>")
+					O.visible_message("<span class='alert'>A ton of money falls out of thin air! Woah!</span>")
 					for(var/turf/T in range(user,3))
 						if (T.density)
 							continue
@@ -78,7 +78,7 @@
 						S.setup(T)
 
 				if("I wish for great power!")
-					O.visible_message("<span style=\"color:red\"><b>[O]</b> envelops [user] in a brilliant light!</span>")
+					O.visible_message("<span class='alert'><b>[O]</b> envelops [user] in a brilliant light!</span>")
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.bioHolder)

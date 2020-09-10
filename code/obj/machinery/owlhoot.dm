@@ -35,10 +35,10 @@
 			src.anchored = !src.anchored
 
 			if (!src.anchored)
-				user.show_message(text("<span style=\"color:red\">[src] can now be moved.</span>"))
+				user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
 
 			else if (src.anchored)
-				user.show_message(text("<span style=\"color:red\">[src] is now secured.</span>"))
+				user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
 
 	attack_hand(user)
 		if (src.anchored)
@@ -74,4 +74,4 @@
 			if (mobsnearby.len > 0)
 				M1 = pick(mobsnearby)
 			if (M1 && prob(50))
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> frowns at [M1].</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> frowns at [M1].</span>")

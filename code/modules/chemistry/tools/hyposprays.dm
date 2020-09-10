@@ -3,7 +3,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 "oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
 "salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
 "menthol", "cold_medicine", "antihistamine", "ipecac",\
-"booster_enzyme", "anti_fart", "goodnanites")
+"booster_enzyme", "anti_fart", "goodnanites", "smelling_salt")
 
 /* =================================================== */
 /* -------------------- Hypospray -------------------- */
@@ -29,6 +29,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 	var/image/fluid_image
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
 	hide_attack = 2
+	inventory_counter_enabled = 1
 
 	emagged
 		New() // as it turns out it is me who is the dumb
@@ -52,6 +53,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 			src.icon_state = "hypo0"
 			src.name = "hypospray"
 			src.UpdateOverlays(null, "fluid")
+		src.inventory_counter.update_number(src.reagents.total_volume)
 		signal_event("icon_updated")
 
 	on_reagent_change(add)
@@ -61,7 +63,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 
 	attack_self(mob/user as mob)
 		update_icon()
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = ""
 		dat += "Injection amount: <A href='?src=\ref[src];change_amt=1'>[inj_amount == -1 ? "ALL" : inj_amount]</A><BR><BR>"
 
@@ -115,20 +117,24 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		return 1
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
-		if (!ishuman(M))
-			user.show_text("[src] can only be used on humans!", "red")
+		if (issilicon(M))
+			user.show_text("[src] cannot be used on silicon lifeforms!", "red")
+			return
+
+		if (!isliving(M))
+			user.show_text("[src] can only be used on the living!", "red")
 			return
 
 		if (!reagents.total_volume)
 			user.show_text("[src] is empty.", "red")
 			return
 		if(check_target_immunity(M))
-			user.show_text("<span style='color:red'>You can't seem to inject [M]!</span>")
+			user.show_text("<span class='alert'>You can't seem to inject [M]!</span>")
 			return
 		var/amt_prop = inj_amount == -1 ? src.reagents.total_volume : inj_amount
-		user.visible_message("<span style='color:blue'><B>[user] injects [M] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B></span>",\
-		"<span style='color:blue'>You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units.</span>")
-		logTheThing("combat", user, M, "uses a hypospray [log_reagents(src)] to inject %target% at [log_loc(user)].")
+		user.visible_message("<span class='notice'><B>[user] injects [M] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B></span>",\
+		"<span class='notice'>You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units.</span>")
+		logTheThing("combat", user, M, "uses a hypospray [log_reagents(src)] to inject [constructTarget(M,"combat")] at [log_loc(user)].")
 
 		src.reagents.trans_to(M, amt_prop)
 

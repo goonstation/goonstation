@@ -37,12 +37,12 @@
 	if (!( src.connected ))
 		viewers(null, null) << "Cannot locate mass driver connector. Cancelling firing sequence!"
 		return
-	for(var/obj/machinery/door/poddoor/M in doors)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			SPAWN_DBG( 0 )
 				M.open()
 				return
-	sleep(20)
+	sleep(2 SECONDS)
 
 	//src.connected.drive()		*****RM from 40.93.3S
 	for(var/obj/machinery/mass_driver/M in machine_registry[MACHINES_MASSDRIVERS])
@@ -50,8 +50,8 @@
 			M.power = src.connected.power
 			M.drive()
 
-	sleep(50)
-	for(var/obj/machinery/door/poddoor/M in doors)
+	sleep(5 SECONDS)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			SPAWN_DBG( 0 )
 				M.close()
@@ -73,7 +73,7 @@
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -99,7 +99,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				//generate appropriate circuitboard. Accounts for /pod/old computer types
@@ -133,7 +133,7 @@
 		return
 
 	var/dat = "<HTML><BODY><TT><B>Mass Driver Controls</B>"
-	user.machine = src
+	src.add_dialog(user)
 	var/d2
 	if (src.timing)
 		d2 = text("<A href='?src=\ref[];time=0'>Stop Time Launch</A>", src)
@@ -175,9 +175,10 @@
 		if (src.time > 0)
 			src.time = round(src.time) - 1
 		else
-			alarm()
-			src.time = 0
-			src.timing = 0
+			SPAWN_DBG(0)
+				alarm()
+				src.time = 0
+				src.timing = 0
 		src.updateDialog()
 	return
 
@@ -185,14 +186,14 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
 			//src.TPR = 1
 			//SPAWN_DBG(1 MINUTE)
 			//	if(src)
 			//		src.TPR = 0
 			//		src.updateDialog()
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=computer")
 			usr.teleportscroll(1, 2, src)
 			return
@@ -214,7 +215,7 @@
 						src.time = min(max(round(src.time), 0), 120)
 					else
 						if (href_list["door"])
-							for(var/obj/machinery/door/poddoor/M in doors)
+							for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 								if (M.id == src.id)
 									if (M.density)
 										SPAWN_DBG( 0 )

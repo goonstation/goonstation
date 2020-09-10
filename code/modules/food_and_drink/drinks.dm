@@ -164,7 +164,7 @@
 /obj/item/reagent_containers/food/drinks/water
 	name = "water bottle"
 	desc = "I wonder if this is still fresh?"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bottlewater"
 	item_state = "contliquid"
 	initial_volume = 50
@@ -243,7 +243,7 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		if (is_sealed)
-			boutput(user, "<span style=\"color:red\">You can't drink out of a sealed can!</span>") //idiot
+			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
 			return
 		..()
 
@@ -257,7 +257,7 @@
 		if (!src.reagents || !src.reagents.total_volume)
 			var/zone = user.zone_sel.selecting
 			if (zone == "head")
-				user.visible_message("<span style=\"color:red\"><b>[user] crushes \the [src] against their forehead!! [pick("Bro!", "Epic!", "Damn!", "Gnarly!", "Sick!",\
+				user.visible_message("<span class='alert'><b>[user] crushes \the [src] against their forehead!! [pick("Bro!", "Epic!", "Damn!", "Gnarly!", "Sick!",\
 				"Crazy!", "Nice!", "Hot!", "What a monster!", "How sick is that?", "That's slick as shit, bro!")]", "You crush the can against your forehead! You feel super cool.")
 				drop_this_shit = 1
 			else
@@ -274,7 +274,7 @@
 /obj/item/crushed_can
 	name = "crushed can"
 	desc = "This can's been totally crushed!"
-	icon = 'icons/obj/can.dmi'
+	icon = 'icons/obj/foodNdrink/can.dmi'
 
 	proc/set_stuff(var/name, var/icon_state)
 		src.name = "crushed [name]"
@@ -292,27 +292,19 @@
 /obj/item/reagent_containers/food/drinks/cola/random
 	name = "space cola"
 	desc = "You don't recognise this cola brand at all."
-	icon = 'icons/obj/can.dmi'
+	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 
 	New()
 		..()
-		name = "[pick(COLA_prefixes)] [pick(COLA_suffixes)]"
+		name = "[pick_string("chemistry_tools.txt", "COLA_prefixes")] [pick_string("chemistry_tools.txt", "COLA_suffixes")]"
 		var/n = rand(1,26)
 		icon_state = "cola-[n]"
 		reagents.add_reagent("cola, 20")
 		reagents.add_reagent("VHFCS, 10")
-		reagents.add_reagent(pick(COLA_flavors), 5,3)
-
-///////////
-
-/var/list/COLA_prefixes = strings("chemistry_tools.txt", "COLA_prefixes")
-/var/list/COLA_suffixes = strings("chemistry_tools.txt", "COLA_suffixes")
-/var/list/COLA_flavors = strings("chemistry_tools.txt", "COLA_flavors")
-
-///////////
+		reagents.add_reagent(pick_string("chemistry_tools.txt", "COLA_flavors"), 5, 3)
 
 /obj/item/reagent_containers/food/drinks/peach
 	name = "Delightful Dan's Peachy Punch"
@@ -329,13 +321,15 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = "milk"
+	var/canbequilty = 1
 
 	New()
 		..()
-		if( prob(10) )
-			name = "Quilty Farms Milk"
-			desc = "For ages 1[pick("0","8")] and under."
-			icon_state = "milk_quilty"
+		if(canbequilty == 1)
+			if( prob(10))
+				name = "Quilty Farms Milk"
+				desc = "For ages 1[pick("0","8")] and under."
+				icon_state = "milk_quilty"
 
 /obj/item/reagent_containers/food/drinks/milk/rancid
 	name = "Rancid Space Milk"
@@ -344,6 +338,24 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("milk"=25,"toxin"=25)
+
+/obj/item/reagent_containers/food/drinks/milk/clownspider
+	name = "Honkey Gibbersons - Clownspider Milk"
+	desc = "A bottle of really - really colorful milk? The smell is sweet and looking at this envokes the same thrill as wanting to drink paint!"
+	icon_state = "milk"
+	heal_amt = 1
+	initial_volume = 50
+	initial_reagents = list("rainbow fluid" = 7, "milk" = 19)
+	canbequilty = 0
+
+/obj/item/reagent_containers/food/drinks/milk/cluwnespider
+	name = "Honkey Gibbersons - Cluwnespider Milk"
+	desc = "A bottle of ... oh no! Do not look at it! Better never drink this colorful milk?!"
+	icon_state = "milk"
+	heal_amt = 1
+	initial_volume = 50
+	initial_reagents = list("painbow fluid" = 13, "milk" = 20)
+	canbequilty = 0
 
 /obj/item/reagent_containers/food/drinks/milk/soy
 	name = "Creaca's Space Soy Milk"

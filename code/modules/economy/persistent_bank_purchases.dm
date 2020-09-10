@@ -8,6 +8,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/harmonica,\
 	new /datum/bank_purchaseable/human_item/airhorn,\
 	new /datum/bank_purchaseable/human_item/dramatichorn,\
+	new /datum/bank_purchaseable/human_item/saxophone,\
 	new /datum/bank_purchaseable/human_item/trumpet,\
 	new /datum/bank_purchaseable/human_item/fiddle,\
 	new /datum/bank_purchaseable/human_item/gold_zippo,\
@@ -16,6 +17,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/food_synth,\
 	new /datum/bank_purchaseable/human_item/record,\
 	new /datum/bank_purchaseable/human_item/sparkler_box,\
+	new /datum/bank_purchaseable/human_item/dabbing_license,\
 	new /datum/bank_purchaseable/human_item/chem_hint,\
 
 	new /datum/bank_purchaseable/altjumpsuit,\
@@ -23,11 +25,16 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_fjallraven,\
 	new /datum/bank_purchaseable/bp_randoseru,\
 	new /datum/bank_purchaseable/bp_anello,\
+	new /datum/bank_purchaseable/nt_backpack,\
 	new /datum/bank_purchaseable/lizard,\
+	new /datum/bank_purchaseable/cow,\
 	new /datum/bank_purchaseable/skeleton,\
+	new /datum/bank_purchaseable/roach,\
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/corpse,\
 	new /datum/bank_purchaseable/space_diner,\
+	new /datum/bank_purchaseable/mail_order,\
+	new /datum/bank_purchaseable/missile_arrival,\
 	new /datum/bank_purchaseable/lunchbox,\
 
 	new /datum/bank_purchaseable/critter_respawn,\
@@ -35,11 +42,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 	new /datum/bank_purchaseable/fruithat,\
 	new /datum/bank_purchaseable/hoodie,\
+	new /datum/bank_purchaseable/pride_o_matic,\
 	new /datum/bank_purchaseable/fake_waldo,\
 	new /datum/bank_purchaseable/moustache,\
 	new /datum/bank_purchaseable/gold_that,\
+	new /datum/bank_purchaseable/dancin_shoes,\
 
-	new /datum/bank_purchaseable/alohamaton)
+	new /datum/bank_purchaseable/alohamaton,\
+	new /datum/bank_purchaseable/ai_hat)
 
 
 /datum/bank_purchaseable
@@ -60,7 +70,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			var/mob/living/carbon/human/H = M
 			equip_success = 1
 			var/obj/I = new path(H.loc)
-			I.name = "[H.real_name][pick(trinket_names)] [I.name]"
+			I.name = "[H.real_name][pick_string("trinkets.txt", "modifiers")] [I.name]"
 			I.quality = rand(5,80)
 			var/equipped = 0
 			if (istype(H.back, /obj/item/storage) && H.equip_if_possible(I, H.slot_in_backpack))
@@ -103,6 +113,16 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					R.clothes["head"] = O
 					O.set_loc(R)
 					equip_success = 1
+				if(equip_success)
+					R.update_appearance()
+
+		if(isAI(M))
+			var/mob/living/silicon/ai/AI = M
+			if (ispath(path, /obj/item/clothing))
+				if(ispath(path,/obj/item/clothing/head))
+					AI.set_hat(new path(AI))
+					equip_success = 1
+
 
 
 		//The AI can't really wear items...
@@ -176,6 +196,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			cost = 400
 			path = /obj/item/instrument/bikehorn/dramatic
 
+		saxophone
+			name = "Saxophone"
+			cost = 600
+			path = /obj/item/instrument/saxophone
+
 		trumpet
 			name = "Trumpet"
 			cost = 700
@@ -215,6 +240,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Sparkler Box"
 			cost = 1000
 			path = /obj/item/storage/sparkler_box
+
+		dabbing_license
+			name = "Dabbing License"
+			cost = 4200
+			path = /obj/item/card/id/dabbing_license
 
 		battlepass
 			name = "Battle Pass"
@@ -317,6 +347,18 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					return 1
 			return 0
 
+	cow
+		name = "Cow"
+		cost = 4000
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.bioHolder)
+					H.bioHolder.AddEffect("cow")
+					return 1
+			return 0
+
 	skeleton
 		name = "Skeleton"
 		cost = 5000
@@ -326,6 +368,18 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				var/mob/living/carbon/human/H = M
 				if (H.bioHolder)
 					H.bioHolder.AddEffect("skeleton")
+					return 1
+			return 0
+
+	roach
+		name = "Roach"
+		cost = 5000
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.bioHolder)
+					H.bioHolder.AddEffect("roach")
 					return 1
 			return 0
 
@@ -346,35 +400,69 @@ var/global/list/persistent_bank_purchaseables =	list(\
 							H.limbs.l_leg.delete()
 						if (H.limbs.r_leg)
 							H.limbs.r_leg.delete()
-						boutput( H, "<span style='color:blue'><b>Your limbs magically disappear! Oh, no!</b></span>" )
+						boutput( H, "<span class='notice'><b>Your limbs magically disappear! Oh, no!</b></span>" )
 				return 1
 			return 0
 
-	corpse 
+	corpse
 		name = "Corpse"
 		cost = 15000
+		carries_over = 0
 
 		Create(var/mob/living/M)
 			setdead(M)
-			boutput(M, "<span style='color:blue'><b>You magically keel over and die! Oh, no!</b></span>")
+			boutput(M, "<span class='notice'><b>You magically keel over and die! Oh, no!</b></span>")
 			return 1
 
-	space_diner 
+	space_diner
 		name = "Space Diner Patron"
 		cost = 5000
 
 		Create(var/mob/living/M)
-			var/list/turfs = get_area_turfs(/area/diner/dining, 1)
-			if (!turfs.len)
-				return 0
-			var/turf/T = pick(turfs)
-			if (!T)
+			var/list/start
+			for(var/turf/T in get_area_turfs(/area/diner/dining, 1))
+				start = T
+				break
+			if (!start)
 				return 0
 			if (istype(M.loc, /obj/storage)) // for stowaways
 				var/obj/storage/S = M.loc
-				S.set_loc(T)
+				S.set_loc(start)
 			else
-				M.set_loc(T) 
+				M.set_loc(start)
+			return 1
+
+	mail_order
+		name = "Mail Order"
+		cost = 5000
+
+		Create(var/mob/living/M)
+			var/obj/storage/S
+			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
+				S = M.loc
+			else
+				S = new /obj/storage/crate/packing(get_turf(M))
+				M.set_loc(S)
+				shippingmarket.receive_crate(S)
+				return 1
+
+	missile_arrival
+		name = "Missile Arrival"
+		cost = 20000
+
+		Create(var/mob/living/M)
+			if(istype(M.back, /obj/item/storage))
+				var/obj/item/storage/backpack = M.back
+				new /obj/item/tank/emergency_oxygen(backpack) // oh boy they'll need this if they are unlucky
+				backpack.hud.update()
+			var/mob/living/carbon/human/H = M
+			if(istype(H))
+				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+			SPAWN_DBG(0)
+				if(istype(M.loc, /obj/storage))
+					launch_with_missile(M.loc)
+				else
+					launch_with_missile(M)
 			return 1
 
 	critter_respawn
@@ -432,6 +520,19 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				return 1
 			return 0
 
+	nt_backpack
+		name = "NT Backpack"
+		cost = 600
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.back)
+					H.back.name = "\improper NT backpack"
+					H.back.icon_state = "NTbackpack"
+					return 1
+				return 0
+
 	lunchbox
 		name = "Lunchbox"
 		cost = 600
@@ -459,6 +560,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		cost = 1500
 		path = /obj/item/clothing/suit/hoodie/random
 
+	pride_o_matic
+		name = "Pride-O-Matic Jumpsuit"
+		cost = 1200
+		path = /obj/item/clothing/under/pride/special
+
 	fake_waldo
 		name = "Stripe Outfit"
 		cost = 1400
@@ -473,6 +579,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Golden Top Hat"
 		cost = 900
 		path = /obj/item/clothing/head/that/gold
+
+	dancin_shoes
+		name = "Dancin Shoes"
+		cost = 2000
+		path = /obj/item/clothing/shoes/heels/dancin
 
 	////////////////////////
 	//CYBORG PURCHASEABLES//
@@ -506,3 +617,17 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				A.set_color("#EE0000")
 				return 1
 			return 0
+
+	ai_hat
+		name = "AI hat"
+		cost = 1000
+
+		Create(var/mob/living/M)
+			if (isAI(M))
+				var/mob/living/silicon/ai/A = M
+				var/picked = pick(childrentypesof(/obj/item/clothing/head))
+				A.set_hat(new picked())
+				return 1
+			return 0
+
+

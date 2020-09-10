@@ -28,10 +28,7 @@
 	src.update_lying()
 
 	// If he's wearing magnetic boots anchored = 1, otherwise anchored = 0
-	if ((src.shoes && src.shoes.magnetic) || (src.mutantrace && src.mutantrace.anchor_to_floor))
-		src.anchored = 1
-	else
-		src.anchored = 0
+	reset_anchored(src)
 	// Automatically drop anything in store / id / belt if you're not wearing a uniform.
 	if (!src.w_uniform)
 		for (var/atom in list(src.r_store, src.l_store, src.wear_id, src.belt)) //assuming things in all these slots will only ever be items
@@ -86,7 +83,7 @@
 // Uniform
 	if (src.w_uniform)
 		if (src.bioHolder && bioHolder.HasEffect("fat") && !(src.w_uniform.c_flags & ONESIZEFITSALL))
-			boutput(src, "<span style=\"color:red\">You burst out of the [src.w_uniform.name]!</span>")
+			boutput(src, "<span class='alert'>You burst out of the [src.w_uniform.name]!</span>")
 			var/obj/item/clothing/c = src.w_uniform
 			src.u_equip(c)
 			if (c)
@@ -351,7 +348,7 @@
 
 	if (src.wear_suit)
 		if (src.bioHolder && src.bioHolder.HasEffect("fat") && !(src.wear_suit.c_flags & ONESIZEFITSALL))
-			boutput(src, "<span style=\"color:red\">You burst out of the [src.wear_suit.name]!</span>")
+			boutput(src, "<span class='alert'>You burst out of the [src.wear_suit.name]!</span>")
 			var/obj/item/clothing/c = src.wear_suit
 			src.u_equip(c)
 			if (c)
@@ -417,10 +414,8 @@
 				UpdateOverlays(null, "wear_suit_bloody")
 
 			if (src.wear_suit.restrain_wearer)
-				if (src.handcuffed)
-					src.handcuffed.set_loc(src.loc)
-					src.handcuffed.layer = initial(src.handcuffed.layer)
-					src.handcuffed = null
+				if (src.hasStatus("handcuffed"))
+					src.handcuffs.drop_handcuffs(src)
 				if ((src.l_hand || src.r_hand))
 					var/h = src.hand
 					src.hand = 1
@@ -614,7 +609,7 @@
 	if (src.r_store)
 		src.r_store.screen_loc = hud.layouts[hud.layout_style]["storage2"]
 
-	if (src.handcuffed)
+	if (src.hasStatus("handcuffed"))
 		src.pulling = null
 		handcuff_img.icon_state = "handcuff1"
 		handcuff_img.pixel_x = 0
@@ -657,12 +652,16 @@
 			UpdateOverlays(I.implant_overlay, "implant--\ref[I]")
 			implant_images += I
 
-	if (world.time - src.last_show_inv <= 600) //icky mbc workaround doing viewers()... only try to update our inventory for nearby viewers if we were interacted with in the last 60sec
-		for (var/mob/M in viewers(1, src))
-			if ((M.client && M.machine == src))
-				SPAWN_DBG (0)
-					src.show_inv(M)
-					return
+	if (world.time - src.last_show_inv <= 30 SECONDS)
+		for (var/client/C in src.showing_inv)
+			if (C && C.mob)
+				if (get_dist(src,C.mob) <= 1)
+					src.show_inv(C.mob)
+				else
+					src.remove_dialog(C.mob)
+			else
+				src.showing_inv -= C
+
 
 	src.last_b_state = src.stat
 
@@ -868,6 +867,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				src.body_standing.overlays += human_decomp_image
 
 			if (src.limbs)
+				src.limbs.reset_stone()
+
 				var/sleeveless = 1
 				if (istype(src.w_uniform, /obj/item/clothing) && !(src.w_uniform.c_flags & SLEEVELESS))
 					sleeveless = 0
@@ -1199,7 +1200,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	src.maptext_y = 32
 	src.maptext_width = 64
 	src.maptext_x = -16
-	src.UpdateDamage()
+	health_update_queue |= src
 #endif
 
 	if (src.bioHolder)
@@ -1208,10 +1209,10 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	src.UpdateOverlays(src.body_standing, "body", 1, 1)
 	src.UpdateOverlays(src.hands_standing, "hands", 1, 1)
 
-#if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam! 
+#if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 /mob/living/carbon/human/UpdateDamage()
-	..()
 	var/prev = health
+	..()
 	src.updatehealth()
 	if (!isdead(src))
 		var/h_color = "#999999"
@@ -1228,9 +1229,27 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			new /obj/maptext_junk/damage(get_turf(src), change = health - prev)
 	else
 		src.maptext = ""
-
+#else
+/mob/living/carbon/human/tdummy/UpdateDamage()
+	var/prev = health
+	..()
+	src.updatehealth()
+	if (!isdead(src))
+		var/h_color = "#999999"
+		var/h_pct = round((health / (max_health != 0 ? max_health : 1)) * 100)
+		switch (h_pct)
+			if (50 to INFINITY)
+				h_color	= "rgb([(100 - h_pct) / 50 * 255], 255, [(100 - h_pct) * 0.3])"
+			if (0 to 50)
+				h_color	= "rgb(255, [h_pct / 50 * 255], 0)"
+			if (-100 to 0)
+				h_color	= "#ffffff"
+		src.maptext = "<span style='color: [h_color];' class='pixel c sh'>[h_pct]%</span>"
+		if (prev != health)
+			new /obj/maptext_junk/damage(get_turf(src), change = health - prev)
+	else
+		src.maptext = ""
 #endif
-
 
 /mob/living/carbon/human/UpdateDamageIcon()
 	if (lastDamageIconUpdate && !(world.time - lastDamageIconUpdate))

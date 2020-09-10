@@ -2,6 +2,9 @@
 	name = "stomach"
 	organ_name = "stomach"
 	desc = "A little meat sack containing acid for the digestion of food. Like most things that come out of living creatures, you can probably eat it."
+	organ_holder_name = "stomach"
+	organ_holder_location = "chest"
+	organ_holder_required_op_stage = 4.0
 	icon_state = "stomach"
 	FAIL_DAMAGE = 100
 
@@ -64,43 +67,39 @@
 				output += "[S] = [L[S]]\n"
 			boutput(user, "<br><span style='color:purple'><b>[src]</b> contains:\n [output]</span>")
 
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		if (!ismob(M))
-			return
-
-		src.add_fingerprint(user)
-
-		if (user.zone_sel.selecting != "chest")
-			return ..()
-		if (!surgeryCheck(M, user))
-			return ..()
-
-		var/mob/living/carbon/human/H = M
-		if (!H.organHolder)
-			return ..()
-
-		if (!H.organHolder.stomach && H.organHolder.chest && H.organHolder.chest.op_stage == 4.0)
-
-			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
-
-			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] chest!</span>",\
-			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] chest!</span>",\
-			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your chest!</span>")
-
-			user.u_equip(src)
-			H.organHolder.receive_organ(src, "stomach", 3.0)
-			H.update_body()
-
-		else
-			..()
-		return
-
 /obj/item/organ/stomach/cyber
 	name = "cyberstomach"
 	desc = "A fancy robotic stomach to replace one that someone's lost!"
 	icon_state = "cyber-stomach"
 	// item_state = "heart_robo1"
+	made_from = "pharosium"
 	robotic = 1
 	edible = 0
 	mats = 6
 
+	on_transplant(mob/M)
+		. = ..()
+		if(!broken)
+			ADD_STATUS_LIMIT(M, "Food", 6)
+
+	on_removal()
+		. = ..()
+		REMOVE_STATUS_LIMIT(src.donor, "Food")
+
+	unbreakme()
+		..()
+		if(donor)
+			ADD_STATUS_LIMIT(src.donor, "Food", 6)
+
+	breakme()
+		..()
+		if(donor)
+			REMOVE_STATUS_LIMIT(src.donor, "Food")
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		organ_abilities = list(/datum/targetable/organAbility/projectilevomit)
+
+	demag(mob/user)
+		..()
+		organ_abilities = initial(organ_abilities)

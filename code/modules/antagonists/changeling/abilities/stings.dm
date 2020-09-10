@@ -19,19 +19,19 @@
 				boutput(holder.owner, __red("We cannot reach that target with our stinger."))
 				return 1
 			if (target.reagents.total_volume >= target.reagents.maximum_volume)
-				boutput(holder.owner, "<span style=\"color:red\">[target] is full.</span>")
+				boutput(holder.owner, "<span class='alert'>[target] is full.</span>")
 				return 1
 			if (istype(target,/obj/item/reagent_containers/patch))
 				var/obj/item/reagent_containers/patch/P = target
 				if (P.medical)
 					//break the seal
-					boutput(holder.owner, "<span style=\"color:red\">You break [P]'s tamper-proof seal!</span>")
+					boutput(holder.owner, "<span class='alert'>You break [P]'s tamper-proof seal!</span>")
 					P.medical = 0
 			logTheThing("combat", holder.owner, target, "stings [target] with [name] as a changeling at [log_loc(holder.owner)].")
 			target.reagents.add_reagent(venom_id, inject_amount)
 			holder.owner.show_message(__blue("We stealthily sting [target]."))
 			return 0
-		
+
 
 		if (isobj(target))
 			target = get_turf(target)
@@ -48,6 +48,7 @@
 		var/mob/MT = target
 		if (!MT.reagents)
 			boutput(holder.owner, __red("That does not hold reagents, apparently."))
+			return 1
 		if (!stealthy)
 			holder.owner.visible_message(__red("<b>[holder.owner] stings [target]!</b>"))
 		else
@@ -55,9 +56,9 @@
 		if(MT.reagents)
 			MT.reagents.add_reagent(venom_id, inject_amount)
 
-		if (ishuman(MT))
+		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")
-		logTheThing("combat", holder.owner, MT, "stings %target% with [name] as a changeling [log_loc(holder.owner)].")
+		logTheThing("combat", holder.owner, MT, "stings [constructTarget(MT,"combat")] with [name] as a changeling [log_loc(holder.owner)].")
 
 	neurotoxin
 		name = "Neurotoxic Sting"
@@ -77,7 +78,7 @@
 		desc = "Injects stable mutagen and the blood of the selected victim into your target."
 		icon_state = "stingdna"
 		venom_id = "dna_mutagen"
-		inject_amount = 15
+		inject_amount = 30
 		pointCost = 4
 		var/datum/targetable/changeling/dna_target_select/targeting = null
 
@@ -97,10 +98,10 @@
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
 					return 0
 				var/max_amount = min(15,target.reagents.maximum_volume - target.reagents.total_volume)
-				target.reagents.add_reagent("blood", max_amount, targeting.dna_sting_target)
+				target.reagents?.add_reagent("blood", max_amount, targeting.dna_sting_target)
 				return 0
 			var/mob/MT = target
-			MT.reagents.add_reagent("blood", 15, targeting.dna_sting_target)
+			MT.reagents?.add_reagent("blood", 15, targeting.dna_sting_target)
 			return 0
 
 	fartonium

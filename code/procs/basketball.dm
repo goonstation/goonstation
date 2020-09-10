@@ -19,7 +19,7 @@
 	SPAWN_DBG(30 SECONDS)
 		M.verbs += /mob/proc/bball_nova
 
-	M.visible_message("<span style=\"color:red\">A swarm of basketballs erupts from [M]!</span>")
+	M.visible_message("<span class='alert'>A swarm of basketballs erupts from [M]!</span>")
 
 	for(var/turf/T in orange(1, M))
 		if(!T.density)
@@ -30,7 +30,7 @@
 
 /obj/newmeteor/basketball
 	name = "basketball"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bball_spin"
 	hits = 6
 
@@ -59,14 +59,14 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] takes a mighty leap towards the ceiling!</span>")
+	M.visible_message("<span class='alert'>[M] takes a mighty leap towards the ceiling!</span>")
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
 		step_to(M, target)
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	M.pixel_y = 0
 	M.set_loc(target.loc)
 	M.transforming = 0
@@ -92,8 +92,8 @@
 				N.changeStatus("weakened", 5 SECONDS)
 				random_brute_damage(N, 10)
 		if(N.client)
-			shake_camera(N, 6, 5)
-			N.show_message("<span style=\"color:red\">[M] showboat slams [target] to the ground!</span>", 1)
+			shake_camera(N, 6, 32)
+			N.show_message("<span class='alert'>[M] showboat slams [target] to the ground!</span>", 1)
 	random_brute_damage(target, 40)
 
 /mob/proc/holy_jam()
@@ -121,14 +121,14 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] takes a divine leap towards the ceiling!</span>")
+	M.visible_message("<span class='alert'>[M] takes a divine leap towards the ceiling!</span>")
 
 	playsound(M.loc, "sound/voice/heavenly.ogg", 50, 1)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	M.pixel_y = 0
 	M.transforming = 0
 	M.layer = MOB_LAYER
@@ -143,8 +143,8 @@
 				if(ishuman(N) && istype(N:mutantrace, /datum/mutantrace/zombie))
 					N.gib()
 		if(N.client)
-			shake_camera(N, 6, 4)
-			N.show_message("<span style=\"color:red\">[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
+			shake_camera(N, 6, 16)
+			N.show_message("<span class='alert'>[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
 
 	playsound(M.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
@@ -204,15 +204,15 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] comically leaps towards the ceiling!</span>")
+	M.visible_message("<span class='alert'>[M] comically leaps towards the ceiling!</span>")
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
 		M.pixel_x = rand(-4, 4)
 		step_to(M, target)
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	M.pixel_x = 0
 	M.pixel_y = 0
 	M.set_loc(target.loc)
@@ -224,8 +224,8 @@
 			if(N != M)
 				N.changeStatus("weakened", 5 SECONDS)
 		if(N.client)
-			shake_camera(N, 6, 4)
-			N.show_message("<span style=\"color:red\">[M] clown jams [target]!</span>", 1)
+			shake_camera(N, 6, 16)
+			N.show_message("<span class='alert'>[M] clown jams [target]!</span>", 1)
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball"
@@ -240,7 +240,7 @@
 	smoke.start()
 
 	if(target.job != "Clown")
-		boutput(target, "<span style=\"color:red\"><B>You HONK painfully!</B></span>")
+		boutput(target, "<span class='alert'><B>You HONK painfully!</B></span>")
 		target.take_brain_damage(80)
 		target.stuttering = 120
 		target.job = "Clown"
@@ -263,7 +263,7 @@
 		var/mob/living/carbon/human/H = target
 		if(!istype(H))
 			return
-		boutput(H, "<span style=\"color:red\"><b>You don't feel very funny.</b></span>")
+		boutput(H, "<span class='alert'><b>You don't feel very funny.</b></span>")
 		H.take_brain_damage(-120)
 		H.stuttering = 0
 		H.job = "Lawyer"
@@ -333,13 +333,13 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] flies through the ceiling!</span>")
+	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
 
 	for(var/i = 0, i < 50, i++)
 		M.pixel_y += 6
 		M.dir = turn(M.dir, 90)
-		sleep(1)
+		sleep(0.1 SECONDS)
 	M.layer = 0
 	var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
 	siren.repeat = 1
@@ -351,8 +351,7 @@
 		A.updateicon()
 		LAGCHECK(LAG_LOW)
 	for(var/mob/N in mobs)
-		SPAWN_DBG(0)
-			shake_camera(N, 120, 2)
+		shake_camera(N, 120, 8)
 	SPAWN_DBG(0)
 		var/thunder = 70
 		while(thunder > 0)
@@ -361,20 +360,20 @@
 				world << sound('sound/effects/thunder.ogg', volume = 80)
 				for(var/mob/N in mobs)
 					N.flash(3 SECONDS)
-			sleep(5)
-	sleep(300)
+			sleep(0.5 SECONDS)
+	sleep(30 SECONDS)
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
 	M.layer = EFFECTS_LAYER_BASE
 	for(var/i = 0, i < 20, i++)
 		M.pixel_y -= 12
 		M.dir = turn(M.dir, 90)
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	siren.repeat = 0
 	siren.status = SOUND_UPDATE
 	siren.channel = 5
 	world << siren
-	M.visible_message("<span style=\"color:red\">[M] successfully executes a Chaos Dunk!</span>")
+	M.visible_message("<span class='alert'>[M] successfully executes a Chaos Dunk!</span>")
 	M.unlock_medal("Shut Up and Jam", 1)
 	explosion_new(src, get_turf(M), 1500, 22.78)
 
@@ -401,17 +400,17 @@
 
 	for(var/mob/N in AIviewers(M, null))
 		if(N.client)
-			N.show_message("<span style=\"color:red\">[M] does a quick spin, knocking you off guard!</span>", 1)
+			N.show_message("<span class='alert'>[M] does a quick spin, knocking you off guard!</span>", 1)
 		if(get_dist(N, M) <= 2)
 			if(N != M)
 				N.changeStatus("stunned", 2 SECONDS)
 
 	M.dir = NORTH
-	sleep(1)
+	sleep(0.1 SECONDS)
 	M.dir = EAST
-	sleep(1)
+	sleep(0.1 SECONDS)
 	M.dir = SOUTH
-	sleep(1)
+	sleep(0.1 SECONDS)
 	M.dir = WEST
 
 	M.transforming = 0
@@ -422,7 +421,7 @@
 
 /obj/item/bball_uplink
 	name = "station bounced radio"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "radio"
 	var/temp = null
 	var/uses = 4.0
@@ -448,7 +447,7 @@
 	return
 
 /obj/item/bball_uplink/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat
 	if (src.selfdestruct)
 		dat = "Self Destructing..."
@@ -485,7 +484,7 @@
 	if (!( ishuman(H)))
 		return 1
 	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["spell_nova"])
 			if (src.uses >= 1)
 				src.uses -= 1
@@ -523,7 +522,7 @@
 */
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=radio")
 			var/obj/item/device/radio/T = src.origradio
 			var/obj/item/bball_uplink/R = src

@@ -15,23 +15,23 @@ var/list/datum/reagents/active_reagent_holders = list()
 
 proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	if(H.wear_mask)
-		boutput(H, "<span style=\"color:red\">Your mask protects you from the [what_liquid] liquid!</span>")
+		boutput(H, "<span class='alert'>Your mask protects you from the [what_liquid] liquid!</span>")
 		return 0
 	else if(H.head)
-		boutput(H, "<span style=\"color:red\">Your helmet protects you from the [what_liquid] liquid!</span>")
+		boutput(H, "<span class='alert'>Your helmet protects you from the [what_liquid] liquid!</span>")
 		return 0
 	return 1
 
 proc/chemhood_check(mob/living/carbon/human/H)
 	if(H.wear_mask == /obj/item/clothing/head/chemhood && H.wear_suit == /obj/item/clothing/suit/chemsuit )
-		boutput(H, "<span style=\"color:red\">FUCK YOU ACID</span>")
+		boutput(H, "<span class='alert'>FUCK YOU ACID</span>")
 		return 0
 	else
 		return 1
 
 datum
 	reagents
-		var/list/reagent_list = new/list()
+		var/list/datum/reagent/reagent_list = new/list()
 		var/maximum_volume = 100
 		var/atom/my_atom = null
 		var/last_basic_explosion = 0
@@ -60,6 +60,7 @@ datum
 		var/postfoam = 0 //attempt at killing infinite foam
 
 		New(maximum=100)
+			..()
 			maximum_volume = maximum
 
 		disposing()
@@ -108,20 +109,22 @@ datum
 		proc/temperature_react() //Calls the temperature reaction procs without changing the temp.
 			for(var/reagent_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[reagent_id]
-				if(current_reagent)
+				if(current_reagent && src.total_temperature >= current_reagent.minimum_reaction_temperature)
 					current_reagent.reaction_temperature(src.total_temperature, 100)
 
 		proc/temperature_reagents(exposed_temperature, exposed_volume, divisor = 35, change_cap = 15) //This is what you use to change the temp of a reagent holder.
 			                                                      //Do not manually change the reagent unless you know what youre doing.
 			last_temp = total_temperature
 			var/difference = abs(total_temperature - exposed_temperature)
+			if (!difference)
+				return
 			var/change = min(max((difference / divisor), 1), change_cap)
 			if(exposed_temperature > total_temperature)
 				total_temperature += change
 			else if (exposed_temperature < total_temperature)
 				total_temperature -= change
 
-			total_temperature = max(min(total_temperature, temperature_cap), temperature_min) //Cap for the moment.
+			total_temperature = clamp(total_temperature, temperature_min, temperature_cap) //Cap for the moment.
 			temperature_react()
 
 			handle_reactions()
@@ -271,7 +274,7 @@ datum
 
 			if (do_fluid_react && issimulatedturf(target))
 				var/turf/simulated/T = target
-				T.fluid_react(src, amount)
+				return T.fluid_react(src, amount)
 
 			return trans_to_direct(target_reagents, amount, multiplier, index = index)
 
@@ -417,7 +420,7 @@ datum
 						//end my copy+paste
 
 
-						if(amount >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
+						if(round(amount, CHEM_EPSILON) >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
 							total_matching_reagents++
 							created_volume = min(created_volume, amount * (C.result_amount ? C.result_amount : 1) / B_required_volume)
 						else
@@ -434,7 +437,7 @@ datum
 							var/turf/T = 0
 							if (my_atom)
 								for(var/mob/living/M in AIviewers(4, get_turf(my_atom)) )	//Fuck you, ghosts
-									if (C.mix_phrase) boutput(M, "<span style=\"color:blue\">[bicon(my_atom)] [C.mix_phrase]</span>")
+									if (C.mix_phrase) boutput(M, "<span class='notice'>[bicon(my_atom)] [C.mix_phrase]</span>")
 								if (C.mix_sound) play_mix_sound(C.mix_sound)
 
 								T = get_turf(my_atom.loc)
@@ -494,6 +497,8 @@ datum
 
 					//Copy+paste to reduce proc calls
 					//var/amount = get_reagent_amount(reagent)
+					if (!(reagent in reagent_list))
+						continue
 					var/datum/reagent/current_reagent = reagent_list[reagent]
 					var/amount = current_reagent ? current_reagent.volume : 0
 					//end copy+paste
@@ -562,7 +567,9 @@ datum
 						del_reagent(current_id)
 					else
 						total_volume += current_reagent.volume
-
+			if(isitem(my_atom))
+				var/obj/item/I = my_atom
+				I.tooltip_rebuild = 1
 			return 0
 
 		proc/clear_reagents()
@@ -616,13 +623,13 @@ datum
 
 						if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 							if (chem_helmet_check(H, "hot"))
-								boutput(H, "<span style=\"color:red\">You are scalded by the hot chemicals!</span>")
+								boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
 								H.TakeDamage("head", 0, round(log(temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 								H.emote("scream")
 								H.bodytemperature += min(max((temp_to_burn_with - T0C) - 20, 5),500)
 						else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 							if (chem_helmet_check(H, "cold"))
-								boutput(H, "<span style=\"color:red\">You are frostbitten by the freezing cold chemicals!</span>")
+								boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
 								H.TakeDamage("head", 0, round(log(T0C - temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
 								H.emote("scream")
 								H.bodytemperature -= min(max(T0C - temp_to_burn_with - 20, 5), 500)
@@ -670,11 +677,11 @@ datum
 
 							if(C.bioHolder)
 								if(temp_to_burn_with > C.base_body_temp + (C.temp_tolerance * 4) && !C.is_heat_resistant())
-									boutput(C, "<span style=\"color:red\">You scald yourself trying to consume the boiling hot substance!</span>")
+									boutput(C, "<span class='alert'>You scald yourself trying to consume the boiling hot substance!</span>")
 									C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 									C.bodytemperature += min(max((temp_to_burn_with - T0C) - 20, 5),700)
 								else if(temp_to_burn_with < C.base_body_temp - (C.temp_tolerance * 4) && !C.is_cold_resistant())
-									boutput(C, "<span style=\"color:red\">You frostburn yourself trying to consume the freezing cold substance!</span>")
+									boutput(C, "<span class='alert'>You frostburn yourself trying to consume the freezing cold substance!</span>")
 									C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 									C.bodytemperature -= min(max((temp_to_burn_with - T0C) - 20, 5),700)
 
@@ -735,6 +742,7 @@ datum
 					added_new = 1
 				else
 					return 0
+			// Else, if the reagent datum already exists, we'll just be adding to that and won't update with our new reagent datum data
 
 			var/new_amount = (current_reagent.volume + amount)
 			current_reagent.volume = new_amount
@@ -805,6 +813,16 @@ datum
 					dispersal = R.dispersal
 			return dispersal
 
+		proc/get_smoke_spread_mod()
+			if (!total_volume)
+				return 0
+			var/smoke_spread_mod = 9999
+			for (var/id in reagent_list)
+				var/datum/reagent/R = reagent_list[id]
+				if (R.smoke_spread_mod < smoke_spread_mod)
+					smoke_spread_mod = R.smoke_spread_mod
+			return smoke_spread_mod
+
 
 		// redirect my_atom.on_reagent_change() through this function
 		proc/reagents_changed(var/add = 0) // add will be 1 if reagents were just added
@@ -835,7 +853,7 @@ datum
 					. += get_exact_description(user)
 
 			else
-				. += "<span style=\"color:blue\">Nothing in it.</span>"
+				. += "<span class='notice'>Nothing in it.</span>"
 			return
 
 
@@ -846,35 +864,19 @@ datum
 
 			// check to see if user wearing the spectoscopic glasses (or similar)
 			// if so give exact readout on what reagents are present
-			var/spectro = 0
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if (istype(H.glasses, /obj/item/clothing/glasses/spectro))
-					spectro = 1
-				else if (H.eye_istype(/obj/item/organ/eye/cyber/spectro))
-					spectro = 1
-			else if (isrobot(user))
-				// check if they have an activated spectroscopic upgrade
-				var/mob/living/silicon/robot/R = user
-				for (var/obj/item/roboupgrade/U in R.upgrades)
-					if (istype(U, /obj/item/roboupgrade/spectro))
-						if (U.activated)
-							spectro = 1
-							break
-
-			if (spectro)
+			if (HAS_MOB_PROPERTY(user, PROP_SPECTRO))
 				if("cloak_juice" in reagent_list)
 					var/datum/reagent/cloaker = reagent_list["cloak_juice"]
 					if(cloaker.volume >= 5)
-						. += "<br><span style=\"color:red\">ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
+						. += "<br><span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 						return
 
 
-				. += "<br><span style=\"color:red\">Spectroscopic analysis:</span>"
+				. += "<br><span class='alert'>Spectroscopic analysis:</span>"
 
 				for(var/current_id in reagent_list)
 					var/datum/reagent/current_reagent = reagent_list[current_id]
-					. += "<br><span style=\"color:red\">[current_reagent.volume] units of [current_reagent.name]</span>"
+					. += "<br><span class='alert'>[current_reagent.volume] units of [current_reagent.name]</span>"
 			return
 
 		proc/get_reagents_fullness()
@@ -893,7 +895,7 @@ datum
 
 			if(full_text == "empty")
 				if(rc_flags & (RC_SCALE | RC_VISIBLE | RC_FULLNESS) )
-					desc = "<span style=\"color:blue\">It is empty.</span>"
+					desc = "<span class='notice'>It is empty.</span>"
 				return desc
 
 			var/datum/color/c = get_average_color()
@@ -915,15 +917,15 @@ datum
 
 			if(rc_flags & RC_VISIBLE)
 				if(rc_flags & RC_SCALE)
-					desc += "<span style=\"color:blue\">It contains [total_volume] units of \a [t]-colored [state_text].</span>"
+					desc += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
 				else
-					desc += "<span style=\"color:blue\">It is [full_text] of \a [t]-colored [state_text].</span>"
+					desc += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
 			else
 				if(rc_flags & RC_SCALE)
-					desc += "<span style=\"color:blue\">It contains [total_volume] units.</span>"
+					desc += "<span class='notice'>It contains [total_volume] units.</span>"
 				else
 					if(rc_flags & RC_FULLNESS)
-						desc += "<span style=\"color:blue\">It is [full_text].</span>"
+						desc += "<span class='notice'>It is [full_text].</span>"
 
 			return desc
 
@@ -932,6 +934,7 @@ datum
 		// taking into account concentration and transparency
 
 		proc/get_average_color()
+			RETURN_TYPE(/datum/color)
 			var/datum/color/average = new(0,0,0,0)
 			var/total_weight = 0
 
@@ -1046,7 +1049,7 @@ datum
 			if (classic)
 				classic_smoke_reaction(src, 4, location = my_atom ? get_turf(my_atom) : 0)
 			else
-				smoke_reaction(src, 5, location = my_atom ? get_turf(my_atom) : 0)
+				smoke_reaction(src, round(min(5, volume/10)), location = my_atom ? get_turf(my_atom) : 0)
 
 ///////////////////////////////////////////////////////////////////////////////////
 

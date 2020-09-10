@@ -1,6 +1,8 @@
+ABSTRACT_TYPE(/datum/buildmode)
 /datum/buildmode
 	var/list/extra_buttons = list()
 	New(var/datum/buildmode_holder/H)
+		..()
 		holder = H
 
 	// Called when mode is selected
@@ -43,7 +45,7 @@
 	proc/click_right(atom/object, var/ctrl, var/alt, var/shift)
 
 	var/name = "You shouldn't see me."
-	var/desc = "<span style=\"color:red\">Someone is a lazy bum.</span>"
+	var/desc = "<span class='alert'>Someone is a lazy bum.</span>"
 	var/datum/buildmode_holder/holder = null
 	var/icon_state = null
 	var/admin_level = LEVEL_BABBY // restricts certain things to certain ranks
@@ -57,13 +59,14 @@
 	var/dir = SOUTH
 
 	New(var/client/C)
+		..()
 		owner = C
 		button_dir = new(null, src)
 		button_help = new(null, src)
 		button_mode = new(null, src)
 		button_quit = new(null, src)
 
-		for (var/T in childrentypesof(/datum/buildmode))
+		for (var/T in concrete_typesof(/datum/buildmode))
 			var/datum/buildmode/M = new T(src)
 			if ((!owner.holder && M.admin_level > LEVEL_BABBY) || M.admin_level > owner.holder.level)
 				DEBUG_MESSAGE("[key_name(owner)] is too low rank to have buildmode [M.name] ([M.type]) and the buildmode is being disposed (min level is [level_to_rank(M.admin_level)] and [owner.ckey] is [owner.holder ? level_to_rank(owner.holder.level) : "not an admin"])")
@@ -117,7 +120,7 @@
 		mode.paused()
 
 	proc/display_help()
-		boutput(usr, "<font color='blue'>[mode.desc]</font>")
+		boutput(usr, "<span class='notice'>[mode.desc]</span>")
 
 	// You shouldn't actually interact with these anymore.
 	var/obj/screen/buildmode/builddir/button_dir
@@ -128,7 +131,7 @@
 /client/proc/togglebuildmode()
 	set name = "Build Mode"
 	set desc = "Toggle build Mode on/off."
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 
 	if(!src.buildmode)
 		src.buildmode = new /datum/buildmode_holder(src)
@@ -259,7 +262,7 @@ var/image/buildmodeBlink = image('icons/effects/effects.dmi',"empdisable")//guH 
 	SPAWN_DBG(0)//WHY DOUBLE SPAWN AND NEW IMAGE EVERY BLINK IT MAKES SOMEPOTATO SAD
 
 		T.overlays += buildmodeBlink
-		sleep(5)
+		sleep(0.5 SECONDS)
 		T.overlays -= buildmodeBlink
 
 	//kinda gross

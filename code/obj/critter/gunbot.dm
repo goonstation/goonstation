@@ -8,7 +8,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 0
 	atcritter = 1
@@ -32,7 +32,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [src.target]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
 
 
 				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
@@ -60,7 +60,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [src.target]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
 
 				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
 				var/tturf = get_turf(target)
@@ -91,7 +91,5 @@
 			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
 
 		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+			elecflash(src,2)
 			qdel(src)

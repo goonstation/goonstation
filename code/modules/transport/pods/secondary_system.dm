@@ -50,7 +50,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
@@ -82,7 +82,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		dat += {"<BR><B>Capacity: [src.contents.len]/[src.capacity]</B><HR>"}
@@ -92,7 +92,7 @@
 
 	Clickdrag_PodToObject(var/mob/living/user,var/atom/A)
 		if (contents.len < 1)
-			boutput(user, "<span style=\"color:red\">[src] has nothing to unload.</span>")
+			boutput(user, "<span class='alert'>[src] has nothing to unload.</span>")
 			return
 
 		var/turf/T = get_turf(A)
@@ -103,12 +103,12 @@
 				inrange = 1
 				break
 		if (!inrange)
-			boutput(user, "<span style=\"color:red\">That tile too far away.</span>")
+			boutput(user, "<span class='alert'>That tile too far away.</span>")
 			return
 
 		for(var/obj/O in T.contents)
 			if(O.density)
-				boutput(user, "<span style=\"color:red\">That tile is blocked by [O].</span>")
+				boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
 				return
 
 		for(var/obj/item/I in src.contents)
@@ -175,7 +175,7 @@
 /obj/item/shipcomponent/secondary_system/cargo/opencomputer(mob/user as mob)
 	if(user.loc != src.ship)
 		return
-	user.machine = src
+	src.add_dialog(user)
 
 	var/dat = {"<TT><B>[src] Console</B><BR><HR><BR>
 				<BR><B>Current Contents:</B><HR>"}
@@ -188,7 +188,7 @@
 
 /obj/item/shipcomponent/secondary_system/cargo/Clickdrag_PodToObject(var/mob/living/user,var/atom/A)
 	if (load.len < 1)
-		boutput(user, "<span style=\"color:red\">[src] has nothing to unload.</span>")
+		boutput(user, "<span class='alert'>[src] has nothing to unload.</span>")
 		return
 	var/turf/T = get_turf(A)
 
@@ -198,12 +198,12 @@
 			inrange = 1
 			break
 	if (!inrange)
-		boutput(user, "<span style=\"color:red\">That tile too far away.</span>")
+		boutput(user, "<span class='alert'>That tile too far away.</span>")
 		return
 
 	for(var/obj/O in T.contents)
 		if(O.density)
-			boutput(user, "<span style=\"color:red\">That tile is blocked by [O].</span>")
+			boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
 			return
 
 	var/crate = input(usr, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
@@ -214,28 +214,28 @@
 
 /obj/item/shipcomponent/secondary_system/cargo/Clickdrag_ObjectToPod(var/mob/living/user,var/atom/A)
 	if (src.load.len > src.maxcap)
-		boutput(user, "<span style=\"color:red\">[src] has no available cargo space.</span>")
+		boutput(user, "<span class='alert'>[src] has no available cargo space.</span>")
 		return
 
 	switch(src.load(A))
 		if (1)
 			// if cargo system is not emagged, only allow crates to be loaded
-			boutput(user, "<span style=\"color:red\">The pod's cargo autoloader rejects [A].</span>")
+			boutput(user, "<span class='alert'>The pod's cargo autoloader rejects [A].</span>")
 			return
 		if (2)
 			// cargo system full (this should never happen)
-			boutput(user, "<span style=\"color:red\">[src] has no available cargo space.</span>")
+			boutput(user, "<span class='alert'>[src] has no available cargo space.</span>")
 			return
 		if (3)
 			// out of range (this should never happen)
-			boutput(user, "<span style=\"color:red\">Something is too far away to do that.</span>")
+			boutput(user, "<span class='alert'>Something is too far away to do that.</span>")
 			return
 		if (0)
 			// success
 			src.visible_message("<span style=\"color:blue\">[user] loads the [A] into [src]'s cargo bay.</span>")
 			return
 
-	boutput(user, "<span style=\"color:red\">[src] has no cargo system or no available cargo space.</span>")
+	boutput(user, "<span class='alert'>[src] has no cargo system or no available cargo space.</span>")
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/proc/load(var/atom/movable/C)
@@ -270,7 +270,7 @@
 		return 1 // invalid cargo
 
 	C.set_loc(src.loc)
-	sleep(2)
+	sleep(0.2 SECONDS)
 	C.set_loc(src)
 	load += C
 	C.anchored = 1 // fix for pulled items getting pulled back out of the cargo hold
@@ -295,7 +295,7 @@
 	while(load && load.len)
 		var/obj/O = src.unload(pick(load))
 		if (O)
-			O.visible_message("<span style='color:red'><b>[O]</b> is flung out of [src.ship]!</span>")
+			O.visible_message("<span class='alert'><b>[O]</b> is flung out of [src.ship]!</span>")
 			O.throw_at(get_edge_target_turf(O, pick(alldirs)), rand(3,7), 3)
 		else
 			break
@@ -355,7 +355,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
@@ -440,7 +440,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
@@ -461,7 +461,7 @@
 		opencomputer(user)
 		return
 	opencomputer(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		dat+=  {"<BR><B>Located at:</B><HR>
@@ -479,7 +479,7 @@
 	Use(mob/user as mob)
 		var/mob/target = input(usr, "Choose Who to Abduct", "Choose Target")  as mob in view(ship.loc)
 		if(target)
-			boutput(target, "<span style=\"color:red\"><B>You have been abducted!</B></span>")
+			boutput(target, "<span class='alert'><B>You have been abducted!</B></span>")
 			showswirl(get_turf(target))
 			target.set_loc(ship)
 		return
@@ -497,7 +497,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 		if (href_list["release"])
 			for(var/mob/M in ship)
 				if(cmptext(href_list["release"], M.name))
@@ -651,7 +651,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(ship, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 		if (href_list["enter"])
 			if (configure_mode)
@@ -670,32 +670,47 @@
 					usr << output("!OK!&0", "ship_lock.browser:updateReadout")
 					if (ship)
 						ship.locked = 0
-						boutput(usr, "<span style=\"color:red\">The lock mechanism clicks unlocked.</span>")
+						boutput(usr, "<span class='alert'>The lock mechanism clicks unlocked.</span>")
 					//	ship.access_computer(usr)
 				else
 					usr << output("ERR!&0", "ship_lock.browser:updateReadout")
 					var/code_attempt = uppertext(ckey(href_list["enter"]))
+					/*
+					Mastermind game in which the solution is "code" and the guess is "code_attempt"
+					First go through the guess and find any with the exact same position as in the solution
+					Increment rightplace when such occurs.
+					Then go through the guess and, with each letter, go through all the letters of the solution code
+					Increment wrongplace when such occurs.
+
+					In both cases, add a power of two corresponding to the locations of the relevant letters
+					This forms a set of flags which is checked whenever same-letters are found
+
+					Once all of the guess has been iterated through for both rightplace and wrongplace, construct
+					a beep/boop message dependant on what was gotten right.
+					*/
 					if (length(code_attempt) == 4)
-						var/i = 0
-						var/j = 0
-						var/incode = 0
+						var/guessplace = 0
+						var/codeplace = 0
+						var/guessflags = 0
+						var/codeflags = 0
+
+						var/wrongplace = 0
 						var/rightplace = 0
-						var/offset = 0
-						while (++i < 5)
-							if (copytext(code_attempt, i,i+1) == copytext(code, i, i + 1))
-								offset += 2 ** (i-1)
+						while (++guessplace < 5)
+							if ((((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, guessplace, guessplace + 1)))
+								guessflags += 2 ** (guessplace-1)
+								codeflags += 2 ** (guessplace-1)
 								rightplace++
-								incode++
-								continue
-						
-						i = 0
-						while (++i < 5)
-							j = 0
-							while(++j < 5)
-								if(i != j && (((offset - offset % (2 ** (j - 1))) / (2 ** (j - 1))) % 2 == 0) && (copytext(code_attempt, i,i+1) == copytext(code, j, j+1)))
-									offset += 2 ** (j-1)
-									incode++
-									j = 5
+
+						guessplace = 0
+						while (++guessplace < 5)
+							codeplace = 0
+							while(++codeplace < 5)
+								if(guessplace != codeplace && (((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (((codeflags - codeflags % (2 ** (codeplace - 1))) / (2 ** (codeplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, codeplace , codeplace + 1)))
+									guessflags += 2 ** (guessplace-1)
+									codeflags += 2 ** (codeplace-1)
+									wrongplace++
+									codeplace = 5
 
 						var/desctext = ""
 						switch(rightplace)
@@ -706,10 +721,10 @@
 							if (3)
 								desctext += "a trio of short beeps"
 
-						if (desctext && (incode - rightplace) > 0)
+						if (desctext && (wrongplace) > 0)
 							desctext += " and "
 
-						switch(incode - rightplace)
+						switch(wrongplace)
 							if (1)
 								desctext += "a short boop"
 							if (2)
@@ -720,31 +735,31 @@
 								desctext += "a rather long boop"
 
 						if (desctext)
-							boutput(usr, "<span style=\"color:red\">The lock panel emits [desctext].</span>")
+							boutput(usr, "<span class='alert'>The lock panel emits [desctext].</span>")
 
 		else if (href_list["lock"])
 			if  (usr.loc != src.ship)
-				boutput(usr, "<span style=\"color:red\">You must be inside the ship to do that!</span>")
+				boutput(usr, "<span class='alert'>You must be inside the ship to do that!</span>")
 				return
 
 			if (ship && !ship.locked)
 				ship.locked = 1
-				boutput(usr, "<span style=\"color:red\">The lock mechanism clunks locked.</span>")
+				boutput(usr, "<span class='alert'>The lock mechanism clunks locked.</span>")
 				//ship.access_computer(usr)
 
 		else if (href_list["unlock"])
 			if  (usr.loc != src.ship)
-				boutput(usr, "<span style=\"color:red\">You must be inside the ship to do that!</span>")
+				boutput(usr, "<span class='alert'>You must be inside the ship to do that!</span>")
 				return
 
 			if (ship && ship.locked)
 				ship.locked = 0
-				boutput(usr, "<span style=\"color:red\">The ship mechanism clicks unlocked.</span>")
+				boutput(usr, "<span class='alert'>The ship mechanism clicks unlocked.</span>")
 				//ship.access_computer(usr)
 
 		else if (href_list["setcode"])
 			if  (usr.loc != src.ship)
-				boutput(usr, "<span style=\"color:red\">You must be inside the ship to do that!</span>")
+				boutput(usr, "<span class='alert'>You must be inside the ship to do that!</span>")
 				return
 
 			src.configure_mode = 1
@@ -781,8 +796,9 @@
 
 /obj/item/shipcomponent/secondary_system/crash/proc/dispense()
 	for (var/mob/living/B in ship.contents)
-		boutput(B, "<span style=\"color:red\">You eject!</span>")
-		ship.visible_message("<span style=\"color:red\">[B] launches out of the [ship]!</span>")
+		boutput(B, "<span class='alert'>You eject!</span>")
+		ship.eject(B)
+		ship.visible_message("<span class='alert'>[B] launches out of the [ship]!</span>")
 		step(B,ship.dir,0)
 		step(B,ship.dir,0)
 		step(B,ship.dir,0)
@@ -820,28 +836,27 @@
 			T.dismantle_wall(1)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-			boutput(ship.pilot, "<span style=\"color:red\"><B>You crash through the wall!</B></span>")
+			boutput(ship.pilot, "<span class='alert'><B>You crash through the wall!</B></span>")
 			in_bump = 0
 		if(istype(A, /turf/simulated/floor))
 			qdel(A)
 	if(ismob(A))
 		var/mob/M = A
-		boutput(ship.pilot, "<span style=\"color:red\"><B>You crash into [M]!</B></span>")
-		shake_camera(M, 8, 3)
-		boutput(M, "<span style=\"color:red\"><B>The [src] crashes into [M]!</B></span>")
+		boutput(ship.pilot, "<span class='alert'><B>You crash into [M]!</B></span>")
+		shake_camera(M, 8, 16)
+		boutput(M, "<span class='alert'><B>The [src] crashes into [M]!</B></span>")
 		M.changeStatus("stunned", 80)
 		M.changeStatus("weakened", 5 SECONDS)
 		var/turf/target = get_edge_target_turf(ship, ship.dir)
-		SPAWN_DBG(0)
-			M.throw_at(target, 4, 2)
+		M.throw_at(target, 4, 2)
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		in_bump = 0
 	if(isobj(A))
 		var/obj/O = A
 		if(O.density && O.anchored != 2)
-			boutput(ship.pilot, "<span style=\"color:red\"><B>You crash into [O]!</B></span>")
-			boutput(O, "<span style=\"color:red\"><B>[ship] crashes into you!</B></span>")
+			boutput(ship.pilot, "<span class='alert'><B>You crash into [O]!</B></span>")
+			boutput(O, "<span class='alert'><B>[ship] crashes into you!</B></span>")
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)

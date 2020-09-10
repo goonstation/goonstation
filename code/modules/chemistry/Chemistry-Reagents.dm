@@ -4,7 +4,7 @@
 //important MBC reagent note : implement mult for on_mob_life(). needed for proper realtime processing. lookk for examples, there are plenty
 //dont put them on byond-time effects like drowsy. just use them for damage, counters, statuseffects(realtime) etc.
 
-var/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
+ABSTRACT_TYPE(/datum/reagent)
 
 datum
 	reagent
@@ -46,6 +46,10 @@ datum
 		var/heat_capacity = 100 /* how much heat a reagent can hold */
 		var/blocks_sight_gas = 0 //opacity
 		var/pierces_outerwear = 0//whether or not this penetrates outerwear that may protect the victim(e.g. biosuit)
+		var/stun_resist = 0
+		var/smoke_spread_mod = 0 //base minimum-required-to-spread on a smoke this chem is in. Highest value in the smoke is used
+		var/minimum_reaction_temperature = INFINITY // Minimum temperature for reaction_temperature() to occur, use -INFINITY to bypass this check
+
 		New()
 			..()
 			if (src.viscosity == 0 && src.reagent_state == SOLID)
@@ -68,9 +72,17 @@ datum
 
 
 		proc/on_add()
+			if (stun_resist > 0)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_[src.id]", stun_resist)
 			return
 
 		proc/on_remove()
+			if (stun_resist > 0)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_[src.id]")
 			return
 
 		proc/on_copy(var/datum/reagent/new_reagent)
@@ -117,7 +129,7 @@ datum
 						if(M.reagents)
 							M.reagents.add_reagent(self.id,volume*modifier,self.data)
 							did_not_react = 0
-					if (ishuman(M) && hygiene_value)
+					if (ishuman(M) && hygiene_value && method == TOUCH)
 						var/mob/living/carbon/human/H = M
 						if (H.sims)
 							if ((hygiene_value > 0 && !(H.wear_suit || H.w_uniform)) || hygiene_value < 0)
@@ -132,7 +144,7 @@ datum
 							addProb = round(addProb / 2)
 					if(prob(addProb) && ishuman(M) && !AD)
 						// i would set up a proc for this but this is the only place that adds addictions
-						boutput(M, "<span style=\"color:red\"><B>You suddenly feel invigorated and guilty...</B></span>")
+						boutput(M, "<span class='alert'><B>You suddenly feel invigorated and guilty...</B></span>")
 						AD = new
 						AD.associated_reagent = src.name
 						AD.last_reagent_dose = world.timeofday
@@ -141,7 +153,8 @@ datum
 						AD.max_severity = src.max_addiction_severity
 						M.ailments += AD
 					else */if (AD)
-						boutput(M, "<span style='color:blue'><b>You feel slightly better, but for how long?</b></span>")
+						boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
+						M.make_jittery(-5)
 						AD.last_reagent_dose = world.timeofday
 						AD.stage = 1
 /*					if (ishuman(M) && thirst_value)
@@ -173,6 +186,8 @@ datum
 
 		proc/how_many_depletions(var/mob/M)
 			var/deplRate = depletion_rate
+			if(!deplRate)
+				return
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism")) //fuck
@@ -199,6 +214,12 @@ datum
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism"))
 					deplRate /= 2
+				if (H.organHolder)
+					if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
+						deplRate /= 2
+					if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
+						deplRate /= 2
+
 				if (H.sims)
 					if (src.thirst_value)
 						H.sims.affectMotive("Thirst", thirst_value)
@@ -263,8 +284,8 @@ datum
 				return AD
 			var/addProb = addiction_prob
 			//DEBUG_MESSAGE("addProb [addProb]")
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				if (H.traitHolder.hasTrait("strongwilled"))
 					addProb = round(addProb / 2)
 					rate /= 2
@@ -279,8 +300,8 @@ datum
 			holder.addiction_tally[src.id] += rate
 			var/current_tally = holder.addiction_tally[src.id]
 			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
-			if (addiction_min < current_tally && ishuman(M) && prob(addProb) && prob(addiction_prob2))
-				boutput(M, "<span style='color:red'><b>You suddenly feel invigorated and guilty...</b></span>")
+			if (addiction_min < current_tally && isliving(M) && prob(addProb) && prob(addiction_prob2))
+				boutput(M, "<span class='alert'><b>You suddenly feel invigorated and guilty...</b></span>")
 				AD = new
 				AD.associated_reagent = src.name
 				AD.last_reagent_dose = world.timeofday

@@ -33,11 +33,12 @@
 		else
 			var/turf/B = get_turf(object)
 			if (A.z != B.z)
-				boutput(usr, "<span style=\"color:red\">The two corners must be on the same Z!</span>")
+				boutput(usr, "<span class='alert'>The two corners must be on the same Z!</span>")
 				return
 
 			for(var/turf/T in block(A, B))
-				var/turf/at = new turftype(T)
+				var/turf/at = T
+				T.ReplaceWith(turftype, force=1)
 				at.set_dir(holder.dir)
 				blink(at)
 				new /area/adventure(at)
@@ -53,7 +54,7 @@
 		else
 			var/turf/B = get_turf(object)
 			if (A.z != B.z)
-				boutput(usr, "<span style=\"color:red\">The two corners must be on the same Z!</span>")
+				boutput(usr, "<span class='alert'>The two corners must be on the same Z!</span>")
 				return
 
 			for(var/turf/T in block(A, B))
@@ -72,7 +73,7 @@
 	selected()
 		var/kind = input(usr, "What kind of turf?", "Turf type", "Ancient floor") in src.turfs
 		turftype = src.turfs[kind]
-		boutput(usr, "<span style=\"color:blue\">Now building [kind] turfs in wide area spawn mode.</span>")
+		boutput(usr, "<span class='notice'>Now building [kind] turfs in wide area spawn mode.</span>")
 
 	deselected()
 		if (A)

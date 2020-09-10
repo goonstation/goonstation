@@ -6,7 +6,7 @@
 	var/crop_suffix = ""
 	var/crop_prefix = ""
 	desc = "You shouldn't be able to see this item ingame!"
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	var/brewable = 0 // will hitting a still with it do anything?
 	var/brew_result = null // what will it make if it's brewable?
 	rand_pos = 1
@@ -17,9 +17,7 @@
 
 	proc/make_reagents()
 		if (!src.reagents)
-			var/datum/reagents/R = new/datum/reagents(100)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(100)
 
 	unpooled()
 		if(src.reagents)
@@ -46,7 +44,7 @@
 			src.make_reagents()
 
 		if (istype(W, /obj/item/spacecash) || istype(W, /obj/item/paper))
-			boutput(user, "<span style=\"color:red\">You roll up [W] into a cigarette.</span>")
+			boutput(user, "<span class='alert'>You roll up [W] into a cigarette.</span>")
 			var/obj/item/clothing/mask/cigarette/custom/P = new(user.loc)
 
 			P.name = build_name(W)
@@ -57,9 +55,11 @@
 			pool (W)
 			pool (src)
 			user.put_in_hand_or_drop(P)
+			if (prob(20))
+				JOB_XP(user, "Botanist", 2)
 
 		else if (istype(W, /obj/item/bluntwrap))
-			boutput(user, "<span style=\"color:red\">You roll [src] up in [W] and make a fat doink.</span>")
+			boutput(user, "<span class='alert'>You roll [src] up in [W] and make a fat doink.</span>")
 			var/obj/item/clothing/mask/cigarette/cigarillo/doink = new(user.loc)
 			var/obj/item/bluntwrap/B = W
 			if(B.flavor)
@@ -74,6 +74,8 @@
 			qdel(W)
 			pool(src)
 			user.put_in_hand_or_drop(doink)
+			if (prob(20))
+				JOB_XP(user, "Botanist", 3)
 
 	combust_ended()
 		smoke_reaction(src.reagents, 1, get_turf(src), do_sfx = 0)
@@ -85,7 +87,6 @@
 /obj/item/plant/herb/cannabis/
 	name = "cannabis leaf"
 	desc = "Leafs for reefin'!"
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
 	icon_state = "cannabisleaf"
 	brewable = 1
 	brew_result = list("THC", "CBD")
@@ -96,11 +97,9 @@
 
 /obj/item/plant/herb/cannabis/spawnable
 	make_reagents()
-		var/datum/reagents/R = new/datum/reagents(85)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("THC", 60)
-		R.add_reagent("CBD", 20)
+		src.create_reagents(85)
+		reagents.add_reagent("THC", 60)
+		reagents.add_reagent("CBD", 20)
 
 /obj/item/plant/herb/cannabis/mega
 	name = "cannabis leaf"
@@ -111,11 +110,9 @@
 
 /obj/item/plant/herb/cannabis/mega/spawnable
 	make_reagents()
-		var/datum/reagents/R = new/datum/reagents(85)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("THC", 40)
-		R.add_reagent("LSD", 40)
+		src.create_reagents(85)
+		reagents.add_reagent("THC", 40)
+		reagents.add_reagent("LSD", 40)
 
 /obj/item/plant/herb/cannabis/black
 	name = "cannabis leaf"
@@ -126,11 +123,9 @@
 
 /obj/item/plant/herb/cannabis/black/spawnable
 	make_reagents()
-		var/datum/reagents/R = new/datum/reagents(85)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("THC", 40)
-		R.add_reagent("cyanide", 40)
+		src.create_reagents(85)
+		reagents.add_reagent("THC", 40)
+		reagents.add_reagent("cyanide", 40)
 
 /obj/item/plant/herb/cannabis/white
 	name = "cannabis leaf"
@@ -141,11 +136,9 @@
 
 /obj/item/plant/herb/cannabis/white/spawnable
 	make_reagents()
-		var/datum/reagents/R = new/datum/reagents(85)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("THC", 40)
-		R.add_reagent("omnizine", 40)
+		src.create_reagents(85)
+		reagents.add_reagent("THC", 40)
+		reagents.add_reagent("omnizine", 40)
 
 /obj/item/plant/herb/cannabis/omega
 	name = "glowing cannabis leaf"
@@ -157,29 +150,27 @@
 
 /obj/item/plant/herb/cannabis/omega/spawnable
 	make_reagents()
-		var/datum/reagents/R = new/datum/reagents(800)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("THC", 40)
-		R.add_reagent("LSD", 40)
-		R.add_reagent("suicider", 40)
-		R.add_reagent("space_drugs", 40)
-		R.add_reagent("mercury", 40)
-		R.add_reagent("lithium", 40)
-		R.add_reagent("atropine", 40)
-		R.add_reagent("haloperidol", 40)
-		R.add_reagent("methamphetamine", 40)
-		R.add_reagent("THC", 40)
-		R.add_reagent("capsaicin", 40)
-		R.add_reagent("psilocybin", 40)
-		R.add_reagent("hairgrownium", 40)
-		R.add_reagent("ectoplasm", 40)
-		R.add_reagent("bathsalts", 40)
-		R.add_reagent("itching", 40)
-		R.add_reagent("crank", 40)
-		R.add_reagent("krokodil", 40)
-		R.add_reagent("catdrugs", 40)
-		R.add_reagent("histamine", 40)
+		src.create_reagents(800)
+		reagents.add_reagent("THC", 40)
+		reagents.add_reagent("LSD", 40)
+		reagents.add_reagent("suicider", 40)
+		reagents.add_reagent("space_drugs", 40)
+		reagents.add_reagent("mercury", 40)
+		reagents.add_reagent("lithium", 40)
+		reagents.add_reagent("atropine", 40)
+		reagents.add_reagent("haloperidol", 40)
+		reagents.add_reagent("methamphetamine", 40)
+		reagents.add_reagent("THC", 40)
+		reagents.add_reagent("capsaicin", 40)
+		reagents.add_reagent("psilocybin", 40)
+		reagents.add_reagent("hairgrownium", 40)
+		reagents.add_reagent("ectoplasm", 40)
+		reagents.add_reagent("bathsalts", 40)
+		reagents.add_reagent("itching", 40)
+		reagents.add_reagent("crank", 40)
+		reagents.add_reagent("krokodil", 40)
+		reagents.add_reagent("catdrugs", 40)
+		reagents.add_reagent("histamine", 40)
 
 /obj/item/plant/herb/tobacco
 	name = "tobacco leaf"
@@ -234,7 +225,7 @@
 	icon_state = "sugarcane"
 	brewable = 1
 	brew_result = "rum"
-	
+
 /obj/item/plant/herb/grass
 	name = "grass"
 	desc = "Fresh free-range spacegrass."
@@ -252,6 +243,12 @@
 	desc = "Chewy leaves often manufactured for use in radiation treatment medicine."
 	icon_state = "nureous"
 
+/obj/item/plant/herb/nureous/fuzzy
+	name = "nureous leaves"
+	crop_suffix = " leaves"
+	desc = "Chewy leaves often manufactured for use in radiation treatment medicine. They seem strangely hairy."
+	icon_state = "nureousfuzzy"
+
 /obj/item/plant/herb/asomna
 	name = "asomna bark"
 	crop_suffix	= " bark"
@@ -260,11 +257,39 @@
 	brewable = 1
 	brew_result = "tea"
 
+/obj/item/plant/herb/asomna/robust
+	name = "asomna bark"
+	crop_suffix = " bark"
+	desc = "Often regarded as a delicacy when used for tea, Asomna also has stimulant properties. This particular chunk looks extra spicy."
+	icon_state = "asomnarobust"
+	brewable = 1
+	brew_result = "tea"
+
 /obj/item/plant/herb/commol
 	name = "commol root"
 	crop_suffix	= " root"
 	desc = "A tough and waxy root. It is well-regarded as an ingredient in burn salve."
 	icon_state = "commol"
+
+/obj/item/plant/herb/ipecacuanha
+	name = "ipecacuanha root"
+	crop_suffix	= " root"
+	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it."
+	icon_state = "ipecacuanha"
+
+/obj/item/plant/herb/ipecacuanha/invigorating
+	name = "ipecacuanha root"
+	crop_suffix	= " root"
+	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it. This one is strangely veinous"
+	icon_state = "ipecacuanhainvigorating"
+
+/obj/item/plant/herb/ipecacuanha/bilious
+	name = "ipecacuanha root"
+	crop_suffix = " root"
+	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it. This one looks particularly revolting"
+	icon_state = "ipecacuanhabilious"
+	brewable = 1
+	brew_result = "gvomit"
 
 /obj/item/plant/herb/sassafras
 	name = "sassafras root"
@@ -330,7 +355,7 @@
 		if (iswerewolf(user))
 			user.changeStatus("weakened",80)
 			user.take_toxin_damage(-10)
-			boutput(user, "<span style=\"color:red\">You try to pick up [src], but it hurts and you fall over!</span>")
+			boutput(user, "<span class='alert'>You try to pick up [src], but it hurts and you fall over!</span>")
 			return
 		else ..()
 	//stolen from glass shard
@@ -340,7 +365,7 @@
 			M.changeStatus("weakened",30)
 			M.force_laydown_standup()
 			M.take_toxin_damage(-10)
-			M.visible_message("<span style=\"color:red\">The [M] steps too close to [src] and falls down!</span>")
+			M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
 			return
 		..()
 	attack(mob/M as mob, mob/user as mob)
@@ -348,7 +373,7 @@
 		if (iswerewolf(user))
 			user.u_equip(src)
 			user.drop_item()
-			boutput(user, "<span style=\"color:red\">You drop the aconite, you don't think it's a good idea to hold it!</span>")
+			boutput(user, "<span class='alert'>You drop the aconite, you don't think it's a good idea to hold it!</span>")
 			return
 		if (iswerewolf(M))
 			M.take_toxin_damage(rand(5,10))
@@ -360,22 +385,20 @@
 		..()
 		return
 	//stolen from dagger, not much too it
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iswerewolf(A))
 			if (istype(usr, /mob))
 				A:lastattacker = usr
 				A:lastattackertime = world.time
 			A:weakened += 15
-	pull()
-		set src in oview(1)
-		set category = "Local"
-		var/mob/living/user = usr
+
+	pull(var/mob/user)
 		if (!istype(user))
 			return
 		if (!iswerewolf(user))
 			return ..()
 		else
-			boutput(user, "<span style=\"color:red\">You can't drag that aconite! It burns!</span>")
+			boutput(user, "<span class='alert'>You can't drag that aconite! It burns!</span>")
 			user.take_toxin_damage(-10)
 			return
 
@@ -406,7 +429,7 @@
 				if(H.gloves)
 					..()
 					return
-			boutput(user, "<span style=\"color:red\">You prick yourself on [src]'s thorns trying to pick it up!</span>")
+			boutput(user, "<span class='alert'>You prick yourself on [src]'s thorns trying to pick it up!</span>")
 			random_brute_damage(user, 3)
 			take_bleeding_damage(user,null,3,DAMAGE_STAB)
 		else
@@ -414,7 +437,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/wirecutters/) && src.thorned)
-			boutput(user, "<span style=\"color:blue\">You snip off [src]'s thorns.</span>")
+			boutput(user, "<span class='notice'>You snip off [src]'s thorns.</span>")
 			src.thorned = 0
 			src.desc += " Its thorns have been snipped off."
 			return
@@ -424,4 +447,4 @@
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"
 	desc = "Also known as fish mint or heart leaf, used in cuisine for its distinct fishy flavor."
-	icon_state = "hcordata" 
+	icon_state = "hcordata"

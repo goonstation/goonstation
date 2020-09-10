@@ -13,8 +13,8 @@
 		color_rgb = input("Color", "Color", "#ffffff") as color
 		key_name = input("Key name", "Key name", "[key_type]") as text
 		oneshot = alert("Is this key one use only?",,"Yes","No") == "Yes" ? 1 : 0
-		boutput(usr, "<span style=\"color:blue\">Left click to place keys, right click triggerables to (de)select them for automatic assignment to the keys. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span style=\"color:blue\">NOTE: Select stuff first, then make keys for extra comfort!</span>")
+		boutput(usr, "<span class='notice'>Left click to place keys, right click triggerables to (de)select them for automatic assignment to the keys. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>NOTE: Select stuff first, then make keys for extra comfort!</span>")
 
 	proc/clear_selections()
 		for (var/obj/O in selected_triggerable)
@@ -24,6 +24,7 @@
 	disposing()
 		clear_selections()
 		pool(selection)
+		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if (pa.Find("left"))
@@ -54,7 +55,7 @@
 						selected_triggerable += object
 						selected_triggerable[object] = act
 					else
-						boutput(usr, "<span style=\"color:red\">ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/item/adventurepuzzle/triggerer/key
 	name = "key"
@@ -77,9 +78,9 @@
 			return
 		if (istype(target, /obj/adventurepuzzle/triggerable))
 			if (target in src.triggered)
-				boutput(usr, "<span style=\"color:blue\">The key slides into [target]!</span>")
+				boutput(usr, "<span class='notice'>The key slides into [target]!</span>")
 				target:trigger(src.triggered[target])
 				if (oneshot)
 					qdel(src)
 			else
-				boutput(usr, "<span style=\"color:red\">The key won't fit into [target]!</span>")
+				boutput(usr, "<span class='alert'>The key won't fit into [target]!</span>")

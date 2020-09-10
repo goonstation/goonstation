@@ -83,10 +83,11 @@ Modules to do things with cloning modules
 	desc = "A module that automatically inserts a gene into clones. It has a slot in the back that looks like it would hold a DNA injector."
 
 	var/datum/bioEffect/BE = null
-	/obj/item/cloneModule/genepowermodule/attackby(obj/item/W as obj, mob/user as mob)
-		if (!BE && istype(W, /obj/item/genetics_injector/dna_injector))
-			var/obj/item/genetics_injector/dna_injector/injector = W
-			boutput(user, "You put the DNA injector into the slot on the cartridge.")
-			BE = injector.BE
-			user.drop_item()
-			qdel(W)
+
+/obj/item/cloneModule/genepowermodule/attackby(obj/item/W as obj, mob/user as mob)
+	if (!BE && istype(W, /obj/item/genetics_injector/dna_injector))
+		var/obj/item/genetics_injector/dna_injector/injector = W
+		boutput(user, "You put the DNA injector into the slot on the cartridge.")
+		BE = injector.BE
+		user.drop_item()
+		qdel(W)

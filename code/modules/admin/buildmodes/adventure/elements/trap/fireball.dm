@@ -9,14 +9,15 @@
 		..()
 		selection = unpool(/obj/adventurepuzzle/marker)
 		power = input("Fireball explosion power? (default should do if you want this to be doable)", "Fireball explosion", 5) as num
-		boutput(usr, "<span style=\"color:blue\">Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span style=\"color:blue\">Special note: If no target is set, the fireball will launch at the nearest mob.</span>")
+		boutput(usr, "<span class='notice'>Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>Special note: If no target is set, the fireball will launch at the nearest mob.</span>")
 
 	disposing()
 		if (target)
 			target.overlays -= selection
 		if (selection)
 			pool(selection)
+		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if (pa.Find("left"))
@@ -159,7 +160,6 @@
 
 	proc/launch()
 		if (!target)
-			loc = null
 			qdel(src)
 		SPAWN_DBG(0)
 			while (loc != get_turf(target))
@@ -169,14 +169,14 @@
 				timeout--
 				if (!timeout)
 					break
-				sleep(1)
+				sleep(0.1 SECONDS)
 			explode()
 
 	proc/explode()
 		if (exploding)
 			return
 		for (var/mob/M in viewers(src))
-			boutput(M, "<span style=\"color:red\">The [name] explodes!</span>")
+			boutput(M, "<span class='alert'>The [name] explodes!</span>")
 		exploding = 1
 		var/turf/T = get_turf(src)
 		explosion_new(src, T, power)

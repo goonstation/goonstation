@@ -19,6 +19,7 @@
 	w_class = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	var/rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
+	tooltip_flags = REBUILD_SPECTRO | REBUILD_DIST
 	var/amount_per_transfer_from_this = 5
 	var/initial_volume = 50
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
@@ -95,12 +96,12 @@
 			return
 		if (!reagents)
 			return
-		. = "<br><span style=\"color:blue\">[reagents.get_description(user,rc_flags)]</span>"
+		. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
 		return
 
 	MouseDrop(atom/over_object as obj)
 		if (!can_mousedrop)
-			boutput(usr, "<span style=\"color:red\">Nope.</span>")
+			boutput(usr, "<span class='alert'>Nope.</span>")
 			return
 		if(usr.restrained())
 			return
@@ -120,14 +121,14 @@
 			if(!ok)
 				return
 		// First filter out everything we don't want to refill or empty quickly.
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender))
+		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
 			return ..()
 
 		if (usr.stat || usr.getStatusDuration("weakened") || get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
-			boutput(usr, "<span style=\"color:red\">That's too far!</span>")
+			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
 
 		src.transfer_all_reagents(over_object, usr)
@@ -151,7 +152,7 @@
 		user.lastattacked = target
 		if (ismob(target))
 			if (!src.reagents.total_volume)
-				boutput(user, "<span style=\"color:red\">Your [src.name] is empty!</span>")
+				boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
 				return
 			var/mob/living/T = target
 			var/obj/item/reagent_containers/glass/G = null
@@ -168,8 +169,8 @@
 
 			if (G && user.a_intent == "help" && T.a_intent == "help" && user != T)
 				if (G.reagents.total_volume >= G.reagents.maximum_volume)
-					boutput(user, "<span style=\"color:red\">[T.name]'s [G.name] is already full!</span>")
-					boutput(T, "<span style=\"color:red\"><B>[user.name]</B> offers you [src.name], but your [G.name] is already full.</span>")
+					boutput(user, "<span class='alert'>[T.name]'s [G.name] is already full!</span>")
+					boutput(T, "<span class='alert'><B>[user.name]</B> offers you [src.name], but your [G.name] is already full.</span>")
 					return
 				src.reagents.trans_to(G, src.amount_per_transfer_from_this)
 				user.visible_message("<b>[user.name]</b> pours some of the [src.name] into [T.name]'s [G.name].")
@@ -178,13 +179,13 @@
 				if (reagents)
 					reagents.physical_shock(14)
 				if (src.splash_all_contents)
-					boutput(user, "<span style=\"color:blue\">You splash all of the solution onto [target].</span>")
-					target.visible_message("<span style=\"color:red\"><b>[user.name]</b> splashes the [src.name]'s contents onto [target.name]!</span>")
+					boutput(user, "<span class='notice'>You splash all of the solution onto [target].</span>")
+					target.visible_message("<span class='alert'><b>[user.name]</b> splashes the [src.name]'s contents onto [target.name]!</span>")
 				else
-					boutput(user, "<span style=\"color:blue\">You apply [src.amount_per_transfer_from_this] units of the solution to [target].</span>")
-					target.visible_message("<span style=\"color:red\"><b>[user.name]</b> applies some of the [src.name]'s contents to [target.name].</span>")
+					boutput(user, "<span class='notice'>You apply [src.amount_per_transfer_from_this] units of the solution to [target].</span>")
+					target.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [target.name].</span>")
 				var/mob/living/MOB = target
-				logTheThing("combat", user, MOB, "splashes [src] onto %target% [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
+				logTheThing("combat", user, MOB, "splashes [src] onto [constructTarget(MOB,"combat")] [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
 				can_mousedrop = 0
 				if (src.splash_all_contents)
 					src.reagents.reaction(target,TOUCH)
@@ -199,82 +200,78 @@
 			var/obj/fluid/F = target
 			if (!src.reagents.total_volume)
 				if (!F.group || !F.group.reagents.total_volume)
-					boutput(user, "<span style=\"color:red\">[target] is empty. (this is a bug, whooops!)</span>")
+					boutput(user, "<span class='alert'>[target] is empty. (this is a bug, whooops!)</span>")
 					F.removed()
 					return
 
 				if (reagents.total_volume >= reagents.maximum_volume)
-					boutput(user, "<span style=\"color:red\">[src] is full.</span>")
+					boutput(user, "<span class='alert'>[src] is full.</span>")
 					return
 				//var/transferamt = min(src.reagents.maximum_volume - src.reagents.total_volume, F.amt)
 
 				F.group.reagents.skip_next_update = 1
 				F.group.update_amt_per_tile()
-				var/fill = min(F.group.amt_per_tile, F.group.reagents.total_volume)
-				boutput(user, "<span style=\"color:blue\">You fill [src] with [fill] units of [target].</span>")
-				F.group.reagents.trans_to_direct(src.reagents,fill)
-				if (!F.group) return
-				F.group.contained_amt = F.group.reagents.total_volume
-				F.group.remove(F,0,F.group.updating)
-
+				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
+				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
+				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
 				logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
 				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
-				boutput(user, "<span style=\"color:blue\">You transfer [trans] units of the solution to [T].</span>")
+				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
 		else if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
-				boutput(user, "<span style=\"color:red\">[target] is empty.</span>")
+				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
 
 			if (reagents.total_volume >= reagents.maximum_volume)
-				boutput(user, "<span style=\"color:red\">[src] is full.</span>")
+				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
 
 			var/transferamt = src.reagents.maximum_volume - src.reagents.total_volume
 			var/trans = target.reagents.trans_to(src, transferamt)
-			boutput(user, "<span style=\"color:blue\">You fill [src] with [trans] units of the contents of [target].</span>")
+			boutput(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
 		else if (target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 			if (!reagents.total_volume)
-				boutput(user, "<span style=\"color:red\">[src] is empty.</span>")
+				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
 
 			if (target.reagents.total_volume >= target.reagents.maximum_volume)
-				boutput(user, "<span style=\"color:red\">[target] is full.</span>")
+				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
 			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
 			var/trans = src.reagents.trans_to(target, 10)
-			boutput(user, "<span style=\"color:blue\">You transfer [trans] units of the solution to [target].</span>")
+			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
 		else if (istype(target, /obj/item/sponge)) // dump contents onto it
 			if (!reagents.total_volume)
-				boutput(user, "<span style=\"color:red\">[src] is empty.</span>")
+				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
 
 			if (target.reagents.total_volume >= target.reagents.maximum_volume)
-				boutput(user, "<span style=\"color:red\">[target] is full.</span>")
+				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
 			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
 			var/trans = src.reagents.trans_to(target, 10)
-			boutput(user, "<span style=\"color:blue\">You dump [trans] units of the solution to [target].</span>")
-		
+			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
+
 		else if (istype(target, /turf/space/fluid)) //specific exception for seafloor rn, since theres no others
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
-				boutput(user, "<span style=\"color:red\">[src] is full.</span>")
+				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
 			else
 				src.reagents.add_reagent("silicon_dioxide", src.reagents.maximum_volume - src.reagents.total_volume) //should add like, 100 - 85 sand or something
-			boutput(user, "<span style=\"color:blue\">You scoop some of the sand into [src].</span>")
+			boutput(user, "<span class='notice'>You scoop some of the sand into [src].</span>")
 			return
 
 		else if (reagents.total_volume)
@@ -282,8 +279,8 @@
 			if (isobj(target)) //Have to do this in 2 lines because byond is shit.
 				if (target:flags & NOSPLASH) return
 			can_mousedrop = 0
-			boutput(user, "<span style=\"color:blue\">You [src.splash_all_contents ? "splash all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
-			logTheThing("combat", user, target, "splashes [src] onto %target% [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "splash all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
+			logTheThing("combat", user, target, "splashes [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			if (reagents)
 				reagents.physical_shock(14)
 
@@ -299,24 +296,24 @@
 		/*if (istype(I, /obj/item/reagent_containers/pill))
 
 			if (!I.reagents || !I.reagents.total_volume)
-				boutput(user, "<span style=\"color:red\">[src] is empty.</span>")
+				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
 
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
-				boutput(user, "<span style=\"color:red\">[src] is full.</span>")
+				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
 
-			boutput(user, "<span style=\"color:blue\">You dissolve the [I] in [src].</span>")
+			boutput(user, "<span class='notice'>You dissolve the [I] in [src].</span>")
 
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			qdel(I)
 
 		else */if (istype(I, /obj/item/reagent_containers/food/snacks/ingredient/egg))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
-				boutput(user, "<span style=\"color:red\">[src] is full.</span>")
+				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
 
-			boutput(user, "<span style=\"color:blue\">You crack [I] into [src].</span>")
+			boutput(user, "<span class='notice'>You crack [I] into [src].</span>")
 
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			user.u_equip(I)
@@ -324,20 +321,20 @@
 
 		else if (istype(I, /obj/item/paper))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
-				boutput(user, "<span style=\"color:red\">[src] is full.</span>")
+				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
 
-			boutput(user, "<span style=\"color:blue\">You rip up the [I] into tiny pieces and sprinkle it into [src].</span>")
+			boutput(user, "<span class='notice'>You rip up the [I] into tiny pieces and sprinkle it into [src].</span>")
 
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			pool(I)
 
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/breadloaf))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
-				boutput(user, "<span style=\"color:red\">[src] is full.</span>")
+				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
 
-			boutput(user, "<span style=\"color:blue\">You shove the [I] into [src].</span>")
+			boutput(user, "<span class='notice'>You shove the [I] into [src].</span>")
 
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			user.u_equip(I)
@@ -345,10 +342,10 @@
 
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/breadslice))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
-				boutput(user, "<span style=\"color:red\">[src] is full.</span>")
+				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
 
-			boutput(user, "<span style=\"color:blue\">You shove the [I] into [src].</span>")
+			boutput(user, "<span class='notice'>You shove the [I] into [src].</span>")
 
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			user.u_equip(I)
@@ -356,10 +353,10 @@
 
 		else if (istype(I,/obj/item/material_piece/rubber))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
-				boutput(user, "<span style=\"color:red\">[src] is full.</span>")
+				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
 
-			boutput(user, "<span style=\"color:blue\">You shove the [I] into [src].</span>")
+			boutput(user, "<span class='notice'>You shove the [I] into [src].</span>")
 
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			user.u_equip(I)
@@ -370,18 +367,18 @@
 				I:Poisoner = user
 				src.reagents.trans_to(I, 5)
 				logTheThing("combat", user, null, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> dips the blade of [I] into [src]!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> dips the blade of [I] into [src]!</span>")
 				return
 
 		//Hacky thing to make silver bullets (maybe todo later : all items can be dipped in any solution?)
 		else if (istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || (I.type == /obj/item/handcuffs) || istype(I,/datum/projectile/bullet/revolver_38))
 			if ("silver" in src.reagents.reaction(I, react_volume = src.reagents.total_volume))
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> dips [I] into [src] coating it in silver. Watch out, evil creatures!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> dips [I] into [src] coating it in silver. Watch out, evil creatures!</span>")
 			else
 				if (I.material && I.material.mat_id == "silver")
-					boutput(user, "<span style=\"color:blue\">[I] is already coated, more silver won't do any good.</span>")
+					boutput(user, "<span class='notice'>[I] is already coated, more silver won't do any good.</span>")
 				else
-					boutput(user, "<span style=\"color:blue\">[src] doesn't have enough silver in it to coat [I].</span>")
+					boutput(user, "<span class='notice'>[src] doesn't have enough silver in it to coat [I].</span>")
 
 		else if (istype(I, /obj/item/reagent_containers/iv_drip))
 			var/obj/item/reagent_containers/iv_drip/W = I
@@ -391,7 +388,7 @@
 						var/transferred = W.reagents.trans_to(src, 10)
 						boutput(user, "You pour [transferred] units of the [W.name]'s contents into the [src.name].")
 					else
-						boutput(user, "<span style=\"color:red\">The [src.name] is full.</span>")
+						boutput(user, "<span class='alert'>The [src.name] is full.</span>")
 				else
 					boutput(user, "The [W.name] is empty.")
 
@@ -402,10 +399,10 @@
 
 	attack_self(mob/user as mob)
 		if (src.splash_all_contents)
-			boutput(user, "<span style=\"color:blue\">You tighten your grip on the [src].</span>")
+			boutput(user, "<span class='notice'>You tighten your grip on the [src].</span>")
 			src.splash_all_contents = 0
 		else
-			boutput(user, "<span style=\"color:blue\">You loosen your grip on the [src].</span>")
+			boutput(user, "<span class='notice'>You loosen your grip on the [src].</span>")
 			src.splash_all_contents = 1
 		return
 
@@ -418,8 +415,9 @@
 		qdel(src)
 
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
+		. = ..()
 		if (src.is_open_container() && src.reagents && src.reagents.total_volume > 0)
-			user.visible_message("<span style=\"color:red\"><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
 			src.reagents.reaction(get_turf(user), TOUCH)
 			src.reagents.clear_reagents()
 
@@ -479,7 +477,7 @@
 
 	attack_self(mob/user as mob)
 		if (isrobot(user))
-			boutput(user, "<span style=\"color:red\">Why would you wanna flip over your precious bucket? Silly.</span>")
+			boutput(user, "<span class='alert'>Why would you wanna flip over your precious bucket? Silly.</span>")
 			return
 		if (src.reagents.total_volume)
 			user.show_text("<b>You turn the bucket upside down, causing it to spill!</b>", "red")
@@ -496,7 +494,7 @@
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
 		step_rand(src)
-		user.visible_message("<span style=\"color:red\"><b>[user] kicks the bucket!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
 		user.death(0)
 
 	red

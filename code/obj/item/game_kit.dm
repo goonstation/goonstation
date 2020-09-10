@@ -5,7 +5,7 @@ THAT STUPID GAME KIT
 */
 /obj/item/game_kit
 	name = "Gaming Kit"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "game_kit"
 	var/selected = null
 	var/board_stat = null
@@ -19,8 +19,10 @@ THAT STUPID GAME KIT
 	stamina_crit_chance = 5
 
 /obj/item/game_kit/New()
+	..()
 	src.board_stat = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 	src.selected = "CR"
+	BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/game_kit/MouseDrop(mob/user as mob)
 	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
@@ -60,7 +62,7 @@ THAT STUPID GAME KIT
 	src.data = jointext(dat, "")
 
 /obj/item/game_kit/attack_hand(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 
 	if (!( src.data ))
 		update()
@@ -134,6 +136,4 @@ THAT STUPID GAME KIT
 										src.board_stat = text("[][][]", copytext(src.board_stat, 1, place), src.selected, copytext(src.board_stat, place + 2, 129))
 		src.add_fingerprint(usr)
 		update()
-		for(var/mob/M in viewers(1, src))
-			if ((M.client && M.machine == src))
-				src.attack_hand(M)
+		src.updateDialog()

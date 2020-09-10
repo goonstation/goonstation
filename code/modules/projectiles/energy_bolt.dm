@@ -5,17 +5,20 @@
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 20
 //How much ammo this costs
-	cost = 15
+	cost = 25
 //How fast the power goes away
-	dissipation_rate = 2
+	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 2
+	max_range = 12 //how many ticks the projectile can go regardless of falloff
 //Kill/Stun ratio
 	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting
 	sname = "stun"
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/Taser.ogg'
+//should the sound have extra range?
+	shot_sound_extrarange = 5
 //How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
 //What is our damage type
@@ -42,9 +45,6 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
-	on_pointblank(var/obj/projectile/P, var/mob/living/M)
-		stun_bullet_hit(P, M)
-
 
 //Any special things when it hits shit?
 	/* this is now handled in the projectile parent on_hit for all ks_ratio 0.0 weapons.
@@ -57,6 +57,17 @@ toxic - poisons
 			if (H.getStatusDuration("slowed") > power)
 				H.changeStatus("stunned", power)
 		return*/
+
+/datum/projectile/energy_bolt/bouncy
+	name = "ricochet energy bolt"
+	var/max_bounce_count = 1
+	var/reflect_on_nondense_hits = FALSE
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		if (!ismob(hit))
+			if (shoot_reflected_bounce(P, hit, max_bounce_count, PROJ_NO_HEADON_BOUNCE, reflect_on_nondense_hits))
+				elecflash(get_turf(P),radius=0, power=2, exclude_center = 0)
+		..()
 
 /datum/projectile/heavyion
 	name = "ion bolt"
@@ -91,7 +102,7 @@ toxic - poisons
 
 /datum/projectile/energy_bolt/burst
 	shot_number = 3
-	cost = 50
+	cost = 75
 	sname = "burst stun"
 
 
@@ -115,28 +126,11 @@ toxic - poisons
 		return
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
-	power = 0
-	dissipation_delay = 6
+	cost = 10
+	power = 15
+	dissipation_delay = 1
+	dissipation_rate = 2
 	icon_state = "spark"
-
-	on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
-		if(ks_ratio == 0) //stun projectiles only
-			if (isliving(hit))
-				var/mob/living/L = hit
-
-#ifdef USE_STAMINA_DISORIENT
-				L.do_disorient(stamina_damage = 45, weakened = 50, stunned = 80, disorient = 20, remove_stamina_below_zero = 0)
-				L.emote("twitch_v")
-#else
-				L.changeStatus("slowed", power)
-				L.change_misstep_chance(5)
-				L.emote("twitch_v")
-			if (L.getStatusDuration("slowed") > power)
-				L.changeStatus("stunned", power)
-			if (L.getStatusDuration("weakened") > 0) //weaken from stamina does not stack, this allows it to for stun guns
-				L.changeStatus("weakened", power)
-#endif
-
 
 //////////// VUVUZELA
 /datum/projectile/energy_bolt_v
@@ -178,16 +172,17 @@ toxic - poisons
 	disruption = 0
 
 //Any special things when it hits shit?
-	on_hit(atom/hit)
+	on_hit(atom/hit) //purposefully not getting falloff, so it's not just a worse taser
 		if (isliving(hit))
 			var/mob/living/L = hit
 			L.apply_sonic_stun(1.5, 0, 25, 10, 0, rand(1, 3), stamina_damage = 80)
 			impact_image_effect("T", hit)
 		return
 
+ //purposefully keeping (some of) the pointblank double-dip,
+ //because a staffie with a vuvu won't always have the option to follow up with a baton and cuffs, and this helps keep a guy down
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		M.apply_sonic_stun(3, 0, 25, 20, 0, rand(2, 4), stamina_damage = 80)
-		stun_bullet_hit(P, M)
 		impact_image_effect("T", M)
 
 //////////// Ghost Hunting for Halloween
@@ -238,57 +233,42 @@ toxic - poisons
 /datum/projectile/energy_bolt/aoe
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "detain-projectile"
+	sname = "detain"
 	power = 20
 	cost = 50
-	dissipation_rate = 6
+	dissipation_rate = 5
+	dissipation_delay = 3
 	color_red = 255
 	color_green = 165
 	color_blue = 0
-	var/distance = 6		//Distance needs to be explicitly set before usage. in shoot// currently only used for the Lawgiver
-	var/hit = 0				//This hit var and the on_hit on_end nonsense was to make it so that if it hits a guy, the explosion starts on them and not one tile before, but if it hits a wall, it explodes on the floor tile in front of it
+	max_range = 7 //slight range boost
+	damage_type = D_SPECIAL
 
-	//die/detonate when you go the required distance
-	tick(var/obj/projectile/O)
-		if (distance <= 0)
-			O.die()
-		distance--
-
-	on_hit(atom/O)
-
+	on_hit(atom/O, angle, var/obj/projectile/P)
 		//lets make getting hit by the projectile a bit worse than getting the shockwave
 		//tasers have changed in production code, I'm not really sure what value is good to give it here...
 		if (isliving(O))
 			var/mob/living/L = O
 			L.changeStatus("slowed", 2 SECONDS)
-			L.do_disorient(stamina_damage = 45, weakened = 50, stunned = 80, disorient = 20, remove_stamina_below_zero = 0)
-
+			L.do_disorient(stamina_damage = 2*P.power, weakened = 0, stunned = 0, disorient = P.power, remove_stamina_below_zero = 0)
 			L.emote("twitch_v")
+		detonate(O, P)
 
+	on_max_range_die(obj/projectile/O)
+		detonate(O, O)
 
-		hit = 1
-
-		detonate(O)
-
-	//do AOE stuff. This is not on on_hit because this effect should trigger when the projectile reaches the end of its distance OR hits things.
-	on_end(var/obj/projectile/O)
-		distance = 6		//reset distance for next shot
-		//if we hit a mob or something, that will handle the detonation, we don't need to do it on_end
-		if (!hit)
-			detonate(O)
-		hit = 0
-
-	proc/detonate(atom/O)
+	proc/detonate(atom/O, var/obj/projectile/P)
 		if (istype(O, /obj/projectile))
 			var/obj/projectile/proj = O
 			new /obj/effects/energy_bolt_aoe_burst(get_turf(proj), x_val = proj.xo, y_val = proj.yo)
 		else
 			new /obj/effects/energy_bolt_aoe_burst(get_turf(O))
 
-		for (var/mob/M in orange(1, O))
-			if (isliving(M))
+		for (var/mob/M in range(1, O)) //direct hit power is a 'bonus for aim', so we want this to hit the target
+			if (isliving(M) && M != P.shooter) //don't stun ourself while shooting in close quarters
 				var/mob/living/L = M
 				L.changeStatus("slowed", 2 SECONDS)
-				L.do_disorient(stamina_damage = 45, weakened = 50, stunned = 80, disorient = 20, remove_stamina_below_zero = 0)
+				L.do_disorient(stamina_damage = 70, weakened = 50, stunned = 80, disorient = 20, remove_stamina_below_zero = 0)
 				L.emote("twitch_v")
 
 
@@ -301,6 +281,7 @@ toxic - poisons
 	icon_state = "shockwave"
 
 	New(var/x_val, var/y_val)
+		..()
 		pixel_x = x_val
 		pixel_y = y_val
 		src.Scale(0.4,0.4)
@@ -326,7 +307,11 @@ toxic - poisons
 	shot_sound = 'sound/weapons/Taser.ogg'
 	damage_type = D_ENERGY
 	hit_ground_chance = 30
-	brightness = 0
+	brightness = 1
+	color_red = 0.18
+	color_green = 0.2
+	color_blue = 1
+
 	disruption = 8
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
@@ -339,13 +324,14 @@ toxic - poisons
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		// var/dir = angle2dir(angle)
 		var/dir = get_dir(O.shooter, hit)
+		var/pow = O.power
 		if (ishuman(hit))
+			O.die()
 			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = 60, weakened = 0, stunned = 0, disorient = 80, remove_stamina_below_zero = 0)
-			H.throw_at(get_edge_target_turf(hit, dir),7,1, throw_type = THROW_GUNIMPACT)
+			H.do_disorient(stamina_damage = pow*3, weakened = 0, stunned = 0, disorient = pow*4, remove_stamina_below_zero = 0)
+			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
 			H.emote("twitch_v")
 			H.changeStatus("slowed", 3 SECONDS)
-		return
 
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)
 		return

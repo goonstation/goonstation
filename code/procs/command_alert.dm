@@ -14,7 +14,7 @@
 	if (sound_to_play && length(sound_to_play) > 0)
 		world << csound(sound_to_play)
 
-/proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
+/proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
 	if(!title || !text) return
 
 	if(do_sanitize)
@@ -23,7 +23,7 @@
 
 	boutput(world, "<h2 class='alert'>[title]</h2>")
 
-	boutput(world, "<span class='alert'>[text]</span>")
+	boutput(world, "<span class='[css_class]'>[text]</span>")
 	boutput(world, "<br>")
 	if (sound_to_play && length(sound_to_play) > 0)
 		world << csound(sound_to_play)

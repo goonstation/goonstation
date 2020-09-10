@@ -39,19 +39,19 @@ Notes:
 	proc/start()
 		// send centcom message
 		// begin timer for first sub-event
-	
-	
+
+
 	// Change space to a certain atmosphere color tile, progressively up from the southern map edge
 	proc/showAtmosTiles(atmosColor = null)
 		for (var/row = 1, row <= world.maxy, row++) // Each map row from bottom
 			for (var/col = 1, col <= world.maxx, col++) // Each column (tile) within this row
 				// apply tile change
-				
+
 
 	// Show a heatshield burning effect on southern facing exterior tiles of the station
 	proc/setHeatshieldBurn(burnAmount = null)
 		//
-	
+
 
 	proc/setAmbientTemperature(temp = null)
 		//
@@ -93,7 +93,7 @@ Notes:
 		C.hotspots += src
 
 	proc/process()
-		var/datum/gas_mixture/env = src.spot.remove_air(src.spot.air.total_moles())
+		var/datum/gas_mixture/env = src.spot.remove_air(TOTAL_MOLES(src.spot.air))
 		if (env)
 			out(world, "Current temp: [env.temperature]")
 			env.temperature += src.heatAmount
@@ -106,18 +106,18 @@ Notes:
 			out(world, "Operating on [src.spot]")
 			var/datum/gas_mixture/env = src.spot.return_air()
 			if (env.temperature < src.tempTarget)
-				var/transfer_moles = env.total_moles()
+				var/transfer_moles = TOTAL_MOLES(env)
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 				out(world, "got [transfer_moles] moles at [removed.temperature]")
 
 				if (removed)
 					/*
-					var/heat_capacity = removed.heat_capacity()
+					var/heat_capacity = HEAT_CAPACITY(removed)
 					out(world, "heating ([heat_capacity])")
 					if (heat_capacity)
 						removed.temperature = (removed.temperature*heat_capacity + src.heatAmount)/heat_capacity
 					*/
-				
+
 					removed.temperature += src.heatAmount
 					out(world, "now at [removed.temperature]")
 				env.merge(removed)

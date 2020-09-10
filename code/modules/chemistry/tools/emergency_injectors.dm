@@ -8,7 +8,7 @@
 	desc = "A small syringe-like thing that automatically injects its contents into someone."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	item_state = "dnainjector"
+	item_state = "emerg_inj-orange"
 	icon_state = "emerg_inj-orange"
 	initial_volume = 10
 	amount_per_transfer_from_this = 10
@@ -35,39 +35,40 @@
 			src.underlays += src.fluid_image
 		else
 			icon_state = "emerg_inj-[label]0"
+		item_state = "emerg_inj-[label]"
 
 	attack(mob/M as mob, mob/user as mob)
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (src.empty || !src.reagents)
-				boutput(user, "<span style='color:red'>There's nothing to inject, [src] has already been expended!</span>")
+				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
 				return
 			else
 				if (!M.reagents)
 					return ..()
-				logTheThing("combat", user, M, "injects %target% with [src] [log_reagents(src)]")
+				logTheThing("combat", user, M, "injects [constructTarget(M,"combat")] with [src] [log_reagents(src)]")
 				src.reagents.trans_to(M, amount_per_transfer_from_this)
-				user.visible_message("<span style='color:red'>[user] injects [M == user ? "[his_or_her(user)]self" : M] with [src]!</span>",\
-				"<span style='color:red'>You inject [M == user ? "yourself" : M] with [src]!</span>")
+				user.visible_message("<span class='alert'>[user] injects [M == user ? "[his_or_her(user)]self" : M] with [src]!</span>",\
+				"<span class='alert'>You inject [M == user ? "yourself" : M] with [src]!</span>")
 				playsound(get_turf(M), "sound/items/hypo.ogg", 40, 0)
 				if(!src.reagents.total_volume)
 					src.empty = 1
 				return
 		else
-			boutput(user, "<span style='color:red'>You can only use [src] on people!</span>")
+			boutput(user, "<span class='alert'>You can only use [src] on people!</span>")
 			return
 
 	attack_self(mob/user)
-		if (iscarbon(user) || iscritter(user))
+		if (iscarbon(user) || ismobcritter(user))
 			if (src.empty || !src.reagents)
-				boutput(user, "<span style='color:red'>There's nothing to inject, [src] has already been expended!</span>")
+				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
 				return
 			else
 				if (!user.reagents)
 					return ..()
 				logTheThing("combat", user, null, "injects themself with [src] [log_reagents(src)]")
 				src.reagents.trans_to(user, amount_per_transfer_from_this)
-				user.visible_message("<span style='color:red'>[user] injects [his_or_her(user)]self with [src]!</span>",\
-				"<span style='color:red'>You inject yourself with [src]!</span>")
+				user.visible_message("<span class='alert'>[user] injects [his_or_her(user)]self with [src]!</span>",\
+				"<span class='alert'>You inject yourself with [src]!</span>")
 				playsound(get_turf(user), "sound/items/hypo.ogg", 40, 0)
 				if(!src.reagents.total_volume)
 					src.empty = 1
@@ -102,6 +103,11 @@
 	name = "emergency auto-injector (potassium iodide)"
 	initial_reagents = "anti_rad"
 	label = "green"
+	
+/obj/item/reagent_containers/emergency_injector/pentetic_acid
+	name = "emergency auto-injector (pentetic acid)"
+	initial_reagents = list("penteticacid"=5)
+	label = "blue"
 
 /obj/item/reagent_containers/emergency_injector/insulin
 	name = "emergency auto-injector (insulin)"
@@ -131,6 +137,11 @@
 /obj/item/reagent_containers/emergency_injector/salbutamol
 	name = "emergency auto-injector (salbutamol)"
 	initial_reagents = "salbutamol"
+	label = "blue"
+	
+/obj/item/reagent_containers/emergency_injector/perf
+	name = "emergency auto-injector (perfluorodecalin)"
+	initial_reagents = "perfluorodecalin"
 	label = "blue"
 
 /obj/item/reagent_containers/emergency_injector/mannitol
@@ -172,6 +183,11 @@
 	name = "emergency auto-injector (synaptizine)"
 	initial_reagents = "synaptizine" // same as the lexorin, they both ended up with 10u in the end so I'm just gunna leave it like this idk
 	label = "orange"
+
+/obj/item/reagent_containers/emergency_injector/morphine
+	name = "emergency auto-injector (morphine)"
+	initial_reagents = "morphine"
+	label = "purple"
 
 /obj/item/reagent_containers/emergency_injector/random
 	name = "emergency auto-injector (???)"

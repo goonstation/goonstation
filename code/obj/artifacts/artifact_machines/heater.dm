@@ -4,7 +4,7 @@
 
 /datum/artifact/heater
 	associated_object = /obj/machinery/artifact/heater
-	rarity_class = 2
+	rarity_class = 1 // modified from 2 as part of art tweak
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/cold)
@@ -17,7 +17,7 @@
 
 	post_setup()
 		heat_target = rand(0,620)
-		if (artitype == "eldritch" && prob(66))
+		if (artitype.name == "eldritch" && prob(66))
 			if (heat_target > 310)
 				heat_target *= 2
 			if (heat_target < 310 && heat_target != 0)
@@ -37,10 +37,10 @@
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
 			if(env.temperature < (heat_target+T0C))
-				var/transfer_moles = 0.25 * env.total_moles()
+				var/transfer_moles = 0.25 * TOTAL_MOLES(env)
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 				if(removed)
-					var/heat_capacity = removed.heat_capacity()
+					var/heat_capacity = HEAT_CAPACITY(removed)
 					if(heat_capacity)
 						removed.temperature = (removed.temperature*heat_capacity + heat_amount)/heat_capacity
 				env.merge(removed)

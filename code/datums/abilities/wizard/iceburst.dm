@@ -6,9 +6,9 @@
 	cooldown = 200
 	requires_robes = 1
 	offensive = 1
-	voice_grim = "sound/voice/wizard/IceburstGrim.ogg"
-	voice_fem = "sound/voice/wizard/IceburstFem.ogg"
-	voice_other = "sound/voice/wizard/IceburstLoud.ogg"
+	voice_grim = "sound/voice/wizard/IceBurstGrim.ogg"
+	voice_fem = "sound/voice/wizard/IceBurstFem.ogg"
+	voice_other = "sound/voice/wizard/IceBurstLoud.ogg"
 
 	cast()
 		if(!holder)
@@ -27,24 +27,24 @@
 		holder.owner.say("NYTH ERRIN")
 		..()
 
-		if(!holder.owner.wizard_spellpower())
-			boutput(holder.owner, "<span style=\"color:red\">Your spell is weak without a staff to focus it!</span>")
+		if(!holder.owner.wizard_spellpower(src))
+			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
 		for (var/mob/living/M as mob in oview())
 			if(isdead(M)) continue
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
-					boutput(holder.owner, "<span style=\"color:red\">[M] has divine protection! The spell refuses to target \him!</span>")
+					boutput(holder.owner, "<span class='alert'>[M] has divine protection! The spell refuses to target \him!</span>")
 					continue
 			if (iswizard(M))
-				boutput(holder.owner, "<span style=\"color:red\">[M] has arcane protection! The spell refuses to target \him!</span>")
+				boutput(holder.owner, "<span class='alert'>[M] has arcane protection! The spell refuses to target \him!</span>")
 				continue
 			else if(check_target_immunity( M ))
-				boutput(holder.owner, "<span style='color:red'>[M] seems to be warded from the effects!</span>" )
+				boutput(holder.owner, "<span class='alert'>[M] seems to be warded from the effects!</span>" )
 				continue
 
 			playsound(holder.owner.loc, "sound/effects/mag_iceburstlaunch.ogg", 25, 1, -1)
-			if ((!holder.owner.wizard_spellpower() && count >= 1) || (count >= moblimit)) break
+			if ((!holder.owner.wizard_spellpower(src) && count >= 1) || (count >= moblimit)) break
 			count++
 			SPAWN_DBG(0)
 				var/obj/overlay/A = new /obj/overlay( holder.owner.loc )
@@ -58,7 +58,7 @@
 				//A.sd_SetColor(0, 0.1, 0.8)
 				var/i
 				for(i=0, i<20, i++)
-					if (holder.owner.wizard_spellpower())
+					if (holder.owner.wizard_spellpower(src))
 						if (!locate(/obj/decal/icefloor) in A.loc)
 							var/obj/decal/icefloor/B = new /obj/decal/icefloor(A.loc)
 							//B.sd_SetLuminosity(1)
@@ -67,18 +67,18 @@
 								qdel (B)
 					step_to(A,M,0)
 					if (get_dist(A,M) == 0)
-						boutput(M, text("<span style=\"color:blue\">You are chilled by a burst of magical ice!</span>"))
-						M.visible_message("<span style=\"color:red\">[M] is struck by magical ice!</span>")
+						boutput(M, text("<span class='notice'>You are chilled by a burst of magical ice!</span>"))
+						M.visible_message("<span class='alert'>[M] is struck by magical ice!</span>")
 						playsound(holder.owner.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1, -1)
 						M.bodytemperature = 0
 						M.lastattacker = holder.owner
 						M.lastattackertime = world.time
 						qdel(A)
 						if(prob(40))
-							M.visible_message("<span style=\"color:red\">[M] is frozen solid!</span>")
+							M.visible_message("<span class='alert'>[M] is frozen solid!</span>")
 							new /obj/icecube(M.loc, M)
 						return
-					sleep(5)
+					sleep(0.5 SECONDS)
 				qdel(A)
 
 // /obj/decal/icefloor moved to decal.dm
@@ -105,8 +105,9 @@
 
 			if (add_underlay)
 				src.underlays += iced
-			boutput(iced, "<span style=\"color:red\">You are trapped within [src]!</span>") // since this is used in at least two places to trap people in things other than ice cubes
+			boutput(iced, "<span class='alert'>You are trapped within [src]!</span>") // since this is used in at least two places to trap people in things other than ice cubes
 
+		if (iced) //apparently a blank ice cube spawns in adventure
 			iced.last_cubed = world.time
 
 		src.health *= (rand(10,20)/10)
@@ -119,7 +120,7 @@
 		for(var/atom/movable/AM in src)
 			if(ismob(AM))
 				var/mob/M = AM
-				M.visible_message("<span style=\"color:red\"><b>[M]</b> breaks out of [src]!</span>","<span style=\"color:red\">You break out of [src]!</span>")
+				M.visible_message("<span class='alert'><b>[M]</b> breaks out of [src]!</span>","<span class='alert'>You break out of [src]!</span>")
 				M.last_cubed = world.time
 			AM.set_loc(src.loc)
 
@@ -163,7 +164,7 @@
 				takeDamage(1)
 
 	attack_hand(mob/user as mob)
-		user.visible_message("<span class='combat'><b>[user]</b> kicks [src]!</span>", "<span style=\"color:blue\">You kick [src].</span>")
+		user.visible_message("<span class='combat'><b>[user]</b> kicks [src]!</span>", "<span class='notice'>You kick [src].</span>")
 		takeDamage(2)
 
 	bullet_act(var/obj/projectile/P)
@@ -185,11 +186,12 @@
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-		user.show_text("<span style=\"color:red\">[src] [pick("cracks","bends","shakes","groans")].</span>")
+		user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
 		src.takeDamage(6)
 
 	ex_act(severity)
 		for(var/atom/A in src)
 			A.ex_act(severity)
-		takeDamage(20 / severity)
+		SPAWN_DBG(0)
+			takeDamage(20 / severity)
 		..()

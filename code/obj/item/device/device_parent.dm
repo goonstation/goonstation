@@ -1,5 +1,5 @@
 /obj/item/device
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	stamina_damage = 5
 	stamina_cost = 5

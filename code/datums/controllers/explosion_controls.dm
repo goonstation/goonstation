@@ -10,7 +10,7 @@ var/datum/explosion_controller/explosions
 	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1)
 		var/atom/A = epicenter
 		if(istype(A))
-			var/severity = power >= 6 ? 1 : power >= 3 ? 2 : 3
+			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
 			var/fprint = null
 			if(istype(source))
 				fprint = source.fingerprintslast
@@ -30,7 +30,6 @@ var/datum/explosion_controller/explosions
 	proc/queue_damage(var/list/new_turfs)
 		for (var/turf/T in new_turfs)
 			queued_turfs[T] += new_turfs[T]
-			LAGCHECK(LAG_REALTIME)
 
 	proc/kaboom()
 		defer_powernet_rebuild = 1
@@ -42,46 +41,69 @@ var/datum/explosion_controller/explosions
 		var/p
 		var/last_touched
 
-
-
-		var/iteration = 0
-
-		for (var/turf/T in queued_turfs)
+		for (var/y in queued_turfs)
+			var/turf/T = y
+			queued_turfs[T]=sqrt(queued_turfs[T])*2
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P1 [p]")
 			if (p >= 6)
-				for (var/atom/A as obj|mob in T)
-					A.ex_act(1, last_touched, p)
-					if (istype(A, /obj/cable)) // these two are hacky, newcables should relieve the need for this
-						needrebuild = 1
-					//LAGCHECK(LAG_REALTIME)
-			else if (p >= 3)
-				for (var/atom/A as obj|mob in T)
-					A.ex_act(2, last_touched, p)
-					if (istype(A, /obj/cable))
-						needrebuild = 1
-					//LAGCHECK(LAG_REALTIME)
+				for (var/mob/M in T)
+					M.ex_act(1, last_touched, p)
+			else if (p > 3)
+				for (var/mob/M in T)
+					M.ex_act(2, last_touched, p)
 			else
-				for (var/atom/A as obj|mob in T)
-					A.ex_act(3, last_touched, p)
-					//LAGCHECK(LAG_REALTIME)
+				for (var/mob/M in T)
+					M.ex_act(3, last_touched, p)
 
-			iteration++
-			if((iteration % 100) == 0)
-				LAGCHECK(LAG_REALTIME)
+		LAGCHECK(LAG_HIGH)
+
+		for (var/y in queued_turfs)
+			var/turf/T = y
+			p = queued_turfs[T]
+			last_touched = queued_turfs_blame[T]
+			//boutput(world, "P1 [p]")
+			if (p >= 6)
+				for (var/obj/O in T)
+					if(istype(O, /obj/overlay))
+						continue
+					O.ex_act(1, last_touched, p)
+					if (istype(O, /obj/cable)) // these two are hacky, newcables should relieve the need for this
+						needrebuild = 1
+			else if (p > 3)
+				for (var/obj/O in T)
+					if(istype(O, /obj/overlay))
+						continue
+					O.ex_act(2, last_touched, p)
+					if (istype(O, /obj/cable))
+						needrebuild = 1
+			else
+				for (var/obj/O in T)
+					if(istype(O, /obj/overlay))
+						continue
+					O.ex_act(3, last_touched, p)
+
+		LAGCHECK(LAG_HIGH)
 
 		// BEFORE that ordeal (which may sleep quite a few times), fuck the turfs up all at once to prevent lag
-		for (var/turf/T in queued_turfs)
+		for (var/x in queued_turfs)
+			var/turf/T = x
+#ifndef UNDERWATER_MAP
+			if(istype(T, /turf/space))
+				continue
+#endif
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P2 [p]")
 			if (p >= 6)
 				T.ex_act(1, last_touched)
-			else if (p >= 3)
+			else if (p > 3)
 				T.ex_act(2, last_touched)
 			else
 				T.ex_act(3, last_touched)
+
+		LAGCHECK(LAG_HIGH)
 
 		queued_turfs.len = 0
 		queued_turfs_blame.len = 0
@@ -113,6 +135,7 @@ var/datum/explosion_controller/explosions
 	var/brisance
 
 	New(atom/source, turf/epicenter, power, brisance)
+		..()
 		src.source = source
 		src.epicenter = epicenter
 		src.power = power
@@ -133,7 +156,7 @@ var/datum/explosion_controller/explosions
 
 		for(var/client/C in clients)
 			if(C.mob && (C.mob.z == epicenter.z) && power > 15)
-				shake_camera(C.mob, 8, 3) // remove if this is too laggy
+				shake_camera(C.mob, 8, 24) // remove if this is too laggy
 
 				C << sound(explosions.distant_sound)
 
@@ -184,7 +207,7 @@ var/datum/explosion_controller/explosions
 			p = min(p, 10)
 			for(var/mob/living/carbon/C in T)
 				if (!isdead(C) && C.client)
-					shake_camera(C, 3 * p, p)
+					shake_camera(C, 3 * p, p * 4)
 				C.changeStatus("stunned", p * 10)
 				C.stuttering += p
 				C.lying = 1

@@ -6,6 +6,7 @@
 	var/enabled = 1
 	anchored = 1
 	layer = OBJ_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 	invisibility = 2
 	density = 0
 	machine_registry_idx = MACHINES_TURRETS
@@ -35,11 +36,13 @@
 	var/area/station/turret_protected/TP = get_area(src)
 	if(istype(TP))
 		TP.turret_list += src
+	START_TRACKING
 
 /obj/machinery/turret/disposing()
 	var/area/station/turret_protected/TP = get_area(src)
 	if(istype(TP))
 		TP.turret_list -= src
+	STOP_TRACKING
 	..()
 
 /obj/machinery/turret/proc/isPopping()
@@ -116,7 +119,7 @@
 		LAGCHECK(LAG_HIGH)
 		if (!C)
 			continue
-		if (!iscarbon(C) && !iscritter(C))
+		if (!iscarbon(C) && !ismobcritter(C))
 			continue
 		if (isdead(C))
 			continue
@@ -144,7 +147,7 @@
 	for(var/atom/AT in A)
 		var/mob/living/C = AT
 		if( istype(C) )
-			if (!iscarbon(C) && !iscritter(C))
+			if (!iscarbon(C) && !ismobcritter(C))
 				continue
 			if (isdead(C))
 				continue
@@ -196,9 +199,11 @@
 		if (src.lasers)
 			use_power(200)
 			shoot_projectile_ST(src, lethal, U)
+			muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_laser")
 		else
 			use_power(100)
 			shoot_projectile_ST(src, stun, U)
+			muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_elec")
 
 
 	return
@@ -228,7 +233,8 @@
 
 /obj/machinery/turret/ex_act(severity)
 	if(severity < 3)
-		src.die()
+		SPAWN_DBG(0)
+			src.die()
 
 /obj/machinery/turret/emp_act()
 	..()
@@ -244,7 +250,7 @@
 	src.icon_state = "destroyed_target_prism"
 	if (cover!=null)
 		qdel(cover)
-	sleep(3)
+	sleep(0.3 SECONDS)
 	flick("explosion", src)
 	SPAWN_DBG(1.3 SECONDS)
 		qdel(src)
@@ -332,18 +338,25 @@
 
 /obj/machinery/turretid
 	name = "Turret deactivation control"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "ai3"
 	anchored = 1
 	density = 0
+	plane = PLANE_NOSHADOW_ABOVE
 	var/enabled = 1
 	var/lethal = 0
 	var/locked = 1
 	var/emagged = 0
-	var/turretsExist = 1
+	var/turretArea = null
 
 	req_access = list(access_ai_upload)
 	object_flags = CAN_REPROGRAM_ACCESS
+
+	New()
+		..()
+		if (!src.turretArea)
+			var/area/A = get_area(src)
+			src.turretArea = A.type
 
 /obj/machinery/turretid/attackby(obj/item/W, mob/user)
 	if(status & BROKEN) return
@@ -354,14 +367,14 @@
 			locked = !locked
 			boutput(user, "You [ locked ? "lock" : "unlock"] the panel.")
 			if (locked)
-				if (user.machine==src)
-					user.machine = null
+				if (user.using_dialog_of(src))
+					src.remove_dialog(user)
 					user.Browse(null, "window=turretid")
 			else
-				if (user.machine==src)
+				if (user.using_dialog_of(src))
 					src.attack_hand(usr)
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 
 /obj/machinery/turretid/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -373,21 +386,18 @@
 	if ( (get_dist(src, user) > 1 ))
 		if (!issilicon(user) && !isAI(user) && !isAIeye(user))
 			boutput(user, text("Too far away."))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=turretid")
 			return
 
-	user.machine = src
-	var/loc = src.loc
-	if (istype(loc, /turf))
-		loc = loc:loc
-	if (!istype(loc, /area))
-		logTheThing("debug", null, null, "Turret badly positioned - loc.loc is [loc].")
+	src.add_dialog(user)
+	var/area/area = get_area(src)
+	if (!istype(area))
+		logTheThing("debug", null, null, "Turret badly positioned.")
 		return
-	var/area/area = loc
 	var/t = "<TT><B>Turret Control Panel</B> ([area.name])<HR>"
 
-	if(!src.emagged && turretsExist)
+	if(!src.emagged)
 		if(src.locked && (!issilicon(user) && !isAI(user)))
 			t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 		else
@@ -465,26 +475,20 @@
 
 
 /obj/machinery/turretid/proc/updateTurrets()
-	if(turretsExist) //Let's not waste a lot of time here.
-		if (src.enabled)
-			if (src.lethal)
-				icon_state = "ai1"
-			else
-				icon_state = "ai3"
-		else
-			icon_state = "ai0"
+	for (var/obj/machinery/turret/turret in by_type[/obj/machinery/turret])
+		var/area/A = get_area(turret)
+		if (A.type == src.turretArea)
+			turret.setState(enabled, lethal)
+			src.updateicon()
 
-		var/loc = src.loc
-		if (istype(loc, /turf))
-			loc = loc:loc
-		if (!istype(loc, /area))
-			logTheThing("debug", null, null, "Turret badly positioned - loc.loc is [loc].")
-			return
-		var/area/area = loc
-		turretsExist = 0
-		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(area))
-			aTurret.setState(enabled, lethal)
-			turretsExist = 1
+/obj/machinery/turretid/proc/updateicon()
+	if (src.enabled)
+		if (src.lethal)
+			icon_state = "ai1"
+		else
+			icon_state = "ai3"
+	else
+		icon_state = "ai0"
 
 /obj/machinery/turretid/emag_act(var/mob/user)
 	if(!emagged)
@@ -520,4 +524,4 @@
 		updateTurrets()
 
 		sleep(rand(1, 10) * 10)
-	while(emagged && turretsExist)
+	while(emagged)

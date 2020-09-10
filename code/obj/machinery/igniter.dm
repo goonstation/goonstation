@@ -75,10 +75,10 @@
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
-			user.visible_message("<span style=\"color:red\">[user] has disabled the [src]!</span>", "<span style=\"color:red\">You disable the connection to the [src].</span>")
+			user.visible_message("<span class='alert'>[user] has disabled the [src]!</span>", "<span class='alert'>You disable the connection to the [src].</span>")
 			icon_state = "[base_state]-d"
 		if (!src.disable)
-			user.visible_message("<span style=\"color:red\">[user] has reconnected the [src]!</span>", "<span style=\"color:red\">You fix the connection to the [src].</span>")
+			user.visible_message("<span class='alert'>[user] has reconnected the [src]!</span>", "<span class='alert'>You fix the connection to the [src].</span>")
 			if(src.powered())
 				icon_state = "[base_state]"
 			else
@@ -99,9 +99,7 @@
 
 
 	flick("[base_state]-spark", src)
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(2, 1, src)
-	s.start()
+	elecflash(src)
 	src.last_spark = world.time
 	use_power(1000)
 	var/turf/location = src.loc
@@ -144,7 +142,7 @@
 			M.icon_state = text("igniter[]", M.on)
 		LAGCHECK(LAG_MED)
 
-	sleep(50)
+	sleep(5 SECONDS)
 
 	icon_state = "launcherbtt"
 	active = 0

@@ -5,7 +5,7 @@
 /obj/machinery/bot/medbot
 	name = "Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
-	icon = 'icons/obj/medbots.dmi'
+	icon = 'icons/obj/bots/medbots.dmi'
 	icon_state = "medibot"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -84,7 +84,7 @@
 /obj/item/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
-	icon = 'icons/obj/medbots.dmi'
+	icon = 'icons/obj/bots/medbots.dmi'
 	icon_state = "medskin-firstaid"
 	item_state = "firstaid"
 	pixel_y = 4 // so we don't have to have two sets of the skin sprites, we're just gunna bump this up a bit
@@ -142,18 +142,6 @@
 			src.update_icon()
 	return
 
-/obj/machinery/bot/medbot/examine()
-	set src in view()
-	set category = "Local"
-	..()
-
-	if (src.health < 20)
-		if (src.health > 15)
-			boutput(usr, text("<span style=\"color:red\">[src]'s parts look loose.</span>"))
-		else
-			boutput(usr, text("<span style=\"color:red\"><B>[src]'s parts look very loose!</B></span>"))
-	return
-
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
 	return toggle_power()
 
@@ -201,7 +189,7 @@
 /obj/machinery/bot/medbot/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (src.allowed(usr)))
 		src.toggle_power()
@@ -236,13 +224,22 @@
 	src.updateUsrDialog()
 	return
 
+
+/obj/machinery/bot/medbot/Move(var/turf/NewLoc, direct)
+	..()
+	if (src.patient && (get_dist(src,src.patient) <= 1))
+		if (!src.currently_healing)
+			src.currently_healing = 1
+			src.frustration = 0
+			src.medicate_patient(src.patient)
+
 /obj/machinery/bot/medbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
-			boutput(user, "<span style=\"color:red\">You short out [src]'s reagent synthesis circuits.</span>")
+			boutput(user, "<span class='alert'>You short out [src]'s reagent synthesis circuits.</span>")
 		SPAWN_DBG(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
 		src.patient = null
 		src.oldpatient = user
 		src.currently_healing = 0
@@ -292,12 +289,12 @@
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			src.updateUsrDialog()
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 
 	else if (isscrewingtool(W))
 		if (src.health < initial(src.health))
 			src.health = initial(src.health)
-			src.visible_message("<span style=\"color:blue\">[user] repairs [src]!</span>", "<span style=\"color:blue\">You repair [src].</span>")
+			src.visible_message("<span class='notice'>[user] repairs [src]!</span>", "<span class='notice'>You repair [src].</span>")
 
 	else if (istype(W, /obj/item/reagent_containers/glass))
 		if (src.locked)
@@ -315,12 +312,11 @@
 		return
 
 	else
-		switch (W.damtype)
-			if ("fire")
+		switch(W.hit_type)
+			if (DAMAGE_BURN)
 				src.health -= W.force * 0.75
-			if ("brute")
-				src.health -= W.force * 0.5
 			else
+				src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
 		else if (W.force)
@@ -544,7 +540,7 @@
 		return
 	else
 		src.update_icon(stun = 0, heal = 1)
-		src.visible_message("<span style=\"color:red\"><B>[src] is trying to inject [src.patient]!</B></span>")
+		src.visible_message("<span class='alert'><B>[src] is trying to inject [src.patient]!</B></span>")
 		SPAWN_DBG(3 SECONDS)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
 				if ((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
@@ -552,7 +548,7 @@
 					src.reagent_glass.reagents.reaction(src.patient, 2)
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
-				src.visible_message("<span style=\"color:red\"><B>[src] injects [src.patient] with the syringe!</B></span>")
+				src.visible_message("<span class='alert'><B>[src] injects [src.patient] with the syringe!</B></span>")
 
 			src.update_icon()
 			src.currently_healing = 0
@@ -562,20 +558,20 @@
 					var/message = pick("It will be okay.","You're okay.", "Everything will be alright,","Please remain calm.","Please calm down, sir.","You need to calm down.","CODE BLUE.","You're going to be just fine.","Hold stIll.","Sedating patient.","ALERT.","I think we're losing them...","You're only hurting yourself.","MEM ERR BLK 0  ADDR 30FC500 HAS 010F NOT 0000","MEM ERR BLK 3  ADDR 55005FF HAS 020A NOT FF00","ERROR: Missing or corrupted resource filEs. Plea_-se contact a syst*m administrator.","ERROR: Corrupted kernel. Ple- - a", "This will all be over soon.")
 					src.speak(message)
 				else
-					src.visible_message("<b>[src] [pick("spazzes out","glitches out","tweaks out", "malfunctions", "twitches")]!</b>")
+					src.visible_message("<b>[src] [pick("freaks out","glitches out","tweaks out", "malfunctions", "twitches")]!</b>")
 					var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg','sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 					playsound(src.loc, glitchsound, 50, 1)
 					// let's grustle a bit
 					SPAWN_DBG(1 DECI SECOND)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
-						sleep(1)
+						sleep(0.1 SECONDS)
 						src.pixel_x = 0
 						src.pixel_y = 0
 
@@ -646,7 +642,7 @@
 	..()
 	if(!src.emagged && prob(75))
 		src.emagged = 1
-		src.visible_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>")
+		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		src.on = 1
 	else
 		src.explode()
@@ -665,9 +661,11 @@
 	return src.explode()
 
 /obj/machinery/bot/medbot/explode()
+	if(src.exploding) return
+	src.exploding = 1
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
-		O.show_message("<span style=\"color:red\"><B>[src] blows apart!</B></span>", 1)
+		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/storage/firstaid(Tsec)
@@ -683,9 +681,7 @@
 	if (prob(50))
 		new /obj/item/parts/robot_parts/arm/left(Tsec)
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return
 
@@ -709,7 +705,7 @@
 		return
 
 	if (src.contents.len >= 1)
-		boutput(user, "<span style=\"color:red\">You need to empty [src] out first!</span>")
+		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
 		return
 	else
 		var/obj/item/firstaid_arm_assembly/A = new /obj/item/firstaid_arm_assembly

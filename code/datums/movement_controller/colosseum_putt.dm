@@ -69,7 +69,7 @@
 		else
 			move_dir = 0
 
-		var/delay = CLAMP(10 - master.speed, 1, 10)
+		var/delay = clamp(10 - master.speed, 1, 10)
 
 		if ((owner in master) && (owner == master.piloting))
 			master.facing = move_dir
@@ -98,7 +98,8 @@
 				walk(master, 0)
 				master.flying = 0
 
-	modify_keymap(datum/keymap/keymap, client/C)
+	modify_keymap(client/C)
 		..()
-		keymap.merge(C.get_keymap("colosseum_putt"))
-
+		C.apply_keybind("colputt")
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("colputt_arrow")

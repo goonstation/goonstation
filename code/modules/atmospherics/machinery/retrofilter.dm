@@ -1,5 +1,7 @@
 //Ye olde filter of yore (Pre-dev adjustable filter)
 
+//TODO: Make this more modular and use APPLY_TO_GASES
+
 //TODO: Hacking.
 obj/machinery/atmospherics/retrofilter
 	icon = 'icons/obj/atmospherics/retro_filter.dmi'
@@ -77,8 +79,6 @@ obj/machinery/atmospherics/retrofilter
 	disposing()
 		radio_controller.remove_object(src, "[frequency]")
 
-		loc = null
-
 		if(node_out1)
 			node_out1.disconnect(src)
 			if (network_out1)
@@ -138,11 +138,11 @@ obj/machinery/atmospherics/retrofilter
 	attack_hand(mob/user as mob)
 		if(..())
 			user.Browse(null, "window=pipefilter")
-			user.machine = null
+			src.remove_dialog(user)
 			return
 
 		var/list/gases = list("O2", "N2", "CO2", "Plasma", "OTHER")
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<head><title>Gas Filtration Unit Mk VII</title></head><body><hr>"// "Filter Release Rate:<BR><br><A href='?src=\ref[src];fp=-[num2text(src.maxrate, 9)]'>M</A> <A href='?src=\ref[src];fp=-100000'>-</A> <A href='?src=\ref[src];fp=-10000'>-</A> <A href='?src=\ref[src];fp=-1000'>-</A> <A href='?src=\ref[src];fp=-100'>-</A> <A href='?src=\ref[src];fp=-1'>-</A> [src.f_per] <A href='?src=\ref[src];fp=1'>+</A> <A href='?src=\ref[src];fp=100'>+</A> <A href='?src=\ref[src];fp=1000'>+</A> <A href='?src=\ref[src];fp=10000'>+</A> <A href='?src=\ref[src];fp=100000'>+</A> <A href='?src=\ref[src];fp=[num2text(src.maxrate, 9)]'>M</A><BR><br>"
 		for (var/i = 1; i <= gases.len; i++)
 			if (!issilicon(user) && src.locked)
@@ -150,8 +150,8 @@ obj/machinery/atmospherics/retrofilter
 			else
 				dat += "[gases[i]]: <a href='?src=\ref[src];toggle_gas=[1 << (i - 1)]'>[(src.filter_mode & (1 << (i - 1))) ? "Releasing" : "Passing"]</a><br>"
 
-		var/pressure = air_in.return_pressure()
-		var/total_moles = air_in.total_moles()
+		var/pressure = MIXTURE_PRESSURE(air_in)
+		var/total_moles = TOTAL_MOLES(air_in)
 
 		dat += "<hr>Gas Levels: <br>Gas Pressure: [round(pressure,0.1)] kPa<br><br>"
 
@@ -185,7 +185,7 @@ obj/machinery/atmospherics/retrofilter
 		if(..() || (status & NOPOWER))
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		src.add_fingerprint(usr)
 		if (href_list["toggle_gas"] && (!src.locked || issilicon(usr)))
@@ -203,7 +203,7 @@ obj/machinery/atmospherics/retrofilter
 
 		else if (href_list["close"])
 			usr.Browse(null, "window=pipefilter")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 		return
 
@@ -241,7 +241,7 @@ obj/machinery/atmospherics/retrofilter
 		if (!air_out2)
 			return
 
-		var/output_starting_pressure = air_out1.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air_out1)
 
 		if(output_starting_pressure >= target_pressure)
 			//No need to mix if target is already full!
@@ -284,7 +284,7 @@ obj/machinery/atmospherics/retrofilter
 					filtered_out.carbon_dioxide = removed.carbon_dioxide
 					removed.carbon_dioxide = 0
 			if (filter_mode & MODE_TRACE)
-				if(removed && removed.trace_gases && removed.trace_gases.len)
+				if(removed && length(removed.trace_gases))
 					for(var/datum/gas/trace_gas in removed.trace_gases)
 						if(trace_gas)
 							removed.trace_gases -= trace_gas
@@ -318,7 +318,7 @@ obj/machinery/atmospherics/retrofilter
 		src.emagged = 1
 		if (user)
 			src.add_fingerprint(user)
-			src.visible_message("<span style=\"color:red\">[user] has shorted out the [src.name] with an electromagnetic card!</span>")
+			src.visible_message("<span class='alert'>[user] has shorted out the [src.name] with an electromagnetic card!</span>")
 		src.update_overlays()
 		return 1
 
@@ -326,7 +326,7 @@ obj/machinery/atmospherics/retrofilter
 		if (!src.emagged)
 			return 0
 		if (user)
-			user.show_message("You repair the [src.name]'s wiring!", "blue")
+			user.show_message("<span class='notice'>You repair the [src.name]'s wiring!</span>")
 		src.emagged = 1
 		src.update_overlays()
 		return 1
@@ -337,7 +337,7 @@ obj/machinery/atmospherics/retrofilter
 		if (istype(W, /obj/item/card/id))
 			src.add_fingerprint(user)
 			if (src.hacked)
-				boutput(user, "<span style=\"color:red\">Remove the foreign wires first!</span>")
+				boutput(user, "<span class='alert'>Remove the foreign wires first!</span>")
 				return
 			if (src.allowed(user))
 				src.locked = !src.locked
@@ -345,31 +345,31 @@ obj/machinery/atmospherics/retrofilter
 				src.updateUsrDialog()
 				src.update_overlays()
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 		else if (isscrewingtool(W))
 			if(src.hacked)
-				user.show_message("<span style=\"color:red\">Remove the foreign wires first!</span>", 1)
+				user.show_message("<span class='alert'>Remove the foreign wires first!</span>", 1)
 				return
 			src.add_fingerprint(user)
-			user.show_message("<span style=\"color:red\">Now [src.open ? "re" : "un"]securing the access system panel...</span>", 1)
+			user.show_message("<span class='alert'>Now [src.open ? "re" : "un"]securing the access system panel...</span>", 1)
 			if (!do_after(user, 30))
 				return
 			src.open = !src.open
-			user.show_message("<span style=\"color:red\">Done!</span>",1)
+			user.show_message("<span class='alert'>Done!</span>",1)
 			src.update_overlays()
 			return
 		else if (istype(W, /obj/item/cable_coil) && !hacked)
 			if(!src.open)
-				user.show_message("<span style=\"color:red\">You must remove the panel first!</span>",1)
+				user.show_message("<span class='alert'>You must remove the panel first!</span>",1)
 				return
 			var/obj/item/cable_coil/C = W
 			if(C.amount >= 4)
-				user.show_message("<span style=\"color:red\">You unravel some cable..</span>",1)
+				user.show_message("<span class='alert'>You unravel some cable..</span>",1)
 			else
-				user.show_message("<span style=\"color:red\">Not enough cable! <I>(Requires four pieces)</I></span>",1)
+				user.show_message("<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>",1)
 				return
 			src.add_fingerprint(user)
-			user.show_message("<span style=\"color:red\">Now bypassing the access system... <I>(This may take a while)</I></span>", 1)
+			user.show_message("<span class='alert'>Now bypassing the access system... <I>(This may take a while)</I></span>", 1)
 			if(!do_after(user, 100))
 				return
 			C.use(4)
@@ -379,7 +379,7 @@ obj/machinery/atmospherics/retrofilter
 			return
 		else if (issnippingtool(W) && hacked)
 			src.add_fingerprint(user)
-			user.show_message("<span style=\"color:red\">Now removing the bypass wires... <I>(This may take a while)</I></span>", 1)
+			user.show_message("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>", 1)
 			if (!do_after(user, 50))
 				return
 			src.hacked = 0

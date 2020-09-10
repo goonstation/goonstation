@@ -10,7 +10,7 @@ Right Mouse Button on buildmode    = Set material ID<br>
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if (!material_cache.len)
-			boutput(usr, "<span style=\"color:red\">Error detected in material cache, attempting rebuild. Please try again.</span>")
+			boutput(usr, "<span class='alert'>Error detected in material cache, attempting rebuild. Please try again.</span>")
 			buildMaterialCache()
 			return
 		var/mat = input(usr,"Select Material:","Material",null) in material_cache

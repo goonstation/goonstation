@@ -1,5 +1,7 @@
 // the cable coil object, used for laying cable
 
+obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
+
 #define MAXCOIL 120
 #define STARTCOIL 30 //base type starting coil amt
 /obj/item/cable_coil
@@ -15,7 +17,7 @@
 	var/namemod = null
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "coil"
-	throwforce = 10
+	throwforce = 2
 	w_class = 1.0
 	throw_speed = 2
 	throw_range = 5
@@ -26,6 +28,7 @@
 	rand_pos = 1
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab
+	inventory_counter_enabled = 1
 
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null
@@ -44,20 +47,20 @@
 		..(loc)
 		if (spawn_conductor_name)
 			applyCableMaterials(src, getMaterial(spawn_insulator_name), getMaterial(spawn_conductor_name))
+		BLOCK_SETUP(BLOCK_ROPE)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins coiling cable!</span>")
+		user.visible_message("<span class='notice'>[user] begins coiling cable!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style=\"color:blue\">You finish coiling cable.</span>")
+		boutput(user, "<span class='notice'>You finish coiling cable.</span>")
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style=\"color:red\"><b>[user] wraps the cable around \his neck and tightens it.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] wraps the cable around \his neck and tightens it.</b></span>")
 		user.take_oxygen_deprivation(160)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -88,6 +91,7 @@
 			return 0
 		else if (src.amount == used)
 			qdel(src)
+			return 1
 		else
 			amount -= used
 			updateicon()
@@ -100,7 +104,7 @@
 			if (ismob(loc))
 				var/mob/owner = loc
 				owner.u_equip(src)
-			loc = newloc
+			set_loc(newloc)
 			return src
 		src.use(amt)
 		var/obj/item/cable_coil/C = new /obj/item/cable_coil(newloc)
@@ -122,6 +126,8 @@
 			set_icon_state("coil[iconmod]")
 			base_name = "[namemod]cable coil"
 		updateName()
+		inventory_counter?.update_number(amount)
+
 
 /obj/item/cable_coil/cut
 	icon_state = "coil2"
@@ -174,10 +180,10 @@
 	if (istype(M))
 		if (M.move_laying)
 			M.move_laying = null
-			boutput(M, "<span style=\"color:blue\">No longer laying the cable while moving.</span>")
+			boutput(M, "<span class='notice'>No longer laying the cable while moving.</span>")
 		else
 			M.move_laying = src
-			boutput(M, "<span style=\"color:blue\">Now laying cable while moving.</span>")
+			boutput(M, "<span class='notice'>Now laying cable while moving.</span>")
 
 /obj/proc/move_callback(var/mob/M, var/turf/source, var/turf/target)
 	return
@@ -192,7 +198,7 @@
 		return
 	if (!src.amount)
 		M.move_laying = null
-		boutput(M, "<span style=\"color:red\">Your cable coil runs out!</span>")
+		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
 	var/obj/cable/C
 
@@ -204,7 +210,7 @@
 
 	if (!src.amount)
 		M.move_laying = null
-		boutput(M, "<span style=\"color:red\">Your cable coil runs out!</span>")
+		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
 
 	C = find_half_cable(target, get_dir(target, source))
@@ -216,24 +222,19 @@
 
 	if (!src.amount)
 		M.move_laying = null
-		boutput(M, "<span style=\"color:red\">Your cable coil runs out!</span>")
+		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
 
 /obj/item/cable_coil/examine()
-	set src in view(1)
-	set category = "Local"
-
 	if (amount == 1)
-		boutput(usr, "A short piece of [base_name].")
-	else if (amount == 1)
-		boutput(usr, "A piece of [base_name].")
+		. = list("A short piece of [base_name].")
 	else
-		boutput(usr, "A coil of [base_name]. There's [amount] length[s_es(amount)] of cable in the coil.")
+		. = list("A coil of [base_name]. There's [amount] length[s_es(amount)] of cable in the coil.")
 
 	if (insulator)
-		boutput(usr, "It is insulated with [insulator].")
+		. += "It is insulated with [insulator]."
 	if (conductor)
-		boutput(usr, "Its conductive layer is made out of [conductor].")
+		. += "Its conductive layer is made out of [conductor]."
 
 /obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1)
@@ -257,6 +258,13 @@
 			C.amount += src.amount
 			boutput(user, "You join the cable coils together.")
 			C.updateicon()
+			if(istype(src.loc, /obj/item/storage))
+				var/obj/item/storage/storage = src.loc
+				storage.hud.remove_object(src)
+			else if(istype(src.loc, /mob))
+				var/mob/M = src.loc
+				M.u_equip(src)
+				M.drop_item(src)
 			qdel(src)
 			return
 

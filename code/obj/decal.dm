@@ -1,4 +1,5 @@
 /obj/decal
+	text = ""
 	var/list/random_icon_states = list()
 	var/random_dir = 0
 
@@ -79,7 +80,7 @@
 	opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "skeleton_l"
 
 	decomposed_corpse
@@ -103,7 +104,7 @@
 		opacity = 0
 		density = 0
 		anchored = 1
-		icon = 'icons/effects/3dimension.dmi'
+		icon = 'icons/obj/adventurezones/void.dmi'
 		icon_state = "skeleton_l"
 
 /obj/decal/floatingtiles
@@ -112,7 +113,7 @@
 	opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "floattiles1"
 
 /obj/decal/implo
@@ -126,7 +127,7 @@
 	pixel_x = -16
 	mouse_opacity = 0
 	New(var/atom/location)
-		src.loc = location
+		src.set_loc(location)
 		SPAWN_DBG(2 SECONDS) qdel(src)
 		return ..(location)
 
@@ -141,7 +142,7 @@
 	pixel_x = -16
 	mouse_opacity = 0
 	New(var/atom/location)
-		src.loc = location
+		src.set_loc(location)
 		SPAWN_DBG(2 SECONDS) qdel(src)
 		return ..(location)
 
@@ -150,6 +151,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "arrow"
 	layer = EFFECTS_LAYER_1
+	plane = PLANE_HUD
 	anchored = 1
 
 /* - Replaced by functional version: /obj/item/instrument/large/jukebox
@@ -434,16 +436,18 @@ obj/decal/fakeobjects/teleport_pad
 	buckle_move_delay = 6 // this should have been a var somepotato WHY WASN'T IT A VAR
 	securable = 0
 
-	MouseDrop_T(mob/M as mob, mob/user as mob)
+	can_buckle(var/mob/M as mob, var/mob/user as mob)
 		if (M != user)
-			return
-
+			return 0
 		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || user.restrained() || usr.stat || !user.canmove))
-			return
+			return 0
+		return 1
 
-		M.set_loc(src.loc)
-		user.visible_message("<span style=\"color:blue\"><b>[M]</b> climbs up on [src]!</span>", "<span style=\"color:blue\">You climb up on [src].</span>")
-		buckle_in(M, 1)
+	MouseDrop_T(mob/M as mob, mob/user as mob)
+		if (can_buckle(M,user))
+			M.set_loc(src.loc)
+			user.visible_message("<span class='notice'><b>[M]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
+			buckle_in(M, user, 1)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
@@ -475,7 +479,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/alienflower
 	name = "strange alien flower"
 	desc = "Is it going to eat you if you get too close?"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
 	random_dir = 8
 
@@ -487,7 +491,7 @@ obj/decal/fakeobjects/teleport_pad
 
 /obj/decal/cleanable/alienvine
 	name = "strange alien vine"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "avine_l1"
 	random_icon_states = list("avine_l1", "avine_l2", "avine_l3")
 	New()
@@ -517,19 +521,16 @@ obj/decal/fakeobjects/teleport_pad
 	if (iscarbon(AM))
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes
-		if (!M.can_slip(0) || M.getStatusDuration("weakened") || M.getStatusDuration("stunned"))
+
+		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned"))
 			return
 
-		M.pulling = null
-		boutput(M, "<span style=\"color:red\">You slipped on [src]!</span>")
-		playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-		M.changeStatus("stunned", 2 SECONDS)
-		M.changeStatus("weakened", 2 SECONDS)
-		M.force_laydown_standup()
-		if (prob(5))
-			M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
-			M.visible_message("<span style=\"color:red\"><b>[M]</b> hits their head on [src]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
+		if (M.slip(0))
+			boutput(M, "<span class='alert'>You slipped on [src]!</span>")
+			if (prob(5))
+				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
+				M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
+				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
 
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).
 /obj/decal/mule
@@ -537,7 +538,7 @@ obj/decal/fakeobjects/teleport_pad
 	mouse_opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
 	layer = TURF_LAYER + 0.1 // Should basically be part of a turf.
 
@@ -622,7 +623,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/tile_edge/floorguide
 	name = "navigation guide"
 	desc = "A navigation guide to help people find the department they're looking for."
-	icon = 'icons/obj/floorguides.dmi'
+	icon = 'icons/obj/decals/floorguides.dmi'
 	icon_state = "endpiece_s"
 
 /obj/decal/tile_edge/floorguide/security
@@ -669,6 +670,21 @@ obj/decal/fakeobjects/teleport_pad
 	name = "QM Navigation Guide"
 	desc = "The quartermaster is in this direction."
 	icon_state = "guide_qm"
+
+/obj/decal/tile_edge/floorguide/hop
+	name = "Head Of Personnel Navigation Guide"
+	desc = "The Head of Personnel's office is in this direction."
+	icon_state = "guide_hop"
+
+/obj/decal/tile_edge/floorguide/ai
+	name = "AI Navigation Guide"
+	desc = "The AI core is in this direction."
+	icon_state = "guide_ai"
+
+/obj/decal/tile_edge/floorguide/catering
+	name = "Catering Navigation Guide"
+	desc = "Catering is in this direction."
+	icon_state = "guide_catering"
 
 /obj/decal/tile_edge/floorguide/arrow_e
 	name = "Directional Navigation Guide"

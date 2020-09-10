@@ -1,7 +1,8 @@
 /obj/machinery/atmospherics/unary/outlet_injector
 	icon = 'icons/obj/atmospherics/outlet_injector.dmi'
 	icon_state = "off"
-	plane = PLANE_FLOOR //They're supposed to be embedded in the floor.
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW //They're supposed to be embedded in the floor.
 
 	name = "Air Injector"
 	desc = "Has a valve and pump attached to it"
@@ -37,7 +38,7 @@
 			return 0
 
 		if(air_contents.temperature > 0)
-			var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+			var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
@@ -55,7 +56,7 @@
 		injecting = 1
 
 		if(air_contents.temperature > 0)
-			var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+			var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 

@@ -8,11 +8,10 @@
 	flags = NOSPLASH
 	var/on = 0
 	var/datum/light/light
-	var/temperature_archived
+	var/ARCHIVED(temperature)
 	var/obj/overlay/O1 = null
 	var/mob/occupant = null
-	var/beaker = null
-	var/next_trans = 0
+	var/obj/item/beaker = null
 	var/show_beaker_contents = 0
 
 	var/current_heat_capacity = 50
@@ -50,7 +49,7 @@
 				node = target
 				break
 
-	dispose()
+	disposing()
 		for (var/mob/M in src)
 			M.set_loc(src.loc)
 		..()
@@ -67,18 +66,18 @@
 			if(!isdead(occupant))
 				if (!ishuman(occupant))
 					src.go_out() // stop turning into cyborgs thanks
-				if (occupant.health < 100) process_occupant()
+				if (occupant.health < occupant.max_health || occupant.bioHolder.HasEffect("premature_clone"))
+					process_occupant()
 				else
 					src.go_out()
 					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 
-
 		if(air_contents)
-			temperature_archived = air_contents.temperature
+			ARCHIVED(temperature) = air_contents.temperature
 			heat_gas_contents()
 			expel_gas()
 
-		if(abs(temperature_archived-air_contents.temperature) > 1)
+		if(abs(ARCHIVED(temperature)-air_contents.temperature) > 1)
 			network.update = 1
 
 		src.updateUsrDialog()
@@ -92,7 +91,7 @@
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -117,13 +116,13 @@
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
 		if (src.occupant)
-			boutput(M, "<span style=\"color:blue\"><B>The scanner is already occupied!</B></span>")
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return 0
-		if(iscritter(target))
-			boutput(M, "<span style=\"color:red\"><B>The scanner doesn't support this body type.</B></span>")
+		if(ismobcritter(target))
+			boutput(M, "<span class='alert'><B>The scanner doesn't support this body type.</B></span>")
 			return 0
 		if(!iscarbon(target) )
-			boutput(M, "<span style=\"color:red\"><B>The scanner supports only carbon based lifeforms.</B></span>")
+			boutput(M, "<span class='alert'><B>The scanner supports only carbon based lifeforms.</B></span>")
 			return 0
 
 		.= 1
@@ -135,17 +134,17 @@
 		return
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
-			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
-		else if(air_contents.temperature > 225)
-			temp_text = "<FONT color=black>[air_contents.temperature]</FONT>"
+			temp_text = "<FONT color=red>[air_contents.temperature - T0C]</FONT>"
+		else if(air_contents.temperature > 170)
+			temp_text = "<FONT color=black>[air_contents.temperature - T0C]</FONT>"
 		else
-			temp_text = "<FONT color=blue>[air_contents.temperature]</FONT>"
+			temp_text = "<FONT color=blue>[air_contents.temperature - T0C]</FONT>"
 
 		var/dat = "<B>Cryo cell control system</B><BR>"
-		dat += "<B>Current cell temperature:</B> [temp_text]K<BR>"
+		dat += "<B>Current cell temperature:</B> [temp_text]&deg;C<BR>"
 		dat += "<B>Eject Occupant:</B> [src.occupant ? "<A href='?src=\ref[src];eject_occupant=1'>Eject</A>" : "Eject"]<BR>"
 		dat += "<B>Cryo status:</B> [src.on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>"
 		dat += "[draw_beaker_text()]<BR>"
@@ -186,7 +185,7 @@
 			return "<B>Reagent Scan : </B>[ reagent_scan_active ? "<A href='?src=\ref[src];reagent_scan_active=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];reagent_scan_active=1'>On</A>"]"
 
 	Topic(href, href_list)
-		if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+		if (( usr.using_dialog_of(src) && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
 			if(href_list["start"])
 				src.on = !src.on
 				build_icon()
@@ -220,54 +219,54 @@
 			logTheThing("combat", user, null, "adds a beaker [log_reagents(G)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
 			src.add_fingerprint(user)
 		else if(istype(G, /obj/item/grab))
-			push_in(G)
+			push_in(G, user)
 		else if (istype(G, /obj/item/reagent_containers/syringe))
 			//this is in syringe.dm
 			logTheThing("combat", user, null, "injects [log_reagents(G)] to [src] at [log_loc(src)].")
 			if (src.beaker == null)
-				boutput(user, "<span style=\"color:red\">There is no beaker in [src] for you to inject reagents.</span>")
+				boutput(user, "<span class='alert'>There is no beaker in [src] for you to inject reagents.</span>")
 				return
-			if (src.beaker:reagents.total_volume == src.beaker:reagents.maximum_volume)
-				boutput(user, "<span style=\"color:red\">The beaker in [src] is full.</span>")
+			if (src.beaker.reagents.total_volume == src.beaker.reagents.maximum_volume)
+				boutput(user, "<span class='alert'>The beaker in [src] is full.</span>")
 				return
 			var/transferred = G.reagents.trans_to(src.beaker, 5)
-			src.visible_message("<span style=\"color:red\"><B>[user] injects [transferred] into [src]!</B></span>")
+			src.visible_message("<span class='alert'><B>[user] injects [transferred] into [src]!</B></span>")
 			src.beaker:on_reagent_change()
 			return
 		else if (istype(G, /obj/item/device/analyzer/healthanalyzer_upgrade))
 			if (reagent_scan_enabled)
-				boutput(user, "<span style=\"color:red\">This Cryo Cell already has a reagent scan upgrade!</span>")
+				boutput(user, "<span class='alert'>This Cryo Cell already has a reagent scan upgrade!</span>")
 				return
 			else
 				reagent_scan_enabled = 1
-				boutput(user, "<span style=\"color:blue\">Reagent scan upgrade installed.</span>")
+				boutput(user, "<span class='notice'>Reagent scan upgrade installed.</span>")
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 				user.u_equip(G)
 				qdel(G)
 				return
 		else if (istype(G, /obj/item/robodefibrillator))
 			if (src.defib)
-				boutput(user, "<span style=\"color:red\">[src] already has a Defibrillator installed.</span>")
+				boutput(user, "<span class='alert'>[src] already has a Defibrillator installed.</span>")
 			else
 				var/obj/item/robodefibrillator/D = G
 				src.defib = D
-				boutput(user, "<span style=\"color:blue\">Defibrillator installed into [src].</span>")
+				boutput(user, "<span class='notice'>Defibrillator installed into [src].</span>")
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 				user.u_equip(G)
 		else if (istype(G, /obj/item/wrench))
 			if (!src.defib)
-				boutput(user, "<span style=\"color:red\">[src] does not have a Defibrillator installed.</span>")
+				boutput(user, "<span class='alert'>[src] does not have a Defibrillator installed.</span>")
 			else
 				src.defib.set_loc(src.loc)
 				src.defib = null
-				src.visible_message("<span style=\"color:red\">[user] removes the Defibrillator from [src].</span>")
+				src.visible_message("<span class='alert'>[user] removes the Defibrillator from [src].</span>")
 				playsound(src.loc ,"sound/items/Ratchet.ogg", 50, 1)
 		else if (istype(G, /obj/item/device/analyzer/healthanalyzer))
 			if (!occupant)
-				boutput(user, "<span style=\"color:blue\">This Cryo Cell is empty!</span>")
+				boutput(user, "<span class='notice'>This Cryo Cell is empty!</span>")
 				return
 			else
-				boutput(user, "<span style=\"color:blue\">You scan the occupant of the cell!</span>")
+				boutput(user, "<span class='notice'>You scan the occupant of the cell!</span>")
 				G.attack(src.occupant, user)
 
 				return
@@ -281,7 +280,7 @@
 		if (src.occupant)
 			user.show_text("The cryo tube is already occupied.", "red")
 			return
-		logTheThing("combat", user, G.affecting, "shoves %target% into [src] at [log_loc(src)].") // Ditto (Convair880).
+		logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")] into [src] at [log_loc(src)].") // Ditto (Convair880).
 		var/mob/M = G.affecting
 		M.set_loc(src)
 		src.occupant = M
@@ -318,12 +317,12 @@
 		add_overlays()
 
 	proc/process_occupant()
-		if(air_contents.total_moles() < 10)
+		if(TOTAL_MOLES(air_contents) < 10)
 			return
 		if(ishuman(occupant))
 			if(isdead(occupant))
 				return
-			occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
+			occupant.bodytemperature += 50*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + HEAT_CAPACITY(air_contents))
 			occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 			occupant.changeStatus("burning",-100)
 			var/mob/living/carbon/human/H = 0
@@ -340,27 +339,24 @@
 		else
 			src.go_out()
 			return
-		if(beaker && (next_trans == 0))
-			beaker:reagents.trans_to(occupant, 1, 10)
-			beaker:reagents.reaction(occupant)
-		next_trans++
-		if(next_trans == 10)
-			next_trans = 0
+		if(beaker)
+			beaker.reagents.trans_to(occupant, 0.1, 10)
+			beaker.reagents.reaction(occupant, TOUCH, 5) //1/10th of small beaker - matches old rate for default beakers, give or take
 
 	proc/heat_gas_contents()
-		if(air_contents.total_moles() < 1)
+		if(TOTAL_MOLES(air_contents) < 1)
 			return
-		var/air_heat_capacity = air_contents.heat_capacity()
+		var/air_heat_capacity = HEAT_CAPACITY(air_contents)
 		var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
 		if(combined_heat_capacity > 0)
 			var/combined_energy = T20C*current_heat_capacity + air_heat_capacity*air_contents.temperature
 			air_contents.temperature = combined_energy/combined_heat_capacity
 
 	proc/expel_gas()
-		if(air_contents.total_moles() < 1)
+		if(TOTAL_MOLES(air_contents) < 1)
 			return
 		var/datum/gas_mixture/expel_gas
-		var/remove_amount = air_contents.total_moles()/100
+		var/remove_amount = TOTAL_MOLES(air_contents)/100
 		expel_gas = air_contents.remove(remove_amount)
 		expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
 		loc.assume_air(expel_gas)
@@ -393,10 +389,10 @@
 		if (!isalive(usr) || status & (NOPOWER|BROKEN))
 			return
 		if (!ishuman(usr))
-			boutput(usr, "<span style='color:red'>You can't seem to fit into \the [src].</span>")
+			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
 			return
 		if (src.occupant)
-			boutput(usr, "<span style=\"color:blue\"><B>The cell is already occupied!</B></span>")
+			boutput(usr, "<span class='notice'><B>The cell is already occupied!</B></span>")
 			return
 		if(!src.node)
 			boutput(usr, "The cell is not corrrectly connected to its pipe network!")
@@ -412,22 +408,6 @@
 		src.add_fingerprint(usr)
 		build_icon()
 		return
-
-
-
-
-
-/mob/living/carbon/human/abiotic()
-	if ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves))
-		return 1
-	else
-		return 0
-
-/mob/proc/abiotic()
-	if ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || src.back || src.wear_mask)
-		return 1
-	else
-		return 0
 
 /datum/data/function/proc/reset()
 	return

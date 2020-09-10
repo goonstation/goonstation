@@ -14,6 +14,7 @@
 	attackby()
 	attack_hand()
 	hitby()
+		. = ..()
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -43,6 +44,7 @@
 	attackby()
 	attack_hand()
 	hitby()
+		. = ..()
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -63,6 +65,7 @@
 	attackby()
 	attack_hand()
 	hitby()
+		. = ..()
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -95,6 +98,7 @@
 	attackby()
 	attack_hand()
 	hitby()
+		. = ..()
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -111,14 +115,14 @@
 	mouse_opacity = 0
 
 	examine()
-		return
+		return list()
 
 
 /obj/indestructible/invisible_block/opaque
 	opacity = 1
 
 	examine()
-		return
+		return list()
 
 
 /turf/simulated/shuttle/wall/cockpit
@@ -141,6 +145,7 @@
 	layer = TURF_LAYER
 
 /obj/indestructible/shuttle_corner
+	plane = PLANE_WALL
 	name = "shuttle wall"
 	desc = "A shuttle wall. Pretty reinforced. This appears to be a corner."
 	icon = 'icons/turf/walls_shuttle.dmi'
@@ -164,6 +169,7 @@
 	attackby()
 	attack_hand()
 	hitby()
+		. = ..()
 	reagent_act()
 	bullet_act()
 	ex_act()

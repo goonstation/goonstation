@@ -76,7 +76,7 @@
 		if(src.loaded)
 			src.visible_message("[user] ejects the tape from the databank.",1)
 			playsound(get_turf(src), 'sound/machines/driveclick.ogg', 80,1)
-			tape.loc = user.loc
+			tape.set_loc(user.loc)
 			tape.layer = 3
 			icon_state = "oldai_mem-0"
 			ai.tapes_loaded--
@@ -86,7 +86,7 @@
 		if(!ai) return
 		if (istype(W, /obj/item/aiboss_tape/))
 			if(src.loaded)
-				boutput(user, "<span style=\"color:red\">There's already a tape inside!</span>")
+				boutput(user, "<span class='alert'>There's already a tape inside!</span>")
 				return
 
 			if(!ai.on)
@@ -94,10 +94,10 @@
 				return
 
 			else if(!ai.ready_for_tapes)
-				boutput(user, "<span style=\"color:red\">The databank refuses to load the tape!</span>")
+				boutput(user, "<span class='alert'>The databank refuses to load the tape!</span>")
 				return
 			user.u_equip(W)
-			W.loc = src
+			W.set_loc(src)
 			tape = W
 			ai.ready_for_tapes = 0
 			src.loaded = 1
@@ -105,7 +105,7 @@
 			playsound(get_turf(src), 'sound/machines/driveclick.ogg', 80,1)
 			src.visible_message("The databank begins loading the tape.",1)
 			src.icon_state = "oldai_mem-1"
-			sleep(10)
+			sleep(1 SECOND)
 			src.icon_state = "oldai_mem-2"
 			SPAWN_DBG(5 SECONDS) src.icon_state = "oldai_mem-1"
 			if(ai) ai.load_tape(tape_no)
@@ -197,45 +197,43 @@
 		for(var/mob/O in hearers(src, null))
 			O << csound("sound/misc/satanellite_failedboot.ogg")
 		src.change_face("blink")
-		sleep(20)
+		sleep(2 SECONDS)
 		src.change_face("static")
-		sleep(8)
+		sleep(0.8 SECONDS)
 		src.change_face("face_fade04")
-		sleep(10)
+		sleep(1 SECOND)
 		src.change_face("face_fade03")
-		sleep(10)
+		sleep(1 SECOND)
 		src.change_face("face_fade02")
-		sleep(10)
+		sleep(1 SECOND)
 		speak("BRADBURY II IS NOW ONLINE.", 0)
 		src.change_face("face_fade01")
-		sleep(10)
+		sleep(1 SECOND)
 		src.change_face("face_talking")
-		sleep(35)
+		sleep(3.5 SECONDS)
 		speak("THE TIME IS 01/01/1971.", 0)
-		sleep(75)
+		sleep(7.5 SECONDS)
 		src.change_face("static")
-		var/datum/effects/system/spark_spread/E = unpool(/datum/effects/system/spark_spread)
-		E.set_up(3,0,get_turf(src))
-		E.start()
+		elecflash(src,power=6)
 		for(var/obj/machinery/light/L in get_area(src))
 			L.on = 1
 			L.broken()
-		sleep(1)
+		sleep(0.1 SECONDS)
 		src.change_face("face_terror")
-		sleep(3)
+		sleep(0.3 SECONDS)
 		src.change_face("face_fade01")
-		sleep(8)
+		sleep(0.8 SECONDS)
 		src.change_face("face_neutral")
-		sleep(2)
+		sleep(0.2 SECONDS)
 		src.change_face("face_fade03")
-		sleep(10)
+		sleep(1 SECOND)
 		src.change_face("static")
-		sleep(10)
+		sleep(1 SECOND)
 		speak("DANGER", 0)
-		sleep(25)
+		sleep(2.5 SECONDS)
 		speak("Dddddddahhhngggggerrrrrrrrrrrrrrr.rrr.......", 0)
 		src.change_face("dot")
-		sleep(25)
+		sleep(2.5 SECONDS)
 		src.ready_for_tapes = 1
 		src.teaser_enabled = 0
 
@@ -244,7 +242,7 @@
 		playsound(src.loc, 'sound/machines/computerboot_pc.ogg', 80, 1)
 		src.change_face("blink")
 		light.enable()
-		sleep(50)
+		sleep(5 SECONDS)
 		if(!on) return
 		if(src.teaser_enabled == 1)
 			do_teaser()
@@ -252,7 +250,7 @@
 			src.change_face("static")
 			for(var/mob/O in hearers(src, null))
 				O << csound("sound/misc/satanellite_bootsignal.ogg")
-			sleep(170)
+			sleep(17 SECONDS)
 			if(!on) return
 			src.ready_for_tapes = 1
 			src.change_face("dot")
@@ -285,28 +283,28 @@
 		src.ready_for_tapes = 0
 		if(!on) return
 		playsound(get_turf(src), 'sound/machines/modem.ogg', 80,1)
-		sleep(70)
+		sleep(7 SECONDS)
 		switch(tapeno)
 			if(1)
 				src.change_face("static")
 				for(var/mob/O in hearers(src, null))
 					O << csound("sound/misc/satanellite_signal01.ogg")
-				sleep(690)
+				sleep(69 SECONDS)
 			if(2)
 				src.change_face("static")
 				for(var/mob/O in hearers(src, null))
 					O << csound("sound/misc/satanellite_signal02.ogg")
-				sleep(690)
+				sleep(69 SECONDS)
 			if(4)
 				src.change_face("static")
 				for(var/mob/O in hearers(src, null))
 					O << csound("sound/misc/satanellite_signal04.ogg")
-				sleep(690)
+				sleep(69 SECONDS)
 			if(420)
 				src.change_face("static")
 				for(var/mob/O in hearers(src, null))
 					O << csound("sound/misc/satanellite_signal420.ogg")
-				sleep(690)
+				sleep(69 SECONDS)
 		tapes_loaded++
 		src.change_face("dot")
 		src.ready_for_tapes = 1
@@ -377,7 +375,7 @@
 	icon_state = "l_leg-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
+	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 
 /obj/item/parts/robot_parts/leg/right/servotron
 	name = "servotron right leg"
@@ -385,7 +383,7 @@
 	icon_state = "r_leg-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
+	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 
 
 /obj/item/parts/robot_parts/arm/right/servotron
@@ -394,8 +392,8 @@
 	icon_state = "r_arm-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
 	handlistPart = "armR-light"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/head
 
 /obj/item/parts/robot_parts/arm/left/servotron
 	name = "servotron left arm"
@@ -403,8 +401,8 @@
 	icon_state = "l_arm-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
 	handlistPart = "armL-light"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
 
 /obj/item/parts/robot_parts/head/servotron
 	name = "servotron head"
@@ -412,7 +410,7 @@
 	icon_state = "head-servo"
 	appearanceString = "servo"
 	max_health = 87
-	speedbonus = 0.1
+	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
 
 /obj/item/parts/robot_parts/chest/servotron
 	name = "servotron chest"

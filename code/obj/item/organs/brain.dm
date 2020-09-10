@@ -6,6 +6,8 @@
 	name = "brain"
 	organ_name = "brain"
 	desc = "A human brain, gross."
+	organ_holder_name = "brain"
+	organ_holder_location = "head"
 	icon_state = "brain2"
 	item_state = "brain"
 	var/datum/mind/owner = null
@@ -14,6 +16,7 @@
 	module_research_type = /obj/item/organ/brain
 	FAIL_DAMAGE = 120
 	MAX_DAMAGE = 120
+	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
 	disposing()
 		if (owner && owner.brain == src)
@@ -28,45 +31,44 @@
 	get_desc()
 		if (usr && (usr.job == "Roboticist" || usr.job == "Medical Doctor" || usr.job == "Geneticist" || usr.job == "Medical Director"))
 			if (src.owner && src.owner.current)
-				. += "<br><span style='color:blue'>This brain is still warm.</span>"
+				. += "<br><span class='notice'>This brain is still warm.</span>"
 			else
-				. += "<br><span style='color:red'>This brain has gone cold.</span>"
+				. += "<br><span class='alert'>This brain has gone cold.</span>"
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (!ismob(M))
-			return
-
-		src.add_fingerprint(user)
-
-		if (user.zone_sel.selecting != "head")
-			return ..()
-		if (!surgeryCheck(M, user))
-			return ..()
-
+	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Overrides parent function to handle special case for brains. */
 		var/mob/living/carbon/human/H = M
-		if (!H.organHolder)
-			return ..()
+		if (!src.can_attach_organ(H, user))
+			return 0
+
+		var/obj/item/organ/organ_location = H.organHolder.get_organ("head")
+
+		if (!organ_location)
+			boutput(user, "<span class='notice'>Where are you putting that again? There's no head.</span>")
+			return null
 
 		if (!headSurgeryCheck(H))
-			boutput(user, "<span style=\"color:blue\">You're going to need to remove that mask/helmet/glasses first.</span>")
-			return
+			boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
+			return null
 
-		//since these people will be dead M != usr
-
-		if (!H.organHolder.brain)
+		if (!H.organHolder.get_organ("brain") && H.organHolder.head.scalp_op_stage >= 4.0)
+			if (!H.organHolder.get_organ("skull"))
+				boutput(user, "<span class='notice'>There's no skull in there to hold the brain in place.</span>")
+				return null
 
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
-			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
-			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
-			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
+			user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
 
-			user.u_equip(src)
+			if (user.find_in_hand(src))
+				user.u_equip(src)
 			H.organHolder.receive_organ(src, "brain", 3.0)
+			H.organHolder.head.scalp_op_stage = 3.0
+			return 1
 
-		else
-			..()
-		return
+		return 0
 
 	proc/setOwner(var/datum/mind/mind)
 		if (!mind)
@@ -90,10 +92,10 @@
 		src.icon_state = pick("plant_brain", "plant_brain_bloom")
 
 /obj/item/organ/brain/latejoin
-	name = "Intelligence Formation Chip"
+	name = "Spontaneous Intelligence Creation Core"
 	icon_state = "late_brain"
 	item_state = "late_brain"
-	desc = "A mess of wires and sillicon that can spontaniously create artifical intelligence."
+	desc = "A brain sized pyramid constructed out of silicon and LED lights. It employs complex quantum loopholes to create a consciousness within a decade or less."
 	created_decal = /obj/decal/cleanable/oil
 	var/activated = 0
 
@@ -135,3 +137,12 @@
 				"sound/effects/radio_sweep1.ogg", "sound/effects/radio_sweep2.ogg", "sound/effects/radio_sweep3.ogg", "sound/effects/radio_sweep4.ogg", "sound/effects/radio_sweep5.ogg")
 			M.playsound_local(get_turf(M), pick(sounds), 20, 1)
 			boutput(M, "<span class='flocksay italics'><i>... [pick_string("flockmind.txt", "brain")] ...</i></span>")
+
+/obj/item/organ/brain/flockdrone/special_desc(dist, mob/user)
+	if(isflock(user))
+		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+		special_desc += "<br><span class='bold'>ID:</span> Computational core"
+		special_desc += "<br><span class='bold'>###=-</span></span>"
+		return special_desc
+	else
+		return null // give the standard description

@@ -3,7 +3,7 @@
 /obj/item/device/pda2
 	name = "PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by an EEPROM cartridge."
-	icon = 'icons/obj/pda.dmi'
+	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda"
 	item_state = "pda"
 	w_class = 2.0
@@ -47,8 +47,9 @@
 	var/setup_system_os_path = /datum/computer/file/pda_program/os/main_os //Needs an operating system to...operate!!
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
-	var/mailgroups = list("staff","Party Line") //What default mail groups the PDA is part of.
-	var/reserved_mailgroups = list("command","security","science","ai","sillicon","medresearch","medbay","cargo","janitor","chaplain","engineer","mining","kitchen","mechanic","botany") //Job-specific mailgroups that cannot be joined or left
+	var/mailgroups = list("staff",MGD_PARTY) //What default mail groups the PDA is part of.
+	var/muted_mailgroups = list() //What mail groups should the PDA ignore?
+	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,"ai","sillicon",MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,"janitor",MGD_SPIRITUALAFFAIRS,"engineer","mining",MGD_KITCHEN,"mechanic",MGD_BOTANY,MGD_STATIONREPAIR) //Job-specific mailgroups that cannot be joined or left
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 
@@ -64,19 +65,19 @@
 		icon_state = "pda-c"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/captain
 		setup_drive_size = 32
-		mailgroups = list("command","Party Line")
+		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	heads
 		icon_state = "pda-h"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/head
 		setup_drive_size = 32
-		mailgroups = list("command","Party Line")
+		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	hos
 		icon_state = "pda-hos"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
 		setup_drive_size = 32
-		mailgroups = list("security","command","Party Line")
+		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
 
 	ai
 		icon_state = "pda-h"
@@ -92,52 +93,52 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list("silicon","Party Line")
+		mailgroups = list("silicon",MGD_PARTY)
 
 	research_director
 		icon_state = "pda-rd"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/research_director
 		setup_drive_size = 32
-		mailgroups = list("science","command","Party Line")
+		mailgroups = list(MGD_SCIENCE,MGD_COMMAND,MGD_PARTY)
 
 	medical_director
 		icon_state = "pda-md"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		setup_drive_size = 32
-		mailgroups = list("medresearch","medbay","command","Party Line")
+		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY ,MGD_COMMAND,MGD_PARTY)
 
 	medical
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
-		mailgroups = list("medbay","Party Line")
+		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
 
 		robotics
-			mailgroups = list("medresearch","Party Line")
-
-	security
-		icon_state = "pda-s"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/security
-		mailgroups = list("security","Party Line")
-
-	forensic
-		icon_state = "pda-s"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
-		mailgroups = list("security","Party Line")
-
-	toxins
-		icon_state = "pda-tox"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/toxins
-		mailgroups = list("science","Party Line")
+			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
 
 	genetics
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
-		mailgroups = list("medresearch","Party Line")
+		mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
+
+	security
+		icon_state = "pda-s"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/security
+		mailgroups = list(MGD_SECURITY,MGD_PARTY)
+
+	forensic
+		icon_state = "pda-s"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
+		mailgroups = list(MGD_SECURITY,MGD_PARTY)
+
+	toxins
+		icon_state = "pda-tox"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/toxins
+		mailgroups = list(MGD_SCIENCE,MGD_PARTY)
 
 	quartermaster
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
-		mailgroups = list("cargo","Party Line")
+		mailgroups = list(MGD_CARGO,MGD_PARTY)
 
 	clown
 		icon_state = "pda-clown"
@@ -150,27 +151,20 @@
 				return
 			if (iscarbon(AM))
 				var/mob/M = AM
-				if (!M.can_slip())
-					return
-
-				M.pulling = null
-				boutput(M, "<span style=\"color:blue\">You slipped on the PDA!</span>")
-				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-				if (M.bioHolder.HasEffect("clumsy"))
-					M.changeStatus("stunned", 80)
-					M.changeStatus("weakened", 5 SECONDS)
-				else
-					M.changeStatus("weakened", 2 SECONDS)
-				M.force_laydown_standup()
+				if (M.slip(ignore_actual_delay = 1))
+					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
+					if (M.bioHolder.HasEffect("clumsy"))
+						M.changeStatus("weakened", 5 SECONDS)
+						JOB_XP(M, "Clown", 1)
 
 	janitor
 		icon_state = "pda-j"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/janitor
-		mailgroups = list("janitor","Party Line")
+		mailgroups = list("janitor",MGD_STATIONREPAIR,MGD_PARTY)
 
 	chaplain
 		icon_state = "pda-holy"
-		mailgroups = list("chaplain","Party Line")
+		mailgroups = list(MGD_SPIRITUALAFFAIRS,MGD_PARTY)
 
 	atmos
 		icon_state = "pda-a"
@@ -179,28 +173,28 @@
 	engine
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
-		mailgroups = list("engineer","Party Line")
+		mailgroups = list("engineer",MGD_STATIONREPAIR,MGD_PARTY)
 
 	mining
 		icon_state = "pda-e"
-		mailgroups = list("mining","Party Line")
+		mailgroups = list("mining",MGD_PARTY)
 
 	chef
-		mailgroups = list("kitchen","Party Line")
+		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	barman
-		mailgroups = list("kitchen","Party Line")
+		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	mechanic
 		icon_state = "pda-a"
 		setup_default_module = /obj/item/device/pda_module/tray
 		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
-		mailgroups = list("mechanic","Party Line")
+		mailgroups = list("mechanic",MGD_STATIONREPAIR,MGD_PARTY)
 
 	botanist
 		icon_state = "pda-hydro"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/botanist
-		mailgroups = list("botany","Party Line")
+		mailgroups = list(MGD_BOTANY,MGD_PARTY)
 
 	syndicate
 		icon_state = "pda-syn"
@@ -258,6 +252,12 @@
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
+		for (var/datum/computer/file/pda_program/P in src.cartridge.root.contents)
+			if (P.name == "Packet Sniffer")
+				radio_controller.remove_object(src, "[P:scan_freq]")
+				continue
+			if (P.name == "Ping Tool")
+				radio_controller.remove_object(src, "[P:send_freq]")
 		src.cartridge.dispose()
 		src.cartridge = null
 
@@ -266,6 +266,12 @@
 	src.scan_program = null
 
 	if (src.hd)
+		for (var/datum/computer/file/pda_program/P in src.hd.root.contents)
+			if (P.name == "Packet Sniffer")
+				radio_controller.remove_object(src, "[P:scan_freq]")
+				continue
+			if (P.name == "Ping Tool")
+				radio_controller.remove_object(src, "[P:send_freq]")
 		src.hd.dispose()
 		src.hd = null
 
@@ -293,10 +299,10 @@
 
 /obj/item/device/pda2/attack_self(mob/user as mob)
 	if(!user.literate)
-		boutput(user, "<span class='text-red'>You don't know how to read, the screen is meaningless to you.</span>")
+		boutput(user, "<span class='alert'>You don't know how to read, the screen is meaningless to you.</span>")
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 
 	var/wincheck = winexists(user, "pda2_\ref[src]")
 	//boutput(world, wincheck)
@@ -385,7 +391,7 @@
 			return
 
 		src.add_fingerprint(usr)
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["return_to_host"])
 			if (src.host_program)
@@ -406,7 +412,7 @@
 
 		else if (href_list["close"])
 			usr.Browse(null, "window=pda2_\ref[src]")
-			usr.machine = null
+			src.remove_dialog(usr)
 
 		src.updateSelfDialog()
 		return
@@ -417,20 +423,24 @@
 		if (U.try_deliver(C, user))
 			return
 
-	if (istype(C, /obj/item/disk/data/cartridge) && isnull(src.cartridge))
+	if (istype(C, /obj/item/disk/data/cartridge))
 		user.drop_item()
 		C.set_loc(src)
-		boutput(user, "<span style=\"color:blue\">You insert [C] into [src].</span>")
+		if (isnull(src.cartridge))
+			boutput(user, "<span class='notice'>You insert [C] into [src].</span>")
+		else
+			boutput(user, "<span class='notice'>You remove the old cartridge and insert [C] into [src].</span>")
+			user.put_in_hand_or_eject(src.cartridge)
 		src.cartridge = C
 		src.updateSelfDialog()
 
 	else if (istype(C, /obj/item/device/pda_module))
 		if(src.closed)
-			boutput(user, "<span style=\"color:red\">The casing is closed!</span>")
+			boutput(user, "<span class='alert'>The casing is closed!</span>")
 			return
 
 		if(src.module)
-			boutput(user, "<span style=\"color:red\">There is already a module installed!</span>")
+			boutput(user, "<span class='alert'>There is already a module installed!</span>")
 			return
 
 		user.drop_item()
@@ -450,7 +460,7 @@
 			return
 
 		if(src.closed)
-			boutput(user, "<span style=\"color:red\">The casing is closed!</span>")
+			boutput(user, "<span class='alert'>The casing is closed!</span>")
 			return
 
 		src.module.set_loc(get_turf(src))
@@ -462,30 +472,29 @@
 	else if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!ID.registered)
-			boutput(user, "<span style=\"color:red\">This ID isn't registered to anyone!</span>")
+			boutput(user, "<span class='alert'>This ID isn't registered to anyone!</span>")
 			return
 		if (!src.owner)
 			src.owner = ID.registered
 			src.ownerAssignment = ID.assignment
 			src.name = "PDA-[src.owner]"
-			boutput(user, "<span style=\"color:blue\">Card scanned.</span>")
+			boutput(user, "<span class='notice'>Card scanned.</span>")
 			src.updateSelfDialog()
 		else
 			if (src.ID_card)
-				boutput(user, "<span style=\"color:blue\">You swap [ID] and [src.ID_card].</span>")
+				boutput(user, "<span class='notice'>You swap [ID] and [src.ID_card].</span>")
 				src.eject_id_card(user)
 				src.insert_id_card(ID, user)
 				return
 			else if (!src.ID_card)
 				src.insert_id_card(ID, user)
-				boutput(user, "<span style=\"color:blue\">You insert [ID] into [src].</span>")
+				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
 
 /obj/item/device/pda2/examine()
-	..()
-	boutput(usr, "The back cover is [src.closed ? "closed" : "open"].")
+	. = ..()
+	. += "The back cover is [src.closed ? "closed" : "open"]."
 	if (src.ID_card)
-		boutput(usr, "[ID_card] has been inserted into it.")
-	return
+		. += "[ID_card] has been inserted into it."
 
 /obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
 	if(!signal || signal.encryption || !src.owner) return
@@ -546,7 +555,7 @@
 		scan_dat = scan_atmospheric(A, visible = 1) // Replaced with global proc (Convair880).
 
 	if(scan_dat)
-		A.visible_message("<span style=\"color:red\">[user] has scanned [A]!</span>")
+		A.visible_message("<span class='alert'>[user] has scanned [A]!</span>")
 		user.show_message(scan_dat, 1)
 
 	return
@@ -698,10 +707,10 @@
 */
 	proc/display_alert(var/alert_message) //Add alert overlay and beep
 		if (alert_message)
-			playsound(get_turf(src), "sound/machines/twobeep.ogg", 50, 1)
+			playsound(get_turf(src), "sound/machines/twobeep.ogg", 35, 1)
 
 			for (var/atom in mobs)
-				if (!atom) break
+				if (!atom) continue
 				var/mob/O = atom
 				if (get_dist(get_turf(src),O) <= 3)
 					O.show_message(text("[bicon(src)] *[alert_message]*"))
@@ -710,7 +719,7 @@
 			//for (var/mob/O in hearers(3, src.loc))
 
 		src.overlays = null
-		src.overlays += image('icons/obj/pda.dmi', "pda-r")
+		src.overlays += image('icons/obj/items/pda.dmi', "pda-r")
 		return
 
 	proc/display_message(var/message)
@@ -743,8 +752,7 @@
 		src.active_program = program
 		program.init()
 
-		if(program.setup_use_process && !(src in processing_items))
-			processing_items.Add(src)
+		if(program.setup_use_process) processing_items |= src
 
 		return 1
 
@@ -781,7 +789,7 @@
 	proc/explode()
 		if (src.bombproof)
 			if (ismob(src.loc))
-				boutput(src.loc, "<span style=\"color:red\"><b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked.</span>")
+				boutput(src.loc, "<span class='alert'><b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked.</span>")
 			return
 
 		if(src in bible_contents)
@@ -798,7 +806,7 @@
 
 		if (ismob(src.loc))
 			var/mob/M = src.loc
-			M.show_message("<span style=\"color:red\">Your [src] explodes!</span>", 1)
+			M.show_message("<span class='alert'>Your [src] explodes!</span>", 1)
 
 		if(T)
 			T.hotspot_expose(700,125)
@@ -820,7 +828,7 @@
 		return ..()
 	var/mob/living/silicon/ai/ai = loc
 	if (ai.deployed_to_eyecam)
-		ai.eyecam << sound('sound/machines/twobeep.ogg', volume=50)
+		ai.eyecam << sound('sound/machines/twobeep.ogg', volume=35)
 		ai.eyecam.show_message(message)
 	if (ismob(ai.deployed_shell))
 		var/mob/M = ai.deployed_shell

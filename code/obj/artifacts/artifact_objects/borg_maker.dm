@@ -24,9 +24,9 @@
 			return
 		if (ishuman(user))
 			if(!isalive(user) && user.ghost && user.ghost.mind && user.ghost.mind.dnr)
-				O.visible_message("<span style=\"color:red\"><b>[O]</b> refuses to process [user.name]!</span>")
+				O.visible_message("<span class='alert'><b>[O]</b> refuses to process [user.name]!</span>")
 				return
-			O.visible_message("<span style=\"color:red\"><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
+			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
 			user.emote("scream")
 			user.set_loc(O.loc)
 			converting = 1
@@ -36,14 +36,14 @@
 				random_brute_damage(user, 15)
 				user.changeStatus("paralysis", 70)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
-				sleep(4)
+				sleep(0.4 SECONDS)
 
 			var/bdna = null // For forensics (Convair880).
 			var/btype = null
 			if (user.bioHolder.Uid && user.bioHolder.bloodType)
 				bdna = user.bioHolder.Uid
 				btype = user.bioHolder.bloodType
-			var/turf/T = find_loc(user)
+			var/turf/T = get_turf(user)
 			gibs(T, null, null, bdna, btype)
 
 			ArtifactLogs(user, null, O, "touched", "robotizing user", 0) // Added (Convair880).
@@ -53,7 +53,7 @@
 				user.ghostize()
 				var/robopath = pick(/obj/machinery/bot/guardbot,/obj/machinery/bot/secbot,
 				/obj/machinery/bot/medbot,/obj/machinery/bot/firebot,/obj/machinery/bot/cleanbot,
-				/obj/machinery/bot/floorbot)
+				/obj/machinery/bot/floorbot,/obj/machinery/bot/mining)
 				new robopath (T)
 				qdel(user)
 			else
@@ -61,6 +61,6 @@
 				M.Robotize_MK2(1)
 			converting = 0
 		else if (issilicon(user))
-			boutput(user, "<span style=\"color:red\">An imperious voice rings out in your head... \"<b>UPGRADE COMPLETE, RETURN TO ASSIGNED TASK</b>\"</span>")
+			boutput(user, "<span class='alert'>An imperious voice rings out in your head... \"<b>UPGRADE COMPLETE, RETURN TO ASSIGNED TASK</b>\"</span>")
 		else
 			return

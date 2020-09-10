@@ -38,17 +38,13 @@
 		if(istype( what, /obj/machinery/bathtub ))
 			var/obj/machinery/bathtub/B = what
 			B.wheels = src
-			boutput( user, "<span style='color:blue'>You attach the [CLEAN(src)] to the [CLEAN(what)].</span>" )
+			boutput( user, "<span class='notice'>You attach the [CLEAN(src)] to the [CLEAN(what)].</span>" )
 		*/
 
 
 /obj/landmark/gps_waypoint
-	name = "GPS Waypoint"
-	New()
-		..()
-		if(name != "GPS Waypoint") return
-		var/area/A = get_area(src)
-		name = A.name
+	icon_state = "gps"
+	name = LANDMARK_GPS_WAYPOINT
 
 /client/var/list/GPS_Path
 /client/var/list/GPS_Images
@@ -63,20 +59,22 @@
 	var/list/targets = list()
 	var/list/wtfbyond = list()
 	var/turf/OT = get_turf(src)
-	for( var/obj/landmark/gps_waypoint/wp in landmarks)//world )
+	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
 		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=175)
 		if(path)
-			targets[wp.name] = wp
-			wtfbyond[++wtfbyond.len] = wp.name
+			var/area/area = get_area(wp)
+			var/name = area.name
+			targets[name] = wp
+			wtfbyond[++wtfbyond.len] = name
 
 	if(!targets.len)
 		boutput( usr, "No targets found! Try again later!" )
 		return
-	world << targets.len
+
 	var/target = input("Choose a destination!") in wtfbyond|null
-	if(!target) return
+	if(!target || !src.client) return
 	target = targets[target]
-	var/turf/dest = get_turf(target)
+	var/turf/dest = target
 	if(dest.z != OT.z)
 		boutput(usr, "You are on a different z-level!")
 		return
@@ -111,11 +109,11 @@
 			var/matrix/xf = matrix()
 			img.transform = xf/2
 			animate(img,alpha=255,transform=xf,time=2)
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 /mob/living/carbon/verb/GPS()
 	set name = "GPS"
-	set category = "Special Verbs"
+	set category = "Commands"
 	set desc = "Find your way around with ease!"
 	if(PROC_ON_COOLDOWN(10 SECONDS))
 		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0))].")
@@ -124,10 +122,10 @@
 		DoGPS(src:wear_id)
 /mob/living/silicon/verb/GPS()
 	set name = "GPS"
-	set category = "Special Verbs"
+	set category = "Commands"
 	set desc = "Find your way around with ease!"
 	if(PROC_ON_COOLDOWN(10 SECONDS))
-		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0))].")
+		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0 SECONDS))].")
 		return
 	DoGPS(src.botcard)
 /*
@@ -172,7 +170,7 @@ world/proc/updateCameraVisibility()
 			t.aiImage.override = 1
 			t.aiImage.name = " "
 		aiDirty = 1
-	for(var/obj/machinery/camera/C in cameras)
+	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		for(var/turf/t in view(7, C))
 			//var/dist = get_dist(t, C)
 			t.aiImage.alpha = 0
@@ -264,7 +262,7 @@ world/proc/updateCameraVisibility()
 	.=..()
 	for(var/turf/t in range(7, src))
 		t.cameraTotal = 0
-	for(var/obj/machinery/camera/C in cameras)
+	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		if( get_dist(C.loc, src) <= 7 )
 			var/list/inview = view(7,C)
 			for(var/turf/t in range(7, C))
@@ -292,9 +290,8 @@ world/proc/updateCameraVisibility()
 /obj/somepotato/vfd
 	name = "Variable Frequency Drive"
 	desc = "To avoid arousing too much suspicion, this fella converts single-phase power to three-phase. Sure, that power is passed down via a 24 AWG USB cable, but it's probably fine."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "vfd"
-	New()
 /obj/somepotato/billiards
 	name = "Billiards Table"
 	desc = "Who in God's name would get enjoyment at beating polyester spheres with wooden sticks???"

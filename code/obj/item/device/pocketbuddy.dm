@@ -120,13 +120,13 @@
 /obj/item/device/pocketbuddy/attack_self(mob/user as mob)
   if(!src.on)
     if(src.cell.charge > 0)
-      boutput(user, "<span style=\"color:blue\">You turn the pocketbuddy on!</span>")
+      boutput(user, "<span class='notice'>You turn the pocketbuddy on!</span>")
       turn_on()
     else
-      boutput(user, "<span style=\"color:red\">You try to turn the pocketbuddy on, but nothing happens.</span>")
+      boutput(user, "<span class='alert'>You try to turn the pocketbuddy on, but nothing happens.</span>")
   else
     // apply PETS to BUDDY
-    boutput(user, "<span style=\"color:blue\">You pet the buddy!</span>")
+    boutput(user, "<span class='notice'>You pet the buddy!</span>")
     // src.react_to_pets
 
 
@@ -138,10 +138,9 @@
   playsound(get_turf(src), "sound/machines/twobeep.ogg", 50, 1)
   //speak("Pocketbuddy v0.9 - Copyright 2051-2053 Thinktronic Data Systems, LTD.")
   src.speak("System message. Pocketbuddy v0.9 initializing.")
-  sleep(20)
+  sleep(2 SECONDS)
   src.speak(src.get_quip_for("init"))
-  if(!(src in processing_items))
-    processing_items += src
+  processing_items |= src
 
 /obj/item/device/pocketbuddy/proc/turn_off()
   src.speak("Pocketbuddy shutting down.")

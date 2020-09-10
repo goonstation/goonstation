@@ -4,7 +4,7 @@
 /obj/machinery/bot/firebot
 	name = "Firebot"
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "firebot0"
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER | USE_CANPASS
 	layer = 5.0 //TODO LAYER
@@ -34,7 +34,7 @@
 //
 /obj/item/toolbox_arm
 	name = "toolbox/robot arm assembly"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_arm"
 	force = 3.0
 	throwforce = 10.0
@@ -53,22 +53,10 @@
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
 			src.icon_state = "firebot[src.on]"
-	return
 
 //		if(radio_connection)
 //			radio_controller.add_object(src, "[beacon_freq]")
 
-/obj/machinery/bot/firebot/examine()
-	set src in view()
-	set category = "Local"
-	..()
-
-	if (src.health < 20)
-		if (src.health > 15)
-			boutput(usr, text("<span style=\"color:red\">[src]'s parts look loose.</span>"))
-		else
-			boutput(usr, text("<span style=\"color:red\"><B>[src]'s parts look very loose!</B></span>"))
-	return
 
 /obj/machinery/bot/firebot/attack_ai(mob/user as mob, params)
 	var/dat
@@ -85,8 +73,6 @@
 			"title" = "Firebot v1.0 controls",
 			"content" = dat,
 		))
-
-	return
 
 /obj/machinery/bot/firebot/attack_hand(mob/user as mob, params)
 	var/dat
@@ -109,7 +95,7 @@
 /obj/machinery/bot/firebot/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (src.allowed(usr)))
 		src.toggle_power()
@@ -121,10 +107,10 @@
 /obj/machinery/bot/firebot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
-			boutput(user, "<span style=\"color:red\">You short out [src]'s valve control circuit!</span>")
+			boutput(user, "<span class='alert'>You short out [src]'s valve control circuit!</span>")
 		SPAWN_DBG(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
 		flick("firebot_spark", src)
 		src.target = null
 		src.last_found = world.time
@@ -148,7 +134,7 @@
 /obj/machinery/bot/firebot/emp_act()
 	..()
 	if (!src.emagged && prob(75))
-		src.visible_message("<span style=\"color:red\"><B>[src] buzzes oddly!</B></span>")
+		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		flick("firebot_spark", src)
 		src.target = null
 		src.last_found = world.time
@@ -173,19 +159,18 @@
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			src.updateUsrDialog()
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 
 	else if (isscrewingtool(W))
 		if (src.health < initial(src.health))
 			src.health = initial(src.health)
-			src.visible_message("<span style=\"color:blue\">[user] repairs [src]!</span>", "<span style=\"color:blue\">You repair [src].</span>")
+			src.visible_message("<span class='notice'>[user] repairs [src]!</span>", "<span class='notice'>You repair [src].</span>")
 	else
-		switch(W.damtype)
-			if("fire")
-				src.health -= W.force * 0.1 //More fire resistant than other bots
-			if("brute")
-				src.health -= W.force * 0.5
+		switch(W.hit_type)
+			if (DAMAGE_BURN)
+				src.health -= W.force * 0.1 //more fire resistant than other bots
 			else
+				src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
 		else if (W.force)
@@ -335,11 +320,10 @@
 	if (src.emagged && iscarbon(target))
 		var/atom/targetTurf = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 
-		SPAWN_DBG(0)
-			var/mob/living/carbon/Ctarget = target
-			boutput(Ctarget, "<span style=\"color:red\"><b>[src] knocks you back!</b></span>")
-			Ctarget.changeStatus("weakened", 2 SECONDS)
-			Ctarget.throw_at(targetTurf, 200, 4)
+		var/mob/living/carbon/Ctarget = target
+		boutput(Ctarget, "<span class='alert'><b>[src] knocks you back!</b></span>")
+		Ctarget.changeStatus("weakened", 2 SECONDS)
+		Ctarget.throw_at(targetTurf, 200, 4)
 
 	return
 
@@ -368,9 +352,11 @@
 	return src.explode()
 
 /obj/machinery/bot/firebot/explode()
+	if(src.exploding) return
+	src.exploding = 1
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
-		O.show_message("<span style=\"color:red\"><B>[src] blows apart!</B></span>", 1)
+		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/prox_sensor(Tsec)
@@ -384,9 +370,7 @@
 	for(var/obj/item/I in emptybox.contents) //Empty the toolbox so we don't have infinite crowbars or whatever
 		qdel(I)
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return
 
@@ -418,7 +402,7 @@
 		return
 
 	if(src.contents.len >= 1)
-		boutput(user, "<span style=\"color:red\">You need to empty [src] out first!</span>")
+		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
 		return
 
 	var/obj/item/toolbox_arm/B = new /obj/item/toolbox_arm

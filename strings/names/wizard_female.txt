@@ -1,15 +1,32 @@
-Queen Mab
-Nanny Ogg
-Granny Weatherwax
-Baba Yaga
-Wicked Witch of the West
-Morgan le Fay
-Circe
-Malificent
-Hermione
-Umbridge
-The Worst Witch
-Sabrina
-Morrigan
-Ursula
-Buffy
+names@=
+	Queen Mab
+	Nanny Ogg
+	Granny Weatherwax
+	Baba Yaga
+	Wicked Witch of the West
+	Morgan le Fay
+	Circe
+	Malificent
+	Hermione
+	Umbridge
+	The Worst Witch
+	Sabrina
+	Morrigan
+	Ursula
+	Buffy
+	Llorio
+	The Murthe
+	Morgaine
+	Sheelba of the Eyeless Face
+	Ivrian
+	Myshella of Law
+	Onyesonwu
+	Est
+	Elphaba
+	Lady of the Green Kirtle
+	Magica DeSpell
+	Queen Beryl
+	Scarlet Witch
+	Sea Hag
+	Zatanna
+	Sybel

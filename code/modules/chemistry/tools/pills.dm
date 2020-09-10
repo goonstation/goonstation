@@ -6,7 +6,7 @@
 /obj/item/reagent_containers/pill
 	name = "pill"
 	desc = "a pill."
-	icon = 'icons/obj/pills.dmi'
+	icon = 'icons/obj/items/pills.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "pill0"
 	item_state = "pill"
@@ -45,13 +45,13 @@
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
 
-		if (iscarbon(user) || iscritter(user))
+		if (iscarbon(user) || ismobcritter(user))
 			user.visible_message("[user] swallows [src].",\
-			"<span style='color:blue'>You swallow [src].</span>")
+			"<span class='notice'>You swallow [src].</span>")
 			logTheThing("combat", user, null, "swallows a pill [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(user, INGEST)
-				sleep(1)
+				sleep(0.1 SECONDS)
 				reagents.trans_to(user, reagents.total_volume)
 			user.u_equip(src)
 			pool(src)
@@ -62,18 +62,18 @@
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
-				//boutput(M, "<span style='color:blue'>You swallow [src].</span>")
+				//boutput(M, "<span class='notice'>You swallow [src].</span>")
 				user.visible_message("[user] swallows [src].",\
-				"<span style='color:blue'>You swallow [src].</span>")
+				"<span class='notice'>You swallow [src].</span>")
 			else if(check_target_immunity(M))
-				user.show_message( "<span style='color:red'>You try to force [M] to swallow [src], but fail!</span>")
+				user.show_message( "<span class='alert'>You try to force [M] to swallow [src], but fail!</span>")
 				return
 			else
-				user.visible_message("<span style='color:red'>[user] attempts to force [M] to swallow [src].</span>",\
-				"<span style='color:red'>You attempt to force [M] to swallow [src].</span>")
-				logTheThing("combat", user, M, "tries to force-feed a pill [log_reagents(src)] to %target% at [log_loc(user)].")
+				user.visible_message("<span class='alert'>[user] attempts to force [M] to swallow [src].</span>",\
+				"<span class='alert'>You attempt to force [M] to swallow [src].</span>")
+				logTheThing("combat", user, M, "tries to force-feed a pill [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
 
 				if (!do_mob(user, M))
 					if (user && ismob(user))
@@ -82,13 +82,13 @@
 				if (!src.reagents || !src.reagents.total_volume)
 					user.show_text("[src] doesn't contain any reagents.", "red")
 					return
-				user.visible_message("<span style='color:red'>[user] forces [M] to swallow [src].</span>",\
-				"<span style='color:red'>You force [M] to swallow [src].</span>")
+				user.visible_message("<span class='alert'>[user] forces [M] to swallow [src].</span>",\
+				"<span class='alert'>You force [M] to swallow [src].</span>")
 
-			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes %target% swallow"] a pill [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes [constructTarget(M,"combat")] swallow"] a pill [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(M, INGEST)
-				sleep(1)
+				sleep(0.1 SECONDS)
 				reagents.trans_to(M, reagents.total_volume)
 			user.u_equip(src)
 			pool(src)
@@ -108,17 +108,17 @@
 			return ..()
 		if (target.is_open_container() && target.reagents)
 			if (!src.reagents || !src.reagents.total_volume)
-				boutput(user, "<span style='color:red'>[src] doesn't contain any reagents.</span>")
+				boutput(user, "<span class='alert'>[src] doesn't contain any reagents.</span>")
 				return
 			if (target.reagents.is_full())
-				boutput(user, "<span style='color:red'>[target] is full!</span>")
+				boutput(user, "<span class='alert'>[target] is full!</span>")
 				return
 
 			if (istype(target, /obj/item/pen/sleepypen))
-				boutput(user, "<span style='color:blue'>You cram the pill into the [target.name]. Elegant.</span>")
+				boutput(user, "<span class='notice'>You cram the pill into the [target.name]. Elegant.</span>")
 			else
-				user.visible_message("<span style='color:red'>[user] puts something in [target].</span>",\
-				"<span style=\"color:green\">You dissolve [src] in [target].</span>")
+				user.visible_message("<span class='alert'>[user] puts something in [target].</span>",\
+				"<span class='success'>You dissolve [src] in [target].</span>")
 
 			logTheThing("combat", user, null, "dissolves a pill [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
@@ -127,6 +127,12 @@
 			return
 		else
 			return ..()
+
+
+	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+		if (istype(over_object,/obj/item/chem_pill_bottle)) //dont do our whole fancy pickup thjing
+			return
+		..()
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -312,12 +318,6 @@
 		..()
 		reagents.add_reagent("catdrugs", 10)
 
-/var/list/CYBERPUNK_drug_prefixes = strings("chemistry_tools.txt", "CYBERPUNK_drug_prefixes")
-/var/list/CYBERPUNK_drug_suffixes = strings("chemistry_tools.txt", "CYBERPUNK_drug_suffixes")
-/var/list/CYBERPUNK_drug_primaries = strings("chemistry_tools.txt", "CYBERPUNK_drug_primaries")
-/var/list/CYBERPUNK_drug_adulterants = strings("chemistry_tools.txt", "CYBERPUNK_drug_adulterants")
-/var/list/CYBERPUNK_drug_adulterants_safe = strings("chemistry_tools.txt", "CYBERPUNK_drug_adulterants_safe")
-
 /obj/item/reagent_containers/pill/cyberpunk
 	name = "cyberpunk pill"
 	desc = "A cocktail of illicit designer drugs, who knows what might be in here."
@@ -326,17 +326,26 @@
 
 	New()
 		..()
-		name = "[pick(CYBERPUNK_drug_prefixes)] [pick(CYBERPUNK_drug_suffixes)]"
+		name = "[pick_string("chemistry_tools.txt", "CYBERPUNK_drug_prefixes")] [pick_string("chemistry_tools.txt", "CYBERPUNK_drug_suffixes")]"
 
 		var/primaries = rand(1,3)
 		var/adulterants = rand(2,4)
 
+#if ASS_JAM
+		primaries--
+		adulterants--
+		var/the_spicy_stuff = rand(2, 4)
+		while(the_spicy_stuff > 0)
+			the_spicy_stuff--
+			reagents.add_reagent(pick(all_functional_reagent_ids), 3)
+#endif
+
 		while(primaries > 0)
 			primaries--
-			reagents.add_reagent(pick(CYBERPUNK_drug_primaries), 6)
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_primaries"), 6)
 		while(adulterants > 0)
 			adulterants--
-			reagents.add_reagent(pick(CYBERPUNK_drug_adulterants), 3)
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), 3)
 
 /obj/item/reagent_containers/pill/vr
 	icon = 'icons/effects/VR.dmi'
@@ -345,45 +354,41 @@
 	name = "mannitol pill"
 	desc = "Used to treat cranial swelling."
 	icon_state = "pill1"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("mannitol", 20)
+		..()
+		reagents.add_reagent("mannitol", 20)
 
 /obj/item/reagent_containers/pill/vr/antitox
 	name = "anti-toxins pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill2"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("charcoal", 50)
+		..()
+		reagents.add_reagent("charcoal", 50)
 
 /obj/item/reagent_containers/pill/vr/salicylic_acid
 	name = "analgesic pill"
 	desc = "Commonly used to treat moderate pain and fevers."
 	icon_state = "pill3"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("salicylic_acid", 20)
+		..()
+		reagents.add_reagent("salicylic_acid", 20)
 
 /obj/item/reagent_containers/pill/vr/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat respiratory distress."
 	icon_state = "pill4"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("salbutamol", 20)
+		..()
+		reagents.add_reagent("salbutamol", 20)
 
 /obj/item/reagent_containers/pill/ipecac
 	name = "space ipecac pill"

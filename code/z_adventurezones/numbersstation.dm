@@ -3,7 +3,7 @@ var/global/shut_up_about_the_fucking_numbers_station = 1
 /client/proc/toggle_numbers_station_messages()
 	set name = "Toggle Numbers Station Alerts"
 	set desc = "I DON'T CARE WHEN SPACE NUMBERS STATION LINCOLNSHIRE IS BROADCASTING SO SHUT UP ABOUT IT"
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	admin_only
 
 	shut_up_about_the_fucking_numbers_station = !(shut_up_about_the_fucking_numbers_station)
@@ -63,7 +63,7 @@ Thanks to our agents inside the organization, we were able to identify two infil
 		info = "<html><body style='margin:0px'><img src='[resource("images/bloody_numbers_note.png")]'></body></html>"
 
 	examine()
-		..()
+		return ..()
 
 	attackby()
 		return
@@ -246,8 +246,8 @@ Nanotrasen, Inc.<br>
 	var/next_play = 0
 
 	New()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		..()
+		processing_items |= src
 		if (ticker)
 			while (next_play <= ticker.round_elapsed_ticks)
 				next_play += play_interval
@@ -264,7 +264,7 @@ Nanotrasen, Inc.<br>
 			for (var/obj/item/device/radio/Hs in H)
 				if (Hs.frequency == frequency)
 					listeners += H
-					boutput(H, "<span style=\"color:blue\">A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
+					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
 				break
 		for (var/mob/living/silicon/robot/R in mobs)
 			LAGCHECK(LAG_LOW)
@@ -272,7 +272,7 @@ Nanotrasen, Inc.<br>
 				var/obj/item/device/radio/Hs = R.radio
 				if (Hs.frequency == frequency)
 					listeners += R
-					boutput(R, "<span style=\"color:blue\">A peculiar noise intrudes upon your radio frequency.</span>")
+					boutput(R, "<span class='notice'>A peculiar noise intrudes upon your radio frequency.</span>")
 
 	proc/play_all_numbers()
 		var/batch = 0
@@ -282,7 +282,7 @@ Nanotrasen, Inc.<br>
 			broadcast_sound(period)
 			batch++
 			if (batch >= 3)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 	proc/process()
 		if (ticker.round_elapsed_ticks >= next_warning)

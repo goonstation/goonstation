@@ -37,7 +37,7 @@
 			boutput(M, __red("[target] is moving around too much."))
 			return 1
 
-		logTheThing("combat", M, target, "starts to maul %target% at [log_loc(M)].")
+		logTheThing("combat", M, target, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_feast(target, src), M)
 		return 0
 
@@ -70,7 +70,7 @@
 		// It's okay when the victim expired half-way through the feast, but plain corpses are too cheap.
 		if (target.stat == 2)
 			boutput(M, __red("Urgh, this cadaver tasted horrible. Better find some fresh meat."))
-			//target.visible_message("<span style=\"color:red\"><B>[M] completely rips [target]'s corpse to pieces!</B></span>")
+			//target.visible_message("<span class='alert'><B>[M] completely rips [target]'s corpse to pieces!</B></span>")
 			//target.gib()
 			//nah this sucks for the guy being eaten.
 			interrupt(INTERRUPT_ALWAYS)
@@ -78,7 +78,7 @@
 
 		A.locked = 1
 		playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-		M.visible_message("<span style=\"color:red\"><B>[M] lunges at [target]!</b></span>")
+		M.visible_message("<span class='alert'><B>[M] lunges at [target]!</b></span>")
 
 	onUpdate()
 		..()
@@ -179,6 +179,7 @@
 							M.add_stam_mod_regen("feast-[W.feed_objective.feed_count]", 2)
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 10)
 							M.max_health += 10
+							health_update_queue |= M
 							W.lower_cooldowns(0.10)
 							boutput(M, __blue("You finish chewing on [HH], but what a feast it was!"))
 						else
@@ -213,6 +214,7 @@
 							M.add_stam_mod_regen("feast-[W.feed_objective.feed_count]", 1)
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 5)
 							M.max_health += 10
+							health_update_queue |= M
 							W.lower_cooldowns(0.10)
 							boutput(M, __blue("Your feast was interrupted, but it satisfied your hunger for the time being."))
 						else

@@ -35,7 +35,7 @@
 			if(istype(A, /atom/movable))
 				if(!isturf(A) && hasvar(A, "anchored") && !A:anchored)
 					SPAWN_DBG(0) A:throw_at(get_edge_cheap(A, get_dir(holder.owner, A)), 30, 1)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		for(var/atom/A in range1 ^ range2)
 			if(affected.Find(A)) continue
 			if(check_target_immunity( A )) continue
@@ -45,7 +45,7 @@
 			if(istype(A, /atom/movable))
 				if(!isturf(A) && hasvar(A, "anchored") && !A:anchored)
 					SPAWN_DBG(0) A:throw_at(get_edge_cheap(A, get_dir(holder.owner, A)), 30, 1)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		for(var/atom/A in range2 ^ range3)
 			if(affected.Find(A)) continue
 			if(check_target_immunity( A )) continue
@@ -69,6 +69,7 @@
 	pixel_x = -96
 
 	New()
+		..()
 		src.Scale(0,0)
 		animate(src, matrix(1.4, MATRIX_SCALE), time = 6, color = "#ffdddd", easing = LINEAR_EASING)
 		animate(time = 2, alpha = 0)

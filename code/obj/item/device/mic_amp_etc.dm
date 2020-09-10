@@ -1,7 +1,7 @@
 
 /obj/item/device/microphone
 	name = "microphone"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
 	var/max_font = 8
@@ -14,19 +14,20 @@
 
 	attack_self(mob/user as mob)
 		src.on = !(src.on)
+		tooltip_rebuild = 1
 		user.show_text("You switch [src] [src.on ? "on" : "off"].")
 		if (src.on && prob(5))
 			if (locate(/obj/loudspeaker) in range(2, user))
 				for (var/obj/loudspeaker/S in by_type[/obj/loudspeaker])
-					if(!DIST_CHECK(S, user, 7)) continue
-					S.visible_message("<span style=\"color:red\">[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
+					if(!IN_RANGE(S, user, 7)) continue
+					S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 					playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
 	attack_hand(mob/user as mob)
 		if (user.find_in_hand(src) && src.on)
 			playsound(get_turf(user), 'sound/misc/miccheck.ogg', 30, 1)
-			user.visible_message("<span style='color:#605b59'>[user] taps [src] with [his_or_her(user)] hand.</span>")
-		else 
+			user.visible_message("<span class='emote'>[user] taps [src] with [his_or_her(user)] hand.</span>")
+		else
 			return ..()
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
@@ -42,7 +43,7 @@
 		var/speakers = 0
 		var/turf/T = get_turf(src)
 		for (var/obj/loudspeaker/S in by_type[/obj/loudspeaker])
-			if(!DIST_CHECK(S, T, 7)) continue
+			if(!IN_RANGE(S, T, 7)) continue
 			speakers ++
 		if (!speakers)
 			return
@@ -51,7 +52,7 @@
 		var/stuff_b = M.say_quote(messages[2])
 		var/list/mobs_messaged = list()
 		for (var/obj/loudspeaker/S in by_type[/obj/loudspeaker])
-			if(!DIST_CHECK(S, T, 7)) continue
+			if(!IN_RANGE(S, T, 7)) continue
 			for (var/mob/H in hearers(S, null))
 				if (H in mobs_messaged)
 					continue
@@ -60,13 +61,13 @@
 				mobs_messaged += H
 		if (prob(10) && locate(/obj/loudspeaker) in range(2, T))
 			for (var/obj/loudspeaker/S in by_type[/obj/loudspeaker])
-				if(!DIST_CHECK(S, T, 7)) continue
-				S.visible_message("<span style=\"color:red\">[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
+				if(!IN_RANGE(S, T, 7)) continue
+				S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 				playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
 /obj/mic_stand
 	name = "microphone stand"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "micstand"
 	mats = 10
 	layer = FLY_LAYER
@@ -120,7 +121,7 @@
 
 /obj/loudspeaker
 	name = "loudspeaker"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "loudspeaker"
 	anchored = 1
 	density = 1
@@ -129,7 +130,7 @@
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING

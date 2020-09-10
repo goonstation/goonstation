@@ -15,6 +15,7 @@
 	var/image/shield_overlay = null
 
 	New()
+		..()
 		work()
 
 	dropped(mob/user as mob)
@@ -24,15 +25,12 @@
 	pickup(mob/user)
 		return
 
-	equipped(var/mob/user, var/slot)
-		return
-
 	attack_self()
 		if(!active)
-			boutput(usr, "<span style=\"color:blue\">You activate the shield.</span>")
+			boutput(usr, "<span class='notice'>You activate the shield.</span>")
 			turn_on(usr)
 		else
-			boutput(usr, "<span style=\"color:blue\">You deactivate the shield.</span>")
+			boutput(usr, "<span class='notice'>You deactivate the shield.</span>")
 			turn_off()
 		return
 
@@ -42,7 +40,7 @@
 			if(!active)
 				return 0
 			else
-				boutput(user, "<span style=\"color:red\">The impact temporarily weakens the shield.</span>")
+				boutput(user, "<span class='alert'>The impact temporarily weakens the shield.</span>")
 				var/pre_protect = protection
 				protection -= 5
 				SPAWN_DBG(30 SECONDS) protection += 5
@@ -60,7 +58,7 @@
 		turn_on(var/mob/user2)
 
 			if(user2.energy_shield)
-				boutput(user2, "<span style=\"color:red\">Cannot activate more than one shield.</span>")
+				boutput(user2, "<span class='alert'>Cannot activate more than one shield.</span>")
 				return
 
 			user = user2

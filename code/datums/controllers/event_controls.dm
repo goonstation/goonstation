@@ -2,12 +2,11 @@ var/datum/event_controller/random_events
 
 /datum/event_controller
 	var/list/events = list()
-	var/events_begin = 18000 // 30m
+	var/major_events_begin = 18000 // 30m
 	var/time_between_events_lower = 6600  // 11m
 	var/time_between_events_upper = 12000 // 20m
 	var/events_enabled = 1
 	var/announce_events = 1
-	var/next_event = 0
 	var/event_cycle_count = 0
 
 	var/list/minor_events = list()
@@ -15,17 +14,37 @@ var/datum/event_controller/random_events
 	var/time_between_minor_events_lower = 4000 // roughly 8m
 	var/time_between_minor_events_upper = 8000 // roughly 14m
 	var/minor_events_enabled = 1
-	var/next_minor_event = 0
 	var/minor_event_cycle_count = 0
+
+	var/list/antag_spawn_events = list()
+	var/list/player_spawn_events = list()
+	var/spawn_events_begin = 23 MINUTES
+	var/time_between_spawn_events = 7 MINUTES
+
+	var/major_event_timer = 0
+	var/minor_event_timer = 0
+
+	var/next_major_event = 0
+	var/next_minor_event = 0
+	var/next_spawn_event = 0
 
 	var/time_lock = 1
 	var/list/special_events = list()
 	var/minimum_population = 15 // Minimum amount of players connected for event to occur
 
 	New()
+		..()
 		for (var/X in childrentypesof(/datum/random_event/major))
 			var/datum/random_event/RE = new X
 			events += RE
+
+		for (var/X in childrentypesof(/datum/random_event/major/antag))
+			var/datum/random_event/RE = new X
+			antag_spawn_events += RE
+
+		for (var/X in childrentypesof(/datum/random_event/major/player_spawn))
+			var/datum/random_event/RE = new X
+			player_spawn_events += RE
 
 		for (var/X in childrentypesof(/datum/random_event/minor))
 			var/datum/random_event/RE = new X
@@ -35,44 +54,96 @@ var/datum/event_controller/random_events
 			var/datum/random_event/RE = new X
 			special_events += RE
 
+	proc/process()
+		if (TIME >= major_events_begin)
+			if (TIME >= next_major_event)
+				event_cycle()
+
+		if (TIME >= spawn_events_begin)
+			if (TIME >= next_spawn_event)
+				spawn_event()
+
+		if (TIME >= minor_events_begin)
+			if (TIME >= next_minor_event)
+				minor_event_cycle()
+
 	proc/event_cycle()
 		event_cycle_count++
-		var/num_players = 0
-		for(var/mob/players in mobs)
-			if(players.client) num_players++
-
-		if (events_enabled && (num_players >= minimum_population))
+		if (events_enabled && (total_clients() >= minimum_population))
 			do_random_event(events)
 		else
-			message_admins("<span style=\"color:blue\">A random event would have happened now, but they are disabled!</span>")
-		var/event_timer = rand(time_between_events_lower,time_between_events_upper)
-		next_event = ticker.round_elapsed_ticks + event_timer
-		message_admins("<span style=\"color:blue\">Next event will occur at [round(next_event / 600)] minutes into the round.</span>")
-		SPAWN_DBG(event_timer)
-			event_cycle()
+			message_admins("<span class='internal'>A random event would have happened now, but they are disabled!</span>")
+
+		major_event_timer = rand(time_between_events_lower,time_between_events_upper)
+		next_major_event = TIME + major_event_timer
+		message_admins("<span class='internal'>Next event will occur at [round(next_major_event / 600)] minutes into the round.</span>")
 
 	proc/minor_event_cycle()
 		minor_event_cycle_count++
 		if (minor_events_enabled)
 			do_random_event(minor_events)
-		var/event_timer = rand(time_between_minor_events_lower,time_between_minor_events_upper)
-		next_minor_event = ticker.round_elapsed_ticks + event_timer
-		SPAWN_DBG(event_timer)
-			minor_event_cycle()
 
-	proc/do_random_event(var/list/event_bank)
+		minor_event_timer = rand(time_between_minor_events_lower,time_between_minor_events_upper)
+		next_minor_event = TIME + minor_event_timer
+
+	proc/spawn_event(var/type = "player")
+		var/do_event = 1
+		if (!events_enabled)
+			message_admins("<span class='internal'>A spawn event would have happened now, but they are disabled!</span>")
+			do_event = 0
+		if (total_clients() < minimum_population)
+			message_admins("<span class='internal'>A spawn event would have happened now, but there is not enough players!</span>")
+			do_event = 0
+
+		if (do_event)
+			var/alive = 0
+			var/dead_dnr = 0
+			var/antags = ticker.mode.traitors.len + ticker.mode.Agimmicks.len
+			var/dead_antags = 0
+
+			for (var/datum/mind/antag in ticker.mode.traitors)
+				var/mob/M = antag.current
+				if (!M) continue
+				if (!M.client || isdead(M))
+					dead_antags++
+			for (var/datum/mind/antag in ticker.mode.Agimmicks)
+				var/mob/M = antag.current
+				if (!M) continue
+				if (!M.client || isdead(M))
+					dead_antags++
+
+			for(var/client/C)
+				var/mob/M = C.mob
+				if(!M) continue
+				if (!isdead(M) && isliving(M))
+					alive++
+				else if (M.mind?.dnr)
+					dead_dnr++
+
+			if (dead_antags >= round(antags * 0.75) && (ticker?.mode?.do_antag_random_spawns))
+				do_random_event(list(pick(antag_spawn_events)), source = "spawn_antag")
+				message_admins("<span class='internal'>Antag spawn event success!<br>DEAD ANTAGS: [dead_antags], TOTAL ANTAGS: [antags]</span>")
+			else if (alive <= (total_clients() - dead_dnr) * 0.6)
+				do_random_event(player_spawn_events, source = "spawn_player")
+				message_admins("<span class='internal'>Player spawn event success!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)]</span>")
+			else
+				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)], DEAD ANTAGS: [dead_antags]</span>")
+
+		next_spawn_event = TIME + time_between_spawn_events
+
+	proc/do_random_event(var/list/event_bank, var/source = null)
 		if (!event_bank || event_bank.len < 1)
 			logTheThing("debug", null, null, "<b>Random Events:</b> do_random_event proc was passed a bad event bank")
 			return
 		var/list/eligible = list()
 		var/list/weights = list()
 		for (var/datum/random_event/RE in event_bank)
-			if (RE.is_event_available())
+			if (RE.is_event_available( ignore_time_lock = (source=="spawn_antag") ))
 				eligible += RE
 				weights += RE.weight
 		if (eligible.len > 0)
 			var/datum/random_event/this = weightedprob(eligible, weights)
-			this.event_effect()
+			this.event_effect(source)
 		else
 			logTheThing("debug", null, null, "<b>Random Events:</b> do_random_event couldn't find any eligible events")
 
@@ -97,11 +168,14 @@ var/datum/event_controller/random_events
 		dat += "<b><u>Random Event Controls</u></b><HR>"
 
 		if (current_state <= GAME_STATE_PREGAME)
-			dat += "<b>Random Events begin at: <a href='byond://?src=\ref[src];EventBegin=1'>[round(events_begin / 600)] minutes</a><br>"
+			dat += "<b>Random Events begin at: <a href='byond://?src=\ref[src];EventBegin=1'>[round(major_events_begin / 600)] minutes</a><br>"
 			dat += "<b>Minor Events begin at: <a href='byond://?src=\ref[src];MEventBegin=1'>[round(minor_events_begin / 600)] minutes</a><br>"
+			dat += "<b>Spawn Events begin at: <a href='byond://?src=\ref[src];MEventBegin=1'>[round(spawn_events_begin / 600)] minutes</a><br>"
 		else
-			dat += "Next random event at [round(next_event / 600)] minutes into the round.<br>"
+			dat += "Next major random event at [round(next_major_event / 600)] minutes into the round.<br>"
 			dat += "Next minor event at [round(next_minor_event / 600)] minutes into the round.<br>"
+			dat += "Next spawn event at [round(next_spawn_event / 600)] minutes into the round.<br>"
+
 		dat += "<b><a href='byond://?src=\ref[src];EnableEvents=1'>Random Events Enabled:</a></b> [events_enabled ? "Yes" : "No"]<br>"
 		dat += "<b><a href='byond://?src=\ref[src];EnableMEvents=1'>Minor Events Enabled:</a></b> [minor_events_enabled ? "Yes" : "No"]<br>"
 		dat += "<b><a href='byond://?src=\ref[src];AnnounceEvents=1'>Announce Events to Station:</a></b> [announce_events ? "Yes" : "No"]<br>"
@@ -164,7 +238,14 @@ var/datum/event_controller/random_events
 				return
 			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")
 			if (choice == "Yes")
-				RE.event_effect("Triggered by [key_name(usr)]")
+				if (RE.customization_available)
+					var/choice2 = alert("Random or custom variables?","[RE.name]","Random","Custom")
+					if (choice2 == "Custom")
+						RE.admin_call(key_name(usr, 1))
+					else
+						RE.event_effect("Triggered by [key_name(usr)]")
+				else
+					RE.event_effect("Triggered by [key_name(usr)]")
 
 		else if(href_list["TriggerSEvent"])
 			var/datum/random_event/RE = locate(href_list["TriggerSEvent"]) in special_events
@@ -204,7 +285,7 @@ var/datum/event_controller/random_events
 			if (new_min == minimum_population) return
 
 			if (new_min < 1)
-				boutput(usr, "<span style=\"color:red\">Well that doesn't even make sense.</span>")
+				boutput(usr, "<span class='alert'>Well that doesn't even make sense.</span>")
 				return
 			else
 				minimum_population = new_min
@@ -215,7 +296,7 @@ var/datum/event_controller/random_events
 
 		else if(href_list["EventBegin"])
 			var/time = input("How many minutes into the round until events begin?","Random Events") as num
-			events_begin = time * 600
+			major_events_begin = time * 600
 
 			message_admins("Admin [key_name(usr)] set random events to begin at [time] minutes")
 			logTheThing("admin", usr, null, "set random events to begin at [time] minutes")
@@ -256,12 +337,12 @@ var/datum/event_controller/random_events
 		else if(href_list["TimeLower"])
 			var/time = input("Set the lower bound to how many minutes?","Random Events") as num
 			if (time < 1)
-				boutput(usr, "<span style=\"color:red\">The fuck is that supposed to mean???? Knock it off!</span>")
+				boutput(usr, "<span class='alert'>The fuck is that supposed to mean???? Knock it off!</span>")
 				return
 
 			time *= 600
 			if (time > time_between_events_upper)
-				boutput(usr, "<span style=\"color:red\">You cannot set the lower bound higher than the upper bound.</span>")
+				boutput(usr, "<span class='alert'>You cannot set the lower bound higher than the upper bound.</span>")
 			else
 				time_between_events_lower = time
 				message_admins("Admin [key_name(usr)] set event lower interval bound to [time_between_events_lower / 600] minutes")
@@ -271,12 +352,12 @@ var/datum/event_controller/random_events
 		else if(href_list["TimeUpper"])
 			var/time = input("Set the upper bound to how many minutes?","Random Events") as num
 			if (time > 100)
-				boutput(usr, "<span style=\"color:red\">That's a bit much.</span>")
+				boutput(usr, "<span class='alert'>That's a bit much.</span>")
 				return
 
 			time *= 600
 			if (time < time_between_events_lower)
-				boutput(usr, "<span style=\"color:red\">You cannot set the upper bound lower than the lower bound.</span>")
+				boutput(usr, "<span class='alert'>You cannot set the upper bound lower than the lower bound.</span>")
 			else
 				time_between_events_upper = time
 			message_admins("Admin [key_name(usr)] set event upper interval bound to [time_between_events_upper / 600] minutes")
@@ -286,12 +367,12 @@ var/datum/event_controller/random_events
 		else if(href_list["MTimeLower"])
 			var/time = input("Set the lower bound to how many minutes?","Random Events") as num
 			if (time < 1)
-				boutput(usr, "<span style=\"color:red\">The fuck is that supposed to mean???? Knock it off!</span>")
+				boutput(usr, "<span class='alert'>The fuck is that supposed to mean???? Knock it off!</span>")
 				return
 
 			time *= 600
 			if (time > time_between_minor_events_upper)
-				boutput(usr, "<span style=\"color:red\">You cannot set the lower bound higher than the upper bound.</span>")
+				boutput(usr, "<span class='alert'>You cannot set the lower bound higher than the upper bound.</span>")
 			else
 				time_between_minor_events_lower = time
 			message_admins("Admin [key_name(usr)] set minor event lower interval bound to [time_between_minor_events_lower / 600] minutes")
@@ -301,12 +382,12 @@ var/datum/event_controller/random_events
 		else if(href_list["MTimeUpper"])
 			var/time = input("Set the upper bound to how many minutes?","Random Events") as num
 			if (time > 100)
-				boutput(usr, "<span style=\"color:red\">That's a bit much.</span>")
+				boutput(usr, "<span class='alert'>That's a bit much.</span>")
 				return
 
 			time *= 600
 			if (time < time_between_events_lower)
-				boutput(usr, "<span style=\"color:red\">You cannot set the upper bound lower than the lower bound.</span>")
+				boutput(usr, "<span class='alert'>You cannot set the upper bound lower than the lower bound.</span>")
 			else
 				time_between_minor_events_upper = time
 			message_admins("Admin [key_name(usr)] set minor event upper interval bound to [time_between_minor_events_upper / 600] minutes")

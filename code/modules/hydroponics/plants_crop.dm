@@ -1,6 +1,10 @@
-/datum/plant/bamboo
-	name = "Bamboo"
+ABSTRACT_TYPE(/datum/plant/crop)
+/datum/plant/crop
+	plant_icon = 'icons/obj/hydroponics/plants_crop.dmi'
 	category = "Miscellaneous"
+
+/datum/plant/crop/bamboo
+	name = "Bamboo"
 	seedcolor = "#FCDA91"
 	crop = /obj/item/material_piece/organic/bamboo
 	starthealth = 15
@@ -13,9 +17,8 @@
 	genome = 10
 	commuts = list(/datum/plant_gene_strain/growth_fast,/datum/plant_gene_strain/health_poor)
 
-/datum/plant/wheat
+/datum/plant/crop/wheat
 	name = "Wheat"
-	category = "Miscellaneous"
 	seedcolor = "#FFFF88"
 	crop = /obj/item/plant/wheat
 	starthealth = 15
@@ -36,9 +39,8 @@
 		if (reagent == "iron")
 			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/wheat/steelwheat)
 
-/datum/plant/oat
+/datum/plant/crop/oat
 	name = "Oat"
-	category = "Miscellaneous"
 	seedcolor = "#CCFF88"
 	crop = /obj/item/plant/oat
 	starthealth = 20
@@ -51,9 +53,8 @@
 	genome = 10
 	commuts = list(/datum/plant_gene_strain/growth_fast,/datum/plant_gene_strain/health_poor)
 
-/datum/plant/rice
+/datum/plant/crop/rice
 	name = "Rice"
-	category = "Miscellaneous"
 	seedcolor = "#FFFFAA"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 	starthealth = 20
@@ -66,9 +67,8 @@
 	genome = 8
 	commuts = list(/datum/plant_gene_strain/yield,/datum/plant_gene_strain/health_poor)
 
-/datum/plant/beans
+/datum/plant/crop/beans
 	name = "Bean"
-	category = "Miscellaneous"
 	seedcolor = "#AA7777"
 	crop = /obj/item/reagent_containers/food/snacks/plant/bean
 	starthealth = 40
@@ -79,12 +79,12 @@
 	endurance = 0
 	vending = 1
 	genome = 6
+	mutations = list(/datum/plantmutation/beans/jelly)
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
 	assoc_reagents = list("nitrogen")
 
-/datum/plant/corn
+/datum/plant/crop/corn
 	name = "Corn"
-	category = "Miscellaneous"
 	seedcolor = "#FFFF00"
 	crop = /obj/item/reagent_containers/food/snacks/plant/corn
 	starthealth = 20
@@ -98,9 +98,8 @@
 	commuts = list(/datum/plant_gene_strain/photosynthesis,/datum/plant_gene_strain/splicing/bad)
 	assoc_reagents = list("cornstarch")
 
-/datum/plant/synthmeat
+/datum/plant/crop/synthmeat
 	name = "Synthmeat"
-	category = "Miscellaneous"
 	seedcolor = "#550000"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 	starthealth = 5
@@ -113,7 +112,7 @@
 	genome = 7
 	special_proc = 1
 	assoc_reagents = list("synthflesh")
-	mutations = list(/datum/plantmutation/synthmeat/butt,/datum/plantmutation/synthmeat/limb,/datum/plantmutation/synthmeat/organ)
+	mutations = list(/datum/plantmutation/synthmeat/butt,/datum/plantmutation/synthmeat/limb,/datum/plantmutation/synthmeat/brain,/datum/plantmutation/synthmeat/heart,/datum/plantmutation/synthmeat/eye)
 	commuts = list(/datum/plant_gene_strain/yield,/datum/plant_gene_strain/unstable)
 
 	HYPinfusionP(var/obj/item/seed/S,var/reagent)
@@ -123,13 +122,12 @@
 		if (reagent == "nanites" && (DNA.mutation && istype(DNA.mutation,/datum/plantmutation/synthmeat/butt)))
 			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/butt/buttbot)
 
-/obj/machinery/bot/buttbot/synth
-	name = "Organic Buttbot"
+/obj/machinery/bot/buttbot/synth //Opinion: i personally think this should be in the same file as buttbots
+	name = "Organic Buttbot" //TODO: This and synthbutts need to use the new green synthbutt sprites
 	desc = "What part of this even makes any sense."
 
-/datum/plant/sugar
+/datum/plant/crop/sugar
 	name = "Sugar"
-	category = "Miscellaneous"
 	seedcolor = "#BBBBBB"
 	crop = /obj/item/plant/sugar
 	starthealth = 10
@@ -143,9 +141,8 @@
 	commuts = list(/datum/plant_gene_strain/quality,/datum/plant_gene_strain/terminator)
 	assoc_reagents = list("sugar")
 
-/datum/plant/soy
+/datum/plant/crop/soy
 	name = "Soybean"
-	category = "Miscellaneous"
 	seedcolor = "#CCCC88"
 	crop = /obj/item/reagent_containers/food/snacks/plant/soy
 	starthealth = 15
@@ -159,9 +156,8 @@
 	assoc_reagents = list("grease")
 	mutations = list(/datum/plantmutation/soy/soylent)
 
-/datum/plant/peanut
+/datum/plant/crop/peanut
 	name = "Peanut"
-	category = "Miscellaneous"
 	seedcolor = "#999900"
 	crop = /obj/item/reagent_containers/food/snacks/plant/peanuts
 	starthealth = 40
@@ -182,9 +178,8 @@
 				if (prob(10))
 					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/peanut/sandwich)
 
-/datum/plant/cotton
+/datum/plant/crop/cotton
 	name = "Cotton"
-	category = "Miscellaneous"
 	seedcolor = "#FFFFFF"
 	dont_rename_crop = true
 	crop = /obj/item/raw_material/cotton
@@ -198,9 +193,8 @@
 	force_seed_on_harvest = 1
 	commuts = list(/datum/plant_gene_strain/immunity_radiation,/datum/plant_gene_strain/metabolism_slow)
 
-/datum/plant/tree // :effort:
+/datum/plant/crop/tree // :effort:
 	name = "Tree"
-	category = "Miscellaneous"
 	seedcolor = "#9C5E13"
 	dont_rename_crop = true
 	crop = /obj/item/material_piece/organic/wood
@@ -218,9 +212,8 @@
 	mutations = list(/datum/plantmutation/tree/money, /datum/plantmutation/tree/rubber,/datum/plantmutation/tree/sassafras, /datum/plantmutation/tree/dog,/datum/plantmutation/tree/paper)
 	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/metabolism_slow,/datum/plant_gene_strain/resistance_drought)
 
-/datum/plant/coffee
+/datum/plant/crop/coffee
 	name = "Coffee"
-	category = "Miscellaneous"
 	seedcolor = "#302013"
 	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry
 	starthealth = 40

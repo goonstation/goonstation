@@ -34,7 +34,6 @@ var/list/observers = list()
 			my_ghost.set_loc(get_turf(src))
 		my_ghost = null
 		target = null
-		src.loc = null
 
 
 		for (var/datum/hud/H in huds)
@@ -59,7 +58,6 @@ var/list/observers = list()
 			my_ghost.set_loc(get_turf(src))
 		my_ghost = null
 		target = null
-		src.loc = null
 
 		..()
 
@@ -82,18 +80,14 @@ var/list/observers = list()
 		return
 
 	process_move(keys)
-		if (istype(src,/mob/dead/target_observer))
-			var/mob/dead/target_observer/O = src
-			O.stop_observing()
-			return
-		. = ..()
+		src.stop_observing()
 
 	apply_camera(client/C)
 		var/mob/living/M = src.target
 		if (istype(M))
 			M.apply_camera(C)
 		else
-			..(C)
+			..()
 
 	cancel_camera()
 		set hidden = 1
@@ -122,7 +116,7 @@ var/list/observers = list()
 			return
 		//Let's have a proc so as to make it easier to reassign an observer.
 		src.target = target
-		loc = target
+		src.set_loc(target)
 
 		set_eye(target)
 
@@ -134,11 +128,17 @@ var/list/observers = list()
 			for (var/datum/hud/hud in M.huds)
 				src.attach_hud(hud)
 
+		if (isobj(target))
+			src.RegisterSignal(target, list(COMSIG_PARENT_PRE_DISPOSING), .verb/stop_observing)
+
 
 	verb
 		stop_observing()
 			set name = "Stop Observing"
-			set category = "Special Verbs"
+			set category = "Commands"
+
+			if (isobj(target))
+				src.UnregisterSignal(target, list(COMSIG_PARENT_PRE_DISPOSING))
 
 			if (!my_ghost)
 				my_ghost = new(src.corpse)
@@ -160,7 +160,7 @@ var/list/observers = list()
 			if (src.mind)
 				mind.transfer_to(my_ghost)
 
-			var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (target)
 				var/turf/T = get_turf(target)
 				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(my_ghost, T) || (my_ghost.client && my_ghost.client.holder)))))

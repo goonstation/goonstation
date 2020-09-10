@@ -35,7 +35,7 @@
 				animation.icon = 'icons/mob/mob.dmi'
 				animation.master = src
 				flick("monkey2h", animation)
-				sleep(48)
+				sleep(4.8 SECONDS)
 				qdel(animation)
 				qdel(H.mutantrace)
 				H.set_mutantrace(null)
@@ -94,13 +94,15 @@
 
 		var/datum/bioHolder/D = H.absorbed_dna[target_name]
 
-		holder.owner.visible_message(text("<span style=\"color:red\"><B>[holder.owner] transforms!</B></span>"))
+		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner] transforms!</B></span>"))
 		logTheThing("combat", holder.owner, target_name, "transforms into [target_name] as a changeling [log_loc(holder.owner)].")
 		var/mob/living/carbon/human/C = holder.owner
 		C.real_name = target_name
 		C.bioHolder.CopyOther(D)
 		C.bioHolder.RemoveEffect("husk")
-		if (istype(C))
+		if (C.bioHolder?.mobAppearance?.mutant_race)
+			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race)
+		else
 			C.set_mutantrace(null)
 		C.update_face()
 		C.update_body()

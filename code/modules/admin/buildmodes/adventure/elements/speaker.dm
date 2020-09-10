@@ -14,7 +14,7 @@
 			speaker_anchored = (anchstr == "yes") ? 1 : 0
 			color_rgb = input("Color", "Color", "#ffffff") as color
 		message = input("Speaker message", "Speaker message") as text
-		boutput(usr, "<span style=\"color:blue\">Left click to place speaker, right click to simulate message. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>Left click to place speaker, right click to simulate message. Ctrl+click anywhere to finish.</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if (pa.Find("left"))

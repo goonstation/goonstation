@@ -29,8 +29,7 @@ Contains:
 		set_icon_state("t-ray[on]")
 		boutput(user, "You switch [src] [on ? "on" : "off"].")
 
-		if(on && !(src in processing_items))
-			processing_items.Add(src)
+		if(on) processing_items |= src
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))
@@ -38,13 +37,13 @@ Contains:
 				return
 			if(A.interesting && src.on)
 				animate_scanning(A, "#7693d3")
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> has scanned the [A].</span>")
-				boutput(user, "<br><i>Historical analysis:</i><br><span style='color:blue'>[A.interesting]</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> has scanned the [A].</span>")
+				boutput(user, "<br><i>Historical analysis:</i><br><span class='notice'>[A.interesting]</span>")
 				return
 		else if (istype(A, /obj) && A.interesting)
 			animate_scanning(A, "#7693d3")
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> has scanned the [A].</span>")
-			boutput(user, "<br><i>Analysis failed:</i><br><span style='color:blue'>Unable to determine signature</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> has scanned the [A].</span>")
+			boutput(user, "<br><i>Analysis failed:</i><br><span class='notice'>Unable to determine signature</span>")
 
 	process()
 		if(!on)
@@ -172,14 +171,14 @@ that cannot be itched
 		if (get_dist(A,user) > 1) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
 			return
 
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> has scanned [A].</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
 		boutput(user, scan_forensic(A, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
 		src.add_fingerprint(user)
 
 		if(!active && istype(A, /obj/decal/cleanable/blood))
 			var/obj/decal/cleanable/blood/B = A
 			if(B.dry > 0) //Fresh blood is -1
-				boutput(user, "<span style=\"color:red\">Targeted blood is too dry to be useful!</span>")
+				boutput(user, "<span class='alert'>Targeted blood is too dry to be useful!</span>")
 				return
 			for(var/mob/living/carbon/human/H in mobs)
 				if(B.blood_DNA == H.bioHolder.Uid)
@@ -195,7 +194,7 @@ that cannot be itched
 		if(get_turf(src) != T)
 			icon_state = "fs"
 			active = 0
-			boutput(usr, "<span style=\"color:red\">[src] shuts down because you moved!</span>")
+			boutput(usr, "<span class='alert'>[src] shuts down because you moved!</span>")
 			return
 		if(!target)
 			icon_state = "fs"
@@ -240,35 +239,35 @@ that cannot be itched
 
 	attack_self(mob/user as mob)
 		if (!src.reagent_upgrade && !src.organ_upgrade)
-			boutput(user, "<span style=\"color:red\">No upgrades detected!</span>")
+			boutput(user, "<span class='alert'>No upgrades detected!</span>")
 
 		else if (src.reagent_upgrade && src.organ_upgrade)
 			if (src.reagent_scan && src.organ_scan)				//if both active, make both off
 				src.reagent_scan = 0
 				src.organ_scan = 0
-				boutput(user, "<span style=\"color:red\">All upgrades disabled.</span>")
+				boutput(user, "<span class='alert'>All upgrades disabled.</span>")
 
 			else if (!src.reagent_scan && !src.organ_scan)		//if both inactive, turn reagent on
 				src.reagent_scan = 1
 				src.organ_scan = 0
-				boutput(user, "<span style=\"color:red\">Reagent scanner enabled.</span>")
+				boutput(user, "<span class='alert'>Reagent scanner enabled.</span>")
 
 			else if (src.reagent_scan)							//if reagent active, turn reagent off, turn organ on
 				src.reagent_scan = 0
 				src.organ_scan = 1
-				boutput(user, "<span style=\"color:red\">Reagent scanner disabled. Organ scanner enabled.</span>")
+				boutput(user, "<span class='alert'>Reagent scanner disabled. Organ scanner enabled.</span>")
 
 			else if (src.organ_scan)							//if organ active, turn BOTH on
 				src.reagent_scan = 1
 				src.organ_scan = 1
-				boutput(user, "<span style=\"color:red\">All upgrades enabled.</span>")
+				boutput(user, "<span class='alert'>All upgrades enabled.</span>")
 
 		else if (src.reagent_upgrade)
 			src.reagent_scan = !(src.reagent_scan)
-			boutput(user, "<span style=\"color:blue\">Reagent scanner [src.reagent_scan ? "enabled" : "disabled"].</span>")
+			boutput(user, "<span class='notice'>Reagent scanner [src.reagent_scan ? "enabled" : "disabled"].</span>")
 		else if (src.organ_upgrade)
 			src.organ_scan = !(src.organ_scan)
-			boutput(user, "<span style=\"color:blue\">Organ scanner [src.organ_scan ? "enabled" : "disabled"].</span>")
+			boutput(user, "<span class='notice'>Organ scanner [src.organ_scan ? "enabled" : "disabled"].</span>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		addUpgrade(src, W, user, src.reagent_upgrade)
@@ -276,15 +275,16 @@ that cannot be itched
 
 	attack(mob/M as mob, mob/user as mob)
 		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> slips and drops [src]'s sensors on the floor!</span>")
-			user.show_message("Analyzing Results for <span style=\"color:blue\">The floor:<br>&emsp; Overall Status: Healthy</span>", 1)
+			user.visible_message("<span class='alert'><b>[user]</b> slips and drops [src]'s sensors on the floor!</span>")
+			user.show_message("Analyzing Results for <span class='notice'>The floor:<br>&emsp; Overall Status: Healthy</span>", 1)
 			user.show_message("&emsp; Damage Specifics: <font color='#1F75D1'>[0]</font> - <font color='#138015'>[0]</font> - <font color='#CC7A1D'>[0]</font> - <font color='red'>[0]</font>", 1)
 			user.show_message("&emsp; Key: <font color='#1F75D1'>Suffocation</font>/<font color='#138015'>Toxin</font>/<font color='#CC7A1D'>Burns</font>/<font color='red'>Brute</font>", 1)
-			user.show_message("<span style=\"color:blue\">Body Temperature: ???</span>", 1)
+			user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
+			JOB_XP(user, "Clown", 1)
 			return
 
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> has analyzed [M]'s vitals.</span>",\
-		"<span style=\"color:red\">You have analyzed [M]'s vitals.</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
+		"<span class='alert'>You have analyzed [M]'s vitals.</span>")
 		boutput(user, scan_health(M, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 		update_medical_record(M)
 
@@ -296,8 +296,8 @@ that cannot be itched
 		if (istype(A, /obj/machinery/clonepod))
 			var/obj/machinery/clonepod/P = A
 			if(P.occupant)
-				user.visible_message("<span style=\"color:red\"><b>[user]</b> has analyzed [P.occupant]'s vitals.</span>",\
-					"<span style=\"color:red\">You have analyzed [P.occupant]'s vitals.</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> has analyzed [P.occupant]'s vitals.</span>",\
+					"<span class='alert'>You have analyzed [P.occupant]'s vitals.</span>")
 				boutput(user, scan_health(P.occupant, src.reagent_scan, src.disease_detection, src.organ_scan))
 				update_medical_record(P.occupant)
 				return
@@ -356,15 +356,17 @@ that cannot be itched
 	module_research = list("analysis" = 2, "science" = 2, "devices" = 1)
 	module_research_type = /obj/item/device/reagentscanner
 	hide_attack = 2
+	tooltip_flags = REBUILD_DIST
 
 	attack(mob/M as mob, mob/user as mob)
 		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\"><b>[user]</b> scans [A] with [src]!</span>",\
-		"<span style=\"color:blue\">You scan [A] with [src]!</span>")
+		user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
+		"<span class='notice'>You scan [A] with [src]!</span>")
 
 		src.scan_results = scan_reagents(A, visible = 1)
+		tooltip_rebuild = 1
 
 		if (!isnull(A.reagents))
 			if (A.reagents.reagent_list.len > 0)
@@ -375,20 +377,20 @@ that cannot be itched
 			set_icon_state("reagentscan-no")
 
 		if (isnull(src.scan_results))
-			boutput(user, "<span style=\"color:red\">\The [src] encounters an error and crashes!</span>")
+			boutput(user, "<span class='alert'>\The [src] encounters an error and crashes!</span>")
 		else
 			boutput(user, "[src.scan_results]")
 
 	attack_self(mob/user as mob)
 		if (isnull(src.scan_results))
-			boutput(user, "<span style=\"color:blue\">No previous scan results located.</span>")
+			boutput(user, "<span class='notice'>No previous scan results located.</span>")
 			return
-		boutput(user, "<span style=\"color:blue\">Previous scan's results:<br>[src.scan_results]</span>")
+		boutput(user, "<span class='notice'>Previous scan's results:<br>[src.scan_results]</span>")
 
 	get_desc(dist)
 		if (dist < 3)
 			if (!isnull(src.scan_results))
-				. += "<br><span style=\"color:blue\">Previous scan's results:<br>[src.scan_results]</span>"
+				. += "<br><span class='notice'>Previous scan's results:<br>[src.scan_results]</span>"
 
 /////////////////////////////////////// Atmos analyzer /////////////////////////////////////
 
@@ -412,7 +414,7 @@ that cannot be itched
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
 		if ((analyzer_upgrade == 1) && (get_dist(user, T)>1))
-			usr.visible_message("<span style=\"color:blue\"><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
+			usr.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
 			boutput(user, scan_atmospheric(T, visible = 1))
 			src.add_fingerprint(user)
 			return
@@ -428,7 +430,7 @@ that cannot be itched
 			user.show_text("Unable to obtain a reading.", "red")
 			return
 
-		user.visible_message("<span style=\"color:blue\"><b>[user]</b> takes an atmospheric reading of [location].</span>")
+		user.visible_message("<span class='notice'><b>[user]</b> takes an atmospheric reading of [location].</span>")
 		boutput(user, scan_atmospheric(location, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
 		return
 
@@ -440,7 +442,7 @@ that cannot be itched
 			return
 
 		if (istype(A, /obj) || isturf(A))
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> takes an atmospheric reading of [A].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> takes an atmospheric reading of [A].</span>")
 			boutput(user, scan_atmospheric(A, visible = 1))
 		src.add_fingerprint(user)
 		return
@@ -461,6 +463,10 @@ that cannot be itched
 					det.detonate()
 		return
 
+/obj/item/device/analyzer/atmospheric/upgraded //for borgs because JESUS FUCK
+	analyzer_upgrade = 1
+	icon_state = "atmos"
+
 /obj/item/device/analyzer/atmosanalyzer_upgrade
 	name = "atmospherics analyzer upgrade"
 	desc = "A small upgrade card that allows standard atmospherics analyzers to detect environmental information at a distance."
@@ -480,7 +486,7 @@ that cannot be itched
 			var/obj/item/device/analyzer/healthanalyzer/a = src
 			if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade))
 				if (a.reagent_upgrade)
-					boutput(user, "<span style=\"color:red\">This analyzer already has a reagent scan upgrade!</span>")
+					boutput(user, "<span class='alert'>This analyzer already has a reagent scan upgrade!</span>")
 					return
 				a.reagent_scan = 1
 				a.reagent_upgrade = 1
@@ -489,7 +495,7 @@ that cannot be itched
 
 			else if (istype(W, /obj/item/device/analyzer/healthanalyzer_organ_upgrade))
 				if (a.organ_upgrade)
-					boutput(user, "<span style=\"color:red\">This analyzer already has an internal organ scan upgrade!</span>")
+					boutput(user, "<span class='alert'>This analyzer already has an internal organ scan upgrade!</span>")
 					return
 				a.organ_upgrade = 1
 				a.organ_scan = 1
@@ -497,7 +503,7 @@ that cannot be itched
 				a.item_state = "healthanalyzer"
 		else if(istype(src, /obj/item/device/analyzer/atmospheric) && istype(W, /obj/item/device/analyzer/atmosanalyzer_upgrade))
 			if (upgraded)
-				boutput(user, "<span style=\"color:red\">This analyzer already has a distance scan upgrade!</span>")
+				boutput(user, "<span class='alert'>This analyzer already has a distance scan upgrade!</span>")
 				return
 			var/obj/item/device/analyzer/atmospheric/a = src
 			a.analyzer_upgrade = 1
@@ -505,9 +511,9 @@ that cannot be itched
 			a.item_state = "atmosphericnalyzer"
 
 		else
-			boutput(user, "<span style=\"color:red\">That cartridge won't fit in there!</span>")
+			boutput(user, "<span class='alert'>That cartridge won't fit in there!</span>")
 			return
-		boutput(user, "<span style=\"color:blue\">Upgrade cartridge installed.</span>")
+		boutput(user, "<span class='notice'>Upgrade cartridge installed.</span>")
 		playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 		user.u_equip(W)
 		qdel(W)
@@ -531,10 +537,10 @@ that cannot be itched
 		////General Records
 		var/found = 0
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
-		//	boutput(user, "<span style=\"color:red\">Device only works in designated security areas!</span>")
+		//	boutput(user, "<span class='alert'>Device only works in designated security areas!</span>")
 		//	return
-		boutput(user, "<span style=\"color:blue\">You scan in [M]</span>")
-		boutput(M, "<span style=\"color:red\">[user] scans you with the Securotron-5000</span>")
+		boutput(user, "<span class='notice'>You scan in [M]</span>")
+		boutput(M, "<span class='alert'>[user] scans you with the Securotron-5000</span>")
 		for(var/datum/data/record/R in data_core.general)
 			if (lowertext(R.fields["name"]) == lowertext(M.name))
 				//Update Information
@@ -544,7 +550,7 @@ that cannot be itched
 				if (M.gloves)
 					R.fields["fingerprint"] = "Unknown"
 				else
-					R.fields["fingerprint"] = md5(M.bioHolder.Uid)
+					R.fields["fingerprint"] = M.bioHolder.uid_hash
 				R.fields["p_stat"] = "Active"
 				R.fields["m_stat"] = "Stable"
 				src.active1 = R
@@ -552,7 +558,7 @@ that cannot be itched
 
 		if(found == 0)
 			src.active1 = new /datum/data/record()
-			src.active1.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
+			src.active1.fields["id"] = num2hex(rand(1, 1.6777215E7),6)
 			src.active1.fields["rank"] = "Unassigned"
 			//Update Information
 			src.active1.fields["name"] = M.name
@@ -562,7 +568,7 @@ that cannot be itched
 			if (M.gloves)
 				src.active1.fields["fingerprint"] = "Unknown"
 			else
-				src.active1.fields["fingerprint"] = md5(M.bioHolder.Uid)
+				src.active1.fields["fingerprint"] = M.bioHolder.uid_hash
 			src.active1.fields["p_stat"] = "Active"
 			src.active1.fields["m_stat"] = "Stable"
 			data_core.general += src.active1
@@ -606,16 +612,16 @@ that cannot be itched
 
 		if (src.mode == 1)
 			src.mode = 2
-			boutput(user, "<span style=\"color:blue\">you switch the record mode to Parolled</span>")
+			boutput(user, "<span class='notice'>you switch the record mode to Parolled</span>")
 		else if (src.mode == 2)
 			src.mode = 3
-			boutput(user, "<span style=\"color:blue\">you switch the record mode to Released</span>")
+			boutput(user, "<span class='notice'>you switch the record mode to Released</span>")
 		else if (src.mode == 3)
 			src.mode = 4
-			boutput(user, "<span style=\"color:blue\">you switch the record mode to None</span>")
+			boutput(user, "<span class='notice'>you switch the record mode to None</span>")
 		else
 			src.mode = 1
-			boutput(user, "<span style=\"color:blue\">you switch the record mode to Incarcerated</span>")
+			boutput(user, "<span class='notice'>you switch the record mode to Incarcerated</span>")
 
 		add_fingerprint(user)
 		return

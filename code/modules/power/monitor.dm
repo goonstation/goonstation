@@ -15,24 +15,24 @@
 
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/monitor/attack_hand(mob/user)
 	add_fingerprint(user)
 
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
-/obj/machinery/power/monitor/proc/interact(mob/user)
+/obj/machinery/power/monitor/proc/interacted(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=[window_tag]")
 			return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/t = "<TT><B>Power Monitoring</B><HR>"
 
 	if(!powernet)
@@ -74,7 +74,7 @@
 	..()
 	if( href_list["close"] )
 		usr.Browse(null, "window=[window_tag]")
-		usr.machine = null
+		src.remove_dialog(usr)
 		return
 
 /obj/machinery/power/monitor/process()
@@ -140,16 +140,16 @@
 	desc = "Shows the SMES usage and power produced by the engine."
 	window_tag = "smespowcomp"
 
-/obj/machinery/power/monitor/smes/interact(mob/user)
+/obj/machinery/power/monitor/smes/interacted(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=[window_tag]")
 			return
 
 
-	user.machine = src
+	src.add_dialog(user)
 	var/t = "<TT><B>Engine and SMES Monitoring</B><HR>"
 
 
@@ -184,7 +184,7 @@
 				var/area/place = get_area(P)
 				t += copytext(add_tspace(place.name, 30), 1, 30)
 
-				t += "[add_lspace(round(100.0*P.charge/P.output, 0.1), 5)]% |      [P.charging ? "Yes" : " No"] | [add_lspace(P.chargelevel,7)] | [add_lspace(P.output,7)] |    [P.online ? "Yes" : " No"] | N/A<BR>"
+				t += "[P.output ? add_lspace(round(100.0*P.charge/P.output, 0.1), 5) : 0]% |      [P.charging ? "Yes" : " No"] | [add_lspace(P.chargelevel,7)] | [add_lspace(P.output,7)] |    [P.online ? "Yes" : " No"] | N/A<BR>"
 
 		t += "</FONT></PRE>"
 

@@ -20,7 +20,7 @@
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -34,7 +34,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/teleporter/M = new /obj/item/circuitboard/teleporter( A )
@@ -62,10 +62,9 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 
-	for(var/obj/item/device/radio/beacon/R in tracking_beacons)//world)
+	for(var/obj/item/device/radio/beacon/R in by_type[/obj/item/device/radio/beacon])
 		if (!istype(R, /obj/item/device/radio/beacon/jones))
-			LAGCHECK(LAG_LOW)
-			var/turf/T = find_loc(R)
+			var/turf/T = get_turf(R)
 			if (!T)	continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -74,8 +73,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-	for (var/obj/item/implant/tracking/I in tracking_implants)//world)
-		LAGCHECK(LAG_LOW)
+	for (var/obj/item/implant/tracking/I in by_type[/obj/item/implant/tracking])
 		if (!I.implanted || !ismob(I.loc))
 			continue
 		else
@@ -95,8 +93,8 @@
 		return
 	src.locked = L[desc]
 	for(var/mob/O in hearers(src, null))
-		O.show_message("<span style=\"color:blue\">Locked In</span>", 2)
-	playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, 5)
+		O.show_message("<span class='notice'>Locked In</span>", 2)
+	playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 	return
 
 // Called by the telegun etc (Convair880).

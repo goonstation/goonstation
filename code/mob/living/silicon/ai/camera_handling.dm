@@ -6,7 +6,11 @@
 	//try to find the closest working camera in the same area, switch to it
 
 	var/area/A = get_area(src)
-	if (A && A.type == /area || usr:tracker.tracking) return //lol @ dumping you at the mining magnet every fucking time. (or interrupting a track, wow rude)
+	if (A && area_space_nopower(A)) return //lol @ dumping you at the mining magnet every fucking time. (or interrupting a track, wow rude)
+	if(istype(usr, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/anAI = usr
+		if(anAI.tracker.tracking)
+			return
 
 	var/best_dist = INFINITY //infinity
 	var/best_cam = null
@@ -26,7 +30,9 @@
 	if(!best_cam)
 		return
 	//usr:cameraFollow = null
-	usr:tracker.cease_track()
+	if(istype(usr, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/anAI = usr
+		anAI.tracker.cease_track()
 	usr:switchCamera(best_cam)
 
 /mob/living/silicon/ai/proc/ai_camera_list()
@@ -83,7 +89,7 @@
 		boutput(usr, "You can't track with camera because you are dead!")
 		return
 
-	var/list/creatures = get_mobs_trackable_by_AI()
+	var/list/mob/creatures = get_mobs_trackable_by_AI()
 	creatures.Remove(SORT)
 	var/list/candidates = list()
 
@@ -163,10 +169,8 @@
 	if (isdead(src) || !src.classic_move)
 		return
 
-	user.machine = src
-
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in cameras)
+	for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		L.Add(C)
 
 	L = camera_sort(L)
@@ -209,6 +213,7 @@
 	var/fail_delay = 50		// Same but in case we failed
 
 	New(var/mob/living/silicon/ai/A)
+		..()
 		owner = A
 		global.tracking_list += src
 
@@ -216,14 +221,13 @@
 		owner = null
 		tracking = null
 		global.tracking_list -= src
+		..()
 
 	proc/begin_track(mob/target as mob)
 		if(!owner || !target)
 			return
 
 		tracking = target
-		if(!owner.machine)
-			owner.machine = owner
 
 		if (!owner.deployed_to_eyecam)
 			if (!owner.deployed_to_eyecam)
@@ -287,7 +291,7 @@
 		//Target is not on station level
 		return (target.loc.z == 1) \
 				&& ((issilicon(target) && istype(target.loc, /turf) ) \
-				|| (iscritter(target) && istype(target.loc, /turf) ) \
+				|| (ismobcritter(target) && istype(target.loc, /turf) ) \
 				|| !((ishuman(target) \
 				&& istype(target:wear_id, /obj/item/card/id/syndicate)) \
 				|| (target:wear_id && istype(target:wear_id, /obj/item/device/pda2) && target:wear_id:ID_card && istype(target:wear_id:ID_card, /obj/item/card/id/syndicate)) \

@@ -6,15 +6,12 @@ atom
 			return null
 
 turf
-	proc/hotspot_expose(exposed_temperature, exposed_volume, soh)
+	proc/hotspot_expose(exposed_temperature, exposed_volume, soh,electric = 0)
 		if(src.material)
 			src.material.triggerTemp(src, exposed_temperature)
 
 	simulated
-		hotspot_expose(exposed_temperature, exposed_volume, soh)
-			if (src == ff_debug_turf && ff_debugger)
-				boutput(ff_debugger, "<span style='color:#ff8800'>Fireflash affecting tile at [showCoords(x, y, z)]</span>")
-
+		hotspot_expose(exposed_temperature, exposed_volume, soh,electric = 0)
 			var/datum/gas_mixture/air_contents = return_air()
 			if(src.material)
 				src.material.triggerTemp(src, exposed_temperature)
@@ -22,9 +19,14 @@ turf
 			if(reagents)
 				reagents.temperature_reagents(exposed_temperature, 10, 10, 300)
 
-			for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
-				item.temperature_expose(null, exposed_temperature, exposed_volume)
-				LAGCHECK(LAG_REALTIME)
+			if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
+				for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
+					item.temperature_expose(null, exposed_temperature, exposed_volume)
+					if (item?.flags & FLUID_SUBMERGE)
+						item.electric_expose(electric)
+			else
+				for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
+					item.temperature_expose(null, exposed_temperature, exposed_volume)
 
 			if(!air_contents)
 				return 0
@@ -32,7 +34,7 @@ turf
 			if(active_hotspot)
 
 				if(locate(/obj/fire_foam) in src)
-					active_hotspot.disposing() // have to call this now to force the lighting cleanup
+					active_hotspot.dispose() // have to call this now to force the lighting cleanup
 					pool(active_hotspot)
 					active_hotspot = null
 

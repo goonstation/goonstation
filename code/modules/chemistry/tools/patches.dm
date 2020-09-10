@@ -105,22 +105,22 @@
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (iscarbon(user) || iscritter(user))
+		if (iscarbon(user) || ismobcritter(user))
 			src.in_use = 1
 			user.visible_message("[user] applies [src] to [his_or_her(user)]self.",\
-			"<span style='color:blue'>You apply [src] to yourself.</span>")
+			"<span class='notice'>You apply [src] to yourself.</span>")
 			logTheThing("combat", user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
 			apply_to(user,0,user=user)
 			attach_sticker_manual(user)
 		return
 
-	throw_impact(mob/M as mob)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
-		if (src.medical && !borg && !src.in_use && (iscarbon(M) || iscritter(M)))
+		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
-				M.visible_message("<span style='color:red'>[src] lands on [M] sticky side down!</span>")
-				logTheThing("combat", M, usr, "is stuck by a patch [log_reagents(src)] thrown by %target% at [log_loc(M)].")
+				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
+				logTheThing("combat", M, usr, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
 				apply_to(M,usr)
 				attach_sticker_manual(M)
 
@@ -135,17 +135,17 @@
 
 		// No src.reagents check here because empty patches can be used to counteract bleeding.
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			src.in_use = 1
 			if (M == user)
 				//M.show_text("You put [src] on your arm.", "blue")
 				M.visible_message("[user] applies [src] to [his_or_her(user)]self.",\
-				"<span style='color:blue'>You apply [src] to yourself.</span>")
+				"<span class='notice'>You apply [src] to yourself.</span>")
 			else
 				if (medical == 0)
-					user.visible_message("<span style='color:red'><b>[user]</b> is trying to stick [src] to [M]'s arm!</span>",\
-					"<span style='color:red'>You try to stick [src] to [M]'s arm!</span>")
-					logTheThing("combat", user, M, "tries to apply a patch [log_reagents(src)] to %target% at [log_loc(user)].")
+					user.visible_message("<span class='alert'><b>[user]</b> is trying to stick [src] to [M]'s arm!</span>",\
+					"<span class='alert'>You try to stick [src] to [M]'s arm!</span>")
+					logTheThing("combat", user, M, "tries to apply a patch [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
 
 					if (!do_mob(user, M))
 						if (user && ismob(user))
@@ -154,26 +154,26 @@
 						return
 					// No src.reagents check here because empty patches can be used to counteract bleeding.
 
-					user.visible_message("<span style='color:red'><b>[user]</b> sticks [src] to [M]'s arm.</span>",\
-					"<span style='color:red'>You stick [src] to [M]'s arm.</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> sticks [src] to [M]'s arm.</span>",\
+					"<span class='alert'>You stick [src] to [M]'s arm.</span>")
 					attach_sticker_manual(M)
 
 				else if (borg == 1)
-					user.visible_message("<span style='color:blue'><b>[user]</b> stamps [src] on [M].</span>",\
-					"<span style='color:blue'>You stamp [src] on [M].</span>")
+					user.visible_message("<span class='notice'><b>[user]</b> stamps [src] on [M].</span>",\
+					"<span class='notice'>You stamp [src] on [M].</span>")
 					if (user.mind && user.mind.objectives && M.health < 90) //might as well let people complete this even if they're borged
 						for (var/datum/objective/crew/medicaldoctor/heal/H in user.mind.objectives)
 							H.patchesused ++
 						JOB_XP(user, "Medical Doctor", 1)
 				else
-					user.visible_message("<span style='color:blue'><b>[user]</b> applies [src] to [M].</span>",\
-					"<span style='color:blue'>You apply [src] to [M].</span>")
+					user.visible_message("<span class='notice'><b>[user]</b> applies [src] to [M].</span>",\
+					"<span class='notice'>You apply [src] to [M].</span>")
 					if (user.mind && user.mind.objectives && M.health < 90)
 						for (var/datum/objective/crew/medicaldoctor/heal/H in user.mind.objectives)
 							H.patchesused ++
 						JOB_XP(user, "Medical Doctor", 1)
 
-			logTheThing("combat", user, M, "applies a patch to %target% [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			src.clamp_reagents()
 
@@ -183,7 +183,7 @@
 		return 0
 
 	proc/apply_to(mob/M as mob, mob/user as mob)
-		repair_bleeding_damage(M, 66, 1)
+		repair_bleeding_damage(M, 25, 1)
 		active = 1
 
 		if (reagents && reagents.total_volume)
@@ -191,7 +191,7 @@
 				user.drop_item(src)
 				//user.u_equip(src)
 				//qdel(src)
-				src.loc = M
+				src.set_loc(M)
 				if (isliving(M))
 					var/mob/living/L = M
 					L.skin_process += src
@@ -390,13 +390,13 @@
 			name = initial(src.name)
 
 	examine()
-		..()
+		. = ..()
 		if (patches.len)
 			var/obj/item/reagent_containers/patch/P = patches[patches.len]
 			if (P)
-				boutput(usr, "The topmost patch is a [P.name]; [patches.len] patch(es) on the stack.")
+				. += "The topmost patch is a [P.name]; [patches.len] patch(es) on the stack."
 		else
-			boutput(usr, "0 patches on the stack.")
+			. += "0 patches on the stack."
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (patches.len)
@@ -406,12 +406,12 @@
 	attack_self(var/mob/user)
 		if (patches.len)
 			var/obj/item/reagent_containers/patch/P = patches[patches.len]
-			P.loc = user.loc
+			P.set_loc(user.loc)
 			patches -= P
 			update_overlay()
-			boutput(user, "<span style='color:blue'>You remove [P] from the stack.</span>")
+			boutput(user, "<span class='notice'>You remove [P] from the stack.</span>")
 		else
-			boutput(user, "<span style='color:red'>There are no patches on the stack.</span>")
+			boutput(user, "<span class='alert'>There are no patches on the stack.</span>")
 
 	attack() //Or you're gonna literally attack someone with it. *thwonk* style
 		return
@@ -427,15 +427,15 @@
 					U.contents -= target
 					if (U.hud)
 						U.hud.update()
-				target.loc = src
+				target.set_loc(src)
 				patches += target
 				update_overlay()
-				boutput(user, "<span style='color:blue'>You add [target] to the stack.</span>")
-		else if (ishuman(target))
+				boutput(user, "<span class='notice'>You add [target] to the stack.</span>")
+		else if (isliving(target))
 			if (patches.len)
 				var/obj/item/reagent_containers/patch/P = patches[patches.len]
 				patches -= P
-				var/mob/living/carbon/human/H = target
+				var/mob/living/H = target
 				P.attack(H, user, user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null)
 
 				update_overlay()
@@ -444,14 +444,6 @@
 
 
 //mender
-
-var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
-"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "stimulants", "synaptizine", "anti_rad",\
-"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
-"menthol", "cold_medicine", "antihistamine", "ipecac",\
-"booster_enzyme", "anti_fart", "goodnanites")
-
 /obj/item/reagent_containers/mender
 	name = "auto-mender"
 	desc = "A small electronic device designed to topically apply healing chemicals."
@@ -474,8 +466,8 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 
 	New()
 		..()
-		if (!tampered && islist(mender_chem_whitelist) && mender_chem_whitelist.len)
-			src.whitelist = mender_chem_whitelist
+		if (!tampered && islist(chem_whitelist) && chem_whitelist.len)
+			src.whitelist = chem_whitelist
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
@@ -493,7 +485,7 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 			. = ..()
 
 	proc/can_operate_on(atom/A)
-		.= (iscarbon(A) || iscritter(A))
+		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/update_icon()
 		src.overlays = null
@@ -530,14 +522,14 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 		if (can_operate_on(M) && !actions.hasAction(user,"automender_apply"))
 			if (M == user)
 				M.visible_message("[user] begins mending [his_or_her(user)]self with [src].",\
-					"<span style='color:blue'>You begin mending yourself with [src].</span>")
+					"<span class='notice'>You begin mending yourself with [src].</span>")
 			else
-				user.visible_message("<span style='color:red'><b>[user]</b> begins mending [M] with [src].</span>",\
-					"<span style='color:red'>You begin mending [M] with [src].</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> begins mending [M] with [src].</span>",\
+					"<span class='alert'>You begin mending [M] with [src].</span>")
 				if (M.health < 90)
 					JOB_XP(user, "Medical Doctor", 2)
 
-			logTheThing("combat", user, M, "begins automending %target% [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 			begin_application(M,user=user)
 			return 1
 
@@ -564,7 +556,7 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 				var/datum/reagents/R = new
 				reagents.copy_to(R)
 				R.trans_to(M, use_volume_adjusted/2)
-			logTheThing("combat", user, M, " automends %target% [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, " automends [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			playsound(get_turf(src), pick(sfx), 50, 1)
 
@@ -589,7 +581,7 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 
 /datum/action/bar/icon/automender_apply
 	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "automender_apply"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender-active"
@@ -619,7 +611,11 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 		if(get_dist(user, target) > 1 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		src.loopStart()
+		return
 
+	loopStart()
+		..()
 		if (!M.reagents || M.reagents.total_volume <= 0)
 			user.show_text("[M] is empty.", "red")
 			interrupt(INTERRUPT_ALWAYS)
@@ -629,21 +625,24 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 
 		//WEAKEN the first apply or use some sort of ramp-up!
 		var/multiply = 1
-		if (looped <= 0)
-			multiply = 0.2
+		if (looped <= 7)
+			multiply = min((looped+1)/8, 1)
 
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
 	onEnd()
-		..()
 		if(get_dist(user, target) > 1 || user == null || target == null)
+			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		//Auto stop healing loop if we are not tampered and the health didnt change at all
 		if (!M.tampered)
+			target.updatehealth() //I hate this, but we actually need the health on time here.
 			if (health_temp == target.health)
+				..()
 				user.show_text("[M] is finished healing and powers down automatically.", "blue")
 				return
 
-		actions.start(new/datum/action/bar/icon/automender_apply(user, M, target, looped + 1), user)
+		looped++
+		src.onRestart()

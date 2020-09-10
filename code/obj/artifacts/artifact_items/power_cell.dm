@@ -24,13 +24,12 @@
 			..()
 
 	examine()
-		set src in oview()
-		boutput(usr, "You have no idea what this thing is!")
+		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
 		if (istext(A.examine_hint))
-			boutput(usr, "[A.examine_hint]")
+			. += A.examine_hint
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -41,7 +40,7 @@
 
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact
-	rarity_class = 1
+	rarity_class = 2 // modified from 1 as part of art tweak
 	validtypes = list("ancient","martian","wizard","precursor")
 	automatic_activation = 1
 	react_elec = list("equal",0,10)

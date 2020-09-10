@@ -9,12 +9,13 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 0.1
 	brutevuln = 1
 	angertext = "hisses at"
+	death_text = null //has custom death message logic
 	butcherable = 1
 	var/eaten = 0
 
@@ -29,7 +30,7 @@
 			if (src.attack)
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> sees [C.name]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> sees [C.name]!</span>")
 				src.task = "chasing"
 				break
 			else
@@ -39,7 +40,7 @@
 		src.attacking = 1
 
 		if(istype(M, /obj/item/raw_material/))
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> hungrily eats [src.target]!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> hungrily eats [src.target]!</span>")
 			playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 			pool(src.target)
 			src.eaten++
@@ -51,12 +52,9 @@
 
 	CritterDeath()
 		if (!alive) return
-		src.alive = 0
+		..()
 		src.target = null
 		src.task = "dead"
-		set_density(0)
-		src.icon_state = "rockworm-dead"
-		walk_to(src,0)
 		if (eaten >= 10)
 			src.visible_message("<b>[src]</b> vomits something up and dies!")
 		else
@@ -87,7 +85,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 0.1
@@ -117,4 +115,4 @@
 			M.changeStatus("weakened", 3 SECONDS)
 			M.changeStatus("stunned", 2 SECONDS)
 			random_brute_damage(M, rand(2,5),1)
-		else src.visible_message("<span style=\"color:red\"><B>[src]</B> dives at [M], but misses!</span>")
+		else src.visible_message("<span class='alert'><B>[src]</B> dives at [M], but misses!</span>")

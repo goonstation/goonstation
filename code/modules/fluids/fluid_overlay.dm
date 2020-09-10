@@ -40,6 +40,8 @@
 /mob/living/carbon/human/create_submerged_images()
 	submerged_images.len = 0
 
+	var/mutable_appearance/ma
+
 	for(var/i = 1, i <= 4, i++)
 		var/icon/I = new /icon('icons/obj/fluid.dmi', "overlay_[i]")
 		var/icon/body = new /icon('icons/mob/human.dmi', "submerged_fill")
@@ -54,10 +56,12 @@
 		I.Blend(body, ICON_MULTIPLY)
 
 		var/image/submerged_image = image(I)
-		submerged_image.layer = src.layer + 0.1
-		submerged_image.appearance_flags = RESET_COLOR
-		submerged_image.icon = I
-		submerged_image.blend_mode = BLEND_MULTIPLY
+		ma = new(submerged_image)
+		ma.layer = src.layer + 0.1
+		ma.appearance_flags = RESET_COLOR
+		ma.icon = I
+		ma.blend_mode = BLEND_MULTIPLY
+		submerged_image.appearance = ma
 		submerged_images += submerged_image
 
 
@@ -92,15 +96,20 @@
 
 /obj/proc/create_submerged_images()
 	submerged_images.len = 0
+
+	var/mutable_appearance/ma
+
 	for(var/i = 1, i <= 4, i++)
 		var/icon/I = new /icon('icons/obj/fluid.dmi', "overlay_[i]")
 		I.Blend(new /icon(src.icon, src.icon_state),ICON_MULTIPLY)
 
 		var/image/submerged_image = image(I)
-		submerged_image.layer = src.layer + 1
-		submerged_image.appearance_flags = RESET_COLOR
-		submerged_image.icon = I
-		submerged_image.blend_mode = BLEND_MULTIPLY
+		ma = new(submerged_image)
+		ma.layer = src.layer + 1
+		ma.appearance_flags = RESET_COLOR
+		ma.icon = I
+		ma.blend_mode = BLEND_MULTIPLY
+		submerged_image.appearance = ma
 		submerged_images += submerged_image
 
 /obj/proc/show_submerged_image(var/depth) //depth from 0 - 4

@@ -132,8 +132,11 @@
 
 /datum/game_mode/spy_theft/pre_setup()
 	var/num_players = 0
-	for(var/mob/new_player/player in mobs)
-		if(player.client && player.ready) num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if(player.ready) num_players++
 
 	var/randomizer = rand(0,6)
 	var/num_spies = 2 //minimum
@@ -190,17 +193,23 @@
 /datum/game_mode/spy_theft/proc/get_possible_spies(minimum_traitors=1)
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_spy)
 				candidates += player.mind
 
 	if(candidates.len < minimum_traitors)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_spy set to yes were ready. We need [minimum_traitors] traitors so including players who don't want to be traitors in the pool.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
@@ -234,7 +243,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(traitors))
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -251,20 +260,25 @@
 	for(var/datum/mind/M in ticker.mode.traitors) //We loop through ticker.mode.traitors and do spy checks here because the mode might not actually be spy thief. And this instance of the datum may be held by the TRUE MODE
 		LAGCHECK(LAG_LOW)
 		if (M.special_role == "spy_thief")
-			boutput(M.current, "<span style=\"color:blue\"><b>Spy Console</b> has been updated with new requests.</span>") //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
+			boutput(M.current, "<span class='notice'><b>Spy Console</b> has been updated with new requests.</span>") //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
 			M.current << sound('sound/machines/twobeep.ogg')
 
 /datum/game_mode/spy_theft/proc/get_mob_list()
 	var/list/mobs = list()
-	for(var/mob/living/player in mobs)
-		if (player.client)
-			mobs += player
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+
+		mobs += player
 	return mobs
 
 /datum/game_mode/spy_theft/proc/pick_human_name_except(excluded_name)
 	var/list/names = list()
-	for(var/mob/living/player in mobs)
-		if (player.client && (player.real_name != excluded_name))
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.real_name != excluded_name)
 			names += player.real_name
 	if(!names.len)
 		return null
@@ -571,7 +585,7 @@
 		var/turf/T = get_turf(item_existing)
 		if (item_existing && T.z == 1)
 			var/datum/bounty_item/B = new /datum/bounty_item(src)
-			B.path = item_existing.type
+			B.path = choice
 			B.item = item_existing
 			B.name = item_existing.name
 
@@ -609,18 +623,3 @@
 			B.delivery_area = pick(possible_areas)
 
 	return
-
-
-
-proc/get_accessible_spy_station_areas() //sorry
-	// All areas
-	var/list/L = list()
-	var/list/areas = childrentypesof(/area/station)
-	for(var/A in areas)
-		var/area/instance = locate(A)
-		for(var/turf/T in instance)
-			if(istype(T,/area/station/test_area))
-				continue
-			L[instance.name] = instance
-			break
-	return L

@@ -4,7 +4,7 @@
 	anchored = 1.0
 	machine_registry_idx = MACHINES_POWER
 	var/datum/powernet/powernet = null
-	var/netnum = 0
+	var/tmp/netnum = 0
 	var/use_datanet = 0		// If set to 1, communicate with other devices over cable network.
 	var/directwired = 1		// by default, power machines are connected by a cable in a neighbouring turf
 							// if set to 0, requires a 0-X cable on this turf
@@ -69,7 +69,6 @@
 var/makingpowernets = 0
 var/makingpowernetssince = 0
 /proc/makepowernets()
-	src = null // fuck you
 	if (makingpowernets)
 		logTheThing("debug", null, null, "makepowernets was called while it was already running! oh no!")
 		DEBUG_MESSAGE("attempt to rebuild powernets while already rebuilding")
@@ -85,7 +84,7 @@ var/makingpowernetssince = 0
 	var/netcount = 0
 	powernets = list()
 
-	for(var/obj/cable/PC in allcables)
+	for(var/obj/cable/PC in by_type[/obj/cable])
 		PC.netnum = 0
 	LAGCHECK(LAG_MED)
 
@@ -94,13 +93,10 @@ var/makingpowernetssince = 0
 			M.netnum = 0
 	LAGCHECK(LAG_MED)
 
-	for(var/obj/cable/PC in allcables)
+	for(var/obj/cable/PC in by_type[/obj/cable])
 		if(!PC.netnum)
-			if(Debug) world.log << "Starting mpn at [PC.x],[PC.y] ([PC.d1]/[PC.d2]) #[netcount]"
 			powernet_nextlink(PC, ++netcount)
 		LAGCHECK(LAG_MED)
-
-	if(Debug) world.log << "[netcount] powernets found"
 
 	for(var/L = 1 to netcount)
 		var/datum/powernet/PN = new()
@@ -108,7 +104,7 @@ var/makingpowernetssince = 0
 		powernets += PN
 		PN.number = L
 
-	for(var/obj/cable/C in allcables)
+	for(var/obj/cable/C in by_type[/obj/cable])
 		if(!C.netnum) continue
 		var/datum/powernet/PN = powernets[C.netnum]
 		PN.cables += C
@@ -131,7 +127,7 @@ var/makingpowernetssince = 0
 	makingpowernets = 0
 
 /client/proc/fix_powernets()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc = "Attempts for fix the powernets."
 	set name = "Fix powernets"
 	unfuck_makepowernets()
@@ -251,7 +247,7 @@ var/makingpowernetssince = 0
         else if( istype(O, /obj/machinery/power) )
 
             var/obj/machinery/power/M = O
-            if(M.netnum > 0) 
+            if(M.netnum > 0)
                 if(!more || !more.len) return
                 O = more[more.len]
                 more -= O
@@ -289,18 +285,11 @@ var/makingpowernetssince = 0
 
 	var/list/P2 = power_list(T2, C, C.d2)	// what joins on to cut cable in dir2
 
-	if(Debug)
-		for(var/obj/O in P1)
-			world.log << "P1: [O] at [O.x] [O.y] : [istype(O, /obj/cable) ? "[O:d1]/[O:d2]" : null] "
-		for(var/obj/O in P2)
-			world.log << "P2: [O] at [O.x] [O.y] : [istype(O, /obj/cable) ? "[O:d1]/[O:d2]" : null] "
-
 	if(P1.len == 0 || P2.len ==0)			// if nothing in either list, then the cable was an endpoint
 											// no need to rebuild the powernet, just remove cut cable from the list
 		cables -= C
-		if(Debug) world.log << "Was end of cable"
 		return
-	
+
 	if(makingpowernets)
 		return // TODO queue instead
 
@@ -344,8 +333,6 @@ var/makingpowernetssince = 0
 		powernets += PN
 		PN.number = powernets.len
 
-		if(Debug) world.log << "Was not looped: spliting PN#[number] ([cables.len];[nodes.len])"
-
 		for(var/obj/cable/OC in cables)
 			if(!OC.netnum)		// non-connected cables will have netnum==0, since they weren't reached by propagation
 				OC.netnum = PN.number
@@ -364,30 +351,23 @@ var/makingpowernetssince = 0
 					PN.data_nodes += OM
 			LAGCHECK(LAG_MED)
 
-		if(Debug)
-			world.log << "Old PN#[number] : ([cables.len];[nodes.len])"
-			world.log << "New PN#[PN.number] : ([PN.cables.len];[PN.nodes.len])"
-
 	else
-		if(Debug)
-			world.log << "Was looped."
 		//there is a loop, so nothing to be done
 		return
 
 	return
 
-/datum/powernet/proc/join_to(var/datum/powernet/PN)
+/datum/powernet/proc/join_to(var/datum/powernet/PN) // maybe pool powernets someday
 	for(var/obj/cable/C in src.cables)
 		C.netnum = PN.number
 		PN.cables += C
 
 	for(var/obj/machinery/power/M in src.nodes)
 		M.netnum = PN.number
+		M.powernet = PN
 		PN.nodes += M
-	
-	for(var/obj/machinery/power/M in src.data_nodes)
-		M.netnum = PN.number
-		PN.data_nodes += M
+		if (M.use_datanet)
+			PN.data_nodes += M
 
 /datum/powernet/proc/reset()
 	load = newload

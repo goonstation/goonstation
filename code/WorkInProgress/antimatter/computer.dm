@@ -27,7 +27,7 @@
 /obj/machinery/computer/am_engine/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 
 	if(!href_list["operation"])
 		return
@@ -60,7 +60,7 @@
 /obj/machinery/computer/am_engine/attack_hand(var/mob/user as mob)
 	if(..())
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<head><title>Engine Computer</title></head><body>"
 	switch(src.state)
 		if(STATE_DEFAULT)

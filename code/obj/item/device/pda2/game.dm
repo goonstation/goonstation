@@ -410,7 +410,7 @@
 				src.temp = "You attack for [attackamt] damage!"
 				src.master.updateSelfDialog()
 
-				sleep(10)
+				sleep(1 SECOND)
 				src.enemy_hp -= attackamt
 				src.arcade_action()
 
@@ -421,7 +421,7 @@
 				src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
 				src.master.updateSelfDialog()
 
-				sleep(10)
+				sleep(1 SECOND)
 				src.player_mp -= pointamt
 				src.player_hp += healamt
 				src.blocked = 1
@@ -435,7 +435,7 @@
 				src.player_mp += chargeamt
 
 				src.master.updateSelfDialog()
-				sleep(10)
+				sleep(1 SECOND)
 				src.arcade_action()
 
 		if (href_list["newgame"]) //Reset everything
@@ -463,7 +463,7 @@
 
 			if (src.player_mp <= 0)
 				src.gameover = 1
-				sleep(10)
+				sleep(1 SECOND)
 				src.temp = "You have been drained! GAME OVER"
 
 		else if ((src.enemy_hp <= 10) && (src.enemy_mp > 4))
@@ -566,7 +566,7 @@
 				src.temp = "Illegal move."
 				src.master.updateSelfDialog()
 				return
-			if(lentext(attempt) != lentext(src.solution))
+			if(length(attempt) != length(src.solution))
 				src.temp = "Illegal move."
 				src.master.updateSelfDialog()
 				return
@@ -580,7 +580,7 @@
 				else
 					src.attempts--
 
-					var/length = lentext(src.solution)
+					var/length = length(src.solution)
 
 					var/list/lockcode_list = list()
 					for(var/i=0,i < length,i++)

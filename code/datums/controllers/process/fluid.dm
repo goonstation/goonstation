@@ -31,6 +31,8 @@ datum/controller/process/fluid_group
 			if (FG.queued_drains)
 				FG.reagents.skip_next_update = 1
 				FG.drain(FG.last_drain.active_liquid ? FG.last_drain.active_liquid : pick(FG.members), FG.queued_drains) //420 drain it
+				if(!FG)
+					continue
 				FG.queued_drains = 0
 				FG.last_drain = 0
 				FG.draining = 0
@@ -134,7 +136,7 @@ datum/controller/process/fluid_group
 								if (!F) continue
 								var/obj/decal/cleanable/blood/dynamic/B = make_cleanable(/obj/decal/cleanable/blood/dynamic,F.loc)
 								B.sample_reagent = "blood"
-								B.add_volume(F.color, 1, null, null, null, 0)
+								B.add_volume(F.color, do_fluid_react = 0)
 								B.handle_reagent_list(FG.reagents.reagent_list)
 								B.blood_DNA = F.blood_DNA
 								B.blood_type = F.blood_type

@@ -1,6 +1,3 @@
-var/global/turf/ff_debug_turf = null
-var/global/client/ff_debugger = null
-
 /turf
 	icon = 'icons/turf/floors.dmi'
 	plane = PLANE_FLOOR //See _plane.dm, required for shadow effect
@@ -21,20 +18,10 @@ var/global/client/ff_debugger = null
 	proc/burn_down()
 		return
 
-	proc/debug_fireflash_here()
-		set name = "Debug Fireflash Here"
-		set popup_menu = 1
-		set category = null
-		set desc = "Debug-print the effects of all fireflashes affecting this tile."
-		ff_debug_turf = src
-		ff_debugger = usr.client
-
 		//Properties for open tiles (/floor)
-	var/oxygen = 0
-	var/carbon_dioxide = 0
-	var/nitrogen = 0
-	var/toxins = 0
-	//var/water = 0
+	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
+	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
+	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
@@ -46,14 +33,14 @@ var/global/client/ff_debugger = null
 	var/blocks_air = 0
 	var/icon_old = null
 	var/name_old = null
-	var/pathweight = 1
-	var/pathable = 1
+	var/tmp/pathweight = 1
+	var/tmp/pathable = 1
 	var/can_write_on = 0
-	var/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
-	var/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
-	var/checkingcanpass = 0 // "" how many implement canpass()
-	var/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
-	var/checkinghasproximity = 0
+	var/tmp/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
+	var/tmp/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
+	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
+	var/tmp/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
+	var/tmp/checkinghasproximity = 0
 	var/wet = 0
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
@@ -64,10 +51,15 @@ var/global/client/ff_debugger = null
 
 	var/turf_flags = 0
 
-	disposing()
+	disposing() // DOES NOT GET CALLED ON TURFS!!!
+		SHOULD_NOT_OVERRIDE(TRUE)
+		..()
+
+	Del()
 		if (cameras && cameras.len)
-			for (var/obj/machinery/camera/C in cameras)
-				C.coveredTiles -= src
+			for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+				if(C.coveredTiles)
+					C.coveredTiles -= src
 		cameras = null
 		..()
 
@@ -75,7 +67,7 @@ var/global/client/ff_debugger = null
 		..()
 		if(istype(src.material))
 			if(initial(src.opacity))
-				opacity = (src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
+				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 
 		blocks_air = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : blocks_air
 		return
@@ -182,8 +174,9 @@ var/global/client/ff_debugger = null
 	mat_changename = 0
 	mat_changedesc = 0
 	throw_unlimited = 1
-	plane = -11
+	plane = PLANE_SPACE
 	special_volume_override = 0
+	text = ""
 
 	flags = ALWAYS_SOLID_FLUID
 	turf_flags = CAN_BE_SPACE_SAMPLE
@@ -292,10 +285,12 @@ var/global/client/ff_debugger = null
 			if ((forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CANPASS)
 					if(!obstacle.CanPass(mover, cturf, 1, 0))
+
 						mover.Bump(obstacle, 1)
 						return 0
 				else //cheaper, skip proc call lol lol
 					if (obstacle.density)
+
 						mover.Bump(obstacle,1)
 						return 0
 	return 1 //Nothing found to block so return success!
@@ -388,7 +383,7 @@ var/global/client/ff_debugger = null
 
 	if (!(A.last_move))
 		return
-	
+
 	//if(!(src in A.locs))
 	//	return
 
@@ -412,17 +407,24 @@ var/global/client/ff_debugger = null
 	else if (A.y >= (world.maxy - 1))
 		edge_step(A, 0, 3)
 
+/turf/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	. = ..()
+	if(src.density)
+		if(AM.throwforce >= 80)
+			src.meteorhit(AM)
+		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
+
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1)
 			O.hide(src.intact)
 
-/turf/unsimulated/ReplaceWith(var/what, force = 0, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1)
+/turf/unsimulated/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
 	if (can_replace_with_stuff || force)
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
-/turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1)
+/turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 
@@ -432,11 +434,10 @@ var/global/client/ff_debugger = null
 	var/datum/air_group/oldparent = null //Ditto.
 
 	//For unsimulated static air tiles such as ice moon surface.
-	var/oxyold = null
-	var/co2old = null
-	var/nitold = null
-	var/toxold = null
-	var/tempold = null
+	var/temp_old = null
+	#define _OLD_GAS_VAR_DEF(GAS, ...) var/GAS ## _old = null;
+	APPLY_TO_GASES(_OLD_GAS_VAR_DEF)
+	#undef _OLD_GAS_VAR_DEF
 
 	if (handle_air)
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
@@ -445,11 +446,10 @@ var/global/client/ff_debugger = null
 			oldparent = S.parent
 
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
-			oxyold = src.oxygen
-			co2old = src.carbon_dioxide
-			nitold = src.nitrogen
-			toxold = src.toxins
-			tempold = src.temperature
+			#define _OLD_GAS_VAR_ASSIGN(GAS, ...) GAS ## _old = src.GAS;
+			APPLY_TO_GASES(_OLD_GAS_VAR_ASSIGN)
+			#undef _OLD_GAS_VAR_ASSIGN
+			temp_old = src.temperature
 
 
 	if (istype(src, /turf/simulated/floor))
@@ -576,13 +576,14 @@ var/global/client/ff_debugger = null
 			else if(istype(N.air)) //Unsimulated tile (likely space) - > Simulated tile  // fix runtime: Cannot execute null.zero()
 				N.air.zero()
 
-			if (N.air && (oxyold || co2old || nitold || toxold)) //Unsimulated tile w/ static atmos -> simulated floor handling
-				N.air.oxygen += oxyold
-				N.air.carbon_dioxide += co2old
-				N.air.nitrogen += nitold
-				N.air.toxins += toxold
+			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
+			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
+				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
+				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
+				#undef _OLD_GAS_VAR_RESTORE
 				if (!N.air.temperature)
-					N.air.temperature = tempold
+					N.air.temperature = temp_old
+			#undef _OLD_GAS_VAR_NOT_NULL
 
 			// tell atmos to update this tile's air settings
 			if (air_master)
@@ -672,11 +673,11 @@ var/global/client/ff_debugger = null
 	var/turf/floor
 	if (my_area)
 		if (my_area.filler_turf)
-			floor = ReplaceWith(my_area.filler_turf, 1)
+			floor = ReplaceWith(my_area.filler_turf, force=1)
 		else
-			floor = ReplaceWith("Space", 1)
+			floor = ReplaceWith("Space", force=1)
 	else
-		floor = ReplaceWith("Space", 1)
+		floor = ReplaceWith("Space", force=1)
 
 	return floor
 
@@ -718,6 +719,7 @@ var/global/client/ff_debugger = null
 	var/default_melt_cap = 30
 	can_write_on = 1
 	mat_appearances_to_ignore = list("steel")
+	text = "<font color=#aaa>."
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
@@ -787,6 +789,11 @@ var/global/client/ff_debugger = null
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "grimy"
 
+/turf/unsimulated/grimycarpet
+	name = "grimy carpet"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "grimy"
+
 /turf/simulated/grass
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
@@ -800,20 +807,29 @@ var/global/client/ff_debugger = null
 	nitrogen = MOLES_N2STANDARD
 	fullbright = 0 // cogwerks changed as a lazy fix for newmap- if this causes problems change back to 1
 	stops_space_move = 1
+	text = "<font color=#aaa>."
 
 /turf/unsimulated/floor
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
+	text = "<font color=#aaa>."
+	plane = PLANE_FLOOR
 
 /turf/unsimulated/wall
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "riveted"
 	opacity = 1
+	text = "<font color=#aaa>#"
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
+#ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
+	plane = PLANE_WALL
+#else
+	plane = PLANE_FLOOR
+#endif
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"
@@ -838,7 +854,7 @@ var/global/client/ff_debugger = null
 	layer = 60
 	name = "Space Station 13"
 	desc = "The title card for it, at least."
-	plane = 11
+	plane = PLANE_OVERLAY_EFFECTS
 	pixel_x = -96
 
 	New()
@@ -853,10 +869,46 @@ var/global/client/ff_debugger = null
 		name = "The NSS Manta"
 		desc = "Some fancy comic about the NSS Manta and its travels on the planet Abzu."
 	#endif
+	#if defined(REVERSED_MAP)
+		transform = list(-1, 0, 0, 0, 1, 0)
+	#endif
 		lobby_titlecard = src
 
+		if (!player_capa)
+			encourage()
+
+	proc/encourage()
+		var/obj/overlay/clickable = new/obj/overlay(src)
+
+		// This is gross. I'm sorry.
+		var/list/servers = list()
+		servers["main"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main'>Goonstation</a>"}
+		servers["main3"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main3'>Goonstation Overflow</a>"}
+		servers["rp"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "rp'>Goonstation Roleplay</a>"}
+		servers["main2"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main2'>Goonstation Roleplay Overflow</a></span>"}
+
+		var/serverList = ""
+		for (var/serverId in servers)
+			if (serverId == config.server_id)
+				continue
+			serverList += "\n[servers[serverId]]"
+
+		clickable.maptext = {"<span class='ol vga'>
+Welcome to Goonstation!
+New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
+Have questions? Ask mentors with \[F3]!
+Need an admin? Message us with \[F1].
+
+Other Goonstation servers:[serverList]"}
+		clickable.maptext_width = 600
+		clickable.maptext_height = 400
+		clickable.plane = 100
+		clickable.layer = src.layer + 1
+		clickable.x -= 3
+
+
 	proc/educate()
-		maptext = "hello!! Please excuse the lag, we have lots of players right now.<br>use T to talk<br>use Y to talk on radio<br>use F3 to ask questions about how to play<br>We have Wiki + Map links on the top-right of the game window"
+		maptext = "<span class='ol c ps2p'>Hello! Press F3 to ask for help. You can change game settings using the file menu on the top left, and see our wiki + maps by clicking the buttons on the top right.</span>"
 		maptext_width = 300
 		maptext_height = 300
 
@@ -931,10 +983,10 @@ var/global/client/ff_debugger = null
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 	var/area/A = get_area (user)
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-		boutput(usr, "<span style=\"color:red\">You can't build here.</span>")
+		boutput(usr, "<span class='alert'>You can't build here.</span>")
 		return
 	if (istype(C, /obj/item/rods))
-		boutput(user, "<span style=\"color:blue\">Constructing support lattice ...</span>")
+		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		ReplaceWithLattice()
 		if(C.material) src.setMaterial(C.material)
@@ -948,15 +1000,17 @@ var/global/client/ff_debugger = null
 
 	if (istype(C, /obj/item/tile))
 		//var/obj/lattice/L = locate(/obj/lattice, src)
-		for(var/obj/lattice/L in src)
-			qdel(L)
-		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
-		C:build(src)
-		C:amount--
-		if(C.material) src.setMaterial(C.material)
-		if (C:amount < 1)
-			user.u_equip(C)
-			qdel(C)
+		var/obj/item/tile/T = C
+		if (T.amount >= 1)
+			for(var/obj/lattice/L in src)
+				qdel(L)
+			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			T.build(src)
+			if(T.material) src.setMaterial(T.material)
+
+		if (T.amount < 1 && !issilicon(user))
+			user.u_equip(T)
+			qdel(T)
 			return
 		return
 	return
@@ -980,7 +1034,7 @@ var/global/client/ff_debugger = null
 
 	if (A.z == 1 && zlevel != A.z)
 		if (!(isitem(A) && A:w_class <= 2))
-			for (var/obj/machinery/communications_dish/C in comm_dishes)
+			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 				C.add_cargo_logs(A)
 
 	A.z = zlevel
@@ -1048,6 +1102,15 @@ var/global/client/ff_debugger = null
 		..()
 		dir = pick(NORTH,SOUTH)
 
+/turf/unsimulated/pool/no_animate
+	name = "pool floor"
+	icon = 'icons/obj/fluid.dmi'
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		dir = pick(NORTH,SOUTH)
+
 /turf/simulated/pool
 	name = "water"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -1084,7 +1147,7 @@ var/global/client/ff_debugger = null
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/shovel))
 			if (src.icon_state == "dirt-dug")
-				boutput(user, "<span style=\"color:red\">That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space.</span>")
+				boutput(user, "<span class='alert'>That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space.</span>")
 				return
 
 			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")
@@ -1130,21 +1193,3 @@ var/global/client/ff_debugger = null
 	name = "concrete floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "concrete"
-
-//MBC : another one of these exists on obj/verb/interact_verb(). Sorry i'm lazy haw ahaw haw
-/turf/verb/interact_floor_verb()
-	set name = "Interact Floor"
-	set src in oview(1)
-	set category = "Local"
-
-	if (isdead(usr) || (!iscarbon(usr) && !iscritter(usr) && !issilicon(usr)))
-		return
-
-	if (usr.stat || usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.restrained())
-		return
-
-	if (!can_reach(usr, src))
-		return
-
-	if (usr.client)
-		usr.client.Click(src,src)

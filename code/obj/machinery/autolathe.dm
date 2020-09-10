@@ -112,7 +112,7 @@
 /obj/machinery/autolathe/Topic(href, href_list)
 	if(..() || !(usr in range(1)))
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
 		var/list/makeable = list()
@@ -129,11 +129,11 @@
 				src.g_amount = 0
 			SPAWN_DBG(1.6 SECONDS)
 				flick("autolathe_c",src)
-				SPAWN_DBG(1.6 SECONDS)
-					flick("autolathe_o",src)
-					SPAWN_DBG(1.6 SECONDS)
-						new template.type(usr.loc)
-						src.operating = 0
+				sleep(1.6 SECONDS)
+				flick("autolathe_o",src)
+				sleep(1.6 SECONDS)
+				new template.type(usr.loc)
+				src.operating = 0
 
 	if(href_list["act"])
 		if(href_list["act"] == "pulse")
@@ -197,7 +197,7 @@
 	src.L += new /obj/item/device/t_scanner(src)
 	src.L += new /obj/item/reagent_containers/food/drinks/cola_bottle(src)
 	src.L += new /obj/item/device/gps(src)
-	src.LL += new /obj/item/flamethrower(src)
+	src.LL += new /obj/item/flamethrower/assembled(src)
 	src.LL += new /obj/item/device/igniter(src)
 	src.LL += new /obj/item/device/timer(src)
 	src.LL += new /obj/item/rcd(src)

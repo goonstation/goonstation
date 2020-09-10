@@ -8,6 +8,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 
 /obj/item/assembly/shock_kit/New()
+	..()
 	SPAWN_DBG (20)
 		if (src)
 			if (!(src.part1 && istype(src.part1)))
@@ -16,7 +17,6 @@
 			if (!(src.part2 && istype(src.part2)))
 				src.part2 = new /obj/item/device/radio/electropack(src)
 				src.part2.master = src
-	return
 
 /obj/item/assembly/shock_kit/disposing()
 	if (src.part1)
@@ -26,7 +26,6 @@
 		qdel(src.part2)
 		src.part2 = null
 	..()
-	return
 
 /obj/item/assembly/shock_kit/attackby(obj/item/W as obj, mob/user as mob)
 	src.add_fingerprint(user)
@@ -56,6 +55,6 @@
 	if (src.master && istype(src.master, /obj/stool/chair/e_chair))
 		var/obj/stool/chair/e_chair/C = src.master
 		if (C.buckled_guy)
-			logTheThing("signalers", usr, C.buckled_guy, "signalled an electric chair (setting: [C.lethal ? "lethal" : "non-lethal"]), shocking %target% at [log_loc(C)].") // Added (Convair880).
+			logTheThing("signalers", usr, C.buckled_guy, "signalled an electric chair (setting: [C.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(C.buckled_guy,"signalers")] at [log_loc(C)].") // Added (Convair880).
 		C.shock()
 	return

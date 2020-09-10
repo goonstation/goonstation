@@ -6,7 +6,7 @@
 	name = "Blindness"
 	desc = "Disconnects the optic nerves from the brain, rendering the subject unable to see."
 	id = "blind"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	msgGain = "You can't seem to see anything!"
@@ -25,7 +25,7 @@
 	name = "Frontal Gyrus Suspension"
 	desc = "Completely shuts down the speech center of the subject's brain."
 	id = "mute"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	msgGain = "You feel unable to express yourself at all."
@@ -43,7 +43,7 @@
 	name = "Deafness"
 	desc = "Diminishes the subject's tympanic membrane, rendering them unable to hear."
 	id = "deaf"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 4
@@ -75,7 +75,7 @@
 	name = "Dyspraxia"
 	desc = "Hinders transmissions in the subject's nervous system, causing poor motor skills."
 	id = "clumsy"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 66
 	isBad = 1
 	msgGain = "You feel kind of off-balance and disoriented."
@@ -88,7 +88,7 @@
 	name = "Narcolepsy"
 	desc = "Alters the sleep center of the subject's brain, causing bouts of involuntary sleepiness."
 	id = "narcolepsy"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 66
 	isBad = 1
 	msgGain = "You feel a bit sleepy."
@@ -127,7 +127,7 @@
 	name = "Coprolalia"
 	desc = "Causes involuntary outbursts from the subject."
 	id = "coprolalia"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 99
 	isBad = 1
 	msgGain = "You can't seem to shut up!"
@@ -152,7 +152,7 @@
 	desc = "Greatly slows the subject's metabolism, enabling greater buildup of lipid tissue."
 	id = "fat"
 	probability = 99
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel blubbery and lethargic!"
 	msgLose = "You feel fit!"
@@ -163,13 +163,17 @@
 	OnAdd()
 		..()
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
-			owner.unlock_medal("Space Ham", 1)
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			H.unlock_medal("Space Ham", 1)
+			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
 
 	OnRemove()
 		..()
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
 
 	OnLife()
 		if(..()) return
@@ -183,7 +187,7 @@
 	name = "Diminished Optic Nerves"
 	desc = "Reduces the subject's ability to see clearly without glasses or other visual aids."
 	id = "bad_eyesight"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 99
 	isBad = 1
 	msgGain = "Your vision blurs."
@@ -225,7 +229,7 @@
 	name = "Epilepsy"
 	desc = "Causes damage to the subject's brain structure, resulting in occasional siezures from brain misfires."
 	id = "epilepsy"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 66
 	blockCount = 3
@@ -240,7 +244,7 @@
 		if (isdead(owner))
 			return
 		if (prob(1) && !owner.getStatusDuration("paralysis"))
-			owner:visible_message("<span style=\"color:red\"><B>[owner] starts having a seizure!</span>", "<span style=\"color:red\">You have a seizure!</span>")
+			owner:visible_message("<span class='alert'><B>[owner] starts having a seizure!</span>", "<span class='alert'>You have a seizure!</span>")
 			owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 20))
 			owner:make_jittery(100)
 		return
@@ -249,7 +253,7 @@
 	name = "Thermal Vulnerability"
 	desc = "Cripples the subject's thermoregulation, rendering them more vulnerable to abnormal temperatures."
 	id = "thermal_vuln"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 40
 	blockCount = 3
@@ -275,7 +279,7 @@
 	name = "Blood Toxification"
 	desc = "Impairs the subject's blood filtration, resulting in gradual toxic buildup that must be purged by outside assistance."
 	id = "toxification"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 13
 	blockCount = 3
@@ -292,13 +296,13 @@
 		if (iscarbon(owner))
 			var/mob/living/carbon/C = owner
 			if (prob(tox_prob))
-				C.toxloss += tox_amount
+				C.take_toxin_damage(tox_amount)
 
 /datum/bioEffect/tourettes
 	name = "Tourettes"
 	desc = "Alters the subject's brain structure, causing periodic involuntary movements and outbursts."
 	id = "tourettes"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 66
 	msgGain = "You feel like you can't control your actions fully."
@@ -333,7 +337,7 @@
 	desc = "Enhances the sensitivity of nerves in the subject's throat, causing periodic coughing fits."
 	id = "cough"
 	probability = 99
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel an irritating itch in your throat."
 	msgLose = "Your throat clears up."
@@ -357,7 +361,7 @@
 	name = "Motor Neuron Signal Enhancement" // heh
 	desc = "Causes involuntary muscle contractions in limbs, due to a loss of inhibition of motor neurons."
 	id = "funky_limb"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 4
@@ -409,32 +413,32 @@
 
 		if (src.limb_type == LIMB_IS_ARM)
 			if (prob(5))
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "lewd", "strange", "offensive", "cruel", "furious")] gesture!</span>")
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "lewd", "strange", "offensive", "cruel", "furious")] gesture!</span>")
 			else if (prob(2))
 				owner.emote("slap")
 			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B></span>")
+				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B></span>")
 				owner.TakeDamageAccountArmor("head", rand(2,5), 0, 0, DAMAGE_BLUNT)
 			else if (prob(1))
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!</span>")
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!</span>")
 				while (prob(80) && owner.bioHolder.HasEffect("funky_limb"))
 					owner.losebreath = max(owner.losebreath, 2)
-					sleep(10)
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] stops trying to strangle [him_or_her(owner)].</span>")
+					sleep(1 SECOND)
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] stops trying to strangle [him_or_her(owner)].</span>")
 			return
 
 		else if (src.limb_type == LIMB_IS_LEG)
 			if (prob(5))
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "lewdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "lewdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
 			else if (prob(3))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B></span>")
+				owner.visible_message("<span class='alert'><B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B></span>")
 				owner.changeStatus("weakened", 2 SECONDS)
 			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B></span>")
+				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B></span>")
 				owner.changeStatus("paralysis", 70)
 				owner.TakeDamageAccountArmor("head", rand(5,10), 0, 0, DAMAGE_BLUNT)
 			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
+				owner.visible_message("<span class='alert'><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
 				owner.change_misstep_chance(10)
 			return
 
@@ -449,7 +453,7 @@
 	name = "Radioactive"
 	desc = "The subject suffers from constant radiation sickness and causes the same on nearby organics."
 	id = "radioactive"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 66
 	blockCount = 3
 	blockGaps = 3
@@ -472,7 +476,7 @@
 		for(var/mob/living/L in range(1, owner))
 			if (L == owner)
 				continue
-			boutput(L, "<span style=\"color:red\">You are enveloped by a soft green glow emanating from [owner].</span>")
+			boutput(L, "<span class='alert'>You are enveloped by a soft green glow emanating from [owner].</span>")
 			L.changeStatus("radiation", 50, 1)
 		return
 
@@ -480,7 +484,7 @@
 	name = "Mutagenic Field"
 	desc = "The subject emits low-level radiation that may cause everyone in range to mutate."
 	id = "mutagenic_field"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 3
@@ -522,7 +526,7 @@
 	name = "Spatial Destabilization"
 	desc = "Causes the subject's molecular structure to become partially unstuck in space."
 	id = "involuntary_teleporting"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 3
@@ -545,7 +549,7 @@
 			return
 
 		if (isrestrictedz(L.z))
-			boutput(L, "<span style=\"color:blue\">You feel quite strange. Almost as if you're not supposed to be here.</span>")
+			boutput(L, "<span class='notice'>You feel quite strange. Almost as if you're not supposed to be here.</span>")
 			return
 
 		if (prob(tele_prob))
@@ -565,7 +569,7 @@
 	name = "Irritable Bowels"
 	desc = "Causes the subject to experience frequent involuntary flatus."
 	id = "farty"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Your guts are rumbling."
 	msgLose = "Your guts settle down."
@@ -583,6 +587,30 @@
 			return
 		if (prob(emote_prob))
 			L.emote(emote_type)
+
+/datum/bioEffect/colorblindness
+	name = "Protanopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing red-green colorblindness."
+	id = "protanopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot more yellow."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+	var/list/protanopia_matrix = list(MATRIX_PROTANOPIA)
+
+	OnAdd()
+		src.removed = 0
+		APPLY_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
+		owner.client?.color = protanopia_matrix
+		return
+
+	OnRemove()
+		src.removed = 1
+		REMOVE_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
+		owner.client?.color = null
+		return
 
 /datum/bioEffect/emoter/screamer
 	name = "Paranoia"
@@ -640,7 +668,7 @@
 	name = "Nectar Perspiration"
 	desc = "Causes the subject to perspire nectar that attracts abnormally small bees."
 	id = "buzz"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Your guts are rumbling."
 	msgLose = "Your guts settle down."
@@ -659,14 +687,14 @@
 		if (!istype(L) || (L.stat == 2))
 			return
 		if (prob(prob_sting))
-			boutput(src, "<span style=\"color:red\">A bee in your cloud stung you! How rude!</span>")
+			boutput(src, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
 			L.reagents.add_reagent("histamine", 2)
 
 /datum/bioEffect/emp_field
 	name = "Electromagnetic Field"
 	desc = "The subject produces small, random electromagnetic pulses around it."
 	id = "emp_field"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	msgGain = "You feel more connected to electromagnetic fields."
 	msgLose = "You feel less connected to electromagnetic fields."
 	blockCount = 1
@@ -708,7 +736,7 @@
 	id = "fitness_debuff"
 	probability = 60
 	isBad = 1
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	blockCount = 2
 	blockGaps = 3
 	reclaim_mats = 30
@@ -718,7 +746,7 @@
 	lockedGaps = 1
 	lockedDiff = 3
 	lockedTries = 8
-	stability_loss = 5
+	stability_loss = -5
 	icon_state  = "bad"
 
 	OnAdd()
@@ -733,7 +761,7 @@
 	name = "Tinnitus"
 	desc = "Causes the subject to almost constantly hear a terrible/annoying ringing in their ears."
 	id = "tinnitus"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You hear a ringing in your ears."
 	msgLose = "The ringing has stopped...Finally. Thank the Space-Gods."
@@ -753,7 +781,7 @@
 	id = "anemia"
 	probability = 55
 	isBad = 1
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel lightheaded."
 	msgLose = "Your lightheadedness fades."
 	stability_loss = -5
@@ -773,7 +801,7 @@
 	id = "polycythemia"
 	probability = 45
 	isBad = 1
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your breathing quickens."
 	msgLose = "Your breathing returns to normal."
 	stability_loss = -5
@@ -797,7 +825,7 @@
 	name = "Meta-Neural Transferral"
 	desc = "The subject's brainwaves will occasionally involuntarily switch with those of another near them."
 	id = "mind_jockey"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	occur_in_genepools = 0
 	probability = 0
 	scanner_visibility = 0
@@ -820,8 +848,8 @@
 				potential_victims += H
 			if (potential_victims.len)
 				var/mob/living/carbon/human/this_one = pick(potential_victims)
-				boutput(src, "<span style=\"color:red\">Your mind twangs uncomfortably!</span>")
-				boutput(this_one, "<span style=\"color:red\">Your mind twangs uncomfortably!</span>")
+				boutput(src, "<span class='alert'>Your mind twangs uncomfortably!</span>")
+				boutput(this_one, "<span class='alert'>Your mind twangs uncomfortably!</span>")
 				owner.mind.swap_with(this_one)
 
 /datum/bioEffect/mutagenic_field/prenerf
@@ -858,7 +886,7 @@
 	stability_loss = 15
 	var/prob_per_tick = 15
 	var/list/emotes = list("slap","snap","hiccup","burp","fart","dance","tantrum","flipoff","flip","boggle")
-	var/list/noises = list('sound/musical_instruments/WeirdHorn_0.ogg','sound/voice/animal/cat.ogg','sound/musical_instruments/Saxophone_CarelessWhisper.ogg',
+	var/list/noises = list('sound/musical_instruments/WeirdHorn_0.ogg','sound/voice/animal/cat.ogg','sound/musical_instruments/piano/furelise.ogg',
 	'sound/machines/engine_alert3.ogg','sound/machines/fortune_riff.ogg','sound/misc/ancientbot_grump2.ogg',
 	'sound/voice/farts/diarrhea.ogg','sound/misc/sad_server_death.ogg','sound/voice/animal/werewolf_howl.ogg',
 	'sound/voice/MEruncoward.ogg','sound/voice/macho/macho_become_enraged01.ogg',
@@ -881,7 +909,7 @@
 				if (2)
 
 					if (isrestrictedz(L.z))
-						boutput(L, "<span style=\"color:blue\">You feel your genes tingling inside you. Strange.</span>")
+						boutput(L, "<span class='notice'>You feel your genes tingling inside you. Strange.</span>")
 						return
 
 					var/list/randomturfs = new/list()
@@ -898,7 +926,7 @@
 					var/turf/T = get_turf(L)
 					T.color = random_color()
 				if (5)
-					L.visible_message("<span style=\"color:red\"><b>[L.name]</b> makes a weird noise!</span>")
+					L.visible_message("<span class='alert'><b>[L.name]</b> makes a weird noise!</span>")
 					playsound(L.loc, pick(noises), 50, 0)
 
 /datum/bioEffect/sneeze
@@ -906,7 +934,7 @@
 	desc = "Enhances the sensitivity of nerves in the subject's nose, causing periodic sneezing."
 	id = "sneeze"
 	probability = 66
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel an irritating itch in your nose."
 	msgLose = "Your nose clears up."
@@ -920,4 +948,3 @@
 			else
 				owner:emote("sneeze")
 		return
-

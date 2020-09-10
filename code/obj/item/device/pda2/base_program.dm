@@ -17,6 +17,7 @@
 		extension = "PSCAN"
 
 	New(obj/holding as obj)
+		..()
 		if(holding)
 			src.holder = holding
 
@@ -163,10 +164,10 @@
 			if(master.active_program == src)
 				master.active_program = null
 			return 1
-		usr.machine = src.master
+		src.master.add_dialog(usr)
 
 		if (href_list["close"])
-			usr.machine = null
+			src.master.remove_dialog(usr)
 			usr.Browse(null, "window=pda2_\ref[src]")
 			return 0
 		if (href_list["quit"])

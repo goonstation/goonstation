@@ -66,18 +66,12 @@
 
 
 	examine()
-		set src in oview(12)
-		if (!( usr ))
-			return
-		boutput(usr, "This is [bicon(src)] \an [src.name].")
-		boutput(usr, src.desc)
-
-		boutput(usr, "The HVAC is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"].")
+		. = ..()
+		. += "The HVAC is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"]."
 		if(open)
-			boutput(usr, "The power cell is [cell ? "installed" : "missing"].")
+			. += "The power cell is [cell ? "installed" : "missing"]."
 		else
-			boutput(usr, "The charge meter reads [cell ? round(cell.percent(),1) : 0]%")
-		return
+			. += "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
 
 
 	attackby(obj/item/I, mob/user)
@@ -95,17 +89,17 @@
 						C.set_loc(src)
 						C.add_fingerprint(usr)
 
-						user.visible_message("<span style=\"color:blue\">[user] inserts a power cell into [src].</span>", "<span style=\"color:blue\">You insert the power cell into [src].</span>")
+						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
 				boutput(user, "The hatch must be open to insert a power cell.")
 				return
 		else if (isscrewingtool(I))
 			open = !open
-			user.visible_message("<span style=\"color:blue\">[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span style=\"color:blue\">You [open ? "open" : "close"] the hatch on the [src].</span>")
+			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
 			update_icon()
-			if(!open && user.machine == src)
+			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=spaceheater")
-				user.machine = null
+				src.remove_dialog(user)
 		else if (istype(I, /obj/item/wrench))
 			if (user)
 				user.show_text("You [anchored ? "release" : "anchor"] the [src]", "blue")
@@ -132,10 +126,11 @@
 
 			dat += "<A href='?src=\ref[src];op=temp;val=-10'>--</A> <A href='?src=\ref[src];op=temp;val=-5'>-</A>"
 
-			dat += " <A href='?src=\ref[src];op=set_temp'> [set_temperature]&deg;C </A>"
+			dat += " <A href='?src=\ref[src];op=set_temp'>[set_temperature]&deg;C</A> "
+
 			dat += "<A href='?src=\ref[src];op=temp;val=5'>+</A> <A href='?src=\ref[src];op=temp;val=10'>++</A><BR>"
 
-			user.machine = src
+			src.add_dialog(user)
 			user.Browse("<HEAD><TITLE>Space Heater Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=spaceheater")
 			onclose(user, "spaceheater")
 
@@ -147,7 +142,7 @@
 				user.show_text("The button seems to be stuck!", "red")
 			else
 				on = !on
-				user.visible_message("<span style=\"color:blue\">[user] switches [on ? "on" : "off"] the [src].</span>","<span style=\"color:blue\">You switch [on ? "on" : "off"] the [src].</span>")
+				user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 				update_icon()
 
 
@@ -163,7 +158,7 @@
 		if (usr.stat)
 			return
 		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			switch(href_list["op"])
 				if("set_temp")
@@ -172,7 +167,7 @@
 					var/max = src.emagged ? 400 : 90
 					var/min = src.emagged ? -120 : 90
 
-					set_temperature = CLAMP(set_temperature + value, -min, max)
+					set_temperature = clamp(value, -min, max)
 
 				if("temp")
 					var/value = text2num(href_list["val"])
@@ -180,7 +175,7 @@
 					var/min = src.emagged ? -120 : 90
 
 					// limit to 20-90 degC
-					set_temperature = CLAMP(set_temperature + value, -min, max)
+					set_temperature = clamp(set_temperature + value, -min, max)
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
@@ -188,7 +183,7 @@
 						cell.updateicon()
 						cell = null
 
-						usr.visible_message("<span style=\"color:blue\">[usr] removes the power cell from \the [src].</span>", "<span style=\"color:blue\">You remove the power cell from \the [src].</span>")
+						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 
 
 				if("cellinstall")
@@ -200,12 +195,12 @@
 							C.set_loc(src)
 							C.add_fingerprint(usr)
 
-							usr.visible_message("<span style=\"color:blue\">[usr] inserts a power cell into \the [src].</span>", "<span style=\"color:blue\">You insert the power cell into \the [src].</span>")
+							usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
 
 			updateDialog()
 		else
 			usr.Browse(null, "window=spaceheater")
-			usr.machine = null
+			src.remove_dialog(usr)
 		return
 
 
@@ -222,7 +217,7 @@
 					else
 						heating = 0
 
-					var/transfer_moles = src.emagged ? 0.5 * env.total_moles() : 0.25 * env.total_moles()
+					var/transfer_moles = src.emagged ? 0.5 * TOTAL_MOLES(env) : 0.25 * TOTAL_MOLES(env)
 
 					var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
@@ -230,7 +225,7 @@
 
 					if(removed)
 
-						var/heat_capacity = removed.heat_capacity()
+						var/heat_capacity = HEAT_CAPACITY(removed)
 						//boutput(world, "heating ([heat_capacity])")
 						var/current_power = 0
 						if(heating)
@@ -296,18 +291,13 @@
 		return
 
 	examine()
-		set src in oview(12)
-		if (!( usr ))
-			return
-		boutput(usr, "This is [bicon(src)] \an [src.name].")
-		boutput(usr, src.desc)
+		. = ..()
 
-		boutput(usr, "The stove is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"].")
+		. += "The stove is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"]."
 		if(open)
-			boutput(usr, "The power cell is [cell ? "installed" : "missing"].")
+			. += "The power cell is [cell ? "installed" : "missing"]."
 		else
-			boutput(usr, "The charge meter reads [cell ? round(cell.percent(),1) : 0]%")
-		return
+			. += "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
 
 
 	attackby(obj/item/I, mob/user)
@@ -325,17 +315,17 @@
 						C.set_loc(src)
 						C.add_fingerprint(usr)
 
-						user.visible_message("<span style=\"color:blue\">[user] inserts a power cell into [src].</span>", "<span style=\"color:blue\">You insert the power cell into [src].</span>")
+						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
 				boutput(user, "The hatch must be open to insert a power cell.")
 				return
 		else if (isscrewingtool(I))
 			open = !open
-			user.visible_message("<span style=\"color:blue\">[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span style=\"color:blue\">You [open ? "open" : "close"] the hatch on the [src].</span>")
+			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
 			update_icon()
-			if(!open && user.machine == src)
+			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=saunastove")
-				user.machine = null
+				src.remove_dialog(user)
 		else
 			..()
 		return
@@ -360,7 +350,7 @@
 			dat += " [set_temperature]&deg;C "
 			dat += "<A href='?src=\ref[src];op=temp;val=5'>+</A> <A href='?src=\ref[src];op=temp;val=10'>++</A><BR>"
 
-			user.machine = src
+			src.add_dialog(user)
 			user.Browse("<HEAD><TITLE>Sauna Stove Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=saunastove")
 			onclose(user, "spaceheater")
 
@@ -369,7 +359,7 @@
 
 		else
 			on = !on
-			user.visible_message("<span style=\"color:blue\">[user] switches [on ? "on" : "off"] the [src].</span>","<span style=\"color:blue\">You switch [on ? "on" : "off"] the [src].</span>")
+			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 			update_icon()
 
 			if (on)
@@ -383,7 +373,7 @@
 		if (usr.stat)
 			return
 		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			switch(href_list["op"])
 
@@ -391,7 +381,7 @@
 					var/value = text2num(href_list["val"])
 
 					// limit to 20-90 degC
-					set_temperature = CLAMP(set_temperature + value, 0, 200)
+					set_temperature = clamp(set_temperature + value, 0, 200)
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
@@ -399,7 +389,7 @@
 						cell.updateicon()
 						cell = null
 
-						usr.visible_message("<span style=\"color:blue\">[usr] removes the power cell from \the [src].</span>", "<span style=\"color:blue\">You remove the power cell from \the [src].</span>")
+						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 
 
 				if("cellinstall")
@@ -411,12 +401,12 @@
 							C.set_loc(src)
 							C.add_fingerprint(usr)
 
-							usr.visible_message("<span style=\"color:blue\">[usr] inserts a power cell into \the [src].</span>", "<span style=\"color:blue\">You insert the power cell into \the [src].</span>")
+							usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
 
 			updateDialog()
 		else
 			usr.Browse(null, "window=saunastove")
-			usr.machine = null
+			src.remove_dialog(usr)
 		return
 
 
@@ -433,7 +423,7 @@
 					else
 						heating = 0
 
-					var/transfer_moles = 0.25 * env.total_moles()
+					var/transfer_moles = 0.25 * TOTAL_MOLES(env)
 
 					var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
@@ -441,7 +431,7 @@
 
 					if(removed)
 
-						var/heat_capacity = removed.heat_capacity()
+						var/heat_capacity = HEAT_CAPACITY(removed)
 						//boutput(world, "heating ([heat_capacity])")
 						if(heating)
 							removed.temperature = (removed.temperature*heat_capacity + heating_power)/heat_capacity

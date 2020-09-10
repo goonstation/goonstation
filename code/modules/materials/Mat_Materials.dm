@@ -3,6 +3,7 @@
 	var/procname = null
 
 	New(var/datum/D, var/name)
+		..()
 		owner = D
 		procname = name
 ///
@@ -414,6 +415,7 @@
 	New()
 		setProperty("density", 65)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
+		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 // Crystals
@@ -940,12 +942,25 @@
 		setProperty("stable", 53)
 		return ..()
 
+/datum/material/organic/cardboard
+	mat_id = "cardboard"
+	name = "cardboard"
+	desc = "Perfect for making boxes."
+	color = "#d3b173"
+	material_flags = MATERIAL_ORGANIC
+
+	New()
+		setProperty("density", 25)
+		setProperty("hard", 25)
+		setProperty("flammable", 67)
+		return ..()
+
 /datum/material/organic/chitin
 	mat_id = "chitin"
 	name = "chitin"
 	desc = "Chitin is an organic material found in the exoskeletons of insects."
 	color = "#118800"
-	material_flags = MATERIAL_ORGANIC
+	material_flags = MATERIAL_ORGANIC | MATERIAL_METAL
 
 	New()
 		setProperty("density", 25)
@@ -1005,6 +1020,7 @@
 		setProperty("density", 5)
 		setProperty("hard", 50)
 		return ..()
+
 
 // Fabrics
 
@@ -1198,6 +1214,7 @@
 		setProperty("permeable", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
+		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 /datum/material/fabric/cloth/ectofibre

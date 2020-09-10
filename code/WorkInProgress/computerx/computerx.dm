@@ -93,7 +93,7 @@ var/compx_gridx_max = 5
 		if(..())
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		src.current_user = user
 
 		var/wincheck = winexists(user, "compx_\ref[src]")
@@ -157,7 +157,7 @@ var/compx_gridx_max = 5
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if((href_list["conin"]) && src.host_program)
 			src.host_program.input_text(href_list["conin"])
@@ -348,7 +348,7 @@ var/compx_gridx_max = 5
 				src.override_temp += "<font color=red>ERR - BOOT FAILURE</font><br>"
 
 			src.updateUsrDialog()
-			sleep(20)
+			sleep(2 SECONDS)
 
 			src.restarting = 0
 			if(to_run)

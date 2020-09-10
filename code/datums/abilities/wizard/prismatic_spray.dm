@@ -18,7 +18,7 @@
 	//the number of projectiles we want to fire in a single cast
 	var/num_projectiles = 12
 	//what projectiles do we *NOT* want to add to the pool of random projectiles?
-	var/list/blacklist = list(/datum/projectile,/datum/projectile/slam,/datum/projectile/artifact,/datum/projectile/artifact/prismatic_projectile)
+	var/static/list/blacklist = list(/datum/projectile/slam,/datum/projectile/artifact,/datum/projectile/artifact/prismatic_projectile)
 	//If random == 0, use the special prismatic projectile datum. Else, pick from the pool of all projectiles minus the blacklisted ones
 	var/random = 0
 	//the list of projectile types to pick from if random is set to 1
@@ -28,12 +28,16 @@
 
 	New()
 		..()
-		for (var/X in typesof(/datum/projectile) - src.blacklist)
+		for (var/X in filtered_concrete_typesof(/datum/projectile, .proc/filter_projectile))
 			var/datum/projectile/A = new X
+			A.is_magical = 1
 			proj_types += A
 
+	proc/filter_projectile(proj_type)
+		return !(proj_type in src.blacklist)
+
 	cast(atom/target)
-		if (holder.owner.wizard_spellpower() || istype(src, /datum/targetable/spell/prismatic_spray/admin))
+		if (holder.owner.wizard_spellpower(src) || istype(src, /datum/targetable/spell/prismatic_spray/admin))
 			holder.owner.say("PROJEHK TUL IHNFERNUS") //incantation credit to Grifflez
 			//var/mob/living/carbon/human/O = holder.owner
 			if(!istype(src, /datum/targetable/spell/prismatic_spray/admin))
@@ -49,7 +53,7 @@
 						var/obj/projectile/P = shoot_projectile_XY(S, ps_proj, cos(rand(0,360)), sin(rand(0,360)))
 						if (P)
 							P.mob_shooter = holder.owner
-							sleep(1)
+							sleep(0.1 SECONDS)
 					else
 						var/obj/projectile/P = initialize_projectile_ST(holder.owner, ps_proj, target )
 						if (P)
@@ -57,7 +61,7 @@
 							var/angle = (rand(spread * -1000, spread * 1000))/1000
 							P.rotateDirection(angle)
 							P.launch()
-							sleep(1)
+							sleep(0.1 SECONDS)
 			else
 				for(var/i=0, i<num_projectiles, i++)
 					var/turf/S = get_turf(holder.owner)
@@ -65,7 +69,7 @@
 						var/obj/projectile/P = shoot_projectile_XY(S, pick(proj_types), cos(rand(0,360)), sin(rand(0,360)))
 						if (P)
 							P.mob_shooter = holder.owner
-							sleep(1)
+							sleep(0.1 SECONDS)
 					else
 						var/obj/projectile/P = initialize_projectile_ST(holder.owner, pick(proj_types), target )
 						if (P)
@@ -73,9 +77,9 @@
 							var/angle = (rand(spread * -1000, spread * 1000))/1000
 							P.rotateDirection(angle)
 							P.launch()
-							sleep(1)
+							sleep(0.1 SECONDS)
 		else
-			boutput(holder.owner, "<span style=\"color:red\">Your spell doesn't work without a staff to refract the light!</span>")
+			boutput(holder.owner, "<span class='alert'>Your spell doesn't work without a staff to refract the light!</span>")
 			return 1
 
 /datum/targetable/spell/prismatic_spray/admin

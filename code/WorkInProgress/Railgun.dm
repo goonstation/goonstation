@@ -29,7 +29,7 @@
 /obj/item/railgun
 	name = "Railgun"
 	desc = "Bzooom"
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "railgun"
 	item_state = "gun"
@@ -208,8 +208,8 @@ proc/Get_Angle(atom/ref, atom/target,startpx,startpy,endpx,endpy)
 
 
 proc/DrawLine(atom/Start,atom/End,LineType,Icon,Whole_Icon_State = "",CenterOfIconStart=1,CenterOfIconEnd=1,HalfStart_Icon_State = "HalfStart",HalfEnd_Icon_State = "HalfEnd",Layer=OBJ_LAYER,ExtraDetection=1,startpx,startpy,endpx,endpy,startpx2,startpy2,PreloadedIcon=null)
-	if(isturf(Start)||isturf(End))
-		world.log << "ERROR:  Cannot draw line with turf for starting or ending point.  Please use /obj points instead."
+	if(isturf(Start) || isturf(End))
+		world.log << "DrawLine ERROR:  Cannot draw line with turf for starting or ending point.  Please use /obj points instead. S: [Start] | E: [End]"
 		return
 	var/list/LineList = list()
 	var/Angle = Get_Angle(Start,End,startpx,startpy,endpx,endpy)

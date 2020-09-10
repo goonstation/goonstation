@@ -24,7 +24,7 @@
 		..()
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
-		setProperty("meleeprot", 2)
+		setProperty("meleeprot_head", 2)
 
 /obj/item/clothing/mask/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/voice_changer))
@@ -81,10 +81,10 @@
 	if (!source || !target) return
 	if( src.unstaple()) //Try a staple if it worked, yay
 		if (!src.stapled) //That's the last staple!
-			source.visible_message("<span style=\"color:red\"><B>[source] rips out the staples from [src]!</B></span>", "<span style=\"color:red\"><B>You rip out the staples from [src]!</B></span>", "<span style=\"color:red\">You hear a loud ripping noise.</span>")
+			source.visible_message("<span class='alert'><B>[source] rips out the staples from [src]!</B></span>", "<span class='alert'><B>You rip out the staples from [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
 			. = 1
 		else //Did you get some of them?
-			source.visible_message("<span style=\"color:red\"><B>[source] rips out some of the staples from [src]!</B></span>", "<span style=\"color:red\"><B>You rip out some of the staples from [src]!</B></span>", "<span style=\"color:red\">You hear a loud ripping noise.</span>")
+			source.visible_message("<span class='alert'><B>[source] rips out some of the staples from [src]!</B></span>", "<span class='alert'><B>You rip out some of the staples from [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
 			. = 0
 
 		//Commence owie
@@ -94,7 +94,7 @@
 		target.TakeDamage("head", rand(12, 18), 0) 				//OW!
 		target.changeStatus("weakened", 4 SECONDS)
 
-		logTheThing("combat", source, target, "rips out the staples on %target%'s [src]") //Crime
+		logTheThing("combat", source, target, "rips out the staples on [constructTarget(target,"combat")]'s [src]") //Crime
 
 /obj/item/clothing/mask/gas
 	name = "gas mask"
@@ -128,7 +128,7 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
-		setProperty("meleeprot", 3)
+		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/mask/moustache/safe
 	name = "discount fake moustache"
@@ -217,7 +217,7 @@
 	item_state = "death_commando_mask"
 	setupProperties()
 		..()
-		setProperty("meleeprot", 4)
+		setProperty("meleeprot_head", 4)
 
 
 /obj/item/clothing/mask/clown_hat
@@ -261,7 +261,7 @@
 	equipped(var/mob/user, var/slot)
 		. = ..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "mask")
+		if(istype(H) && slot == SLOT_WEAR_MASK)
 			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
 				src.cant_other_remove = 1.0
 				src.cant_self_remove = 0.0
@@ -281,8 +281,7 @@
 		if ( src.victim )
 			src.victim.change_misstep_chance(-25)
 			src.victim = null
-			if ( src in processing_items )
-				processing_items.Remove(src)
+			processing_items -= src
 
 	process()
 		if ( src.victim )
@@ -351,12 +350,32 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 1)
+		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 10)
+
+	New()
+		..()
+		var/image/inventory = image('icons/obj/clothing/item_masks.dmi', "")
+		var/image/onhead = image('icons/mob/mask.dmi', "")
+
+		if (prob(1))
+			name = "surgical face bee-ld"
+			inventory.icon_state = "surgicalshield-bee"
+			onhead.icon_state = "surgicalshield-bee"
+			desc = "For those really, <i>really</i> messy surgeries where you also want to look like a dork."
+		else
+			inventory.icon_state = "surgicalshield-overlay"
+			onhead.icon_state = "surgicalshield-overlay"
+			var/randcol = random_hex(6)
+			inventory.color = "#[randcol]"
+			onhead.color = "#[randcol]"
+
+		src.UpdateOverlays(inventory, "surgmaskcolour")
+		src.wear_image.overlays += onhead
 
 /obj/item/paper_mask
 	name = "unfinished paper mask"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "domino"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "domino"
@@ -370,11 +389,11 @@
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
-				boutput(user, "<span style=\"color:blue\">You scribble on the mask until it's filled in.</span>")
+				boutput(user, "<span class='notice'>You scribble on the mask until it's filled in.</span>")
 				if (P.font_color)
 					src.color = P.font_color
 		else if (istype(W,/obj/item/cable_coil/))
-			boutput(user, "<span style=\"color:blue\">You attach the cable to the mask. Looks like you can wear it now.</span>")
+			boutput(user, "<span class='notice'>You attach the cable to the mask. Looks like you can wear it now.</span>")
 			var/obj/item/cable_coil/C = W
 			C.use(1)
 			var/obj/item/clothing/mask/paper/M = new /obj/item/clothing/mask/paper(src.loc)
@@ -399,7 +418,7 @@
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
-				boutput(user, "<span style=\"color:blue\">You scribble on the mask until it's filled in.</span>")
+				boutput(user, "<span class='notice'>You scribble on the mask until it's filled in.</span>")
 				src.color = P.font_color
 
 /obj/item/clothing/mask/melons

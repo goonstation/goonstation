@@ -61,7 +61,7 @@
 		if (gauntlet_controller.state != 0)
 			return
 		if (ticker.round_elapsed_ticks < 3000)
-			boutput(usr, "<span style=\"color:red\">You may not initiate the Gauntlet before 5 minutes into the round.</span>")
+			boutput(usr, "<span class='alert'>You may not initiate the Gauntlet before 5 minutes into the round.</span>")
 			return
 		if (alert("Start the Gauntlet? No more players will be given admittance to the staging area!",, "Yes", "No") == "Yes")
 			if (gauntlet_controller.state != 0)
@@ -114,7 +114,7 @@
 			boutput(M, rendered)
 		for (var/mob/M in gauntlet)
 			boutput(M, rendered)
-		for (var/mob/M in mobs)//world)
+		for (var/mob/M in mobs)
 			LAGCHECK(LAG_LOW)
 			if (ismob(M.eye) && M.eye != M)
 				var/mob/N = M.eye
@@ -250,7 +250,6 @@
 					for (var/obj/critter/C in gauntlet)
 						if (!C.alive)
 							showswirl(get_turf(C))
-							C.loc = null
 							qdel(C)
 						else
 							live++
@@ -281,7 +280,7 @@
 		announceAll("The Critter Gauntlet match concluded at level [current_level].")
 		if (current_level > 50)
 			var/command_report = "A Critter Gauntlet match has concluded at level [current_level]. Congratulations to: [moblist_names]."
-			for (var/obj/machinery/communications_dish/C in comm_dishes)
+			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 				C.add_centcom_report("[command_name()] Update", command_report)
 
 			command_alert(command_report, "Critter Gauntlet match finished")
@@ -361,6 +360,7 @@
 			critters_left -= name
 
 	New()
+		..()
 		SPAWN_DBG(0.5 SECONDS)
 			viewing = locate() in world
 			staging = locate() in world
@@ -555,7 +555,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			src.cam.c_tag = src.name
 			src.cam.network = cam_network
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -793,7 +793,8 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 0
 
 		setUp()
-			var/list/q = shuffle(gauntlet_controller.spawnturfs)
+			var/list/q = gauntlet_controller.spawnturfs.Copy()
+			shuffle_list(q)
 			var/percentage = rand(25, 45) * 0.01
 			q.len = round(q.len * percentage)
 			for (var/turf/T in q)
@@ -822,7 +823,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			else
 				for (var/mob/living/M in gauntlet_controller.gauntlet)
 					M.HealDamage("All", 5, 5)
-					//boutput(M, "<span style=\"color:blue\">A soothing wave of energy washes over you!</span>")
+					//boutput(M, "<span class='notice'>A soothing wave of energy washes over you!</span>")
 				counter = 10
 
 		tearDown()
@@ -869,7 +870,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				M.bodytemperature = T0C + 120
 				if (prob(10))
 					if (!M.getStatusDuration("burning"))
-						boutput(M, "<span style=\"color:red\">You spontaneously combust!</span>")
+						boutput(M, "<span class='alert'>You spontaneously combust!</span>")
 					M.changeStatus("burning", 70)
 
 		tearDown()
@@ -896,7 +897,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			if (prob(20))
 				for (var/mob/living/M in gauntlet_controller.gauntlet)
 					M.TakeDamage("chest", 1, 0, 0, DAMAGE_CUT)
-					//boutput(M, "<span style=\"color:red\">The void tears at you!</span>")
+					//boutput(M, "<span class='alert'>The void tears at you!</span>")
 					// making the zone name a bit more obvious and making its spam chatbox less - ISN
 
 		tearDown()
@@ -1020,7 +1021,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			C.health *= health_multiplier
 			C.aggressive = 1
 			C.defensive = 1
-			C.opensdoors = 0
+			C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 			if (ev)
 				ev.onSpawn(C)
 			count--

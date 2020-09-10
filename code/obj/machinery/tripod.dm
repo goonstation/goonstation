@@ -16,7 +16,7 @@
 				bulb = null
 				src.updateicon()
 			else
-				boutput(user, "<span style=\"color:blue\">You fold up the tripod.</span>")
+				boutput(user, "<span class='notice'>You fold up the tripod.</span>")
 				var/obj/item/tripod/I = new()
 				if (src.material)
 					I.setMaterial(src.material)
@@ -27,7 +27,7 @@
 		if (istype(W, /obj/item/tripod_bulb) && !bulb)
 			user.drop_item()
 			bulb = W
-			W.loc = src
+			W.set_loc(src)
 			bulb.inserted(src)
 			src.updateicon()
 

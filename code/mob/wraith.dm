@@ -14,6 +14,7 @@
 	anchored = 1
 	alpha = 180
 	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	plane = PLANE_NOSHADOW_ABOVE
 
 	var/deaths = 0
 	var/datum/hud/wraith/hud
@@ -125,8 +126,7 @@
 			src.death(0)
 			return
 		else if (src.health < src.max_health)
-			src.health += 1 * (life_time_passed / life_tick_spacing)
-			updatehealth()
+			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
 		last_life_update = world.timeofday
 
 	// No log entries for unaffected mobs (Convair880).
@@ -152,13 +152,13 @@
 			for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 				WO.onWeakened()
 		if (deaths < 2)
-			boutput(src, "<span style=\"color:red\"><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
+			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
 			src.justdied = 1
-			src.set_loc(pick(latejoin))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			SPAWN_DBG(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else
-			boutput(src, "<span style=\"color:red\"><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
+			boutput(src, "<span class='alert'><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
 			if (src.mind)
 				for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 					WO.onBanished()
@@ -185,12 +185,16 @@
 				WO.onAbsorb(M)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if (istype(mover, /obj/projectile))
+			var/obj/projectile/proj = mover
+			if (proj.proj_data.hits_wraiths)
+				return 0
 		if (src.density) return 0
 		else return 1
 
 
 	projCanHit(datum/projectile/P)
-		if (src.density) return 1
+		if (src.density || P.hits_wraiths) return 1
 		else return 0
 
 
@@ -211,10 +215,10 @@
 				src.TakeDamage(null, 0, damage)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message("<span style=\"color:red\">[src] is hit by the [P]!</span>")
+			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (!src.density)
 			return
 		health -= burn
@@ -222,7 +226,7 @@
 		health = min(max_health, health)
 		if (src.health <= 0)
 			src.death(0)
-		updatehealth()
+		health_update_queue |= src
 
 	HealDamage(zone, brute, burn)
 		TakeDamage(zone, -(brute / 3), -burn)
@@ -236,9 +240,9 @@
 	Move(var/turf/NewLoc, direct)
 		if (loc)
 			if (!isturf(loc) && !density)
-				loc = get_turf(loc)
+				src.set_loc(get_turf(loc))
 		else
-			loc = locate(1,1,1)
+			src.set_loc(locate(1,1,1))
 
 		if(!canmove) return
 
@@ -246,7 +250,7 @@
 
 		if (NewLoc)
 			if (isghostrestrictedz(NewLoc.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
-				var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 				if (OS)
 					src.set_loc(OS)
 				else
@@ -280,23 +284,23 @@
 
 				if (!src.density || vertical.Enter(src))
 					vert = 1
-					loc = vertical
+					src.set_loc(vertical)
 					if (!src.density || NewLoc.Enter(src))
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in vertical)
 							if (istype(A)) salted = 1
 							if (salted) break
-					loc = oldloc
+					src.set_loc(oldloc)
 
 				if (!src.density || horizontal.Enter(src))
 					horiz = 1
-					loc = horizontal
+					src.set_loc(horizontal)
 					if (!src.density || NewLoc.Enter(src))
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in horizontal)
 							if (istype(A)) salted = 1
 							if (salted) break
-					loc = oldloc
+					src.set_loc(oldloc)
 
 				if (blocked)
 					if (horiz)
@@ -319,7 +323,7 @@
 			//if tile contains salt, wraith becomes corporeal
 			if (salted && !src.density && !src.justdied)
 				src.makeCorporeal()
-				boutput(src, "<span style=\"color:red\">You have passed over salt! You now interact with the mortal realm...</span>")
+				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
 				SPAWN_DBG(1 MINUTE) //one minute
 					src.makeIncorporeal()
 
@@ -357,7 +361,7 @@
 		if (. == 100)
 			return 100
 		if (!density)
-			target.examine()
+			src.examine_verb(target)
 
 	say(var/message)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -419,7 +423,7 @@
 
 		if (acts)
 			for (var/mob/M in hearers(src, null))
-				M.show_message("<span style=\"color:red\">[src] [acts]!</span>")
+				M.show_message("<span class='alert'>[src] [acts]!</span>")
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src
@@ -442,11 +446,11 @@
 				src.invisibility = 0
 				src.alpha = 255
 				src.see_invisible = 0
-				src.visible_message(pick("<span style=\"color:red\">A horrible apparition fades into view!</span>", "<span style=\"color:red\">A pool of shadow forms!</span>"), pick("<span style=\"color:red\">A shell of ectoplasm forms around you!</span>", "<span style=\"color:red\">You manifest!</span>"))
+				src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
 
 		makeIncorporeal()
 			if (src.density)
-				src.visible_message(pick("<span style=\"color:red\">[src] vanishes!</span>", "<span style=\"color:red\">The wraith dissolves into shadow!</span>"), pick("<span style=\"color:blue\">The ectoplasm around you dissipates!</span>", "<span style=\"color:blue\">You fade into the aether!</span>"))
+				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 				src.set_density(0)
 				src.invisibility = 10
 				src.alpha = 160
@@ -454,7 +458,7 @@
 
 		haunt()
 			if (src.density)
-				src.show_message("<span style=\"color:red\">You are already corporeal! You cannot use this ability.</span>")
+				src.show_message("<span class='alert'>You are already corporeal! You cannot use this ability.</span>")
 				return 1
 
 			src.makeCorporeal()
@@ -514,21 +518,21 @@
 
 		makeRevenant(var/mob/M as mob)
 			if (!ishuman(M))
-				boutput(usr, "<span style=\"color:red\">You can only extend your consciousness into humans corpses.</span>")
+				boutput(usr, "<span class='alert'>You can only extend your consciousness into humans corpses.</span>")
 				return 1
 			var/mob/living/carbon/human/H = M
 			if (!isdead(H))
-				boutput(usr, "<span style=\"color:red\">A living consciousness possesses this body. You cannot force your way in.</span>")
+				boutput(usr, "<span class='alert'>A living consciousness possesses this body. You cannot force your way in.</span>")
 				return 1
 			if (H.decomp_stage == 4)
-				boutput(usr, "<span style=\"color:red\">This corpse is no good for this!</span>")
+				boutput(usr, "<span class='alert'>This corpse is no good for this!</span>")
 				return 1
-			if (H.is_changeling())
-				boutput(usr, "<span style=\"color:red\">What is this? An exquisite genetic structure. It forcibly resists your will, even in death.</span>")
+			if (ischangeling(H))
+				boutput(usr, "<span class='alert'>What is this? An exquisite genetic structure. It forcibly resists your will, even in death.</span>")
 				return 1
 			if (!H.bioHolder)
 				message_admins("[key_name(src)] tried to possess [M] as a revenant but failed due to a missing bioholder.")
-				boutput(usr, "<span style=\"color:red\">Failed.</span>")
+				boutput(usr, "<span class='alert'>Failed.</span>")
 				return 1
 			// Happens in wraithPossess() already.
 			//src.abilityHolder.suspendAllAbilities()
@@ -564,7 +568,7 @@
 /mob/proc/wraithize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a wraith.")
-		logTheThing("admin", usr, src, "made %target% a wraith.")
+		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a wraith.")
 		return make_wraith()
 	return null
 
@@ -574,7 +578,7 @@
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || ((isghostrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))
-			var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				W.set_loc(OS)
 			else
@@ -592,11 +596,7 @@
 			W.mind.key = key
 			W.mind.current = W
 			ticker.minds += W.mind
-		src.loc = null
-
-		var/this = src
-		src = null
-		qdel(this)
+		qdel(src)
 
 		//W.addAllAbilities()
 		boutput(W, "<B>You are a wraith! Terrorize the mortals and drive them into releasing their life essence!</B>")

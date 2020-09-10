@@ -72,37 +72,6 @@
 		invisibility = (intact && level==1) ? 101: 0	// hide if floor is intact
 		update()
 
-
-	// flip and rotate verbs
-	verb/rotate()
-		set name = "Rotate Pipe"
-		set src in view(1)
-		set category = "Local"
-
-		if(usr.stat)
-			return
-		if(anchored)
-			boutput(usr, "You must unfasten the pipe before rotating it.")
-		dir = turn(dir, -90)
-		update()
-
-	verb/flip()
-		set name = "Flip Pipe"
-		set src in view(1)
-		set category = "Local"
-		if(usr.stat)
-			return
-
-		if(anchored)
-			boutput(usr, "You must unfasten the pipe before flipping it.")
-
-		dir = turn(dir, 180)
-		if(ptype == 2)
-			ptype = 3
-		else if(ptype == 3)
-			ptype = 2
-		update()
-
 	// returns the type path of disposalpipe corresponding to this item dtype
 	proc/dpipetype()
 		switch(ptype)
@@ -131,6 +100,22 @@
 	// weldingtool: convert to real pipe
 
 	attackby(var/obj/item/I, var/mob/user)
+		if(ispryingtool(I))
+			if(!anchored)
+				var/input = input("Select a config to modify!", "Config", null) as null|anything in list("Rotate","Flip")
+				if((user in range(1,src)) && (!anchored))
+					switch(input)
+						if("Rotate")
+							dir = turn(dir, -90)
+							update()
+						if("Flip")
+							dir = turn(dir, 180)
+							if(ptype == 2)
+								ptype = 3
+							else if(ptype == 3)
+								ptype = 2
+							update()
+				return
 		if(isscrewingtool(I))
 			boutput(user, "You take the pipe segment apart.")
 			// var/obj/item/sheet/A = new /obj/item/sheet(get_turf(src))
@@ -170,19 +155,18 @@
 				boutput(user, "You attach the pipe to the underfloor.")
 			playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
 
-		else if(istype(I, /obj/item/weldingtool))
-			var/obj/item/weldingtool/W = I
-			if(W.try_weld(user, 2, noisy = 2))
+		else if(isweldingtool(I))
+			if(I:try_weld(user, 2, noisy = 2))
 				// check if anything changed over 2 seconds
 				var/turf/uloc = user.loc
-				var/atom/wloc = W.loc
+				var/atom/wloc = I.loc
 				var/turf/ploc = loc
 				boutput(user, "You begin welding [src] in place.")
-				sleep(1)
-				if(user.loc == uloc && wloc == W.loc)
+				sleep(0.1 SECONDS)
+				if(user.loc == uloc && wloc == I.loc)
 					// REALLY? YOU DON'T FUCKING CARE ABOUT THE LOCATION OF THE PIPE? GET FUCKED <CODER>
 					if (ploc != loc)
-						boutput(user, "<span style='color:red'>As you try to weld the pipe to a completely different floor than it was originally placed on it breaks!</span>")
+						boutput(user, "<span class='alert'>As you try to weld the pipe to a completely different floor than it was originally placed on it breaks!</span>")
 						ploc = loc
 						SPAWN_DBG(0)
 							robogibs(ploc)

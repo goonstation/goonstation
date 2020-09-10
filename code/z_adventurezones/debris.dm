@@ -30,8 +30,9 @@
 
 	proc/checkhealth()
 		if(src.health <= 0)
-			gib(src.loc)
-			ReplaceWithSpace()
+			SPAWN_DBG(0)
+				gib(src.loc)
+				ReplaceWithSpace()
 
 /turf/simulated/martian/wall/ex_act(severity)
 	switch(severity)

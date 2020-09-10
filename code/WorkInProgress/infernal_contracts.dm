@@ -62,13 +62,13 @@
 /mob/proc/horse()
 	var/mob/living/carbon/human/H = src
 	if(H.mind && (H.mind.assigned_role != "Horse") || (!H.mind || !H.client)) //I am shamelessly copying this from the wizard cluwne spell
-		boutput(H, "<span style=\"color:red\"><B>You NEIGH painfully!</B></span>")
+		boutput(H, "<span class='alert'><B>You NEIGH painfully!</B></span>")
 		H.take_brain_damage(80)
 		H.stuttering = 120
 		if(H.mind)
 			H.mind.assigned_role = "Horse"
 		H.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
-		playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+		playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 		H.change_misstep_chance(66)
 		animate_clownspell(H)
 		H.drop_from_slot(H.wear_suit)
@@ -140,7 +140,7 @@
 		acount++
 	src.playsound_local(C.loc,"sound/effects/screech.ogg", 100, 1)
 	if(C.mind)
-		shake_camera(C, 20, 1)
+		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
 		boutput(C, "<i><b><font face = Tempus Sans ITC>You have sold your soul and become an avatar of evil! Spread darkness across the land!</font></b></i>")
 		C.mind.special_role = "Faustian Cluwne"
@@ -163,7 +163,7 @@
 	color = "#FF0000"
 	font_color = "#FF0000"
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			if (ismob(usr))
 				A:lastattacker = usr
@@ -241,7 +241,7 @@
 					if (1)
 						var/obj/item/contract/horse/H = new /obj/item/contract/horse(src)
 						H.merchant = src.merchant
-					else if (2)
+					if (2)
 						var/obj/item/contract/fart/F = new /obj/item/contract/fart(src)
 						F.merchant = src.merchant
 			else
@@ -286,7 +286,7 @@
 		if (total_souls_value >= 10)
 			wrestler_backfist(user, M) //sends people flying above 10 souls sold, does not scale with souls.
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		src.throwforce = min((15 + total_souls_value), 30) //capped at 30 max throwforce.
 		..()
 
@@ -297,19 +297,19 @@
 	set src in usr
 
 	if (!(isdiabolical(usr)))
-		boutput(usr, "<span style=\"color:blue\">You aren't evil enough to buy an infernal contract!</span>")
+		boutput(usr, "<span class='notice'>You aren't evil enough to buy an infernal contract!</span>")
 		return
 	if (!(total_souls_value >= 5))
-		boutput(usr, "<span style=\"color:blue\">You don't have enough souls to summon another contract! You need [5 - total_souls_value] more to afford it.</span>")
+		boutput(usr, "<span class='notice'>You don't have enough souls to summon another contract! You need [5 - total_souls_value] more to afford it.</span>")
 		return
 	else if ((total_souls_value >= 5) && (isdiabolical(usr)))
 		total_souls_value -= 5
 		spawncontract(usr, 1, 1)
-		boutput(usr, "<span style=\"color:blue\">You have spent five souls to summon another contract! Your weapons are weaker as a result.</span>")
+		boutput(usr, "<span class='notice'>You have spent five souls to summon another contract! Your weapons are weaker as a result.</span>")
 		soulcheck(usr)
 		return
 	else
-		boutput(usr, "<span style=\"color:red\">Something is horribly broken. Please report this to a coder.</span>")
+		boutput(usr, "<span class='alert'>Something is horribly broken. Please report this to a coder.</span>")
 		return
 
 /obj/item/contract
@@ -319,6 +319,7 @@
 	var/uses = 4.0
 	flags = FPRINT | TABLEPASS
 	w_class = 2.0
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	color = "#FF0000"
 	throw_speed = 4
@@ -333,15 +334,16 @@
 	showTooltipDesc = 0
 
 	New()
+		..()
 		src.color = random_color()
-	examine()
-		if ((ishuman(usr) && istype(usr:w_uniform, /obj/item/clothing/under/misc/lawyer/red/demonic)) || isobserver(usr))
-			..()
-		else
-			boutput(usr, "A strange piece of old crinkled paper, covered in mysterious gibberish legalese.")
-			return
 
-	get_desc(dist)
+	examine(mob/user)
+		if ((ishuman(user) && istype(user:w_uniform, /obj/item/clothing/under/misc/lawyer/red/demonic)) || isobserver(user))
+			return ..()
+		else
+			return list("A strange piece of old crinkled paper, covered in mysterious gibberish legalese.")
+
+	get_desc()
 		if (src.limiteduse == 0)
 			. += "Somehow, it seems like an endless number of signatures could fit on this thing."
 		else if (src.contractlines - src.used == 1)
@@ -353,15 +355,15 @@
 		if (!user)
 			return 0
 		if (isdiabolical(user))
-			boutput(user, "<span style=\"color:blue\">You can't sell your soul to yourself!</span>")
+			boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 			return 0
-		src.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
+		src.visible_message("<span class='alert'><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a [src.type] contract at [log_loc(user)]!")
 		return user.sell_soul(100, 0, 1)
 
 	proc/vanish(var/mob/user as mob, var/mob/badguy as mob)
 		if(user)
-			boutput(user, "<span style=\"color:blue\"><b>The depleted contract vanishes in a puff of smoke!</b></span>")
+			boutput(user, "<span class='notice'><b>The depleted contract vanishes in a puff of smoke!</b></span>")
 		playsound(src.loc, pick('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg'), 50, 1)
 		spawncontract(badguy, 0, 0) //huzzah for efficient code
 		SPAWN_DBG(1 DECI SECOND)
@@ -374,20 +376,20 @@
 			return
 		else if (isdiabolical(user))
 			if (M == user)
-				boutput(user, "<span style=\"color:blue\">You can't sell your soul to yourself!</span>")
+				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 				return
 			else if (!M.literate)
-				boutput(user, "<span style=\"color:blue\">Unfortunately they don't know how to write. Their signature will mean nothing.</span>")
+				boutput(user, "<span class='notice'>Unfortunately they don't know how to write. Their signature will mean nothing.</span>")
 				return
 			else if (src.inuse != 1)
 				src.inuse = 1
-				M.visible_message("<span style=\"color:red\"><B>[user] is guiding [M]'s hand to the signature field of [src]!</B></span>")
+				M.visible_message("<span class='alert'><B>[user] is guiding [M]'s hand to the signature field of [src]!</B></span>")
 				if (!do_mob(user, M, 70)) //150 (or 15 seconds) was way too long to actually be useful
 					if (user && ismob(user))
 						user.show_text("You were interrupted!", "red")
 						src.inuse = 0
 						return
-				M.visible_message("<span style=\"color:red\">[user] forces [M] to sign [src]!</span>")
+				M.visible_message("<span class='alert'>[user] forces [M] to sign [src]!</span>")
 				logTheThing("combat", user, M, "forces [M] to sign a [src] at [log_loc(user)].")
 				MagicEffect(M, user)
 				SPAWN_DBG(1 DECI SECOND)
@@ -399,10 +401,10 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/pen))
 			if (isdiabolical(user))
-				boutput(user, "<span style=\"color:blue\">You can't sell your soul to yourself!</span>")
+				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 				return
 			else if (user.mind && user.mind.soul < 100)
-				boutput(user, "<span style=\"color:blue\">You don't have a soul to sell!</span>")
+				boutput(user, "<span class='notice'>You don't have a soul to sell!</span>")
 				return
 			else if (!isliving(user))
 				return
@@ -413,7 +415,7 @@
 				SPAWN_DBG(1 DECI SECOND)
 					soulcheck(src.merchant)
 			else
-				user.visible_message("<span style=\"color:red\"><b>[user] looks puzzled as [he_or_she(user)] realizes [his_or_her(user)] pen isn't evil enough to sign [src]!</b></span>")
+				user.visible_message("<span class='alert'><b>[user] looks puzzled as [he_or_she(user)] realizes [his_or_her(user)] pen isn't evil enough to sign [src]!</b></span>")
 				return
 		else
 			return
@@ -431,6 +433,7 @@ obj/item/contract/satan
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -450,6 +453,7 @@ obj/item/contract/macho
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -467,20 +471,21 @@ obj/item/contract/wrestle
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
 			user.mind.special_role = "Faustian Wrestler"
-			sleep(1)
+			sleep(0.1 SECONDS)
 			user.make_wrestler(1)
 			user.traitHolder.addTrait("addict") //HEH
 			user.traitHolder.addTrait("clutz")
 			user.traitHolder.addTrait("leftfeet")
 			user.traitHolder.addTrait("nervous")
 			user.reagents.add_reagent(pick("methamphetamine", "crank", "LSD"), rand(1,75))
-			boutput(user, "<span style=\"color:blue\">Oh cripes, looks like your years of drug abuse caught up with you! </span>")
+			boutput(user, "<span class='notice'>Oh cripes, looks like your years of drug abuse caught up with you! </span>")
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
-			user.visible_message("<span style=\"color:red\">[user]'s pupils dilate.</span>")
+			user.visible_message("<span class='alert'>[user]'s pupils dilate.</span>")
 			user.changeStatus("stunned", 1000)
 			ticker.mode.Agimmicks.Add(user)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -500,6 +505,7 @@ obj/item/contract/yeti
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -518,18 +524,19 @@ obj/item/contract/genetic
 		SPAWN_DBG(1 DECI SECOND)
 			user.bioHolder.AddEffect("activator", 0, 0, 1)
 			user.bioHolder.AddEffect("mutagenic_field", 0, 0, 1)
-			boutput(user, "<span style=\"color:blue\">You have finally achieved your full potential! Mom would so proud!</span>")
+			boutput(user, "<span class='success'>You have finally achieved your full potential! Mom would so proud!</span>")
 			if ((prob(5)) || (src.limiteduse == 1))
 				SPAWN_DBG(1 SECOND)
-					boutput(user, "<span style=\"color:green\">You feel an upwelling of additional power!</span>")
+					boutput(user, "<span class='success'>You feel an upwelling of additional power!</span>")
 					user:unkillable = 1
 					user.bioHolder.AddEffect("mutagenic_field_prenerf", 0, 0, 1)
 					SPAWN_DBG(0.2 SECONDS)
-						boutput(user, "<span style=\"color:blue\">You have ascended beyond mere humanity!</span>")
+						boutput(user, "<span class='success'>You have ascended beyond mere humanity!</span>")
 						user.mind.special_role = "Genetic Demigod"
 						ticker.mode.Agimmicks.Add(user)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -549,15 +556,15 @@ obj/item/contract/horse
 	attack_self(mob/user as mob)
 		if((ishuman(user)) && (isdiabolical(user)))
 			if (total_souls_value >= 20) //20 souls needed to start the end-times. Sufficiently difficult?
-				boutput(user, "<span style=\"color:red\"><font size=6><B>NEIGH!</b></font></span>")
+				boutput(user, "<span class='alert'><font size=6><B>NEIGH!</b></font></span>")
 				src.endtimes()
 				SPAWN_DBG(1 DECI SECOND)
 					soulcheck(user)
 				return
 			else
-				boutput(user, "<span style=\"color:red\"><font size=3><B>You currently have [total_souls_value] souls. You need 20 soul points to begin the end times. </b></font></span>")
+				boutput(user, "<span class='alert'><font size=3><B>You currently have [total_souls_value] souls. You need 20 soul points to begin the end times. </b></font></span>")
 		else
-			boutput(user, "<span style=\"color:blue\">Nothing happens.</span>")
+			boutput(user, "<span class='notice'>Nothing happens.</span>")
 
 	proc/endtimes()
 		total_souls_value -= 20
@@ -571,11 +578,12 @@ obj/item/contract/horse
 		SPAWN_DBG(1 DECI SECOND)
 			user.horse()
 			user.traitHolder.addTrait("soggy")
-			boutput(user, "<span style=\"color:red\"><font size=6><B>NEIGH</b></font></span>")
+			boutput(user, "<span class='alert'><font size=6><B>NEIGH</b></font></span>")
 			user.mind.special_role = "Faustian Horse"
 			ticker.mode.Agimmicks.Add(user)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -590,17 +598,22 @@ obj/item/contract/mummy
 		if(!..())
 			return 0
 		var/list/limbs = list("l_arm","r_arm","l_leg","r_leg","head","chest")
-		for (var/target in limbs)
-			if (!user:bandaged.Find(target))
-				user:bandaged += target
-				user.update_body()
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			for (var/target in limbs)
+				if (!H.bandaged.Find(target))
+					H.bandaged += target
+					H.update_body()
 		if(user.reagents)
 			user.reagents.add_reagent("formaldehyde", 300) //embalming fluid for mummies
 		if((prob(10)) || (src.limiteduse == 1))
-			boutput(user, "<span style=\"color:blue\">Wow, that contract did a really thorough job of mummifying you! It removed your organs and everything!</span>")
-			user:organHolder.drop_organ("all")
+			boutput(user, "<span class='notice'>Wow, that contract did a really thorough job of mummifying you! It removed your organs and everything!</span>")
+			if(isliving(user))
+				var/mob/living/L = user
+				L.organHolder.drop_organ("all")
 		if (src.limiteduse == 1)
 			src.used++
+			tooltip_rebuild = 1
 			SPAWN_DBG(0)
 				if (src.used >= src.contractlines)
 					src.vanish(user, badguy)
@@ -624,6 +637,7 @@ obj/item/contract/vampire
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -641,6 +655,7 @@ obj/item/contract/juggle
 			user.bioHolder.AddEffect("juggler", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -658,6 +673,7 @@ obj/item/contract/fart
 			user.bioHolder.AddEffect("linkedfart", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -675,6 +691,7 @@ obj/item/contract/bee
 			user.bioHolder.AddEffect("drunk_bee", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -694,6 +711,7 @@ obj/item/contract/rested
 			user.bioHolder.AddEffect("narcolepsy_super", 0, 0, 1) //basically, the signer's very vulnerable but exceptionally difficult to actually kill.
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -712,9 +730,10 @@ obj/item/contract/reversal
 		SPAWN_DBG(1 DECI SECOND)
 			user.bioHolder.AddEffect("breathless_contract", 0, 0, 1)
 			user.traitHolder.addTrait("reversal")
-			boutput(user, "<span style=\"color:blue\">You feel like you could take a shotgun blast to the face without getting a scratch on you!</span>")
+			boutput(user, "<span class='notice'>You feel like you could take a shotgun blast to the face without getting a scratch on you!</span>")
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -732,6 +751,7 @@ obj/item/contract/chemical
 			user.bioHolder.AddEffect("drunk_random", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -755,6 +775,7 @@ obj/item/contract/hair
 					H.bioHolder.mobAppearance.customization_first = "None"
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -772,11 +793,11 @@ obj/item/contract/greed
 			var/obj/item/spacecash/random/tourist/S = unpool(/obj/item/spacecash/random/tourist)
 			S.setup(user.loc)
 
-			boutput(user, "<span style=\"color:blue\">Some money appears at your feet. What, did you expect some sort of catch or trick?</span>")
+			boutput(user, "<span class='notice'>Some money appears at your feet. What, did you expect some sort of catch or trick?</span>")
 			var/wealthy = rand(1,2)
 			if (wealthy == 1)
 				SPAWN_DBG(10 SECONDS)
-					boutput(user, "<span style=\"color:blue\">What, not enough for you? Fine.</span>")
+					boutput(user, "<span class='notice'>What, not enough for you? Fine.</span>")
 					var/turf/T = get_turf(user)
 					if (T)
 						playsound(user.loc, "sound/misc/coindrop.ogg", 100, 1)
@@ -788,11 +809,12 @@ obj/item/contract/greed
 								new /obj/item/coin(T)
 			if (wealthy == 2)
 				SPAWN_DBG(10 SECONDS)
-					boutput(user, "<span style=\"color:blue\">Well, you were right.</span>")
+					boutput(user, "<span class='notice'>Well, you were right.</span>")
 					var/mob/living/carbon/human/H = user
 					H.become_gold_statue(1)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)

@@ -20,15 +20,21 @@
 	var/target_fluid = "flockdrone_fluid"
 	var/create_egg_at_fluid = 100
 	var/absorb_per_process_tick = 2
+	mat_changename = 0
+	mat_changedesc = 0
+	mat_changeappearance = 0
+
 
 	New(loc, mob/living/iced as mob, datum/flock/F=null)
 		..()
 		src.flock = F
 		var/datum/reagents/R = new /datum/reagents(initial_volume)
 		src.reagents = R
+		R.my_atom = src //grumble
 		iced.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 		occupant = iced
 		processing_items |= src
+		src.setMaterial(getMaterial("gnesis"))
 
 	proc/getHumanPiece(var/mob/living/carbon/human/H)
 		// prefer inventory items before limbs, and limbs before organs
@@ -55,8 +61,8 @@
 			target = pick(items)
 			H.remove_item(target)
 			playsound(get_turf(src), "sound/weapons/nano-blade-1.ogg", 50, 1)
-			boutput(H, "<span class='text-red'>[src] pulls [target] from you and begins to rip it apart.</span>")
-			src.visible_message("<span class='text-red'>[src] pulls [target] from [H] and begins to rip it apart.</span>")
+			boutput(H, "<span class='alert'>[src] pulls [target] from you and begins to rip it apart.</span>")
+			src.visible_message("<span class='alert'>[src] pulls [target] from [H] and begins to rip it apart.</span>")
 		else if(limbs.len >= 1)
 			eating_occupant = 1
 			target = pick(limbs)
@@ -64,8 +70,8 @@
 			H.emote("scream")
 			random_brute_damage(H, 20)
 			playsound(get_turf(src), "sound/impact_sounds/Flesh_Tear_1.ogg", 80, 1)
-			boutput(H, "<span class='text-red bold'>[src] wrenches your [initial(target.name)] clean off and begins peeling it apart! Fuck!</span>")
-			src.visible_message("<span class='text-red bold'>[src] wrenches [target.name] clean off and begins peeling it apart!</span>")
+			boutput(H, "<span class='alert bold'>[src] wrenches your [initial(target.name)] clean off and begins peeling it apart! Fuck!</span>")
+			src.visible_message("<span class='alert bold'>[src] wrenches [target.name] clean off and begins peeling it apart!</span>")
 		else if(organs.len >= 1)
 			eating_occupant = 1
 			target = pick(organs)
@@ -73,21 +79,21 @@
 			H.emote("scream")
 			random_brute_damage(H, 20)
 			playsound(get_turf(src), "sound/impact_sounds/Flesh_Tear_2.ogg", 80, 1)
-			boutput(H, "<span class='text-red bold'>[src] tears out your [initial(target.name)]! OH GOD!</span>")
-			src.visible_message("<span class='text-red bold'>[src] tears out [target.name]!</span>")
+			boutput(H, "<span class='alert bold'>[src] tears out your [initial(target.name)]! OH GOD!</span>")
+			src.visible_message("<span class='alert bold'>[src] tears out [target.name]!</span>")
 		else
 			H.gib()
 			occupant = null
 			underlays -= H
 			playsound(get_turf(src), "sound/impact_sounds/Flesh_Tear_2.ogg", 80, 1)
-			src.visible_message("<span class='text-red bold'>[src] rips what's left of its occupant to shreds!</span>")
+			src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
 
 	Enter(atom/movable/O)
 		. = ..()
 		underlays += O
 
 	proc/spawnEgg()
-		src.visible_message("<span class='text-blue'>[src] spits out a device!</span>")
+		src.visible_message("<span class='notice'>[src] spits out a device!</span>")
 		var/obj/flock_structure/egg/egg = new(get_turf(src), src.flock)
 		var/turf/target = null
 		target = get_edge_target_turf(get_turf(src), pick(alldirs))
@@ -116,14 +122,14 @@
 				eating_occupant = 0
 				playsound(get_turf(src), "sound/weapons/nano-blade-1.ogg", 50, 1)
 				if(occupant)
-					boutput(occupant, "<span class='text-blue'>[src] begins to process [target].</span>")
-			else if(ishuman(occupant))
+					boutput(occupant, "<span class='notice'>[src] begins to process [target].</span>")
+			else if(occupant && ishuman(occupant))
 				var/mob/living/carbon/human/H = occupant
 				getHumanPiece(H)
 			else if(occupant)
 				occupant.gib() // sorry buddy but if you're some freaky-deaky cube thing or some other weird living thing we can't be doing with this now
 			if(target)
-				target.loc = src
+				target.set_loc(src)
 		else
 			underlays -= target
 			if(hasvar(target, "health"))
@@ -155,5 +161,17 @@
 		if(occupant)
 			occupant.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 		..()
+
+
+/obj/icecube/flockdrone/special_desc(dist, mob/user)
+	if(isflock(user))
+		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+		special_desc += "<br><span class='bold'>ID:</span> Matter Reprocessor"
+		special_desc += "<br><span class='bold'>Volume:</span> [src.reagents.get_reagent_amount(src.target_fluid)]"
+		special_desc += "<br><span class='bold'>Needed volume:</span> [src.create_egg_at_fluid]"
+		special_desc += "<br><span class='bold'>###=-</span></span>"
+		return special_desc
+	else
+		return null // give the standard description
 
 

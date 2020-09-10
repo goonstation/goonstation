@@ -11,13 +11,17 @@
 
 	force = 5.0
 	throwforce = 7.0
-	stamina_damage = 25
-	stamina_cost = 20
+	stamina_damage = 40
+	stamina_cost = 14
 	stamina_crit_chance = 15
 
 	m_amt = 150
 	module_research = list("tools" = 4, "metals" = 2)
 	rand_pos = 1
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/wrench/gold
 	name = "golden wrench"

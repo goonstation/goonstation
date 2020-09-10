@@ -17,7 +17,8 @@
 			return
 		if (href_list["close"])
 			usr.Browse(null, "window=forcefield")
-			if (usr.machine == src) usr.machine = null
+			if (usr.using_dialog_of(src))
+				src.remove_dialog(usr)
 			src.updateUsrDialog()
 			return
 
@@ -110,15 +111,13 @@
 	proc/shock(var/mob/A)
 		if(!A) return
 		for(var/mob/M in view(A))
-			boutput(M, "<span style=\"color:red\">[A] was shocked by [src]!</span>")
-		boutput(A, "<span style=\"color:red\">[src] shocks you.</span>")
+			boutput(M, "<span class='alert'>[A] was shocked by [src]!</span>")
+		boutput(A, "<span class='alert'>[src] shocks you.</span>")
 		A.TakeDamage("All", 0, 75)
 		if(hasvar(A,"weakened")) A:changeStatus("weakened", 1 SECOND)
 		var/dirmob = turn(A.dir,180)
 		var/location = get_turf(A)
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, location)
-		s.start()
+		elecflash(location,power=4)
 		step(A,dirmob)
 		SPAWN_DBG(0.5 SECONDS) step(A,dirmob)
 		playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
@@ -134,14 +133,14 @@
 			if(set_active)
 				set_active = 0
 				turn_off()
-				boutput(user, "<span style=\"color:blue\">You deactivate the forcefield.</span>")
+				boutput(user, "<span class='notice'>You deactivate the forcefield.</span>")
 			else
 				set_active = 1
 				if(powered())
 					turn_on()
-					boutput(user, "<span style=\"color:blue\">You activate the forcefield.</span>")
+					boutput(user, "<span class='notice'>You activate the forcefield.</span>")
 				else
-					boutput(user, "<span style=\"color:blue\">You attempt to activate the forcefield but its not powered.</span>")
+					boutput(user, "<span class='notice'>You attempt to activate the forcefield but its not powered.</span>")
 
 	CanPass(atom/A, turf/T)
 		if (!active) return 1

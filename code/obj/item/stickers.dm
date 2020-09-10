@@ -16,6 +16,7 @@
 	var/list/random_icons = list()
 
 	New()
+		..()
 		if (islist(src.random_icons) && src.random_icons.len)
 			src.icon_state = pick(src.random_icons)
 		pixel_y = rand(-8, 8)
@@ -24,7 +25,7 @@
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (!A)
 			return
-		if (isarea(A) || istype(A, /obj/item/item_box))
+		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /obj/screen) || istype(A, /obj/ability_button))
 			return
 		user.tri_message("<b>[user]</b> sticks [src] to [A]!",\
 		user, "You stick [src] to [user == A ? "yourself" : "[A]"]!",\
@@ -49,8 +50,8 @@
 			sticker.icon_state = src.icon_state
 			sticker.appearance_flags = RESET_COLOR
 
-			//pox = CLAMP(-round(A.bound_width/2), pox, round(A.bound_width/2))
-			//poy = CLAMP(-round(A.bound_height/2), pox, round(A.bound_height/2))
+			//pox = clamp(-round(A.bound_width/2), pox, round(A.bound_width/2))
+			//poy = clamp(-round(A.bound_height/2), pox, round(A.bound_height/2))
 			sticker.pixel_x = pox
 			sticker.pixel_y = poy
 			overlay_key = "sticker[world.timeofday]"
@@ -64,14 +65,14 @@
 
 		src.attached = A
 		src.active = 1
-		src.loc = A
+		src.set_loc(A)
 
 		playsound(get_turf(src), 'sound/items/sticker.ogg', 50, 1)
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if (prob(50))
-			A.visible_message("<span style=\"color:red\">[src] lands on [A] sticky side down!</span>")
+			A.visible_message("<span class='alert'>[src] lands on [A] sticky side down!</span>")
 			src.stick_to(A,rand(-5,5),rand(-8,8))
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
@@ -83,9 +84,9 @@
 	proc/fall_off()
 		if (!active) return
 		if (istype(attached,/turf))
-			src.loc = attached
+			src.set_loc(attached)
 		else
-			src.loc = attached.loc
+			src.set_loc(attached.loc)
 		if (!dont_make_an_overlay)
 			attached.ClearSpecificOverlays(overlay_key)
 			overlay_key = 0
@@ -93,17 +94,15 @@
 		src.invisibility = 0
 		src.pixel_x = initial(pixel_x)
 		src.pixel_y = initial(pixel_y)
-		attached.visible_message("<span style=\"color:red\"><b>[src]</b> un-sticks from [attached] and falls to the floor!</span>")
+		attached.visible_message("<span class='alert'><b>[src]</b> un-sticks from [attached] and falls to the floor!</span>")
 		attached = 0
 
-	dispose()
+	disposing()
 		if (attached)
 			if (!dont_make_an_overlay && active)
 				attached.ClearSpecificOverlays(overlay_key)
-			attached.visible_message("<span style=\"color:red\"><b>[src]</b> is destroyed!</span>")
-
-	attack()
-		return
+			attached.visible_message("<span class='alert'><b>[src]</b> is destroyed!</span>")
+		..()
 
 /obj/item/sticker/postit
 	// this used to be some paper shit, then it was a cleanable/writing, now it's a sticker
@@ -118,7 +117,7 @@
 	var/max_message = 128
 
 	get_desc()
-		. = "<br><span style='color: blue'>It says:</span><br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
+		. = "<br><span class='notice'>It says:</span><br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
 	attack_hand(mob/user as mob)
 		//boutput(user, "fart")
@@ -155,12 +154,13 @@
 
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "[src.words ? "<br>" : ""]<b>\[[S.current_mode]\]</b>"
-			boutput(user, "<span style=\"color:blue\">You stamp \the [src].</span>")
+			tooltip_rebuild = 1
+			boutput(user, "<span class='notice'>You stamp \the [src].</span>")
 			return
 
 		else if (istype(W, /obj/item/pen))
 			if(!user.literate)
-				boutput(user, "<span style=\"color:red\">You don't know how to write.</span>")
+				boutput(user, "<span class='alert'>You don't know how to write.</span>")
 				return ..()
 			var/obj/item/pen/pen = W
 			pen.in_use = 1
@@ -183,6 +183,7 @@
 				else
 					src.icon_state = "postit-writing"
 			src.words += "[src.words ? "<br>" : ""][t]"
+			tooltip_rebuild = 1
 			pen.in_use = 0
 			src.add_fingerprint(user)
 			return
@@ -218,7 +219,7 @@
 			var/turf/F = src.attached
 			F.vis_contents -= src
 
-		src.loc = src.attached.loc
+		src.set_loc(src.attached.loc)
 		src.layer = initial(src.layer)
 		src.plane = initial(src.plane)
 		src.pixel_x = initial(src.pixel_x)
@@ -229,7 +230,7 @@
 		src.remove_from_attached()
 		..()
 
-	dispose()
+	disposing()
 		src.remove_from_attached()
 		..()
 
@@ -423,7 +424,7 @@
 			src.set_internal_radio(user)
 		else
 			src.set_internal_camera(user)
-					
+
 	fall_off()
 		if (src.radio)
 			src.loc.open_to_sound = 0
@@ -432,7 +433,7 @@
 			src.camera.c_tag = src.camera_tag
 		..()
 
-	dispose()
+	disposing()
 		if ((active) && (attached != null))
 			attached.open_to_sound = 0
 		if (src.camera)
@@ -448,12 +449,12 @@
 			src.camera.updateCoverage()
 		if (src.radio)
 			src.radio.invisibility = 101
-		logTheThing("combat", user, A, "places a spy sticker on %target% at [log_loc(user)].")
+		logTheThing("combat", user, A, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
 
 		..()
 
 		if (istype(A, /turf/simulated/wall) || istype(A, /turf/unsimulated/wall))
-			src.loc = get_turf(user) //If sticking to a wall, just set the loc to the user loc. Otherwise the spycam would be able to see through walls.
+			src.set_loc(get_turf(user)) //If sticking to a wall, just set the loc to the user loc. Otherwise the spycam would be able to see through walls.
 
 		if (src.radio)
 			src.loc.open_to_sound = 1
@@ -473,7 +474,7 @@
 	proc/set_internal_camera()
 		if (!ishuman(usr) || !src.camera)
 			return
-		usr.machine = src.camera
+		src.camera.add_dialog(usr)
 		if (!src.HTML)
 			src.generate_html()
 		usr.Browse(src.HTML, "window=sticker_internal_camera;title=Sticker Internal Camera")
@@ -484,7 +485,7 @@
 			return
 
 		if ((get_dist(src, usr) <= 1) || (usr.loc == src.loc))
-			usr.machine = src
+			src.add_dialog(usr)
 			switch (href_list["change_setting"])
 				if ("spynetwork")
 					if (src.camera)
@@ -564,4 +565,4 @@
 /obj/item/device/radio/spy/sec_only
 	locked_frequency = 1
 	frequency = R_FREQ_SECURITY
-	device_color = RADIOC_SECURITY
+	chat_class = RADIOCL_SECURITY

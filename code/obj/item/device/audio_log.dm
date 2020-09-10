@@ -1,7 +1,7 @@
 /obj/item/audio_tape
 	name = "compact tape"
 	desc = "A small audio tape.  You could make some rad mix-tapes with this!"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "recordertape"
 	w_class = 1.0
 	mats = 3
@@ -171,7 +171,7 @@
 		if (user.stat || user.restrained() || user.lying)
 			return
 		if ((user.contents.Find(src) || user.contents.Find(src.master) || get_dist(src, user) <= 1 && istype(src.loc, /turf)))
-			user.machine = src
+			src.add_dialog(user)
 
 			var/dat = "<TT><b>Audio Logger</b><br>"
 			if (src.tape)
@@ -190,7 +190,7 @@
 			onclose(user, "audiolog")
 		else
 			user.Browse(null, "window=audiolog")
-			user.machine = null
+			src.remove_dialog(user)
 
 		return
 
@@ -229,15 +229,14 @@
 		if (usr.stat || usr.restrained() || usr.lying)
 			return
 		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr) && istype(src.loc, /turf)))
-			usr.machine = src
+			src.add_dialog(usr)
 			switch(href_list["command"])
 				if("rec")
 					src.mode = 1
 					processing_items.Remove(src)
 				if("play")
 					src.mode = 2
-					if (!(src in processing_items))
-						processing_items.Add(src)
+					processing_items |= src
 				if("stop")
 					src.mode = 0
 					processing_items.Remove(src)
@@ -355,7 +354,7 @@
 
 			if (ismob(src.loc))
 				var/mob/M = src.loc
-				M.show_message("<span style=\"color:red\">Your [src] explodes!</span>", 1)
+				M.show_message("<span class='alert'>Your [src] explodes!</span>", 1)
 
 			if(T)
 				T.hotspot_expose(700,125)
@@ -422,25 +421,3 @@
 								"Electronic Voice",
 								"???")
 
-// ########################
-// # Horizon  audio  logs #
-// ########################
-
-/obj/item/device/audio_log/horizon_minorcollision
-	continuous = 0
-	audiolog_messages = list("Course stady, bearing One One Zero Mark Two,",
-							"Firing thrusters.",
-							"Steady hot stuff. Keep your eyes on the grav- wait a second.",
-							"Uh, Captain- I- I don't-",
-							"Shuttlecraft One to NSS Horizon abort maneuver! ABORT MANEUVER WE ARE NOT CLEA-",
-							"*Thunderous scraping, metallic sound*",
-							"Negative, Captain. Engines offline, there's some kind of well between *click*",
-							"What. the fuck is that. *Creaking, static*")
-	audiolog_speakers = list("Female voice",
-							"Juvenile voice",
-							"Female voice",
-							"Juvenile voice",
-							"Female voice",
-							"???",
-							"NSS Horizon",
-							"???")

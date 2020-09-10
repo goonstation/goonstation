@@ -30,15 +30,14 @@
 
 	New()
 		..()
+		// Previously generated a super lame amount of power from 5 KW to 5 MW. Let's make things... INTERESTING? Maybe 500 KW to 500 MW will be more interesting.
 		gen_level = rand(1,10) // levels from 1-10
-		gen_rate = 5000 * 1.0715 ** ((gen_level-1)*10 + rand(0,10)) // max 4.99MW
+		gen_rate = 500000 * 1.0715 ** ((gen_level-1)*10 + rand(0,10))
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(4, 1, user)
-		s.start()
+		elecflash(user,power=2)
 		user.shock(O, rand(5000, gen_rate / 4))
 		if(mode == 0)
 			var/turf/T = get_turf(O)
@@ -78,12 +77,12 @@
 				if (prob(10))
 					playsound(O, "sound/effects/screech2.ogg", 200, 1)
 					fireflash(O, rand(1,min(5,gen_level)))
-					O.visible_message("<span style=\"color:red\">[O] erupts in flame!</span>")
+					O.visible_message("<span class='alert'>[O] erupts in flame!</span>")
 				if (prob(5))
 					playsound(O, "sound/effects/screech2.ogg", 200, 1)
-					O.visible_message("<span style=\"color:red\">[O] rumbles!</span>")
+					O.visible_message("<span class='alert'>[O] rumbles!</span>")
 					for (var/mob/M in range(min(5,gen_level),T))
-						shake_camera(M, 5, 1)
+						shake_camera(M, 5, 8)
 						M.changeStatus("weakened", 3 SECONDS)
 					for (var/turf/TF in range(min(5,gen_level),T))
 						animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
@@ -93,7 +92,7 @@
 							W.smash()
 				if (prob(5))
 					playsound(O, "sound/effects/screech2.ogg", 200, 1)
-					O.visible_message("<span style=\"color:red\">[O] sparks violently!</span>")
+					O.visible_message("<span class='alert'>[O] sparks violently!</span>")
 					for (var/mob/M in range(min(5,gen_level),T))
 						arcFlash(O, M, gen_rate/2)
 		else

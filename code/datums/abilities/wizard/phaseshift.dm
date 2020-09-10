@@ -21,10 +21,10 @@
 		..()
 
 		var/SPtime = 35
-		if(holder.owner.wizard_spellpower())
+		if(holder.owner.wizard_spellpower(src))
 			SPtime = 50
 		else
-			boutput(holder.owner, "<span style=\"color:red\">Your spell doesn't last as long without a staff to focus it!</span>")
+			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
 		playsound(holder.owner.loc, "sound/effects/mag_phase.ogg", 25, 1, -1)
 		spell_invisibility(holder.owner, SPtime, 0, 1)
 
@@ -57,7 +57,7 @@
 	if (stop_burning == 1)
 		var/mob/living/carbon/human/HH = H
 		if (istype(HH) && HH.getStatusDuration("burning"))
-			boutput(HH, "<span style=\"color:blue\">The flames sputter out as you phase shift.</span>")
+			boutput(HH, "<span class='notice'>The flames sputter out as you phase shift.</span>")
 			HH.delStatus("burning")
 
 	SPAWN_DBG(0)
@@ -82,10 +82,11 @@
 		steam.location = mobloc
 		steam.start()
 		H.canmove = 0
-		H.restrain_time = world.timeofday + 40
-		sleep(20)
+		H.restrain_time = TIME + 40
+		holder.canmove = 0
+		sleep(2 SECONDS)
 		flick("reappear",animation)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		H.set_loc(mobloc)
 		H.canmove = 1
 		H.restrain_time = 0
@@ -100,12 +101,14 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	invisibility = 101
-	var/canmove = 1
+	var/canmove = 1 // can be used to completely stop movement
+	var/movecd = 0 // used in relaymove, so people don't move too quickly
 	density = 0
 	anchored = 1
 
 /obj/dummy/spell_invis/relaymove(var/mob/user, direction, delay)
-	if (!src.canmove) return
+	if (!src.canmove || src.movecd)
+		return
 	switch(direction)
 		if(NORTH)
 			src.y++
@@ -127,8 +130,8 @@
 		if(SOUTHWEST)
 			src.y--
 			src.x--
-	src.canmove = 0
-	SPAWN_DBG(0.2 SECONDS) src.canmove = 1
+	src.movecd = 1
+	SPAWN_DBG(0.2 SECONDS) src.movecd = 0
 
 /obj/dummy/spell_invis/ex_act(blah)
 	return
@@ -149,8 +152,8 @@
 	if (!H.canmove)
 		return
 
-	if (ishuman(H))
-		var/mob/living/carbon/human/owner = H
+	if (isliving(H))
+		var/mob/living/owner = H
 		if (owner.stamina < STAMINA_SPRINT)
 			return
 
@@ -158,12 +161,32 @@
 	//usecloak == check abilityholder
 	new /obj/dummy/spell_batpoof( get_turf(H), H , cloak)
 
+/proc/spell_firepoof(var/mob/H)
+	if (!H || !ismob(H))
+		return
+	if (!isturf(H.loc))
+		H.show_text("You can't seem to transform in here.", "red")
+		return
+	if (isdead(H))
+		return
+	if (!H.canmove)
+		return
+
+	if (isliving(H))
+		var/mob/living/owner = H
+		if (owner.stamina < STAMINA_SPRINT)
+			return
+
+	new /obj/dummy/spell_batpoof/firepoof( get_turf(H), H , 0)
+
 /obj/dummy/spell_batpoof
 	name = "bat"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "vampbat"
 	density = 0
 	flags = TABLEPASS | DOORPASS
+
+	var/stamina_mult = 0.88
 
 	var/mob/living/carbon/owner = 0
 	var/datum/abilityHolder/vampire/vampholder = 0
@@ -190,8 +213,7 @@
 		owner.remove_stamina(5)
 
 		if (use_cloakofdarkness)
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 
 		SPAWN_DBG(-1)
 			var/reduc_count = 0
@@ -200,7 +222,7 @@
 				if (reduc_count >= 4)
 					reduc_count = 0
 					owner.remove_stamina(1)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
 			if (src && !src.qdeled)
 				dispel()
@@ -258,7 +280,7 @@
 	relaymove(var/mob/user, direction, delay)//all relaymove should accept delay
 		delay = max(delay,1)			//0.75 sprint 1.25 run
 		if (direction & (direction-1))
-			delay *= 1.4
+			delay *= DIAG_MOVE_DELAY_MULT
 
 		var/glide = ((32 / delay) * world.tick_lag)
 		src.glide_size = glide
@@ -276,7 +298,7 @@
 
 		user.glide_size = glide
 
-		owner.remove_stamina(round(STAMINA_COST_SPRINT*0.88))
+		owner.remove_stamina(round(STAMINA_COST_SPRINT*stamina_mult))
 
 		update_cloak_status()
 
@@ -316,3 +338,23 @@
 	attack_hand(mob/M)
 		dispel(1)
 		if(owner) owner.attackby(M)
+
+
+	firepoof
+		icon_state = "fireball"
+		icon = 'icons/obj/wizard.dmi'
+		flags = TABLEPASS
+		stamina_mult = 1.1
+
+		New()
+			..()
+			playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 15, 1, pitch = 1.8)
+
+		relaymove()
+			..()
+			tfireflash(get_turf(owner), 0, 100)
+
+
+		dispel()
+			playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 15, 1, pitch = 2)
+			..()

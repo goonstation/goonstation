@@ -9,7 +9,7 @@
 /obj/machinery/computer/door_control/proc/alarm()
 	if(status & (NOPOWER|BROKEN))
 		return
-	for(var/obj/machinery/door/window/brigdoor/M in doors)
+	for(var/obj/machinery/door/window/brigdoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			if(M.density)
 				SPAWN_DBG( 0 )
@@ -26,8 +26,8 @@
 	if(..())
 		return
 	var/dat = "<HTML><BODY><TT><B>Brig Computer</B><br><br>"
-	user.machine = src
-	for(var/obj/machinery/door/window/brigdoor/M in doors)  //DOORS OH MY GOD (was previously looping through WORLD)
+	src.add_dialog(user)
+	for(var/obj/machinery/door/window/brigdoor/M in by_type[/obj/machinery/door])  //DOORS OH MY GOD (was previously looping through WORLD)
 		if(M.id == 1)
 			dat += text("<A href='?src=\ref[src];setid=1'>Door 1: [(M.density ? "Closed" : "Opened")]</A><br>")
 		else if(M.id == 2)
@@ -51,19 +51,19 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["setid"])
 			if(src.allowed(usr))
 				src.id = text2num(href_list["setid"])
 				src.alarm()
 		if (href_list["openall"])
 			if(src.allowed(usr))
-				for(var/obj/machinery/door/window/brigdoor/M in doors)
+				for(var/obj/machinery/door/window/brigdoor/M in by_type[/obj/machinery/door])
 					if(M.density)
 						M.open()
 		if (href_list["closeall"])
 			if(src.allowed(usr))
-				for(var/obj/machinery/door/window/brigdoor/M in doors)
+				for(var/obj/machinery/door/window/brigdoor/M in by_type[/obj/machinery/door])
 					if(!M.density)
 						M.close()
 		src.add_fingerprint(usr)

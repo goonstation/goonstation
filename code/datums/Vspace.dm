@@ -66,30 +66,26 @@ datum/v_space
 		if(!user)
 			return
 		if(!active)
-			boutput(user, "<span style=\"color:red\">Unable to connect to the Net!</span>")
+			boutput(user, "<span class='alert'>Unable to connect to the Net!</span>")
 			return
 		if(!network_device)
-			boutput(user, "<span style=\"color:red\">You lack a device able to connect to the net!</span>")
+			boutput(user, "<span class='alert'>You lack a device able to connect to the net!</span>")
 			return
 		if(!user:client)
 			return
 		if(!user.mind)
-			boutput(user, "<span style=\"color:red\">You don't have a mind!</span>")
+			boutput(user, "<span class='alert'>You don't have a mind!</span>")
 			return
 
 //		var/range_check = In_Network(user, network_device, network)
 //		if(!range_check)
-//			boutput(user, "<span style=\"color:red\">Out of network range!</span>")
+//			boutput(user, "<span class='alert'>Out of network range!</span>")
 //			return
 
-		var/obj/landmark/B = null
-		for (var/obj/landmark/A in landmarks)//world)
-			LAGCHECK(LAG_LOW)
-			if (A.name == network)
-				B = A
-				break
-		if(!B)//no entry landmark
-			boutput(user, "<span style=\"color:red\">Invalid network!</span>")
+		var/turf/B = pick_landmark(network)
+
+		if(!B) //no entry landmark
+			boutput(user, "<span class='alert'>Invalid network!</span>")
 			return
 
 
@@ -102,11 +98,11 @@ datum/v_space
 			V.body = user
 			user.mind.transfer_to(V)
 			character = V
-			character.visible_message("<span style=\"color:blue\"><b>[user.name] logs in!</b></span>")
+			character.visible_message("<span class='notice'><b>[user.name] logs in!</b></span>")
 		else
 			character = create_Vcharacter(user, network_device, network)
-			character.set_loc(B.loc)
-			character.visible_message("<span style=\"color:blue\"><b>[character.name] logs in!</b></span>")
+			character.set_loc(B)
+			character.visible_message("<span class='notice'><b>[character.name] logs in!</b></span>")
 		users.Add(character)
 		// Made much more prominent due to frequent a- and mhelps (Convair880).
 		character.show_text("<h2><font color=red><B>Death in virtual reality will result in a log-out. You can also press one of the logout buttons to leave.</B></font></h2>", "red")
@@ -124,7 +120,7 @@ datum/v_space
 			user.client.reset_view()
 
 		for(var/mob/O in oviewers())
-			boutput(O, "<span style=\"color:red\"><b>[user] logs out!</b></span>")
+			boutput(O, "<span class='alert'><b>[user] logs out!</b></span>")
 		if (istype(user.loc,/obj/racing_clowncar/kart))
 			var/obj/racing_clowncar/kart/car = user.loc
 			car.reset()
@@ -153,7 +149,7 @@ datum/v_space
 			else
 				var/mob/dead/observer/O = user.ghostize()
 				if (O)
-					var/arrival_loc = pick(latejoin)
+					var/arrival_loc = pick_landmark(LANDMARK_LATEJOIN)
 					O.real_name = user.isghost
 					O.name = O.real_name
 					O.set_loc(arrival_loc)

@@ -36,7 +36,12 @@
 
 	New()
 		my_turf = get_turf(src)
+		START_TRACKING
 		..()
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	process()
 		if (!my_turf)
@@ -65,28 +70,25 @@
 
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		if (istype(I, /obj/item/weldingtool))
-			var/obj/item/weldingtool/W = I
-			if(W.welding)
-				if(!W.try_weld(user, 2))
-					return
-				W.eyecheck(user)
-
-				if (!src.welded)
-					src.welded = 1
-					logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
-					user.show_text("You weld the drain shut.")
-				else
-					logTheThing("station", user, null, "un-welded [name] at [log_loc(user)].")
-					src.welded = 0
-					user.show_text("You unseal the drain with your welder.")
-
-				if (src.clogged)
-					src.clogged = 0
-					user.show_text("The drain clog melts away.")
-
-				src.update_icon()
+		if (isweldingtool(I))
+			if(!I:try_weld(user, 2))
 				return
+
+			if (!src.welded)
+				src.welded = 1
+				logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
+				user.show_text("You weld the drain shut.")
+			else
+				logTheThing("station", user, null, "un-welded [name] at [log_loc(user)].")
+				src.welded = 0
+				user.show_text("You unseal the drain with your welder.")
+
+			if (src.clogged)
+				src.clogged = 0
+				user.show_text("The drain clog melts away.")
+
+			src.update_icon()
+			return
 		if (istype(I,/obj/item/material_piece/cloth))
 			var/obj/item/material_piece/cloth/C = I
 			src.clogged += (20 * C.amount) //One piece of cloth clogs for about 1 minute. (cause the machine loop updates ~3 second interval)
@@ -228,6 +230,8 @@
 	var/slurping = 0
 	var/pissing = 0
 
+	var/contained = 0
+
 	var/static/image/overlay_image = image('icons/obj/fluid.dmi')
 
 	New()
@@ -259,6 +263,7 @@
 		..()
 
 	process()
+		if(contained) return
 		if (slurping)
 			if (src.reagents.total_volume < bladder)
 				var/turf/T = get_turf(src)
@@ -299,7 +304,7 @@
 		if (usr.stat || usr.restrained())
 			return
 		if (get_dist(src, usr) <= 1)
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["slurp"])
 				slurping = 1
@@ -324,7 +329,7 @@
 		return
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/offtext
 		var/intext
 		var/outtext
@@ -354,7 +359,16 @@
 		onclose(user, "fluid_canister")
 		return
 
-
+/obj/machinery/fluid_canister/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/atmosporter))
+		var/obj/item/atmosporter/porter = W
+		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		else
+			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
+			src.contained = 1
+			src.set_loc(W)
+			elecflash(user)
+	..()
 ///////////////////
 //////canister/////
 ///////////////////
@@ -410,9 +424,9 @@
 	w_class = 4.0
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 5
-	stamina_damage = 35
-	stamina_cost = 30
+	force = 9
+	stamina_damage = 30
+	stamina_cost = 20
 	stamina_crit_chance = 6
 	var/c_color = null
 	mats = 7
@@ -420,6 +434,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	afterattack(atom/target, mob/user as mob)
 		if (istype(target,/turf/space/fluid/warp_z5))
@@ -434,7 +449,7 @@
 			L.linked_ladder.linked_ladder = L
 
 			user.drop_item()
-			src.loc = L
+			src.set_loc(L)
 			L.og_ladder_item = src
 			L.linked_ladder.og_ladder_item = src
 
@@ -504,10 +519,10 @@
 		active = !active
 		if (active)
 			playsound(src.loc, powerupsfx, 50, 1, 0.1, 1)
-			usr.visible_message("<span style=\"color:blue\">[usr] activates [src].</span>", "<span style=\"color:blue\">You activate [src].</span>")
+			user.visible_message("<span class='notice'>[user] activates [src].</span>", "<span class='notice'>You activate [src].</span>")
 		else
 			playsound(src.loc, powerdownsfx, 50, 1, 0.1, 1)
-			user.visible_message("<span style=\"color:blue\">[user] disarms [src].</span>","<span style=\"color:blue\">You disarm [src].</span>")
+			user.visible_message("<span class='notice'>[user] disarms [src].</span>","<span class='notice'>You disarm [src].</span>")
 
 	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I) || ispryingtool(I) || ispulsingtool(I))

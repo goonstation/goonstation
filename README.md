@@ -1,6 +1,13 @@
 # Goonstation ![](https://i.imgur.com/mvQFRZm.png)
 
-![contains resentment](https://forthebadge.com/images/badges/built-with-resentment.svg)![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)
+![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)![made with crayons](https://forthebadge.com/images/badges/made-with-crayons.svg)![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)
+
+<table>
+<tr><td align="right" >Master Status: </td>
+<td><img valign="sub" src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=master"/></td></tr>
+<tr><td align="right">Develop Status: </td>
+<td><img valign="sub" src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=develop"/></td></tr>
+</table>
 
 **Website:** [goonhub.com](https://goonhub.com)
 
@@ -8,7 +15,7 @@
 
 **Wiki:** [wiki.ss13.co](https://wiki.ss13.co)
 
-**Goonstation Discord:** [0117EEzASKYV2vtek](https://discord.gg/0117EEzASKYV2vtek)
+**Goonstation Discord:** [zd8t6pY](https://discord.gg/zd8t6pY)
 
 This is the codebase for the Goonstation branch of [Space Station 13](https://spacestation13.com/).
 
@@ -20,12 +27,23 @@ Space Station 13 is a community developed, multiplayer round-based role playing 
 
 ## Contributing
 
-[Code Guidelines](https://hackmd.io/@ZeWaka/gooncode)
+[Contributor Guidelines](https://hackmd.io/@ZeWaka/gooncontributor)
+
+[Code Guide](https://hackmd.io/@ZeWaka/gooncode)
 
 [Spriting Guidelines](https://hackmd.io/@ZeWaka/goonsprite)
 
 [Mapping Guidelines](https://hackmd.io/@ZeWaka/goonmap)
 
+## FAQ (Frequently Asked Question)
+
+#### Q: I'm getting a compilation error like `unable to open +secret\__secret.dme`.
+
+You’ll need to create a file named `__secret.dme` in the +secret subdirectory. It should be blank and have no contents. Read the [Goonstation Development Guide](https://hackmd.io/@ZeWaka/goondev) for additional details.
+
 ## LICENSE
-All Goonstation contributions are licensed under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/).
-See LICENSE for more details.
+[![license-badge](https://forthebadge.com/images/badges/cc-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
+
+All Goonstation contributions are licensed under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/). See LICENSE for more details.
+
+**Important:** This means that code from Goonstation cannot be ported to codebases such as /tg/station. If you wish to port a specific feature, you must get the developer(s) to sublicense it to you under a license like AGPLv3. This also applies in the opposite direction for features ported from other codebases.

@@ -4,7 +4,7 @@
 		return
 
 	var/currentLoc = src.loc
-	var/ASLoc = pick(latejoin)
+	var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 
 	// They could be in a pod or whatever, which would have unfortunate results when respawned.
 	if (!isturf(src.loc))
@@ -27,10 +27,7 @@
 		else
 			character.set_loc(ASLoc)
 
-		src.loc = null // Same as wraith/blob creation proc. Trying to narrow down a bug which
-		var/this = src // inexplicably (and without runtimes) caused another proc to fail, and
-		src = null // might as well give this a try. I suppose somebody else ran into the same problem?
-		qdel(this)
+		qdel(src)
 		return character
 
 	else
@@ -45,10 +42,7 @@
 			else
 				character.set_loc(ASLoc)
 
-			src.loc = null
-			var/this = src
-			src = null
-			qdel(this)
+			qdel(src)
 			return character
 
 		var/mob/new_player/respawned = new() // C&P from respawn_target(), which couldn't be adapted easily.
@@ -58,10 +52,7 @@
 		respawned.Login()
 		respawned.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 
-		src.loc = null
-		var/this = src
-		src = null
-		qdel(this)
+		qdel(src)
 
 		logTheThing("debug", respawned, null, "Humanize() failed. Player was respawned instead.")
 		message_admins("Humanize() failed. [key_name(respawned)] was respawned instead.")
@@ -73,7 +64,7 @@
 	if (src.transforming || !src.bioHolder)
 		return
 	if (iswizard(src))
-		src.visible_message("<span style=\"color:red\"><b>[src] magically resists being transformed!</b></span>")
+		src.visible_message("<span class='alert'><b>[src] magically resists being transformed!</b></span>")
 		return
 
 	src.unequip_all()
@@ -83,8 +74,7 @@
 
 /mob/new_player/AIize(var/mobile=0)
 	src.spawning = 1
-	..()
-	return
+	return ..()
 
 /mob/living/carbon/AIize(var/mobile=0)
 	if (src.transforming)
@@ -95,7 +85,8 @@
 	src.icon = null
 	src.invisibility = 101
 	for(var/t in src.organs)
-		qdel(src.organs[text("[]", t)])
+		qdel(src.organs[t])
+		src.organs[t] = null
 
 	return ..()
 
@@ -118,12 +109,8 @@
 	mind.transfer_to(O)
 	mind.assigned_role = "AI"
 
-	if (!mobile && !do_not_move)
-		var/obj/loc_landmark
-		loc_landmark = locate(text("start*AI"))
-
-		if(loc_landmark && loc_landmark.loc)
-			O.set_loc(loc_landmark.loc)
+	if (!mobile && !do_not_move && job_start_locations["AI"])
+		O.set_loc(pick(job_start_locations["AI"]))
 
 	boutput(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 	boutput(O, "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
@@ -161,6 +148,7 @@
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_radio
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
+	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 	O.job = "AI"
 
 	SPAWN_DBG(0)
@@ -174,7 +162,7 @@
 /mob/proc/critterize(var/CT)
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a critter ([CT]).")
-		logTheThing("admin", usr, src, "made %target% a critter ([CT]).")
+		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a critter ([CT]).")
 
 		return make_critter(CT, get_turf(src))
 	return 0
@@ -184,7 +172,7 @@
 	if (!(T && isturf(T)))
 		T = get_turf(src)
 	/*if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = pick(latejoin)
+		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 		if (ASLoc)
 			W.set_loc(ASLoc)
 		else
@@ -196,10 +184,9 @@
 	if (src.bioHolder)
 		var/datum/bioHolder/original = new/datum/bioHolder(W)
 		original.CopyOther(src.bioHolder)
+		if(W.bioHolder)
+			qdel(W.bioHolder)
 		W.bioHolder = original
-	if (issmallanimal(W))
-		var/mob/living/critter/small_animal/small = W
-		small.setup_overlays()
 
 	var/mob/selfmob = src
 	src = null
@@ -214,6 +201,11 @@
 			ticker.minds += W.mind
 			W.mind.key = key
 			W.mind.current = W
+
+	if (issmallanimal(W))
+		var/mob/living/critter/small_animal/small = W
+		small.setup_overlays() // this requires the small animal to have a client to set things up properly
+
 	SPAWN_DBG(1 DECI SECOND)
 		qdel(selfmob)
 	return W
@@ -289,7 +281,7 @@
 //	animation.icon = 'icons/mob/mob.dmi'
 //	animation.master = src
 //	flick("h2alien", animation)
-//	sleep(48)
+//	sleep(4.8 SECONDS)
 //	qdel(animation)
 	var/mob/living/carbon/alien/humanoid/O = new /mob/living/carbon/alien/humanoid( src.loc )
 	O.name = "alien"
@@ -323,7 +315,7 @@
 //	animation.icon = 'icons/mob/mob.dmi'
 //	animation.master = src
 //	flick("h2alien", animation)
-//	sleep(48)
+//	sleep(4.8 SECONDS)
 //	qdel(animation)
 	var/mob/living/carbon/alien/humanoid/queen/O = new /mob/living/carbon/alien/humanoid/queen( src.loc )
 	O.name = "alien queen"
@@ -400,7 +392,7 @@
 /mob/proc/blobize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a blob.")
-		logTheThing("admin", usr, src, "made %target% a blob.")
+		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a blob.")
 
 		return make_blob()
 	return 0
@@ -409,15 +401,15 @@
 	if (src.mind || src.client)
 		if (shitty)
 			message_admins("[key_name(src)] has been made a faustian macho man.")
-			logTheThing("admin", null, src, "%target% has been made a faustian macho man.")
+			logTheThing("admin", null, src, "[constructTarget(src,"admin")] has been made a faustian macho man.")
 		else
 			message_admins("[key_name(usr)] made [key_name(src)] a macho man.")
-			logTheThing("admin", usr, src, "made %target% a macho man.")
+			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a macho man.")
 		var/mob/living/carbon/human/machoman/W = new/mob/living/carbon/human/machoman(src)
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-			var/ASLoc = pick(latejoin)
+			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 			if (ASLoc)
 				W.set_loc(ASLoc)
 			else
@@ -427,7 +419,7 @@
 
 		if (src.mind)
 			if (shitty)
-				boutput(src, "<span style=\"color:blue\">You are being bombarded by energetic macho waves!</span>")
+				boutput(src, "<span class='notice'>You are being bombarded by energetic macho waves!</span>")
 				src.mind.transfer_to(W)
 				W.mind.special_role = "faustian macho man"
 				ticker.mode.Agimmicks.Add(W)
@@ -470,10 +462,10 @@
 					) //they can keep macho heal
 				W.verbs -= dangerousVerbs //this is just diabolical
 				W.reagents.add_reagent("anti_fart", 800) //as is this
-			boutput(W, "<span style=\"color:blue\">You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
+			boutput(W, "<span class='notice'>You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
 
 		else
-			boutput(W, "<span style=\"color:blue\">You are now a macho man!</span>")
+			boutput(W, "<span class='notice'>You are now a macho man!</span>")
 
 		return W
 	return 0
@@ -484,21 +476,24 @@
 
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a cube ([CT]) with a lifetime of [life].")
-		logTheThing("admin", usr, src, "made %target% a cube ([CT]) with a lifetime of [life].")
+		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a cube ([CT]) with a lifetime of [life].")
 
 		return make_cube(CT, life)
 	return 0
 
 /mob/proc/make_cube(var/CT, var/life, var/turf/T)
 	if (!CT)
-		CT = /mob/living/carbon/cube/meat
+		if(issilicon(CT))
+			CT = /mob/living/carbon/cube/metal
+		else
+			CT = /mob/living/carbon/cube/meat
 	var/mob/living/carbon/cube/W = new CT()
 	if (!T || !isturf(T))
 		T = get_turf(src)
 	W.life_timer = life
 
 	if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = pick(latejoin)
+		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 		if (ASLoc)
 			W.set_loc(ASLoc)
 		else
@@ -561,8 +556,12 @@
 	set name = "Enter Ghostdrone Queue"
 	set category = "Ghost"
 
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
+		return
+
 	var/obj/machinery/ghost_catcher/catcher = null
-	if(by_type[/obj/machinery/ghost_catcher] && by_type[/obj/machinery/ghost_catcher].len)
+	if(length(by_type[/obj/machinery/ghost_catcher]))
 		catcher = by_type[/obj/machinery/ghost_catcher][1]
 
 	if (catcher)
@@ -577,6 +576,9 @@
 	set name = "Enter VR"
 	set category = "Ghost"
 
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		boutput(usr, "Sorry, respawn options aren't availbale during football mode.")
+		return
 	if (usr && istype(usr, /mob/dead/observer))
 		var/obj/machinery/sim/vr_bed/vr_bed = locate(/obj/machinery/sim/vr_bed)
 		vr_bed.log_in(usr)
@@ -592,7 +594,11 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='text-red'>The game hasn't started yet, silly!</span>")
+		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
+		return
+
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 
 	// get the mind
@@ -621,29 +627,29 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		if(minutes >= 1)
 			time_left_message += "[minutes] minute[minutes == 1 ? "" : "s"] and "
 		time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
-		boutput(src, "<span class='text-red'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
+		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
 	else
-		if (alert(src, "Are you sure you want to respawn as an animal? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
+		if (alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", "Yes", "No") != "Yes")
 			return
 		// you can be an animal
 		// get spawnpoints
-		var/list/spawns = list()
-		for(var/obj/landmark/L in landmarks)
-			if (L.name == "peststart")
-				spawns.Add(L.loc)
-			LAGCHECK(LAG_LOW)
-		var/turf/spawnpoint = get_turf(src)
-		if(spawns.len >= 1)
-			spawnpoint = pick(spawns)
-		else
-			spawnpoint = latejoin.len ? pick(latejoin) : spawnpoint
-		// be critter
+
+		var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
+		if(!spawnpoint)
+			spawnpoint = pick_landmark(LANDMARK_LATEJOIN, get_turf(src))
+		src.make_ghost_critter(spawnpoint)
 
 
-		var/mob/selfmob = src
-		src = null
-		var/mob/living/critter/C
-		var/traitor = checktraitor(selfmob)
+/mob/proc/make_ghost_critter(var/turf/spawnpoint, var/list/types = null)
+	var/mob/selfmob = src
+	src = null
+	var/mob/living/critter/C
+	var/traitor = 0
+
+	if (types && types.len)
+		C = selfmob.make_critter(pick(types), spawnpoint)
+	else
+		traitor = checktraitor(selfmob)
 		if (traitor)
 			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint)
 		else
@@ -653,22 +659,22 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 			else
 				C = selfmob.make_critter(pick(respawn_critter_types), spawnpoint)
 
-		C.mind.assigned_role = "Animal"
-		C.say_language = "animal"
-		C.literate = 0
-		C.ghost_spawned = 1
-		C.original_name = selfmob.real_name
+	C.mind.assigned_role = "Animal"
+	C.say_language = "animal"
+	C.literate = 0
+	C.ghost_spawned = 1
+	C.original_name = selfmob.real_name
 
-		if (traitor)
-			C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter_antag;size=600x400;title=Ghost Critter Help")
-		else
-			C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter;size=600x400;title=Ghost Critter Help")
+	if (traitor)
+		C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter_antag;size=600x400;title=Ghost Critter Help")
+	else
+		C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter;size=600x400;title=Ghost Critter Help")
 
-		//hacky fix : qdel brain to prevent reviving
-		if (C.organHolder)
-			var/obj/item/organ/brain/B = C.organHolder.get_organ("brain")
-			if (B)
-				qdel(B)
+	//hacky fix : qdel brain to prevent reviving
+	if (C.organHolder)
+		var/obj/item/organ/brain/B = C.organHolder.get_organ("brain")
+		if (B)
+			qdel(B)
 
 /mob/dead/observer/verb/respawn_as_mentor_mouse()
 	set name = "Respawn as Mentor Mouse"
@@ -676,12 +682,15 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set hidden = 1
 
 	if(!(src.client.player.mentor || src.client.holder))
-		boutput(src, "<span class='text-red'>You aren't even a mentor, how did you get here?!</span>")
+		boutput(src, "<span class='alert'>You aren't even a mentor, how did you get here?!</span>")
 		return
 
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='text-red'>The game hasn't started yet, silly!</span>")
+		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
+		return
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 
 	// get the mind
@@ -711,7 +720,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 			time_left_message += "[minutes] minute[minutes == 1 ? "" : "s"] and "
 		else
 			time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
-		boutput(src, "<span class='text-red'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
+		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
 	else
 		if (alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
 			return
@@ -722,7 +731,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		// you can be an animal
 		var/turf/spawnpoint = get_turf(src)
 		if(spawnpoint.density)
-			boutput(src, "<span class='text-red'>The wall is in the way.</span>")
+			boutput(src, "<span class='alert'>The wall is in the way.</span>")
 			return
 		// be critter
 
@@ -750,12 +759,12 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set hidden = 1
 
 	if(!src.client.holder)
-		boutput(src, "<span class='text-red'>You aren't even an admin, how did you get here?!</span>")
+		boutput(src, "<span class='alert'>You aren't even an admin, how did you get here?!</span>")
 		return
 
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='text-red'>The game hasn't started yet, silly!</span>")
+		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
 
 	if (alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", "Yes", "No") != "Yes")
@@ -772,7 +781,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	src = null
 	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint)
 	C.mind.assigned_role = "Animal"
-	C.say_language = "animal"
+	// C.say_language = "animal"
 	C.literate = 1
 	C.ghost_spawned = 1
 	C.original_name = selfmob.real_name
@@ -789,6 +798,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set category = null
 
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
+		return
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 	var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
 
@@ -818,11 +830,15 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(to_del)
 		newbody.remove_item(to_del)
 		qdel(to_del)
+	to_del = locate(/obj/item/storage/bible) in newbody
+	if(to_del)
+		newbody.remove_item(to_del)
+		qdel(to_del)
 	if(newbody.wear_id)
 		newbody.wear_id:access = get_access("Captain")
 
 	if (!newbody.bioHolder)
-		newbody.bioHolder = new bioHolder()
+		newbody.bioHolder = new bioHolder(newbody)
 	newbody.bioHolder.AddEffect("radio_brain")
 	// newbody.abilityHolder = src.abilityHolder
 	// if (newbody.abilityHolder)
@@ -843,22 +859,26 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	return
 
-var/list/ass_arena_spawn = list()
 var/respawn_arena_enabled = 0
 /mob/dead/observer/verb/go_to_respawn_arena()
 	set name = "Fight for your life"
 	set desc = "Visit the Respawn Arena to earn a respawn!"
 	set category = "Ghost"
 
-	if(!it_is_ass_day && !respawn_arena_enabled)
+	if(!ASS_JAM && !respawn_arena_enabled)
 		boutput(src,"The respawn arena is not open right now. Tough luck!")
 		return
 
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
 		return
 
-	var/mob/living/carbon/human/newbody = new()
 	if (!src.client) return //ZeWaka: fix for null.preferences
+
+	if(!src.client || !src.client.player || ON_COOLDOWN(src.client.player, "ass day arena", 2 MINUTES))
+		boutput(src, "Whoa whoa, you need to regenerate your ethereal essence to fight again, it'll take [time_to_text(ON_COOLDOWN(src?.client?.player, "ass day arena", 0))].")
+		return
+
+	var/mob/living/carbon/human/newbody = new()
 	src.client.preferences.copy_to(newbody,src,1)
 	newbody.real_name = src.real_name
 
@@ -869,7 +889,7 @@ var/respawn_arena_enabled = 0
 		newbody.key = src.key
 	equip_battler(newbody)
 	newbody.set_clothing_icon_dirty()
-	newbody.set_loc(pick(ass_arena_spawn).loc)
+	newbody.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 	return
 
 ///////////////////
@@ -882,47 +902,46 @@ var/respawn_arena_enabled = 0
 		if(flock == null)
 			// no flocks given, make flockmind
 			message_admins("[key_name(usr)] made [key_name(src)] a flockmind ([src.real_name]).")
-			logTheThing("admin", usr, src, "made %target% a flockmind ([src.real_name]).")
+			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flockmind ([src.real_name]).")
 			return make_flockmind()
 		else
 			// make flocktrace of existing flock
 			message_admins("[key_name(usr)] made [key_name(src)] a flocktrace of flock [flock.name].")
-			logTheThing("admin", usr, src, "made %target% a flocktrace ([flock.name]).")
+			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flocktrace ([flock.name]).")
 			return make_flocktrace(get_turf(src), flock)
 	return null
 
 /mob/proc/make_flockmind()
-	if (src.mind || src.client)
-		var/mob/living/intangible/flock/flockmind/O = new/mob/living/intangible/flock/flockmind(src)
+	if (!src.mind && !src.client)
+		return null
 
-		var/turf/T = get_turf(src)
-		if (!(T && isturf(T)) || ((isrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))
-			var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
-			if (OS)
-				O.set_loc(OS)
-			else
-				O.z = 1
+	var/mob/living/intangible/flock/flockmind/O = new/mob/living/intangible/flock/flockmind(src)
+
+	var/turf/T = get_turf(src)
+	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
+		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
+		if (OS)
+			O.set_loc(OS)
 		else
-			O.set_loc(T)
+			O.z = 1
+	else
+		O.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
-		if (src.mind)
-			src.mind.transfer_to(O)
-		else
-			var/key = src.client.key
-			if (src.client)
-				src.client.mob = O
-			O.mind = new /datum/mind()
-			O.mind.key = key
-			O.mind.current = O
-			ticker.minds += O.mind
-		src.loc = null
-		qdel(src)
-
-		boutput(O, "<B>You are a flockmind, the collective machine consciousness of a flock of drones! Your existence is tied to your flock! Ensure that it survives and thrives!</B>")
-		boutput(O, "<B>Silicon units are able to detect your transmissions and messages (with some signal corruption), so exercise caution in what you say.</B>")
-		boutput(O, "<B>On the flipside, you can hear silicon transmissions and all radio signals, but with heavy corruption.</B>")
-		return O
-	return null
+	if (src.mind)
+		src.mind.transfer_to(O)
+	else
+		var/key = src.client.key
+		if (src.client)
+			src.client.mob = O
+		O.mind = new /datum/mind()
+		O.mind.key = key
+		O.mind.current = O
+		ticker.minds += O.mind
+	qdel(src)
+	boutput(O, "<B>You are a flockmind, the collective machine consciousness of a flock of drones! Your existence is tied to your flock! Ensure that it survives and thrives!</B>")
+	boutput(O, "<B>Silicon units are able to detect your transmissions and messages (with some signal corruption), so exercise caution in what you say.</B>")
+	boutput(O, "<B>On the flipside, you can hear silicon transmissions and all radio signals, but with heavy corruption.</B>")
+	return O
 
 // flocktraces are made by flockminds
 /mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock)
@@ -943,13 +962,12 @@ var/respawn_arena_enabled = 0
 			O.mind.key = key
 			O.mind.current = O
 			ticker.minds += O.mind
-		src.loc = null
 		qdel(src)
 
 		boutput(O, "<span class='bold'>You are a flocktrace, a partition of the flock's collective computation!</span>")
 		boutput(O, "<span class='bold'>Your loyalty is to the flock and to the flockmind. Spread drones, convert the station, aid in the construction of the Relay.</span>")
 		boutput(O, "<span class='bold'>In this form, you cannot be harmed, but you can't do anything to the world at large.</span>")
 		boutput(O, "<span class='italic'>Tip: click-drag yourself onto unoccupied drones to take direct control of them.</span>")
-		boutput(O, "<span class='text-blue'>You are part of the <span class='bold'>[flock.name]</span> flock.</span>")
+		boutput(O, "<span class='notice'>You are part of the <span class='bold'>[flock.name]</span> flock.</span>")
 		return O
 	return null

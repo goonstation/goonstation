@@ -16,26 +16,26 @@
         var/result = C.Invoke(args, to, add) //additional args are added after the ones given when the callback was created
         OR
         var/result = C.InvokeAsync(args, to, add) //Sleeps will not block, returns . on the first sleep (then continues on in the "background" after the sleep/block ends), otherwise operates normally.
-    
-    PROC TYPEPATH SHORTCUTS (these operate on paths, not types, so to these shortcuts, datum is NOT a parent of atom, etc...)       
-        
+
+    PROC TYPEPATH SHORTCUTS (these operate on paths, not types, so to these shortcuts, datum is NOT a parent of atom, etc...)
+
         proc defined on current(src) object OR overridden at src or any of it's parents:
             .procname
             Example:
                 CALLBACK(src, .some_proc_here)
-        
+
         proc defined on parent(of src) object (when the above doesn't apply):
             .proc/procname
             Example:
                 CALLBACK(src, .proc/some_proc_here)
-        
+
         global proc while in another global proc:
             .procname
             Example:
                 CALLBACK(GLOBAL_PROC, .some_proc_here)
-            
+
         Other wise you will have to do the full typepath of the proc (/type/of/thing/proc/procname)
-        
+
 */
 
 /datum/callback
@@ -44,6 +44,7 @@
     var/list/arguments
 
     New(thingToCall, procToCall, ...)
+        ..()
         if (thingToCall)
             src.object = thingToCall
 
@@ -63,7 +64,7 @@
                 callingArguments = callingArguments + args //not += so that it creates a new list so the arguments list stays clean
             else
                 callingArguments = args
-                
+
         if (src.object == GLOBAL_PROC)
             return call(src.delegate)(arglist(callingArguments))
 

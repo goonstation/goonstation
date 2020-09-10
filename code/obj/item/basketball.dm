@@ -3,7 +3,7 @@
 /obj/item/basketball
 	name = "basketball"
 	desc = "If you can't slam with the best, then jam with the rest."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bball"
 	item_state = "bball"
 	w_class = 3.0
@@ -22,15 +22,14 @@
 		src.icon_state = "bball"
 
 /obj/item/basketball/suicide(var/mob/user as mob)
-	user.visible_message("<span style=\"color:red\"><b>[user] fouls out, permanently.</b></span>")
+	user.visible_message("<span class='alert'><b>[user] fouls out, permanently.</b></span>")
 	user.TakeDamage("head", 175, 0)
-	user.updatehealth()
 	SPAWN_DBG(30 SECONDS)
 		if (user)
 			user.suiciding = 0
 	return 1
 
-/obj/item/basketball/throw_impact(atom/hit_atom)
+/obj/item/basketball/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.icon_state = "bball"
 	if(hit_atom)
@@ -41,6 +40,7 @@
 				if((prob(50) && M.bioHolder.HasEffect("clumsy")) || M.equipped() || get_dir(M, src) == M.dir)
 					src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
 					M.changeStatus("stunned", 2 SECONDS)
+					JOB_XP(M, "Clown", 1)
 					return
 				// catch the ball!
 				src.attack_hand(M)
@@ -52,13 +52,13 @@
 			M.changeStatus("stunned", 2 SECONDS)
 			return
 
-/obj/item/basketball/throw_at(atom/target, range, speed)
+/obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	src.icon_state = "bball_spin"
-	..(target, range, speed)
+	..()
 
 /obj/item/basketball/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/plutonium_core))
-		boutput(user, "<span style=\"color:blue\">You insert the [W.name] into the [src.name].</span>")
+		boutput(user, "<span class='notice'>You insert the [W.name] into the [src.name].</span>")
 		user.u_equip(W)
 		W.dropped(user)
 		W.layer = initial(W.layer)
@@ -98,23 +98,29 @@
 	var/active = 0
 	var/probability = 40
 
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ALL)
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iswrenchingtool(W) && mounted)
-			src.visible_message("<span style=\"color:blue\"><b>[user] removes [src].</b></span>")
+			src.visible_message("<span class='notice'><b>[user] removes [src].</b></span>")
 			src.pixel_y = 0
 			src.pixel_x = 0
 			src.anchored = 0
 			src.mounted = 0
 		else if (src.mounted && !istype(W, /obj/item/bballbasket))
 			if (W.cant_drop) return
-			src.visible_message("<span style=\"color:blue\"><b>[user]</b> jumps up and tries to dunk [W] into [src]!</span>")
+			src.visible_message("<span class='notice'><b>[user]</b> jumps up and tries to dunk [W] into [src]!</span>")
 			user.u_equip(W)
 			if (user.bioHolder.HasEffect("clumsy") && prob(50)) // clowns are not good at basketball I guess
 				user.visible_message("<span class='combat'><b>[user] knocks their head into the rim of [src]!</b></span>")
 				user.changeStatus("weakened", 5 SECONDS)
+				JOB_XP(user, "Clown", 1)
+
 			if (!src.shoot(W, user))
 				SPAWN_DBG(1 SECOND)
-					src.visible_message("<span style=\"color:red\">[user] whiffs the dunk.</span>")
+					src.visible_message("<span class='alert'>[user] whiffs the dunk.</span>")
 		return
 
 	attack_hand(mob/user as mob)
@@ -128,9 +134,9 @@
 			if (isturf(target) && target.density)
 				//if (get_dir(src,target) == NORTH || get_dir(src,target) == EAST || get_dir(src,target) == SOUTH || get_dir(src,target) == WEST)
 				if (get_dir(src,target) in cardinal)
-					src.visible_message("<span style=\"color:blue\"><b>[user] mounts [src] on [target].</b></span>")
+					src.visible_message("<span class='notice'><b>[user] mounts [src] on [target].</b></span>")
 					user.drop_item()
-					src.loc = get_turf(user)
+					src.set_loc(get_turf(user))
 					src.mounted = 1
 					src.anchored = 1
 					src.dir = get_dir(src, target)
@@ -164,19 +170,19 @@
 		O.set_loc(get_turf(src))
 		if (prob(src.probability)) // It might land!
 			if (prob(30)) // It landed cleanly!
-				src.visible_message("<span style=\"color:blue\">[O] lands cleanly in [src]!</span>")
+				src.visible_message("<span class='notice'>[O] lands cleanly in [src]!</span>")
 				src.basket(O)
 			else // Aaaa the tension!
-				src.visible_message("<span style=\"color:red\">[O] teeters on the edge of [src]!</span>")
+				src.visible_message("<span class='alert'>[O] teeters on the edge of [src]!</span>")
 				var/delay = rand(5, 15)
 				animate_horizontal_wiggle(O, delay, 5, 1, -1) // target, number of animation loops, speed, positive x variation, negative x variation
 				SPAWN_DBG(delay)
 					if (O && O.loc == src.loc)
 						if (prob(40)) // It goes in!
-							src.visible_message("<span style=\"color:blue\">[O] slips into [src]!</span>")
+							src.visible_message("<span class='notice'>[O] slips into [src]!</span>")
 							src.basket(O)
 						else
-							src.visible_message("<span style=\"color:red\">[O] slips off of the edge of [src]!</span>")
+							src.visible_message("<span class='alert'>[O] slips off of the edge of [src]!</span>")
 							src.active = 0
 					else
 						src.active = 0
@@ -205,7 +211,7 @@
 /obj/item/plutonium_core
 	name = "plutonium core"
 	desc = "A payload from a nuclear warhead. Comprised of weapons-grade plutonium."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "plutonium"
 	item_state = "egg3"
 	w_class = 3.0
@@ -230,7 +236,6 @@
 			if(affecting)
 				affecting.take_damage(0, 15)
 				H.UpdateDamageIcon()
-				H.updatehealth()
 
 
 //BLOOD BOWL BALL
@@ -238,7 +243,7 @@
 /obj/item/bloodbowlball
 	name = "spiked ball"
 	desc = "An american football studded with sharp spikes and serrated blades. Looks dangerous."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bloodbowlball"
 	item_state = "bloodbowlball"
 	w_class = 3.0
@@ -252,7 +257,7 @@
 	if(user)
 		src.icon_state = "bloodbowlball"
 
-/obj/item/bloodbowlball/throw_impact(atom/hit_atom)
+/obj/item/bloodbowlball/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.icon_state = "bloodbowlball"
 	if(hit_atom)
@@ -283,9 +288,9 @@
 					return
 	return
 
-/obj/item/bloodbowlball/throw_at(atom/target, range, speed)
+/obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	src.icon_state = "bloodbowlball_air"
-	..(target, range, speed)
+	..()
 
 /obj/item/bloodbowlball/attack(target as mob, mob/user as mob)
 	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)

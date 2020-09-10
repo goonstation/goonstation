@@ -44,7 +44,7 @@
 			W = M.get_ability_holder(/datum/abilityHolder/werewolf)
 		if (!W) return
 
-		M.visible_message("<span style=\"color:red\"><B>[M] starts salivating a disgusting amount!</B></span>")
+		M.visible_message("<span class='alert'><B>[M] starts salivating a disgusting amount!</B></span>")
 		W.tainted_saliva_reservior.clear_reagents()
 		M.reagents.copy_to(W.tainted_saliva_reservior, 1, 1)
 		M.reagents.clear_reagents()
@@ -61,5 +61,5 @@
 
 		W.tainted_saliva_reservior.clear_reagents()
 		boutput(M, __blue("<B>You no longer will spread saliva when you attack!</B>"))
-		M.visible_message("<span style=\"color:blue\"><B>[M] stops dripping its disgusting saliva!</B></span>")
+		M.visible_message("<span class='notice'><B>[M] stops dripping its disgusting saliva!</B></span>")
 		return

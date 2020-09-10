@@ -4,14 +4,14 @@
 client/proc/enable_waterflow(var/enabled as num)
 	set name = "Set Fluid Flow Enabled"
 	set desc = "0 to disable, 1 to enable"
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 	waterflow_enabled = !!enabled
 
 client/proc/delete_fluids()
 	set name = "Delete All Fluids"
 	set desc = "Probably safe to run. Probably."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	var/exenabled = waterflow_enabled
@@ -36,14 +36,14 @@ client/proc/delete_fluids()
 				fluid.removed()
 			i++
 			if(!(i%30))
-				sleep(2)
+				sleep(0.2 SECONDS)
 
 		enable_waterflow(exenabled)
 
 client/proc/special_fullbright()
 	set name = "Static Sea Light"
 	set desc = "Helps when server load is heavy. Doesn't affect trench."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
@@ -58,16 +58,17 @@ client/proc/special_fullbright()
 client/proc/replace_space()
 	set name = "Replace All Space Tiles With Ocean"
 	set desc = "uh oh."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	admin_only
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 	if(searchFor)
-		for(var/R in childrentypesof(/datum/reagent))
+		for(var/R in concrete_typesof(/datum/reagent))
 			if(findtext("[R]", searchFor)) L += R
 	else
-		L = childrentypesof(/datum/reagent)
+		L = concrete_typesof(/datum/reagent)
+
 	var/type = 0
 	if(L.len == 1)
 		type = L[1]
@@ -79,7 +80,7 @@ client/proc/replace_space()
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	logTheThing("admin", src, "began to convert all space tiles into an ocean of [reagent.id].")
+	logTheThing("admin", src, null, "began to convert all space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all space tiles into an ocean of [reagent.id]. Oh no.")
 
 	SPAWN_DBG(0)
@@ -97,18 +98,19 @@ client/proc/replace_space()
 		map_currently_underwater = 1
 
 client/proc/replace_space_exclusive()
-	set name = "Replace All Station-Zlevel Space Tiles With Ocean"
+	set name = "Oceanify"
 	set desc = "This is the safer one."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	admin_only
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 	if(searchFor)
-		for(var/R in childrentypesof(/datum/reagent))
+		for(var/R in concrete_typesof(/datum/reagent))
 			if(findtext("[R]", searchFor)) L += R
 	else
-		L = childrentypesof(/datum/reagent)
+		L = concrete_typesof(/datum/reagent)
+
 	var/type = 0
 	if(L.len == 1)
 		type = L[1]
@@ -120,24 +122,44 @@ client/proc/replace_space_exclusive()
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	logTheThing("admin", src, "began to convert all station space tiles into an ocean of [reagent.id].")
+	logTheThing("admin", src, null, "began to convert all station space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all station space tiles into an ocean of [reagent.id].")
 
 	SPAWN_DBG(0)
 		ocean_reagent_id = reagent.id
 		var/datum/reagents/R = new /datum/reagents(100)
 		R.add_reagent(reagent.id, 100)
+
+#ifdef UNDERWATER_MAP
+		var/master_reagent_name = R.get_master_reagent_name()
+		if(master_reagent_name == "water")
+			ocean_name = "ocean floor" //normal ocean
+		else
+			ocean_name = master_reagent_name + " ocean floor"
+#else
 		ocean_name = "ocean of " + R.get_master_reagent_name()
-		ocean_color = R.get_average_color()
+#endif
+
+		ocean_color = R.get_average_color().to_rgb()
 		qdel(R)
 
-#ifndef UNDERWATER_MAP
 		map_currently_underwater = 1
 		for(var/turf/space/S in world)
 			if (S.z != 1) continue
-			new /turf/space/fluid( locate(S.x, S.y, S.z) )
-			LAGCHECK(LAG_REALTIME)
+
+#ifdef MOVING_SUB_MAP
+			var/turf/space/fluid/manta/T = new /turf/space/fluid/manta( locate(S.x, S.y, S.z) )
+#else
+			var/turf/space/fluid/T = new /turf/space/fluid( locate(S.x, S.y, S.z) )
 #endif
+
+#ifdef UNDERWATER_MAP
+			T.name = ocean_name
+#endif
+
+			T.color = ocean_color
+			LAGCHECK(LAG_REALTIME)
+
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
 
@@ -152,14 +174,14 @@ client/proc/update_ocean_lighting()
 
 
 client/proc/dereplace_space()
-	set name = "Replace All Ocean Tiles With Space"
+	set name = "Unoceanify"
 	set desc = "uh oh."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	admin_only
 
 	var/answer = alert("Replace Z1 only?",,"Yes","No")
 
-	logTheThing("admin", src, "began to convert all ocean tiles into space.")
+	logTheThing("admin", src, null, "began to convert all ocean tiles into space.")
 	message_admins("[key_name(src)] began to convert all ocean tiles into space.")
 
 	SPAWN_DBG(0)

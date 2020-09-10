@@ -17,7 +17,7 @@
 "q" = (/obj/table/glass/reinforced/auto,/obj/item/reagent_containers/glass/wateringcan,/turf/simulated/floor,/area/helianthus)
 "r" = (/obj/item/reagent_containers/glass/happyplant,/obj/machinery/light/incandescent/greenish,/obj/storage/crate,/obj/item/reagent_containers/glass/happyplant,/turf/simulated/floor,/area/helianthus)
 "s" = (/obj/stool/chair/office/green{icon_state = "office_chair_green"; dir = 4},/turf/simulated/floor,/area/helianthus)
-"t" = (/obj/table/glass/reinforced/auto,/obj/item/seed/cannabis,/obj/item/seed/crystal{pixel_x = 6; pixel_y = 8},/obj/item/seed/creeper{pixel_x = -6; pixel_y = 4},/obj/landmark/artifact/seed,/turf/simulated/floor,/area/helianthus)
+"t" = (/obj/table/glass/reinforced/auto,/obj/item/seed/cannabis,/obj/item/seed/crystal{pixel_x = 6; pixel_y = 8},/obj/item/seed/creeper{pixel_x = -6; pixel_y = 4},/obj/item/seed/alien,/turf/simulated/floor,/area/helianthus)
 "u" = (/obj/wingrille_spawn/auto,/turf/simulated/floor,/area/helianthus)
 "v" = (/turf/simulated/floor/stairs/wide/green,/area/helianthus)
 "w" = (/turf/simulated/floor/stairs/wide/middle,/area/helianthus)

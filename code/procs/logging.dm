@@ -1,15 +1,24 @@
 /* Hello these are the new logs wow gosh look at this isn't it exciting
-Some placeholders exist for replacement within text:
-	%target% - Replaced by a link + traitor info for the name
+Some procs  exist for replacement within text:
+	[constructTarget(target,type)]
 
 Example in-game log call:
-		logTheThing("admin", src, M, "shot that nerd %target% at [showCoords(usr.x, usr.y, usr.z)]")
+		logTheThing("admin", src, M, "shot that nerd [constructTarget(src,"diary")] at [showCoords(usr.x, usr.y, usr.z)]")
 Example out of game log call:
 		logTheThing("diary", src, null, "gibbed everyone ever", "admin")
 */
 
 //We save this as html because the non-diary logging currently has html tags in place
-var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html")
+
+
+#define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
+#define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
+
+var/global/roundLog_date = time2text(world.realtime, "YYYY-MM-DD-hh-mm")
+var/global/roundLog_name = "data/logs/full/[roundLog_date].html"
+var/global/roundLog = file(roundLog_name)
+var/global/disable_log_lists = 0
+var/global/first_adminhelp_happened = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
@@ -19,36 +28,11 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 	else
 		if (type != "diary") source = "<span class='blank'>(blank)</span>"
 
-	if (target) //If we have a target we assume the text has a %target% placeholder to shove it in
-		if (type == "diary") target = constructName(target, type)
-		else target = "<span class='target'>[constructName(target, type)]</span>"
-		text =  replacetext(text, "%target%", target)
+	//if (target) target does nothing but i cant be assed to remove its arg from every single logthething and idk regex
+	//	target = constructTarget(target,type)
 
-	var/ingameLog = "<td class='duration'>\[[round(world.time/600)]:[(world.time%600)/10]\]</td><td class='source'>[source]</td><td class='text'>[text]</td>"
-	switch(type)
-		//These are things we log in-game (accessible via the Secrets menu)
-		if ("audit")
-			logs["audit"] += ingameLog
-			diaryLogging = 1
-			diaryType = "audit"
-		if ("admin") logs["admin"] += ingameLog
-		if ("admin_help") logs["admin_help"] += ingameLog
-		if ("mentor_help") logs["mentor_help"] += ingameLog
-		if ("say") logs["speech"] += ingameLog
-		if ("ooc") logs["ooc"] += ingameLog
-		if ("whisper") logs["speech"] += ingameLog
-		if ("station") logs["station"] += ingameLog
-		if ("combat") logs["combat"] += ingameLog
-		if ("telepathy") logs["telepathy"] += ingameLog
-		if ("debug") logs["debug"] += ingameLog
-		if ("pdamsg") logs["pdamsg"] += ingameLog
-		if ("signalers") logs["signalers"] += ingameLog
-		if ("bombing") logs["bombing"] += ingameLog
-		if ("atmos") logs["atmos"] += ingameLog
-		if ("pathology") logs["pathology"] += ingameLog
-		if ("deleted") logs["deleted"] += ingameLog
-		if ("vehicle") logs["vehicle"] += ingameLog
-		if ("diary")
+	if (disable_log_lists) // lag reduction hack - ONLY print logs to the web versions
+		if (type == "diary")
 			switch (diaryType)
 				//These are things we log in the out of game logs (the diary)
 				if ("admin") if (config.log_admin) diaryLogging = 1
@@ -66,14 +50,107 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 				if ("vehicle") if (config.log_vehicles) diaryLogging = 1
 
 
-	if (diaryLogging)
-		diary << "[time2text(world.timeofday, "\[hh:mm:ss\]")] [uppertext(diaryType)]: [source ? "[source] ": ""][text]"
+		if (diaryLogging)
+			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
 
-	//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
-	if (!diaryLogging && config.allowRotatingFullLogs)
-		roundLog << "[time2text(world.timeofday, "\[hh:mm:ss\]")] \[[uppertext(type)]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>"
+		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
+		if (!diaryLogging && config.allowRotatingFullLogs)
+			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 
+	else
+		var/ingameLog = "<td class='duration'>\[[round(world.time/600)]:[(world.time%600)/10]\]</td><td class='source'>[source]</td><td class='text'>[text]</td>"
+
+		switch(type)
+			//These are things we log in-game (accessible via the Secrets menu)
+			if ("audit")
+				logs["audit"] += ingameLog
+				diaryLogging = 1
+				diaryType = "audit"
+			if ("admin") logs["admin"] += ingameLog
+			if ("admin_help") logs["admin_help"] += ingameLog
+			if ("mentor_help") logs["mentor_help"] += ingameLog
+			if ("say") logs["speech"] += ingameLog
+			if ("ooc") logs["ooc"] += ingameLog
+			if ("whisper") logs["speech"] += ingameLog
+			if ("station") logs["station"] += ingameLog
+			if ("combat") logs["combat"] += ingameLog
+			if ("telepathy") logs["telepathy"] += ingameLog
+			if ("debug") logs["debug"] += ingameLog
+			if ("pdamsg") logs["pdamsg"] += ingameLog
+			if ("signalers") logs["signalers"] += ingameLog
+			if ("bombing") logs["bombing"] += ingameLog
+			if ("atmos") logs["atmos"] += ingameLog
+			if ("pathology") logs["pathology"] += ingameLog
+			if ("deleted") logs["deleted"] += ingameLog
+			if ("vehicle") logs["vehicle"] += ingameLog
+			if ("diary")
+				switch (diaryType)
+					//These are things we log in the out of game logs (the diary)
+					if ("admin") if (config.log_admin) diaryLogging = 1
+					if ("ahelp") if (config.log_say) diaryLogging = 1 //log_ahelp
+					if ("mhelp") if (config.log_say) diaryLogging = 1 //log_mhelp
+					if ("game") if (config.log_game) diaryLogging = 1
+					if ("access") if (config.log_access) diaryLogging = 1
+					if ("say") if (config.log_say) diaryLogging = 1
+					if ("ooc") if (config.log_ooc) diaryLogging = 1
+					if ("whisper") if (config.log_whisper) diaryLogging = 1
+					if ("station") if (config.log_station) diaryLogging = 1
+					if ("combat") if (config.log_combat) diaryLogging = 1
+					if ("telepathy") if (config.log_telepathy) diaryLogging = 1
+					if ("debug") if (config.log_debug) diaryLogging = 1
+					if ("vehicle") if (config.log_vehicles) diaryLogging = 1
+
+
+		if (diaryLogging)
+			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
+
+		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
+		if (!diaryLogging && config.allowRotatingFullLogs)
+			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 	return
+
+/proc/logDiary(text)
+	WRITE_LOG(diary_name, "[text]")
+
+/**
+ * Appends a tgui-related log entry. All arguments are optional.
+ */
+/proc/log_tgui(user, message, context,
+		datum/tgui_window/window,
+		datum/src_object)
+	var/entry = "tgui: "
+	// Insert user info
+	if(!user)
+		entry += "<nobody>"
+	else if(istype(user, /mob))
+		var/mob/mob = user
+		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
+	else if(istype(user, /client))
+		var/client/client = user
+		entry += "[client.ckey]"
+	// Insert context
+	if(context)
+		entry += " in [context]"
+	else if(window)
+		entry += " in [window.id]"
+	// Resolve src_object
+	if(!src_object && window && window.locked_by)
+		src_object = window.locked_by.src_object
+	// Insert src_object info
+	if(src_object)
+		entry += "<br>Using: [src_object.type] [\ref(src_object)]" // |GOONSTATION-CHANGE| (\n->br, REF->\ref)
+	// Insert message
+	if(message)
+		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
+	WRITE_LOG(roundLog_name, entry)
+
+/* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
+/proc/shutdown_logging()
+	rustg_log_close_all()
+
+/proc/constructTarget(ref,type)
+	if (type == "diary") . = constructName(ref, type)
+	else . = "<span class='target'>[constructName(ref, type)]</span>"
 
 /proc/constructName(ref, type)
 	var/name
@@ -122,7 +199,7 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 		else if (isAI(mobRef)) mobType = "AI"
 		else if (!ckey) mobType = "NPC"
 
-	var/data
+	var/list/data = list()
 	if (name)
 		if (type == "diary")
 			data += name
@@ -146,8 +223,8 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 		if (type == "diary")
 			data += " \[DEAD\]"
 		else
-			data += " \[<span class='text-red'>DEAD</span>\]"
-	return data
+			data += " \[<span class='alert'>DEAD</span>\]"
+	return data.Join()
 
 proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (!P || !SHOT)
@@ -168,7 +245,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	//Wire: Added this so I don't get a bunch of logs for fukken drones shooting pods WHO CARES
 	if (istype(P.shooter, /obj/critter/))
 		return
-	logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots %target%[P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+	logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 
 /proc/log_reagents(var/atom/A as turf|obj|mob)
 	var/log_reagents = ""
@@ -195,7 +272,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 
 /proc/log_health(var/mob/M)
 	var/log_health = ""
-	if (ishuman(M) || iscritter(M))
+	if (ishuman(M) || ismobcritter(M))
 		log_health += "[M.get_brain_damage()], [M.get_oxygen_deprivation()], [M.get_toxin_damage()], [M.get_burn_damage()], [M.get_brute_damage()]"
 	else if (issilicon(M))
 		log_health += "[M.get_burn_damage()], [M.get_brute_damage()]"
@@ -203,13 +280,13 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		log_health += "No clue! Report this to a coder!"
 	return "(<b>Damage:</b> <i>[log_health]</i>)"
 
-/proc/log_loc(var/atom/A as turf|obj|mob)
-	if (!istype(A))
+/proc/log_loc(var/atom/A)
+	if (!A)
 		return
-	var/turf/our_turf = null
-	if (!isturf(A.loc))
-		our_turf = get_turf(A)
-	return "([our_turf ? "[showCoords(our_turf.x, our_turf.y, our_turf.z)]" : "[showCoords(A.x, A.y, A.z)]"] in [get_area(A)])"
+	var/turf/our_turf = get_turf(A)
+	if (!our_turf)
+		return
+	return "([showCoords(our_turf.x, our_turf.y, our_turf.z)] in [our_turf.loc])"
 
 // Does what is says on the tin. We're using the global proc, though (Convair880).
 /proc/log_atmos(var/atom/A as turf|obj|mob)

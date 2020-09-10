@@ -85,7 +85,7 @@
 				src.bootstrap = new setup_bootstrap_path
 				src.bootstrap.master = src
 
-			sleep(54)
+			sleep(5.4 SECONDS)
 			src.posted = 0
 			src.post_system()
 
@@ -135,7 +135,7 @@
 			if(!src.hd)
 				return
 
-			boutput(user, "<span style=\"color:red\">The mainframe is trashed, but the memory core could probably salvaged.</span>")
+			boutput(user, "<span class='alert'>The mainframe is trashed, but the memory core could probably salvaged.</span>")
 			return
 
 		var/dat = "<html><head><title>Mainframe Access Panel</title></head><body><hr>"
@@ -165,17 +165,17 @@
 			if (usr.stat || usr.restrained())
 				return
 
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if(href_list["core"])
 
 				if(!(status & NOPOWER))
-					boutput(usr, "<span style=\"color:red\">The electromagnetic lock is still on!</span>")
+					boutput(usr, "<span class='alert'>The electromagnetic lock is still on!</span>")
 					return
 
 				//Ai/cyborgs cannot physically remove a memory board from a room away.
 				if(issilicon(usr) && get_dist(src, usr) > 1)
-					boutput(usr, "<span style=\"color:red\">You cannot physically touch the board.</span>")
+					boutput(usr, "<span class='alert'>You cannot physically touch the board.</span>")
 					return
 
 				if(src.hd)
@@ -227,7 +227,7 @@
 				return
 
 			if (!src.hd)
-				boutput(usr, "<span style=\"color:red\">The memory core has already been removed.</span>")
+				boutput(usr, "<span class='alert'>The memory core has already been removed.</span>")
 				return
 
 			status |= MAINT
@@ -911,7 +911,7 @@
 			if(!src.holder || !src.holder.root)
 				return 0
 
-			for(var/datum/computer/C in src.holder.root)
+			for(var/datum/computer/C in src.holder.root.contents)
 				if(C == src || C == src.holding_folder)
 					continue
 

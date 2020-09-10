@@ -9,7 +9,7 @@
 	robot_talk_understand = 2
 	var/glitchy_speak = 0
 
-//3 Modules can be activated at any one time.
+	// 3 tools can be activated at any one time.
 	var/obj/item/robot_module/module = null
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
@@ -32,15 +32,17 @@
 
 	var/obj/machinery/camera/camera = null
 
-/mob/living/silicon/hivebot/TakeDamage(zone, brute, burn)
+/mob/living/silicon/hivebot/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	bruteloss += brute
 	fireloss += burn
+	health_update_queue |= src
 
 /mob/living/silicon/hivebot/HealDamage(zone, brute, burn)
 	bruteloss -= brute
 	fireloss -= burn
 	bruteloss = max(0, bruteloss)
 	fireloss = max(0, fireloss)
+	health_update_queue |= src
 
 /mob/living/silicon/hivebot/get_brute_damage()
 	return bruteloss
@@ -49,7 +51,7 @@
 	return fireloss
 
 /mob/living/silicon/hivebot/New(loc, mainframe)
-	boutput(src, "<span style=\"color:blue\">Your icons have been generated!</span>")
+	boutput(src, "<span class='notice'>Your icons have been generated!</span>")
 	updateicon()
 
 	if (mainframe)
@@ -95,7 +97,8 @@
 		SPAWN_DBG(0)
 			var/key = src.ckey
 			recently_dead += key
-			SPAWN_DBG(recently_time) recently_dead -= key
+			sleep(recently_time)
+			recently_dead -= key
 */
 	if(src.mind)
 		src.mind.register_death()
@@ -263,7 +266,7 @@
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-2,2)
 				src.pixel_y += rand(-1,1)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				src.pixel_x = old_x
 				src.pixel_y = old_y
 
@@ -275,7 +278,7 @@
 				var/old_y = src.pixel_y
 				src.pixel_x += rand(-3,3)
 				src.pixel_y += rand(-1,1)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				src.pixel_x = old_x
 				src.pixel_y = old_y
 
@@ -327,7 +330,7 @@
 				for (var/mob/living/M in src.loc)
 					if (M == src || !M.lying)
 						continue
-					message = "<span style=\"color:red\"><B>[src]</B> farts in [M]'s face!</span>"
+					message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
 					fart_on_other = 1
 					break
 				if (!fart_on_other)
@@ -351,7 +354,7 @@
 						if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 						if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 						if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span style=\"color:red\"><B>FUCK!</B></span>"
+						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span class='alert'><B>FUCK!</B></span>"
 						if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 						if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
 						if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
@@ -371,7 +374,7 @@
 						if (37) message = "<B>[src]</B> farts with the burning hatred of a thousand suns."
 						if (38) message = "<B>[src]</B> exterminates the air supply."
 						if (39) message = "<B>[src]</B> farts so hard the AI feels it."
-						if (40) message = "<B>[src] <span style=\"color:red\">f</span><span style=\"color:blue\">a</span>r<span style=\"color:red\">t</span><span style=\"color:blue\">s</span>!</B>"
+						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1)
 				else
@@ -389,40 +392,37 @@
 		logTheThing("say", src, null, "EMOTE: [message]")
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
-				O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+				O.show_message("<span class='emote'>[message]</span>", m_type)
 		else
 			for (var/mob/O in hearers(src, null))
-				O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+				O.show_message("<span class='emote'>[message]</span>", m_type)
 	return
 
-/mob/living/silicon/hivebot/examine()
-	set src in oview()
-	set category = "Local"
+/mob/living/silicon/hivebot/examine(mob/user)
+	if (isghostdrone(user))
+		return list()
 
-	if (isghostdrone(usr))
-		return
-	boutput(usr, "<span style=\"color:blue\">*---------*</span>")
-	boutput(usr, text("<span style=\"color:blue\">This is [bicon(src)] <B>[src.name]</B>!</span>"))
+	. = list("<span class='notice'>*---------*</span>\n<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span>")
+
 	if (isdead(src))
-		boutput(usr, text("<span style=\"color:red\">[src.name] is powered-down.</span>"))
+		. += "<span class='alert'>[src.name] is powered-down.</span>"
 	if (src.bruteloss)
 		if (src.bruteloss < 75)
-			boutput(usr, text("<span style=\"color:red\">[src.name] looks slightly dented</span>"))
+			. += "<span class='alert'>[src.name] looks slightly dented</span>"
 		else
-			boutput(usr, text("<span style=\"color:red\"><B>[src.name] looks severely dented!</B></span>"))
+			. += "<span class='alert'><B>[src.name] looks severely dented!</B></span>"
 	if (src.fireloss)
 		if (src.fireloss < 75)
-			boutput(usr, text("<span style=\"color:red\">[src.name] looks slightly burnt!</span>"))
+			. += "<span class='alert'>[src.name] looks slightly burnt!</span>"
 		else
-			boutput(usr, text("<span style=\"color:red\"><B>[src.name] looks severely burnt!</B></span>"))
+			. += "<span class='alert'><B>[src.name] looks severely burnt!</B></span>"
 	if (isunconscious(src))
-		boutput(usr, text("<span style=\"color:red\">[src.name] doesn't seem to be responding.</span>"))
-	return
+		. += "<span class='alert'>[src.name] doesn't seem to be responding.</span>"
 
 /mob/living/silicon/hivebot/blob_act(var/power)
 	if (!isdead(src))
 		src.bruteloss += power
-		src.updatehealth()
+		health_update_queue |= src
 		return 1
 	return 0
 
@@ -470,17 +470,17 @@
 				b_loss += 30
 	src.bruteloss = b_loss
 	src.fireloss = f_loss
-	src.updatehealth()
+	health_update_queue |= src
 
 /mob/living/silicon/hivebot/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span style=\"color:red\">[src] has been hit by [O]</span>"), 1)
+		M.show_message(text("<span class='alert'>[src] has been hit by [O]</span>"), 1)
 		//Foreach goto(19)
 	if (src.health > 0)
 		src.bruteloss += 30
 		if ((O.icon_state == "flaming"))
 			src.fireloss += 40
-		src.updatehealth()
+		health_update_queue |= src
 	return
 
 /mob/living/silicon/hivebot/Bump(atom/movable/AM as mob|obj, yes)
@@ -492,7 +492,7 @@
 			var/mob/tmob = AM
 			if(ishuman(tmob) && tmob.bioHolder.HasEffect("fat"))
 				if(prob(20))
-					src.visible_message("<span style=\"color:red\"><B>[src] fails to push [tmob]'s fat ass out of the way.</B></span>")
+					src.visible_message("<span class='alert'><B>[src] fails to push [tmob]'s fat ass out of the way.</B></span>")
 					src.now_pushing = 0
 					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
 					return
@@ -515,9 +515,9 @@
 	return
 
 /mob/living/silicon/hivebot/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weldingtool) && W:welding)
+	if (isweldingtool(W))
 		if (src.get_brute_damage() < 1)
-			boutput(user, "<span style=\"color:red\">[src] has no dents to repair.</span>")
+			boutput(user, "<span class='alert'>[src] has no dents to repair.</span>")
 			return
 		if(!W:try_weld(user, 1))
 			return
@@ -525,10 +525,10 @@
 		src.add_fingerprint(user)
 		if (src.get_brute_damage() < 1)
 			src.bruteloss = 0
-			src.visible_message("<span style=\"color:red\"><b>[user] fully repairs the dents on [src]!</b></span>")
+			src.visible_message("<span class='alert'><b>[user] fully repairs the dents on [src]!</b></span>")
 		else
-			src.visible_message("<span style=\"color:red\">[user] has fixed some of the dents on [src].</span>")
-		src.updatehealth()
+			src.visible_message("<span class='alert'>[user] has fixed some of the dents on [src].</span>")
+		health_update_queue |= src
 
 	// Added ability to repair burn-damaged AI shells (Convair880).
 	else if (istype(W, /obj/item/cable_coil))
@@ -541,10 +541,10 @@
 		src.HealDamage("All", 0, 30)
 		if (src.get_burn_damage() < 1)
 			src.fireloss = 0
-			src.visible_message("<span style=\"color:red\"><b>[user.name]</b> fully repairs the damage to [src.name]'s wiring.</span>")
+			src.visible_message("<span class='alert'><b>[user.name]</b> fully repairs the damage to [src.name]'s wiring.</span>")
 		else
-			boutput(user, "<span style=\"color:red\"><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
-		src.updatehealth()
+			boutput(user, "<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
+		health_update_queue |= src
 
 	else if (istype(W, /obj/item/clothing/suit/bee))
 		boutput(user, "You stuff [src] into [W]! It fits surprisingly well.")
@@ -556,13 +556,42 @@
 		return ..()
 
 /mob/living/silicon/hivebot/attack_hand(mob/user)
-	..()
-	if(user.a_intent == INTENT_GRAB && src.beebot == 1)
-		var/obj/item/clothing/suit/bee/B = new /obj/item/clothing/suit/bee(src.loc)
-		boutput(user, "You pull [B] off of [src]!")
-		src.beebot = 0
-		src.updateicon()
-	return
+	user.lastattacked = src
+	if(!user.stat)
+		actions.interrupt(src, INTERRUPT_ATTACKED)
+		switch(user.a_intent)
+			if(INTENT_HELP) //Friend person
+				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
+				user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
+			if(INTENT_DISARM) //Shove
+				SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
+				user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
+			if(INTENT_GRAB) //Shake
+				if(src.beebot == 1)
+					var/obj/item/clothing/suit/bee/B = new /obj/item/clothing/suit/bee(src.loc)
+					boutput(user, "You pull [B] off of [src]!")
+					src.beebot = 0
+					src.updateicon()
+				else
+					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
+					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
+			if(INTENT_HARM) //Dumbo
+				if (user.is_hulk())
+					src.TakeDamage("All", 5, 0)
+					if (prob(40))
+						var/turf/T = get_edge_target_turf(user, user.dir)
+						if (isturf(T))
+							src.visible_message("<span class='alert'><B>[user] savagely punches [src], sending them flying!</B></span>")
+							src.throw_at(T, 10, 2)
+				/*if (user.glove_weaponcheck())
+					user.energyclaws_attack(src)*/
+				else
+					user.visible_message("<span class='alert'><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
+					random_brute_damage(user, rand(2,5))
+					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+					if(prob(10)) user.show_text("Your hand hurts...", "red")
+
+		add_fingerprint(user)
 
 /mob/living/silicon/hivebot/allowed(mob/M)
 	//check if it doesn't require any access at all
@@ -650,7 +679,7 @@
 	hud.update_active_tool()
 
 /mob/living/silicon/hivebot/click(atom/target, list/params)
-	if ((target in src.module.modules) && !(target in src.module_states))
+	if ((target in src.module.tools) && !(target in src.module_states))
 		for (var/i = 1; i <= 3; i++)
 			if (!src.module_states[i])
 				src.module_states[i] = target
@@ -718,31 +747,27 @@ Frequency:
 		mainframe.return_to(src)
 		src.updateicon()
 	else
-		boutput(src, "<span style=\"color:red\">You lack a dedicated mainframe!</span>")
+		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
 		return
 
-/mob/living/silicon/hivebot/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
-		return 1
-
-	clamp_values()
-
-	update_icons_if_needed()
-	src.antagonist_overlay_refresh(0, 0)
-
-	handle_regular_status_updates()
-
-	if(client)
-		src.shell = 0
-		handle_regular_hud_updates()
-		if(dependent)
-			mainframe_check()
-
 /mob/living/silicon/hivebot
-	proc/clamp_values()
+	clamp_values()
+		..()
 		sleeping = max(min(sleeping, 1), 0)
 		bruteloss = max(bruteloss, 0)
 		fireloss = max(fireloss, 0)
+		if (src.stuttering)
+			src.stuttering = 0
+
+		src.lying = 0
+		src.set_density(1)
+
+		if (src.get_eye_blurry())
+			src.change_eye_blurry(-1)
+
+		if (src.druggy > 0)
+			src.druggy--
+			src.druggy = max(0, src.druggy)
 
 	use_power()
 		..()
@@ -773,73 +798,6 @@ Frequency:
 				sleep(0)
 				src.lastgasp() // calling lastgasp() here because we just ran out of power
 			setunconscious(src)
-
-
-	proc/handle_regular_status_updates()
-		hud.update_charge()
-		health = src.max_health - (fireloss + bruteloss)
-
-		if(health <= 0)
-			gib(1)
-
-		if (!isdead(src)) //Alive.
-
-			if (src.getStatusDuration("paralysis") || src.getStatusDuration("stunned") || src.getStatusDuration("weakened")) //Stunned etc.
-				var/setStat = src.stat
-				if (src.getStatusDuration("stunned") > 0)
-					setStat = 0
-				if (src.getStatusDuration("weakened"))
-					src.lying = 1
-					setStat = 0
-				if (src.getStatusDuration("paralysis"))
-					src.lying = 1
-					setStat = 1
-				if (isalive(src) && setStat == 1)
-					sleep(0)
-					src.lastgasp() // calling lastgasp() here because we just got knocked out
-				src.stat = setStat
-			else	//Not stunned.
-				src.lying = 0
-				setalive(src)
-
-		else //Dead.
-			setdead(src)
-
-		if (src.stuttering)
-			src.stuttering = 0
-
-		src.lying = 0
-		src.set_density(1)
-
-		if (src.get_eye_blurry())
-			src.change_eye_blurry(-1)
-
-		if (src.druggy > 0)
-			src.druggy--
-			src.druggy = max(0, src.druggy)
-
-		return 1
-
-	proc/handle_regular_hud_updates()
-
-		if (isdead(src) || src.bioHolder.HasEffect("xray"))
-			src.sight |= SEE_TURFS
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_OBJS
-			src.see_in_dark = SEE_DARK_FULL
-			src.see_invisible = 2
-		else if (!isdead(src))
-			src.sight &= ~SEE_MOBS
-			src.sight &= ~SEE_TURFS
-			src.sight &= ~SEE_OBJS
-			src.see_in_dark = SEE_DARK_FULL
-			src.see_invisible = 2
-
-		if (!src.sight_check(1) && !isdead(src))
-			vision.set_color_mod("#000000")
-		else
-			vision.set_color_mod("#ffffff")
-		return 1
 
 	proc/mainframe_check()
 		if (mainframe)
@@ -1002,7 +960,8 @@ Frequency:
 		..()
 		hud = new(src)
 		src.attach_hud(hud)
-		bioHolder = new/datum/bioHolder( src )
+		if(!bioHolder)
+			bioHolder = new/datum/bioHolder( src )
 		SPAWN_DBG(0.5 SECONDS)
 			if (src.module)
 				qdel(src.module)
@@ -1040,10 +999,17 @@ Frequency:
 			else
 				return ..()
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("robot"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("robot")
+
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("robot_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("robot_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("robot_tg")
 
 	updateicon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
 		src.overlays = null
@@ -1059,7 +1025,7 @@ Frequency:
 					SPAWN_DBG(0)
 						while(src.pixel_y < 10)
 							src.pixel_y++
-							sleep(1)
+							sleep(0.1 SECONDS)
 						if (src.beebot == 1)
 							src.icon_state = "eyebot-bee"
 						else
@@ -1093,15 +1059,6 @@ Frequency:
 			src.mainframe.return_to(src)
 		else
 			return ..()
-
-	handle_regular_hud_updates()
-		..()
-		if (!ticker)
-			return
-		if (!ticker.mode)
-			return
-		if (ticker.mode && istype(ticker.mode, /datum/game_mode/construction))
-			see_invisible = 9
 
 /*-----Shell-Creation---------------------------------------*/
 

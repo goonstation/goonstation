@@ -27,7 +27,7 @@
 			else if (reagents.has_reagent("bloodc"))
 				blood = reagents.get_reagent("bloodc")
 			if (blood == null)
-				boutput(usr, "<span style=\"color:red\">Blood slides are not working. This is an error message, please page 1-800-555-MARQUESAS.</span>")
+				boutput(usr, "<span class='alert'>Blood slides are not working. This is an error message, please page 1-800-555-MARQUESAS.</span>")
 				return
 		else
 			desc = "This blood slide is contaminated and useless."
@@ -37,6 +37,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "petri0"
 	desc = "A dish tailored hold pathogen cultures."
+	initial_volume = 40
 	var/stage = 0
 
 	var/dirty = 0
@@ -49,36 +50,31 @@
 	rc_flags = 0
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		// Integration notes: stable mutagen ID.
+		..()
 		for (var/nutrient in pathogen_controller.nutrients)
 			nutrition += nutrient
 			nutrition[nutrient] = 0
 
 	examine()
 		if (src.dirty || src.dirty_reason)
-			..()
-			boutput(usr, "<span style=\"color:red\">The petri dish appears to be incapable of growing any pathogen, and must be cleaned.</span>")
+			. = ..()
+			. += "<span class='alert'>The petri dish appears to be incapable of growing any pathogen, and must be cleaned.</span><br/>"
 			return
-		boutput(usr, "This is [src]")
+
+		. = list("This is [src]<br/>")
 		if (src.reagents.reagent_list["pathogen"])
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-			boutput(usr, "<span style=\"color:blue\">It contains [P.volume] units of harvestable pathogen.</span>")
+			. += "<span class='notice'>It contains [P.volume] unit\s of harvestable pathogen.</span><br/>"
 		if (src.medium)
-			boutput(usr, "<span style=\"color:blue\">The petri dish is coated with [src.medium.name].</span>")
-		boutput(usr, "Nutrients in the dish:")
+			. += "<span class='notice'>The petri dish is coated with [src.medium.name].</span><br/>"
+		. += "Nutrients in the dish:<br/>"
 		var/count = 0
 		for (var/N in nutrition)
 			if (nutrition[N])
-				if (nutrition[N] != 1)
-					boutput(usr, "<span style=\"color:blue\">[nutrition[N]] units of [N]</span>")
-				else
-					boutput(usr, "<span style=\"color:blue\">[nutrition[N]] unit of [N]</span>")
+				. += "<span class='notice'>[nutrition[N]] unit\s of [N]</span><br/>"
 				count++
 		if (!count)
-			boutput(usr, "<span style=\"color:blue\">None.</span>")
+			. += "<span class='notice'>None.</span><br/>"
 
 	afterattack(obj/target, mob/user , flag)
 		if (istype(target, /obj/machinery/microscope))
@@ -192,8 +188,7 @@
 				var/datum/reagent/RE = src.reagents.reagent_list[R]
 				if (R == "pathogen")
 					if (src.medium)
-						if (!(src in processing_items))
-							processing_items.Add(src)
+						processing_items |= src
 				else if (R in pathogen_controller.media)
 					if (src.medium && src.medium.id != R)
 						set_dirty("There are multiple, incompatible growth media in the petri dish.")
@@ -208,8 +203,7 @@
 						src.reagents.reagent_list -= R
 						src.reagents.update_total()
 						if (src.reagents.has_reagent("pathogen"))
-							if (!(src in processing_items))
-								processing_items.Add(src)
+							processing_items |= src
 					else
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)
@@ -278,16 +272,36 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "vial0"
 	item_state = "vial"
+	var/datum/microbody/FM = null
 
 	New()
 		..()
 		SPAWN_DBG(2 SECONDS)
+			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 			var/datum/pathogen/P = unpool(/datum/pathogen)
+			if(FM)
+				P.forced_microbody = FM
 			P.create_weak()
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
 			var/datum/reagent/blood/pathogen/R = RE.get_reagent("pathogen")
 			R.pathogens[P.pathogen_uid] = P
+			#else
+			var/datum/reagents/RE = src.reagents
+			RE.add_reagent("water", 5)
+			#endif
+
+/obj/item/reagent_containers/glass/vial/prepared/virus
+	FM = /datum/microbody/virus
+
+/obj/item/reagent_containers/glass/vial/prepared/parasite
+	FM = /datum/microbody/parasite
+
+/obj/item/reagent_containers/glass/vial/prepared/bacterium
+	FM = /datum/microbody/bacteria
+
+/obj/item/reagent_containers/glass/vial/prepared/fungus
+	FM = /datum/microbody/fungi
 
 /obj/item/reagent_containers/glass/beaker/parasiticmedium
 	name = "Beaker of Parasitic Medium"
@@ -409,27 +423,27 @@
 	proc/inject(var/mob/living/carbon/human/target, var/mob/user)
 		if (is_cure)
 			if (!is_vaccine)
-				logTheThing("pathology", user, target, "injects %target% with the cure for [src.pathogen.name].")
+				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with the cure for [src.pathogen.name].")
 				target.remission(src.pathogen)
 			else
-				logTheThing("pathology", user, target, "injects %target% with a vaccine for [src.pathogen.name].")
+				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with a vaccine for [src.pathogen.name].")
 				target.immunity(src.pathogen)
 		else
 			if (target.infected(src.pathogen))
-				logTheThing("pathology", user, target, "injects %target% with pathogen [src.pathogen.name] from a bad cure injector and infects them.")
+				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector and infects them.")
 			else
-				logTheThing("pathology", user, target, "injects %target% with pathogen [src.pathogen.name] from a bad cure injector but they were unaffected.")
+				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector but they were unaffected.")
 		src.pathogen = null
 		used = 1
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (used)
-			boutput(user, "<span style=\"color:red\">The [src.name] is empty.</span>")
+			boutput(user, "<span class='alert'>The [src.name] is empty.</span>")
 			return
 		if (ishuman(M))
 			if (M != user)
 				for (var/mob/V in viewers(M))
-					boutput(V, "<span style=\"color:red\"><b>[user] is trying to inject [M] with the [src.name]!</b></span>")
+					boutput(V, "<span class='alert'><b>[user] is trying to inject [M] with the [src.name]!</b></span>")
 				var/ML = M.loc
 				var/UL = user.loc
 				SPAWN_DBG (30)
@@ -438,14 +452,14 @@
 					if (user.equipped() == src && M.loc == ML && user.loc == UL)
 						used = 1
 						for (var/mob/V in viewers(M))
-							boutput(V, "<span style=\"color:red\"><b>[user] is injects [M] with the [src.name]!</b></span>")
+							boutput(V, "<span class='alert'><b>[user] is injects [M] with the [src.name]!</b></span>")
 						src.name = "empty [src.name]"
 						icon_state = "serum0"
 						inject(M, user)
 			else
 				used = 1
 				for (var/mob/V in viewers(M))
-					boutput(V, "<span style=\"color:red\"><b>[user] injects [M] with the [src.name]!</b></span>")
+					boutput(V, "<span class='alert'><b>[user] injects [M] with the [src.name]!</b></span>")
 				icon_state = "serum0"
 				src.name = "empty [src.name]"
 				inject(user, user)
