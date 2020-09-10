@@ -519,8 +519,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(isnull(G))
 		return
 
-	src.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_Start", dir=NSEW, layer=(dir == NORTH ? src.layer - 1 : FLOAT_LAYER)), "field_start_[NSEW]")
-	G.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_End", dir=NSEW, layer=(dir == SOUTH ? src.layer - 1 : FLOAT_LAYER)), "field_end_[NSEW]")
+	src.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_Start", dir=NSEW, layer=(NSEW == NORTH ? src.layer - 1 : FLOAT_LAYER)), "field_start_[NSEW]")
+	G.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_End", dir=NSEW, layer=(NSEW == SOUTH ? src.layer - 1 : FLOAT_LAYER)), "field_end_[NSEW]")
 
 	T2 = src.loc
 
