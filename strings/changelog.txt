@@ -1,5 +1,9 @@
 
 (t)thu sep 10 20
+(u)Tarmunora
+(p)2133
+(e)🆕|feature
+(+)Added very short cooldown to toggling rest state.
 (u)Superlagg
 (p)2103
 (e)🆕|feature
