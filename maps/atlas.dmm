@@ -8562,12 +8562,12 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "vF" = (
-/obj/storage/closet/wardrobe/pride,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/lounge)
 "vG" = (
@@ -10972,7 +10972,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/NEmaint)
 "BI" = (
-/obj/storage/secure/closet/personal,
+/obj/submachine/laundry_machine,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/lounge)
 "BJ" = (
@@ -11138,7 +11138,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/lounge)
 "Cn" = (
-/obj/submachine/laundry_machine,
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/lounge)
 "Co" = (
@@ -11343,15 +11343,16 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/lounge)
 "CO" = (
+/obj/storage/closet/wardrobe/pride,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/lounge)
 "CP" = (
-/obj/submachine/laundry_machine,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/lounge)
 "CQ" = (
@@ -11528,11 +11529,14 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
 "Ds" = (
-/turf/simulated/floor/black,
+/turf/simulated/floor/sanitary,
 /area/station/crew_quarters/lounge)
 "Dt" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon13,
-/turf/simulated/floor/black,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/turf/simulated/floor/sanitary,
 /area/station/crew_quarters/lounge)
 "Du" = (
 /obj/machinery/camera{
@@ -11542,8 +11546,8 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/machinery/manufacturer/uniform,
-/turf/simulated/floor/black,
+/obj/storage/secure/closet/personal,
+/turf/simulated/floor/sanitary,
 /area/station/crew_quarters/lounge)
 "Dv" = (
 /obj/storage/secure/closet/command/hos,
@@ -16101,8 +16105,8 @@
 "OW" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
+	icon_state = "wall3";
+	dir = 6
 	},
 /area)
 "OX" = (
@@ -74544,7 +74548,7 @@ zr
 Ae
 AV
 vF
-Cm
+CO
 CN
 Ds
 Vx
@@ -74847,7 +74851,7 @@ yi
 AV
 BI
 Cm
-CO
+Cm
 Dt
 Eo
 ET
