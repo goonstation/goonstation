@@ -506,9 +506,6 @@
 				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and accidentally discharges [src]!</B></span>")
 				src.shoot_point_blank(user, user)
-				user.changeStatus("stunned", 50)
-				user.changeStatus("weakened", 3 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
 			else
 				src.attack_hand(usr)
