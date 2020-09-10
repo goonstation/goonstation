@@ -413,7 +413,7 @@
 					/obj/item/storage/box/QM_grenadekit_security,
 					/obj/item/storage/box/QM_grenadekit_experimentalweapons,
 					/obj/item/clothing/head/helmet/hardhat/security/improved)
-	cost = 15000
+	cost = 12000
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Experimental Security Equipment (Cardlocked \[Security])"
 	access = access_security

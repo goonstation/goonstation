@@ -524,7 +524,7 @@
 					src.silenced = initial(src.silenced)
 
 			prob_clonk = min(prob_clonk + 5, 100)
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN_DBG(1 SECONDS)
 				prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
