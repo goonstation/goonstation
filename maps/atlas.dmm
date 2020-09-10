@@ -6115,7 +6115,7 @@
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
-	light_type = /obj/item/light/tube/purpleish;
+	light_type = /obj/item/light/tube/light_purpleish;
 	pixel_y = 21
 	},
 /turf/simulated/floor/purplewhite{
@@ -9366,7 +9366,7 @@
 	},
 /obj/machinery/light{
 	layer = 3;
-	light_type = /obj/item/light/tube/purpleish
+	light_type = /obj/item/light/tube/light_purpleish
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/artifact)
@@ -12022,7 +12022,7 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	light_type = /obj/item/light/tube/purpleish
+	light_type = /obj/item/light/tube/light_purpleish
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
@@ -12032,7 +12032,7 @@
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
-	light_type = /obj/item/light/tube/purpleish;
+	light_type = /obj/item/light/tube/light_purpleish;
 	pixel_x = -10
 	},
 /turf/simulated/floor/purplewhite{
@@ -12649,7 +12649,7 @@
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
-	light_type = /obj/item/light/tube/purpleish;
+	light_type = /obj/item/light/tube/light_purpleish;
 	pixel_y = 21
 	},
 /turf/simulated/floor/purplewhite{
@@ -13131,7 +13131,7 @@
 "Hn" = (
 /obj/machinery/light{
 	layer = 3;
-	light_type = /obj/item/light/tube/purpleish
+	light_type = /obj/item/light/tube/light_purpleish
 	},
 /obj/stool/chair/office/purple{
 	tag = "icon-office_chair_purple (WEST)";
@@ -13193,7 +13193,7 @@
 /obj/cable,
 /obj/machinery/light{
 	dir = 4;
-	light_type = /obj/item/light/tube/purpleish;
+	light_type = /obj/item/light/tube/light_purpleish;
 	pixel_x = 10
 	},
 /turf/simulated/floor/purplewhite{
@@ -16423,7 +16423,7 @@
 	},
 /obj/machinery/light{
 	layer = 3;
-	light_type = /obj/item/light/tube/purpleish
+	light_type = /obj/item/light/tube/light_purpleish
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
@@ -18610,7 +18610,7 @@
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
-	light_type = /obj/item/light/tube/purpleish;
+	light_type = /obj/item/light/tube/light_purpleish;
 	pixel_x = 10
 	},
 /obj/machinery/power/data_terminal,
