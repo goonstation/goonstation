@@ -743,7 +743,7 @@ obj/trait/pilot
 /obj/trait/color_shift
 	name = "Color Shift (0)"
 	cleanName = "Color Shift"
-	desc = "Grants the user Achromia and Hemochromia."
+	desc = "You are more depressing on the outside but more colorful on the inside."
 	id = "color_shift"
 	icon_state = "color_shift"
 	points = 0
