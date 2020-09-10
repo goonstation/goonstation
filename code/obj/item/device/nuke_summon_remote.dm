@@ -10,17 +10,29 @@
 
 	var/charges = 1
 	var/use_sound = "sound/machines/chime.ogg"
+	var/obj/the_bomb = null
 
-	attack_self(mob/user as mob)
-		if(charges >= 1)
-			var/datum/game_mode/nuclear/mode = ticker.mode
-			showswirl(mode.the_bomb)
-			mode.the_bomb?.set_loc(get_turf(src))
-			showswirl(src)
-			src.visible_message("<span class='alert'>[user] has summoned the Nuclear Bomb!</span>")
-			src.charges -= 1
-			playsound(src.loc, use_sound, 70, 1)
-		else
-			boutput(user, "<span class='alert'>The [src] is out of charge and can't be used again!</span>")
+/obj/item/remote/nuke_summon_remote/attack_self(mob/user as mob)
+	if(charges >= 1)
+		if(the_bomb == null)
+			try_to_find_the_nuke()
+		if(the_bomb == null)
+			boutput(user, "<span class='alert'>No teleportation target found!</span>")
 			return
+		tele_the_bomb(user)
+	else
+		boutput(user, "<span class='alert'>The [src] is out of charge and can't be used again!</span>")
+		return
+	
+/obj/item/remote/nuke_summon_remote/proc/try_to_find_the_nuke()
+	if(ticker.mode.type == /datum/game_mode/nuclear)
+		var/datum/game_mode/nuclear/mode = ticker.mode
+		the_bomb = mode.the_bomb
 
+/obj/item/remote/nuke_summon_remote/proc/tele_the_bomb(mob/user as mob)
+	showswirl(the_bomb)
+	the_bomb?.set_loc(get_turf(src))
+	showswirl(src)
+	src.visible_message("<span class='alert'>[user] has summoned the [the_bomb]!</span>")
+	src.charges -= 1
+	playsound(src.loc, use_sound, 70, 1)
