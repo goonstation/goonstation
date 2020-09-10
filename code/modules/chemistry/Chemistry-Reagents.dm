@@ -4,6 +4,8 @@
 //important MBC reagent note : implement mult for on_mob_life(). needed for proper realtime processing. lookk for examples, there are plenty
 //dont put them on byond-time effects like drowsy. just use them for damage, counters, statuseffects(realtime) etc.
 
+ABSTRACT_TYPE(/datum/reagent)
+
 datum
 	reagent
 		var/name = "Reagent"

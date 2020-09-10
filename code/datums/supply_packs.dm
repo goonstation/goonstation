@@ -1219,10 +1219,8 @@
 			if (isnum(frames[path]))
 				amt = abs(frames[path])
 
-			// vvv this is barf vvv
-			var/atom/template = new path()
-			var/template_name = template ? template.name : null
-			qdel(template)
+			var/atom/template = path
+			var/template_name = initial(template.name)
 			if (!template_name)
 				continue
 

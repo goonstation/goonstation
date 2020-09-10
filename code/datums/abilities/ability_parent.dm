@@ -39,6 +39,7 @@
 
 
 	New(var/mob/M)
+		..()
 		owner = M
 		hud = new()
 		if(owner)
@@ -109,8 +110,8 @@
 		if (src.topBarRendered && src.rendered)
 
 			if (!called_by_owner)
-				for(var/obj/screen/ability/A in src.hud)
-					src.hud -= A
+				for(var/obj/screen/ability/A in src.hud.objects)
+					src.hud.objects -= A
 
 			var/pos_x = start_x
 			var/pos_y = start_y
@@ -828,6 +829,7 @@
 
 	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
 	New(datum/abilityHolder/holder)
+		SHOULD_CALL_PARENT(FALSE) // I hate this but refactoring /datum/targetable is a big project I'll do some other time
 		..()
 		src.holder = holder
 		if (src.icon && src.icon_state)
@@ -1122,8 +1124,8 @@
 
 	updateButtons(var/called_by_owner = 0, var/start_x = 1, var/start_y = 0)
 		if (src.topBarRendered && src.rendered && src.hud)
-			for(var/obj/screen/ability/A in src.hud)
-				src.hud -= A
+			for(var/obj/screen/ability/A in src.hud.objects)
+				src.hud.objects -= A
 
 		x_occupied = 1
 		y_occupied = 0

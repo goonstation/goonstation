@@ -45,6 +45,7 @@
 	var/currently_selling = 0 //Are we currently processing an order?
 
 	New()
+		..()
 		src.current_message = pick(src.dialogue_greet)
 		src.patience = rand(src.base_patience[1],src.base_patience[2])
 		if (src.max_goods_buy > src.base_goods_buy.len)

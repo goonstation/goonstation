@@ -1319,7 +1319,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/set_loc(var/newloc as turf|mob|obj in world)
 	var/atom/oldloc = src.loc
 	. = ..()
-	if(src && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
+	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
 		if(src.chat_text.vis_locs.len)
 			var/atom/movable/AM = src.chat_text.vis_locs[1]
 			AM.vis_contents -= src.chat_text
@@ -1797,7 +1797,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	return shock_damage
 
-/mob/living/hitby(atom/movable/AM)
+/mob/living/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = 'sound/impact_sounds/Generic_Hit_2.ogg'
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	if (src.can_bleed && isitem(AM))
@@ -1805,4 +1805,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if ((I.hit_type == DAMAGE_STAB && prob(20)) || (I.hit_type == DAMAGE_CUT && prob(40)))
 			take_bleeding_damage(src, null, I.throwforce * 0.5, I.hit_type)
 			. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
+			if(thr?.user)
+				src.was_harmed(thr.user, AM)
 	..()

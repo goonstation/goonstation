@@ -72,7 +72,8 @@ export const DisposalChute = (props, context) => {
             buttons={
               <Button
                 icon={destinations ? "envelope" : "trash-alt"}
-                content={flush ? "Engaged" : "Disengaged"}
+                content={flush ? "Flushing" : "Flush"}
+                color={flush ? '' : 'red'}
                 onClick={() => act('toggleHandle')} />
             } >
             <Button

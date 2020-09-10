@@ -192,7 +192,7 @@
 		if (before == 2 && src.stat < 2) //if we were dead, and now arent
 			src.updateSprite()
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (src.nodamage) return //godmode
 		src.health -= max(burn, brute)
 		if (!isdead(src) && src.health <= 0) //u ded

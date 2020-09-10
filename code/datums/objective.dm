@@ -6,6 +6,7 @@ ABSTRACT_TYPE(/datum/objective)
 	var/medal_announce = 1
 
 	New(var/text)
+		..()
 		if(text)
 			src.explanation_text = text
 
@@ -1259,6 +1260,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 	/datum/objective/escape/kamikaze)
 
 	New(var/datum/mind/enemy)
+		..()
 		if(!istype(enemy))
 			return 1
 

@@ -381,7 +381,7 @@
 
 			if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 				var/turf/pilotSpawnLocation = null
-				
+
 				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
 				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
 					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
@@ -395,7 +395,7 @@
 					src.set_loc(pilotSpawnLocation)
 				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
 				#endif
-				for(var/obj/critter/gunbot/drone/snappedDrone in src.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+				for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
 					qdel(snappedDrone)
 				V.finish_board_pod(src)
 
@@ -476,22 +476,21 @@
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
 		var/obj/item/tank/emergency_oxygen/E = new /obj/item/tank/emergency_oxygen(src.loc)
-		src.equip_if_possible(E, slot_in_backpack)
+		src.force_equip(E, slot_in_backpack)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
-		src.equip_if_possible(SSW, slot_in_backpack)
+		src.force_equip(SSW, slot_in_backpack)
 		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
-		src.equip_if_possible(SHW, slot_in_backpack)
+		src.force_equip(SHW, slot_in_backpack)
 		#else
 		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
-		src.equip_if_possible(SSS, slot_in_backpack)
+		src.force_equip(SSS, slot_in_backpack)
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
-		src.equip_if_possible(SHS, slot_in_backpack)
+		src.force_equip(SHS, slot_in_backpack)
 		#endif
-		var/obj/item/clothing/mask/breath/MSK = new /obj/item/clothing/mask/breath(src.loc)
-		src.equip_if_possible(MSK, slot_in_backpack)
+		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
-		src.equip_if_possible(GPSDEVICE, slot_in_backpack)
+		src.force_equip(GPSDEVICE, slot_in_backpack)
 
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
@@ -501,9 +500,6 @@
 			src.equip_new_if_possible(JOB.slot_belt, slot_in_backpack)
 		else
 			src.equip_new_if_possible(JOB.slot_belt, slot_belt)
-			if (src.traitHolder && istype(src.belt, /obj/item/device/pda2))
-				if (src.traitHolder.hasTrait("immigrant") || src.traitHolder.hasTrait("pilot"))
-					del(src.belt)
 		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
 			for (var/X in JOB.items_in_belt)
 				if(ispath(X))
@@ -538,6 +534,11 @@
 		src.equip_new_if_possible(JOB.slot_rhan, slot_r_hand)
 	if (JOB.slot_lhan)
 		src.equip_new_if_possible(JOB.slot_lhan, slot_l_hand)
+
+	if (src.traitHolder?.hasTrait("immigrant") || src.traitHolder?.hasTrait("pilot"))
+		var/obj/item/device/pda2/pda = locate() in src
+		src.u_equip(pda)
+		qdel(pda)
 
 	var/T = pick(trinket_safelist)
 	var/obj/item/trinket = null

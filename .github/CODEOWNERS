@@ -19,7 +19,8 @@
 
 # ZeWaka
 *.md @ZeWaka
-# /maps/ @ZeWaka
+/.github/ @ZeWaka
+/tools/ @ZeWaka
 
 # Multiple Owners
 /tgui/ @mordent-goonstation @ZeWaka

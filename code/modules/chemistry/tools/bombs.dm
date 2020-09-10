@@ -65,8 +65,8 @@
 		return
 	return
 
-/obj/item/assembly/chem_bomb/get_desc()
-	return src.payload.get_desc()
+/obj/item/assembly/chem_bomb/get_desc(dist, user)
+	return src.payload.get_desc(dist, user)
 
 /obj/item/assembly/chem_bomb/disposing()
 	qdel(src.triggering_device)

@@ -1,5 +1,129 @@
 
+(t)wed sep 09 20
+(u)pali
+(e)🗺|mapping
+(*)A bunch of Atlas changes, expand the minor changes section at the bottom to see the incomplete list
+(+)Atlas stuff:<br>New clown hole<br>Fixed and added disposal pipes and disposals<br>Readded the genebooth<br>Fixed placement of the QM lightswitch<br>Added a bunch of intercoms<br>Added more cameras<br>Added more surgery tools (for robotics too)<br>Added equipment for the third miner<br>Added a glass recycler to chemistry<br>Fixed some incorrect areas (looking at you, armory in the freezer)<br>Added a portable air pump to toxins<br>Added a heat exchange pipe going through toxins burn chamber<br>Added reagent extractor to the kitchen<br>More artifacts both on and off station<br>Added artlab, engineering and mechanics cargopads<br>Added a recharger to QM<br>Added minimed and the cigarette vending machine (also a pizza vending machine, kinda)<br>Telesci reorganized a bit so the person in the chair doesn't block others<br>Added GPS landmarks<br>Added Gnome Chompski<br>Added blood fridge and restricted medicine locker<br>Various mood lighting experiments<br>Added some background objects to look at in space<br>Added the regular nano-fab to minig<br>Added Tiny Geoff Honkington<br>Other minor changes I forgot about
+(u)Jawns
+(p)2114
+(e)🆕|feature
+(+)Enzymatic reclaimer now ejects meats, organs, and various limbs.
+(u)pali
+(p)2081
+(e)🆕|feature
+(*)Traitor janitors can now buy a very special wet floor sign. Also wet floor signs can now be anchored / unanchored with a wrench.
+(u)MarkNstein
+(p)2126
+(e)|
+(+)Glass recycler accepts plate stacks.
+(u)Flaborized
+(p)2090
+(e)🎨|sprites
+(+)New sprites for a wide variety of glasses
+(u)MarkNstein
+(p)2124
+(e)|
+(*)ChemiCompiler no longer transfers double the intended amount when dumping.
+(u)MarkNstein
+(p)2100
+(e)🆕🎨|feature, sprites
+(*)Digbot revived: a bot for miners. Craftable and has a blueprint in robotics and mining fabs.
+(t)tue sep 08 20
+(u)Superlagg
+(p)2111
+(e)⚖🆕|balance, feature
+(+)Werewolves are no longer completely unintelligible.
+(u)Tarmunora
+(p)2109
+(e)⚖|balance
+(+)Changed explosion resist property to be a percentage-based protection
+(u)Gannets
+(p)2106
+(e)⚖|balance
+(+)Improved armour values for Nuclear Operative Specialist uniforms.
+(u)Zamujasa
+(+)Lowered the intensity of screen-shake effects across the board.
+(+)Manta will no longer fling your viewpoint halfway across the screen, for example.
+(+)Some effects may need to be intensified again later, but in general screen shake has been a constant complaint, to the point some players would quit and rejoin to avoid it.
+(u)Superlagg
+(p)2102
+(e)🆕|feature
+(+)Metal organs are no longer made of delicious flesh.
+(t)mon sep 07 20
+(u)Flourish
+(p)2104
+(e)🆕|feature
+(+)Hit someone with a plush toy on help intent to make the plush toy hug them.
+(u)kyle & pali & BatElite
+(e)🆕|feature
+(*)Added the Spaceship of Theseus medal
+(u)SageAcrin & pali & Dogs
+(e)🆕|feature
+(*)Added the Quit Cloning Around medal
+(u)Gannets
+(p)2093
+(e)⚖|balance
+(*)Increased maximum number of Nuclear Operatives to 8 from 6.
+(u)Aft2001
+(p)2098
+(e)|
+(+)An AI's PDA name is now based on its actual name, instead of just being labeled as 'AI'
+(t)sun sep 06 20
+(u)Nebulacrity
+(p)2057
+(e)🆕🎨|feature, sprites
+(*)Added a new mutation: Hemochromia. NanoTrasen has released a statement that differently colored blood is perfectly normal and not worth being alarmed over.
+(u)zjdtmkhzt
+(p)2059
+(e)⚖🆕|balance, feature
+(+)Electric wand type artifacts should now actually work. Some other small changes to wand artifacts were made too.
+(u)RichardGere
+(p)2082
+(e)⚖|balance
+(+)Tweaked secbots responsiveness to accommodate the new movement change.
+(u)Zamujasa
+(*)Added the Rotbusttec implant to the medical and robotics fabricators.
+(+)The cloner now makes noises/jostles a bit when cloning a player.
+(t)sat sep 05 20
+(u)zjdtmkhzt
+(p)2077
+(e)|
+(+)Fixed a bug where magical artifact wands would not work past melee range.
+(u)Sovexe
+(e)🆕|feature
+(*)Added a new secret chem, Bombini.
+(t)fri sep 04 20
+(u)pali
+(*)Securitrons are now less lazy when chasing people and don't stop for 1-2 second breaks to catch their breath
+(u)Zamujasa
+(e)🐛🆕🔄|feature, rework, bug
+(*)The cloner now works a little differently: it will begin producing a new body automatically, if possible.
+(*)When you clone someone, they will either be put into that body (if it exists), or the cloner will start producing a body for them (and then put them in it).
+(*)The cloning pod will keep a ready body indefinitely until someone is cloned into it.
+(*)You can toggle this automatic pre-generation via the right-click menu "Toggle Auto Mode".
+(*)Premature clones can have their genes fixed by hanging out in a cold cryo cell at full health for a while.
+(+)The cloner now accounts for server tick delay when processing.
+(+)Puritan-trait-havers will no longer die immediately upon cloning, but...
+(+)The cloner will now consider maximum HP changes when deciding how far along a clone is.
+(+)Reagents added to the cloner should now react properly. Previously they kinda didn't.
+(+)Checking the status of the cloning pod has been moved to Examine rather than requiring you to click on it.
+(+)Probably added a few bugs. Sorry. I tested what I could think of, but y'all are good at breaking things.
+(+)The cryo cell and freezer now show the temperature in Celsius.
+(u)Superlagg
+(p)1904
+(e)🆕|feature
+(+)Securitrons are now much more dutiful when patrolling and responding to summons
+(+)Securitrons also show a progress bar when cuffing someone. Careful, they don't like to be interrupted!
+(+)Upgraded the Hos' secbot PDA program to be able to summon every active securitron or force it to stun whoever its chasing.
+(u)Sovexe
+(p)1879
+(e)🆕📄|feature, tgui
+(+)Converted PTL to TGUI
 (t)thu sep 03 20
+(u)ThePotato97
+(p)2056
+(e)|
+(+)AI eyebot is now able to interact with tguis.
 (u)adharainspace
 (p)2006
 (e)🆕🎨|feature, sprites

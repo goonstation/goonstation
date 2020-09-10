@@ -382,7 +382,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_base = "sec_glass"
 	req_access = list(access_security)
 
-/obj/machinery/door/airlock/pyro/glass/med 
+/obj/machinery/door/airlock/pyro/glass/med
 	icon_state = "med_glass_closed"
 	icon_base = "med_glass"
 	req_access = null
@@ -458,7 +458,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
 	req_access = null
-	
+
 /obj/machinery/door/airlock/gannets
 	name = "airlock"
 	icon = 'icons/obj/doors/destiny.dmi'
@@ -1678,6 +1678,9 @@ obj/machinery/door/airlock
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption)
+			return
+
+		if(lowertext(signal.data["sender"]) == src.net_id)
 			return
 
 		if (lowertext(signal.data["address_1"]) != src.net_id)

@@ -314,6 +314,8 @@
 	var/turf/T = get_turf(src)
 
 	var/datum/artifact/A = src.artifact
+	if(!istype(A))
+		return
 
 	// Possible stimuli = force, elec, radiate, heat
 	switch(A.artitype.name)

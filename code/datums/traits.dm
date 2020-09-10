@@ -62,6 +62,9 @@
 			if (!user)
 				return
 
+		if(!user.client)
+			return
+
 		if(!winexists(user, "traitssetup_[user.ckey]"))
 			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
 
@@ -102,6 +105,9 @@
 		return
 
 	proc/showTraits(var/mob/user)
+		if(!user.client)
+			return
+
 		if(!winexists(user, "traitssetup_[user.ckey]"))
 			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
 
@@ -721,13 +727,13 @@
 	isPositive = 0
 
 obj/trait/pilot
-	name = "Pilot (+1) \[Background\]"
+	name = "Pilot (0) \[Background\]"
 	cleanName = "Pilot"
 	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection but without a PDA."
 	id = "pilot"
 	icon_state = "pilot"
 	category = "background"
-	points = 1
+	points = 0
 	isPositive = 0
 
 // NO CATEGORY - Grey Border

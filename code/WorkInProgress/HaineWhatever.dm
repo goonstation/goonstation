@@ -163,8 +163,7 @@
 	equipped(var/mob/user, var/slot)
 		if (slot == SLOT_WEAR_MASK && istype(user))
 			src.chewer = user
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 			if (src.reagents && !src.reagents.total_volume)
 				user.show_text("Looks like [src] has lost its flavor, darn.")
 		return ..()
@@ -1108,7 +1107,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			usr.say("MOON TIARA ACTION!")
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "sailormoon"
 		if (hit_atom == usr)
 			if (ishuman(usr))
@@ -1272,7 +1271,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (!ismob(M) || !M.contents.len)
@@ -1594,7 +1593,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			return ..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom && isvampire(hit_atom))
 			src.force = (src.force * 2)
 			src.stamina_damage = (src.stamina_damage * 2)

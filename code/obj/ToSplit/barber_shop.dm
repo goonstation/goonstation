@@ -45,7 +45,7 @@
 		AddComponent(/datum/component/transfer_on_attack)
 		AddComponent(/datum/component/barber/haircut)
 		AddComponent(/datum/component/toggle_tool_use)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/M as mob, mob/user as mob)
 		if (src.remove_bandage(M, user))
@@ -89,7 +89,7 @@
 		AddComponent(/datum/component/transfer_on_attack)
 		AddComponent(/datum/component/barber/shave)
 		AddComponent(/datum/component/toggle_tool_use)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/M as mob, mob/user as mob)
 		if (scalpel_surgery(M, user))
@@ -147,11 +147,10 @@
 	desc = "The #1 hair growth product on the market! WARNING: Some side effects may occur."
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "tonic1"
+	initial_volume = 50
 	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("hairgrownium", 40)
+		..()
+		reagents.add_reagent("hairgrownium", 40)
 
 	on_reagent_change()
 		src.icon_state = "tonic[src.reagents.total_volume ? "1" : "0"]"
@@ -201,7 +200,7 @@
 		var/is_barber = user.mind.assigned_role == "Barber"
 		var/passed_dye_roll = 1
 
-		if(user.bioHolder.HasEffect("clumsy" && prob(40)))
+		if(user.bioHolder.HasEffect("clumsy") && prob(40))
 			var/recolor_these_hair_layers_instead = 0
 			var/mob/living/carbon/human/famtofuckup = null
 			passed_dye_roll = 0

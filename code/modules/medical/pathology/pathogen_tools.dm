@@ -37,6 +37,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "petri0"
 	desc = "A dish tailored hold pathogen cultures."
+	initial_volume = 40
 	var/stage = 0
 
 	var/dirty = 0
@@ -49,10 +50,7 @@
 	rc_flags = 0
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		// Integration notes: stable mutagen ID.
+		..()
 		for (var/nutrient in pathogen_controller.nutrients)
 			nutrition += nutrient
 			nutrition[nutrient] = 0
@@ -190,8 +188,7 @@
 				var/datum/reagent/RE = src.reagents.reagent_list[R]
 				if (R == "pathogen")
 					if (src.medium)
-						if (!(src in processing_items))
-							processing_items.Add(src)
+						processing_items |= src
 				else if (R in pathogen_controller.media)
 					if (src.medium && src.medium.id != R)
 						set_dirty("There are multiple, incompatible growth media in the petri dish.")
@@ -206,8 +203,7 @@
 						src.reagents.reagent_list -= R
 						src.reagents.update_total()
 						if (src.reagents.has_reagent("pathogen"))
-							if (!(src in processing_items))
-								processing_items.Add(src)
+							processing_items |= src
 					else
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)

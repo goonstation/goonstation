@@ -104,7 +104,7 @@
 					continue
 				if(check_target_immunity( N )) continue
 				N.apply_flash(30, 5)
-		if(N.client) shake_camera(N, 6, 4)
+		if(N.client) shake_camera(N, 6, 16)
 
 /mob/living/proc/PAND_Meteors(var/protectuser = 1)
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> summons meteors!</span>", src), 1)

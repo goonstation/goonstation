@@ -9,6 +9,7 @@
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
 	New(productpath, amount=0, cost=0, hidden=0)
+		..()
 		if (istext(productpath))
 			productpath = text2path(productpath)
 		if (!ispath(productpath))
@@ -454,8 +455,8 @@
 		if (W && W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
 
-/obj/machinery/vending/hitby(M as mob|obj)
-	if (iscarbon(M) && M:throwing && prob(25))
+/obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
+	if (iscarbon(M) && M.throwing && prob(25))
 		src.fall(M)
 		return
 
@@ -1491,19 +1492,18 @@
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/device/pda2, 10, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/atmos, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/mechanic, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/quartermaster, 2, cost=50)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/genetics, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/toxins, 2, cost=50)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/botanist, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/janitor, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/engineer, 2, cost=70)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2, 20, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/atmos, 5, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/quartermaster, 5, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 5, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/genetics, 5, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/toxins, 5, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/botanist, 5, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/janitor, 5, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/engineer, 5, cost=70)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/diagnostics, 2, cost=70)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/game_codebreaker, 4, cost=25)
-		product_list += new/datum/data/vending_product(/obj/item/device/pda_module/flashlight/high_power, 2, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/game_codebreaker, 10, cost=25)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda_module/flashlight/high_power, 10, cost=100)
 
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/security, 1, cost=80, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/head, 1, cost=100, hidden=1)
@@ -1690,6 +1690,11 @@
 			add_fingerprint(usr)
 			updateUsrDialog()
 		return
+
+/obj/machinery/vending/pizza/fallen
+	New()
+		. = ..()
+		src.fall()
 
 /obj/machinery/vending/monkey
 	name = "ValuChimp"
@@ -2065,6 +2070,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/goboard, 1, cost=100)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/b, 1, cost=50)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/clow, 5, cost=100) // (this is an anime joke)
+		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=100)      //      (please laugh)
 
 /obj/machinery/vending/clothing
 	name = "FancyPantsCo Sew-O-Matic"

@@ -13,6 +13,7 @@
 	var/mob/the_user = null
 	//Prolonged use causes damage.
 	New(mob/target, atom/location)
+		..()
 		src.set_loc(location)
 		the_user = target
 		target.set_loc(src)

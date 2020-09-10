@@ -122,13 +122,10 @@
 	New()
 		..()
 		src.plantgenes = new /datum/plantgenes(src)
-		var/datum/reagents/R = new/datum/reagents(400)
-		reagents = R
-		R.maximum_volume = 400
+		src.create_reagents(400)
 		// The plantpot can store 400 reagents in total, we want a bit more than the max water
 		// level since we can put other additives in the pot for various effects.
-		R.my_atom = src
-		R.add_reagent("water", 200)
+		reagents.add_reagent("water", 200)
 		// 200 is the exact maximum amount of water a plantpot can hold before it is considered
 		// to have too much water, which stunts plant growth speed.
 		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi', "wat-[src.water_level]")
@@ -1799,11 +1796,8 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(5000)
-		reagents = R
-		R.maximum_volume = 5000
-		R.my_atom = src
-		R.add_reagent("water", 1000)
+		src.create_reagents(5000)
+		reagents.add_reagent("water", 1000)
 
 	get_desc()
 		var/reag_list = ""

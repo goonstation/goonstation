@@ -62,5 +62,6 @@
 	icon_state = "bull"
 
 	New()
+		..()
 		src.alpha = 245
 		animate(src, alpha = 1, time = 30)

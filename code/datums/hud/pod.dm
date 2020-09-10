@@ -23,6 +23,7 @@
 	var/obj/machinery/vehicle/master
 
 	New(P)
+		..()
 		master = P
 		missing = image('icons/mob/hud_pod.dmi', "marker")
 		engine = create_screen("engine", "Engine", 'icons/mob/hud_pod.dmi', "engine-off", "NORTH+1,WEST", tooltipTheme = "pod-alt", desc = "Turn the pod's engine on or off (you probably don't want to turn it off)")

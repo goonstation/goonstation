@@ -45,7 +45,7 @@
 		M.dir = turn(M.dir, 90)
 
 		for (var/mob/C in oviewers(M))
-			shake_camera(C, 8, 3)
+			shake_camera(C, 8, 24)
 
 		M.visible_message("<span class='alert'><B>[M.name] [pick_string("wrestling_belt.txt", "kick")]-kicks [target]!</B></span>")
 		if (!fake)
