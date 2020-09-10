@@ -10,7 +10,7 @@
 
 	var/charges = 1
 	var/use_sound = "sound/machines/chime.ogg"
-	var/obj/the_bomb = null
+	var/atom/movable/the_bomb = null
 
 /obj/item/remote/nuke_summon_remote/attack_self(mob/user as mob)
 	if(charges >= 1)
