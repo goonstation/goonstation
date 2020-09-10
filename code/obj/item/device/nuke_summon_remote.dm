@@ -22,7 +22,6 @@
 		tele_the_bomb(user)
 	else
 		boutput(user, "<span class='alert'>The [src] is out of charge and can't be used again!</span>")
-		return
 	
 /obj/item/remote/nuke_summon_remote/proc/try_to_find_the_nuke()
 	if(ticker.mode.type == /datum/game_mode/nuclear)
