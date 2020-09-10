@@ -109,13 +109,24 @@
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
-/proc/mult_color_matrix(var/list/M1, var/list/M2) // always 4x4
-	if (M1.len != M2.len)
+/proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 4x4
+	if (Mat1.len != Mat2.len)
 		return 0
-	. = list()
-	for(var/i in 1 to M1.len)
-		. += M1[i] * M2[i]
-	return
+
+	var/list/M1[4][4] // turn the input matrix lists into more matrix-y lists
+	var/list/M2[4][4] // both of em
+	var/index = 1
+	for(var/r in 1 to 4)
+		for(var/c in 1 to 4)
+			M1[c][r] = Mat1[index]
+			M2[c][r] = Mat2[index]
+			index ++
+	var/list/out[16] // get ready to deconvert the 4x4 into a 1x16 list
+	for(var/i in 1 to 16)	// output cell
+		for(var/ro in 1 to 4)
+			for(var/co in 1 to 4)
+				out[i] += (M1[ro][co]*M2[co][ro])
+	return out
 
 //Color matrices		// vv Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
 #define MATRIX_PROTANOPIA 0.55, 0.45, 0.00, 0.00, 0.55, 0.45, 0.00, 0.00, 0.00, 0.25, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00
