@@ -1295,7 +1295,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/who = lowertext(plist["target"])
 
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
-				if (M.client)
+				if (M?.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
 							<div style="background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
