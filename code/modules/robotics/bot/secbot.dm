@@ -1093,14 +1093,14 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	onUpdate()
 		..()
-		if (get_dist(master, master.target) <= 1 || !master.target || master.target.hasStatus("handcuffed"))
+		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed"))
 			interrupt(INTERRUPT_ALWAYS)
 			master.process()
 			return
 
 	onStart()
 		..()
-		if (get_dist(master, master.target) <= 1 || !master.target || master.target.hasStatus("handcuffed"))
+		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed"))
 			interrupt(INTERRUPT_ALWAYS)
 			master.process()
 			return

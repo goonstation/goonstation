@@ -811,9 +811,9 @@
 	verb/eject()
 		set src in oview(1)
 		set category = "Local"
-
 		if (!isalive(usr)) return
 		if (src.process_timer > 0) return
+		src.eject_meats()
 		src.go_out()
 		add_fingerprint(usr)
 		return
@@ -821,6 +821,11 @@
 	relaymove(mob/user as mob)
 		src.go_out()
 		return
+
+	proc/eject_meats()
+		for (var/obj/item/meat in src.meats)
+			meat.set_loc(src.loc)
+		src.meats = list()
 
 	proc/go_out()
 		if (!src.occupant)

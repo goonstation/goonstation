@@ -835,7 +835,7 @@
 			var/datum/ailment_data/disease/D = mob.find_ailment_by_type(/datum/ailment/disease/lycanthropy/)
 
 			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
-			mob.bioHolder.AddEffect("accent_scoob", null, null, 0, 1)
+			mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
 
 			if(D)
 				D.cycles++

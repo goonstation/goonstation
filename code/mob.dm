@@ -486,9 +486,9 @@
 		illumplane.alpha = 255
 
 	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
-		src.client?.color = list(MATRIX_PROTANOPIA)
-
-	return
+		// creating a local var for this is actually necessary, byond freaks the fuck out if you do `color = list(blahblah)`. Why? I wish I knew.
+		var/list/matrix_protanopia = list(MATRIX_PROTANOPIA)
+		src.client?.color = matrix_protanopia
 
 /mob/Logout()
 
@@ -992,7 +992,7 @@
 	return
 
 // for mobs without organs
-/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type)
+/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	hit_twitch(src)
 #if ASS_JAM//pausing damage for timestop
 	if(src.paused)

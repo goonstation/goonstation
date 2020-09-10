@@ -272,8 +272,8 @@ var/datum/score_tracker/score_tracker
 		var/found_hb = 0
 		var/tier = world.load_intra_round_value("heisenbee_tier")
 		for(var/obj/critter/domestic_bee/heisenbee/HB in by_cat[TR_CAT_PETS])
-			var/obj/item/hat = locate(HB.original_hat_ref)
-			if(hat)
+			var/obj/item/hat = HB.original_hat
+			if(hat && !hat.disposed)
 				if(hat.loc != HB)
 					var/atom/movable/L = hat.loc
 					while(istype(L) && !istype(L, /mob))
@@ -292,12 +292,12 @@ var/datum/score_tracker/score_tracker
 				else
 					. += "[hat][inline_bicon(getFlatIcon(HB, no_anim=TRUE))](tier [HB.original_tier])"
 			else if(HB.alive)
-				if(HB.original_tier)
-					. += "\[DESTROYED!\]"
+				if(hat)
+					. += "[inline_bicon(getFlatIcon(hat, no_anim=TRUE))] \[DESTROYED!\]"
 				else
 					. += "No hat yet."
-			else if(HB.original_tier)
-				. += "\[DESTROYED!\] \[🐝 MURDERED!\]"
+			else if(hat)
+				. += "[inline_bicon(getFlatIcon(hat, no_anim=TRUE))] \[DESTROYED!\] \[🐝 MURDERED!\]"
 			else
 				. += "No hat yet. \[🐝 MURDERED!\]"
 			found_hb = 1

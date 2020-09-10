@@ -647,9 +647,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 		sleep(0.2 SECONDS)
 
-		//Look i know this check looks janky. that's because IT IS. violent_twitch is ONLY called for disorient. okay. this stops it fucking up rest animation
-		if (!A.hasStatus(list("weakened", "paralysis")))
-			A.transform = A.transform.Turn(-deg)
+		A.transform = A.transform.Turn(-deg)
 		A.pixel_x = old_x
 		A.pixel_y = old_y
 

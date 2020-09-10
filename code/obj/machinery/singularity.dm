@@ -78,6 +78,8 @@ Contains:
 
 	bound_width = 96
 	bound_height = 96
+	bound_x = -32
+	bound_y = -32
 
 	var/active = 0
 	var/energy = 10
@@ -98,14 +100,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 */
 /obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null)
 	src.energy = E
-	pixel_x = -32
-	pixel_y = -32
+	pixel_x = -32 * 2
+	pixel_y = -32 * 2
 	event()
 	if (Ti)
 		src.Dtime = Ti
-	SPAWN_DBG(0)
-		src.x--
-		src.y--
 	..()
 
 /obj/machinery/the_singularity/process()
@@ -171,7 +170,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (selfmove)
 		var/dir = pick(cardinal)
 
-		var/checkloc = get_step(src,dir)
+		var/checkloc = get_step(src.get_center(), dir)
 		for (var/dist = 0, dist < 3, dist ++)
 			if (locate(/obj/machinery/containment_field) in checkloc)
 				return
@@ -248,6 +247,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/get_center()
 	. = get_turf(src)
+	//if(!(get_step(., SOUTHWEST) in src.locs)) // I hate this, neither `loc` nor `get_turf` behave consistently, sometimes they are the center tile and sometimes they are the south west tile, aaaa
 	. = get_step(., NORTHEAST)
 
 /obj/machinery/the_singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
@@ -632,6 +632,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/turf/T2 = src.loc
 
 	src.UpdateOverlays(null, "field_start_[NSEW]")
+	src.UpdateOverlays(null, "field_end_[turn(NSEW, 180)]")
 
 	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for fields
 		T = get_step(T2, NSEW)
@@ -643,6 +644,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if(locate(/obj/machinery/field_generator) in T)
 			G = (locate(/obj/machinery/field_generator) in T)
 			G.UpdateOverlays(null, "field_end_[NSEW]")
+			G.UpdateOverlays(null, "field_start_[turn(NSEW, 180)]")
 			if(!G.active)
 				break
 
@@ -1816,3 +1818,41 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					</div>
 				</body>
 			</html>"}
+
+
+/obj/item/ez_singulo
+	name = "Ez Singularity Engine"
+	icon = 'icons/obj/items/grenade.dmi'
+	icon_state = "graviton"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "emp"
+	var/activated = FALSE
+	var/radius = 3
+
+	attack_self(mob/user)
+		if(activated)
+			. = ..()
+			return
+		else
+			src.activated = TRUE
+			boutput(user, "You prime [src]. Three seconds until activation.")
+			SPAWN_DBG(3 SECONDS)
+				src.build_a_singulo()
+
+
+	proc/build_a_singulo()
+		if(!isturf(src.loc))
+			src.activated = FALSE
+			return
+		for(var/turf/T in block(locate(src.x - radius, src.y - radius, src.z), locate(src.x + radius, src.y + radius, src.z)))
+			T.ReplaceWith(/turf/simulated/floor/engine, 0, 1, 0, 0)
+		new /obj/machinery/the_singularitygen(src.loc)
+		for(var/dir in ordinal)
+			var/turf/T = get_steps(src.loc, dir, radius)
+			var/obj/machinery/field_generator/gen = new(T)
+			gen.set_active(1)
+			gen.state = 3
+			gen.power = 250
+			gen.anchored = 1
+			icon_state = "Field_Gen +a"
+		qdel(src)

@@ -125,7 +125,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	del(churn)
 	canmove = 1
 
-/mob/living/silicon/ai/TakeDamage(zone, brute, burn)
+/mob/living/silicon/ai/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	bruteloss += brute
 	fireloss += burn
 	health_update_queue |= src

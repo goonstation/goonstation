@@ -219,7 +219,7 @@
 			logTheThing("combat", user, null, "adds a beaker [log_reagents(G)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
 			src.add_fingerprint(user)
 		else if(istype(G, /obj/item/grab))
-			push_in(G)
+			push_in(G, user)
 		else if (istype(G, /obj/item/reagent_containers/syringe))
 			//this is in syringe.dm
 			logTheThing("combat", user, null, "injects [log_reagents(G)] to [src] at [log_loc(src)].")

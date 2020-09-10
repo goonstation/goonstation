@@ -1,5 +1,88 @@
 
+(t)thu sep 10 20
+(u)Gannets
+(p)2129
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added the Nuclear Bomb Teleporter Remote, a single-use item that allows nuke ops to teleport the bomb to their location.
+(*)Use it to either skip the bomb ferrying portion of the round or in an emergency to retrieve a stolen bomb.
+(u)ThePotato97
+(p)2143
+(e)|
+(+)Centcomm's power announcement is no longer hardcoded to the TEG and will work on any map.
+(u)pali
+(+)Crayons now even better. They show their selected letter and let you queue up a text of up to 100 characters!
+(+)Two more personal lockers and an experimental artifact flusher added to Atlas.
+(u)zjdtmkhzt
+(p)2136
+(e)|
+(+)Fixed a bug where critters were unable to throw people.
+(u)ThePotato97
+(p)2142
+(e)|
+(+)Toilet UI now updates correctly.
+(u)Tarmunora
+(p)2133
+(e)🆕|feature
+(+)Added very short cooldown to toggling rest state.
+(u)Superlagg
+(p)2103
+(e)🆕|feature
+(+)You can now also pick what a crayon draws by using it in-hand.
+(u)MarkNstein
+(p)2141
+(e)🐛|bug
+(*)Oshan PTL now works.
+(u)UrsulaMajor
+(p)2053
+(e)⚖🆕|balance, feature
+(*)Added the Clock 180. Buy it at QM. Wear your security badge.
+(+)Consolidated QM security crate contents.
+(t)wed sep 09 20
+(u)zjdtmkhzt
+(p)2130
+(e)|
+(+)Filling a pipe with chems during pipebomb construction will no longer splash the rest of the chems onto it.
+(u)pali
+(e)🗺|mapping
+(*)A bunch of Atlas changes, expand the minor changes section at the bottom to see the incomplete list
+(+)Atlas stuff:<br>New clown hole<br>Fixed and added disposal pipes and disposals<br>Readded the genebooth<br>Fixed placement of the QM lightswitch<br>Added a bunch of intercoms<br>Added more cameras<br>Added more surgery tools (for robotics too)<br>Added equipment for the third miner<br>Added a glass recycler to chemistry<br>Fixed some incorrect areas (looking at you, armory in the freezer)<br>Added a portable air pump to toxins<br>Added a heat exchange pipe going through toxins burn chamber<br>Added reagent extractor to the kitchen<br>More artifacts both on and off station<br>Added artlab, engineering and mechanics cargopads<br>Added a recharger to QM<br>Added minimed and the cigarette vending machine (also a pizza vending machine, kinda)<br>Telesci reorganized a bit so the person in the chair doesn't block others<br>Added GPS landmarks<br>Added Gnome Chompski<br>Added blood fridge and restricted medicine locker<br>Various mood lighting experiments<br>Added some background objects to look at in space<br>Added the regular nano-fab to minig<br>Added Tiny Geoff Honkington<br>Other minor changes I forgot about
+(u)Jawns
+(p)2114
+(e)🆕|feature
+(+)Enzymatic reclaimer now ejects meats, organs, and various limbs.
+(u)pali
+(p)2081
+(e)🆕|feature
+(*)Traitor janitors can now buy a very special wet floor sign. Also wet floor signs can now be anchored / unanchored with a wrench.
+(u)MarkNstein
+(p)2126
+(e)|
+(+)Glass recycler accepts plate stacks.
+(u)Flaborized
+(p)2090
+(e)🎨|sprites
+(+)New sprites for a wide variety of glasses
+(u)MarkNstein
+(p)2124
+(e)|
+(*)ChemiCompiler no longer transfers double the intended amount when dumping.
+(u)MarkNstein
+(p)2100
+(e)🆕🎨|feature, sprites
+(*)Digbot revived: a bot for miners. Craftable and has a blueprint in robotics and mining fabs.
 (t)tue sep 08 20
+(u)Superlagg
+(p)2111
+(e)⚖🆕|balance, feature
+(+)Werewolves are no longer completely unintelligible.
+(u)Tarmunora
+(p)2109
+(e)⚖|balance
+(+)Changed explosion resist property to be a percentage-based protection
+(u)Gannets
+(p)2106
+(e)⚖|balance
+(+)Improved armour values for Nuclear Operative Specialist uniforms.
 (u)Zamujasa
 (+)Lowered the intensity of screen-shake effects across the board.
 (+)Manta will no longer fling your viewpoint halfway across the screen, for example.

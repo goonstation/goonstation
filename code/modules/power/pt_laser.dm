@@ -280,7 +280,8 @@
 
 	for(var/dist = 0, dist < range, dist += 1)
 		T = get_step(T, dir)
-		if(!T || T.density) return dist
+		if(!T || T.density) 
+			if(!istype(T, /turf/unsimulated/wall/trench)) return dist
 		for(var/obj/O in T)
 			if(!istype(O,/obj/window) && !istype(O,/obj/grille) && !ismob(O) && O.density)
 				blocking_objects += O
