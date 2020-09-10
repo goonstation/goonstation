@@ -1145,6 +1145,7 @@ PIPE BOMBS + CONSTRUCTION
 				name = "hollow [src.material.name] pipe frame"
 			else
 				name = "hollow pipe frame"
+			src.flags |= NOSPLASH
 
 		if (allowed_items.len && item_mods.len < 3 && state == 2)
 			var/ok = 0
@@ -1201,7 +1202,8 @@ PIPE BOMBS + CONSTRUCTION
 			else
 				name = "pipe bomb frame"
 
-			desc = "Two small pipes joined together, filled with welding fuel and connected with a cable. It needs some kind of ignition switch."
+			desc = "Two small pipes joined together, filled with explosives and connected with a cable. It needs some kind of ignition switch."
+			src.flags &= ~NOSPLASH
 
 		if(istype(W, /obj/item/assembly/time_ignite) && state == 4)
 			boutput(user, "<span class='notice'>You connect the cable to the timer/igniter assembly.</span>")
