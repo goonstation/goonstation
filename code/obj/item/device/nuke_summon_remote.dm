@@ -30,7 +30,7 @@
 
 /obj/item/remote/nuke_summon_remote/proc/tele_the_bomb(mob/user as mob)
 	showswirl(the_bomb)
-	the_bomb?.set_loc(get_turf(src))
+	the_bomb.set_loc(get_turf(src))
 	showswirl(src)
 	src.visible_message("<span class='alert'>[user] has summoned the [the_bomb]!</span>")
 	src.charges -= 1
