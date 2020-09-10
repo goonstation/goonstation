@@ -599,6 +599,7 @@
 		if (opener)
 			random_brute_damage(opener,damage,1)
 			playsound(opener.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+			opener.unlock_medal("This object menaces with spikes of...", 1)
 		return
 
 /datum/loot_crate_trap/zap
