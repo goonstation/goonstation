@@ -406,10 +406,10 @@
 	access = access_security
 
 /datum/supply_packs/security_upgrade
-	name = "Weapons Crate - Security Equipment Upgrade (Cardlocked \[Security])"
-	desc = "1x Clock 188, x1 Elite Security Helmet, x1 Lethal Grenade Kit, 1x Experimental Grenade Kit"
+	name = "Weapons Crate - Experimental Security Equipment (Cardlocked \[Security])"
+	desc = "1x Clock 180, x1 Elite Security Helmet, x1 Lethal Grenade Kit, 1x Experimental Grenade Kit"
 	category = "Security Department"
-	contains = list(/obj/item/gun/kinetic/clock_188,
+	contains = list(/obj/item/gun/kinetic/clock_188/boomerang,
 					/obj/item/ammo/bullets/nine_mm_NATO,
 					/obj/item/ammo/bullets/nine_mm_NATO,
 					/obj/item/storage/box/QM_grenadekit_security,

@@ -484,6 +484,49 @@
 				src.icon_state = "clock-188-beige"
 		return
 
+/obj/item/gun/kinetic/clock_188/boomerang
+	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."
+	name = "Clock 180"
+	throw_range = 10
+	throwforce = 1
+	throw_speed = 1
+	throw_return = 1
+	var/prob_clonk = 0
+
+	throw_begin(atom/target)
+		playsound(src.loc, "rustle", 50, 1)
+		return ..(target)
+
+	throw_impact(atom/hit_atom)
+		if(hit_atom == usr)
+			if(prob(prob_clonk))
+				var/mob/living/carbon/human/user = usr
+				user.visible_message("<span class='alert'><B>[user] fumbles the catch and accidentally discharges [src]!</B></span>")
+				src.shoot_point_blank(user, user)
+				user.changeStatus("stunned", 50)
+				user.changeStatus("weakened", 3 SECONDS)
+				user.changeStatus("paralysis", 2 SECONDS)
+				user.force_laydown_standup()
+			else
+				src.attack_hand(usr)
+			return
+		else
+			var/mob/M = hit_atom
+			if(istype(M))
+				var/mob/living/carbon/human/user = usr
+				if(istype(user.wear_suit, /obj/item/clothing/suit/security_badge))
+					src.silenced = 1
+					src.shoot_point_blank(M, M)
+					M.visible_message("<span class='alert'><B>[src] fires, hitting [M] point blank!</B></span>")
+					src.silenced = initial(src.silenced)
+
+			prob_clonk = min(prob_clonk + 5, 100)
+			SPAWN_DBG(1.5 SECONDS)
+				prob_clonk = max(prob_clonk - 5, 0)
+
+		return ..(hit_atom)
+
+
 /obj/item/gun/kinetic/spes
 	name = "SPES-12"
 	desc = "Multi-purpose high-grade military shotgun. Very spiffy."
