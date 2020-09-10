@@ -1,5 +1,9 @@
 
 (t)thu sep 10 20
+(u)zjdtmkhzt
+(p)2136
+(e)|
+(+)Fixed a bug where critters were unable to throw people.
 (u)ThePotato97
 (p)2142
 (e)|
