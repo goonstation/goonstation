@@ -16,7 +16,7 @@
 	if(charges >= 1)
 		if(isnull(the_bomb))
 			try_to_find_the_nuke()
-		if(the_bomb == null)
+		if(isnull(the_bomb))
 			boutput(user, "<span class='alert'>No teleportation target found!</span>")
 			return
 		tele_the_bomb(user)
