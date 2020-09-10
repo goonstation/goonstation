@@ -135,7 +135,14 @@
 								"Throwing explosive tomatoes at people.",\
 								"Caused multiple seemingly unrelated accidents.")
 		S.fields["ma_crim_d"] = "No details provided."
-		S.fields["notes"] = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
+		if(!length(sec_note))
+			S.fields["notes"] = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
+		else
+			S.fields["notes"] = sec_note
+
+		boutput(H, "<span class='notice'>You are currently on the run because you've committed the following crimes:</span>")
+		boutput(H, "<span class='notice'>- [S.fields["mi_crim"]]</span>")
+		boutput(H, "<span class='notice'>- [S.fields["ma_crim"]]</span>")
 	else
 		S.fields["criminal"] = "None"
 		S.fields["mi_crim"] = "None"
