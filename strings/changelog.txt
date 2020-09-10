@@ -1,5 +1,7 @@
 
 (t)thu sep 10 20
+(u)pali
+(+)Crayons now even better. They show their selected letter and let you queue up a text of up to 100 characters!
 (u)zjdtmkhzt
 (p)2136
 (e)|
