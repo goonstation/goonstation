@@ -354,8 +354,6 @@
 		if (!I || !isitem(I) || I.cant_drop)
 			return
 
-		u_equip(I)
-
 		if (istype(I, /obj/item/grab))
 			var/obj/item/grab/G = I
 			I = G.handle_throw(src,target)
@@ -364,6 +362,8 @@
 			if (!I) return
 
 		I.set_loc(src.loc)
+
+		u_equip(I)
 
 		if (isitem(I))
 			I.dropped(src) // let it know it's been dropped
@@ -651,8 +651,8 @@
 				clothing = 1
 		if (clothing)
 			update_clothing()
-
-		I.dropped(src)
+		if(isitem(I))
+			I.dropped(src)
 
 	put_in_hand(obj/item/I, t_hand)
 		if (!hands.len)
