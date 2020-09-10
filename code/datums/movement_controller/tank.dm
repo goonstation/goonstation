@@ -65,7 +65,7 @@
 	process_move(mob/user, keys)
 		var/accel = 0
 		var/rot = 0
-		if (user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user))
+		if (user && user == owner.pilot && can_act(user, 0))
 			if (owner && owner.engine && owner.engine.active)
 				accel = input_y * accel_pow * (reverse_gear ? -1 : 1)
 				rot = input_x * turn_delay

@@ -236,7 +236,7 @@
 				user.client.tooltipHolder.inPod = 0
 
 			return
-		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user))
+		if (!can_act(user, 0))
 			boutput(user, "<span class='alert'>Not when you are incapacitated.</span>")
 			return
 		// WHAT THE FUCK PAST MARQUESAS

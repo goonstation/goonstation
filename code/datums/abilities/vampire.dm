@@ -480,10 +480,7 @@
 
 		switch (stunned_only_is_okay)
 			if (0)
-				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("paralysis") > 0 || M.getStatusDuration("weakened"))
-					return 0
-				else
-					return 1
+				return can_act(M, 0)
 			if (1)
 				if (!isalive(M) || M.getStatusDuration("paralysis") > 0)
 					return 0

@@ -284,7 +284,7 @@
 	//	Station_VNet.Enter_Vspace(usr, src, src:network)
 	//	return
 
-	if ((usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) && !isobserver(usr))
+	if (!can_act(usr, 0) && !isobserver(usr))
 		return
 	src.log_in(usr)
 	src.add_fingerprint(usr)

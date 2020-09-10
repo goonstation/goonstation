@@ -284,7 +284,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		return 0
 
 #define CHECK1 (get_dist(src, usr) > 1 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-#define CHECK2 (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+//#define CHECK2 (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
 	Topic(href, href_list)
 		..()
 		if (src.uses < 0)
@@ -293,7 +293,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		if (CHECK1)
 			return
-		if (CHECK2)
+		if (!can_act(usr, 1))
 			return
 		if (src.vr_check(usr) != 1)
 			usr.show_text("This uplink only works in virtual reality.", "red")
@@ -303,7 +303,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		if (href_list["unlock"] && src.locked && !isnull(src.lock_code))
 			var/the_code = adminscrub(input(usr, "Please enter the password.", "Unlock Uplink", null))
-			if (!src || !istype(src) || !usr || !ismob(usr) || CHECK1 || CHECK2)
+			if (!src || !istype(src) || !usr || !ismob(usr) || CHECK1 || !can_act(usr, 1))
 				return
 			if (isnull(the_code) || !cmptext(the_code, src.lock_code))
 				usr.show_text("Incorrect password.", "red")
@@ -379,7 +379,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.attack_self(usr)
 		return
 #undef CHECK1
-#undef CHECK2
+//#undef CHECK2
 
 /////////////////////////////////////////////// Syndicate uplink ////////////////////////////////////////////
 
@@ -524,7 +524,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (!can_act(usr, 1))
 			return
 		if (src.vr_check(usr) != 1)
 			usr.show_text("This uplink only works in virtual reality.", "red")
@@ -815,7 +815,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (!can_act(usr, 1))
 			return
 
 		src.generate_menu()

@@ -206,7 +206,7 @@
 			return 0
 
 	proc/ai_pickpocket()
-		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket)
+		if (!can_act(src, 0) || src.ai_picking_pocket)
 			return
 		var/list/possible_targets = list()
 		for (var/mob/living/carbon/human/H in view(1, src))
@@ -236,7 +236,7 @@
 		actions.start(new/datum/action/bar/icon/filthyPickpocket(src, theft_target, slot), src)
 
 	proc/ai_knock_from_hand()
-		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket || src.r_hand)
+		if (!can_act(src, 0) || src.ai_picking_pocket || src.r_hand)
 			return
 		var/list/possible_targets = list()
 		for (var/mob/living/carbon/human/H in view(1, src))

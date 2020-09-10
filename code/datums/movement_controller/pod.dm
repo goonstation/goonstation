@@ -90,7 +90,7 @@
 			return next_move - world.time
 
 		velocity_magnitude = 0
-		if (user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user))
+		if (user && user == owner.pilot && can_act(user, 0))
 			if (owner && owner.engine && owner.engine.active)
 
 				velocity_x	+= input_x * accel

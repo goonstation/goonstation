@@ -598,7 +598,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 
 	MouseDrop_T(obj/storage/cart/target, mob/user)
-		if (!istype(target) || target.loc != src.loc || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user))
+		if (!istype(target) || target.loc != src.loc || get_dist(user, src) > 1 || get_dist(user, target) > 1 || !can_act(user, 0) || isAI(user))
 			return ..()
 
 		if (!target.contents.len)
@@ -607,7 +607,7 @@
 		src.visible_message("[user] begins depositing [target]'s contents into [src].")
 		playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 		for (var/atom/movable/AM in target)
-			if (get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened"))
+			if (get_dist(user, src) > 1 || get_dist(user, target) > 1 || !can_act(user, 0))
 				break
 			if (AM.anchored || AM.loc != target)
 				continue

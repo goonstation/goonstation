@@ -113,7 +113,7 @@
 		if (istype(src.loc, /turf) && (( get_dist(src, usr) <= 1) || issilicon(usr) || isAI(usr)))
 			if (!isliving(usr) || iswraith(usr) || isintangible(usr))
 				return
-			if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+			if (!can_act(usr, 1))
 				return
 
 			src.add_fingerprint(usr)
@@ -530,7 +530,7 @@ table#cooktime a#start {
 	Topic(href, href_list)
 		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (!can_act(usr, 1))
 			return
 		if (href_list["cook"])
 			if (src.working)
@@ -942,7 +942,7 @@ table#cooktime a#start {
 		..()
 		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (!can_act(usr, 1))
 			return
 		if (over_object == usr && (in_range(src, usr) || usr.contents.Find(src)))
 			for(var/obj/item/P in src.contents)
@@ -954,7 +954,7 @@ table#cooktime a#start {
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (get_dist(src, user) > 1 || !isliving(user) || iswraith(user) || isintangible(user))
 			return
-		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained())
+		if (!can_act(usr, 1))
 			return
 
 		if (istype(O, /obj/storage))
@@ -1071,7 +1071,7 @@ var/list/mixer_recipes = list()
 	Topic(href, href_list)
 		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (!can_act(usr, 1))
 			return
 
 		if (href_list["mix"])

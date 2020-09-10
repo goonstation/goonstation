@@ -263,7 +263,7 @@
 			M.set_loc(src.loc)
 
 /obj/vehicle/skateboard/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || !can_act(user, 0) || isAI(user))
 		return
 
 	if(target == user && !user.stat)
@@ -292,7 +292,7 @@
 	if(usr != rider)
 		..()
 		return
-	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+	if(can_act(usr, 0))
 		eject_rider(0, 1)
 	return
 

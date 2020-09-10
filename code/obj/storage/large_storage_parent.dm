@@ -110,7 +110,7 @@
 		return get_turf(src)
 
 	relaymove(mob/user as mob)
-		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user))
+		if (!can_act(user, 0))
 			return
 		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
 			return

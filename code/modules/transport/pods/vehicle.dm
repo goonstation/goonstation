@@ -184,7 +184,7 @@
 				src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (!can_act(usr, 1))
 			return
 		///////////////////////////////////////
 		//////Main Computer Code		//////
@@ -853,7 +853,7 @@
 ////////// Exit Ship Code /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 /obj/machinery/vehicle/proc/exit_ship()
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (!can_act(usr, 0))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -953,7 +953,7 @@
 		boutput(boarder, "<span class='alert'>[src] is locked!</span>")
 		return
 
-	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("weakened") || boarder.getStatusDuration("paralysis") || !isalive(boarder) || boarder.restrained())
+	if (!can_act(boarder, 1))
 		boutput(boarder, "<span class='alert'>You can't enter a pod while incapacitated or restrained.</span>")
 		return
 
@@ -1424,7 +1424,7 @@
 /obj/machinery/vehicle/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!user.client || !isliving(user))
 		return
-	if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user))
+	if (!can_act(user, 0))
 		user.show_text("Not when you're incapacitated.", "red")
 		return
 	if (!can_reach(user, src))
@@ -1451,7 +1451,7 @@
 /obj/machinery/vehicle/MouseDrop(over_object, src_location, over_location)
 	if (!usr.client || !isliving(usr))
 		return
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (!can_act(usr, 0))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -1499,7 +1499,7 @@
 */
 
 /obj/machinery/vehicle/proc/access_main_computer()
-	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if(!can_act(usr, 0))
 		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
@@ -1509,7 +1509,7 @@
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 /obj/machinery/vehicle/proc/fire_main_weapon()
-	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if(!can_act(usr, 0))
 		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
@@ -1538,7 +1538,7 @@
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 /obj/machinery/vehicle/proc/use_external_speaker()
-	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if(!can_act(usr, 0))
 		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
@@ -1554,7 +1554,7 @@
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 /obj/machinery/vehicle/proc/create_wormhole()//HEY THIS DOES SAMETHING AS HUD POD BUTTON
-	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if(!can_act(usr, 0))
 		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
@@ -1578,7 +1578,7 @@
 
 
 /obj/machinery/vehicle/proc/access_sensors()
-	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if(!can_act(usr, 0))
 		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
@@ -1597,7 +1597,7 @@
 
 
 /obj/machinery/vehicle/proc/use_secondary_system()
-	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if(!can_act(usr, 0))
 		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
@@ -1616,7 +1616,7 @@
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 /obj/machinery/vehicle/proc/open_hangar()
-	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if(!can_act(usr, 0))
 		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
@@ -1632,7 +1632,7 @@
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 /obj/machinery/vehicle/proc/return_to_station()
-	if(usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if(!can_act(usr, 0))
 		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))

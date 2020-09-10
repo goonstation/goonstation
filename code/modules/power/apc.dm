@@ -814,7 +814,7 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/cut(var/wireColor)
-	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
+	if (!can_act(usr, 0))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -837,7 +837,7 @@ var/zapLimiter = 0
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 /obj/machinery/power/apc/proc/bite(var/wireColor) // are you fuckin huffing or somethin
-	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
+	if (!can_act(usr, 0))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -863,7 +863,7 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/mend(var/wireColor)
-	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
+	if (!can_act(usr, 0))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -890,7 +890,7 @@ var/zapLimiter = 0
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 /obj/machinery/power/apc/proc/pulse(var/wireColor)
-	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
+	if (!can_act(usr, 0))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 

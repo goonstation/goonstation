@@ -542,7 +542,7 @@
 	else return 0
 
 /mob/living/carbon/human/proc/ai_incapacitated()
-	if(stat || hasStatus(list("stunned", "paralysis", "weakened")) || !sight_check(1)) return 1
+	if(!can_act(src, 0) || !sight_check(1)) return 1
 	else return 0
 
 /mob/living/carbon/human/proc/ai_validpath()

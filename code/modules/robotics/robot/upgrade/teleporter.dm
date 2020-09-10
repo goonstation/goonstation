@@ -8,7 +8,7 @@
 /obj/item/roboupgrade/teleport/upgrade_activate(var/mob/living/silicon/robot/user as mob)
 	if (!user || !src || src.loc != user || !issilicon(user) || !src.active)
 		return
-	if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") >  0 || !isalive(user))
+	if (!can_act(user, 0))
 		user.show_text("Not when you're incapacitated.", "red")
 		return
 	if (!isturf(user.loc))
@@ -55,7 +55,7 @@
 	if (user.mind && user.mind.current != src.loc) // Debrained or whatever.
 		user.show_text("Teleportation failed.", "red")
 		return
-	if (user.getStatusDuration("stunned") || getStatusDuration("weakened") || user.getStatusDuration("paralysis") >  0 || !isalive(user))
+	if (!can_act(user, 0))
 		user.show_text("Not when you're incapacitated.", "red")
 		return
 	if (!src.active)

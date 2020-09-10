@@ -58,7 +58,7 @@
 // Moves this down from ai.dm so AI shells and AI-controlled cyborgs can use it too.
 // Also made it a little more functional and less buggy (Convair880).
 #define SORT "* Sort alphabetically..."
-#define STUNNED (src.stat || src.getStatusDuration("stunned") || src.getStatusDuration("weakened")) || (src.dependent && (src.mainframe.stat || src.mainframe.getStatusDuration("stunned") || src.mainframe.getStatusDuration("weakened")))
+#define STUNNED (!can_act(src, 0) || (src.dependent && !can_act(src.mainframe, 0)))
 /mob/living/silicon/proc/open_nearest_door_silicon()
 	if (!src || !issilicon(src))
 		return
@@ -166,7 +166,7 @@
 	return 0 // we have no hands doofus
 
 /mob/living/silicon/click(atom/target, params, location, control)
-	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (can_act(src, 1))
 		if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 			var/obj/O = target
 			if(O.receive_silicon_hotkey(src)) return

@@ -973,7 +973,7 @@
 	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
 		return
 
-	if (!istype(src.loc, /turf) || user.stat || user.hasStatus(list("paralysis", "stunned", "weakened")) || user.restrained())
+	if (!istype(src.loc, /turf) || !can_act(user, 1))
 		return
 
 	if (!can_reach(user, src))

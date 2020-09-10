@@ -354,7 +354,7 @@
 			W.afterattack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (can_act(src, 1))
 		var/obj/item/W = src.equipped()
 		if (W) //nah dude, don't typecheck. just assume that mobs can only hold items, this proc gets called a fuckload
 			W.onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
@@ -370,14 +370,14 @@
 	return
 */
 /mob/living/onMouseDown(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (can_act(src, 1))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseDown(object,location,control,params)
 	return
 
 /mob/living/onMouseUp(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (can_act(src, 1))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseUp(object,location,control,params)
@@ -465,7 +465,7 @@
 			boutput(src, "<span class='alert'>You are handcuffed! Use Resist to attempt removal.</span>")
 		return
 
-	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
+	if (can_act(src, 0))
 		if (target != src && ishuman(src))
 			var/mob/living/carbon/human/S = src
 			if (S.sims)

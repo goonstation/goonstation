@@ -85,12 +85,8 @@
 			object.name = src.name
 			object.icon_state = src.icon_state
 
-	proc/incapacitationCheck()
-		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened")
-
 	castcheck()
-		if (incapacitationCheck())
+		if (!can_act(holder.owner, 1))
 			boutput(holder.owner, __red("Not while incapacitated."))
 			return 0
 		if (disabled)

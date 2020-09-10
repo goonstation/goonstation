@@ -20,7 +20,7 @@
 			return 1
 
 		// Ability holder only checks for M.stat and wizard power, we need more than that here.
-		if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
+		if (!can_act(M, 1))
 			boutput(M, __red("Not when you're incapacitated or restrained."))
 			return 1
 
@@ -77,7 +77,7 @@
 					return 0
 				if (M.wizard_castcheck(src) == 0)
 					return 0 // Has own user feedback.
-				if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
+				if (!can_act(M, 1))
 					boutput(M, __red("Not when you're incapacitated or restrained."))
 					return 0
 				if (M.mind.key != S3.wizard_key)
