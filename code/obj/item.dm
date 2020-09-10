@@ -361,6 +361,8 @@
 		return 0
 	if (!iscarbon(M) && !ismobcritter(M))
 		return 0
+	if(ismobcritter(M) && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
+		return 0
 
 	if (M == user)
 		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
