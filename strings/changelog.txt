@@ -1,5 +1,9 @@
 
 (t)thu sep 10 20
+(u)Superlagg
+(p)2103
+(e)🆕|feature
+(+)You can now also pick what a crayon draws by using it in-hand.
 (u)MarkNstein
 (p)2141
 (e)🐛|bug
