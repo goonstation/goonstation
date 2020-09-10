@@ -14,7 +14,7 @@
 
 /obj/item/remote/nuke_summon_remote/attack_self(mob/user as mob)
 	if(charges >= 1)
-		if(the_bomb == null)
+		if(isnull(the_bomb))
 			try_to_find_the_nuke()
 		if(the_bomb == null)
 			boutput(user, "<span class='alert'>No teleportation target found!</span>")
