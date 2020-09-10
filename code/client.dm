@@ -150,6 +150,7 @@
 
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "Sorry, this game does not support Telnet.")
+		preferences = new
 		sleep(5 SECONDS)
 		del(src)
 		return
@@ -164,6 +165,11 @@
 	player.client = src
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Player set ([player])")
+	
+	// moved preferences from new_player so it's accessible in the client scope
+	if (!preferences)
+		preferences = new
+
 
 	//Assign custom interface datums
 	src.chatOutput = new /datum/chatOutput(src)
@@ -315,10 +321,6 @@
 		del(src)
 		return
 
-	// moved preferences from new_player so it's accessible in the client scope
-	if (!preferences)
-		preferences = new
-
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
 
 	clients += src
@@ -349,7 +351,9 @@
 		updateXpRewards()
 
 	SPAWN_DBG(3 SECONDS)
+#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 		var/is_newbie = 0
+#endif
 		// new player logic, moving some of the preferences handling procs from new_player.Login
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - 3 sec spawn stuff")
 		if (!preferences)
@@ -366,8 +370,8 @@
 				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
-#endif
 				is_newbie = 1
+#endif
 			else if(!src.holder)
 				preferences.sanitize_name()
 

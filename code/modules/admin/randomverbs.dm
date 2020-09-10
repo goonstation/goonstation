@@ -1309,7 +1309,7 @@
 
 		var/M = alert(usr,S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)","Claim this Reward?","Yes","No")
 		if (M == "Yes")
-			S.rewardActivate(usr)
+			S.rewardActivate(src.mob)
 
 /client/proc/cmd_admin_check_health(var/atom/target as null|mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

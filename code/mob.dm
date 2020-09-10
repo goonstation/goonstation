@@ -486,9 +486,9 @@
 		illumplane.alpha = 255
 
 	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
-		src.client?.color = list(MATRIX_PROTANOPIA)
-
-	return
+		// creating a local var for this is actually necessary, byond freaks the fuck out if you do `color = list(blahblah)`. Why? I wish I knew.
+		var/list/matrix_protanopia = list(MATRIX_PROTANOPIA)
+		src.client?.color = matrix_protanopia
 
 /mob/Logout()
 

@@ -209,6 +209,7 @@
 				if ("health")
 					boutput(master, "<span class='notice'>Your health: [master.health]/[master.max_health]</span>")
 				if ("rest")
+					if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 					if(master.ai_active && !master.hasStatus("resting"))
 						master.show_text("You feel too restless to do that!", "red")
 					else

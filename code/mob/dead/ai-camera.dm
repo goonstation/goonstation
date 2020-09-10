@@ -51,15 +51,29 @@
 		for(var/key in aiImages)
 			var/image/I = aiImages[key]
 			src.client << I
+		SPAWN_DBG(0)
+			var/sleep_counter = 0
+			for(var/key in aiImagesLowPriority)
+				var/image/I = aiImagesLowPriority[key]
+				src.client << I
+				if(sleep_counter++ % (300 * 10) == 0)
+					LAGCHECK(LAG_LOW)
 
 	Logout()
 		//if (src.client)
 		//	src.client.show_popup_menus = 1
-
-		if(src.last_client)
+		var/client/cl = src.last_client
+		if(cl)
 			for(var/key in aiImages)
 				var/image/I = aiImages[key]
-				src.last_client.images -= I
+				cl.images -= I
+		SPAWN_DBG(0)
+			var/sleep_counter = 0
+			for(var/key in aiImagesLowPriority)
+				var/image/I = aiImagesLowPriority[key]
+				cl.images -= I
+				if(sleep_counter++ % (300 * 10) == 0)
+					LAGCHECK(LAG_LOW)
 
 		.=..()
 
@@ -722,7 +736,7 @@ world/proc/updateCameraVisibility()
 			t.aiImage.appearance = ma
 			t.aiImage.loc = t
 
-			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]")
+			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]", low_priority=istype(t, /turf/space))
 
 			donecount++
 			thispct = round(donecount / cam_candidates.len * 100)

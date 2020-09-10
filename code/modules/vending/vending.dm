@@ -1691,6 +1691,11 @@
 			updateUsrDialog()
 		return
 
+/obj/machinery/vending/pizza/fallen
+	New()
+		. = ..()
+		src.fall()
+
 /obj/machinery/vending/monkey
 	name = "ValuChimp"
 	desc = "More fun than a barrel of monkeys! Monkeys may or may not be synthflesh replicas, may or may not contain partially-hydrogenated banana oil."
