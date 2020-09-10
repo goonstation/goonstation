@@ -460,7 +460,10 @@
 
 		ammo = new/obj/item/ammo/bullets/nine_mm_NATO
 		current_projectile = new/datum/projectile/bullet/nine_mm_NATO
-		projectiles = list(current_projectile,new/datum/projectile/bullet/nine_mm_NATO/burst)
+		if(throw_return)
+			projectiles = list(current_projectile)
+		else
+			projectiles = list(current_projectile,new/datum/projectile/bullet/nine_mm_NATO/burst)
 		..()
 
 	attack_self(mob/user as mob)

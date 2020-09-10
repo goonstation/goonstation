@@ -410,8 +410,6 @@
 	desc = "1x Clock 180, x1 Elite Security Helmet, x1 Lethal Grenade Kit, 1x Experimental Grenade Kit"
 	category = "Security Department"
 	contains = list(/obj/item/gun/kinetic/clock_188/boomerang,
-					/obj/item/ammo/bullets/nine_mm_NATO,
-					/obj/item/ammo/bullets/nine_mm_NATO,
 					/obj/item/storage/box/QM_grenadekit_security,
 					/obj/item/storage/box/QM_grenadekit_experimentalweapons,
 					/obj/item/clothing/head/helmet/hardhat/security/improved)
