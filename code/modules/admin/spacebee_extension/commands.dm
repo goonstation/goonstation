@@ -179,7 +179,7 @@
 /datum/spacebee_extension_command/all_admins
 	name = "alladmins"
 	server_targeting = COMMAND_TARGETING_ALL_SERVERS
-	help_message = "All servers respond with pong."
+	help_message = "All servers respond with their list of admins (probably)."
 	argument_types = list()
 	execute(user)
 		var/list/admins = list()
@@ -191,4 +191,3 @@
 			else
 				admins += C.key
 		system.reply(admins.Join(", "), user)
-		
