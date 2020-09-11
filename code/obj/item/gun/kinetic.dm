@@ -1534,7 +1534,7 @@
 			.=..()
 
 	update_icon()
-		if(open==1)
+		if(open)
 			icon_state="guncase"
 		else
 			icon_state="secure"
