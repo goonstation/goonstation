@@ -34,7 +34,7 @@
 				logTheThing("combat", user, null, "tries to eat [src] (owner's ckey [owner ? owner.ckey : null]).")
 				return ..()
 		else
-			if(alert(user, "Are you sure you want to feed [src] to [M]?", "Feed brain?", "Yes", "No", Usr=user) == "Yes")
+			if(alert(user, "Are you sure you want to feed [src] to [M]?", "Feed brain?", "Yes", "No") == "Yes")
 				logTheThing("combat", user, null, "tries to feed [src] (owner's ckey [owner ? owner.ckey : null]) to [M].")
 				return ..()
 		return 0
