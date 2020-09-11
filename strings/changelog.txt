@@ -1,4 +1,9 @@
 
+(t)fri sep 11 20
+(u)ThePotato97
+(p)2068
+(e)|
+(+)Port-a-Gene can now be entered by dragging and can also redeem filled injectors!
 (t)thu sep 10 20
 (u)Gannets
 (p)2129
