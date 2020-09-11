@@ -327,8 +327,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					var/turf/simulated/floor/F = T
 					if (!F.broken)
 						if (prob(80))
-							new/obj/item/tile (F)
 							F.break_tile_to_plating()
+							if(!F.intact)
+								new/obj/item/tile (F)
 						else
 							F.break_tile()
 				else if (istype(T, /turf/simulated/wall))
