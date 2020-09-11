@@ -181,6 +181,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		step(src, dir)
 		has_moved = TRUE
 
+/obj/machinery/the_singularity/ex_act(severity)
+	if(severity == 1 && prob(30))
+		qdel(src)
+
 /obj/machinery/the_singularity/Bumped(atom/A)
 	var/gain = 0
 

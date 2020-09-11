@@ -1,5 +1,7 @@
 
 (t)fri sep 11 20
+(u)pali
+(+)The singularity can no longer be destroyed by weak explosions
 (u)ThePotato97
 (p)2068
 (e)|
