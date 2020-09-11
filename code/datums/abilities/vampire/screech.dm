@@ -8,7 +8,7 @@
 	cooldown = 300
 	pointCost = 60
 	when_stunned = 1
-	var/duration = 50
+	var/duration = 5 SECONDS
 	not_when_handcuffed = 0
 	unlock_message = "You have gained chiropteran screech. It deafens nearby foes, damages windows and lights."
 	var/level = 1
