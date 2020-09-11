@@ -2633,6 +2633,9 @@
 /area/station/quartermaster)
 "gR" = (
 /obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster)
 "gS" = (
@@ -3136,7 +3139,12 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon5,
-/obj/machinery/camera,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "im" = (
@@ -3933,6 +3941,17 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
+"km" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 8;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Hot Loop Purge Pump";
+	on = 1;
+	target_pressure = 1000
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/SWmaint)
 "kn" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -4738,6 +4757,13 @@
 "mu" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/captain)
+"mw" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4;
+	name = "hot loop purge valve"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/SWmaint)
 "mx" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor,
@@ -5718,12 +5744,10 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "oV" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir-b"
+/obj/machinery/atmospherics/pipe/vent{
+	dir = 4
 	},
-/obj/machinery/light/runway_light,
-/turf/space,
+/turf/simulated/floor/plating/random,
 /area)
 "oW" = (
 /obj/decal/poster/wallsign/hazard_hotloop,
@@ -5829,7 +5853,9 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "pj" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/valve{
+	name = "hot loop bypass valve"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "pk" = (
@@ -5891,8 +5917,9 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "pu" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/SWmaint)
@@ -6159,6 +6186,13 @@
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/combustion_chamber)
+"qd" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4;
+	name = "cold loop purge valve"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/SEmaint)
 "qe" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -6431,7 +6465,8 @@
 /area/station/engine/engineering)
 "qR" = (
 /obj/machinery/atmospherics/valve{
-	dir = 4
+	dir = 4;
+	name = "hot loop valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -6619,7 +6654,11 @@
 /obj/item/plantanalyzer,
 /obj/item/device/reagentscanner,
 /obj/item/device/reagentscanner,
+/obj/item/paper_bin,
 /obj/item/plantanalyzer,
+/obj/item/pen/pencil{
+	pixel_x = -6
+	},
 /turf/simulated/floor/green,
 /area/station/hydroponics)
 "rn" = (
@@ -8186,12 +8225,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
-"uE" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 10
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/SEmaint)
 "uF" = (
 /obj/cable{
 	d1 = 1;
@@ -8953,8 +8986,7 @@
 /area/station/maintenance/west)
 "ws" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 5;
-	layer = 2.13
+	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/SEmaint)
@@ -9911,8 +9943,13 @@
 /turf/space,
 /area)
 "yu" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
+/obj/machinery/atmospherics/binary/pump{
+	dir = 8;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Cold Loop Purge Pump";
+	on = 1;
+	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/SEmaint)
@@ -11028,6 +11065,14 @@
 /area/station/hallway/primary/east)
 "Bv" = (
 /obj/table/auto,
+/obj/item/paper_bin{
+	pixel_x = -7
+	},
+/obj/item/clipboard/with_pen{
+	name = "clipboard";
+	pixel_x = 6
+	},
+/obj/item/pen/fancy,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -11843,6 +11888,7 @@
 /obj/landmark/start{
 	name = "Scientist"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/white,
 /area/station/chemistry)
 "DP" = (
@@ -11885,6 +11931,9 @@
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/item/paper_bin{
+	pixel_x = 6
+	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "DT" = (
@@ -11901,6 +11950,9 @@
 	tag = ""
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/item/hand_labeler{
+	pixel_y = -6
+	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "DU" = (
@@ -12198,6 +12250,13 @@
 	dir = 1
 	},
 /area/station/science/artifact)
+"EJ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4;
+	layer = 2.13
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/SWmaint)
 "EK" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/black,
@@ -13189,6 +13248,9 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
+/obj/machinery/guardbot_dock,
+/obj/cable,
+/obj/machinery/bot/guardbot/ranger,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "Hd" = (
@@ -14119,6 +14181,17 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"Jr" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/SEmaint)
 "Jt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16508,6 +16581,9 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "PB" = (
@@ -16559,6 +16635,20 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/item/audio_tape{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/audio_tape,
+/obj/item/device/audio_log{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/table/auto,
+/obj/item/audio_tape{
+	pixel_x = 3;
+	pixel_y = 7
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
@@ -17642,6 +17732,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/disk/data/tape{
+	pixel_y = -5
+	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "TG" = (
@@ -17669,6 +17762,7 @@
 	},
 /obj/access_spawn/research,
 /obj/firedoor_spawn,
+/obj/access_spawn/tech_storage,
 /turf/simulated/floor,
 /area/station/storage/tech)
 "TO" = (
@@ -17822,6 +17916,16 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/SWmaint)
+"Uu" = (
+/obj/machinery/sleeper/compact,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "Uv" = (
 /obj/storage/closet/wardrobe/pride,
 /turf/simulated/floor/sanitary,
@@ -18188,6 +18292,17 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"VP" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/SEmaint)
 "VQ" = (
 /obj/machinery/light{
 	dir = 8
@@ -18332,6 +18447,17 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
+"Wu" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/SEmaint)
 "Wv" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -18382,6 +18508,9 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
 	level = 2
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -18864,6 +18993,10 @@
 	dir = 6
 	},
 /area/station/mining)
+"Yg" = (
+/obj/machinery/atmospherics/pipe/manifold,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/SEmaint)
 "Yi" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white/checker2{
@@ -19201,6 +19334,13 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/core)
+"Zb" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4;
+	name = "cold loop valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "Zd" = (
 /obj/stool/bench/red,
 /obj/machinery/light_switch/auto,
@@ -19419,6 +19559,8 @@
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/powermonitor,
 /obj/item/circuitboard/arcade,
+/obj/item/disk/data/tape,
+/obj/item/disk/data/tape/guardbot_tools,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "ZO" = (
@@ -52206,7 +52348,7 @@ aa
 aa
 aa
 aa
-aa
+PS
 PS
 aa
 pO
@@ -52218,7 +52360,7 @@ vq
 wo
 aa
 PS
-aa
+PS
 aa
 aa
 aa
@@ -52509,7 +52651,7 @@ aa
 aa
 aa
 PS
-PS
+aa
 aa
 fi
 aa
@@ -52519,7 +52661,7 @@ aa
 vr
 wp
 aa
-PS
+aa
 PS
 aa
 aa
@@ -52820,7 +52962,7 @@ aa
 aa
 vs
 wq
-qO
+oV
 aa
 PS
 aa
@@ -53114,14 +53256,14 @@ PS
 PS
 PS
 aa
-ii
+EJ
 ii
 pX
 qW
 qW
 qW
 to
-uE
+ws
 ws
 aa
 PS
@@ -53416,14 +53558,14 @@ PS
 aa
 aa
 aa
-ii
+km
 pb
 YX
 qX
 Ru
 qX
 UZ
-uJ
+VP
 yu
 aa
 aa
@@ -53718,15 +53860,15 @@ aa
 iW
 iW
 iW
-ii
+mw
 ka
 pX
 ra
 WV
 ra
 to
-wt
-yu
+Wu
+qd
 iW
 iW
 iW
@@ -54027,8 +54169,8 @@ rX
 ti
 uz
 tq
-wt
-yu
+Jr
+Yg
 wz
 wE
 An
@@ -55838,7 +55980,7 @@ qR
 rt
 Uw
 rt
-qR
+Zb
 vD
 wx
 YR
@@ -57674,7 +57816,7 @@ PS
 PS
 PS
 PS
-aa
+PS
 aa
 aa
 aa
@@ -57975,7 +58117,7 @@ aa
 aa
 aa
 aa
-PS
+aa
 PS
 aa
 aa
@@ -68232,7 +68374,7 @@ PK
 yF
 ZH
 Bx
-Bz
+Uu
 WG
 GT
 Hy

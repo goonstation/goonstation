@@ -2,6 +2,7 @@
 (t)fri sep 11 20
 (u)pali
 (+)The singularity can no longer be destroyed by weak explosions
+(+)Atlas stuff:writing supplies for medbay, artlab and botany<br>drains in chemistry<br>compact sleeper in medbay (between the two cryocells)<br>thinktape in artlab<br>guaranteed labeller in artlab<br>additional thinktape in tech storage<br>audiolog + tapes in science<br>fixed bridge shield controls not working at all<br>Ol' Harner in robotics<br>purge valve + pumps for the generator<br>mechanics can now enter tech storage<br>APC powercell charger added to QM
 (u)ThePotato97
 (p)2068
 (e)|
