@@ -28,6 +28,12 @@
 			holder.brain = null
 		..()
 
+	Eat(mob/M, mob/user)
+		if(alert(usr=user, "Are you sure you want to eat [src]?", "Eat brain?", "Yes", "No") == "Yes")
+			logTheThing("combat", user, null, "tries to eat [src] (owner's ckey [owner ? owner.ckey : null]).")
+			return ..()
+		return 0
+
 	get_desc()
 		if (usr && (usr.job == "Roboticist" || usr.job == "Medical Doctor" || usr.job == "Geneticist" || usr.job == "Medical Director"))
 			if (src.owner && src.owner.current)
