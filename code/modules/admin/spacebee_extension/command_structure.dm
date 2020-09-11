@@ -109,6 +109,9 @@ ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based/confirmation/mob_tar
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/do_it(user)
 	var/mob/M = whois_ckey_to_mob_reference(ckey)
+	if(!M)
+		system.reply("Ckey [ckey] disappeared in the meantime, huh.", user)
+		return
 	var/success_msg = "Done: [src.action_name] [M] ([ckey])[isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""]."
 	if(src.perform_action(user, M))
 		system.reply(success_msg, user)
