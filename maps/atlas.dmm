@@ -6969,11 +6969,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sf" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -7519,6 +7514,11 @@
 /area/station/engine/core)
 "tn" = (
 /obj/machinery/shield_generator,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "to" = (
@@ -9389,6 +9389,17 @@
 	dir = 10
 	},
 /area/station/security/main)
+"xn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "xo" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16912,11 +16923,6 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /obj/landmark/start{
 	name = "Engineer"
@@ -58549,7 +58555,7 @@ pW
 qV
 sb
 QB
-sb
+xn
 qV
 vW
 vE
