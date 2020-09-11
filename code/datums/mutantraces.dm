@@ -500,6 +500,9 @@
 	say_filter(var/message)
 		return replacetext(message, "s", stutter("ss"))
 
+	say_verb()
+		return "hisses"
+
 /datum/mutantrace/zombie
 	name = "zombie"
 	icon_state = "zombie"
