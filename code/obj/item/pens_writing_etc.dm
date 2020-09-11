@@ -241,6 +241,8 @@
 	color = "#333333"
 	font = "Comic Sans MS"
 	clicknoise = 0
+	var/pixel = FALSE
+	var/font_size = 32
 
 	white
 		name = "white crayon"
@@ -315,6 +317,13 @@
 				src.name = "[src.color_name] crayon"
 				user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
 				JOB_XP(user, "Clown", 1)
+
+		pixel
+			pixel = TRUE
+			font_size = 16
+			New()
+				..()
+				src.name = "[src.color_name] pixel crayon"
 
 
 	rainbow
@@ -434,14 +443,26 @@
 		if(t == " ")
 			return
 
-		if(t in src.c_char_to_symbol)
+		if(!src.pixel && (t in src.c_char_to_symbol))
 			t = c_char_to_symbol[t]
 
-		var/obj/decal/cleanable/writing/G = make_cleanable(/obj/decal/cleanable/writing,T)
+		var/obj/decal/cleanable/writing/G
+		if(src.pixel)
+			G = make_cleanable(/obj/decal/cleanable/writing/maptext_dummy, T)
+		else
+			G = make_cleanable(/obj/decal/cleanable/writing, T)
 		G.artist = user.key
 
 		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
-		G.icon_state = "c[t]"
+
+		var/size = src.pixel ? 16 : 32
+
+		if(src.pixel)
+			G.maptext = "<span class='pixel c' style='font-size:[font_size]pt'>[t]</span>"
+		else
+			G.icon_state = "c[t]"
+			if(src.font_size != 32)
+				G.Scale(src.font_size / 32, src.font_size / 32)
 		if (src.font_color && src.color_name)
 			G.color = src.font_color
 			G.color_name = src.color_name
@@ -451,8 +472,8 @@
 			G.setMaterial(src.material)
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
-			G.pixel_x = text2num(params["icon-x"]) - 16
-			G.pixel_y = text2num(params["icon-y"]) - 16
+			G.pixel_x = text2num(params["icon-x"]) - size / 2
+			G.pixel_y = text2num(params["icon-y"]) - size / 2
 		else
 			G.pixel_x = rand(-4,4)
 			G.pixel_y = rand(-4,4)
@@ -484,6 +505,8 @@
 			src.name = "[src.color_name] chalk"
 
 	proc/assign_color(var/color)
+		if(isnull(color))
+			color = "#ffffff"
 		src.color = color
 		src.font_color = src.color
 		src.color_name = hex2color_name(color)
