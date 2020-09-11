@@ -280,7 +280,7 @@
 
 	for(var/dist = 0, dist < range, dist += 1)
 		T = get_step(T, dir)
-		if(!T || T.density) 
+		if(!T || T.density)
 			if(!istype(T, /turf/unsimulated/wall/trench)) return dist
 		for(var/obj/O in T)
 			if(!istype(O,/obj/window) && !istype(O,/obj/grille) && !ismob(O) && O.density)
@@ -332,6 +332,7 @@
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
+	//only call stop_firing() if output setting is hire than charge, and if we are actually firing
 	if(abs(src.output) > src.charge && src.firing)
 		stop_firing()
 
