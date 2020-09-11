@@ -1498,3 +1498,85 @@
 		..()
 		ammo = new/obj/item/ammo/bullets/meowitzer/inert
 		current_projectile = new/datum/projectile/special/meowitzer/inert
+
+
+
+
+/obj/item/gun/kinetic/SMG_briefcase
+	name = "secure briefcase"
+	icon = 'icons/obj/items/storage.dmi'
+	icon_state = "secure"
+	item_state = "sec-case"
+	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
+	force = 8.0
+	caliber = 0.355
+	max_ammo_capacity = 30
+	auto_eject = 0
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	object_flags = NO_ARM_ATTACH
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	spread_angle = 2
+	can_dual_wield = 0
+	var/cases_to_eject = 0
+	var/open = FALSE
+
+
+	New()
+		ammo = new/obj/item/ammo/bullets/nine_mm_NATO
+		current_projectile = new/datum/projectile/bullet/nine_mm_NATO/burst
+		..()
+
+	attack_hand(mob/user as mob)
+		if(!user.find_in_hand(src))
+			..() //this works, dont touch it
+		else if(open)
+			.=..()
+		else
+			boutput(user, "<span class='alert'>You can't unload the [src] while it is closed.</span>")
+
+	attackby(obj/item/ammo/bullets/b as obj, mob/user)
+		if(open)
+			.=..()
+		else
+			boutput(user, "<span class='alert'>You can't access the gun inside the [src] while it's closed! You'll have to open the [src]!</span>")
+
+	attack_self(mob/user)
+		if(open)
+			open = FALSE
+			update_icon()
+			boutput(user, "<span class='alert'>You close the [src]!</span>")
+		else
+			boutput(user, "<span class='alert'>You open the [src].</span>")
+			open = TRUE
+			update_icon()
+			if (src.loc == user && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
+				src.add_fingerprint(user)
+				if (!src.sanitycheck(0, 1))
+					user.show_text("You can't unload this gun.", "red")
+					return
+				if (src.casings_to_eject > 0 && src.current_projectile.casing)
+					if (!src.sanitycheck(1, 0))
+						logTheThing("debug", usr, null, "<b>Convair880</b>: [user]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
+						src.casings_to_eject = 0
+						return
+					else
+						user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
+						src.ejectcasings()
+						return
+				else
+					user.show_text("[src] is empty!", "red")
+					return
+
+	canshoot()
+		if(open)
+			return 0
+		else
+			. = ..()
+
+	update_icon()
+		if(open)
+			icon_state="guncase"
+		else
+			icon_state="secure"

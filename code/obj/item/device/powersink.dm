@@ -60,6 +60,7 @@
 				light.disable()
 				icon_state = "powersink0"
 				processing_items.Remove(src)
+				logTheThing("combat", user, src, "deactivated [src] at [log_loc(src)].")
 				return
 		else
 			..()
@@ -80,6 +81,8 @@
 				mode = 2
 				icon_state = "powersink1"
 				processing_items |= src
+				logTheThing("combat", user, src, "activated [src] at [log_loc(src)].")
+				message_admins("[key_name(user)] activated [src] at [log_loc(src)].")
 
 	process()
 		if(attached)

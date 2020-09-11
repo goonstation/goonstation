@@ -1333,6 +1333,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\device\mic_amp_etc.dm"
 #include "code\obj\item\device\monkey_barrel.dm"
 #include "code\obj\item\device\multitool.dm"
+#include "code\obj\item\device\nuke_summon_remote.dm"
 #include "code\obj\item\device\pocketbuddy.dm"
 #include "code\obj\item\device\powersink.dm"
 #include "code\obj\item\device\prox_sensor.dm"

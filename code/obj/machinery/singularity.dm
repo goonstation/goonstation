@@ -81,6 +81,8 @@ Contains:
 	bound_x = -32
 	bound_y = -32
 
+	var/has_moved = FALSE
+
 	var/active = 0
 	var/energy = 10
 	var/warp = 5
@@ -177,6 +179,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			checkloc = get_step(checkloc, dir)
 
 		step(src, dir)
+		has_moved = TRUE
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	var/gain = 0
@@ -248,7 +251,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/proc/get_center()
 	. = get_turf(src)
 	//if(!(get_step(., SOUTHWEST) in src.locs)) // I hate this, neither `loc` nor `get_turf` behave consistently, sometimes they are the center tile and sometimes they are the south west tile, aaaa
-	. = get_step(., NORTHEAST)
+	if(has_moved)
+		. = get_step(., NORTHEAST)
 
 /obj/machinery/the_singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
@@ -515,8 +519,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(isnull(G))
 		return
 
-	src.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_Start", dir=NSEW, layer=(dir == NORTH ? src.layer - 1 : FLOAT_LAYER)), "field_start_[NSEW]")
-	G.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_End", dir=NSEW, layer=(dir == SOUTH ? src.layer - 1 : FLOAT_LAYER)), "field_end_[NSEW]")
+	src.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_Start", dir=NSEW, layer=(NSEW == NORTH ? src.layer - 1 : FLOAT_LAYER)), "field_start_[NSEW]")
+	G.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_End", dir=NSEW, layer=(NSEW == SOUTH ? src.layer - 1 : FLOAT_LAYER)), "field_end_[NSEW]")
 
 	T2 = src.loc
 
