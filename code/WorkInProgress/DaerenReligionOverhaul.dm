@@ -56,12 +56,8 @@
 		B.desc = src.desc
 		src.object = B
 
-	proc/incapacitationCheck()
-		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.stunned || M.getStatusDuration("weakened")
-
 	castcheck()
-		if (incapacitationCheck())
+		if (!can_act(holder.owner, 1))
 			boutput(holder.owner, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 			return 0
 		if (disabled)

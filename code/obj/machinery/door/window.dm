@@ -206,7 +206,7 @@
 
 		if (isobserver(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || usr.stat || usr.restrained())
+		if (!can_act(usr, 1))
 			return
 		if (!in_range(src, usr))
 			usr.show_text("You are too far away.", "red")

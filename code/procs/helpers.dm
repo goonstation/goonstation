@@ -234,7 +234,7 @@ proc/get_angle(atom/a, atom/b)
 	sleep(time)
 	if (!user || !target)
 		return 0
-	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !( user.stat ) && ( !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !user.lying ) )
+	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && can_act(user, 0) && !user.lying )
 		return 1
 
 /proc/do_after(mob/M as mob, time as num)

@@ -666,11 +666,9 @@
 
 
 	proc/can_operate(var/mob/M)
-		if (!isalive(M))
+		if (!can_act(M, 0))
 			return
 		if (get_dist(src,M) > 1)
-			return 0
-		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
 		if (src.occupant)
 			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")

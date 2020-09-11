@@ -1295,15 +1295,11 @@
 			object.name = src.name
 			object.icon_state = src.icon_state
 
-	proc/incapacitationCheck()
-		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened")
-
 	castcheck()
 		if (!linked_organ || (!islist(src.linked_organ) && linked_organ.loc != holder.owner))
 			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
 			return 0
-		else if (incapacitationCheck())
+		else if (!can_act(holder.owner, 1))
 			boutput(holder.owner, "<span class='alert'>You can't use that ability while you're incapacitated.</span>")
 			return 0
 		else if (disabled)

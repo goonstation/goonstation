@@ -605,7 +605,7 @@
 	else if(istype(src.loc, /obj/vehicle/))
 		var/obj/vehicle/V = src.loc
 		if (V.rider == src)
-			if(!(src.getStatusDuration("paralysis") || src.getStatusDuration("stunned") || src.getStatusDuration("weakened") || src.stat))
+			if(can_act(src, 0))
 				V.eject_rider(0, 1)
 
 	else if(istype(src.loc, /obj/icecube/))

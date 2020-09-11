@@ -138,7 +138,7 @@
 		set desc = "Release the item currently held by the magtractor"
 		set category = "Local"
 
-		if (!src || !src.holding || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) return 0
+		if (!src || !src.holding || !can_act(usr, 0)) return 0
 		actions.stopId("magpickerhold", usr)
 		return 1
 
@@ -148,7 +148,7 @@
 		set desc = "Increases power driven to the magtractor, allowing it to carry items while moving."
 		set category = "Local"
 
-		if (!src || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) return 0
+		if (!src || !can_act(usr, 0)) return 0
 
 		var/image/magField = GetOverlayImage("magField")
 		var/msg = "<span class='notice'>You toggle the [src]'s HPM "

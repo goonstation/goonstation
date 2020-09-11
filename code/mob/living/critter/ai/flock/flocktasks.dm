@@ -508,7 +508,7 @@
 		holder.target = get_best_target(get_targets())
 	if(holder.target)
 		var/mob/living/M = holder.target
-		if(M && !istype(M.loc.type, /obj/icecube/flockdrone) && (M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+		if(M && !istype(M.loc.type, /obj/icecube/flockdrone) && !can_act(M, 0))
 			// target is down or in a cage, we don't care about this target now
 			// fetch a new one if we can
 			holder.target = get_best_target(get_targets())
@@ -540,7 +540,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F && F.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
-			if(!istype(M.loc.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+			if(!istype(M.loc.type, /obj/icecube/flockdrone) && can_act(M, 0))
 				// mob isn't already stunned, check if they're in our target list
 				if(F.flock.isEnemy(M))
 					targets += M
@@ -574,7 +574,7 @@
 		holder.target = get_best_target(get_targets())
 	if(holder.target)
 		var/mob/living/M = holder.target
-		if(!(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+		if(can_act(M, 0))
 			// target is up, abort
 			// fetch a new one if we can
 			holder.target = get_best_target(get_targets())
@@ -600,7 +600,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F && F.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
-			if(F.flock.isEnemy(M) && (M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+			if(F.flock.isEnemy(M) && !can_act(M, 0))
 				// mob is a valid target, check if they're not already in a cage
 				if(!istype(M.loc.type, /obj/icecube/flockdrone))
 					// if we can get a valid path to the target, include it for consideration

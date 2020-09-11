@@ -304,7 +304,7 @@
 		if (usr != rider)
 			..()
 			return
-		if (!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+		if (can_act(usr, 0))
 			eject_rider(0, 1)
 		return
 
