@@ -135,16 +135,12 @@ var/datum/action_controller/actions
 		var/atom/movable/A = owner
 		if(owner != null)
 			bar = unpool(/obj/actions/bar)
-			bar.loc = owner.loc
 			border = unpool(/obj/actions/border)
-			border.loc = owner.loc
 			bar.pixel_y = 5
 			bar.pixel_x = 0
 			border.pixel_y = 5
-			if (!islist(A.attached_objs))
-				A.attached_objs = list()
-			A.attached_objs.Add(bar)
-			A.attached_objs.Add(border)
+			A.vis_contents += bar
+			A.vis_contents += border
 			// this will absolutely obviously cause no problems.
 			bar.color = "#4444FF"
 			updateBar()
@@ -157,9 +153,9 @@ var/datum/action_controller/actions
 	onDelete()
 		..()
 		var/atom/movable/A = owner
-		if (owner != null && islist(A.attached_objs))
-			A.attached_objs.Remove(bar)
-			A.attached_objs.Remove(border)
+		if (owner != null)
+			A.vis_contents -= bar
+			A.vis_contents -= border
 		SPAWN_DBG(0.5 SECONDS)
 			if (bar)
 				bar.set_loc(null)
@@ -172,9 +168,9 @@ var/datum/action_controller/actions
 
 	disposing()
 		var/atom/movable/A = owner
-		if (owner != null && islist(A.attached_objs))
-			A.attached_objs.Remove(bar)
-			A.attached_objs.Remove(border)
+		if (owner != null)
+			A.vis_contents -= bar
+			A.vis_contents -= border
 		if (bar)
 			bar.set_loc(null)
 			pool(bar)
@@ -884,6 +880,7 @@ var/datum/action_controller/actions
 	icon_state = "bar"
 	layer = 101
 	plane = PLANE_HUD + 1
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	var/image/img
 	New()
 		..()
@@ -905,6 +902,7 @@ var/datum/action_controller/actions
 	layer = 100
 	icon_state = "border"
 	plane = PLANE_HUD + 1
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	var/image/img
 	New()
 		..()
