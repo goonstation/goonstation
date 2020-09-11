@@ -972,7 +972,7 @@
 		boutput(boarder, "There is no more room!")
 		return
 
-	actions.start(new/datum/action/bar/icon/board_pod(src,boarder), boarder)
+	actions.start(new/datum/action/bar/icon/board_pod(src), boarder)
 
 /obj/machinery/vehicle/proc/finish_board_pod(var/mob/boarder)
 	for(var/obj/item/shipcomponent/S in src.components)
@@ -1036,9 +1036,8 @@
 	var/mob/M
 	var/obj/machinery/vehicle/V
 
-	New(Vehicle, Mob)
+	New(Vehicle)
 		V=Vehicle
-		M=Mob
 		..()
 
 
@@ -1047,7 +1046,7 @@
 		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (!can_act(owner, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1063,7 +1062,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (!can_act(owner, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1088,7 +1087,7 @@
 		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (!can_act(owner, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1104,7 +1103,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (!can_act(owner, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
