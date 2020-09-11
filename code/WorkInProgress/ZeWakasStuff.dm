@@ -21,7 +21,7 @@
 	skip_sims = 1
 	sims_score = 30
 
-///////////////////////////////////// Beach Stuff
+///////////////////////////////////// Beach zone Stuff
 
 /area/greek/beach
 	name = "Strange Beach"
