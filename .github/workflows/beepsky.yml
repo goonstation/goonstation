@@ -151,6 +151,9 @@ jobs:
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
+          token: '${{ secrets.ROBUDDYBOT_PAT }}'
 
       - name: Install Dependencies
         run: |
@@ -175,12 +178,6 @@ jobs:
           echo "::set-env name=PATH::/home/runner/BYOND/byond/bin:$PATH"
           echo "::set-env name=LD_LIBRARY_PATH::/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH"
           echo "::set-env name=MANPATH::/home/runner/BYOND/byond/man:$MANPATH"
-
-      - name: Set up Submodule
-        run: tools/ci/setup_submodule.sh
-        env:
-          secret_iv: ${{ secrets.SECRET_REPO_IV }}
-          secret_key: ${{ secrets.SECRET_REPO_KEY }}
 
       - name: Cache SpacemanDMM
         uses: actions/cache@v1

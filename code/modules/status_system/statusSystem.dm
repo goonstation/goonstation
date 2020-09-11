@@ -1170,6 +1170,7 @@ var/list/statusGroupLimits = list("Food"=4)
 				owner.delStatus("resting")
 
 		clicked(list/params)
+			if(ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			L.delStatus("resting")
 			L.force_laydown_standup()
 			if (ishuman(L))
