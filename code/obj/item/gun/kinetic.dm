@@ -1197,7 +1197,7 @@
 		..()
 
 	MouseDrop(atom/over_object, src_location, over_location, params)
-		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
+		if (!can_act(usr, 1) || !can_reach(usr, src) || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
 		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
 			src.add_fingerprint(usr)

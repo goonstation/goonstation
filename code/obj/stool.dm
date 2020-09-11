@@ -1321,7 +1321,7 @@
 		return
 
 	Topic(href, href_list)
-		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
+		if (!can_act(usr, 1)) return
 		if (!in_range(src, usr)) return
 
 		if (href_list["on"])

@@ -1028,7 +1028,7 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (!can_act(user, 0))
 		return
 
 	if (!src.canAIControl())
@@ -1362,7 +1362,7 @@ About the new airlock wires panel:
 		src.updateUsrDialog()
 	if(issilicon(usr) || isAI(usr))
 		//AI
-		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
+		if (!can_act(usr, 0))
 			return
 		if (!src.canAIControl())
 			boutput(usr, "Airlock control connection lost!")

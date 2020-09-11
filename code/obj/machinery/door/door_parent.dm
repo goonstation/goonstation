@@ -281,7 +281,7 @@
 	return 1
 
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())
+	if (!can_act(user, 1))
 		return
 	if(istype(I, /obj/item/grab))
 		return ..() // handled in grab.dm + Bumped

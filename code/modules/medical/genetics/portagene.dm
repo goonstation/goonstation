@@ -33,7 +33,7 @@
 			return
 		if ((usr in src.contents) || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (!can_act(usr, 0))
 			return
 		if (get_dist(src, usr) > 1)
 			usr.show_text("You are too far away to do this!", "red")

@@ -523,7 +523,7 @@ var/zapLimiter = 0
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/attack_hand(mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (!can_act(user, 0))
 		return
 
 	add_fingerprint(user)
@@ -548,7 +548,7 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (!can_act(user, 0))
 		return
 
 	if ( (get_dist(src, user) > 1 ))
@@ -929,7 +929,7 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/Topic(href, href_list)
 	if(..())
 		return
-	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
+	if (!can_act(usr, 0))
 		return
 	if ((in_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
 		src.add_dialog(usr)

@@ -189,7 +189,7 @@
 	..()
 
 /obj/item/electronics/frame/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-	if(!iscarbon(user) || user.stat || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis"))
+	if(!iscarbon(user) || !can_act(user, 0))
 		return
 
 	if(get_dist(user, src) > 1)

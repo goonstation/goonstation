@@ -74,7 +74,7 @@
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && !(user.stat || user.getStatusDuration("paralysis")))
+			if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && can_act(user, 0))
 				user.visible_message("<span class='alert'><b>[user] hoots loudly!</b></span>")
 				user.owlgib()
 				return 1

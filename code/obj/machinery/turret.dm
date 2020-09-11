@@ -380,7 +380,7 @@
 	return attack_hand(user)
 
 /obj/machinery/turretid/attack_hand(mob/user as mob)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (!can_act(user, 0))
 		return
 
 	if ( (get_dist(src, user) > 1 ))
@@ -424,7 +424,7 @@
 
 /obj/machinery/turretid/Topic(href, href_list)
 	..()
-	if ((!isliving(usr) && !isAIeye(usr)) || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
+	if ((!isliving(usr) && !isAIeye(usr)) || !can_act(usr, 0))
 		return
 	if (src.locked)
 		if (!issilicon(usr) && !isAI(usr))

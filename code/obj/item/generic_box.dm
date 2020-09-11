@@ -339,7 +339,7 @@
 						I.set_loc(T)
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!can_act(user, 1) || user.sleeping || user.lying)
 			return
 		if (!in_range(user, src) || !in_range(user, O))
 			boutput(user, "<span class='alert'>That's too far away!</span>")

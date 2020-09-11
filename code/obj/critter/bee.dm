@@ -101,7 +101,7 @@
 			if (!istype(M)) return
 			if (prob(20))
 				return CritterAttack(M)
-			if (M.stat || M.getStatusDuration("paralysis"))
+			if (!can_act(M, 0))
 				src.task = "thinking"
 				return
 			src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [prob(50) ? "IMMENSE" : "COLOSSAL"] stinger!</span>")
@@ -159,7 +159,7 @@
 			if (isliving(M))
 				var/mob/living/H = M
 				H.was_harmed(src)
-			if (M.stat || M.getStatusDuration("paralysis"))
+			if (!can_act(M, 0))
 				src.task = "thinking"
 				src.attacking = 0
 				return
@@ -456,7 +456,7 @@
 			if (isliving(M))
 				var/mob/living/H = M
 				H.was_harmed(src)
-			if (M.stat || M.getStatusDuration("paralysis"))
+			if (!can_act(M, 0))
 				src.task = "thinking"
 				src.attacking = 0
 				return
@@ -571,7 +571,7 @@
 			if (attacking)
 				return
 
-			if (M.stat || M.getStatusDuration("paralysis"))
+			if (!can_act(M, 0))
 				src.task = "thinking"
 				src.attacking = 0
 				return
@@ -1022,7 +1022,7 @@
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (!can_act(M, 0))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -1036,7 +1036,7 @@
 			return
 		if (prob(20))
 			return CritterAttack(M)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (!can_act(M, 0))
 			src.task = "thinking"
 			return
 		src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>")
@@ -1855,7 +1855,7 @@
 		src.visible_message("<span class='alert'><B>[src]</B> bites [M]!</span>")
 		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (!can_act(M, 0))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -1865,7 +1865,7 @@
 	ChaseAttack(mob/M)
 		if (!istype(M)) return
 
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (!can_act(M, 0))
 			src.task = "thinking"
 			return
 

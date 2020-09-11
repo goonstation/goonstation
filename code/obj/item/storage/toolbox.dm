@@ -158,7 +158,7 @@
 		if(istype(W, /obj/item/grab))	// It will devour people! It's an evil thing!
 			var/obj/item/grab/G = W
 			if(!G.affecting) return
-			if(!G.affecting.stat && !G.affecting.restrained() && !G.affecting.getStatusDuration("weakened"))
+			if(can_act(G.affecting, 1))
 				boutput(user, "<span class='alert'>They're moving too much to feed to His Grace!</span>")
 				return
 			user.visible_message("<span class='alert'><b>[user] is trying to feed [G.affecting] to [src]!</b></span>")

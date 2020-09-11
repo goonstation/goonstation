@@ -1185,7 +1185,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	cooldown = 100
 
 	ability_allowed()
-		if (!the_mob || the_mob.stat || the_mob.getStatusDuration("paralysis"))
+		if (!the_mob || !can_act(the_mob, 0))
 			boutput(the_mob, "<span class='alert'>You are incapacitated.</span>")
 			return 0
 

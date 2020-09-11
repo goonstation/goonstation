@@ -79,7 +79,7 @@
 								return
 						else return ..()
 				else
-					if (!(locate(/obj/machinery/optable, M.loc) && M.lying) && !(locate(/obj/table, M.loc) && (M.getStatusDuration("paralysis") || M.stat)) && !(M.reagents && M.reagents.get_reagent_amount("ethanol") > 10 && M == user))
+					if (!(locate(/obj/machinery/optable, M.loc) && M.lying) && !(locate(/obj/table, M.loc) && !can_act(M, 0)) && !(M.reagents && M.reagents.get_reagent_amount("ethanol") > 10 && M == user))
 						return ..()
 					// TODO: what is this line?
 					if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts/leg/treads)) attach_robopart("treads")

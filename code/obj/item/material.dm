@@ -569,7 +569,7 @@
 			var/mob/M = AM
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+				if(!can_act(H, 0)) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
 					return
 				if(isabomination(H))
 					return

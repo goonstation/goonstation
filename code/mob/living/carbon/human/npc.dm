@@ -325,7 +325,7 @@
 						src.visible_message("<b>[src]</b> [pick("stares off into space momentarily.","loses track of what they were doing.")]")
 					return
 
-				if((carbon_target.getStatusDuration("weakened") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("paralysis")) && distance <= 1 && !ai_incapacitated())
+				if(!can_act(carbon_target, 0) && distance <= 1 && !ai_incapacitated())
 					if (istype(carbon_target.wear_mask, /obj/item/clothing/mask) && prob(10))
 						var/mask = carbon_target.wear_mask
 						src.visible_message("<span class='alert'><b>[src] is trying to take off [mask] from [carbon_target]'s head!</b></span>")

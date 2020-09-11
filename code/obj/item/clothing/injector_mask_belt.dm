@@ -414,7 +414,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		return 1
 
 	check_trigger(mob/M)
-		if(M.getStatusDuration("stunned") || M.getStatusDuration("paralysis") || M.getStatusDuration("weakened") || isunconscious(M)) return 1
+		if(!can_act(M, 0)) return 1
 		else return 0
 
 /datum/injector_belt_condition/life

@@ -1390,7 +1390,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			return attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+		if (!can_act(user, 0) || get_dist(user, src) > 1 || !user.can_use_hands())
 			return
 
 		user.visible_message("<span class='alert'>[user] presses against [src].</span>", "<span class='alert'>You press against [src].  Ew.</span>")

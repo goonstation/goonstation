@@ -317,7 +317,7 @@
 		src.tag = "orb_stand_[id]"
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
+		if (!can_act(user, 0) || get_dist(user, src) > 1)
 			return
 
 		if (!src.assembled)

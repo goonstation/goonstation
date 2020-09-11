@@ -498,7 +498,7 @@
 	cooldown = 100
 
 	ability_allowed()
-		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("paralysis"))
+		if (!the_mob || !the_mob.canmove || !can_act(the_mob, 0))
 			boutput(the_mob, "<span class='alert'>You need to be ready on your feet to use this ability.</span>")
 			return 0
 

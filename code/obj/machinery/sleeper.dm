@@ -210,7 +210,7 @@
 			return*/
 		if (!isturf(src.loc) && !istype(src.loc, /obj/machinery/sleeper))
 			return
-		if ((src.our_sleeper && src.our_sleeper.occupant == usr) || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained())
+		if ((src.our_sleeper && src.our_sleeper.occupant == usr) || !can_act(usr, 1))
 			return
 		if (!issilicon(usr) && !in_range(src, usr))
 			return
@@ -723,7 +723,7 @@
 			return
 		if (usr == src.occupant || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (!can_act(usr, 0))
 			return
 		if (get_dist(src, usr) > 1)
 			usr.show_text("You are too far away to do this!", "red")

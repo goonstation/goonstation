@@ -188,11 +188,11 @@
 			boutput(L, "<b>You have to be alive to enter cryogenic storage!</b>")
 			boutput(user, "<b>You can't put someone in cryogenic storage if they aren't alive!</b>")
 			return 0
-		if (L.stat || L.restrained() || L.getStatusDuration("paralysis") || L.sleeping)
+		if (!can_act(L, 1) || L.sleeping)
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
 			boutput(user, "<b>You can't put someone in cryogenic storage while they're incapacitated!</b>")
 			return 0
-		if (user && (user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping))
+		if (user && (!can_act(user, 1) || user.sleeping))
 			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated!</b>")
 			return 0
 		if (get_dist(src, L) > 1)

@@ -22,7 +22,7 @@
 
 // These two procs were so similar that I combined them (Convair880).
 /mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null, var/datum/targetable/spell/teleport/spell)
-	if (src.getStatusDuration("paralysis") || !isalive(src))
+	if (!can_act(src, 0))
 		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
 		return 0
 
@@ -100,7 +100,7 @@
 			if (src.wizard_castcheck(spell) == 0)
 				return 0 // Has own user feedback.
 
-	if (src.getStatusDuration("paralysis") || !isalive(src))
+	if (!can_act(src, 0))
 		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
 		return 0
 

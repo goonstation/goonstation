@@ -273,7 +273,7 @@
 	if(status & (NOPOWER|BROKEN))
 		return
 
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (!can_act(user, 0))
 		return
 
 	use_power(5)

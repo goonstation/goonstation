@@ -34,7 +34,7 @@
 			boutput(holder.owner, __red("That is too far away to frenzy."))
 			return 1
 		var/mob/MT = target
-		if (!MT.getStatusDuration("weakened") && !MT.getStatusDuration("paralysis") && !MT.stat)
+		if (can_act(MT, 0))
 			boutput(holder.owner, __red("That is moving around far too much to pounce."))
 			return 1
 		playsound(get_turf(holder.owner), "sound/voice/animal/wendigo_roar.ogg", 80, 1)
@@ -48,7 +48,7 @@
 				if (MT.loc)
 					holder.owner.set_loc(MT.loc)
 				holder.owner.changeStatus("stunned", 1 SECOND)
-				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
+				if (!can_act(holder.owner, 0))
 					break
 				playsound(get_turf(holder.owner), "sound/voice/animal/wendigo_maul.ogg", 80, 1)
 				holder.owner.visible_message("<span class='alert'><b>[holder.owner] [pick("mauls", "claws", "slashes", "tears at", "lacerates", "mangles")] [MT]!</b></span>")

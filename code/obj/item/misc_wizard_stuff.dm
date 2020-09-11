@@ -40,7 +40,7 @@
 
 /obj/item/teleportation_scroll/Topic(href, href_list)
 	..()
-	if (usr.getStatusDuration("paralysis") || !isalive(usr) || usr.restrained())
+	if (!can_act(usr, 1))
 		return
 	var/mob/living/carbon/human/H = usr
 	if (!( ishuman(H)))

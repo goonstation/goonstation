@@ -246,7 +246,7 @@
 
 	Topic(href, href_list)
 		if (!isturf(src.loc)) return
-		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
+		if (!can_act(usr, 1)) return
 		if (!issilicon(usr) && !in_range(src, usr)) return
 
 		src.add_fingerprint(usr)

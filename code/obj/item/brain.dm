@@ -71,7 +71,7 @@
 	if(!(user.zone_sel.selecting == ("head")) || !ishuman(M))
 		return ..()
 
-	if(!(locate(/obj/machinery/optable, M.loc) && M.lying) && !(locate(/obj/table, M.loc) && (M.getStatusDuration("paralysis") || M.stat)))
+	if(!(locate(/obj/machinery/optable, M.loc) && M.lying) && !(locate(/obj/table, M.loc) && !can_act(M, 0)))
 		return ..()
 
 	var/mob/living/carbon/human/H = M

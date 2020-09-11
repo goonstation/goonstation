@@ -10,7 +10,7 @@
 	mats = 10
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_range(user, src) || !in_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_range(user, src) || !in_range(user, C) || !can_act(user, 1) || user.sleeping || user.lying)
 			return
 
 		if (!istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
@@ -46,7 +46,7 @@
 		..()
 		var/turf/T = get_turf(over_location)
 		var/mob/user = usr
-		if (!user || !(in_range(user, src) || user.loc == src) || !in_range(src, over_object) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!user || !(in_range(user, src) || user.loc == src) || !in_range(src, over_object) || !can_act(user, 1) || user.sleeping || user.lying)
 			return
 		if (!load)
 			return
@@ -240,7 +240,7 @@
 				M.set_loc(src.loc)
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_range(user, src) || !in_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_range(user, src) || !in_range(user, C) || !can_act(user, 1) || user.sleeping || user.lying)
 			return
 
 		if (istype(C, /obj/tug_cart) && in_range(C, src))

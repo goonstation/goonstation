@@ -7,13 +7,13 @@
 	return
 
 /obj/proc/user_can_suicide(var/mob/user as mob)
-	if (!istype(user) || get_dist(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
+	if (!istype(user) || get_dist(user, src) > src.suicide_distance || !can_act(user, 0))
 		return 0
 	return 1
 
 /obj/item/var/suicide_in_hand = 1 // does it have to be held to be used for suicide?
 /obj/item/user_can_suicide(var/mob/user as mob)
-	if (!istype(user) || (src.suicide_in_hand && !user.find_in_hand(src)) || get_dist(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
+	if (!istype(user) || (src.suicide_in_hand && !user.find_in_hand(src)) || get_dist(user, src) > src.suicide_distance || !can_act(user, 1))
 		return 0
 	return 1
 
@@ -100,7 +100,7 @@
 	if (src.w_uniform && src.w_uniform.custom_suicide)
 		suicides += src.w_uniform
 
-	if (!src.restrained() && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!can_act(src, 1))
 		if (src.l_hand && src.l_hand.custom_suicide)
 			suicides += src.l_hand
 

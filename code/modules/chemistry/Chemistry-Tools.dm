@@ -127,7 +127,7 @@
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
 			return ..()
 
-		if (usr.stat || usr.getStatusDuration("weakened") || get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
+		if (!can_act(usr, 0) || get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
 

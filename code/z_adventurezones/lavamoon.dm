@@ -577,7 +577,7 @@ var/sound/iomoon_alarm_sound = null
 		src.attacking = 1
 		src.visible_message("<span class='alert'><B>[src]</B> pinches [M] with its claws!</span>")
 		random_brute_damage(M, 3,1)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (!can_act(M, 0))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -897,7 +897,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		var/active = 0
 
 		attack_hand(mob/user as mob)
-			if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+			if (!can_act(user, 0) || get_dist(user, src) > 1 || !user.can_use_hands())
 				return
 
 			user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")
@@ -1350,7 +1350,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		src.tag = "ladder_[id][src.icon_state == "ladder" ? 0 : 1]"
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
+		if (!can_act(user, 0) || get_dist(user, src) > 1)
 			return
 
 		var/obj/ladder/otherLadder = locate("ladder_[id][src.icon_state == "ladder"]")
@@ -1793,7 +1793,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			id = params2list(id)
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+		if (!can_act(user, 0) || get_dist(user, src) > 1 || !user.can_use_hands())
 			return
 
 		user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")

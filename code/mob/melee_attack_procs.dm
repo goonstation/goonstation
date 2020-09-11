@@ -193,7 +193,7 @@
 		return
 
 	var/obj/stool/S = (locate(/obj/stool) in src.loc)
-	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
+	if (S && !src.lying && can_act(src, 0))
 		S.buckle_in(src,src,1)
 	else
 		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src)
@@ -479,7 +479,7 @@
 #undef DISARM_WITH_ITEM_TEXT
 
 /mob/proc/check_block(ignoreStuns = 0) //am i blocking?
-	if (ignoreStuns || (isalive(src) && !getStatusDuration("paralysis")))
+	if (ignoreStuns || can_act(src, 0))
 		var/obj/item/I = src.equipped()
 		if (I)
 			if (istype(I,/obj/item/grab/block))
