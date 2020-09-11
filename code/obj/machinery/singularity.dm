@@ -396,6 +396,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 	mats = 14
+	var/active_dirs = 0
 
 
 	proc/set_active(var/act)
@@ -513,7 +514,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			steps -= 1
 			if(!G.active)
 				return
-			G.cleanup(oNSEW)
+			if(G.active_dirs & oNSEW)
+				return // already active I guess
 			break
 
 	if(isnull(G))
@@ -531,6 +533,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/obj/machinery/containment_field/CF = new/obj/machinery/containment_field/(src, G) //(ref to this gen, ref to connected gen)
 		CF.set_loc(T)
 		CF.dir = field_dir
+
+	active_dirs |= NSEW
+	G.active_dirs |= oNSEW
+
+	G.process() // ok, a cool trick / ugly hack to make the direction of the fields nice and consistent in a circle
 
 //Create a link with a data terminal on the same tile, if possible.
 /obj/machinery/field_generator/proc/get_link()
@@ -635,6 +642,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/turf/T = src.loc
 	var/turf/T2 = src.loc
 
+	active_dirs &= ~NSEW
+
 	src.UpdateOverlays(null, "field_start_[NSEW]")
 	src.UpdateOverlays(null, "field_end_[turn(NSEW, 180)]")
 
@@ -649,6 +658,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			G = (locate(/obj/machinery/field_generator) in T)
 			G.UpdateOverlays(null, "field_end_[NSEW]")
 			G.UpdateOverlays(null, "field_start_[turn(NSEW, 180)]")
+			G.active_dirs &= ~turn(NSEW, 180)
 			if(!G.active)
 				break
 
