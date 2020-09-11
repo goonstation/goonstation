@@ -338,7 +338,7 @@
 		setProperty("rangedprot", 0.5)
 
 /obj/item/clothing/suit/det_suit/hos
-	name = "HoS jacket"
+	name = "Head of Security's jacket"
 	desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_armor.dmi'
