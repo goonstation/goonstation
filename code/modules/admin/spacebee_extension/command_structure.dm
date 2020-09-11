@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based/confirmation/mob_tar
 	if(!M)
 		system.reply("Ckey not found.", user)
 		return null
-	ckey = M.ckey // make sure we can do exact match in do_it(), partial matches could get fucked up by newjoiners etc
+	src.ckey = M.ckey // make sure we can do exact match in do_it(), partial matches could get fucked up by newjoiners etc
 	return "You are about to [src.action_name] [M] ([ckey])[isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""]."
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/do_it(user)
