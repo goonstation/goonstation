@@ -1,5 +1,11 @@
 
 (t)fri sep 11 20
+(u)makkipakki
+(p)2122
+(e)🆕|feature
+(*)Added the HoS' Cape to their locker on all maps! Comes with a rebalancing to make it a sidegrade to the HoS' Jacket.
+(+)HoS no longer spawns with the Cape on submarine maps.
+(+)Changes to both the HoS Jacket and Cape names and descriptions.
 (u)pali
 (+)The singularity can no longer be destroyed by weak explosions
 (+)Atlas stuff:writing supplies for medbay, artlab and botany<br>drains in chemistry<br>compact sleeper in medbay (between the two cryocells)<br>thinktape in artlab<br>guaranteed labeller in artlab<br>additional thinktape in tech storage<br>audiolog + tapes in science<br>fixed bridge shield controls not working at all<br>Ol' Harner in robotics<br>purge valve + pumps for the generator<br>mechanics can now enter tech storage<br>APC powercell charger added to QM
