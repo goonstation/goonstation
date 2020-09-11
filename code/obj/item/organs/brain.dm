@@ -29,7 +29,7 @@
 		..()
 
 	Eat(mob/M, mob/user)
-		if(alert(usr=user, "Are you sure you want to eat [src]?", "Eat brain?", "Yes", "No") == "Yes")
+		if(alert("Are you sure you want to eat [src]?", "Eat brain?", "Yes", "No", Usr=user) == "Yes")
 			logTheThing("combat", user, null, "tries to eat [src] (owner's ckey [owner ? owner.ckey : null]).")
 			return ..()
 		return 0
