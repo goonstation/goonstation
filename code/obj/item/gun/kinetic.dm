@@ -1477,46 +1477,45 @@
 	spread_angle = 2
 	can_dual_wield = 0
 	var/cases_to_eject = 0
-	var/open
+	var/open = FALSE
 
 
 	New()
 		ammo = new/obj/item/ammo/bullets/nine_mm_NATO
 		current_projectile = new/datum/projectile/bullet/nine_mm_NATO/burst
-		open=0
 		..()
 
 	attack_hand(mob/user as mob)
 		if(!user.find_in_hand(src))
 			..() //this works, dont touch it
-		else if(open==1)
+		else if(open)
 			.=..()
 		else
-			boutput(user,"<span class='alert'>You can't unload the [src] while it is closed.</span>")
+			boutput(user, "<span class='alert'>You can't unload the [src] while it is closed.</span>")
 
-	attackby(obj/item/ammo/bullets/b as obj, mob/user as mob)
-		if(open==1)
+	attackby(obj/item/ammo/bullets/b as obj, mob/user)
+		if(open)
 			.=..()
 		else
 			boutput(user, "<span class='alert'>You can't access the gun inside the [src] while it's closed! You'll have to open the [src]!</span>")
 
 	attack_self(mob/user)
-		if(open==1)
-			open=0
+		if(open)
+			open = FALSE
 			update_icon()
 			boutput(user, "<span class='alert'>You close the [src]!</span>")
 		else
-			boutput(user,"<span class='alert'>You open the [src].</span>")
-			open=1
+			boutput(user, "<span class='alert'>You open the [src].</span>")
+			open = TRUE
 			update_icon()
-			if ((src.loc == user) && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
+			if (src.loc == user && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
 				src.add_fingerprint(user)
-				if (src.sanitycheck(0, 1) == 0)
+				if (!src.sanitycheck(0, 1))
 					user.show_text("You can't unload this gun.", "red")
 					return
-				if ((src.casings_to_eject > 0) && src.current_projectile.casing)
-					if (src.sanitycheck(1, 0) == 0)
-						logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
+				if (src.casings_to_eject > 0 && src.current_projectile.casing)
+					if (!src.sanitycheck(1, 0))
+						logTheThing("debug", usr, null, "<b>Convair880</b>: [user]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
 						src.casings_to_eject = 0
 						return
 					else
@@ -1528,10 +1527,10 @@
 					return
 
 	canshoot()
-		if(open==1)
+		if(open)
 			return 0
 		else
-			.=..()
+			. = ..()
 
 	update_icon()
 		if(open)
