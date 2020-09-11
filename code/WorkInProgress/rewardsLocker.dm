@@ -883,7 +883,7 @@
 		if (isdead(activator))
 			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
 			return
-		if (!can_act(activator, 0))
+		if (!can_act(activator, 1))
 			boutput(activator, "<span style=\"color:red\">Absolutely Not. You can't be incapacitated.</span>")
 			return
 		var/blood_id = "blood"
