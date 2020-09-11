@@ -93,6 +93,11 @@
 
 	M.fields["traits"] = traitStr
 
+	if(!length(sec_note))
+		S.fields["notes"] = "No notes."
+	else
+		S.fields["notes"] = sec_note
+
 	if(H.traitHolder.hasTrait("jailbird"))
 		S.fields["criminal"] = "*Arrest*"
 		S.fields["mi_crim"] = pick(\
@@ -135,10 +140,12 @@
 								"Throwing explosive tomatoes at people.",\
 								"Caused multiple seemingly unrelated accidents.")
 		S.fields["ma_crim_d"] = "No details provided."
-		if(!length(sec_note))
-			S.fields["notes"] = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
+
+		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
+		if(S.fields["notes"] == "No notes.")
+			S.fields["notes"] = randomNote
 		else
-			S.fields["notes"] = sec_note
+			S.fields["notes"] += " [randomNote]"
 
 		boutput(H, "<span class='notice'>You are currently on the run because you've committed the following crimes:</span>")
 		boutput(H, "<span class='notice'>- [S.fields["mi_crim"]]</span>")
@@ -154,10 +161,6 @@
 		S.fields["ma_crim"] = "None"
 		S.fields["ma_crim_d"] = "No major crime convictions."
 
-		if(!length(sec_note))
-			S.fields["notes"] = "No notes."
-		else
-			S.fields["notes"] = sec_note
 
 	B.fields["job"] = H.job
 	B.fields["current_money"] = 100.0
