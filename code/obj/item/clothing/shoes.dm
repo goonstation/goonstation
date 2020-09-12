@@ -545,7 +545,6 @@
 	desc = "The shoes of a not-so-funny-clown."
 	icon_state = "jester"
 
-#if ASS_JAM
 /obj/item/clothing/shoes/scream
 	name = "scream shoes"
 	icon_state = "pink"
@@ -557,4 +556,3 @@
 	icon-state = "tourist"
 	step_sound = "fart"
 	desc = "Do I really need to tell you what these do?"
-#endif 
