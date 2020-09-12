@@ -2159,7 +2159,7 @@
 	upperfluc = 150
 	lowerfluc = -20
 	
-/datum/commodity/screamshoes
+/datum/commodity/fartflops
 	comname = "fart-flops"
 	comtype = /obj/item/clothing/shoes/fart
 	desc = "They fart when you walk."
