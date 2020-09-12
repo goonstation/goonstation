@@ -1,5 +1,9 @@
 
 (t)sat sep 12 20
+(u)monochromatism
+(p)2108
+(e)🆕|feature
+(+)Added the "atheist" trait. Disables faith healing and has interesting flavor text about prayer, but might have an upside...
 (u)Flourish
 (p)2110
 (e)🆕|feature
