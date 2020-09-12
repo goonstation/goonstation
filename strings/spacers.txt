@@ -1,7 +1,7 @@
 honorifics@=
 	Eminence
 	Brustler
-	King Bro
+	The Notorious
 	Handsome
 	Sidesguy
 	Double
@@ -57,7 +57,7 @@ lastnames@=
 	Stromboulopoulos
 	Smith
 	The Third
-
+	Grandpa
 nicknames@=
 	"The Juice"
 	"The Flagship"
@@ -121,6 +121,7 @@ stuff@=
 	Handshake
 	Juicebox
 	Whackoff
+	Spoons
 
 
 
