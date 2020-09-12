@@ -280,7 +280,7 @@
 
 	for(var/dist = 0, dist < range, dist += 1)
 		T = get_step(T, dir)
-		if(!T || T.density) 
+		if(!T || T.density)
 			if(!istype(T, /turf/unsimulated/wall/trench)) return dist
 		for(var/obj/O in T)
 			if(!istype(O,/obj/window) && !istype(O,/obj/grille) && !ismob(O) && O.density)
@@ -332,12 +332,12 @@
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
-	if(abs(output) > charge)
+	//only call stop_firing() if output setting is hire than charge, and if we are actually firing
+	if(src.firing && (abs(src.output) > src.charge))
 		stop_firing()
-		return
 
 	for(var/obj/lpt_laser/L in laser_parts)
-		L.power = round(abs(output)*PTLEFFICIENCY)
+		L.power = round(abs(src.output)*PTLEFFICIENCY)
 		L.alpha = max(50,min(255,L.power/39e7)) //255 (max) alpha at 1e11 power, the point at which the laser's most deadly effect happens
 
 /obj/machinery/power/pt_laser/ui_state(mob/user)
@@ -360,6 +360,7 @@
 	var/list/data = list()
 	data["capacity"] = src.capacity
 	data["charge"] = src.charge
+	data["isEmagged"] = src.emagged
 	data["isChargingEnabled"] = src.charging
 	data["excessPower"] = src.excess
 	data["gridLoad"] = src.terminal?.powernet.load
@@ -415,22 +416,29 @@
 			if(!online) src.stop_firing()
 			. = TRUE
 		if("setOutput")
-			src.output_number = clamp(params["setOutput"], 0, 999)
+			if (src.emagged)
+				src.output_number = clamp(params["setOutput"], -999, 999)
+			else
+				src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
 			if(!src.output)
 				src.stop_firing()
+			src.update_laser_power()
 			. = TRUE
 		if("outputMW")
 			src.output_multi = 1 MEGA WATT
 			src.output = src.output_number * src.output_multi
+			src.update_laser_power()
 			. = TRUE
 		if("outputGW")
 			src.output_multi = 1 GIGA WATT
 			src.output = src.output_number * src.output_multi
+			src.update_laser_power()
 			. = TRUE
 		if("outputTW")
 			src.output_multi = 1 TERA WATT
 			src.output = src.output_number * src.output_multi
+			src.update_laser_power()
 			. = TRUE
 
 /obj/machinery/power/pt_laser/ex_act(severity)

@@ -241,7 +241,7 @@
 	color = "#333333"
 	font = "Comic Sans MS"
 	clicknoise = 0
-	var/pixel = FALSE
+	var/maptext_crayon = FALSE
 	var/font_size = 32
 
 	white
@@ -319,8 +319,9 @@
 				JOB_XP(user, "Clown", 1)
 
 		pixel
-			pixel = TRUE
+			maptext_crayon = TRUE
 			font_size = 16
+			font = "Small Fonts"
 			New()
 				..()
 				src.name = "[src.color_name] pixel crayon"
@@ -377,7 +378,7 @@
 			. = list()
 			for(var/i = 1 to min(length(inp), 100))
 				var/c = copytext(inp, i, i + 1)
-				if((c in src.c_default) || (c in src.c_char_to_symbol))
+				if(maptext_crayon && c != " " || (c in src.c_default) || (c in src.c_char_to_symbol))
 					. += c
 		src.in_use = 0
 
@@ -419,12 +420,12 @@
 
 		var/t // t is for what we're tdrawing
 
-		if (src.symbol_setting)
+		if (length(src.symbol_setting))
 			t = src.symbol_setting
 		else
 			t = write_input(user)
 
-		if(isnull(t))
+		if(isnull(t) || !length(t))
 			return
 
 		if(islist(t))
@@ -443,11 +444,11 @@
 		if(t == " ")
 			return
 
-		if(!src.pixel && (t in src.c_char_to_symbol))
+		if(!src.maptext_crayon && (t in src.c_char_to_symbol))
 			t = c_char_to_symbol[t]
 
 		var/obj/decal/cleanable/writing/G
-		if(src.pixel)
+		if(src.maptext_crayon)
 			G = make_cleanable(/obj/decal/cleanable/writing/maptext_dummy, T)
 		else
 			G = make_cleanable(/obj/decal/cleanable/writing, T)
@@ -455,10 +456,14 @@
 
 		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 
-		var/size = src.pixel ? 16 : 32
+		var/size = 32
 
-		if(src.pixel)
-			G.maptext = "<span class='pixel c' style='font-size:[font_size]pt'>[t]</span>"
+		if(src.maptext_crayon)
+			G.maptext = "<span class='c' style='font-family:\"[font]\";font-size:[font_size]pt'>[t]</span>"
+			G.maptext_width = 32 * 3
+			G.maptext_height = 32 * 3
+			G.maptext_x = -32
+			G.maptext_y = size / 2 - font_size / 2
 		else
 			G.icon_state = "c[t]"
 			if(src.font_size != 32)

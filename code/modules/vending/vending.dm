@@ -580,6 +580,14 @@
 
 			src.prevend_effect()
 			if(!src.freestuff) R.product_amount--
+
+			if (src.pay)
+				if (src.acceptcard && account)
+					account.fields["current_money"] -= R.product_cost
+				else
+					src.credit -= R.product_cost
+				wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+
 			SPAWN_DBG(src.vend_delay)
 				src.vend_ready = 1 // doin this at the top here just in case something goes fucky and the proc crashes
 
@@ -602,14 +610,6 @@
 					var/S = sound(R.product_path)
 					if (S)
 						playsound(src.loc, S, 50, 0)
-
-				if (src.pay)
-					if (src.acceptcard && account)
-						account.fields["current_money"] -= R.product_cost
-					else
-						src.credit -= R.product_cost
-					wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
-
 				src.postvend_effect()
 
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")

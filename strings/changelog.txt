@@ -1,4 +1,30 @@
 
+(t)sat sep 12 20
+(u)Medoublej
+(p)2153
+(e)⚖🐛|balance, bug
+(+)Vampire's chiropteran screech MK2 now silences radios properly and no longer emags robots.
+(u)Luxizzle
+(p)2146
+(e)|
+(+)Jailbird no longer overwrites personal security note.
+(+)Jailbird now informs you of what crimes you've committed.
+(u)monochromatism
+(p)2108
+(e)🆕|feature
+(+)Added the "atheist" trait. Disables faith healing and has interesting flavor text about prayer, but might have an upside...
+(u)Flourish
+(p)2110
+(e)🆕|feature
+(*)If you flip with a grab on help intent, your grabee will flip with you. And if they also have a grab and are on help intent, their grabee will also flip. And so on.
+(u)eckff
+(p)2131
+(e)🎨|sprites
+(+)Space tiles now more darker than before! Like real space!
+(u)Enfaeutchie
+(p)2150
+(e)⚖|balance
+(*)On the RP servers, changelings have had their neurotoxin sting replaced with a non-lethal capulettium sting which will make their victims appear to drop dead.
 (t)fri sep 11 20
 (u)makkipakki
 (p)2122
@@ -13,6 +39,9 @@
 (p)2068
 (e)|
 (+)Port-a-Gene can now be entered by dragging and can also redeem filled injectors!
+(u)UrsulaMejor
+(e)🐛|bug
+(+)You can now change your preferred maps to maps that aren't currently pickable
 (t)thu sep 10 20
 (u)Gannets
 (p)2129

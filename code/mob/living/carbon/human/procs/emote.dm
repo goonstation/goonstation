@@ -1608,6 +1608,9 @@
 									continue
 								if (!G.affecting) //Wire note: Fix for Cannot read null.loc
 									continue
+								if (src.a_intent == INTENT_HELP)
+									M.emote("flip", 1) // make it voluntary so there's a cooldown and stuff
+									continue
 								flipped_a_guy = 1
 								if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
 									var/obj/table/tabl = locate() in src.loc.contents

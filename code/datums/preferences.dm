@@ -1711,7 +1711,7 @@ $(function() {
 
 		if (link_tags["preferred_map"])
 			rebuild_data["map"] = 1
-			src.preferred_map = mapSwitcher.clientSelectMap(usr.client)
+			src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
 
 		if (link_tags["tooltip"])
 			rebuild_data["tooltips"] = 1
