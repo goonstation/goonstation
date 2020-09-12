@@ -13,6 +13,9 @@
 (p)2068
 (e)|
 (+)Port-a-Gene can now be entered by dragging and can also redeem filled injectors!
+(u)UrsulaMejor
+(e)🐛|bug
+(+)You can now change your preferred maps to maps that aren't currently pickable
 (t)thu sep 10 20
 (u)Gannets
 (p)2129
