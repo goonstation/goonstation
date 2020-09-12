@@ -19621,6 +19621,10 @@
 "bGt" = (
 /obj/cable,
 /obj/machinery/power/terminal,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 24
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -21781,11 +21785,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "eKJ" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 12;
-	pixel_y = 12
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -21793,7 +21792,7 @@
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - SS13";
-	pixel_x = 10;
+	pixel_x = 12;
 	tag = ""
 	},
 /turf/simulated/floor/greenwhite{
@@ -22795,6 +22794,10 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -23695,6 +23698,11 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
+"hkT" = (
+/turf/simulated/wall/auto/jen/dark4{
+	icon_state = "9"
+	},
+/area/station/turret_protected/AIsat)
 "hmQ" = (
 /obj/machinery/light,
 /turf/simulated/floor/delivery,
@@ -23981,7 +23989,7 @@
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - SS13";
-	pixel_x = 10;
+	pixel_x = 12;
 	tag = ""
 	},
 /turf/simulated/floor{
@@ -24444,12 +24452,17 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/proto)
+"igI" = (
+/turf/simulated/wall/auto/jen/dark4{
+	icon_state = "10"
+	},
+/area/station/turret_protected/AIsat)
 "ihb" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname - SS13";
-	pixel_y = 22;
+	pixel_y = 23;
 	tag = ""
 	},
 /turf/simulated/floor/engine{
@@ -27095,11 +27108,6 @@
 /turf/simulated/floor/engine,
 /area/station/security/armory)
 "lvP" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 12
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -27107,7 +27115,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
-	pixel_x = -10;
+	pixel_x = -12;
 	tag = ""
 	},
 /turf/simulated/floor/greenwhite{
@@ -27419,7 +27427,7 @@
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13";
-	pixel_y = 22;
+	pixel_y = 23;
 	tag = ""
 	},
 /turf/simulated/floor/engine{
@@ -28232,6 +28240,11 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/singcore)
+"nbR" = (
+/turf/simulated/wall/auto/reinforced/jen/dark4{
+	icon_state = "R6"
+	},
+/area/station/turret_protected/AIsat)
 "nbT" = (
 /obj/storage/secure/closet/medical/medkit,
 /obj/machinery/light/emergency,
@@ -28785,7 +28798,7 @@
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - SS13";
-	pixel_x = 10;
+	pixel_x = 12;
 	tag = ""
 	},
 /turf/simulated/floor/engine{
@@ -28841,6 +28854,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/circuit/off,
+/area/station/turret_protected/AIsat)
+"nPM" = (
+/turf/simulated/wall/auto/jen/dark1{
+	icon_state = "10"
+	},
 /area/station/turret_protected/AIsat)
 "nQw" = (
 /obj/cable{
@@ -30090,6 +30108,7 @@
 /obj/machinery/networked/radio,
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/light/small/cool,
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
 "pka" = (
@@ -30838,6 +30857,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
+"qbU" = (
+/turf/simulated/wall/auto/jen/dark4{
+	icon_state = "5"
+	},
+/area/station/turret_protected/AIsat)
 "qcf" = (
 /obj/cable,
 /obj/wingrille_spawn/auto/crystal,
@@ -32922,7 +32946,7 @@
 	c_tag = "autotag";
 	dir = 5;
 	name = "autoname - SS13";
-	pixel_x = -10;
+	pixel_x = -12;
 	tag = ""
 	},
 /turf/simulated/floor/engine{
@@ -33077,7 +33101,7 @@
 	c_tag = "autotag";
 	dir = 5;
 	name = "autoname - SS13";
-	pixel_x = -10;
+	pixel_x = -12;
 	tag = ""
 	},
 /turf/simulated/floor{
@@ -33342,6 +33366,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/light/small/cool,
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
 "sUk" = (
@@ -34653,7 +34678,7 @@
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13";
-	pixel_y = 22;
+	pixel_y = 23;
 	tag = ""
 	},
 /turf/simulated/floor{
@@ -34806,7 +34831,7 @@
 	c_tag = "autotag";
 	dir = 9;
 	name = "autoname - SS13";
-	pixel_x = 10;
+	pixel_x = 12;
 	tag = ""
 	},
 /turf/simulated/floor/engine{
@@ -35493,6 +35518,11 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
+"vlI" = (
+/turf/simulated/wall/auto/reinforced/jen/dark4{
+	icon_state = "R12"
+	},
+/area/station/turret_protected/AIsat)
 "vlK" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -35588,6 +35618,11 @@
 	icon_state = "carpetNE"
 	},
 /area/station/crew_quarters/cafeteria)
+"vqK" = (
+/turf/simulated/wall/auto/jen/dark4{
+	icon_state = "6"
+	},
+/area/station/turret_protected/AIsat)
 "vqV" = (
 /obj/stool/chair{
 	dir = 1;
@@ -35745,6 +35780,11 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 12
+	},
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
 "vyl" = (
@@ -35897,6 +35937,11 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12;
+	pixel_y = 12
 	},
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
@@ -36599,6 +36644,11 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/owlery)
+"wCi" = (
+/turf/simulated/wall/auto/reinforced/jen/dark4{
+	icon_state = "R10"
+	},
+/area/station/turret_protected/AIsat)
 "wCC" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/white,
@@ -36761,7 +36811,7 @@
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
-	pixel_x = -10;
+	pixel_x = -12;
 	tag = ""
 	},
 /turf/simulated/floor/engine{
@@ -37163,6 +37213,10 @@
 	},
 /obj/machinery/power/terminal{
 	dir = 4
+	},
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -109494,7 +109548,7 @@ pgH
 pgH
 xnm
 xnm
-ctF
+vqK
 ctF
 cmg
 nLc
@@ -109506,7 +109560,7 @@ hEk
 mCV
 cmg
 ctF
-ctF
+qbU
 xnm
 xnm
 pgH
@@ -109804,7 +109858,7 @@ mOn
 sej
 sSw
 sej
-sej
+hnK
 cmg
 ncY
 cmg
@@ -110698,7 +110752,7 @@ mYq
 pgH
 xnm
 xtu
-ctF
+vqK
 ctF
 cmg
 uLP
@@ -110718,7 +110772,7 @@ sej
 bBI
 cmg
 ctF
-ctF
+qbU
 ihb
 xnm
 pgH
@@ -111625,7 +111679,7 @@ sej
 sej
 cmg
 mSi
-pgH
+vlI
 imb
 uMV
 mJS
@@ -111907,7 +111961,7 @@ pgH
 xnm
 ctF
 qda
-sej
+mOn
 sej
 sej
 rRV
@@ -111927,7 +111981,7 @@ sej
 sej
 hnK
 enP
-pgH
+wCi
 isn
 pgH
 koD
@@ -113115,7 +113169,7 @@ pgH
 xnm
 ctF
 edf
-sej
+nPM
 sej
 sej
 rRV
@@ -113133,9 +113187,9 @@ czM
 sPG
 sej
 sej
-sej
+fFB
 uiC
-pgH
+nbR
 jqS
 pgH
 epO
@@ -113437,7 +113491,7 @@ sej
 sej
 cmg
 pwg
-pgH
+vlI
 sOZ
 uMV
 rSV
@@ -114322,7 +114376,7 @@ gkJ
 pgH
 xnm
 pMu
-ctF
+igI
 ctF
 cmg
 bBI
@@ -114342,7 +114396,7 @@ sej
 uLP
 cmg
 ctF
-ctF
+hkT
 lWh
 xnm
 pgH
@@ -115236,7 +115290,7 @@ ctF
 cmg
 ncY
 cmg
-sej
+nPM
 sej
 sSw
 sej
@@ -115534,7 +115588,7 @@ pgH
 pgH
 xnm
 xnm
-ctF
+igI
 ctF
 cmg
 cwI
@@ -115546,7 +115600,7 @@ xhK
 vOx
 cmg
 ctF
-ctF
+hkT
 xnm
 xnm
 pgH
