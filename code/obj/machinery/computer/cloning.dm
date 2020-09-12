@@ -580,8 +580,8 @@
 	for(var/mob/M in mobs)
 		//Dead people only thanks!
 		if (!(isdead(M) || isVRghost(M) || isghostcritter(M) || inafterlifebar(M)) || (!M.client))
-			continue
-		//They need a brain!
+			//continue
+		They need a brain!
 		if (needbrain && ishuman(M) && !M:brain)
 			continue
 
@@ -700,6 +700,7 @@
 			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
+		src?.connected.updateUsrDialog()
 
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 

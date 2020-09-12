@@ -23,6 +23,7 @@
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 // Are we cloning an actual person now?
+	var/time_started = 0 // When did we start cloning the actual person?
 	var/operating = 0 // Are we creating a new body?
 	var/eject_wait = 0 // How long do we wait until we eject them?
 	var/previous_heal = 0
@@ -124,6 +125,9 @@
 
 			pda_connection.post_signal(src, newsignal)
 
+	attack_hand(mob/user as mob)
+		interact_particle(user, src)
+		src.examine(user)
 
 	get_desc(dist, mob/user)
 		. = ""
@@ -211,15 +215,13 @@
 			return 0
 
 		src.attempting = 1 //One at a time!!
+		src.time_started = TIME
 		src.failed_tick_counter = 0 // make sure we start here
 
 		src.look_busy(1)
 		src.visible_message("<span class='alert'>[src] whirrs and starts up!</span>")
 
-		if (!src.gen_analysis)
-				src.eject_wait = 10 SECONDS
-		else
-				src.eject_wait = 30 SECONDS
+		src.eject_wait = 10
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
@@ -335,7 +337,7 @@
 		if (src.BE)
 			src.occupant.bioHolder.AddEffectInstance(BE,1)
 
-
+		src.occupant.changeStatus("paralysis", 20 SECONDS)
 		previous_heal = src.occupant.health
 		return 1
 
@@ -453,7 +455,7 @@
 					src.failed_tick_counter = 0
 				previous_heal = src.occupant.health
 
-				if ((src.occupant.health + (100 - src.occupant.max_health)) > 50 && src.failed_tick_counter >= 2 && !eject_wait)
+				if ((src.occupant.health + (100 - src.occupant.max_health)) > 50 && src.failed_tick_counter >= 2 && (src.time_started + eject_wait < TIME))
 					// Wait a few ticks to see if they stop gaining health.
 					// Once that's the case, boot em
 					src.connected_message("Cloning Process Complete.")
@@ -468,7 +470,7 @@
 			else if (src.occupant.max_health - src.occupant.health <= src.heal_level)
 				// Clone is more or less fully complete!
 
-				if (src.attempting && !eject_wait)
+				if (src.attempting && (src.time_started + eject_wait < TIME))
 					// If this body has an actual mind in it, they're done.
 					// Sure hope the outside is safe for ya.
 					src.connected_message("Cloning Process Complete.")
@@ -654,7 +656,7 @@
 			return
 
 		src.failed_tick_counter = 0
-		src.eject_wait = 0 //If it's still set somehow.
+		src.eject_wait = 0 // Set eject_wait back to 0
 		src.operating = 0
 		src.attempting = 0
 
