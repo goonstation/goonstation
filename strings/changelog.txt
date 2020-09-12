@@ -1,5 +1,10 @@
 
 (t)sat sep 12 20
+(u)Luxizzle
+(p)2146
+(e)|
+(+)Jailbird no longer overwrites personal security note.
+(+)Jailbird now informs you of what crimes you've committed.
 (u)monochromatism
 (p)2108
 (e)🆕|feature
