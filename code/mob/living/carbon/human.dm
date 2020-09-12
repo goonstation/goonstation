@@ -3146,7 +3146,9 @@
 							priority = (src.shoes.step_priority > NewLoc.step_priority) ? -1 : 1
 
 					if (priority)
-						if (priority > 0)
+						if (src.shoes.step_sound_is_soundcache)
+							priority = pick(soundCache)
+						else if (priority > 0)
 							priority = NewLoc.step_material
 						else if (priority < 0)
 							priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
