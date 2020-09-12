@@ -151,7 +151,7 @@
 /obj/item/clothing/shoes/pink
 	name = "pink shoes"
 	icon_state = "pink"
-
+	
 /obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
 	if (src.chained)
 		src.chained = null
@@ -544,3 +544,18 @@
 	name = "jester's shoes"
 	desc = "The shoes of a not-so-funny-clown."
 	icon_state = "jester"
+
+
+#if ASS_JAM
+/obj/item/clothing/shoes/scream
+	name = "scream shoes"
+	icon_state = "pink"
+	step_sound = "scream"
+	desc = "AAAAAAAAAAAAAAAAAAAAAAA"
+	
+	/obj/item/clothing/shoes/fart
+	name = "fart-flops"
+	icon-state = "tourist"
+	step_sound = "fart"
+	desc = "Do I really need to tell you what these do?"
+#endif 
