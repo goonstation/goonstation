@@ -1211,22 +1211,13 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
 
 /obj/machinery/vending/security_ammo //ass jam time yes
-#if ASS_JAM
-	name = "Kinetitech"
-	desc = "A restricted weapon vendor, banned by the Space Geneva Convention in 2036 for being a 'warcrime'. Where the hell did the Head of Security find this?"
-	mats = 6669 //Yes its not traitor restricted, but good luck getting more of these. If you manage to get this, you deserve it
-#else
 	name = "AmmoTech"
 	desc = "A restricted ammunition vendor."
-#endif
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
 	req_access_txt = "37"
 	acceptcard = 0
-#if !ASS_JAM
-	is_syndicate = 1 // okay enough piles of spes ammo for any mechanic
-#endif
 	lr = 1
 	lg = 0.8
 	lb = 0.9
@@ -1241,43 +1232,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
-#if ASS_JAM
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/ak47, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/tommy_gun, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/tactical_shotgun, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/hunting_rifle, 6)
-		product_list += new/datum/data/vending_product(/obj/item/baton/classic, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/egun, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/riot40mm, 6)
-		if(prob(10))
-			product_list += new/datum/data/vending_product(/obj/item/gun/energy/howitzer, 1)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/detectiverevolver, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/clock_188, 200)
-		product_list += new/datum/data/vending_product(/obj/item/storage/pouch, 6)
-		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/stinger, 10)
-		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/frag, 10)
-		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/high_explosive, 10)
-		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/incendiary, 10)
-		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/smoke, 10)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/ak47, 20)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/aex, 20)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12, 40)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/rifle_3006, 20)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/bullet_9mm, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 9999999)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 120)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 40)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/seeker, 20)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/knocker,20)
-
-#else
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
-#endif
 /obj/machinery/vending/cola
 	name = "soda machine"
 	pay = 1

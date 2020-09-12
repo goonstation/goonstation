@@ -167,15 +167,6 @@
 		..()
 		src.access = get_all_accesses()
 
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-#if ASS_JAM
-		if(prob(5))
-			M.unequip_all()
-			M.tommyize_reshape()
-#endif
 
 	derelict
 		//name = "NT-SO Commander"
@@ -234,13 +225,7 @@
 	name = "Head of Security"
 	limit = 1
 	wages = 350
-#if ASS_JAM
-	requires_whitelist = 0
-	high_priority_job = 1
-	change_name_on_spawn = 1
-#else
 	requires_whitelist = 1
-#endif
 	recieves_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
