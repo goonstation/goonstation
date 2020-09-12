@@ -2131,6 +2131,17 @@
 		bad_traitorify(M, "Syndicate Agent")
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
+/datum/job/special/juicer_specialist
+	linkcolor = "#cc8899"
+	name = "Juicer Security"
+	limit = 0
+	allow_traitors = 0
+	allow_spy_theft = 0
+	cant_spawn_as_rev = 1
+
+	slot_back = /obj/item/gun/energy/blaster_cannon
+	slot_belt = /obj/item/storage/fanny
+	//more
 
 /datum/job/special/ntso_specialist
 	linkcolor = "#3348ff"
