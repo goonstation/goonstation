@@ -333,7 +333,7 @@
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
 	//only call stop_firing() if output setting is hire than charge, and if we are actually firing
-	if(abs(src.output) > src.charge && src.firing)
+	if(src.firing && (abs(src.output) > src.charge))
 		stop_firing()
 
 	for(var/obj/lpt_laser/L in laser_parts)
