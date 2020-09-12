@@ -553,7 +553,7 @@
 	step_sound = "scream"
 	desc = "AAAAAAAAAAAAAAAAAAAAAAA"
 	
-	/obj/item/clothing/shoes/fart
+/obj/item/clothing/shoes/fart
 	name = "fart-flops"
 	icon-state = "tourist"
 	step_sound = "fart"
