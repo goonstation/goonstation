@@ -264,8 +264,7 @@
 		if(5) //Advanced genetics analysis
 			dat += {"<h4>Advanced Genetic Analysis</h4>
 					<a href='byond://?src=\ref[src];menu=1'>Back</a><br>
-					<B>Notice:</B> Enabling this feature will prompt the attached clone pod to transfer active genetic mutations from the genetic record to the subject during cloning.
-					The cloning process will be slightly slower as a result.<BR><BR>"}
+					<B>Notice:</B> Enabling this feature will prompt the attached clone pod to transfer active genetic mutations from the genetic record to the subject during cloning.<BR>"}
 
 			if(pod1 && !pod1.attempting)
 				if(pod1.gen_analysis)
