@@ -89,7 +89,7 @@ datum
 								boutput(M, "<span class='alert'><b>You hear something strange behind you...</b></span>")
 								var/ants = rand(1,3)
 								for(var/i = 0, i < ants, i++)
-									fake_attackEx(M, 'icons/effects/genetics.dmi', "epileptic", "stranger")
+									fake_attackEx(M, 'icons/effects/genetics.dmi', "psyche", "stranger")
 						if(2)
 							var/halluc_state = null
 							var/halluc_name = null
