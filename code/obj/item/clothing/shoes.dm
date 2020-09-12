@@ -553,6 +553,6 @@
 	
 /obj/item/clothing/shoes/fart
 	name = "fart-flops"
-	icon-state = "tourist"
+	icon_state = "tourist"
 	step_sound = "fart"
 	desc = "Do I really need to tell you what these do?"
