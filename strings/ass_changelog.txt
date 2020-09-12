@@ -1,4 +1,7 @@
 
+(t)thu sep 10 20
+(u)pali
+(*)Temporary hotspots (e.g. from welderbombs, fireballs, shitty grills...) now more consistently affect atmos temperature. Let's test it out.
 (t)tue sep 08 20
 (u)pali
 (*)Burning items now release their contents as smoke. Bring back infinicheese 2020.

@@ -531,6 +531,9 @@
 			L.remove_lizard_powers()
 		. = ..()
 
+	say_verb()
+		return "hisses"
+
 /datum/mutantrace/zombie
 	name = "zombie"
 	icon_state = "zombie"
