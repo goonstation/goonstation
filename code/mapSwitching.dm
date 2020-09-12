@@ -242,7 +242,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		for (var/client/C in clients)
 			C.verbs += /client/proc/mapVote
-			if(C && C.preferences && length(C.preferences.preferred_map) && !istype(C.mob,/mob/new_player))
+			if(C && C.preferences && length(C.preferences.preferred_map) && !istype(C.mob,/mob/new_player) && (C.preferences.preferred_map in playerPickable))
 				src.passiveVotes[C.ckey] = C.preferences.preferred_map
 
 		//announce vote
@@ -360,10 +360,13 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			C.verbs -= /client/proc/mapVote
 
 	// Standardized way to ask a user for a map
-	proc/clientSelectMap(client/C)
+	proc/clientSelectMap(client/C,var/pickable)
 		var/info = "Select a map"
 		info += "\nCurrently on: [src.current]"
-		return input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in src.playerPickable
+		if(pickable)
+			return input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in src.playerPickable
+		else
+			return(input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in mapNames)
 
 	//show a html report of who voted for what in any given map vote
 	proc/composeVoteReport(vote)

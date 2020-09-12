@@ -27,7 +27,7 @@
 	var/jerk = 0				// Should robots arrest these by default?
 
 	var/icon = 'icons/effects/genetics.dmi'
-	var/icon_state = "epileptic"
+	var/icon_state = "psyche"
 	var/icon_head = null
 	var/icon_beard = null
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
@@ -499,6 +499,9 @@
 
 	say_filter(var/message)
 		return replacetext(message, "s", stutter("ss"))
+
+	say_verb()
+		return "hisses"
 
 /datum/mutantrace/zombie
 	name = "zombie"

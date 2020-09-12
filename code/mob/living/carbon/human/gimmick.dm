@@ -854,6 +854,51 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		A.transition_task = F
 		default_task = B
 
+
+#define SPACER_PICK(WHAT) pick_string("spacers.txt", WHAT)
+
+/mob/living/carbon/human/proc/spacer_name(var/type = "spacer")
+	var/constructed_name = ""
+
+	switch(type)
+		if("spacer")
+			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(80)?SPACER_PICK("pejoratives")+" ":SPACER_PICK("superlatives")+" "][prob(10)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")]"
+		if("juicer")
+			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
+
+	return constructed_name
+
+
+/mob/living/carbon/human/spacer
+	is_npc = 1
+	uses_mobai = 1
+	New()
+		..()
+		SPAWN_DBG(0)
+			randomize_look(src, 1, 1, 1, 1, 1, 0)
+			real_name = spacer_name(pick("spacer","juicer"))
+			gender = pick(MALE,FEMALE)
+			SPAWN_DBG(1 SECOND)
+				bioHolder.mobAppearance.UpdateMob()
+
+			src.equip_new_if_possible(/obj/item/clothing/shoes/orange, slot_shoes)
+			src.equip_new_if_possible(/obj/item/clothing/under/rank/chief_engineer, slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, slot_glasses)
+
+			src.ai = new /datum/aiHolder/human/yank(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+			src.ai.enabled = 0
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+		if(isdead(src))
+			return
+		if(prob(10))
+			say(pick("Oh no you don't - not today, not ever!","Nice try fuckass, but I ain't goin' down so easy!","IMMA SCREAM BUDDY!","You wanna fuck around bucko? You wanna try your luck?"))
+			src.ai.interrupt()
+		src.ai.target = M
+		src.ai.enabled = 1
+
 // This is Big Yank, one of John Bill's old buds. Yank owes John a favor. He's a Juicer.
 /mob/living/carbon/human/big_yank
 	gender = MALE

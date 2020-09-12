@@ -825,8 +825,11 @@ datum
 						M.change_vampire_blood(-burndmg)
 						reacted = 1
 					else if (method == TOUCH)
-						boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
-						M.take_brain_damage(-10)
+						if (M.traitHolder?.hasTrait("atheist"))
+							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
+						else
+							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
+							M.take_brain_damage(-10)
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))
 								M.cure_disease(V)

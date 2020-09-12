@@ -66,6 +66,14 @@
 		icon_state = "stingneuro"
 		venom_id = "neurotoxin"
 
+	//neuro replacement for RP
+	capulettium
+		name = "Capulettium Sting"
+		desc = "Transfer some capulettium into your target."
+		icon_state = "stingneuro"
+		venom_id = "capulettium"
+		inject_amount = 20
+
 	lsd
 		name = "Hallucinogenic Sting"
 		desc = "Transfer some LSD into your target."
