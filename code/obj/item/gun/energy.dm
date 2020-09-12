@@ -869,10 +869,12 @@
 	w_class = 4
 	force = 15
 
+
 	New()
 		cell = new/obj/item/ammo/power_cell/self_charging/big
 		current_projectile = new /datum/projectile/special/spreader/uniform_burst/blaster
 		projectiles = list(current_projectile)
+		flags |= ONBACK
 		..()
 
 
