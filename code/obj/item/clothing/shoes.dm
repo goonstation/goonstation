@@ -23,6 +23,7 @@
 	var/step_sound = "step_default"
 	var/step_priority = STEP_PRIORITY_NONE
 	var/step_lots = 0 //classic steps (used for clown shoos)
+	var/step_sound_is_soundcache = 0 // Set to 1 to make the footsteps be any random sound
 
 	var/magnetic = 0    //for magboots, to avoid type checks on shoe
 
@@ -151,7 +152,7 @@
 /obj/item/clothing/shoes/pink
 	name = "pink shoes"
 	icon_state = "pink"
-	
+
 /obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
 	if (src.chained)
 		src.chained = null
@@ -550,9 +551,39 @@
 	icon_state = "pink"
 	step_sound = list(sound('sound/voice/screams/male_scream.ogg'),sound('sound/voice/screams/mascream6.ogg'),sound('sound/voice/screams/mascream7.ogg'))
 	desc = "AAAAAAAAAAAAAAAAAAAAAAA"
-	
+
+/obj/item/clothing/shoes/scream/custom
+	name = "My Very Own scream shoes"
+	desc = "The internal sound synthesizer is programmed to record the wearer's very own unique cries of pain and terror for fun and games!"
+
+	equipped(mob/user, slot)
+		. = ..()
+		if(!ishuman(user))
+			return
+		var/mob/living/carbon/human/screamlord = user
+		src.step_sound = screamlord?.sound_scream
+		return
+
 /obj/item/clothing/shoes/fart
 	name = "fart-flops"
 	icon_state = "tourist"
 	step_sound = list(sound('sound/voice/farts/poo2.ogg'),sound('sound/voice/farts/fart4.ogg'),sound('sound/voice/farts/poo2_robot.ogg'))
 	desc = "Do I really need to tell you what these do?"
+
+/obj/item/clothing/shoes/fart/custom
+	name = "My Very Own fart-flops"
+	desc = "Instantly tunes itself to the unique intestinal qualities of whoever wears them."
+
+	equipped(mob/user, slot)
+		. = ..()
+		if(!ishuman(user))
+			return
+		var/mob/living/carbon/human/fartmonster = user
+		src.step_sound = fartmonster?.sound_fart
+		return
+
+/obj/item/clothing/shoes/cacophony
+	name = "deafening boots of unspeakable cacophony"
+	icon_state = "blessedclown"
+	step_sound_is_soundcache = 1
+	desc = "The high-tech poly-resonant \"FunnyFlesh\" soles of these shoes are able to transform the wearer's footsteps into any possible combination of audible noises. The switch is stuck on \"random\"."
