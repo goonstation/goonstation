@@ -186,7 +186,6 @@
 		src.occupant.take_toxin_damage(50)
 		src.occupant.take_oxygen_deprivation(40)
 		src.occupant.take_brain_damage(60)
-		src.occupant.changeStatus("paralysis", 10 SECONDS)
 
 		//Here let's calculate their health so the pod doesn't immediately eject them!!!
 		src.occupant.health = (src.occupant.get_brute_damage() + src.occupant.get_toxin_damage() + src.occupant.get_oxygen_deprivation())
@@ -221,7 +220,7 @@
 		src.look_busy(1)
 		src.visible_message("<span class='alert'>[src] whirrs and starts up!</span>")
 
-		src.eject_wait = 10
+		src.eject_wait = 10 SECONDS
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
@@ -337,7 +336,7 @@
 		if (src.BE)
 			src.occupant.bioHolder.AddEffectInstance(BE,1)
 
-		src.occupant.changeStatus("paralysis", 20 SECONDS)
+		src.occupant.changeStatus("paralysis", 10 SECONDS)
 		previous_heal = src.occupant.health
 		return 1
 
@@ -695,6 +694,7 @@
 			var/mob/living/carbon/C = src.occupant
 			C.remove_ailments() // no more cloning with heart failure
 
+		src.occupant.changeStatus("paralysis", 10 SECONDS)
 		src.occupant.set_loc(get_turf(src))
 		src.occupant = null
 		src.update_icon()
