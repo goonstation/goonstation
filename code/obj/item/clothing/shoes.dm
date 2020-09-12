@@ -548,11 +548,11 @@
 /obj/item/clothing/shoes/scream
 	name = "scream shoes"
 	icon_state = "pink"
-	step_sound = "scream"
+	step_sound = list(sound('sound/voice/screams/male_scream.ogg'),sound('sound/voice/screams/mascream6.ogg'),sound('sound/voice/screams/mascream7.ogg'))
 	desc = "AAAAAAAAAAAAAAAAAAAAAAA"
 	
 /obj/item/clothing/shoes/fart
 	name = "fart-flops"
 	icon_state = "tourist"
-	step_sound = "fart"
+	step_sound = list(sound('sound/voice/farts/poo2.ogg'),sound('sound/voice/farts/fart4.ogg'),sound('sound/voice/farts/poo2_robot.ogg'))
 	desc = "Do I really need to tell you what these do?"
