@@ -1,4 +1,9 @@
 
+(t)sat sep 12 20
+(u)Enfaeutchie
+(p)2150
+(e)⚖|balance
+(*)On the RP servers, changelings have had their neurotoxin sting replaced with a non-lethal capulettium sting which will make their victims appear to drop dead.
 (t)fri sep 11 20
 (u)makkipakki
 (p)2122
