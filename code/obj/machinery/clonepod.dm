@@ -15,7 +15,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS
-	mats = 15
+	mats = 45
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -24,7 +24,7 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 // Are we cloning an actual person now?
 	var/operating = 0 // Are we creating a new body?
-	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
+	var/eject_wait = 0 // How long do we wait until we eject them?
 	var/previous_heal = 0
 	var/portable = 0 //Are we part of a port-a-clone?
 	var/id = null
@@ -65,7 +65,7 @@
 
 	New()
 		..()
-		req_access = list(access_medlab) //For premature unlocking.
+		req_access = list(access_medical_lockers) //For premature unlocking.
 		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
 		src.create_reagents(100)
@@ -97,6 +97,10 @@
 			occupant.set_loc(src.loc)
 		occupant = null
 		..()
+
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		meat_level = 0 // no meat for those built from frames
 
 	proc/send_pda_message(var/msg)
 		if (!msg && src.message)
@@ -212,10 +216,10 @@
 		src.look_busy(1)
 		src.visible_message("<span class='alert'>[src] whirrs and starts up!</span>")
 
-
-		src.eject_wait = 1
-		SPAWN_DBG(5 SECONDS)
-			src.eject_wait = 0
+		if (!src.gen_analysis)
+				src.eject_wait = 10 SECONDS
+		else
+				src.eject_wait = 30 SECONDS
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
@@ -237,8 +241,6 @@
 			src.occupant.setStatus("maxhealth-", null, -health_penalty)
 			if(health_penalty >= 100)
 				src.occupant.unlock_medal("Quit Cloning Around")
-
-
 
 		src.mess = 0
 		if (traits && traits.len && src.occupant.traitHolder)
@@ -272,7 +274,7 @@
 			boutput(src.occupant, "<span class='notice'><b>Clone generation process initiated.</b> This might take a moment, please hold.</span>")
 
 		if (clonename)
-			if (prob(5))
+			if (prob(15))
 				src.occupant.real_name = "[pick("Almost", "Sorta", "Mostly", "Kinda", "Nearly", "Pretty Much", "Roughly", "Not Quite", "Just About", "Something Resembling", "Somewhat")] [clonename]"
 			else
 				src.occupant.real_name = clonename
@@ -712,13 +714,11 @@
 		return operating && src.meat_level && gen_analysis //Only operate nominally for non-shit cloners
 
 	proc/healing_multiplier()
-		// effectively "(1 + (!gen_analysis * 0.15)) * speed_bonus" (cash-4-clones is never on)
+		// effectively "speed_bonus" (cash-4-clones is never on)
 		if (wagesystem.clones_for_cash)
-			return (2 + (!gen_analysis * 0.15)) * speed_bonus
+			return 2 * speed_bonus
 		else
-			//If the analysis feature is disabled, then generate the clone slightly faster
-			return (1 + (!gen_analysis * 0.15)) * speed_bonus
-
+			return speed_bonus
 
 	relaymove(mob/user as mob)
 		if (user.stat)

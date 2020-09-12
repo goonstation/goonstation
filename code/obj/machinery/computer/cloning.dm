@@ -6,7 +6,7 @@
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
-	req_access = list(access_heads) //Only used for record deletion right now.
+	req_access = list(access_medical_lockers) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
@@ -267,7 +267,7 @@
 					<B>Notice:</B> Enabling this feature will prompt the attached clone pod to transfer active genetic mutations from the genetic record to the subject during cloning.
 					The cloning process will be slightly slower as a result.<BR><BR>"}
 
-			if(pod1 && !pod1.operating)
+			if(pod1 && !pod1.attempting)
 				if(pod1.gen_analysis)
 					dat += {"Enabled<BR>
 							<a href='byond://?src=\ref[src];set_analysis=0'>Disable</A><BR>"}
@@ -322,10 +322,13 @@
 	else if (href_list["del_rec"])
 		if ((!src.active_record) || (src.menu < 3))
 			return
+		if (!src.allowed(usr))
+			src.temp = "Insufficient access."
+			src.updateUsrDialog()
+			return
 		if (src.menu == 3) //If we are viewing a record, confirm deletion
 			src.temp = "Delete record?"
 			src.menu = 4
-
 		else if (src.menu == 4)
 			logTheThing("combat", usr, null, "deletes the cloning record [src.active_record.fields["name"]] for player [src.active_record.fields["ckey"]] at [log_loc(src)].")
 			src.records.Remove(src.active_record)
