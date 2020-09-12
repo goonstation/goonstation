@@ -1,5 +1,9 @@
 
 (t)sat sep 12 20
+(u)Flourish
+(p)2110
+(e)🆕|feature
+(*)If you flip with a grab on help intent, your grabee will flip with you. And if they also have a grab and are on help intent, their grabee will also flip. And so on.
 (u)eckff
 (p)2131
 (e)🎨|sprites
