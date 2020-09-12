@@ -113,7 +113,7 @@
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/send_to_arrivals
-	name = "send_to_arrivals"
+	name = "sendtoarrivals"
 	help_message = "Sends a given ckey to arrivals."
 	action_name = "send to arrivals"
 
@@ -177,7 +177,7 @@
 	action_name = "revive"
 
 /datum/spacebee_extension_command/all_admins
-	name = "alladmins"
+	name = "adminsall"
 	server_targeting = COMMAND_TARGETING_ALL_SERVERS
 	help_message = "All servers respond with their list of admins (probably)."
 	argument_types = list()
