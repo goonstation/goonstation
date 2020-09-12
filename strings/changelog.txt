@@ -1,5 +1,9 @@
 
 (t)sat sep 12 20
+(u)Medoublej
+(p)2153
+(e)⚖🐛|balance, bug
+(+)Vampire's chiropteran screech MK2 now silences radios properly and no longer emags robots.
 (u)Luxizzle
 (p)2146
 (e)|
