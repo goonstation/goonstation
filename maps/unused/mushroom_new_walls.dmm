@@ -18605,13 +18605,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/engine/engineering/ce)
-"brz" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/plating/damaged2,
-/area/station/maintenance/west)
 "brC" = (
 /obj/machinery/light{
 	dir = 1;
@@ -35934,12 +35927,6 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/power/apc/autoname_north{
-	areastring = "AI Perimeter Defenses";
-	name = "AI Perimeter Defenses APC";
-	pixel_x = -4;
-	pixel_y = 29
-	},
 /obj/machinery/turretid{
 	name = "Perimiter Defences Turret Control";
 	pixel_x = 13;
@@ -35953,6 +35940,12 @@
 	dir = 4;
 	pixel_x = 12;
 	pixel_y = 12
+	},
+/obj/machinery/power/apc{
+	areastring = "AI Perimeter Defenses";
+	name = "AI Perimeter Defenses APC";
+	pixel_x = -4;
+	pixel_y = 29
 	},
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
@@ -77547,7 +77540,7 @@ bkY
 boy
 bps
 bqr
-brz
+baT
 baT
 baT
 bET
