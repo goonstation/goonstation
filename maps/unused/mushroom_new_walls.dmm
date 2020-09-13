@@ -5232,9 +5232,6 @@
 	},
 /area/station/quartermaster/office)
 "auS" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
@@ -9259,7 +9256,7 @@
 	},
 /obj/cable{
 	icon_state = "4-5";
-	tag = "icon-4-5"
+	tag = null
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
@@ -14806,8 +14803,7 @@
 /area/station/engine/power)
 "bdO" = (
 /obj/cable{
-	icon_state = "0-2";
-	tag = "icon-0-2"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto_gangway)
@@ -19497,10 +19493,6 @@
 	},
 /area/station/turret_protected/AIsat)
 "bCm" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
 /obj/decal/tile_edge/line/white{
 	dir = 1;
 	icon_state = "line4";
@@ -19608,7 +19600,10 @@
 /area/station/turret_protected/AIsat)
 "bGj" = (
 /obj/cable{
-	icon_state = "4-9"
+	icon_state = "2-5"
+	},
+/obj/cable{
+	icon_state = "2-9"
 	},
 /turf/simulated/floor/white,
 /area/station/turret_protected/AIsat)
@@ -19779,16 +19774,6 @@
 /turf/simulated/floor/bot/white,
 /area/station/medical/medbay/lobby)
 "bUh" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/table/auto,
-/obj/machinery/networked/printer{
-	name = "Printer - AI";
-	pixel_y = 5;
-	print_id = "AI"
-	},
 /obj/decal/tile_edge/line/white{
 	dir = 8;
 	icon_state = "line4";
@@ -20063,12 +20048,11 @@
 	},
 /area/station/bridge)
 "ckO" = (
-/obj/cable{
-	icon_state = "0-2";
-	tag = "icon-0-2"
-	},
 /obj/cable,
 /obj/machinery/power/generatorTemp,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "clo" = (
@@ -20098,9 +20082,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "cma" = (
-/obj/cable{
-	icon_state = "4-9"
-	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
@@ -20337,12 +20318,6 @@
 "czC" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
-"czM" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/white,
-/area/station/turret_protected/AIsat)
 "cAg" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -20795,9 +20770,6 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "dni" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/decal/tile_edge/line/white{
 	dir = 8;
 	icon_state = "line1"
@@ -20877,18 +20849,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"dtE" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/med_data{
-	dir = 8
-	},
-/turf/simulated/floor/greenwhite{
-	dir = 5
-	},
-/area/station/turret_protected/AIsat)
 "dtM" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -21780,9 +21740,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "eKJ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -22885,23 +22842,6 @@
 	},
 /area/station/hydroponics)
 "ggW" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "9-10"
-	},
-/obj/cable{
-	icon_state = "5-6"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta,
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
@@ -23186,9 +23126,6 @@
 /obj/decal/tile_edge/line/white{
 	dir = 4;
 	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "1-9"
 	},
 /obj/cable{
 	icon_state = "1-10"
@@ -23487,14 +23424,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
-"gVM" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/bluewhite/corner{
-	dir = 1
-	},
-/area/station/turret_protected/AIsat)
 "gVZ" = (
 /obj/landmark/start{
 	name = "Medical Doctor"
@@ -23786,9 +23715,6 @@
 	},
 /area/station/hydroponics)
 "hqd" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/greenwhite{
 	dir = 4
 	},
@@ -23823,9 +23749,6 @@
 	},
 /area/station/chemistry)
 "hsb" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/decal/tile_edge/line/white{
 	dir = 9;
 	icon_state = "line1"
@@ -23862,18 +23785,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics)
-"htY" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/bank_data{
-	dir = 4
-	},
-/turf/simulated/floor/greenwhite{
-	dir = 9
-	},
-/area/station/turret_protected/AIsat)
 "huW" = (
 /turf/simulated/floor/stairs/wide{
 	dir = 4
@@ -24433,17 +24344,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
-"ifi" = (
-/obj/cable{
-	icon_state = "2-5"
-	},
-/obj/cable{
-	icon_state = "4-9"
-	},
-/turf/simulated/floor/greenwhite/corner{
-	dir = 8
-	},
-/area/station/turret_protected/AIsat)
 "ifj" = (
 /obj/machinery/light/small,
 /obj/disposalpipe/segment/mail{
@@ -24685,17 +24585,6 @@
 	dir = 4
 	},
 /area/station/security/main)
-"iop" = (
-/obj/cable{
-	icon_state = "2-9"
-	},
-/obj/cable{
-	icon_state = "5-8"
-	},
-/turf/simulated/floor/greenwhite/corner{
-	dir = 1
-	},
-/area/station/turret_protected/AIsat)
 "ioF" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -24799,10 +24688,7 @@
 /area/station/security/detectives_office)
 "ivG" = (
 /obj/cable{
-	icon_state = "2-5"
-	},
-/obj/cable{
-	icon_state = "2-10"
+	icon_state = "5-10"
 	},
 /obj/cable{
 	icon_state = "4-10"
@@ -24936,12 +24822,6 @@
 	dir = 8
 	},
 /area/station/security/main)
-"iFj" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/white,
-/area/station/turret_protected/AIsat)
 "iFD" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/lobby)
@@ -25616,16 +25496,6 @@
 	dir = 5;
 	icon_state = "bigstripe-corner2"
 	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/nuclear_charge{
-	desc = "A small Nuclear-Charge intended to destroy the AI in the event of an emergency. Oh god."
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/map/light/dimred,
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/AIsat)
@@ -25947,12 +25817,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
 "jPd" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-6"
-	},
 /obj/cable{
 	icon_state = "1-10"
 	},
@@ -26465,9 +26329,6 @@
 	},
 /obj/cable{
 	icon_state = "4-10"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -27210,9 +27071,6 @@
 /turf/simulated/floor/engine,
 /area/station/security/armory)
 "lvP" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -27279,20 +27137,6 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
-"lDX" = (
-/obj/cable{
-	icon_state = "1-10"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-6"
-	},
-/turf/simulated/floor/greenwhite/corner{
-	dir = 8
-	},
-/area/station/turret_protected/AIsat)
 "lEL" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -28399,20 +28243,13 @@
 /obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
-"neg" = (
-/obj/cable{
-	icon_state = "5-8"
-	},
-/turf/simulated/floor/white,
-/area/station/turret_protected/AIsat)
 "neo" = (
 /obj/lattice,
-/obj/cable{
-	icon_state = "0-2";
-	tag = "icon-0-2"
-	},
 /obj/machinery/power/terminal{
 	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/space,
 /area/station/engine/proto_gangway)
@@ -28592,7 +28429,7 @@
 	pixel_y = 24
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-10"
 	},
 /turf/simulated/floor/greenwhite{
 	dir = 1
@@ -28805,10 +28642,6 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "nGQ" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
 /obj/decal/tile_edge/line/white{
 	dir = 4;
 	icon_state = "line4";
@@ -29041,17 +28874,20 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-9"
 	},
 /obj/cable{
 	icon_state = "0-5"
 	},
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/AIsat)
 "nTR" = (
@@ -29238,12 +29074,6 @@
 	},
 /area/station/security/detectives_office)
 "oie" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "2-10"
-	},
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -30233,9 +30063,6 @@
 /obj/machinery/camera{
 	dir = 1
 	},
-/obj/machinery/networked/radio,
-/obj/cable,
-/obj/machinery/power/data_terminal,
 /obj/machinery/light/small/cool,
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
@@ -31347,11 +31174,6 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "qwl" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/secure_data,
 /turf/simulated/floor/greenwhite{
 	dir = 5
 	},
@@ -31481,9 +31303,6 @@
 /turf/space,
 /area)
 "qEy" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/decal/tile_edge/line/white{
 	dir = 4;
 	icon_state = "line1"
@@ -31752,9 +31571,6 @@
 	dir = 1;
 	icon_state = "line4";
 	pixel_x = -13
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /obj/cable{
 	icon_state = "2-9"
@@ -32235,9 +32051,6 @@
 	pixel_x = 13
 	},
 /obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/greenwhite/corner,
@@ -32254,9 +32067,6 @@
 /turf/simulated/floor/purple,
 /area/station/science/lab)
 "run" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/decal/tile_edge/line/white{
 	dir = 5;
 	icon_state = "line1"
@@ -32483,17 +32293,6 @@
 	dir = 10
 	},
 /area/station/science/artifact)
-"rGp" = (
-/obj/cable{
-	icon_state = "5-10"
-	},
-/obj/cable{
-	icon_state = "5-8"
-	},
-/turf/simulated/floor/greenwhite/corner{
-	dir = 1
-	},
-/area/station/turret_protected/AIsat)
 "rHr" = (
 /obj/item/spacecash,
 /obj/item/coin,
@@ -32788,12 +32587,6 @@
 	},
 /area/station/crew_quarters/hor)
 "saz" = (
-/obj/cable{
-	icon_state = "6-9"
-	},
-/obj/cable{
-	icon_state = "4-9"
-	},
 /turf/simulated/floor/greenwhite/corner{
 	dir = 8
 	},
@@ -33435,15 +33228,6 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/turret_protected/Zeta)
 "sOL" = (
-/obj/cable{
-	icon_state = "1-6"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "1-10"
-	},
 /turf/simulated/floor/greenwhite/corner{
 	dir = 1
 	},
@@ -33585,11 +33369,6 @@
 /obj/machinery/camera{
 	dir = 10
 	},
-/obj/machinery/networked/mainframe/zeta{
-	tag = "ZETA_MAINFRAME"
-	},
-/obj/cable,
-/obj/machinery/power/data_terminal,
 /obj/machinery/light/small/cool,
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
@@ -33793,10 +33572,7 @@
 /area/station/hallway/primary/west)
 "tfZ" = (
 /obj/cable{
-	icon_state = "1-10"
-	},
-/obj/cable{
-	icon_state = "5-6"
+	icon_state = "2-8"
 	},
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/turret_protected/AIsat)
@@ -33816,18 +33592,6 @@
 	icon_state = "red2"
 	},
 /area/station/crew_quarters/hor)
-"tgB" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/communications{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
-/area/station/turret_protected/AIsat)
 "tgG" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/snacks/burger/cheeseburger,
@@ -33886,9 +33650,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/SWmaint)
 "tiQ" = (
-/obj/cable{
-	icon_state = "5-8"
-	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
@@ -34035,9 +33796,6 @@
 /obj/decal/tile_edge/line/white{
 	dir = 8;
 	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "1-5"
 	},
 /obj/cable{
 	icon_state = "1-6"
@@ -34814,10 +34572,6 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/captain)
 "uaQ" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
 /obj/decal/tile_edge/line/white{
 	dir = 1;
 	icon_state = "line4";
@@ -35222,9 +34976,6 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 6;
@@ -35535,10 +35286,7 @@
 /area/station/bridge)
 "uRe" = (
 /obj/cable{
-	icon_state = "2-9"
-	},
-/obj/cable{
-	icon_state = "2-6"
+	icon_state = "6-9"
 	},
 /obj/cable{
 	icon_state = "6-8"
@@ -35698,7 +35446,7 @@
 	dir = 1
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-6"
 	},
 /turf/simulated/floor/greenwhite{
 	dir = 1
@@ -37349,20 +37097,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/engine/engineering/private)
-"xak" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/obj/computer3frame{
-	anchored = 1;
-	dir = 8;
-	state = 1
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 5
-	},
-/area/station/turret_protected/AIsat)
 "xao" = (
 /obj/cable,
 /obj/cable{
@@ -38281,10 +38015,7 @@
 /area/station/science/lab)
 "yfw" = (
 /obj/cable{
-	icon_state = "1-6"
-	},
-/obj/cable{
-	icon_state = "9-10"
+	icon_state = "2-4"
 	},
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/turret_protected/AIsat)
@@ -38311,14 +38042,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/lab)
-"ygA" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/bluewhite/corner{
-	dir = 8
-	},
-/area/station/turret_protected/AIsat)
 "ygF" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
@@ -38402,11 +38125,6 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "yjT" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/supplycomp,
 /turf/simulated/floor/greenwhite{
 	dir = 9
 	},
@@ -111142,7 +110860,7 @@ uLP
 sej
 sej
 sej
-tgB
+faz
 oMr
 vJy
 nhI
@@ -111444,7 +111162,7 @@ sej
 sej
 sej
 gFI
-gVM
+vJy
 tLi
 tLi
 uEg
@@ -111746,12 +111464,12 @@ sej
 sej
 bSJ
 sne
-oOx
+tLi
 tLi
 ivG
 hqd
 eKJ
-lDX
+saz
 cKs
 nwm
 gfH
@@ -112053,7 +111771,7 @@ gAc
 uOd
 qcf
 puN
-dtE
+qwl
 saz
 tLi
 hcG
@@ -112357,8 +112075,8 @@ sTZ
 bKK
 bKK
 qwl
-ifi
-iFj
+saz
+tLi
 sPG
 sej
 sej
@@ -112660,7 +112378,7 @@ bUF
 oie
 yfw
 vdp
-neg
+tLi
 hcG
 xdE
 sej
@@ -112962,7 +112680,7 @@ xSs
 jrO
 nSY
 ggW
-jdY
+bGj
 jdY
 jdY
 pkb
@@ -113264,7 +112982,7 @@ cdz
 jPd
 tfZ
 ntM
-bGj
+tLi
 gzS
 pKG
 sej
@@ -113565,8 +113283,8 @@ pjH
 bKK
 bKK
 yjT
-iop
-czM
+sOL
+tLi
 sPG
 sej
 sej
@@ -113865,8 +113583,8 @@ tnK
 tbT
 qcf
 izO
-htY
-rGp
+yjT
+sOL
 tLi
 gzS
 pKG
@@ -114162,7 +113880,7 @@ sej
 sej
 ltZ
 qqh
-uKh
+tLi
 tLi
 uRe
 auS
@@ -114464,7 +114182,7 @@ sej
 sej
 sej
 jVD
-ygA
+ptG
 tLi
 tLi
 fjF
@@ -114766,7 +114484,7 @@ bBI
 sej
 sej
 sej
-xak
+onH
 lkN
 ptG
 iuL
