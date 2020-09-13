@@ -16201,14 +16201,12 @@
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
 "biG" = (
-/obj/submachine/cargopad{
-	name = "Robotics Pad"
-	},
 /obj/machinery/camera{
 	c_tag = "Robotics East";
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/obj/submachine/cargopad/robotics,
+/turf/simulated/floor/plating/jen,
 /area/station/medical/robotics)
 "biI" = (
 /obj/landmark/start{
@@ -18862,9 +18860,7 @@
 	},
 /area/station/medical/research)
 "bsu" = (
-/obj/submachine/cargopad{
-	name = "Cargo Bay Pad"
-	},
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bsv" = (
@@ -20158,6 +20154,17 @@
 	dir = 6
 	},
 /area/station/engine/inner)
+"cno" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack/corner{
+	dir = 4
+	},
+/area/station/hydroponics)
 "cnU" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -20249,6 +20256,17 @@
 	},
 /turf/simulated/wall/auto/jen/dark4,
 /area/station/turret_protected/AIsat)
+"cvd" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack/corner{
+	dir = 1
+	},
+/area/station/hydroponics)
 "cvJ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -20625,9 +20643,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
 "daR" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/plating/jen,
 /area/station/mining/magnet)
 "dbj" = (
@@ -20988,6 +21004,10 @@
 	},
 /turf/space,
 /area/station/engine/proto)
+"dCs" = (
+/obj/submachine/cargopad/hydroponic,
+/turf/simulated/floor,
+/area/station/hydroponics)
 "dDE" = (
 /obj/machinery/door/airlock/pyro/security,
 /obj/access_spawn/security,
@@ -22188,9 +22208,7 @@
 "fim" = (
 /obj/item/wrench,
 /obj/storage/crate,
-/turf/simulated/floor/orangeblack/side{
-	dir = 4
-	},
+/turf/simulated/floor,
 /area/station/hydroponics)
 "fjy" = (
 /obj/disposalpipe/segment,
@@ -22207,13 +22225,13 @@
 /turf/simulated/floor/white,
 /area/station/turret_protected/AIsat)
 "fke" = (
-/obj/submachine/cargopad{
-	name = "Botany Pad"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/obj/table/wood/auto,
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
 /area/station/hydroponics)
 "flu" = (
 /obj/cable{
@@ -22512,6 +22530,17 @@
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"fHb" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/station/hydroponics)
 "fHj" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -22929,9 +22958,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics)
 "gkg" = (
-/turf/simulated/floor/orangeblack/corner{
-	dir = 4
-	},
+/turf/simulated/floor/orangeblack/corner,
 /area/station/hydroponics)
 "gkG" = (
 /obj/machinery/light,
@@ -22978,9 +23005,7 @@
 	pixel_x = 24
 	},
 /obj/item/hand_labeler,
-/turf/simulated/floor/orangeblack/side{
-	dir = 1
-	},
+/turf/simulated/floor,
 /area/station/hydroponics)
 "gmv" = (
 /obj/cable{
@@ -27765,6 +27790,11 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
+"mum" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/hydroponics)
 "mvc" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -31154,6 +31184,11 @@
 "qqx" = (
 /turf/simulated/floor,
 /area/station/storage/primary)
+"qrp" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/hydroponics)
 "qrS" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/purple/corner{
@@ -31490,6 +31525,11 @@
 "qLi" = (
 /turf/simulated/floor/purple,
 /area/station/science)
+"qMA" = (
+/turf/simulated/floor/orangeblack/corner{
+	dir = 8
+	},
+/area/station/hydroponics)
 "qMC" = (
 /obj/machinery/camera{
 	c_tag = "Robotics East";
@@ -34504,6 +34544,9 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
+"tRW" = (
+/turf/simulated/floor/orangeblack/side,
+/area/station/hydroponics)
 "tSB" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -76340,9 +76383,9 @@ aaa
 aaa
 toE
 arN
-atQ
-atQ
-iCc
+gkg
+mum
+cno
 atQ
 lNv
 toE
@@ -76642,9 +76685,9 @@ aaa
 aaa
 bbK
 aEt
-atQ
-atQ
-iCc
+tRW
+dCs
+fHb
 atQ
 lQv
 toE
@@ -76944,9 +76987,9 @@ aqd
 xRT
 toE
 arQ
-atQ
-atQ
-iCc
+qMA
+qrp
+cvd
 atQ
 lQE
 toE
@@ -77548,7 +77591,7 @@ bhd
 dte
 toE
 fim
-gkg
+atQ
 atQ
 iJJ
 khp
