@@ -38,7 +38,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		setItemSpecial(null)
 
 /obj/item/flamethrower/assembled
@@ -71,9 +71,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(4000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(4000)
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
 	on_reagent_change(add)
@@ -481,8 +479,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			item_state = "flamethrower1"
 			force = 10
 			hit_type = DAMAGE_BURN
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			icon_state = "flamethrower_oxy_fuel"
 			force = 3
@@ -568,8 +565,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	if(lit)
 		force = 12
 		hit_type = DAMAGE_BURN
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 	else
 		force = 6
 		hit_type = DAMAGE_BLUNT

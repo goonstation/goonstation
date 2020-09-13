@@ -25,7 +25,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/tile_fling)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))

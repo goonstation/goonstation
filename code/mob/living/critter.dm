@@ -354,8 +354,6 @@
 		if (!I || !isitem(I) || I.cant_drop)
 			return
 
-		u_equip(I)
-
 		if (istype(I, /obj/item/grab))
 			var/obj/item/grab/G = I
 			I = G.handle_throw(src,target)
@@ -364,6 +362,8 @@
 			if (!I) return
 
 		I.set_loc(src.loc)
+
+		u_equip(I)
 
 		if (isitem(I))
 			I.dropped(src) // let it know it's been dropped
@@ -651,8 +651,8 @@
 				clothing = 1
 		if (clothing)
 			update_clothing()
-
-		I.dropped(src)
+		if(isitem(I))
+			I.dropped(src)
 
 	put_in_hand(obj/item/I, t_hand)
 		if (!hands.len)
@@ -721,7 +721,7 @@
 			return healthlist[assoc]
 		return null
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		hit_twitch(src)
 		if (nodamage)
 			return
@@ -1099,14 +1099,14 @@
 				var/obj/item/clothing/suit/S = EH.item
 				if (istype(S))
 					ret += S.getProperty("exploprot")
-		return ret
+		return ret/100
 
 	ex_act(var/severity)
 		..() // Logs.
 		var/ex_res = get_explosion_resistance()
-		if (ex_res >= 15 && prob(ex_res * 3.5))
+		if (ex_res >= 0.35 && prob(ex_res * 100))
 			severity++
-		if (ex_res >= 30 && prob(ex_res * 1.5))
+		if (ex_res >= 0.80 && prob(ex_res * 75))
 			severity++
 		switch(severity)
 			if (1)

@@ -151,11 +151,9 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(25)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("acid",20)
-		R.add_reagent("vomit",5)
+		src.create_reagents(25)
+		reagents.add_reagent("acid",20)
+		reagents.add_reagent("vomit",5)
 
 	HasEntered(atom/A)
 		reagents.reaction(A, TOUCH, 2)

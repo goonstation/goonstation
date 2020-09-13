@@ -28,8 +28,7 @@
 
 	New(mob/user)
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		if (user)
 			src.holder = user
 			src.verbs |= /obj/item/magtractor/proc/toggleHighPower

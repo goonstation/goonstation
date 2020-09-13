@@ -76,8 +76,7 @@ Contains:
 		src.add_dialog(usr)
 		if (href_list["passive"])
 			src.passive = !( src.passive )
-			if(passive && !(src in processing_items))
-				processing_items.Add(src)
+			if(passive) processing_items |= src
 		if (href_list["active"])
 			SPAWN_DBG( 0 )
 				src.burst()
@@ -183,8 +182,7 @@ Contains:
 			src.icon_state = text("infrared[]", src.state)
 			if (src.master)
 				src.master:c_state(src.state, src)
-			if(state && !(src in processing_items))
-				processing_items.Add(src)
+			if(state) processing_items |= src
 		if (href_list["visible"])
 			src.visible = !( src.visible )
 			SPAWN_DBG( 0 )

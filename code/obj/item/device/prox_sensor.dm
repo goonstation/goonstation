@@ -120,8 +120,7 @@
 		if (href_list["arm"])
 			src.armed = !src.armed
 			src.update_icon()
-			if(timing || armed && !(src in processing_items))
-				processing_items.Add(src)
+			if(timing || armed) processing_items |= src
 
 			var/turf/T = get_turf(src)
 			if (master && istype(master, /obj/item/device/transfer_valve))
@@ -138,8 +137,7 @@
 		if (href_list["time"])
 			src.timing = text2num(href_list["time"])
 			src.update_icon()
-			if(timing || armed && !(src in processing_items))
-				processing_items.Add(src)
+			if(timing || armed) processing_items |= src
 
 			var/turf/T = get_turf(src)
 			if (master && istype(master, /obj/item/device/transfer_valve))

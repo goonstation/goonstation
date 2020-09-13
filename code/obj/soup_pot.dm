@@ -287,10 +287,7 @@
 	New()
 		..()
 		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "souppot-f")
-		var/datum/reagents/R = new/datum/reagents(max_reagents)
-		reagents = R
-		R.my_atom = src
-		return
+		src.create_reagents(max_reagents)
 
 	get_desc(var/dist)
 		if(dist>1)

@@ -205,10 +205,8 @@
 
 	setup_material()
 		src.setMaterial(getMaterial("latex"), appearance = 0, setname = 0)
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("rubber", 10)
+		src.create_reagents(10)
+		reagents.add_reagent("rubber", 10)
 		return ..()
 
 /obj/item/material_piece/organic/wood
@@ -219,7 +217,7 @@
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 		..()
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] cuts [src] into a plank.", "You cut the [src] into a plank.")
 			var/obj/item/plankobj = new /obj/item/plank(user.loc)
 			plankobj.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)

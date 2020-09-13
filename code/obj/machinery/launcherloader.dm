@@ -12,6 +12,7 @@
 	layer = 2.6
 	anchored = 1
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
 
@@ -43,14 +44,14 @@
 		operating = 1
 		flick("launcher_loader_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
-		sleep(0.3 SECONDS)
-		for(var/atom/movable/AM in src.loc)
-			if(AM.anchored || AM == src) continue
-			if(trash && AM.delivery_destination != "Disposals")
-				AM.delivery_destination = "Disposals"
-			step(AM,src.dir)
-		operating = 0
-		handle_driver()
+		SPAWN_DBG(0.3 SECONDS)
+			for(var/atom/movable/AM in src.loc)
+				if(AM.anchored || AM == src) continue
+				if(trash && AM.delivery_destination != "Disposals")
+					AM.delivery_destination = "Disposals"
+				step(AM,src.dir)
+			operating = 0
+			handle_driver()
 
 	proc/handle_driver()
 		if(driver && !driver_operating)
@@ -111,6 +112,7 @@
 	opacity = 0
 	anchored = 1
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/default_direction = NORTH //The direction things get sent into when the router does not have a destination for the given barcode or when there is none attached.
 	var/list/destinations = new/list() //List of tags and the associated directions.
@@ -144,16 +146,16 @@
 
 		flick("amdl_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
-		sleep(0.3 SECONDS)
 
-		for(var/atom/movable/AM2 in src.loc)
-			if(AM2.anchored || AM2 == src) continue
-			step(AM2,src.dir)
+		SPAWN_DBG(0.3 SECONDS)
+			for(var/atom/movable/AM2 in src.loc)
+				if(AM2.anchored || AM2 == src) continue
+				step(AM2,src.dir)
 
-		driver = (locate(/obj/machinery/mass_driver) in get_step(src,src.dir))
+			driver = (locate(/obj/machinery/mass_driver) in get_step(src,src.dir))
 
-		operating = 0
-		handle_driver()
+			operating = 0
+			handle_driver()
 
 	proc/handle_driver()
 		if(driver && !driver_operating)

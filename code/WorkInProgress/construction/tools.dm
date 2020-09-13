@@ -226,8 +226,8 @@
 
 /obj/item/clothing/glasses/construction
 	name = "\improper Construction Visualizer"
-	icon_state = "meson"
-	item_state = "glasses"
+	icon_state = "construction"
+	item_state = "construction"
 	mats = 6
 	desc = "The latest technology in viewing live blueprints."
 

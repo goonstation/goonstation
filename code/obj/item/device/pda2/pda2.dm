@@ -252,7 +252,7 @@
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
-		for (var/datum/computer/file/pda_program/P in src.cartridge.root.contents)
+		for (var/datum/computer/file/pda_program/P in src.cartridge.root?.contents)
 			if (P.name == "Packet Sniffer")
 				radio_controller.remove_object(src, "[P:scan_freq]")
 				continue
@@ -266,7 +266,7 @@
 	src.scan_program = null
 
 	if (src.hd)
-		for (var/datum/computer/file/pda_program/P in src.hd.root.contents)
+		for (var/datum/computer/file/pda_program/P in src.hd.root?.contents)
 			if (P.name == "Packet Sniffer")
 				radio_controller.remove_object(src, "[P:scan_freq]")
 				continue
@@ -752,8 +752,7 @@
 		src.active_program = program
 		program.init()
 
-		if(program.setup_use_process && !(src in processing_items))
-			processing_items.Add(src)
+		if(program.setup_use_process) processing_items |= src
 
 		return 1
 

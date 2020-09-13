@@ -1680,7 +1680,7 @@ Returns:
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	rebuild()
 		..()
@@ -1839,7 +1839,7 @@ Returns:
 	New()
 		. = ..()
 		START_TRACKING
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	disposing()
 		. = ..()
@@ -2876,14 +2876,14 @@ Returns:
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	throw_begin(atom/target)
 		icon_state = "boomerang1"
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
@@ -2964,7 +2964,7 @@ Returns:
 			P = new/obj/fancyportal(get_turf(selected))
 			P.setTarget(target)
 			var/targetThing = isturf(target) ? "" : "[target] in "
-			targetThing += get_area(target)
+			targetThing += "[get_area(target)]"
 			logTheThing("admin", usr, null, "created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
 			logTheThing("diary", usr, null, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
 			message_admins("[key_name(usr)] created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
@@ -3052,6 +3052,9 @@ Returns:
 			sparks.set_loc(get_turf(src))
 			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 			qdel(src)
+
+	ex_act()
+		return
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -3451,7 +3454,7 @@ var/list/lag_list = new/list()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		break_it()
 
-	hitby(atom/movable/AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = ..()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		break_it()

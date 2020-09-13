@@ -177,8 +177,7 @@
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			src.force = 3
 			src.hit_type = DAMAGE_BLUNT
@@ -728,7 +727,7 @@
 		src.throw_source = get_turf(src)
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (src.active && ismob(hit_atom))
 			var/mob/M = hit_atom
 			playsound(get_turf(src), src.hitsound, 60, 1)

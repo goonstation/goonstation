@@ -472,9 +472,7 @@
 
 	setup_material()
 		src.setMaterial(getMaterial("viscerite"), appearance = 0, setname = 0)
-		var/datum/reagents/R = new/datum/reagents(25)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(25)
 		src.reagents.add_reagent("synthflesh", 25)
 		return ..()
 

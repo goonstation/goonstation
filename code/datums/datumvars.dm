@@ -34,13 +34,13 @@
 		boutput(usr, "<span class='alert'>Yeah, no.</span>")
 		return
 	if (V)
-		body += debug_variable(S, V, V, 0)
+		body += debug_variable(S, V, "GLOB", 0)
 	else
 		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
 		return
 	body += "</tbody></table>"
 
-	var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""] - Refresh button doesn't work."
+	var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""]"
 
 	//stole this from view_variables below
 	var/html = {"
@@ -54,16 +54,13 @@
 	<body>
 	<strong>Global Variable: [S]</strong>
 	<hr>
-	<a href='byond://?src=\ref[src];Refresh-Global-Var=\ref[V]'>Refresh</a>
+	<a href='byond://?src=\ref[src];Refresh-Global-Var=[S]'>Refresh</a>
 		<hr>
 		[body]
 	</body>
 </html>
 "}
 
-	if (src.holder.level >= LEVEL_CODER)
-		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[V]'>Call Proc</a>"
-		html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[V]'>List Procs</a>"
 	usr.Browse(html, "window=variables\ref[V];size=600x400")
 
 /client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
@@ -403,7 +400,7 @@
 		src.debug_variables(locate(href_list["Refresh"]))
 	if (href_list["Refresh-Global-Var"])
 		usr_admin_only
-		src.debug_variable(locate(href_list["Refresh-Global-Var"]))
+		src.debug_global_variable(href_list["Refresh-Global-Var"])
 		// src.debug_variable(S, V, V, 0)
 	if (href_list["JumpToThing"])
 		usr_admin_only

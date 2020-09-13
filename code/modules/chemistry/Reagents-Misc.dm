@@ -1,4 +1,8 @@
 //Contains exotic or special reagents.
+
+ABSTRACT_TYPE(/datum/reagent/cement)
+ABSTRACT_TYPE(/datum/reagent/concrete)
+
 datum
 	reagent
 		nitroglycerin // Yes, this is a bad idea.
@@ -737,7 +741,7 @@ datum
 			fluid_g = 255
 			value = 4 // 1 1 1
 			hygiene_value = 0.25
-			block_slippy = -1
+			block_slippy = -2
 
 			reaction_turf(var/turf/target, var/volume)
 				src = null
@@ -3963,7 +3967,7 @@ datum
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50,1,-1)
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 				sleep(1 SECOND)
-				playsound(src.loc, 'sound/impact_sounds/Generic_Punch_4.ogg', 50, 1, -1)
+				playsound(src.loc, pick(sounds_punch), 50, 1, -1)
 				deathtarget.emote("scream")
 				deathtarget.setStatus("stunned", max(deathtarget.getStatusDuration("stunned"), 50))
 				deathtarget.setStatus("weakened", max(deathtarget.getStatusDuration("weakened"), 50))

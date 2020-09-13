@@ -866,8 +866,7 @@
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
 
 	disposing()
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 	emp_act()
@@ -1014,20 +1013,17 @@
 		return
 
 	New()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		..()
 		return
 
 	charge(var/amt = 0)
 		if (src.charge < src.max_charge)
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		return ..()
 
 	use(var/amt = 0)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		return ..()
 
 	process()

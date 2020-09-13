@@ -1,4 +1,9 @@
 //Contains reagents related to eating or drinking.
+
+ABSTRACT_TYPE(/datum/reagent/fooddrink)
+ABSTRACT_TYPE(/datum/reagent/fooddrink/alcoholic)
+ABSTRACT_TYPE(/datum/reagent/fooddrink/temp_bioeffect)
+
 datum
 	reagent
 		fooddrink/
@@ -320,7 +325,7 @@ datum
 					M.stuttering = 10
 					M.changeStatus("stunned", 10 SECONDS)
 
-					M.Virus_ShockCure(M, 33)
+					M.Virus_ShockCure(33)
 					M.shock_cyberheart(33)
 
 					V.eject_rider(1,0)
@@ -336,7 +341,7 @@ datum
 						M.stuttering = 10
 						M.changeStatus("stunned", 10 SECONDS)
 
-						M.Virus_ShockCure(M, 33)
+						M.Virus_ShockCure(33)
 						M.shock_cyberheart(33)
 
 						MV.eject(M)

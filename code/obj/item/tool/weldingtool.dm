@@ -31,10 +31,8 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(capacity)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("fuel", capacity)
+		src.create_reagents(capacity)
+		reagents.add_reagent("fuel", capacity)
 		src.inventory_counter.update_number(get_fuel())
 
 		src.setItemSpecial(/datum/item_special/flame)
@@ -182,8 +180,7 @@
 			hit_type = DAMAGE_BURN
 			set_icon_state("weldingtool-on" + src.icon_state_variant_suffix)
 			src.item_state = "weldingtool-on" + src.item_state_variant_suffix
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			boutput(user, "<span class='notice'>Not welding anymore.</span>")
 			src.force = 3

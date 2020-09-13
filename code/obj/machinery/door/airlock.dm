@@ -1676,6 +1676,9 @@ obj/machinery/door/airlock
 		if(!signal || signal.encryption)
 			return
 
+		if(lowertext(signal.data["sender"]) == src.net_id)
+			return
+
 		if (lowertext(signal.data["address_1"]) != src.net_id)
 			if (lowertext(signal.data["address_1"]) == "ping")
 				var/datum/signal/pingsignal = get_free_signal()

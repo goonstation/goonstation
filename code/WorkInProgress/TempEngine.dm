@@ -356,7 +356,7 @@
 						W.health = 0
 						W.smash()
 					for (var/mob/living/M in range(6, src.loc))
-						shake_camera(M, 3, 2)
+						shake_camera(M, 3, 16)
 						M.changeStatus("weakened", 1 SECOND)
 					for (var/atom/A in range(rand(1,3), src.loc))
 						if (istype(A, /turf/simulated))

@@ -281,8 +281,7 @@
 		if ( src.victim )
 			src.victim.change_misstep_chance(-25)
 			src.victim = null
-			if ( src in processing_items )
-				processing_items.Remove(src)
+			processing_items -= src
 
 	process()
 		if ( src.victim )

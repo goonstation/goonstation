@@ -554,7 +554,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		else return ..()
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if (ismob(A))
 			src.hit(A)
 		if (src.amount <= 0)
@@ -877,9 +877,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			desc = "Oh shit! Have you been naughty?!"
 
 			if(!src.reagents)
-				var/datum/reagents/R = new/datum/reagents(1000)
-				src.reagents = R
-				R.my_atom = src
+				src.create_reagents(1000)
 
 			src.set_mutantrace(/datum/mutantrace/krampus)
 			src.reagents.add_reagent("stimulants", 50)
@@ -909,7 +907,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			if(ismob(AM))
 				var/mob/M = AM
 				for (var/mob/C in viewers(src))
-					shake_camera(C, 8, 3)
+					shake_camera(C, 8, 16)
 					C.show_message("<span class='alert'><B>[src] tramples right over [M]!</B></span>", 1)
 				M.changeStatus("stunned", 80)
 				M.changeStatus("weakened", 5 SECONDS)
@@ -924,7 +922,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				if(O.density)
 					playsound(O.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", attack_volume, 1, 0, 0.4)
 					for (var/mob/C in viewers(src))
-						shake_camera(C, 8, 3)
+						shake_camera(C, 8, 16)
 						C.show_message("<span class='alert'><B>[src] [attack_text] on [O]!</B></span>", 1)
 					if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
@@ -934,7 +932,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				var/turf/T = AM
 				if(T.density && istype(T,/turf/simulated/wall/))
 					for (var/mob/C in viewers(src))
-						shake_camera(C, 8, 3)
+						shake_camera(C, 8, 16)
 						C.show_message("<span class='alert'><B>[src] [attack_text] on [T]!</B></span>", 1)
 					playsound(T.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", attack_volume, 1, 0, 0.4)
 					T.ex_act(attack_strength)
@@ -991,7 +989,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			SPAWN_DBG(0)
 				playsound(M.loc, "Explosion1.ogg", 50, 1, -1)
 				for (var/mob/C in viewers(src))
-					shake_camera(C, 10, 6)
+					shake_camera(C, 10, 64)
 					C.show_message("<span class='alert'><B>[src] slams down onto the ground!</B></span>", 1)
 				for (var/turf/T in range(src,3))
 					animate_shake(T,5,rand(3,8),rand(3,8))
@@ -1018,7 +1016,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_stomp
 			if(!src.stat && !src.transforming)
 				for (var/mob/C in viewers(src))
-					shake_camera(C, 10, 6)
+					shake_camera(C, 10, 64)
 					C.show_message("<span class='alert'><B>[src] stomps the ground with \his huge feet!</B></span>", 1)
 				playsound(src.loc, "meteorimpact.ogg", 80, 1, 1, 0.6)
 				for (var/mob/living/M in view(src,2))

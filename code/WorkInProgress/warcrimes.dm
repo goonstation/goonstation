@@ -64,7 +64,11 @@ var/fartcount = 0
 		setProperty("heatprot", 0)
 		setProperty("conductivity", 1)
 
+
+
 #define JOHN_PICK(WHAT) pick_string("johnbill.txt", WHAT)
+
+
 
 // all of john's area specific lines here
 /area/var/john_talk = null
@@ -98,6 +102,7 @@ var/fartcount = 0
 /area/derelict_ai_sat/core/john_talk = list("Hello, Daddy.","You should probably start writing down the shit I say, I certainly can't remember any of it.")
 /area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Huh, Always wondered what those goggles did.","Huh, Always wondered what those goggles did.","Your hubris will be punished. Will you kill your fellow man to save yourself? Who harvests the harvestmen? What did it feel like when you lost your mind?")
 /area/grillnasium/grill_chamber/john_talk = list("You better know what you've started.","This is where it happens.")
+
 
 // bus driver
 /mob/living/carbon/human/john
@@ -552,7 +557,7 @@ var/bombini_saved = 0
 						sleep(5 SECONDS)
 						playsound(T, "sound/impact_sounds/Machinery_Break_1.ogg", 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
-							shake_camera(M, 5, 2)
+							shake_camera(M, 5, 8)
 
 						sleep(2 SECONDS)
 						playsound(T, "sound/effects/creaking_metal2.ogg", 70, 1)
@@ -566,7 +571,7 @@ var/bombini_saved = 0
 						sleep(4 SECONDS)
 						playsound(T, "sound/machines/boost.ogg", 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
-							shake_camera(M, 10, 4)
+							shake_camera(M, 10, 16)
 
 				T = get_turf(src)
 				SPAWN_DBG(25 SECONDS)

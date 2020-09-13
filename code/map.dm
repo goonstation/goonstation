@@ -376,7 +376,7 @@ var/global/list/mapNames = list(
 		/datum/job/civilian/chaplain = 2,
 		/datum/job/special/lawyer = 1,
 		/datum/job/special/vice_officer = 1,
-		/datum/job/special/atmospheric_technician = 1,
+		/datum/job/special/atmospheric_technician = 1
 	)
 
 /datum/map_settings/manta

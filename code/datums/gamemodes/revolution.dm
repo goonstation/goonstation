@@ -519,7 +519,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		processing_items.Add(src)
 
 	disposing()

@@ -223,7 +223,7 @@ datum/shuttle_controller
 										O.throw_at( target, 25, 1 )//dear god I am sorry in advance for doing this
 							else if(istype( A, /mob ))
 								var/mob/M = A
-								shake_camera(M, 32, 4)
+								shake_camera(M, 32, 32)
 								M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
 								if (!isturf(M.loc) || !isliving(M) || isintangible(M))
 									continue

@@ -275,14 +275,6 @@
 							<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
 				src.updateUsrDialog()
 				return
-			if(ispath(sellitem, /obj/item/reagent_containers/food/snacks/ingredient/meat))
-				sellitem = /obj/item/reagent_containers/food/snacks/ingredient/meat
-			if(ispath(sellitem, /obj/item/reagent_containers/food/snacks/plant))
-				sellitem = /obj/item/reagent_containers/food/snacks/plant
-			if(ispath(sellitem, /obj/item/electronics))
-				sellitem = /obj/item/electronics
-			if(ispath(sellitem, /obj/item/parts/robot_parts))
-				sellitem = /obj/item/parts/robot_parts
 			var/list/goods_buy_types
 			goods_buy_types = new /list(0)
 			for(var/datum/commodity/N in goods_buy)
@@ -1047,6 +1039,11 @@
 		src.goods_sell += new /datum/commodity/crayons(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
+		#if ASS_JAM
+		src.goods_sell += new /datum/commodity/screamshoes(src)
+		src.goods_sell += new /datum/commodity/fartflops(src)
+		#endif 
+		
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
 		/////////////////////////////////////////////////////////

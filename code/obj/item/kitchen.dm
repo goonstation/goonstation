@@ -26,7 +26,7 @@ TRAYS
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/kitchen/rollingpin/light
 	name = "light rolling pin"
@@ -55,7 +55,7 @@ TRAYS
 		..()
 		if(prob(60))
 			src.pixel_y = rand(0, 4)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 		return
 
 	attack_self(mob/user as mob)
@@ -378,7 +378,7 @@ TRAYS
 			return ..()
 
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			if(ismob(usr))
@@ -540,7 +540,7 @@ TRAYS
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	proc/add_contents(var/obj/item/W)
 		ordered_contents += W
@@ -608,7 +608,7 @@ TRAYS
 	proc/unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
 		playsound(get_turf(src), "sound/items/plate_tap.ogg", 30, 1)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if(ordered_contents.len == 0)
 			return
@@ -785,7 +785,7 @@ TRAYS
 
 	New()
 		..()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	proc/update_inhand_icon()
 		var/weighted_num = round(ordered_contents.len / 5) //6 inhand sprites, 30 possible foods on the tray
@@ -959,7 +959,7 @@ TRAYS
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 
@@ -1178,7 +1178,7 @@ TRAYS
 		else
 			..()
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		var/list/throw_targets = list()
 		if(platenum == 0)

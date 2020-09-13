@@ -216,7 +216,6 @@
 //end of needed for timestop
 	var/dir_locked = FALSE
 
-	var/list/cooldowns = null
 	var/list/mob_properties
 
 	var/last_move_dir = null
@@ -239,7 +238,6 @@
 	huds = new
 	render_special = new
 	traitHolder = new(src)
-	cooldowns = new
 	if (!src.bioHolder)
 		src.bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)
@@ -479,18 +477,14 @@
 	src.need_update_item_abilities = 1
 	src.antagonist_overlay_refresh(1, 0)
 
-#if ASS_JAM
-	ass_day_popup(src)
-#endif
-
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
 	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
-		src.client?.color = list(MATRIX_PROTANOPIA)
-
-	return
+		// creating a local var for this is actually necessary, byond freaks the fuck out if you do `color = list(blahblah)`. Why? I wish I knew.
+		var/list/matrix_protanopia = list(MATRIX_PROTANOPIA)
+		src.client?.color = matrix_protanopia
 
 /mob/Logout()
 
@@ -560,7 +554,7 @@
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
-			if(tmob.reagents && tmob.reagents.get_reagent_amount("flubber") + src.reagents.get_reagent_amount("flubber") > 0)
+			if(tmob.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0)
 				if(src.next_spammable_chem_reaction_time > world.time || tmob.next_spammable_chem_reaction_time > world.time)
 					src.now_pushing = 0
 					return
@@ -987,13 +981,14 @@
 
 /mob/proc/movement_delay(var/atom/move_target = 0)
 	.= 2 + movement_delay_modifier
-	. *= max(src?.pushing.p_class, 1)
+	if (src.pushing)
+		. *= max(src.pushing.p_class, 1)
 
 /mob/proc/Life(datum/controller/process/mobs/parent)
 	return
 
 // for mobs without organs
-/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type)
+/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	hit_twitch(src)
 #if ASS_JAM//pausing damage for timestop
 	if(src.paused)
@@ -1987,7 +1982,7 @@
 	if(src_turf)
 		src_turf.fluid_react_single("toxic_fart",50,airborne = 1)
 		for(var/mob/living/L in range(src_turf, 6))
-			shake_camera(L, 10, 5)
+			shake_camera(L, 10, 32)
 
 	if (animation)
 		animation.delaydispose()
@@ -2221,11 +2216,11 @@
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
 
-/mob/throw_impact(atom/hit, list/params)
+/mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(!isturf(hit) || hit.density)
-		if (throw_traveled <= 410)
+		if (thr?.get_throw_travelled() <= 410)
 			if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
-				random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 				if (!src.hasStatus("weakened"))
 					src.changeStatus("weakened", 2 SECONDS)
 					src.force_laydown_standup()
@@ -2879,4 +2874,5 @@
 		A.interact(src)
 
 /mob/proc/add_karma(how_much)
-	src?.mind.add_karma(how_much)
+	src.mind?.add_karma(how_much)
+	// TODO add NPC karma

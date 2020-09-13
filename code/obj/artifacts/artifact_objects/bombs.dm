@@ -142,9 +142,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(1000)
 
 /datum/artifact/bomb/chemical
 	associated_object = /obj/artifact/bomb/chemical

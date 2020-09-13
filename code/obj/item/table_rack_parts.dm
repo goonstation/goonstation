@@ -27,7 +27,7 @@ RACK PARTS
 		if (storage_thing)
 			src.contained_storage = storage_thing
 			src.contained_storage.set_loc(src)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	proc/construct(mob/user as mob, turf/T as turf)
 		var/obj/newThing = null

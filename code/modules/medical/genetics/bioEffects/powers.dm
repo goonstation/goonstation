@@ -924,7 +924,7 @@
 				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1)
 
 			for(var/mob/living/V in range(get_turf(owner),fart_range))
-				shake_camera(V,10,5)
+				shake_camera(V,10,64)
 				if (V == owner)
 					continue
 				boutput(V, "<span class='alert'>You are sent flying!</span>")

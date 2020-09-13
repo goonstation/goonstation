@@ -286,7 +286,7 @@
 				src.material.triggerOnAttacked(src, user, user, src)
 			for (var/mob/N in AIviewers(usr, null))
 				if (N.client)
-					shake_camera(N, 4, 1, 0.5)
+					shake_camera(N, 4, 8, 0.5)
 		if (prob(40))
 			boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
 			dismantle_wall(1)

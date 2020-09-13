@@ -45,7 +45,7 @@
 		AddComponent(/datum/component/transfer_on_attack)
 		AddComponent(/datum/component/barber/haircut)
 		AddComponent(/datum/component/toggle_tool_use)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/M as mob, mob/user as mob)
 		if (src.remove_bandage(M, user))
@@ -89,7 +89,7 @@
 		AddComponent(/datum/component/transfer_on_attack)
 		AddComponent(/datum/component/barber/shave)
 		AddComponent(/datum/component/toggle_tool_use)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/M as mob, mob/user as mob)
 		if (scalpel_surgery(M, user))
@@ -200,7 +200,7 @@
 		var/is_barber = user.mind.assigned_role == "Barber"
 		var/passed_dye_roll = 1
 
-		if(user.bioHolder.HasEffect("clumsy" && prob(40)))
+		if(user.bioHolder.HasEffect("clumsy") && prob(40))
 			var/recolor_these_hair_layers_instead = 0
 			var/mob/living/carbon/human/famtofuckup = null
 			passed_dye_roll = 0
