@@ -111,3 +111,4 @@ if thread_url:
 else:
 	print("All attempts failed. You are on your own, cowboy.")
 	post_pr_comment("Failed to create a discussion thread. Try making your own: {}".format(URL + "/newthread.php?fid=" + os.environ["SUBFORUM_ID"]))
+	sys.exit(1)
