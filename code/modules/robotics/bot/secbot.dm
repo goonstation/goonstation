@@ -381,15 +381,15 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			how_many_dorkcodes--
 			switch(pick(1,5))
 				if (1)
-					. += pick_string("agent_callsigns", "nato")
+					. += pick_string("agent_callsigns.txt", "nato")
 				if (2)
-					. += pick_string("agent_callsigns", "birds")
+					. += pick_string("agent_callsigns.txt", "birds")
 				if (3)
-					. += pick_string("agent_callsigns", "mammals")
+					. += pick_string("agent_callsigns.txt", "mammals")
 				if (4)
-					. += pick_string("agent_callsigns", "colors")
+					. += pick_string("agent_callsigns.txt", "colors")
 				if (5)
-					. += pick_string("shittybill", "nouns")
+					. += pick_string("shittybill.txt", "nouns")
 			. += "-"
 		. += "[rand(1,99)]-"
 		. += "[rand(1,99)]"
