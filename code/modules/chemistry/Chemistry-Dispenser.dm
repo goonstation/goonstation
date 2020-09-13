@@ -23,7 +23,7 @@
 	var/list/accounts = list()
 	var/doing_a_thing = 0
 	var/user_dispense_amt = 10 // users can set this to dispense a custom amount of stuff, rounded to 1 and between 1-100
-	var/user_remove_amt = 10 // same as above but for removing chems
+	var/user_remove_amt = 20 // same as above but for removing chems
 	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
 	var/output_target = null
 
@@ -159,10 +159,11 @@
 		data["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
 		data["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
 		data["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
-		data["beakerName"] = capitalize(glass_name)
+		data["beakerName"] = glass_name
 		if(beaker)
 			var/datum/reagents/R = beaker:reagents
 			var/datum/color/average = R.get_average_color()
+			data["currentBeakerName"] = beaker.name
 			data["finalColor"] = average.to_rgba()
 			if(istype(R) && R.reagent_list.len>0)
 				for(var/reagent in R.reagent_list)
@@ -246,10 +247,10 @@
 				src.user_remove_amt = clamp(round(params["amount"]), 1, 100)
 				. = TRUE
 			if("newGroup")
-				var/reagents = input("Which reagents (separated by semicolons, indicate amount with equals signs)?","New Group") as null|text
+				var/reagents = params["reagents"]
 				if (isnull(reagents) || !length(reagents))
 					return
-				var/name = input("What should the reagent group be called?","New Group") as null|text
+				var/name = params["groupName"]
 				name = copytext(sanitize(html_encode(name)), 1, MAX_MESSAGE_LEN)
 				if (isnull(name) || !length(name) || name == " ")
 					return
