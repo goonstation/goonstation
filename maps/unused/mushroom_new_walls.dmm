@@ -1885,7 +1885,8 @@
 /area/station/hallway/secondary/exit)
 "ahs" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering"
+	name = "Engineering";
+	req_access = null
 	},
 /obj/access_spawn/engineering,
 /turf/simulated/floor/black/side{
@@ -2329,10 +2330,16 @@
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "aja" = (
-/obj/machinery/door/poddoor/blast{
-	dir = 1;
-	id = "qm_dock";
-	tag = "icon-bdoormid1 (NORTH)"
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4;
+	icon_state = "bdoormid1";
+	id = "qm_dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -3042,7 +3049,8 @@
 /area/station/engine/storage)
 "amL" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/access_spawn/engineering,
 /obj/access_spawn/mining,
@@ -3308,14 +3316,13 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "anZ" = (
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/pyro{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "store2";
-	layer = 4;
 	name = "Market #2";
-	opacity = 0;
-	p_open = 1
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -4766,14 +4773,13 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "atn" = (
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/pyro{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "store1";
-	layer = 4;
 	name = "Market #1";
-	opacity = 0;
-	p_open = 1
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -5027,7 +5033,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eastsolar)
 "aub" = (
-/obj/machinery/door/airlock/pyro/engineering,
+/obj/machinery/door/airlock/pyro/engineering{
+	req_access = null
+	},
 /obj/access_spawn/engineering,
 /obj/cable{
 	icon_state = "1-2"
@@ -5424,12 +5432,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "avL" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	id = "Disposal Exit"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "avM" = (
-/obj/machinery/launcher_loader/east{
-	id = "Disposal Exit"
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "Disposal Exit";
+	throw_speed = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -5450,10 +5462,16 @@
 /turf/simulated/floor/airless/engine/glow/blue,
 /area/station/engine/singcore)
 "avP" = (
-/obj/machinery/mass_driver{
+/obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
-	id = "Disposal Exit";
-	throw_speed = 4
+	id = "disp-vent";
+	name = "Disposal Vents"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -6312,7 +6330,7 @@
 	id = "garbage";
 	operating = 1
 	},
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/blast/pyro{
 	id = "disp-vent";
 	name = "Disposal Vents"
 	},
@@ -6543,14 +6561,19 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "aAd" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage";
-	operating = 1
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "0-4"
 	},
-/obj/machinery/crusher,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	name = "Bridge Blast Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
+/area/station/bridge)
 "aAg" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Toilets"
@@ -6717,11 +6740,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aAR" = (
-/obj/machinery/door/poddoor/blast{
-	dir = 1;
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	dir = 4;
 	icon_state = "bdoorright1";
-	id = "qm_dock";
-	tag = "icon-bdoorright1 (NORTH)"
+	id = "qm_dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -11095,7 +11124,9 @@
 	},
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
-/turf/simulated/floor,
+/turf/simulated/floor/yellowblack{
+	dir = 10
+	},
 /area/station/engine/engineering/breakroom)
 "aSt" = (
 /obj/machinery/light{
@@ -11765,6 +11796,13 @@
 	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	name = "Bridge Blast Doors";
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/station/bridge)
@@ -12542,7 +12580,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/security/armory)
 "aWZ" = (
 /turf/simulated/floor/purple/side{
@@ -12734,7 +12772,8 @@
 /area)
 "aXP" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/access_spawn/engineering,
 /obj/disposalpipe/segment{
@@ -12796,7 +12835,8 @@
 /area/station/engine/inner)
 "aXW" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/access_spawn/engineering,
 /obj/disposalpipe/segment/mail{
@@ -13563,12 +13603,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/warehouse)
 "baj" = (
-/obj/machinery/door/poddoor{
-	id = "emergencyinternals";
-	name = "Emergency Internals"
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "emergencyinternals";
+	name = "Emergency Internals"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergencyinternals)
@@ -13746,7 +13786,8 @@
 	icon_state = "4-8-thick"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
@@ -13979,9 +14020,11 @@
 	icon_state = "1-2-thick"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Power Room"
+	name = "Power Room";
+	req_access = null
 	},
 /obj/access_spawn/engineering,
+/obj/access_spawn/engineering_power,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -14026,7 +14069,8 @@
 /area/station/engine/inner)
 "bbH" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/access_spawn/engineering,
 /turf/simulated/floor/plating,
@@ -14509,11 +14553,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/emergencyinternals)
 "bda" = (
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/pyro{
 	id = "emergencyinternals";
 	name = "Emergency Internals"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/grime,
 /area/station/storage/emergencyinternals)
 "bdb" = (
 /obj/machinery/power/apc/autoname_west,
@@ -14965,7 +15009,9 @@
 	},
 /area/station/mining/magnet)
 "beC" = (
-/obj/machinery/door/airlock/pyro/engineering,
+/obj/machinery/door/airlock/pyro/engineering{
+	req_access = null
+	},
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
@@ -15302,11 +15348,13 @@
 "bfG" = (
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Power Room"
+	name = "Power Room";
+	req_access = null
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/engineering_power,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -17519,7 +17567,8 @@
 /area/station/crew_quarters/pool)
 "bor" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/access_spawn/engineering,
 /obj/access_spawn/mining,
@@ -18272,10 +18321,16 @@
 	dir = 4;
 	id = "qmin"
 	},
-/obj/machinery/door/poddoor/blast{
-	dir = 1;
-	id = "qm_dock";
-	tag = "icon-bdoormid1 (NORTH)"
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4;
+	icon_state = "bdoormid1";
+	id = "qm_dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -18284,11 +18339,16 @@
 	dir = 8;
 	id = "qm_dock"
 	},
-/obj/machinery/door/poddoor/blast{
-	dir = 1;
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4;
 	icon_state = "bdoorleft1";
-	id = "qm_dock";
-	tag = "icon-bdoorleft1 (NORTH)"
+	id = "qm_dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
@@ -19381,7 +19441,8 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "bAw" = (
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
 	id = "dwaine_core";
 	name = "DWAINE Core Access"
 	},
@@ -20711,13 +20772,6 @@
 /turf/simulated/floor/blueblack,
 /area/station/crew_quarters/captain)
 "dmI" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "bridge blast";
-	name = "Bridge Blast Doors";
-	opacity = 0
-	},
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "Bridge"
 	},
@@ -20726,6 +20780,13 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	name = "Bridge Blast Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "dni" = (
@@ -20749,14 +20810,15 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "dqc" = (
-/obj/machinery/door/poddoor{
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
-/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/chemistry)
 "drp" = (
@@ -21927,6 +21989,14 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/bot/white,
 /area/station/chemistry)
 "eVf" = (
@@ -22610,16 +22680,17 @@
 	},
 /area/station/medical/medbay)
 "fUr" = (
-/obj/machinery/door/poddoor{
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
-	},
-/obj/wingrille_spawn/auto,
-/obj/cable{
-	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/chemistry)
@@ -23566,17 +23637,18 @@
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
 "hgD" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "chemistry";
-	name = "Chemistry Privacy Shutters";
-	opacity = 0
-	},
 /obj/wingrille_spawn/auto,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/chemistry)
@@ -24772,7 +24844,8 @@
 /turf/simulated/floor,
 /area/station/hydroponics)
 "iDU" = (
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
 	id = "dwaine_core";
 	name = "DWAINE Core Access"
 	},
@@ -25907,6 +25980,12 @@
 /obj/machinery/door/poddoor/pyro/podbay_autoclose{
 	dir = 4;
 	id = "artlabgun"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
@@ -27664,6 +27743,7 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "mvc" = (
@@ -29399,6 +29479,7 @@
 	},
 /obj/cable,
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "oAD" = (
@@ -29440,17 +29521,17 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "oDS" = (
-/obj/machinery/door/poddoor{
+/obj/machinery/door/airlock/pyro/glass/command{
+	name = "Bridge"
+	},
+/obj/access_spawn/heads,
+/obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/pyro/glass/command{
-	name = "Bridge"
-	},
-/obj/access_spawn/heads,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "oEf" = (
@@ -30990,6 +31071,14 @@
 "qnj" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	name = "Bridge Blast Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "qnk" = (
@@ -31529,11 +31618,11 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics)
 "qSp" = (
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/pyro{
 	id = "deliverydoor";
 	name = "Delivery Door"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/hydroponics)
 "qSD" = (
 /obj/decal/tile_edge/line/white{
@@ -31560,6 +31649,7 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "qTa" = (
@@ -32550,11 +32640,11 @@
 	},
 /area/station/turret_protected/AIsat)
 "sbx" = (
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/pyro{
 	id = "deliverydoor";
 	name = "Delivery Door"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "sbz" = (
 /obj/pool/perspective{
@@ -32772,6 +32862,14 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	name = "Bridge Blast Doors";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
@@ -33250,6 +33348,7 @@
 	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "sPC" = (
@@ -37625,6 +37724,20 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/turret_protected/Zeta)
+"xKz" = (
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	name = "Bridge Blast Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "xLP" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -81403,7 +81516,7 @@ aRq
 bno
 wrZ
 wrZ
-aUJ
+aAd
 bbB
 fGH
 aZi
@@ -82007,7 +82120,7 @@ wrZ
 wrZ
 wrZ
 wrZ
-aUL
+xKz
 wnC
 ebB
 mAK
@@ -86745,7 +86858,7 @@ avL
 axg
 axg
 azg
-aAd
+axg
 azg
 axg
 axg
