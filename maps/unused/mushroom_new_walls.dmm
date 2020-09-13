@@ -9901,8 +9901,10 @@
 "aNz" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	autoclose = 0;
-	name = "Confession Booth"
+	name = "Confession Booth (Chaplain)";
+	req_access_txt = null
 	},
+/obj/access_spawn/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/main)
 "aNA" = (
@@ -9911,10 +9913,8 @@
 	},
 /obj/machinery/door/unpowered/wood/pyro{
 	autoclose = 0;
-	name = "Confession Booth (Chaplain)";
-	req_access_txt = null
+	name = "Confession Booth"
 	},
-/obj/access_spawn/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/main)
 "aNC" = (
@@ -11462,7 +11462,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating/damaged2,
+/turf/simulated/floor/plating/damaged1,
 /area/station/maintenance/NWmaint)
 "aTx" = (
 /obj/cable{
@@ -11626,7 +11626,8 @@
 /area/station/chapel/main)
 "aUe" = (
 /obj/machinery/door/airlock/pyro/command{
-	name = "AI Module Storage"
+	name = "AI Module Storage";
+	req_access = null
 	},
 /obj/access_spawn/ai_upload,
 /obj/cable{
@@ -11742,7 +11743,8 @@
 /area/station/hallway/primary/central)
 "aUy" = (
 /obj/machinery/door/airlock/pyro/command{
-	name = "Teleporter Access"
+	name = "Teleporter Access";
+	req_access = null
 	},
 /obj/access_spawn/teleporter,
 /obj/cable{
@@ -12450,7 +12452,8 @@
 "aWI" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	name = "AI Upload"
+	name = "AI Upload";
+	req_access = null
 	},
 /obj/access_spawn/ai_upload,
 /obj/cable{
@@ -12468,7 +12471,8 @@
 "aWK" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	name = "AI Upload"
+	name = "AI Upload";
+	req_access = null
 	},
 /obj/access_spawn/ai_upload,
 /obj/cable{
@@ -18605,13 +18609,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/engine/engineering/ce)
-"brz" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/plating/damaged2,
-/area/station/maintenance/west)
 "brC" = (
 /obj/machinery/light{
 	dir = 1;
@@ -21183,7 +21180,8 @@
 "dXx" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
-	name = "Detective's Office"
+	name = "Detective's Office";
+	req_access = null
 	},
 /obj/access_spawn/forensics,
 /obj/cable{
@@ -22734,7 +22732,8 @@
 "gaO" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
-	name = "Detective's Office"
+	name = "Detective's Office";
+	req_access = null
 	},
 /obj/access_spawn/forensics,
 /obj/firedoor_spawn,
@@ -23448,7 +23447,8 @@
 "gXL" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	name = "Captain's Quarters"
+	name = "Captain's Quarters";
+	req_access = null
 	},
 /obj/access_spawn/captain,
 /obj/cable{
@@ -28010,7 +28010,8 @@
 /area/station/turret_protected/AIsat)
 "mOu" = (
 /obj/machinery/door/airlock/pyro/glass/command{
-	name = "Bridge"
+	name = "Bridge";
+	req_access = null
 	},
 /obj/access_spawn/head_of_personnel,
 /obj/cable{
@@ -34125,7 +34126,8 @@
 "tCp" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	name = "Head of Personnel"
+	name = "Head of Personnel";
+	req_access = null
 	},
 /obj/access_spawn/head_of_personnel,
 /obj/cable{
@@ -35934,12 +35936,6 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/power/apc/autoname_north{
-	areastring = "AI Perimeter Defenses";
-	name = "AI Perimeter Defenses APC";
-	pixel_x = -4;
-	pixel_y = 29
-	},
 /obj/machinery/turretid{
 	name = "Perimiter Defences Turret Control";
 	pixel_x = 13;
@@ -35953,6 +35949,12 @@
 	dir = 4;
 	pixel_x = 12;
 	pixel_y = 12
+	},
+/obj/machinery/power/apc{
+	areastring = "AI Perimeter Defenses";
+	name = "AI Perimeter Defenses APC";
+	pixel_x = -4;
+	pixel_y = 29
 	},
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
@@ -35973,7 +35975,8 @@
 /area/station/crew_quarters/hor)
 "vIF" = (
 /obj/machinery/door/airlock/pyro/command{
-	name = "Research Director's Office"
+	name = "Research Director's Office";
+	req_access = null
 	},
 /obj/access_spawn/research_director,
 /obj/cable{
@@ -76271,7 +76274,7 @@ aaW
 abt
 abH
 aak
-acP
+adX
 acP
 acP
 aaa
@@ -77170,7 +77173,7 @@ aaa
 aaa
 aaa
 aaa
-aal
+aai
 aaL
 aaT
 aaT
@@ -77547,7 +77550,7 @@ bkY
 boy
 bps
 bqr
-brz
+baT
 baT
 baT
 bET
@@ -78083,7 +78086,7 @@ aaA
 aaA
 abI
 aai
-acP
+adX
 acP
 acP
 aaa
