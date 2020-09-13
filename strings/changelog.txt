@@ -1,5 +1,11 @@
 
 (t)sun sep 13 20
+(u)Comradef191
+(p)2166
+(e)🗺🎨|mapping, sprites
+(*)Overhauled Mushroom Stations Armoury, AI Satellite, Kitchen & Disposals system.
+(+)Mushroom Station now has a large Prototype Engine to the North-East!
+(+)Mushroom Station now has its Second Reset Board in the Computer Core, rather then Tech Storage.
 (u)RichardGere
 (p)2003
 (e)🆕📄|feature, tgui
