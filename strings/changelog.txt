@@ -1,5 +1,9 @@
 
 (t)sun sep 13 20
+(u)RichardGere
+(p)2003
+(e)🆕📄|feature, tgui
+(+)Door hacking UI has been converted to TGUI.
 (u)warc
 (*)horizon fixes: you can sell small items thu the ejection chute now - also i guess i forgot to put a still in the bar?????????
 (t)sat sep 12 20
