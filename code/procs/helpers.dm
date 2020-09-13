@@ -341,6 +341,11 @@ proc/get_angle(atom/a, atom/b)
 		index = findtext(t, ">")
 	. = sanitize(t)
 
+/proc/strip_html_tags(var/t,var/limit=MAX_MESSAGE_LEN)
+	. = html_decode(copytext(t,1,limit))
+	. = replacetext(., "<br>", "\n")
+	. = replacetext(., regex("<.*>"), "")
+
 /proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
 	t = html_decode(copytext(t,1,limit))
 	var/index = findtext(t, "<")

@@ -240,3 +240,42 @@
 		src.rarity = initial(src.rarity)
 	src.tooltip_rebuild = 1
 	src.UpdateName()
+
+///Office stuff
+//Suggestion box
+/obj/suggestion_box
+	name = "suggestion box"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "voting_box"
+	density = 1
+	flags = FPRINT
+	anchored = 1.0
+	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
+	var/taken_suggestion = 0
+	var/list/turf/floors = null
+
+	New()
+		. = ..()
+		floors = list()
+		for(var/turf/T in orange(1, src))
+			if(!T.density)
+				floors += T
+		if(!floors.len)	//fall back on own turf
+			floors += get_turf(src)
+
+	attackby(obj/item/I, mob/user)
+		if(istype(I, /obj/item/paper))
+			var/obj/item/paper/P = I
+			if(P.info && !taken_suggestion)
+				message_admins("[user ? user : "Unknown"] has made a suggestion in [src]:<br>[P.name]<br><br>[copytext(P.info,1,MAX_MESSAGE_LEN)]")
+				var/ircmsg[] = new()
+				ircmsg["msg"] = "[user ? user : "Unknown"] has made a suggestion in [src]:\n**[P.name]**\n[strip_html_tags(P.info)]"
+				ircbot.export("admin", ircmsg)
+				taken_suggestion = 1
+			user.u_equip(P)
+			qdel(P)
+			playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
+			var/turf/T = pick(floors)
+			if(T)
+				new /obj/decal/cleanable/paper(T)
+		return ..()
