@@ -84,7 +84,7 @@
 
 	if ( istype(target, /obj/reagent_dispensers) && get_dist(src,target) <= 1)
 		var/obj/o = target
-		o.reagents.trans_to(src, src.reagents.maximum_volume)
+		o.reagents.trans_to(src, (src.reagents.maximum_volume - src.reagents.total_volume))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 		boutput(user, "<span class='notice'>Extinguisher refilled...</span>")
 		playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
