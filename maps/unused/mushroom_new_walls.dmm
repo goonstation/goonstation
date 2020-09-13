@@ -22093,16 +22093,15 @@
 /area/station/crew_quarters/barber_shop)
 "eYy" = (
 /obj/table/reinforced,
-/obj/machinery/door/poddoor{
+/obj/firedoor_spawn,
+/obj/machinery/door/poddoor/pyro{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "kitchen";
-	layer = 4;
 	name = "Kitchen Shutter";
-	opacity = 0;
-	p_open = 1
+	opacity = 0
 	},
-/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "eYG" = (
@@ -24505,11 +24504,19 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "ikb" = (
-/obj/window/reinforced{
-	dir = 1
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "0-8"
 	},
-/turf/space,
-/area)
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	name = "Bridge Blast Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "ikU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28735,16 +28742,14 @@
 "nHx" = (
 /obj/table/reinforced,
 /obj/firedoor_spawn,
-/obj/machinery/door/poddoor{
+/obj/disposalpipe/segment/produce,
+/obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "kitchen";
-	layer = 4;
 	name = "Kitchen Shutter";
-	opacity = 0;
-	p_open = 1
+	opacity = 0
 	},
-/obj/disposalpipe/segment/produce,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "nIt" = (
@@ -30306,14 +30311,12 @@
 "pwa" = (
 /obj/table/reinforced,
 /obj/firedoor_spawn,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "kitchen";
-	layer = 4;
 	name = "Kitchen Shutter";
-	opacity = 0;
-	p_open = 1
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
@@ -37724,20 +37727,6 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/turret_protected/Zeta)
-"xKz" = (
-/obj/wingrille_spawn/auto,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "bridge blast";
-	name = "Bridge Blast Doors";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/bridge)
 "xLP" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -82120,7 +82109,7 @@ wrZ
 wrZ
 wrZ
 wrZ
-xKz
+ikb
 wnC
 ebB
 mAK
@@ -92062,7 +92051,7 @@ rZk
 hqr
 pIZ
 jku
-ikb
+aaa
 aaa
 aaa
 aaa
@@ -92666,7 +92655,7 @@ wOE
 rKw
 fRo
 jku
-ikb
+aaa
 aaa
 aaa
 aaa
@@ -93270,7 +93259,7 @@ tgv
 kJE
 qla
 jku
-ikb
+aaa
 aaa
 aaa
 aaa
