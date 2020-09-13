@@ -16,7 +16,7 @@
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
 
 /obj/item/storage/backpack/withO2
@@ -142,7 +142,7 @@
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/storage/fanny/funny
 	name = "funny pack"
@@ -180,7 +180,7 @@
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 	proc/can_use()
 		.= 1

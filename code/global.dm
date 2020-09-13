@@ -37,6 +37,7 @@ var/global
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
 	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
+	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
 	list/clients = list()
 	list/mobs = list()
 	list/ai_mobs = list()
@@ -671,9 +672,12 @@ var/global
 		globalImages.Remove(key)
 	return
 
-/proc/addAIImage(var/image/I, var/key)
+/proc/addAIImage(var/image/I, var/key, var/low_priority=FALSE)
 	if(I && length(key))
-		aiImages[key] = I
+		if(low_priority)
+			aiImagesLowPriority[key] = I
+		else
+			aiImages[key] = I
 		for(var/mob/M in by_type[/mob/living/silicon/ai])
 			if (M.client)
 				M << I
@@ -682,6 +686,7 @@ var/global
 
 /proc/getAIImage(var/key)
 	if(length(key) && aiImages[key]) return aiImages[key]
+	else if(length(key) && aiImagesLowPriority[key]) return aiImagesLowPriority[key]
 	else return null
 
 /proc/removeAIImage(var/key)
@@ -690,6 +695,11 @@ var/global
 			C.images -= aiImages[key]
 		aiImages[key] = null
 		aiImages.Remove(key)
+	if(length(key) && aiImagesLowPriority[key])
+		for(var/client/C in clients)
+			C.images -= aiImagesLowPriority[key]
+		aiImagesLowPriority[key] = null
+		aiImagesLowPriority.Remove(key)
 	return
 
 /// Generates item icons for manufacturers and other things, used in UI dialogs. Sends to client if needed.

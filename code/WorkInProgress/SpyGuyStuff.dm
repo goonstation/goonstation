@@ -869,7 +869,7 @@ proc/Create_Tommyname()
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 
 /obj/item/garrote/proc/toggle_wire_readiness()

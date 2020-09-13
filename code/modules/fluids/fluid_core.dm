@@ -744,7 +744,7 @@ var/mutable_appearance/fluid_ma
 	//SLIPPING
 	//only slip if edge tile
 	var/turf/T = get_turf(oldloc)
-	if (T.active_liquid)
+	if (T?.active_liquid)
 		entered_group = 0
 
 	if (entered_group && (src.loc != oldloc))

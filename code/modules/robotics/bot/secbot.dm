@@ -505,6 +505,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 						src.moving = 0
 						navigate_to(src.target, ARREST_SPEED * move_arrest_delay_mult, max_dist = 50)
 						return
+					else
+						SPAWN_DBG(0)
+							src.baton_attack(src.target)
 
 			if(SECBOT_PREP_ARREST)		// preparing to arrest target
 
@@ -1090,14 +1093,14 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	onUpdate()
 		..()
-		if (get_dist(master, master.target) <= 1 || !master.target || master.target.hasStatus("handcuffed"))
+		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed"))
 			interrupt(INTERRUPT_ALWAYS)
 			master.process()
 			return
 
 	onStart()
 		..()
-		if (get_dist(master, master.target) <= 1 || !master.target || master.target.hasStatus("handcuffed"))
+		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed"))
 			interrupt(INTERRUPT_ALWAYS)
 			master.process()
 			return

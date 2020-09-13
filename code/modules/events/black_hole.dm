@@ -36,7 +36,7 @@
 
 		for (var/mob/M in range(14,src))
 			boutput(M, "<span class='alert'>The air grows heavy and thick. Something feels terribly wrong.</span>")
-			shake_camera(M, 5, 1)
+			shake_camera(M, 5, 16)
 		playsound(get_turf(src),'sound/effects/creaking_metal1.ogg',100,0,5,0.5)
 
 		sleep(lifespan / 2)

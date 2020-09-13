@@ -51,7 +51,7 @@
 	src.create_reagents(100)
 	reagents.add_reagent("ff-foam", 100)
 	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
-	BLOCK_TANK
+	BLOCK_SETUP(BLOCK_TANK)
 
 /obj/item/extinguisher/get_desc(dist)
 	if (dist > 1)

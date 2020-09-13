@@ -140,7 +140,7 @@
 		acount++
 	src.playsound_local(C.loc,"sound/effects/screech.ogg", 100, 1)
 	if(C.mind)
-		shake_camera(C, 20, 1)
+		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
 		boutput(C, "<i><b><font face = Tempus Sans ITC>You have sold your soul and become an avatar of evil! Spread darkness across the land!</font></b></i>")
 		C.mind.special_role = "Faustian Cluwne"

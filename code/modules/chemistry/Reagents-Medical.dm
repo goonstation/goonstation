@@ -1188,7 +1188,7 @@ datum
 				if(probmult(7)) M.emote("yawn")
 				if(prob(3))
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30 * mult))
-					M.drowsyness += 1 * mult
+					M.drowsyness += 1
 					M.visible_message("<span class='notice'><b>[M.name]<b> looks a bit dazed.</span>")
 				..()
 				return

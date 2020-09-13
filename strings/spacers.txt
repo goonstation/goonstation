@@ -1,0 +1,131 @@
+honorifics@=
+	Eminence
+	Brustler
+	The Notorious
+	Handsome
+	Sidesguy
+	Double
+	Triple
+	Ultra
+	Captain
+	Chieftain
+	Sir
+firstnames@=
+	John
+	Jhon
+	Bill
+	Billy
+	Willy
+	Daniels
+	Greg
+	Grieg
+	Eddie
+	Geames
+	Jeffie
+	Jonas
+	Jillian
+	Jimmus
+	Frankcis
+	Yevgeny
+	Olaf
+	Pilaf
+	Schitts
+	Giacomo
+	Cosmo
+	Cranston
+	Franston
+	Bringus
+	Woldorf
+	Winston
+	Fanny
+	Carole
+	Ellie
+	Rimbo
+	Dunkus
+	Hamstone
+	Bubs
+lastnames@=
+	Whitney
+	Bill
+	Johnson
+	Johnston
+	Schweet
+	Bangoman
+	Jackson
+	Cranston
+	Henries
+	Stromboulopoulos
+	Smith
+	The Third
+	Grandpa
+nicknames@=
+	"The Juice"
+	"The Flagship"
+	"Freight Train"
+	"Passenger Train"
+	"Different Kind of Train"
+	"Unitary Grump"
+	"Lil' Yank"
+	"The Bikester"
+	"Truck Chef"
+	"Smash Dong"
+	"Mr. Blueberry"
+	"The Widest"
+	"Skull Clown"
+	"Regular Face"
+	"Normal Legs"
+	"Quality Time"
+	"Dance Anarchist"
+	"The Swede"
+	"Buff Chugger"
+	"On the Ceiling"
+pejoratives@=
+	Italian
+	Shitty
+	Shittier
+	Smelly
+	Garbage
+	Lazy
+	Rubbish
+	Lousy
+	Awful
+	Gross-Ass
+	Greasy
+	Grissly
+	Gassy
+	Gross
+	Unwashed
+	Stupid
+	Ugly
+	Nasty
+	Bumbling
+superlatives@=
+	Glistening
+	Gorgeous
+	Handsome
+	Beautiful
+	Badass
+	Delicious
+	Thundering
+	Beefy
+	Juiced-Up
+	Zesty
+	Creamy
+	Heavenly
+	Vorpal
+	Hardcore
+stuff@=
+	Mountain
+	Toaster
+	Barbeque
+	Handshake
+	Juicebox
+	Whackoff
+	Spoons
+
+
+
+
+
+
+

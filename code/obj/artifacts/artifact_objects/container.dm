@@ -65,7 +65,7 @@
 		for(var/mob/N in viewers(O, null))
 			N.flash(3 SECONDS)
 			if(N.client)
-				shake_camera(N, 6, 4)
+				shake_camera(N, 6, 16)
 		O.visible_message("<span class='alert'><b>With a blinding light [O] vanishes, leaving its contents behind.</b></span>")
 		playsound(O.loc, "sound/effects/warp2.ogg", 50, 1)
 		artifact_controls.artifacts -= src

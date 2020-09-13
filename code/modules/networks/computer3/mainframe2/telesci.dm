@@ -617,7 +617,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if (get_dist(N, src) <= 6)
 						N.apply_flash(30, 5)
 					if (N.client)
-						shake_camera(N, 6, 4)
+						shake_camera(N, 6, 32)
 				return
 			if("buzz")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>You hear a loud buzz coming from the [src]!</span>", 1)

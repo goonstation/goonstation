@@ -65,7 +65,7 @@
 		src.update_icon()
 		src.setItemSpecial(/datum/item_special/spark)
 
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	disposing()
 		processing_items -= src
@@ -662,13 +662,13 @@
 
 	New()
 		..()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 		c_flags &= ~BLOCK_TOOLTIP
 
 	block_prop_setup(source, obj/item/grab/block/B)
 		if(src.status)
 			B.setProperty("rangedprot", 0.5)
-			B.setProperty("exploprot", 1)
+			B.setProperty("exploprot", 10)
 			. = ..()
 
 	proc/update_icon()
@@ -774,4 +774,4 @@
 		setProperty("disorient_resist_ear", 50)
 
 		src.setItemSpecial(/datum/item_special/barrier)
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)

@@ -14,6 +14,7 @@
 	anchored = 1
 	alpha = 180
 	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	plane = PLANE_NOSHADOW_ABOVE
 
 	var/deaths = 0
 	var/datum/hud/wraith/hud
@@ -217,7 +218,7 @@
 			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (!src.density)
 			return
 		health -= burn

@@ -384,6 +384,16 @@
 			light_dir.update(0)
 		return
 
+	attackby(var/obj/item/T, mob/user as mob)
+		if(istype(T, /obj/item/device/prox_sensor) && src.type == /obj/item/clothing/head/helmet/hardhat) //No derivatives
+			boutput(user,  "You attach the proximity sensor to the hard hat. Now you need to add a robot arm.")
+			new /obj/item/digbotassembly(get_turf(src))
+			qdel(T)
+			qdel(src)
+			return
+		else 
+			..()
+
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"
 	icon_state = "helmet-sec"
@@ -520,7 +530,7 @@
 		..()
 		setProperty("meleeprot_head", 9)
 		setProperty("disorient_resist_eye", 25)
-		setProperty("exploprot", 2)
+		setProperty("exploprot", 20)
 
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS Hat"
@@ -657,7 +667,7 @@
 	setupProperties()
 		..()
 		setProperty("radprot", 50)
-		setProperty("exploprot", 1)
+		setProperty("exploprot", 10)
 
 	syndicate
 		name = "Syndicate Command Helmet"

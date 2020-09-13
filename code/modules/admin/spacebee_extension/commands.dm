@@ -113,7 +113,7 @@
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/send_to_arrivals
-	name = "send_to_arrivals"
+	name = "sendtoarrivals"
 	help_message = "Sends a given ckey to arrivals."
 	action_name = "send to arrivals"
 
@@ -175,3 +175,19 @@
 	name = "revive"
 	help_message = "Heal / revive a given ckey. (alias of ;;heal)"
 	action_name = "revive"
+
+/datum/spacebee_extension_command/all_admins
+	name = "adminsall"
+	server_targeting = COMMAND_TARGETING_ALL_SERVERS
+	help_message = "All servers respond with their list of admins (probably)."
+	argument_types = list()
+	execute(user)
+		var/list/admins = list()
+		for(var/client/C in clients)
+			if(!C.holder)
+				continue
+			if (C.stealth || C.alt_key)
+				admins += "[C.key] (as [C.fakekey])"
+			else
+				admins += C.key
+		system.reply(admins.Join(", "), user)

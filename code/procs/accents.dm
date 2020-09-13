@@ -2338,7 +2338,7 @@ var/list/zalgo_mid = list(
 // this whole thing was originally copied over from the Scots entry
 // so its also gonna use a strings file: strings/language/scoob.txt
 
-/proc/scoobify(var/string)
+/proc/scoobify(var/string, var/less_shit)
 
 	var/list/tokens = splittext(string, " ")
 	var/list/modded_tokens = list()
@@ -2363,7 +2363,10 @@ var/list/zalgo_mid = list(
 			var/datum/text_roamer/T = new/datum/text_roamer(original_word)
 			for(var/i = 0, i < length(original_word), i=i)
 				var/datum/parse_result/P = scoob_parse(T)
-				modified_token += P.string
+				if(less_shit && prob(50))
+					modified_token = T.string
+				else
+					modified_token += P.string
 				i += P.chars_used
 				T.curr_char_pos = T.curr_char_pos + P.chars_used
 				T.update()

@@ -404,6 +404,7 @@
 	allowed_type = /obj/item/light/bulb
 	wallmounted = 0
 	deconstruct_flags = DECON_SIMPLE
+	plane = PLANE_DEFAULT
 
 	var/switchon = 0		// independent switching for lamps - not controlled by area lightswitch
 
@@ -930,6 +931,14 @@
 		color_r = 0.95
 		color_g = 0.2
 		color_b = 0.2
+	reddish
+		name = "reddish light tube"
+		desc = "Fancy."
+		icon_state = "tube-red"
+		base_state = "tube-red"
+		color_r = 0.98
+		color_g = 0.75
+		color_b = 0.5
 	yellow
 		name = "yellow light tube"
 		desc = "Fancy."
@@ -938,6 +947,14 @@
 		color_r = 0.95
 		color_g = 0.95
 		color_b = 0.2
+	yellowish
+		name = "yellowish light tube"
+		desc = "Fancy."
+		icon_state = "tube-yellow"
+		base_state = "tube-yellow"
+		color_r = 0.98
+		color_g = 0.98
+		color_b = 0.75
 	green
 		name = "green light tube"
 		desc = "Fancy."
@@ -970,6 +987,14 @@
 		color_r = 0.95
 		color_g = 0.2
 		color_b = 0.95
+	light_purpleish
+		name = "light purpleish light tube"
+		desc = "Fancy."
+		icon_state = "tube-purple"
+		base_state = "tube-purple"
+		color_r = 0.98
+		color_g = 0.76
+		color_b = 0.98
 	blacklight
 		name = "black light tube"
 		desc = "Fancy."
@@ -1088,6 +1113,14 @@
 		color_r = 0.95
 		color_g = 0.95
 		color_b = 0.2
+	yellowish
+		name = "yellowish light bulb"
+		desc = "Fancy."
+		icon_state = "bulb-yellow"
+		base_state = "bulb-yellow"
+		color_r = 0.98
+		color_g = 0.98
+		color_b = 0.75
 	green
 		name = "green light bulb"
 		desc = "Fancy."

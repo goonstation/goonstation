@@ -340,11 +340,11 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
-	onAdd(optional)
+	onAdd(optional = 10)
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_EXPLOPROT, src, 1)
+			APPLY_MOB_PROPERTY(M, PROP_EXPLOPROT, src, optional)
 
 	onRemove()
 		. = ..()

@@ -894,6 +894,7 @@
 			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		if ("rest")
+			if(ON_COOLDOWN(src, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			if(src.ai_active && !src.hasStatus("resting"))
 				src.show_text("You feel too restless to do that!", "red")
 			else
@@ -1022,7 +1023,7 @@
 			playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 #endif
 			for(var/mob/M in view(7, I.loc))
-				shake_camera(M, 20, 1)
+				shake_camera(M, 20, 8)
 
 		if (mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in grabbed_by)

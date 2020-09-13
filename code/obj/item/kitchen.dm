@@ -26,7 +26,7 @@ TRAYS
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/kitchen/rollingpin/light
 	name = "light rolling pin"
@@ -55,7 +55,7 @@ TRAYS
 		..()
 		if(prob(60))
 			src.pixel_y = rand(0, 4)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 		return
 
 	attack_self(mob/user as mob)
@@ -540,7 +540,7 @@ TRAYS
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	proc/add_contents(var/obj/item/W)
 		ordered_contents += W
@@ -785,7 +785,7 @@ TRAYS
 
 	New()
 		..()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	proc/update_inhand_icon()
 		var/weighted_num = round(ordered_contents.len / 5) //6 inhand sprites, 30 possible foods on the tray
@@ -959,7 +959,7 @@ TRAYS
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 

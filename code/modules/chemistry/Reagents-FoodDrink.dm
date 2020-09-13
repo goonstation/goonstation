@@ -325,7 +325,7 @@ datum
 					M.stuttering = 10
 					M.changeStatus("stunned", 10 SECONDS)
 
-					M.Virus_ShockCure(M, 33)
+					M.Virus_ShockCure(33)
 					M.shock_cyberheart(33)
 
 					V.eject_rider(1,0)
@@ -341,7 +341,7 @@ datum
 						M.stuttering = 10
 						M.changeStatus("stunned", 10 SECONDS)
 
-						M.Virus_ShockCure(M, 33)
+						M.Virus_ShockCure(33)
 						M.shock_cyberheart(33)
 
 						MV.eject(M)

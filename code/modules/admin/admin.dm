@@ -2963,17 +2963,17 @@ var/global/noir = 0
 
 					if("shakecamera")
 						if (src.level >= LEVEL_ADMIN)
-							var/intensity = input("Enter intensity of the shaking effect. (2 or over  will also cause mobs to trip over.)","Shaking intensity",null) as num|null
+							var/intensity = input("Enter intensity of the shaking effect (pixels to jostle view around by). 64 or over will also cause mobs to trip over.","Shaking intensity",null) as num|null
 							if (!intensity)
 								return
-							var/time = input("Enter lenght of the shaking effect.(In milliseconds, don't use more then 400 unless you want players to complain.) ", "Lenght of shaking effect", 1) as num
-							logTheThing("admin", src, null, "created a shake effect (intensity [intensity], lenght [time])")
-							logTheThing("diary", src, null, "created a shake effect (intensity [intensity], lenght [time])", "admin")
-							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], lenght [time]).")
+							var/time = input("Enter length of the shaking effect in seconds.", "length of shaking effect", 1) as num
+							logTheThing("admin", src, null, "created a shake effect (intensity [intensity], length [time])")
+							logTheThing("diary", src, null, "created a shake effect (intensity [intensity], length [time])", "admin")
+							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], length [time]).")
 							for (var/mob/M in mobs)
 								SPAWN_DBG(0)
-									shake_camera(M, time, intensity)
-								if (intensity >= 2)
+									shake_camera(M, time * 10, intensity)
+								if (intensity >= 64)
 									M.changeStatus("weakened", 2 SECONDS)
 
 						else
@@ -3777,7 +3777,7 @@ var/global/noir = 0
 	switch (originWindow)
 		if ("adminplayeropts")
 			if (href_list["targetckey"])
-				var/mob/target = targetClient.mob
+				var/mob/target = targetClient?.mob
 				if(!target)
 					var/targetCkey = href_list["targetckey"]
 					for (var/mob/M in mobs) //The ref may have changed with our actions, find it again

@@ -1415,7 +1415,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	command_alert("A massive influx of Owl Quarks has been detected in [get_area(M)]. A Owl Slam is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
 	for(var/mob/N in mobs)
 		SPAWN_DBG(0)
-			shake_camera(N, 120, 2)
+			shake_camera(N, 120, 24)
 	SPAWN_DBG(0)
 		var/thunder = 70
 		while(thunder > 0)
