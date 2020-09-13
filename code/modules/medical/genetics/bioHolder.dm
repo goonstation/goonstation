@@ -16,11 +16,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 /datum/appearanceHolder
 	//Holds all the appearance information.
-	var/customization_first_color_carry = "#101010"
+	var/customization_first_color_carry = "#101010" //Holds someone's original colors if they need to be changed temporarily
 	var/customization_first_color = "#101010"
 	var/customization_first = "Trimmed"
 
-	var/customization_second_color_carry = "#101010"
+	var/customization_second_color_carry = "#101010" // This way, they can return to their orignal colors
 	var/customization_second_color = "#101010"
 	var/customization_second = "None"
 
