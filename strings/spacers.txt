@@ -1,6 +1,6 @@
 honorifics@=
 	Eminence
-	Brustler
+	Supreme
 	The Notorious
 	Handsome
 	Sidesguy
@@ -8,99 +8,552 @@ honorifics@=
 	Triple
 	Ultra
 	Captain
-	Chieftain
+	Chief
 	Sir
+	Lord
+	Sergeant 
+	Old
+	Right Honorable
+	Sailor
+	Ensign
+	
 firstnames@=
-	John
-	Jhon
+	Abby
+	Ace
+	Aeon
+	Aero
+	Al
+	Alabama
+	Alex
+	Alexi
+	Almond
+	Ames
+	Ange
+	Aoki
+	Arizona
+	Avi
+	Baker
+	Bandit
+	Bane
+	Bao 
+	Bardou
+	Barry
+	Bates
+	Baz
+	Bean
+	Beauregard
+	Bee
+	Berne
 	Bill
 	Billy
-	Willy
-	Daniels
-	Greg
-	Grieg
-	Eddie
-	Geames
-	Jeffie
-	Jonas
-	Jillian
-	Jimmus
-	Frankcis
-	Yevgeny
-	Olaf
-	Pilaf
-	Schitts
-	Giacomo
+	Blake
+	Blue
+	Bob
+	Bobby
+	Borton
+	Briggs
+	Brody
+	Bronx
+	Brooklyn
+	Buddy	
+	Bunny
+	Cactus
+	Cage
+	Camryn
+	Cappy
+	Carmo
+	Carol
+	Carson
+	Cassidy
+	Cat
+	Cato
+	Cedar
+	Chang
+	Chas
+	Chevis
+	Chi
+	Chicago
+	Chris
+	Christmas
+	Clever
+	Clove
+	Colby
+	Corbin
 	Cosmo
 	Cranston
-	Franston
-	Bringus
-	Woldorf
-	Winston
-	Fanny
-	Carole
-	Ellie
-	Rimbo
+	Cricket
+	Cruz
+	Dabney
+	Dakota
+	Dallas
+	December
+	Dee
+	Del
+	Denny
+	Denver
+	Diamond
+	Disco
+	Doc
+	Drew
+	Dublin
 	Dunkus
-	Hamstone
-	Bubs
-lastnames@=
+	Echo
+	Edge
+	Eko
+	Eli
+	Eridian
+	Essa
+	Evans
+	Everix
+	Fabrice
+	Fargo
+	February
+	Fenix
+	Fizzy
+	Flash
+	Flynn
+	Franston
+	Freedom
+	Friday
+	Frost
+	Galaxy
+	Garnet
+	George
+	Gi
+	Giacomo
+	Gil
+	Glen
+	Glenn
+	Goose
+	Gray
+	Green
+	Guitain
+	Guo 
+	Gusty
+	Hadley
+	Ham
+	Hamilton
+	Happy
+	Harper
+	Helle
+	Higgs
+	Hitomi
+	Hollis
+	Hogg
+	Hooper
+	Horse
+	Hot
+	Hunter
+	Ibis
+	Illinois
+	Indiana 
+	Indigo
+	Indy
+	Inge
+	Innes
+	Io
+	Iron
+	Izzy
+	Jack
+	Jade
+	Jaime
+	Jaffe
+	Jam
+	January
+	Janus
+	Java
+	Jack
+	Jax
+	Jazz
+	Jenski
+	Jerry
+	Jeven
+	Ji
+	Jo
+	Joe
+	Jojo
+	Jude
+	Juno
+	Justice
+	Kai
+	Kane
+	Kansas
+	Keegan
+	Kel
+	Kentucky
+	Kim
+	Kimball
+	Kingsley
+	Kinsey
+	Kit
+	Knife 
+	Kris
+	Layton
+	Lee
+	Lem
+	Lex
+	Ling
+	Locke
+	London
+	Lou
+	Lucky
+	Lux
+	Mack
+	Mads
+	Magic
+	Mancuso
+	Manny
+	Mars
+	Matty
+	Meatball
+	Memphis
+	Merle
+	Mick
+	Midnight
+	Milne
+	Mint
+	Moe
+	Moon
+	Monaco
+	Mountain
+	Muncel
+	Nat
+	Neo
+	Nikita
+	Niko
+	Nova
+	Oakes 
+	Ocean
+	October
+	Odell
+	Oklahoma
+	Ollie
+	Omega
+	Orion
+	Oxide
+	Oz
+	Park
+	Pasha
+	Patsy
+	Peanut
+	Pepper
+	Petya
+	Phobos
+	Piccolo
+	Pilaf
+	Pisces
+	Pizza
+	Pluto
+	Posh	
+	Puck
+	Quincy
+	Randy
+	Raven
+	Raz
+	Red
+	Reese
+	Rider
+	Ridley
+	Riggs
+	Rimbo
+	Rocket
+	Rollo 
+	Rudy
+	Rusty
+	Sailor
+	Sam
+	Santana
+	Sasha
+	Saturday
+	Scoop
+	September
+	Silver
+	Sky
+	Sloane
+	Stabs
+	Star
+	Steel 
+	Suave
+	Sunday
+	Sully
+	Sunny
+	Syd
+	Tachyon
+	Tandy
+	Taurus
+	Taylor
+	Tennessee
+	Tex
+	Texas
+	Theo
+	Tiger
+	Tony
+	Topaz
+	Trace
+	Tuesday
+	Twain
+	Udo
+	Ulf
+	Uri
+	Val
+	Valentine
+	Vermont
+	Virgo
+	Voss
+	Wallace
 	Whitney
-	Bill
-	Johnson
-	Johnston
-	Schweet
+	Xandy
+	Xio
+	Yank
+	Zane
+	Zenith
+	Zenon
+	Zeppelin
+	Zhou
+	
+lastnames@=
+	Abbots
+	Adams
+	Alberts
+	Ames
+	Arnolds
+	Augustin
+	Babcock
+	Bacon
+	Baker	
 	Bangoman
-	Jackson
+	Banks
+	Barnes
+	Bates
+	Batista
+	Beasley
+	Biggs
+	Bishop
+	Bill
+	Billips
+	Blanton
+	Bob
+	Boggs
+	Bologna
+	Boyd
+	Braun
+	Briscoe
+	Burtons
+	Carlson
+	Cash
+	Castle
+	Castro
+	Chang
+	Chaves
+	Clarks
+	Clifton
+	Collins
+	Conway
 	Cranston
+	Crump
+	Curtis
+	Daniels
+	Dang
+	Davies
+	Delgado
+	Denton
+	Diaz
+	Diggs
+	Dions
+	Domingo
+	Donnely
+	Dubois
+	Edwards
+	Ellis
+	Ellison
+	Eng
+	Eubanks
+	Fernando
+	Finch
+	Flynn
+	Fong
+	Fox
+	Franklins
+	Gary
+	Gauthier
+	Gibbs
+	Gilberts
+	Gilliam
+	Goodman
+	Graves
+	Greg
+	Gross
+	Gunn
+	Guy
+	Hamilton
+	Hamm
+	Hammer
+	Hammond
+	Hankins
+	Hendrix
 	Henries
+	Henson
+	Higgins
+	Hobbs
+	Holliday
+	Howards
+	Hubbard
+	Huggins
+	Jackson
+	Johnson
+	Jones
+	Khan
+	Klein
+	Lawson
+	Lewis
+	Licorice
+	Logans
+	Lucas
+	Luna
+	Lutz
+	Malone
+	Mann
+	Matsumoto
+	Maxwell
+	Mayo
+	Mcginnis
+	Melvins
+	Mortons
+	Murphies
+	Mustard
+	Nakamura
+	Nguyen
+	Nicholson
+	Novak
+	Owens
+	Payne
+	Pitts
+	Punp
+	Ravioli
+	Schweet
 	Stromboulopoulos
+	Stromboli
 	Smith
 	The Third
-	Grandpa
+	Untz
+	Vorbis
+	Whitman
+	Wilkins
+	Wolff	
+	
 nicknames@=
 	"The Juice"
 	"The Flagship"
 	"Freight Train"
 	"Passenger Train"
 	"Different Kind of Train"
-	"Unitary Grump"
-	"Lil' Yank"
-	"The Bikester"
-	"Truck Chef"
-	"Smash Dong"
-	"Mr. Blueberry"
+	"Trainset"
+	"Big Truck"
+	"Dump Truck" 
+	"Lorry" 
+	"Dumpster"
+	"Grumpy"
+	"Lil"
+	"Bathtub"
+	"Boats"
+	"Punchout"
+	"Goddamn"
+	"Unlicensed"
+	"The Rowdy" 
+	"The Worst"
+	"Blueberry"
+	"Banana"	
+	"The Loaf"
+	"Rummy"
+	"Saxophone"
 	"The Widest"
-	"Skull Clown"
+	"Extra Bones"
 	"Regular Face"
 	"Normal Legs"
-	"Quality Time"
+	"Quality"
 	"Dance Anarchist"
 	"The Swede"
-	"Buff Chugger"
-	"On the Ceiling"
+	"Finland"
+	"Friggin"
+	"Basement"
+	"Tugboat"
+	"Beefpile"
+	"Grustler"
+	"Zesty" 
+	"Lousy"
+	"A Real Jerk"
+	"The Funny One"
+	"No Bones"
+	"No Nonsense" 
+	"No Good" 
+	"Hard Knocks" 
+	"Trouble" 
+	"Hogg Mild" 
+	"Hogg Wild" 
+	"Yep"
+	"Ace" 
+	"Champ" 
+	"Zapper"
+	"Whizbang"
+	"Kaboom" 
+	"Fancypants"
+	"Wee-Ooo"
+	"Imaginary"
+	"The Greatest"
+	"As Advertised"
+	"Makeouts"
+	"Magic"
+	"Junkyard"
+	"The Skull"
+	"Boneyard"
+	"Scrappy"
+	"Scrapyard"
+	"Miami"
+	"Vegas" 
+	"Texas"
+	"Montana"
+	"Quebec" 
+	"Monday" 
+	"Not Bad" 
+	"All About It"
+	"Par Excellance!"
+	"Who Cares"
+	"Brass Tacks"
+	"So What"
+	"Hoo Boy"
+	"The Destroyer"
+	"Gumdrop"
+	"Gravy"	
+	 
 pejoratives@=
-	Italian
-	Shitty
-	Shittier
+	Loathesome
+	Not-Great
 	Smelly
 	Garbage
 	Lazy
 	Rubbish
 	Lousy
 	Awful
+	Grotesque
+	Pretty-Bad
 	Gross-Ass
+	Grody
 	Greasy
-	Grissly
+	Grizzly
 	Gassy
 	Gross
 	Unwashed
-	Stupid
+	Sloppy
 	Ugly
 	Nasty
 	Bumbling
+	Sweaty
+	Disappointing
+	Over-Rated
+	Moist
+	Stale
+
 superlatives@=
-	Glistening
 	Gorgeous
 	Handsome
 	Beautiful
@@ -113,19 +566,43 @@ superlatives@=
 	Creamy
 	Heavenly
 	Vorpal
-	Hardcore
+	Tough
+	Nice 
+	Awesome
+	Gnarly
+	Mild
+	Spicy
+	Jazzy
+	Cute 
+
 stuff@=
 	Mountain
+	Grill
 	Toaster
 	Barbeque
 	Handshake
 	Juicebox
-	Whackoff
-	Spoons
-
-
-
-
+	Subway
+	Trench
+	Knife
+	Spoon
+	Loaf
+	Ocean
+	Sea
+	Burger
+	Pizza
+	Wharf
+	Shipyard
+	Landfill
+	Dumpster 
+	Space
+	Train
+	Truck
+	Meat
+	Banjo
+	Pickaxe
+	Chainsaw
+	Saloon
 
 
 
