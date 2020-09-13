@@ -7488,6 +7488,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/access_spawn/cargo,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "aDH" = (
@@ -21997,6 +22001,10 @@
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/access_spawn/research,
 /turf/simulated/floor/bot/white,
 /area/station/chemistry)
 "eVf" = (
@@ -24381,10 +24389,12 @@
 /obj/table/auto/desk,
 /obj/machinery/cashreg,
 /obj/item/kitchen/food_box/lollipop,
-/obj/machinery/door/window/westleft,
 /obj/access_spawn/medical,
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
@@ -25680,8 +25690,10 @@
 	pixel_x = -5
 	},
 /obj/item/paper/book/medical_guide,
-/obj/machinery/door/window/westright,
 /obj/access_spawn/medical,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "jBD" = (
