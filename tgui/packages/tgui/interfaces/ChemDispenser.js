@@ -1,5 +1,3 @@
-// TODO ctrl+hover to see reagent IDs
-
 
 import { useBackend, useSharedState, useLocalState } from "../backend";
 import { truncate } from "../format.js";
