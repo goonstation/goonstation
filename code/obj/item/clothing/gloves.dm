@@ -17,7 +17,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	var/activeweapon = 0 // Used for gloves that can be toggled to turn into a weapon (example, bladed gloves)
 
 	var/hide_prints = 1 // Seems more efficient to do this with one global proc and a couple of vars (Convair880).
-	var/scramble_prints = 0
+	var/scramble_prints = 1
 	var/material_prints = null
 
 	var/can_be_charged = 0 // Currently, there are provisions for icon state "yellow" only. You have to update this file and mob_procs.dm if you're wanna use other glove sprites (Convair880).
@@ -210,6 +210,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	icon_state = "long_gloves"
 	item_state = "long_gloves"
 	protective_temperature = 550
+	scramble_prints = 0
 	material_prints = "synthetic silicone rubber fibers"
 	setupProperties()
 		..()
@@ -251,7 +252,8 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	permeability_coefficient = 0.02
 	desc = "Thin gloves that offer minimal protection."
 	protective_temperature = 310
-	scramble_prints = 1
+	scramble_prints = 0
+	material_prints = "white talcum powder"
 	setupProperties()
 		..()
 		setProperty("conductivity", 0.3)
@@ -276,7 +278,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	icon_state = "latex"
 	item_state = "lgloves"
 	desc = "Custom made gloves."
-	scramble_prints = 1
+	scramble_prints = 0
 
 	insulating
 		onMaterialChanged()
@@ -319,6 +321,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	icon_state = "swat_syndie"
 	item_state = "swat_syndie"
 	protective_temperature = 1100
+	scramble_prints = 0
 	material_prints = "high-quality synthetic fibers"
 	setupProperties()
 		..()
@@ -384,6 +387,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	desc = "These gloves are for competitive boxing."
 	icon_state = "boxinggloves"
 	item_state = "bogloves"
+	scramble_prints = 0
 	material_prints = "red leather fibers"
 	crit_override = 1
 	bonus_crit_chance = 0
