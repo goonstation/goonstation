@@ -186,8 +186,9 @@ export const Beaker = (props, context) => {
       title={
         <Button
           icon="eject"
-          content={!maximumBeakerVolume ? "Insert " + beakerName : "Eject " + titleCase(currentBeakerName) + " (" + beakerTotalVolume + "/" + maximumBeakerVolume + ")"}
-          onClick={() => act("eject")} />
+          onClick={() => act("eject")}>
+          {!maximumBeakerVolume ? "Insert " + beakerName : "Eject " + titleCase(currentBeakerName) + " (" + beakerTotalVolume + "/" + maximumBeakerVolume + ")"}
+        </Button>
       }
       buttons={(
         <Box align="left" as="span">
