@@ -50,7 +50,6 @@
 					candidate_turfs -= S
 					break
 		flockdronegibs(src.loc, null, eject)//here they are actually ejected
-		src.loc = null
 		if(src.flock)
 			src.flock.removeDrone(src)
 		qdel(src)

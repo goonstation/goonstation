@@ -31,12 +31,14 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
           touch +secret/__secret.dme
 
       - name: Misc Checks
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
+          tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
 
       - name: Run Linter
@@ -149,6 +151,9 @@ jobs:
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
+          token: '${{ secrets.ROBUDDYBOT_PAT }}'
 
       - name: Install Dependencies
         run: |
@@ -173,12 +178,6 @@ jobs:
           echo "::set-env name=PATH::/home/runner/BYOND/byond/bin:$PATH"
           echo "::set-env name=LD_LIBRARY_PATH::/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH"
           echo "::set-env name=MANPATH::/home/runner/BYOND/byond/man:$MANPATH"
-
-      - name: Set up Submodule
-        run: tools/ci/setup_submodule.sh
-        env:
-          secret_iv: ${{ secrets.SECRET_REPO_IV }}
-          secret_key: ${{ secrets.SECRET_REPO_KEY }}
 
       - name: Cache SpacemanDMM
         uses: actions/cache@v1
@@ -212,7 +211,7 @@ jobs:
           tools/ci/dm.sh -DTRAVISBUILDING -DTRAVIS_SUB goonstation.dme > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
 
       - name: Annotate Errors
-        uses: yogstation13/add-annotations-github-action@master
+        uses: zewaka/add-annotations-github-action@master
         with:
           check_name: "Run Linters"
           linter_output_path: 'output-annotations.txt'

@@ -69,6 +69,23 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	assoc_reagents = list("silver_sulfadiazine")
 	mutations = list(/datum/plantmutation/commol/burning)
 
+/datum/plant/herb/ipecacuanha
+	name = "Ipecacuanha"
+	seedcolor = "#063c0f"
+	crop = /obj/item/plant/herb/ipecacuanha
+	starthealth = 20
+	growtime = 30
+	harvtime = 100
+	cropsize = 5
+	harvests = 1
+	isgrass = 1
+	endurance = 0
+	genome = 16
+	nectarlevel = 5
+	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted)
+	assoc_reagents = list("ipecac")
+	mutations = list(/datum/plantmutation/ipecacuanha/bilious,/datum/plantmutation/ipecacuanha/invigorating)
+
 /datum/plant/herb/venne
 	name = "Venne"
 	seedcolor = "#DDFF99"

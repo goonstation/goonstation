@@ -18,6 +18,7 @@
 	var/spinner_num = 1
 
 	New(M)
+		..()
 		master = M
 
 		health = create_screen("health", "Core Health", 'icons/mob/hud_ai.dmi', "health", "EAST, NORTH+0.5", HUD_LAYER)

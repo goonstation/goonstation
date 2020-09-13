@@ -76,7 +76,7 @@
 
 		contextLayout = new /datum/contextLayout/flexdefault(4, 32, 32)
 
-		genetics_computers += src
+		START_TRACKING
 		screenoverlay = SafeGetOverlayImage("screen", 'icons/obj/64x64.dmi', "genebooth_screen")
 		screenoverlay.blend_mode = BLEND_MULTIPLY
 		screenoverlay.layer = src.layer + 0.2
@@ -95,7 +95,7 @@
 		workingoverlay.layer = src.layer + 0.1
 
 	disposing()
-		genetics_computers -= src
+		STOP_TRACKING
 		..()
 
 
@@ -164,7 +164,7 @@
 		updateicon()
 
 		usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
-		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, pitch = 0.60)
+		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.60)
 
 	proc/just_pick_anything()
 		for (var/datum/geneboothproduct/P in offered_genes)
@@ -201,7 +201,7 @@
 
 					var/datum/bioEffect/NEW = new selected_product.BE.type()
 					copy_datum_vars(selected_product.BE,NEW)
-					occupant.bioHolder.AddEffectInstance(NEW,1)
+					occupant.bioHolder.AddEffectInstanceNoDelay(NEW)
 
 					selected_product.uses -= 1
 					if (selected_product.uses <= 0 || !selected_product.BE)

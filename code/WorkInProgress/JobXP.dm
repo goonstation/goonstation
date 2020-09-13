@@ -7,6 +7,8 @@ var/list/xp_throttle_list = list()
 //List of KEY : List(JOB : XP amount) used for end-of-round XP recaps and stat tracking
 var/list/xp_archive = list()
 
+var/list/xp_cache = list()
+
 /proc/testSummary(var/amt = 1)
 	award_xp(usr.key, "Bip", amt, 1)
 	award_xp(usr.key, "Bop", amt, 1)
@@ -98,12 +100,48 @@ var/list/xp_archive = list()
 				actual = (XP_ROUND_CAP - xp_earned[key])
 
 		if(actual >= 0)
+			// SPAWN_DBG(0)
+				// add_xp(key, field_name, actual)
+			add_xp_throttle_entry(key, actual)
+			archive_xp(key, field_name, actual)
+	return
+//Wrapper for awarding exp without actually adding it to the byond medals database
+/proc/award_xp_and_archive(var/key = null, var/field_name="debug", var/amount = 0, var/ignore_caps=0)
+	if(!key) return null
+	var/actual = round(amount * XP_GLOBAL_MOD)
+
+	if(is_eligible_xp(key, amount) || (amount >= XP_THROTTLE_AMT) || ignore_caps)
+		if(xp_earned[key] && !ignore_caps)
+			if(xp_earned[key] + (amount * XP_GLOBAL_MOD) > XP_ROUND_CAP)
+				actual = (XP_ROUND_CAP - xp_earned[key])
+
+		if(actual >= 0)
 			SPAWN_DBG(0)
-				add_xp(key, field_name, actual)
 				add_xp_throttle_entry(key, actual)
 				archive_xp(key, field_name, actual)
 	return
 
+//Saves the xp gained by players in this round into the byond scores db
+//Only to be used at round end.
+var/global/awarded_xp = 0
+/proc/award_archived_round_xp()
+	if (awarded_xp)
+		message_admins("Tried to award job exp for the round more than once. Probably some fuckery is going on.")
+		logTheThing("debug", null, null, "Tried to award job exp for the round more than once. Probably some fuckery is going on.")
+		return
+	if (!islist(xp_archive))
+		return
+	awarded_xp = 1
+
+	for (var/key in xp_archive)
+		SPAWN_DBG(0)
+			var/list/v_list = xp_archive[key]
+			for (var/field in v_list)		//field is the job. Botanist, Clown, etc.
+				var/amt = v_list["[field]"]
+				amt = clamp(amt,0,XP_ROUND_CAP)
+				add_xp(key, field, amt)
+
+//wrapper for set_xp
 /proc/add_xp(var/key = null, var/field_name="debug", var/amount = 0)
 	if(!key) return null
 
@@ -117,7 +155,7 @@ var/list/xp_archive = list()
 			set_xp(key, field_name, amount)
 	return
 
-/proc/get_xp(var/key = null, var/field_name="debug")
+/proc/get_xp(key, field_name="debug", force_new=FALSE)
 	if(!key) return null
 	if (IsGuestKey(key))
 		return null
@@ -125,14 +163,18 @@ var/list/xp_archive = list()
 		return null
 	else if (!config.medal_hub || !config.medal_password)
 		return null
-	var/result = 0
-	var/list/response = world.GetScores(key, field_name, config.medal_hub, config.medal_password)
-	if(isnull(response)) return null
-	if(response)
-		var/list/rList = params2list(response)
-		if(rList[field_name])
-			result = text2num(rList[field_name])
-	return result
+	if(!(key in xp_cache) || force_new)
+		var/response = world.GetScores(key, null, config.medal_hub, config.medal_password)
+		if(isnull(response))
+			return null
+		xp_cache[key] = params2list(response)
+		for(var/field in xp_cache[key])
+			var/num = text2num(xp_cache[key][field])
+			if(!isnull(num))
+				xp_cache[key][field] = num
+	if(field_name in xp_cache[key])
+		return xp_cache[key][field_name]
+	return 0
 
 /proc/get_level(var/key = null, var/field_name="debug")
 	var/xp = get_xp(key, field_name)
@@ -140,6 +182,7 @@ var/list/xp_archive = list()
 		return round(LEVEL_FOR_XP(xp))
 	return null
 
+//Actually sets the xp on byond scores
 /proc/set_xp(var/key = null, var/field_name="debug", var/field_value="0")
 	if(!key) return null
 	if (IsGuestKey(key))

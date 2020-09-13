@@ -370,11 +370,11 @@ datum/pathogeneffects/benevolent/sunglass
 		var/obj/item/clothing/glasses/N = new/obj/item/clothing/glasses/sunglasses()
 		M.show_message({"<span class='notice'>[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")][G?" But you were already wearing glasses!":""]</span>"})
 		if (G)
-			N.loc = M.loc
+			N.set_loc(M.loc)
 			var/turf/T = get_edge_target_turf(M, pick(alldirs))
 			N.throw_at(T,rand(0,5),1)
 		else
-			N.loc = M
+			N.set_loc(M)
 			N.layer = M.layer
 			N.master = M
 			M.glasses = N

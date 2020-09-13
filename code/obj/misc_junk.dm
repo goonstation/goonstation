@@ -73,7 +73,7 @@
 		..()
 		processing_items.Add(src)
 		START_TRACKING
-		BLOCK_TANK
+		BLOCK_SETUP(BLOCK_TANK)
 
 	disposing()
 		. = ..()
@@ -86,7 +86,7 @@
 			last_laugh = world.time
 
 	process()
-		if(prob(75)) // Takes around 12 seconds for ol chompski to vanish
+		if(prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a crate
 		if(istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))
@@ -97,10 +97,10 @@
 				return
 		//oh boy time to move
 		playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
-		var/obj/crate = lockers_and_crates[rand(lockers_and_crates.len + 1)]
+		var/obj/crate = pick(by_type[/obj/storage])
 		while(crate.z != 1)
-			crate = lockers_and_crates[rand(lockers_and_crates.len + 1)]
-		src.loc = crate
+			crate = pick(by_type[/obj/storage])
+		src.set_loc(crate)
 
 
 
@@ -121,7 +121,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(issnippingtool(W))
@@ -360,12 +360,12 @@
 
 
 		if (istype(ghost_to_toss))
-			ghost_to_toss.loc = soul_stuff
+			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(., 10, 1)
 		SPAWN_DBG (10)
 			if (soul_stuff && ghost_to_toss)
-				ghost_to_toss.loc = soul_stuff.loc
+				ghost_to_toss.set_loc(soul_stuff.loc)
 
 		some_poor_fucker.throw_at(., 1, 1)
 		some_poor_fucker.weakened += 2
@@ -559,7 +559,7 @@
 
 	New()
 		..()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
@@ -834,8 +834,7 @@
 		if(world.time - pickup_time >= 300)
 			boutput(owner, "<h3><span class='alert'>You have held [src.name] long enough! Good job!</span></h3>")
 			if(owner && owner.client)
-				var/obj/landmark/ass_arena_spawn/place = pick(ass_arena_spawn)
-				src.set_loc(place.loc)
+				src.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 				owner.client.respawn_target(owner,1)
 				DEBUG_MESSAGE("[owner.name] has been ass arena respawned!")
 				owner.gib()
@@ -848,8 +847,7 @@
 		DEBUG_MESSAGE("Heck someone broke the artifact")
 		var/obj/item/ass_day_artifact/next_artifact
 		next_artifact = new /obj/item/ass_day_artifact
-		var/obj/landmark/ass_arena_spawn/place = pick(ass_arena_spawn)
-		next_artifact.set_loc(place.loc)
+		next_artifact.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 		processing_items.Remove(src)
 		..()
 

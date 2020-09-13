@@ -25,6 +25,9 @@
 		update_icon()
 
 	steel
+#ifdef IN_MAP_EDITOR
+		icon_state = "grille-0"
+#endif
 		New()
 			..()
 			var/datum/material/M = getMaterial("steel")
@@ -47,6 +50,7 @@
 		desc = "This doesn't look very safe at all!"
 		layer = CATWALK_LAYER
 		shock_when_entered = 0
+		plane = PLANE_FLOOR
 
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
@@ -224,7 +228,7 @@
 			if("foof")
 				damage_heat(volume * 3)
 
-	hitby(AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)

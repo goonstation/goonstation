@@ -73,6 +73,9 @@ datum/preferences
 	var/target_cursor = "Default"
 	var/hud_style = "New"
 
+	var/tgui_fancy = TRUE
+	var/tgui_lock = FALSE
+
 	var/tooltip_option = TOOLTIP_ALWAYS
 
 	var/regex/character_name_validation = null //This regex needs to match the name in order to consider it a valid name
@@ -94,16 +97,16 @@ datum/preferences
 		//real_name = random_name(src.gender)
 		if (src.gender == MALE)
 			if (first)
-				src.name_first = capitalize(pick(first_names_male))
+				src.name_first = capitalize(pick_string_autokey("names/first_male.txt"))
 			if (middle)
-				src.name_middle = capitalize(pick(first_names_male))
+				src.name_middle = capitalize(pick_string_autokey("names/first_male.txt"))
 		else
 			if (first)
-				src.name_first = capitalize(pick(first_names_female))
+				src.name_first = capitalize(pick_string_autokey("names/first_female.txt"))
 			if (middle)
-				src.name_middle = capitalize(pick(first_names_female))
+				src.name_middle = capitalize(pick_string_autokey("names/first_female.txt"))
 		if (last)
-			src.name_last = capitalize(pick(last_names))
+			src.name_last = capitalize(pick_string_autokey("names/last.txt"))
 		src.real_name = src.name_first + " " + src.name_last
 
 	proc/randomizeLook() // im laze
@@ -212,6 +215,8 @@ datum/preferences
 	var/list/profile_cache
 	var/rebuild_profile
 
+	var/had_cloud = FALSE
+
 	var/list/rebuild_data
 	var/list/data_cache
 
@@ -228,11 +233,11 @@ datum/preferences
 			data_cache = list("script" = null,"css" = null,"profile_name" = null,"character_name" = null,"gender" = null,"age_blood" = null,\
 								"bank" = null,"flavortext" = null,"security_note" = null,"medical_note" = null,"occupation" = null,"traits" = null,\
 								"fartsound" = null,"screamsound" = null,"chatsound" = null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
-								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null,"popups" = null,"controls" = null,"map"=null)
+								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null, "tgui" = null,"popups" = null,"controls" = null,"map"=null)
 			rebuild_data = list("script" = 1,"css" = 1,"profile_name" = 1,"character_name" = 1,"gender" = 1,"age_blood" = 1,\
 								"bank" = 1,"flavortext" = 1,"security_note" = 1,"medical_note" = 1,"occupation" = 1,"traits" = 1,\
 								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
-								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1,"popups" = 1,"controls" = 1,"map"=1)
+								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1, "tgui" = 1, "popups" = 1,"controls" = 1,"map"=1)
 		if (!profile_cache)
 			profile_cache = list()
 			rebuild_profile = 1
@@ -259,12 +264,17 @@ datum/preferences
 		//var/profile_menu[]
 
 		if (user && !IsGuestKey(user.key)) //ZeWaka: Fix for null.key
-			if (rebuild_profile)
+			var/client/client = ismob( user ) ? user.client : user
+
+			if (!client) return // b r u h
+
+			if (rebuild_profile || client.cloud_available() && !had_cloud)
 				rebuild_profile = 0
+				had_cloud = client.cloud_available()
+				rebuild_data["profile_name"] = 1
 				profile_cache.len = 0
 				profile_cache += "<div id='cloudsaves'><strong>Cloud Saves</strong><hr>"
-				var/client/wtf = ismob( user ) ? user.client : user
-				for( var/name in wtf.cloudsaves )
+				for( var/name in client.cloudsaves )
 					profile_cache += "<a href='[pref_link]cloudload=[url_encode(name)]'>[html_encode(name)]</a> (<a href='[pref_link]cloudsave=[url_encode(name)]'>Save</a> - <a href='[pref_link]clouddelete=[url_encode(name)]'>Delete</a>)<br>"
 					LAGCHECK(LAG_REALTIME)
 				profile_cache += "<a href='[pref_link]cloudnew=1'>Create new save</a></div>"
@@ -646,7 +656,7 @@ $(function() {
 			data_cache["hair_top"] = {"
 	<tr>
 		<th>
-			Top Detail<span class="info-thing" title="Hair or other features. This one is appied above the other ones.">?</span>
+			Top Detail<span class="info-thing" title="Hair or other features. This one is applied above the other ones.">?</span>
 		</th>
 		<td>
 			<a href='[pref_link]detail=input'>&#9998;</a>
@@ -779,6 +789,19 @@ $(function() {
 		</td>
 	</tr>"}
 		LAGCHECK(80)
+		if (rebuild_data["tgui"])
+			rebuild_data["tgui"] = 0
+			data_cache["tgui"] = {"
+	<tr>
+		<th>
+			tgui<span class="info-thing" title="tgui is the UI framework we use for some game windows, and it comes with options!">?</span>
+		</th>
+		<td colspan="2">
+			<a href="[pref_link]tgui_fancy=1" class="toggle">[crap_checkbox(src.tgui_fancy)] Fast & Fancy Windows</a>
+			<br><a href="[pref_link]tgui_lock=1" class="toggle">[crap_checkbox(src.tgui_lock)] Lock initial placement of windows</a>
+		</td>
+	</tr>"}
+		LAGCHECK(80)
 		if (rebuild_data["popups"])
 			rebuild_data["popups"] = 0
 			data_cache["popups"] = {"
@@ -829,6 +852,10 @@ $(function() {
 		LAGCHECK(LAG_MED)
 		traitPreferences.updateTraits(user)
 		LAGCHECK(LAG_MED)
+
+		//Mob has been deleted or client been deleted
+		if (!user || !user.client)
+			return
 
 		var/list/dat = list()
 		for (var/x in data_cache)
@@ -898,6 +925,11 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated() //if this list is null, the api query failed, so we just let it happen
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
+					src.jobs_unwanted += J.name
+					continue
 			src.jobs_med_priority += J.name
 		return
 
@@ -912,6 +944,11 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
+					src.jobs_unwanted += J.name
+					continue
 			src.jobs_low_priority += J.name
 		return
 
@@ -940,6 +977,11 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
+					src.jobs_unwanted += J.name
+					continue
 			src.jobs_low_priority += J.name
 		return
 
@@ -1047,9 +1089,15 @@ $(function() {
 			if (!J_Fav)
 				HTML += " Favorite Job not found!"
 			else if (jobban_isbanned(user,J_Fav.name) || (J_Fav.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J_Fav.requires_whitelist && !NT.Find(ckey(user.mind.key))))
-				boutput(user, "<span class='alert'><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</span>")
+				boutput(user, "<span class='alert'><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</b></span>")
 				src.jobs_unwanted += J_Fav.name
 				src.job_favorite = null
+			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J_Fav.rounds_needed_to_play) //they havent played enough rounds!
+					boutput(user, "<span class='alert'><b>You cannot play [J_Fav.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b></span>")
+					src.jobs_unwanted += J_Fav.name
+					src.job_favorite = null
 			else
 				HTML += " <a href=\"byond://?src=\ref[src];preferences=1;occ=1;job=[J_Fav.name];level=0\" style='font-weight: bold; color: [J_Fav.linkcolor];'>[J_Fav.name]</a>"
 
@@ -1185,6 +1233,19 @@ $(function() {
 					if (3) src.jobs_low_priority -= job
 				src.jobs_unwanted += job
 			return
+
+		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
+		if (temp_job.rounds_needed_to_play && (user.client && user.client.player))
+			var/round_num = user.client.player.get_rounds_participated()
+			if (!isnull(round_num) && round_num < temp_job.rounds_needed_to_play) //they havent played enough rounds!
+				boutput(user, "<span class='alert'><b>You cannot play [temp_job.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b></span>")
+				if (occ != 4)
+					switch(occ)
+						if (1) src.job_favorite = null
+						if (2) src.jobs_med_priority -= job
+						if (3) src.jobs_low_priority -= job
+					src.jobs_unwanted += job
+				return
 
 		src.antispam = 1
 
@@ -1351,9 +1412,9 @@ $(function() {
 
 				if ("random")
 					if (src.gender == MALE)
-						new_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
+						new_name = capitalize(pick_string_autokey("names/first_male.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 					else
-						new_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
+						new_name = capitalize(pick_string_autokey("names/first_female.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 					randomizeLook()
 			if (new_name)
 				if (length(new_name) >= 26)
@@ -1388,9 +1449,9 @@ $(function() {
 					new_name = capitalize(new_name)
 				if ("random")
 					if (src.gender == MALE)
-						new_name = capitalize(pick(first_names_male))
+						new_name = capitalize(pick_string_autokey("names/first_male.txt"))
 					else
-						new_name = capitalize(pick(first_names_female))
+						new_name = capitalize(pick_string_autokey("names/first_female.txt"))
 			if (new_name)
 				src.name_first = new_name
 				src.real_name = src.name_first + " " + src.name_last
@@ -1414,9 +1475,9 @@ $(function() {
 					new_name = capitalize(new_name)
 				if ("random")
 					if (src.gender == MALE)
-						new_name = capitalize(pick(first_names_male))
+						new_name = capitalize(pick_string_autokey("names/first_male.txt"))
 					else
-						new_name = capitalize(pick(first_names_female))
+						new_name = capitalize(pick_string_autokey("names/first_female.txt"))
 			src.name_middle = new_name // don't need to check if there is one in case someone wants no middle name I guess
 // -------------------------------------------
 		if (link_tags["last_name"])
@@ -1444,7 +1505,7 @@ $(function() {
 						return
 					new_name = capitalize(new_name)
 				if ("random")
-					new_name = capitalize(pick(last_names))
+					new_name = capitalize(pick_string_autokey("names/last.txt"))
 			if (new_name)
 				src.name_last = new_name
 				src.real_name = src.name_first + " " + src.name_last
@@ -1650,7 +1711,7 @@ $(function() {
 
 		if (link_tags["preferred_map"])
 			rebuild_data["map"] = 1
-			src.preferred_map = mapSwitcher.clientSelectMap(usr.client)
+			src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
 
 		if (link_tags["tooltip"])
 			rebuild_data["tooltips"] = 1
@@ -1662,6 +1723,14 @@ $(function() {
 				if("3")
 					src.tooltip_option = TOOLTIP_NEVER
 				else src.tooltip_option = TOOLTIP_ALWAYS
+
+		if (link_tags["tgui_fancy"])
+			rebuild_data["tgui"] = 1
+			src.tgui_fancy = !(src.tgui_fancy)
+
+		if (link_tags["tgui_lock"])
+			rebuild_data["tgui"] = 1
+			src.tgui_lock = !(src.tgui_lock)
 
 		if (link_tags["scores"])
 			rebuild_data["popups"] = 1
@@ -1858,9 +1927,9 @@ $(function() {
 			AH.customization_third = "None"
 			AH.underwear = "No Underwear"
 
-			AH.customization_first_color = 0
-			AH.customization_second_color = 0
-			AH.customization_third_color = 0
+			AH.customization_first_color = initial(AH.customization_first_color)
+			AH.customization_second_color = initial(AH.customization_second_color)
+			AH.customization_third_color = initial(AH.customization_third_color)
 			AH.e_color = 0
 			AH.u_color = "#FEFEFE"
 
@@ -1893,6 +1962,8 @@ $(function() {
 			be_spy = 0
 			be_gangleader = 0
 			tooltip_option = TOOLTIP_ALWAYS
+			tgui_fancy = TRUE
+			tgui_lock = FALSE
 			if (!force_random_names)
 				be_random_name = 0
 			else
@@ -2221,10 +2292,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		H.sound_scream = AH.screamsounds[pick(AH.gender == MALE ? male_screams : female_screams)]
 	if (H && change_name)
 		if (AH.gender == FEMALE)
-			H.real_name = pick(first_names_female)
+			H.real_name = pick_string_autokey("names/first_female.txt")
 		else
-			H.real_name = pick(first_names_male)
-		H.real_name += " [pick(last_names)]"
+			H.real_name = pick_string_autokey("names/first_male.txt")
+		H.real_name += " [pick_string_autokey("names/last.txt")]"
 
 	AH.voicetype = RANDOM_HUMAN_VOICE
 

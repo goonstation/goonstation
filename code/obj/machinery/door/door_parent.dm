@@ -73,10 +73,13 @@
 
 	else if (istype(AM, /obj/critter/))
 		var/obj/critter/C = AM
-		if (C.opensdoors == 1)
+		if (C.opensdoors == OBJ_CRITTER_OPENS_DOORS_PUBLIC)
 			if (src.density)
-				src.open()
+				src.bumpopen(AM)
 				C.frustration = 0
+		else if (C.opensdoors == OBJ_CRITTER_OPENS_DOORS_ANY)
+			src.open()
+			C.frustration = 0
 		else
 			C.frustration++
 
@@ -158,13 +161,13 @@
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
 		update_nearby_tiles(need_rebuild=1)
-		doors.Add(src)
+		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
 			T.update_icon()
 
 	disposing()
 		update_nearby_tiles()
-		doors.Remove(src)
+		STOP_TRACKING
 		..()
 
 	proc/toggleinput()
@@ -350,16 +353,16 @@
 
 	return ..(I,user)
 
-/obj/machinery/door/proc/bumpopen(mob/user as mob)
+/obj/machinery/door/proc/bumpopen(atom/movable/AM as mob|obj)
 	if (src.operating)
 		return 0
 	if(world.time-last_used <= 10)
 		return 0
-	src.add_fingerprint(user)
+	src.add_fingerprint(AM)
 	if (!src.requiresID())
-		user = null
+		AM = null
 
-	if (src.allowed(user))
+	if (src.allowed(AM))
 		if (src.density)
 			last_used = world.time
 			if (src.open() == 1)

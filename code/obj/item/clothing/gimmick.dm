@@ -335,7 +335,7 @@
 /obj/item/clothing/mask/cursedclown_hat/equipped(var/mob/user, var/slot)
 	..()
 	var/mob/living/carbon/human/Victim = user
-	if(istype(Victim) && slot == SLOT_WEAR_MASM)
+	if(istype(Victim) && slot == SLOT_WEAR_MASK)
 		boutput(user, "<span class='alert'><B> The mask grips your face!</B></span>")
 		src.desc = "This is never coming off... oh god..."
 		// Mostly for spawning a cluwne car and clothes manually.
@@ -354,10 +354,10 @@
 	SPAWN_DBG(1 SECOND)
 		playsound(src.loc, "sound/voice/chanting.ogg", 25, 0, 0)
 		playsound(src.loc, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0)
-		SPAWN_DBG(1.5 SECONDS)
-			user.emote("scream")
-			SPAWN_DBG(1.5 SECONDS)
-				user.implode()
+		sleep(1.5 SECONDS)
+		user.emote("scream")
+		sleep(1.5 SECONDS)
+		user.implode()
 	return 1
 
 /obj/item/clothing/shoes/cursedclown_shoes
@@ -1315,7 +1315,8 @@
 	desc = "A jumpsuit with a cute frog pattern on it. Get it? <i>Jump</i>suit? Ribbit!"
 	icon_state = "frogsuit"
 	item_state = "lightgreen"
-
+	c_flags = ONESIZEFITSALL // Fix to stop frog suit + obese infinite looping. RemoveEffect would loop through the obesity code back to unequipped over 5 procs total.
+													 //	(The loop goes unequipped->RemoveEffect->UpdateMob->update_clothing->u_equip->unequipped if you're courageous enough to fix it properly. I think that's not be the only way it could loop either.) -BatElite
 	equipped(var/mob/user, var/slot)
 		if (slot == SLOT_W_UNIFORM && user.bioHolder)
 			user.bioHolder.AddEffect("jumpy_suit", 0, 0, 0, 1) // id, variant, time left, do stability, magical

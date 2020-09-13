@@ -102,8 +102,7 @@ var/image/blob_icon_cache
 			setMaterial(copyMaterial(O.my_material))
 			color = material.color
 			original_color = color
-			if (!(src in O.blobs))
-				O.blobs += src
+			O.blobs |= src
 			onAttach(O)
 			if( state_overlay )
 				blob_icon_cache.color = O.organ_color
@@ -142,7 +141,6 @@ var/image/blob_icon_cache
 		in_disposing = 1
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B.blobs -= src
-		blobs -= src
 		if (istype(overmind))
 			overmind.blobs -= src
 			if (gen_rate_value > 0)
@@ -153,7 +151,7 @@ var/image/blob_icon_cache
 		if (istype(src.loc,/turf))
 			if (istype(src.loc.loc,/area))
 				src.loc.loc.Exited(src)
-		healthbar.onDelete()
+		healthbar?.onDelete()
 		qdel(healthbar)
 		healthbar = null
 		..()

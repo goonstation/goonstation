@@ -42,10 +42,11 @@
 	pixel_x = -32
 
 	New(var/location = null, var/state = null)
+		..()
 		if(location)
-			src.loc = location
+			src.set_loc(location)
 		else
-			src.loc = usr.loc
+			src.set_loc(usr.loc)
 
 		if(state)
 			icon_state = "[state]"
@@ -167,7 +168,7 @@
 			adjustSickness(-sickness)
 			eject_rider(2)
 		else
-			src.loc = AM
+			src.set_loc(AM)
 			walk(src, dir, speed_delay)
 
 	else if(ismob(AM))
@@ -182,7 +183,7 @@
 			if(give_points)
 				adjustSickness(6)
 			trickAnimate()
-			src.loc = AM.loc
+			src.set_loc(AM.loc)
 			walk(src, turn(dir, pick(180, 90, -90)), speed_delay)
 			playsound(src, pick(sb_tricks), 65, 1)
 

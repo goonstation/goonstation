@@ -96,9 +96,13 @@
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
 			src.attackby(O, user)
 
-	attackby(obj/item/W, mob/user, params, obj/item/storage/T) // T for transfer - transferring items from one storage obj to another
+	//failure returns 0 or lower for diff messages - sorry
+	proc/check_can_hold(obj/item/W)
+		if (!W)
+			return 0
+		.= 1
 		if (W.cant_drop)
-			return
+			return -1
 		if (islist(src.can_hold) && src.can_hold.len)
 			var/ok = 0
 			if (src.in_list_or_max && W.w_class <= src.max_wclass)
@@ -108,17 +112,26 @@
 					if (ispath(A) && istype(W, A))
 						ok = 1
 			if (!ok)
-				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
-				return
+				return 0
 
 		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
-			return
+			return -1
 
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len >= slots)
-			boutput(user, "<span class='alert'>[src] is full!</span>")
-			return 0
+			return -2
+
+	attackby(obj/item/W, mob/user, params, obj/item/storage/T) // T for transfer - transferring items from one storage obj to another
+		var/canhold = src.check_can_hold(W,user)
+		if (canhold <= 0)
+			switch (canhold)
+				if(0)
+					boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
+				if(-1)
+					boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
+				if(-2)
+					boutput(user, "<span class='alert'>[src] is full!</span>")
+			return
 
 		var/atom/checkloc = src.loc // no infinite loops for you
 		while (checkloc && !isturf(src.loc))
@@ -133,10 +146,10 @@
 			src.add_contents(W)
 			T.hud.remove_item(W)
 		else
-			user.u_equip(W)
-			W.dropped(user)
 			src.add_contents(W)
+			user.u_equip(W)
 		hud.add_item(W)
+		update_icon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
@@ -325,7 +338,7 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
@@ -382,15 +395,10 @@
 		if (!I)
 			return
 
-		I.throwforce += 8 //Ugly. Who cares.
-		SPAWN_DBG(1.5 SECONDS)
-			if (I)
-				I.throwforce -= 8
-
 		I.set_loc(get_turf(src.loc))
 		I.dropped()
 		src.hud.remove_item(I) //fix the funky UI stuff
 		I.layer = initial(I.layer)
-		I.throw_at(target, 8, 2)
+		I.throw_at(target, 8, 2, bonus_throwforce=8)
 
 		playsound(src, 'sound/effects/singsuck.ogg', 40, 1)

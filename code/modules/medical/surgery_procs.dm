@@ -34,6 +34,9 @@ Finally Sutures on the head heal these back to op_stage 0.0 in a speicifc order:
 limbs are their own thing not included here.
 */
 
+// chest item whitelist, because some things are more important than being reasonable
+var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gnomechompski/elf, /obj/item/gnomechompski/mummified)
+
 // ~make procs 4 everything~
 /proc/surgeryCheck(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob)
 	if (!patient) // did we not get passed a patient?
@@ -176,6 +179,10 @@ limbs are their own thing not included here.
 		if (patient.chest_item == null)
 			// If no item in chest, get surgeon's equipped item
 			var/obj/item/chest_item = surgeon.equipped()
+
+			if(chest_item.w_class > 3 && !(chest_item.type in chestitem_whitelist))
+				surgeon.show_text("<span class='alert'>[chest_item] is too big to fit into [patient]'s chest cavity.</span>")
+				return 1
 
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest.</span>",\
 			surgeon, "<span class='notice'>You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest.</span>",\

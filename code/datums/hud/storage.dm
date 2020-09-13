@@ -2,13 +2,17 @@
 	var/obj/screen/hud
 		boxes
 		close
+		sel
 	var/obj/item/storage/master
 	var/list/obj_locs = null // hi, haine here, I'm gunna crap up this efficient code with REGEX BULLSHIT YEAHH!!
+	var/empty_obj_loc = null
 
 	New(master)
+		..()
 		src.master = master
 		src.boxes = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "block", ui_storage_area)
 		src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
+		src.sel = create_screen("sel", "sel", 'icons/mob/hud_human_new.dmi', "sel", null, HUD_LAYER+1.2)
 		update()
 
 	disposing()
@@ -86,6 +90,27 @@
 				user.detach_hud(src)
 				user.s_active = null
 
+	//issue below with th4e way we draw boxes : all boxes are one object drawn multiple tiles using screenloc...
+	//I cannot get specific values for one box or find which item is in which box without some maybe-expensive string parsing. Figure out not-slow fix later
+	MouseEntered(var/obj/screen/hud/H, location, control, params)
+		if (!H || H.id != "boxes") return
+		if (usr)
+			var/obj/item/I = usr.equipped()
+			if (src.master && I && src.master.loc == usr && src.master.check_can_hold(I)>0)
+				sel.screen_loc = empty_obj_loc
+
+
+	MouseExited(var/obj/screen/hud/H)
+		if (!H) return
+		sel.screen_loc = null
+
+//idk if i can even use the params of mousedrop for this
+/*
+	MouseDrop(var/obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+		var/obj/item/I = src.obj_locs[H.screen_loc]
+		if (I)
+			I.MouseDrop(over_object, src_location, over_location, over_control, params)
+*/
 	proc/update()
 		var x = 1
 		var y = 1 + master.slots
@@ -146,6 +171,7 @@
 			I.screen_loc = final_loc
 			src.obj_locs[obj_loc] = I
 			i++
+		empty_obj_loc =  "[x+(i%sx)],[y-round(i/sx)]:[pixel_y_adjust]"
 		if(isitem(master))
 			var/obj/item/I = master
 			I.tooltip_rebuild = 1

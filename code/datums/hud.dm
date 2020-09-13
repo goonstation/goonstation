@@ -32,14 +32,29 @@
 				"content" = (src.desc ? src.desc : null),
 				"theme" = src.tooltipTheme
 			))
+		else
+			if (master && (!master.click_check || (usr in master.mobs)))
+				master.MouseEntered(src, location, control, params)
 
 	MouseExited()
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
+		if (master && (!master.click_check || (usr in master.mobs)))
+			master.MouseExited(src)
 
 	MouseWheel(dx, dy, loc, ctrl, parms)
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.scrolled(src.id, dx, dy, usr, parms, src)
+
+
+	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+		if (master && (!master.click_check || (usr in master.mobs)))
+			master.MouseDrop(src, over_object, src_location, over_location, over_control, params)
+
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+		if (master && (!master.click_check || (usr in master.mobs)))
+			master.scrolled(src, O, user)
+
 
 /datum/hud
 	var/list/mob/living/mobs = list()
@@ -165,3 +180,7 @@
 
 	proc/clicked(id)
 	proc/scrolled(id, dx, dy, usr, parms)
+	proc/MouseEntered(id,location, control, params)
+	proc/MouseExited(id)
+	proc/MouseDrop(var/obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+	proc/MouseDrop_T(var/obj/screen/hud/H, atom/movable/O as obj, mob/user as mob)

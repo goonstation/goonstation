@@ -204,8 +204,7 @@ toxic - poisons
 #endif
 			if(proj.power > 80)
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				SPAWN_DBG(0)
-					M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
+				M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
 		..()
 
 /datum/projectile/bullet/rifle_762_NATO //like .308 but military
@@ -238,8 +237,7 @@ toxic - poisons
 #endif
 			if(power > 60)
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				SPAWN_DBG(0)
-					M.throw_at(target, 3, 3, throw_type = THROW_GUNIMPACT)
+				M.throw_at(target, 3, 3, throw_type = THROW_GUNIMPACT)
 		..()
 
 /datum/projectile/bullet/tranq_dart
@@ -345,10 +343,9 @@ toxic - poisons
 			if(proj.power >= 40)
 				var/throw_range = (proj.power > 50) ? 6 : 3
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				SPAWN_DBG(0)
-					if(!M.stat) M.emote("scream")
-					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
-					M.update_canmove()
+				if(!M.stat) M.emote("scream")
+				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
 			if (M.organHolder)
 				var/targetorgan
 				for (var/i in 1 to (power/10)-2) //targets 5 organs for strong, 3 for weak
@@ -384,10 +381,9 @@ toxic - poisons
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			SPAWN_DBG(0)
-				if(!M.stat) M.emote("scream")
-				M.do_disorient(15, weakened = 10)
-				M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
+			if(!M.stat) M.emote("scream")
+			M.do_disorient(15, weakened = 10)
+			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 
 /datum/projectile/bullet/airzooka/bad
 	name = "plasmaburst"
@@ -410,10 +406,9 @@ toxic - poisons
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			SPAWN_DBG(0)
-				if(!M.stat) M.emote("scream")
-				M.do_disorient(15, weakened = 25)
-				M.throw_at(target, 12, 3, throw_type = THROW_GUNIMPACT)
+			if(!M.stat) M.emote("scream")
+			M.do_disorient(15, weakened = 25)
+			M.throw_at(target, 12, 3, throw_type = THROW_GUNIMPACT)
 
 
 /datum/projectile/bullet/aex
@@ -463,10 +458,9 @@ toxic - poisons
 				var/throw_range = (proj.power > 20) ? 5 : 3
 
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				SPAWN_DBG(0)
-					if(!M.stat) M.emote("scream")
-					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
-					M.update_canmove()
+				if(!M.stat) M.emote("scream")
+				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 			//if (src.hit_type)
 			// impact_image_effect("K", hit)
@@ -493,12 +487,11 @@ toxic - poisons
 				var/throw_range = (proj.power > 20) ? 5 : 3
 
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				SPAWN_DBG(0)
-					if(!M.stat) M.emote("scream")
-					M.changeStatus("stunned", 1 SECONDS)
-					M.changeStatus("weakened", 2 SECONDS)
-					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
-					M.update_canmove()
+				if(!M.stat) M.emote("scream")
+				M.changeStatus("stunned", 1 SECONDS)
+				M.changeStatus("weakened", 2 SECONDS)
+				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 
 /datum/projectile/bullet/minigun
@@ -651,7 +644,7 @@ toxic - poisons
 	icon_state = "plasma"
 	casing = null
 
-/datum/projectile/bullet/shrapnel // cogwerks: for explosions
+/datum/projectile/bullet/shrapnel // for explosions
 	name = "shrapnel"
 	power = 10
 	damage_type = D_PIERCING
@@ -661,6 +654,107 @@ toxic - poisons
 	icon_state = "2metal0"
 	casing = null
 	icon_turf_hit = "bhole-staple"
+
+/datum/projectile/bullet/cannon // autocannon should probably be renamed next
+	name = "cannon round"
+	brightness = 0.7
+	window_pass = 0
+	icon_state = "20mmAPHE"
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_CUT
+	power = 150
+	dissipation_delay = 1
+	dissipation_rate = 5
+	cost = 1
+	shot_sound = 'sound/weapons/20mm.ogg'
+	shot_volume = 130
+	implanted = null
+
+	ks_ratio = 1.0
+	caliber = 0.787 //20mm
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/cannon
+	pierces = 4
+	shot_sound_extrarange = 1
+
+
+
+	on_launch(obj/projectile/proj)
+		proj.AddComponent(/datum/component/sniper_wallpierce, 4) //pierces 4 walls/lockers/doors/etc. Does not function on restricted Z, rwalls and blast doors use 2 pierces
+		for(var/mob/M in range(proj.loc, 5))
+			shake_camera(M, 3, 8)
+
+
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+
+		..()
+
+		SPAWN_DBG(0)
+			//hit.setTexture()
+
+			var/turf/T = get_turf(hit)
+			new /obj/effects/rendersparks (T)
+			var/impact = clamp(1,3, proj.pierces_left % 4)
+			if(proj.pierces_left <= 1 )
+				new /obj/effects/explosion/dangerous(T)
+				new /obj/effects/explosion/dangerous(get_step(T, dirflag))
+				new /obj/effects/explosion/dangerous(get_step(get_step(T, dirflag), dirflag))
+				proj.die()
+				return
+
+			if(hit && ismob(hit))
+				var/mob/living/M = hit
+				var/throw_range = 10
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				if(!M.stat)
+					M.emote("scream")
+				M.throw_at(target, throw_range, 2, throw_type = THROW_GUNIMPACT)
+
+				if (ishuman(M) && M.organHolder)
+					var/mob/living/carbon/human/H = M
+					var/targetorgan
+					for (var/i in 1 to 3)
+						targetorgan = pick("left_lung", "heart", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+						H.organHolder.damage_organ(proj.power/H.get_ranged_protection(), 0, 0,  targetorgan)
+				M.ex_act(impact)
+
+
+
+			if(hit && isobj(hit))
+				var/obj/O = hit
+				O.throw_shrapnel(T, 1, 1)
+
+				if(istype(hit, /obj/machinery/door))
+					var/obj/machinery/door/D = hit
+					if(!D.cant_emag)
+						D.take_damage(D.health) //fuck up doors without needing ex_act(1)
+
+				else if(istype(hit, /obj/window))
+					var/obj/window/W = hit
+					W.smash()
+
+				else
+					O.ex_act(impact)
+
+			if(hit && isturf(hit))
+				T.throw_shrapnel(T, 1, 1)
+				T.ex_act(2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /datum/projectile/bullet/autocannon
 	name = "HE grenade"
@@ -721,11 +815,7 @@ toxic - poisons
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
 		on_hit(atom/hit, angle, var/obj/projectile/P)
-#if ASS_JAM
-			if (P.data || prob(100)) //Removing the data check would mean indenting is fucked, and im lazy
-#else
 			if (P.data || prob(10))
-#endif
 				..()
 			else
 				new /obj/effects/rendersparks(hit.loc)
@@ -862,7 +952,7 @@ toxic - poisons
 
 	New(var/atom/sloc)
 		if(!sloc) return
-		src.loc = sloc
+		src.set_loc(sloc)
 		for(var/mob/M in src.loc)
 			Crossed(M)
 		return ..()
@@ -1099,13 +1189,13 @@ toxic - poisons
 		if (src.has_grenade !=0)
 			if (src.CHEM != null)
 				if (T)
-					src.CHEM.loc = T
+					src.CHEM.set_loc(T)
 				src.CHEM = null
 				src.has_grenade = 0
 				return 1
 			else if (src.OLD != null)
 				if (T)
-					src.OLD.loc = T
+					src.OLD.set_loc(T)
 				src.OLD = null
 				src.has_grenade = 0
 				return 1
@@ -1117,14 +1207,14 @@ toxic - poisons
 	proc/det(var/turf/T)
 		if (T && src.has_det == 0 && src.has_grenade != 0)
 			if (src.CHEM != null)
-				src.CHEM.loc = T
+				src.CHEM.set_loc(T)
 				src.has_det = 1
 				SPAWN_DBG(1 DECI SECOND)
 					src.CHEM.explode()
 				src.has_grenade = 0
 				return
 			else if (src.OLD != null)
-				src.OLD.loc = T
+				src.OLD.set_loc(T)
 				src.has_det = 1
 				SPAWN_DBG(1 DECI SECOND)
 					src.OLD.prime()
@@ -1177,8 +1267,7 @@ toxic - poisons
 #endif
 			if(power > 80)
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				SPAWN_DBG(0)
-					M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
+				M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
 		..()
 
 /datum/projectile/bullet/antisingularity
@@ -1241,8 +1330,7 @@ toxic - poisons
 
 			if (H.job == "Clown" || clown_tally >= 2)
 				H.drop_from_slot(H.shoes)
-				SPAWN_DBG(0)
-					H.throw_at(get_offset_target_turf(H, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2, throw_type = THROW_GUNIMPACT)
+				H.throw_at(get_offset_target_turf(H, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2, throw_type = THROW_GUNIMPACT)
 				H.emote("twitch_v")
 				JOB_XP(H, "Clown", 1)
 		return

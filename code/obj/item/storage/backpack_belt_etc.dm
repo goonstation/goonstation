@@ -16,7 +16,7 @@
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
 
 /obj/item/storage/backpack/withO2
@@ -34,6 +34,22 @@
 	icon_state = "Syndiebackpack"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/captain
+	name = "Captain's Backpack"
+	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
+	icon_state = "capbackpack"
+	item_state = "capbackpack"
+
+	blue
+		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capbackpack_blue"
+		item_state = "capbackpack_blue"
+
+	red
+		desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capbackpack_red"
+		item_state = "capbackpack_red"
+
 /obj/item/storage/backpack/syndie/tactical
 	name = "tactical assault rucksack"
 	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
@@ -46,6 +62,11 @@
 	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
 	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+#if ASS_JAM
+	New()
+		..()
+		ADD_MORTY(12, 7, 8, 8)
+#endif
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"
@@ -58,9 +79,27 @@
 	icon_state = "Syndiesatchel"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/satchel/captain
+	name = "Captain's Satchel"
+	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
+	icon_state = "capsatchel"
+
+	blue
+		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capsatchel_blue"
+
+	red
+		desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capsatchel_red"
+
 /obj/item/storage/backpack/satchel/medic
 	name = "medic's satchel"
 	icon_state = "satchel_medic"
+#if ASS_JAM
+	New()
+		..()
+		ADD_MORTY(8, 11, 7, 7)
+#endif
 
 /obj/item/storage/backpack/satchel/randoseru
 	name = "randoseru"
@@ -73,6 +112,7 @@
 	item_state = "bp_fjallraven_red"
 
 	New()
+		..()
 		if (prob(50))
 			icon_state = "bp_fjallraven_yellow"
 			item_state = "bp_fjallraven_yellow"
@@ -102,7 +142,7 @@
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/storage/fanny/funny
 	name = "funny pack"
@@ -140,7 +180,7 @@
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 	proc/can_use()
 		.= 1
@@ -215,8 +255,7 @@
 		return
 
 	proc/activate()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 		if(charge > 0)
 			charge -= 1

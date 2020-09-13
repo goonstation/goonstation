@@ -88,7 +88,7 @@
 
 	set_loc() //never ever ever ever!!!
 		..()
-		if (src.loc && src.loc == get_turf(src.loc))
+		if (src.loc && !istype(src.loc, /mob))
 			set_loc(null)
 
 	dropped()
@@ -839,9 +839,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(10)
 
 	disposing()
 		..()

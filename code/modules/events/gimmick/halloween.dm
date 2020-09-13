@@ -36,7 +36,7 @@
 		/obj/item/device/key/haunted,
 		/obj/item/book_kinginyellow)
 
-		var/list/halloweenspawn_temp = halloweenspawn.Copy()
+		var/list/halloweenspawn_temp = landmarks[LANDMARK_HALLOWEEN_SPAWN].Copy()
 		var/turf/majorspawn = pick(halloweenspawn_temp)
 		halloweenspawn_temp.Remove(majorspawn)
 

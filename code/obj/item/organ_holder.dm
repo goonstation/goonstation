@@ -858,7 +858,7 @@
 				var/obj/item/organ/heart/newHeart = I
 				if (newHeart.robotic)
 					if (src.donor.bioHolder.HasEffect("elecres"))
-						newHeart.broken = 1
+						newHeart.breakme()
 					if (newHeart.broken || src.donor.bioHolder.HasEffect("elecres"))
 						src.donor.show_text("Something is wrong with [newHeart], it fails to start beating!", "red")
 						src.donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
@@ -1392,3 +1392,149 @@
 		if (istype(M))
 			M.toggle()
 			src.is_on = M.on
+		if(is_on)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon_state = "[initial(src.icon_state)]_cd"
+
+
+/datum/targetable/organAbility/kidneypurge
+	name = "Kidney Purge"
+	desc = "Dangerously overclock your cyberkidneys to rapidly purge chemicals from your blood."
+	icon_state = "cyberkidney"
+	targeted = 0
+	cooldown = 40 SECONDS
+	var/power = 6
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if(length(linked_organ))
+			for(var/obj/item/organ/O in linked_organ)
+				O.take_damage(15, 15) //safe-ish
+		else
+			linked_organ.take_damage(30, 30) //not safe
+		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body.</span>")
+		APPLY_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src, power)
+		holder.owner.urine += power // -.-
+		SPAWN_DBG(15 SECONDS)
+			if(holder?.owner)
+				REMOVE_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src)
+
+	proc/cancel_purge()
+		if(holder?.owner)
+			REMOVE_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src)
+
+/datum/targetable/organAbility/liverdetox
+	name = "\"Detox\" Toggle"
+	desc = "Activate the experimental \"detoxification\" function of your liver to metabolize ethanol into omnizine."
+	icon_state = "cyberliver"
+	targeted = 0
+	toggled = 1
+	cooldown = 5
+	is_on = 0
+
+	New()
+		..()
+		src.icon_state = "[initial(src.icon_state)]_cd"
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/obj/item/organ/liver/cyber/L = linked_organ
+		if (istype(L))
+			L.overloading = !L.overloading
+			src.is_on = L.overloading
+			boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver.</span>")
+		if(is_on)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon_state = "[initial(src.icon_state)]_cd"
+
+/datum/targetable/organAbility/quickdigest
+	name = "Rapid Digestion"
+	desc = "Force your cyberintestines to rapidly process the contents of your stomach. This can't be healthy."
+	icon_state = "cyberintestine"
+	targeted = 0
+	cooldown = 40 SECONDS
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		linked_organ.take_damage(20, 20) //not safe
+		if(istype(holder.owner, /mob/living))
+			var/mob/living/L = holder.owner
+			if (L.stomach_process && L.stomach_process.len)
+				boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
+				for(var/obj/item/reagent_containers/food/snacks/bite/B in L.stomach_process)
+					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
+			else
+				boutput(L, "<span class='alert'>Your intestines crunch painfully in your gut. Maybe they would work better with some food to process.</span>")
+				linked_organ.take_damage(30) //owwww
+
+
+/datum/targetable/organAbility/projectilevomit
+	name = "Projectile Vomiting"
+	desc = "Upchuck your stomach contents with deadly force."
+	icon_state = "cyberstomach"
+	targeted = 1
+	target_anything = 1
+	cooldown = 10
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if(istype(holder.owner, /mob/living))
+			var/mob/living/L = holder.owner
+			if (L.stomach_process && L.stomach_process.len)
+				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
+				SPAWN_DBG(0)
+					for (var/i in 1 to 3)
+						var/obj/item/O = L.vomit()
+						O.throw_at(target, 8, 3, bonus_throwforce=5)
+						linked_organ.take_damage(3)
+						sleep(0.1 SECONDS)
+						if(linked_organ.broken || !L.stomach_process.len)
+							break
+			else
+				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")
+				linked_organ.take_damage(30) //owwww
+				L.vomit()
+
+/datum/targetable/organAbility/rebreather
+	name = "Rebreather Toggle"
+	desc = "Dangerously overload your cyberlungs to completely pause your breathing. Any oxygen deprivation already suffered will not be cleared, however."
+	icon_state = "cyberlung"
+	targeted = 0
+	toggled = 1
+	cooldown = 5
+	is_on = 0
+
+	New()
+		..()
+		src.icon_state = "[initial(src.icon_state)]_cd"
+
+	cast(atom/target)
+		if (..())
+			return 1
+		if(!islist(linked_organ) && !is_on)
+			boutput(holder.owner, "<span class='notice'>This ability is only usable with two unregulated cyberlungs!</span>")
+			return 1
+
+		src.is_on = !src.is_on
+		boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the rebreather mode on your cyberlungs.</span>")
+		for(var/obj/item/organ/lung/cyber/L in linked_organ)
+			L.overloading = is_on
+		if(is_on)
+			APPLY_MOB_PROPERTY(holder.owner, PROP_REBREATHING, "cyberlungs")
+		else
+			REMOVE_MOB_PROPERTY(holder.owner, PROP_REBREATHING, "cyberlungs")
+
+		if(is_on)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon_state = "[initial(src.icon_state)]_cd"

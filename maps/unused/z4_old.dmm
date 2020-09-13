@@ -2940,7 +2940,7 @@
 	},
 /area/syndicate_station)
 "iq" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
 	},
 /turf/simulated/floor/shuttle{

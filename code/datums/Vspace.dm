@@ -82,13 +82,9 @@ datum/v_space
 //			boutput(user, "<span class='alert'>Out of network range!</span>")
 //			return
 
-		var/obj/landmark/B = null
-		for (var/obj/landmark/A in landmarks)//world)
-			LAGCHECK(LAG_LOW)
-			if (A.name == network)
-				B = A
-				break
-		if(!B)//no entry landmark
+		var/turf/B = pick_landmark(network)
+
+		if(!B) //no entry landmark
 			boutput(user, "<span class='alert'>Invalid network!</span>")
 			return
 
@@ -105,7 +101,7 @@ datum/v_space
 			character.visible_message("<span class='notice'><b>[user.name] logs in!</b></span>")
 		else
 			character = create_Vcharacter(user, network_device, network)
-			character.set_loc(B.loc)
+			character.set_loc(B)
 			character.visible_message("<span class='notice'><b>[character.name] logs in!</b></span>")
 		users.Add(character)
 		// Made much more prominent due to frequent a- and mhelps (Convair880).
@@ -153,7 +149,7 @@ datum/v_space
 			else
 				var/mob/dead/observer/O = user.ghostize()
 				if (O)
-					var/arrival_loc = pick(latejoin)
+					var/arrival_loc = pick_landmark(LANDMARK_LATEJOIN)
 					O.real_name = user.isghost
 					O.name = O.real_name
 					O.set_loc(arrival_loc)

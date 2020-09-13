@@ -40,6 +40,7 @@ datum/pathogen_cdc
 	var/list/mutations = list()
 
 	New(var/pathogen_uid)
+		..()
 		creation_time = world.time / 600
 		src.uid = pathogen_uid
 
@@ -176,7 +177,7 @@ datum/controller/pathogen
 							var/datum/suppressant/S = src.path_to_suppressant[spath]
 							types += S.name
 							types[S.name] = S
-						var/chosen = input("Which suppresant?", "Suppressant", types[1]) in types
+						var/chosen = input("Which suppressant?", "Suppressant", types[1]) in types
 						P.suppressant = types[chosen]
 						P.desc = "[P.suppressant.color] dodecahedrical [P.body_type.plural]"
 
@@ -651,6 +652,7 @@ datum/controller/pathogen
 		src.cdc_creator[key] = P
 
 	New()
+		..()
 		UID_to_symptom = list()
 		symptom_to_UID = list()
 		UID_to_suppressant = list()
@@ -975,11 +977,13 @@ datum/pathogen
 		generate_attributes(strength)
 
 	New()
+		..()
 		setup(0, null, 0)
 
 	unpooled()
 		clear()
 		setup(0, null, 0)
+		..()
 
 	proc/create_weak()
 		randomize(0)
@@ -1561,7 +1565,7 @@ proc/num2hexoc(num, pad)
 
 // One's complement reverse engineering of a hexadecimal one's complement representation to a base 10 signed number
 proc/hex2numoc(var/num)
-	var/len = lentext(num)
+	var/len = length(num)
 	var/max = 7
 	for (var/i = len - 1, i > 0, i--)
 		max = max * 16 + 15

@@ -275,35 +275,32 @@
 							<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
 				src.updateUsrDialog()
 				return
-			if(ispath(sellitem, /obj/item/reagent_containers/food/snacks/ingredient/meat))
-				sellitem = /obj/item/reagent_containers/food/snacks/ingredient/meat
-			if(ispath(sellitem, /obj/item/reagent_containers/food/snacks/plant))
-				sellitem = /obj/item/reagent_containers/food/snacks/plant
-			if(ispath(sellitem, /obj/item/electronics))
-				sellitem = /obj/item/electronics
-			if(ispath(sellitem, /obj/item/parts/robot_parts))
-				sellitem = /obj/item/parts/robot_parts
+			var/list/goods_buy_types
+			goods_buy_types = new /list(0)
 			for(var/datum/commodity/N in goods_buy)
-				if(N.comtype == src.sellitem.type)
-					var/datum/data/record/account = null
-					account = FindBankAccountByName(src.scan.registered)
-					if (!account)
-						src.temp = {" [src] looks slightly agitated when he realizes there is no bank account associated with the ID card.<BR>
-									<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
-						src.add_fingerprint(usr)
-						src.updateUsrDialog()
-						return
-					else
-						doing_a_thing = 1
-						src.temp = pick(src.successful_sale_dialogue) + "<BR>"
-						src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
-						qdel (src.sellitem)
-						src.sellitem = null
-						account.fields["current_money"] += N.price
-						src.add_fingerprint(usr)
-						src.updateUsrDialog()
-						doing_a_thing = 0
-						return
+				if (istype(src.sellitem, N.comtype))
+					goods_buy_types[N.comtype] = N.price
+			if (goods_buy_types.len >= 1)
+				var/goods_type = maximal_subtype(goods_buy_types)
+				var/datum/data/record/account = null
+				account = FindBankAccountByName(src.scan.registered)
+				if (!account)
+					src.temp = {" [src] looks slightly agitated when he realizes there is no bank account associated with the ID card.<BR>
+								<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
+					src.add_fingerprint(usr)
+					src.updateUsrDialog()
+					return
+				else
+					doing_a_thing = 1
+					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
+					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
+					qdel (src.sellitem)
+					src.sellitem = null
+					account.fields["current_money"] += goods_buy_types[goods_type]
+					src.add_fingerprint(usr)
+					src.updateUsrDialog()
+					doing_a_thing = 0
+					return
 			src.temp = {"[pick(failed_sale_dialogue)]<BR>
 						<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
 
@@ -566,7 +563,7 @@
 
 		var/pickprename = pick("Honest","Fair","Merchant","Trader","Kosher","Real Deal","Dealer", "Old", "Ol'", "Zesty", "Sassy", "Bargain", "Discount", "Uncle", "Big", "Little")
 		//var/pickfirstname = pick(first_names)
-		var/picklastname = pick(last_names)
+		var/picklastname = pick_string_autokey("names/last.txt")
 		src.name = "[pickprename] [picklastname]"
 
 		greeting= {"WELL HI THERE, STEP RIGHT UP AND BUY MY STUFF!"}
@@ -807,6 +804,9 @@
 				src.goods_sell += new /datum/commodity/medical/firstaidT(src)
 				src.goods_sell += new /datum/commodity/medical/firstaidO(src)
 				src.goods_sell += new /datum/commodity/medical/firstaidN(src)
+				src.goods_sell += new /datum/commodity/medical/firstaidC(src)
+				src.goods_sell += new /datum/commodity/medical/injectorPent(src)
+				src.goods_sell += new /datum/commodity/medical/injectorPerf(src)
 				src.goods_sell += new /datum/commodity/synthmodule/bacteria(src)
 				src.goods_sell += new /datum/commodity/synthmodule/virii(src)
 				src.goods_sell += new /datum/commodity/synthmodule/fungi(src)
@@ -998,7 +998,7 @@
 			for(var/mob/M in AIviewers(src))
 				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
 				M.unlock_medal("Bombini is missing!", 1)
-				karma_update(15, "SAINT", src)
+				M.add_karma(15) // This line originally tried to give the karma to Bombini. Definitely a bug but I like to imagine that she just managed to pickpocket your karma or something.
 			user.u_equip(W)
 			qdel(W)
 		else
@@ -1039,6 +1039,11 @@
 		src.goods_sell += new /datum/commodity/crayons(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
+		#if ASS_JAM
+		src.goods_sell += new /datum/commodity/screamshoes(src)
+		src.goods_sell += new /datum/commodity/fartflops(src)
+		#endif 
+		
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
 		/////////////////////////////////////////////////////////
@@ -1318,3 +1323,64 @@
 		pickupdialogue = "Here you are."
 
 		pickupdialoguefailure = "No."
+
+
+
+/*
+
+/obj/npc/trader/flexx
+	icon = 'icons/obj/64.dmi'
+	icon_state = "flexx"
+	picture = "flexx.png"
+	name = "Flexx"
+	trader_area = "/area/flexx_trader"
+	angrynope = "Not cool, champ!"
+	whotext = "Yo, buddy, name's Flexx. Whaddup?"
+
+	New()
+		..()
+		/////////////////////////////////////////////////////////
+		//// sell list //////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_sell += new /datum/commodity/hat/bandana(src)
+		src.goods_sell += new /datum/commodity/hat/beret(src)
+		src.goods_sell += new /datum/commodity/hat/spacehelmet(src)
+		src.goods_sell += new /datum/commodity/hat/spacehelmet/red(src)
+		src.goods_sell += new /datum/commodity/hat/pinkwizard(src)
+		src.goods_sell += new /datum/commodity/hat/purplebutt(src)
+		src.goods_sell += new /datum/commodity/hat/dailyspecial(src)
+		src.goods_sell += new /datum/commodity/hat/laurels(src)
+		src.goods_sell += new /datum/commodity/tech/laptop(src)
+		/////////////////////////////////////////////////////////
+		//// buy list ///////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_buy += new /datum/commodity/contraband/hosberet(src)
+		/////////////////////////////////////////////////////////
+
+		greeting= {"Hello there, space-faring friend."}
+
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+
+		sell_dialogue = "What can I relieve you of?"
+
+		buy_dialogue = "What would you like to purchase?"
+
+		successful_purchase_dialogue = list("Lovely, lovely.",
+			"Enjoy.",
+			"Cheers.")
+
+		failed_sale_dialogue = list("I'm not interested in that.",
+			"Don't you have anything else?")
+
+		successful_sale_dialogue = list("Sounds good to me.",
+			"Sure, I'll take it.")
+
+		failed_purchase_dialogue = list("You're a bit lacking in funds.",
+			"Take a second look at my prices.")
+
+		pickupdialogue = "Here are your things."
+
+		pickupdialoguefailure = "I don't believe you've bought anything yet."
+
+
+*/

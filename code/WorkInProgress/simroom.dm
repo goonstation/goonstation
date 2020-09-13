@@ -499,17 +499,11 @@
 /obj/machinery/sim/programcomp/proc/Run_Program(var/program = "zombies", var/vspace = 0)
 	if(vspace == 0)	return
 
-	for (var/obj/landmark/A in landmarks)//world)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "[network]_critter_spawn")//ex (area1_critter_spawn)
-			switch(program)
-				if("zombies")
-					new/obj/critter/zombie(A.loc)
-
-//				if("aliens")
-//					new/obj/critter/zombie(A.loc)
-
-				else
-					break
+	for(var/turf/T in landmarks["[network]_critter_spawn"])
+		switch(program)
+			if("zombies")
+				new/obj/critter/zombie(T)
+			else
+				break
 
 	return

@@ -10,22 +10,34 @@
 
 */
 
-/////ZeWaka note: PLEASE stuff your areas in the right place, its organized
+// ZeWaka note: PLEASE stuff your areas in the right place, its organized
 
 #define SIMS_DETAILED_SCOREKEEPING
 
-//
+
+/**
+  * # area
+  *
+  * A grouping of tiles into a logical space. The sworn enemy of mappers.
+  */
 /area
-	var/tmp/active = 0 //True if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
-	var/list/population = list() //Who is here (ditto)
+
+	/// TRUE if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
+	var/tmp/active = FALSE
+
+	//Who is here (ditto)
+	var/list/population = list()
+
 	var/tmp/fire = null
 	var/atmos = 1
 	var/poweralm = 1
 	var/skip_sims = 0
 	var/tmp/sims_score = 100
 	var/virtual = 0
-	var/is_centcom = 0 // for escape checks
-	var/gencolor
+
+	/// for escape checks
+	var/is_centcom = 0
+
 	level = null
 	#ifdef UNDERWATER_MAP
 	name = "Ocean"
@@ -40,13 +52,15 @@
 	mat_changedesc = 0
 	text = ""
 	var/lightswitch = 1
-	var/may_eat_here_in_restricted_z = 0
+
+	/// If the area is on a restricted z leve, this controls if people can eat within it. (The reason for this might shock you!)
+	var/may_eat_here_in_restricted_z = FALSE
 
 	var/eject = null
 
 	var/obj/machinery/power/apc/area_apc = null // okay in certain cases you may have more than one apc, but for my purposes the latest apc works just fine
 
-	var/requires_power = 1
+	var/requires_power = TRUE
 	var/tmp/power_equip = 1
 	var/tmp/power_light = 1
 	var/tmp/power_environ = 1
@@ -55,23 +69,42 @@
 	var/tmp/used_environ = 0
 	var/expandable = 1
 
-	var/irradiated = 0 // space blowouts use this, should always be 0
-	var/permarads = 0 // Blowouts don't set irradiated on this area back to zero.
-	var/do_not_irradiate = 1 // don't irradiate this place!!
-	// Definitely DO NOT var-edit areas in the map editor because it apparently causes individual tiles
-	// to become detached from the parent area. Example: APCs belonging to medbay or whatever that are in
-	// adjacent maintenance tunnels, not in the same room they're powering. If you set the d_n_i flag,
-	// it will render them useless.
+	/// space blowouts use this, should always be 0
+	var/irradiated = 0
 
-	var/datum/gang/gang_owners = null // gang that owns this area in gang mode
-	var/gang_base = 0 // is this a gang's base (uncaptureable)?
-	var/being_captured = null // for gang mode
+	// Blowouts don't set irradiated on this area back to zero.
+	var/permarads = 0
 
-	var/filler_turf = null		// if set, replacewithspace in this area instead replaces with this turf type
+	/**
+	  * Don't irradiate this place during the blowout event
+		*
+		* Definitely DO NOT var-edit areas in the map editor because it apparently causes individual tiles
+		* to become detached from the parent area.
+		*
+		* Example: APCs belonging to medbay or whatever that are in adjacent maintenance tunnels,
+		* not in the same room they're powering.
+		*
+		* If you set the d_n_i flag, it will render them useless.
+		*/
+	var/do_not_irradiate = 1
 
-	var/teleport_blocked = 0 //Cannot teleport into this area without some explicit set_loc thing. 1 for most things, 2 for definitely everything.
+	/// gang that owns this area in gang mode
+	var/datum/gang/gang_owners = null
 
-	var/workplace = 0 //Do people work here?
+	/// is this a gang's base (uncaptureable)?
+	var/gang_base = 0
+
+	/// Is the area currently being captured/tagged in gang mode
+	var/being_captured = null
+
+	/// if set, replacewithspace in this area instead replaces with this turf type
+	var/filler_turf = null
+
+	/// Cannot teleport into this area without some explicit set_loc thing. 1 for most things, 2 for definitely everything.
+	var/teleport_blocked = 0
+
+	/// Do people work here?
+	var/workplace = 0
 
 	var/list/obj/critter/registered_critters = list()
 	var/waking_critters = 0
@@ -83,15 +116,27 @@
 	var/tmp/played_fx_1 = 0
 	var/tmp/played_fx_2 = 0
 	var/sound_group = null
-	var/sound_environment = 1 //default environment for sounds - see sound datum vars documentation for the presets.
 
-	var/sanctuary = 0//set to 1 to inhibit attacks in this area.
-	var/blocked   = 0//set to 1 to inhibit entrance into this area, may not work completely yet.
-	var/blocked_waypoint //if set and a blocked person makes their way into here via Bad Ways, they'll be teleported here instead of nullspace. use a path!
+	/// default environment for sounds - see sound datum vars documentation for the presets.
+	var/sound_environment = 1
+
+	/// set to TRUE to inhibit attacks in this area.
+	var/sanctuary = 0
+
+	/// set to TRUE to inhibit entrance into this area, may not work completely yet.
+	var/blocked = 0
+
+	/// if set and a blocked person makes their way into here via Bad Ways, they'll be teleported here instead of nullspace. use a path!
+
+	var/blocked_waypoint
 	var/list/blockedTimers
-	var/storming = 0 // for BR
+
+	/// for Battle Royale gamemode
+	var/storming = 0
 
 	var/obj/machinery/light_area_manager/light_manager = 0
+
+	/// Local list of obj/machines found in the area
 	var/list/machines = list()
 
 	proc/CanEnter(var/atom/movable/A)
@@ -153,8 +198,7 @@
 						if( sanctuary && !blocked && !(oldarea.sanctuary))
 							boutput( enteringM, "<b style='color:#31BAE8'>You are entering a sanctuary zone. You cannot be harmed by other players here.</b>" )
 						if (src.name != "Space" || src.name != "Ocean") //Who cares about making space active gosh
-							if (!(enteringM.mind in src.population))
-								src.population += enteringM.mind
+							src.population |= enteringM.mind
 							if (!src.active)
 								src.active = 1
 
@@ -201,6 +245,7 @@
 
 		..()
 
+	/// Returns the turf in the middle of the area. Returns null if none can be found.
 	proc/find_middle(var/mustbeinside = 1)
 		var/minx = 300
 		var/miny = 300
@@ -280,7 +325,7 @@
 				continue
 			value++
 		for (var/obj/machinery/light/L in src.contents)
-			if (L.light_status != 0) //See LIGHT_OK
+			if (L.current_lamp.light_status != 0) //See LIGHT_OK
 				continue
 			value++
 		for (var/obj/window/W in src.contents)
@@ -346,10 +391,13 @@
 		if (light_manager)
 			light_manager.lights -= L
 	New()
+		..()
 		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
-//////////////////////////// zewaka - adventure/technical/admin areas below
 
+// zewaka - adventure/technical/admin areas below //
+
+/// Unless you are an admin, you may not pass GO nor collect $200
 /area/cordon
 	name = "CORDON"
 	icon = 'icons/effects/mapeditor.dmi'
@@ -450,7 +498,8 @@
 			qdel(O)
 		return
 
-/area/build_zone // currently for z4 just so people don't teleport in there randomly
+/// currently for z4 just so people don't teleport in there randomly
+/area/build_zone
 	name = "Build Space"
 	icon_state = "death"
 	skip_sims = 1
@@ -460,11 +509,11 @@
 	force_fullbright = 1
 	filler_turf = "/turf/unsimulated/nicegrass/random"
 
-//////////////////////////// zewaka - shuttle areas, read below note
-
-//These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
-//place to another. Look at escape shuttle for example.
-
+/** Shuttle Areas
+  *
+  * These are shuttle areas, they must contain two areas in a subgroup if you want
+  * to move a shuttle from one place to another. Look at escape shuttle for example.
+  */
 /area/shuttle //DO NOT TURN THE RL_Lighting STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 #ifdef HALLOWEEN
 	alpha = 128
@@ -483,10 +532,7 @@
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
-	//sanctuary = 1//waka waka bang bang
 	teleport_blocked = 2
-	//blocked = 1
-	//blocked_waypoint = /obj/landmark/block_waypoint/shuttle
 
 /area/shuttle/arrival/pre_game
 	icon_state = "shuttle2"
@@ -631,9 +677,8 @@
 		if (!isobserver(Obj) && !isintangible(Obj) && !iswraith(Obj) && !istype(Obj,/obj/machinery/vehicle/escape_pod))
 			var/atom/target = get_edge_target_turf(src, src.throw_dir)
 			if (OldLoc && isturf(OldLoc))
-				SPAWN_DBG(0)
-					if (target && Obj)
-						Obj.throw_at(target, 1, 1)
+				if (target && Obj)
+					Obj?.throw_at(target, 1, 1)
 
 	Exited(atom/movable/Obj)
 		..()
@@ -676,9 +721,9 @@
 	icon_state = "shuttle_transit_sound"
 	teleport_blocked = 1
 
-/////////////////////////////////////zewaka - actual areas below
+// zewaka - actual areas below //
 
-/////////////////////zewaka - adventure zone areas
+// zewaka - adventure zone areas //
 
 /area/station/wreckage
 	name = "Twisted Wreckage"
@@ -788,7 +833,7 @@
 	expandable = 0
 
 
-/////////////////////// zewaka - debris field areas/Spacejunk
+// zewaka - debris field areas/Spacejunk //
 
 /area/buddyfactory
 	name = "Factory V"
@@ -1028,7 +1073,24 @@
 	name = "Tech Outpost"
 	icon_state = "storage"
 
-/////////////////////// Sealab trench areas
+// Gore's Z5 Space generation areas //
+/area/prefab/discount_dans_asteroid
+	name = "Discount Dans delivery asteroid"
+	icon_state = "orange"
+
+/area/prefab/clown_nest
+	name = "Honky Gibbersons Clownspider farm"
+	icon_state = "orange"
+
+/area/prefab/drug_den
+	name = "Space Drug Den"
+	icon_state = "orange"
+
+/area/prefab/drug_den/party
+	name ="Drug Den"
+	icon_state = "purple"
+
+// Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
 	name = "Sea Elevator Room"
@@ -1138,11 +1200,11 @@
 	name = "Water Treatment Facility"
 	icon_state = "purple"
 
-/area/station/bee_sanctuary
+/area/bee_sanctuary
 	name = "Bee Sanctuary"
 	icon_state = "purple"
 
-//////////////////////////// zewaka - vspace areas
+// zewaka - vspace areas //
 
 /area/sim
 	name = "Sim"
@@ -1205,8 +1267,9 @@
 	icon_state = "purple"
 	sound_environment = 9
 
-///////////////////// zewaka-station areas
+// zewaka-station areas //
 
+/// Base station area
 /area/station
 	do_not_irradiate = 0
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
@@ -1319,7 +1382,7 @@ area/station/communications
 	name = "Inner Maintenance"
 	icon_state = "imaint"
 
-/////////////////////////////////////////////////// Donut 3 specific areas
+// Donut 3 specific areas //
 
 // Civilian
 
@@ -1474,7 +1537,7 @@ area/station/communications
 	name = "Northwest Outer Maintenance"
 	icon_state = "OUT_NWmaint"
 
-////////////////////////////////////////////////////////// end
+// donut 3 end //
 
 /area/station/maintenance/storage
 	name = "Atmospherics"
@@ -1931,17 +1994,23 @@ area/station/crewquarters/cryotron
 /area/station/com_dish/comdish
 	name = "Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1 // ????
+#endif
 
 /area/station/com_dish/auxdish
 	name = "Auxilary Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1
+#endif
 
 /area/station/com_dish/research_outpost
 	name = "Research Outpost Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1
+#endif
 
 /area/station/engine
 	sound_environment = 5
@@ -2490,8 +2559,6 @@ area/station/security/visitation
 	icon_state = "chapel"
 	sound_environment = 7
 
-/area/station/chapel/main/main //wtf why is this a thing
-
 /area/station/chapel/office
 	name = "Chapel Office"
 	icon_state = "chapeloffice"
@@ -2560,8 +2627,6 @@ area/station/security/visitation
 	name = "Test Room"
 	icon_state = "storage"
 	teleport_blocked = 1
-
-// cogmap new areas ///////////
 
 /area/station/hangar
 	name = "Hangar"
@@ -2672,6 +2737,7 @@ area/station/security/visitation
 	airbridge
 		name = "Airbridge Router"
 
+/// Off-station research outpost. Used for Cog2.
 /area/research_outpost
 	name = "Research Outpost"
 	icon_state = "blue"
@@ -2694,8 +2760,9 @@ area/station/security/visitation
 		name = "Research Outpost Toxins"
 		icon_state = "green"
 
-///////////////////////////////
+// end station areas //
 
+/// Nukeops listening post
 /area/listeningpost
 	name = "Listening Post"
 	icon_state = "brig"
@@ -2717,8 +2784,7 @@ area/station/security/visitation
 	luminosity = 1
 	force_fullbright = 1
 
-///////////////////////////////
-
+/// Nukeops spawn station
 /area/syndicate_station
 	name = "Syndicate Station"
 	icon_state = "yellow"
@@ -2736,8 +2802,9 @@ area/station/security/visitation
 		name = "firing range"
 		icon_state = "blue"
 
-///////////////////////////////
+// end syndie //
 
+/// Wizard den area for the wizard shuttle spawn
 /area/wizard_station
 	name = "Wizard's Den"
 	icon_state = "yellow"
@@ -2750,13 +2817,10 @@ area/station/security/visitation
 		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
-			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" )//or something
+			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" ) //or something
 			return 0
 		return 1
 
-	//sanctuary = 1
-
-///////////////////////////////
 
 /area/station/ai_monitored
 	name = "AI Monitored Area"
@@ -2803,8 +2867,9 @@ area/station/security/visitation
 	sound_environment = 2
 	teleport_blocked = 1
 
-///////////////////////////////
+// // // // // //
 
+/// Turret protected areas, will activate AI turrets to pop up when entered, and vice-versa when exited.
 /area/station/turret_protected
 	name = "Turret Protected Area"
 	var/list/obj/machinery/turret/turret_list = list()
@@ -2858,6 +2923,11 @@ area/station/security/visitation
 	sound_environment = 12
 	do_not_irradiate = 1
 
+/area/station/turret_protected/ai_module_storage
+	name = "AI Module Storage"
+	icon_state = "ai_module_storage"
+	sound_environment = 12
+
 /area/station/turret_protected/ai_upload_foyer
 	name = "AI Upload Foyer"
 	icon_state = "ai_foyer"
@@ -2876,7 +2946,7 @@ area/station/security/visitation
 
 /area/station/turret_protected/AIsat
 	name = "AI Satellite"
-	icon_state = "ai_chamber"
+	icon_state = "ai_satellite"
 	sound_environment = 12
 	do_not_irradiate = 1
 
@@ -2911,10 +2981,9 @@ area/station/security/visitation
 	name = "Armory Outer Perimeter"
 	icon_state = "red"
 
-/////////////////////////////// OLD AREAS THAT ARE NOT USED BUT ARE IN HERE
+// // // //  OLD AREAS THAT ARE NOT USED BUT ARE IN HERE // // // //
 
-///////////////////// zewaka-old mining outpost
-
+/// old mining outpost
 /area/mining
 	name = "Mining Outpost"
 	icon_state = "engine"
@@ -3015,7 +3084,7 @@ area/station/security/visitation
 	icon_state = "green"
 	sound_environment = 3
 
-////////////////////////////////////
+// // // // // // // // // // // //
 
 /area/russian
 	name = "Kosmicheskoi Stantsii 13"
@@ -3027,219 +3096,16 @@ area/station/security/visitation
 	icon_state = "yellow"
 	permarads = 1
 
-///////////////////////////////
+// // // // // // // // // // // //
 
-/*
-/area/derelict
-	name = "Derelict Station"
-	icon_state = "derelict"
-	sound_environment = 21
-
-/area/derelict/hallway/primary
-	name = "Derelict Primary Hallway"
-	icon_state = "hallP"
-
-/area/derelict/hallway/secondary
-	name = "Derelict Secondary Hallway"
-	icon_state = "hallS"
-
-/area/derelict/arrival
-	name = "Arrival Centre"
-	icon_state = "yellow"
-
-/area/derelict/storage/equipment
-	name = "Derelict Equipment Storage"
-
-/area/derelict/storage/storage_access
-	name = "Derelict Storage Access"
-
-/area/derelict/storage/engine_storage
-	name = "Derelict Engine Storage"
-	icon_state = "green"
-
-/area/derelict/bridge
-	name = "Control Room"
-	icon_state = "bridge"
-
-/area/derelict/bridge/access
-	name = "Control Room Access"
-	icon_state = "auxstorage"
-
-/area/derelict/bridge/ai_upload
-	name = "Ruined Computer Core"
-	icon_state = "ai"
-
-/area/derelict/solar_control
-	name = "Solar Control"
-	icon_state = "engine"
-
-/area/derelict/crew_quarters
-	name = "Derelict Crew Quarters"
-	icon_state = "fitness"
-
-/area/derelict/medical
-	name = "Derelict Medbay"
-	icon_state = "medbay"
-
-/area/derelict/medical/morgue
-	name = "Derelict Morgue"
-	icon_state = "morgue"
-
-/area/derelict/medical/chapel
-	name = "Derelict Chapel"
-	icon_state = "chapel"
-
-/area/derelict/teleporter
-	name = "Derelict Teleporter"
-	icon_state = "teleporter"
-
-/area/derelict/eva
-	name = "Derelict EVA Storage"
-	icon_state = "eva"
-
-/area/derelict/smuggler
-
-/area/derelict/smuggler/power
-	name = "Power center"
-	icon_state = "engine"
-
-/area/derelict/smuggler/cargo
-	name = "Cargo sorting"
-	icon_state = "storage"
-
-/area/derelict/smuggler/control
-	name = "Control room"
-	icon_state = "bridge"*/
-
-/////////////////////////zewaka - old prison area
-
-/*
-/area/prison/arrival_airlock
-	name = "Asylum Station Airlock"
-	icon_state = "green"
-	requires_power = 0
-
-/area/prison/control
-	name = "Warden's Office"
-	icon_state = "security"
-
-/area/prison/crew_quarters
-	name = "Asylum Staff Quarters"
-	icon_state = "security"
-
-/area/prison/closet
-	name = "Prison Supply Closet"
-	icon_state = "dk_yellow"
-
-/area/prison/hallway/north
-	name = "Asylum North Hallway"
-	icon_state = "yellow"
-
-/area/prison/hallway/south
-	name = "Prison South Hallway"
-	icon_state = "yellow"
-
-/area/prison/hallway/west
-	name = "Prison West Hallway"
-	icon_state = "yellow"
-
-/area/prison/hallway/east
-	name = "Prison East Hallway"
-	icon_state = "yellow"
-
-/area/prison/morgue
-	name = "Asylum Morgue"
-	icon_state = "morgue"
-
-/area/prison/medical_research
-	name = "Prison Genetic Research"
-	icon_state = "medresearch"
-
-/area/prison/office
-	name = "Asylum Offices"
-	icon_state = "purple"
-
-/area/prison/office/checkpoint
-	name = "Nurse's Station"
-
-/area/prison/medical
-	name = "Asylum Operating Theatre"
-	icon_state = "medbay"
-
-/area/prison/solar
-	name = "Prison Solar Array"
-	icon_state = "storage"
-	requires_power = 0
-
-/area/prison/podbay
-	name = "Prison Podbay"
-	icon_state = "dk_yellow"
-
-/area/prison/solar_control
-	name = "Prison Solar Array Control"
-	icon_state = "dk_yellow"
-
-/area/prison/solitary
-	name = "Solitary Confinement"
-	icon_state = "brig"*/
-
+/// Used for the admin holding cells.
 /area/prison/cell_block/wards
 	name = "Asylum Wards"
 	icon_state = "brig"
-	requires_power = 0/*
+	requires_power = 0
 
-/area/prison/cell_block/A
-	name = "Prison Cell Block A"
-	icon_state = "brig"
 
-/area/prison/cell_block/B
-	name = "Prison Cell Block B"
-	icon_state = "brig"
-
-/area/prison/cell_block/C
-	name = "Prison Cell Block C"
-	icon_state = "brig"
-*/
-
-///////////////////////////////
-
-/*/area/factory
-	name = "Derelict Robot Factory"
-	icon_state = "start"
-
-/area/factory/core
-	name = "Aged Computer Core"
-	icon_state = "ai"
-
-/area/old_outpost
-	name = "Derelict Outpost"
-	icon_state = "yellow"
-	sound_environment = 12
-
-/area/old_outpost/engine
-	name = "Outpost Engine"
-	icon_state = "dk_yellow"
-	sound_environment = 10
-
-/area/old_outpost/control
-	name = "Outpost Control"
-	icon_state = "purple"
-
-/area/old_outpost/medical
-	name = "VR Research"
-	icon_state = "medresearch"
-	sound_environment = 3
-
-/area/old_outpost/study
-	name = "Outpost Study"
-	icon_state = "green"
-	sound_environment = 4
-
-/area/old_outpost/teleporter
-	name = "Outpost Teleporter"
-	icon_state = "teleporter"
-	sound_environment = 2*/
-
+/// Shamecube area, applied on the admin command. Blocks entry.
 /area/shamecube
 	name = "Shame Cube"
 	blocked = 1
@@ -3254,6 +3120,7 @@ area/station/security/visitation
 		else
 			return 0
 
+/// Unshame cube area, replaces the previous shamecube area.
 /area/shamecube/unshamefulcube
 	name = "Unshameful Cube"
 	blocked = 0
@@ -3264,30 +3131,42 @@ area/station/security/visitation
 	CanEnter()
 		return 1
 
+/** When building a zone in space, unconnected to anywhere else, this is the zone that gets created.
+ *  If an APC existed in the zone upon creation, will rename the APC as well.
+ */
 /area/built_zone
 	name = "Built Zone"
 	requires_power = 1
 	power_equip = 0
 	power_light = 0
 	power_environ = 0
+
 	proc/SetName(var/name)
 		src.name = name
 		for(var/obj/machinery/power/apc/apc in src)
 			apc.name = "[name] APC"
 			apc.area = src
+
 	New()
 		.=..()
-		SetName(name)//because the jerk built an APC first, because WHY NOT JERKO?!
+		SetName(name) //because the jerk built an APC first, because WHY NOT JERKO?!
 
-
-// end areas
-
+/// adhara setpiece
+/area/janitor_setpiece
+	name = "Rental Office"
+	icon_state = "purple"
 
 
 
 /* ================================================== */
 
+
+
+/**
+	* Called when an area first loads
+  */
 /area/New()
+	..()
 	src.icon = 'icons/effects/alert.dmi'
 	src.layer = EFFECTS_LAYER_BASE
 //Halloween is all about darkspace
@@ -3311,7 +3190,9 @@ area/station/security/visitation
 	SPAWN_DBG(1.5 SECONDS)
 		src.power_change()		// all machines set to current power level, also updates lighting icon
 
-
+/**
+  * Causes a power alert in the area. Notifies AIs.
+  */
 /area/proc/poweralert(var/state, var/source)
 	if (state != poweralm)
 		poweralm = state
@@ -3319,7 +3200,7 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/aiPlayer in AIs)
+		for (var/mob/living/silicon/aiPlayer in by_type[/mob/living/silicon/ai])
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
@@ -3327,6 +3208,9 @@ area/station/security/visitation
 	return
 
 
+/**
+  * Causes a fire alert in the area if there is not one already set. Notifies AIs.
+  */
 /area/proc/firealert()
 	if(src.name == "Space" || src.name == "Ocean") //no fire alarms in space
 		return
@@ -3341,14 +3225,16 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/ai/aiPlayer in AIs)
+		for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 			LAGCHECK(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])
 			a.triggerAlarm("Fire", src, cameras, src)
 			LAGCHECK(LAG_HIGH)
-	return
 
+/**
+  * Resets the fire alert in the area. Notifies AIs.
+  */
 /area/proc/firereset()
 	if (src.fire)
 		src.fire = 0
@@ -3358,31 +3244,38 @@ area/station/security/visitation
 		for (var/obj/machinery/firealarm/F in src)
 			F.icon_state = "fire0"
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/ai/aiPlayer in AIs)
+		for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
 			aiPlayer.cancelAlarm("Fire", src, src)
 			LAGCHECK(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])
 			a.cancelAlarm("Fire", src, src)
 			LAGCHECK(LAG_HIGH)
-	return
 
+/**
+  * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
+  */
 /area/proc/updateicon()
 	if ((fire || eject) && power_environ)
 		if(fire && !eject)
-//			icon_state = "blue"
 			icon_state = null
 		else if(!fire && eject)
 			icon_state = "red"
 		else
 			icon_state = "blue-red"
 	else
-	//	new lighting behaviour with obj lights
+		//	new lighting behaviour with obj lights
 		icon_state = null
 
-/area/proc/powered(var/chan)		// return true if the area has power to given channel
-
+/**
+  * Determines is an area is powered or not.
+	*
+  * * chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON)
+	*
+  * * return true if the area has power to given channel, false otherwise, null if channel was not specified
+  */
+/area/proc/powered(chan)
 	if(!requires_power)
-		return 1
+		return TRUE
 	switch(chan)
 		if(EQUIP)
 			return power_equip
@@ -3390,10 +3283,11 @@ area/station/security/visitation
 			return power_light
 		if(ENVIRON)
 			return power_environ
-	return 0
+	return null
 
-// called when power status changes
-
+/**
+  * Called when power status changes. Updates machinery and the icon of the area.
+  */
 /area/proc/power_change()
 	for(var/X in src.machines)	// for each machine in the area
 		var/obj/machinery/M = X
@@ -3401,8 +3295,12 @@ area/station/security/visitation
 
 	updateicon()
 
-/area/proc/usage(var/chan)
-
+/**
+  * Returns the current usage of the specified channel
+	*
+  * * required - chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON, TOTAL)
+  */
+/area/proc/usage(chan)
 	switch(chan)
 		if(LIGHT)
 			. = used_light
@@ -3413,13 +3311,22 @@ area/station/security/visitation
 		if(TOTAL)
 			. = used_light + used_equip + used_environ
 
+/**
+  * sets all current usage of power to 0
+  */
 /area/proc/clear_usage()
-
 	used_equip = 0
 	used_light = 0
 	used_environ = 0
 
-/area/proc/use_power(var/amount, var/chan)
+/**
+  * Uses the specified ammount of power for the specified channel
+  *
+  * * required - amount - the amt. of power to use
+	*
+  * * required - chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON)
+  */
+/area/proc/use_power(amount, chan)
 
 	switch(chan)
 		if(EQUIP)
@@ -3428,11 +3335,6 @@ area/station/security/visitation
 			used_light += amount
 		if(ENVIRON)
 			used_environ += amount
-
-
-/area/janitor_setpiece // adhara setpiece
-	name = "Rental Office"
-	icon_state = "purple"
 
 
 /*
@@ -4611,7 +4513,7 @@ area/station/security/visitation
 	icon_state = "storage"
 	teleport_blocked = 1
 
-// cogmap new areas ///////////
+// cogmap new areas // //
 
 /area/station2/hangar
 	name = "Hangar"
@@ -4744,7 +4646,7 @@ area/station/security/visitation
 		name = "Research Outpost Toxins"
 		icon_state = "green"
 
-///////////////////////////////
+// // // // // // // // // // // //
 
 /area/listeningpost
 	name = "Listening Post"
@@ -4767,7 +4669,7 @@ area/station/security/visitation
 	luminosity = 1
 	force_fullbright = 1
 
-///////////////////////////////
+// // // // // // // // // // // //
 
 /area/syndicate_station
 	name = "Syndicate Station"
@@ -4786,7 +4688,7 @@ area/station/security/visitation
 		name = "firing range"
 		icon_state = "blue"
 
-///////////////////////////////
+// // // // // // // // // // // // // // // //
 
 /area/wizard_station
 	name = "Wizard's Den"
@@ -4806,7 +4708,7 @@ area/station/security/visitation
 
 	//sanctuary = 1
 
-///////////////////////////////
+// // // // // // // // // // // // // // // //
 
 /area/station2/ai_monitored
 	name = "AI Monitored Area"
@@ -4853,7 +4755,7 @@ area/station/security/visitation
 	sound_environment = 2
 	teleport_blocked = 1
 
-///////////////////////////////
+// // // // // // // // // // // // // //
 
 /area/station2/turret_protected
 	name = "Turret Protected Area"

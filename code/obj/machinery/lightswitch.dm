@@ -8,7 +8,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = 1.0
-	plane = PLANE_NOSHADOW_BELOW
+	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
 	var/on = 1
 	var/area/area = null
@@ -64,9 +64,9 @@
 			icon_state = "light0"
 			light.set_color(1, 0.50, 0.50)
 
-/obj/machinery/light_switch/examine(mob/user)
+/obj/machinery/light_switch/get_desc(dist, mob/user)
 	if(user && !user.stat)
-		return list("A light switch. It is [on? "on" : "off"].")
+		return "A light switch. It is [on? "on" : "off"]."
 
 /obj/machinery/light_switch/attack_hand(mob/user)
 

@@ -122,7 +122,7 @@
 		holder = null
 		..()
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A) //
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
 		if (T && !src.decal_done && ispath(src.created_decal))
@@ -137,9 +137,6 @@
 	proc/on_life(var/mult = 1)
 		if (holder && (src.broken || src.get_damage() > MAX_DAMAGE) )
 			return 0
-		if (emagged && prob(30))	//don't really need to check for robotic too since no other types of organs can or should be emagged
-			take_damage(1, 0, 0)
-
 		return 1
 
 	//What should happen each life tick when an organ is broken.
@@ -171,16 +168,7 @@
 			if (!src.broken  && failure_disease)
 				src.donor.cure_disease(failure_disease)
 
-			//all robotic organs have a base stamina buff, some have others, see heart. maybe lungs in future
-			if (src.robotic)
-				if (src.emagged)
-					src.donor.add_stam_mod_regen("cyber-[src.organ_name]", 5)
-					src.donor.add_stam_mod_max("cyber-[src.organ_name]", 20)
-				else
-					src.donor.add_stam_mod_regen("cyber-[src.organ_name]", 2)
-					src.donor.add_stam_mod_max("cyber-[src.organ_name]", 10)
-
-		if (islist(src.organ_abilities) && src.organ_abilities.len)
+		if (!broken && islist(src.organ_abilities) && src.organ_abilities.len)
 			var/datum/abilityHolder/organ/A = M.get_ability_holder(/datum/abilityHolder/organ)
 			if (!istype(A))
 				A = M.add_ability_holder(/datum/abilityHolder/organ)
@@ -197,14 +185,6 @@
 		if (src.donor)
 			if (failure_disease)
 				src.donor.cure_disease(failure_disease)
-
-			if (src.robotic)
-				if (src.emagged)
-					src.donor.remove_stam_mod_regen("cyber-[src.organ_name]")
-					src.donor.remove_stam_mod_max("cyber-[src.organ_name]")
-				else
-					src.donor.remove_stam_mod_regen("cyber-[src.organ_name]")
-					src.donor.remove_stam_mod_max("cyber-[src.organ_name]")
 
 		if (!src.donor_DNA && src.donor && src.donor.bioHolder)
 			src.donor_DNA = src.donor.bioHolder.Uid
@@ -281,8 +261,8 @@
 
 		// if (src.get_damage() >= MAX_DAMAGE)
 		if (brute_dam + burn_dam + tox_dam >= MAX_DAMAGE)
-			src.broken = 1
-			donor.contract_disease(failure_disease,null,null,1)
+			src.breakme()
+			donor?.contract_disease(failure_disease,null,null,1)
 		health_update_queue |= donor
 		return 1
 
@@ -341,3 +321,26 @@
 			return 1
 		else
 			return 0
+
+	proc/breakme()
+		if (!broken && islist(src.organ_abilities) && src.organ_abilities.len)// remove abilities when broken
+			var/datum/abilityHolder/aholder
+			if (src.donor && src.donor.abilityHolder)
+				aholder = src.donor.abilityHolder
+			else if (src.holder && src.holder.donor && src.holder.donor.abilityHolder)
+				aholder = src.holder.donor.abilityHolder
+			if (istype(aholder))
+				for (var/abil in src.organ_abilities)
+					src.remove_ability(aholder, abil)
+		src.broken = 1
+
+	proc/unbreakme()
+		if (broken && islist(src.organ_abilities) && src.organ_abilities.len) //put them back if fixed (somehow)
+			var/datum/abilityHolder/organ/A = donor?.get_ability_holder(/datum/abilityHolder/organ)
+			if (!istype(A))
+				A = donor?.add_ability_holder(/datum/abilityHolder/organ)
+			if (!A)
+				return
+			for (var/abil in src.organ_abilities)
+				src.add_ability(A, abil)
+		src.broken = 0

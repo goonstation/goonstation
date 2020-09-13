@@ -160,7 +160,6 @@
 
 	proc/launch()
 		if (!target)
-			loc = null
 			qdel(src)
 		SPAWN_DBG(0)
 			while (loc != get_turf(target))

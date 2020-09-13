@@ -37,6 +37,7 @@
 		ability_toggle
 		stats
 		legend
+		sel
 	var/list/obj/screen/hud/inventory_bg = list()
 	var/list/obj/item/inventory_items = list()
 	var/show_inventory = 1
@@ -48,6 +49,8 @@
 	var/mob/living/carbon/human/master
 
 	var/layout_style = "goon"
+
+	var/mutable_appearance/default_sel_appearance
 
 	var/static/list/layouts = \
 							list("goon" = list( \
@@ -169,6 +172,7 @@
 		..()
 
 	New(M)
+		..()
 		master = M
 
 		SPAWN_DBG(0)
@@ -273,6 +277,10 @@
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/burnprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs burning attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/bluntprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs blunt attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 15%"
+
+			sel = create_screen("sel", "sel", src.icon_hud, "sel", null, HUD_LAYER+1.2)
+			sel.mouse_opacity = 0
+			default_sel_appearance = new(sel)
 
 			set_visible(twohandl, 0)
 			set_visible(twohandr, 0)
@@ -426,6 +434,7 @@
 				src.update_pulling()
 
 			if ("rest")
+				if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 				if(master.ai_active && !master.hasStatus("resting"))
 					master.show_text("You feel too restless to do that!", "red")
 				else
@@ -547,6 +556,162 @@
 				clicked_slot(slot_head)
 			#undef clicked_slot
 
+	MouseEntered(var/obj/screen/hud/H, location, control, params)
+		if (!H || usr != src.master) return
+		var/obj/item/W = null
+		var/obj/item/I
+
+		#define entered_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseEntered(location,control,params); }
+		#define test_slot(slot) if (!W) { I = master.equipped(); if (I && !master.can_equip(I, master.slot)) { I = null; } if (I && sel) { sel.screen_loc = H.screen_loc; } }
+
+		switch(H.id)
+			if("belt")
+				entered_slot(slot_belt)
+				test_slot(slot_belt)
+			if("storage1")
+				entered_slot(slot_l_store)
+				test_slot(slot_l_store)
+			if("storage2")
+				entered_slot(slot_r_store)
+				test_slot(slot_r_store)
+			if("back") //mousing over the bag to trigger a sel outline is handled in small_storage_parent.dm off of the storage hud so we dont have to do typechecks
+				entered_slot(slot_back)
+				test_slot(slot_back)
+			if("shoes")
+				entered_slot(slot_shoes)
+				test_slot(slot_shoes)
+			if("gloves")
+				entered_slot(slot_gloves)
+				test_slot(slot_gloves)
+			if("id")
+				entered_slot(slot_wear_id)
+				test_slot(slot_wear_id)
+			if("under")
+				entered_slot(slot_w_uniform)
+				test_slot(slot_w_uniform)
+			if("suit")
+				entered_slot(slot_wear_suit)
+				test_slot(slot_wear_suit)
+			if("glasses")
+				entered_slot(slot_glasses)
+				test_slot(slot_glasses)
+			if("ears")
+				entered_slot(slot_ears)
+				test_slot(slot_ears)
+			if("mask")
+				entered_slot(slot_wear_mask)
+				test_slot(slot_wear_mask)
+			if("head")
+				entered_slot(slot_head)
+				test_slot(slot_head)
+			if ("lhand")
+				entered_slot(slot_l_hand)
+			if ("rhand")
+				entered_slot(slot_r_hand)
+			if ("intent")
+				switch (master.a_intent)
+					if (INTENT_DISARM)
+						sel.icon_state = "intent-sel-disarm"
+					if (INTENT_HARM)
+						sel.icon_state = "intent-sel-harm"
+					if (INTENT_HELP)
+						sel.icon_state = "intent-sel-help"
+					if (INTENT_GRAB)
+						sel.icon_state = "intent-sel-grab"
+				sel.screen_loc = H.screen_loc
+
+			if ("throw")
+				if (master.in_throw_mode)
+					sel.icon_state = "throw1_over"
+				else
+					sel.icon_state = "throw0_over"
+				sel.screen_loc = H.screen_loc
+
+		#undef entered_slot
+		#undef test_slot
+
+	MouseExited(obj/screen/hud/H)
+		if (!H || usr != src.master) return
+		if (sel)
+			sel.screen_loc = null
+			if (sel.icon_state != sel)
+				//sel.icon_state = "sel"
+				sel.appearance = default_sel_appearance
+
+	MouseDrop(obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+		if (!H) return
+		var/obj/item/W = null
+		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop(over_object, src_location, over_location, over_control, params); }
+		switch(H.id)
+			if("belt")
+				mdrop_slot(slot_belt)
+			if("storage1")
+				mdrop_slot(slot_l_store)
+			if("storage2")
+				mdrop_slot(slot_r_store)
+			if("back")
+				mdrop_slot(slot_back)
+			if("shoes")
+				mdrop_slot(slot_shoes)
+			if("gloves")
+				mdrop_slot(slot_gloves)
+			if("id")
+				mdrop_slot(slot_wear_id)
+			if("under")
+				mdrop_slot(slot_w_uniform)
+			if("suit")
+				mdrop_slot(slot_wear_suit)
+			if("glasses")
+				mdrop_slot(slot_glasses)
+			if("ears")
+				mdrop_slot(slot_ears)
+			if("mask")
+				mdrop_slot(slot_wear_mask)
+			if("head")
+				mdrop_slot(slot_head)
+			if ("lhand")
+				mdrop_slot(slot_l_hand)
+			if ("rhand")
+				mdrop_slot(slot_r_hand)
+		#undef mdrop_slot
+
+	MouseDrop_T(obj/screen/hud/H, atom/movable/O as obj, mob/user as mob)
+		if (!H) return
+		var/obj/item/W = null
+		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop_T(O,user); }
+		switch(H.id)
+			if("belt")
+				mdrop_slot(slot_belt)
+			if("storage1")
+				mdrop_slot(slot_l_store)
+			if("storage2")
+				mdrop_slot(slot_r_store)
+			if("back")
+				mdrop_slot(slot_back)
+			if("shoes")
+				mdrop_slot(slot_shoes)
+			if("gloves")
+				mdrop_slot(slot_gloves)
+			if("id")
+				mdrop_slot(slot_wear_id)
+			if("under")
+				mdrop_slot(slot_w_uniform)
+			if("suit")
+				mdrop_slot(slot_wear_suit)
+			if("glasses")
+				mdrop_slot(slot_glasses)
+			if("ears")
+				mdrop_slot(slot_ears)
+			if("mask")
+				mdrop_slot(slot_wear_mask)
+			if("head")
+				mdrop_slot(slot_head)
+			if ("lhand")
+				mdrop_slot(slot_l_hand)
+			if ("rhand")
+				mdrop_slot(slot_r_hand)
+		#undef mdrop_slot
+
 	proc/add_other_object(obj/item/I, loc) // this is stupid but necessary
 
 		var/hide = 0 //hide from layotu based on the ignore_inventory_hide thingo
@@ -615,10 +780,14 @@
 	proc/update_throwing()
 		if (!throwing) return 0
 		throwing.icon_state = "throw[master.in_throw_mode]"
+		if (sel.screen_loc == throwing.screen_loc)
+			sel.icon_state = "[throwing.icon_state]_over"
 
 	proc/update_intent()
 		if (!intent) return 0
 		intent.icon_state = "intent-[master.a_intent]"
+		if (sel.screen_loc == intent.screen_loc)
+			sel.icon_state = "intent-sel-[master.a_intent]"
 
 	proc/update_mintent()
 		if (!mintent) return 0
@@ -991,9 +1160,49 @@
 		if(stamina)
 			stamina.icon_state = on ? "stamina_sprint" : "stamina"
 
+
+
+
+
+
+
+//item moused over events
+
+/mob/proc/moused_over(var/obj/item/I)
+	.=0
+
+/mob/proc/moused_exit(var/obj/item/I)
+	.=0
+
 /mob/living/carbon/human
 	updateStatusUi()
 		if(src.hud && istype(src.hud, /datum/hud/human))
 			var/datum/hud/human/H = src.hud
 			H.update_status_effects()
 		return
+
+	moused_over(var/obj/item/I)
+		if (src.client && src.client.hand_ghosts)
+			if (!src.equipped() && !I.anchored && src.hud?.sel && I != src.back && can_reach(src, I))
+				if (I.two_handed)
+					src.hud.sel.screen_loc = "[src.hud.lhand.screen_loc] to [src.hud.rhand.screen_loc]"
+				else
+					if (src.hand)
+						src.hud.sel.screen_loc = src.hud.lhand.screen_loc
+					else
+						src.hud.sel.screen_loc = src.hud.rhand.screen_loc
+
+				src.hud.sel.icon = I.icon
+				src.hud.sel.icon_state = I.icon_state
+				src.hud.sel.alpha = 120
+				src.hud.sel.filters += filter(type = "outline")
+
+	moused_exit(var/obj/item/I)
+		if (src.client && src.client.hand_ghosts)
+			if (src.hud?.sel?.screen_loc)
+				src.hud.sel.screen_loc = null
+				////src.hud.sel.icon = src.hud.icon_hud
+				//src.hud.sel.icon_state = "sel"
+				//src.hud.alpha = 255
+				src.hud.sel.appearance = src.hud.default_sel_appearance
+				src.hud.sel.filters = null

@@ -96,14 +96,14 @@
 	if(round_limit > 0)
 		SPAWN_DBG (round_limit) // this has got to end soon
 			command_alert("A revolution has been detected on [station_name(1)]. All loyal members of the crew are to ensure the revolution is quelled.","Emergency Riot Update")
-			SPAWN_DBG(6000) // 10 minutes to clean up shop
-				command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Riot Update")
-				SPAWN_DBG(3000) // 5 minutes until everyone dies
-					command_alert("You may feel a slight burning sensation.", "Emergency Riot Update")
-					SPAWN_DBG(10 SECONDS) // welp
-						for(var/mob/living/carbon/M in mobs)
-							M.gib()
-						endthisshit = 1
+			sleep(6000) // 10 minutes to clean up shop
+			command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Riot Update")
+			sleep(3000) // 5 minutes until everyone dies
+			command_alert("You may feel a slight burning sensation.", "Emergency Riot Update")
+			sleep(10 SECONDS) // welp
+			for(var/mob/living/carbon/M in mobs)
+				M.gib()
+			endthisshit = 1
 
 /datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
 	equip_traitor(rev_mob)
@@ -160,7 +160,7 @@
 			comm.messagetext.Add(intercepttext)
 */
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -362,7 +362,7 @@
 				continue
 
 			// Check if they're on the current z-level
-			var/turf/T = get_turf_loc(head_mind.current)
+			var/turf/T = get_turf(head_mind.current)
 			if(T.z != 1)
 				continue
 			// If they are then don't end the round
@@ -396,7 +396,7 @@
 			if(isghostcritter(rev_mind.current) || isVRghost(rev_mind.current))
 				continue
 
-			var/turf/T = get_turf_loc(rev_mind.current)
+			var/turf/T = get_turf(rev_mind.current)
 			if(T.z != 1)
 				continue
 
@@ -438,7 +438,7 @@
 		text = ""
 		if(rev_mind.current)
 			text += "[rev_mind.current.real_name]"
-			var/turf/T = get_turf_loc(rev_mind.current)
+			var/turf/T = get_turf(rev_mind.current)
 			if(isdead(rev_mind.current))
 				text += " (Dead)"
 			else if(T.z == 2)
@@ -457,7 +457,7 @@
 	for(var/datum/mind/rev_nh_mind in revolutionaries)
 		if(rev_nh_mind.current)
 			text += "[rev_nh_mind.current.real_name]"
-			var/turf/T = get_turf_loc(rev_nh_mind.current)
+			var/turf/T = get_turf(rev_nh_mind.current)
 			if(T.z == 2)
 				text += " (Imprisoned!)"
 			else if(isdead(rev_nh_mind.current))
@@ -482,7 +482,7 @@
 			if(isdead(head_mind.current))
 				text += " (Dead)"
 			else
-				var/turf/T = get_turf_loc(head_mind.current)
+				var/turf/T = get_turf(head_mind.current)
 				if(T.z != 1)
 					text += " (Abandoned the [station_or_ship()]!)"
 				else
@@ -519,7 +519,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		processing_items.Add(src)
 
 	disposing()

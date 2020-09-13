@@ -277,7 +277,7 @@
 				if (counter <= 0)
 					var/turf/T = pick_deployment_location()
 					if (!T)
-						T = get_turf(pick(observer_start)) // contingency
+						T = get_turf(pick_landmark(LANDMARK_OBSERVER)) // contingency
 					set_loc(T)
 					if (!deploy)
 						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Invalid state for [src]: Cannot find deploy ability in state DEPLOYING.")

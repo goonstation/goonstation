@@ -303,6 +303,7 @@ Returns:
 		src.filters += filter(type="layer", render_source="*portaltrg")
 
 	New()
+		..()
 		SPAWN_DBG(50) setup()
 
 /atom/proc/cabinetGlassIcon(var/atom/A, var/targetWidth = 12, var/targetHeight= 10, var/iconSize = 32)
@@ -448,8 +449,8 @@ Returns:
 	if(trgX && trgY && trgZ)
 		var/startTime = world.timeofday
 		var/dmm_suite/D = new/dmm_suite()
-		if(loaded && lentext(loaded))
-			usr.loc = locate(trgX,trgY,trgZ)
+		if(loaded && length(loaded))
+			usr.set_loc(locate(trgX,trgY,trgZ))
 			D.read_map(loaded,trgX,trgY,trgZ)
 			boutput(usr, "<span class='alert'>LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC</span>")
 		else
@@ -890,7 +891,7 @@ Returns:
 			source_loc = source.loc
 			client = source.client
 			if(remove_source)
-				source.loc = src
+				source.set_loc(src)
 			if(freeze_source)
 				source.nodamage = 1
 				source.canmove = 0
@@ -898,7 +899,7 @@ Returns:
 		return
 
 	proc/stop()
-		source.loc = source_loc
+		source.set_loc(source_loc)
 		source.client = client
 		source.client.pixel_x = 0
 		source.client.pixel_y = 0
@@ -1013,7 +1014,7 @@ Returns:
 	icon_state = "sabre"
 	anchored = 1
 	New(var/obj/item/experimental/melee/spear/S,var/atom/location)
-		src.loc = location
+		src.set_loc(location)
 		var/image/I = image(S)
 		I.appearance_flags = 0
 		src.overlays += image(S)
@@ -1040,7 +1041,7 @@ Returns:
 			if(beam)
 				if(last != get_turf(over_object))
 					last = get_turf(over_object)
-					beam.loc = get_turf(src)
+					beam.set_loc(get_turf(src))
 					animate(beam, transform=beam.transform, time=1)//, flags=ANIMATION_LINEAR_TRANSFORM)
 					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-get_dist(get_turf(src),get_turf(over_object)), 2))
 		return
@@ -1127,6 +1128,7 @@ Returns:
 	icon_y_off = 29
 
 	New(var/obj/item/experimental/melee/dagger/D, var/mob/U, var/atom/T)
+		..()
 		if(!D || !U || !T)
 			interrupt(INTERRUPT_ALWAYS)
 		else
@@ -1545,6 +1547,7 @@ Returns:
 	density = 1
 
 	New()
+		..()
 		setMaterial(getMaterial("slag"))
 		name = "Statue of Dr.Floorpills"
 
@@ -1637,7 +1640,7 @@ Returns:
 				var/actX = A.pixel_x + x - 1
 				var/actY = A.pixel_y + y - 1
 				var/obj/apixel/P = unpool(/obj/apixel)
-				P.loc = A.loc
+				P.set_loc(A.loc)
 				P.pixel_x = actX
 				P.pixel_y = actY
 				P.color = color
@@ -1677,7 +1680,7 @@ Returns:
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	rebuild()
 		..()
@@ -1836,7 +1839,7 @@ Returns:
 	New()
 		. = ..()
 		START_TRACKING
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	disposing()
 		. = ..()
@@ -2354,7 +2357,7 @@ Returns:
 
 /proc/gobuzz()
 	if(buzztile)
-		usr.loc = buzztile
+		usr.set_loc(buzztile)
 	return
 
 /obj/item/beamtest
@@ -2873,14 +2876,14 @@ Returns:
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	throw_begin(atom/target)
 		icon_state = "boomerang1"
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
@@ -2961,7 +2964,7 @@ Returns:
 			P = new/obj/fancyportal(get_turf(selected))
 			P.setTarget(target)
 			var/targetThing = isturf(target) ? "" : "[target] in "
-			targetThing += get_area(target)
+			targetThing += "[get_area(target)]"
 			logTheThing("admin", usr, null, "created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
 			logTheThing("diary", usr, null, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
 			message_admins("[key_name(usr)] created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
@@ -3050,6 +3053,9 @@ Returns:
 			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 			qdel(src)
 
+	ex_act()
+		return
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /* var/list/raisinlist = new/list()
@@ -3131,6 +3137,7 @@ Returns:
 	icon_state = "r_wall"
 
 	New()
+		..()
 		update()
 
 	proc/update()
@@ -3420,6 +3427,7 @@ var/list/lag_list = new/list()
 		sleep(3 SECONDS)
 
 	New()
+		..()
 		build_base()
 		update()
 
@@ -3446,7 +3454,8 @@ var/list/lag_list = new/list()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		break_it()
 
-	hitby(atom/movable/AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		break_it()
 
@@ -3890,6 +3899,7 @@ var/list/lag_list = new/list()
 		return
 
 	New()
+		..()
 		for(var/D in typesof(/datum/engibox_mode) - /datum/engibox_mode)
 			modes += new D
 
@@ -3909,7 +3919,7 @@ var/list/lag_list = new/list()
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
 				user.loc.loc.Exited(user)
-				user.set_loc(pick(latejoin))
+				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			if("No")
 				return
 
@@ -4038,7 +4048,7 @@ var/list/lag_list = new/list()
 
 	if(high_range)
 	//Uses all cameras within viewrange + camera range, significantly slower
-		for(var/obj/machinery/camera/C in cameras)
+		for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 			if(C.z != src.z || get_dist(src, C) > (src.client.view + CAM_RANGE)) continue
 			visible = (visible | view(CAM_RANGE, C))
 	else

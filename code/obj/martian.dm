@@ -23,7 +23,7 @@
 	boutput(user, "<span class='alert'>You reach your hand into the crevice.</span>")
 
 	if(id)
-		for(var/obj/machinery/door/unpowered/martian/D in doors)
+		for(var/obj/machinery/door/unpowered/martian/D in by_type[/obj/machinery/door])
 			D.locked = !D.locked
 		boutput(user, "<span class='notice'>You push down on something.</span>")
 		return

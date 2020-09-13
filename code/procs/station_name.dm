@@ -23,7 +23,7 @@ var/global/the_station_name = null
 var/global/list/station_name_whitelist = new()
 var/global/list/station_name_whitelist_sectioned = new()
 
-var/global/stationNameChangeDelay = 600 //deciseconds. 600 = 60 seconds
+var/global/stationNameChangeDelay = 1 MINUTE //deciseconds. 600 = 60 seconds
 var/global/lastStationNameChange = 0 //timestamp
 
 /mob/proc/openStationNameChangeWindow(source, submitRoute)

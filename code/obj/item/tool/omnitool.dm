@@ -267,7 +267,11 @@
 
 	New()
 		. = ..()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("fuel", 20)
+		src.create_reagents(20)
+		reagents.add_reagent("fuel", 20)
+
+
+
+/obj/item/tool/omnitool/silicon
+	prefix = "silicon-omnitool"
+	desc = "A set of tools on telescopic arms. It's the robotic future!"

@@ -252,7 +252,7 @@
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
-		for (var/datum/computer/file/pda_program/P in src.cartridge.root.contents)
+		for (var/datum/computer/file/pda_program/P in src.cartridge.root?.contents)
 			if (P.name == "Packet Sniffer")
 				radio_controller.remove_object(src, "[P:scan_freq]")
 				continue
@@ -266,7 +266,7 @@
 	src.scan_program = null
 
 	if (src.hd)
-		for (var/datum/computer/file/pda_program/P in src.hd.root.contents)
+		for (var/datum/computer/file/pda_program/P in src.hd.root?.contents)
 			if (P.name == "Packet Sniffer")
 				radio_controller.remove_object(src, "[P:scan_freq]")
 				continue
@@ -423,10 +423,14 @@
 		if (U.try_deliver(C, user))
 			return
 
-	if (istype(C, /obj/item/disk/data/cartridge) && isnull(src.cartridge))
+	if (istype(C, /obj/item/disk/data/cartridge))
 		user.drop_item()
 		C.set_loc(src)
-		boutput(user, "<span class='notice'>You insert [C] into [src].</span>")
+		if (isnull(src.cartridge))
+			boutput(user, "<span class='notice'>You insert [C] into [src].</span>")
+		else
+			boutput(user, "<span class='notice'>You remove the old cartridge and insert [C] into [src].</span>")
+			user.put_in_hand_or_eject(src.cartridge)
 		src.cartridge = C
 		src.updateSelfDialog()
 
@@ -706,7 +710,7 @@
 			playsound(get_turf(src), "sound/machines/twobeep.ogg", 35, 1)
 
 			for (var/atom in mobs)
-				if (!atom) break
+				if (!atom) continue
 				var/mob/O = atom
 				if (get_dist(get_turf(src),O) <= 3)
 					O.show_message(text("[bicon(src)] *[alert_message]*"))
@@ -748,8 +752,7 @@
 		src.active_program = program
 		program.init()
 
-		if(program.setup_use_process && !(src in processing_items))
-			processing_items.Add(src)
+		if(program.setup_use_process) processing_items |= src
 
 		return 1
 

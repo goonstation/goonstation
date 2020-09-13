@@ -35,7 +35,6 @@
 
 	New()
 		..()
-		ghost_drones += src
 		hud = new(src)
 		src.attach_hud(hud)
 		//src.sight |= SEE_TURFS //Uncomment for meson-like vision. I'm not a fan of it though. -Wire
@@ -60,8 +59,6 @@
 		var/obj/item/cell/cerenkite/charged/CELL = new /obj/item/cell/cerenkite/charged(src)
 		src.cell = CELL
 
-		src.add_sm_light("ghostdrone\ref[src]", list(255,255,255,0.4 * 255), directional = 1)
-
 
 		src.health = src.max_health
 		src.botcard.access = list(access_maint_tunnels, access_ghostdrone, access_engineering,access_external_airlocks,
@@ -72,8 +69,9 @@
 		//Attach shit to tools
 		src.tools = list(
 			new /obj/item/magtractor(src),
-			new /obj/item/tool/omnitool(src),
+			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/safe(src),
+			new /obj/item/lamp_manufacturer(src),
 			new /obj/item/device/analyzer/atmospheric(src),
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
@@ -129,7 +127,6 @@
 	death(gibbed)
 		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
 		setdead(src)
-		ghost_drones -= src
 		if (src.mind)
 			src.mind.dnr = 0
 		if (src.client)
@@ -180,8 +177,6 @@
 		hud.update_pulling()
 
 	disposing()
-		if (src in ghost_drones)
-			ghost_drones -= src
 		if (src in available_ghostdrones)
 			available_ghostdrones -= src
 		..()
@@ -197,7 +192,7 @@
 		if (before == 2 && src.stat < 2) //if we were dead, and now arent
 			src.updateSprite()
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (src.nodamage) return //godmode
 		src.health -= max(burn, brute)
 		if (!isdead(src) && src.health <= 0) //u ded
@@ -273,10 +268,7 @@
 
 		if (length(color) == 7) //Set our luminosity color, if valid
 			var/colors = GetColors(src.faceColor)
-			colors[1] = colors[1] / 255
-			colors[2] = colors[2] / 255
-			colors[3] = colors[3] / 255
-			src.add_sm_light("ghostdrone\ref[src]", list(colors[1],colors[2],colors[3],0.4 * 255), directional = 1)
+			src.add_sm_light("ghostdrone\ref[src]", list(colors[1],colors[2],colors[3],0.4 * 255))
 
 
 
@@ -323,7 +315,7 @@
 				src.icon_state = "g_drone-dead"
 
 			if (!isdead(src))
-				src.add_sm_light("ghostdrone\ref[src]", list(0.94*255,0.88*255,0.12*255,0.4 * 255), directional = 1)
+				src.add_sm_light("ghostdrone\ref[src]", list(0.94*255,0.88*255,0.12*255,0.4 * 255))
 			UpdateOverlays(null, "face")
 			UpdateOverlays(null, "hoverDiscs")
 			animate(src) //stop bumble animation
@@ -1316,9 +1308,9 @@
 	theMind.dnr = 1
 
 
-	boutput(M, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")
-	if (M.mind)
-		M.Browse(grabResource("html/ghostdrone.html"),"window=ghostdrone;size=600x440;title=Ghostdrone Help")
+	boutput(G, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")
+	if (G.mind)
+		G.Browse(grabResource("html/ghostdrone.html"),"window=ghostdrone;size=600x440;title=Ghostdrone Help")
 
 	SPAWN_DBG(1 SECOND)
 		G.show_laws_drone()

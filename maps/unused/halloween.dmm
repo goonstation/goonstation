@@ -1801,7 +1801,7 @@
 /area/station/medical/research)
 "aeb" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
@@ -28978,7 +28978,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -29503,9 +29503,7 @@
 /turf/simulated/floor/plating,
 /area)
 "bei" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating,
 /area)
 "bej" = (
@@ -33460,9 +33458,7 @@
 /turf/simulated/floor/carpet,
 /area)
 "bnI" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor{
 	icon_state = "carpet1"
 	},
@@ -34170,9 +34166,7 @@
 /turf/simulated/shuttle/wall,
 /area)
 "boM" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -34303,9 +34297,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -34510,9 +34502,7 @@
 	d2 = 4
 	},
 /obj/decal/fakeobjects/lightbulb_broken,
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -36314,9 +36304,7 @@
 	requires_power = 1
 	})
 "bsM" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/unsimulated/grasstodirt{
 	tag = "icon-grasstodirt (WEST)";
 	icon_state = "grasstodirt";
@@ -36450,9 +36438,7 @@
 /turf/simulated/wall/asteroid,
 /area)
 "bsZ" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area)
 "bta" = (
@@ -39901,9 +39887,7 @@
 /area)
 "bzl" = (
 /obj/lattice,
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/space,
 /area)
 "bzm" = (

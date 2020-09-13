@@ -41,6 +41,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	plane = PLANE_NOSHADOW_BELOW
 
 	New(var/loc,var/list/viral_list)
+		..()
 		if (!pooled)
 			setup(loc,viral_list)
 
@@ -250,9 +251,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/reagents_max = 10
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(reagents_max) // 9u is the max since we wanna leave at least 1u of blood in the blood puddle
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(reagents_max)
 		if (ling_blood)
 			src.reagents.add_reagent("bloodc", 10)
 			src.sample_reagent = "bloodc"
@@ -274,9 +273,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	setup()
 		if (!src.reagents)
-			var/datum/reagents/R = new/datum/reagents(reagents_max)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(reagents_max)
 		else
 			src.reagents.clear_reagents()
 		if (ling_blood)
@@ -299,9 +296,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	proc/set_sample_reagent_custom(var/reagent_id, var/amt = 10)
 		if (!src.reagents)
-			var/datum/reagents/R = new/datum/reagents(reagents_max)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(reagents_max)
 		else
 			src.reagents.clear_reagents()
 
@@ -775,11 +770,23 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	real_name = "writing"
 
 	get_desc(dist)
-		. = "<br><span class='notice'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br><span style='color:[src.font_color]'>[words]</span>"
+		. = "<br><span class='notice'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br>[words]"
 		//. = "[src.webfont ? "<link href='http://fonts.googleapis.com/css?family=[src.font]' rel='stylesheet' type='text/css'>" : null]<span class='notice'>It says:</span><br><span style='[src.font ? "font-family: [src.font][src.webfont ? ", cursive" : null];" : null]color: [src.font_color]'>[words]</span>"
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
+
+/obj/decal/cleanable/writing/maptext_dummy
+	icon_state = ""
+
+	setup(var/L,var/list/viral_list)
+		. = ..()
+		icon_state = initial(icon_state)
+		maptext_width = 16
+
+	pooled()
+		. = ..()
+		src.maptext = ""
 
 /obj/decal/cleanable/writing/spooky
 	icon = 'icons/obj/writing_animated_blood.dmi'
@@ -1463,9 +1470,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	stain = "azure-stained"
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(10) // 9u is the max since we wanna leave at least 1u of blood in the blood puddle
-		reagents = R
-		R.my_atom = src
+		..()
+		src.create_reagents(10)
 		src.reagents.add_reagent("reliquary_blood", 10)
 		src.blood_DNA = "--conductive_substance--"
 		src.color = "#0b1f8f"
@@ -1664,6 +1670,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				else
 					return
 				burn_time--
+
+			if (on_fire)
+				overlays -= on_fire
+				on_fire = null
+				burn_time = initial(burn_time)
 			pool(src)
 
 	reagent_act(id, volume)

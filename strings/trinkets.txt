@@ -1,0 +1,8 @@
+modifiers@=
+	's dad's@,'s mom's@,'s grampa's@,'s grandma's@,'s favorite@,'s trusty@,'s favorite@,'s heirloom@,'s pet
+	's beloved@,'s lucky@,'s best@,'s antique@,'s old@,'s ol'@,'s prized@,'s neat@,'s good old@,'s good ol'@,'s son's
+	's daughter's@,'s aunt's@,'s uncle's@,'s finest@,'s shiniest@,'s lovely@,'s stupid@,'s prize winning@,'s top shelf
+	's 'prize winning'@,'s 'top shelf'@,'s autographed@,'s monogramed@,'s bejazzled@,'s jewel encrusted@,'s fanciest@,
+	's worn out@,'s custom@,'s luxurious@,'s superb@,'s precious@,'s roommate's@,'s neighbor's@,'s stolen@,'s fire sale@,'s counterfeit@,'s collectible@,
+	's limited edition@,'s ex's@,'s grody old@,'s family keepsake@,'s personalized@,'s smuggled@,'s shameful secret@,'s half-off@,'s bargain-bin@,'s spouse's@,
+

@@ -56,7 +56,6 @@ var/global/list/adventure_elements_by_id = list()
 
 	disposing()
 		icon_state = null
-		loc = null
 		..()
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)

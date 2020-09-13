@@ -390,7 +390,7 @@ var/HasturPresent = 0
 					A.smash()
 				for(var/mob/living/M in src_turf)
 					if(M == O || M == user) continue
-					var/turf/destination = find_loc(user)
+					var/turf/destination = get_turf(user)
 					if (destination)
 						do_teleport(M, destination, 1, sparks=0) ///You will appear adjacent to Hastur.
 						playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)

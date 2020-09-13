@@ -54,10 +54,10 @@
 
 	event_effect(var/source, var/aggressive, var/startturf)
 		..()
-		if ((!islist(kudzustart) || !kudzustart.len) && !isturf(startturf))
+		if (!landmarks[LANDMARK_KUDZUSTART] && !isturf(startturf))
 			message_admins("Error starting event, no kudzu start landmarks. Process aborted.")
 			return
-		var/kudzloc = isturf(startturf) ? startturf : pick(kudzustart)
+		var/kudzloc = isturf(startturf) ? startturf : pick_landmark(LANDMARK_KUDZUSTART)
 		if (prob(1) || aggressive)
 			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
 			L.set_loc(kudzloc)
@@ -394,7 +394,12 @@
 					if (!H.ckey && H.last_client && !H.last_client.mob.mind.dnr)
 						if ((!istype(H.last_client.mob,/mob/living) && !istype(H.last_client.mob,/mob/wraith)) || inafterlifebar(H.last_client.mob))
 							H.ckey = H.last_client.ckey
-
+					if (istype(H.abilityHolder, /datum/abilityHolder/composite))
+						var/datum/abilityHolder/composite/Comp = H.abilityHolder
+						Comp.removeHolder(/datum/abilityHolder/kudzu)
+					else if (H.abilityHolder)
+						H.abilityHolder.dispose()
+						H.abilityHolder = null
 					H.set_mutantrace(/datum/mutantrace/kudzu)
 					natural_opening = 1
 					SHOW_KUDZU_TIPS(H)

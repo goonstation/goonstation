@@ -123,11 +123,11 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					O.icon = 'icons/effects/effects.dmi'
 					O.icon_state = "nothing"
 					flick("empdisable",O)
-					SPAWN_DBG(0.5 SECONDS)
-						qdel(O)
+					sleep(0.5 SECONDS)
+					qdel(O)
 
 				return 1
-		if (istype(source, /obj/machinery) && isAI(user))
+		else if (istype(source, /obj/machinery) && isAI(user))
 			return 1
 
 	return 0 //not in range and not telekinetic
@@ -208,14 +208,15 @@ var/obj/item/dummy/click_dummy = new
 
 
 /proc/get_viewing_AIs(center = null, distance = 7)
+	RETURN_TYPE(/list/mob)
 	. = list()
 
 	var/turf/T = get_turf(center)
-	for (var/mob/living/silicon/ai/theAI in AIs)
+	for (var/mob/living/silicon/ai/theAI in by_type[/mob/living/silicon/ai])
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
 //			if (AIeye in view(center, distance))
-			if(DIST_CHECK(center, AIeye, distance) && T.cameras && T.cameras.len)
+			if(IN_RANGE(center, AIeye, distance) && T.cameras && T.cameras.len)
 				. += AIeye
 				. += theAI
 		//if (istype(theAI.current) && (theAI.current in view(center, distance)) )
@@ -251,10 +252,7 @@ var/obj/item/dummy/click_dummy = new
 //A little wrapper around format_net_id to account for non-null tag values
 /proc/generate_net_id(var/atom/the_atom)
 	if(!the_atom) return
-	var/tag_holder = the_atom.tag
-	the_atom.tag = null //So we generate from internal ref id
 	. = format_net_id("\ref[the_atom]")
-	the_atom.tag = tag_holder
 
 /proc/can_act(var/mob/M, var/include_cuffs = 1)
 	if(!M) return 0 //Please pass the M, I need a sprinkle of it on my potatoes.
@@ -506,6 +504,7 @@ var/obj/item/dummy/click_dummy = new
 	var/a = null
 
 	New(_r,_g,_b,_a=255)
+		..()
 		r = _r
 		g = _g
 		b = _b

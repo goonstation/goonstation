@@ -6,7 +6,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	butcherable = 1
@@ -142,7 +142,7 @@ obj/critter/bear/care
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 3
@@ -218,7 +218,7 @@ obj/critter/bear/care
 	name = "super space yeti"
 	desc = "Well-known as the single most aggressive, dangerous, intelligent, sturdy and hungry thing in the universe."
 	health = 225
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 
 /obj/critter/shark
 	name = "space shark"
@@ -230,7 +230,7 @@ obj/critter/bear/care
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 3
@@ -315,7 +315,7 @@ obj/critter/bear/care
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -509,7 +509,7 @@ obj/critter/bear/care
 	atkcarbon = 1
 	atksilicon = 1
 	brutevuln = 0.7
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	seekrange = 5
 	density = 1 // so lasers can hit them
 	angertext = "screeches at"
@@ -559,7 +559,7 @@ obj/critter/bear/care
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1

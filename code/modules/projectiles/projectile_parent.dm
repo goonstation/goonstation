@@ -53,6 +53,7 @@
 	var/list/hitlist = list() //list of atoms collided with this tick
 	var/reflectcount = 0
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
+	var/is_detonating = 0//to start modeling fuses
 #if ASS_JAM
 	var/projectile_paused = FALSE //for time stopping
 #endif
@@ -79,8 +80,8 @@
 		if (proj_data)
 			proj_data.on_launch(src)
 		src.setup()
-		if (!disposed && !pooled && !qdeled)
-			SPAWN_DBG(-1)
+		if (!disposed && !pooled)
+			SPAWN_DBG(0)
 				if (!is_processing)
 					process()
 
@@ -88,7 +89,7 @@
 		if(hitlist.len)
 			hitlist.len = 0
 		is_processing = 1
-		while (!disposed)
+		while (!disposed && !pooled)
 #if ASS_JAM //dont move while in timestop
 			while(src.projectile_paused)
 				sleep(1 SECOND)
@@ -96,9 +97,6 @@
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
-
-	proc/get_power(obj/O)
-		return src.proj_data.power - max(0,((isnull(src.orig_turf)? 0 : get_dist(src.orig_turf, get_turf(O)))-src.proj_data.dissipation_delay))*src.proj_data.dissipation_rate
 
 	proc/collide(atom/A as mob|obj|turf|area)
 		if (!A) return // you never know ok??
@@ -114,7 +112,7 @@
 				return
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
-		src.power = src.get_power(A)
+		src.power = src.proj_data.get_power(src, A)
 		if(src.power <= 0 && src.proj_data.power != 0) return //we have run out of power
 		// Necessary because the check in human.dm is ineffective (Convair880).
 		var/immunity = check_target_immunity(A, source = src)
@@ -435,7 +433,7 @@
 			die()
 			return
 		proj_data.tick(src)
-		if (disposed)
+		if (disposed || pooled)
 			return
 
 		var/turf/curr_turf = loc
@@ -458,7 +456,7 @@
 				var/turf/T = crossing[i]
 				if (crossing[T] < curr_t)
 					Move(T)
-					if (disposed)
+					if (disposed || pooled)
 						return
 					incidence = get_dir(curr_turf, T)
 					curr_turf = T
@@ -603,6 +601,7 @@ datum/projectile
 
 	// Self-explanatory.
 	var/hits_ghosts = 0
+	var/hits_wraiths = 0
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/pierces = 0
@@ -657,6 +656,9 @@ datum/projectile
 
 		on_canpass(var/obj/projectile/O, atom/movable/passing_thing)
 			.= 1
+
+		get_power(obj/projectile/P, atom/A)
+			return src.power - max(0,((isnull(P.orig_turf)? 0 : get_dist(P.orig_turf, get_turf(A)))-src.dissipation_delay))*src.dissipation_rate
 
 // WOO IMPACT RANGES
 // Meticulously calculated by hand.
@@ -714,6 +716,9 @@ datum/projectile/bullet/autocannon/plasma_orb
 	impact_range = 8
 
 datum/projectile/bullet/autocannon/huge
+	impact_range = 8
+
+datum/projectile/bullet/cannon
 	impact_range = 8
 
 datum/projectile/bullet/glitch
@@ -924,7 +929,7 @@ datum/projectile/snowball
 		P.rotateDirection(prob(50) ? spread : -spread)
 	return P
 
-/proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null, var/turf/remote_sound_source)
+/proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null, var/turf/remote_sound_source, var/play_shot_sound = TRUE)
 	if (!S)
 		return
 	var/obj/projectile/P = unpool(/obj/projectile)
@@ -946,13 +951,14 @@ datum/projectile/snowball
 	if(remote_sound_source)
 		shooter = remote_sound_source
 
-	if (narrator_mode)
-		playsound(S, 'sound/vox/shoot.ogg', 50, 1)
-	else if(DATA.shot_sound && DATA.shot_volume && shooter)
-		playsound(S, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
-		if (isobj(shooter))
-			for (var/mob/M in shooter)
-				M << sound(DATA.shot_sound, volume=DATA.shot_volume)
+	if (play_shot_sound)
+		if (narrator_mode)
+			playsound(S, 'sound/vox/shoot.ogg', 50, 1)
+		else if(DATA.shot_sound && DATA.shot_volume && shooter)
+			playsound(S, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
+			if (isobj(shooter))
+				for (var/mob/M in shooter)
+					M << sound(DATA.shot_sound, volume=DATA.shot_volume)
 
 #ifdef DATALOGGER
 	if (game_stats && istype(game_stats))
@@ -1009,6 +1015,104 @@ datum/projectile/snowball
 	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
+	Q.name = "reflected [Q.name]"
+	Q.launch()
+	return Q
+
+/*
+ * shoot_reflected_true seemed half broken...
+ * So I made my own proc, but left the old one in place just in case -- Sovexe
+ * var/reflect_on_nondense_hits - flag for handling hitting objects that let bullets pass through like secbots, rather than duplicating projectiles
+ */
+/proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3, var/mode = PROJ_RAPID_HEADON_BOUNCE, var/reflect_on_nondense_hits = FALSE)
+	if (!P || !reflector)
+		return
+
+	if(P.reflectcount >= max_reflects)
+		return
+
+	var/play_shot_sound = TRUE
+
+	switch (mode)
+		if (PROJ_NO_HEADON_BOUNCE) //no head-on bounce
+			if ((P.shooter.x == reflector.x) || (P.shooter.y == reflector.y))
+				return
+		if (PROJ_HEADON_BOUNCE) // no rapid head-on bounce
+			if ((P.shooter.x == reflector.x) && abs(P.shooter.y - reflector.y) == 2)
+				return
+			else if (abs(P.shooter.x - reflector.x) == 2 && (P.shooter.y == reflector.y))
+				return
+		if (PROJ_RAPID_HEADON_BOUNCE)
+			if (P.proj_data.shot_sound)
+				if ((P.shooter.x == reflector.x) && abs(P.shooter.y - reflector.y) == 2)
+					play_shot_sound = FALSE //anti-ear destruction
+				else if (abs(P.shooter.x - reflector.x) == 2 && (P.shooter.y == reflector.y))
+					play_shot_sound = FALSE //anti-ear destruction
+		else
+			return
+
+	/*
+		* We have to calculate our incidence each time
+		* Otherwise we risk the reflect projectile using the same incidence over and over
+		* resulting in bumping same wall repeatadly
+	*/
+	var/x_diff = reflector.x - P.x
+	var/y_diff = reflector.y - P.y
+
+	if (!x_diff && !y_diff)
+		return //we are inside the reflector or something went terribly wrong
+	else if (x_diff > 0 && y_diff == 0)
+		P.incidence = WEST
+	else if (x_diff < 0 && y_diff == 0)
+		P.incidence = EAST
+	else if (x_diff == 0 && y_diff > 0)
+		P.incidence = SOUTH
+	else if (x_diff == 0 && y_diff < 0)
+		P.incidence = NORTH
+	else if (x_diff < 0 && y_diff < 0)
+		P.incidence = pick(EAST, NORTH)
+	else if (x_diff < 0 && y_diff > 0)
+		P.incidence = pick(EAST, SOUTH)
+	else if (x_diff > 0 && y_diff < 0)
+		P.incidence = pick(WEST, NORTH)
+	else if (x_diff > 0 && y_diff > 0)
+		P.incidence = pick(WEST, SOUTH)
+	else
+		return //please no runtimes
+
+	var/rx = 0
+	var/ry = 0
+
+	var/nx = P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
+	var/ny = P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
+
+	var/dn = 2 * (P.xo * nx + P.yo * ny) // incident direction DOT normal * 2
+	rx = P.xo - dn * nx // r = d - 2 * (d * n) * n
+	ry = P.yo - dn * ny
+
+	if (rx == ry && rx == 0)
+		logTheThing("debug", null, null, "<b>Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
+		return // unknown error
+
+	//spawns the new projectile in the same location as the existing one, not inside the hit thing
+	var/obj/projectile/Q = initialize_projectile(get_turf(P), P.proj_data, rx, ry, reflector, play_shot_sound = play_shot_sound)
+	if (!Q)
+		return
+	Q.reflectcount = P.reflectcount + 1
+	if (ismob(P.shooter))
+		Q.mob_shooter = P.shooter
+
+	//fix for duplicating projectiles when hitting nondense objects like secbots that don't kill projectiles
+	if (isobj(reflector) && reflector.density == 0)
+		if (reflect_on_nondense_hits)
+			P.die()
+		else
+			Q.die()
+			if (P)
+				return P
+			else
+				return
+
 	Q.name = "reflected [Q.name]"
 	Q.launch()
 	return Q

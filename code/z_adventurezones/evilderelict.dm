@@ -58,12 +58,10 @@ var/maniac_previous_victim = "Unknown"
 				target.ckey = "" // disconnect the player so they rejoin wondering what the hell happened
 				sleep(0)
 				var/mob/dead/observer/ghost = new/mob/dead/observer
-				for (var/obj/landmark/A in landmarks)//world)
-					LAGCHECK(LAG_LOW)
-					if (A.name == "evilchef_corpse")
-						ghost.set_loc(A.loc)
-						var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(A.loc)
-						meat.name = "[victimname] meat"
+				for(var/turf/T in landmarks[LANDMARK_EVIL_CHEF_CORPSE])
+					ghost.set_loc(T)
+					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(T)
+					meat.name = "[victimname] meat"
 				ghost.ckey = victimkey
 				ghost.name = victimname // should've added this sooner
 				ghost.real_name = victimname
@@ -82,9 +80,9 @@ var/maniac_previous_victim = "Unknown"
 			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
-					qdel(src)
+				sleep(rand(100,400))
+				if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
+				qdel(src)
 		..()
 
 
@@ -156,7 +154,7 @@ var/maniac_previous_victim = "Unknown"
 				playsound(src.loc, 'sound/machines/whistlealert.ogg', 50, 1)
 				icon_state = "pr1_1"
 				flick("pr1_a",src)
-				for(var/obj/machinery/door/poddoor/P in doors)
+				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 					if (P.id == src.id)
 						if (!P.density)
 							SPAWN_DBG( 0 )
@@ -321,8 +319,8 @@ var/maniac_previous_victim = "Unknown"
 			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
-					qdel(src)
+				sleep(rand(100,400))
+				if(target)	target << sound('sound/misc/chefsong_end.ogg',channel=7)
+				qdel(src)
 		..()
 

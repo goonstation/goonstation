@@ -229,7 +229,7 @@
 		return 1
 	//For end of round laws
 	else
-		for (var/mob/living/silicon/ai/aiPlayer in AIs)
+		for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
 			var/laws[] = new()
 			if (ticker.centralized_ai_laws.zeroth)
 				laws["0"] = ticker.centralized_ai_laws.zeroth

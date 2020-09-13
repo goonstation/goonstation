@@ -85,6 +85,7 @@ datum/pathogendna
 	var/datum/pathogen/reference = null
 
 	New(var/datum/pathogen/P)
+		..()
 		if (P)
 			reference = unpool(/datum/pathogen)
 			reference.setup(0, P, 0, src)
@@ -148,7 +149,7 @@ datum/pathogendna
 	proc/explode()
 		var/list/ret = new/list()
 		var/pos = 1
-		while (pos < lentext(seqsplice))
+		while (pos < length(seqsplice))
 			if (copytext(seqsplice, pos, pos + 1) != "|")
 				ret += copytext(seqsplice, pos, pos + 3)
 				pos += 3

@@ -357,7 +357,7 @@ td {
 }
 </style></head><body><h2>Module editor</h2><h3>Current items</h3><table style='width:100%'><tr><td style='width:80%'><b>Module</b></td><td style='width:10%'>&nbsp;</td><td style='width:10%'>&nbsp;</td></tr>"}
 
-		for (var/obj/item/I in D.modules)
+		for (var/obj/item/I in D.tools)
 			output += "<tr><td><b>[I.name]</b> ([I.type])</td><td><a href='?src=\ref[src];edit=\ref[I];mod=\ref[D]'>(EDIT)</a><a href='?src=\ref[src];del=\ref[I];mod=\ref[D]'>(DEL)</a></td></tr>"
 
 		output += "</table><br><br><h3>Add new item</h3>"
@@ -379,7 +379,7 @@ td {
 				boutput(usr, "<span class='alert'>Item no longer exists!</span>")
 				show_interface(usr.client, D)
 				return
-			if (!(I in D.modules))
+			if (!(I in D.tools))
 				boutput(usr, "<span class='alert'>Item no longer in module!</span>")
 				show_interface(usr.client, D)
 				return
@@ -390,11 +390,11 @@ td {
 				boutput(usr, "<span class='alert'>Item no longer exists!</span>")
 				show_interface(usr.client, D)
 				return
-			if (!(I in D.modules))
+			if (!(I in D.tools))
 				boutput(usr, "<span class='alert'>Item no longer in module!</span>")
 				show_interface(usr.client, D)
 				return
-			D.modules -= I
+			D.tools -= I
 			qdel(I)
 		if (href_list["edcurr"])
 			if (!current)
@@ -414,8 +414,8 @@ td {
 			if (!current)
 				show_interface(usr.client, D)
 				return
-			D.modules += current
-			current.loc = D
+			D.tools += current
+			current.set_loc(D)
 			current = null
 			boutput(usr, "<span class='notice'>Added item to module!</span>")
 		show_interface(usr.client, D)
@@ -692,3 +692,19 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/electric_expose(var/power = 1)
 	return 0
+
+/mob/living/silicon/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	. = ..()
+
+	src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+	logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+	random_brute_damage(src, AM.throwforce,1)
+
+	#ifdef DATALOGGER
+	game_stats.Increment("violence")
+	#endif
+
+	if(AM.throwforce >= 40)
+		src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
+
+	. = 'sound/impact_sounds/Metal_Clang_3.ogg'

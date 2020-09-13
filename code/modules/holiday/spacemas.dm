@@ -74,8 +74,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 	// Respawn player.
 	var/mob/L
-	var/ASLoc = latejoin.len ? pick(latejoin) : null // picking from an empty list causes a runtime
-	var/WSLoc = wizardstart.len ? pick(wizardstart) : null
+	var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
+	var/WSLoc = job_start_locations["wizard"] ? pick(job_start_locations["wizard"]) : null
 
 	if (!ASLoc)
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (no late-join landmark found).")
@@ -282,8 +282,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		O.set_clothing_icon_dirty()
 		return
 
-var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev","Puffles","Boop","Akiak","Willy","Aga","Snuffles","Tonaph","Suortin","Anana","Ananas","Pineapple","Munchkin","Asiaq","Niko","Roman","Chu","Corazon")
-
 /obj/critter/sealpup
 	name = "space seal pup"
 	desc = "A seal pup, in space, aww."
@@ -293,7 +291,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -302,7 +300,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 
 	New()
 		..()
-		src.name = pick(seal_names)
+		src.name = pick_string_autokey("names/seals.txt")
 
 	CritterDeath()
 		if (!src.alive) return
@@ -444,6 +442,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 	var/image/fire_image = null
 
 	New()
+		..()
 		src.fire_image = image('icons/effects/160x160.dmi', "")
 
 	attack_hand(mob/user as mob)
@@ -555,7 +554,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 
 		else return ..()
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if (ismob(A))
 			src.hit(A)
 		if (src.amount <= 0)
@@ -658,9 +657,6 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
 			bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
 
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
-
 			real_name = "Santa Claus"
 			desc = "Father Christmas! Santa Claus! Old Nick! ..wait, not that last one. I hope."
 			gender = "male"
@@ -681,6 +677,9 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			HS.addAbility(/datum/targetable/santa/warmth)
 			HS.addAbility(/datum/targetable/santa/teleport)
 			HS.addAbility(/datum/targetable/santa/banish)
+
+			sleep(1 SECOND)
+			bioHolder.mobAppearance.UpdateMob()
 
 	death()
 		modify_christmas_cheer(-60)
@@ -822,7 +821,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 							break
 					if(clear)
 						L+=T
-			src.loc = pick(L)
+			src.set_loc(pick(L))
 
 			SPAWN_DBG(30 SECONDS)
 				boutput(src, "<span class='notice'>You may now teleport again.</span>")
@@ -872,23 +871,22 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			bioHolder.mobAppearance.customization_first = "None"
 			bioHolder.mobAppearance.customization_second = "None"
 			bioHolder.mobAppearance.customization_third = "None"
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
 
 			src.mind = new
 			real_name = "Krampus"
 			desc = "Oh shit! Have you been naughty?!"
 
 			if(!src.reagents)
-				var/datum/reagents/R = new/datum/reagents(1000)
-				src.reagents = R
-				R.my_atom = src
+				src.create_reagents(1000)
 
 			src.set_mutantrace(/datum/mutantrace/krampus)
 			src.reagents.add_reagent("stimulants", 50)
 			src.gender = "male"
 			bioHolder.AddEffect("loud_voice")
 			bioHolder.AddEffect("cold_resist")
+
+			sleep(1 SECOND)
+			bioHolder.mobAppearance.UpdateMob()
 
 	Bump(atom/movable/AM, yes)
 		if(src.stance == "krampage")
@@ -909,7 +907,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			if(ismob(AM))
 				var/mob/M = AM
 				for (var/mob/C in viewers(src))
-					shake_camera(C, 8, 3)
+					shake_camera(C, 8, 16)
 					C.show_message("<span class='alert'><B>[src] tramples right over [M]!</B></span>", 1)
 				M.changeStatus("stunned", 80)
 				M.changeStatus("weakened", 5 SECONDS)
@@ -918,13 +916,13 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				playsound(M.loc, "fleshbr1.ogg", attack_volume, 1, -1)
 				playsound(M.loc, "loudcrunch2.ogg", attack_volume, 1, -1)
 				if (istype(M.loc,/turf/))
-					src.loc = M.loc
+					src.set_loc(M.loc)
 			else if(isobj(AM))
 				var/obj/O = AM
 				if(O.density)
 					playsound(O.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", attack_volume, 1, 0, 0.4)
 					for (var/mob/C in viewers(src))
-						shake_camera(C, 8, 3)
+						shake_camera(C, 8, 16)
 						C.show_message("<span class='alert'><B>[src] [attack_text] on [O]!</B></span>", 1)
 					if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
@@ -934,7 +932,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				var/turf/T = AM
 				if(T.density && istype(T,/turf/simulated/wall/))
 					for (var/mob/C in viewers(src))
-						shake_camera(C, 8, 3)
+						shake_camera(C, 8, 16)
 						C.show_message("<span class='alert'><B>[src] [attack_text] on [T]!</B></span>", 1)
 					playsound(T.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", attack_volume, 1, 0, 0.4)
 					T.ex_act(attack_strength)
@@ -985,13 +983,13 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			src.visible_message("<span class='alert'><B>[src] leaps high into the air, heading right for [M]!</B></span>")
 			animate_fading_leap_up(src)
 			sleep(2.5 SECONDS)
-			src.loc = target
+			src.set_loc(target)
 			playsound(src.loc, "sound/voice/animal/bull.ogg", 50, 1, 0, 0.8)
 			animate_fading_leap_down(src)
 			SPAWN_DBG(0)
 				playsound(M.loc, "Explosion1.ogg", 50, 1, -1)
 				for (var/mob/C in viewers(src))
-					shake_camera(C, 10, 6)
+					shake_camera(C, 10, 64)
 					C.show_message("<span class='alert'><B>[src] slams down onto the ground!</B></span>", 1)
 				for (var/turf/T in range(src,3))
 					animate_shake(T,5,rand(3,8),rand(3,8))
@@ -1018,7 +1016,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_stomp
 			if(!src.stat && !src.transforming)
 				for (var/mob/C in viewers(src))
-					shake_camera(C, 10, 6)
+					shake_camera(C, 10, 64)
 					C.show_message("<span class='alert'><B>[src] stomps the ground with \his huge feet!</B></span>", 1)
 				playsound(src.loc, "meteorimpact.ogg", 80, 1, 1, 0.6)
 				for (var/mob/living/M in view(src,2))
@@ -1063,7 +1061,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 							break
 					if(clear)
 						L+=T
-			src.loc = pick(L)
+			src.set_loc(pick(L))
 
 			usr.set_loc(pick(L))
 			smoke.start()
@@ -1111,7 +1109,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 					src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_crush
 					var/mob/living/carbon/human/H = G.affecting
 					src.visible_message("<span class='alert'><B>[src] begins squeezing [H] in \his hand!</B></span>")
-					H.loc = src.loc
+					H.set_loc(src.loc)
 					while (!isdead(H))
 						if (src.stat || src.transforming || get_dist(src,H) > 1)
 							boutput(src, "<span class='alert'>Your victim escaped! Curses!</span>")
@@ -1151,7 +1149,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				if(ishuman(G.affecting))
 					var/mob/living/carbon/human/H = G.affecting
 					src.visible_message("<span class='alert'><B>[src] raises [H] up to \his mouth! Oh shit!</B></span>")
-					H.loc = src.loc
+					H.set_loc(src.loc)
 					sleep(6 SECONDS)
 					if (src.stat || src.transforming || get_dist(src,H) > 1)
 						boutput(src, "<span class='alert'>Your prey escaped! Curses!</span>")

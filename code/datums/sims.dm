@@ -664,6 +664,7 @@ var/global/datum/simsControl/simsController = new()
 			//addMotive(/datum/simsMotive/sanity)
 
 	New(var/mob/living/L)
+		..()
 		owner = L
 		simsController.register_simsHolder(src)
 		make_motives()
@@ -691,7 +692,7 @@ var/global/datum/simsControl/simsController = new()
 				H.hud.remove_screen(hud)
 			if (plumbob && islist(H.attached_objs))
 				H.attached_objs -= plumbob
-				plumbob.loc = null
+				plumbob.set_loc(null)
 		if (plumbob)
 			qdel(plumbob)
 			plumbob = null

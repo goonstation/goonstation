@@ -53,6 +53,8 @@
 	var/bio_effects = null
 	var/objective = null
 	var/spawn_miscreant = 0
+	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
+	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
 
 	New()
 		..()
@@ -74,11 +76,13 @@
 				I.implanted = 1
 				if(ishuman(M)) H.implant.Add(I)
 				I.implanted(M)
-				if (receives_disk && ishuman(M))
+				if (src.receives_disk && ishuman(M))
 					if (istype(H.back, /obj/item/storage))
 						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
 						if (D)
-							D.data["imp"] = "\ref[I]"
+							var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
+							if (R)
+								R.fields["imp"] = "\ref[I]"
 
 			var/give_access_implant = ismobcritter(M)
 			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
@@ -96,7 +100,7 @@
 				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
-				M.loc = locate(spawn_x,spawn_y,spawn_z)
+				M.set_loc(locate(spawn_x,spawn_y,spawn_z))
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
@@ -149,6 +153,7 @@
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_card = /obj/item/card/id/gold
 	slot_belt = /obj/item/device/pda2/captain
+	slot_back = /obj/item/storage/backpack/captain
 	slot_jump = /obj/item/clothing/under/rank/captain
 	slot_suit = /obj/item/clothing/suit/armor/captain
 	slot_foot = /obj/item/clothing/shoes/swat
@@ -162,15 +167,6 @@
 		..()
 		src.access = get_all_accesses()
 
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-#if ASS_JAM
-		if(prob(5))
-			M.unequip_all()
-			M.tommyize_reshape()
-#endif
 
 	derelict
 		//name = "NT-SO Commander"
@@ -229,13 +225,7 @@
 	name = "Head of Security"
 	limit = 1
 	wages = 350
-#if ASS_JAM
-	requires_whitelist = 0
-	high_priority_job = 1
-	change_name_on_spawn = 1
-#else
 	requires_whitelist = 1
-#endif
 	recieves_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
@@ -248,7 +238,7 @@
 
 #ifdef SUBMARINE_MAP
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold/fancy_alt
-	slot_suit = /obj/item/clothing/suit/armor/hoscape
+	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/hos
 	slot_poc1 = /obj/item/requisition_token/security
@@ -466,6 +456,7 @@
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_poc2 = /obj/item/requisition_token/security
+	rounds_needed_to_play = 13 //ss13, and also seems like a good number to go with
 
 	New()
 		..()
@@ -891,6 +882,7 @@
 	no_jobban_from_this_job = 1
 	low_priority_job = 1
 	cant_allocate_unwanted = 1
+	map_can_autooverride = 0
 	slot_jump = /obj/item/clothing/under/rank
 	slot_foot = /obj/item/clothing/shoes/black
 
@@ -1145,7 +1137,7 @@
 		return
 
 /datum/job/special/atmospheric_technician
-	name = "Atmospheric Technician"
+	name = "Atmospherish Technician"
 	linkcolor = "#FF9900"
 	limit = 0
 	wages = 150
@@ -2124,6 +2116,17 @@
 		bad_traitorify(M, "Syndicate Agent")
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
+/datum/job/special/juicer_specialist
+	linkcolor = "#cc8899"
+	name = "Juicer Security"
+	limit = 0
+	allow_traitors = 0
+	allow_spy_theft = 0
+	cant_spawn_as_rev = 1
+
+	slot_back = /obj/item/gun/energy/blaster_cannon
+	slot_belt = /obj/item/storage/fanny
+	//more
 
 /datum/job/special/ntso_specialist
 	linkcolor = "#3348ff"
@@ -2250,13 +2253,8 @@
 /datum/job/special/meatcube
 	name = "Meatcube"
 	linkcolor = "#FF0000"
-#if ASS_JAM
-	announce_on_join = 1
-	limit = 300
-#else
 	limit = 0
 	allow_traitors = 0
-#endif
 	slot_ears = null
 	slot_card = null
 	slot_back = null
@@ -2431,19 +2429,21 @@
 			M.set_mutantrace(morph)
 
 /datum/job/daily/saturday
-	name = "Vice Officer"
+	name = "Part-time Vice Officer"
 	linkcolor = "#FF0000"
 	limit = 2
 	wages = 200
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
+	receives_badge = 1
 	recieves_miranda = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
 	slot_jump = /obj/item/clothing/under/misc/vice
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_ears =  /obj/item/device/radio/headset/security
-	items_in_backpack = list(/obj/item/storage/box/security_starter_kit) // Don't make them spawn with a full backpack again, please.
+	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
+	slot_poc2 = /obj/item/requisition_token/security
 
 	New()
 		..()

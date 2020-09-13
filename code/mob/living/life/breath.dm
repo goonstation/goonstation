@@ -3,7 +3,6 @@
 	var/breathtimer = 0
 	var/breathstate = 0
 
-
 	//consider these temporary...hopefully
 	proc/update_oxy(var/on)
 		if (human_owner)
@@ -20,6 +19,7 @@
 	process(var/datum/gas_mixture/environment)
 		if(isdead(owner))
 			return ..()
+
 		//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
 		if (manualbreathing && human_owner)
 			breathtimer++
@@ -74,20 +74,21 @@
 				if (!(human_owner?.wear_mask && (human_owner?.wear_mask.c_flags & BLOCKSMOKE || (human_owner?.wear_mask.c_flags & MASKINTERNALS && human_owner?.internal))))
 					//underwater = T.active_airborne_liquid
 					var/obj/fluid/F = T.active_airborne_liquid
-					F.force_mob_to_ingest(owner)
+					F.force_mob_to_ingest(owner, mult)
 				else
 					if (!owner.clothing_protects_from_chems())
 						var/obj/fluid/airborne/F = T.active_airborne_liquid
-						F.just_do_the_apply_thing(owner, hasmask = 1)
+						F.just_do_the_apply_thing(owner, mult, hasmask = 1)
 
 		else if (istype(owner.loc, /mob/living/object))
 			return // no breathing inside possessed objects
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return
+
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
 		if (owner.reagents)
-			if (owner.reagents.has_reagent("lexorin")) return
+			if (owner.reagents.has_reagent("lexorin") || HAS_MOB_PROPERTY(owner, PROP_REBREATHING)) return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.
 		// And because they're excluded from the breathing procs, said damage didn't heal
@@ -201,10 +202,10 @@
 			if (underwater && (owner.get_oxygen_deprivation() > 40 || underwater.type == /obj/fluid/airborne))
 				if (istype(underwater,/obj/fluid))
 					var/obj/fluid/F = underwater
-					F.force_mob_to_ingest(owner)// * mult
+					F.force_mob_to_ingest(owner, mult)// * mult
 				else if (istype(underwater, /turf/space/fluid))
 					var/turf/space/fluid/F = underwater
-					F.force_mob_to_ingest(owner)// * mult
+					F.force_mob_to_ingest(owner, mult)// * mult
 
 
 			return 0
@@ -273,7 +274,6 @@
 					owner.take_oxygen_deprivation(7 * mult)
 			if (prob(20)) // Lets give them some chance to know somethings not right though I guess.
 				owner.emote("cough")
-
 		else
 			owner.co2overloadtime = 0
 

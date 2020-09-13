@@ -78,9 +78,10 @@ Contains:
 
 	bound_width = 96
 	bound_height = 96
-
 	bound_x = -32
 	bound_y = -32
+
+	var/has_moved = FALSE
 
 	var/active = 0
 	var/energy = 10
@@ -101,8 +102,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 */
 /obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null)
 	src.energy = E
-	pixel_x = -64
-	pixel_y = -64
+	pixel_x = -32 * 2
+	pixel_y = -32 * 2
 	event()
 	if (Ti)
 		src.Dtime = Ti
@@ -142,7 +143,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			grav_pull = 8
 
 /obj/machinery/the_singularity/proc/eat()
-	for (var/X in orange(grav_pull,get_turf(src)))
+	for (var/X in orange(grav_pull, src.get_center()))
 		LAGCHECK(LAG_LOW)
 		if (!X)
 			continue
@@ -156,11 +157,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				continue
 
 		if (!isarea(X))
-			if (get_dist(src, X) <= 2) // why was this a switch before ffs
+			if (get_dist(src.get_center(), X) <= 2) // why was this a switch before ffs
 				src.Bumped(A)
-				if (A && A.qdeled)
-					A = null
-					X = null
 			else if (istype(X, /atom/movable))
 				var/atom/movable/AM = X
 				if (!AM.anchored)
@@ -174,13 +172,18 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (selfmove)
 		var/dir = pick(cardinal)
 
-		var/checkloc = get_step(src,dir)
+		var/checkloc = get_step(src.get_center(), dir)
 		for (var/dist = 0, dist < 3, dist ++)
 			if (locate(/obj/machinery/containment_field) in checkloc)
 				return
 			checkloc = get_step(checkloc, dir)
 
 		step(src, dir)
+		has_moved = TRUE
+
+/obj/machinery/the_singularity/ex_act(severity)
+	if(severity == 1 && prob(30))
+		qdel(src)
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	var/gain = 0
@@ -249,6 +252,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	src.energy += gain
 
+/obj/machinery/the_singularity/proc/get_center()
+	. = get_turf(src)
+	//if(!(get_step(., SOUTHWEST) in src.locs)) // I hate this, neither `loc` nor `get_turf` behave consistently, sometimes they are the center tile and sometimes they are the south west tile, aaaa
+	if(has_moved)
+		. = get_step(., NORTHEAST)
+
 /obj/machinery/the_singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/C = I
@@ -284,7 +293,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 /obj/machinery/the_singularity/proc/Toxmob()
-	for (var/mob/living/carbon/M in orange(7, src))
+
+	for (var/mob/living/carbon/M in orange(7, src.get_center()))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.wear_suit)
@@ -294,7 +304,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
-	for (var/mob/living/carbon/M in oviewers(8, get_turf(src)))
+
+	for (var/mob/living/carbon/M in oviewers(8, src.get_center()))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (istype(H.glasses,/obj/item/clothing/glasses/meson))
@@ -305,18 +316,20 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
 
 /obj/machinery/the_singularity/proc/BHolerip()
-	for (var/turf/T in orange(6,get_turf(src)))
+
+	for (var/turf/T in orange(6, src.get_center()))
 		LAGCHECK(LAG_LOW)
 		if (prob(70))
 			continue
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src,T) == 4 || get_dist(src,T) == 5)) // I'm very tired and this is the least dumb thing I can make of what was here for now
+		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == 4 || get_dist(src.get_center(),T) == 5)) // I'm very tired and this is the least dumb thing I can make of what was here for now
 			if (T.turf_flags & IS_TYPE_SIMULATED)
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
 					if (!F.broken)
 						if (prob(80))
-							new/obj/item/tile (F)
 							F.break_tile_to_plating()
+							if(!F.intact)
+								new/obj/item/tile (F)
 						else
 							F.break_tile()
 				else if (istype(T, /turf/simulated/wall))
@@ -337,7 +350,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	return
 
 /obj/machinery/the_singularity/proc/Zzzzap()///Pulled from wizard spells might edit later
-	var/turf/T = get_turf(src)
+	var/turf/T = src.get_center()
 
 	var/obj/overlay/pulse = new/obj/overlay(T)
 	pulse.icon = 'icons/effects/effects.dmi'
@@ -388,6 +401,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 	mats = 14
+	var/active_dirs = 0
 
 
 	proc/set_active(var/act)
@@ -473,6 +487,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				src.cleanup(2)
 				src.cleanup(4)
 				src.cleanup(8)
+				for(var/dir in cardinal)
+					src.UpdateOverlays(null, "field_start_[dir]")
+					src.UpdateOverlays(null, "field_end_[dir]")
 
 /obj/machinery/field_generator/proc/setup_field(var/NSEW = 0)
 	var/turf/T = src.loc
@@ -502,11 +519,15 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			steps -= 1
 			if(!G.active)
 				return
-			G.cleanup(oNSEW)
+			if(G.active_dirs & oNSEW)
+				return // already active I guess
 			break
 
 	if(isnull(G))
 		return
+
+	src.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_Start", dir=NSEW, layer=(NSEW == NORTH ? src.layer - 1 : FLOAT_LAYER)), "field_start_[NSEW]")
+	G.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_End", dir=NSEW, layer=(NSEW == SOUTH ? src.layer - 1 : FLOAT_LAYER)), "field_end_[NSEW]")
 
 	T2 = src.loc
 
@@ -517,6 +538,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/obj/machinery/containment_field/CF = new/obj/machinery/containment_field/(src, G) //(ref to this gen, ref to connected gen)
 		CF.set_loc(T)
 		CF.dir = field_dir
+
+	active_dirs |= NSEW
+	G.active_dirs |= oNSEW
+
+	G.process() // ok, a cool trick / ugly hack to make the direction of the fields nice and consistent in a circle
 
 //Create a link with a data terminal on the same tile, if possible.
 /obj/machinery/field_generator/proc/get_link()
@@ -621,6 +647,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/turf/T = src.loc
 	var/turf/T2 = src.loc
 
+	active_dirs &= ~NSEW
+
+	src.UpdateOverlays(null, "field_start_[NSEW]")
+	src.UpdateOverlays(null, "field_end_[turn(NSEW, 180)]")
+
 	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for fields
 		T = get_step(T2, NSEW)
 		T2 = T
@@ -630,6 +661,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		if(locate(/obj/machinery/field_generator) in T)
 			G = (locate(/obj/machinery/field_generator) in T)
+			G.UpdateOverlays(null, "field_end_[NSEW]")
+			G.UpdateOverlays(null, "field_start_[turn(NSEW, 180)]")
+			G.active_dirs &= ~turn(NSEW, 180)
 			if(!G.active)
 				break
 
@@ -1346,19 +1380,19 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 			if(!isnull(S1))
 				power_s += S1.energy
-			if(!isnull(P1))
+			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
 					P1.air_contents.toxins -= 0.001
-			if(!isnull(P2))
+			if(P2?.air_contents)
 				if(CA2.active != 0)
 					power_p += P2.air_contents.toxins
 					P2.air_contents.toxins -= 0.001
-			if(!isnull(P3))
+			if(P3?.air_contents)
 				if(CA3.active != 0)
 					power_p += P3.air_contents.toxins
 					P3.air_contents.toxins -= 0.001
-			if(!isnull(P4))
+			if(P4?.air_contents)
 				if(CA4.active != 0)
 					power_p += P4.air_contents.toxins
 					P4.air_contents.toxins -= 0.001
@@ -1518,8 +1552,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					if("prime")
 						if(!timing)
 							src.timing = 1
-							if(!(src in processing_items))
-								processing_items.Add(src)
+							processing_items |= src
 							src.icon_state = "portgen2"
 
 							// And here (Convair880).
@@ -1551,8 +1584,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		/*
 		if (href_list["time"])
 			src.timing = text2num(href_list["time"])
-			if(timing && !(src in processing_items))
-				processing_items.Add(src)
+			if(timing) processing_items |= src
 				src.icon_state = "portgen2"
 			else
 				src.icon_state = "portgen1"
@@ -1612,7 +1644,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	playsound(T, 'sound/effects/creaking_metal1.ogg', 100, 0, 5, 0.5)
 	for (var/mob/M in range(7,T))
 		boutput(M, "<span class='bold alert'>The contaiment field on \the [src] begins destabilizing!</span>")
-		shake_camera(M, 5, 1)
+		shake_camera(M, 5, 16)
 	for (var/turf/TF in range(4,T))
 		animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
 	particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(T))
@@ -1620,7 +1652,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	SPAWN_DBG(3 SECONDS)
 		for (var/mob/M in range(7,T))
 			boutput(M, "<span class='bold alert'>The containment field on \the [src] fails completely!</span>")
-			shake_camera(M, 5, 1)
+			shake_camera(M, 5, 16)
 
 		// And most importantly here (Convair880)!
 		logTheThing("bombing", src.activator, null, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")
@@ -1693,7 +1725,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							display:table-cell;
 							color:#0A0;
 							font-weight:bold;
-							text-align:center;
+							text-align:src.get_center();
 							vertical-align:middle;
 							border:3px solid #222;
 							background-color:#111;
@@ -1706,7 +1738,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							display:table-cell;
 							color:#0A0;
 							font-weight:bold;
-							text-align:center;
+							text-align:src.get_center();
 							vertical-align:middle;
 							border:3px solid #222;
 							background-color:#111;
@@ -1741,7 +1773,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 						*/
 
 						.timer_table {
-							text-align:center;
+							text-align:src.get_center();
 							vertical-align:middle;
 							width:200px;
 						}
@@ -1805,3 +1837,41 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					</div>
 				</body>
 			</html>"}
+
+
+/obj/item/ez_singulo
+	name = "Ez Singularity Engine"
+	icon = 'icons/obj/items/grenade.dmi'
+	icon_state = "graviton"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "emp"
+	var/activated = FALSE
+	var/radius = 3
+
+	attack_self(mob/user)
+		if(activated)
+			. = ..()
+			return
+		else
+			src.activated = TRUE
+			boutput(user, "You prime [src]. Three seconds until activation.")
+			SPAWN_DBG(3 SECONDS)
+				src.build_a_singulo()
+
+
+	proc/build_a_singulo()
+		if(!isturf(src.loc))
+			src.activated = FALSE
+			return
+		for(var/turf/T in block(locate(src.x - radius, src.y - radius, src.z), locate(src.x + radius, src.y + radius, src.z)))
+			T.ReplaceWith(/turf/simulated/floor/engine, 0, 1, 0, 0)
+		new /obj/machinery/the_singularitygen(src.loc)
+		for(var/dir in ordinal)
+			var/turf/T = get_steps(src.loc, dir, radius)
+			var/obj/machinery/field_generator/gen = new(T)
+			gen.set_active(1)
+			gen.state = 3
+			gen.power = 250
+			gen.anchored = 1
+			icon_state = "Field_Gen +a"
+		qdel(src)

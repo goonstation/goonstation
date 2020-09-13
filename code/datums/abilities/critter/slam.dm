@@ -26,7 +26,7 @@
 		O.special_data["charger"] = charger
 		charger.transforming = 1
 		charger.canmove = 0
-		charger.loc = O
+		charger.set_loc(O)
 		O.dir = angle_to_dir(O.angle)
 		O.name = charger.name
 		O.icon = null
@@ -95,10 +95,10 @@
 		var/mob/charger = O.special_data["charger"] //can somehow get a null value???
 		charger.transforming = 0
 		charger.canmove = 1
-		charger.loc = get_turf(O)
+		charger.set_loc(get_turf(O))
 		charger.dir = get_dir(O.special_data["orig_turf"], charger.loc)
 		if (!charger.loc)
-			charger.loc = O.special_data["valid_loc"]
+			charger.set_loc(O.special_data["valid_loc"])
 
 /datum/targetable/critter/slam
 	name = "Slam"

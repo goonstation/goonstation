@@ -37,7 +37,7 @@
 	if (!( src.connected ))
 		viewers(null, null) << "Cannot locate mass driver connector. Cancelling firing sequence!"
 		return
-	for(var/obj/machinery/door/poddoor/M in doors)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			SPAWN_DBG( 0 )
 				M.open()
@@ -51,7 +51,7 @@
 			M.drive()
 
 	sleep(5 SECONDS)
-	for(var/obj/machinery/door/poddoor/M in doors)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			SPAWN_DBG( 0 )
 				M.close()
@@ -175,9 +175,10 @@
 		if (src.time > 0)
 			src.time = round(src.time) - 1
 		else
-			alarm()
-			src.time = 0
-			src.timing = 0
+			SPAWN_DBG(0)
+				alarm()
+				src.time = 0
+				src.timing = 0
 		src.updateDialog()
 	return
 
@@ -214,7 +215,7 @@
 						src.time = min(max(round(src.time), 0), 120)
 					else
 						if (href_list["door"])
-							for(var/obj/machinery/door/poddoor/M in doors)
+							for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 								if (M.id == src.id)
 									if (M.density)
 										SPAWN_DBG( 0 )

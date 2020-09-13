@@ -7,7 +7,7 @@
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	generic = 0
@@ -36,7 +36,7 @@
 		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
 		SPAWN_DBG (100) //Give time for people to butcher it if they want.
 			if (!src.disposed && src.loc && original_object)
-				original_object.loc = src.loc
+				original_object.set_loc(src.loc)
 				original_object = null
 				qdel(src)
 		return ..()
@@ -64,7 +64,7 @@
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 2
@@ -308,7 +308,7 @@
 	atkcarbon = 1
 	atksilicon = 1
 	brutevuln = 0.5
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	seekrange = 5
 	density = 0
 	angertext = "suddenly materializes and lunges at"
@@ -394,7 +394,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1
@@ -438,7 +438,7 @@
 		if (M.reagents)
 			M.reagents.add_reagent("histamine", 12)
 			M.reagents.add_reagent("toxin", 2)
-			karma_update(1, "SAINT", M)
+			M.add_karma(1)
 
 /obj/critter/spacebee/angry
 	name = "angry space wasp"
@@ -465,7 +465,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -590,7 +590,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0 // don't bother!
@@ -599,14 +599,13 @@
 	generic = 0
 	atk_text = "bashes against"
 	atk_brute_amt = 7
+	is_pet = FALSE
 	var/reagent_id = null
 
 	New()
 		..()
 
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(1000)
 
 		SPAWN_DBG(4 SECONDS)
 			if(!reagents.total_volume)
@@ -615,7 +614,7 @@
 				else
 					src.reagent_id = "water"
 
-				R.add_reagent(src.reagent_id, 10)
+				reagents.add_reagent(src.reagent_id, 10)
 
 				var/oldcolor = src.reagents.get_master_color()
 				var/icon/I = new /icon('icons/misc/critter.dmi',"golem")
@@ -694,7 +693,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -825,7 +824,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 0
 	atcritter = 0
@@ -834,6 +833,7 @@
 	seekrange = 5
 	invisibility = 1
 	flying = 1
+	is_pet = FALSE
 
 	generic = 0
 
@@ -918,7 +918,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -951,7 +951,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -1063,7 +1063,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 0
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	seekrange = 5
 	density = 1
 	var/boredom_countdown = 0
@@ -1243,7 +1243,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0 // don't bother!

@@ -75,6 +75,7 @@
 	var/source_car = null
 
 	New(var/atom/spawnloc, var/spawndir, var/atom/sourcecar)
+		..()
 		src.set_loc(spawnloc)
 		src.dir = spawndir
 		source_car = sourcecar
@@ -106,6 +107,7 @@
 	var/source_car = null
 
 	New(var/atom/spawnloc, var/spawndir, var/atom/sourcecar)
+		..()
 		src.set_loc(spawnloc)
 		src.dir = spawndir
 		source_car = sourcecar
@@ -364,8 +366,6 @@
 
 	var/mob/living/carbon/human/driver = null
 
-	New()
-
 	proc/random_powerup()
 		var/list/powerups = childrentypesof(/obj/powerup/)
 		if(!powerups.len) return
@@ -511,12 +511,7 @@
 		..()
 		returndir = dir
 		if(returnpoint)
-			for (var/obj/landmark/A in landmarks)//world)
-				LAGCHECK(LAG_LOW)
-				if (A.name == returnpoint)
-					returnloc = A.loc
-					return
-			returnloc = null
+			returnloc = pick_landmark(returnpoint)
 
 	enter()
 		set src in oview(1)
@@ -571,7 +566,7 @@
 
 	proc/returntoline()
 		if(returnloc)
-			loc = returnloc
+			set_loc(returnloc)
 			dir = returndir
 
 /obj/racing_clowncar/kart/red

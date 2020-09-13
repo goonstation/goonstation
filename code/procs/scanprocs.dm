@@ -569,10 +569,10 @@
 		var/obj/item/assembly/proximity_bomb/PB = A
 		if (PB.part3)
 			check_me = PB.part3.air_contents
-	if (istype(A, /obj/item/flamethrower/))
-		var/obj/item/flamethrower/FT = A
-		if (FT.part4)
-			check_me = FT.part4.air_contents
+	if (istype(A, /obj/item/flamethrower/assembled/))
+		var/obj/item/flamethrower/assembled/FT = A
+		if (FT.gastank)
+			check_me = FT.gastank.air_contents
 
 	if (!check_me || !istype(check_me, /datum/gas_mixture/))
 		if (pda_readout == 1)

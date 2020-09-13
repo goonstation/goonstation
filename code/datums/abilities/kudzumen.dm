@@ -85,10 +85,8 @@
 		else if (points > MAX_POINTS)
 			points = MAX_POINTS
 
-
 		if (src.stealthed)
 			points -= round(2*mult)
-
 
 /datum/targetable/kudzu
 	icon = 'icons/misc/kudzu_plus.dmi'
@@ -166,6 +164,9 @@
 
 	cast(atom/target)
 		. = ..()
+		if (istype(holder, /datum/abilityHolder/kudzu))
+			var/datum/abilityHolder/kudzu/KAH = holder
+			KAH.nutrients_meter.update()
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return
 
@@ -494,7 +495,7 @@
 	cast()
 		var/mob/owner = holder?.owner
 		if (!istype(owner))
-			logTheThing("debug", "no owner for this kudzu ability. [src]")
+			logTheThing("debug", null, null, "no owner for this kudzu ability. [src]")
 			return 1
 		//turn on
 		if (!active)
@@ -629,15 +630,18 @@
 	proc/update()
 		amount = length(kudzu_controller.kudzu)
 
-		if (amount > 9999)
-			src.maptext = "<div style='font-size:8px; color:maroon;text-align:center;'>+</div>"
-			src.maptext_y = 2
-		else if (amount > 999)
+		if (amount <= 99)
+			src.maptext = "<div style='font-size:14px; color:maroon;text-align:center;'>[amount]</div>"
+			src.maptext_y = 4
+		else if (amount <= 999)
 			src.maptext = "<div style='font-size:10px; color:maroon;text-align:center;'>[amount]</div>"
 			src.maptext_y = 8
+		else if (amount <= 9999)
+			src.maptext = "<div style='font-size:8px; color:maroon;text-align:center;'>[amount]</div>"
+			src.maptext_y = 8
 		else
-			src.maptext = "<div style='font-size:14px; color:maroon;text-align:center;'>[amount]</div>"
-			src.maptext_y = 10
+			src.maptext = "<div style='font-size:8px; color:maroon;text-align:center;'>+</div>"
+			src.maptext_y = 8
 
 //This will be the hud element that contains a vine thingy which covers up the left and right hand hud ui elements
 /obj/screen/kudzu/vine_hands_cover
@@ -694,8 +698,7 @@
 		if (prob(20))
 			var/turf/target = get_edge_target_turf(user, get_dir(user, M))
 			user.visible_message("<span class='alert'>[user] sends [M] flying with mighty oak-like strength!</span>")
-			SPAWN_DBG(0)
-				M.throw_at(target, 5, 1)
+			M.throw_at(target, 5, 1)
 
 /obj/item/kudzu/kudzumen_vine/proc/build_buttons()
 	if (src.contextActions != null)	//dont need rebuild
@@ -751,6 +754,7 @@
 			return
 
 		kudzu.growth = 1
+		kudzu.update_self()
 		new creation_path(get_turf(kudzu))
 
 

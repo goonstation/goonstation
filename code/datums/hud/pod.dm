@@ -23,6 +23,7 @@
 	var/obj/machinery/vehicle/master
 
 	New(P)
+		..()
 		master = P
 		missing = image('icons/mob/hud_pod.dmi', "marker")
 		engine = create_screen("engine", "Engine", 'icons/mob/hud_pod.dmi', "engine-off", "NORTH+1,WEST", tooltipTheme = "pod-alt", desc = "Turn the pod's engine on or off (you probably don't want to turn it off)")
@@ -309,7 +310,7 @@
 				else
 					boutput(usr, "[master.ship_message("System not installed in ship!")]")
 			if ("leave")
-				master.eject(usr)
+				master.leave_pod(usr)
 			if ("wormhole") //HEY THIS DOES SAMETHING AS CLIENT WORMHOLE PROC IN VEHICLE.DM
 				if(master.engine && !istype(master,/obj/machinery/vehicle/tank/car))
 					if(master.engine.active)

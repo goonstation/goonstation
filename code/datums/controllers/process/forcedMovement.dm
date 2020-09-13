@@ -186,4 +186,4 @@ datum/controller/process/fMove
 		return
 
 	tickDetail()
-		return "Managing [mantaPushList.len] mantapush objects and [spacePushList.len] spacepush objects."
+		boutput(usr, "<b>ForcedMovement:</b> Managing [mantaPushList.len] mantapush objects and [spacePushList.len] spacepush objects")

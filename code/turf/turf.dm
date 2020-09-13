@@ -1,6 +1,3 @@
-var/global/turf/ff_debug_turf = null
-var/global/client/ff_debugger = null
-
 /turf
 	icon = 'icons/turf/floors.dmi'
 	plane = PLANE_FLOOR //See _plane.dm, required for shadow effect
@@ -20,14 +17,6 @@ var/global/client/ff_debugger = null
 
 	proc/burn_down()
 		return
-
-	proc/debug_fireflash_here()
-		set name = "Debug Fireflash Here"
-		set popup_menu = 1
-		SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-		set desc = "Debug-print the effects of all fireflashes affecting this tile."
-		ff_debug_turf = src
-		ff_debugger = usr.client
 
 		//Properties for open tiles (/floor)
 	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
@@ -62,10 +51,15 @@ var/global/client/ff_debugger = null
 
 	var/turf_flags = 0
 
-	disposing()
+	disposing() // DOES NOT GET CALLED ON TURFS!!!
+		SHOULD_NOT_OVERRIDE(TRUE)
+		..()
+
+	Del()
 		if (cameras && cameras.len)
-			for (var/obj/machinery/camera/C in cameras)
-				C.coveredTiles -= src
+			for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+				if(C.coveredTiles)
+					C.coveredTiles -= src
 		cameras = null
 		..()
 
@@ -291,10 +285,12 @@ var/global/client/ff_debugger = null
 			if ((forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CANPASS)
 					if(!obstacle.CanPass(mover, cturf, 1, 0))
+
 						mover.Bump(obstacle, 1)
 						return 0
 				else //cheaper, skip proc call lol lol
 					if (obstacle.density)
+
 						mover.Bump(obstacle,1)
 						return 0
 	return 1 //Nothing found to block so return success!
@@ -410,6 +406,13 @@ var/global/client/ff_debugger = null
 		edge_step(A, 0, world.maxy - 2)
 	else if (A.y >= (world.maxy - 1))
 		edge_step(A, 0, 3)
+
+/turf/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	. = ..()
+	if(src.density)
+		if(AM.throwforce >= 80)
+			src.meteorhit(AM)
+		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
@@ -822,7 +825,11 @@ var/global/client/ff_debugger = null
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
+#ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
+#else
+	plane = PLANE_FLOOR
+#endif
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"
@@ -867,18 +874,38 @@ var/global/client/ff_debugger = null
 	#endif
 		lobby_titlecard = src
 
-#ifndef RP_MODE
 		if (!player_capa)
 			encourage()
-#endif
 
 	proc/encourage()
 		var/obj/overlay/clickable = new/obj/overlay(src)
-		clickable.maptext = "<span class='ol c ps2p'>Hello! We are experiencing more load than usual. <br><a href='byond://goon3.goonhub.com:26300'>click here to join Goonstation Overflow (Smoother game, RP flavor).</a> </span>"
-		clickable.maptext_width = 300
-		clickable.maptext_height = 300
+
+		// This is gross. I'm sorry.
+		var/list/servers = list()
+		servers["main"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main'>Goonstation</a>"}
+		servers["main3"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main3'>Goonstation Overflow</a>"}
+		servers["rp"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "rp'>Goonstation Roleplay</a>"}
+		servers["main2"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main2'>Goonstation Roleplay Overflow</a></span>"}
+
+		var/serverList = ""
+		for (var/serverId in servers)
+			if (serverId == config.server_id)
+				continue
+			serverList += "\n[servers[serverId]]"
+
+		clickable.maptext = {"<span class='ol vga'>
+Welcome to Goonstation!
+New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
+Have questions? Ask mentors with \[F3]!
+Need an admin? Message us with \[F1].
+
+Other Goonstation servers:[serverList]"}
+		clickable.maptext_width = 600
+		clickable.maptext_height = 400
 		clickable.plane = 100
 		clickable.layer = src.layer + 1
+		clickable.x -= 3
+
 
 	proc/educate()
 		maptext = "<span class='ol c ps2p'>Hello! Press F3 to ask for help. You can change game settings using the file menu on the top left, and see our wiki + maps by clicking the buttons on the top right.</span>"
@@ -1007,7 +1034,7 @@ var/global/client/ff_debugger = null
 
 	if (A.z == 1 && zlevel != A.z)
 		if (!(isitem(A) && A:w_class <= 2))
-			for (var/obj/machinery/communications_dish/C in comm_dishes)
+			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 				C.add_cargo_logs(A)
 
 	A.z = zlevel

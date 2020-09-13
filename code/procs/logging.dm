@@ -14,10 +14,11 @@ Example out of game log call:
 #define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
 #define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 
-var/global/roundLog_name = "data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html"
-var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html")
+var/global/roundLog_date = time2text(world.realtime, "YYYY-MM-DD-hh-mm")
+var/global/roundLog_name = "data/logs/full/[roundLog_date].html"
+var/global/roundLog = file(roundLog_name)
 var/global/disable_log_lists = 0
-
+var/global/first_adminhelp_happened = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
@@ -110,6 +111,38 @@ var/global/disable_log_lists = 0
 
 /proc/logDiary(text)
 	WRITE_LOG(diary_name, "[text]")
+
+/**
+ * Appends a tgui-related log entry. All arguments are optional.
+ */
+/proc/log_tgui(user, message, context,
+		datum/tgui_window/window,
+		datum/src_object)
+	var/entry = "tgui: "
+	// Insert user info
+	if(!user)
+		entry += "<nobody>"
+	else if(istype(user, /mob))
+		var/mob/mob = user
+		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
+	else if(istype(user, /client))
+		var/client/client = user
+		entry += "[client.ckey]"
+	// Insert context
+	if(context)
+		entry += " in [context]"
+	else if(window)
+		entry += " in [window.id]"
+	// Resolve src_object
+	if(!src_object && window && window.locked_by)
+		src_object = window.locked_by.src_object
+	// Insert src_object info
+	if(src_object)
+		entry += "<br>Using: [src_object.type] [\ref(src_object)]" // |GOONSTATION-CHANGE| (\n->br, REF->\ref)
+	// Insert message
+	if(message)
+		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
+	WRITE_LOG(roundLog_name, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()

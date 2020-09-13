@@ -8,6 +8,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Sad" = "ai_sad",\
 	"Mad" = "ai_mad",\
 	"BSOD" = "ai_bsod",\
+	"Text" = "ai_text",\
 	"Blank" = "ai_off")
 
 /mob/living/silicon/ai
@@ -125,7 +126,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	del(churn)
 	canmove = 1
 
-/mob/living/silicon/ai/TakeDamage(zone, brute, burn)
+/mob/living/silicon/ai/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	bruteloss += brute
 	fireloss += burn
 	health_update_queue |= src
@@ -146,12 +147,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	return 0
 
 /mob/living/silicon/ai/disposing()
+	STOP_TRACKING
 	..()
-	AIs.Remove(src)
 
 /mob/living/silicon/ai/New(loc, var/empty = 0)
 	..(loc)
-	AIs.Add(src)
+	START_TRACKING
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
@@ -364,6 +365,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_radio
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
+				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"
@@ -996,10 +998,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					message = "<B>[src]</B> kicks [M]!"
 					var/turf/T = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 					if (T && isturf(T))
-						SPAWN_DBG(0)
-							M.throw_at(T, 100, 2)
-							M.changeStatus("weakened", 1 SECOND)
-							M.changeStatus("stunned", 2 SECONDS)
+						M.throw_at(T, 100, 2)
+						M.changeStatus("weakened", 1 SECOND)
+						M.changeStatus("stunned", 2 SECONDS)
 					break
 
 		if ("scream")
@@ -1620,7 +1621,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
-		for(var/obj/machinery/door/airlock/D in doors)
+		for(var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door])
 			if (D.z == 1 && D.canAIControl() && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
 				count++
@@ -1642,7 +1643,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
-		for(var/obj/machinery/door/airlock/D in doors)
+		for(var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door])
 			if (D.z == 1 && D.canAIControl() && D.locked && D.arePowerSystemsOn())
 				D.locked = 0
 				D.update_icon()
@@ -2074,7 +2075,7 @@ proc/get_mobs_trackable_by_AI()
 		message_admins("[key_name(src)] has created an AI intercom announcement: \"[output]\"")
 
 
-/mob/living/silicon/ai/verb/ai_station_announcement()
+/mob/living/silicon/ai/proc/ai_station_announcement()
 	set name = "AI Station Announcement"
 	set desc = "Makes a station announcement."
 	set category = "AI Commands"
@@ -2118,13 +2119,15 @@ proc/get_mobs_trackable_by_AI()
 	vox_help(src)
 
 /mob/living/silicon/ai/choose_name(var/retries = 3)
-	var/randomname = pick(ai_names)
+	var/randomname = pick_string_autokey("names/ai.txt")
 	var/newname
 	for (retries, retries > 0, retries--)
 		newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", randomname) as null|text
 		if (!newname)
 			src.real_name = randomname
 			src.name = src.real_name
+			src.internal_pda.name = "[src]'s Internal PDA Unit"
+			src.internal_pda.owner = "[src]"
 			return
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
@@ -2138,6 +2141,8 @@ proc/get_mobs_trackable_by_AI()
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					src.real_name = newname
 					src.name = newname
+					src.internal_pda.name = "[src]'s Internal PDA Unit"
+					src.internal_pda.owner = "[src]"
 					return 1
 				else
 					continue

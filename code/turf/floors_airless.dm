@@ -16,6 +16,11 @@
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
 
+/turf/unsimulated/floor/airless/solar
+	icon_state = "solarbase"
+	step_material = "step_lattice"
+	step_priority = STEP_PRIORITY_MED
+
 // cogwerks - catwalk plating
 
 /turf/simulated/floor/airless/plating/catwalk

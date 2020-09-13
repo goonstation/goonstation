@@ -31,7 +31,7 @@
 		return
 	if (prob(laugh_rate)) affected_mob.emote("laugh")
 	switch(D.stage)
-		if(1 || 2)
+		if(1, 2)
 
 			if(prob(8))
 				playsound(affected_mob.loc, "sound/musical_instruments/Boathorn_1.ogg", 22, 1)

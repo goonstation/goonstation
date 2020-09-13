@@ -656,7 +656,7 @@
 		if (narrator_mode)
 			msgs.played_sound = 'sound/vox/hit.ogg'
 		else
-			msgs.played_sound = 'sound/impact_sounds/Generic_Punch_2.ogg'
+			msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
 		return
 
@@ -707,7 +707,7 @@
 
 		if (can_crit && prob(crit_chance))
 			msgs.stamina_crit = 1
-			msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
+			msgs.played_sound = pick(sounds_punch)
 			//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
 		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
@@ -819,6 +819,7 @@
 	var/force_stamina_target = null
 
 	New(var/mob/M)
+		..()
 		owner = M
 
 	proc/clear(var/mob/M)
@@ -968,7 +969,7 @@
 						target.OnMove(owner)
 			else
 				target.deliver_move_trigger("bump")
-
+		else
 #ifdef DATALOGGER
 			game_stats.Increment("violence")
 #endif
@@ -1041,7 +1042,7 @@
 									if (owner in viewers(7,M.current))
 										M.current.changeStatus("mutiny", 10 SECONDS)
 
-				if(target.client && target.health < 0) //Only do rev stuff if they have a client and are low health
+				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
 						if (R.add_revolutionary(target.mind))
 							target.HealDamage("All", max(30 - target.health,0), 0)
@@ -1251,8 +1252,7 @@
 				var/turf/T = get_edge_target_turf(src, src.dir)
 				if (isturf(T))
 					src.visible_message("<span class='alert'><B>[src] savagely punches [target], sending them flying!</B></span>")
-					SPAWN_DBG (0)
-						target.throw_at(T, 10, 2)
+					target.throw_at(T, 10, 2)
 
 	if (src.bioHolder.HasEffect("revenant"))
 		var/datum/bioEffect/hidden/revenant/R = src.bioHolder.GetEffect("revenant")
@@ -1285,8 +1285,7 @@
 	T.changeStatus("weakened", 5 SECONDS)
 	var/turf/throwpoint = get_edge_target_turf(H, get_dir(H, T))
 	if (throwpoint && isturf(throwpoint))
-		SPAWN_DBG(0)
-			T.throw_at(throwpoint, 10, 2)
+		T.throw_at(throwpoint, 10, 2)
 
 	return
 

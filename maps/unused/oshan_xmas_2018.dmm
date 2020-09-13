@@ -4479,9 +4479,7 @@
 	})
 "ajb" = (
 /obj/storage/secure/closet/animal,
-/obj/landmark{
-	name = "monkeyspawn_inside"
-	},
+/obj/landmark/spawner/inside/monkey,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26;
@@ -5447,7 +5445,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "alm" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/overlay{
@@ -6037,7 +6035,7 @@
 	},
 /area/station/medical/dome)
 "amo" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light/incandescent/warm,
@@ -6938,9 +6936,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/crew_quarters/quartersA)
-"aov" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
 "aow" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Chapel Office"
@@ -6949,13 +6944,13 @@
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aox" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aoy" = (
 /obj/disposalpipe/segment,
 /obj/machinery/firealarm{
@@ -7397,12 +7392,12 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apr" = (
 /obj/stool,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aps" = (
 /obj/table/wood/auto,
 /obj/item/card_box/tarot,
@@ -7412,7 +7407,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apt" = (
 /obj/stool,
 /obj/decal/garland{
@@ -7421,7 +7416,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apu" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -7432,14 +7427,14 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apv" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
 	icon_state = "wood1"
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apw" = (
 /obj/stool/chair/office{
 	icon_state = "office_chair";
@@ -7981,24 +7976,21 @@
 "aqF" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqG" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqH" = (
 /turf/simulated/wall/false_wall,
-/area/station/chapel/main/main)
-"aqI" = (
-/turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqJ" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqK" = (
 /obj/item/a_gift/festive,
 /turf/simulated/floor/snow/snowball,
@@ -8517,7 +8509,7 @@
 "arT" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "arU" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
@@ -8525,7 +8517,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "arV" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -8533,7 +8525,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "arW" = (
 /obj/xmastree,
 /turf/simulated/floor/snow/snowball,
@@ -9739,7 +9731,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "auF" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
@@ -10797,7 +10789,7 @@
 	pixel_y = 5
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -12850,7 +12842,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -14762,7 +14754,7 @@
 "aFP" = (
 /obj/storage/secure/closet/research/chemical,
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/garland{
 	dir = 6;
@@ -16711,12 +16703,12 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/sanitary/blue{
-	dir = 
+	dir =
 	},
 /area/station/chemistry)
 "aKc" = (
 /turf/simulated/floor/sanitary/blue{
-	dir = 
+	dir =
 	},
 /area/station/chemistry)
 "aKd" = (
@@ -16885,14 +16877,14 @@
 "aKy" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary/blue{
-	dir = 
+	dir =
 	},
 /area/station/chemistry)
 "aKz" = (
 /obj/machinery/drainage,
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/sanitary/blue{
-	dir = 
+	dir =
 	},
 /area/station/chemistry)
 "aKA" = (
@@ -17829,7 +17821,7 @@
 	name = "Catering Hangar"
 	})
 "aMH" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/grass,
@@ -20750,7 +20742,7 @@
 /area/station/engine/inner)
 "aTm" = (
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -20762,7 +20754,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/yellow/checker{
 	icon_state = "yellowchecker";
@@ -20809,7 +20801,7 @@
 /turf/space/fluid,
 /area)
 "aTv" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "seamonkeyspawn"
 	},
 /turf/space/fluid,
@@ -28028,7 +28020,7 @@
 	},
 /area/station/crew_quarters/bar)
 "bkZ" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -28309,7 +28301,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor,
@@ -31203,7 +31195,7 @@
 	icon_state = "chair";
 	dir = 1
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/black,
@@ -31519,7 +31511,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "btk" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -31535,7 +31527,6 @@
 /obj/decal/poster/wallsign/gym,
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";
-	layer = 9;
 	name = "barkley's basketball"
 	},
 /turf/simulated/floor,
@@ -32011,7 +32002,7 @@
 "bup" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -32024,7 +32015,7 @@
 "buq" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -32037,7 +32028,7 @@
 "bur" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/decal/xmas_lights{
@@ -32051,7 +32042,7 @@
 "bus" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -35721,7 +35712,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bCX" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,
@@ -39747,7 +39738,7 @@
 /turf/simulated/floor/bot,
 /area/station/security/checkpoint/sec_foyer)
 "bMk" = (
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/simulated/floor/grass,
 /area)
 "bMl" = (
@@ -40270,7 +40261,7 @@
 	},
 /area/station/crew_quarters/courtroom)
 "bNF" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/wood,
@@ -40484,7 +40475,7 @@
 	icon_state = "shrub";
 	dir = 10
 	},
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/item/seed/cannabis,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/black,
@@ -40557,7 +40548,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bOu" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /obj/disposalpipe/segment/brig,
@@ -44311,7 +44302,7 @@
 /area/station/security/brig)
 "bXr" = (
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
@@ -44362,7 +44353,7 @@
 /obj/item/gun/kinetic/flaregun,
 /obj/item/ammo/bullets/flare,
 /obj/item/ammo/bullets/flare,
-/obj/item/flamethrower/loaded,
+/obj/item/flamethrower/assembled/loaded,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bXy" = (
@@ -45447,7 +45438,7 @@
 /obj/stool/chair/wooden{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "father_jack"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -45532,7 +45523,7 @@
 /area/diner/bathroom)
 "cbc" = (
 /obj/stool/chair/wooden,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "don_glab"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -45650,7 +45641,7 @@
 	icon_state = "chair_wooden";
 	dir = 4
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "shitty_bill"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -81396,10 +81387,10 @@ akX
 akX
 akX
 akX
-aov
-aov
-aov
-aov
+ahY
+ahY
+ahY
+ahY
 ati
 auy
 avN
@@ -81698,10 +81689,10 @@ akX
 acg
 amH
 anF
-aov
+ahY
 apq
 aqF
-aov
+ahY
 atj
 auz
 atj
@@ -82302,10 +82293,10 @@ akX
 alP
 amJ
 anH
-aov
+ahY
 aps
 aqH
-aov
+ahY
 aCJ
 auB
 avP
@@ -82604,10 +82595,10 @@ akX
 alQ
 amK
 anI
-aov
+ahY
 apt
-aqI
-aov
+aiL
+ahY
 atm
 auC
 avQ
@@ -83208,14 +83199,14 @@ akX
 aco
 amN
 aco
-aov
+ahY
 apv
-aov
+ahY
 arV
 aox
 auE
-aov
-aov
+ahY
+ahY
 bem
 azq
 aAw

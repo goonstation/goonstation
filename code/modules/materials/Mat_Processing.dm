@@ -255,7 +255,15 @@
 	anchored = 0
 	density = 1
 
+	custom_suicide = 1
+	suicide(var/mob/user)
+		if (!src.user_can_suicide(user))
+			return 0
 
+		user.visible_message("<span class='alert'><b>[user] hops right into [src]! Jesus!</b></span>")
+		user.unequip_all()
+		user.set_loc(src)
+		user.make_cube(life = 5 MINUTES, T = src.loc)
 /obj/machinery/neosmelter
 	name = "Nano-crucible"
 	desc = "A huge furnace-like machine used to combine materials."
@@ -621,7 +629,7 @@
 					src.visible_message("<span class='notice'>[user] puts [W] into [src]</span>")
 					user.drop_item()
 					components.Add(W)
-					W.loc = src
+					W.set_loc(src)
 					playsound(src.loc, sound_thunk, 40, 1)
 				else
 					boutput(user, "<span class='alert'>The smelter is already filled to capacity!</span>")
@@ -677,4 +685,4 @@
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)

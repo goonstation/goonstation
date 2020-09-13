@@ -51,13 +51,14 @@
 		if (available_ghostdrones.len && ghostdrone_candidates.len)
 			src.icon_state = "ghostcatcher1"
 
-			var/datum/mind/M = dequeue_next_ghostdrone_candidate()
-			if(istype(M))
-				var/mob/dead/D = M.current
-				if(istype(D))
-					D.visible_message("[src] scoops up [D]!",\
-					"You feel yourself being torn away from the afterlife and into [src]!")
-					droneize(D, 1)
+			SPAWN_DBG(0)
+				var/datum/mind/M = dequeue_next_ghostdrone_candidate()
+				if(istype(M))
+					var/mob/dead/D = M.current
+					if(istype(D))
+						D.visible_message("[src] scoops up [D]!",\
+						"You feel yourself being torn away from the afterlife and into [src]!")
+						droneize(D, 1)
 
 		else
 			src.icon_state = "ghostcatcher0"
@@ -94,6 +95,11 @@
 		return 0
 	if (jobban_isbanned(G, "Ghostdrone"))
 		return 0
+	if (G.client.player)
+		var/round_num = G.client.player.get_rounds_participated()
+		if (!isnull(round_num) && round_num < 20)
+			boutput(G, "<span class='alert'>You only have [round_num] rounds played. You need 20 rounds to play this role.")
+			return 0
 	return 1
 
 #define GHOSTDRONE_BUILD_INTERVAL 1000
@@ -183,7 +189,8 @@ var/global/list/ghostdrone_candidates = list()
 				return
 
 			if (prob(40))
-				src.shake(rand(4,6))
+				SPAWN_DBG(0)
+					src.shake(rand(4,6))
 				playsound(get_turf(src), pick("sound/impact_sounds/Wood_Hit_1.ogg", "sound/impact_sounds/Metal_Hit_Heavy_1.ogg"), 30, 1, -3)
 			if (prob(40))
 				var/list/sound_list = pick(ghostly_sounds, sounds_engine, sounds_enginegrump, sounds_sparks)

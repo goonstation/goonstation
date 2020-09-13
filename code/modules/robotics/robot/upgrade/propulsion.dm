@@ -1,6 +1,6 @@
 /obj/item/roboupgrade/jetpack
 	name = "cyborg propulsion upgrade"
-	desc = "A small turbine allowing cyborgs to move freely in space."
+	desc = "A small jetpack allowing cyborgs to move freely in space."
 	icon_state = "up-jetpack"
 	drainrate = 25
 	borg_overlay = "up-jetpack"

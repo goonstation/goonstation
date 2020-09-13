@@ -15,8 +15,7 @@
 	var/allowReverseReload = 1 //Use gun on ammo to reload
 	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
 
-	var/muzzle_flash = 1 //set to 0 if you dont want any muzzle flash with this gun
-	var/muzzle_flash_state = "muzzle_flash" //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
+	muzzle_flash = "muzzle_flash"
 
 	// caliber list: update as needed
 	// 0.22 - pistols
@@ -32,6 +31,7 @@
 		if(silenced)
 			current_projectile.shot_sound = 'sound/machines/click.ogg'
 		..()
+		src.update_icon()
 
 	examine()
 		. = ..()
@@ -46,6 +46,10 @@
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
+		if (src.ammo)
+			inventory_counter.update_number(src.ammo.amount_left)
+		else
+			inventory_counter.update_text("-")
 		return 0
 
 	canshoot()
@@ -169,7 +173,7 @@
 						for (var/i = 1, i <= number_of_casings, i++)
 							var/obj/item/casing/C = new src.current_projectile.casing(T)
 							C.forensic_ID = src.forensic_ID
-							C.loc = T
+							C.set_loc(T)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -187,15 +191,11 @@
 						for (var/i = 1, i <= number_of_casings, i++)
 							var/obj/item/casing/C = new src.current_projectile.casing(T)
 							C.forensic_ID = src.forensic_ID
-							C.loc = T
+							C.set_loc(T)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
 				src.casings_to_eject += src.current_projectile.shot_number
-			if (src.muzzle_flash) //probably reinventing the wheel here as far as all of this goes, but idk
-				if (isturf(user.loc))
-					var/turf/origin = user.loc
-					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash_state)
 		..()
 
 	proc/ejectcasings()
@@ -207,7 +207,7 @@
 				while (src.casings_to_eject > 0)
 					C = new src.current_projectile.casing(T)
 					C.forensic_ID = src.forensic_ID
-					C.loc = T
+					C.set_loc(T)
 					src.casings_to_eject--
 		return
 
@@ -262,6 +262,11 @@
 	shotgun_gray
 		icon_state = "shotgun_gray"
 		desc = "An gray shotgun shell."
+
+	cannon
+		icon_state = "rifle"
+		desc = "A cannon shell."
+		w_class = 2
 
 	grenade
 		w_class = 2
@@ -330,7 +335,7 @@
 	caliber = 0.41
 	max_ammo_capacity = 2
 	w_class = 2
-	muzzle_flash = 0 //small gun
+	muzzle_flash = null
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
@@ -356,7 +361,7 @@
 	max_ammo_capacity = 4
 	auto_eject = 1
 	w_class = 2
-	muzzle_flash = 0
+	muzzle_flash = null
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_22/faith
@@ -364,6 +369,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "faith-empty"
 		else
@@ -445,6 +451,7 @@
 	force = 7.0
 	caliber = 0.355
 	max_ammo_capacity = 18
+	auto_eject = 1
 
 	New()
 		if (prob(30))
@@ -453,7 +460,10 @@
 
 		ammo = new/obj/item/ammo/bullets/nine_mm_NATO
 		current_projectile = new/datum/projectile/bullet/nine_mm_NATO
-		projectiles = list(current_projectile,new/datum/projectile/bullet/nine_mm_NATO/burst)
+		if(throw_return)
+			projectiles = list(current_projectile)
+		else
+			projectiles = list(current_projectile,new/datum/projectile/bullet/nine_mm_NATO/burst)
 		..()
 
 	attack_self(mob/user as mob)
@@ -464,6 +474,7 @@
 			spread_angle = 0
 
 	update_icon()
+		..()
 		if (src.item_state == "clock-188-black")
 			if (src.ammo.amount_left < 1)
 				src.icon_state = "clock-188-black_empty"
@@ -475,6 +486,46 @@
 			else
 				src.icon_state = "clock-188-beige"
 		return
+
+/obj/item/gun/kinetic/clock_188/boomerang
+	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."
+	name = "Clock 180"
+	throw_range = 10
+	throwforce = 1
+	throw_speed = 1
+	throw_return = 1
+	var/prob_clonk = 0
+
+	throw_begin(atom/target)
+		playsound(src.loc, "rustle", 50, 1)
+		return ..(target)
+
+	throw_impact(atom/hit_atom)
+		if(hit_atom == usr)
+			if(prob(prob_clonk))
+				var/mob/living/carbon/human/user = usr
+				user.visible_message("<span class='alert'><B>[user] fumbles the catch and accidentally discharges [src]!</B></span>")
+				src.shoot_point_blank(user, user)
+				user.force_laydown_standup()
+			else
+				src.attack_hand(usr)
+			return
+		else
+			var/mob/M = hit_atom
+			if(istype(M))
+				var/mob/living/carbon/human/user = usr
+				if(istype(user.wear_suit, /obj/item/clothing/suit/security_badge))
+					src.silenced = 1
+					src.shoot_point_blank(M, M)
+					M.visible_message("<span class='alert'><B>[src] fires, hitting [M] point blank!</B></span>")
+					src.silenced = initial(src.silenced)
+
+			prob_clonk = min(prob_clonk + 5, 100)
+			SPAWN_DBG(1 SECONDS)
+				prob_clonk = max(prob_clonk - 5, 0)
+
+		return ..(hit_atom)
+
 
 /obj/item/gun/kinetic/spes
 	name = "SPES-12"
@@ -552,7 +603,8 @@
 
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
-	desc = "Based on a an old Cold War relic, often used by paramilitary organizations and space terrorists."
+	desc = "Based on an old Cold War relic, often used by paramilitary organizations and space terrorists."
+	icon = 'icons/obj/64x32.dmi' // big guns get big icons
 	icon_state = "ak47"
 	item_state = "ak47"
 	force = 30.0
@@ -619,6 +671,7 @@
 	caliber = null // use any ammo at all BA HA HA HA HA
 	max_ammo_capacity = 2
 	var/failure_chance = 6
+	var/failured = 0
 
 	New()
 #if ASS_JAM
@@ -634,16 +687,22 @@
 		..()
 #endif
 
-	shoot()
-		if(ammo && ammo.amount_left && current_projectile && current_projectile.caliber && current_projectile.power)
-			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
-		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
+	shoot(var/target,var/start ,var/mob/user)
+		if(failured)
 			var/turf/T = get_turf(src)
 			explosion(src, T,-1,-1,1,2)
 			qdel(src)
-		else
-			..()
-			return
+		if(ammo && ammo.amount_left && current_projectile && current_projectile.caliber && current_projectile.power)
+			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
+		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
+			failured = 1
+			if(prob(failure_chance))	// Sometimes the failure is obvious
+				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+				boutput(user, "<span class='alert'>The [src]'s shodilly thrown-together [pick("breech", "barrel", "bullet holder", "firing pin", "striker", "staple-driver mechanism", "bendy metal part", "shooty-bit")][pick("", "...thing")] [pick("cracks", "pops off", "bends nearly in half", "comes loose")]!</span>")
+			else						// Other times, less obvious
+				playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+		..()
+		return
 
 /obj/item/gun/kinetic/silenced_22
 	name = "STL Orion"
@@ -657,7 +716,7 @@
 	max_ammo_capacity = 10
 	auto_eject = 1
 	hide_attack = 1
-	muzzle_flash = 0 //stealthy gun
+	muzzle_flash = null
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_22HP
@@ -665,6 +724,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "silenced_empty"
 		else
@@ -685,7 +745,7 @@
 		..()
 
 	shoot(var/target,var/start ,var/mob/user)
-		var/turf/T = get_turf_loc(src)
+		var/turf/T = get_turf(src)
 
 		if (!istype(T.loc, /area/sim))
 			boutput(user, "<span class='alert'>You can't use the guns outside of the combat simulation, fuckhead!</span>")
@@ -717,7 +777,7 @@
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1
-	muzzle_flash = 0 //grenade launcher
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new/obj/item/ammo/bullets/smoke/single
@@ -758,7 +818,7 @@
 	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
-	muzzle_flash = 0 //rocket launcher
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new /obj/item/ammo/bullets/rpg
@@ -768,6 +828,7 @@
 		return
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "rpg7_empty"
 			src.item_state = "rpg7_empty"
@@ -804,11 +865,12 @@
 	icon_state = "airzooka"
 	max_ammo_capacity = 10
 	caliber = 4.6 // I rolled a dice
-	muzzle_flash = 0 //it uses air not booms
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new/obj/item/ammo/bullets/airzooka
 		current_projectile = new/datum/projectile/bullet/airzooka
+		..()
 
 /obj/item/gun/kinetic/smg //testing keelin's continuous fire POC
 	name = "submachine gun"
@@ -849,6 +911,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "9mm_pistol_empty"
 		else
@@ -867,7 +930,7 @@
 	max_ammo_capacity = 30
 	auto_eject = 0
 	hide_attack = 1
-	muzzle_flash = 0 //silenced + supressed likely
+	muzzle_flash = null
 
 	New()
 		ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/pistol
@@ -893,10 +956,16 @@
 		current_projectile = new/datum/projectile/special/spreader/buckshot_burst/
 		..()
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+/*  //  how about not putting a goddamn irl suicide threat into the game??? fuck this content
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 /obj/item/gun/kinetic/tactical_shotgun/oblivion //"I've a gun named Oblivion that'll take all the pain away.. All our pain away..."
 	name = "Oblivion"
 	New()
 		return
+
+*/ /////////////////////////////////////////////////////////////////////////////////////////
 
 // assault
 /obj/item/gun/kinetic/assault_rifle
@@ -962,7 +1031,7 @@
 	force = 5
 	caliber = 0.308
 	max_ammo_capacity = 100
-	auto_eject = 0
+	auto_eject = 1
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
@@ -985,6 +1054,44 @@
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.5)
+
+
+/obj/item/gun/kinetic/cannon
+	name = "M20-CV tactical cannon"
+	desc = "A shortened conversion of a 20mm military cannon. Slow but enormously powerful."
+	icon = 'icons/obj/64x32.dmi'
+	icon_state = "cannon"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/back.dmi'
+	force = 10
+	caliber = 0.787
+	max_ammo_capacity = 1
+	auto_eject = 1
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	object_flags = NO_ARM_ATTACH
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	slowdown = 10
+	slowdown_time = 15
+
+	two_handed = 1
+	w_class = 4
+	muzzle_flash = "muzzle_flash_launch"
+
+
+	New()
+		ammo = new/obj/item/ammo/bullets/cannon/single
+		current_projectile = new/datum/projectile/bullet/cannon
+		..()
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.3)
+
+
 
 // demo
 /obj/item/gun/kinetic/grenade_launcher
@@ -1240,6 +1347,45 @@
 		playsound(get_turf(src), "sound/weapons/scope.ogg", 50, 1)
 		break
 
+
+// WIP //////////////////////////////////
+/*/obj/item/gun/kinetic/sniper/antimateriel
+	name = "M20-S antimateriel cannon"
+	desc = "A ruthlessly powerful rifle chambered for a 20mm cannon round. Built to destroy vehicles and infrastructure at range."
+	icon = 'icons/obj/64x32.dmi'
+	icon_state = "antimateriel"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/back.dmi'
+	force = 10
+	caliber = 0.787
+	max_ammo_capacity = 5
+	auto_eject = 1
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	object_flags = NO_ARM_ATTACH
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	slowdown = 5
+	slowdown_time = 10
+
+	two_handed = 1
+	w_class = 4
+	muzzle_flash = "muzzle_flash_launch"
+
+
+	New()
+		ammo = new/obj/item/ammo/bullets/cannon
+		current_projectile = new/datum/projectile/bullet/cannon
+		snipermove = new/datum/movement_controller/sniper_look()
+		..()
+
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.3)*/
+
 /obj/item/gun/kinetic/flintlockpistol
 	name = "flintlock pistol"
 	desc = "A powerful antique flintlock pistol."
@@ -1284,7 +1430,7 @@
 	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
-	muzzle_flash = 0 //rocket launcher
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new /obj/item/ammo/bullets/antisingularity
@@ -1312,3 +1458,125 @@
 		ammo.amount_left = 6 //spawn full please
 		current_projectile = new /datum/projectile/special/spawner/gun
 		..()
+
+/obj/item/gun/kinetic/meowitzer
+	name = "\improper Meowitzer"
+	desc = "It purrs gently in your hands."
+	icon = 'icons/obj/items/mining.dmi'
+	icon_state = "blaster"
+
+	color = "#ff7b00"
+	force = 5
+	caliber = 20
+	max_ammo_capacity = 1
+	auto_eject = 0
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	spread_angle = 0
+	can_dual_wield = 0
+	slowdown = 0
+	slowdown_time = 0
+	two_handed = 1
+	w_class = 4
+
+	New()
+		ammo = new/obj/item/ammo/bullets/meowitzer
+		current_projectile = new/datum/projectile/special/meowitzer
+		..()
+
+	afterattack(atom/A, mob/user as mob)
+		if(src.ammo.amount_left < max_ammo_capacity && istype(A, /obj/critter/cat))
+			src.ammo.amount_left += 1
+			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
+			src.current_projectile.icon_state = A.icon_state //match the cat sprite that we load
+			qdel(A)
+			return
+		else
+			..()
+
+/obj/item/gun/kinetic/meowitzer/inert
+	New()
+		..()
+		ammo = new/obj/item/ammo/bullets/meowitzer/inert
+		current_projectile = new/datum/projectile/special/meowitzer/inert
+
+
+
+
+/obj/item/gun/kinetic/SMG_briefcase
+	name = "secure briefcase"
+	icon = 'icons/obj/items/storage.dmi'
+	icon_state = "secure"
+	item_state = "sec-case"
+	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
+	force = 8.0
+	caliber = 0.355
+	max_ammo_capacity = 30
+	auto_eject = 0
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	object_flags = NO_ARM_ATTACH
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	spread_angle = 2
+	can_dual_wield = 0
+	var/cases_to_eject = 0
+	var/open = FALSE
+
+
+	New()
+		ammo = new/obj/item/ammo/bullets/nine_mm_NATO
+		current_projectile = new/datum/projectile/bullet/nine_mm_NATO/burst
+		..()
+
+	attack_hand(mob/user as mob)
+		if(!user.find_in_hand(src))
+			..() //this works, dont touch it
+		else if(open)
+			.=..()
+		else
+			boutput(user, "<span class='alert'>You can't unload the [src] while it is closed.</span>")
+
+	attackby(obj/item/ammo/bullets/b as obj, mob/user)
+		if(open)
+			.=..()
+		else
+			boutput(user, "<span class='alert'>You can't access the gun inside the [src] while it's closed! You'll have to open the [src]!</span>")
+
+	attack_self(mob/user)
+		if(open)
+			open = FALSE
+			update_icon()
+			boutput(user, "<span class='alert'>You close the [src]!</span>")
+		else
+			boutput(user, "<span class='alert'>You open the [src].</span>")
+			open = TRUE
+			update_icon()
+			if (src.loc == user && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
+				src.add_fingerprint(user)
+				if (!src.sanitycheck(0, 1))
+					user.show_text("You can't unload this gun.", "red")
+					return
+				if (src.casings_to_eject > 0 && src.current_projectile.casing)
+					if (!src.sanitycheck(1, 0))
+						logTheThing("debug", usr, null, "<b>Convair880</b>: [user]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
+						src.casings_to_eject = 0
+						return
+					else
+						user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
+						src.ejectcasings()
+						return
+				else
+					user.show_text("[src] is empty!", "red")
+					return
+
+	canshoot()
+		if(open)
+			return 0
+		else
+			. = ..()
+
+	update_icon()
+		if(open)
+			icon_state="guncase"
+		else
+			icon_state="secure"

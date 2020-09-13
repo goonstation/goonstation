@@ -44,6 +44,27 @@
 /obj/decal/tile_edge/stripe/extra_big
 	icon_state = "xtra_bigstripe-edge"
 
+/obj/decal/tile_edge/stripe/corner
+	name = "hazard stripe corner"
+
+/obj/decal/tile_edge/stripe/corner/big
+	icon_state = "bigstripe-corner"
+
+/obj/decal/tile_edge/stripe/corner/big2
+	icon_state = "bigstripe-corner2"
+
+/obj/decal/tile_edge/stripe/corner/extra_big
+	icon_state = "xtra_bigstripe-corner"
+
+/obj/decal/tile_edge/stripe/corner/extra_big2
+	icon_state = "xtra_bigstripe-corner2"
+
+/obj/decal/tile_edge/stripe/corner/xmas
+	icon_state = "xmas-corner"
+
+/obj/decal/tile_edge/stripe/corner/xmas2
+	icon_state = "xmas-corner2"
+
 /obj/decal/tile_edge/line
 	icon = 'icons/obj/line.dmi'
 	icon_state = "linefull"

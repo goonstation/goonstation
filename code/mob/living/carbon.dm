@@ -43,23 +43,15 @@
 						src.changeStatus("weakened", 35)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
-						/*
-						SPAWN_DBG(0)
-							step(src, src.dir)
-							for (var/i = 4, i>0, i--)
-								if (!isturf(src.loc) || !step(src, src.dir) || i == 1)
-									src.throwing = 0
-									break
-						*/
 						var/atom/target = get_edge_target_turf(src, src.dir)
-						SPAWN_DBG(0) src.throw_at(target, 12, 1, throw_type = THROW_GUNIMPACT)
+						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (3) // superlube
 						src.pulling = null
 						src.changeStatus("weakened", 6 SECONDS)
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						var/atom/target = get_edge_target_turf(src, src.dir)
-						SPAWN_DBG(0) src.throw_at(target, 30, 1, throw_type = THROW_GUNIMPACT)
+						src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 						random_brute_damage(src, 10)
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
@@ -179,7 +171,7 @@
 
 	src.brainloss = max(0,min(src.brainloss + amount,120))
 
-	if (src.brainloss >= 120)
+	if (src.brainloss >= 120 && isalive(src))
 		// instant death, we can assume a brain this damaged is no longer able to support life
 		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
 		src.death()
@@ -202,7 +194,7 @@
 
 	if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		src.toxloss = 0
-		return
+		return 1 //prevent organ damage
 
 	src.toxloss = max(0,src.toxloss + amount)
 	return
@@ -231,3 +223,26 @@
 
 /mob/living/carbon/get_oxygen_deprivation()
 	return src.oxyloss
+
+/mob/living/carbon/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	if(src.find_type_in_hand(/obj/item/bat))
+		var/turf/T = get_turf(src)
+		var/turf/U = get_step(src, src.dir)
+		/*I know what you're thinking. What's up with those SPAWN_DBGs down there?
+			Wasn't the whole throwing system changed not to need those? Yes it was!
+			However, this is a bit of a special case since the item is currently in flight.
+			We need to wait until it stops. I could add some throw queue for this but...
+			afaik this is the only place that'd use it. */
+		if (prob(1))
+			SPAWN_DBG(0)
+				AM.throw_at(get_edge_target_turf(T, get_dir(T, U)), 50, 60)
+			playsound(T, 'sound/items/woodbat.ogg', 50, 1)
+			playsound(T, 'sound/items/batcheer.ogg', 50, 1)
+			src.visible_message("<span class='alert'>[src] hits \the [AM] with the bat and scores a HOMERUN! Woah!!!!</span>")
+		else
+			SPAWN_DBG(0)
+				AM.throw_at(get_edge_target_turf(T, get_dir(T, U)), 50, 25)
+			playsound(T, 'sound/items/woodbat.ogg', 50, 1)
+			src.visible_message("<span class='alert'>[src] hits \the [AM] with the bat!</span>")
+	else
+		. = ..()

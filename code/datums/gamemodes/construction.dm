@@ -412,7 +412,7 @@
 
 /proc/debug_supply_pack()
 	var/thepath = input("Path", "Path", "/datum/supply_packs") as text
-	if (!lentext(thepath))
+	if (!length(thepath))
 		return
 	var/therealpath = text2path(thepath)
 	if (therealpath)

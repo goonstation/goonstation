@@ -146,7 +146,7 @@
 /datum/action/bar/icon/railing_jump
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "railing_deconstruct"
+	id = "railing_jump"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "railing_jump"
 	var/mob/ownerMob
@@ -154,6 +154,7 @@
 	var/turf/jump_target //where the mob will move to when they complete the jump!
 	var/is_athletic_jump //if the user has the athletic trait, and therefore does the BEEG HARDCORE PARKOUR YUMP
 	var/no_no_zone //if the user is trying to jump over railing onto somewhere they couldn't otherwise move through...
+	var/do_bunp = TRUE
 
 	New(The_Owner, The_Railing)
 		..()
@@ -167,10 +168,13 @@
 					is_athletic_jump = 1
 		if (The_Railing)
 			the_railing = The_Railing
-			if (get_dist(ownerMob, the_railing) == 0)
-				jump_target = get_step(the_railing, the_railing.dir)
-			else
-				jump_target = get_turf(the_railing)
+			jump_target = getLandingLoc()
+
+	proc/getLandingLoc()
+		if (get_dist(ownerMob, the_railing) == 0)
+			return get_step(the_railing, the_railing.dir)
+		else
+			return get_turf(the_railing)
 
 	onUpdate()
 		..()
@@ -190,6 +194,12 @@
 
 	onEnd()
 		..()
+		if(do_bunp())
+			return
+		// otherwise, the user jumps over without issue!
+		sendOwner()
+
+	proc/do_bunp()
 		var/bunp //the name of the thing we have bunp'd into when trying to jump the railing
 		var/list/bunp_whitelist = list(/obj/railing, /obj/decal/stage_edge) // things that we cannot bunp into
 		if (jump_target.density)
@@ -224,14 +234,14 @@
 				// HE HE U BUNPED YOUR HEAD
 				if (prob(25))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
-					ownerMob.TakeDamage("head", 0, 10)
+					ownerMob.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
 					for(var/mob/O in AIviewers(ownerMob))
 						O.show_text("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [bunp].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
+			return TRUE
+		return FALSE
 
-			return
-
-		// otherwise, the user jumps over without issue!
+	proc/sendOwner()
 		ownerMob.set_loc(jump_target)
 		for(var/mob/O in AIviewers(ownerMob))
 			var/the_text = null
@@ -240,7 +250,7 @@
 			else
 				the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
 			O.show_text("[the_text]", "red")
-		logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over %the_railing% with [his_or_her(ownerMob)] athletic trait" : "crawls over %the_railing%"].")
+		logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing]"].")
 
 
 /datum/action/bar/icon/railing_tool_interact
@@ -289,7 +299,7 @@
 			return
 		if (!tool)
 			interrupt(INTERRUPT_ALWAYS)
-			logTheThing("debug", src, the_railing, "tried to interact with %the_railing% using a null tool... somehow.")
+			logTheThing("debug", src, the_railing, "tried to interact with [the_railing] using a null tool... somehow.")
 			return
 		var/verbing = "doing something to"
 		switch (interaction)
@@ -324,5 +334,5 @@
 				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
-			logTheThing("station", ownerMob, the_railing, "[verbens] %the_railing%.")
+			logTheThing("station", ownerMob, the_railing, "[verbens] [the_railing].")
 

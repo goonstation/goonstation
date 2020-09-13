@@ -19,7 +19,9 @@
 	update_icon()
 		..()
 		if(src.delivery_destination)
-			src.overlays += "crate-barcode"
+			src.UpdateOverlays(image(src.icon, "crate-barcode"), "barcode")
+		else
+			src.UpdateOverlays(null, "barcode")
 
 
 	CanPass(atom/movable/mover, turf/target)
@@ -31,6 +33,34 @@
 		if(istype(O, /obj/projectile))
 			return 1
 		return ..()
+
+// Gore delivers new crates - woo!
+/obj/storage/secure/crate/dan
+	name = "Discount Dans cargo crate"
+	desc = "Because space is not available!"
+	icon_state = "dd_freezer"
+	icon_opened = "dd_freezeropen"
+	icon_closed = "dd_freezer"
+
+	beverages
+		name = "Discount Dans beverages crate"
+		desc = "Contents vary from sugar-shockers to pure poison."
+		spawn_contents = list(/obj/item/reagent_containers/food/drinks/noodlecup = 2,
+		/obj/item/reagent_containers/food/drinks/peach = 2,
+		/obj/item/reagent_containers/food/drinks/covfefe = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/spooky = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/spooky2 = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/gingerale = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/drowsy = 2)
+
+	snacks
+		name = "Discount Dans 'edibles' crate"
+		desc = "Contents may hold many surprises or...just a quick way out."
+		spawn_contents = list(/obj/item/tvdinner = 2,
+		/obj/item/reagent_containers/food/snacks/strudel = 2,
+		/obj/item/reagent_containers/food/snacks/snack_cake/golden = 2,
+		/obj/item/reagent_containers/food/snacks/burrito = 2,
+		/obj/item/reagent_containers/food/snacks/snack_cake = 2)
 
 /obj/storage/crate/internals
 	name = "internals crate"
@@ -45,6 +75,11 @@
 	icon_state = "medicalcrate"
 	icon_opened = "medicalcrateopen"
 	icon_closed = "medicalcrate"
+#if ASS_JAM
+	update_icon()
+		. = ..()
+		ADD_MORTY(14, 5, 5, 5)
+#endif
 
 /obj/storage/crate/medical/morgue
 	name = "morgue supplies crate"
@@ -214,7 +249,9 @@
 
 /obj/storage/crate/syndicate_surplus
 	var/ready = 0
+	grab_stuff_on_spawn = FALSE
 	New()
+		..()
 		SPAWN_DBG(2 SECONDS)
 			if (!ready)
 				spawn_items()
@@ -242,7 +279,7 @@
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)
 				if (owner)
-					item_datum.run_on_spawn(I, owner)
+					item_datum.run_on_spawn(I, owner, TRUE)
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
@@ -257,6 +294,26 @@
 	New()
 		..()
 		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
+
+/obj/storage/crate/bee
+	name = "Bee crate"
+	desc = "A crate with a picture of a bee on it. Buzz."
+	icon_state = "beecrate"
+	density = 1
+	icon_opened = "beecrateopen"
+	icon_closed = "beecrate"
+
+	loaded
+		spawn_contents = list(/obj/item/bee_egg_carton = 5)
+
+		var/blog = ""
+
+		make_my_stuff()
+			.=..()
+			if (.)
+				for(var/obj/item/bee_egg_carton/carton in src)
+					carton.ourEgg.blog += blog
+				return 1
 
 // New crates woo. (Gannets)
 
@@ -276,6 +333,7 @@
 /obj/storage/crate/wooden
 	name = "wooden crate"
 	desc = "A wooden crate."
+	icon_state = "woodencrate1"
 	New()
 		var/n = rand(1,9)
 		icon_state = "woodencrate[n]"
@@ -305,7 +363,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/grenade_launcher,
 		/obj/item/storage/pouch/grenade_round,
 		/obj/item/storage/grenade_pouch/mixed_explosive,
-		/obj/item/clothing/suit/space/syndicate/specialist,
+		/obj/item/clothing/suit/space/syndicate/specialist/grenadier,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
 	heavy
@@ -383,9 +441,8 @@
 	pyro
 		name = "Class Crate - Firebrand"
 		desc = "A crate containing a Specialist Operative loadout."
-		spawn_contents = list(/obj/item/flamethrower/loaded/napalm,
+		spawn_contents = list(/obj/item/flamethrower/backtank/napalm,
 		/obj/item/fireaxe,
-		/obj/item/reagent_containers/food/drinks/fueltank/napalm = 2,
 		/obj/item/storage/grenade_pouch/incendiary,
 		/obj/item/clothing/suit/space/syndicate/specialist/firebrand,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/firebrand)

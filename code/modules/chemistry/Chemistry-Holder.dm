@@ -60,6 +60,7 @@ datum
 		var/postfoam = 0 //attempt at killing infinite foam
 
 		New(maximum=100)
+			..()
 			maximum_volume = maximum
 
 		disposing()
@@ -273,7 +274,7 @@ datum
 
 			if (do_fluid_react && issimulatedturf(target))
 				var/turf/simulated/T = target
-				T.fluid_react(src, amount)
+				return T.fluid_react(src, amount)
 
 			return trans_to_direct(target_reagents, amount, multiplier, index = index)
 
@@ -496,6 +497,8 @@ datum
 
 					//Copy+paste to reduce proc calls
 					//var/amount = get_reagent_amount(reagent)
+					if (!(reagent in reagent_list))
+						continue
 					var/datum/reagent/current_reagent = reagent_list[reagent]
 					var/amount = current_reagent ? current_reagent.volume : 0
 					//end copy+paste

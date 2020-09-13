@@ -76,7 +76,7 @@
 		if(src.loaded)
 			src.visible_message("[user] ejects the tape from the databank.",1)
 			playsound(get_turf(src), 'sound/machines/driveclick.ogg', 80,1)
-			tape.loc = user.loc
+			tape.set_loc(user.loc)
 			tape.layer = 3
 			icon_state = "oldai_mem-0"
 			ai.tapes_loaded--
@@ -97,7 +97,7 @@
 				boutput(user, "<span class='alert'>The databank refuses to load the tape!</span>")
 				return
 			user.u_equip(W)
-			W.loc = src
+			W.set_loc(src)
 			tape = W
 			ai.ready_for_tapes = 0
 			src.loaded = 1

@@ -30,6 +30,7 @@
 	var/c_flags = null
 	var/tooltip_flags = null
 	var/item_function_flags = null
+	var/force_use_as_tool = 0
 
 	pressure_resistance = 50
 	var/obj/item/master = null
@@ -101,6 +102,10 @@
 
 	var/block_vision = 0 //cannot see when worn
 
+	// Inventory count display. Call create_inventory_counter in New()
+	var/inventory_counter_enabled = 0
+	var/obj/overlay/inventory_counter/inventory_counter = null
+
 	proc/setTwoHanded(var/twohanded = 1) //This is the safe way of changing 2-handed-ness at runtime. Use this please.
 		if(ismob(src.loc))
 			var/mob/L = src.loc
@@ -120,36 +125,44 @@
 		. += "<hr>"
 		if(rarity >= 4)
 			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
+		//combat stats
 		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</span></div>"
 		if (src.stamina_cost || src.stamina_damage)
 			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
 
+		//standard object properties
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
-				if(!istype(P, /datum/objectProperty/inline))
+				if(!P.hidden)
 					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
 
-		//itemblock tooltip additions
+		//Blocking section
 		if(src.c_flags & HAS_GRAB_EQUIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
 			for(var/obj/item/grab/block/B in src)
 				if(B.properties && B.properties.len)
-					for(var/datum/objectProperty/inline/P in B.properties)
-						. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+					//inline-blocking-based properties (disorient resist and damage-type blocks)
 					for(var/datum/objectProperty/P in B.properties)
-						if(!istype(P, /datum/objectProperty/inline))
+						if(P.inline)
+							. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+					//blocking-based properties
+					for(var/datum/objectProperty/P in B.properties)
+						if(!P.hidden)
 							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
 			for (var/datum/component/C in src.GetComponents(/datum/component/itemblock))
 				. += jointext(C.getTooltipDesc(), "")
 		else if(src.c_flags & BLOCK_TOOLTIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
 
+		//item specials
+		//unarmed special overrides from gloves
 		if(istype(src, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = src
 			if(G.specialoverride && G.overridespecial)
 				var/content = resource("images/tooltips/[G.specialoverride.image].png")
 				. += "<br>Unarmed special attack override:<br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[G.specialoverride.name]: [G.specialoverride.getDesc()]</div>"
 			. = jointext(., "")
+		//standard item specials
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
@@ -191,6 +204,9 @@
 					"theme" = usr.client.preferences.hud_style == "New" ? "newhud" : "item"
 				)
 
+				if (src.z == 0 && src.loc == usr)
+					tooltipParams["flags"] = TOOLTIP_TOP2 //space up one tile, not TOP. need other spacing flag thingy
+
 				//If we're over an item that's stored in a container the user has equipped
 				if (src.z == 0 && istype(src.loc, /obj/item/storage) && src.loc.loc == usr)
 					tooltipParams["flags"] = TOOLTIP_RIGHT
@@ -199,9 +215,12 @@
 
 			tooltip_rebuild = 0
 
+		usr.moused_over(src)
+
 	MouseExited()
 		if(showTooltip && usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
+		usr.moused_exit(src)
 
 	onMaterialChanged()
 		..()
@@ -238,6 +257,12 @@
 		if (!src.pixel_y) // same as above
 			src.pixel_y = rand(-8,8)
 	src.setItemSpecial(/datum/item_special/simple)
+
+	if (inventory_counter_enabled)
+		src.create_inventory_counter()
+		if (src.amount != 1)
+			// this is a gross hack to make things not just show "1" by default
+			src.inventory_counter.update_number(src.amount)
 	..()
 
 /obj/item/unpooled()
@@ -250,6 +275,10 @@
 		else
 			src.overlays -= image('icons/effects/fire.dmi', "1old")
 	src.burning = 0
+
+	if (inventory_counter_enabled)
+		src.inventory_counter = unpool(/obj/overlay/inventory_counter)
+		src.inventory_counter.update_number(src.amount)
 
 /obj/item/pooled()
 	src.amount = 0
@@ -265,6 +294,10 @@
 	if (ismob(src.loc))
 		var/mob/M = src.loc
 		M.u_equip(src)
+
+	if (src.inventory_counter)
+		pool(src.inventory_counter)
+		src.inventory_counter = null
 
 	..()
 
@@ -413,33 +446,6 @@
 /obj/item/proc/equipment_click(atom/source, atom/target, params, location, control, origParams, slot) //Called through hand_range_attack on items the mob is wearing that have HAS_EQUIP_CLICK in flags.
 	return 0
 
-
-/*
-		var/icon/overlay = icon('icons/effects/96x96.dmi',"smoke")
-		if (color)
-			overlay.Blend(color,ICON_MULTIPLY)
-		var/image/I = image(overlay)
-		I.pixel_x = -32
-		I.pixel_y = -32
-
-		var/the_dir = NORTH
-	for(var/i=0, i<8, i++)
-		var/obj/chem_smoke/C = new/obj/chem_smoke(location, holder, max_vol)
-		C.overlays += I
-		if (rname) C.name = "[rname] smoke"
-		SPAWN_DBG(0)
-			var/my_dir = the_dir
-			var/my_time = rand(80,110)
-			var/my_range = 3
-			SPAWN_DBG(my_time) qdel(C)
-			for(var/b=0, b<my_range, b++)
-				sleep(1.5 SECONDS)
-				if (!C) break
-				step(C,my_dir)
-				C.expose()
-		the_dir = turn(the_dir,45)
-*/
-
 /obj/item/proc/combust_ended()
 	processing_items.Remove(src)
 
@@ -452,6 +458,12 @@
 		else
 			src.overlays += image('icons/effects/fire.dmi', "1old")
 		processing_items.Add(src)
+#if ASS_JAM
+		if(src.reagents)
+			SPAWN_DBG(3 SECONDS)
+				if(src.reagents)
+					smoke_reaction(src.reagents, 0, get_turf(src), do_sfx=FALSE) // bring back infinicheese 2020
+#endif
 		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
 
 			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
@@ -503,9 +515,18 @@
 
 /obj/item/proc/change_stack_amount(var/diff)
 	amount += diff
+	if (!inventory_counter)
+		create_inventory_counter()
+	inventory_counter.update_number(amount)
 	if (amount > 0)
 		update_stack_appearance()
-	else
+	else if (!issilicon(usr))
+		// Zamu change - added if (!issilicon(usr))
+		// I have no idea if this matters - issilicon() is used in other places to prevent
+		// dropping or deleting items in some places.
+		// good thing I have no clue what I'm doing
+		// Potential issue for later: may end up not deleting external-to-player stacks
+		// maybe check for src.loc = usr? ???
 		SPAWN_DBG(0)
 			usr.u_equip(src)
 			pool(src)
@@ -798,6 +819,8 @@
 			I.remove_from_mob()
 			I.set_item(src)
 
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
+
 	if(chokehold)
 		chokehold.attack_self(user)
 
@@ -997,6 +1020,10 @@
 		if (isliving(checkloc) && checkloc != user)
 			return 0
 		checkloc = checkloc:loc
+
+	if(!src.can_pickup(user))
+		return 0
+
 	src.throwing = 0
 
 	if (isobj(src.loc))
@@ -1128,7 +1155,7 @@
 
 	user.violate_hippocratic_oath()
 
-	for (var/mob/V in nervous_mobs)
+	for (var/mob/V in by_cat[TR_CAT_NERVOUS_MOBS])
 		if (get_dist(user,V) > 6)
 			continue
 		if (prob(8) && user)
@@ -1143,10 +1170,12 @@
 	msgs.logc("attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)])")
 
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
+		return
 	var/stam_crit_pow = src.stamina_crit_chance
 	if (prob(stam_crit_pow))
 		msgs.stamina_crit = 1
-		msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
+		msgs.played_sound = pick(sounds_punch)
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
@@ -1332,6 +1361,9 @@
 	// Clean up circular references
 	disposing_abilities()
 	setItemSpecial(null)
+	if (src.inventory_counter)
+		pool(src.inventory_counter)
+		src.inventory_counter = null
 
 	if(istype(src.loc, /obj/item/storage))
 		var/obj/item/storage/storage = src.loc
@@ -1407,21 +1439,30 @@
 				possible_mob_holder.drop_item()
 				possible_mob_holder.hand = !possible_mob_holder.hand
 
+/obj/item/proc/create_inventory_counter()
+	src.inventory_counter = unpool(/obj/overlay/inventory_counter)
+	src.vis_contents += src.inventory_counter
+
 /obj/item/proc/dropped(mob/user)
 	if (user)
 		src.dir = user.dir
+		#ifdef COMSIG_MOB_DROPPED
+		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
+		#endif
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif
+
 	if(src.material) src.material.triggerDrop(user, src)
 	if (islist(src.ability_buttons))
 		for(var/obj/ability_button/B in ability_buttons)
 			B.OnDrop()
 	hide_buttons()
 	clear_mob()
-
+	if (src.inventory_counter)
+		src.inventory_counter.hide_count()
 	if (special_grab || chokehold)
 		drop_grab()
 	return
@@ -1430,12 +1471,20 @@
 	#ifdef COMSIG_ITEM_PICKUP
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	#endif
+	#ifdef COMSIG_MOB_PICKUP
+	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
+	#endif
 	if(src.material)
 		src.material.triggerPickup(user, src)
 	set_mob(user)
 	show_buttons()
+	if (src.inventory_counter)
+		src.inventory_counter.show_count()
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.equipped(user, user.get_slot_from_item(src))
 
 /obj/item/proc/intent_switch_trigger(mob/user)
 	return
+
+/obj/item/proc/can_pickup(mob/user)
+	return !src.anchored

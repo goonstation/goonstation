@@ -4,6 +4,7 @@
 obj/machinery/atmospherics/pipe
 	text = ""
 	layer = PIPE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent

@@ -318,12 +318,6 @@
 		..()
 		reagents.add_reagent("catdrugs", 10)
 
-/var/list/CYBERPUNK_drug_prefixes = strings("chemistry_tools.txt", "CYBERPUNK_drug_prefixes")
-/var/list/CYBERPUNK_drug_suffixes = strings("chemistry_tools.txt", "CYBERPUNK_drug_suffixes")
-/var/list/CYBERPUNK_drug_primaries = strings("chemistry_tools.txt", "CYBERPUNK_drug_primaries")
-/var/list/CYBERPUNK_drug_adulterants = strings("chemistry_tools.txt", "CYBERPUNK_drug_adulterants")
-/var/list/CYBERPUNK_drug_adulterants_safe = strings("chemistry_tools.txt", "CYBERPUNK_drug_adulterants_safe")
-
 /obj/item/reagent_containers/pill/cyberpunk
 	name = "cyberpunk pill"
 	desc = "A cocktail of illicit designer drugs, who knows what might be in here."
@@ -332,7 +326,7 @@
 
 	New()
 		..()
-		name = "[pick(CYBERPUNK_drug_prefixes)] [pick(CYBERPUNK_drug_suffixes)]"
+		name = "[pick_string("chemistry_tools.txt", "CYBERPUNK_drug_prefixes")] [pick_string("chemistry_tools.txt", "CYBERPUNK_drug_suffixes")]"
 
 		var/primaries = rand(1,3)
 		var/adulterants = rand(2,4)
@@ -348,10 +342,10 @@
 
 		while(primaries > 0)
 			primaries--
-			reagents.add_reagent(pick(CYBERPUNK_drug_primaries), 6)
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_primaries"), 6)
 		while(adulterants > 0)
 			adulterants--
-			reagents.add_reagent(pick(CYBERPUNK_drug_adulterants), 3)
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), 3)
 
 /obj/item/reagent_containers/pill/vr
 	icon = 'icons/effects/VR.dmi'
@@ -360,45 +354,41 @@
 	name = "mannitol pill"
 	desc = "Used to treat cranial swelling."
 	icon_state = "pill1"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("mannitol", 20)
+		..()
+		reagents.add_reagent("mannitol", 20)
 
 /obj/item/reagent_containers/pill/vr/antitox
 	name = "anti-toxins pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill2"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("charcoal", 50)
+		..()
+		reagents.add_reagent("charcoal", 50)
 
 /obj/item/reagent_containers/pill/vr/salicylic_acid
 	name = "analgesic pill"
 	desc = "Commonly used to treat moderate pain and fevers."
 	icon_state = "pill3"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("salicylic_acid", 20)
+		..()
+		reagents.add_reagent("salicylic_acid", 20)
 
 /obj/item/reagent_containers/pill/vr/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat respiratory distress."
 	icon_state = "pill4"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("salbutamol", 20)
+		..()
+		reagents.add_reagent("salbutamol", 20)
 
 /obj/item/reagent_containers/pill/ipecac
 	name = "space ipecac pill"

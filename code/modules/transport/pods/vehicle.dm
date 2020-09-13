@@ -104,6 +104,8 @@
 			checkhealth()
 			src.add_fingerprint(user)
 			src.visible_message("<span class='alert'>[user] has fixed some of the dents on [src]!</span>")
+			if(health >= maxhealth)
+				src.visible_message("<span class='alert'>[src] is fully repaired!</span>")
 			return
 
 		if (istype(W, /obj/item/shipcomponent))
@@ -410,6 +412,8 @@
 	proc/ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir)
 		var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir)
 		P.mob_shooter = user
+		if (src.m_w_system?.muzzle_flash)
+			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
 	bullet_act(var/obj/projectile/P)
 		if(P.shooter == src)
@@ -458,7 +462,7 @@
 		for(var/mob/M in src)
 			M << sound(P.proj_data.shot_sound,volume=35)
 			M << sound(hitsound, volume=30)
-			shake_camera(M, 1, 1)
+			shake_camera(M, 1, 8)
 
 
 
@@ -562,7 +566,7 @@
 				V.checkhealth()
 
 			for (var/mob/C in src)
-				shake_camera(C, 6, 1)
+				shake_camera(C, 6, 8)
 				//M << sound("sound/impact_sounds/Generic_Hit_Heavy_1.ogg",volume=35)
 
 			if (ismob(target) && target != hitmob)
@@ -578,9 +582,8 @@
 				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
-				SPAWN_DBG(0)
-					M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 				SPAWN_DBG(2.5 SECONDS)
 					if(M.health > 0)
 						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
@@ -594,7 +597,7 @@
 					var/turf/simulated/wall/T = target
 					T.dismantle_wall(1)
 
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 			else if (isobj(target) && power >= req_smash_velocity)
 				var/obj/O = target
 
@@ -625,7 +628,7 @@
 					var/obj/machinery/portable_atmospherics/canister/C = O
 					C.health -= power
 					C.healthcheck()
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 
@@ -678,7 +681,7 @@
 		fire_overlay = null
 		damage_overlay = null
 		ion_trail = null
-		pods_and_cruisers -= src
+		STOP_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 		STOP_TRACKING
 
 		..()
@@ -854,7 +857,7 @@
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
-	src.eject(usr)
+	src.leave_pod(usr)
 /*
 	if (usr.loc != src)
 		return
@@ -870,7 +873,7 @@
 	else
 		src.ion_trail.stop()
 */
-/obj/machinery/vehicle/proc/eject(mob/ejectee as mob)
+/obj/machinery/vehicle/proc/eject(mob/ejectee as mob) // Call leave_pod if you're having the mob leave the vehicle normally, otherwise use set_loc and it'll call this for you.
 	if (!ejectee || ejectee.loc != src)
 		return
 
@@ -881,7 +884,25 @@
 
 	src.passengers--
 
+	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
+	ejectee.reset_keymap()
+	ejectee.recheck_keys()
+	if(src.pilot == ejectee)
+		src.pilot = null
+	if(passengers)
+		find_pilot()
+	else
+		src.ion_trail.stop()
+
+
+
+	logTheThing("vehicle", ejectee, src.name, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
+
+/obj/machinery/vehicle/proc/leave_pod(mob/ejectee as mob)
 	// Assert facing direction for eject location offset
+	if (!ejectee || ejectee.loc != src)
+		return
+
 	var/x_offset = 0
 	var/y_offset = 0
 	if (bound_width == 64 && bound_height == 64)	// ensure it is a 2x2 pod
@@ -899,17 +920,7 @@
 	var/location = locate(x_coord, y_coord, z_coord)
 	var/atom/movable/EJ = ejectee		// stops ejectee floating off in the direction they last moved
 	EJ.last_move = null
-	ejectee.set_loc(location)
-
-	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
-	ejectee.reset_keymap()
-	ejectee.recheck_keys()
-	if(src.pilot == ejectee)
-		src.pilot = null
-	if(passengers)
-		find_pilot()
-	else
-		src.ion_trail.stop()
+	ejectee.set_loc(location) // set_loc will call eject()
 
 	for (var/obj/item/I in src)
 		if ( (I in src.components) || I == src.atmostank || I == src.fueltank || I == src.intercom)
@@ -917,7 +928,6 @@
 
 		I.set_loc(location)
 
-	logTheThing("vehicle", ejectee, src.name, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 ///////////////////////////////////////////////////////////////////////
 /////////Board Code  (also eject code lol)		//////////////////////
@@ -1001,14 +1011,14 @@
 /obj/machinery/vehicle/proc/eject_pod(var/mob/user, var/dead_only = 0)
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot
 		if (!dead_only)
-			eject(M)
+			leave_pod(M)
 			boutput(user, "<span class='alert'>You yank [M] out of [src].</span>")
 		else
 			if(M.stat || !M.client)
-				eject(M)
+				leave_pod(M)
 				boutput(user, "<span class='alert'>You pull [M] out of [src].</span>")
 			else if(!isliving(M))
-				eject(M)
+				leave_pod(M)
 				boutput(user, "<span class='alert'>You scrape [M] out of [src].</span>")
 
 	for(var/obj/decal/cleanable/O in src)
@@ -1140,7 +1150,8 @@
 	for(var/mob/M in src)
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
 		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
-		src.eject(M)
+
+		src.leave_pod(M)
 		//var/atom/target = get_edge_target_turf(M,pick(alldirs))
 		//SPAWN_DBG(0)
 		//M.throw_at(target, 10, 2)
@@ -1399,7 +1410,7 @@
 	src.lights.ship = src
 	src.components += src.lights
 
-	pods_and_cruisers += src
+	START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 /obj/machinery/vehicle/get_movement_controller()
 	return movement_controller
@@ -1712,6 +1723,28 @@
 	New()
 		..()
 		Install(new /obj/item/shipcomponent/locomotion/treads(src))
+
+/obj/machinery/vehicle/tank/minisub/pilot
+	body_type = "minisub"
+	health = 150
+	maxhealth = 150
+
+
+	New()
+		..()
+		src.com_system.deactivate()
+		qdel(src.engine)
+		qdel(src.com_system)
+		src.components -= src.engine
+		src.components -= src.com_system
+		src.engine = null
+		Install(new /obj/item/shipcomponent/engine/zero(src))
+		Install(new /obj/item/shipcomponent/mainweapon/bad_mining(src))
+		src.engine.activate()
+		src.com_system = null
+		myhud.update_systems()
+		myhud.update_states()
+		new /obj/item/sea_ladder(src)
 
 /obj/machinery/vehicle/tank/minisub/secsub
 	body_type = "minisub"

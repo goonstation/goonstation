@@ -78,13 +78,16 @@
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
 
 		src.temp = ""
+		var/hookup_error = FALSE
 		if (isnull(src.scanner))
 			src.temp += " <font color=red>SCNR-ERROR</font>"
+			hookup_error = TRUE
 		if (isnull(src.pod1))
 			src.temp += " <font color=red>POD1-ERROR</font>"
-		else
-			src.pod1.connected = src
-			src.scanner.connected = src
+			hookup_error = TRUE
+		if (!hookup_error)
+			src.pod1?.connected = src
+			src.scanner?.connected = src
 
 		if (src.temp == "")
 			src.temp = "System ready."
@@ -497,7 +500,7 @@
 	if (!src.pod1)
 		src.temp = "No cloning pod connected."
 		return
-	if (src.pod1.occupant)
+	if (src.pod1.attempting)
 		src.temp = "Cloning pod in use."
 		return
 	if (src.pod1.mess)
@@ -634,7 +637,7 @@
 		eject_occupant(user)
 
 	disposing()
-		connected.scanner = null
+		connected?.scanner = null
 		connected = null
 		pods = null
 		occupant = null
@@ -644,7 +647,7 @@
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -691,7 +694,7 @@
 		src.icon_state = "scanner_1"
 
 		for(var/obj/O in src)
-			O.loc = src.loc
+			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
 
@@ -746,11 +749,14 @@
 		if ((!( src.occupant ) || src.locked))
 			return
 
-		for(var/obj/O in src)
-			O.set_loc(src.loc)
+		if(!src.occupant.disposed)
+			src.occupant.set_loc(src.loc)
 
-		src.occupant.set_loc(src.loc)
 		src.occupant = null
+
+		for(var/atom/movable/A in src)
+			A.set_loc(src.loc)
+
 		src.icon_state = "scanner_0"
 
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)

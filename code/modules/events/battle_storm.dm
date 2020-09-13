@@ -79,7 +79,7 @@
 
 		for (var/mob/M in mobs)
 			SPAWN_DBG(0)
-				shake_camera(M, 200, 0.5) // wire note: lowered strength from 840 to 400, by popular request
+				shake_camera(M, 200, 16) // wire note: lowered strength from 840 to 400, by popular request
 
 		// Hit everyone every 2 seconds when they are not in the safe zone
 		// Everyone gets set more and more on fire the longer they arent in the safe area

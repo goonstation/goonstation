@@ -4075,7 +4075,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "iF" = (
 /obj/stool/chair/wooden,
 /obj/cable{
@@ -4087,7 +4087,7 @@
 	dir = 9;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "iG" = (
 /obj/stool/chair/wooden,
 /obj/cable{
@@ -4099,7 +4099,7 @@
 	dir = 5;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "iH" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -4335,19 +4335,19 @@
 /area/station/hydroponics)
 "ji" = (
 /turf/simulated/floor/grass,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "jj" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "jk" = (
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "jl" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -4489,7 +4489,7 @@
 	id = "crematorium"
 	},
 /turf/simulated/floor/grass,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "jB" = (
 /obj/table/wood/auto,
 /obj/machinery/crema_switch{
@@ -4501,7 +4501,7 @@
 	dir = 8;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "jC" = (
 /obj/table/wood/auto,
 /obj/item/ghostboard,
@@ -4512,14 +4512,14 @@
 	dir = 4;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "jD" = (
 /obj/morgue{
 	dir = 2;
 	icon_state = "morgue1"
 	},
 /turf/simulated/floor/grass,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "jE" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -4751,7 +4751,7 @@
 	dir = 10;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "jZ" = (
 /obj/landmark/start{
 	name = "Chaplain"
@@ -4762,7 +4762,7 @@
 	dir = 6;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "ka" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -5017,7 +5017,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "kz" = (
 /turf/space,
 /area/shuttle/escape/station/cogmap2)

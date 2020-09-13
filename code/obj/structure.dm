@@ -49,7 +49,7 @@ obj/structure/ex_act(severity)
 				src.material.triggerOnAttacked(src, user, user, src)
 			for (var/mob/N in AIviewers(usr, null))
 				if (N.client)
-					shake_camera(N, 4, 1, 0.5)
+					shake_camera(N, 4, 1, 8)
 		if (prob(80))
 			boutput(user, text("<span class='notice'>You smash through the girder.</span>"))
 			if (istype(src, /obj/structure/girder/reinforced))
@@ -195,8 +195,11 @@ obj/structure/ex_act(severity)
 				// drsingh attempted fix for Cannot read null.amount
 				if (S != null)
 					S.amount -= 2
-					if(S.amount <= 0)
+					if (S.amount <= 0)
 						qdel(W)
+					else
+						S.inventory_counter.update_number(S.amount)
+
 				qdel(src)
 		return
 
@@ -211,7 +214,7 @@ obj/structure/ex_act(severity)
 				src.material.triggerOnAttacked(src, user, user, src)
 			for (var/mob/N in AIviewers(usr, null))
 				if (N.client)
-					shake_camera(N, 4, 1, 0.5)
+					shake_camera(N, 4, 1, 8)
 
 		if (prob(70))
 			boutput(user, text("<span class='notice'>You smash through the girder.</span>"))

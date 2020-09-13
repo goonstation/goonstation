@@ -148,7 +148,7 @@
 
 						src.print_text("Printing out lost cargo logs for connected comm dish...")
 
-						for (var/obj/machinery/communications_dish/C in comm_dishes)
+						for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 							if (C.net_id == src.comm_net_id)
 								for (var/logg in C.cargo_logs)
 									src.print_text(logg)

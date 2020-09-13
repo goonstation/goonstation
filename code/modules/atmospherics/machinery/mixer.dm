@@ -102,7 +102,6 @@ obj/machinery/atmospherics/mixer
 		..()
 
 	disposing()
-		loc = null
 
 		// Signal air disposing...
 		if (network_in1)

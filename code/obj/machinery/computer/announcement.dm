@@ -98,7 +98,7 @@
 			message = copytext( html_decode(trim(strip_html(html_decode(input("Select what you wish to announce.", "Announcement."))))), 1, 280 )
 			if(url_regex && url_regex.Find(message)) message = ""
 			inhibit_updates = 0
-			playsound(src.loc, "keyboard", 50, 1, 5)
+			playsound(src.loc, "keyboard", 50, 1, -15)
 
 		else if (href_list["clear_message"])
 			message = ""
@@ -133,6 +133,10 @@
 	proc/send_message(var/mob/user)
 		if(!message || !unlocked || get_time() > 0) return
 		var/area/A = get_area(src)
+
+		if(user.bioHolder.HasEffect("mute"))
+			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
+			return
 
 		logTheThing("say", user, null, "created a command report: [message]")
 		logTheThing("diary", user, null, "created a command report: [message]", "say")
@@ -179,7 +183,7 @@
 		src.arrivalalert = sanitize(adminscrub(newalert, 200))
 		logTheThing("station", user, src, "sets the arrival announcement on [constructTarget(src,"station")] to \"[src.arrivalalert]\"")
 		user.show_text("Arrival alert set to '[newalert]'", "blue")
-		playsound(src.loc, "keyboard", 50, 1, 5)
+		playsound(src.loc, "keyboard", 50, 1, -15)
 		return
 
 	proc/say_quote(var/text)

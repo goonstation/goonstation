@@ -871,10 +871,12 @@ In suppliant Terms implore a kind Redress.</p>
 	name = "nav_logs"
 
 /datum/computer/file/record/radioship/testlog/New()
+	..()
 	fields = strings("radioship/radioship_records.txt","log_1")
 
 /datum/computer/file/record/radioship/testlog2
 	name = "inter-ship_communications"
 
 /datum/computer/file/record/radioship/testlog2/New()
+	..()
 	fields = strings("radioship/radioship_records.txt","log_2")

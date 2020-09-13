@@ -324,7 +324,7 @@
 		announceAll("The Pod Colosseum match concluded. Final score: [score].")
 		if (score > 10000)
 			var/command_report = "A Pod Colosseum match has concluded with score [score]. Congratulations to: [moblist_names]."
-			for (var/obj/machinery/communications_dish/C in comm_dishes)
+			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 				C.add_centcom_report("[command_name()] Update", command_report)
 
 			command_alert(command_report, "Pod Colosseum match finished")
@@ -375,6 +375,7 @@
 		resetting = 0
 
 	New()
+		..()
 		SPAWN_DBG(0.5 SECONDS)
 			viewing = locate() in world
 			staging = locate() in world
@@ -495,6 +496,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	var/image/health_overlay
 
 	New(var/barLength = 4, var/is_left = 0)
+		..()
 		for (var/i = 1, i <= barLength, i++)
 			var/obj/screen/S = new /obj/screen()
 			var/edge = is_left ? "WEST" : "EAST"

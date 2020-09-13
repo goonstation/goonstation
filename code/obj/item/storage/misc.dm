@@ -78,3 +78,10 @@
 	desc = "Conveniently, once this box runs out of hazardous waste bags, you can throw it away in one of your new hazardous waste bags!! (Please be sure to bleed on it first, though, otherwise it's a bit of a waste of a bag.)"
 	icon_state = "biohazard"
 	spawn_contents = list(/obj/item/clothing/under/trash_bag/biohazard = 7)
+
+/obj/item/storage/box/holywaterkit
+	name = "do-it-yourself holy water kit"
+	desc = "Just combine the ingredients with water! Free container with sample provided."
+	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/mercury = 3,
+	/obj/item/reagent_containers/food/drinks/bottle/wine = 3,
+	/obj/item/reagent_containers/glass/bottle/holywater)

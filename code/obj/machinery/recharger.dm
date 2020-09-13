@@ -146,7 +146,7 @@ obj/machinery/recharger
 		src.icon_state = sprite_error
 
 
-/obj/machinery/recharger/process()
+/obj/machinery/recharger/process(var/mult)
 	// what the fuck
 	// why
 	// why the fuck
@@ -164,15 +164,15 @@ obj/machinery/recharger
 
 
 	if (src.charging && charge_status != STATUS_INACTIVE)
-		power_usage = ACTIVE_POWER_DRAIN
+		power_usage = ACTIVE_POWER_DRAIN * mult
 	else
-		power_usage = 50
+		power_usage = 50 * mult
 
 
 	if(charge_status == STATUS_ACTIVE && src.charging)
 		try
 			//Do the charging - all items to be recharged should implement proc/charge()
-			switch(src.charging:charge(CHARGE_AMOUNT))
+			switch(src.charging:charge(CHARGE_AMOUNT * mult))
 				if(REPORT_FINISH)
 					// Charge complete
 					charge_status = STATUS_COMPLETE

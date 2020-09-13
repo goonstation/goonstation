@@ -6,7 +6,7 @@ var/datum/action_controller/actions
 	var/list/running = list() //Associative list of running actions, format: owner=list of action datums
 
 	proc/hasAction(var/atom/owner, var/id) //has this mob an action of a given type running?
-		if(running.Find(owner))
+		if(owner in running)
 			var/list/actions = running[owner]
 			for(var/datum/action/A in actions)
 				if(A.id == id) return 1
@@ -34,13 +34,18 @@ var/datum/action_controller/actions
 		return
 
 	proc/start(var/datum/action/A, var/atom/owner) //Starts a new action.
-		if(!running.Find(owner))
+		if(!(owner in running))
 			running.Add(owner)
 			running[owner] = list(A)
 		else
 			interrupt(owner, INTERRUPT_ACTION)
+			for(var/datum/action/OA in running[owner])
+				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
+				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE)
+					OA.onResume()
+					qdel(A)
+					return OA
 			running[owner] += A
-
 		A.owner = owner
 		A.started = world.time
 		A.onStart()
@@ -97,6 +102,20 @@ var/datum/action_controller/actions
 		state = ACTIONSTATE_RUNNING
 		return
 
+	proc/onRestart()			   //Called when the action restarts (for example: automenders)
+		sleep(1)
+		started = world.time
+		state = ACTIONSTATE_RUNNING
+		loopStart()
+		return
+
+	proc/loopStart()				//Called after restarting. Meant to cotain code from -and be called from- onStart()
+		return
+
+	proc/onResume()				   //Called when the action resumes - likely from almost ending
+		state = ACTIONSTATE_RUNNING
+		return
+
 	proc/onEnd()				   //Called when the action succesfully ends.
 		state = ACTIONSTATE_DELETE
 		return
@@ -116,26 +135,27 @@ var/datum/action_controller/actions
 		var/atom/movable/A = owner
 		if(owner != null)
 			bar = unpool(/obj/actions/bar)
-			bar.loc = owner.loc
 			border = unpool(/obj/actions/border)
-			border.loc = owner.loc
 			bar.pixel_y = 5
 			bar.pixel_x = 0
 			border.pixel_y = 5
-			if (!islist(A.attached_objs))
-				A.attached_objs = list()
-			A.attached_objs.Add(bar)
-			A.attached_objs.Add(border)
+			A.vis_contents += bar
+			A.vis_contents += border
 			// this will absolutely obviously cause no problems.
 			bar.color = "#4444FF"
 			updateBar()
 
+	onRestart()
+		//Start the bar back at 0
+		bar.transform = matrix(0, 0, -15, 0, 1, 0)
+		..()
+
 	onDelete()
 		..()
 		var/atom/movable/A = owner
-		if (owner != null && islist(A.attached_objs))
-			A.attached_objs.Remove(bar)
-			A.attached_objs.Remove(border)
+		if (owner != null)
+			A.vis_contents -= bar
+			A.vis_contents -= border
 		SPAWN_DBG(0.5 SECONDS)
 			if (bar)
 				bar.set_loc(null)
@@ -148,9 +168,9 @@ var/datum/action_controller/actions
 
 	disposing()
 		var/atom/movable/A = owner
-		if (owner != null && islist(A.attached_objs))
-			A.attached_objs.Remove(bar)
-			A.attached_objs.Remove(border)
+		if (owner != null)
+			A.vis_contents -= bar
+			A.vis_contents -= border
 		if (bar)
 			bar.set_loc(null)
 			pool(bar)
@@ -176,6 +196,12 @@ var/datum/action_controller/actions
 				animate( bar, color = "#CC0000", time = 2.5 )
 		..()
 
+	onResume()
+		if (bar)
+			updateBar()
+			bar.color = "#4444FF"
+		..()
+
 	onUpdate()
 		updateBar()
 		..()
@@ -193,6 +219,7 @@ var/datum/action_controller/actions
 			animate( bar, transform = matrix(1, 0, 0, 0, 1, 0), time = remain )
 		else
 			animate( bar, flags = ANIMATION_END_NOW )
+		return
 
 /datum/action/bar/blob_health // WOW HACK
 	onUpdate()
@@ -364,6 +391,7 @@ var/datum/action_controller/actions
 		R.setMaterial(mat)
 		if (istype(R))
 			R.amount = amount
+			R.inventory_counter?.update_number(R.amount)
 		R.dir = owner.dir
 		sheet.consume_sheets(cost)
 		if (sheet2 && cost2)
@@ -852,37 +880,45 @@ var/datum/action_controller/actions
 	icon_state = "bar"
 	layer = 101
 	plane = PLANE_HUD + 1
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 
 	unpooled()
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
+		..()
 
 	pooled()
 		loc = null
 		attached_objs = list()
 		overlays.len = 0
+		..()
 
 /obj/actions/border
 	layer = 100
 	icon_state = "border"
 	plane = PLANE_HUD + 1
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"border",5)
 
 	unpooled()
 		img = image('icons/ui/actions.dmi',src,"border",5)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
+		..()
 
 	pooled()
 		loc = null
 		attached_objs = list()
 		overlays.len = 0
+		..()
 
 //Use this to start the action
 //actions.start(new/datum/action/bar/private/icon/magPicker(item, picker), usr)
@@ -1269,3 +1305,65 @@ var/datum/action_controller/actions
 			..()
 			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
 				over_object.attackby(target, owner, params)
+
+/// general purpose action to anchor or unanchor stuff
+/datum/action/bar/icon/anchor_or_unanchor
+	id = "table_tool_interact"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/target
+	var/obj/item/tool
+	var/unanchor = FALSE
+
+	New(var/obj/target, var/obj/item/tool, var/unanchor=null, var/duration=null)
+		..()
+		if (target)
+			src.target = target
+		if (tool)
+			src.tool = tool
+			icon = src.tool.icon
+			icon_state = src.tool.icon_state
+		if (!isnull(unanchor))
+			src.unanchor = unanchor
+		else
+			src.unanchor = target.anchored
+		if (duration)
+			src.duration = duration
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("carpenter"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (target == null || tool == null || owner == null || get_dist(owner, target) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(unanchor && !target.anchored || !unanchor && target.anchored)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(iswrenchingtool(tool))
+			playsound(get_turf(target), "sound/items/Ratchet.ogg", 50, 1)
+		else if(isweldingtool(tool))
+			playsound(get_turf(target), "sound/items/Welder.ogg", 50, 1)
+		else if(isscrewingtool(tool))
+			playsound(get_turf(target), "sound/items/Screwdriver.ogg", 50, 1)
+		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
+
+	onEnd()
+		..()
+		owner.visible_message("<span class='notice'>[owner]  [unanchor ? "un" : ""]anchors [target].</span>")
+		if(unanchor)
+			target.anchored = FALSE
+		else
+			target.anchored = TRUE

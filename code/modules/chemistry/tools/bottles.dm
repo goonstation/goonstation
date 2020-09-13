@@ -151,7 +151,7 @@
 	bottle_style = "4"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "sulfonal"
-	
+
 /obj/item/reagent_containers/glass/bottle/synaptizine
 	name = "synaptizine bottle"
 	desc = "A small bottle."
@@ -222,6 +222,14 @@
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
 	initial_reagents = "ethanol"
+
+/obj/item/reagent_containers/glass/bottle/mercury
+	name = "mercury bottle"
+	desc = "A small bottle with a 'Do Not Drink' label on it."
+	bottle_style = "1"
+	initial_volume = 50
+	amount_per_transfer_from_this = 5
+	initial_reagents = "mercury"
 
 /* ========================================================= */
 /* -------------------- Chem Precursors -------------------- */

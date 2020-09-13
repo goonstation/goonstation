@@ -84,6 +84,7 @@ var/global/list/atomTooltips = new()
 
 
 	New(client/C)
+		..()
 		if (!C) return 0
 		src.owner = C
 
@@ -210,6 +211,7 @@ var/global/list/atomTooltips = new()
 
 
 	New(client/C, datum/tooltipHolder/tipHolder, clone = 1, stuck = 1, atom/thing = null)
+		..()
 		if (!C) return 0
 		src.owner = C
 		src.holder = tipHolder
@@ -353,6 +355,8 @@ var/global/list/atomTooltips = new()
 				extra += "left"
 			if (options["flags"] & TOOLTIP_CENTER)
 				extra += "center"
+			if (options["flags"] & TOOLTIP_TOP2)
+				extra += "top2"
 
 			params["flags"] = extra
 			//src.specialFlags = extra

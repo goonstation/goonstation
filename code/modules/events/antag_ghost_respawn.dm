@@ -60,7 +60,7 @@
 
 		// No need for a fancy setup here.
 		if (src.antagonist_type == "Blob (AI)")
-			var/BS = blobstart.len ? pick(blobstart) : null
+			var/BS = pick_landmark(LANDMARK_BLOBSTART)
 			if (BS)
 				new /mob/living/intangible/blob_overmind/ai(BS)
 				message_admins("Antagonist Spawn spawned an AI blob at [log_loc(BS)].")
@@ -169,8 +169,8 @@
 		var/role = null
 		var/objective_path = null
 		var/send_to = 1 // 1: arrival shuttle | 2: wizard shuttle
-		var/ASLoc = latejoin.len ? pick(latejoin) : null
-		var/WSLoc = wizardstart.len ? pick(wizardstart) : null
+		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
+		var/WSLoc = job_start_locations["wizard"] ? pick(job_start_locations["wizard"]) : null
 		var/failed = 0
 
 		switch (src.antagonist_type)
@@ -222,9 +222,9 @@
 
 					SPAWN_DBG (0)
 						if (R.gender && R.gender == "female")
-							R.real_name = wiz_female.len ? pick(wiz_female) : "Witch"
+							R.real_name = pick_string_autokey("names/wizard_female.txt")
 						else
-							R.real_name = wiz_male.len ? pick(wiz_male) : "Wizard"
+							R.real_name = pick_string_autokey("names/wizard_male.txt")
 						R.choose_name(3, "wizard")
 
 				else

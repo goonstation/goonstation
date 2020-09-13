@@ -89,6 +89,7 @@ datum/controller/process/lighting
 
 
 	New(ListSize = 500)
+		..()
 		list = list()
 		list.len = ListSize
 

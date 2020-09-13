@@ -51,7 +51,7 @@
 						my_group.evaporate()
 						return
 				skip_next_update = 1
-				my_group.drain(remove_source, fluids_to_remove)
+				my_group.drain(remove_source, fluids_to_remove, remove_reagent = 0)
 
 	get_reagents_fullness()
 		.= "empty"
@@ -168,8 +168,7 @@
 		reagents = new /datum/reagents/fluid_group(90000000) //high number lol.
 		reagents.my_group = src
 
-		if (!(src in processing_fluid_groups))
-			processing_fluid_groups.Add(src)
+		processing_fluid_groups |= src
 
 	proc/update_amt_per_tile()
 		contained_amt = src.reagents.total_volume
@@ -218,7 +217,7 @@
 	//fluid has been removed from its tile. use 'lightweight' in evaporation procedure cause we dont need icon updates / try split / update loop checks at that point
 	// if 'lightweight' parameter is 2, invoke an update loop but still ignore icon updates
 	proc/remove(var/obj/fluid/F, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 0)
-		if (!F || F.pooled) return 0
+		if (!F || F.pooled || src.disposed) return 0
 		if (!members || !members.len || !members.Find(F)) return 0
 
 		if (!lightweight)
@@ -234,6 +233,8 @@
 				t = get_step( F, dir )
 				if (t && t.active_liquid)
 					t.active_liquid.blocked_dirs = 0
+
+		if(src.disposed || F.disposed) return 0 // update_icon lagchecks, rip
 
 		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
 		members -= F //remove after amt per tile ok? otherwise bad thing could happen
@@ -326,7 +327,7 @@
 						T.active_liquid.group.join(src)
 					else
 						F.loc:active_liquid = 0
-						F.loc = T
+						F.set_loc(T)
 						T.active_liquid = F
 					break
 		else
@@ -405,15 +406,13 @@
 		if (src.qdeled) return
 
 		src.draining = 1
-		if (!(src in processing_fluid_drains))
-			processing_fluid_drains.Add(src)
+		processing_fluid_drains |= src
 
 	proc/update_loop()
 		if (src.qdeled) return
 
 		src.updating = 1
-		if (!(src in processing_fluid_spreads))
-			processing_fluid_spreads.Add(src)
+		processing_fluid_spreads |= src
 
 	proc/update_required_to_spread()
 		return
@@ -573,9 +572,11 @@
 
 			//air specific (messy)
 			fluid_ma.opacity = master_opacity
-
+			fluid_ma.overlays = F.overlays // gross, needed because of perspective overlays
 			F.appearance = fluid_ma
 
+		if(src.disposed)
+			return 1
 
 		src.last_contained_amt = src.contained_amt
 		src.last_members_amt = src.members.len
@@ -632,7 +633,7 @@
 				break
 			src.waitforit = 0
 
-	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0) //basically a reverse spread with drain_source as the center
+	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0, var/remove_reagent = 1) //basically a reverse spread with drain_source as the center
 		if (!drain_source || drain_source.group != src) return
 
 		//Don't delete tiles if we can just drain existing deep fluid
@@ -678,7 +679,7 @@
 			src.reagents.skip_next_update = 1
 			src.reagents.trans_to_direct(transfer_to.reagents,src.amt_per_tile * removed_len)
 			src.contained_amt = src.reagents.total_volume
-		else if (src.reagents)
+		else if (src.reagents && remove_reagent)
 			src.reagents.skip_next_update = 1
 			src.reagents.remove_any(src.amt_per_tile * removed_len)
 			src.contained_amt = src.reagents.total_volume

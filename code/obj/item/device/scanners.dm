@@ -29,8 +29,7 @@ Contains:
 		set_icon_state("t-ray[on]")
 		boutput(user, "You switch [src] [on ? "on" : "off"].")
 
-		if(on && !(src in processing_items))
-			processing_items.Add(src)
+		if(on) processing_items |= src
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))

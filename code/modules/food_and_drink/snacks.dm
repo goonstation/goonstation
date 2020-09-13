@@ -823,8 +823,7 @@
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	process()
 		if (prob(30) && src.icon_state == "surs-open")
@@ -969,7 +968,7 @@
 
 
 	New()
-		..()
+		. = ..()
 		name = "[random_spaghetti_name()] noodles"
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -986,11 +985,27 @@
 			user.put_in_hand_or_drop(D)
 			qdel(W)
 			qdel(src)
-		else return ..()
+
+		// Muppet show EP 111
+		if (istype(W, /obj/item/kitchen/utensil/spoon))
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if (H.a_intent == INTENT_HARM && (H.job == "Chef" || H.job == "Sous-Chef") && H.bioHolder?.HasEffect("accent_swedish"))
+					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!<b></span>")
+					src.visible_message("<span class='alert'>The [src] barks at [H]!</span>")
+					playsound(get_turf(src), "sound/voice/animal/dogbark.ogg", 40, 1)
+					SPAWN_DBG(0.75 SECONDS)
+						if (src && H)
+							src.visible_message("<span class='alert'>The [src] takes a bite out of [H]!</span>")
+							random_brute_damage(H, 10)
+
+		else
+			return ..()
 
 	heal(var/mob/M) // ditto goddammit - arrabiata is not fuckin bland you dorks
-		if (icon_state == "spag_plain") boutput(M, "<span class='alert'>This is really bland.</span>")
-		..()
+		if (icon_state == "spag_plain")
+			boutput(M, "<span class='alert'>This is really bland.</span>")
+		. = ..()
 
 /obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal
 	name = "boneless spaghetti"
@@ -1004,7 +1019,7 @@
 	initial_reagents = list("milk"=50)
 
 	New()
-		..()
+		. = ..()
 		name = "boneless [random_spaghetti_name()]"
 
 	process()
@@ -1021,7 +1036,7 @@
 	food_effects = list("food_energized","food_brute","food_burn")
 
 	New()
-		..()
+		. = ..()
 		name = "[random_spaghetti_name()] with tomato sauce"
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1056,7 +1071,7 @@
 	food_effects = list("food_energized","food_brute","food_burn")
 
 	New()
-		..()
+		. = ..()
 		name = "[random_spaghetti_name()] arrabbiata"
 
 /obj/item/reagent_containers/food/snacks/spaghetti/meatball
@@ -1071,7 +1086,7 @@
 	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
 
 	New()
-		..()
+		. = ..()
 		name = "[random_spaghetti_name()] and meatballs"
 
 /obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti
@@ -1086,12 +1101,12 @@
 	food_effects = list("food_sweaty")
 
 	New()
-		..()
+		. = ..()
 		name = "pizza-ghetti"
 
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>Tastes like pizza and spaghetti, but way less convenient.</span>")
-		..()
+		. = ..()
 
 /obj/item/reagent_containers/food/snacks/donut
 	name = "donut"
@@ -2158,9 +2173,6 @@
 	heal_amt = 6
 	initial_reagents = list("enriched_msg"=1)
 
-// boy i wish byond had static members doop doop
-var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
-
 /obj/item/reagent_containers/food/snacks/candy/jellybean/
 	name = "jelly bean"
 	desc = "YOU SHOULDN'T SEE THIS OBJECT"
@@ -2395,6 +2407,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/)) src.amount += 1
+		else ..()
 
 	examine(mob/user)
 		. = list("This is a [src.name].")
@@ -2526,8 +2539,8 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 	food_color = "#5E6351"
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
-			if (src.cut == 1)
+		if(istool(W, TOOL_CUTTING | TOOL_SAWING))
+			if(src.cut == 1)
 				boutput(user, "<span class='alert'>This has already been cut.</span>")
 				return
 			if(istype(src.loc,/mob))
@@ -2557,6 +2570,10 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 				S.set_loc(spawnloc)
 				makepieces--
 			qdel(src)
+		else if(istype(W,/obj/item/kitchen/utensil/fork))
+			src.Eat(user,user)
+		else
+			..()
 
 /obj/item/reagent_containers/food/snacks/nigiri_roll
 	name = "nigiri roll"

@@ -42,22 +42,8 @@ mob/new_player
 			keyd = mind.key
 
 		new_player_panel()
-		var/starting_loc
-		if (newplayer_start.len > 0)
-			starting_loc = pick(newplayer_start)
-		else
-			starting_loc = locate(1,1,1)
-		src.set_loc(starting_loc)
+		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
-		var/list/watch_locations = list()
-		for(var/obj/landmark/landmark in landmarks)//world)
-			if(landmark.tag == "landmark*new_player")
-				watch_locations += landmark.loc
-
-			LAGCHECK(LAG_REALTIME)
-
-		if(watch_locations.len>0)
-			loc = pick(watch_locations)
 
 		if (src.ckey && !adminspawned)
 			if (spawned_in_keys.Find("[src.ckey]"))
@@ -69,7 +55,7 @@ mob/new_player
 
 					close_spawn_windows()
 					boutput(src, "<span class='notice'>Now teleporting.</span>")
-					var/ASLoc = pick(observer_start)
+					var/ASLoc = pick_landmark(LANDMARK_OBSERVER)
 					if (ASLoc)
 						observer.set_loc(ASLoc)
 					else
@@ -107,10 +93,13 @@ mob/new_player
 			qdel(src)
 
 		// Given below call, not much reason to do this if pregameHTML wasn't set
-		if (pregameHTML && src.last_client)
+		// explanation for isnull(src.key) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
+		if (isnull(src.key) && pregameHTML && isclient(src.last_client))
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
-			winshow(src.last_client, "pregameBrowser", 0)
-			src.last_client << browse("", "window=pregameBrowser")
+			SPAWN_DBG(0)
+				if(isclient(src.last_client))
+					winshow(src.last_client, "pregameBrowser", 0)
+					src.last_client << browse("", "window=pregameBrowser")
 		return
 
 	verb/new_player_panel()
@@ -194,7 +183,7 @@ mob/new_player
 
 				close_spawn_windows()
 				boutput(src, "<span class='notice'>Now teleporting.</span>")
-				var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+				var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 				if (ASLoc)
 					observer.set_loc(ASLoc)
 				else
@@ -275,6 +264,10 @@ mob/new_player
 				return 0
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0
+		if (JOB.rounds_needed_to_play && (src.client && src.client.player))
+			var/round_num = src.client.player.get_rounds_participated()
+			if (!isnull(round_num) && round_num < JOB.rounds_needed_to_play) //they havent played enough rounds!
+				return 0
 		if (JOB.limit < 0 || countJob(JOB.name) < JOB.limit)
 			return 1
 		return 0
@@ -311,34 +304,34 @@ mob/new_player
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
+			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
+				boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
+				//As with the Stowaway trait, location setting is handled elsewhere.
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
 			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
-				if (ishuman(character) && rp_latejoin && rp_latejoin.len)
-					starting_loc = pick(rp_latejoin)
+				if (ishuman(character) && by_type[/obj/cryotron])
+					starting_loc = pick(by_type[/obj/cryotron])
 
 				if (istype(starting_loc))
 					starting_loc.add_person_to_queue(character, JOB)
 				else
-					starting_loc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
+					starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
 					character.set_loc(starting_loc)
 			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_MISSILE)
-				var/list/spawns = list()
-				for(var/obj/landmark/latejoin_missile/L in landmarks)
-					spawns += L
-				var/obj/landmark/latejoin_missile/L = pick(spawns)
 				var/obj/arrival_missile/M = unpool(/obj/arrival_missile)
-				M.loc = L.loc
-				SPAWN_DBG(0) M.lunch(character, L.dir)
+				var/turf/T = pick_landmark(LANDMARK_LATEJOIN_MISSILE)
+				var/missile_dir = landmarks[LANDMARK_LATEJOIN_MISSILE][T]
+				M.set_loc(T)
+				SPAWN_DBG(0) M.lunch(character, missile_dir)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
 					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
 					return AttemptLateSpawn(new /datum/job/special/tourist)
-				var/starting_loc = pick(battle_royale_spawn)
-				character.set_loc(starting_loc)
+				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 				equip_battler(character)
 				character.mind.assigned_role = "MODE"
 				character.mind.special_role = "battler"
@@ -347,7 +340,7 @@ mob/new_player
 				battlemode.battle_shuttle_spawn(character.mind)
 			else
 				var/starting_loc = null
-				starting_loc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
+				starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(round(world.maxx / 2), round(world.maxy / 2), 1))
 				character.set_loc(starting_loc)
 
 			if (isliving(character))
@@ -381,7 +374,9 @@ mob/new_player
 					logTheThing("debug", character, null, "<b>Late join:</b> added player to ticker.minds.")
 					ticker.minds += character.mind
 				logTheThing("debug", character, null, "<b>Late join:</b> assigned job: [JOB.name]")
-
+				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
+				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
+					participationRecorder.record(character.mind.ckey)
 			SPAWN_DBG (0)
 				qdel(src)
 
@@ -595,14 +590,14 @@ a.latejoin-card:hover {
 
 		src.spawning = 1
 
-		if(latejoin.len == 0)
+		if(!(LANDMARK_LATEJOIN in landmarks))
 			// the middle of the map is GeNeRaLlY part of the actual station. moreso than 1,1,1 at least
 			var/midx = round(world.maxx / 2)
 			var/midy = round(world.maxy / 2)
 			boutput(world, "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)")
 			src.set_loc(locate(midx,midy,1))
 		else
-			src.set_loc(pick(latejoin))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 		var/mob/new_character = null
 		if (J)
@@ -830,7 +825,7 @@ a.latejoin-card:hover {
 
 			close_spawn_windows()
 			boutput(src, "<span class='notice'>Now teleporting.</span>")
-			var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (ASLoc)
 				observer.set_loc(ASLoc)
 			observer.apply_looks_of(client)

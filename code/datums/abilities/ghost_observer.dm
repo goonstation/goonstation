@@ -302,6 +302,9 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		displaying_buttons = !displaying_buttons
+		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+			boutput(holder.owner, "Sorry, respawn options aren't availbale during football mode.")
+			displaying_buttons = 0
 		if (!displaying_buttons)
 			holder.owner.closeContextActions()
 
@@ -333,7 +336,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			ghost.go_to_respawn_arena()
 
 		else
-			boutput(usr, "Uhhh something broke. Oops. Please go yell at [pick("Firebarrage","Kyle","Flourish","Azungar","Gannets","Bubs","Simian","Hydrofloric")] to get this fixed.")
+			boutput(usr, "Uhhh something broke. Oops. Please go yell at a coder to get this fixed.")
 
 #ifdef HALLOWEEN
 /datum/targetable/ghost_observer/spooktober_hud

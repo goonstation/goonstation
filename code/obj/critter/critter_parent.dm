@@ -30,7 +30,7 @@
 	var/aggressive = 0
 	var/defensive = 0
 	var/wanderer = 1
-	var/opensdoors = 0
+	var/opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	var/frustration = 0
 	var/last_found = null
 	var/target = null
@@ -100,6 +100,7 @@
 	var/mob/living/corpse_target = null
 
 	var/area/registered_area = null //the area this critter is registered in
+	var/parent = null			//the mob or obj/critter that is the progenitor of this critter. Currently only set via hatched eggs
 #if ASS_JAM //timestop stuff
 	var/paused = FALSE
 #endif
@@ -387,7 +388,7 @@
 		if (user.a_intent == INTENT_HARM)
 			src.health -= rand(1,2) * src.brutevuln
 			src.visible_message("<span class='alert'><b>[user]</b> punches [src]!</span>")
-			playsound(src.loc, pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg','sound/impact_sounds/Generic_Punch_5.ogg'), 100, 1)
+			playsound(src.loc, pick(sounds_punch), 100, 1)
 			attack_twitch(user)
 			hit_twitch(src)
 			if (hitsound)
@@ -757,7 +758,7 @@
 						if (food_target.reagents && food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
 							food_target.reagents.trans_to(src, 5)
 					if (src.food_target != null && src.food_target.amount <= 0)
-						src.food_target.loc = null
+						src.food_target.set_loc(null)
 						SPAWN_DBG(1 SECOND)
 							qdel(src.food_target)
 						src.task = "thinking"
@@ -832,7 +833,7 @@
 							src.attacking = 0
 						else
 							if(M!=null)
-								if (M.health < 0)
+								if (M.health <= 0 || !isalive(M))
 									src.task = "thinking"
 									src.target = null
 									src.anchored = initial(src.anchored)
@@ -855,14 +856,14 @@
 	New(loc)
 		if(!src.reagents) src.create_reagents(100)
 		wander_check = rand(5,20)
-		critters += src
+		START_TRACKING_CAT(TR_CAT_CRITTERS)
 		report_spawn()
 		if(isnull(src.is_pet))
 			src.is_pet = !generic && (copytext(src.name, 1, 2) in uppercase_letters)
 		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
 			src.is_pet = 0
 		if(src.is_pet)
-			pets += src
+			START_TRACKING_CAT(TR_CAT_PETS)
 		if(generic)
 			src.quality = rand(min_quality,max_quality)
 			var/nickname = getCritterQuality(src.quality)
@@ -872,11 +873,11 @@
 		..()
 
 	disposing()
-		critters -= src
+		STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 		if(registered_area)
 			registered_area.registered_critters -= src
 		if(src.is_pet)
-			pets -= src
+			STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
 	proc/seek_target()
@@ -1071,6 +1072,7 @@
 	var/critter_type = null
 	var/warm_count = 10 // how many times you gotta warm it before it hatches
 	var/critter_reagent = null
+	var/parent = null
 	rand_pos = 1
 
 	New()
@@ -1120,7 +1122,7 @@
 		src.warm_count = max(src.warm_count, 0)
 		src.hatch_check(0, user)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		//..() <- Fuck off mom, I'm 25 and I do what I want =I
 		src.hatch_check(1, null, T)
@@ -1161,13 +1163,19 @@
 						qdel(src)
 						return
 
-				var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src))
+				var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src), src.parent)
 
 				if (critter_name)
 					newCritter.name = critter_name
 
 				if (shouldThrow && T)
 					newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
+
+				//hack. Clownspider queens keep track of their babies.
+				if (istype(src.parent, /mob/living/critter/spider/clownqueen))
+					var/mob/living/critter/spider/clownqueen/queen = src.parent
+					if (islist(queen.babies))
+						queen.babies += newCritter
 
 				sleep(0.1 SECONDS)
 				qdel(src)

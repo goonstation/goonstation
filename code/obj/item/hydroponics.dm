@@ -50,7 +50,7 @@
 		SPAWN_DBG (5)
 			if (src)
 				src.update_icon()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 		return
 
 	proc/check_health()
@@ -357,29 +357,14 @@
 	desc = "A tool for cyborgs used to create plant seeds."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "forensic0"
-	var/list/available = list()
 	var/datum/plant/selected = null
 
-	New()
-		..()
-		for (var/A in typesof(/datum/plant)) src.available += new A(src)
-
-		/*for (var/datum/plant/P in src.available)
-			if (!P.vending || P.type == /datum/plant)
-				del P
-				continue*/
 
 	attack_self(var/mob/user as mob)
-/*		var/hacked = 0
-		if (isrobot(user))
-			var/mob/living/silicon/robot/R = user
-			if (R.emagged)
-				hacked = 1
-*/
 		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
 		var/list/usable = list()
 		for(var/datum/plant/A in hydro_controls.plant_species)
-			if (!A.vending/* || (A.vending == 2 && !hacked)*/)
+			if (!A.vending)
 				continue
 			usable += A
 
@@ -389,11 +374,21 @@
 	afterattack(atom/target as obj|mob|turf, mob/user as mob, flag)
 		if (isturf(target) && selected)
 			var/obj/item/seed/S
+			// if (selected.unique_seed)
+			// 	S = new selected.unique_seed(src.loc)
+			// else
+			// 	S = new /obj/item/seed(src.loc,0)
+			// S.generic_seed_setup(selected)
 			if (selected.unique_seed)
-				S = new selected.unique_seed(src.loc)
+				S = unpool(selected.unique_seed)
+				S.set_loc(src.loc)
 			else
-				S = new /obj/item/seed(src.loc,0)
+				S = unpool(/obj/item/seed)
+				S.set_loc(src.loc)
+				S.removecolor()
 			S.generic_seed_setup(selected)
+
+
 
 /obj/item/seedplanter/hidden
 	desc = "This is supposed to be a cyborg part. You're not quite sure what it's doing here."
@@ -427,7 +422,7 @@
 
 	New()
 		..()
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	afterattack(obj/target as obj, mob/user as mob)
 		if(istype(target, /obj/machinery/plantpot))
@@ -457,13 +452,11 @@
 	w_class = 3.0
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	module_research = list("tools" = 2, "hydroponics" = 4)
+	initial_volume = 120
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(120)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("water", 120)
+		reagents.add_reagent("water", 120)
 
 /////////////////////////////////////////// Compost bag ////////////////////////////////////////////////
 
@@ -476,13 +469,11 @@
 	w_class = 3.0
 	rc_flags = 0
 	module_research = list("tools" = 1, "hydroponics" = 1)
+	initial_volume = 60
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(60)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("poo", 60)
+		reagents.add_reagent("poo", 60)
 
 /////////////////////////////////////////// Plant formulas /////////////////////////////////////
 
@@ -494,13 +485,11 @@
 	amount_per_transfer_from_this = 10
 	module_research = list("tools" = 1, "hydroponics" = 1, "science" = 1)
 	module_research_type = /obj/item/reagent_containers/glass/bottle/weedkiller
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("weedkiller", 40)
+		reagents.add_reagent("weedkiller", 40)
 
 /obj/item/reagent_containers/glass/bottle/mutriant
 	name = "Mutagenic Plant Formula"
@@ -508,13 +497,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("mutagen", 40)
+		reagents.add_reagent("mutagen", 40)
 
 /obj/item/reagent_containers/glass/bottle/groboost
 	name = "Ammonia Plant Formula"
@@ -522,13 +509,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("ammonia", 40)
+		reagents.add_reagent("ammonia", 40)
 
 /obj/item/reagent_containers/glass/bottle/topcrop
 	name = "Potash Plant Formula"
@@ -536,13 +521,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("potash", 40)
+		reagents.add_reagent("potash", 40)
 
 /obj/item/reagent_containers/glass/bottle/powerplant
 	name = "Saltpetre Plant Formula"
@@ -550,13 +533,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("saltpetre", 40)
+		reagents.add_reagent("saltpetre", 40)
 
 /obj/item/reagent_containers/glass/bottle/fruitful
 	name = "Mutadone Plant Formula"
@@ -564,13 +545,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 10
+	initial_volume = 40
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("mutadone", 40)
+		reagents.add_reagent("mutadone", 40)
 
 /obj/item/reagent_containers/glass/happyplant
 	name = "Happy Plant Mixture"
