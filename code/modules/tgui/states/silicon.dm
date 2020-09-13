@@ -15,8 +15,6 @@ var/global/datum/ui_state/tgui_silicon_state/tgui_silicon_state = new /datum/ui_
 	. = shared_ui_interaction(src_object)
 	if(. > UI_CLOSE && loc)
 		. = min(., loc.contents_ui_distance(src_object, src)) // Check the distance...
-	if(. == UI_INTERACTIVE) // Non-human living mobs can only look, not touch.
-		return UI_UPDATE
 
 /mob/living/silicon/robot/silicon_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
