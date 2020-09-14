@@ -106,13 +106,15 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			2. no next map set and the current map ISNT the mapID we were just given
 			3. next map set, but it doesn't match the mapID we were just given
 			*/
-			//if (!mapID || \
-			//	(!src.next && mapNames[src.current]["id"] != mapID) || \
-			//	(src.next && mapNames[src.next]["id"] != mapID))
-			//	src.locked = 0
-			//else
-			//	src.locked = 0
-			//	src.nextPrior = null
+			/*
+			if (!mapID || \
+				(!src.next && mapNames[src.current]["id"] != mapID) || \
+				(src.next && mapNames[src.next]["id"] != mapID))
+				src.locked = 0
+			else
+				src.locked = 0
+				src.nextPrior = null
+			*/
 
 			src.locked = 0
 			src.nextPrior = null
