@@ -1176,13 +1176,6 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
-		return
-
-	if (!src.canAIControl())
-		if (src.canAIHack())
-			src.hack(user)
-			return
 	ui_interact(user)
 
 /obj/machinery/door/airlock/proc/hack(mob/user as mob)
@@ -1230,7 +1223,6 @@ About the new airlock wires panel:
 			sleep(1 SECOND)
 			//bring up airlock dialog
 			src.aiHacking = 0
-			src.attack_ai(user)
 
 /obj/machinery/door/airlock/Bumped(atom/AM)
 	if(ismob(AM))
@@ -1254,38 +1246,13 @@ About the new airlock wires panel:
 
 	return static_data
 
-/obj/machinery/door/airlock/ui_state(mob/user)
-	return tgui_default_state
-
 /obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
-  return min(
-		state.can_use_topic(src, user),
+	return min(
+		tgui_default_state.can_use_topic(src, user),
+		tgui_broken_state.can_use_topic(src, user),
 		tgui_not_incapacitated_state.can_use_topic(src, user)
 	)
 
-/obj/machinery/door/airlock/ui_act(action, params)
-	if(..())
-		return
-	switch(action)
-		if("cut")
-			var/which_wire = params["wireColorIndex"]
-			if(isnum(which_wire))
-				. = src.try_cut(which_wire+1, usr)
-		if("mend")
-			var/which_wire = params["wireColorIndex"]
-			if(isnum(which_wire))
-				. = src.try_mend(which_wire+1, usr)
-		if("pulse")
-			var/which_wire = params["wireColorIndex"]
-			if(isnum(which_wire))
-				. = src.try_pulse(which_wire+1, usr)
-		if("signaler")
-			var/which_wire = params["wireColorIndex"]
-			if(isnum(which_wire))
-				if(src.signalers[which_wire+1])
-					. = src.detach_signaler(which_wire+1, usr)
-				else
-					. = src.attach_signaler(which_wire+1, usr)
 
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
 	if (!issilicon(user))
@@ -1789,16 +1756,20 @@ obj/machinery/door/airlock
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "AiAirlock", name)
-		ui.open()
 		ui = new(user, src, "Airlock", name)
 		ui.open()
 	return TRUE
 
-/obj/machinery/door/airlock/ui_data()
-
+/obj/machinery/door/airlock/ui_data(mob/user)
 	var/list/data = list()
+	var/list/userstates = list()
+	userstates["distance"] = get_dist(src, user)
+	userstates["isBorg"] = ishivebot(user) || isrobot(user)
+	userstates["isAI"] = isAI(user)
+	userstates["isCarbon"] = iscarbon(user)
+	data["userStates"] = userstates
 	data["name"] = src.name
+	data["panelOpen"] = src.p_open
 	data["mainTimeleft"] = secondsMainPowerLost
 	data["backupTimeleft"] = secondsBackupPowerLost
 	data["shockTimeleft"] = secondsElectrified
@@ -1807,6 +1778,9 @@ obj/machinery/door/airlock
 	data["welded"] = welded // welded
 	data["opened"] = !density // opened
 	data["status"] = src.status
+	data["canAiControl"] = canAIControl()
+	data["aiHacking"] = src.aiHacking
+	data["canAiHack"] = canAIHack()
 	var/list/wire = list()
 	wire["main_1"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)
 	wire["main_2"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)
@@ -1854,39 +1828,67 @@ obj/machinery/door/airlock
 /obj/machinery/door/airlock/ui_act(action, params)
 	if(..())
 		return
-	if(!src.arePowerSystemsOn())
-		boutput(usr, "<span class='alert'>Airlock power is currently offline.</span>")
-		return
-	switch(action)
-		if("disruptMain")
-			if(!secondsMainPowerLost)
-				loseMainPower()
-				update_icon()
-			else
-				boutput(usr, "<span class='alert'>Main power is already offline.</span>")
-			. = TRUE
-		if("disruptBackup")
-			if(!secondsBackupPowerLost)
-				loseBackupPower()
-				update_icon()
-			else
-				boutput(usr, "<span class='alert'>Backup power is already offline.</span>")
-			. = TRUE
-		if("shockRestore")
-			shock_restore(usr)
-			. = TRUE
-		if("shockTemp")
-			shock_temp(usr)
-			. = TRUE
-		if("shockPerm")
-			shock_perm(usr)
-			. = TRUE
-		if("idscanToggle")
-			idscantoggle(usr)
-			. = TRUE
-		if("boltToggle")
-			toggle_bolt(usr)
-			. = TRUE
-		if("openClose")
-			user_toggle_open(usr)
-			. = TRUE
+	if(src.arePowerSystemsOn() && canAIControl() && (ishivebot(usr) || isrobot(usr) || isAI(usr)))
+		switch(action)
+			if("disruptMain")
+				if(!secondsMainPowerLost)
+					loseMainPower()
+					update_icon()
+				else
+					boutput(usr, "<span class='alert'>Main power is already offline.</span>")
+				. = TRUE
+			if("disruptBackup")
+				if(!secondsBackupPowerLost)
+					loseBackupPower()
+					update_icon()
+				else
+					boutput(usr, "<span class='alert'>Backup power is already offline.</span>")
+				. = TRUE
+			if("shockRestore")
+				shock_restore(usr)
+				. = TRUE
+			if("shockTemp")
+				shock_temp(usr)
+				. = TRUE
+			if("shockPerm")
+				shock_perm(usr)
+				. = TRUE
+			if("idscanToggle")
+				idscantoggle(usr)
+				. = TRUE
+			if("boltToggle")
+				toggle_bolt(usr)
+				. = TRUE
+			if("openClose")
+				user_toggle_open(usr)
+				. = TRUE
+			if("hackAirlock")
+				if (src.canAIHack() && !src.aiHacking)
+					src.hack(usr)
+				. = TRUE
+	if(src.p_open && get_dist(src, user) =< 1)
+		switch(action)
+			if("cut")
+				var/which_wire = params["wireColorIndex"]
+				if(isnum(which_wire))
+					src.try_cut(which_wire+1, usr)
+					. = TRUE
+			if("mend")
+				var/which_wire = params["wireColorIndex"]
+				if(isnum(which_wire))
+					src.try_mend(which_wire+1, usr)
+					. = TRUE
+			if("pulse")
+				var/which_wire = params["wireColorIndex"]
+				if(isnum(which_wire))
+					src.try_pulse(which_wire+1, usr)
+					. = TRUE
+			if("signaler")
+				var/which_wire = params["wireColorIndex"]
+				if(isnum(which_wire))
+					if(src.signalers[which_wire+1])
+						src.detach_signaler(which_wire+1, usr)
+						. = TRUE
+					else
+						src.attach_signaler(which_wire+1, usr)
+						. = TRUE

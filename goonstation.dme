@@ -1055,7 +1055,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\tgui\states\observer.dm"
 #include "code\modules\tgui\states\physical.dm"
 #include "code\modules\tgui\states\self.dm"
-#include "code\modules\tgui\states\silicon.dm"
 #include "code\modules\tgui\states\zlevel.dm"
 #include "code\modules\transport\skateboard.dm"
 #include "code\modules\transport\cruisers\cruiser_console.dm"
