@@ -981,7 +981,7 @@
 	name = "Tesla Coil"
 	desc = ""
 	icon_state = "comp_zap"
-	cooldown_time = 1 SECOND
+	cooldown_time = 3 SECONDS
 	cabinet_banned = true
 	one_per_tile = true
 	own_id = "/obj/item/mechanics/zapper"
@@ -994,6 +994,7 @@
 
 	proc/eleczap(var/datum/mechanicsMessage/input)
 		if(level == 2) return
+		unReady()
 		LIGHT_UP_HOUSING
 		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
 		
