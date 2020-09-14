@@ -1,5 +1,7 @@
 
 (t)sun sep 13 20
+(u)kyle
+(+)Multitool pulse spark special attack now has a 3 second cooldown. Should make it slightly less oppressive for blobs and kudzu.
 (u)Comradef191
 (p)2166
 (e)🗺🎨|mapping, sprites

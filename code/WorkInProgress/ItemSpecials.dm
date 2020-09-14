@@ -1226,7 +1226,7 @@
 			return
 
 	elecflash
-		cooldown = 0
+		cooldown = 3 SECONDS
 		moveDelay = 5
 		moveDelayDuration = 2
 
