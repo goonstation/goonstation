@@ -1749,7 +1749,7 @@ proc/countJob(rank)
 
 // Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 // Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
-/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0)
+/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0, var/require_client = FALSE)
 	var/list/candidates = list()
 
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
@@ -1779,7 +1779,7 @@ proc/countJob(rank)
 		// Run prompts. Minds are preferable to mob references because of the confirmation delay.
 		for (var/datum/mind/M in ticker.minds)
 			if (M.current && M.current.client)
-				if (dead_player_list_helper(M.current, allow_dead_antags) != 1)
+				if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
 					continue
 
 				SPAWN_DBG (0) // Don't lock up the entire proc.
@@ -1790,7 +1790,7 @@ proc/countJob(rank)
 						if (ghost_timestamp && world.time > ghost_timestamp + confirmation_spawn)
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
-						if (dead_player_list_helper(M.current, allow_dead_antags) != 1)
+						if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
 							if (M.current) boutput(M.current, text_chat_failed)
 							return
 
@@ -1806,7 +1806,7 @@ proc/countJob(rank)
 		// Filter list again.
 		if (candidates.len)
 			for (var/datum/mind/M2 in candidates)
-				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags) != 1)
+				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags, require_client) != 1)
 					candidates.Remove(M2)
 					continue
 
@@ -1830,7 +1830,7 @@ proc/countJob(rank)
 	candidates = list()
 
 	for (var/mob/O in mobs)
-		if (dead_player_list_helper(O, allow_dead_antags) != 1)
+		if (dead_player_list_helper(O, allow_dead_antags, require_client) != 1)
 			continue
 		if (!(O in candidates))
 			candidates.Add(O)
@@ -1846,7 +1846,7 @@ proc/countJob(rank)
 	return candidates
 
 // So there aren't multiple instances of C&P code (Convair880).
-/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0)
+/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
 	if (!G || !ismob(G))
 		return 0
 	if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
@@ -1856,6 +1856,8 @@ proc/countJob(rank)
 	if (jobban_isbanned(G, "Syndicate"))
 		return 0
 	if (jobban_isbanned(G, "Special Respawn"))
+		return 0
+	if (require_client && !G.client)
 		return 0
 
 	if (isobserver(G))
