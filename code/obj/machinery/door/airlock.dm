@@ -29,95 +29,6 @@
 */
 
 
-/obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "AiAirlock", src.name)
-		ui.open()
-	return TRUE
-
-/obj/machinery/door/airlock/ui_data()
-
-	var/list/data = list()
-	data["name"] = src.name
-	data["mainTimeleft"] = secondsMainPowerLost
-	data["backupTimeleft"] = secondsBackupPowerLost
-	data["shockTimeleft"] = secondsElectrified
-	data["idScanner"] = !aiDisabledIdScanner
-	data["locked"] = locked // bolted
-	data["welded"] = welded // welded
-	data["opened"] = !density // opened
-	data["status"] = src.status
-	var/list/wire = list()
-	wire["main_1"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)
-	wire["main_2"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)
-	wire["backup_1"] = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1)
-	wire["backup_2"] = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2)
-	wire["shock"] = !src.isWireCut(AIRLOCK_WIRE_ELECTRIFY)
-	wire["idScanner"] = !src.isWireCut(AIRLOCK_WIRE_IDSCAN)
-	wire["bolts"] = !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS)
-	wire["safe"] = !src.isWireCut(AIRLOCK_WIRE_SAFETY)
-
-	data["wires"] = wire
-	return data
-
-/obj/machinery/door/airlock/proc/aidoor_access_check(mob/user)
-	if (status & (NOPOWER | POWEROFF))
-		return UI_UPDATE
-
-
-/obj/machinery/door/airlock/ui_state(mob/user)
-	return tgui_silicon_state
-
-/obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_silicon_state.can_use_topic(src, user)
-	)
-
-
-
-/obj/machinery/door/airlock/ui_act(action, params)
-	if(..())
-		return
-	if(!src.arePowerSystemsOn())
-		boutput(usr, "<span class='alert'>Airlock power is currently offline.</span>")
-		return
-	switch(action)
-		if("disruptMain")
-			if(!secondsMainPowerLost)
-				loseMainPower()
-				update_icon()
-			else
-				boutput(usr, "<span class='alert'>Main power is already offline.</span>")
-			. = TRUE
-		if("disruptBackup")
-			if(!secondsBackupPowerLost)
-				loseBackupPower()
-				update_icon()
-			else
-				boutput(usr, "<span class='alert'>Backup power is already offline.</span>")
-			. = TRUE
-		if("shockRestore")
-			shock_restore(usr)
-			. = TRUE
-		if("shockTemp")
-			shock_temp(usr)
-			. = TRUE
-		if("shockPerm")
-			shock_perm(usr)
-			. = TRUE
-		if("idscanToggle")
-			idscantoggle(usr)
-			. = TRUE
-		if("boltToggle")
-			toggle_bolt(usr)
-			. = TRUE
-		if("openClose")
-			user_toggle_open(usr)
-			. = TRUE
-
 /obj/machinery/door/airlock/proc/shock_temp(mob/user)
 	//electrify door for 30 seconds
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
@@ -1916,3 +1827,92 @@ obj/machinery/door/airlock
 						if (src.secondsElectrified<0)
 							src.secondsElectrified = 0
 						sleep(1 SECOND)
+
+/obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AiAirlock", src.name)
+		ui.open()
+	return TRUE
+
+/obj/machinery/door/airlock/ui_data()
+
+	var/list/data = list()
+	data["name"] = src.name
+	data["mainTimeleft"] = secondsMainPowerLost
+	data["backupTimeleft"] = secondsBackupPowerLost
+	data["shockTimeleft"] = secondsElectrified
+	data["idScanner"] = !aiDisabledIdScanner
+	data["locked"] = locked // bolted
+	data["welded"] = welded // welded
+	data["opened"] = !density // opened
+	data["status"] = src.status
+	var/list/wire = list()
+	wire["main_1"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)
+	wire["main_2"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)
+	wire["backup_1"] = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1)
+	wire["backup_2"] = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2)
+	wire["shock"] = !src.isWireCut(AIRLOCK_WIRE_ELECTRIFY)
+	wire["idScanner"] = !src.isWireCut(AIRLOCK_WIRE_IDSCAN)
+	wire["bolts"] = !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS)
+	wire["safe"] = !src.isWireCut(AIRLOCK_WIRE_SAFETY)
+
+	data["wires"] = wire
+	return data
+
+/obj/machinery/door/airlock/proc/aidoor_access_check(mob/user)
+	if (status & (NOPOWER | POWEROFF))
+		return UI_UPDATE
+
+
+/obj/machinery/door/airlock/ui_state(mob/user)
+	return tgui_silicon_state
+
+/obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
+	return min(
+		state.can_use_topic(src, user),
+		tgui_broken_state.can_use_topic(src, user),
+		tgui_silicon_state.can_use_topic(src, user)
+	)
+
+
+
+/obj/machinery/door/airlock/ui_act(action, params)
+	if(..())
+		return
+	if(!src.arePowerSystemsOn())
+		boutput(usr, "<span class='alert'>Airlock power is currently offline.</span>")
+		return
+	switch(action)
+		if("disruptMain")
+			if(!secondsMainPowerLost)
+				loseMainPower()
+				update_icon()
+			else
+				boutput(usr, "<span class='alert'>Main power is already offline.</span>")
+			. = TRUE
+		if("disruptBackup")
+			if(!secondsBackupPowerLost)
+				loseBackupPower()
+				update_icon()
+			else
+				boutput(usr, "<span class='alert'>Backup power is already offline.</span>")
+			. = TRUE
+		if("shockRestore")
+			shock_restore(usr)
+			. = TRUE
+		if("shockTemp")
+			shock_temp(usr)
+			. = TRUE
+		if("shockPerm")
+			shock_perm(usr)
+			. = TRUE
+		if("idscanToggle")
+			idscantoggle(usr)
+			. = TRUE
+		if("boltToggle")
+			toggle_bolt(usr)
+			. = TRUE
+		if("openClose")
+			user_toggle_open(usr)
+			. = TRUE
