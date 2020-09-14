@@ -1408,7 +1408,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigcheckcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/synthcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/telecomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/zapper, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/zapper, 10)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/thprint, 10)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/togglecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
