@@ -241,7 +241,7 @@
 		is_pet = 2
 		var/tier = 0
 		var/original_tier = 0
-		var/original_hat_ref = ""
+		var/obj/item/clothing/head/original_hat
 		var/static/hat_tier_list = list(
 			///obj/item/clothing/head/butt,
 			/obj/item/clothing/head/paper_hat,
@@ -304,7 +304,7 @@
 					trans.Scale((ubertier - 4) / 3) // mmm, large hat
 					hat.transform = trans
 			hat.name = "[src]'s [hat.name]"
-			src.original_hat_ref = ref(hat)
+			src.original_hat = hat
 			src.hat_that_bee(hat)
 			src.update_icon()
 
@@ -320,7 +320,7 @@
 			. = ..()
 
 		attackby(obj/item/W, mob/living/user)
-			if(!src.hat && ref(W) == src.original_hat_ref) // ...unless you return the hat!
+			if(!src.hat && W == src.original_hat) // ...unless you return the hat!
 				if(src.alive)
 					boutput(user, "<span class='emote'>[src] bubmles happily at the sight of [W]!</span>")
 				src.tier = src.original_tier
@@ -826,9 +826,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(honey_production_amount)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(honey_production_amount)
 
 		statlog_bees(src)
 
@@ -1359,7 +1357,7 @@
 		else
 			return ..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		if (src.alive && !src.sleeping)
 			animate_bumble(src) // please keep bumbling tia
@@ -1641,7 +1639,7 @@
 
 			qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (hatched || 0)//todo: re-enable this when people stop abusing bees!!!
 			return
@@ -1723,13 +1721,10 @@
 					newLarva.custom_desc = "A moon bee.  It's like a regular space bee, but it has a peculiar gleam in its eyes..."
 				newLarva.custom_bee_type = /obj/critter/domestic_bee/moon
 				newLarva.blog += "larva hatched by [key_name(user)]"
-				var/datum/reagents/R = new/datum/reagents(50)
-				newLarva.reagents = R
-				R.my_atom = newLarva
-				R.add_reagent("wolfsbane", 10)
+				newLarva.reagents.add_reagent("wolfsbane", 10)
 				qdel (src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (hatched || 0)//replace me too!!!
 			return
@@ -1821,16 +1816,14 @@
 	amount = 4
 	heal_amt = 1
 	doants = 0
+	initial_volume = 50
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("nectar", 10)
-		R.add_reagent("honey", 10)
-		R.add_reagent("cornstarch", 5)
-		R.add_reagent("pollen", 20)
+		reagents.add_reagent("nectar", 10)
+		reagents.add_reagent("honey", 10)
+		reagents.add_reagent("cornstarch", 5)
+		reagents.add_reagent("pollen", 20)
 
 /* -------------------- END -------------------- */
 

@@ -16,7 +16,7 @@
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
 
 /obj/item/storage/backpack/withO2
@@ -112,6 +112,7 @@
 	item_state = "bp_fjallraven_red"
 
 	New()
+		..()
 		if (prob(50))
 			icon_state = "bp_fjallraven_yellow"
 			item_state = "bp_fjallraven_yellow"
@@ -141,7 +142,7 @@
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/storage/fanny/funny
 	name = "funny pack"
@@ -179,7 +180,7 @@
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 	proc/can_use()
 		.= 1
@@ -254,8 +255,7 @@
 		return
 
 	proc/activate()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 		if(charge > 0)
 			charge -= 1

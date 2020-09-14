@@ -127,9 +127,9 @@ JONES CITY TURFS
 				SPAWN_DBG(12 SECONDS)
 					src.visible_message("<span class='combat'>[src] starts coughing wildly!</span>")
 					animate_shake(src,5,rand(3,8),rand(3,8))
-					SPAWN_DBG(9 SECONDS)
-						src.visible_message("<span class='combat'>[src] coughs out a old fish!</span>")
-						new /obj/item/fish/mahimahi(src.loc)
+					sleep(9 SECONDS)
+					src.visible_message("<span class='combat'>[src] coughs out a old fish!</span>")
+					new /obj/item/fish/mahimahi(src.loc)
 
 
 /obj/item/fish/mahimahi

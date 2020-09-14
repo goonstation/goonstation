@@ -212,7 +212,7 @@
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			//src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
-			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot(src))
+			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot/pro(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portabrig(src))
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))

@@ -96,8 +96,7 @@
 			src.icon_state = src.icon_on
 			src.item_state = src.item_on
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 			if(user)
 				user.update_inhands()
 		return
@@ -111,8 +110,7 @@
 			src.icon_state = src.icon_off
 			src.item_state = src.item_off
 			light.disable()
-			if (src in processing_items)
-				processing_items.Remove(src)
+			processing_items -= src
 			if(user)
 				user.update_inhands()
 		return

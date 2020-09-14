@@ -300,6 +300,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	ex_employee
 		New()
+			..()
 			fields = list("MLH_INTERNAL",
 "*SEC",
 "LOCALHOST",
@@ -2135,7 +2136,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 			new /obj/effects/explosion/tiny_baby (src.loc)
 			for (var/mob/living/carbon/unfortunate_jerk in range(1, src))
 				if (!isdead(unfortunate_jerk) && unfortunate_jerk.client)
-					shake_camera(unfortunate_jerk, 12, 4)
+					shake_camera(unfortunate_jerk, 12, 32)
 				unfortunate_jerk.changeStatus("stunned", 4 SECONDS)
 				unfortunate_jerk.stuttering += 4
 				unfortunate_jerk.lying = 1

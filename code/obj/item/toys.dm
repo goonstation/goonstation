@@ -55,7 +55,7 @@
 		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
 		interrupt(INTERRUPT_ALWAYS)
 		return
-		
+
 /datum/action/bar/icon/claw_machine/onResume()
 	..()
 	state = ACTIONSTATE_DELETE
@@ -106,11 +106,17 @@
 	message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 	if (!message || get_dist(src, user) > 1)
 		return
-	logTheThing("say", user, null, "makes [src] say,  \"[message]\"")
+	logTheThing("say", user, null, "makes [src] say, \"[message]\"")
 	user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
 	var/mob/living/carbon/human/H = user
 	if (H.sims)
 		H.sims.affectMotive("fun", 1)
+
+/obj/item/toy/plush/attack(mob/M as mob, mob/user as mob)
+	if (user.a_intent == INTENT_HELP)
+		M.visible_message("<span class='emote'>[src] gives [M] a hug!</span>", "<span class='emote'>[src] gives you a hug!</span>")
+	else
+		. = ..()
 
 /obj/item/toy/plush/small
 	name = "small plush toy"
@@ -215,7 +221,7 @@
 		icon_state = "sword1-[bladecolor]"
 		item_state = "sword1-[bladecolor]"
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_SWORD
+		BLOCK_SETUP(BLOCK_SWORD)
 
 	attack(target as mob, mob/user as mob)
 		..()
@@ -286,9 +292,7 @@
 				src.setMaterial(getMaterial(pick(material_varieties)))
 
 		if (src.icon_state == "fig-floorpills")
-			var/datum/reagents/R = new/datum/reagents(30)
-			src.reagents = R
-			R.my_atom = src
+			src.create_reagents(30)
 
 			var/primaries = rand(1,3)
 			var/adulterants = rand(2,4)

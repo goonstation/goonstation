@@ -23,13 +23,8 @@
 
 /obj/machinery/recharge_station/New()
 	..()
-
-	var/datum/reagents/R = new/datum/reagents(500)
-	src.reagents = R
-	R.maximum_volume = 500
-	R.my_atom = src
-	R.add_reagent("fuel", 250)
-
+	src.create_reagents(500)
+	reagents.add_reagent("fuel", 250)
 	src.build_icon()
 
 /obj/machinery/recharge_station/process()

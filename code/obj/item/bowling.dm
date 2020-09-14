@@ -48,7 +48,7 @@
 		if(user)
 			src.icon_state = "bowling_ball"
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		var/mob/living/carbon/human/user = usr
 
 		src.icon_state = "bowling_ball"

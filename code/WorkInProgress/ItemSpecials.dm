@@ -697,7 +697,7 @@
 				animate(cracks, alpha=0, time=30)
 
 				for(var/mob/M in viewers())
-					shake_camera(M, 8, 3)
+					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
 					animate_shake(T)
@@ -742,7 +742,7 @@
 				animate(cracks, alpha=0, time=30)
 
 				for(var/mob/M in viewers())
-					shake_camera(M, 8, 3)
+					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
 					animate_shake(T)
@@ -2007,6 +2007,7 @@
 	duration = -1
 
 	New(var/datum/item_special/rush/D, var/mob/U, var/atom/T)
+		..()
 		if(!istype(D, /datum/item_special/rush))
 			interrupt(INTERRUPT_ALWAYS)
 		if(!D || !U || !T)

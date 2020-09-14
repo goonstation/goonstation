@@ -132,52 +132,52 @@
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
 					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!</span>")
 					M.changeStatus("stunned", 6 SECONDS)
-			SPAWN_DBG(5 SECONDS)
-				if(M.loc == src)
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						M.changeStatus("weakened", 10 SECONDS)
-						M.set_body_icon_dirty()
-						H.set_burning(1000)
-						playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
-						M.emote("scream")
-						if (H.limbs.l_leg && H.limbs.r_leg)
-							if (H.limbs.l_leg)
-								H.limbs.l_leg.delete()
-							if (H.limbs.r_leg)
-								H.limbs.r_leg.delete()
-							boutput(M, "You can feel how both of your legs melt away!")
-							visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
-						else
-							boutput(M, "You can feel intense heat on the lower part of your torso.")
-							visible_message("<span class='alert'>[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
-
-					if (isrobot(M))
-						var/mob/living/silicon/robot/R = M
-						R.canmove = 0
-						R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
-						R.emote("scream")
-						playsound(R.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
-						R.changeStatus("stunned", 10 SECONDS)
-						R.part_leg_r.holder = null
-						qdel(R.part_leg_r)
-						if (R.part_leg_r.slot == "leg_both")
-							R.part_leg_l = null
-							R.update_bodypart("l_leg")
-						R.part_leg_r = null
-						R.update_bodypart("r_leg")
-						R.part_leg_l.holder = null
-						qdel(R.part_leg_l)
-						if (R.part_leg_l.slot == "leg_both")
-							R.part_leg_r = null
-							R.update_bodypart("r_leg")
-						R.part_leg_l = null
-						R.update_bodypart("l_leg")
-						visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
+			sleep(5 SECONDS)
+			if(M.loc == src)
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					M.changeStatus("weakened", 10 SECONDS)
+					M.set_body_icon_dirty()
+					H.set_burning(1000)
+					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					M.emote("scream")
+					if (H.limbs.l_leg && H.limbs.r_leg)
+						if (H.limbs.l_leg)
+							H.limbs.l_leg.delete()
+						if (H.limbs.r_leg)
+							H.limbs.r_leg.delete()
 						boutput(M, "You can feel how both of your legs melt away!")
+						visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
 					else
 						boutput(M, "You can feel intense heat on the lower part of your torso.")
 						visible_message("<span class='alert'>[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
+
+				if (isrobot(M))
+					var/mob/living/silicon/robot/R = M
+					R.canmove = 0
+					R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
+					R.emote("scream")
+					playsound(R.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					R.changeStatus("stunned", 10 SECONDS)
+					R.part_leg_r.holder = null
+					qdel(R.part_leg_r)
+					if (R.part_leg_r.slot == "leg_both")
+						R.part_leg_l = null
+						R.update_bodypart("l_leg")
+					R.part_leg_r = null
+					R.update_bodypart("r_leg")
+					R.part_leg_l.holder = null
+					qdel(R.part_leg_l)
+					if (R.part_leg_l.slot == "leg_both")
+						R.part_leg_r = null
+						R.update_bodypart("r_leg")
+					R.part_leg_l = null
+					R.update_bodypart("l_leg")
+					visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
+					boutput(M, "You can feel how both of your legs melt away!")
+				else
+					boutput(M, "You can feel intense heat on the lower part of your torso.")
+					visible_message("<span class='alert'>[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
 
 	corners
 		icon_state = "lava_corners"
@@ -856,9 +856,9 @@
 			//src.equip_new_if_possible(/obj/item/clothing/suit/cultistblack/cursed, slot_wear_suit)
 			//src.equip_new_if_possible(/obj/item/clothing/mask/eldritchskull {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_wear_mask)
 			//src.equip_new_if_possible(/obj/item/dagger/azarakknife {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_r_hand)
-			SPAWN_DBG(0)
-				var/obj/item/organ/heart/eldritchadventure/H = new /obj/item/organ/heart/eldritchadventure
-				receive_organ(H, "heart", 0, 1)
+
+			var/obj/item/organ/heart/eldritchadventure/H = new /obj/item/organ/heart/eldritchadventure
+			receive_organ(H, "heart", 0, 1)
 			return
 
 
@@ -1110,14 +1110,14 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	throw_begin(atom/target)
 		icon_state = "lawspin"
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "lawbook"
 		if(hit_atom == usr)
 			if(prob(prob_clonk))

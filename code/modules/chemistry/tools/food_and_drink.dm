@@ -232,8 +232,8 @@
 				if (src.festivity)
 					modify_christmas_cheer(src.festivity)
 				if (!src.amount)
-					//M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					//"<span class='alert'>You finish eating [src].</span>")
+					/*M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
+					"<span class='alert'>You finish eating [src].</span>")*/
 					boutput(M, "<span class='alert'>You finish eating [src].</span>")
 					if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
 						var/obj/item/reagent_containers/food/snacks/plant/P = src
@@ -1262,7 +1262,7 @@
 			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
 		return
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		src.smash(A)
 
@@ -1275,11 +1275,11 @@
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/glass
 
 	New(mob/Target, obj/item/reagent_containers/food/drinks/drinkingglass/Glass)
-		target= Target
+		..()
+		target = Target
 		glass = Glass
 		icon = glass.icon
 		icon_state = glass.icon_state
-		return
 
 	proc/checkContinue()
 		if (glass.reagents.total_volume <= 0 || !isalive(glassholder) || !glassholder.find_in_hand(glass))
@@ -1625,7 +1625,7 @@
 			G.set_loc(src.loc)
 		qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)

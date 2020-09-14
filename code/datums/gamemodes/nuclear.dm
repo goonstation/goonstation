@@ -14,7 +14,7 @@
 #if ASS_JAM
 	var/const/agents_possible = 30 // on ass jam theres up to 30 nukies to compensate for the warcrime of the kinetitech
 #else
-	var/const/agents_possible = 6 //If we ever need more syndicate agents. cogwerks - raised from 5
+	var/const/agents_possible = 8 //If we ever need more syndicate agents. cogwerks - raised from 5
 #endif
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -41,11 +41,7 @@
 
 		if (player.ready)
 			num_players++
-#if ASS_JAM
-	var/num_synds = max(1, min(round(num_players / 3), agents_possible))
-#else
 	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
-#endif
 
 	possible_syndicates = get_possible_syndicates(num_synds)
 

@@ -17,6 +17,7 @@
 	var/points_per_crate = 10
 
 	New()
+		..()
 
 		add_commodity(new /datum/commodity/goldbar(src))
 

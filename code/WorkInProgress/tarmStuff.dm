@@ -92,7 +92,7 @@
 	New()
 		..()
 		ammo.amount_left = 30
-		AddComponent(/datum/component/holdertargeting/smartgun)
+		AddComponent(/datum/component/holdertargeting/smartgun, 3)
 
 /datum/component/holdertargeting/smartgun
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
@@ -103,14 +103,15 @@
 	var/list/targets = list()
 	var/targetting = 0
 	var/shooting = 0
-	var/maxlocks = 3
+	var/maxlocks
 	var/obj/item/gun/G
 
-	Initialize()
+	Initialize(_maxlocks = 3)
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
 			return COMPONENT_INCOMPATIBLE
 		else
 			G = parent
+		maxlocks = _maxlocks
 
 	on_dropped(datum/source, mob/user)
 		. = ..()
@@ -148,11 +149,11 @@
 	while(targetting)
 		sleep(1 SECOND)
 		ding = 0
-		for(var/mob/M in view(7, user))
+		for(var/mob/M in mobs)
 			if(!G || !(user?.client.check_key(KEY_RUN)))
 				targetting = 0
 				break
-			if(in_cone_of_vision(user, M) && !(targets[M] >= 3 || istype(M.get_id(), /obj/item/card/id/syndicate)) && shotcount < checkshots(G))
+			if(IN_RANGE(user, M, 7) && in_cone_of_vision(user, M) && !(targets[M] >= maxlocks || istype(M.get_id(), /obj/item/card/id/syndicate)) && shotcount < checkshots(G))
 				targets[M] = targets[M] ? targets[M] + 1 : 1
 				ding = 1
 				shotcount++
@@ -239,3 +240,42 @@
 		src.rarity = initial(src.rarity)
 	src.tooltip_rebuild = 1
 	src.UpdateName()
+
+///Office stuff
+//Suggestion box
+/obj/suggestion_box
+	name = "suggestion box"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "voting_box"
+	density = 1
+	flags = FPRINT
+	anchored = 1.0
+	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
+	var/taken_suggestion = 0
+	var/list/turf/floors = null
+
+	New()
+		. = ..()
+		floors = list()
+		for(var/turf/T in orange(1, src))
+			if(!T.density)
+				floors += T
+		if(!floors.len)	//fall back on own turf
+			floors += get_turf(src)
+
+	attackby(obj/item/I, mob/user)
+		if(istype(I, /obj/item/paper))
+			var/obj/item/paper/P = I
+			if(P.info && !taken_suggestion)
+				message_admins("[user ? user : "Unknown"] has made a suggestion in [src]:<br>[P.name]<br><br>[copytext(P.info,1,MAX_MESSAGE_LEN)]")
+				var/ircmsg[] = new()
+				ircmsg["msg"] = "[user ? user : "Unknown"] has made a suggestion in [src]:\n**[P.name]**\n[strip_html_tags(P.info)]"
+				ircbot.export("admin", ircmsg)
+				taken_suggestion = 1
+			user.u_equip(P)
+			qdel(P)
+			playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
+			var/turf/T = pick(floors)
+			if(T)
+				new /obj/decal/cleanable/paper(T)
+		return ..()

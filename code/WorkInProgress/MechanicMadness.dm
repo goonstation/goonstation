@@ -34,8 +34,7 @@
 		src.light = new /datum/light/point
 		src.light.attach(src)
 		src.light.set_color(1,0,1)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id) // hack to make microphones work
 		for(var/obj/item/mechanics/miccomp/mic in src.contents)
@@ -148,8 +147,8 @@
 			if(src.welded)
 				src.icon_state=initial(src.icon_state)+"_w"
 			else if(src.open)
-				// ugly warning, the istype() is 1 when there's a trigger in the container\
-				//	it subtracts 1 from the list of contents when there's a trigger \
+				// ugly warning, the istype() is 1 when there's a trigger in the container
+				//	it subtracts 1 from the list of contents when there's a trigger 
 				//	doing arithmatic on bools is probably not good!
 				var/has_trigger = istype(locate(/obj/item/mechanics/trigger/trigger) in src.contents,/obj/item/mechanics/trigger/trigger)
 				var/len_contents = src.contents.len - has_trigger
@@ -217,7 +216,7 @@
 		can_be_welded=true
 		can_be_anchored=true
 		slots=CABINET_CAPACITY // wew, dont use this in-hand or equipped!
-		name="Component Cabinet" // i tried to replace "23" below with "[CABINET_CAPACITY]", but byond \
+		name="Component Cabinet" // i tried to replace "23" below with "[CABINET_CAPACITY]", but byond 
 									 // thinks it's not a constant and refuses to work with it.
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
@@ -252,8 +251,8 @@
 		slots=HANDHELD_CAPACITY + 1 // One slot used by the permanent button
 		name="Device Frame"
 		desc="A massively shrunken component cabinet fitted with a handle and an external\
-		 button. Due to the average mechanic's low arm strength, it only holds 6 components." // same as above\
-		 												if you change the capacity, remember to manually update this string
+		 button. Due to the average mechanic's low arm strength, it only holds 6 components." // same as above
+		 												//if you change the capacity, remember to manually update this string
 		w_class = 3.0 // fits in backpacks but not pockets. no quickdraw honk boxess
 		density=0
 		anchored=0
@@ -353,8 +352,7 @@
 	New()
 		particles = new/list()
 		AddComponent(/datum/component/mechanics_holder)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		return ..()
 
 
@@ -1954,7 +1952,7 @@
 		if(input.signal in signals)
 			signals.Remove(input.signal)
 			if(current_index > length(signals))
-				current_index = length(signals)
+				current_index = length(signals) ? length(signals) : 1 // Don't let current_index be 0
 			tooltip_rebuild = 1
 			if(announce)
 				componentSay("Removed : [input.signal]")

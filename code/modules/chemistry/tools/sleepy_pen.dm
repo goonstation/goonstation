@@ -5,10 +5,8 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("ketamine", 100)
+		src.create_reagents(100)
+		reagents.add_reagent("ketamine", 100)
 		return
 
 	attack(mob/M, mob/user as mob)

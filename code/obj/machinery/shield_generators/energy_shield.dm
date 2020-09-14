@@ -18,7 +18,8 @@
 		display_active.icon_state = "energyShieldOn"
 		src.power_usage = 5
 
-	examine()
+	get_desc(dist, mob/user)
+		. = ..()
 		var/charge_percentage = 0
 		if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
 			charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)

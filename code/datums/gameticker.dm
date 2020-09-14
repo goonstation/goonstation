@@ -44,10 +44,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	pregame_timeleft = PREGAME_LOBBY_TICKS
 	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B><br>Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds.")
-	#if ASS_JAM
-	vote_manager.active_vote = new/datum/vote_new/mode("everyone-is-a-traitor")
-	boutput(world, "<B>ASS JAM: Everyone-Is-A-Traitor Mode vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
-	#endif
 
 	// let's try doing this here, yoloooo
 	// zamu 20200823: idk if this is even getting called...
@@ -61,6 +57,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for(var/mob/new_player/C in world)
 		C.ready = 1
 	pregame_timeleft = 1
+	#endif
+
+	#if ASS_JAM
+	SPAWN_DBG(10 SECONDS) // wait for people to login etc.
+		vote_manager.active_vote = new/datum/vote_new/mode("everyone-is-a-traitor")
+		boutput(world, "<B>ASS JAM: Everyone-Is-A-Traitor Mode vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
 	#endif
 
 	var/did_mapvote = 0
@@ -250,9 +252,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		participationRecorder.releaseHold()
 
 	SPAWN_DBG (6000) // 10 minutes in
-		for(var/obj/machinery/power/generatorTemp/E in machine_registry[MACHINES_POWER])
+		for(var/obj/machinery/power/monitor/smes/E in machine_registry[MACHINES_POWER])
 			LAGCHECK(LAG_LOW)
-			if (E.lastgen <= 0)
+			if(E.powernet?.avail <= 0)
 				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
 			break
 
@@ -561,13 +563,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	boutput(world, score_tracker.heisenhat_stats())
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
-	for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
-		if (!isdead(aiPlayer))
-			boutput(world, "<b>The AI, [aiPlayer.name] ([aiPlayer.get_message_mob().key]) had the following laws at the end of the game:</b>")
-		else
-			boutput(world, "<b>The AI, [aiPlayer.name] ([aiPlayer.get_message_mob().key]) had the following laws when it was deactivated:</b>")
+	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.centralized_ai_laws.format_for_logs()]")
 
-		aiPlayer.show_laws(1)
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] resetting gauntlet (why? who cares! the game is over!)")
 	if (gauntlet_controller.state)
@@ -575,10 +572,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #ifdef CREW_OBJECTIVES
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] displaying completed crew objectives")
 	if (successfulCrew.len)
-		boutput(world, "<B>The following crewmembers completed all of their Crew Objectives:</B>")
-		for (var/i in successfulCrew)
-			boutput(world, "<B>[i]</B>")
-		boutput(world, "Good job!")
+		boutput(world, "<B>The following crewmembers completed all of their Crew Objectives:</B><br>[successfulCrew.Join("<br>")]<br>Good job!")
 	else
 		boutput(world, "<B>Nobody completed all of their Crew Objectives!</B>")
 #endif

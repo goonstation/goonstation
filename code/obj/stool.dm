@@ -830,7 +830,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 /obj/item/chair/folded/attack_self(mob/user as mob)
 	if(cant_drop == 1)

@@ -524,7 +524,7 @@ to say if there's demand for that.
 	tooltipImg = "explosion.png"
 	defaultValue = 10
 	getTooltipDesc(var/obj/propOwner, var/propVal)
-		return "[propVal]"
+		return "[propVal]%"
 
 	updateMob(obj/item/owner, mob/user, value, oldValue=null)
 		. = ..()

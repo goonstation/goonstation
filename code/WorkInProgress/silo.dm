@@ -40,6 +40,7 @@
 
 	New()
 		health = rand(5, 10)
+		..()
 		update_icon()
 
 	HasEntered(atom/movable/A)

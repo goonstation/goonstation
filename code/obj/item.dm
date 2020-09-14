@@ -446,33 +446,6 @@
 /obj/item/proc/equipment_click(atom/source, atom/target, params, location, control, origParams, slot) //Called through hand_range_attack on items the mob is wearing that have HAS_EQUIP_CLICK in flags.
 	return 0
 
-
-/*
-		var/icon/overlay = icon('icons/effects/96x96.dmi',"smoke")
-		if (color)
-			overlay.Blend(color,ICON_MULTIPLY)
-		var/image/I = image(overlay)
-		I.pixel_x = -32
-		I.pixel_y = -32
-
-		var/the_dir = NORTH
-	for(var/i=0, i<8, i++)
-		var/obj/chem_smoke/C = new/obj/chem_smoke(location, holder, max_vol)
-		C.overlays += I
-		if (rname) C.name = "[rname] smoke"
-		SPAWN_DBG(0)
-			var/my_dir = the_dir
-			var/my_time = rand(80,110)
-			var/my_range = 3
-			SPAWN_DBG(my_time) qdel(C)
-			for(var/b=0, b<my_range, b++)
-				sleep(1.5 SECONDS)
-				if (!C) break
-				step(C,my_dir)
-				C.expose()
-		the_dir = turn(the_dir,45)
-*/
-
 /obj/item/proc/combust_ended()
 	processing_items.Remove(src)
 
@@ -485,6 +458,12 @@
 		else
 			src.overlays += image('icons/effects/fire.dmi', "1old")
 		processing_items.Add(src)
+#if ASS_JAM
+		if(src.reagents)
+			SPAWN_DBG(3 SECONDS)
+				if(src.reagents)
+					smoke_reaction(src.reagents, 0, get_turf(src), do_sfx=FALSE) // bring back infinicheese 2020
+#endif
 		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
 
 			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
@@ -1041,6 +1020,10 @@
 		if (isliving(checkloc) && checkloc != user)
 			return 0
 		checkloc = checkloc:loc
+
+	if(!src.can_pickup(user))
+		return 0
+
 	src.throwing = 0
 
 	if (isobj(src.loc))
@@ -1192,7 +1175,7 @@
 	var/stam_crit_pow = src.stamina_crit_chance
 	if (prob(stam_crit_pow))
 		msgs.stamina_crit = 1
-		msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
+		msgs.played_sound = pick(sounds_punch)
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
@@ -1502,3 +1485,6 @@
 
 /obj/item/proc/intent_switch_trigger(mob/user)
 	return
+
+/obj/item/proc/can_pickup(mob/user)
+	return !src.anchored

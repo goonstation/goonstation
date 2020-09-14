@@ -328,8 +328,7 @@ Obsidian Crown
 		cant_other_remove = 1
 		if (!src.processing)
 			src.processing++
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 
 		if (istype(user.reagents)) //Protect them from poisions! (And coincidentally healing chems OH WELL)
 			user.reagents.maximum_volume = 0
@@ -509,7 +508,7 @@ Obsidian Crown
 		for(var/mob/N in viewers(host, null))
 			N.flash(3 SECONDS)
 			if(N.client)
-				shake_camera(N, 6, 4)
+				shake_camera(N, 6, 32)
 				N.show_message("<span class='combat'><b>A blinding light envelops [host]!</b></span>")
 
 		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)

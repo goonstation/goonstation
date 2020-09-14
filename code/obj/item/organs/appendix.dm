@@ -20,6 +20,7 @@
 	icon_state = "cyber-appendix"
 	// item_state = "cyber-"
 	robotic = 1
+	made_from = "pharosium"
 	edible = 0
 	mats = 6
 

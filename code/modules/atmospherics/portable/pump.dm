@@ -14,14 +14,10 @@
 	volume = 750
 
 /obj/machinery/portable_atmospherics/pump/update_icon()
-	src.overlays = 0
-
 	if(on)
 		icon_state = "psiphon:1"
 	else
 		icon_state = "psiphon:0"
-
-	return
 
 /obj/machinery/portable_atmospherics/pump/process()
 	..()

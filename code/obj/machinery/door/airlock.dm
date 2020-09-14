@@ -161,6 +161,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/spawnPowerRestoreRunning = 0
 	var/welded = null
 	var/wires = 1023 //goddd use bitflag defines please
+	var/list/wire_colors = list("Orange" = 1, "Pink" = 2, "White" = 3, "Yellow" = 4, "Red" = 5, "Blue" = 6, "Green" = 7, "Grey" = 8, "Olive" = 9, "Teal" = 10)
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = 0
 	var/aiHacking = 0
@@ -730,6 +731,16 @@ About the new airlock wires panel:
 	play_animation("deny")
 	playsound(get_turf(src), src.sound_deny_temp, 100, 0)
 
+/obj/machinery/door/airlock/proc/try_pulse(var/wire_color, mob/user)
+	if (!user.find_tool_in_hand(TOOL_PULSING))
+		boutput(user, "You need a multitool or similar!")
+		return FALSE
+	if (src.isWireColorCut(wire_color))
+		boutput(user, "You can't pulse a cut wire.")
+		return FALSE
+	src.pulse(wire_color)
+	return TRUE
+
 /obj/machinery/door/airlock/proc/pulse(var/wireColor)
 	//var/wireFlag = airlockWireColorToFlag[wireColor] //not used in this function
 	var/wireIndex = airlockWireColorToIndex[wireColor]
@@ -751,6 +762,7 @@ About the new airlock wires panel:
 				logTheThing("station",usr,null,"[usr] has bolted a door at [log_loc(src)].")
 				boutput(usr, "You hear a click from the bottom of the door.")
 				src.updateUsrDialog()
+				tgui_process.update_uis(src)
 			else
 				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
 					src.locked = 0
@@ -771,12 +783,14 @@ About the new airlock wires panel:
 			else if (src.aiControlDisabled == -1)
 				src.aiControlDisabled = 2
 			src.updateDialog()
+			tgui_process.update_uis(src)
 			SPAWN_DBG(1 SECOND)
 				if (src.aiControlDisabled == 1)
 					src.aiControlDisabled = 0
 				else if (src.aiControlDisabled == 2)
 					src.aiControlDisabled = -1
 				src.updateDialog()
+				tgui_process.update_uis(src)
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 		if (AIRLOCK_WIRE_ELECTRIFY)
@@ -808,6 +822,47 @@ About the new airlock wires panel:
 			src.safety = 1
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
+
+/obj/machinery/door/airlock/proc/attach_signaler(var/wire_color, mob/user)
+	if(!istype(user.equipped(), /obj/item/device/radio/signaler))
+		boutput(user, "You need a signaler!")
+		return FALSE
+
+	if(src.isWireColorCut(wire_color))
+		boutput(user, "You can't attach a signaler to a cut wire.")
+		return FALSE
+
+	var/obj/item/device/radio/signaler/R = user.equipped()
+	if(!R.b_stat)
+		boutput(user, "This radio can't be attached!")
+		return FALSE
+
+	user.drop_item()
+	R.set_loc(src)
+	R.airlock_wire = wire_color
+	src.signalers[wire_color] = R
+	tgui_process.update_uis(src)
+	return TRUE
+
+/obj/machinery/door/airlock/proc/detach_signaler(var/wire_color, mob/user)
+	if(!(src.signalers[wire_color]))
+		boutput(user, "There's no signaler attached to that wire!")
+		return FALSE
+
+	var/obj/item/device/radio/signaler/R = src.signalers[wire_color]
+	user.put_in_hand_or_drop(R)
+	R.airlock_wire = null
+	src.signalers[wire_color] = null
+	tgui_process.update_uis(src)
+	return TRUE
+
+/obj/machinery/door/airlock/proc/try_cut(var/wire_color, mob/user)
+	if(!user.find_tool_in_hand(TOOL_SNIPPING))
+		boutput(user, "You need a snipping tool!")
+		return FALSE
+
+	src.cut(wire_color)
+	return TRUE
 
 /obj/machinery/door/airlock/proc/cut(var/wireColor)
 	var/wireFlag = airlockWireColorToFlag[wireColor]
@@ -853,6 +908,14 @@ About the new airlock wires panel:
 			logTheThing("station", usr, null, "permanently disabled the safety of an airlock at [log_loc(src)] by cutting the safety wire.")
 			src.safety = 0
 
+	tgui_process.update_uis(src)
+
+/obj/machinery/door/airlock/proc/try_mend(var/wire_color, mob/user)
+	if(!user.find_tool_in_hand(TOOL_SNIPPING))
+		boutput(user, "You need a snipping tool to mend the wire!")
+		return FALSE
+	src.mend(wire_color)
+	return TRUE
 
 /obj/machinery/door/airlock/proc/mend(var/wireColor)
 	var/wireFlag = airlockWireColorToFlag[wireColor]
@@ -886,6 +949,8 @@ About the new airlock wires panel:
 		if(AIRLOCK_WIRE_SAFETY)
 			logTheThing("station", usr, null, "re-enabled the safety of an airlock at [log_loc(src)] by mending the safety wire.")
 			src.safety = 1
+
+	tgui_process.update_uis(src)
 
 /obj/machinery/door/airlock/proc/isElectrified()
 	return (src.secondsElectrified != 0)
@@ -937,15 +1002,18 @@ About the new airlock wires panel:
 					if ((!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)))
 						src.secondsMainPowerLost -= 1
 						src.updateDialog()
+						tgui_process.update_uis(src)
 					cont = 1
 
 				if (src.secondsBackupPowerLost>0)
 					if ((!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2)))
 						src.secondsBackupPowerLost -= 1
 						src.updateDialog()
+						tgui_process.update_uis(src)
 					cont = 1
 			src.spawnPowerRestoreRunning = 0
 			src.updateDialog()
+			tgui_process.update_uis(src)
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
 	if (src.secondsBackupPowerLost < 60)
@@ -1178,50 +1246,46 @@ About the new airlock wires panel:
 				return
 	..()
 
-/obj/machinery/door/airlock/proc/show_html(mob/user as mob)
-	if (!user)
+/obj/machinery/door/airlock/ui_static_data(mob/user)
+	var/list/static_data = list()
+
+	static_data["wireColors"] = src.wire_colors
+	static_data["netId"] = src.net_id;
+
+	return static_data
+
+/obj/machinery/door/airlock/ui_state(mob/user)
+	return tgui_default_state
+
+/obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
+  return min(
+		state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
+
+/obj/machinery/door/airlock/ui_act(action, params)
+	if(..())
 		return
-
-	if (!istext(src.HTML))
-		src.generate_html()
-
-	user << browse(src.HTML, "window=airlock")
-
-/obj/machinery/door/airlock/proc/generate_html()
-	src.HTML = "<B>Access Panel</B><br><br>"
-	src.HTML += "An identifier is engraved under the airlock's card sensors: <i>[net_id]</i><br><br>"
-
-	var/list/wires = list("Orange" = 1,
-		"Dark red" = 2,
-		"White" = 3,
-		"Yellow" = 4,
-		"Red" = 5,
-		"Blue" = 6,
-		"Green" = 7,
-		"Grey" = 8,
-		"Black" = 9,
-		"Translucent" = 10)
-
-	for (var/wiredesc in wires)
-		var/is_uncut = src.wires & airlockWireColorToFlag[wires[wiredesc]]
-		src.HTML += "[wiredesc] wire: "
-		if (!is_uncut)
-			src.HTML += "<a href='?src=\ref[src];wires=[wires[wiredesc]]'>Mend</a>"
-		else
-			src.HTML += "<a href='?src=\ref[src];wires=[wires[wiredesc]]'>Cut</a> "
-			src.HTML += "<a href='?src=\ref[src];pulse=[wires[wiredesc]]'>Pulse</a> "
-			if (src.signalers[wires[wiredesc]])
-				src.HTML += "<a href='?src=\ref[src];remove-signaler=[wires[wiredesc]]'>Detach signaler</a>"
-			else
-				src.HTML += "<a href='?src=\ref[src];signaler=[wires[wiredesc]]'>Attach signaler</a>"
-		src.HTML += "<br>"
-
-	src.HTML += {"<br>[src.locked ? "The door bolts have fallen!" : "The door bolts look up."]<br>
-	[(src.arePowerSystemsOn() && !(status & NOPOWER)) ? "The test light is on." : "The test light is off!"]<br>
-	[src.aiControlDisabled==0 ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."]<br>
-	[src.safety ? "The green light is blinking!" : "The green light is off!"]"}
-
-	src.HTML += "<p><a href='?src=\ref[src];close=1'>Close</a></p>"
+	switch(action)
+		if("cut")
+			var/which_wire = params["wireColorIndex"]
+			if(isnum(which_wire))
+				. = src.try_cut(which_wire+1, usr)
+		if("mend")
+			var/which_wire = params["wireColorIndex"]
+			if(isnum(which_wire))
+				. = src.try_mend(which_wire+1, usr)
+		if("pulse")
+			var/which_wire = params["wireColorIndex"]
+			if(isnum(which_wire))
+				. = src.try_pulse(which_wire+1, usr)
+		if("signaler")
+			var/which_wire = params["wireColorIndex"]
+			if(isnum(which_wire))
+				if(src.signalers[which_wire+1])
+					. = src.detach_signaler(which_wire+1, usr)
+				else
+					. = src.attach_signaler(which_wire+1, usr)
 
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
 	if (!issilicon(user))
@@ -1236,44 +1300,7 @@ About the new airlock wires panel:
 		return
 
 	if (src.p_open)
-		src.add_dialog(user)
-		var/list/t1 = list(text("<B>Access Panel</B><br><br>"))
-		t1 += "An identifier is engraved under the airlock's card sensors: <i>[net_id]</i><br><br>"
-
-		//t1 += text("[]: ", airlockFeatureNames[airlockWireColorToIndex[9]])
-		var/list/wires = list(
-			"Orange" = 1,
-			"Dark red" = 2,
-			"White" = 3,
-			"Yellow" = 4,
-			"Red" = 5,
-			"Blue" = 6,
-			"Green" = 7,
-			"Grey" = 8,
-			"Black" = 9,
-			"Translucent" = 10,
-		)
-		for(var/wiredesc in wires)
-			var/is_uncut = src.wires & airlockWireColorToFlag[wires[wiredesc]]
-			t1 += "[wiredesc] wire: "
-			if(!is_uncut)
-				t1 += "<a href='?src=\ref[src];wires=[wires[wiredesc]]'>Mend</a>"
-			else
-				t1 += "<a href='?src=\ref[src];wires=[wires[wiredesc]]'>Cut</a> "
-				t1 += "<a href='?src=\ref[src];pulse=[wires[wiredesc]]'>Pulse</a> "
-				if(src.signalers[wires[wiredesc]])
-					t1 += "<a href='?src=\ref[src];remove-signaler=[wires[wiredesc]]'>Detach signaler</a>"
-				else
-					t1 += "<a href='?src=\ref[src];signaler=[wires[wiredesc]]'>Attach signaler</a>"
-			t1 += "<br>"
-
-		t1 += text("<br>[]<br>[]<br>[]<br>[]", (src.locked ? "The door bolts have fallen!" : "The door bolts look up."), ((src.arePowerSystemsOn() && !(status & NOPOWER)) ? "The test light is on." : "The test light is off!"), (src.aiControlDisabled==0 ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."), (src.safety ? "The green light is blinking!" : "The green light is off!"))
-
-		t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>", src)
-
-		user.Browse(t1.Join(), "window=airlock")
-		onclose(user, "airlock")
-
+		ui_interact(user)
 		interact_particle(user,src)
 	//clicking with no access, door closed, and help intent, and panel closed to knock
 	else if (!src.allowed(user) && (user.a_intent == INTENT_HELP) && src.density && src.requiresID())
@@ -1281,74 +1308,6 @@ About the new airlock wires panel:
 		return //Opening the door just because knocks are on cooldown is rude!
 	else
 		..(user)
-	return
-
-
-
-
-/obj/machinery/door/airlock/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained() )
-		return
-	if (href_list["close"])
-		usr.Browse(null, "window=airlock")
-		src.remove_dialog(usr)
-		return
-	if (!isAIeye(usr))
-		if (!isrobot(usr) && !ishivebot(usr))
-			if (!src.p_open)
-				return
-		if ((in_range(src, usr) && istype(src.loc, /turf)))
-			src.add_dialog(usr)
-			if (href_list["wires"])
-				var/t1 = text2num(href_list["wires"])
-				if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-					boutput(usr, "You need a snipping tool!")
-					return
-				if (src.isWireColorCut(t1))
-					src.mend(t1)
-				else
-					src.cut(t1)
-			else if (href_list["pulse"])
-				var/t1 = text2num(href_list["pulse"])
-				if (!usr.find_tool_in_hand(TOOL_PULSING))
-					boutput(usr, "You need a multitool or similar!")
-					return
-				else if (src.isWireColorCut(t1))
-					boutput(usr, "You can't pulse a cut wire.")
-					return
-				else
-					src.pulse(t1)
-			else if(href_list["signaler"])
-				var/wirenum = text2num(href_list["signaler"])
-				if(!istype(usr.equipped(), /obj/item/device/radio/signaler))
-					boutput(usr, "You need a signaller!")
-					return
-				if(src.isWireColorCut(wirenum))
-					boutput(usr, "You can't attach a signaller to a cut wire.")
-					return
-				var/obj/item/device/radio/signaler/R = usr.equipped()
-				if(!R.b_stat)
-					boutput(usr, "This radio can't be attached!")
-					return
-				var/mob/M = usr
-				M.drop_item()
-				R.set_loc(src)
-				R.airlock_wire = wirenum
-				src.signalers[wirenum] = R
-			else if(href_list["remove-signaler"])
-				var/wirenum = text2num(href_list["remove-signaler"])
-				if(!(src.signalers[wirenum]))
-					boutput(usr, "There's no signaller attached to that wire!")
-					return
-				var/obj/item/device/radio/signaler/R = src.signalers[wirenum]
-				R.set_loc(usr.loc)
-				R.airlock_wire = null
-				src.signalers[wirenum] = null
-
-		src.update_icon()
-		add_fingerprint(usr)
-		src.updateUsrDialog()
 	return
 
 /obj/machinery/door/airlock/attackby(obj/item/C as obj, mob/user as mob)
@@ -1535,6 +1494,9 @@ obj/machinery/door/airlock
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption)
+			return
+
+		if(lowertext(signal.data["sender"]) == src.net_id)
 			return
 
 		if (lowertext(signal.data["address_1"]) != src.net_id)
@@ -1745,10 +1707,6 @@ obj/machinery/door/airlock
 				src.secondsElectrified = 0
 	return
 
-/obj/machinery/door/airlock/proc/isthedoorwirecutfordummies()
-	var/wireFlag = airlockIndexToFlag[AIRLOCK_WIRE_DOOR_BOLTS]
-	return ((src.wires & wireFlag) == 0)
-
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
 	..()
 
@@ -1787,7 +1745,7 @@ obj/machinery/door/airlock
 		var/obj/machinery/door/airlock/D = src
 		if (D.aiControlDisabled > 0)
 			return
-		if (D.isthedoorwirecutfordummies())
+		if (D.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 			boutput(src, "The door bolt drop wire is cut - you can't change the door bolts.")
 		else
 			if (D.locked)
@@ -1831,7 +1789,9 @@ obj/machinery/door/airlock
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "AiAirlock", src.name)
+		ui = new(user, src, "AiAirlock", name)
+		ui.open()
+		ui = new(user, src, "Airlock", name)
 		ui.open()
 	return TRUE
 
@@ -1843,7 +1803,7 @@ obj/machinery/door/airlock
 	data["backupTimeleft"] = secondsBackupPowerLost
 	data["shockTimeleft"] = secondsElectrified
 	data["idScanner"] = !aiDisabledIdScanner
-	data["locked"] = locked // bolted
+	data["boltsAreUp"] = !src.locked // not bolted
 	data["welded"] = welded // welded
 	data["opened"] = !density // opened
 	data["status"] = src.status
@@ -1858,6 +1818,20 @@ obj/machinery/door/airlock
 	wire["safe"] = !src.isWireCut(AIRLOCK_WIRE_SAFETY)
 
 	data["wires"] = wire
+
+	if(src.signalers)
+		data["signalers"] = src.signalers
+
+	data["powerIsOn"] = src.arePowerSystemsOn() && !(status & NOPOWER)
+
+	data["aiControlDisabled"] = src.aiControlDisabled
+	data["safety"] = src.safety
+
+	var/list/wire_states = list()
+	for(var/I in src.wire_colors)
+		wire_states += src.isWireCut(airlockWireColorToIndex[src.wire_colors[I]])
+	data["wireStates"] = wire_states
+
 	return data
 
 /obj/machinery/door/airlock/proc/aidoor_access_check(mob/user)

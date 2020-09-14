@@ -75,6 +75,7 @@
 	var/source_car = null
 
 	New(var/atom/spawnloc, var/spawndir, var/atom/sourcecar)
+		..()
 		src.set_loc(spawnloc)
 		src.dir = spawndir
 		source_car = sourcecar
@@ -106,6 +107,7 @@
 	var/source_car = null
 
 	New(var/atom/spawnloc, var/spawndir, var/atom/sourcecar)
+		..()
 		src.set_loc(spawnloc)
 		src.dir = spawndir
 		source_car = sourcecar
@@ -363,8 +365,6 @@
 	var/speed = 2 //This is actually the DELAY. Lower = faster.
 
 	var/mob/living/carbon/human/driver = null
-
-	New()
 
 	proc/random_powerup()
 		var/list/powerups = childrentypesof(/obj/powerup/)
