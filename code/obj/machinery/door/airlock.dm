@@ -1812,19 +1812,6 @@ obj/machinery/door/airlock
 	if (status & (NOPOWER | POWEROFF))
 		return UI_UPDATE
 
-
-/obj/machinery/door/airlock/ui_state(mob/user)
-	return tgui_silicon_state
-
-/obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_silicon_state.can_use_topic(src, user)
-	)
-
-
-
 /obj/machinery/door/airlock/ui_act(action, params)
 	if(..())
 		return
@@ -1866,7 +1853,7 @@ obj/machinery/door/airlock
 				if (src.canAIHack() && !src.aiHacking)
 					src.hack(usr)
 				. = TRUE
-	if(src.p_open && get_dist(src, user) =< 1)
+	if(src.p_open && get_dist(src, usr) <= 1)
 		switch(action)
 			if("cut")
 				var/which_wire = params["wireColorIndex"]
