@@ -16,7 +16,6 @@
 	var/datum/projectile/proj_data = null
 	//var/obj/o_shooter = null
 	var/list/targets = list()
-	var/dissipation_ticker = 0 // moved this from the datum because why the hell was it on there
 	var/power = 20 // local copy of power for proper dissipation tracking
 	var/implanted = null
 	var/forensic_ID = null
@@ -233,7 +232,6 @@
 		pixel_x = 0
 		pixel_y = 0
 		power = 0
-		dissipation_ticker = 0
 		travelled = 0
 		target = null
 		proj_data = null
@@ -359,10 +357,7 @@
 			if (y32 < 0)
 				ys = -1
 				y32 = -y32
-		var/max_t
-		if (proj_data.dissipation_rate > 0) //500 is default maximum range
-			proj_data.max_range = min(proj_data.max_range, proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate))
-		max_t = proj_data.max_range // why not
+		var/max_t = proj_data.max_range // why not
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -425,10 +420,9 @@
 			die()
 			return
 		src.ticks_until_can_hit_mob--
-		src.dissipation_ticker++
 
 		// The bullet has expired/decayed.
-		if (src.dissipation_ticker > src.proj_data.max_range)
+		if (src.travelled > src.proj_data.max_range * 32)
 			proj_data.on_max_range_die(src)
 			die()
 			return
@@ -547,11 +541,10 @@ datum/projectile
 		override_color = 0
 		power = 20               // How much of a punch this has
 		cost = 1                 // How much ammo this costs
-		max_range = 500          // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
+		max_range = 0          // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
 		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
 		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
-		dissipation_ticker = 0   // Tracks how many tiles we moved
 		ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
 		                            eg 1.0 will cause damage = to power while 0.0 would cause just stun = to power */
 
@@ -609,6 +602,10 @@ datum/projectile
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
+	New()
+		. = ..()
+		if(!max_range)
+			max_range = min(max_range, dissipation_delay + round(power / dissipation_rate))
 
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
@@ -658,7 +655,7 @@ datum/projectile
 			.= 1
 
 		get_power(obj/projectile/P, atom/A)
-			return src.power - max(0,((isnull(P.orig_turf)? 0 : get_dist(P.orig_turf, get_turf(A)))-src.dissipation_delay))*src.dissipation_rate
+			return src.power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
 
 // WOO IMPACT RANGES
 // Meticulously calculated by hand.
