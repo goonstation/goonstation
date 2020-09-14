@@ -541,7 +541,7 @@ datum/projectile
 		override_color = 0
 		power = 20               // How much of a punch this has
 		cost = 1                 // How much ammo this costs
-		max_range = 0          // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
+		max_range = 0            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
 		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
 		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
@@ -605,7 +605,7 @@ datum/projectile
 	New()
 		. = ..()
 		if(!max_range)
-			max_range = min(max_range, dissipation_delay + round(power / dissipation_rate))
+			max_range = dissipation_delay + round(power / dissipation_rate)s
 
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
