@@ -1,4 +1,6 @@
 /proc/AStar(start, end, adjacent, heuristic, maxtraverse = 30, adjacent_param = null, exclude = null)
+	if(isnull(end) || isnull(start))
+		return
 	var/list/open = list(start), list/nodeG = list(), list/nodeParent = list(), P = 0
 	while (P++ < open.len)
 		var/T = open[P], TG = nodeG[T]
