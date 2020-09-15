@@ -118,10 +118,10 @@ var/global/first_adminhelp_happened = 0
 /proc/log_tgui(user, message, context,
 		datum/tgui_window/window,
 		datum/src_object)
-	var/entry = "tgui: "
+	var/entry = "\[tgui\] " // |GOONSTATION-CHANGE| (tgui:->\[tgui\])
 	// Insert user info
 	if(!user)
-		entry += "<nobody>"
+		entry += "(nobody)" // |GOONSTATION-CHANGE| (<nobody>->(nobody))
 	else if(istype(user, /mob))
 		var/mob/mob = user
 		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
