@@ -1,4 +1,4 @@
-/proc/Artifact_Spawn(var/atom/T,var/forceartitype)
+/proc/Artifact_Spawn(var/atom/T,var/forceartiorigin)
 	if (!T)
 		return
 	if (!istype(T,/turf/) && !istype(T,/obj/))
@@ -22,7 +22,7 @@
 	for (var/datum/artifact/A in artifact_controls.artifact_types)
 		if (A.rarity_class != rarityroll)
 			continue
-		if (istext(forceartitype) && !(forceartitype in A.validtypes))
+		if (istext(forceartiorigin) && !(forceartiorigin in A.validtypes))
 			continue
 		selection_pool += A
 
@@ -33,8 +33,8 @@
 	if (!istype(picked,/datum/artifact/))
 		return
 
-	if (istext(forceartitype))
-		new picked.associated_object(T,forceartitype)
+	if (istext(forceartiorigin))
+		new picked.associated_object(T,forceartiorigin)
 	else
 		new picked.associated_object(T)
 
