@@ -605,7 +605,7 @@ datum/projectile
 	New()
 		. = ..()
 		if(!max_range)
-			max_range = dissipation_delay + round(power / dissipation_rate)
+			max_range = dissipation_delay + round(power / (dissipation_rate ? dissipation_rate : 1))
 
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
