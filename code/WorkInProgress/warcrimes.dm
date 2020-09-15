@@ -847,6 +847,3 @@ Urs' Hauntdog critter
 							"NSS Horizon",
 							"???")
 
-
-
-#undef JOHN_PICK
