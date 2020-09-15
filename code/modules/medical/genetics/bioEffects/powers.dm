@@ -1843,6 +1843,8 @@
 	lockedTries = 8
 	stability_loss = 20
 	cooldown = 0
+	var/last_moved = 0;
+	var/last_moved_world = 0;
 	var/active = 0
 	ability_path = /datum/targetable/geneticsAbility/chameleon
 
@@ -1864,10 +1866,16 @@
 		if(..()) return
 		if(isliving(owner))
 			var/mob/living/L = owner
-			if ((world.timeofday - owner.l_move_time) >= 30 && can_act(owner) && src.active)
-				L.UpdateOverlays(overlay_image, id)
-				L.invisibility = 1
+			if (last_moved == owner.l_move_time)
+				if (last_moved_world == 0)
+					last_moved_world = world.timeofday
+					return
+				if ((world.timeofday - last_moved_world) >= 30 && can_act(owner) && src.active)
+					L.UpdateOverlays(overlay_image, id)
+					L.invisibility = 1
 			else
+				last_moved = owner.l_move_time
+				last_moved_world = 0
 				L.UpdateOverlays(null, id)
 				L.invisibility = 0
 
