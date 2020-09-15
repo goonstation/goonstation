@@ -36,7 +36,7 @@
 
 	var/tmp/list/pdasay_autocomplete = list()
 
-	var/tmp/list/overlay_images = null
+	var/tmp/list/image/overlay_images = null
 	var/tmp/current_overlay = "idle"
 
 	var/bg_color = "#6F7961"

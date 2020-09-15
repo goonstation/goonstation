@@ -7,3 +7,6 @@
 
 //strip html from a string
 #define CLEAN(x) html_encode("[x]")
+
+#define JOHN_PICK(WHAT) pick_string("johnbill.txt", WHAT)
+#define SPACER_PICK(WHAT) pick_string("spacers.txt", WHAT)

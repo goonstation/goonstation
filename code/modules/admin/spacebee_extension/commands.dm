@@ -18,7 +18,7 @@
 	name = "locate"
 	server_targeting = COMMAND_TARGETING_ALL_SERVERS
 	help_message = "Locates a given ckey on all servers."
-	argument_types = list(/datum/command_argument/string="ckey")
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
 	execute(user, ckey)
 		var/mob/M = whois_ckey_to_mob_reference(ckey, exact=FALSE)
 		if(!M)
@@ -36,9 +36,8 @@
 	name = "addnote"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
 	help_message = "Adds a note to a given ckey."
-	argument_types = list(/datum/command_argument/string="ckey", /datum/command_argument/the_rest="note")
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="note")
 	execute(user, ckey, note)
-		ckey = ckey(ckey)
 		addPlayerNote(ckey, user + " (Discord)", note)
 
 		logTheThing("admin", "[user] (Discord)", null, "added a note for [ckey]: [note]")
@@ -190,4 +189,31 @@
 				admins += "[C.key] (as [C.fakekey])"
 			else
 				admins += C.key
-		system.reply(admins.Join(", "), user)
+		if(length(admins))
+			system.reply(admins.Join(", "), user)
+
+/datum/spacebee_extension_command/context
+	name = "context"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Gets last N log entries of a given ckey."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string="log_name", /datum/command_argument/number/integer="N")
+	execute(user, ckey, log_name, n)
+		if(log_name == "audit")
+			system.reply("No peeking in the audit log.", user)
+			return
+		if(!(log_name in logs))
+			system.reply("Invalid log name. Valid log names: [logs.Join(" ")]")
+			return
+		var/list/log = logs[log_name]
+		var/list/result = list()
+		for (var/i=length(log); i >= 1; i--)
+			if(n <= 0)
+				return
+			var/log_line = log[i]
+			if (findtext(log_line, ckey, 1, null))
+				result += log_line
+				n -= 1
+		if(!length(result))
+			system.reply("No results.")
+		else
+			system.reply(reverse_list(result).Join("\n"), user)
