@@ -397,12 +397,11 @@
 	name = "record - \"key_lime #1\""
 	record_name = "key lime #1"
 	song = "sound/radio_station/key_lime.ogg"
+	add_overlay = FALSE
 
 	New()
-		if (add_overlay)
-			src.overlays += "record_6"	//it should always be green because I'm so funny.
-		if (record_name)
-			src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
+		..()
+		src.overlays += "record_6"	//it should always be green because I'm so funny.
 
 /obj/item/record/spacebux/New()
 	..()
