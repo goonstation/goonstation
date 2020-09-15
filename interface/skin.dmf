@@ -921,7 +921,7 @@ window "pda2"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Personal Data Assistant"
 		statusbar = false
-		can-resize = false
+		can-resize = true
 	elem "grido"
 		type = GRID
 		pos = 0,0
@@ -940,8 +940,8 @@ window "pda2"
 		type = BROWSER
 		pos = 0,0
 		size = 408x424
-		anchor1 = none
-		anchor2 = none
+		anchor1 = 0,0
+		anchor2 = 100,100
 		background-color = #6f7961
 		saved-params = ""
 
