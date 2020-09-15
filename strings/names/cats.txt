@@ -2,7 +2,7 @@ names@=
 	Gary@,Mittens@,Mr. Jingles@,Rex@,Jasmine@,Litterbox
 	Reginald@,Poosycat@,Dr. Purrsworthy@,Lt. Scratches@,Michael Catson
 	Fluffy@,Mr. Purrfect@,Lord Furstooth@,Lion-O@,Johnathan@,Gary Catglitter
-	Chat de Gaulle@,Ratbag@,Mitts@,Mr. Fluffington@,Meowxie@,Fluffy The Cat
+	Chat de Gaulle@,Ratbag@,Mitts@,Mr. Fluffington@,Meowxie
 	Baron Fuzzykins, Defiler of Carpets@,Robert Meowgabe@,Chairman Meow@,Bacon
 	Prunella@,Poonella@,SEXCOPTER@,Fat, Lazy Piece of Shit@,Jones Mk. II@,Fish eater
 	Jones Mk. III@,Jones Mk. IV@,Jones Mk.V@,Mr. Meowgi@,Meoxie@,Zeta Jones@,Double Zeta Jones@,Nu Jones
