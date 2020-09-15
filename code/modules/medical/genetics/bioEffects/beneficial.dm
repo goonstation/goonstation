@@ -396,7 +396,7 @@ var/list/radio_brains = list()
 				HAH.customization_third_color_carry = HAH.customization_third_color
 				HAH.s_tone_carry = HAH.s_tone
 				var/hulk_skin = "#4CBB17" // a striking kelly green
-				if(prob(10)) // just the classics
+				if(prob(1)) // just the classics
 					var/gray_af = rand(60, 150) // as consistent as the classics too
 					hulk_skin = rgb(gray_af, gray_af, gray_af)
 				HAH.customization_first_color = "#4F7942" // a pleasant fern green
