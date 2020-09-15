@@ -130,7 +130,8 @@
 	icon_state = "greek-cyclops"
 	health = 70
 	wanderer = 0
-	aggressive = 1
+	aggres
+	sive = 1
 	defensive = 1
 	atkcarbon = 1
 	atksilicon = 1

@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-python@v2
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1
+        uses: hecrj/setup-rust-action@v1.3.3
 
       - name: Install Dependencies
         run: |
@@ -42,6 +42,7 @@ jobs:
           tools/ci/check_grep.sh
 
       - name: Run Linter
+        id: linter
         run: |
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
 
