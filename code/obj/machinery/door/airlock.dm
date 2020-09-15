@@ -38,16 +38,15 @@
 	else if (src.secondsElectrified!=0)
 		boutput(usr, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br><br>"))
 	else
-		if(alert("Are you sure? Electricity might harm a human!",,"Yes","No") == "Yes")
-			src.secondsElectrified = 30
-			logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
-			message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
-			SPAWN_DBG(1 SECOND)
-				while (src.secondsElectrified>0)
-					src.secondsElectrified-=1
-					if (src.secondsElectrified<0)
-						src.secondsElectrified = 0
-					sleep(1 SECOND)
+		src.secondsElectrified = 30
+		logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
+		message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
+		SPAWN_DBG(1 SECOND)
+			while (src.secondsElectrified>0)
+				src.secondsElectrified-=1
+				if (src.secondsElectrified<0)
+					src.secondsElectrified = 0
+				sleep(1 SECOND)
 
 /obj/machinery/door/airlock/proc/toggle_bolt(mob/user)
 	if (src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
@@ -72,10 +71,9 @@
 	else if (src.secondsElectrified!=0)
 		boutput(usr, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br><br>"))
 	else
-		if(alert("Are you sure? Electricity might harm a human!",,"Yes","No") == "Yes")
-			logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] indefinitely.")
-			message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] indefinitely.")
-			src.secondsElectrified = -1
+		logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] indefinitely.")
+		message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] indefinitely.")
+		src.secondsElectrified = -1
 
 /obj/machinery/door/airlock/proc/shock_restore(mob/user)
 	//un-electrify door
@@ -762,12 +760,10 @@ About the new airlock wires panel:
 				src.locked = 1
 				logTheThing("station",usr,null,"[usr] has bolted a door at [log_loc(src)].")
 				boutput(usr, "You hear a click from the bottom of the door.")
-				src.updateUsrDialog()
 				tgui_process.update_uis(src)
 			else
 				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
 					src.locked = 0
-					src.updateUsrDialog()
 				boutput(usr, "You hear a click from inside the door.")
 			update_icon()
 			SPAWN_DBG(1 DECI SECOND)
@@ -805,7 +801,7 @@ About the new airlock wires panel:
 						src.secondsElectrified-=1
 						if (src.secondsElectrified<0)
 							src.secondsElectrified = 0
-						//src.updateUsrDialog()
+						//
 						sleep(1 SECOND)
 		if(AIRLOCK_WIRE_OPEN_DOOR)
 			//tries to open the door without ID
@@ -875,20 +871,19 @@ About the new airlock wires panel:
 			src.loseMainPower()
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 50)
-			src.updateUsrDialog()
 		if (AIRLOCK_WIRE_DOOR_BOLTS)
 			//Cutting this wire also drops the door bolts, and mending it does not raise them. (This is what happens now, except there are a lot more wires going to door bolts at present)
 			if (src.locked!=1)
 				src.locked = 1
 				logTheThing("station",usr,null,"[usr] has bolted a door at [log_loc(src)].")
 			update_icon()
-			src.updateUsrDialog()
+
 		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
 			src.loseBackupPower()
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 50)
-			src.updateUsrDialog()
+
 		if (AIRLOCK_WIRE_AI_CONTROL)
 			//one wire for AI control. Cutting this prevents the AI from controlling the door unless it has hacked the door through the power connection (which takes about a minute). If both main and backup power are cut, as well as this wire, then the AI cannot operate or hack the door at all.
 			//aiControlDisabled: If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -898,7 +893,7 @@ About the new airlock wires panel:
 				src.aiControlDisabled = 2
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
-			src.updateUsrDialog()
+
 		if (AIRLOCK_WIRE_ELECTRIFY)
 			//Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted.
 			if (src.secondsElectrified != -1)
@@ -928,13 +923,13 @@ About the new airlock wires panel:
 				src.regainMainPower()
 				SPAWN_DBG(1 DECI SECOND)
 					src.shock(usr, 50)
-				src.updateUsrDialog()
+
 		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			if ((!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2)))
 				src.regainBackupPower()
 				SPAWN_DBG(1 DECI SECOND)
 					src.shock(usr, 50)
-				src.updateUsrDialog()
+
 		if (AIRLOCK_WIRE_AI_CONTROL)
 			//one wire for AI control. Cutting this prevents the AI from controlling the door unless it has hacked the door through the power connection (which takes about a minute). If both main and backup power are cut, as well as this wire, then the AI cannot operate or hack the door at all.
 			//aiControlDisabled: If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -942,7 +937,7 @@ About the new airlock wires panel:
 				src.aiControlDisabled = 0
 			else if (src.aiControlDisabled == 2)
 				src.aiControlDisabled = -1
-			src.updateUsrDialog()
+
 		if (AIRLOCK_WIRE_ELECTRIFY)
 			if (src.secondsElectrified == -1)
 				src.secondsElectrified = 0
@@ -1186,6 +1181,7 @@ About the new airlock wires panel:
 			//TODO: Make this take a minute
 			boutput(user, "Airlock AI control has been blocked. Beginning fault-detection.")
 			hackMessage = "Fault Detection..."
+			tgui_process.update_uis(src)
 			sleep(5 SECONDS)
 			if (src.canAIControl())
 				boutput(user, "Alert cancelled. Airlock control has been restored without our assistance.")
@@ -1197,9 +1193,11 @@ About the new airlock wires panel:
 				return
 			boutput(user, "Fault confirmed: airlock control wire disabled or cut.")
 			hackMessage = "Fault Confirmed..."
+			tgui_process.update_uis(src)
 			sleep(2 SECONDS)
 			boutput(user, "Attempting to hack into airlock. This may take some time.")
 			hackMessage = "Hacking into airlock..."
+			tgui_process.update_uis(src)
 			sleep(20 SECONDS)
 			if (src.canAIControl())
 				boutput(user, "Alert cancelled. Airlock control has been restored without our assistance.")
@@ -1211,6 +1209,7 @@ About the new airlock wires panel:
 				return
 			boutput(user, "Upload access confirmed. Loading control program into airlock software.")
 			hackMessage = "Uploading..."
+			tgui_process.update_uis(src)
 			sleep(17 SECONDS)
 			if (src.canAIControl())
 				boutput(user, "Alert cancelled. Airlock control has been restored without our assistance.")
@@ -1222,13 +1221,16 @@ About the new airlock wires panel:
 				return
 			boutput(user, "Transfer complete. Forcing airlock to execute program.")
 			hackMessage = "Transfer complete"
+			tgui_process.update_uis(src)
 			sleep(5 SECONDS)
 			//disable blocked control
 			src.aiControlDisabled = 2
 			boutput(user, "Receiving control information from airlock.")
 			hackMessage = "Receiving Information"
+			tgui_process.update_uis(src)
 			sleep(1 SECOND)
 			hackMessage = ""
+			tgui_process.update_uis(src)
 			//bring up airlock dialog
 			src.aiHacking = 0
 
@@ -1836,6 +1838,7 @@ obj/machinery/door/airlock
 				if(!secondsMainPowerLost)
 					loseMainPower()
 					update_icon()
+					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Main power is already offline.</span>")
 				. = TRUE
@@ -1843,6 +1846,7 @@ obj/machinery/door/airlock
 				if(!secondsBackupPowerLost)
 					loseBackupPower()
 					update_icon()
+					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Backup power is already offline.</span>")
 				. = TRUE

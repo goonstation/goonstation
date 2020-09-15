@@ -37,8 +37,8 @@ export const Airlock = (props, context) => {
     panelOpen,
     canAiControl,
     hackMessage,
+    canAiHack,
   } = data;
-  const canAiHack = true;
 
   const currentState = uiState(data);
 
@@ -92,7 +92,7 @@ export const Airlock = (props, context) => {
               <AccessAndDoorControl />
               <Electrify />
             </Section>
-            {canAiHack && (
+            {!!canAiHack && (
               <Hack />
             )}
           </Fragment>
@@ -284,26 +284,30 @@ const Electrify = (props, context) => {
               pb={0}
               pt={0.5}>
               {(!shockTimeleft &&(
-                <Button
+                <Button.Confirm
                   p={1}
+                  width={9}
+                  align="center"
                   color="average"
+                  content="Temporary"
+                  confirmContent="Are you sure?"
                   icon="bolt"
                   disabled={(!wires.shock) || shockTimeleft === -1
                 || (mainTimeleft && backupTimeleft)}
-                  onClick={(() => act("shockTemp"))}>
-                  Temporary
-                </Button>
+                  onClick={(() => act("shockTemp"))} />
               ))}
-              <Button
+              <Button.Confirm
                 p={1}
+                width={9}
+                align="center"
                 color={shockTimeleft ? "good" : "bad"}
                 icon="bolt"
+                confirmContent="Are you sure?"
+                content={shockTimeleft ? "Restore" : "Permanent"}
                 disabled={(!wires.shock)
                 || (mainTimeleft && backupTimeleft)}
                 onClick={shockTimeleft ? (() => act("shockRestore"))
-                  : (() => act("shockPerm"))}>
-                {shockTimeleft ? "Restore" : "Permanent"}
-              </Button>
+                  : (() => act("shockPerm"))} />
             </Box>
           </LabeledList.Item>
         </LabeledList>
