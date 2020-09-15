@@ -13,4 +13,4 @@ names@=
 	Arthur Cat Clarke@,Prick@,Pantalaimon@,Purrsula K. Le Guin@,Douglas Pat 'Ems
 	Gato@,Zebra@,Possum@,Myst@,Too@,P@,Z@,Catopus
 	Jennyanydots@,Growltiger@,Rum Tum Tugger@,Jellicle Cat@,Mungojerrie@,Rumpleteazer@,Old Deuteronomy@,The Great Rumpus Cat
-	Mr. Mistoffelees@,Macavity@,Gus The Theatre Cat@,Asaparagus@,Bustopher Jones@,Skimbleshanks@,Cat Morgan
+	Mr. Mistoffelees@,Macavity@,Gus The Theatre Cat@,Asparagus@,Bustopher Jones@,Skimbleshanks@,Cat Morgan
