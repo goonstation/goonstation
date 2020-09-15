@@ -282,8 +282,10 @@
 
 //lily's office
 obj/item/gun/reagent/syringe/lovefilled
+	ammo_reagents = list("love")
 	New()
 		. = ..()
+		src.reagents?.maximum_volume = 750
 		src.reagents.add_reagent("love", src.reagents.maximum_volume)
 
 /obj/item/storage/desk_drawer/lily/
