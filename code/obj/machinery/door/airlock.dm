@@ -180,6 +180,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/safety = 1
 	var/HTML = null
 	var/has_panel = 1
+	var/hackMessage = ""
 
 	var/no_access = 0
 
@@ -1184,6 +1185,7 @@ About the new airlock wires panel:
 		SPAWN_DBG(2 SECONDS)
 			//TODO: Make this take a minute
 			boutput(user, "Airlock AI control has been blocked. Beginning fault-detection.")
+			hackMessage = "Fault Detection..."
 			sleep(5 SECONDS)
 			if (src.canAIControl())
 				boutput(user, "Alert cancelled. Airlock control has been restored without our assistance.")
@@ -1194,8 +1196,10 @@ About the new airlock wires panel:
 				src.aiHacking=0
 				return
 			boutput(user, "Fault confirmed: airlock control wire disabled or cut.")
+			hackMessage = "Fault Confirmed..."
 			sleep(2 SECONDS)
 			boutput(user, "Attempting to hack into airlock. This may take some time.")
+			hackMessage = "Hacking into airlock..."
 			sleep(20 SECONDS)
 			if (src.canAIControl())
 				boutput(user, "Alert cancelled. Airlock control has been restored without our assistance.")
@@ -1206,6 +1210,7 @@ About the new airlock wires panel:
 				src.aiHacking=0
 				return
 			boutput(user, "Upload access confirmed. Loading control program into airlock software.")
+			hackMessage = "Uploading..."
 			sleep(17 SECONDS)
 			if (src.canAIControl())
 				boutput(user, "Alert cancelled. Airlock control has been restored without our assistance.")
@@ -1216,11 +1221,14 @@ About the new airlock wires panel:
 				src.aiHacking=0
 				return
 			boutput(user, "Transfer complete. Forcing airlock to execute program.")
+			hackMessage = "Transfer complete"
 			sleep(5 SECONDS)
 			//disable blocked control
 			src.aiControlDisabled = 2
 			boutput(user, "Receiving control information from airlock.")
+			hackMessage = "Receiving Information"
 			sleep(1 SECOND)
+			hackMessage = ""
 			//bring up airlock dialog
 			src.aiHacking = 0
 
@@ -1781,6 +1789,7 @@ obj/machinery/door/airlock
 	data["canAiControl"] = canAIControl()
 	data["aiHacking"] = src.aiHacking
 	data["canAiHack"] = canAIHack()
+	data["hackMessage"] = hackMessage
 	var/list/wire = list()
 	wire["main_1"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)
 	wire["main_2"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)
@@ -1815,6 +1824,12 @@ obj/machinery/door/airlock
 /obj/machinery/door/airlock/ui_act(action, params)
 	if(..())
 		return
+	if(src.arePowerSystemsOn() && (ishivebot(usr) || isrobot(usr) || isAI(usr)))
+		switch(action)
+			if("hackAirlock")
+				if (src.canAIHack() && !src.aiHacking)
+					src.hack(usr)
+					. = TRUE
 	if(src.arePowerSystemsOn() && canAIControl() && (ishivebot(usr) || isrobot(usr) || isAI(usr)))
 		switch(action)
 			if("disruptMain")
@@ -1848,10 +1863,6 @@ obj/machinery/door/airlock
 				. = TRUE
 			if("openClose")
 				user_toggle_open(usr)
-				. = TRUE
-			if("hackAirlock")
-				if (src.canAIHack() && !src.aiHacking)
-					src.hack(usr)
 				. = TRUE
 	if(src.p_open && get_dist(src, usr) <= 1)
 		switch(action)

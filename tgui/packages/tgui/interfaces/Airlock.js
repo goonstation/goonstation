@@ -36,8 +36,9 @@ export const Airlock = (props, context) => {
     userStates,
     panelOpen,
     canAiControl,
-    canAIHack,
+    hackMessage,
   } = data;
+  const canAiHack = true;
 
   const currentState = uiState(data);
 
@@ -49,9 +50,7 @@ export const Airlock = (props, context) => {
         ? 1
         : currentState["accessPanel"]
           ? 2
-          : (userStates.isCarbon)
-            ? 2
-            : 1);
+          : 1);
 
   return (
     <Window
@@ -86,14 +85,14 @@ export const Airlock = (props, context) => {
                 <Modal
                   textAlign="center"
                   fontSize="24px">
-                  {"Airlock Controls Disabled"}
+                  {hackMessage ? hackMessage : "Airlock Controls Disabled"}
                 </Modal>
               )}
               <PowerStatus />
               <AccessAndDoorControl />
               <Electrify />
             </Section>
-            {canAIHack && (
+            {canAiHack && (
               <Hack />
             )}
           </Fragment>
@@ -323,8 +322,6 @@ const Hack = (props, context) => {
   return (
     <Section m={-1} py={0.5}>
       <Box
-        pb={0}
-        pt={0.5}
         align="center">
         <Button
           bold
@@ -335,7 +332,7 @@ const Hack = (props, context) => {
           width={20}
           py={0}
           onClick={() => act("hackAirlock")}>
-          {aiHacking ? "HACKING..." : "HACK"}
+          {aiHacking ? "Hacking..." : "HACK"}
         </Button>
       </Box>
     </Section>
