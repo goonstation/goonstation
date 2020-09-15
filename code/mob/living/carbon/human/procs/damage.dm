@@ -322,11 +322,11 @@
 	if(!power)
 		switch(severity)
 			if(1)
-				power = 9
+				power = 9		//gib
 			if(2)
-				power = 4
+				power = 5		//100 damage total
 			if(3)
-				power = 2.5
+				power = 3	//50 damage total
 
 	var/exploprot = src.get_explosion_resistance()
 	var/reduction = 0
@@ -348,7 +348,7 @@
 	power *= clamp(1-exploprot, 0, 1)
 	power -= reduction
 	var/b_loss = clamp(power*15, 0, 120)
-	var/f_loss = clamp((power-3)*10, 0, 120)
+	var/f_loss = clamp((power-2.5)*10, 0, 120)
 
 	var/delib_chance = b_loss - 20
 	if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))

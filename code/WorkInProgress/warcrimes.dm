@@ -66,7 +66,7 @@ var/fartcount = 0
 
 
 
-#define JOHN_PICK(WHAT) pick_string("johnbill.txt", WHAT)
+
 
 
 
@@ -847,6 +847,3 @@ Urs' Hauntdog critter
 							"NSS Horizon",
 							"???")
 
-
-
-#undef JOHN_PICK

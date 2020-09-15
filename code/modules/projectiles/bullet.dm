@@ -414,7 +414,7 @@ toxic - poisons
 /datum/projectile/bullet/aex
 	name = "explosive slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	power = 35 // the damage should be more from the explosion
+	power = 25 // the damage should be more from the explosion
 	ks_ratio = 1.0
 	dissipation_delay = 6
 	dissipation_rate = 10
@@ -426,7 +426,10 @@ toxic - poisons
 	casing = /obj/item/casing/shotgun_orange
 
 	on_hit(atom/hit)
-		explosion_new(null, get_turf(hit), 1)
+		explosion_new(null, get_turf(hit), 2)
+
+	on_max_range_die(obj/projectile/O)
+		explosion_new(null, get_turf(O), 2)
 
 	lawbringer
 		name = "lawbringer"
@@ -435,7 +438,10 @@ toxic - poisons
 		cost = 150
 
 		on_hit(atom/hit)
-			explosion_new(null, get_turf(hit), 3)
+			explosion_new(null, get_turf(hit), 6)
+
+		on_max_range_die(obj/projectile/O)
+			explosion_new(null, get_turf(O), 6)
 
 /datum/projectile/bullet/abg
 	name = "rubber slug"
