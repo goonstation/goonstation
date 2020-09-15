@@ -199,13 +199,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/speed_max = 5
 	var/speed_min = 60
 	var/spread_angle_variance = 5
-	var/dissipation_variance = 1
+	var/dissipation_variance = 32
 
 	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
 		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
 		FC.rotateDirection(rand(0-spread_angle_variance,spread_angle_variance))
 		FC.internal_speed = rand(speed_min,speed_max)
-		FC.dissipation_ticker = rand(0,dissipation_variance)
+		FC.travelled = rand(0,dissipation_variance)
 		FC.launch()
 
 /datum/projectile/special/spreader/buckshot_burst/nails
