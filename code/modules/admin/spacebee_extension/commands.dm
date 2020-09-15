@@ -190,4 +190,5 @@
 				admins += "[C.key] (as [C.fakekey])"
 			else
 				admins += C.key
-		system.reply(admins.Join(", "), user)
+		if(length(admins))
+			system.reply(admins.Join(", "), user)
