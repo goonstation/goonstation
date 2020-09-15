@@ -206,13 +206,11 @@
 			return
 		var/list/log = logs[log_name]
 		var/list/result = list()
-		for (var/i=length(log); i >= 1; i--)
-			if(n <= 0)
-				return
+		for (var/i=length(log); i >= 1 && n > 0; i--)
 			var/log_line = log[i]
 			if (findtext(log_line, ckey, 1, null))
 				result += log_line
-				n -= 1
+				n--
 		if(!length(result))
 			system.reply("No results.")
 		else
