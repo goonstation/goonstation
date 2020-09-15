@@ -154,10 +154,9 @@ var/global/derelict_mode = 0
 			cinematic.play("sadbuddy")
 			sleep(1 SECOND)
 			boutput(world, "<tt>BUG: CPU0 on fire!</tt>")
-
-			sleep(15 SECONDS)
-			logTheThing("diary", null, null, "Rebooting due to completion of solarium quest.", "game")
-			Reboot_server()
+			logTheThing("diary", null, null, "The server would have restarted, if I hadn't removed the line of code that does that. Instead, we play through.", "game")
+			// sleep(15 SECONDS)
+			// Reboot_server()
 
 proc/voidify_world()
 	var/turf/unsimulated/wall/the_ss13_screen = locate("the_ss13_screen")
