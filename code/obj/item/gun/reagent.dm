@@ -24,7 +24,7 @@
 	is_open_container()
 		return 1
 
-	alter_projectile(var/obj/projectile/P)
+	alter_projectile(source, var/obj/projectile/P)
 		if(src.projectile_reagents && P && P.proj_data)
 			if (!P.reagents)
 				P.reagents = new /datum/reagents(P.proj_data.cost)
