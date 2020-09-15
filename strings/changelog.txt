@@ -1,7 +1,82 @@
 
+(t)mon sep 14 20
+(u)Zamujasa
+(+)PDAs have an option to change the backlight color. You no longer have to use that wonky olive green color.
+(+)PDA window is now resizable and respects the "Popup Font Size" option in your preferences.
+(u)kyle
+(*)Rounds no longer end when the sol nerds trigger a disaster round. Play through to the end of the round before the disaster starts.
+(+)Undo last multitool cooldown change. Now it just checks if it is over a blob tile or a med kudzu tile and doesn't make a spark.
+(t)sun sep 13 20
+(u)kyle
+(+)Multitool pulse spark special attack now has a 3 second cooldown. Should make it slightly less oppressive for blobs and kudzu.
+(u)Comradef191
+(p)2166
+(e)🗺🎨|mapping, sprites
+(*)Overhauled Mushroom Stations Armoury, AI Satellite, Kitchen & Disposals system.
+(+)Mushroom Station now has a large Prototype Engine to the North-East!
+(+)Mushroom Station now has its Second Reset Board in the Computer Core, rather then Tech Storage.
+(u)RichardGere
+(p)2003
+(e)🆕📄|feature, tgui
+(+)Door hacking UI has been converted to TGUI.
+(u)warc
+(*)horizon fixes: you can sell small items thu the ejection chute now - also i guess i forgot to put a still in the bar?????????
+(t)sat sep 12 20
+(u)Medoublej
+(p)2153
+(e)⚖🐛|balance, bug
+(+)Vampire's chiropteran screech MK2 now silences radios properly and no longer emags robots.
+(u)Luxizzle
+(p)2146
+(e)|
+(+)Jailbird no longer overwrites personal security note.
+(+)Jailbird now informs you of what crimes you've committed.
+(u)monochromatism
+(p)2108
+(e)🆕|feature
+(+)Added the "atheist" trait. Disables faith healing and has interesting flavor text about prayer, but might have an upside...
+(u)Flourish
+(p)2110
+(e)🆕|feature
+(*)If you flip with a grab on help intent, your grabee will flip with you. And if they also have a grab and are on help intent, their grabee will also flip. And so on.
+(u)eckff
+(p)2131
+(e)🎨|sprites
+(+)Space tiles now more darker than before! Like real space!
+(u)Enfaeutchie
+(p)2150
+(e)⚖|balance
+(*)On the RP servers, changelings have had their neurotoxin sting replaced with a non-lethal capulettium sting which will make their victims appear to drop dead.
+(t)fri sep 11 20
+(u)makkipakki
+(p)2122
+(e)🆕|feature
+(*)Added the HoS' Cape to their locker on all maps! Comes with a rebalancing to make it a sidegrade to the HoS' Jacket.
+(+)HoS no longer spawns with the Cape on submarine maps.
+(+)Changes to both the HoS Jacket and Cape names and descriptions.
+(u)pali
+(+)The singularity can no longer be destroyed by weak explosions
+(+)Atlas stuff:writing supplies for medbay, artlab and botany<br>drains in chemistry<br>compact sleeper in medbay (between the two cryocells)<br>thinktape in artlab<br>guaranteed labeller in artlab<br>additional thinktape in tech storage<br>audiolog + tapes in science<br>fixed bridge shield controls not working at all<br>Ol' Harner in robotics<br>purge valve + pumps for the generator<br>mechanics can now enter tech storage<br>APC powercell charger added to QM
+(u)ThePotato97
+(p)2068
+(e)|
+(+)Port-a-Gene can now be entered by dragging and can also redeem filled injectors!
+(u)UrsulaMejor
+(e)🐛|bug
+(+)You can now change your preferred maps to maps that aren't currently pickable
 (t)thu sep 10 20
+(u)Gannets
+(p)2129
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added the Nuclear Bomb Teleporter Remote, a single-use item that allows nuke ops to teleport the bomb to their location.
+(*)Use it to either skip the bomb ferrying portion of the round or in an emergency to retrieve a stolen bomb.
+(u)ThePotato97
+(p)2143
+(e)|
+(+)Centcomm's power announcement is no longer hardcoded to the TEG and will work on any map.
 (u)pali
 (+)Crayons now even better. They show their selected letter and let you queue up a text of up to 100 characters!
+(+)Two more personal lockers and an experimental artifact flusher added to Atlas.
 (u)zjdtmkhzt
 (p)2136
 (e)|

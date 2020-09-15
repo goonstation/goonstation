@@ -45550,14 +45550,18 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot,
+/turf/simulated/floor/bot{
+	dir = NORTH
+	},
 /area/shuttle/sea_elevator/upper)
 "cgh" = (
 /obj/grille/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot,
+/turf/simulated/floor/bot{
+	dir = WEST
+	},
 /area/shuttle/sea_elevator/upper)
 "cgi" = (
 /obj/machinery/light/incandescent/greenish,
@@ -45577,7 +45581,9 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot,
+/turf/simulated/floor/bot{
+	dir = EAST
+	},
 /area/shuttle/sea_elevator/upper)
 "cgl" = (
 /turf/space/fluid/warp_z5,

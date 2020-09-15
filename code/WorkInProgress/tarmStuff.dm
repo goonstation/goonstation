@@ -240,3 +240,91 @@
 		src.rarity = initial(src.rarity)
 	src.tooltip_rebuild = 1
 	src.UpdateName()
+
+///Office stuff
+//Suggestion box
+/obj/suggestion_box
+	name = "suggestion box"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "voting_box"
+	density = 1
+	flags = FPRINT
+	anchored = 1.0
+	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
+	var/taken_suggestion = 0
+	var/list/turf/floors = null
+
+	New()
+		. = ..()
+		floors = list()
+		for(var/turf/T in orange(1, src))
+			if(!T.density)
+				floors += T
+		if(!floors.len)	//fall back on own turf
+			floors += get_turf(src)
+
+	attackby(obj/item/I, mob/user)
+		if(istype(I, /obj/item/paper))
+			var/obj/item/paper/P = I
+			if(P.info && !taken_suggestion)
+				message_admins("[user ? user : "Unknown"] has made a suggestion in [src]:<br>[P.name]<br><br>[copytext(P.info,1,MAX_MESSAGE_LEN)]")
+				var/ircmsg[] = new()
+				ircmsg["msg"] = "[user ? user : "Unknown"] has made a suggestion in [src]:\n**[P.name]**\n[strip_html_tags(P.info)]"
+				ircbot.export("admin", ircmsg)
+				taken_suggestion = 1
+			user.u_equip(P)
+			qdel(P)
+			playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
+			var/turf/T = pick(floors)
+			if(T)
+				new /obj/decal/cleanable/paper(T)
+		return ..()
+
+//lily's office
+obj/item/gun/reagent/syringe/lovefilled
+	ammo_reagents = list("love")
+	New()
+		. = ..()
+		src.reagents?.maximum_volume = 750
+		src.reagents.add_reagent("love", src.reagents.maximum_volume)
+
+/obj/item/storage/desk_drawer/lily/
+	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
+	/obj/item/reagent_containers/food/snacks/cake,\
+	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
+	/obj/item/reagent_containers/food/snacks/cake/cream,\
+	/obj/item/reagent_containers/food/snacks/cake/cream,\
+	/obj/item/reagent_containers/food/snacks/cake/chocolate,\
+	/obj/item/reagent_containers/food/snacks/cake,\
+)
+
+/obj/table/wood/auto/desk/lily
+	New()
+		..()
+		var/obj/item/storage/desk_drawer/lily/L = new(src)
+		src.desk_drawer = L
+
+/obj/machinery/door/unpowered/wood/lily
+
+/obj/machinery/door/unpowered/wood/lily/open()
+	if(src.locked) return
+	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1)
+	. = ..()
+
+/obj/machinery/door/unpowered/wood/lily/close()
+	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1)
+	. = ..()
+
+
+/obj/trigger/lovefill
+	name = "A lovely spot"
+	desc = "For lovely people"
+	var/list/loved = list()
+
+	on_trigger(var/atom/movable/triggerer)
+		var/mob/living/M = triggerer
+		if(!istype(M) || (M in loved))
+			return
+		M.reagents?.add_reagent("love", 20)
+		boutput(M, "<span class='notice'>You feel loved</span>")
+		loved += M

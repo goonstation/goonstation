@@ -776,6 +776,18 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
+/obj/decal/cleanable/writing/maptext_dummy
+	icon_state = ""
+
+	setup(var/L,var/list/viral_list)
+		. = ..()
+		icon_state = initial(icon_state)
+		maptext_width = 16
+
+	pooled()
+		. = ..()
+		src.maptext = ""
+
 /obj/decal/cleanable/writing/spooky
 	icon = 'icons/obj/writing_animated_blood.dmi'
 	color = null

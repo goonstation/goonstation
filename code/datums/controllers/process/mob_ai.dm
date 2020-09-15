@@ -32,7 +32,7 @@ datum/controller/process/mob_ai
 					scheck()
 
 			var/mob/living/L = M
-			if((isliving(M) && L.is_npc || !isliving(M)))
+			if((isliving(M) && (L.is_npc || L.ai_active) || !isliving(M)))
 				if(istype(X, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = X
 					if(H.uses_mobai && H.ai)

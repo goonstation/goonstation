@@ -40,6 +40,10 @@ $bg-map: colors.$bg-map !default;
     background-color: lighten($color, 15%);
     color: $text-color;
   }
+
+  &:active {
+    background-color: lighten($color, 60%);
+  }
 }
 
 .Button {

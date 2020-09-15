@@ -1545,7 +1545,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			my_datum.implant_master = user
 		return 1
 
-	alter_projectile(var/obj/projectile/P)
+	alter_projectile(source, var/obj/projectile/P)
 		if (!P || !my_implant)
 			return ..()
 		my_implant.set_loc(P)

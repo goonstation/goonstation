@@ -167,15 +167,6 @@
 		..()
 		src.access = get_all_accesses()
 
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-#if ASS_JAM
-		if(prob(5))
-			M.unequip_all()
-			M.tommyize_reshape()
-#endif
 
 	derelict
 		//name = "NT-SO Commander"
@@ -234,13 +225,7 @@
 	name = "Head of Security"
 	limit = 1
 	wages = 350
-#if ASS_JAM
-	requires_whitelist = 0
-	high_priority_job = 1
-	change_name_on_spawn = 1
-#else
 	requires_whitelist = 1
-#endif
 	recieves_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
@@ -253,7 +238,7 @@
 
 #ifdef SUBMARINE_MAP
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold/fancy_alt
-	slot_suit = /obj/item/clothing/suit/armor/hoscape
+	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/hos
 	slot_poc1 = /obj/item/requisition_token/security
@@ -2131,6 +2116,17 @@
 		bad_traitorify(M, "Syndicate Agent")
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
+/datum/job/special/juicer_specialist
+	linkcolor = "#cc8899"
+	name = "Juicer Security"
+	limit = 0
+	allow_traitors = 0
+	allow_spy_theft = 0
+	cant_spawn_as_rev = 1
+
+	slot_back = /obj/item/gun/energy/blaster_cannon
+	slot_belt = /obj/item/storage/fanny
+	//more
 
 /datum/job/special/ntso_specialist
 	linkcolor = "#3348ff"

@@ -393,6 +393,16 @@
 	add_overlay = 0
 	icon_state = "record_red"
 
+/obj/item/record/random/key_lime
+	name = "record - \"key_lime #1\""
+	record_name = "key lime #1"
+	song = "sound/radio_station/key_lime.ogg"
+	add_overlay = FALSE
+
+	New()
+		..()
+		src.overlays += "record_6"	//it should always be green because I'm so funny.
+
 /obj/item/record/spacebux/New()
 	..()
 	var/pick_song = rand(1,3)
