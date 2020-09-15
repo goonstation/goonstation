@@ -999,6 +999,25 @@ nicknames@=
 	"Soup Bowl" 
 	"Soup Spoon"
 	"Aw Shucks"
+	"Apple Pie"
+	"Trickshot"
+	"Razzle Dazzle"
+	"Jazz Hands"
+	"Bread Bowl"
+	"Salad Bowl"
+	"Rotunda"
+	"Minigolf"
+	"Hockeypuck"
+	"B-Ball"
+	"Meteor"
+	"Igneous"
+	"Lemonade"
+	"The Smelter"
+	"Reactor-Grade"
+	"Weapons-Grade"
+	"Full-Auto"
+	"Scrimshaw"
+	"Rum Raisin"
 		
 pejoratives@=
 	Loathesome
@@ -1026,6 +1045,7 @@ pejoratives@=
 	Over-Rated
 	Moist
 	Stale
+	Lonesome
 	Hollerin'
 	Ornery
 	Ill-Tempered
@@ -1054,6 +1074,7 @@ superlatives@=
 	Cute
 	Top-Notch
 	Primo
+	Huge
 
 stuff@=
 	Mountain
