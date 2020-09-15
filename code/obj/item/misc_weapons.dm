@@ -302,11 +302,15 @@
 			else
 				src.icon_state = "[state_name]-open"
 			return
-		else
+		else if (src.open && src.bladecolor)
 			user.visible_message("<b>[user]</b> closes and screws [src] shut.")
 			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
 			src.open = 0
 			src.icon_state = "[state_name]0"
+		else
+			boutput(user, "<span class='alert'>The screw spins freely in place without a blade to screw into.</span>")
+			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			return
 
 	if (istype(W, /obj/item/device/light/glowstick) && !loaded_glowstick && open)
 		if (!W:on)
