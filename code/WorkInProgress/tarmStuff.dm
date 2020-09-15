@@ -279,3 +279,50 @@
 			if(T)
 				new /obj/decal/cleanable/paper(T)
 		return ..()
+
+//lily's office
+obj/item/gun/reagent/syringe/lovefilled
+	New()
+		. = ..()
+		src.reagents.add_reagent("love", src.reagents.maximum_volume)
+
+/obj/item/storage/desk_drawer/lily/
+	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
+	/obj/item/reagent_containers/food/snacks/cake,\
+	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
+	/obj/item/reagent_containers/food/snacks/cake/cream,\
+	/obj/item/reagent_containers/food/snacks/cake/cream,\
+	/obj/item/reagent_containers/food/snacks/cake/chocolate,\
+	/obj/item/reagent_containers/food/snacks/cake,\
+)
+
+/obj/table/wood/auto/desk/lily
+	New()
+		..()
+		var/obj/item/storage/desk_drawer/lily/L = new(src)
+		src.desk_drawer = L
+
+/obj/machinery/door/unpowered/wood/lily
+
+/obj/machinery/door/unpowered/wood/lily/open()
+	if(src.locked) return
+	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1)
+	. = ..()
+
+/obj/machinery/door/unpowered/wood/lily/close()
+	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1)
+	. = ..()
+
+
+/obj/trigger/lovefill
+	name = "A lovely spot"
+	desc = "For lovely people"
+	var/list/loved = list()
+
+	on_trigger(var/atom/movable/triggerer)
+		var/mob/living/M = triggerer
+		if(!istype(M) || (M in loved))
+			return
+		M.reagents?.add_reagent("love", 20)
+		boutput(M, "<span class='notice'>You feel loved</span>")
+		loved += M
