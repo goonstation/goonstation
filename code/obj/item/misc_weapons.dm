@@ -1194,7 +1194,7 @@
 			return ..()
 
 	attack_self(mob/living/carbon/human/user as mob)
-		if(user.r_hand == src || user.l_hand == src || user.belt == src)
+		if(user.r_hand == src || user.l_hand == src)
 			draw_sword(user)
 		else
 			return ..()
