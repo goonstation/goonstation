@@ -258,7 +258,7 @@
 /obj/item/record/New()
 	..()
 	if (add_overlay)
-		src.overlays += "record_[rand(1,10)]"
+		src.UpdateOverlays(new /image(src.icon, "record_[rand(1,10)]"), "recordlabel")
 	if (record_name)
 		src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
 
@@ -401,7 +401,7 @@
 
 	New()
 		..()
-		src.overlays += "record_6"	//it should always be green because I'm so funny.
+		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
 
 /obj/item/record/spacebux/New()
 	..()
