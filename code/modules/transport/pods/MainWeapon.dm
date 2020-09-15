@@ -168,6 +168,8 @@
 	name = "SPK-12 Ballistic System"
 	desc = "A one of it's kind kinetic podweapon, designed to fire shotgun rounds similar to those in a SPES-12."
 	weapon_score = 1.25
+	uses_ammunition = 1
+	remaining_ammunition = 18
 	current_projectile = new/datum/projectile/bullet/a12
 	appearanceString = "pod_weapon_gun_off"
 	firerate = 10
