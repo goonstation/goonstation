@@ -154,7 +154,7 @@
 				if (Hs.frequency == frequency)
 					listeners += H
 					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
-					if(H.client && !checktraitor(H) && (H.client.preferences.be_traitor || src.override_player_pref) && !(H.mind.assigned_role in list("Head of Security", "Security Officer")))
+					if(H.client && !checktraitor(H) && (H.client.preferences.be_traitor || src.override_player_pref) && !(H.traitHolder.hasTrait("training_security")))
 						candidates += H
 				break
 		for (var/mob/living/silicon/robot/R in mobs)

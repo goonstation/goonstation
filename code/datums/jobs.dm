@@ -2163,6 +2163,7 @@
 		..()
 		if (!M)
 			return
+		M.traitHolder.addTrait("training_security")
 		M.show_text("<b>Hostile assault force incoming! Defend the crew from the attacking Syndicate Special Operatives!</b>", "blue")
 
 
@@ -2205,6 +2206,7 @@
 		..()
 		if (!M)
 			return
+		M.traitHolder.addTrait("training_security")
 		M.show_text("<b>Defend the crew from all current threats!</b>", "blue")
 
 
