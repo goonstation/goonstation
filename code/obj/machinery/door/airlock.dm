@@ -31,12 +31,15 @@
 
 /obj/machinery/door/airlock/proc/shock_temp(mob/user)
 	//electrify door for 30 seconds
+	if(!src.arePowerSystemsOn())
+		boutput(user, "The door has no power - you can't electrify it.")
+		return
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-		boutput(usr, text("The electrification wire has been cut.<br><br>"))
+		boutput(usr, text("<span class='alert'>The electrification wire has been cut.<br><br></span>"))
 	else if (src.secondsElectrified==-1)
-		boutput(usr, text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br><br>"))
+		boutput(usr, text("<span class='alert'>The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br><br></span>"))
 	else if (src.secondsElectrified!=0)
-		boutput(usr, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br><br>"))
+		boutput(usr, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
 	else
 		src.secondsElectrified = 30
 		logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
@@ -50,26 +53,29 @@
 
 /obj/machinery/door/airlock/proc/toggle_bolt(mob/user)
 	if (src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-		boutput(usr, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
+		boutput(usr, "<span class='alert'>You can't drop the door bolts - The door bolt dropping wire has been cut.</span>")
+		return
+	if(!src.arePowerSystemsOn())
+		boutput(user, "<span class='alert'>The door has no power - you can't raise/lower the door bolts.</span>")
 		return
 	if(src.locked)
-		if(!src.arePowerSystemsOn())
-			boutput(user, "The door has no power - you can't raise the door bolts.")
-		else
-			src.locked = 0
-			update_icon()
+		src.locked = 0
+		update_icon()
 	else
+		logTheThing("station",user,null,"[user] has bolted a door at [log_loc(src)].")
 		src.locked = 1
 		update_icon()
 
 /obj/machinery/door/airlock/proc/shock_perm(mob/user)
+	if(!src.arePowerSystemsOn())
+		boutput(user, "<span class='alert'>The door has no power - you can't electrify it.</span>")
 	//electrify door indefinitely
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-		boutput(usr, text("The electrification wire has been cut.<br><br>"))
+		boutput(usr, text("<span class='alert'>The electrification wire has been cut.<br><br></span>"))
 	else if (src.secondsElectrified==-1)
-		boutput(usr, text("The door is already indefinitely electrified.<br><br>"))
+		boutput(usr, text("<span class='alert'>The door is already indefinitely electrified.<br><br></span>"))
 	else if (src.secondsElectrified!=0)
-		boutput(usr, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br><br>"))
+		boutput(usr, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
 	else
 		logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] indefinitely.")
 		message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] indefinitely.")
@@ -77,8 +83,10 @@
 
 /obj/machinery/door/airlock/proc/shock_restore(mob/user)
 	//un-electrify door
+	if(!src.arePowerSystemsOn())
+		boutput(user, "The door has no power - you can't electrify it.")
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-		boutput(usr, text("Can't un-electrify the airlock - The electrification wire is cut.<br><br>"))
+		boutput(usr, text("<span class='alert'>Can't un-electrify the airlock - The electrification wire is cut.<br><br></span>"))
 	else if (src.secondsElectrified!=0)
 		src.secondsElectrified = 0
 		logTheThing("combat", usr, null, "de-electrified airlock ([src]) at [log_loc(src)].")
@@ -86,6 +94,8 @@
 
 
 /obj/machinery/door/airlock/proc/idscantoggle(mob/user)
+	if(!src.arePowerSystemsOn())
+		boutput(user, "<span class='alert'>The door has no power - you toggle the ID scanner.</span>")
 	//enable/disable ID scanner
 	if (src.isWireCut(AIRLOCK_WIRE_IDSCAN))
 		boutput(usr, "The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.")
@@ -94,12 +104,15 @@
 
 
 /obj/machinery/door/airlock/proc/user_toggle_open(mob/user)
+	if (src.operating == 1 || (!src.arePowerSystemsOn()) || (status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+		boutput(user, "<span class='alert'>The door has no power - you can't open/close it.</span>")
+		return
 	if(!src.allowed(usr))
 		return
 	if(welded)
-		boutput(usr, text("<span class='warning'>The airlock has been welded shut!</span>"))
+		boutput(usr, text("<span class='alert'>The airlock has been welded shut!</span>"))
 	else if(locked)
-		boutput(usr, text("<span class='warning'>The door bolts are down!</span>"))
+		boutput(usr, text("<span class='alert'>The door bolts are down!</span>"))
 	else if(!density)
 		close()
 	else
@@ -1179,53 +1192,53 @@ About the new airlock wires panel:
 		src.aiHacking=1
 		SPAWN_DBG(2 SECONDS)
 			//TODO: Make this take a minute
-			boutput(user, "Airlock AI control has been blocked. Beginning fault-detection.")
+			boutput(user, "<span class='notice'>Airlock AI control has been blocked. Beginning fault-detection.</span>")
 			hackMessage = "Fault Detection..."
 			tgui_process.update_uis(src)
 			sleep(5 SECONDS)
 			if (src.canAIControl())
-				boutput(user, "Alert cancelled. Airlock control has been restored without our assistance.")
+				boutput(user, "<span class='notice'>Alert cancelled. Airlock control has been restored without our assistance.</span>")
 				src.aiHacking=0
 				return
 			else if (!src.canAIHack())
-				boutput(user, "We've lost our connection! Unable to hack airlock.")
+				boutput(user, "<span class='notice'>We've lost our connection! Unable to hack airlock.</span>")
 				src.aiHacking=0
 				return
-			boutput(user, "Fault confirmed: airlock control wire disabled or cut.")
+			boutput(user, "<span class='notice'>Fault confirmed: airlock control wire disabled or cut.</span>")
 			hackMessage = "Fault Confirmed..."
 			tgui_process.update_uis(src)
 			sleep(2 SECONDS)
-			boutput(user, "Attempting to hack into airlock. This may take some time.")
+			boutput(user, "<span class='notice'>Attempting to hack into airlock. This may take some time.</span>")
 			hackMessage = "Hacking into airlock..."
 			tgui_process.update_uis(src)
 			sleep(20 SECONDS)
 			if (src.canAIControl())
-				boutput(user, "Alert cancelled. Airlock control has been restored without our assistance.")
+				boutput(user, "<span class='notice'>Alert cancelled. Airlock control has been restored without our assistance.</span>")
 				src.aiHacking=0
 				return
 			else if (!src.canAIHack())
-				boutput(user, "We've lost our connection! Unable to hack airlock.")
+				boutput(user, "<span class='alert'>We've lost our connection! Unable to hack airlock.</span>")
 				src.aiHacking=0
 				return
-			boutput(user, "Upload access confirmed. Loading control program into airlock software.")
+			boutput(user, "<span class='notice'>Upload access confirmed. Loading control program into airlock software.</span>")
 			hackMessage = "Uploading..."
 			tgui_process.update_uis(src)
 			sleep(17 SECONDS)
 			if (src.canAIControl())
-				boutput(user, "Alert cancelled. Airlock control has been restored without our assistance.")
+				boutput(user, "<span class='notice'>Alert cancelled. Airlock control has been restored without our assistance.</span>")
 				src.aiHacking=0
 				return
 			else if (!src.canAIHack())
-				boutput(user, "We've lost our connection! Unable to hack airlock.")
+				boutput(user, "<span class='alert'>We've lost our connection! Unable to hack airlock.</span>")
 				src.aiHacking=0
 				return
-			boutput(user, "Transfer complete. Forcing airlock to execute program.")
+			boutput(user, "<span class='notice'>Transfer complete. Forcing airlock to execute program.</span>")
 			hackMessage = "Transfer complete"
 			tgui_process.update_uis(src)
 			sleep(5 SECONDS)
 			//disable blocked control
 			src.aiControlDisabled = 2
-			boutput(user, "Receiving control information from airlock.")
+			boutput(user, "<span class='notice'>Receiving control information from airlock.</span>")
 			hackMessage = "Receiving Information"
 			tgui_process.update_uis(src)
 			sleep(1 SECOND)
@@ -1692,76 +1705,25 @@ obj/machinery/door/airlock
 
 	if (user.client.check_key(KEY_OPEN))
 		. = 1
-		var/obj/machinery/door/airlock/D = src
-		if (D.aiControlDisabled > 0)
-			return
-		if (!D.density)
-			if (D.welded)
-				boutput(src, "The airlock has been welded shut!")
-			else if (D.locked)
-				boutput(src, "The door bolts are down!")
-			else if (!D.density)
-				D.close()
-			else
-				boutput(src, "The airlock is already closed.")
-		else
-			if (D.welded)
-				boutput(src, "The airlock has been welded shut!")
-			else if (D.locked)
-				boutput(src, "The door bolts are down!")
-			else if (D.density)
-				D.open()
-			else
-				boutput(src, "The airlock is already opened.")
-		D.update_icon()
-		//D.updateUsrDialog() //NAH these are HOT KEYS i don't want them to open up some dumb pop up window
+		user_toggle_open(user)
 		return
 
 	else if (user.client.check_key(KEY_BOLT))
 		. = 1
-		var/obj/machinery/door/airlock/D = src
-		if (D.aiControlDisabled > 0)
-			return
-		if (D.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-			boutput(src, "The door bolt drop wire is cut - you can't change the door bolts.")
-		else
-			if (D.locked)
-				if (D.arePowerSystemsOn())
-					D.locked = 0
-					D.update_icon()
-				else
-					boutput(src, "Cannot raise door bolts due to power failure.")
-			else
-				if (D.arePowerSystemsOn())
-					D.locked = 1
-					logTheThing("station",user,null,"[user] has bolted a door at [log_loc(src)].")
-					D.update_icon()
-				else
-					boutput(src, "Cannot lower door bolts due to power failure.")
-		D.update_icon()
-		//D.updateUsrDialog()
+		toggle_bolt(user)
 		return
 
 	else if (user.client.check_key(KEY_SHOCK))
 		. = 1
 		//electrify door for 30 seconds
-		if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-			boutput(user, text("The electrification wire has been cut.<br><br>"))
-		else if (src.secondsElectrified==-1)
-			boutput(user, text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br><br>"))
-		else if (src.secondsElectrified!=0)
-			boutput(user, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br><br>"))
+		if (src.secondsElectrified!=0)
+			shock_restore(user)
 		else
-			if(alert("Are you sure? Electricity might harm a human!",,"Yes","No") == "Yes")
-				src.secondsElectrified = 30
-				logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
-				message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
-				SPAWN_DBG(1 SECOND)
-					while (src.secondsElectrified>0)
-						src.secondsElectrified-=1
-						if (src.secondsElectrified<0)
-							src.secondsElectrified = 0
-						sleep(1 SECOND)
+			if(!src.arePowerSystemsOn())
+				boutput(user, "The door has no power - you can't electrify it.")
+				return
+			if(alert("Are you sure? Electricity might harm a human!",,"No","Yes") == "Yes") // fix for holding spacebar clicking yes
+				shock_temp(user)
 
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
