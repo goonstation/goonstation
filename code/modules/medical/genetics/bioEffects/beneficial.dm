@@ -453,6 +453,26 @@ var/list/radio_brains = list()
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
 
+/datum/bioEffect/sixthsense
+	name = "Sixth Sense"
+	desc = "Enables the subject to perceive super-natural occurences."
+	id = "sixthsense"
+	effectType = EFFECT_TYPE_POWER
+	probability = 33
+	blockCount = 3
+	blockGaps = 3
+	reclaim_mats = 30
+	msgGain = "A haunting dread fills the room."
+	msgLose = "The haunting feeling passes."
+	lockProb = 40
+	lockedGaps = 1
+	lockedDiff = 3
+	lockedChars = list("G","C","A","T")
+	lockedTries = 8
+	stability_loss = 25
+	degrade_to = "screamer"
+	icon_state  = "eye"
+
 /datum/bioEffect/toxic_farts
 	name = "High Decay Digestion"
 	desc = "Causes the subject's digestion to create a significant amount of noxious gas."

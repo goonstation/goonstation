@@ -148,7 +148,7 @@
 					human_owner.see_invisible = 2
 				human_owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
-			else if (istype(human_owner.glasses, /obj/item/clothing/glasses/regular/ecto) || human_owner.eye_istype(/obj/item/organ/eye/cyber/ecto))
+			else if (istype(human_owner.glasses, /obj/item/clothing/glasses/regular/ecto) || human_owner.eye_istype(/obj/item/organ/eye/cyber/ecto) || human_owner.bioHolder && human_owner.bioHolder.HasEffect("sixthsense"))
 				if (human_owner.see_in_dark != 1)
 					human_owner.see_in_dark = 1
 				if (human_owner.see_invisible < 15)
