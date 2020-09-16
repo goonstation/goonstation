@@ -344,7 +344,7 @@ proc/get_angle(atom/a, atom/b)
 /proc/strip_html_tags(var/t,var/limit=MAX_MESSAGE_LEN)
 	. = html_decode(copytext(t,1,limit))
 	. = replacetext(., "<br>", "\n")
-	. = replacetext(., regex("<\[^>\]*>", "g"), "")
+	. = replacetext(., regex("<\[^>\]*>", "gm"), "")
 
 /proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
 	t = html_decode(copytext(t,1,limit))

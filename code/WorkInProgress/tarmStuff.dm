@@ -267,9 +267,9 @@
 		if(istype(I, /obj/item/paper))
 			var/obj/item/paper/P = I
 			if(P.info && !taken_suggestion)
-				message_admins("[user ? user : "Unknown"] has made a suggestion in [src]:<br>[P.name]<br><br>[copytext(P.info,1,MAX_MESSAGE_LEN)]")
+				message_admins("[user] ([user?.ckey]) has made a suggestion in [src]:<br>[P.name]<br><br>[copytext(P.info,1,MAX_MESSAGE_LEN)]")
 				var/ircmsg[] = new()
-				ircmsg["msg"] = "[user ? user : "Unknown"] has made a suggestion in [src]:\n**[P.name]**\n[strip_html_tags(P.info)]"
+				ircmsg["msg"] = "[user] ([user?.ckey]) has made a suggestion in [src]:\n**[P.name]**\n[strip_html_tags(P.info)]"
 				ircbot.export("admin", ircmsg)
 				taken_suggestion = 1
 			user.u_equip(P)
