@@ -4,6 +4,7 @@
 (+)PDAs have an option to change the backlight color. You no longer have to use that wonky olive green color.
 (+)PDA window is now resizable and respects the "Popup Font Size" option in your preferences.
 (u)kyle
+(*)Rounds no longer end when the sol nerds trigger a disaster round. Play through to the end of the round before the disaster starts.
 (+)Undo last multitool cooldown change. Now it just checks if it is over a blob tile or a med kudzu tile and doesn't make a spark.
 (t)sun sep 13 20
 (u)kyle
