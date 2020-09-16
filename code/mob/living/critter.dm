@@ -1156,6 +1156,12 @@
 	proc/on_wake()
 		return
 
+/mob/living/critter/Bump(atom/movable/AM, yes)
+	if(src.ghost_spawned && !AM.anchored)
+		return
+	. = ..()
+
+
 /mob/living/critter/hotkey(name)
 	switch (name)
 		if ("help")
