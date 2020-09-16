@@ -1156,8 +1156,9 @@
 	proc/on_wake()
 		return
 
-/mob/living/critter/Bump(atom/movable/AM, yes)
-	if(src.ghost_spawned && !AM.anchored)
+/mob/living/critter/Bump(atom/A, yes)
+	var/atom/movable/AM = A
+	if(src.ghost_spawned && istype(AM) && !AM.anchored)
 		return
 	. = ..()
 
