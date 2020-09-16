@@ -535,6 +535,11 @@
 			.= 1
 			src.lastattacked = src
 
+	weapon_attack(atom/target, obj/item/W, reach, params)
+		if(issmallanimal(src) && src.ghost_spawned && (ghostcritter_blocked[target.type] || ghostcritter_blocked[W.type]))
+			return
+		. = ..()
+
 	hand_attack(atom/target, params)
 		if (src.fits_under_table && (istype(target, /obj/machinery/optable) || istype(target, /obj/table) || istype(target, /obj/stool/bed)))
 			if (src.loc == target.loc)
@@ -1158,7 +1163,7 @@
 
 /mob/living/critter/Bump(atom/A, yes)
 	var/atom/movable/AM = A
-	if(src.ghost_spawned && istype(AM) && !AM.anchored)
+	if(issmallanimal(src) && src.ghost_spawned && istype(AM) && !AM.anchored)
 		return
 	. = ..()
 
