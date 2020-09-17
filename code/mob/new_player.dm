@@ -41,7 +41,7 @@ mob/new_player
 			mind = new(src)
 			keyd = mind.key
 
-		if (src?.client?.player) //playtime logging stuff
+		if (src.client?.player) //playtime logging stuff
 			var/datum/player/P = src.client.player
 			if (!isnull(P.round_join_time) && isnull(P.round_leave_time)) //they likely died but didnt d/c b4 respawn
 				P.log_leave_time()
@@ -93,8 +93,7 @@ mob/new_player
 		if (src.ckey) //Null if the client changed to another mob, but not null if they disconnected.
 			spawned_in_keys -= "[src.ckey]"
 		else if (isclient(src.last_client)) //playtime logging stuff
-			var/client/C = src.last_client
-			C.player.log_join_time()
+			src.last_client.player.log_join_time()
 
 		..()
 		close_spawn_windows()

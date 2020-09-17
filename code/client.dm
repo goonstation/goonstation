@@ -141,8 +141,7 @@
 		src.holder.dispose()
 		src.holder = null
 
-	if (src.player)
-		src.player.log_leave_time() //logs leave time, calculates played time on player datum
+	src.player?.log_leave_time() //logs leave time, calculates played time on player datum
 
 	return ..()
 
