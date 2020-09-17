@@ -1345,6 +1345,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/filecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/flushcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/accelerator, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/gps, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/hscan, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/instrumentPlayer, 10)

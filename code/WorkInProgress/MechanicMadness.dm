@@ -148,7 +148,7 @@
 				src.icon_state=initial(src.icon_state)+"_w"
 			else if(src.open)
 				// ugly warning, the istype() is 1 when there's a trigger in the container
-				//	it subtracts 1 from the list of contents when there's a trigger 
+				//	it subtracts 1 from the list of contents when there's a trigger
 				//	doing arithmatic on bools is probably not good!
 				var/has_trigger = istype(locate(/obj/item/mechanics/trigger/trigger) in src.contents,/obj/item/mechanics/trigger/trigger)
 				var/len_contents = src.contents.len - has_trigger
@@ -216,7 +216,7 @@
 		can_be_welded=true
 		can_be_anchored=true
 		slots=CABINET_CAPACITY // wew, dont use this in-hand or equipped!
-		name="Component Cabinet" // i tried to replace "23" below with "[CABINET_CAPACITY]", but byond 
+		name="Component Cabinet" // i tried to replace "23" below with "[CABINET_CAPACITY]", but byond
 									 // thinks it's not a constant and refuses to work with it.
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
@@ -3068,6 +3068,45 @@
 	updateIcon()
 		icon_state = "[under_floor ? "u" : ""]comp_ass"
 		return
+
+/obj/item/mechanics/gps
+	name = "GPS Component"
+	desc = "Interfaces with GPS units."
+	icon_state = "comp_gps"
+
+	New()
+		..()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "get coordinates", "getCoords")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "get information from GPS ID", "getCoordsID")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "get information from GPS Serial Number", "getCoordsSerial")
+
+	proc/getCoords(var/datum/mechanicsMessage/input)
+		var/turf/T = get_turf(loc)
+		input.signal = "x=[T.x]&y=[T.y]&z=[T.z]"
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+
+	proc/getCoordsID(var/datum/mechanicsMessage/input)
+		var/id = input.signal
+		for (var/obj/item/device/gps/G in by_type[/obj/item/device/gps])
+			if (G.allowtrack == 1 && G.identifier == id)
+				var/turf/T = get_turf(G.loc)
+				input.signal = "x=[T.x]&y=[T.y]&z=[T.z]&id=[G.identifier]&serial=[G.serial]&distress=[G.distress]"
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+				return
+
+	proc/getCoordsSerial(var/datum/mechanicsMessage/input)
+		var/id = input.signal
+		for (var/obj/item/device/gps/G in by_type[/obj/item/device/gps])
+			if (G.allowtrack == 1 && "[G.serial]" == id)
+				var/turf/T = get_turf(G.loc)
+				input.signal = "x=[T.x]&y=[T.y]&z=[T.z]&id=[G.identifier]&serial=[G.serial]&distress=[G.distress]"
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+				return
+
+	updateIcon()
+		icon_state = "[under_floor ? "u" : ""]comp_gps"
+		return
+
 
 /obj/mecharrow
 	name = ""
