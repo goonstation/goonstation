@@ -309,7 +309,7 @@
 		else if (lowertext(signal.data["address_1"]) == "ping" && src.allowtrack)
 			var/datum/signal/pingsignal = get_free_signal()
 			pingsignal.source = src
-			pingsignal.data["device"] = "WNET_GPS"
+			pingsignal.data["device"] = "WNET_GPS_" + identifier
 			pingsignal.data["netid"] = src.net_id
 			pingsignal.data["address_1"] = signal.data["sender"]
 			pingsignal.data["command"] = "ping_reply"
