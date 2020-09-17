@@ -853,7 +853,6 @@
 					src.visible_message("<span class='alert'><b>[user]</b> wrangles [src].</span>")
 
 				else
-
 					src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
 					if(prob(15))
 						for(var/mob/O in hearers(src, null))
