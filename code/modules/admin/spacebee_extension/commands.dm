@@ -212,6 +212,24 @@
 				result += strip_html_tags(log_line)
 				n--
 		if(!length(result))
-			system.reply("No results.")
+			system.reply("No results.", user)
 		else
 			system.reply(reverse_list(result).Join("\n"), user)
+
+/datum/spacebee_extension_command/crate
+	name = "crate"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Sends items in a crate to cargo. Separate typepaths by spaces."
+	argument_types = list(/datum/command_argument/the_rest="types")
+	execute(user, types)
+		var/obj/to_send = new /obj/storage/crate/packing
+		var/list/type_str_list = splittext(types, " ")
+		for(var/type_str in type_str_list)
+			var/type = text2path(type_str)
+			if(isnull(type))
+				system.reply("Unknown type [type_str], aborting.", user)
+				qdel(to_send)
+				return
+			new type(to_send)
+		shippingmarket.receive_crate(to_send)
+		system.reply("Crate sent.")
