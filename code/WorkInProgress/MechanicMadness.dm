@@ -2413,7 +2413,7 @@
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, "[frequency]")
 		tooltip_rebuild = 1
-	proc/hear_radio(atom/movable/AM as mob|obj, msg, lang_id)
+	proc/hear_radio(atom/movable/AM, msg, lang_id)
 		if (level == 2) return
 		LIGHT_UP_HOUSING
 		var/message = msg[2]
