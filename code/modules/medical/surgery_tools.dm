@@ -1122,6 +1122,8 @@ CONTAINS:
 			user.visible_message("<b>[user]</b> unfolds [src].",\
 			"You unfold [src].")
 			user.drop_item()
+			pixel_x = 0
+			pixel_y = 0
 			src.update_icon()
 		else
 			return
