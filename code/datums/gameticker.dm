@@ -774,9 +774,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		playtimes["ckeys\[[P.ckey]]"] = round((P.current_playtime / (1 SECOND))) //rounds 1/10th seconds to seconds
 	try
 		apiHandler.queryAPI("playtime/record-multiple", playtimes)
-		logTheThing("debug", null, null, "playtime successfully logged") //lmk if this is bad practice
 	catch
-
+		logTheThing("debug", null, null, "playtime was unable to be logged because of an api error")
 	return 1
 
 /////
