@@ -1,4 +1,9 @@
 
+(t)thu sep 17 20
+(u)adharainspace
+(p)2201
+(e)🆕|feature
+(+)your playtime is now tracked (you cant see it yet tho sorry)
 (t)mon sep 14 20
 (u)Zamujasa
 (+)PDAs have an option to change the backlight color. You no longer have to use that wonky olive green color.
