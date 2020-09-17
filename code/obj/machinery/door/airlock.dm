@@ -1742,9 +1742,9 @@ obj/machinery/door/airlock
 	data["userStates"] = userstates
 	data["name"] = src.name
 	data["panelOpen"] = src.p_open
-	data["mainTimeleft"] = secondsMainPowerLost
-	data["backupTimeleft"] = secondsBackupPowerLost
-	data["shockTimeleft"] = secondsElectrified
+	data["mainTimeLeft"] = secondsMainPowerLost
+	data["backupTimeLeft"] = secondsBackupPowerLost
+	data["shockTimeLeft"] = secondsElectrified
 	data["idScanner"] = !aiDisabledIdScanner
 	data["boltsAreUp"] = !src.locked // not bolted
 	data["welded"] = welded // welded
@@ -1821,7 +1821,7 @@ obj/machinery/door/airlock
 			if("shockPerm")
 				shock_perm(usr)
 				. = TRUE
-			if("idscanToggle")
+			if("idScanToggle")
 				idscantoggle(usr)
 				. = TRUE
 			if("boltToggle")

@@ -172,8 +172,8 @@ const AccessPanelOnly = (props, context) => {
 const PowerStatus = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    mainTimeleft,
-    backupTimeleft,
+    mainTimeLeft,
+    backupTimeLeft,
     wires,
   } = data;
 
@@ -182,7 +182,7 @@ const PowerStatus = (props, context) => {
       <LabeledList>
         <LabeledList.Item
           label="Main"
-          color={mainTimeleft ? "bad" : "good"}
+          color={mainTimeLeft ? "bad" : "good"}
           buttons={(
             <Button
               py={0.5}
@@ -190,21 +190,21 @@ const PowerStatus = (props, context) => {
               align="center"
               color="bad"
               icon="plug"
-              disabled={!!mainTimeleft}
+              disabled={!!mainTimeLeft}
               onClick={() => act("disruptMain")}>
               Disrupt
             </Button>
           )}>
-          {mainTimeleft ? "Offline" : "Online"}
+          {mainTimeLeft ? "Offline" : "Online"}
           {" "}
           {(!wires.main_1 || !wires.main_2)
             && "[Wires cut!]"
-            || (mainTimeleft > 0
-              && `[${mainTimeleft}s]`)}
+            || (mainTimeLeft > 0
+              && `[${mainTimeLeft}s]`)}
         </LabeledList.Item>
         <LabeledList.Item
           label="Backup"
-          color={backupTimeleft ? "bad": "good"}
+          color={backupTimeLeft ? "bad": "good"}
           buttons={(
             <Button
               py={0.5}
@@ -213,17 +213,17 @@ const PowerStatus = (props, context) => {
               mt={0.5}
               color="bad"
               icon="plug"
-              disabled={!!backupTimeleft}
+              disabled={!!backupTimeLeft}
               onClick={() => act("disruptBackup")}>
               Disrupt
             </Button>
           )}>
-          {backupTimeleft ? "Offline" : "Online"}
+          {backupTimeLeft ? "Offline" : "Online"}
           {" "}
           {(!wires.backup_1 || !wires.backup_2)
             && "[Wires cut!]"
-            || (backupTimeleft > 0
-              && `[${backupTimeleft}s]`)}
+            || (backupTimeLeft > 0
+              && `[${backupTimeLeft}s]`)}
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -233,8 +233,8 @@ const PowerStatus = (props, context) => {
 const AccessAndDoorControl = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    mainTimeleft,
-    backupTimeleft,
+    mainTimeLeft,
+    backupTimeLeft,
     wires,
     idScanner,
     boltsAreUp,
@@ -259,8 +259,8 @@ const AccessAndDoorControl = (props, context) => {
               color={idScanner ? "good" : "bad"}
               icon={idScanner ? "power-off" : "times"}
               disabled={!wires.idScanner
-                || (mainTimeleft && backupTimeleft)}
-              onClick={() => act("idscanToggle")}>
+                || (mainTimeLeft && backupTimeLeft)}
+              onClick={() => act("idScanToggle")}>
               {idScanner ? "Enabled" : "Disabled"}
             </Button>
           )}>
@@ -278,7 +278,7 @@ const AccessAndDoorControl = (props, context) => {
               color={!boltsAreUp ? "bad" : "good"}
               icon={!boltsAreUp ? "unlock" : "lock"}
               disabled={!wires.bolts
-                || (mainTimeleft && backupTimeleft) || (isDisabled)}
+                || (mainTimeLeft && backupTimeLeft) || (isDisabled)}
               onClick={() => act("boltToggle")}>
               {!boltsAreUp ? "Lowered" : "Raised"}
             </Button>
@@ -297,7 +297,7 @@ const AccessAndDoorControl = (props, context) => {
               color={opened ? "bad" : "good"}
               icon={opened ? "sign-out-alt" : "sign-in-alt"}
               disabled={(!boltsAreUp || welded)
-                || (mainTimeleft && backupTimeleft) || (isDisabled)}
+                || (mainTimeLeft && backupTimeLeft) || (isDisabled)}
               onClick={() => act("openClose")}>
               {opened ? "Open" : "Closed"}
             </Button>
@@ -319,10 +319,10 @@ const AccessAndDoorControl = (props, context) => {
 const Electrify = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    mainTimeleft,
-    backupTimeleft,
+    mainTimeLeft,
+    backupTimeLeft,
     wires,
-    shockTimeleft,
+    shockTimeLeft,
   } = data;
 
   return (
@@ -330,24 +330,24 @@ const Electrify = (props, context) => {
       <Section m={-1} py={0.5}>
         <LabeledList>
           <LabeledList.Item
-            color={shockTimeleft ? "average" : "good"}
+            color={shockTimeLeft ? "average" : "good"}
             label="Electrify">
-            {!shockTimeleft ? "Safe" : "Electrified"}
+            {!shockTimeLeft ? "Safe" : "Electrified"}
             {" "}
             {!wires.shock
             && "[Wires cut!]"
-            || (shockTimeleft > 0
-            && `[${shockTimeleft}s]`)
-            || (shockTimeleft === -1
+            || (shockTimeLeft > 0
+            && `[${shockTimeLeft}s]`)
+            || (shockTimeLeft === -1
             && "[Permanent]")}
           </LabeledList.Item>
           <LabeledList.Item
-            color={!shockTimeleft ? "Average" : "Bad"}>
+            color={!shockTimeLeft ? "Average" : "Bad"}>
             <Box
-              pl={shockTimeleft ? 21 : 0}
+              pl={shockTimeLeft ? 21 : 0}
               pb={0}
               pt={0.5}>
-              {(!shockTimeleft &&(
+              {(!shockTimeLeft &&(
                 <Button.Confirm
                   p={1}
                   width={9}
@@ -356,21 +356,21 @@ const Electrify = (props, context) => {
                   content="Temporary"
                   confirmContent="Are you sure?"
                   icon="bolt"
-                  disabled={(!wires.shock) || shockTimeleft === -1
-                || (mainTimeleft && backupTimeleft)}
+                  disabled={(!wires.shock) || shockTimeLeft === -1
+                || (mainTimeLeft && backupTimeLeft)}
                   onClick={(() => act("shockTemp"))} />
               ))}
               <Button.Confirm
                 p={1}
                 width={9}
                 align="center"
-                color={shockTimeleft ? "good" : "bad"}
+                color={shockTimeLeft ? "good" : "bad"}
                 icon="bolt"
                 confirmContent="Are you sure?"
-                content={shockTimeleft ? "Restore" : "Permanent"}
+                content={shockTimeLeft ? "Restore" : "Permanent"}
                 disabled={(!wires.shock)
-                || (mainTimeleft && backupTimeleft)}
-                onClick={shockTimeleft ? (() => act("shockRestore"))
+                || (mainTimeLeft && backupTimeLeft)}
+                onClick={shockTimeLeft ? (() => act("shockRestore"))
                   : (() => act("shockPerm"))} />
             </Box>
           </LabeledList.Item>
