@@ -2420,15 +2420,20 @@
 		if (lang_id in list("english", ""))
 			message = msg[1]
 		message = strip_html(html_decode(message))
-		var/heardname = AM:real_name
-		if (ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			if (H.wear_mask && H.wear_mask.vchange)
-				if (istype(H.wear_id, /obj/item/card/id))
-					var/obj/item/card/id/ID = H.wear_id
-					heardname = ID.registered
-				else
-					heardname = "Unknown"
+		var/heardname = null
+		if (isobj(AM))
+			heardname = AM.name
+		else if (ismob(AM))
+			heardname = AM:real_name
+			if (ishuman(AM))
+				var/mob/living/carbon/human/H = AM
+				if (H.wear_mask && H.wear_mask.vchange)
+					if (istype(H.wear_id, /obj/item/card/id))
+						var/obj/item/card/id/ID = H.wear_id
+						heardname = ID.registered
+					else
+						heardname = "Unknown"
+
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"name=[heardname]&message=[message]")
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
