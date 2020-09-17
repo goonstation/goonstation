@@ -388,7 +388,6 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				if(method == INGEST)
 					boutput(M, "Your ears start buzzing.")
-				return
 
 		drug/space_drugs
 			name = "space drugs"
