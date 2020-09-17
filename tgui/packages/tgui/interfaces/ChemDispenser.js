@@ -74,7 +74,6 @@ export const ReagentDispenser = (props, context) => {
 
   return (
     <Section
-      fontFamily="Arial"
       fontSize="12px"
       title={(
         <Fragment>
@@ -117,7 +116,6 @@ export const ReagentDispenser = (props, context) => {
       {(!maximumBeakerVolume || maximumBeakerVolume === beakerTotalVolume) && (
         <Modal
           fontSize="20px"
-          fontFamily="Arial"
           mr={2}
           p={3}>
           <Box>
@@ -179,7 +177,6 @@ export const Beaker = (props, context) => {
 
   return (
     <Section
-      fontFamily="Arial"
       fontSize="12px"
       title={
         <Button
@@ -372,7 +369,6 @@ export const ChemGroups = (props, context) => {
   return (
     <Fragment>
       <Section
-        fontFamily="Arial"
         title="Reagent Groups"
         buttons={
           <Box>
