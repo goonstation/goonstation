@@ -217,14 +217,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 		owner = owneri
 		Uid = CreateUid()
 		uid_hash = md5(Uid)
-		bioUids[Uid] = 1
+		bioUids[Uid] = null
 		mobAppearance = new/datum/appearanceHolder()
 
 		mobAppearance.owner = owner
 		mobAppearance.parentHolder = src
 
-		if(owner)
-			ownerName = owner:real_name
+		SPAWN_DBG(2 SECONDS) // fuck this shit
+			if(owner)
+				ownerName = owner.real_name
+				bioUids[Uid] = owner?.real_name ? owner.real_name : owner?.name
 
 		BuildEffectPool()
 		return ..()

@@ -258,7 +258,7 @@
 /obj/item/record/New()
 	..()
 	if (add_overlay)
-		src.overlays += "record_[rand(1,10)]"
+		src.UpdateOverlays(new /image(src.icon, "record_[rand(1,10)]"), "recordlabel")
 	if (record_name)
 		src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
 
@@ -392,6 +392,16 @@
 /obj/item/record/spacebux // Many thanks to Camryn Buttes!!
 	add_overlay = 0
 	icon_state = "record_red"
+
+/obj/item/record/random/key_lime
+	name = "record - \"key_lime #1\""
+	record_name = "key lime #1"
+	song = "sound/radio_station/key_lime.ogg"
+	add_overlay = FALSE
+
+	New()
+		..()
+		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
 
 /obj/item/record/spacebux/New()
 	..()

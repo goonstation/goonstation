@@ -64,7 +64,11 @@ var/fartcount = 0
 		setProperty("heatprot", 0)
 		setProperty("conductivity", 1)
 
-#define JOHN_PICK(WHAT) pick_string("johnbill.txt", WHAT)
+
+
+
+
+
 
 // all of john's area specific lines here
 /area/var/john_talk = null
@@ -98,6 +102,7 @@ var/fartcount = 0
 /area/derelict_ai_sat/core/john_talk = list("Hello, Daddy.","You should probably start writing down the shit I say, I certainly can't remember any of it.")
 /area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Huh, Always wondered what those goggles did.","Huh, Always wondered what those goggles did.","Your hubris will be punished. Will you kill your fellow man to save yourself? Who harvests the harvestmen? What did it feel like when you lost your mind?")
 /area/grillnasium/grill_chamber/john_talk = list("You better know what you've started.","This is where it happens.")
+
 
 // bus driver
 /mob/living/carbon/human/john
@@ -842,6 +847,3 @@ Urs' Hauntdog critter
 							"NSS Horizon",
 							"???")
 
-
-
-#undef JOHN_PICK

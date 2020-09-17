@@ -21,6 +21,10 @@ WET FLOOR SIGN
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
 
+/obj/item/spraybottle/pixelaction(atom/target, params, mob/user, reach)
+	..()
+	return FALSE // this needs to be here for ranged clicking I think, I hate it
+
 /obj/item/spraybottle/New()
 	..()
 	create_reagents(100)
@@ -405,8 +409,11 @@ WET FLOOR SIGN
 
 /obj/item/sponge/New()
 	..()
-	src.create_reagents(50)
+	// We use this instead of create_reagents because sponges need a special reagent holder to grow in size
+	reagents = new/datum/reagents/sponge(50)
+	reagents.my_atom = src
 	processing_items |= src
+
 /obj/item/sponge/disposing()
 	processing_items -= src
 	..()
@@ -604,6 +611,48 @@ WET FLOOR SIGN
 	dropped()
 		JOB_XP(usr, "Janitor", 2)
 		return
+
+	attackby(obj/item/W, mob/user, params)
+		if(iswrenchingtool(W))
+			actions.start(new /datum/action/bar/icon/anchor_or_unanchor(src, W, duration=2 SECONDS), user)
+			return
+		. = ..()
+
+/obj/item/caution/traitor
+	event_handler_flags = USE_PROXIMITY
+	var/obj/item/reagent_containers/payload
+
+	New()
+		. = ..()
+		payload = new /obj/item/reagent_containers/glass/bucket/red(src)
+		payload.reagents.add_reagent("superlube", payload.reagents.maximum_volume)
+		src.create_reagents(1)
+
+	attackby(obj/item/W, mob/user, params)
+		var/mob/living/carbon/human/H = user
+		if(istype(W, /obj/item/reagent_containers) && istype(H) && istype(H.gloves, /obj/item/clothing/gloves/long))
+			boutput(user, "<span class='notice'>You stealthily replace the hidden [payload.name] with [W].</span>")
+			user.drop_item(W)
+			src.payload.set_loc(src.loc)
+			user.put_in_hand_or_drop(src.payload)
+			src.payload = W
+			W.set_loc(src)
+			return
+		. = ..()
+
+	HasProximity(atom/movable/AM)
+		if(iscarbon(AM) && isturf(src.loc) && prob(20) && !ON_COOLDOWN(src, "spray", 3 SECONDS) && src.payload?.reagents)
+			if(ishuman(AM))
+				var/mob/living/carbon/human/H = AM
+				if(istype(H.shoes, /obj/item/clothing/shoes/galoshes))
+					return
+			var/turf/T = AM.loc
+			src.payload.reagents.trans_to(src, 1)
+			src.reagents.reaction(T)
+			src.reagents.clear_reagents()
+		else
+			. = ..()
+
 
 /obj/item/holoemitter
 	name = "Holo-emitter"

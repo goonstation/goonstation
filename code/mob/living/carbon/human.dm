@@ -894,6 +894,7 @@
 			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		if ("rest")
+			if(ON_COOLDOWN(src, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			if(src.ai_active && !src.hasStatus("resting"))
 				src.show_text("You feel too restless to do that!", "red")
 			else
@@ -3146,11 +3147,11 @@
 
 					if (priority)
 						if (priority > 0)
-							priority = NewLoc.step_material
+							priority = "[NewLoc.step_material]"
 						else if (priority < 0)
 							priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
 
-						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
+						playsound(NewLoc, priority, src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
 	//STEP SOUND HANDLING OVER
 

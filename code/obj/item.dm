@@ -1020,6 +1020,10 @@
 		if (isliving(checkloc) && checkloc != user)
 			return 0
 		checkloc = checkloc:loc
+
+	if(!src.can_pickup(user))
+		return 0
+
 	src.throwing = 0
 
 	if (isobj(src.loc))
@@ -1481,3 +1485,6 @@
 
 /obj/item/proc/intent_switch_trigger(mob/user)
 	return
+
+/obj/item/proc/can_pickup(mob/user)
+	return !src.anchored

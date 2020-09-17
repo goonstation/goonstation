@@ -35,7 +35,6 @@
 
 	var/spaced = 0
 	var/spaced_via_group = 0
-	var/gencolor = null
 
 // overrides
 /datum/air_group/disposing()

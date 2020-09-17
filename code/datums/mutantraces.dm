@@ -27,7 +27,7 @@
 	var/jerk = 0				// Should robots arrest these by default?
 
 	var/icon = 'icons/effects/genetics.dmi'
-	var/icon_state = "epileptic"
+	var/icon_state = "psyche"
 	var/icon_head = null
 	var/icon_beard = null
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
@@ -500,6 +500,9 @@
 	say_filter(var/message)
 		return replacetext(message, "s", stutter("ss"))
 
+	say_verb()
+		return "hisses"
+
 /datum/mutantrace/zombie
 	name = "zombie"
 	icon_state = "zombie"
@@ -835,7 +838,7 @@
 			var/datum/ailment_data/disease/D = mob.find_ailment_by_type(/datum/ailment/disease/lycanthropy/)
 
 			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
-			mob.bioHolder.AddEffect("accent_scoob", null, null, 0, 1)
+			mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
 
 			if(D)
 				D.cycles++

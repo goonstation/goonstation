@@ -43,6 +43,7 @@
 
 
 /obj/landmark/gps_waypoint
+	icon_state = "gps"
 	name = LANDMARK_GPS_WAYPOINT
 
 /client/var/list/GPS_Path
