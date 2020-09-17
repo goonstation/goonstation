@@ -140,6 +140,10 @@
 		onlineAdmins.Remove(src)
 		src.holder.dispose()
 		src.holder = null
+
+	if (src.player)
+		src.player.log_leave_time() //logs leave time, calculates played time on player datum
+
 	return ..()
 
 /client/New()
@@ -164,8 +168,11 @@
 		player = make_player(key)
 	player.client = src
 
+	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
+		src.player.log_join_time()
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Player set ([player])")
-	
+
 	// moved preferences from new_player so it's accessible in the client scope
 	if (!preferences)
 		preferences = new
@@ -190,7 +197,7 @@
 		)
 		src.loadResourcesFromList(chuiResources)
 
-	if (!istype(src.mob, /mob/new_player))
+	if (!isnewplayer(src.mob))
 		src.loadResources()
 
 /*

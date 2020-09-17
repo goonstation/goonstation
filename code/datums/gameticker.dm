@@ -766,6 +766,16 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] finished spacebux updates")
 
+	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
+	for(var/datum/player/P in by_type[/datum/player])
+		if (!P || !P.ckey)
+			continue
+		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
+		playtimes["ckeys\[[P.ckey]]"] = round((P.current_playtime / (1 SECOND))) //rounds 1/10th seconds to seconds
+	try
+		apiHandler.queryAPI("playtime/record-multiple", playtimes)
+		logTheThing("debug", null, null, "playtime successfully logged") //lmk if this is bad practice
+	catch
 
 	return 1
 
