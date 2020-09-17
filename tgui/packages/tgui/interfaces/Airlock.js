@@ -3,55 +3,63 @@ import { useBackend, useLocalState } from "../backend";
 import { Button, LabeledList, Section, Modal, Flex, Tabs, Box, NoticeBox, Divider } from "../components";
 import { Window } from "../layouts";
 
-export const uiState = data => {
+export const uiCurrentUserPermissions = data => {
   const {
     panelOpen,
     userStates,
   } = data;
 
-  // Borg within range and panel open
-  if (userStates.isBorg && userStates.distance <= 1 && panelOpen) {
-    return { "airlock": true, "accessPanel": true };
-  }
-  // Borg not within range can only access airlock controls
-  if (userStates.isBorg && userStates.distance >= 2) {
-    return { "airlock": true, "accessPanel": false };
-  }
-  // AI can only access airlock controls
-  if (userStates.isAi) {
-    return { "airlock": true, "accessPanel": false };
-  }
-  // Human
-  if (userStates.isCarbon && panelOpen) {
-    return { "airlock": false, "accessPanel": true };
-  }
-  return { "airlock": false, "accessPanel": false };
+  return {
+    airlock: (userStates.isBorg) || (userStates.isAi),
+    accessPanel: (
+      (userStates.isBorg && userStates.distance <= 3 && panelOpen)
+      || (userStates.isCarbon && panelOpen)
+    ),
+    // shows too far message on access panel when the mob is
+    accessPanelNotTooFar: (
+      userStates.isBorg && userStates.distance <= 1 && panelOpen
+    ),
+  };
+
 };
 
 export const Airlock = (props, context) => {
   const { data } = useBackend(context);
 
+  const userPerms = uiCurrentUserPermissions(data);
+
+  return (
+    <Window>
+      <Window.Content>
+        {(userPerms["airlock"] && userPerms["accessPanel"])
+          && <AirlockAndAccessPanel />
+          || userPerms["airlock"] && <AirlockControlsOnly />
+          || userPerms["accessPanel"] && <AccessPanelOnly />}
+      </Window.Content>
+    </Window>
+  );
+};
+
+
+const AirlockAndAccessPanel = (props, context) => {
+  const { data } = useBackend(context);
+  const userPerms = uiCurrentUserPermissions(data);
+
   const {
     name,
-    userStates,
-    panelOpen,
     canAiControl,
     hackMessage,
     canAiHack,
   } = data;
 
-  const currentState = uiState(data);
-
-  // airlock + accessPanel = 1 / airlock = 1 / accessPanel = 2
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex',
-    (currentState["airlock"] && currentState["accessPanel"])
+    (userPerms["airlock"] && userPerms["accessPanel"])
       ? 1
-      : currentState["airlock"]
+      : userPerms["airlock"]
         ? 1
-        : currentState["accessPanel"]
+        : userPerms["accessPanel"]
           ? 2
           : 1);
-
   return (
     <Window
       width={354}
@@ -59,25 +67,22 @@ export const Airlock = (props, context) => {
       theme="ntos"
       title={"Airlock - " + name}>
       <Window.Content>
-        {!!userStates.isBorg && (
-          <Tabs>
-            <Tabs.Tab
-              selected={tabIndex === 1}
-              onClick={() => {
-                setTabIndex(1);
-              }}>
-              Airlock Controls
-            </Tabs.Tab>
-            <Tabs.Tab
-              selected={tabIndex === 2}
-              disable={!panelOpen}
-              onClick={() => {
-                setTabIndex(2);
-              }}>
-              Access Panel
-            </Tabs.Tab>
-          </Tabs>
-        )}
+        <Tabs>
+          <Tabs.Tab
+            selected={tabIndex === 1}
+            onClick={() => {
+              setTabIndex(1);
+            }}>
+            Airlock Controls
+          </Tabs.Tab>
+          <Tabs.Tab
+            selected={tabIndex === 2}
+            onClick={() => {
+              setTabIndex(2);
+            }}>
+            Access Panel
+          </Tabs.Tab>
+        </Tabs>
         {tabIndex === 1 && (
           <Fragment>
             <Section fitted backgroundColor="rgba(0,0,0,0)">
@@ -100,6 +105,65 @@ export const Airlock = (props, context) => {
         {tabIndex === 2 && (
           <AccessPanel />
         )}
+      </Window.Content>
+    </Window>
+  );
+};
+
+const AirlockControlsOnly = (props, context) => {
+  const { data } = useBackend(context);
+
+  const {
+    name,
+    canAiControl,
+    hackMessage,
+    canAiHack,
+  } = data;
+
+  return (
+    <Window
+      width={354}
+      height={370}
+      theme="ntos"
+      title={"Airlock - " + name}>
+      <Window.Content>
+        <Section fitted backgroundColor="rgba(0,0,0,0)">
+          {(!canAiControl) && (
+            <Modal
+              textAlign="center"
+              fontSize="24px">
+              {hackMessage ? hackMessage : "Airlock Controls Disabled"}
+              {!!canAiHack && (
+                <Hack />
+              )}
+            </Modal>
+          )}
+          <PowerStatus />
+          <AccessAndDoorControl />
+          <Electrify />
+        </Section>
+        {!!canAiHack && (
+          <Hack />
+        )}
+      </Window.Content>
+    </Window>
+  );
+};
+
+const AccessPanelOnly = (props, context) => {
+  const { data } = useBackend(context);
+  const {
+    name,
+  } = data;
+
+  return (
+    <Window
+      width={354}
+      height={460}
+      theme="ntos"
+      title={"Airlock - " + name}>
+      <Window.Content>
+        <AccessPanel />
       </Window.Content>
     </Window>
   );
@@ -324,22 +388,21 @@ const Hack = (props, context) => {
   } = data;
 
   return (
-    <Section m={-1} py={0.5}>
-      <Box
-        align="center">
-        <Button
-          bold
-          color="bad"
-          fontSize="33px"
-          fontFamily="monospace"
-          disabled={aiHacking}
-          width={20}
-          py={0}
-          onClick={() => act("hackAirlock")}>
-          {aiHacking ? "Hacking..." : "HACK"}
-        </Button>
-      </Box>
-    </Section>
+    <Box
+      m={-1} py={0.5} pt={2}
+      align="center">
+      <Button
+        bold
+        color="bad"
+        fontSize="33px"
+        fontFamily="monospace"
+        disabled={aiHacking}
+        width={20}
+        py={0}
+        onClick={() => act("hackAirlock")}>
+        {aiHacking ? "Hacking..." : "HACK"}
+      </Button>
+    </Box>
   );
 };
 
@@ -352,12 +415,12 @@ export const AccessPanel = (props, context) => {
     netId,
     powerIsOn,
     boltsAreUp,
-    aiControlDisabled,
+    canAiControl,
     safety,
     panelOpen,
   } = data;
 
-  const currentState = uiState(data);
+  const userPerms = uiCurrentUserPermissions(data);
 
   const handleWireInteract = (wireColorIndex, action) => {
     act(action, { wireColorIndex });
@@ -368,7 +431,7 @@ export const AccessPanel = (props, context) => {
   return (
     <Section
       title="Access Panel">
-      {!currentState["accessPanel"] && (
+      {!userPerms["accessPanelNotTooFar"] && (
         <Modal
           textAlign="center"
           fontSize="24px">
@@ -443,8 +506,8 @@ export const AccessPanel = (props, context) => {
           <LabeledList>
             <LabeledList.Item
               label="AI control"
-              color={!aiControlDisabled ? "green" : "red"}>
-              {!aiControlDisabled ? "Enabled" : "Disabled"}
+              color={canAiControl ? "green" : "red"}>
+              {canAiControl ? "Enabled" : "Disabled"}
             </LabeledList.Item>
             <LabeledList.Item
               label="Safety light"

@@ -1737,7 +1737,7 @@ obj/machinery/door/airlock
 	var/list/userstates = list()
 	userstates["distance"] = get_dist(src, user)
 	userstates["isBorg"] = ishivebot(user) || isrobot(user)
-	userstates["isAI"] = isAI(user)
+	userstates["isAi"] = isAI(user)
 	userstates["isCarbon"] = iscarbon(user)
 	data["userStates"] = userstates
 	data["name"] = src.name
