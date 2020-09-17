@@ -265,6 +265,9 @@ datum/preferences
 
 		if (user && !IsGuestKey(user.key)) //ZeWaka: Fix for null.key
 			var/client/client = ismob( user ) ? user.client : user
+
+			if (!client) return // b r u h
+
 			if (rebuild_profile || client.cloud_available() && !had_cloud)
 				rebuild_profile = 0
 				had_cloud = client.cloud_available()
@@ -1708,7 +1711,7 @@ $(function() {
 
 		if (link_tags["preferred_map"])
 			rebuild_data["map"] = 1
-			src.preferred_map = mapSwitcher.clientSelectMap(usr.client)
+			src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
 
 		if (link_tags["tooltip"])
 			rebuild_data["tooltips"] = 1
@@ -1924,9 +1927,9 @@ $(function() {
 			AH.customization_third = "None"
 			AH.underwear = "No Underwear"
 
-			AH.customization_first_color = 0
-			AH.customization_second_color = 0
-			AH.customization_third_color = 0
+			AH.customization_first_color = initial(AH.customization_first_color)
+			AH.customization_second_color = initial(AH.customization_second_color)
+			AH.customization_third_color = initial(AH.customization_third_color)
 			AH.e_color = 0
 			AH.u_color = "#FEFEFE"
 

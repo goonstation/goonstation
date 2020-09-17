@@ -73,7 +73,7 @@
 		..()
 		processing_items.Add(src)
 		START_TRACKING
-		BLOCK_TANK
+		BLOCK_SETUP(BLOCK_TANK)
 
 	disposing()
 		. = ..()
@@ -86,7 +86,7 @@
 			last_laugh = world.time
 
 	process()
-		if(prob(75)) // Takes around 12 seconds for ol chompski to vanish
+		if(prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a crate
 		if(istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))
@@ -121,7 +121,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(issnippingtool(W))
@@ -559,7 +559,7 @@
 
 	New()
 		..()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)

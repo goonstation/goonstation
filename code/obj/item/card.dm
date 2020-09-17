@@ -168,7 +168,7 @@ GAUNTLET CARDS
 		People dabbed on: [dabbed_on_count]<br/>"}
 
 /obj/item/card/id/dabbing_license/attack_self(mob/user as mob)
-	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0)]")
+	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0, user)]")
 
 	src.add_fingerprint(user)
 	return

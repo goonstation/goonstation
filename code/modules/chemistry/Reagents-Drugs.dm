@@ -1,4 +1,7 @@
 //Contains wacky space drugs
+
+ABSTRACT_TYPE(/datum/reagent/drug)
+
 datum
 	reagent
 		drug/
@@ -86,7 +89,7 @@ datum
 								boutput(M, "<span class='alert'><b>You hear something strange behind you...</b></span>")
 								var/ants = rand(1,3)
 								for(var/i = 0, i < ants, i++)
-									fake_attackEx(M, 'icons/effects/genetics.dmi', "epileptic", "stranger")
+									fake_attackEx(M, 'icons/effects/genetics.dmi', "psyche", "stranger")
 						if(2)
 							var/halluc_state = null
 							var/halluc_name = null
@@ -656,7 +659,7 @@ datum
 									boutput(M, "<span class='alert'><b>Unknown has punched [M]</b></span>")
 									boutput(M, "<span class='alert'><b>Unknown has weakened [M]</b></span>")
 									M.setStatus("weakened", max(M.getStatusDuration("weakened"), 10))
-									M.playsound_local(M.loc, 'sound/impact_sounds/Generic_Punch_2.ogg', 50, 1)
+									M.playsound_local(M.loc, pick(sounds_punch), 50, 1)
 								if(4)
 									boutput(M, "<span class='alert'><b>[M] has been attacked with the taser gun by Unknown</b></span>")
 									boutput(M, "<i>You can almost hear someone talking...</i>")

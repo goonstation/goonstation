@@ -1,7 +1,7 @@
 #define MEAT_NEEDED_TO_CLONE	16
 #define MAXIMUM_MEAT_LEVEL		100
 #define DEFAULT_MEAT_USED_PER_TICK 0.6
-#define DEFAULT_SPEED_BONUS 1.5
+#define DEFAULT_SPEED_BONUS 1
 
 #define MEAT_LOW_LEVEL	MAXIMUM_MEAT_LEVEL * 0.15
 
@@ -40,6 +40,7 @@
 	var/gen_bonus = 1 //Normal generation speed
 	var/speed_bonus = DEFAULT_SPEED_BONUS // Multiplier that can be modified by modules
 	var/auto_mode = 1
+	var/auto_delay = 10
 
 	power_usage = 200
 
@@ -56,6 +57,10 @@
 	var/meat_level = MAXIMUM_MEAT_LEVEL / 4
 
 	var/static/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.75,"pepperoni"=0.5,"meat_slurry"=1,"bloodc"=0.5)
+
+	// Copied from manufacturer.dm, except -- get this -- used for functioning, not MALfunctioning. wow.
+	var/static/list/sounds_function = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
+	'sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
 
 
 	New()
@@ -147,6 +152,9 @@
 	proc/start_clone(force = 0)
 		// Returns 1 if we started a clone or 0 if we couldn't due to meat reasons
 
+		// Reset the time until the next automatic start.
+		src.auto_delay = initial(src.auto_delay)
+
 		if (src.occupant)
 			// If we already have an occupant then we don't really need to start it, do we?
 			return 1
@@ -162,8 +170,11 @@
 		src.update_icon()
 
 		//Get the clone body ready. They start out with a bunch of damage right off.
-		SPAWN_DBG(0.5 SECONDS) //Organs may not exist yet if we call this right away.
-			random_brute_damage(src.occupant, 90, 1)
+		// changing this to takedamage which should hopefully apply it right away
+		// SPAWN_DBG(0.5 SECONDS) //Organs may not exist yet if we call this right away.
+		// 	random_brute_damage(src.occupant, 90, 1)
+		src.occupant.TakeDamage("chest", 90, 0, 0, DAMAGE_BLUNT)
+
 		src.occupant.take_toxin_damage(50)
 		src.occupant.take_oxygen_deprivation(40)
 		src.occupant.take_brain_damage(60)
@@ -198,8 +209,12 @@
 		src.attempting = 1 //One at a time!!
 		src.failed_tick_counter = 0 // make sure we start here
 
+		src.look_busy(1)
+		src.visible_message("<span class='alert'>[src] whirrs and starts up!</span>")
+
+
 		src.eject_wait = 1
-		SPAWN_DBG(3 SECONDS)
+		SPAWN_DBG(5 SECONDS)
 			src.eject_wait = 0
 
 		if (istype(oldholder))
@@ -218,15 +233,38 @@
 		ghost.client.mob = src.occupant
 
 		if(src.occupant.bioHolder.clone_generation > 1)
-			src.occupant.setStatus("maxhealth-", null, -((src.occupant.bioHolder.clone_generation - 1) * 15))
+			var/health_penalty = (src.occupant.bioHolder.clone_generation - 1) * 15
+			src.occupant.setStatus("maxhealth-", null, -health_penalty)
+			if(health_penalty >= 100)
+				src.occupant.unlock_medal("Quit Cloning Around")
 
-		// @TODO Puritan needs some sort of new penalty rather than this...
-		// Lop off random limbs + give the bad clone mutation + fuck up health?
+
+
 		src.mess = 0
 		if (traits && traits.len && src.occupant.traitHolder)
 			src.occupant.traitHolder.traits = traits
 			if (src.occupant.traitHolder.hasTrait("puritan"))
 				src.mess = 1
+				// Puritans have a bad time.
+				// This is a little different from how it was before:
+				// - Immediately take 250 tox and 100 random brute
+				// - 50% chance, per limb, to lose that limb
+				// - enforced premature_clone, which gibs you on death
+				// If you have a clone body that's been allowed to fully heal before
+				// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
+				// out of deep critical health before they turn into chunky salsa
+				// This should be really rare to have happen, but I want to leave it in
+				// just in case someone manages to pull off a miracle save
+				src.occupant.bioHolder?.AddEffect("premature_clone")
+				src.occupant.take_toxin_damage(250)
+				random_brute_damage(src.occupant, 100, 0)
+				if (ishuman(src.occupant))
+					var/mob/living/carbon/human/P = src.occupant
+					if (P.limbs)
+						var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
+						for (var/limb in limbs)
+							if (prob(50))
+								P.limbs.sever(limb)
 
 		if (src.mess)
 			boutput(src.occupant, "<span class='notice'><b>Clone generation process initi&mdash;</b></span><span class='alert'> oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b></span>")
@@ -321,37 +359,20 @@
 		if (src.occupant && src.occupant.loc == src)
 			// If we have a body inside the pod right now...
 
-			var/abort = 0
 			if (src.occupant.traitHolder && src.occupant.traitHolder.hasTrait("puritan"))
-				// Puritans have a bad time.
-				// This is a little different from how it was before:
-				// - Immediately take 150 tox and 150 random brute
-				// - 50% chance, per limb, to lose that limb
-				// - enforced premature_clone, which gibs you on death
-				// If you have a clone body that's been allowed to fully heal before
-				// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
-				// out of deep critical health before they turn into chunky salsa
-				// This should be really rare to have happen, but I want to leave it in
-				// just in case someone manages to pull off a miracle save
-				abort = 1
-				src.occupant.bioHolder?.AddEffect("premature_clone")
-				src.occupant.take_toxin_damage(150)
-				random_brute_damage(src.occupant, 150, 0)
-				if (ishuman(src.occupant))
-					var/mob/living/carbon/human/P = src.occupant
-					if (P.limbs)
-						var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
-						for (var/limb in limbs)
-							if (prob(50))
-								P.limbs.sever(limb)
-				// src.occupant.death()
+				// puritans get punted out immediately
+				src.go_out(1)
+				src.connected_message("Clone Aborted: Genetic Structure Incompatible.")
+				src.send_pda_message("Clone Aborted: Genetic Structure Incompatible")
+				power_usage = 200
+				return ..()
 
 			if (src.cloneslave == 1 && prob(10))
 				// Mindslave cloning modules make obnoxious noises.
 				playsound(src.loc, pick("sound/machines/glitch1.ogg","sound/machines/glitch2.ogg",
 				"sound/machines/genetics.ogg","sound/machines/shieldoverload.ogg"), 50, 1)
 
-			if (isdead(src.occupant) || src.occupant.suiciding || abort)  //Autoeject corpses and suiciding dudes.
+			if (isdead(src.occupant) || src.occupant.suiciding)  //Autoeject corpses and suiciding dudes.
 				// Dead or suiciding people are ejected.
 				src.go_out(1)
 				src.connected_message("Clone Rejected: Deceased.")
@@ -380,14 +401,17 @@
 				return ..()
 
 			else if ((src.occupant.max_health - src.occupant.health) > src.heal_level)
+
+				if (src.attempting)
+					// If we're cloning an actual person, make weird noises
+					src.look_busy(prob(33))
+
 				// Otherwise, heal thyself, clone.
 				src.occupant.changeStatus("paralysis", 10 SECONDS)
 
 				// Slowly get that clone healed and finished.
-				//At this rate one clone takes about 95 seconds to produce.(with heal_level 90)
+				//At this rate one clone takes about 95 seconds to produce.
 				src.occupant.HealDamage("All", 1 * gen_bonus * mult, 1 * gen_bonus * mult)
-
-				// Zamujasa: changed -0.5 to -1; consistently the slowest type to heal
 				src.occupant.take_toxin_damage(-1 * gen_bonus * mult)
 
 				//Premature clones may have brain damage.
@@ -430,7 +454,6 @@
 				if ((src.occupant.health + (100 - src.occupant.max_health)) > 50 && src.failed_tick_counter >= 2 && !eject_wait)
 					// Wait a few ticks to see if they stop gaining health.
 					// Once that's the case, boot em
-					//
 					src.connected_message("Cloning Process Complete.")
 					src.send_pda_message("Cloning Process Complete")
 					src.go_out(1)
@@ -443,19 +466,19 @@
 			else if (src.occupant.max_health - src.occupant.health <= src.heal_level)
 				// Clone is more or less fully complete!
 
-				// Unlock the pod.
-				src.locked = 0
-
 				if (src.attempting && !eject_wait)
 					// If this body has an actual mind in it, they're done.
 					// Sure hope the outside is safe for ya.
 					src.connected_message("Cloning Process Complete.")
 					src.send_pda_message("Cloning Process Complete")
+					// literally ding like a microwave
+					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+					look_busy()
 					src.go_out(1)
 				else
 					// Clones that are idling get some freebies to keep them topped up
 					// until an actual person moves in
-					if (src.occupant.reagents.get_reagent_amount("salbutamol") < 6)
+					if (src.occupant.reagents.get_reagent_amount("salbutamol") < 2)
 						src.occupant.reagents.add_reagent("salbutamol", 2)
 					src.occupant.take_oxygen_deprivation(-10)
 					src.occupant.losebreath = 0
@@ -475,7 +498,9 @@
 
 			if (!src.operating && src.auto_mode)
 				// Attempt to start a new clone (if possible)
-				src.start_clone()
+				src.auto_delay -= mult
+				if (src.auto_delay < 0)
+					src.start_clone()
 
 			return ..()
 
@@ -518,8 +543,8 @@
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 			logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
-			speed_bonus *= 2
-			meat_used_per_tick *= 3
+			speed_bonus *= 3
+			meat_used_per_tick *= 4
 			is_speedy = 1
 			user.drop_item()
 			qdel(W)
@@ -631,6 +656,12 @@
 		src.operating = 0
 		src.attempting = 0
 
+		if ((src.occupant.max_health - src.occupant.health) > (heal_level + 30) && src.occupant.bioHolder)
+			// this seems to often not work right, changing 20 to 50
+			// changing to 30 and rewriting to consider the /damage/ someone has;
+			// max_health can vary depending on other
+			src.occupant.bioHolder.AddEffect("premature_clone")
+
 		if (src.mess) //Clean that mess and dump those gibs!
 			src.mess = 0
 			gibs(get_turf(src)) // we don't need to do if/else things just to say "put gibs on this thing's turf"
@@ -649,12 +680,6 @@
 
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
-
-		if ((src.occupant.max_health - src.occupant.health) > (heal_level + 30) && src.occupant.bioHolder)
-			// this seems to often not work right, changing 20 to 50
-			// changing to 30 and rewriting to consider the /damage/ someone has;
-			// max_health can vary depending on other factors
-			src.occupant.bioHolder.AddEffect("premature_clone")
 
 		if (src.occupant.get_oxygen_deprivation())
 			src.occupant.take_oxygen_deprivation(-INFINITY)
@@ -726,6 +751,14 @@
 			else
 		return
 
+	proc/look_busy(var/big = 0)
+		if (big)
+			animate_shake(src,5,rand(3,8),rand(3,8))
+			playsound(src.loc, pick(src.sounds_function), 50, 2)
+		else
+			animate_shake(src,3,rand(1,4),rand(1,4))
+
+
 	//SOME SCRAPS I GUESS
 	/* EMP grenade/spell effect
 			if(istype(A, /obj/machinery/clonepod))
@@ -778,9 +811,9 @@
 	verb/eject()
 		set src in oview(1)
 		set category = "Local"
-
 		if (!isalive(usr)) return
 		if (src.process_timer > 0) return
+		src.eject_meats()
 		src.go_out()
 		add_fingerprint(usr)
 		return
@@ -788,6 +821,11 @@
 	relaymove(mob/user as mob)
 		src.go_out()
 		return
+
+	proc/eject_meats()
+		for (var/obj/item/meat in src.meats)
+			meat.set_loc(src.loc)
+		src.meats = list()
 
 	proc/go_out()
 		if (!src.occupant)

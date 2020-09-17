@@ -1112,7 +1112,7 @@
 
 						mode.kidnapping_target = null
 						mode.kidnapp_success = 1
-						qdel(G.affecting)
+						G.affecting.remove()
 						qdel(G)
 			return
 

@@ -976,7 +976,7 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	examine(mob/user)
 		if (!issilicon(user))

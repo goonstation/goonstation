@@ -656,7 +656,7 @@
 		if (narrator_mode)
 			msgs.played_sound = 'sound/vox/hit.ogg'
 		else
-			msgs.played_sound = 'sound/impact_sounds/Generic_Punch_2.ogg'
+			msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
 		return
 
@@ -707,7 +707,7 @@
 
 		if (can_crit && prob(crit_chance))
 			msgs.stamina_crit = 1
-			msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
+			msgs.played_sound = pick(sounds_punch)
 			//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
 		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"

@@ -466,7 +466,7 @@
 		src.harmedBy(M)
 
 // also maybe we've just had environmental damage, who knows
-/mob/living/critter/flock/drone/TakeDamage(zone, brute, burn)
+/mob/living/critter/flock/drone/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	var/prev_damaged = src.damaged
 	src.check_health()

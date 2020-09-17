@@ -22,7 +22,7 @@
 	c_flags = COVERSEYES | COVERSMOUTH
 	setupProperties()
 		..()
-		setProperty("meleeprot", 6)
+		setProperty("meleeprot_head", 6)
 
 	red
 		desc = "Gotta protect your head! This helmet will certainly do the job. It has a Spacissippi Timberdoodles logo printed on it!"
@@ -106,7 +106,7 @@
 		src.take_brain_damage(1 + power * 0.1)
 
 	for (var/mob/C in viewers(src))
-		shake_camera(C, 6, 1)
+		shake_camera(C, 6, 16)
 	if (ismob(target))
 		var/mob/M = target
 		var/msg = pick("tackles", "rushes into", "sacks", "steamrolls", "plows into", "bashes", "leaps into", "runs into", "bowls over")

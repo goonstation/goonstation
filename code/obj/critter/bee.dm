@@ -241,7 +241,7 @@
 		is_pet = 2
 		var/tier = 0
 		var/original_tier = 0
-		var/original_hat_ref = ""
+		var/obj/item/clothing/head/original_hat
 		var/static/hat_tier_list = list(
 			///obj/item/clothing/head/butt,
 			/obj/item/clothing/head/paper_hat,
@@ -304,7 +304,7 @@
 					trans.Scale((ubertier - 4) / 3) // mmm, large hat
 					hat.transform = trans
 			hat.name = "[src]'s [hat.name]"
-			src.original_hat_ref = ref(hat)
+			src.original_hat = hat
 			src.hat_that_bee(hat)
 			src.update_icon()
 
@@ -320,7 +320,7 @@
 			. = ..()
 
 		attackby(obj/item/W, mob/living/user)
-			if(!src.hat && ref(W) == src.original_hat_ref) // ...unless you return the hat!
+			if(!src.hat && W == src.original_hat) // ...unless you return the hat!
 				if(src.alive)
 					boutput(user, "<span class='emote'>[src] bubmles happily at the sight of [W]!</span>")
 				src.tier = src.original_tier
