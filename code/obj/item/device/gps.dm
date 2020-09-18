@@ -201,11 +201,16 @@
 	New()
 		..()
 		serial = rand(4201,7999)
-		desc += " Its serial code is [src.serial]-[identifier]."
 		START_TRACKING
 		if (radio_controller)
 			src.net_id = generate_net_id(src)
 			radio_control = radio_controller.add_object(src, "[frequency]")
+
+	get_desc(dist, mob/user)
+		. = "<br>Its serial code is [src.serial]-[identifier]."
+		if (dist > 2)
+			return
+		. += "<br>There's a sticker on the back saying Net Identifier: [net_id] on it."
 
 	proc/obtain_target_from_coords(href_list)
 		if (href_list["dest_cords"])
