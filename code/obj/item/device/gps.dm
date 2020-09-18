@@ -210,7 +210,7 @@
 		. = "<br>Its serial code is [src.serial]-[identifier]."
 		if (dist > 2)
 			return
-		. += "<br>There's a sticker on the back saying Net Identifier: [net_id] on it."
+		. += "<br>There's a sticker on the back saying \"Net Identifier: [net_id]\" on it."
 
 	proc/obtain_target_from_coords(href_list)
 		if (href_list["dest_cords"])
