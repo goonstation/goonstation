@@ -293,7 +293,7 @@
 					if (!sender)
 						return
 
-					var/turf/T = get_turf(usr)
+					var/turf/T = get_turf(src)
 					var/datum/signal/reply = get_free_signal()
 					reply.source = src
 					reply.data["sender"] = src.net_id
@@ -309,11 +309,11 @@
 		else if (lowertext(signal.data["address_1"]) == "ping" && src.allowtrack)
 			var/datum/signal/pingsignal = get_free_signal()
 			pingsignal.source = src
-			pingsignal.data["device"] = "WNET_GPS_" + identifier
+			pingsignal.data["device"] = "WNET_GPS"
 			pingsignal.data["netid"] = src.net_id
 			pingsignal.data["address_1"] = signal.data["sender"]
 			pingsignal.data["command"] = "ping_reply"
-			pingsignal.data["identifier"] = "[src.serial]-[src.identifier]"
+			pingsignal.data["data"] = "[src.serial]-[src.identifier]"
 			pingsignal.data["distress"] = "[src.distress]"
 			pingsignal.transmission_method = TRANSMISSION_RADIO
 
