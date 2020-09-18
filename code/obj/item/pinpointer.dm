@@ -185,7 +185,7 @@
 	var/active = 0
 	var/target = null
 	mats = 4
-	desc = "Tracks down people from their blood puddles! Requires you to stand still to function."
+	desc = "Tracks down people from their blood puddles!"
 	var/blood_timer = 0
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
