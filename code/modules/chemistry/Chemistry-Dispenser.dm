@@ -21,9 +21,6 @@
 	var/obj/item/card/id/user_id = null
 	var/datum/reagent_group_account/current_account = null
 	var/list/accounts = list()
-	var/doing_a_thing = 0
-	var/user_dispense_amt = 10 // users can set this to dispense a custom amount of stuff, rounded to 1 and between 1-100
-	var/user_remove_amt = 20 // same as above but for removing chems
 	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
 	var/output_target = null
 
@@ -150,16 +147,33 @@
 			ui = new(user, src, "ChemDispenser", src.name)
 			ui.open()
 
+	ui_static_data(mob/user)
+		var/list/static_data = list()
+		var/list/dispensableReagentsTemp = list()
+		if(dispensable_reagents)
+			for(var/reagent in dispensable_reagents)
+				var/datum/reagent/current_reagent = reagents_cache[reagent]
+				dispensableReagentsTemp.Add(list(list(
+					name = current_reagent.name,
+					colorR = current_reagent.fluid_r,
+					colorG = current_reagent.fluid_g,
+					colorB = current_reagent.fluid_b,
+					state = current_reagent.reagent_state,
+					id = reagent
+				)))
+		static_data["beakerName"] = glass_name
+		static_data["dispensableReagents"] = dispensableReagentsTemp
+
+		return static_data
+
 	ui_data(mob/user)
 		var/list/data = list()
 		var/list/beakerContentsTemp = list()
-		var/list/dispensableReagentsTemp = list()
 		var/list/groupListTemp = list()
 		data["idCardInserted"] = !isnull(src.user_id)
 		data["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
 		data["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
 		data["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
-		data["beakerName"] = glass_name
 		if(beaker)
 			var/datum/reagents/R = beaker:reagents
 			var/datum/color/average = R.get_average_color()
@@ -177,17 +191,6 @@
 						state = current_reagent.reagent_state,
 						volume = current_reagent.volume
 					)))
-		if(dispensable_reagents)
-			for(var/reagent in dispensable_reagents)
-				var/datum/reagent/current_reagent = reagents_cache[reagent]
-				dispensableReagentsTemp.Add(list(list(
-					name = current_reagent.name,
-					colorR = current_reagent.fluid_r,
-					colorG = current_reagent.fluid_g,
-					colorB = current_reagent.fluid_b,
-					state = current_reagent.reagent_state,
-					id = reagent
-				)))
 		if(current_account)
 			for (var/datum/reagent_group/group in current_account.groups)
 				groupListTemp.Add(list(list(
@@ -196,10 +199,7 @@
 					ref = ref(group)
 				)))
 		data["groupList"] = groupListTemp
-		data["dispensableReagents"] = dispensableReagentsTemp
 		data["beakerContents"] = beakerContentsTemp
-		data["removeAmount"] = user_remove_amt
-		data["addAmount"] = user_dispense_amt
 		return data
 
 	ui_act(action, params)
@@ -209,7 +209,8 @@
 			if("dispense")
 				if (!(params["reagentId"] in dispensable_reagents))
 					return
-				beaker.reagents.add_reagent(params["reagentId"], isnum(src.user_dispense_amt) ? src.user_dispense_amt : 10)
+				var/amount = clamp(round(params["amount"]), 1, 100)
+				beaker.reagents.add_reagent(params["reagentId"], isnum(amount) ? amount : 10)
 				beaker.reagents.handle_reactions()
 				src.update_icon()
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
@@ -229,7 +230,8 @@
 						src.update_icon()
 						. = TRUE
 			if("remove")
-				beaker.reagents.remove_reagent(params["reagentId"], params["amount"])
+				var/amount = clamp(round(params["amount"]), 1, 100)
+				beaker.reagents.remove_reagent(params["reagentId"], isnum(amount) ? amount : 10)
 				src.update_icon()
 				. = TRUE
 			if("isolate")
@@ -239,12 +241,6 @@
 			if("all")
 				beaker.reagents.del_reagent(params["reagentId"])
 				src.update_icon()
-				. = TRUE
-			if("setDispense")
-				src.user_dispense_amt = clamp(round(params["amount"]), 1, 100)
-				. = TRUE
-			if("setRemove")
-				src.user_remove_amt = clamp(round(params["amount"]), 1, 100)
 				. = TRUE
 			if("newGroup")
 				var/reagents = params["reagents"]

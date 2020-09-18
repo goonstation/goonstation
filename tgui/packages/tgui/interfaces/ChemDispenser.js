@@ -63,10 +63,10 @@ export const ReagentDispenser = (props, context) => {
   const {
     beakerName,
     currentBeakerName,
-    addAmount,
     maximumBeakerVolume,
     beakerTotalVolume,
   } = data;
+  const [addAmount, setAddAmount] = useLocalState(context, 'addAmount', 20);
   const [iconToggle, setIconToggle] = useSharedState(context, 'iconToggle', false);
   const [hoverOverId, setHoverOverId] = useLocalState(context, 'hoverOver', "");
 
@@ -105,27 +105,27 @@ export const ReagentDispenser = (props, context) => {
           {"Dispense Amount: "}
           <NumberInput
             value={addAmount}
-            width={5}
+            format={value => value + "u"}
+            width={4}
             minValue={1}
             maxValue={100}
-            onChange={(e, value) => act("setDispense", {
-              amount: value,
-            })} />
+            onDrag={(e, value) => setAddAmount(value)} />
         </Box>
       )}>
-      {(!maximumBeakerVolume || maximumBeakerVolume === beakerTotalVolume) && (
-        <Modal
-          fontSize="20px"
-          mr={2}
-          p={3}>
-          <Box>
-            {!maximumBeakerVolume &&(
-              "No " + titleCase(beakerName) + " Inserted"
-            ) || titleCase(currentBeakerName) + " Full"}
-          </Box>
-        </Modal>
-      )}
-      <Box>
+      <Section fitted backgroundColor="rgba(0,0,0,0)">
+        {(!maximumBeakerVolume || maximumBeakerVolume
+        === beakerTotalVolume) && (
+          <Modal
+            fontSize="20px"
+            mr={2}
+            p={3}>
+            <Box>
+              {!maximumBeakerVolume &&(
+                "No " + titleCase(beakerName) + " Inserted"
+              ) || titleCase(currentBeakerName) + " Full"}
+            </Box>
+          </Modal>
+        )}
         {dispensableReagents.map((reagent, index) => (
           <Button
             key={index}
@@ -138,7 +138,7 @@ export const ReagentDispenser = (props, context) => {
             disabled={maximumBeakerVolume === beakerTotalVolume}
             lineHeight={1.75}
             onClick={() => act("dispense", {
-              reagentId: reagent.id,
+              amount: addAmount, reagentId: reagent.id,
             })}>
             <Icon
               style={{
@@ -155,8 +155,8 @@ export const ReagentDispenser = (props, context) => {
             )}
           </Button>
         ))}
-        <Box italic pt={0.5}> {"Reagent ID: " + hoverOverId}</Box>
-      </Box>
+      </Section>
+      <Box italic pt={0.5}> {"Reagent ID: " + hoverOverId}</Box>
     </Section>
   );
 };
@@ -168,10 +168,10 @@ export const Beaker = (props, context) => {
     maximumBeakerVolume,
     currentBeakerName,
     beakerTotalVolume,
-    removeAmount,
   } = data;
 
   const [iconToggle] = useSharedState(context, 'iconToggle', false);
+  const [removeAmount, setRemoveAmount] = useLocalState(context, 'removeAmount', 20);
   const removeReagentButtons = [removeAmount, 10, 5, 1];
   const beakerContents = data.beakerContents || [];
 
@@ -189,13 +189,12 @@ export const Beaker = (props, context) => {
         <Box align="left" as="span">
           {"Remove Amount: "}
           <NumberInput
-            width={5}
+            width={4}
+            format={value => value + "u"}
             value={removeAmount}
             minValue={1}
             maxValue={100}
-            onChange={(e, value) => act("setRemove", {
-              amount: value,
-            })} />
+            onDrag={(e, value) => setRemoveAmount(value)} />
         </Box>
       )}>
       <Table.Row>
@@ -238,7 +237,7 @@ export const Beaker = (props, context) => {
               <Button
                 icon="minus"
                 onClick={() => act("all", {
-                  reagentId: reagent.id,
+                  amount: removeAmount, reagentId: reagent.id,
                 })}>
                 All
               </Button>
