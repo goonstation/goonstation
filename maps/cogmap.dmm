@@ -6001,6 +6001,11 @@
 "anN" = (
 /obj/structure/girder,
 /obj/grille/steel,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/airless/damaged2,
 /area/station/wreckage)
 "anO" = (
@@ -6520,10 +6525,20 @@
 /area/station/wreckage)
 "aoY" = (
 /obj/decal/cleanable/oil,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/airless/grime,
 /area/station/wreckage)
 "aoZ" = (
 /obj/item/raw_material/rock,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/airless/grime,
 /area/station/wreckage)
 "apa" = (
@@ -6533,6 +6548,11 @@
 	icon_state = "2-4"
 	},
 /obj/creepy_sound_trigger,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/wreckage)
 "apb" = (
@@ -62997,6 +63017,13 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"fSi" = (
+/obj/lattice,
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
+/turf/space,
+/area/station/wreckage)
 "fVA" = (
 /obj/machinery/portable_atmospherics/canister/empty,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -63572,13 +63599,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
-"rxq" = (
-/obj/lattice,
-/obj/machinery/light/small/broken{
-	dir = 4
-	},
-/turf/space,
-/area/station/wreckage)
 "rEe" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -98447,7 +98467,7 @@ aaa
 aaa
 ajz
 aky
-rxq
+fSi
 amz
 anO
 apa
