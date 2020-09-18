@@ -50,6 +50,7 @@ const AirlockAndAccessPanel = (props, context) => {
     canAiControl,
     hackMessage,
     canAiHack,
+    netId,
   } = data;
 
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex',
@@ -63,7 +64,7 @@ const AirlockAndAccessPanel = (props, context) => {
   return (
     <Window
       width={354}
-      height={485}
+      height={495}
       theme="ntos"
       title={"Airlock - " + name}>
       <Window.Content>
@@ -97,6 +98,9 @@ const AirlockAndAccessPanel = (props, context) => {
               <AccessAndDoorControl />
               <Electrify />
             </Section>
+            <Section>
+              {"Access sensor reports the net identifer is:"} <Box inline italic>{netId}</Box>
+            </Section>
             {!!canAiHack && (
               <Hack />
             )}
@@ -118,12 +122,13 @@ const AirlockControlsOnly = (props, context) => {
     canAiControl,
     hackMessage,
     canAiHack,
+    netId,
   } = data;
 
   return (
     <Window
       width={354}
-      height={370}
+      height={405}
       theme="ntos"
       title={"Airlock - " + name}>
       <Window.Content>
@@ -142,9 +147,9 @@ const AirlockControlsOnly = (props, context) => {
           <AccessAndDoorControl />
           <Electrify />
         </Section>
-        {!!canAiHack && (
-          <Hack />
-        )}
+        <Section>
+          {"Access sensor reports the net identifer is:"} <Box inline italic>{netId}</Box>
+        </Section>
       </Window.Content>
     </Window>
   );
@@ -323,6 +328,7 @@ const Electrify = (props, context) => {
     backupTimeLeft,
     wires,
     shockTimeLeft,
+    netId,
   } = data;
 
   return (
@@ -394,11 +400,10 @@ const Hack = (props, context) => {
       <Button
         bold
         color="bad"
-        fontSize="33px"
+        fontSize="25px"
         fontFamily="monospace"
         disabled={aiHacking}
         width={20}
-        py={0}
         onClick={() => act("hackAirlock")}>
         {aiHacking ? "Hacking..." : "HACK"}
       </Button>
