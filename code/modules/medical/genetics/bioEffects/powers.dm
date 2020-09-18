@@ -1873,11 +1873,11 @@
 				if ((world.timeofday - last_moved_world) >= 30 && can_act(owner) && src.active)
 					L.UpdateOverlays(overlay_image, id)
 					L.invisibility = 1
-			else
-				last_moved = owner.l_move_time
-				last_moved_world = 0
-				L.UpdateOverlays(null, id)
-				L.invisibility = 0
+
+	proc/decloak()
+		last_moved_world = world.timeofday
+		L.UpdateOverlays(null, id)
+		L.invisibility = 0
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"
@@ -1893,9 +1893,11 @@
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0
+			RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED), .proc/decloak)
 		else
 			boutput(usr, "You start using your chameleon cloaking.")
 			CH.active = 1
+			UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
