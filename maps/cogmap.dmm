@@ -5055,13 +5055,6 @@
 /obj/lattice,
 /turf/space,
 /area/station/wreckage)
-"alE" = (
-/obj/lattice,
-/obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
-	},
-/turf/space,
-/area/station/wreckage)
 "alF" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/wreckage)
@@ -63579,6 +63572,13 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
+"rxq" = (
+/obj/lattice,
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
+/turf/space,
+/area/station/wreckage)
 "rEe" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -98447,7 +98447,7 @@ aaa
 aaa
 ajz
 aky
-alE
+rxq
 amz
 anO
 apa
