@@ -351,10 +351,28 @@
 		qdel(src)
 		return
 
-/obj/artifact_spawner/vurdalak
+/obj/artifact_type_spawner
+	var/list/types = list()
+
 	New(var/loc)
 		..()
-		var/turf/T = get_turf(src)
-		Artifact_Spawn(T)
+		Artifact_Spawn(src.loc, forceartitype = pick(src.types))
 		qdel(src)
 		return
+
+/obj/artifact_type_spawner/vurdalak
+
+	New(var/loc)
+		src.types = concrete_typesof(/datum/artifact)
+		..()
+
+// I removed mining artifacts from this list because they are kinda not in the game right now
+/obj/artifact_type_spawner/gragg
+	types = list(
+		/datum/artifact/activator_key,
+		/datum/artifact/wallwand,
+		/datum/artifact/melee,
+		/datum/artifact/telewand,
+		/datum/artifact/energygun,
+		/datum/artifact/watercan
+		)

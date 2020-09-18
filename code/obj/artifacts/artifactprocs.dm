@@ -1,4 +1,4 @@
-/proc/Artifact_Spawn(var/atom/T,var/forceartiorigin)
+/proc/Artifact_Spawn(var/atom/T,var/forceartiorigin, var/datum/artifact/forceartitype = null)
 	if (!T)
 		return
 	if (!istype(T,/turf/) && !istype(T,/obj/))
@@ -19,24 +19,31 @@
 
 	var/list/selection_pool = list()
 
-	for (var/datum/artifact/A in artifact_controls.artifact_types)
-		if (A.rarity_class != rarityroll)
-			continue
-		if (istext(forceartiorigin) && !(forceartiorigin in A.validtypes))
-			continue
-		selection_pool += A
+	if(forceartitype)
+		selection_pool += forceartitype
+	else
+		for (var/datum/artifact/A in concrete_typesof(/datum/artifact))
+			if (initial(A.rarity_class) != rarityroll)
+				continue
+			if (istext(forceartiorigin) && !(forceartiorigin in initial(A.validtypes)))
+				continue
+			selection_pool += A
 
 	if (selection_pool.len < 1)
 		return
 
 	var/datum/artifact/picked = pick(selection_pool)
-	if (!istype(picked,/datum/artifact/))
+
+	var/type = null
+	if(ispath(picked,/datum/artifact/))
+		type = initial(picked.associated_object)	// artifact type
+	else
 		return
 
 	if (istext(forceartiorigin))
-		new picked.associated_object(T,forceartiorigin)
+		new type(T,forceartiorigin)
 	else
-		new picked.associated_object(T)
+		new type(T)
 
 /obj/proc/ArtifactSanityCheck()
 	// This proc is called in any other proc or thing that uses the new artifact shit. If there was an improper artifact variable
