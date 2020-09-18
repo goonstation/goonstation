@@ -155,12 +155,6 @@ var/global/derelict_mode = 0
 			sleep(1 SECOND)
 			boutput(world, "<tt>BUG: CPU0 on fire!</tt>")
 			logTheThing("diary", null, null, "The server would have restarted, if I hadn't removed the line of code that does that. Instead, we play through.", "game")
-			
-			SPAWN_DBG(5 SECONDS)
-				for (var/client/C in clients)
-					cinematic.remove_client(C)
-
-
 			// sleep(15 SECONDS)
 			// Reboot_server()
 
