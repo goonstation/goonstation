@@ -94,7 +94,7 @@
 		jobs["Clown"] = PAY_DUMBCLOWN
 //		jobs["Chemist"] = PAY_DOCTORATE
 		jobs["Quartermaster"] = PAY_TRADESMAN
-		jobs["Botanist"] = PAY_SEXNUMBER
+		jobs["Botanist"] = PAY_TRADESMAN
 //		jobs["Attorney at Space-Law"] = PAY_DOCTORATE
 		jobs["Staff Assistant"] = PAY_UNTRAINED
 		jobs["Medical Assistant"] = PAY_UNTRAINED

@@ -827,7 +827,7 @@
 	#else
 	limit = 5
 	#endif
-	wages = PAY_SEXNUMBER
+	wages = PAY_TRADESMAN
 	slot_belt = /obj/item/device/pda2/botanist
 	slot_jump = /obj/item/clothing/under/rank/hydroponics
 	slot_foot = /obj/item/clothing/shoes/brown
@@ -1880,7 +1880,7 @@
 
 /datum/job/special/halloween/ghost
 	name = "Ghost"
-	wages = PAY_WEEDSMOKE
+	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
 	slot_eyes = /obj/item/clothing/glasses/regular/ecto/goggles
@@ -1895,7 +1895,7 @@
 
 /datum/job/special/halloween/ghost_buster
 	name = "Ghost Buster"
-	wages = PAY_WEEDSMOKE
+	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
 	slot_ears = /obj/item/device/radio/headset/command/captain
@@ -1957,7 +1957,7 @@
 
 /datum/job/special/halloween/devil
 	name = "Devil"
-	wages = PAY_SEXNUMBER
+	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
 	slot_head = /obj/item/clothing/head/devil
@@ -2432,7 +2432,8 @@
 
 /datum/job/daily/friday
 	name = "Tourist"
-	limit = PAY_WEEDSMOKE
+	limit = 100
+	wages = 0
 	linkcolor = "#FF99FF"
 	slot_back = null
 	slot_belt = /obj/item/storage/fanny
