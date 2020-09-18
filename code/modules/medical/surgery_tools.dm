@@ -1156,13 +1156,11 @@ CONTAINS:
 			..() //Lets it do the turf-to-turf slide
 			return
 		else if (istype(over_object, /obj/screen/hud))
-			MouseDrop(usr) //Try to fold & pick up the bag instead
-			return
-		else if (!ismob(over_object))
+			over_object = usr //Try to fold & pick up the bag with your mob instead
+		else if (!(over_object == usr))
 			return
 		..()
-		var/mob/user = over_object
-		if (!(src.contents && src.contents.len) && (usr == user && !usr.restrained() && !usr.stat && in_range(src, usr) && !issilicon(usr)))
+		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && IN_RANGE(src, usr, 1) && !issilicon(usr))
 			if (src.icon_state != "bodybag")
 				usr.visible_message("<b>[usr]</b> folds up [src].",\
 				"You fold up [src].")
