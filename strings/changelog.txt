@@ -4,6 +4,9 @@
 (p)2219
 (e)⚖|balance
 (+)The Detectives BloodTrak now also works while moving but will shut down after a while, depending on how fresh the used blood was.
+(u)kyle
+(+)Lowered standard kudzu's to_spread cap somewhat. Trying to make placing the kudzu a more strategic selection than just placing it anywhere.
+(+)Health analyzers with a reagent scan upgrade now show if a subject is OD-ing on a reagent in their system. (note. Not all dangerous or deadly chems have OD thresholds so this doens't necessarily indicate poisons)
 (t)thu sep 17 20
 (u)adharainspace
 (p)2201
