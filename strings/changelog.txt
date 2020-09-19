@@ -1,4 +1,9 @@
 
+(t)sat sep 19 20
+(u)zjdtmkhzt
+(p)2219
+(e)⚖|balance
+(+)The Detectives BloodTrak now also works while moving but will shut down after a while, depending on how fresh the used blood was.
 (t)thu sep 17 20
 (u)adharainspace
 (p)2201
