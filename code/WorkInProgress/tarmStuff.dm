@@ -242,8 +242,6 @@ obj/item/ammo/bullets/gyrojet
 					incr = (currentench <= 2) ? rand(1, 3) : 1
 					I.setProperty("enchantweapon", currentench+incr)
 					success = 1
-			else
-				return ..()
 			if(success)
 				var/turf/T = get_turf(target)
 				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
@@ -268,8 +266,6 @@ obj/item/ammo/bullets/gyrojet
 	else
 		currentench = src.getProperty("enchantweapon")
 		src.setProperty("enchantweapon", currentench+incr)
-	else
-		return
 	src.remove_prefixes("[currentench>0?"+":""][currentench]")
 	if(currentench+incr)
 		src.name_prefix("[(currentench+incr)>0?"+":""][currentench+incr]")
