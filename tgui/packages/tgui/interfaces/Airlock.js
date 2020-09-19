@@ -1,3 +1,10 @@
+/**
+* @file
+* @copyright 2020
+* @author ThePotato97 (https://github.com/ThePotato97)
+* @license ISC
+*/
+
 import { Fragment } from "inferno";
 import { useBackend, useLocalState } from "../backend";
 import { Button, LabeledList, Section, Modal, Flex, Tabs, Box, NoticeBox, Divider } from "../components";
@@ -15,7 +22,7 @@ export const uiCurrentUserPermissions = data => {
       (userStates.isBorg && userStates.distance <= 3 && panelOpen)
       || (userStates.isCarbon && panelOpen)
     ),
-    // shows too far message on access panel when the mob is
+    // shows too far message on access panel when the mob is not in range
     accessPanelNotTooFar: (
       userStates.isBorg && userStates.distance <= 1 && panelOpen
     ),
@@ -27,7 +34,7 @@ export const Airlock = (props, context) => {
   const { data } = useBackend(context);
 
   const userPerms = uiCurrentUserPermissions(data);
-
+  //  We render 3 different interfaces so we can change the window sizes
   return (
     <Window>
       <Window.Content>
@@ -127,8 +134,8 @@ const AirlockControlsOnly = (props, context) => {
 
   return (
     <Window
-      width={354}
-      height={405}
+      width={327}
+      height={385}
       theme="ntos"
       title={"Airlock - " + name}>
       <Window.Content>
@@ -136,7 +143,7 @@ const AirlockControlsOnly = (props, context) => {
           {(!canAiControl) && (
             <Modal
               textAlign="center"
-              fontSize="24px">
+              fontSize="20px">
               {hackMessage ? hackMessage : "Airlock Controls Disabled"}
               {!!canAiHack && (
                 <Hack />
@@ -182,6 +189,11 @@ const PowerStatus = (props, context) => {
     wires,
   } = data;
 
+  const buttonProps = {
+    width: 6.7,
+    textAlign: "center",
+  };
+
   return (
     <Section title="Power Status">
       <LabeledList>
@@ -190,9 +202,7 @@ const PowerStatus = (props, context) => {
           color={mainTimeLeft ? "bad" : "good"}
           buttons={(
             <Button
-              py={0.5}
-              width={6.7}
-              align="center"
+              {...buttonProps}
               color="bad"
               icon="plug"
               disabled={!!mainTimeLeft}
@@ -212,9 +222,7 @@ const PowerStatus = (props, context) => {
           color={backupTimeLeft ? "bad": "good"}
           buttons={(
             <Button
-              py={0.5}
-              width={6.7}
-              align="center"
+              {...buttonProps}
               mt={0.5}
               color="bad"
               icon="plug"
@@ -247,8 +255,10 @@ const AccessAndDoorControl = (props, context) => {
     welded,
   } = data;
 
-  const isDisabled = (data.status === 2);
-
+  const buttonProps = {
+    width: 6.7,
+    textAlign: "center",
+  };
   return (
     <Section title="Access and Door Control"
       pt={1}>
@@ -258,9 +268,7 @@ const AccessAndDoorControl = (props, context) => {
           color="bad"
           buttons={(
             <Button
-              py={0.5}
-              width={6.7}
-              align="center"
+              {...buttonProps}
               color={idScanner ? "good" : "bad"}
               icon={idScanner ? "power-off" : "times"}
               disabled={!wires.idScanner
@@ -276,14 +284,12 @@ const AccessAndDoorControl = (props, context) => {
           color="bad"
           buttons={(
             <Button
-              py={0.5}
               mt={0.5}
-              width={6.7}
-              align="center"
+              {...buttonProps}
               color={!boltsAreUp ? "bad" : "good"}
               icon={!boltsAreUp ? "unlock" : "lock"}
               disabled={!wires.bolts
-                || (mainTimeLeft && backupTimeLeft) || (isDisabled)}
+                || (mainTimeLeft && backupTimeLeft)}
               onClick={() => act("boltToggle")}>
               {!boltsAreUp ? "Lowered" : "Raised"}
             </Button>
@@ -295,23 +301,21 @@ const AccessAndDoorControl = (props, context) => {
           color="bad"
           buttons={(
             <Button
-              py={0.5}
-              width={6.7}
-              align="center"
+              {...buttonProps}
               mt={0.5}
               color={opened ? "bad" : "good"}
               icon={opened ? "sign-out-alt" : "sign-in-alt"}
               disabled={(!boltsAreUp || welded)
-                || (mainTimeLeft && backupTimeLeft) || (isDisabled)}
+                || (mainTimeLeft && backupTimeLeft)}
               onClick={() => act("openClose")}>
               {opened ? "Open" : "Closed"}
             </Button>
           )}>
           {!!(!boltsAreUp || welded) && (
             <span>
-              [Door is {!boltsAreUp ? "bolted" : ""}
-              {(!boltsAreUp && welded) ? " and " : ""}
-              {welded ? "welded" : ""}!]
+              [{!boltsAreUp && "Bolted"}
+              {(!boltsAreUp && welded) && " & "}
+              {welded && "Welded"}!]
             </span>
           )}
         </LabeledList.Item>
@@ -328,7 +332,6 @@ const Electrify = (props, context) => {
     backupTimeLeft,
     wires,
     shockTimeLeft,
-    netId,
   } = data;
 
   return (
@@ -350,13 +353,12 @@ const Electrify = (props, context) => {
           <LabeledList.Item
             color={!shockTimeLeft ? "Average" : "Bad"}>
             <Box
-              pl={shockTimeLeft ? 21 : 0}
-              pb={0}
+              pl={shockTimeLeft ? 18 : 0}
               pt={0.5}>
               {(!shockTimeLeft &&(
                 <Button.Confirm
-                  p={1}
                   width={9}
+                  p={0.5}
                   align="center"
                   color="average"
                   content="Temporary"
@@ -367,8 +369,8 @@ const Electrify = (props, context) => {
                   onClick={(() => act("shockTemp"))} />
               ))}
               <Button.Confirm
-                p={1}
                 width={9}
+                p={0.5}
                 align="center"
                 color={shockTimeLeft ? "good" : "bad"}
                 icon="bolt"
@@ -395,7 +397,7 @@ const Hack = (props, context) => {
 
   return (
     <Box
-      m={-1} py={0.5} pt={2}
+      fitted py={0.5} pt={2}
       align="center">
       <Button
         bold
@@ -403,7 +405,7 @@ const Hack = (props, context) => {
         fontSize="25px"
         fontFamily="monospace"
         disabled={aiHacking}
-        width={20}
+        width={15}
         onClick={() => act("hackAirlock")}>
         {aiHacking ? "Hacking..." : "HACK"}
       </Button>

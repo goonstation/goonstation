@@ -1749,7 +1749,6 @@ obj/machinery/door/airlock
 	data["boltsAreUp"] = !src.locked // not bolted
 	data["welded"] = welded // welded
 	data["opened"] = !density // opened
-	data["status"] = src.status
 	data["canAiControl"] = canAIControl()
 	data["aiHacking"] = src.aiHacking
 	data["canAiHack"] = canAIHack()
