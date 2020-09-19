@@ -2572,7 +2572,7 @@ var/global/night_mode_enabled = 0
 
 
 /client/proc/retreat_to_office()
-	set name = "retreat to office"
+	set name = "Retreat To Office"
 	set desc = "Retreat to my office at centcom."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
