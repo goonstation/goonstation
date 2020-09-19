@@ -3,9 +3,8 @@
 	boutput(world, "<h1 class='alert'>[big_title]</h1>")
 
 	if(do_sanitize)
-		title = html_encode(title)
-		text = html_encode(text)
-	text = replacetext(text, "\n", "<br>")
+		title = sanitize(title)
+		text = sanitize(text)
 
 	if (title && length(title) > 0)
 		boutput(world, "<h2 class='alert'>[title]</h2>")
@@ -19,9 +18,8 @@
 	if(!title || !text) return
 
 	if(do_sanitize)
-		title = html_encode(title)
-		text = html_encode(text)
-	text = replacetext(text, "\n", "<br>")
+		title = sanitize(title)
+		text = sanitize(text)
 
 	boutput(world, "<h2 class='alert'>[title]</h2>")
 
