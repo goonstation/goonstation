@@ -126,7 +126,7 @@
 	logTheThing("diary", client.mob, null, "MENTORHELP: [msg]", "mhelp")
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.real_name
+	ircmsg["name"] = client.mob.job ? "[client.mob.real_name] \[[client.mob.job]]" : client.mob.real_name
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("mentorhelp", ircmsg)
 
