@@ -1683,10 +1683,162 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		src.ai.was_harmed(weapon,M)
 	..()
 
-/mob/living/bullet_act(var/obj/projectile/P)
-	if (P.mob_shooter)
-		src.was_harmed(P.mob_shooter)
-	..()
+/mob/living/bullet_act(var/obj/projectile/P, mob/meatshield)
+	log_shot(P,src)
+	if (ismob(P.shooter))
+		var/mob/living/M = P.shooter
+		if (P.name != "energy bolt" && M && M.mind)
+			M.mind.violated_hippocratic_oath = 1
+
+	if (src.nodamage) return 0
+	if (src.spellshield)
+		src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
+		return 0
+	for (var/obj/item/device/shield/S in src)
+		if (S.active)
+			if (P.proj_data.damage_type == D_KINETIC)
+				src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
+				return 0
+			S.active = 0
+			S.icon_state = "shield0"
+
+	if (HAS_MOB_PROPERTY(src, PROP_REFLECTPROT))
+		var/obj/item/equipped = src.equipped()
+		if (equipped && istype(equipped,/obj/item/sword))
+			var/obj/item/sword/S = equipped
+			S.handle_deflect_visuals(src)
+
+		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
+		P.die()
+		src.visible_message("<span class='alert'>[src] reflected [Q.name] with [equipped]!</span>")
+		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
+		return 0
+
+	if (P?.proj_data?.is_magical  && src?.traitHolder?.hasTrait("training_chaplain"))
+		src.visible_message("<span class='alert'>A divine light absorbs the magical projectile!</span>")
+		playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+		P.die()
+		return 0
+
+	if(src.material) src.material.triggerOnBullet(src, src, P)
+	for (var/atom/A in src)
+		if (A.material)
+			if(src.material) src.material.triggerOnBullet(A, src, P)
+
+	if (!P.proj_data)
+		return 0
+
+	if (!meatshield && locate(/obj/item/grab, src))
+		var/mob/hostage = null
+		var/obj/item/grab/G = find_type_in_hand(/obj/item/grab)
+		if(G && G.affecting && G.state >= 2 && P.shooter != G.affecting) //If you grab someone they can still shoot you
+			hostage = G.affecting
+		if (hostage)
+			hostage.bullet_act(P, src)
+
+			//moved here so that it displays after the bullet hit message
+			if(prob(20)) //This should probably not be bulletproof, har har
+				hostage.visible_message("<span class='combat bold'>[hostage] is knocked out of [src]'s grip by the force of the [P.name]!</span>")
+				qdel(G)
+			return hostage
+
+	if (!P.proj_data.silentshot && !P.proj_data.nomsg)
+		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name]!</span>")
+
+	for (var/mob/V in by_cat[TR_CAT_NERVOUS_MOBS])
+		if (get_dist(src,V) > 6)
+			continue
+		if(prob(8) && src)
+			if(src != V)
+				V.emote("scream")
+				V.changeStatus("stunned", 2 SECONDS)
+
+// ahhhh fuck this im just making every shot be a chest shot for now -drsingh
+	var/damage = 0
+	var/stun = 0 //HEY this doesnt actually stun. its the number to reduce stamina. gosh.
+	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
+		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
+
+	var/rangedprot = get_ranged_protection() //will be 1 unless overridden
+	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
+		switch(P.proj_data.damage_type)
+			if (D_KINETIC)
+				if (stun > 0)
+					src.remove_stamina(min(round(stun/rangedprot, 0.5) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.stamina_stun()
+
+				src.TakeDamage("chest", (damage/rangedprot), 0, 0, DAMAGE_BLUNT)
+				if (stat==0) lastgasp()
+
+			if (D_PIERCING)
+				if (stun > 0)
+					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.stamina_stun()
+
+				src.TakeDamage("chest", damage/max((rangedprot/3), 1), 0, 0, DAMAGE_STAB)
+				if (stat==0) lastgasp()
+
+			if (D_SLASHING)
+				if (stun > 0)
+					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.stamina_stun()
+
+				if (rangedprot > 1)
+					src.TakeDamage("chest", (damage/rangedprot), 0, 0, DAMAGE_BLUNT)
+				else
+					src.TakeDamage("chest", (damage*2), 0, 0, DAMAGE_CUT)
+
+			if (D_ENERGY)
+				if (stun > 0)
+					src.do_disorient(clamp(stun*4, P.proj_data.power*(1-P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = min(stun,  80), remove_stamina_below_zero = 0)
+					src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
+
+				if (isalive(src)) lastgasp()
+
+				if (src.stuttering < stun)
+					src.stuttering = stun
+				src.TakeDamage("chest", 0, (damage/rangedprot), 0, DAMAGE_BURN)
+
+			if (D_BURNING)
+				if (stun > 0)
+					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.stamina_stun()
+
+				if (src.is_heat_resistant())
+					// fire resistance should probably not let you get hurt by welders
+					src.visible_message("<span class='alert'><b>[src] seems unaffected by fire!</b></span>")
+					return 0
+				src.TakeDamage("chest", 0, (damage/rangedprot), 0, DAMAGE_BURN)
+				src.update_burning(damage/rangedprot)
+
+			if (D_RADIOACTIVE)
+				if (stun > 0)
+					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.stamina_stun()
+
+				src.changeStatus("radiation", damage SECONDS)
+				if (src.add_stam_mod_regen("projectile", -5))
+					SPAWN_DBG(30 SECONDS)
+						src.remove_stam_mod_regen("projectile")
+
+			if (D_TOXIC)
+				if (stun > 0)
+					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.stamina_stun()
+
+				if (P.proj_data.reagent_payload)
+					src.TakeDamage("chest", (damage/rangedprot), 0, 0, DAMAGE_STAB)
+					if (stat==0) lastgasp()
+					src.reagents.add_reagent(P.proj_data.reagent_payload, 15/rangedprot)
+				else
+					src.take_toxin_damage(damage)
+
+	if (ismob(P.shooter))
+		if (P.shooter)
+			src.lastattacker = P.shooter
+			src.lastattackertime = world.time
+	return 1
 
 /mob/living/attackby(obj/item/W, mob/M)
 	var/oldbloss = get_brute_damage()
