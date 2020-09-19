@@ -53,10 +53,12 @@
 	icon_state = "gehenna_rock"
 
 /turf/simulated/wall/asteroid/gehenna/tough
+	name = "dense sulferous rock"
 	desc = "looks densely packed"
 	icon_state = "gehenna_rock2"
 
 /turf/unsimulated/wall/gehenna/
+	name = "monolithic sulferous rock"
 	desc = "looks conveniently impenetrable"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gehenna_rock3"
