@@ -1122,6 +1122,8 @@ CONTAINS:
 			user.visible_message("<b>[user]</b> unfolds [src].",\
 			"You unfold [src].")
 			user.drop_item()
+			pixel_x = 0
+			pixel_y = 0
 			src.update_icon()
 		else
 			return
@@ -1148,9 +1150,17 @@ CONTAINS:
 		src.open()
 		src.visible_message("<span class='alert'><b>[user]</b> unzips themselves from [src]!</span>")
 
-	MouseDrop(mob/user as mob)
+	MouseDrop(atom/over_object)
+		if (!over_object) return
+		if(isturf(over_object))
+			..() //Lets it do the turf-to-turf slide
+			return
+		else if (istype(over_object, /obj/screen/hud))
+			over_object = usr //Try to fold & pick up the bag with your mob instead
+		else if (!(over_object == usr))
+			return
 		..()
-		if (!(src.contents && src.contents.len) && (usr == user && !usr.restrained() && !usr.stat && in_range(src, usr) && !issilicon(usr)))
+		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && IN_RANGE(src, usr, 1) && !issilicon(usr))
 			if (src.icon_state != "bodybag")
 				usr.visible_message("<b>[usr]</b> folds up [src].",\
 				"You fold up [src].")
