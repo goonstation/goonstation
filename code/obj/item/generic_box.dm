@@ -121,19 +121,19 @@
 			set_contained_items()
 				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy
 
-			robot//this type sticks things by clicking on them with a cooldown
+			robot //this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
 				New()
 					.=..()
 					flags |= SUPPRESSATTACK
 				var/next_use = 0
-				var/use_delay = 15//admemes
+				var/use_delay = 15 //admemes
 				afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 					if (!A) return 0
-					if(world.timeofday < next_use || use_delay > world.timeofday)
+					if(TIME < next_use || use_delay > TIME)
 						user.show_message("Patience! The Stickerening can wait!")
 						return 0
-					next_use = world.timeofday + use_delay
+					next_use = TIME + use_delay
 					var/obj/item/sticker/stikur = take_from()
 					if(!stikur) return
 					var/ret = stikur.afterattack(A, user, reach, params)

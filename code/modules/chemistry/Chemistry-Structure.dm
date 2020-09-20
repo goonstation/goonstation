@@ -1,7 +1,7 @@
 #define chem_building_precaution if(!total_chem_reactions || !total_chem_reactions.len) build_chem_structure()
 //initialize the thing when the world starts
 /proc/build_chem_structure()
-	var/startTime = world.timeofday
+	var/startTime = TIME
 
 	total_chem_reactions.Cut()
 	for(var/R in childrentypesof(/datum/chemical_reaction))
@@ -17,17 +17,17 @@
 
 	total_chem_reactions = sortList(total_chem_reactions)
 
-	logTheThing("debug", null, null, "<B>SpyGuy/chem_struct</B> Finished building reaction structure. Took [(world.timeofday - startTime)/10] seconds.")
+	logTheThing("debug", null, null, "<B>SpyGuy/chem_struct</B> Finished building reaction structure. Took [(TIME - startTime)/(1 SECOND)] seconds.")
 
 /proc/build_reagent_cache()
-	var/startTime = world.timeofday
+	var/startTime = TIME
 	reagents_cache.Cut()
 	for(var/R in concrete_typesof(/datum/reagent))
 		var/datum/reagent/Rinstance = new R()
 		//If R is not a datum/reagent then I don't think anything I can do will help here.
 		reagents_cache[Rinstance.id] = Rinstance
 
-	logTheThing("debug", null, null, "<B>SpyGuy/reagents_cache</B> Finished building reagents cache. Took [(world.timeofday - startTime)/10] seconds.")
+	logTheThing("debug", null, null, "<B>SpyGuy/reagents_cache</B> Finished building reagents cache. Took [(TIME - startTime)/(1 SECOND)] seconds.")
 
 //Things that will handle the possible options in reagents
 

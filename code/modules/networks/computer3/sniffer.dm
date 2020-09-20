@@ -146,7 +146,7 @@
 		if(!src.last_intercept || src.last_intercept + 40 <= world.time)
 			playsound(src.loc, "sound/machines/twobeep.ogg", 25, 1)
 		//src.packet_data = signal.data:Copy()
-		var/newdat = "<b>\[[time2text(world.timeofday,"mm:ss")]:[(world.timeofday%10)]\]:</b>"
+		var/newdat = "<b>\[[time2text(TIME,"mm:ss")]:[(TIME % (1 SECOND))]\]:</b>"
 		for (var/i in signal.data)
 			newdat += "[i][isnull(signal.data[i]) ? "; " : "=[signal.data[i]]; "]"
 

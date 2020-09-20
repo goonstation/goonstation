@@ -246,7 +246,7 @@
 		owner.eyecam.set_loc(get_turf(owner.eyecam))
 
 	proc/process()
-		if(!tracking || !owner || ( ( (last_track + delay) > world.timeofday ) && (world.timeofday > last_track) ) )
+		if(!tracking || !owner || ( ( (last_track + delay) > TIME ) && (TIME > last_track) ) )
 			return
 
 
@@ -280,7 +280,7 @@
 		owner.hud.update_tracking()
 		owner.eyecam.update_statics()
 
-		last_track = world.timeofday
+		last_track = TIME
 
 	proc/can_track(mob/target as mob)
 		//Allow tracking of cyborgs & mobcritters, however

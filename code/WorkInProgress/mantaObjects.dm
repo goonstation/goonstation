@@ -82,8 +82,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	damage_blunt()
 
 	attack_hand(mob/user as mob)
-		var/diff = world.timeofday - lastuse
-		if(diff < 0) diff += 864000 //Wrapping protection.
+		var/diff = TIME
 
 		if (locked == 1)
 			user.show_text("<span class='alert'><b>You must first unlock the lever console with an ID to be able to use it.</b></span>")
@@ -93,8 +92,8 @@ var/obj/manta_speed_lever/mantaLever = null
 			user.show_text("<span class='alert'><b>Too many propellers are damaged; you can not move NSS Manta.</b></span>")
 			return
 
-		if(diff > 3000)
-			lastuse = world.timeofday
+		if(diff > (5 MINUTES))
+			lastuse = TIME
 			if(on)
 				user.show_text("<span class='notice'><b>You turn off the propellers.</b></span>")
 				on = 0
@@ -218,7 +217,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				if(istype(AM,/obj/item/scrap))
 					return
 
-				if(world.timeofday - AM.last_bumped <= 60)
+				if(TIME - AM.last_bumped <= (6 SECONDS))
 					return
 
 				if(ismob(AM))

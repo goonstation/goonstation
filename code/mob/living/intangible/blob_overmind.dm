@@ -90,7 +90,7 @@
 
 		//set start grace-period timestamp
 		var/extraGrace = rand(600, 1800) //add between 1 min and 3 mins extra
-		src.extra_try_timestamp = world.timeofday + extra_try_period + extraGrace
+		src.extra_try_timestamp = TIME + extra_try_period + extraGrace
 
 		src.nucleus_overlay = image('icons/mob/blob.dmi', null, "reflective_overlay")
 		src.nucleus_overlay.alpha = 0
@@ -123,7 +123,7 @@
 			src.antagonist_overlay_refresh(0, 0)
 
 		//time to un-apply the nucleus-destroyed debuff
-		if (src.debuff_timestamp && world.timeofday >= src.debuff_timestamp)
+		if (src.debuff_timestamp && (TIME >= src.debuff_timestamp))
 			src.debuff_timestamp = 0
 			out(src, "<span class='alert'><b>You can feel your former power returning!</b></span>")
 
@@ -191,7 +191,7 @@
 			return
 
 		//if within grace period, respawn
-		if (src.current_try < src.extra_tries_max && world.timeofday <= src.extra_try_timestamp)
+		if (src.current_try < src.extra_tries_max && (TIME <= src.extra_try_timestamp))
 			src.extra_try_timestamp = 0
 			src.current_try++
 			src.reset()

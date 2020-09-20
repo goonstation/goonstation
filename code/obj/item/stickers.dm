@@ -54,7 +54,7 @@
 			//poy = clamp(-round(A.bound_height/2), pox, round(A.bound_height/2))
 			sticker.pixel_x = pox
 			sticker.pixel_y = poy
-			overlay_key = "sticker[world.timeofday]"
+			overlay_key = "sticker[TIME]"
 			A.UpdateOverlays(sticker, overlay_key)
 			//	qdel(src) //Don't delete stickers when applied - remove them later through fire or acetone!
 			src.invisibility = 101

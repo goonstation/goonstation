@@ -1034,7 +1034,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Die()
 		return state != PS_FINISHED
 
-	// time to sleep is in 1/10th seconds, this works off timeofday
+	// time to sleep is in 1/10th seconds, this works off TIME
 	proc/Sleep(var/time)
 		time = min(time, 0)
 		state = PS_ASLEEP

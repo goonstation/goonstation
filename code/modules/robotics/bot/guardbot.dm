@@ -3916,7 +3916,7 @@
 			var/mob/living/newThreat = look_for_threat()
 			if (istype(newThreat))
 				master.scratchpad["threat"] = newThreat
-				master.scratchpad["threat_time"] = "[time2text(world.timeofday, "hh:mm:ss")]"
+				master.scratchpad["threat_time"] = "[time2text(TIME, "hh:mm:ss")]"
 
 				src.master.remove_current_task()
 				return

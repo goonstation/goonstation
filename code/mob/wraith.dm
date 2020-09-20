@@ -63,7 +63,7 @@
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = 50
 		src.addAllAbilities()
-		last_life_update = world.timeofday
+		last_life_update = TIME
 		src.hud = new(src)
 		src.attach_hud(hud)
 
@@ -111,7 +111,7 @@
 		if (!src.abilityHolder)
 			src.abilityHolder = new /datum/abilityHolder/wraith(src)
 
-		var/life_time_passed = max(life_tick_spacing, world.timeofday - last_life_update)
+		var/life_time_passed = max(life_tick_spacing, TIME - last_life_update)
 
 		if (src.haunting)
 			src.hauntBonus = 0
@@ -127,8 +127,7 @@
 			return
 		else if (src.health < src.max_health)
 			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
-		last_life_update = world.timeofday
-
+		last_life_update = TIME
 	// No log entries for unaffected mobs (Convair880).
 	ex_act(severity)
 		return

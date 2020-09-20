@@ -164,7 +164,7 @@ obj/critter/bear/care
 			if (src.target)
 				src.task = "chasing"
 				break
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
+			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 10 SECONDS)) continue
 			if (C.health < 0) continue
 			if (C.name == src.attacker) src.attack = 1
 			if (iscarbon(C)) src.attack = 1
@@ -329,7 +329,7 @@ obj/critter/bear/care
 
 	var/blood_volume = 0		//This will count all the blood that Dr. Acula has fed on. Cheaper than having a reagent_holder holding blood I suppose
 	var/atom/drink_target		//this would be the mob or obj/item/reagent_container that contains blood that we drink from
-	var/last_drink				//world.time last time this bat drank blood. Just so that they don't just drink a whole 300u of an iv bag without prompting in under a minute.
+	var/last_drink				//last time this bat drank blood. Just so that they don't just drink a whole 300u of an iv bag without prompting in under a minute.
 	var/sips_taken = 0			//for calculating how many times a bat should drink at a souce before they are satiated for a time.
 	var/const/sips_to_take = 5	//amount of sips of blood a bat will take from a source of blood.
 	var/const/blood_sip_amt = 20	//amount of blood a single sip this bat takes contains.
@@ -368,7 +368,7 @@ obj/critter/bear/care
 			return 0
 
 		//gotta wait 1 min from the last drink before the bat goes looking for blood on its own again.
-		if (last_drink+600 > world.time)
+		if ((last_drink + 1 MINUTE) > world.time)
 			return 0
 
 		for (var/obj/fluid/F in view(src.seekrange,src))
@@ -417,7 +417,7 @@ obj/critter/bear/care
 		// if (prob(20))
 		eat_twitch(src)
 
-		last_drink = world.time
+		last_drink = TIME
 		sips_taken++
 		if (sips_taken >= sips_to_take)
 			src.task = "thinking"
@@ -523,7 +523,7 @@ obj/critter/bear/care
 			if (src.target)
 				src.task = "chasing"
 				break
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
+			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 10 SECONDS)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
 			if (issilicon(C) && !src.atksilicon) continue
 			if (C.health < 0) continue

@@ -1159,8 +1159,8 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		if (station_name_changing)
 			var/nextName = lastStationNameChange + stationNameChangeDelay
-			if (nextName > world.timeofday)
-				dat += "<b>The station naming coils are recharging, you must wait [(nextName - world.timeofday) / 10] seconds.</b><br><br>"
+			if (nextName > TIME)
+				dat += "<b>The station naming coils are recharging, you must wait [(nextName - TIME) / (1 SECOND)] seconds.</b><br><br>"
 			else
 				dat += "<a href='?src=\ref[src];change=1'>Change Name</a><br><br>"
 		else
@@ -1183,13 +1183,13 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 		if (href_list["submitChange"])
 			if (station_name_changing)
 				var/nextName = lastStationNameChange + stationNameChangeDelay
-				if (nextName > world.timeofday)
+				if (nextName > TIME)
 					alert("You must wait for the station naming coils to recharge! Did space school teach you nothing?!")
 					usr.Browse(null, "window=stationnamechanger")
 					src.master.updateSelfDialog()
 					return
 
-				lastStationNameChange = world.timeofday
+				lastStationNameChange = TIME
 				var/newName = href_list["newName"]
 
 				if (set_station_name(usr, newName))

@@ -96,7 +96,7 @@
 		//Only if we're considering time
 		if(time)
 			//when it'll be finished in seconds
-			src.current_research_time = round((world.timeofday + time) / 10, 1)
+			src.current_research_time = round((TIME + time) / 1 SECOND, 1)
 		return 1
 
 	//End research, sets research item to null and updates finished research list
@@ -125,7 +125,7 @@
 		if(!is_researching)
 			return
 		//converting timeofday to seconds
-		var/timeleft = round(src.current_research_time - (world.timeofday)/10 ,1)
+		var/timeleft = round(src.current_research_time - ((TIME)/1 SECOND), 1)
 		if(timeleft <= 0)
 			src.end_research()
 			return 0

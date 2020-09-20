@@ -309,8 +309,6 @@ proc/timeywimey(var/time)
 			positions.Add(L)
 			positions[L] = L.loc
 
-//	var/current_time = world.timeofday
-//	while (current_time + 100 > world.timeofday && current_time <= world.timeofday)
 	sleep(time)
 
 	for(var/mob/living/L in positions)

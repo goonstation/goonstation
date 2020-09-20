@@ -591,7 +591,7 @@ var/image/blob_icon_cache
 			src.UpdateOverlays(O.nucleus_overlay, "reflectivity")
 
 	take_damage(amount, mult, damtype, mob/user)
-		var/now = world.timeofday
+		var/now = TIME
 		if (!src.nextAttackMsg || now >= src.nextAttackMsg) //every 5 seconds supposedly
 			boutput(overmind, "<span class='blobalert'>Your nucleus in [get_area(src)] is taking damage!</span>")
 			src.nextAttackMsg = now + 50 //every 5 seconds
@@ -608,7 +608,7 @@ var/image/blob_icon_cache
 		if (length(overmind.nuclei))
 			//give a downside to having a nucleus destroyed. wipe biopoints and temp nerf generation (handled in blob overmind Life())
 			overmind.bio_points = 0
-			overmind.debuff_timestamp = world.timeofday + overmind.debuff_duration
+			overmind.debuff_timestamp = TIME + overmind.debuff_duration
 
 			out(overmind, "<span class='blobalert'>Your nucleus in [get_area(src)] has been destroyed! You feel a lot weaker for a short time...</span>")
 

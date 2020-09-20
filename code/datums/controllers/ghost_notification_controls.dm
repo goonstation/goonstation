@@ -23,7 +23,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 
 /datum/ghost_notification_controller/New()
 	..()
-	src.last_time = world.timeofday
+	src.last_time = TIME
 	src.config_window = new(src)
 
 /datum/ghost_notification_controller/proc/send_notification(var/datum/dispatcher, var/datum/subject, var/datum/ghost_notification/n_type) // the last one is a TYPE field!!!
@@ -33,7 +33,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	var/list/to_notify = list()
 	N.dispatcher = dispatcher
 	N.subject = subject
-	N.key = "[world.timeofday]"
+	N.key = "[TIME]"
 	if(!N)
 		return // abandon ship alart alart
 	for(var/client/C)
@@ -63,13 +63,9 @@ var/datum/ghost_notification_controller/ghost_notifier
 // invoked by ghost notifications process, which exists, shut up
 /datum/ghost_notification_controller/proc/process()
 	// get the time elapsed since the last process
-	var/current_time = world.timeofday
+	var/current_time = TIME
 	var/time_elapsed = 0
-	if(current_time < last_time)
-		// we've hit midnight rollover, i guess
-		time_elapsed = ((current_time + 864000) - last_time) / 10
-	else
-		time_elapsed = (current_time - last_time) / 10
+	time_elapsed = (current_time - last_time) / (1 SECOND)
 	last_time = current_time
 
 	// track what notifications we can discard

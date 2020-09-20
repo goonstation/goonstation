@@ -1522,9 +1522,9 @@ var/f_color_selector_handler/F_Color_Selector
 				var/ircmsg[] = new()
 				ircmsg["cpu"] = world.cpu
 				ircmsg["queue_len"] = delete_queue ? delete_queue.count() : 0
-				var/curtime = world.timeofday
+				var/curtime = TIME
 				sleep(1 SECOND)
-				ircmsg["time"] = (world.timeofday - curtime) / 10
+				ircmsg["time"] = (TIME - curtime) / (1 SECOND)
 				return ircbot.response(ircmsg)
 
 			if ("rev")
@@ -1661,13 +1661,13 @@ var/f_color_selector_handler/F_Color_Selector
 var/opt_inactive = null
 /world/proc/Optimize()
 	SPAWN_DBG(0)
-		if(!opt_inactive) opt_inactive  = world.timeofday
+		if(!opt_inactive) opt_inactive  = TIME
 
-		if(world.timeofday - opt_inactive >= 600 || world.timeofday - opt_inactive < 0)
+		if(TIME - opt_inactive >= (1 MINUTE) || TIME - opt_inactive < 0)
 			KickInactiveClients()
 			//if(mysql)
 				//mysql.CleanQueries()
-			opt_inactive = world.timeofday
+			opt_inactive = TIME
 
 		sleep(10 SECONDS)
 

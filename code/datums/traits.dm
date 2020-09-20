@@ -844,7 +844,7 @@ obj/trait/pilot
 		var/mob/living/M = owner
 		var/datum/ailment_data/addiction/AD = new
 		AD.associated_reagent = selected_reagent
-		AD.last_reagent_dose = world.timeofday
+		AD.last_reagent_dose = TIME
 		AD.name = "[selected_reagent] addiction"
 		AD.affected_mob = M
 		M.ailments += AD

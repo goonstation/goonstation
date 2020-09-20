@@ -618,8 +618,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(mind.assigned_role == "Animal")
 		// no you get to wait for longer
 		min_time_passed = 10 MINUTES
-	var/time_elapsed = (world.timeofday + ((world.timeofday < mind.last_death_time) ? 864000 : 0)) - mind.last_death_time // Offset the time of day in case of midnight rollover
-	var/time_left = min_time_passed - time_elapsed
+	var/time_left = min_time_passed - (TIME - mind.last_death_time)
 	if(time_left > 0)
 		var/time_left_message = ""
 		var/minutes = round(time_left / 600)
@@ -710,16 +709,14 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(mind.assigned_role == "Animal")
 		// no you get to wait for longer
 		min_time_passed = 2 MINUTES
-	var/time_elapsed = (world.timeofday + ((world.timeofday < mind.last_death_time) ? 864000 : 0)) - mind.last_death_time // Offset the time of day in case of midnight rollover
-	var/time_left = min_time_passed - time_elapsed
+	var/time_left = min_time_passed - (TIME - mind.last_death_time)
 	if(time_left > 0)
 		var/time_left_message = ""
 		var/minutes = round(time_left / 600)
 		var/seconds = round((time_left - (minutes * 600))/10)
 		if(minutes >= 1)
 			time_left_message += "[minutes] minute[minutes == 1 ? "" : "s"] and "
-		else
-			time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
+		time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
 		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
 	else
 		if (alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")

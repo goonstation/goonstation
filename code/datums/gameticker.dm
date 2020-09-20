@@ -219,7 +219,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 
 	current_state = GAME_STATE_PLAYING
-	round_time_check = world.timeofday
+	round_time_check = TIME
 
 	SPAWN_DBG(0)
 		ircbot.event("roundstart")
@@ -386,8 +386,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
 
-				last_interval_tick_offset = max(0, (world.timeofday - last_tick_realtime) - (world.time - last_tick_byondtime))
-				last_tick_realtime = world.timeofday
+				last_interval_tick_offset = max(0, (TIME - last_tick_realtime) - (world.time - last_tick_byondtime))
+				last_tick_realtime = TIME
 				last_tick_byondtime = world.time
 
 				var/dilated_tick_lag = world.tick_lag
@@ -461,8 +461,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	proc/updateRoundTime()
 		if (round_time_check)
-			var/elapsed = world.timeofday - round_time_check
-			round_time_check = world.timeofday
+			var/elapsed = TIME - round_time_check
+			round_time_check = TIME
 
 			if (round_time_check == 0) // on the slim chance that this happens exactly on a timeofday rollover
 				round_time_check = 1   // make it nonzero so it doesn't quit updating

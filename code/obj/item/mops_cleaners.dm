@@ -151,11 +151,10 @@ WET FLOOR SIGN
 			return
 
 		if(lastUse)
-			var/actual = (world.timeofday - lastUse)
-			if(actual < 0) actual += 864000
-			if(actual < 40) return
+			var/actual = (TIME - lastUse)
+			if(actual < 4 SECONDS) return
 
-		lastUse = world.timeofday
+		lastUse = TIME
 
 		reagents.clear_reagents()
 		reagents.add_reagent("cleaner", 100)

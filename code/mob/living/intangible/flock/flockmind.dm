@@ -15,7 +15,7 @@
 	..()
 
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
-	src.last_time = world.timeofday
+	src.last_time = TIME
 
 	src.flock = new /datum/flock()
 	src.real_name = "Flockmind [src.flock.name]"
