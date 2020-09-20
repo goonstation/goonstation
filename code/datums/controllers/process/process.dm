@@ -183,6 +183,9 @@ datum/controller/process/proc/handleHung()
 	if(istype(lastObj))
 		lastObjType = lastObj.type
 
+	// If world.timeofday has rolled over, then we need to adjust.
+	if (TimeOfHour < run_start)
+		run_start -= 36000
 	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfHour - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]"
 	logTheThing("debug", null, null, msg)
 	logTheThing("diary", null, null, msg, "debug")

@@ -1562,15 +1562,15 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 	return text2num(copytext(string,slot,slot+1))
 
 /**
-  * Returns the current TIME in o'clock format
+  * Returns the current timeofday in o'clock format
   */
 /proc/o_clock_time()
-	var/get_hour = text2num(time2text(TIME, "hh"))
+	var/get_hour = text2num(time2text(world.timeofday, "hh"))
 	var/final_hour = get_hour
 	if (get_hour > 12)
 		final_hour = (get_hour - 12)
 
-	var/get_minutes = text2num(time2text(TIME, "mm"))
+	var/get_minutes = text2num(time2text(world.timeofday, "mm"))
 	var/final_minutes = "[get_english_num(get_minutes)] minutes past "
 	switch (get_minutes)
 		if (0)
@@ -2056,8 +2056,8 @@ var/global/nextDectalkDelay = 5 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
 	if (!msg) return 0
-	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
-		lastDectalkUse = TIME
+	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
+		lastDectalkUse = world.timeofday
 		msg = copytext(msg, 1, 2000)
 		var/res[] = world.Export("http://spacebee.goonhub.com/api/tts?dectalk=[url_encode(msg)]&api_key=[url_encode(ircbot.apikey)]")
 		if (!res || !res["CONTENT"])
@@ -2340,11 +2340,11 @@ proc/illiterateGarbleText(var/message)
 
 /**
   * Returns the time in seconds since a given timestamp
-	*
-	* required timestamp - TIME that you want to base off of
   */
 proc/getTimeInSecondsSinceTime(var/timestamp)
-	return ((TIME - (timestamp))/1 SECOND)
+	var/time_of_day = world.timeofday + ((world.timeofday < timestamp) ? 864000 : 0) // Offset the time of day in case of midnight rollover
+	var/time_elapsed = (time_of_day - timestamp)/10
+	return time_elapsed
 
 /**
   * Handles the two states icon_size can be in: basic number, or string in WxH format

@@ -28,7 +28,7 @@
 		SPAWN_DBG(0)
 			JobEquipSpawned("Staff Assistant")
 	ai_findtarget_new()
-		if((TIME - ai_threatened) < (1 MINUTE))
+		if((world.timeofday - ai_threatened) < 600)
 			..()
 	proc
 		cry_grief(mob/M)
@@ -36,7 +36,7 @@
 				return
 			src.target = M
 			src.ai_state = AI_ATTACKING
-			src.ai_threatened = TIME
+			src.ai_threatened = world.timeofday
 			var/target_name = M.name
 			//var/area/current_loc = get_area(src)
 			//var/tmp/loc_name = lowertext(current_loc.name) // removing this because nobody believes it
@@ -217,7 +217,7 @@
 	if(tempmob)
 		ai_target = tempmob
 		ai_state = AI_ANGERING
-		ai_threatened = TIME
+		ai_threatened = world.timeofday
 */
 
 /mob/living/carbon/human/proc/ai_findtarget_new()
@@ -259,7 +259,7 @@
 	if(T)
 		ai_target = T
 		ai_state = AI_ANGERING
-		ai_threatened = TIME
+		ai_threatened = world.timeofday
 	else
 		ai_state = AI_PASSIVE
 
@@ -285,7 +285,7 @@
 				ai_threatened = 0
 				return
 
-			if ( (TIME - ai_threatened) > (2 SECONDS) ) //Oh, it is on now! >:C
+			if ( (world.timeofday - ai_threatened) > 20 ) //Oh, it is on now! >:C
 				ai_state = AI_ATTACKING
 				return
 
@@ -343,7 +343,7 @@
 							suit:dropped(carbon_target)
 							suit:layer = initial(suit:layer)
 
-				if(prob(75) && distance > 1 && (TIME - ai_attacked) > 100 && ai_validpath() && (istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()))
+				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && (istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()))
 					//I can attack someone! =D
 					ai_target_old.Cut()
 					var/obj/item/gun/W = src.r_hand
@@ -360,7 +360,7 @@
 					ai_target_old.Cut()
 					src.throw_item(ai_target, list("npc_throw"))
 
-			if(distance <= 1 && (TIME - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck())
+			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck())
 				//I can attack someone! =D
 				ai_target_old.Cut()
 				if(src.bioHolder.HasEffect("coprolalia") && prob(10)) //Combat Trash Talk
@@ -388,9 +388,9 @@
 
 			ai_pickupweapon()
 
-			if(prob(5) && (distance == 3) && (TIME - ai_pounced) > 180 && ai_validpath())
+			if(prob(5) && (distance == 3) && (world.timeofday - ai_pounced) > 180 && ai_validpath())
 				if(valid)
-					ai_pounced = TIME
+					ai_pounced = world.timeofday
 					src.visible_message("<span class='alert'>[src] lunges at [ai_target]!</span>")
 					ai_target:changeStatus("weakened", 2 SECONDS)
 					SPAWN_DBG(0)
@@ -537,8 +537,8 @@
 			if (((M.pulling == src && (!( M.restrained() ) && isalive(M))) || locate(/obj/item/grab, src.grabbed_by.len)))
 				return 0
 	var/speed = (5 * ai_movedelay)
-	if (!ai_laststep) ai_laststep = (TIME - (0.5 SECONDS))
-	if ((TIME - ai_laststep) >= speed) return 1
+	if (!ai_laststep) ai_laststep = (world.timeofday - 5)
+	if ((world.timeofday - ai_laststep) >= speed) return 1
 	else return 0
 
 /mob/living/carbon/human/proc/ai_incapacitated()

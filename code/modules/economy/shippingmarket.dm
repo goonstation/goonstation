@@ -64,7 +64,7 @@
 			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 
 	proc/market_shift()
-		last_market_update = TIME
+		last_market_update = world.timeofday
 		for (var/type in src.commodities)
 			var/datum/commodity/C = src.commodities[type]
 			C.indemand = 0

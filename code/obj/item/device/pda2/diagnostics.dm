@@ -263,7 +263,7 @@
 
 		if(!result)
 			result = new/list()
-		var/t = "\[[time2text(TIME,"mm:ss")]:[(TIME%10)]\]:"
+		var/t = "\[[time2text(world.timeofday,"mm:ss")]:[(world.timeofday%10)]\]:"
 
 		var/t2 = ""
 		for(var/d in signal.data)

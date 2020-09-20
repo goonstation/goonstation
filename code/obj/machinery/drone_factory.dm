@@ -205,7 +205,7 @@ var/global/list/ghostdrone_candidates = list()
 			if (src.factory_section == 1 || src.single_system)
 				if (!ticker) // game ain't started
 					return
-				if (TIME >= (last_ghostdrone_build_time + GHOSTDRONE_BUILD_INTERVAL))
+				if (world.timeofday >= (last_ghostdrone_build_time + GHOSTDRONE_BUILD_INTERVAL))
 					src.start_work()
 			else
 				var/obj/item/ghostdrone_assembly/G = locate() in get_turf(src)
@@ -240,7 +240,7 @@ var/global/list/ghostdrone_candidates = list()
 			ghostdrone_factory_working = src.current_assembly // if something happens to the assembly, for whatever, reason this should become null, I guess?
 			src.working = 1
 			src.icon_state = "factory[src.factory_section]1"
-			last_ghostdrone_build_time = TIME
+			last_ghostdrone_build_time = world.timeofday
 
 		if (!src.current_assembly)
 			src.working = 0

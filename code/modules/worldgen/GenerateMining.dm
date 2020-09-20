@@ -275,7 +275,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 /proc/makeMiningLevel()
 	var/list/miningZ = list()
-	var/startTime = TIME
+	var/startTime = world.timeofday
 	if(world.maxz < AST_ZLEVEL)
 		boutput(world, "<span class='alert'>Skipping Mining Generation!</span>")
 		return
@@ -319,7 +319,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	game_start_countdown?.update_status("Setting up mining level...\nGenerating terrain...")
 	miningZ = D.generate(miningZ)
 
-	boutput(world, "<span class='alert'>Generated Mining Level in [((TIME - startTime)/(1 SECOND))] seconds!")
+	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
 	hotspot_controller.generate_map()
 

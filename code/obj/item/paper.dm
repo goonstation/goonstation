@@ -1166,8 +1166,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 			T = "X"
 		if ("Current Time")
 			if (ticker)
-				var/shift_time = ticker.round_elapsed_ticks
-				T = "SHIFT TIME: [round(shift_time / (1 HOUR))]:[add_zero(round(shift_time / (1 MINUTE)), 2)]:[add_zero(shift_time % (1 SECOND), 2)]"
+				var/S = round(ticker.round_elapsed_ticks / 10)
+				T = "SHIFT TIME: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
 			else
 				T = "SHIFT TIME"
 		else

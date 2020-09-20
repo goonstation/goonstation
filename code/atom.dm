@@ -750,7 +750,7 @@
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
 	SPAWN_DBG( 0 )
 		if ((A && yes)) //wtf
-			A.last_bumped = TIME
+			A.last_bumped = world.timeofday
 			A.Bumped(src)
 		return
 	..()

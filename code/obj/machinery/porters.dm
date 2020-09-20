@@ -321,7 +321,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 	SubscribeToProcess()
 		..()
-		unlock_timer_start = TIME
+		unlock_timer_start = world.timeofday
 		processing = 1
 
 	UnsubscribeProcess()
@@ -329,7 +329,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		processing = 0
 
 	process()
-		var/req = unlock_timer_req - (TIME - unlock_timer_start)
+		var/req = unlock_timer_req - (world.timeofday - unlock_timer_start)
 		if (req <= 0)
 			locked = 0
 			go_out()

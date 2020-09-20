@@ -928,7 +928,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			"I told you to [pick("stop that shit", "cut that shit out")], and you [pick("ain't", "didn't", "didn't listen")]! [pick("So now", "It's time", "And now", "Ypu best not be suprised that")] you're gunna [pick("reap what you sewed", "get it", "get what's yours", "get what's comin' to you")]!")
 			src.target = M
 			src.ai_state = 2
-			src.ai_threatened = TIME
+			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.im_mad = 0
 

@@ -131,6 +131,10 @@ var/global/datum/controller/processScheduler/processScheduler
 		if (p.disabled || p.running || p.queued || !p.idle)
 			continue
 
+		// If world.timeofday has rolled over, then we need to adjust.
+		if (TimeOfHour < last_start[p])
+			last_start[p] -= 36000
+
 		// If the process should be running by now, go ahead and queue it
 		if (TimeOfHour > last_start[p] + p.schedule_interval)
 			setQueuedProcessState(p)
@@ -245,6 +249,10 @@ var/global/datum/controller/processScheduler/processScheduler
 /datum/controller/processScheduler/proc/recordEnd(var/datum/controller/process/process, var/time = null)
 	if (isnull(time))
 		time = TimeOfHour
+
+	// If world.timeofday has rolled over, then we need to adjust.
+	if (time < last_start[process])
+		last_start[process] -= 36000
 
 	var/lastRunTime = time - last_start[process]
 

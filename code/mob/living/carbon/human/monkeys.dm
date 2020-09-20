@@ -141,7 +141,7 @@
 				src.ai_knock_from_hand()
 
 	ai_findtarget_new()
-		if (ai_aggressive || ai_aggression_timeout == 0 || (TIME - ai_threatened) < ai_aggression_timeout)
+		if (ai_aggressive || ai_aggression_timeout == 0 || (world.timeofday - ai_threatened) < ai_aggression_timeout)
 			..()
 
 	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0)
@@ -151,7 +151,7 @@
 		//src.ai_aggressive = 1
 		src.target = T
 		src.ai_state = 2
-		src.ai_threatened = TIME
+		src.ai_threatened = world.timeofday
 		src.ai_target = T
 		src.shitlist[T] ++
 		if (prob(40))
@@ -167,7 +167,7 @@
 			//pal.ai_aggressive = 1
 			pal.target = T
 			pal.ai_state = 2
-			pal.ai_threatened = TIME
+			pal.ai_threatened = world.timeofday
 			pal.ai_target = T
 			pal.shitlist[T] ++
 			pals ++

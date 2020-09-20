@@ -3911,7 +3911,7 @@ var/global/noir = 0
 		var/jobban_dialog_text = replacetext(grabResource("html/admin/jobbans_list.html"), "null /* raw_bans */", "\"[global_jobban_cache]\"");
 		usr.Browse(replacetext(jobban_dialog_text, "null /* ref_src */", "\"\ref[src]\""),"file=jobbans.html;display=0")
 		current_jobbans_rev = global_jobban_cache_rev
-		jobbans_last_cached = TIME
+		jobbans_last_cached = world.timeofday
 		boutput(usr, "Refresh complete, your panel now matches the server's. If you need to edit a ban that was created after the build time shown please do a server rebuild.")
 	else
 		boutput(usr, "Rebuilding server cache...")
@@ -3926,7 +3926,7 @@ var/global/noir = 0
 
 		global_jobban_cache = buf
 		global_jobban_cache_rev++
-		global_jobban_cache_built = TIME
+		global_jobban_cache_built = world.timeofday
 
 		building_jobbans = 0
 		boutput(usr, "Rebuild complete, everyone's job ban panel is now up to date with the latest job bans.")
@@ -3941,7 +3941,7 @@ var/global/noir = 0
 			var/jobban_dialog_text = replacetext(grabResource("html/admin/jobbans_list.html"), "null /* raw_bans */", "\"[global_jobban_cache]\"");
 			usr.Browse(replacetext(jobban_dialog_text, "null /* ref_src */", "\"\ref[src]\""),"file=jobbans.html;display=0")
 			current_jobbans_rev = global_jobban_cache_rev
-			jobbans_last_cached = TIME
+			jobbans_last_cached = world.timeofday
 
 		usr.Browse("<html><head><title>Ban Management</title><style type=\"text/css\">body{font-size: 8pt; font-family: Verdana, sans-serif;}</style></head><body><iframe src=\"jobbans.html\"width=\"100%\" height=\"90%\"></iframe>[jobban_count] job bans. banlist built at [time2text(global_jobban_cache_built)] and downloaded at [time2text(jobbans_last_cached)]</body>", "window=jobbanp;size=400x800")
 

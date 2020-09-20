@@ -897,7 +897,7 @@
 			on = 0
 
 		if (on)
-			activated_timeofday = TIME
+			activated_timeofday = world.timeofday
 			SubscribeToProcess()
 
 	verb/toggle()
@@ -950,7 +950,7 @@
 		//nahh this seems a bit tedious
 		//cell.use(power_cell_usage)
 
-		if (TIME < (activated_timeofday + power_up_realtime))
+		if (world.timeofday < activated_timeofday + power_up_realtime)
 			return
 
 		on = 0

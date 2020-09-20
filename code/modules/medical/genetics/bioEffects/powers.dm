@@ -1864,7 +1864,7 @@
 		if(..()) return
 		if(isliving(owner))
 			var/mob/living/L = owner
-			if (((TIME - owner.l_move_time) >= 3 SECONDS) && can_act(owner) && src.active)
+			if ((world.timeofday - owner.l_move_time) >= 30 && can_act(owner) && src.active)
 				L.UpdateOverlays(overlay_image, id)
 				L.invisibility = 1
 			else

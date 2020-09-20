@@ -497,7 +497,7 @@
 	if (href_list["Display"])
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
-			var/fname = "varview_preview_[href_list["Display"]]_[TIME].png"
+			var/fname = "varview_preview_[href_list["Display"]]_[world.timeofday].png"
 			src << browse_rsc(getFlatIcon(locate(href_list["Display"])), fname)
 			sleep(0.4 SECONDS)
 			boutput(src, {"<img src="[fname]" style="-ms-interpolation-mode: nearest-neighbor;zoom:200%;">"})
