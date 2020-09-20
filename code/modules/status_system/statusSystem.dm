@@ -310,7 +310,7 @@ var/list/statusGroupLimits = list("Food"=4)
 
 
 	/**
-	  * Used to run a custom check before adding status to an object. For when you want something to be flat out immune or something.
+		* Used to run a custom check before adding status to an object. For when you want something to be flat out immune or something.
 		*
 		* return = 1 allow, 0 = do not allow
 		*/
@@ -321,7 +321,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		.= change
 
 	/**
-	  * Called when the status is added to an object. owner is already set at this point.
+		* Called when the status is added to an object. owner is already set at this point.
 		*
 		* optional optional - arg from setStatus (passed in)
 		*/
@@ -332,7 +332,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		return
 
 	/**
-	  * Called when the status is removed from the object. owner is still set at this point.
+		* Called when the status is removed from the object. owner is still set at this point.
 		*/
 	proc/onRemove()
 		if (movement_modifier && ismob(owner))
@@ -341,7 +341,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		return
 
 	/**
-	  * Called every tick by the status controller.
+		* Called every tick by the status controller.
 		*
 		* required timePassed - the actual time since the last update call.
 		*/
@@ -357,19 +357,19 @@ var/list/statusGroupLimits = list("Food"=4)
 		return
 
 	/**
-	  * Called by hasStatus. Used to handle additional checks with the optional arg in that proc.
+		* Called by hasStatus. Used to handle additional checks with the optional arg in that proc.
 		*/
 	proc/onCheck(var/optional=null)
 		return 1
 
 	/**
-	  * Used to generate tooltip. Can be changed to have dynamic tooltips.
+		* Used to generate tooltip. Can be changed to have dynamic tooltips.
 		*/
 	proc/getTooltip()
 		return desc
 
 	/**
-	  * Information that should show up when an object has this effect and is examined.
+		* Information that should show up when an object has this effect and is examined.
 		*/
 	proc/getExamine()
 		return null
