@@ -1387,7 +1387,7 @@
 	amount = 2
 	food_color = "#663300"
 	real_name = "Hetz's Cup"
-	initial_reagents = list("chocolate"=10)
+	initial_reagents = list("chocolate" = 10)
 
 /obj/item/reagent_containers/food/snacks/ectoplasm
 	name = "ectoplasm"
@@ -1400,18 +1400,18 @@
 	doants = 0
 	food_color = "#B3E197"
 	initial_volume = 15
-	initial_reagents = list("ectoplasm"=10)
+	initial_reagents = list("ectoplasm" = 10)
+	food_effects = list("food_hp_up_small", "food_damage_tox")
+
 	New()
 		..()
 		flick("ectoplasm-a", src)
 		src.setMaterial(getMaterial("ectoplasm"), appearance = 0, setname = 0)
-		return
 
-	heal(var/mob/M)
+	heal(mob/M)
 		..()
 		var/ughmessage = pick("Your mouth feels haunted. Haunted with bad flavors.","It tastes like flavor died.", "It tastes like a ghost fart.", "It has the texture of ham aspic.  From the 1950s.  Left out in the sun.")
 		boutput(M, "<span class='alert'>Ugh, why did you eat that? [ughmessage]</span>")
-		return
 
 /obj/item/reagent_containers/food/snacks/corndog
 	name = "corndog"
