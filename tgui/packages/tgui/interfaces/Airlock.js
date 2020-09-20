@@ -64,7 +64,7 @@ const AirlockAndAccessPanel = (props, context) => {
       width={354}
       height={495}
       theme="ntos"
-      title={"Airlock - " + name}>
+      title={`Airlock - ${name}`}>
       <Window.Content>
         <Tabs>
           <Tabs.Tab
@@ -126,7 +126,7 @@ const AirlockControlsOnly = (props, context) => {
       width={315}
       height={375}
       theme="ntos"
-      title={"Airlock - " + name}>
+      title={`Airlock - ${name}`}>
       <Window.Content>
         <Section fitted backgroundColor="transparent">
           {(!canAiControl) && (
@@ -161,7 +161,7 @@ const AccessPanelOnly = (props, context) => {
       width={354}
       height={460}
       theme="ntos"
-      title={"Airlock - " + name}>
+      title={`Airlock - ${name}`}>
       <Window.Content>
         <AccessPanel />
       </Window.Content>
@@ -452,7 +452,7 @@ export const AccessPanel = (props, context) => {
         { wires.map((entry, i) => (
           <LabeledList.Item
             key={entry}
-            label={(entry + " wire")}
+            label={(`${entry} wire`)}
             labelColor={entry.toLowerCase()}>
             {
               !wireStates[i]

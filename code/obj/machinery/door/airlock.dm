@@ -1268,6 +1268,7 @@ About the new airlock wires panel:
 
 	static_data["wireColors"] = src.wire_colors
 	static_data["netId"] = src.net_id;
+	static_data["name"] = src.name
 
 	return static_data
 
@@ -1743,7 +1744,6 @@ obj/machinery/door/airlock
 	userstates["isAi"] = isAI(user)
 	userstates["isCarbon"] = iscarbon(user)
 	data["userStates"] = userstates
-	data["name"] = src.name
 	data["panelOpen"] = src.p_open
 	data["mainTimeLeft"] = secondsMainPowerLost
 	data["backupTimeLeft"] = secondsBackupPowerLost
