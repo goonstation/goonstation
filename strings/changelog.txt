@@ -1,5 +1,9 @@
 
 (t)sat sep 19 20
+(u)ThePotato97
+(p)1986
+(e)🆕📄|feature, tgui
+(+)Converted AI airlock controls to tgui
 (u)zjdtmkhzt
 (p)2219
 (e)⚖|balance
