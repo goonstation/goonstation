@@ -56,6 +56,7 @@ const AirlockAndAccessPanel = (props, context) => {
     canAiControl,
     hackMessage,
     canAiHack,
+    noPower,
   } = data;
 
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 1);
@@ -85,7 +86,7 @@ const AirlockAndAccessPanel = (props, context) => {
         {tabIndex === 1 && (
           <Fragment>
             <Section fitted backgroundColor="transparent">
-              {(!canAiControl) && (
+              {(!canAiControl || !!noPower) && (
                 <Modal
                   textAlign="center"
                   fontSize="24px">
@@ -119,6 +120,7 @@ const AirlockControlsOnly = (props, context) => {
     canAiControl,
     hackMessage,
     canAiHack,
+    noPower,
   } = data;
 
   return (
@@ -129,7 +131,7 @@ const AirlockControlsOnly = (props, context) => {
       title={`Airlock - ${name}`}>
       <Window.Content>
         <Section fitted backgroundColor="transparent">
-          {(!canAiControl) && (
+          {(!canAiControl || !!noPower) && (
             <Modal
               textAlign="center"
               fontSize="26px">
@@ -425,8 +427,6 @@ export const AccessPanel = (props, context) => {
     safety,
     panelOpen,
   } = data;
-
-  const userPerms = uiCurrentUserPermissions(data);
 
   const handleWireInteract = (wireColorIndex, action) => {
     act(action, { wireColorIndex });
