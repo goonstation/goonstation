@@ -1687,7 +1687,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	log_shot(P,src)
 	if (ismob(P.shooter))
 		var/mob/living/M = P.shooter
-		if (P.name != "energy bolt" && M && M.mind)
+		if (P.name != "energy bolt" && M?.mind)
 			M.mind.violated_hippocratic_oath = 1
 
 	if (src.nodamage) return 0
