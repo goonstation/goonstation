@@ -6005,7 +6005,10 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc/autoname_north{
+	autoname_on_spawn = 0;
+	name = "Abandoned APC"
+	},
 /turf/simulated/floor/airless/damaged2,
 /area/station/wreckage)
 "anO" = (
