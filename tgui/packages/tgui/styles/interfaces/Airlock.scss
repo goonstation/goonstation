@@ -1,7 +1,7 @@
 @use '../colors.scss';
 @use '../components/Button.scss';
 
-.airlock-wires-btn {
+.AccessPanel-wires-btn {
   &.Button--selected {
     @include Button.button-color(colors.bg(colors.$average));
   }
