@@ -104,7 +104,9 @@
 
 
 /obj/machinery/door/airlock/proc/user_toggle_open(mob/user)
-	if (src.operating == 1 || (!src.arePowerSystemsOn()) || (status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+	if (src.operating == 1)
+		return
+	if((!src.arePowerSystemsOn()) || (status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		boutput(user, "<span class='alert'>The door has no power - you can't open/close it.</span>")
 		return
 	if(!src.allowed(usr))
@@ -1348,6 +1350,7 @@ About the new airlock wires panel:
 			boutput(usr, "<span class='alert'>[src] does not have a panel for you to unscrew!</span>")
 			return
 		src.p_open = !(src.p_open)
+		tgui_process.update_uis(src)
 		src.update_icon()
 	else if (issnippingtool(C) && src.p_open)
 		return src.attack_hand(user)
@@ -1753,6 +1756,7 @@ obj/machinery/door/airlock
 	data["aiHacking"] = src.aiHacking
 	data["canAiHack"] = canAIHack()
 	data["hackMessage"] = hackMessage
+	data["aiControlVar"] = aiControlDisabled
 	var/list/wire = list()
 	wire["main_1"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)
 	wire["main_2"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)
@@ -1829,7 +1833,7 @@ obj/machinery/door/airlock
 			if("openClose")
 				user_toggle_open(usr)
 				. = TRUE
-	if(src.p_open && get_dist(src, usr) <= 1)
+	if(src.p_open && get_dist(src, usr) <= 1 && !isAI(usr))
 		switch(action)
 			if("cut")
 				var/which_wire = params["wireColorIndex"]

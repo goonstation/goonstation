@@ -17,14 +17,15 @@ export const uiCurrentUserPermissions = data => {
   } = data;
 
   return {
+    // can only access airlock if they're AI or a borg.
     airlock: (userStates.isBorg) || (userStates.isAi),
+    /** borgs can only access panel when they're next to the airlock
+    * carbons are checked on the backend so no need to check their distance here
+    * so we'll return true
+    */
     accessPanel: (
-      (userStates.isBorg && userStates.distance <= 3 && panelOpen)
-      || (userStates.isCarbon && panelOpen)
-    ),
-    // shows too far message on access panel when the mob is not in range
-    accessPanelNotTooFar: (
-      userStates.isBorg && userStates.distance <= 1 && panelOpen
+      (userStates.isBorg && userStates.distance <= 1
+        && panelOpen) || (userStates.isCarbon)
     ),
   };
 
@@ -32,7 +33,6 @@ export const uiCurrentUserPermissions = data => {
 
 export const Airlock = (props, context) => {
   const { data } = useBackend(context);
-
   const userPerms = uiCurrentUserPermissions(data);
   //  We render 3 different interfaces so we can change the window sizes
   return (
@@ -50,24 +50,15 @@ export const Airlock = (props, context) => {
 
 const AirlockAndAccessPanel = (props, context) => {
   const { data } = useBackend(context);
-  const userPerms = uiCurrentUserPermissions(data);
 
   const {
     name,
     canAiControl,
     hackMessage,
     canAiHack,
-    netId,
   } = data;
 
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex',
-    (userPerms["airlock"] && userPerms["accessPanel"])
-      ? 1
-      : userPerms["airlock"]
-        ? 1
-        : userPerms["accessPanel"]
-          ? 2
-          : 1);
+  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 1);
   return (
     <Window
       width={354}
@@ -93,20 +84,19 @@ const AirlockAndAccessPanel = (props, context) => {
         </Tabs>
         {tabIndex === 1 && (
           <Fragment>
-            <Section fitted backgroundColor="rgba(0,0,0,0)">
+            <Section fitted backgroundColor="transparent">
               {(!canAiControl) && (
                 <Modal
                   textAlign="center"
                   fontSize="24px">
-                  {hackMessage ? hackMessage : "Airlock Controls Disabled"}
+                  <Box width={20} height={5} algin="center">
+                    {hackMessage ? hackMessage : "Airlock Controls Disabled"}
+                  </Box>
                 </Modal>
               )}
               <PowerStatus />
               <AccessAndDoorControl />
               <Electrify />
-            </Section>
-            <Section>
-              {"Access sensor reports the net identifer is:"} <Box inline italic>{netId}</Box>
             </Section>
             {!!canAiHack && (
               <Hack />
@@ -129,22 +119,23 @@ const AirlockControlsOnly = (props, context) => {
     canAiControl,
     hackMessage,
     canAiHack,
-    netId,
   } = data;
 
   return (
     <Window
-      width={327}
-      height={385}
+      width={315}
+      height={375}
       theme="ntos"
       title={"Airlock - " + name}>
       <Window.Content>
-        <Section fitted backgroundColor="rgba(0,0,0,0)">
+        <Section fitted backgroundColor="transparent">
           {(!canAiControl) && (
             <Modal
               textAlign="center"
-              fontSize="20px">
-              {hackMessage ? hackMessage : "Airlock Controls Disabled"}
+              fontSize="26px">
+              <Box width={20} height={5} algin="center">
+                {hackMessage ? hackMessage : "Airlock Controls Disabled"}
+              </Box>
               {!!canAiHack && (
                 <Hack />
               )}
@@ -153,9 +144,6 @@ const AirlockControlsOnly = (props, context) => {
           <PowerStatus />
           <AccessAndDoorControl />
           <Electrify />
-        </Section>
-        <Section>
-          {"Access sensor reports the net identifer is:"} <Box inline italic>{netId}</Box>
         </Section>
       </Window.Content>
     </Window>
@@ -187,6 +175,7 @@ const PowerStatus = (props, context) => {
     mainTimeLeft,
     backupTimeLeft,
     wires,
+    netId,
   } = data;
 
   const buttonProps = {
@@ -196,6 +185,8 @@ const PowerStatus = (props, context) => {
 
   return (
     <Section title="Power Status">
+      {"Access sensor reports the net identifer is:"} <Box inline italic>{netId}</Box>
+      <Divider />
       <LabeledList>
         <LabeledList.Item
           label="Main"
@@ -335,55 +326,54 @@ const Electrify = (props, context) => {
   } = data;
 
   return (
-    <NoticeBox danger>
-      <Section m={-1} py={0.5}>
-        <LabeledList>
-          <LabeledList.Item
-            color={shockTimeLeft ? "average" : "good"}
-            label="Electrify">
-            {!shockTimeLeft ? "Safe" : "Electrified"}
-            {" "}
-            {!wires.shock
+    <NoticeBox backgroundColor="#601B1B">
+      <LabeledList>
+        <LabeledList.Item
+          labelColor="white"
+          color={shockTimeLeft ? "average" : "good"}
+          label="Electrify">
+          {!shockTimeLeft ? "Safe" : "Electrified"}
+          {" "}
+          {!wires.shock
             && "[Wires cut!]"
             || (shockTimeLeft > 0
             && `[${shockTimeLeft}s]`)
             || (shockTimeLeft === -1
             && "[Permanent]")}
-          </LabeledList.Item>
-          <LabeledList.Item
-            color={!shockTimeLeft ? "Average" : "Bad"}>
-            <Box
-              pl={shockTimeLeft ? 18 : 0}
-              pt={0.5}>
-              {(!shockTimeLeft &&(
-                <Button.Confirm
-                  width={9}
-                  p={0.5}
-                  align="center"
-                  color="average"
-                  content="Temporary"
-                  confirmContent="Are you sure?"
-                  icon="bolt"
-                  disabled={(!wires.shock) || shockTimeLeft === -1
-                || (mainTimeLeft && backupTimeLeft)}
-                  onClick={(() => act("shockTemp"))} />
-              ))}
+        </LabeledList.Item>
+        <LabeledList.Item
+          color={!shockTimeLeft ? "Average" : "Bad"}>
+          <Box
+            pl={shockTimeLeft ? 18 : 0}
+            pt={0.5}>
+            {(!shockTimeLeft &&(
               <Button.Confirm
                 width={9}
                 p={0.5}
                 align="center"
-                color={shockTimeLeft ? "good" : "bad"}
-                icon="bolt"
+                color="average"
+                content="Temporary"
                 confirmContent="Are you sure?"
-                content={shockTimeLeft ? "Restore" : "Permanent"}
-                disabled={(!wires.shock)
+                icon="bolt"
+                disabled={(!wires.shock) || shockTimeLeft === -1
                 || (mainTimeLeft && backupTimeLeft)}
-                onClick={shockTimeLeft ? (() => act("shockRestore"))
-                  : (() => act("shockPerm"))} />
-            </Box>
-          </LabeledList.Item>
-        </LabeledList>
-      </Section>
+                onClick={(() => act("shockTemp"))} />
+            ))}
+            <Button.Confirm
+              width={9}
+              p={0.5}
+              align="center"
+              color={shockTimeLeft ? "good" : "bad"}
+              icon="bolt"
+              confirmContent="Are you sure?"
+              content={shockTimeLeft ? "Restore" : "Permanent"}
+              disabled={(!wires.shock)
+                || (mainTimeLeft && backupTimeLeft)}
+              onClick={shockTimeLeft ? (() => act("shockRestore"))
+                : (() => act("shockPerm"))} />
+          </Box>
+        </LabeledList.Item>
+      </LabeledList>
     </NoticeBox>
   );
 };
@@ -400,12 +390,20 @@ const Hack = (props, context) => {
       fitted py={0.5} pt={2}
       align="center">
       <Button
+        style={{
+          "font-family": "monospace",
+          "border-width": "base.em(2px)",
+          "border-style": "outset",
+          "border-color": "#00AA00",
+          "outline": "base.em(1px) solid rgb(0, 122, 0)",
+        }}
+        backgroundColor="#00ff00"
         bold
-        color="bad"
-        fontSize="25px"
-        fontFamily="monospace"
+        textColor="black"
+        fontSize="29px"
         disabled={aiHacking}
-        width={15}
+        textAlign="center"
+        width={16}
         onClick={() => act("hackAirlock")}>
         {aiHacking ? "Hacking..." : "HACK"}
       </Button>
@@ -423,6 +421,7 @@ export const AccessPanel = (props, context) => {
     powerIsOn,
     boltsAreUp,
     canAiControl,
+    aiControlVar,
     safety,
     panelOpen,
   } = data;
@@ -438,11 +437,11 @@ export const AccessPanel = (props, context) => {
   return (
     <Section
       title="Access Panel">
-      {!userPerms["accessPanelNotTooFar"] && (
+      {!panelOpen && (
         <Modal
           textAlign="center"
           fontSize="24px">
-          {panelOpen ? "You can't reach" : "Access Panel is Closed"}
+          Access Panel is Closed
         </Modal>
       )}
       <Box>
@@ -473,8 +472,8 @@ export const AccessPanel = (props, context) => {
                     <Button
                       icon="broadcast-tower"
                       width={10.5}
-                      className="airlock-wires-btn"
-                      selected={!!(signalers[i])}
+                      className="AccessPanel-wires-btn"
+                      color={!(signalers[i]) ? "default" : "average"}
                       onClick={() => handleWireInteract(i, "signaler")}>
                       {!(signalers[i]) ? "Attach Signaler" : "Detach Signaler"}
                     </Button>
@@ -513,7 +512,7 @@ export const AccessPanel = (props, context) => {
           <LabeledList>
             <LabeledList.Item
               label="AI control"
-              color={canAiControl ? "green" : "red"}>
+              color={canAiControl ? (aiControlVar === 2 ? "orange" : "green") : "red"}>
               {canAiControl ? "Enabled" : "Disabled"}
             </LabeledList.Item>
             <LabeledList.Item
