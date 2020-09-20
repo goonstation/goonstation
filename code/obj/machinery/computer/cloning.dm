@@ -1,6 +1,6 @@
 //Cloning revival method.
 //The pod handles the actual cloning while the computer manages the clone profiles
-
+//todo fix port-a-clone
 /obj/machinery/computer/cloning
 	name = "Cloning console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
@@ -11,7 +11,7 @@
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
-	var/temp = "Initializing System..."
+	var/currentStatusMessage = list()
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
 	var/obj/item/disk/data/floppy/diskette = null //Mostly so the geneticist can steal somebody's identity while pretending to give them a handy backup profile.
@@ -75,21 +75,15 @@
 		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
 
-		src.temp = ""
+		show_message("")
 		var/hookup_error = FALSE
 		if (isnull(src.scanner))
-			src.temp += " <font color=red>SCNR-ERROR</font>"
 			hookup_error = TRUE
 		if (isnull(src.pod1))
-			src.temp += " <font color=red>POD1-ERROR</font>"
 			hookup_error = TRUE
 		if (!hookup_error)
 			src.pod1?.connected = src
 			src.scanner?.connected = src
-
-		if (src.temp == "")
-			src.temp = "System ready."
-		return
 	return
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
@@ -175,21 +169,33 @@
 		src.attack_hand(user)
 	return
 
+// status = warning/success/danger/info which changes the color of the noticebox on the frontend
+
+/obj/machinery/computer/cloning/proc/show_message(message, status)
+	src.currentStatusMessage["text"] = message
+	src.currentStatusMessage["status"] = status
+	tgui_process.update_uis(src)
+	SPAWN_DBG(5 SECONDS)
+	if(src.currentStatusMessage == message)
+		src.currentStatusMessage["text"] = ""
+		src.currentStatusMessage["status"] = ""
+		tgui_process.update_uis(src)
+
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
 	if ((isnull(subject)) || (!ishuman(subject)))
-		src.temp = "Error: Unable to locate valid genetic data."
+		show_message("Error: Unable to locate valid genetic data.", "danger")
 		return
 	if(!allow_dead_scanning && subject.decomp_stage)
-		src.temp = "Error: Failed to read genetic data from subject.<br>Necrosis of tissue has been detected."
+		show_message("Error: Failed to read genetic data from subject.<br>Necrosis of tissue has been detected.")
 		return
 	if (!subject.bioHolder || subject.bioHolder.HasEffect("husk"))
-		src.temp = "Error: Extreme genetic degredation present."
+		show_message("Error: Extreme genetic degredation present.", "danger")
 		return
 	if (istype(subject.mutantrace, /datum/mutantrace/kudzu))
-		src.temp = "Error: Incompatible cellular structure."
+		show_message("Error: Incompatible cellular structure.", "danger")
 		return
 	if (subject.mob_flags & IS_BONER)
-		src.temp = "Error: No tissue mass present.<br>Total ossification of subject detected."
+		show_message("Error: No tissue mass present.<br>Total ossification of subject detected.", "danger")
 		return
 
 	var/datum/mind/subjMind = subject.mind
@@ -201,13 +207,13 @@
 			if ((istype(V) && V.isghost) || inafterlifebar(V))
 				subjMind = V.mind
 			else
-				src.temp = "Error: Mental interface failure."
+				show_message("Error: Mental interface failure.", "warning")
 				return
 		else
-			src.temp = "Error: Mental interface failure."
+			show_message("Error: Mental interface failure.", "warning")
 			return
 	if (!isnull(find_record(ckey(subjMind.key))))
-		src.temp = "Subject already in database."
+		show_message("Subject already in database.", "info")
 		return
 
 	var/datum/data/record/R = new /datum/data/record(  )
@@ -246,7 +252,7 @@
 		R.fields["mind"] = subjMind
 
 	src.records += R
-	src.temp = "Subject successfully scanned."
+	show_message("Subject successfully scanned.", "success")
 	JOB_XP(usr, "Medical Doctor", 10)
 
 //Find a specific record by key.
@@ -260,27 +266,27 @@
 
 /obj/machinery/computer/cloning/proc/clone_record(datum/data/record/C)
 	if (!istype(C))
-		src.temp = "Invalid or corrupt record."
+		show_message("Invalid or corrupt record.", "danger")
 		return
 	if (!src.pod1)
-		src.temp = "No cloning pod connected."
+		show_message("No cloning pod connected.", "danger")
 		return
 	if (src.pod1.attempting)
-		src.temp = "Cloning pod in use."
+		show_message("Cloning pod in use.", "info")
 		return
 	if (src.pod1.mess)
-		src.temp = "Abnormal reading from cloning pod."
+		show_message("Abnormal reading from cloning pod.", "danger")
 		return
 
 	var/mob/selected = find_dead_player("[C.fields["ckey"]]")
 
 	if (!selected)
-		src.temp = "Can't clone: Unable to locate mind."
+		show_message("Can't clone: Unable to locate mind.", "danger")
 		return
 
 	if (selected.mind && selected.mind.dnr)
 		// leave the goddamn dnr ghosts alone
-		src.temp = "Cannot clone: Subject has set DNR."
+		show_message("Cannot clone: Subject has set DNR.", "danger")
 		return
 	else
 		//for deleting the mob in the afterlife bar if cloning person from there.
@@ -305,17 +311,17 @@
 				if (from_account > 0)
 					Ba.fields["current_money"] -= from_account
 				src.held_credit -= (wagesystem.clone_cost - from_account)
-				src.temp = "Payment of [wagesystem.clone_cost] credits accepted. [from_account > 0 ? "Deducted [from_account] credits from [C.fields["name"]]'s account.' " : ""][from_account < wagesystem.clone_cost ? "Deducted [wagesystem.clone_cost - from_account] credits from machine credit." : ""] Cloning cycle activated."
+				show_message("Payment of [wagesystem.clone_cost] credits accepted. [from_account > 0 ? "Deducted [from_account] credits from [C.fields["name"]]'s account.' " : ""][from_account < wagesystem.clone_cost ? "Deducted [wagesystem.clone_cost - from_account] credits from machine credit." : ""] Cloning cycle activated.", "info")
 				src.records.Remove(C)
 				qdel(C)
 				src.menu = 1
 			else
-				src.temp = "Unknown error when trying to start cloning process."
+				show_message("Unknown error when trying to start cloning process.", "info")
 		else
-			src.temp = "Insufficient funds to begin clone cycle."
+			show_message("Insufficient funds to begin clone cycle.", "warning")
 
 	else if (src.pod1.growclone(selected, C.fields["name"], C.fields["mind"], C.fields["holder"], C.fields["abilities"] , C.fields["traits"]))
-		src.temp = "Cloning cycle activated."
+		show_message("Cloning cycle activated.", "success")
 		src.records.Remove(C)
 		qdel(C)
 		JOB_XP(usr, "Medical Doctor", 15)
@@ -663,7 +669,7 @@
 				src.records.Remove(selected_record)
 				qdel(selected_record)
 				selected_record = null
-				src.temp = "Record deleted."
+				show_message("Record deleted.", "danger")
 				. = TRUE
 		if("scan")
 			if(!isnull(src.scanner))
@@ -679,24 +685,24 @@
 				pod1.gen_analysis = !pod1.gen_analysis
 				. = TRUE
 			else
-				src.temp = "Cannot toggle any modules while cloner is active."
+				show_message("Cannot toggle any modules while cloner is active.", "warning")
 				. = TRUE
 		if("saveToDisk")
 			var/ckey = params["ckey"]
 			var/selected_record = find_record(ckey)
 			if ((isnull(src.diskette)) || (src.diskette.read_only) || (isnull(selected_record)))
-				src.temp = "Save error."
+				show_message("Save error.", "warning")
 				. = TRUE
 
 			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
 				if (R.fields["ckey"] == selected_record["fields"]["ckey"])
-					src.temp = "Record already exists on disk."
+					show_message("Record already exists on disk.", "info")
 					. = TRUE
 
 			var/datum/computer/file/clone/cloneFile = new
 			cloneFile.name = "CloneRecord-[ckey(selected_record["fields"]["name"])]"
 			cloneFile.fields = selected_record["fields"]
-			src.temp = src.diskette.root.add_file(cloneFile) ? "Save successful." : "Save error."
+			show_message(src.diskette.root.add_file(cloneFile) ? "Save successful." : "Save error.", src.diskette.root.add_file(cloneFile) ? "info" : "warning")
 			. = TRUE
 
 		if("eject")
@@ -708,7 +714,7 @@
 		if("load")
 			if (src.diskette.read_only)
 				// The file needs to be deleted from the disk after loading the record
-				src.temp = "Load error - cannot transfer clone records from a disk in read only mode."
+				show_message("Load error - cannot transfer clone records from a disk in read only mode.", "warning")
 				. = TRUE
 
 			var/loaded = 0
@@ -719,12 +725,12 @@
 					R.fields = cloneRecord.fields
 					src.records += R
 					loaded++
-					src.temp = "Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred."
+					show_message("Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred.", "success")
 					src.diskette.root.remove_file(cloneRecord)
 					. = TRUE
 
 			if(!loaded)
-				src.temp = "Load error."
+				show_message("Load error.", "warning")
 				. = TRUE
 		if("toggleLock")
 			if (!isnull(src.scanner))
@@ -739,7 +745,7 @@
 				pod1.mindwipe = !pod1.mindwipe
 				. = TRUE
 			else
-				src.temp = "Cannot toggle any modules while cloner is active."
+				show_message("Cannot toggle any modules while cloner is active.", "warning")
 			. = TRUE
 
 
@@ -760,7 +766,7 @@
 		data["scannerLocked"] = src.scanner.locked
 		if(src.scanner.occupant)
 			data["occupantScanned"] = !isnull(find_record(ckey(src.scanner.occupant.mind.key)))
-	data["message"] = src.temp
+	data["message"] = src.currentStatusMessage
 	data["disk"] = !isnull(src.diskette)
 	if(!isnull(src.diskette))
 		data["diskReadOnly"] = src.diskette.read_only

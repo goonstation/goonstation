@@ -1,3 +1,10 @@
+/**
+* @file
+* @copyright 2020
+* @author ThePotato97 (https://github.com/ThePotato97)
+* @license ISC
+*/
+
 import { Fragment } from "inferno";
 import { useBackend, useSharedState, useLocalState } from "../backend";
 import { truncate } from "../format.js";
@@ -34,6 +41,27 @@ const HealthStat = props => {
   );
 };
 
+const Types = {
+  Danger: 'danger',
+  Info: 'info',
+  Success: 'success',
+};
+
+export const TypedNoticeBox = props => {
+  const {
+    type,
+    ...rest
+  } = props;
+  const typeProps = {
+    ...(type === Types.Danger ? { danger: true } : {}),
+    ...(type === Types.Info ? { info: true } : {}),
+    ...(type === Types.Success ? { success: true } : {}),
+  };
+  return <NoticeBox {...typeProps} {...rest} />;
+};
+
+TypedNoticeBox.Types = Types;
+
 export const CloningConsole = (props, context) => {
   const { data, act } = useBackend(context);
   const {
@@ -48,6 +76,7 @@ export const CloningConsole = (props, context) => {
   ] = useLocalState(context, 'deletionTarget', '');
 
   const [tab, setTab] = useSharedState(context, "tab", "checkRecords");
+  const messageColors = { info: "blue", warning: "orange", success: "green", danger: "red" };
 
   return (
     <Window
@@ -55,11 +84,6 @@ export const CloningConsole = (props, context) => {
       width={550}
       height={550}>
       <Window.Content scrollable>
-        {message && (
-          <NoticeBox info textAlign="center">
-            {message}
-          </NoticeBox>
-        )}
         {(deletionTarget && (
           <Modal
             mx={7}
@@ -124,7 +148,7 @@ export const CloningConsole = (props, context) => {
             </Tabs.Tab>
           </Tabs>
         </Section>
-        {/* used for the wagesystem */}
+        {/* used for the wage system */}
         {(clones_for_cash && (
           <Section>
             Current machine credit: {balance}
@@ -175,7 +199,7 @@ const Functions = (props, context) => {
           </Button>
         </Box>
       </Section>
-      {/* will only be active if the minderaser module is installed */}
+      {/* will only be active if the mind eraser module is installed */}
       {(!!allowMindErasure && (
         <Section
           title="Criminal Rehabilitation Controls">
@@ -231,6 +255,7 @@ const StatusSection = (props, context) => {
     scannerOccupied,
     scannerGone,
     podGone,
+    message,
   } = data;
 
   return (
@@ -252,7 +277,7 @@ const StatusSection = (props, context) => {
             "No Pod Detected"
           )}
         </LabeledList.Item>
-        <LabeledList.Item label="Biomatter">
+        <LabeledList.Item label="Bio-Matter">
           {!podGone && (
             <ProgressBar
               value={meatLevels}
@@ -269,26 +294,44 @@ const StatusSection = (props, context) => {
           )}
         </LabeledList.Item>
       </LabeledList>
-      <Box pt={2}>
-        <Button
-          width={7}
-          icon="dna"
-          align={"center"}
-          color={(occupantScanned ? "average" : (scannerGone ? "bad" : "good"))}
-          disabled={occupantScanned | scannerGone}
-          onClick={() => act("scan")}>
-          {(occupantScanned ? "Scanned" : (scannerGone ? "No Scanner" : "Scan"))}
-        </Button>
-        <Button
-          width={7}
-          icon={scannerLocked ? "unlock" : "lock-open"}
-          align={"center"}
-          disabled={!scannerOccupied}
-          color={scannerLocked ? "bad" : "good"}
-          onClick={() => act("toggleLock")}>
-          {scannerLocked ? "Locked" : "Unlocked"}
-        </Button>
-      </Box>
+      <Flex>
+        <Flex.Item mt={2}>
+          <Button
+            width={7}
+            icon="dna"
+            align={"center"}
+            color={(occupantScanned ? "average" : (scannerGone ? "bad" : "good"))}
+            disabled={occupantScanned | scannerGone}
+            onClick={() => act("scan")}>
+            {(occupantScanned ? "Scanned" : (scannerGone ? "No Scanner" : "Scan"))}
+          </Button>
+          <Button
+            width={7}
+            icon={scannerLocked ? "unlock" : "lock-open"}
+            align={"center"}
+            disabled={!scannerOccupied}
+            color={scannerLocked ? "bad" : "good"}
+            onClick={() => act("toggleLock")}>
+            {scannerLocked ? "Locked" : "Unlocked"}
+          </Button>
+        </Flex.Item>
+        <Flex.Item width={25} mt={2} ml={5}>
+          {message.text && (
+            <TypedNoticeBox
+              as="span"
+              type={"message.status"}
+              textColor="white"
+              textAlign="center"
+              width={30}
+              p={1}
+              pl={8}
+              pr={8}
+              mt={5}>
+              {message.text}
+            </TypedNoticeBox>
+          )}
+        </Flex.Item>
+      </Flex>
     </Section>
   );
 };
