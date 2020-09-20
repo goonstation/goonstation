@@ -190,9 +190,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	mordent
 		ckey = "mordent"
 		name = "Office of Mordent"
-	mbc
+	mrfishstick
 		ckey = "mrfishstick"
-		name = "Office of Dotty Spud"
+		name = "Office of Mr Fishstick"
 	nakar
 		ckey = ""
 		name = "Office of Nakar"
