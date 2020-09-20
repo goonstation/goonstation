@@ -24,6 +24,8 @@
 	var/datum/radio_frequency/radio_connection
 	var/speaker_range = 2
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/hardened = 1	//This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1. 
+
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	throw_speed = 2
 	throw_range = 9
@@ -250,7 +252,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 /obj/item/device/radio/talk_into(mob/M as mob, messages, secure, real_name, lang_id)
 	// According to a pair of DEBUG calls set up for testing, no radio jammer check for the src radio was performed.
 	// As improbable as this sounds, there are bug reports too to back up the findings. So uhm...
-	if (src.radio_connection.check_for_jammer(src) != 0)
+	if (radio_controller.active_jammers.len && src.radio_connection.check_for_jammer(src) != 0)	//First bit is basically can_check_jammer but on this connection
 		return
 	if (!(src.wires & WIRE_TRANSMIT))
 		return
@@ -293,7 +295,11 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			var/obj/item/device/radio/R = I
 			//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
 			if (can_check_jammer)
-				if (connection.check_for_jammer_bare(R))
+				if (connection.check_for_jammer(R))
+					continue
+			//if we have signal_loss (solar flare), and the radio isn't hardened don't send message, then block general frequencies.
+			if (signal_loss && !src.hardened)
+				if (connection.frequency >= R_FREQ_MINIMUM && connection.frequency <= R_FREQ_MAXIMUM)
 					continue
 
 			if (R.accept_rad(src, messages, connection))
