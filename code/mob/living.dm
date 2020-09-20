@@ -1769,7 +1769,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.stamina_stun()
 
 				src.TakeDamage("chest", (damage/rangedprot), 0, 0, DAMAGE_BLUNT)
-				if (stat==0) lastgasp()
+				if (isalive(src))
+					lastgasp()
 
 			if (D_PIERCING)
 				if (stun > 0)
@@ -1777,7 +1778,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.stamina_stun()
 
 				src.TakeDamage("chest", damage/max((rangedprot/3), 1), 0, 0, DAMAGE_STAB)
-				if (stat==0) lastgasp()
+				if (isalive(src))
+					lastgasp()
 
 			if (D_SLASHING)
 				if (stun > 0)
@@ -1829,7 +1831,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (P.proj_data.reagent_payload)
 					src.TakeDamage("chest", (damage/rangedprot), 0, 0, DAMAGE_STAB)
-					if (stat==0) lastgasp()
+					if (isalive(src))
+						lastgasp()
 					src.reagents.add_reagent(P.proj_data.reagent_payload, 15/rangedprot)
 				else
 					src.take_toxin_damage(damage)
