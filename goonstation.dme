@@ -877,7 +877,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\medical\genetics\portaclone.dm"
 #include "code\modules\medical\genetics\portagene.dm"
 #include "code\modules\medical\genetics\bioEffects\beneficial.dm"
-#include "code\modules\medical\genetics\bioEffects\food_bonus.dm"
 #include "code\modules\medical\genetics\bioEffects\harmful.dm"
 #include "code\modules\medical\genetics\bioEffects\hemochromia.dm"
 #include "code\modules\medical\genetics\bioEffects\meta.dm"
