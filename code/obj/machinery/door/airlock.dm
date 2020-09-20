@@ -31,7 +31,7 @@
 
 /obj/machinery/door/airlock/proc/shock_temp(mob/user)
 	//electrify door for 30 seconds
-	if(!src.arePowerSystemsOn())
+	if(!src.arePowerSystemsOn() || (status & NOPOWER))
 		boutput(user, "The door has no power - you can't electrify it.")
 		return
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
@@ -55,7 +55,7 @@
 	if (src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 		boutput(usr, "<span class='alert'>You can't drop the door bolts - The door bolt dropping wire has been cut.</span>")
 		return
-	if(!src.arePowerSystemsOn())
+	if(!src.arePowerSystemsOn() || (status & NOPOWER))
 		boutput(user, "<span class='alert'>The door has no power - you can't raise/lower the door bolts.</span>")
 		return
 	if(src.locked)
@@ -67,8 +67,9 @@
 		update_icon()
 
 /obj/machinery/door/airlock/proc/shock_perm(mob/user)
-	if(!src.arePowerSystemsOn())
+	if(!src.arePowerSystemsOn() || (status & NOPOWER))
 		boutput(user, "<span class='alert'>The door has no power - you can't electrify it.</span>")
+		return
 	//electrify door indefinitely
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
 		boutput(usr, text("<span class='alert'>The electrification wire has been cut.<br><br></span>"))
@@ -83,8 +84,9 @@
 
 /obj/machinery/door/airlock/proc/shock_restore(mob/user)
 	//un-electrify door
-	if(!src.arePowerSystemsOn())
+	if(!src.arePowerSystemsOn() || (status & NOPOWER))
 		boutput(user, "The door has no power - you can't electrify it.")
+		return
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
 		boutput(usr, text("<span class='alert'>Can't un-electrify the airlock - The electrification wire is cut.<br><br></span>"))
 	else if (src.secondsElectrified!=0)
@@ -94,8 +96,9 @@
 
 
 /obj/machinery/door/airlock/proc/idscantoggle(mob/user)
-	if(!src.arePowerSystemsOn())
+	if(!src.arePowerSystemsOn() || (status & NOPOWER))
 		boutput(user, "<span class='alert'>The door has no power - you toggle the ID scanner.</span>")
+		return
 	//enable/disable ID scanner
 	if (src.isWireCut(AIRLOCK_WIRE_IDSCAN))
 		boutput(usr, "The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.")
@@ -1275,7 +1278,6 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
 	return min(
 		tgui_default_state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
 		tgui_not_incapacitated_state.can_use_topic(src, user)
 	)
 
@@ -1723,7 +1725,7 @@ obj/machinery/door/airlock
 		if (src.secondsElectrified!=0)
 			shock_restore(user)
 		else
-			if(!src.arePowerSystemsOn())
+			if(!src.arePowerSystemsOn() || (status & NOPOWER))
 				boutput(user, "The door has no power - you can't electrify it.")
 				return
 			if(alert("Are you sure? Electricity might harm a human!",,"No","Yes") == "Yes") // fix for holding spacebar clicking yes
@@ -1757,6 +1759,7 @@ obj/machinery/door/airlock
 	data["canAiHack"] = canAIHack()
 	data["hackMessage"] = hackMessage
 	data["aiControlVar"] = aiControlDisabled
+	data["noPower"] = (status & NOPOWER)
 	var/list/wire = list()
 	wire["main_1"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)
 	wire["main_2"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)
