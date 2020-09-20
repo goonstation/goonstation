@@ -43,6 +43,7 @@
 
 
 /obj/landmark/gps_waypoint
+	icon_state = "gps"
 	name = LANDMARK_GPS_WAYPOINT
 
 /client/var/list/GPS_Path
@@ -114,8 +115,8 @@
 	set name = "GPS"
 	set category = "Commands"
 	set desc = "Find your way around with ease!"
-	if(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 10 SECONDS))
-		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 0))].")
+	if(PROC_ON_COOLDOWN(10 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0))].")
 		return
 	if(hasvar(src,"wear_id"))
 		DoGPS(src:wear_id)
@@ -123,8 +124,8 @@
 	set name = "GPS"
 	set category = "Commands"
 	set desc = "Find your way around with ease!"
-	if(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 10 SECONDS)) // using ..... is very wacked
-		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 0))].")
+	if(PROC_ON_COOLDOWN(10 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0 SECONDS))].")
 		return
 	DoGPS(src.botcard)
 /*

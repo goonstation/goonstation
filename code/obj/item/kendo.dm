@@ -79,7 +79,7 @@
 
     New()
         ..()
-        BLOCK_SWORD
+        BLOCK_SETUP(BLOCK_SWORD)
 
     proc/change_guard(var/mob/user,var/intent)
         user.do_disorient(10,0,0,0,0,0,null)

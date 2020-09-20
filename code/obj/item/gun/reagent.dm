@@ -24,7 +24,7 @@
 	is_open_container()
 		return 1
 
-	alter_projectile(var/obj/projectile/P)
+	alter_projectile(source, var/obj/projectile/P)
 		if(src.projectile_reagents && P && P.proj_data)
 			if (!P.reagents)
 				P.reagents = new /datum/reagents(P.proj_data.cost)
@@ -156,3 +156,32 @@
 	New()
 		..()
 		src.emag_act()
+
+
+/obj/item/gun/reagent/ecto
+	name = "ectoblaster"
+	icon_state = "ecto0"
+	ammo_reagents = list("ectoplasm")
+	force = 7.0
+	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
+
+	New()
+		current_projectile = new/datum/projectile/ectoblaster
+		projectiles = list(current_projectile)
+		..()
+
+	update_icon()
+		if(src.reagents)
+			var/ratio = min(1, src.reagents.total_volume / src.reagents.maximum_volume)
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "ecto[ratio]"
+			return
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (istype(I, /obj/item/reagent_containers/food/snacks/ectoplasm) && !src.reagents.is_full())
+			I.reagents.trans_to(src, I.reagents.total_volume)
+			user.visible_message("<span style=\"color:red\">[user] smooshes a glob of ectoplasm into [src].</span>")
+			qdel(I)
+			return
+
+		return ..()

@@ -2,10 +2,6 @@
 	var/big_title = override_big_title ? override_big_title : "[command_name()] Update"
 	boutput(world, "<h1 class='alert'>[big_title]</h1>")
 
-	if(do_sanitize)
-		title = sanitize(title)
-		text = sanitize(text)
-
 	if (title && length(title) > 0)
 		boutput(world, "<h2 class='alert'>[title]</h2>")
 
@@ -16,10 +12,6 @@
 
 /proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
 	if(!title || !text) return
-
-	if(do_sanitize)
-		title = sanitize(title)
-		text = sanitize(text)
 
 	boutput(world, "<h2 class='alert'>[title]</h2>")
 

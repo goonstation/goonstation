@@ -635,8 +635,7 @@ SYNDICATE DRONE FACTORY AREAS
 	src.desc = "This isn't coming off... oh god..."
 	if (!src.processing)
 		src.processing++
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 	SPAWN_DBG(5 SECONDS)
 		boutput(user, "<span class='notice'>The [src] feels like it's getting tighter. Ouch! Seems to have a lot of sharp edges inside.</span>")
 		random_brute_damage(user, 5)
@@ -699,7 +698,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/graveyard/lightning_trigger
 	icon = 'icons/misc/mark.dmi'
@@ -944,13 +943,13 @@ SYNDICATE DRONE FACTORY AREAS
 				boutput(usr, "<span class='success'>The Circle begins to vibrate and glow.</span>")
 				playsound(src.loc, "sound/voice/chanting.ogg", 50, 1)
 				sleep(1 SECOND)
-				shake_camera(usr, 15, 1, 0.2)
+				shake_camera(usr, 15, 16, 0.2)
 				sleep(1 SECOND)
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
 				sleep(1 SECOND)
 				world << sound('sound/effects/mag_pandroar.ogg', volume=60) // heh
-				shake_camera(usr, 15, 1, 0.5)
+				shake_camera(usr, 15, 16, 0.5)
 				new/obj/item/alchemy/stone(middle)
 				sleep(0.2 SECONDS)
 				var/obj/graveyard/loose_rock/R = locate("loose_rock_[target_id]")

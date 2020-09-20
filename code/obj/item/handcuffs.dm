@@ -106,7 +106,7 @@
 
 /obj/item/handcuffs/New()
 	..()
-	BLOCK_ROPE
+	BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/handcuffs/disposing()
 	if (ishuman(src.loc))

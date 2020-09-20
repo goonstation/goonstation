@@ -180,8 +180,7 @@
 			hit_type = DAMAGE_BURN
 			set_icon_state("weldingtool-on" + src.icon_state_variant_suffix)
 			src.item_state = "weldingtool-on" + src.item_state_variant_suffix
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			boutput(user, "<span class='notice'>Not welding anymore.</span>")
 			src.force = 3

@@ -134,7 +134,7 @@
 				src.ArtifactStimulus("radiate", P.power)
 		..()
 
-	hitby(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
 			src.ArtifactStimulus("force", ITM.throwforce)
@@ -281,7 +281,7 @@
 				src.ArtifactStimulus("radiate", P.power)
 		..()
 
-	hitby(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
 			src.ArtifactStimulus("force", ITM.throwforce)
@@ -327,7 +327,7 @@
 		if (src.Artifact_attackby(W,user))
 			..()
 
-	hitby(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
 			src.ArtifactStimulus("force", ITM.throwforce)

@@ -894,6 +894,7 @@
 			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		if ("rest")
+			if(ON_COOLDOWN(src, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			if(src.ai_active && !src.hasStatus("resting"))
 				src.show_text("You feel too restless to do that!", "red")
 			else
@@ -1022,7 +1023,7 @@
 			playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 #endif
 			for(var/mob/M in view(7, I.loc))
-				shake_camera(M, 20, 1)
+				shake_camera(M, 20, 8)
 
 		if (mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in grabbed_by)
@@ -1779,6 +1780,7 @@
 		src.update_clothing()
 	else if (W == src.handcuffs)
 		src.handcuffs = null
+		src.delStatus("handcuffed")
 		src.update_clothing()
 
 	if (W && W == src.r_hand)
@@ -3146,11 +3148,11 @@
 
 					if (priority)
 						if (priority > 0)
-							priority = NewLoc.step_material
+							priority = "[NewLoc.step_material]"
 						else if (priority < 0)
 							priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
 
-						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
+						playsound(NewLoc, priority, src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
 	//STEP SOUND HANDLING OVER
 
@@ -3243,7 +3245,7 @@
 	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER))
 		src.equipped().intent_switch_trigger(src)
 
-/mob/living/carbon/human/hitby(atom/movable/AM)
+/mob/living/carbon/human/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 
 	if(isobj(AM) && src.juggling())
@@ -3258,10 +3260,12 @@
 		return
 
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
-		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (throw_traveled <= 1 && last_throw_x == AM.x && last_throw_y == AM.y))
+		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (thr?.get_throw_travelled() <= 1 && AM.last_throw_x == AM.x && AM.last_throw_y == AM.y))
 			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
-			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+			logTheThing("combat", src, thr.user, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
 			random_brute_damage(src, AM.throwforce,1)
+			if(thr?.user)
+				src.was_harmed(thr.user, AM)
 
 			#ifdef DATALOGGER
 			game_stats.Increment("violence")
@@ -3274,7 +3278,7 @@
 		else
 			AM.attack_hand(src)	// nice catch, hayes. don't ever fuckin do it again
 			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
-			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 			src.throw_mode_off()
 			#ifdef DATALOGGER
 			game_stats.Increment("catches")
@@ -3286,7 +3290,9 @@
 		else
 			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
 			random_brute_damage(src, AM.throwforce,1)
-			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+			if(thr?.user)
+				src.was_harmed(thr.user, AM)
 
 		#ifdef DATALOGGER
 		game_stats.Increment("violence")

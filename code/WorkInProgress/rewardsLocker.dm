@@ -1009,10 +1009,10 @@
 		var/M = alert(usr,S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)","Claim this Reward?","Yes","No")
 		src.verbs += /client/verb/claimreward
 		if(M == "Yes")
-			var/worked = S.rewardActivate(usr)
+			var/worked = S.rewardActivate(src.mob)
 			if (worked)
 				boutput(usr, "<span class='alert'>Successfully claimed \"[S.title]\".</span>")
 				if(S.once_per_round)
-					usr.client.claimed_rewards.Add(S.type)
+					src.claimed_rewards.Add(S.type)
 			else
 				boutput(usr, "<span class='alert'>Redemption of \"[S.title]\" failed.</span>")

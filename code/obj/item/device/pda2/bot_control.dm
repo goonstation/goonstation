@@ -156,8 +156,7 @@
 			if(!botlist)
 				botlist = new()
 
-			if(!(signal.source in botlist))
-				botlist += signal.source
+			botlist |= signal.source
 
 			if(active == signal.source)
 				var/list/b = signal.data
@@ -312,8 +311,7 @@
 			if(!botlist)
 				botlist = new()
 
-			if(!(signal.source in botlist))
-				botlist += signal.source
+			botlist |= signal.source
 
 			if(active == signal.source)
 				var/list/b = signal.data

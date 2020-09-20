@@ -51,7 +51,7 @@
 //////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////***
-/obj/item/reagent_containers/glass/vial/throw_impact(atom/hit_atom)
+/obj/item/reagent_containers/glass/vial/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.shatter()
 

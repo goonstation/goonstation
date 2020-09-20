@@ -860,8 +860,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 					// this is also bad
 					var/list/people_with_tickets = list()
 					for (var/datum/ticket/T in data_core.tickets)
-						if(!(T.target in people_with_tickets))
-							people_with_tickets += T.target
+						people_with_tickets |= T.target
 
 					for(var/N in people_with_tickets)
 						dat += "<b>[N]</b><br><br>"

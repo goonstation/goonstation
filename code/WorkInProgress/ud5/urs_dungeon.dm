@@ -198,7 +198,7 @@
 				if (get_dist(N, src) <= 6)
 					N.apply_flash(20, 1)
 				if (N.client)
-					shake_camera(N, 6, 4)
+					shake_camera(N, 6, 32)
 
 			H.unequip_all()
 			H.set_loc(src.target)
@@ -259,7 +259,7 @@
 			if (get_dist(N, src) <= 6)
 				N.apply_flash(20, 1)
 			if (N.client)
-				shake_camera(N, 6, 4)
+				shake_camera(N, 6, 32)
 
 		H.set_loc(pick(L))
 

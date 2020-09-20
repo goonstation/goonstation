@@ -915,8 +915,7 @@
 
 			T.timing = 1
 			T.c_state(1)
-			if (!(T in processing_items))
-				processing_items.Add(T)
+			processing_items |= src
 			src.last_sim = world.time
 
 			var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
@@ -3914,7 +3913,7 @@
 
 		return
 
-	hitby(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (src.density)
 			for (var/obj/item/I in src.loc.contents)
 				I.hitby(M)
@@ -4418,7 +4417,7 @@
 				heat_overlay.icon_state = "heat-1"
 			if (250 to 269)
 				heat_overlay.icon_state = "heat-2"
-			if (230 to -99)
+			if (249 to -99)
 				heat_overlay.icon_state = "heat-3"
 			else
 				heat_overlay.icon_state = ""
@@ -4739,7 +4738,9 @@
 			if ("sense")
 				var/datum/gas_mixture/air_sample = return_air()
 				var/total_moles = max(TOTAL_MOLES(air_sample), 1)
-				sensed.Cut()
+				sensed?.Cut()
+				if(isnull(sensed))
+					sensed = list()
 				if (air_sample)
 					sensed.Add(round(MIXTURE_PRESSURE(air_sample), 0.1))
 					sensed.Add(round(air_sample.temperature, 0.1))

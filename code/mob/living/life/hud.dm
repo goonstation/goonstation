@@ -66,31 +66,27 @@
 				var/obj/item/clothing/glasses/healthgoggles/G = human_owner.glasses
 				if (human_owner.client && !(G.assigned || G.assigned == human_owner.client))
 					G.assigned = human_owner.client
-					if (!(G in processing_items))
-						processing_items.Add(G)
+					processing_items |= G
 					//G.updateIcons()
 
 			if (istype(human_owner.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
 				var/obj/item/clothing/head/helmet/space/syndicate/specialist/medic/M = human_owner.head
 				if (human_owner.client && !(M.assigned || M.assigned == human_owner.client))
 					M.assigned = human_owner.client
-					if (!(M in processing_items))
-						processing_items.Add(M)
+					processing_items |= M
 					//G.updateIcons()
 
 			else if (human_owner.organHolder && istype(human_owner.organHolder.left_eye, /obj/item/organ/eye/cyber/prodoc))
 				var/obj/item/organ/eye/cyber/prodoc/G = human_owner.organHolder.left_eye
 				if (human_owner.client && !(G.assigned || G.assigned == human_owner.client))
 					G.assigned = human_owner.client
-					if (!(G in processing_items))
-						processing_items.Add(G)
+					processing_items |= G
 					//G.updateIcons()
 			else if (human_owner.organHolder && istype(human_owner.organHolder.right_eye, /obj/item/organ/eye/cyber/prodoc))
 				var/obj/item/organ/eye/cyber/prodoc/G = human_owner.organHolder.right_eye
 				if (human_owner.client && !(G.assigned || G.assigned == human_owner.client))
 					G.assigned = human_owner.client
-					if (!(G in processing_items))
-						processing_items.Add(G)
+					processing_items |= G
 					//G.updateIcons()
 		else
 			if (owner.druggy)

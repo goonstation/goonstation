@@ -41,6 +41,11 @@ mob/new_player
 			mind = new(src)
 			keyd = mind.key
 
+		if (src.client?.player) //playtime logging stuff
+			var/datum/player/P = src.client.player
+			if (!isnull(P.round_join_time) && isnull(P.round_leave_time)) //they likely died but didnt d/c b4 respawn
+				P.log_leave_time()
+
 		new_player_panel()
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
@@ -87,16 +92,22 @@ mob/new_player
 		ready = 0
 		if (src.ckey) //Null if the client changed to another mob, but not null if they disconnected.
 			spawned_in_keys -= "[src.ckey]"
+		else if (isclient(src.last_client)) //playtime logging stuff
+			src.last_client.player.log_join_time()
+
 		..()
 		close_spawn_windows()
 		if(!spawning)
 			qdel(src)
 
 		// Given below call, not much reason to do this if pregameHTML wasn't set
-		if (pregameHTML && isclient(src.last_client))
+		// explanation for isnull(src.key) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
+		if (isnull(src.key) && pregameHTML && isclient(src.last_client))
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
-			winshow(src.last_client, "pregameBrowser", 0)
-			src.last_client << browse("", "window=pregameBrowser")
+			SPAWN_DBG(0)
+				if(isclient(src.last_client))
+					winshow(src.last_client, "pregameBrowser", 0)
+					src.last_client << browse("", "window=pregameBrowser")
 		return
 
 	verb/new_player_panel()

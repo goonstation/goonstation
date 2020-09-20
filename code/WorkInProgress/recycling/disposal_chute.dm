@@ -171,10 +171,13 @@
 		if (msg)
 			src.visible_message(msg)
 
+		if (target == user && !istype(src,/obj/machinery/disposal/transport))
+			src.ui_interact(user)
+
 		update()
 		return
 
-	hitby(MO as mob|obj)
+	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
 		// Leaves people wondering where the stuff is, assuming they received a PDA alert at all.
 		if (istype(src, /obj/machinery/disposal/mail))
@@ -387,7 +390,7 @@
 		var/datum/gas_mixture/env = L.return_air()
 		if (!air_contents)
 			air_contents = unpool(/datum/gas_mixture)
-		var/pressure_delta = (ONE_ATMOSPHERE*2.1) - MIXTURE_PRESSURE(air_contents)
+		var/pressure_delta = (3.5 * ONE_ATMOSPHERE) - MIXTURE_PRESSURE(air_contents) // purposefully trying to overshoot the target of 2 atmospheres to make it faster
 
 		if(env.temperature > 0)
 			var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
@@ -643,7 +646,7 @@
 		update()
 		return
 
-	hitby(MO as mob|obj)
+	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		if(istype(MO,/mob/living))
 			return ..()
 		return

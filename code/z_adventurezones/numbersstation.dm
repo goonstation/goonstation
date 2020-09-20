@@ -247,8 +247,7 @@ Nanotrasen, Inc.<br>
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		if (ticker)
 			while (next_play <= ticker.round_elapsed_ticks)
 				next_play += play_interval

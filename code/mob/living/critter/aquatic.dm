@@ -204,7 +204,7 @@
 	if(!isdead(src))
 		animate_bumble(src)
 
-/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom)
+/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..()
 	if(!water_need && !isdead(src))
 		animate_bumble(src)

@@ -986,7 +986,7 @@
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-			poorSoul:Virus_ShockCure(poorSoul, 100)
+			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
 			poorSoul:changeStatus("weakened", 4 SECONDS)
 			if (isdead(poorSoul) && prob(25))

@@ -194,7 +194,7 @@
 	icon_state = "butt-cyber"
 	allow_staple = 0
 	toned = 0
-	made_from = "slag"
+	made_from = "pharosium"
 	sound_fart = "sound/voice/farts/poo2_robot.ogg"
 // no this is not done and I dunno when it will be done
 // I am a bad person who accepts bribes of freaky macho butt drawings and then doesn't prioritize the request the bribe was for

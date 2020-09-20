@@ -252,7 +252,7 @@
 			var/turf/B = M.DR()
 			var/turf/C = M.UL()
 			var/turf/D = M.UR()
-			var/turf/O = get_turf(magnet)
+			var/turf/O = get_turf(target)
 			var/dist = min(min(get_dist(A, O), get_dist(B, O)), min(get_dist(C, O), get_dist(D, O)))
 			if (dist > 10)
 				boutput(user, "<span class='alert'>Designation failed: designated tile is outside magnet range.</span>")
@@ -1462,7 +1462,7 @@
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
 	examine(mob/user)
@@ -1858,7 +1858,7 @@ obj/item/clothing/gloves/concussive
 				C.stuttering += 15
 				boutput(C, "<span class='alert'>The concussive blast knocks you off your feet!</span>")
 			if(get_dist(src,C) <= src.expl_heavy)
-				C.TakeDamage("All",rand(15,25)/C.get_explosion_resistance(),0)
+				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
 				boutput(C, "<span class='alert'>You are battered by the concussive shockwave!</span>")
 
 /obj/item/cargotele

@@ -197,7 +197,6 @@
 	if(!src.use_stamina) return
 	damage = max(damage,10)
 	damage *= 4
-	//playsound(src.loc, "sound/impact_sounds/Generic_Punch_1.ogg", 50, 1, -1)
 	if(src.stamina >= 1 )
 		#if STAMINA_CRIT_DROP == 1
 		src.set_stamina(min(src.stamina,STAMINA_CRIT_DROP_NUM))

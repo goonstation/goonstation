@@ -459,6 +459,18 @@ THROWING DARTS
 		..()
 
 
+// dumb joke
+/obj/item/implant/antirot
+	name = "\improper Rotbusttec implant"
+	icon_state = "implant-r"
+	impcolor = "r"
+
+	on_death()
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = owner
+			H.reagents.add_reagent("formaldehyde", 5)
+
+
 /* Deprecated old turds shit */
 /obj/item/implant/sec
 	name = "security implant"
@@ -1182,6 +1194,10 @@ THROWING DARTS
 	name = "glass case - 'Robusttec'"
 	implant_type = "/obj/item/implant/robust"
 
+/obj/item/implantcase/antirot
+	name = "glass case - 'Rotbusttec'"
+	implant_type = "/obj/item/implant/antirot"
+
 /obj/item/implantcase/access
 	name = "glass case - 'Electronic Access'"
 	implant_type = "/obj/item/implant/access"
@@ -1545,7 +1561,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			my_datum.implant_master = user
 		return 1
 
-	alter_projectile(var/obj/projectile/P)
+	alter_projectile(source, var/obj/projectile/P)
 		if (!P || !my_implant)
 			return ..()
 		my_implant.set_loc(P)
@@ -1602,7 +1618,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	icon_state = "dart"
 	throw_spin = 0
 
-	throw_impact(M)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (ishuman(M) && prob(5))
 			var/mob/living/carbon/human/H = M
@@ -1627,7 +1643,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	throw_spin = 0
 	throw_speed = 3
 
-	throw_impact(M)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M

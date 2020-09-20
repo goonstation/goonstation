@@ -986,7 +986,7 @@
 			else
 				msgs.base_attack_message = "<span class='alert'><B>[user] punches [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 
-			msgs.played_sound = 'sound/impact_sounds/Generic_Punch_2.ogg'
+			msgs.played_sound = pick(sounds_punch)
 			msgs.damage = rand(6, 13)
 			msgs.damage_type = DAMAGE_BLUNT
 
@@ -1582,7 +1582,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		else
 			msgs.base_attack_message = "<span class='alert'><B>[user] punches [target] with their[pick("enormous", "giant", "gargantuan", "strong")] steel fist[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 
-			msgs.played_sound = 'sound/impact_sounds/Generic_Punch_2.ogg'
+			msgs.played_sound = pick(sounds_punch)
 			msgs.damage = rand(6, 13)
 			msgs.damage_type = DAMAGE_BLUNT
 

@@ -250,7 +250,7 @@ toxic - poisons
 		if (isliving(O))
 			var/mob/living/L = O
 			L.changeStatus("slowed", 2 SECONDS)
-			L.do_disorient(stamina_damage = 2*P.power, weakened = 0, stunned = 0, disorient = P.power, remove_stamina_below_zero = 0)
+			L.do_disorient(stamina_damage = 60, weakened = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 			L.emote("twitch_v")
 		detonate(O, P)
 
@@ -268,7 +268,7 @@ toxic - poisons
 			if (isliving(M) && M != P.shooter) //don't stun ourself while shooting in close quarters
 				var/mob/living/L = M
 				L.changeStatus("slowed", 2 SECONDS)
-				L.do_disorient(stamina_damage = 70, weakened = 50, stunned = 80, disorient = 20, remove_stamina_below_zero = 0)
+				L.do_disorient(stamina_damage = 40, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 				L.emote("twitch_v")
 
 

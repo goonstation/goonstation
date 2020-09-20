@@ -35,9 +35,8 @@ Contains:
 		src.air_contents = unpool(/datum/gas_mixture)
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
-		if (!(src in processing_items))
-			processing_items.Add(src)
-		BLOCK_TANK
+		processing_items |= src
+		BLOCK_SETUP(BLOCK_TANK)
 		return
 
 	disposing()

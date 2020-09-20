@@ -106,13 +106,13 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 
 /// parses the name and the server key of the command (if any), returns list(name, server_key, the_rest)
 /datum/spacebee_extension_system/proc/parse_command_head(msg)
-	whitespace_regex.Find(msg)
+	var/whitespace_index = whitespace_regex.Find(msg)
 	var/command_part = msg
-	if(whitespace_regex.index)
-		command_part = copytext(msg, 1, whitespace_regex.index)
+	if(whitespace_index)
+		command_part = copytext(msg, 1, whitespace_index)
 	var/rest = ""
-	if(whitespace_regex.index)
-		rest = copytext(msg, whitespace_regex.index + length(whitespace_regex.match))
+	if(whitespace_index)
+		rest = copytext(msg, whitespace_index + length(whitespace_regex.match))
 	if(!command_head_regex.Find(command_part))
 		return null
 	var/command = command_head_regex.group[1]

@@ -69,7 +69,7 @@
 		HH.can_range_attack = 1
 
 		HH = hands[3]
-		HH.limb = new /datum/limb/small_critter/med
+		HH.limb = new /datum/limb/small_critter/strong
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handn"
 		HH.name = "gunbothand"

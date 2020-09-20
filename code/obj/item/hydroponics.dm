@@ -50,7 +50,7 @@
 		SPAWN_DBG (5)
 			if (src)
 				src.update_icon()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 		return
 
 	proc/check_health()
@@ -422,7 +422,7 @@
 
 	New()
 		..()
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	afterattack(obj/target as obj, mob/user as mob)
 		if(istype(target, /obj/machinery/plantpot))
