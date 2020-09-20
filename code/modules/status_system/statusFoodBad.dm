@@ -12,12 +12,12 @@
 	small
 		name = "Food DoT (Toxin)"
 		id = "food_damage_tox_small"
-		damage_tox = 10 // 8 tox damage
+		damage_tox = 0.25 // 7.5 tox damage
 
 	big
 		name = "Food DoT (Toxin++)"
 		id = "food_damage_tox_big"
-		damage_tox = 0.26 // 30 tox damage
+		damage_tox = 1 // 30 tox damage
 
 	getTooltip()
 		return "Dealing [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec."
