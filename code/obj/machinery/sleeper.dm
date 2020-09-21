@@ -682,6 +682,7 @@
 	mats = 30
 	p_class = 1.2
 	var/homeloc = null
+	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
 	New()
 		..()
@@ -743,6 +744,31 @@
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
+
+/obj/machinery/sleeper/port_a_medbay/proc/PDA_alert_check() //Yell at doctors to check the thing when it's sent home
+	if (src.loc != homeloc)
+		return
+	if (!occupant)
+		return
+	var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
+	if (!transmit_connection)
+		return
+
+	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
+	if (isdead(occupant))
+		PDAalert += "deceased body - please process the occupant as soon as possible."
+	else if (occupant.health < 0)
+		PDAalert += "patient in critical condition - respond and treat immediately."
+	else
+		PDAalert += "patient - please check in on the occupant."
+
+	for(var/mailgroup in mailgroups)
+		var/datum/signal/PDAsignal = get_free_signal()
+
+		PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroup, "sender"="00000000", "message"="[PDAalert]")
+		PDAsignal.transmission_method = TRANSMISSION_RADIO
+		transmit_connection.post_signal(src, PDAsignal)
+
 
 /obj/machinery/sleeper/compact
 	name = "Compact Sleeper"
