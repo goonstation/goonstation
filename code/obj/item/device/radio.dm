@@ -298,7 +298,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				if (connection.check_for_jammer(R))
 					continue
 			//if we have signal_loss (solar flare), and the radio isn't hardened don't send message, then block general frequencies.
-			if (signal_loss && !src.hardened)
+			if (signal_loss && !src.hardened && !secure)
 				if (connection.frequency >= R_FREQ_MINIMUM && connection.frequency <= R_FREQ_MAXIMUM)
 					continue
 
@@ -307,9 +307,8 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				if (secure)
 					for (var/i in R.send_hear())
 						if (!(i in receive))
-							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
-								continue
-
+							// if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
+							// 	continue
 							receive += i
 
 							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
