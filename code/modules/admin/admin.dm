@@ -826,10 +826,10 @@ var/global/noir = 0
 				var/team
 				var/type = href_list["type"]
 				if (type == "1")
-					M.set_loc(pick(tdome1))
+					M.set_loc(pick_landmark(LANDMARK_THUNDERDOME_1))
 					team = "Team 1"
 				else if (type == "2")
-					M.set_loc(pick(tdome2))
+					M.set_loc(pick_landmark(LANDMARK_THUNDERDOME_2))
 					team = "Team 2"
 
 				logTheThing("admin", usr, M, "sent [constructTarget(M,"admin")] to the thunderdome. ([team])")
@@ -1413,10 +1413,10 @@ var/global/noir = 0
 				var/list/L = list()
 				var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 				if(searchFor)
-					for(var/R in childrentypesof(/datum/reagent))
+					for(var/R in concrete_typesof(/datum/reagent))
 						if(findtext("[R]", searchFor)) L += R
 				else
-					L = childrentypesof(/datum/reagent)
+					L = concrete_typesof(/datum/reagent)
 
 				var/type
 				if(L.len == 1)
@@ -2060,8 +2060,6 @@ var/global/noir = 0
 							removed_paths += dirty_path
 						else if (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
 							removed_paths += dirty_path
-						else if (dirty_path in do_not_spawn && src.level < LEVEL_PA)
-							removed_paths += dirty_path
 						else if (ispath(path, /mob) && src.level < LEVEL_PA)
 							removed_paths += dirty_path
 						else
@@ -2335,7 +2333,7 @@ var/global/noir = 0
 						logTheThing("admin", usr, null, "teleported all players to the prison zone.")
 						logTheThing("diary", usr, null, "teleported all players to the prison zone.", "admin")
 						for(var/mob/living/carbon/human/H in mobs)
-							var/turf/loc = find_loc(H)
+							var/turf/loc = get_turf(H)
 							var/security = 0
 							if(loc.z > 1 || prisonwarped.Find(H))
 								//don't warp them if they aren't ready or are already there
@@ -2347,12 +2345,11 @@ var/global/noir = 0
 										security++
 							if(!security)
 								//teleport person to cell
-								H.set_loc(pick(prisonwarp))
+								H.set_loc(pick_landmark(LANDMARK_PRISONWARP))
 							else
 								//teleport security person
-								H.set_loc(pick(prisonsecuritywarp))
+								H.set_loc(pick_landmark(LANDMARK_PRISONSECURITYWARP))
 							prisonwarped += H
-							LAGCHECK(LAG_LOW)
 					if("traitor_all")
 						if (src.level >= LEVEL_SA)
 							if(!ticker)
@@ -2797,7 +2794,7 @@ var/global/noir = 0
 					if ("yeolde")
 						if (src.level >= LEVEL_PA)
 							message_admins("[key_name(usr)] began replacing all Z1 airlocks with wooden doors.")
-							for (var/obj/machinery/door/D in doors)
+							for (var/obj/machinery/door/D in by_type[/obj/machinery/door])
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 airlocks with wooden doors was terminated due to the atom emerygency stop!")
 									return
@@ -2966,17 +2963,17 @@ var/global/noir = 0
 
 					if("shakecamera")
 						if (src.level >= LEVEL_ADMIN)
-							var/intensity = input("Enter intensity of the shaking effect. (2 or over  will also cause mobs to trip over.)","Shaking intensity",null) as num|null
+							var/intensity = input("Enter intensity of the shaking effect (pixels to jostle view around by). 64 or over will also cause mobs to trip over.","Shaking intensity",null) as num|null
 							if (!intensity)
 								return
-							var/time = input("Enter lenght of the shaking effect.(In milliseconds, don't use more then 400 unless you want players to complain.) ", "Lenght of shaking effect", 1) as num
-							logTheThing("admin", src, null, "created a shake effect (intensity [intensity], lenght [time])")
-							logTheThing("diary", src, null, "created a shake effect (intensity [intensity], lenght [time])", "admin")
-							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], lenght [time]).")
+							var/time = input("Enter length of the shaking effect in seconds.", "length of shaking effect", 1) as num
+							logTheThing("admin", src, null, "created a shake effect (intensity [intensity], length [time])")
+							logTheThing("diary", src, null, "created a shake effect (intensity [intensity], length [time])", "admin")
+							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], length [time]).")
 							for (var/mob/M in mobs)
 								SPAWN_DBG(0)
-									shake_camera(M, time, intensity)
-								if (intensity >= 2)
+									shake_camera(M, time * 10, intensity)
+								if (intensity >= 64)
 									M.changeStatus("weakened", 2 SECONDS)
 
 						else
@@ -3005,7 +3002,7 @@ var/global/noir = 0
 							input2 = zalgoify(input, rand(0,3), rand(0, 3), rand(0, 3))
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in comm_dishes)
+								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg"
@@ -3025,7 +3022,7 @@ var/global/noir = 0
 							var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in comm_dishes)
+								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/ambience/spooky/Void_Calls.ogg"
@@ -3235,7 +3232,7 @@ var/global/noir = 0
 									if(!M) continue
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									var/turf/mob_loc = get_turf_loc(M)
+									var/turf/mob_loc = get_turf(M)
 									dat += "<td>[mob_loc.loc]</td></tr>"
 								dat += "</table>"
 
@@ -3780,7 +3777,7 @@ var/global/noir = 0
 	switch (originWindow)
 		if ("adminplayeropts")
 			if (href_list["targetckey"])
-				var/mob/target = targetClient.mob
+				var/mob/target = targetClient?.mob
 				if(!target)
 					var/targetCkey = href_list["targetckey"]
 					for (var/mob/M in mobs) //The ref may have changed with our actions, find it again

@@ -80,7 +80,6 @@
 
 /obj/rack/disposing()
 	var/turf/OL = get_turf(src)
-	loc = null
 	if (!OL)
 		return
 	if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))

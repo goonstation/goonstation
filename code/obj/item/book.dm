@@ -976,7 +976,7 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	examine(mob/user)
 		if (!issilicon(user))
@@ -2754,7 +2754,7 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "lawbook"
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
@@ -2867,6 +2867,12 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 	medical
 		name = "Medbay Pocket Guide"
 		icon_state = "mediguide"
+
+#if ASS_JAM
+		New()
+			. = ..()
+			ADD_MORTY(12, 14, 9, 9)
+#endif
 
 		info = {"<body><h1>NT MEDICAL DIVISION</h1>
 		<h2>Introductory briefing for aspiring Medical Doctors!</h2>

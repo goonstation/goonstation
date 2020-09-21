@@ -31,18 +31,13 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			tutorial_area = locate(tutorial_area_type) in world
 			logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Got area [tutorial_area]")
 			if (tutorial_area)
-				// var/obj/landmark/tutorial_start/L = locate() in tutorial_area
-				// GODDAMNIT LUMMOX
-				var/obj/landmark/tutorial_start/L = null
-				for (var/obj/landmark/tutorial_start/temp in tutorial_area)
-					L = temp
-					break
-				if (!L)
+				for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
+					if(T.loc == tutorial_area)
+						initial_turf = T
+						break
+				if (!initial_turf)
 					logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Tutorial failed setup: missing landmark.")
 					throw EXCEPTION("Okay who removed the goddamn blob tutorial landmark")
-				initial_turf = get_turf(L)
-				if (!initial_turf)
-					logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Tutorial failed setup: [L], [initial_turf].")
 
 	Start()
 		if (!initial_turf)
@@ -60,7 +55,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 	Finish()
 		if (..())
-			bowner.set_loc(pick(observer_start))
+			bowner.set_loc(pick_landmark(LANDMARK_OBSERVER))
 			bowner.bio_points_max_bonus = initial(bowner.bio_points_max_bonus)
 			bowner.started = 0
 			for (var/obj/blob/B in bowner.blobs)
@@ -750,7 +745,7 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 	New()
 		..()
 		overlays += image('icons/mob/inhand/hand_weapons.dmi', "flamethrower1-R")
-		L.loc = src
+		L.set_loc(src)
 		L.lit = 1
 
 	proc/sprayAt(var/turf/T)

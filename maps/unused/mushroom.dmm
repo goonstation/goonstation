@@ -1648,7 +1648,7 @@
 /area/station/maintenance/westsolar)
 "adU" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/computer/stockexchange{
 	icon_state = "QMreq";
@@ -1940,7 +1940,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/NEmaint)
@@ -2404,7 +2404,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "afo" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /obj/machinery/light{
@@ -2686,7 +2686,7 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/janitor)
@@ -2731,7 +2731,7 @@
 /area/station/maintenance/NEmaint)
 "age" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light/small{
 	dir = 1;
@@ -3274,7 +3274,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/grime,
 /area/station/janitor)
@@ -4698,7 +4698,7 @@
 /area/station/quartermaster/storage)
 "akJ" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -7411,7 +7411,7 @@
 /area/station/turret_protected/ai_upload_foyer)
 "aqC" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -9239,7 +9239,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -10548,7 +10548,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/research)
 "axB" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor/white,
@@ -10830,7 +10830,7 @@
 	},
 /area/station/medical/research)
 "aym" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/white,
@@ -20088,7 +20088,7 @@
 /area/station/science/lab)
 "aRB" = (
 /obj/table/reinforced/bar/auto,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor{
@@ -22150,7 +22150,7 @@
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "aVJ" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor/engine,
@@ -28654,9 +28654,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai)
 "bkl" = (

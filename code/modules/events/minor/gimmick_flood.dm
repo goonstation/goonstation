@@ -15,10 +15,10 @@
 			var/list/L = list()
 			var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 			if(searchFor)
-				for(var/R in childrentypesof(/datum/reagent))
+				for(var/R in concrete_typesof(/datum/reagent))
 					if(findtext("[R]", searchFor)) L += R
 			else
-				L = childrentypesof(/datum/reagent)
+				L = concrete_typesof(/datum/reagent)
 
 			if(L.len == 1)
 				reagent_type = L[1]
@@ -40,7 +40,7 @@
 		..()
 
 		if(isnull(src.reagent_type))
-			reagent_type = pick(childrentypesof(/datum/reagent))
+			reagent_type = pick(concrete_typesof(/datum/reagent))
 
 		var/datum/reagent/reagent = new reagent_type()
 

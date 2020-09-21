@@ -8,6 +8,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 
 /obj/item/assembly/shock_kit/New()
+	..()
 	SPAWN_DBG (20)
 		if (src)
 			if (!(src.part1 && istype(src.part1)))
@@ -16,7 +17,6 @@
 			if (!(src.part2 && istype(src.part2)))
 				src.part2 = new /obj/item/device/radio/electropack(src)
 				src.part2.master = src
-	return
 
 /obj/item/assembly/shock_kit/disposing()
 	if (src.part1)
@@ -26,7 +26,6 @@
 		qdel(src.part2)
 		src.part2 = null
 	..()
-	return
 
 /obj/item/assembly/shock_kit/attackby(obj/item/W as obj, mob/user as mob)
 	src.add_fingerprint(user)

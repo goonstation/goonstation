@@ -47,10 +47,13 @@
  * return datum/tgui The requested UI.
  */
 /datum/tgui/New(mob/user, datum/src_object, interface, title)
-	log_tgui(user, "new [interface] fancy [user.client.preferences.tgui_fancy]") // client.preferences [GOONSTATION-CHANGE]
+	..()
+	log_tgui(user,
+		"new [interface] fancy [user?.client?.preferences.tgui_fancy]",
+		src_object = src_object) // |GOONSTATION-CHANGE| (client.preferences)
 	src.user = user
 	src.src_object = src_object
-	src.window_key = "\ref[src_object]-main" // REF doesn't exist [GOONSTATION-CHANGE]
+	src.window_key = "\ref[src_object]-main" // |GOONSTATION-CHANGE| (REF->\ref)
 	src.interface = interface
 	if(title)
 		src.title = title
@@ -222,7 +225,7 @@
  * Run an update cycle for this UI. Called internally by tgui_process
  * every second or so.
  */
-/datum/tgui/proc/process(force = FALSE) // /process doesn't exist on datums here [GOONSTATION-ADD]
+/datum/tgui/proc/process(force = FALSE) // /process doesn't exist on datums here |GOONSTATION-ADD|
 	if(closing)
 		return
 	var/datum/host = src_object.ui_host(user)
@@ -232,11 +235,9 @@
 		return
 	// Validate ping
 	if(!initialized && world.time - opened_at > TGUI_PING_TIMEOUT)
-		log_tgui(user, \
-			"Error: Zombie window detected, killing it with fire.\n" \
-			+ "window_id: [window.id]\n" \
-			+ "opened_at: [opened_at]\n" \
-			+ "world.time: [world.time]")
+		log_tgui(user, "Error: Zombie window detected, closing.",
+			window = window,
+			src_object = src_object)
 		close(can_be_suspended = FALSE)
 		return
 	// Update through a normal call to ui_interact
@@ -269,13 +270,20 @@
 /datum/tgui/proc/on_message(type, list/payload, list/href_list)
 	// Pass act type messages to ui_act
 	if(type && copytext(type, 1, 5) == "act/")
+		var/act_type = copytext(type, 5)
+		log_tgui(user, "Action: [act_type] [href_list["payload"]]",
+			window = window,
+			src_object = src_object)
 		process_status()
-		if(src_object.ui_act(copytext(type, 5), payload, src, state))
+		if(src_object.ui_act(act_type, payload, src, state))
 			tgui_process.update_uis(src_object)
 		return FALSE
 	switch(type)
 		if("ready")
-			initialized = TRUE
+			if(!initialized)
+				initialized = TRUE
+			else // user refreshed the window
+				send_full_update(null, TRUE)
 		if("pingReply")
 			initialized = TRUE
 		if("suspend")

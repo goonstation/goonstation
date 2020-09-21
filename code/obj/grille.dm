@@ -25,6 +25,9 @@
 		update_icon()
 
 	steel
+#ifdef IN_MAP_EDITOR
+		icon_state = "grille-0"
+#endif
 		New()
 			..()
 			var/datum/material/M = getMaterial("steel")
@@ -225,7 +228,7 @@
 			if("foof")
 				damage_heat(volume * 3)
 
-	hitby(AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)

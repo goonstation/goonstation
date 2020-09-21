@@ -539,7 +539,6 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			gibs(C.loc, list())
 		else
 			robogibs(C.loc, list())
-		C.loc = null
 		qdel(C)
 
 /datum/critterDeath/explode
@@ -579,7 +578,6 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		var/L = C.loc
 		SPAWN_DBG (delay)
 			explosion_new(C, L, power)
-			C.loc = null
 			qdel(C)
 
 /datum/critterDeath/smoke
@@ -622,7 +620,6 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			holder.my_atom = C
 			holder.add_reagent(reagent, 50)
 			smoke_reaction(holder, 4, L)
-			C.loc = null
 			qdel(C)
 
 /datum/critterEvent
@@ -1427,6 +1424,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	var/sound/shockwave_sound
 
 	New()
+		..()
 		dummyHolder = new()
 		ability = new()
 		dummyHolder.abilities += ability
@@ -1497,6 +1495,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	abstract = 0
 
 	New()
+		..()
 		template = new /obj/critter/domestic_bee
 		stattype = /obj/critter/domestic_bee
 

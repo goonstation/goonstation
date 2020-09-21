@@ -335,7 +335,7 @@
 /obj/item/clothing/mask/cursedclown_hat/equipped(var/mob/user, var/slot)
 	..()
 	var/mob/living/carbon/human/Victim = user
-	if(istype(Victim) && slot == SLOT_WEAR_MASM)
+	if(istype(Victim) && slot == SLOT_WEAR_MASK)
 		boutput(user, "<span class='alert'><B> The mask grips your face!</B></span>")
 		src.desc = "This is never coming off... oh god..."
 		// Mostly for spawning a cluwne car and clothes manually.
@@ -354,10 +354,10 @@
 	SPAWN_DBG(1 SECOND)
 		playsound(src.loc, "sound/voice/chanting.ogg", 25, 0, 0)
 		playsound(src.loc, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0)
-		SPAWN_DBG(1.5 SECONDS)
-			user.emote("scream")
-			SPAWN_DBG(1.5 SECONDS)
-				user.implode()
+		sleep(1.5 SECONDS)
+		user.emote("scream")
+		sleep(1.5 SECONDS)
+		user.implode()
 	return 1
 
 /obj/item/clothing/shoes/cursedclown_shoes

@@ -299,6 +299,6 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			newbody.key = src.key
 		equip_battler(newbody)
 		newbody.set_clothing_icon_dirty()
-		newbody.set_loc(pick(ass_arena_spawn).loc)
+		newbody.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 		return
 		*/

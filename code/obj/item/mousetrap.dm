@@ -233,7 +233,7 @@
 		..()
 		return
 
-	hitby(A as mob|obj)
+	hitby(atom/movable/A, datum/thrown_thing/thr)
 		if (!src.armed)
 			return ..()
 		src.visible_message("<span class='alert'><B>The mousetrap is triggered by [A].</B></span>")

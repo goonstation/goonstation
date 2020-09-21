@@ -23,7 +23,10 @@
 	var/tmp/processing_tier = PROCESSING_EIGHTH
 	var/tmp/current_processing_tier
 	var/tmp/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
-
+	var/base_tick_spacing = 6 // Machines proc every 1*(2^tier-1) seconds. Or something like that.
+	var/cap_base_tick_spacing = 60
+	var/last_process
+	var/requires_power = TRUE // machine requires power, used in tgui_broken_state
 	// New() and disposing() add and remove machines from the global "machines" list
 	// This list is used to call the process() proc for all machines ~1 per second during a round
 
@@ -47,7 +50,7 @@
 	..()
 	src.power_change()
 	var/area/A = get_area(src)
-	A.machines += src
+	A?.machines += src
 
 /obj/machinery/disposing()
 	if (!isnull(initial(machine_registry_idx)))
@@ -68,8 +71,9 @@
 	/*
 	 *	Prototype procs common to all /obj/machinery objects
 	 */
-
-/obj/machinery/proc/process()
+// Want a mult on your machine process? Put var/mult in its arguments and put mult wherever something could be mangled by lagg
+/obj/machinery/proc/process(var/mult) //<- like that, but in your machine's process()
+	SHOULD_NOT_SLEEP(TRUE)
 	// Called for all /obj/machinery in the "machines" list, approximately once per second
 	// by /datum/controller/game_controller/process() when a game round is active
 	// Any regular action of the machine is executed by this proc.

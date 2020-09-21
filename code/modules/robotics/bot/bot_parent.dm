@@ -96,8 +96,9 @@
 
 /obj/machinery/bot/examine()
 	. = ..()
-	if (src.health < 20)
-		if (src.health > 15)
+	var/healthpct = src.health / initial(src.health)
+	if (healthpct <= 0.8)
+		if (healthpct >= 0.4)
 			. += "<span class='alert'>[src]'s parts look loose.</span>"
 		else
 			. += "<span class='alert'><B>[src]'s parts look very loose!</B></span>"

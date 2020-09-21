@@ -1,4 +1,9 @@
 //COLURSSSSSS AAAAA
+// num2hex, hex2num
+#define num2hex(X, len) num2text(X, len, 16)
+
+#define hex2num(X) text2num(X, 16)
+
 /proc/hsv2rgb(var/hue, var/sat, var/val)
 	var/hh
 	var/p
@@ -108,3 +113,6 @@
 
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+
+//Color matrices		// vv Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
+#define MATRIX_PROTANOPIA 0.55,0.45,0.000,0.55,0.45,0.000,0.000,0.25,1.0,0.0,0.0,0.0

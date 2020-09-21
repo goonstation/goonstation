@@ -104,6 +104,8 @@
 			checkhealth()
 			src.add_fingerprint(user)
 			src.visible_message("<span class='alert'>[user] has fixed some of the dents on [src]!</span>")
+			if(health >= maxhealth)
+				src.visible_message("<span class='alert'>[src] is fully repaired!</span>")
 			return
 
 		if (istype(W, /obj/item/shipcomponent))
@@ -460,7 +462,7 @@
 		for(var/mob/M in src)
 			M << sound(P.proj_data.shot_sound,volume=35)
 			M << sound(hitsound, volume=30)
-			shake_camera(M, 1, 1)
+			shake_camera(M, 1, 8)
 
 
 
@@ -564,7 +566,7 @@
 				V.checkhealth()
 
 			for (var/mob/C in src)
-				shake_camera(C, 6, 1)
+				shake_camera(C, 6, 8)
 				//M << sound("sound/impact_sounds/Generic_Hit_Heavy_1.ogg",volume=35)
 
 			if (ismob(target) && target != hitmob)
@@ -580,9 +582,8 @@
 				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
-				SPAWN_DBG(0)
-					M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 				SPAWN_DBG(2.5 SECONDS)
 					if(M.health > 0)
 						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
@@ -596,7 +597,7 @@
 					var/turf/simulated/wall/T = target
 					T.dismantle_wall(1)
 
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 			else if (isobj(target) && power >= req_smash_velocity)
 				var/obj/O = target
 
@@ -627,7 +628,7 @@
 					var/obj/machinery/portable_atmospherics/canister/C = O
 					C.health -= power
 					C.healthcheck()
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 
@@ -680,7 +681,7 @@
 		fire_overlay = null
 		damage_overlay = null
 		ion_trail = null
-		pods_and_cruisers -= src
+		STOP_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 		STOP_TRACKING
 
 		..()
@@ -1409,7 +1410,7 @@
 	src.lights.ship = src
 	src.components += src.lights
 
-	pods_and_cruisers += src
+	START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 /obj/machinery/vehicle/get_movement_controller()
 	return movement_controller
@@ -1722,6 +1723,28 @@
 	New()
 		..()
 		Install(new /obj/item/shipcomponent/locomotion/treads(src))
+
+/obj/machinery/vehicle/tank/minisub/pilot
+	body_type = "minisub"
+	health = 150
+	maxhealth = 150
+
+
+	New()
+		..()
+		src.com_system.deactivate()
+		qdel(src.engine)
+		qdel(src.com_system)
+		src.components -= src.engine
+		src.components -= src.com_system
+		src.engine = null
+		Install(new /obj/item/shipcomponent/engine/zero(src))
+		Install(new /obj/item/shipcomponent/mainweapon/bad_mining(src))
+		src.engine.activate()
+		src.com_system = null
+		myhud.update_systems()
+		myhud.update_states()
+		new /obj/item/sea_ladder(src)
 
 /obj/machinery/vehicle/tank/minisub/secsub
 	body_type = "minisub"

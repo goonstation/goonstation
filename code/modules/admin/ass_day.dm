@@ -1,21 +1,7 @@
 
 
-var/global/it_is_ass_day = ASS_JAM //set the BUILD_TIME_DAY in __build.dm to 13 for this to be true ~ Warcrimes
+//set the BUILD_TIME_DAY in __build.dm to 13 for this to be true ~ Warcrimes
 // LOOKING FOR HOW TO USE ASS_JAM ? SCROLL TO THE BOTTOM OF THIS FILE OKAY
-
-
-// called in world.New()
-//proc/is_it_ass_day() // not the fuck any more ~ Warc
-/*
-#ifdef RP_MODE
-	it_is_ass_day = 0
-#else
-	if (text2num(time2text(world.realtime, "DD")) == 13)
-		it_is_ass_day = 1
-	else
-		it_is_ass_day = 0
-#endif
-*/
 
 /client/proc/cmd_ass_day_rules()
 	set name = "Ass Day Rules"

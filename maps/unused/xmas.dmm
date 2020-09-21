@@ -10225,7 +10225,7 @@
 /area/crew_quarters/quarters)
 "atq" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/crate,
 /turf/simulated/floor{
@@ -29318,7 +29318,7 @@
 /area/crew_quarters/juryroom)
 "bcy" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -29622,7 +29622,7 @@
 "bdb" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -33109,7 +33109,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -41866,9 +41866,7 @@
 /turf/simulated/floor/white,
 /area/space_diner)
 "bEt" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
 "bEu" = (
@@ -42160,9 +42158,7 @@
 /turf/simulated/floor/engine,
 /area/russian)
 "bFl" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless,
 /area/russian)
 "bFm" = (
@@ -42684,9 +42680,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fuck)
 "bGM" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -43264,9 +43258,7 @@
 /turf/simulated/floor/airless,
 /area/russian/radiation)
 "bIm" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/grime,
 /area/russian)
 "bIn" = (
@@ -47043,9 +47035,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
 /area)
 "bRA" = (

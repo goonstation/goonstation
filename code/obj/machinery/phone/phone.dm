@@ -1,6 +1,3 @@
-/var/global/list/phonelist = list() // Holds all phones
-
-
 /obj/machinery/phone
 	name = "phone"
 	icon = 'icons/obj/machines/phones.dmi'

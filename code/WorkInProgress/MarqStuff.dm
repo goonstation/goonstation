@@ -500,7 +500,7 @@
 			icon_state = "quiver-[min(contents.len, 4)]"
 		else
 			user.u_equip(I)
-			I.loc = src
+			I.set_loc(src)
 			maptext = "[contents.len]"
 			icon_state = "quiver-[min(contents.len, 4)]"
 
@@ -607,7 +607,7 @@
 				var/obj/item/arrow/I = Q.getArrow(user)
 				if(I)
 					loaded = I
-					I.loc = src
+					I.set_loc(src)
 					overlays += I
 					Q.updateApperance()
 			if(istype(H.belt, /obj/item/quiver))
@@ -615,7 +615,7 @@
 				var/obj/item/arrow/I = Q.getArrow(user)
 				if(I)
 					loaded = I
-					I.loc = src
+					I.set_loc(src)
 					overlays += I
 					Q.updateApperance()
 		return
@@ -752,4 +752,4 @@
 			overlays += I
 			user.u_equip(I)
 			loaded = I
-			I.loc = src
+			I.set_loc(src)

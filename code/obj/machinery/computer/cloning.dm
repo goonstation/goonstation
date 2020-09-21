@@ -500,7 +500,7 @@
 	if (!src.pod1)
 		src.temp = "No cloning pod connected."
 		return
-	if (src.pod1.occupant)
+	if (src.pod1.attempting)
 		src.temp = "Cloning pod in use."
 		return
 	if (src.pod1.mess)
@@ -637,7 +637,7 @@
 		eject_occupant(user)
 
 	disposing()
-		connected.scanner = null
+		connected?.scanner = null
 		connected = null
 		pods = null
 		occupant = null
@@ -694,7 +694,7 @@
 		src.icon_state = "scanner_1"
 
 		for(var/obj/O in src)
-			O.loc = src.loc
+			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
 
@@ -749,11 +749,14 @@
 		if ((!( src.occupant ) || src.locked))
 			return
 
-		for(var/obj/O in src)
-			O.set_loc(src.loc)
+		if(!src.occupant.disposed)
+			src.occupant.set_loc(src.loc)
 
-		src.occupant.set_loc(src.loc)
 		src.occupant = null
+
+		for(var/atom/movable/A in src)
+			A.set_loc(src.loc)
+
 		src.icon_state = "scanner_0"
 
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)

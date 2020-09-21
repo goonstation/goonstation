@@ -32,6 +32,10 @@
 	name = "robuttbot"
 	icon_state = "cyberbuttbot"
 
+/obj/machinery/bot/buttbot/text2speech
+	text2speech = 1
+
+
 /obj/machinery/bot/buttbot/process()
 	if (prob(10) && src.on == 1)
 		SPAWN_DBG(0)
@@ -77,9 +81,9 @@
 /obj/machinery/bot/buttbot/hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
 	if(!messages || !src.on)
 		return
-	var/m_id = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
+	var/message = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
 	if(prob(25))
-		var/list/speech_list = splittext(messages[m_id], " ")
+		var/list/speech_list = splittext(message, " ")
 		if(!speech_list || !speech_list.len)
 			return
 

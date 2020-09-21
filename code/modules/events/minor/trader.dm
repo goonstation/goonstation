@@ -11,7 +11,6 @@
 		..()
 		if(active == 1)
 			return //This is to prevent admins from fucking up the shuttle arrival/departures by spamming this event.
-		event = 1
 		active = 1
 		map_turf = map_settings.shuttle_map_turf
 #ifdef UNDERWATER_MAP // bodge fix for oshan

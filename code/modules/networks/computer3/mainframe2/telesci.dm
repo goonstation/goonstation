@@ -14,7 +14,7 @@
 var/telesci_modifiers_set = 0
 
 proc/is_teleportation_allowed(var/turf/T)
-	for (var/atom in teleport_jammers)
+	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
 		if (istype(atom, /obj/machinery/telejam))
 			var/obj/machinery/telejam/TJ = atom
 			if (!TJ.active)
@@ -34,7 +34,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			return 0
 
 	// first check the always allowed turfs from map landmarks
-	if (T in telesci)
+	if (T in landmarks[LANDMARK_TELESCI])
 		return 1
 
 	if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))
@@ -56,6 +56,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	timeout = 10
 	desc = "Stand on this to have your wildest dreams come true!"
 	device_tag = "PNET_S_TELEPAD"
+	plane = PLANE_NOSHADOW_BELOW
 	var/recharging = 0
 	var/realx = 0
 	var/realy = 0
@@ -616,7 +617,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if (get_dist(N, src) <= 6)
 						N.apply_flash(30, 5)
 					if (N.client)
-						shake_camera(N, 6, 4)
+						shake_camera(N, 6, 32)
 				return
 			if("buzz")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>You hear a loud buzz coming from the [src]!</span>", 1)
@@ -670,9 +671,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			if("rads")
 				for(var/turf/T in view(5,src.loc))
 					if(!T.reagents)
-						var/datum/reagents/R = new/datum/reagents(1000)
-						T.reagents = R
-						R.my_atom = T
+						T.create_reagents(1000)
 					T.reagents.add_reagent("radium", 20)
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] begins to glow bright green!</span>", 1)
 				return

@@ -147,10 +147,8 @@ For hairball DynAssemblies see: jonescity.dm
 	onEnd()
 		..()
 		user.visible_message("<span class='notice'><b>[user.name]</b> drops the materials in their hands to secure the assembly.</span>")
-		user.hand = !user.hand
-		user.drop_item()
-		user.hand = !user.hand
-		user.drop_item()
+		if(assembly.loc == user)
+			user.drop_item(assembly)
 		assembly.createproduct(user)
 		assembly.dispose()
 
@@ -181,7 +179,7 @@ For hairball DynAssemblies see: jonescity.dm
 	onEnd()
 		..()
 		for (var/obj/O in assembly.contents)
-			O.loc = get_turf(assembly)
+			O.set_loc(get_turf(assembly))
 		user.u_equip(assembly)
 		boutput(user, "<span class='alert'>You have unsecured \the [assembly]!</span>")
 		qdel(assembly)

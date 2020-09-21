@@ -75,6 +75,8 @@ obj/chessbutton
 
 
 obj/landmark/chess
+	add_to_landmarks = FALSE
+	deleted_on_start = FALSE
 
 	proc/lets_fuckin_start_this_party()
 		switch(src.name)
@@ -152,7 +154,7 @@ obj/item/chesspiece
 				src.visible_message("<span class='notice'>[src] has captured [C].</span>")
 				C.gib()
 		src.visible_message("<span class='notice'>The [chess_color ? "black" : "white" ] commander has moved [src].</span>")
-		src.loc = T
+		src.set_loc(T)
 		if(chess_enpassant)
 			for(var/turf/simulated/floor/chess/CB in chessboard)
 				CB.enpassant = null
@@ -254,11 +256,11 @@ obj/item/chesspiece/king
 							return 0
 						src.visible_message("<span class='notice'>[src] has castled with [C].</span>")
 						if(start_pos.y>end_pos.y)
-							C.loc = locate(src.x,(src.y - 1),src.z)
-							src.loc = locate(src.x,(src.y - 2),src.z)
+							C.set_loc(locate(src.x,(src.y - 1),src.z))
+							src.set_loc(locate(src.x,(src.y - 2),src.z))
 						else
-							C.loc = locate(src.x,(src.y + 1),src.z)
-							src.loc = locate(src.x,(src.y + 2),src.z)
+							C.set_loc(locate(src.x,(src.y + 1),src.z))
+							src.set_loc(locate(src.x,(src.y + 2),src.z))
 						castling = 1 // this is a dirty way to do this but
 						return 1
 		return 0

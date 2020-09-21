@@ -466,6 +466,7 @@ SYNDICATE DRONE FACTORY AREAS
 	opacity = 0
 
 	New(var/atom/sloc)
+		..()
 		src.set_loc(sloc)
 		SPAWN_DBG(0) go()
 
@@ -634,40 +635,38 @@ SYNDICATE DRONE FACTORY AREAS
 	src.desc = "This isn't coming off... oh god..."
 	if (!src.processing)
 		src.processing++
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 	SPAWN_DBG(5 SECONDS)
 		boutput(user, "<span class='notice'>The [src] feels like it's getting tighter. Ouch! Seems to have a lot of sharp edges inside.</span>")
 		random_brute_damage(user, 5)
 		take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
 		bleed(user, 5, 5)
-		SPAWN_DBG(9 SECONDS)
-			user.visible_message("<span class='alert'><b>[src] violently contracts around [user]!</B></span>")
-			playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
-			random_brute_damage(user, 15)
-			user.emote("scream")
-			take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
-			bleed(user, 5, 1)
-			SPAWN_DBG(5 SECONDS)
-				user.visible_message("<span class='alert'><b>[src] digs into [user]!</B></span>")
-				playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
-				random_brute_damage(user, 15)
-				user.emote("scream")
-				take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
-				bleed(user, 5, 5)
-				SPAWN_DBG(5 SECONDS)
-					var/mob/living/carbon/human/H = user
-					playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
-					H.visible_message("<span class='alert'><b>[src] absorbs some of [user]'s skin!</b></span>")
-					random_brute_damage(user, 30)
-					H.emote("scream")
-					if (!H.decomp_stage)
-						H.bioHolder.AddEffect("eaten") //gross
-					take_bleeding_damage(user, null, 0, DAMAGE_CUT, 0)
-					bleed(user, 15, 5)
-					user.emote("faint")
-					user.reagents.add_reagent("ectoplasm", 50)
-	return
+		sleep(9 SECONDS)
+		user.visible_message("<span class='alert'><b>[src] violently contracts around [user]!</B></span>")
+		playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
+		random_brute_damage(user, 15)
+		user.emote("scream")
+		take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
+		bleed(user, 5, 1)
+		sleep(5 SECONDS)
+		user.visible_message("<span class='alert'><b>[src] digs into [user]!</B></span>")
+		playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
+		random_brute_damage(user, 15)
+		user.emote("scream")
+		take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
+		bleed(user, 5, 5)
+		sleep(5 SECONDS)
+		var/mob/living/carbon/human/H = user
+		playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
+		H.visible_message("<span class='alert'><b>[src] absorbs some of [user]'s skin!</b></span>")
+		random_brute_damage(user, 30)
+		H.emote("scream")
+		if (!H.decomp_stage)
+			H.bioHolder.AddEffect("eaten") //gross
+		take_bleeding_damage(user, null, 0, DAMAGE_CUT, 0)
+		bleed(user, 15, 5)
+		user.emote("faint")
+		user.reagents.add_reagent("ectoplasm", 50)
 
 
 /obj/item/clothing/suit/armor/ancient/process()
@@ -699,7 +698,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/graveyard/lightning_trigger
 	icon = 'icons/misc/mark.dmi'
@@ -818,18 +817,21 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/paper/alchemy/north
 	name = "notebook page 2"
 	New()
+		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... [alchemy_symbols["north"]] stands above all else ..."
 
 /obj/item/paper/alchemy/southeast
 	name = "notebook page 3"
 	New()
+		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... in the place the sun rises, [alchemy_symbols["southeast"]] is required ..."
 
 /obj/item/paper/alchemy/southwest
 	name = "notebook page 4"
 	New()
+		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... [alchemy_symbols["southwest"]] where light fades ..."
 
@@ -894,7 +896,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	attack_hand(mob/user as mob)
 		if(symbol != null)
-			symbol.loc = src.loc
+			symbol.set_loc(src.loc)
 			symbol = null
 			overlays.Cut()
 			boutput(usr, "<span class='notice'>You remove the Symbol.</span>")
@@ -904,7 +906,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if(istype(W,/obj/item/alchemy/symbol) && symbol == null)
 			user.drop_item()
 			symbol = W
-			symbol.loc = src
+			symbol.set_loc(src)
 			overlays += symbol
 			boutput(usr, "<span class='notice'>You put the Symbol in the Circle.</span>")
 		return
@@ -941,13 +943,13 @@ SYNDICATE DRONE FACTORY AREAS
 				boutput(usr, "<span class='success'>The Circle begins to vibrate and glow.</span>")
 				playsound(src.loc, "sound/voice/chanting.ogg", 50, 1)
 				sleep(1 SECOND)
-				shake_camera(usr, 15, 1, 0.2)
+				shake_camera(usr, 15, 16, 0.2)
 				sleep(1 SECOND)
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
 				sleep(1 SECOND)
 				world << sound('sound/effects/mag_pandroar.ogg', volume=60) // heh
-				shake_camera(usr, 15, 1, 0.5)
+				shake_camera(usr, 15, 16, 0.5)
 				new/obj/item/alchemy/stone(middle)
 				sleep(0.2 SECONDS)
 				var/obj/graveyard/loose_rock/R = locate("loose_rock_[target_id]")
@@ -972,13 +974,14 @@ SYNDICATE DRONE FACTORY AREAS
 
 
 	New(var/location)
+		..()
 		var/list/types = new/list()
 		var/obj/item/alchemy/symbol/S = null
 
 		for(var/A in childrentypesof(/obj/item/alchemy/symbol))
 			types += A
 
-		loc = location
+		set_loc(location)
 		north = new(locate(src.loc.x + 2, src.loc.y + 3, src.loc.z))
 		var/ntype = pick(types)
 

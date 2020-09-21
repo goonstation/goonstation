@@ -11,7 +11,7 @@
 				src.bioHolder.AddEffect("monkey")
 				src.get_static_image()
 				if (src.name == "monkey" || !src.name)
-					src.name = pick(monkey_names)
+					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
 
 // special monkeys.
@@ -113,18 +113,18 @@
 
 	New()
 		..()
-		npcmonkeypals += src
+		START_TRACKING
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.disposed)
 				src.bioHolder.mobAppearance.customization_first = "None"
 				src.cust_one_state = "None"
 				src.bioHolder.AddEffect("monkey")
 				if (src.name == "monkey" || !src.name)
-					src.name = pick(monkey_names)
+					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
 
 	disposing()
-		npcmonkeypals -= src
+		STOP_TRACKING
 		..()
 
 	ai_action()
@@ -145,6 +145,9 @@
 			..()
 
 	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0)
+		// Dead monkeys can't hold a grude and stops emote
+		if(isdead(src))
+			return ..()
 		//src.ai_aggressive = 1
 		src.target = T
 		src.ai_state = 2
@@ -154,7 +157,7 @@
 		if (prob(40))
 			src.emote("scream")
 		var/pals = 0
-		for (var/mob/living/carbon/human/npc/monkey/pal in npcmonkeypals)
+		for (var/mob/living/carbon/human/npc/monkey/pal in by_type[/mob/living/carbon/human/npc/monkey])
 			if (get_dist(src, pal) > 7)
 				continue
 			if (pals >= 5)
@@ -362,7 +365,7 @@
 				src.bioHolder.AddEffect("seamonkey")
 				src.get_static_image()
 				if (src.name == "sea monkey" || !src.name)
-					src.name = pick(monkey_names)
+					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
 
 

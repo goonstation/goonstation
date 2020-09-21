@@ -41,7 +41,7 @@
 "aO" = (/obj/table/auto,/obj/decal/fakeobjects{name = "broken computer"; desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN."; icon = 'icons/obj/computer.dmi'; icon_state = "oldb"; anchored = 1},/turf/simulated/floor/airless/damaged5,/area/noGenerate)
 "aP" = (/turf/simulated/wall,/area/noGenerate)
 "aQ" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects/lighttube_broken{dir = 1},/obj/decal/cleanable/blood/gibs{icon_state = "gibarm"},/obj/decal/cleanable/blood{icon_state = "u_madman_l"},/obj/item/casing/rifle,/obj/decal/cleanable/paper,/turf/simulated/floor/airless/wood,/area/noGenerate)
-"aR" = (/obj/decal/cleanable/dirt,/obj/item/storage/toilet,/obj/landmark/artifact/cannabis_seed,/turf/simulated/floor/airless/scorched,/area/noGenerate)
+"aR" = (/obj/decal/cleanable/dirt,/obj/item/storage/toilet,/obj/item/seed/cannabis,/turf/simulated/floor/airless/scorched,/area/noGenerate)
 "aS" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 6},/turf/simulated/wall/asteroid,/area/noGenerate)
 "aT" = (/obj/lattice,/turf/simulated/wall/asteroid,/area/noGenerate)
 "aU" = (/obj/lattice{icon_state = "lattice-dir"; dir = 8},/obj/decal/fakeobjects/pipe{dir = 4; name = "grimy pipe"; pixel_y = -6},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)

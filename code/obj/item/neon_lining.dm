@@ -31,7 +31,7 @@
 		pixel_x = rand(-2,2)
 		pixel_y = rand(-2,2)
 		..(loc)
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message("<span class='notice'>[user] begins coiling neon lining!</span>")
@@ -69,7 +69,7 @@
 			if (ismob(loc))
 				var/mob/owner = loc
 				owner.u_equip(src)
-			loc = newloc
+			set_loc(newloc)
 			return src
 		src.use(amt)
 		var/obj/item/neon_lining/C = new /obj/item/neon_lining(newloc)

@@ -401,7 +401,7 @@ var/f_color_selector_handler/F_Color_Selector
 			traitList[T.id] = T
 
 		Z_LOG_DEBUG("Preload", "  /obj/bioEffect")
-		var/list/datum/bioEffect/tempBioList = childrentypesof(/datum/bioEffect)
+		var/list/datum/bioEffect/tempBioList = concrete_typesof(/datum/bioEffect, cache=FALSE)
 		for(var/effect in tempBioList)
 			var/datum/bioEffect/E = new effect(1)
 			bioEffectList[E.id] = E        //Caching instances for easy access to rarity and such. BECAUSE THERES NO PROPER CONSTANTS IN BYOND.
@@ -542,8 +542,11 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Process scheduler setup...")
 	processScheduler = new /datum/controller/processScheduler
-	processScheduler.deferSetupFor(/datum/controller/process/ticker)
 	processSchedulerView = new /datum/processSchedulerView
+	var/datum/controller/process/tgui/tgui_process = processScheduler.addNowSkipSetup(/datum/controller/process/tgui)
+	var/datum/controller/process/ticker/ticker_process = processScheduler.addNowSkipSetup(/datum/controller/process/ticker)
+	tgui_process.setup()
+	ticker_process.setup()
 
 	Z_LOG_DEBUG("World/Init", "Building area sims scores...")
 	if (global_sims_mode)
@@ -593,6 +596,7 @@ var/f_color_selector_handler/F_Color_Selector
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_camera_network()
+	build_manufacturer_icons()
 	clothingbooth_setup()
 #if ASS_JAM
 	ass_jam_init()
@@ -616,6 +620,10 @@ var/f_color_selector_handler/F_Color_Selector
 	aiDirty = 2
 	world.updateCameraVisibility()
 
+	UPDATE_TITLE_STATUS("Preloading client data...")
+	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
+	sendItemIconsToAll()
+
 	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
 	processScheduler.setup()
@@ -623,6 +631,9 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Reticulating splines")
 	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
 	initialize_worldgen()
+
+	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
+	map_settings.init()
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
@@ -642,7 +653,6 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Init() complete")
 	TgsInitializationComplete()
 	//sleep_offline = 1
-
 
 	// Biodome elevator accident stats
 	bioele_load_stats()
@@ -1133,6 +1143,7 @@ var/f_color_selector_handler/F_Color_Selector
 							return 1
 
 						if("rest")
+							if(ON_COOLDOWN(twitch_mob, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
 								H.setStatus("resting", INFINITE_STATUS)
@@ -1141,6 +1152,7 @@ var/f_color_selector_handler/F_Color_Selector
 							return 1
 
 						if("stand")
+							if(ON_COOLDOWN(twitch_mob, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
 								H.delStatus("resting")
@@ -1229,6 +1241,14 @@ var/f_color_selector_handler/F_Color_Selector
 
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
+
+				if(copytext(msg, 1, 2) == SPACEBEE_EXTENSION_ASAY_PREFIX)
+					spacebee_extension_system?.process_asay(msg, nick)
+					var/ircmsg[] = new()
+					ircmsg["key"] = nick
+					ircmsg["msg"] = msg
+					return ircbot.response(ircmsg)
+
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 				logTheThing("admin", null, null, "Discord ASAY: [nick]: [msg]")
@@ -1277,7 +1297,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/who = lowertext(plist["target"])
 
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
-				if (M.client)
+				if (M?.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
 							<div style="background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
@@ -1318,7 +1338,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
-				if (M.client)
+				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")

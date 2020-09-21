@@ -11,7 +11,7 @@
 
 **Website:** [goonhub.com](https://goonhub.com)
 
-**Forums:** [forums.ss13.co](https://forums.ss13.co)
+**Forums:** [forum.ss13.co](https://forum.ss13.co)
 
 **Wiki:** [wiki.ss13.co](https://wiki.ss13.co)
 

@@ -434,7 +434,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	afterattack(atom/target, mob/user as mob)
 		if (istype(target,/turf/space/fluid/warp_z5))
@@ -449,7 +449,7 @@
 			L.linked_ladder.linked_ladder = L
 
 			user.drop_item()
-			src.loc = L
+			src.set_loc(L)
 			L.og_ladder_item = src
 			L.linked_ladder.og_ladder_item = src
 

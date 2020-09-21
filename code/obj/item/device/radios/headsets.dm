@@ -12,7 +12,7 @@
 	speaker_range = 0
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	bicon_override = 1
+	icon_override = "civ"
 	var/haswiretap
 
 	attackby(obj/item/R as obj, mob/user as mob)
@@ -51,7 +51,7 @@
 	icon_state = "command headset"
 	secure_frequencies = list("h" = R_FREQ_COMMAND)
 	secure_classes = list("h" = RADIOCL_COMMAND)
-	bicon_override = "head"
+	icon_override = "head"
 
 /obj/item/device/radio/headset/command/ai
 	name = "AI Headset"
@@ -72,7 +72,7 @@
 		"m" = RADIOCL_MEDICAL,
 		"c" = RADIOCL_CIVILIAN,
 		)
-	bicon_override = "ai"
+	icon_override = "ai"
 
 /obj/item/device/radio/headset/command/nt
 	name = "NT Headset"
@@ -92,7 +92,7 @@
 		"m" = RADIOCL_MEDICAL,
 		"c" = RADIOCL_CIVILIAN,
 		)
-	bicon_override = "nt"
+	icon_override = "nt"
 
 /obj/item/device/radio/headset/command/captain
 	name = "Captain's Headset"
@@ -113,7 +113,7 @@
 		"m" = RADIOCL_MEDICAL,
 		"c" = RADIOCL_CIVILIAN,
 		)
-	bicon_override = "cap"
+	icon_override = "cap"
 
 /obj/item/device/radio/headset/command/radio_show_host
 	name = "Radio show host's Headset"
@@ -134,7 +134,7 @@
 		"m" = RADIOCL_MEDICAL,
 		"c" = RADIOCL_CIVILIAN,
 		)
-	bicon_override = 1
+	icon_override = "civ"
 
 /obj/item/device/radio/headset/command/hos
 	name = "Head of Security's Headset"
@@ -146,7 +146,7 @@
 		"h" = RADIOCL_COMMAND,
 		"g" = RADIOCL_SECURITY,
 		)
-	bicon_override = "hos"
+	icon_override = "hos"
 
 /obj/item/device/radio/headset/command/hop
 	name = "Head of Personnel's Headset"
@@ -165,7 +165,7 @@
 		"m" = RADIOCL_MEDICAL,
 		"c" = RADIOCL_CIVILIAN,
 		)
-	bicon_override = "hop"
+	icon_override = "hop"
 
 /obj/item/device/radio/headset/command/rd
 	name = "Research Director's Headset"
@@ -179,7 +179,7 @@
 		"r" = RADIOCL_RESEARCH,
 		"m" = RADIOCL_MEDICAL,
 		)
-	bicon_override = "rd"
+	icon_override = "rd"
 
 /obj/item/device/radio/headset/command/md
 	name = "Medical Director's Headset"
@@ -193,7 +193,7 @@
 		"r" = RADIOCL_RESEARCH,
 		"m" = RADIOCL_MEDICAL,
 		)
-	bicon_override = "md"
+	icon_override = "md"
 
 /obj/item/device/radio/headset/command/ce
 	name = "Chief Engineer's Headset"
@@ -205,7 +205,7 @@
 		"h" = RADIOCL_COMMAND,
 		"e" = RADIOCL_ENGINEERING,
 		)
-	bicon_override = "ce"
+	icon_override = "ce"
 
 /obj/item/device/radio/headset/security
 	name = "Security Headset"
@@ -215,7 +215,7 @@
 	secure_classes = list(
 		"g" = RADIOCL_SECURITY,
 		)
-	bicon_override = "sec"
+	icon_override = "sec"
 
 /obj/item/device/radio/headset/engineer
 	name = "Engineering Headset"
@@ -225,7 +225,7 @@
 	secure_classes = list(
 		"e" = RADIOCL_ENGINEERING,
 		)
-	bicon_override = "eng"
+	icon_override = "eng"
 
 /obj/item/device/radio/headset/medical
 	name = "Medical Headset"
@@ -235,7 +235,7 @@
 	secure_classes = list(
 		"m" = RADIOCL_MEDICAL,
 		)
-	bicon_override = "med"
+	icon_override = "med"
 
 /obj/item/device/radio/headset/research
 	name = "Research Headset"
@@ -245,7 +245,7 @@
 	secure_classes = list(
 		"r" = RADIOCL_RESEARCH,
 		)
-	bicon_override = "sci"
+	icon_override = "sci"
 
 /obj/item/device/radio/headset/civilian
 	name = "Civilian Headset"
@@ -267,12 +267,12 @@
 		"e" = RADIOCL_ENGINEERING,
 		"c" = RADIOCL_CIVILIAN,
 		)
-	bicon_override = "qm"
+	icon_override = "qm"
 
 /obj/item/device/radio/headset/clown
 	name = "Clown's Headset"
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew. Anybody using this one is unlikely to be taken seriously."
-	bicon_override = "clown"
+	icon_override = "clown"
 
 /obj/item/device/radio/headset/syndicate
 	name = "Radio Headset"
@@ -281,10 +281,10 @@
 	secure_frequencies = list("z" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
 	protected_radio = 1
-	bicon_override = "syndie"
+	icon_override = "syndie"
 
 	leader
-		bicon_override = "syndieboss"
+		icon_override = "syndieboss"
 
 /obj/item/device/radio/headset/deaf
 	name = "Auditory Headset"

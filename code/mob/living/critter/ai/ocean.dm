@@ -55,7 +55,8 @@
 	return precondition() * weight * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/timed/targeted/trilobite/on_tick()
-	if (HAS_MOB_PROPERTY(holder.owner, PROP_CANTMOVE))
+	var/mob/living/critter/owncritter = holder.owner
+	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE))
 		return
 
 	if(!holder.target)
@@ -64,14 +65,14 @@
 			var/list/possible = get_targets()
 			if (possible.len)
 				holder.target = pick(possible)
-	if(holder.target && holder.target.z == holder.owner.z)
+	if(holder.target && holder.target.z == owncritter.z)
 		var/mob/living/M = holder.target
 		if(!isalive(M))
 			holder.target = null
 			holder.target = get_best_target(get_targets())
 			if(!holder.target)
 				return ..() // try again next tick
-		var/dist = get_dist(holder.owner, M)
+		var/dist = get_dist(owncritter, M)
 		if (dist > 2)
 			holder.move_to(M)
 		else
@@ -79,24 +80,24 @@
 
 		if (dist < 4)
 			if (M.equipped())
-				holder.owner.a_intent = prob(66) ? INTENT_DISARM : INTENT_HARM
+				owncritter.a_intent = prob(66) ? INTENT_DISARM : INTENT_HARM
 			else
-				holder.owner.a_intent = INTENT_HARM
+				owncritter.a_intent = INTENT_HARM
 
-			holder.owner.hud.update_intent()
-			holder.owner.dir = get_dir(holder.owner, M)
+			owncritter.hud.update_intent()
+			owncritter.dir = get_dir(owncritter, M)
 
 			var/list/params = list()
 			params["left"] = 1
 			params["ai"] = 1
-			holder.owner.hand_range_attack(M, params)
+			owncritter.hand_range_attack(M, params)
 
 	..()
 
 /datum/aiTask/timed/targeted/trilobite/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
 				holder.current_task = src.escape
@@ -144,7 +145,7 @@
 /datum/aiTask/timed/targeted/escape_vehicles/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, target_range))
 				targets += A
@@ -170,6 +171,7 @@
 	var/weight = 15
 	target_range = 7
 	frustration_threshold = 3
+	var/last_seek
 
 /datum/aiTask/timed/targeted/flee_and_shoot/frustration_check()
 	.= 0
@@ -183,17 +185,19 @@
 		. = !(holder.target)
 
 /datum/aiTask/timed/targeted/flee_and_shoot/on_tick()
-	if (HAS_MOB_PROPERTY(holder.owner, PROP_CANTMOVE))
+	var/mob/living/critter/owncritter = holder.owner
+	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE))
 		return
 
-	if(!holder.target)
+	if(!holder.target && world.time > last_seek + 5 SECONDS)
+		last_seek = world.time
 		var/list/possible = get_targets()
 		if (possible.len)
 			holder.target = pick(possible)
 		if (!holder.target)
 			holder.wait()
 
-	if(holder.target && holder.target.z == holder.owner.z)
+	if(holder.target && holder.target.z == owncritter.z)
 		if (ismob(holder.target))
 			var/mob/living/M = holder.target
 			if(!isalive(M))
@@ -202,29 +206,29 @@
 				if(!holder.target)
 					return ..() // try again next tick
 
-		var/dist = get_dist(holder.owner, holder.target)
+		var/dist = get_dist(owncritter, holder.target)
 		if (dist > target_range)
 			holder.target = null
 			return ..()
 
 		holder.move_away(holder.target,target_range)
 
-		holder.owner.a_intent = INTENT_HARM
+		owncritter.a_intent = INTENT_HARM
 
-		holder.owner.hud.update_intent()
-		holder.owner.dir = get_dir(holder.owner, holder.target)
+		owncritter.hud.update_intent()
+		owncritter.dir = get_dir(owncritter, holder.target)
 
 		var/list/params = list()
 		params["left"] = 1
 		params["ai"] = 1
-		holder.owner.hand_range_attack(holder.target, params)
+		owncritter.hand_range_attack(holder.target, params)
 
 	..()
 
 /datum/aiTask/timed/targeted/flee_and_shoot/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
 				targets += A
@@ -292,7 +296,8 @@
 	return precondition() * weight * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/timed/targeted/pikaia/on_tick()
-	if (HAS_MOB_PROPERTY(holder.owner, PROP_CANTMOVE) || !isalive(holder.owner))
+	var/mob/living/critter/owncritter = holder.owner
+	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE) || !isalive(owncritter))
 		return
 
 	if(!holder.target)
@@ -301,8 +306,8 @@
 			var/list/possible = get_targets()
 			if (possible.len)
 				holder.target = pick(possible)
-	if(holder.target && holder.target.z == holder.owner.z)
-		var/dist = get_dist(holder.owner, holder.target)
+	if(holder.target && holder.target.z == owncritter.z)
+		var/dist = get_dist(owncritter, holder.target)
 		if (dist >= 1)
 			if (prob(80))
 				holder.move_to(holder.target,0)
@@ -319,28 +324,28 @@
 				if(!holder.target)
 					return ..() // try again next tick
 			if (dist <= 1)
-				holder.owner.a_intent = INTENT_GRAB
-				holder.owner.hud.update_intent()
-				holder.owner.dir = get_dir(holder.owner, M)
+				owncritter.a_intent = INTENT_GRAB
+				owncritter.hud.update_intent()
+				owncritter.dir = get_dir(owncritter, M)
 
 				var/list/params = list()
 				params["left"] = 1
 
-				if (!holder.owner.equipped())
-					holder.owner.hand_attack(M, params)
+				if (!owncritter.equipped())
+					owncritter.hand_attack(M, params)
 				else
-					var/obj/item/grab/G = holder.owner.equipped()
+					var/obj/item/grab/G = owncritter.equipped()
 					if (istype(G))
 						if (G.affecting == null || G.assailant == null || G.disposed) //ugly safety
-							holder.owner.drop_item()
+							owncritter.drop_item()
 
 						if (G.state <= GRAB_PASSIVE)
-							G.attack_self(holder.owner)
+							G.attack_self(owncritter)
 						else
-							holder.owner.emote("flip")
+							owncritter.emote("flip")
 							holder.move_away(holder.target,1)
 					else
-						holder.owner.drop_item()
+						owncritter.drop_item()
 		else
 			holder.move_circ(holder.target,target_range+8)
 
@@ -349,7 +354,7 @@
 /datum/aiTask/timed/targeted/pikaia/get_targets()
 	var/list/targets = list()
 	if(holder.owner)
-		for (var/atom in pods_and_cruisers)
+		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
 				targets += A

@@ -4,7 +4,7 @@
 	id = "cryokinesis"
 	msgGain = "You notice a strange cold tingle in your fingertips."
 	msgLose = "Your fingers feel warmer."
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	cooldown = 600
 	probability = 66
 	blockCount = 3
@@ -453,7 +453,8 @@
 				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
 				owner.real_name = H.real_name
 				owner.name = H.name
-
+				if(owner.bioHolder?.mobAppearance?.mutant_race)
+					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race)
 		return
 
 	cast_misfire(atom/target)
@@ -923,7 +924,7 @@
 				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1)
 
 			for(var/mob/living/V in range(get_turf(owner),fart_range))
-				shake_camera(V,10,5)
+				shake_camera(V,10,64)
 				if (V == owner)
 					continue
 				boutput(V, "<span class='alert'>You are sent flying!</span>")
@@ -1605,8 +1606,10 @@
 			return 1
 		owner.visible_message("<span class='alert'><b>[owner.name] makes a weird noise!</b></span>")
 		playsound(owner.loc, 'sound/musical_instruments/WeirdHorn_0.ogg', 50, 0)
+		var/count = 0
 		for (var/mob/living/L in range(7,owner))
 			if (L.hearing_check(1))
+				if(count++ > (src.linked_power.power ? 10 : 7)) break
 				if(locate(/obj/item/storage/bible) in get_turf(L))
 					owner.visible_message("<span class='alert'><b>A mysterious force smites [owner.name] for inciting blasphemy!</b></span>")
 					owner.gib()
@@ -1628,7 +1631,7 @@
 	name = "Telekinetic Pull"
 	desc = "Allows the subject to influence physical objects through utilizing latent powers in their mind."
 	id = "telekinesis_drag"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 5
 	blockGaps = 5
@@ -1666,7 +1669,7 @@
 	name = "Telekinesis"
 	desc = "Allows the subject to influence physical objects through utilizing latent powers in their mind."
 	id = "telekinesis_command"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 5
 	blockGaps = 5
@@ -1737,7 +1740,7 @@
 	name = "Cloak of Darkness"
 	desc = "Enables the subject to bend low levels of light around themselves, creating a cloaking effect."
 	id = "cloak_of_darkness"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	isBad = 0
 	probability = 33
 	blockGaps = 3
@@ -1827,7 +1830,7 @@
 	name = "Chameleon"
 	desc = "The subject becomes able to subtly alter light patterns to become invisible, as long as they remain still."
 	id = "chameleon"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	probability = 33
 	blockCount = 3
 	blockGaps = 3

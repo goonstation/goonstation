@@ -17,7 +17,7 @@
 
 	post_setup()
 		heat_target = rand(0,620)
-		if (artitype == "eldritch" && prob(66))
+		if (artitype.name == "eldritch" && prob(66))
 			if (heat_target > 310)
 				heat_target *= 2
 			if (heat_target < 310 && heat_target != 0)

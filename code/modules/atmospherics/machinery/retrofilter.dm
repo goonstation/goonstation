@@ -79,8 +79,6 @@ obj/machinery/atmospherics/retrofilter
 	disposing()
 		radio_controller.remove_object(src, "[frequency]")
 
-		loc = null
-
 		if(node_out1)
 			node_out1.disconnect(src)
 			if (network_out1)

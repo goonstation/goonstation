@@ -76,6 +76,8 @@ var/global/mutable_appearance/elecflash_ma = null
 
 	var/list/elecs = list()
 	for (var/x in chain_to)
+		if(!x)
+			continue
 		T = x
 		E = new/obj/overlay/tile_effect(T)
 		E.appearance = elecflash_ma
@@ -96,7 +98,7 @@ var/global/mutable_appearance/elecflash_ma = null
 		for(var/atom in elecs)
 			var/atom/A = atom
 			qdel(A)
-
+		elecs.Cut()
 		elecs = null
 	chain_to = null
 	fluid_groups_touched = null

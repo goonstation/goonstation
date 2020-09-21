@@ -3237,7 +3237,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -17548,7 +17548,7 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/device/radio,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/janitor)
@@ -17558,7 +17558,7 @@
 /turf/simulated/floor/black,
 /area/station/owlery)
 "aOX" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/black,
@@ -24696,7 +24696,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/SWmaint)
 "bfj" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{
@@ -29869,7 +29869,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "brE" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/white,

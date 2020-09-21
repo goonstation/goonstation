@@ -25,8 +25,7 @@
 		update_icon()
 
 	disposing()
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 
@@ -870,10 +869,12 @@
 	w_class = 4
 	force = 15
 
+
 	New()
 		cell = new/obj/item/ammo/power_cell/self_charging/big
 		current_projectile = new /datum/projectile/special/spreader/uniform_burst/blaster
 		projectiles = list(current_projectile)
+		flags |= ONBACK
 		..()
 
 
@@ -1164,7 +1165,6 @@
 		var/turf/tgt = get_turf(M)
 		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
 			boutput(user, "\The [src.name] jams!")
-			message_admins("[key_name(usr)] is a nerd and tried to fire a pickpocket gun in a restricted z-level at [showCoords(us.x, us.y, us.z)].")
 			return
 		return ..(M, user)
 
@@ -1254,7 +1254,6 @@
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
 		asign_name(M)
 
-		update_icon()
 		..()
 
 	disposing()

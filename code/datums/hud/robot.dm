@@ -174,34 +174,35 @@
 				return
 			if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
 				master.module_states[1] = O
-				O.loc = master
+				O.set_loc(master)
 				O.pickup(master) // Handle light datums and the like.
 			else if(!master.module_states[2])
 				master.module_states[2] = O
-				O.loc = master
+				O.set_loc(master)
 				O.pickup(master)
 			else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
 				master.module_states[3] = O
-				O.loc = master
+				O.set_loc(master)
 				O.pickup(master)
 			else
 				master.uneq_active()
 				if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
 					master.module_states[1] = O
-					O.loc = master
+					O.set_loc(master)
 					O.pickup(master)
 				else if(!master.module_states[2])
 					master.module_states[2] = O
-					O.loc = master
+					O.set_loc(master)
 					O.pickup(master)
 				else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
 					master.module_states[3] = O
-					O.loc = master
+					O.set_loc(master)
 					O.pickup(master)
 			update_equipment()
 			update_tools()
 
 	New(M)
+		..()
 		master = M
 
 		// @TODO i fucking hate the boxes not being clickable so here's a gross hack to fix it

@@ -1,4 +1,507 @@
 
+(t)sat sep 19 20
+(u)ThePotato97
+(p)1986
+(e)🆕📄|feature, tgui
+(+)Converted AI airlock controls to tgui
+(u)zjdtmkhzt
+(p)2219
+(e)⚖|balance
+(+)The Detectives BloodTrak now also works while moving but will shut down after a while, depending on how fresh the used blood was.
+(u)kyle
+(+)Lowered standard kudzu's to_spread cap somewhat. Trying to make placing the kudzu a more strategic selection than just placing it anywhere.
+(+)Health analyzers with a reagent scan upgrade now show if a subject is OD-ing on a reagent in their system. (note. Not all dangerous or deadly chems have OD thresholds so this doens't necessarily indicate poisons)
+(t)thu sep 17 20
+(u)adharainspace
+(p)2201
+(e)🆕|feature
+(+)your playtime is now tracked (use the .stats command in our <a target="_blank" href="https://discord.com/invite/zd8t6pY">Discord server</a> to see your playtime)
+(t)mon sep 14 20
+(u)Zamujasa
+(+)PDAs have an option to change the backlight color. You no longer have to use that wonky olive green color.
+(+)PDA window is now resizable and respects the "Popup Font Size" option in your preferences.
+(u)kyle
+(*)Rounds no longer end when the sol nerds trigger a disaster round. Play through to the end of the round before the disaster starts.
+(+)Undo last multitool cooldown change. Now it just checks if it is over a blob tile or a med kudzu tile and doesn't make a spark.
+(t)sun sep 13 20
+(u)kyle
+(+)Multitool pulse spark special attack now has a 3 second cooldown. Should make it slightly less oppressive for blobs and kudzu.
+(u)Comradef191
+(p)2166
+(e)🗺🎨|mapping, sprites
+(*)Overhauled Mushroom Stations Armoury, AI Satellite, Kitchen & Disposals system.
+(+)Mushroom Station now has a large Prototype Engine to the North-East!
+(+)Mushroom Station now has its Second Reset Board in the Computer Core, rather then Tech Storage.
+(u)RichardGere
+(p)2003
+(e)🆕📄|feature, tgui
+(+)Door hacking UI has been converted to TGUI.
+(u)warc
+(*)horizon fixes: you can sell small items thu the ejection chute now - also i guess i forgot to put a still in the bar?????????
+(t)sat sep 12 20
+(u)Medoublej
+(p)2153
+(e)⚖🐛|balance, bug
+(+)Vampire's chiropteran screech MK2 now silences radios properly and no longer emags robots.
+(u)Luxizzle
+(p)2146
+(e)|
+(+)Jailbird no longer overwrites personal security note.
+(+)Jailbird now informs you of what crimes you've committed.
+(u)monochromatism
+(p)2108
+(e)🆕|feature
+(+)Added the "atheist" trait. Disables faith healing and has interesting flavor text about prayer, but might have an upside...
+(u)Flourish
+(p)2110
+(e)🆕|feature
+(*)If you flip with a grab on help intent, your grabee will flip with you. And if they also have a grab and are on help intent, their grabee will also flip. And so on.
+(u)eckff
+(p)2131
+(e)🎨|sprites
+(+)Space tiles now more darker than before! Like real space!
+(u)Enfaeutchie
+(p)2150
+(e)⚖|balance
+(*)On the RP servers, changelings have had their neurotoxin sting replaced with a non-lethal capulettium sting which will make their victims appear to drop dead.
+(t)fri sep 11 20
+(u)makkipakki
+(p)2122
+(e)🆕|feature
+(*)Added the HoS' Cape to their locker on all maps! Comes with a rebalancing to make it a sidegrade to the HoS' Jacket.
+(+)HoS no longer spawns with the Cape on submarine maps.
+(+)Changes to both the HoS Jacket and Cape names and descriptions.
+(u)pali
+(+)The singularity can no longer be destroyed by weak explosions
+(+)Atlas stuff:writing supplies for medbay, artlab and botany<br>drains in chemistry<br>compact sleeper in medbay (between the two cryocells)<br>thinktape in artlab<br>guaranteed labeller in artlab<br>additional thinktape in tech storage<br>audiolog + tapes in science<br>fixed bridge shield controls not working at all<br>Ol' Harner in robotics<br>purge valve + pumps for the generator<br>mechanics can now enter tech storage<br>APC powercell charger added to QM
+(u)ThePotato97
+(p)2068
+(e)|
+(+)Port-a-Gene can now be entered by dragging and can also redeem filled injectors!
+(u)UrsulaMejor
+(e)🐛|bug
+(+)You can now change your preferred maps to maps that aren't currently pickable
+(t)thu sep 10 20
+(u)Gannets
+(p)2129
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added the Nuclear Bomb Teleporter Remote, a single-use item that allows nuke ops to teleport the bomb to their location.
+(*)Use it to either skip the bomb ferrying portion of the round or in an emergency to retrieve a stolen bomb.
+(u)ThePotato97
+(p)2143
+(e)|
+(+)Centcomm's power announcement is no longer hardcoded to the TEG and will work on any map.
+(u)pali
+(+)Crayons now even better. They show their selected letter and let you queue up a text of up to 100 characters!
+(+)Two more personal lockers and an experimental artifact flusher added to Atlas.
+(u)zjdtmkhzt
+(p)2136
+(e)|
+(+)Fixed a bug where critters were unable to throw people.
+(u)ThePotato97
+(p)2142
+(e)|
+(+)Toilet UI now updates correctly.
+(u)Tarmunora
+(p)2133
+(e)🆕|feature
+(+)Added very short cooldown to toggling rest state.
+(u)Superlagg
+(p)2103
+(e)🆕|feature
+(+)You can now also pick what a crayon draws by using it in-hand.
+(u)MarkNstein
+(p)2141
+(e)🐛|bug
+(*)Oshan PTL now works.
+(u)UrsulaMajor
+(p)2053
+(e)⚖🆕|balance, feature
+(*)Added the Clock 180. Buy it at QM. Wear your security badge.
+(+)Consolidated QM security crate contents.
+(t)wed sep 09 20
+(u)zjdtmkhzt
+(p)2130
+(e)|
+(+)Filling a pipe with chems during pipebomb construction will no longer splash the rest of the chems onto it.
+(u)pali
+(e)🗺|mapping
+(*)A bunch of Atlas changes, expand the minor changes section at the bottom to see the incomplete list
+(+)Atlas stuff:<br>New clown hole<br>Fixed and added disposal pipes and disposals<br>Readded the genebooth<br>Fixed placement of the QM lightswitch<br>Added a bunch of intercoms<br>Added more cameras<br>Added more surgery tools (for robotics too)<br>Added equipment for the third miner<br>Added a glass recycler to chemistry<br>Fixed some incorrect areas (looking at you, armory in the freezer)<br>Added a portable air pump to toxins<br>Added a heat exchange pipe going through toxins burn chamber<br>Added reagent extractor to the kitchen<br>More artifacts both on and off station<br>Added artlab, engineering and mechanics cargopads<br>Added a recharger to QM<br>Added minimed and the cigarette vending machine (also a pizza vending machine, kinda)<br>Telesci reorganized a bit so the person in the chair doesn't block others<br>Added GPS landmarks<br>Added Gnome Chompski<br>Added blood fridge and restricted medicine locker<br>Various mood lighting experiments<br>Added some background objects to look at in space<br>Added the regular nano-fab to minig<br>Added Tiny Geoff Honkington<br>Other minor changes I forgot about
+(u)Jawns
+(p)2114
+(e)🆕|feature
+(+)Enzymatic reclaimer now ejects meats, organs, and various limbs.
+(u)pali
+(p)2081
+(e)🆕|feature
+(*)Traitor janitors can now buy a very special wet floor sign. Also wet floor signs can now be anchored / unanchored with a wrench.
+(u)MarkNstein
+(p)2126
+(e)|
+(+)Glass recycler accepts plate stacks.
+(u)Flaborized
+(p)2090
+(e)🎨|sprites
+(+)New sprites for a wide variety of glasses
+(u)MarkNstein
+(p)2124
+(e)|
+(*)ChemiCompiler no longer transfers double the intended amount when dumping.
+(u)MarkNstein
+(p)2100
+(e)🆕🎨|feature, sprites
+(*)Digbot revived: a bot for miners. Craftable and has a blueprint in robotics and mining fabs.
+(t)tue sep 08 20
+(u)Superlagg
+(p)2111
+(e)⚖🆕|balance, feature
+(+)Werewolves are no longer completely unintelligible.
+(u)Tarmunora
+(p)2109
+(e)⚖|balance
+(+)Changed explosion resist property to be a percentage-based protection
+(u)Gannets
+(p)2106
+(e)⚖|balance
+(+)Improved armour values for Nuclear Operative Specialist uniforms.
+(u)Zamujasa
+(+)Lowered the intensity of screen-shake effects across the board.
+(+)Manta will no longer fling your viewpoint halfway across the screen, for example.
+(+)Some effects may need to be intensified again later, but in general screen shake has been a constant complaint, to the point some players would quit and rejoin to avoid it.
+(u)Superlagg
+(p)2102
+(e)🆕|feature
+(+)Metal organs are no longer made of delicious flesh.
+(t)mon sep 07 20
+(u)Flourish
+(p)2104
+(e)🆕|feature
+(+)Hit someone with a plush toy on help intent to make the plush toy hug them.
+(u)kyle & pali & BatElite
+(e)🆕|feature
+(*)Added the Spaceship of Theseus medal
+(u)SageAcrin & pali & Dogs
+(e)🆕|feature
+(*)Added the Quit Cloning Around medal
+(u)Gannets
+(p)2093
+(e)⚖|balance
+(*)Increased maximum number of Nuclear Operatives to 8 from 6.
+(u)Aft2001
+(p)2098
+(e)|
+(+)An AI's PDA name is now based on its actual name, instead of just being labeled as 'AI'
+(t)sun sep 06 20
+(u)Nebulacrity
+(p)2057
+(e)🆕🎨|feature, sprites
+(*)Added a new mutation: Hemochromia. NanoTrasen has released a statement that differently colored blood is perfectly normal and not worth being alarmed over.
+(u)zjdtmkhzt
+(p)2059
+(e)⚖🆕|balance, feature
+(+)Electric wand type artifacts should now actually work. Some other small changes to wand artifacts were made too.
+(u)RichardGere
+(p)2082
+(e)⚖|balance
+(+)Tweaked secbots responsiveness to accommodate the new movement change.
+(u)Zamujasa
+(*)Added the Rotbusttec implant to the medical and robotics fabricators.
+(+)The cloner now makes noises/jostles a bit when cloning a player.
+(t)sat sep 05 20
+(u)zjdtmkhzt
+(p)2077
+(e)|
+(+)Fixed a bug where magical artifact wands would not work past melee range.
+(u)Sovexe
+(e)🆕|feature
+(*)Added a new secret chem, Bombini.
+(t)fri sep 04 20
+(u)pali
+(*)Securitrons are now less lazy when chasing people and don't stop for 1-2 second breaks to catch their breath
+(u)Zamujasa
+(e)🐛🆕🔄|feature, rework, bug
+(*)The cloner now works a little differently: it will begin producing a new body automatically, if possible.
+(*)When you clone someone, they will either be put into that body (if it exists), or the cloner will start producing a body for them (and then put them in it).
+(*)The cloning pod will keep a ready body indefinitely until someone is cloned into it.
+(*)You can toggle this automatic pre-generation via the right-click menu "Toggle Auto Mode".
+(*)Premature clones can have their genes fixed by hanging out in a cold cryo cell at full health for a while.
+(+)The cloner now accounts for server tick delay when processing.
+(+)Puritan-trait-havers will no longer die immediately upon cloning, but...
+(+)The cloner will now consider maximum HP changes when deciding how far along a clone is.
+(+)Reagents added to the cloner should now react properly. Previously they kinda didn't.
+(+)Checking the status of the cloning pod has been moved to Examine rather than requiring you to click on it.
+(+)Probably added a few bugs. Sorry. I tested what I could think of, but y'all are good at breaking things.
+(+)The cryo cell and freezer now show the temperature in Celsius.
+(u)Superlagg
+(p)1904
+(e)🆕|feature
+(+)Securitrons are now much more dutiful when patrolling and responding to summons
+(+)Securitrons also show a progress bar when cuffing someone. Careful, they don't like to be interrupted!
+(+)Upgraded the Hos' secbot PDA program to be able to summon every active securitron or force it to stun whoever its chasing.
+(u)Sovexe
+(p)1879
+(e)🆕📄|feature, tgui
+(+)Converted PTL to TGUI
+(t)thu sep 03 20
+(u)ThePotato97
+(p)2056
+(e)|
+(+)AI eyebot is now able to interact with tguis.
+(u)adharainspace
+(p)2006
+(e)🆕🎨|feature, sprites
+(+)batons now flip around when held on harm intent
+(u)Nebulacrity
+(p)2035
+(e)🆕🎨|feature, sprites
+(*)Added a new trait: Pilot. There has been an increased amount of reports of NanoTrasen employees getting lost off-station before their shifts.
+(*)Added a new pod component: Warp-0 Engine. An older sibling of the Warp-1 Engine, this engine is slightly worse power-wise while also lacking the ability to generate wormholes.
+(+)Added Pilot and Stowaway trait sprites.
+(u)Superlagg
+(p)2047
+(e)🐛🆕|bug, feature
+(+)Barber tools can cut 200% more hair than they used to, as they can now affect all three hair layers.
+(u)BatElite
+(p)2033
+(e)🆕|feature
+(+)You can now emag boogiebots!
+(u)pali
+(+)Mulebots are now a bit faster
+(u)Walter-Lin
+(p)2013
+(e)|
+(+)Fixed the flying critter running sound.
+(u)Shroopy
+(p)1733
+(e)🆕|feature
+(*)Added an option in Game->Effects to enable or disable view tinting from glasses, masks, etc.
+(t)wed sep 02 20
+(u)Sovexe
+(p)1965
+(e)🆕📄|feature, tgui
+(+)Converted TEG interface to TGUI
+(u)Sovexe
+(p)1844
+(e)🆕📄|feature, tgui
+(+)Converted disposal and mailchute to TGUI
+(u)Nebulacrity
+(p)1859
+(e)🆕|feature
+(*)Added Party Hard medal for dying while drunk either near neon lining or with a glowstick in your pocket.
+(u)Flaborized
+(p)2026
+(e)🎨|sprites
+(*)New sprites for all kinds of crates
+(u)ThePotato97
+(p)2034
+(e)📄|tgui
+(*)Updated tgui to a newer version (fixes input boxes)
+(u)Kubius
+(p)2038
+(e)🗺|mapping
+(+)Horizon's quartermasters now have access to a small set of cameras for jam detection.
+(t)tue sep 01 20
+(u)Jawns
+(p)2015
+(e)🆕|feature
+(+)Chief engineers now have a space suit in their locker
+(t)mon aug 31 20
+(u)Superlagg
+(p)1857
+(e)🆕🔄🎨|feature, rework, sprites
+(*)Barbering can be done anywhere now! Though it should really be done by a barber in the barber shop.
+(+)Barber tools can be switched between barber and murder mode by clicking them in-hand. They start set to murder, so be careful!
+(+)Dye bottles can target hair layers, and can be used three times if you're a barber.
+(u)pali
+(+)Monkey vaulting over tables is now less buggy and just generally tweaked in several ways.
+(t)sun aug 30 20
+(u)pali
+(p)1987
+(e)🆕🎨|feature, sprites
+(*)New expensive spacebux purchase to arrive to the station in an Oshan style arrival missile.
+(u)Superlagg
+(p)1988
+(e)🆕|feature
+(+)Certain transformations inherit the target's mutant race.
+(u)Sartorius7
+(p)1985
+(e)🆕|feature
+(*)More trinket prefixes!
+(u)Sartorius7
+(p)1984
+(e)🆕|feature
+(+)Many, many more wizard names for the game to pick from!
+(u)Flaborized
+(p)1994
+(e)🎨|sprites
+(+)Furnaces, floppy disks, flashbangs and jukeboxes now have new sprites.
+(t)fri aug 28 20
+(u)Jawns
+(p)1922
+(e)🆕|feature
+(*)New Chief Engineer objective rewards excessive competence
+(u)BatElite
+(p)1981
+(e)🆕🎨|feature, sprites
+(+)Surgical face shields now come in many stylish colours. You might even get lucky and find the rare variant!
+(u)makkipakki
+(p)1923
+(e)🆕🗺|feature, mapping
+(*)Added a table-mounted defibrillator to the security department.
+(t)thu aug 27 20
+(u)Michaellaneous
+(p)1971
+(e)|
+(+)Ejecting beaker from chem dispensers now go into hand
+(+)Putting beaker into chem dispenser now opens interface
+(u)Zamujasa
+(e)⚖🆕|balance, feature
+(*)Major manufacturer UI update.
+(*)Rather than a straight list, manufacturers now show a grid of items they can produce. This includes reverse-engineering fabricators, which will show the eventual item made by a frame.
+(*)The manufacturer queue is always visible, rather than being on a separate page.
+(*)Manufacturers now show an action bar showing progress.
+(*)This is still very much a work in progress, so there will probably be issues. Please report bugs using the button in the top right.
+(+)Manufacturer speeds have been adjusted: lower speeds use much less power, higher speeds use considerably more.
+(+)Manufacturer times for some items have been changed across the board as part of a change to real-time.
+(+)The "search" and "filter" options are missing. They'll be back sooner or later, probably.
+(u)Michaellaneous
+(p)1959
+(e)🆕|feature
+(+)Slotting in a cartridge into a PDA now ejects the old one, if present
+(t)wed aug 26 20
+(u)Superlagg
+(p)1842
+(e)⚖🆕|balance, feature
+(*)Defibrillators now prevent cardiac arrest for a few seconds, and make it more likely for subsequent shocks to cure cardiac arrest.
+(+)Defibrillators are now about 60% less effective at curing robotic transformation.
+(u)Superlagg
+(p)1777
+(e)⚖🆕|balance, feature
+(*)Added the Lawbringer and egun to the Guardbuddy whitelist. They promise not to hurt anyone with them, though.
+(+)Added several gimmick weapons to the Guardbuddy whitelist.
+(+)Guardbuddies are much more helpful if you're trying to change their parts, and can operate a wider variety of gunlike objects.
+(u)Sovexe
+(p)1948
+(e)🆕📄|feature, tgui
+(+)Converted SMES to TGUI
+(u)ThePotato97
+(p)1956
+(e)|
+(+)Monkey doesn't burn itself when going bump anymore.
+(u)Michaellaneous
+(p)1957
+(e)|
+(+)ai eyes and ai in general cannot remove cells from opened APCs anymore
+(u)Superlagg
+(p)1888
+(e)🆕|feature
+(+)Rechargers and manufacturers should no longer take ages to work when exposed to spacelag.
+(+)Manufacturers should now deliver the thing you want it to make in the amount of time it promises.
+(u)BatElite
+(p)1955
+(e)🎨|sprites
+(+)Bees can wear butts again!
+(t)tue aug 25 20
+(u)glassofmilk
+(p)1826
+(e)🆕🎨|feature, sprites
+(*)Added the new Association Component - a MechComp piece that stores key/value pairs
+(u)Tarmunora
+(p)1942
+(e)⚖|balance
+(+)Changed suplexing to interrupt some action bars, notably shambler devour
+(u)Superlagg
+(p)1900
+(e)🆕|feature
+(+)You now keep your held item if you were an antag at any point in the round, or you finish the round in the cryotron.
+(u)Superlagg
+(p)1831
+(e)⚖🆕|balance, feature
+(*)Werewolves now talk and see like a dog.
+(u)Carbadox
+(p)1884
+(e)🆕|feature
+(+)Added a trait to replace your trinket with a lunchbox.
+(+)Added a dozen of empty lunchboxes to the Kitchen vendor. Now chefs can prepare packed lunches for the whole crew! Maybe you'll cute handwritten note (or maybe death threat, who knows).
+(u)Janonas
+(p)1873
+(e)🆕🎨|feature, sprites
+(*)Added a new botany plant, Ipecacuanha - use it to create a powerful emetic!
+(u)Kubius
+(p)1943
+(e)🗺|mapping
+(+)Kondaru fix batch time again! Prominently, gene power module and more defibs.
+(u)zjdtmkhzt
+(p)1939
+(e)🆕|feature
+(*)Lots of smaller artifact-related bugs were fixed, so artifacts may behave a little differently than they used to. Mysterious!
+(u)Superlagg
+(p)1243
+(e)⚖🆕|balance, feature
+(*)Tox, brain, and oxy medkits now have more useful auto-injectors!
+(+)Added a new emergency medkit specifically for deep crit. Ask your local QM or salesbot today!
+(u)ThePotato97
+(p)1846
+(e)|
+(+)Fixed the Infravision trait.
+(u)Michaellaneous
+(p)1918
+(e)⚖|balance
+(+)Medium and small spiders now can't grab people anymore.
+(u)Jawns
+(p)1927
+(e)🐛|bug
+(+)Ghost drone popsicle duplication feature removed
+(u)zjdtmkhzt
+(p)1891
+(e)⚖|balance
+(+)AIs and cyborgs now have su access at terminals.
+(u)RichardGere
+(p)1802
+(e)🆕📄|feature, tgui
+(*)Gas canisters and tanks have had their UIs updated. Report any bugs!
+(+)Fixed a bug where remote signalers attached to canister bombs didn't properly turn off the safety.
+(t)mon aug 24 20
+(u)zjdtmkhzt
+(p)1920
+(e)🆕|feature
+(+)The pitcher in the artifact lab should now actually scale its power properly for force artifacts.
+(u)pali
+(p)1913
+(e)🆕|feature
+(+)Muzzle flashes now emit a bit of light.
+(u)Michaellaneous
+(p)1919
+(e)|
+(+)Added logic to allow bowls to be recycled
+(u)Michaellaneous
+(p)1915
+(e)🗺|mapping
+(+)Added siren helmets to gimmick wardrobe and removed the hardcoded items from maps
+(t)sun aug 23 20
+(u)Zamujasa
+(*)Updated the round setup stuff. The countdown now starts immediately, and the game setup takes place while the countdown is running. This means rounds start about 2-3 minutes faster on average.
+(*)Map voting is enabled with 60 seconds left on the countdown rather than after setup completes.
+(*)If setup hasn't finished yet, the countdown will automatically stop at 30 seconds until it finishes.
+(u)adharainspace
+(p)1887
+(e)🆕|feature
+(*)what counts as round participation should be more consistent now.
+(u)Michaellaneous
+(p)1912
+(e)🗺|mapping
+(+)Oshan - Removed duplicate items already present in adventure chest.
+(t)sat aug 22 20
+(u)Superlagg
+(p)1894
+(e)⚖|balance
+(+)X-Drones are now much more expensive to manufacture.
+(t)thu aug 20 20
+(u)zjdtmkhzt
+(p)1883
+(e)⚖|balance
+(+)General Manufacturers can now produce rods directly.
 (t)wed aug 19 20
 (u)adharainspace
 (p)1876

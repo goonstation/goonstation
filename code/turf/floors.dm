@@ -16,6 +16,7 @@
 	var/broken = 0
 	var/burnt = 0
 	var/plate_mat = null
+	var/reinforced = FALSE
 
 	New()
 		..()
@@ -642,6 +643,7 @@
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
 
+	reinforced = TRUE
 	allows_vehicles = 1
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -1058,6 +1060,7 @@
 	name = "shuttle bay plating"
 	icon_state = "engine"
 	allows_vehicles = 1
+	reinforced = TRUE
 
 /turf/simulated/floor/shuttlebay
 	name = "shuttle bay plating"
@@ -1065,6 +1068,7 @@
 	allows_vehicles = 1
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	reinforced = TRUE
 
 /turf/simulated/floor/metalfoam
 	icon = 'icons/turf/floors.dmi'
@@ -1245,36 +1249,9 @@
 		step(user.pulling, get_dir(fuck_u, src))
 	return
 
-/turf/simulated/floor/engine/attackby(obj/item/C as obj, mob/user as mob, params)
-	if (!C)
-		return
-	if (!user)
-		return
-	if (istype(C, /obj/item/pen))
-		var/obj/item/pen/P = C
-		P.write_on_turf(src, user, params)
-		return
-	else if ((isweldingtool(C) && C:try_weld(user,0,-1,0,1)) || iswrenchingtool(C))
-		boutput(user, "<span class='notice'>Loosening rods...</span>")
-		if(iswrenchingtool(C))
-			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
-		if(do_after(user, 30))
-			var/obj/R1 = new /obj/item/rods(src)
-			var/obj/R2 = new /obj/item/rods(src)
-			if (material)
-				R1.setMaterial(material)
-				R2.setMaterial(material)
-			else
-				R1.setMaterial(getMaterial("steel"))
-				R2.setMaterial(getMaterial("steel"))
-			ReplaceWithFloor()
-			var/turf/simulated/floor/F = src
-			F.to_plating()
-			return
-
 /turf/simulated/floor/proc/to_plating(var/force_break)
 	if(!force_break)
-		if(istype(src,/turf/simulated/floor/engine)) return
+		if(src.reinforced) return
 	if(!intact) return
 	if (!icon_old)
 		icon_old = icon_state
@@ -1300,8 +1277,7 @@
 
 /turf/simulated/floor/proc/break_tile(var/force_break)
 	if(!force_break)
-		if(istype(src,/turf/simulated/floor/engine)) return
-		if(istype(src,/turf/simulated/floor/shuttlebay)) return
+		if(src.reinforced) return
 
 	if(broken) return
 	if (!icon_old)
@@ -1314,7 +1290,7 @@
 		broken = 1
 
 /turf/simulated/floor/proc/burn_tile()
-	if(broken || burnt) return
+	if(broken || burnt || reinforced) return
 	if (!icon_old)
 		icon_old = icon_state
 	if(intact)
@@ -1322,12 +1298,6 @@
 	else
 		src.icon_state = "panelscorched"
 	burnt = 1
-
-/turf/simulated/floor/engine/burn_tile()
-	return
-
-/turf/simulated/floor/shuttlebay/burn_tile()
-	return
 
 /turf/simulated/floor/shuttle/burn_tile()
 	return
@@ -1387,6 +1357,9 @@
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
 		return
+	if(src.reinforced)
+		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead.</span>")
+		return
 
 	if(broken || burnt)
 		boutput(user, "<span class='alert'>You remove the broken plating.</span>")
@@ -1419,6 +1392,23 @@
 	if (istype(C, /obj/item/light_parts/floor))
 		src.attach_light_fixture_parts(user, C) // Made this a proc to avoid duplicate code (Convair880).
 		return
+
+	if (src.reinforced && ((isweldingtool(C) && C:try_weld(user,0,-1,0,1)) || iswrenchingtool(C)))
+		boutput(user, "<span class='notice'>Loosening rods...</span>")
+		if(iswrenchingtool(C))
+			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
+		if(do_after(user, 30))
+			var/obj/R1 = new /obj/item/rods(src)
+			var/obj/R2 = new /obj/item/rods(src)
+			if (material)
+				R1.setMaterial(material)
+				R2.setMaterial(material)
+			else
+				R1.setMaterial(getMaterial("steel"))
+				R2.setMaterial(getMaterial("steel"))
+			ReplaceWithFloor()
+			src.to_plating()
+			return
 
 	if(istype(C, /obj/item/rods))
 		if (!src.intact)
@@ -1692,7 +1682,7 @@
 	icon_state = "gauntwall"
 // --------------------------------------------
 
-/turf/proc/fall_to(var/turf/T, var/atom/A)
+/turf/proc/fall_to(var/turf/T, var/atom/movable/A)
 	if(istype(A, /obj/overlay/tile_effect)) //Ok enough light falling places. Fak.
 		return
 	if (isturf(T))
@@ -1707,8 +1697,7 @@
 			M.changeStatus("paralysis", 70)
 			SPAWN_DBG(0)
 				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
-		T.contents += A
-		T.Entered(A)
+		A.set_loc(T)
 		return
 
 /turf/unsimulated/floor/setpieces
@@ -1719,19 +1708,21 @@
 		name = "broken staircase"
 		desc = "You can't see the bottom."
 		icon_state = "black"
+		var/target_landmark = LANDMARK_FALL_ANCIENT
 
 		Entered(atom/A as mob|obj)
 			if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
 				return ..()
 
-			if (ancientfall.len)
-				var/turf/T = pick(ancientfall)
+			var/turf/T = pick_landmark(target_landmark)
+			if(T)
 				fall_to(T, A)
 				return
 			else ..()
 
 		shaft
 			name = "Elevator Shaft"
+			target_landmark = LANDMARK_FALL_BIO_ELE
 
 			Entered(atom/A as mob|obj)
 				if (istype(A, /mob) && !istype(A, /mob/dead))
@@ -1767,8 +1758,8 @@
 				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 					return ..()
 
-				if (deepfall.len)
-					var/turf/T = pick(deepfall)
+				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)
+				if(T)
 					fall_to(T, A)
 					return
 				else ..()

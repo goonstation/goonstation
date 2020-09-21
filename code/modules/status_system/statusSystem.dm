@@ -294,52 +294,84 @@ var/list/statusGroupLimits = list("Food"=4)
 		return null
 
 /datum/statusEffect
-	var/id = ""
+	var/id = ""							// Unique ID of the status effect
 	var/name = ""
-	var/icon_state = ""
-	var/desc = ""		//Tooltip desc
-	var/duration = 0 //In deciseconds (tenths of a second, same as ticks just sane). A duration of NULL is infinite. (This is distinct from 0)
-	var/atom/owner = null //Owner of the status effect
+	var/icon_state = ""			// Icon state to display.
+	var/desc = ""						// Tooltip desc
+	var/duration = 0 				// In deciseconds (tenths of a second, same as ticks just sane). A duration of NULL is infinite. (This is distinct from 0)
+	var/atom/owner = null 	// Owner of the status effect
 	var/archivedOwnerInfo = ""
-	var/unique = 1 //If true, this status effect can only have one instance on any given object.
-	var/visible = 1 //Is this visible in the status effect bar?
-	var/exclusiveGroup = "" //optional name of a group of buffs. players can only have a certain number of buffs of a given group - any new applications fail. useful for food buffs etc.
-	var/maxDuration = null //If non-null, duration of the effect will be clamped to be max. this amount.
-	var/move_triggered = 0 //has an on-move effect
+	var/unique = 1 					// If true, this status effect can only have one instance on any given object.
+	var/visible = 1 				// Is this visible in the status effect bar?
+	var/exclusiveGroup = "" // optional name of a group of buffs. players can only have a certain number of buffs of a given group - any new applications fail. useful for food buffs etc.
+	var/maxDuration = null	// If non-null, duration of the effect will be clamped to be max. this amount.
+	var/move_triggered = 0 	// has an on-move effect
 	var/datum/movement_modifier/movement_modifier // Has a movement-modifying effect
 
 
-	proc/preCheck(var/atom/A) //Used to run a custom check before adding status to an object. For when you want something to be flat out immune or something. ret = 1 allow, 0 = do not allow
+	/**
+		* Used to run a custom check before adding status to an object. For when you want something to be flat out immune or something.
+		*
+		* return = 1 allow, 0 = do not allow
+		*/
+	proc/preCheck(var/atom/A)
 		return 1
 
 	proc/modify_change(var/change)
 		.= change
 
-	proc/onAdd(var/optional=null) //Called when the status is added to an object. owner is already set at this point. Has the optional arg from setStatus passed in.
+	/**
+		* Called when the status is added to an object. owner is already set at this point.
+		*
+		* optional optional - arg from setStatus (passed in)
+		*/
+	proc/onAdd(var/optional=null)
 		if (movement_modifier && ismob(owner))
 			var/mob/mob_owner = owner
 			APPLY_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
 		return
 
-	proc/onRemove() //Called when the status is removed from the object. owner is still set at this point.
+	/**
+		* Called when the status is removed from the object. owner is still set at this point.
+		*/
+	proc/onRemove()
 		if (movement_modifier && ismob(owner))
 			var/mob/mob_owner = owner
 			REMOVE_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
 		return
 
-	proc/onUpdate(var/timedPassed) //Called every tick by the status controller. Argument is the actual time since the last update call.
+	/**
+		* Called every tick by the status controller.
+		*
+		* required timePassed - the actual time since the last update call.
+		*/
+	proc/onUpdate(var/timePassed)
 		return
 
-	proc/onChange(var/optional=null) //Called when the status is changed using setStatus. Called after duration is updated etc. Has the optional arg from setStatus passed in.
+	/**
+		* Called when the status is changed using setStatus. Called after duration is updated etc.
+		*
+		* optional optional - arg from setStatus (passed in)
+		*/
+	proc/onChange(var/optional=null)
 		return
 
-	proc/onCheck(var/optional=null) //Called by hasStatus. Used to handle additional checks with the optional arg in that proc.
+	/**
+		* Called by hasStatus. Used to handle additional checks with the optional arg in that proc.
+		*/
+	proc/onCheck(var/optional=null)
 		return 1
 
-	proc/getTooltip() //Used to generate tooltip. Can be changed to have dynamic tooltips.
+	/**
+		* Used to generate tooltip. Can be changed to have dynamic tooltips.
+		*/
+	proc/getTooltip()
 		return desc
 
-	proc/getExamine() //Information that should show up when an object has this effect and is examined.
+	/**
+		* Information that should show up when an object has this effect and is examined.
+		*/
+	proc/getExamine()
 		return null
 
 	proc/clicked(list/params)
@@ -353,6 +385,17 @@ var/list/statusGroupLimits = list("Food"=4)
 			owner.statusEffects -= src
 		src.owner = null
 		..()
+
+	defibbed
+		id = "defibbed"
+		name = "Defibrillated"
+		desc = "You've been zapped in a way your heart seems to like."
+		icon_state = "heart+"
+		unique = 1
+		maxDuration = 12 SECONDS // Just slightly longer than a defib's charge cycle
+
+		getTooltip()
+			return "You've been zapped in a way your heart seems to like!<br>You feel more resistant to cardiac arrest, and more likely for subsequent defibrillating shocks to restart your heart if it stops!"
 
 	maxhealth
 		id = "maxhealth"
@@ -377,7 +420,7 @@ var/list/statusGroupLimits = list("Food"=4)
 				health_update_queue |= M
 			return
 
-		onUpdate(var/timedPassed)
+		onUpdate(var/timePassed)
 			icon_state = "[change > 0 ? "heart+":"heart-"]"
 			name = "Max. health [change > 0 ? "increased":"reduced"]"
 			return
@@ -399,17 +442,17 @@ var/list/statusGroupLimits = list("Food"=4)
 		//Technically the base class can handle either but we need to separate these.
 		increased
 			id = "maxhealth+"
-			onUpdate(var/timedPassed)
+			onUpdate(var/timePassed)
 				if(change < 0) //Someone fucked this up; remove effect.
 					duration = 1
-				return ..(timedPassed)
+				return ..(timePassed)
 
 		decreased
 			id = "maxhealth-"
-			onUpdate(var/timedPassed)
+			onUpdate(var/timePassed)
 				if(change > 0) //Someone fucked this up; remove effect.
 					duration = 1
-				return ..(timedPassed)
+				return ..(timePassed)
 
 	simplehot //Simple heal over time.
 		var/tickCount = 0
@@ -419,8 +462,8 @@ var/list/statusGroupLimits = list("Food"=4)
 		var/heal_burn = 0
 		icon_state = "+"
 
-		onUpdate(var/timedPassed)
-			tickCount += timedPassed
+		onUpdate(var/timePassed)
+			tickCount += timePassed
 			var/times = (tickCount / tickSpacing)
 			if(times >= 1 && ismob(owner))
 				tickCount -= (round(times) * tickSpacing)
@@ -438,8 +481,8 @@ var/list/statusGroupLimits = list("Food"=4)
 		var/damage_type = DAMAGE_STAB
 		icon_state = "-"
 
-		onUpdate(var/timedPassed)
-			tickCount += timedPassed
+		onUpdate(var/timePassed)
+			tickCount += timePassed
 			var/times = (tickCount / tickSpacing)
 			if(times >= 1 && ismob(owner))
 				tickCount -= (round(times) * tickSpacing)
@@ -466,7 +509,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		var/stageTime = 10 SECONDS
 
 		getTooltip()
-			return "You are [howMuch]irradiated.<br>Taking [damage_tox] toxin damage every [tickSpacing/10] sec.<br>Damage reduced by radiation resistance on gear."
+			return "You are [howMuch]irradiated.<br>Taking [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
 
 		preCheck(var/atom/A)
 			if(issilicon(A) || isobserver(A) || isintangible(A)) return 0
@@ -488,8 +531,8 @@ var/list/statusGroupLimits = list("Food"=4)
 			icon_state = "radiation[stage]"
 			return
 
-		onUpdate(var/timedPassed)
-			counter += timedPassed
+		onUpdate(var/timePassed)
+			counter += timePassed
 			if(counter >= stageTime)
 				counter -= stageTime
 				stage = max(stage-1, 1)
@@ -559,7 +602,7 @@ var/list/statusGroupLimits = list("Food"=4)
 
 			icon_state = "radiation[stage]"
 
-			return ..(timedPassed)
+			return ..(timePassed)
 
 	simpledot/n_radiation
 		id = "neutron_radiation"
@@ -580,7 +623,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		var/stageTime = 10 SECONDS
 
 		getTooltip()
-			return "You are [howMuch]irradiated by neutrons.<br>Taking [damage_tox] toxin damage every [tickSpacing/10] sec and [damage_brute] brute damage every [tickSpacing/10] sec."
+			return "You are [howMuch]irradiated by neutrons.<br>Taking [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec and [damage_brute] brute damage every [tickSpacing/(1 SECOND)] sec."
 
 		preCheck(var/atom/A)
 			if(isobserver(A) || isintangible(A)) return 0
@@ -602,8 +645,8 @@ var/list/statusGroupLimits = list("Food"=4)
 			icon_state = "radiation[stage]"
 			return
 
-		onUpdate(var/timedPassed)
-			counter += timedPassed
+		onUpdate(var/timePassed)
+			counter += timePassed
 			if(counter >= stageTime)
 				counter -= stageTime
 				stage = max(stage-1, 1)
@@ -640,7 +683,7 @@ var/list/statusGroupLimits = list("Food"=4)
 
 			icon_state = "radiation[stage]"
 
-			return ..(timedPassed)
+			return ..(timePassed)
 
 	simpledot/burning
 		id = "burning"
@@ -661,7 +704,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		var/image/onfire = null
 
 		getTooltip()
-			return "You are [howMuch]on fire.<br>Taking [damage_burn] burn damage every [tickSpacing/10] sec.<br>Damage reduced by heat resistance on gear. Click this statuseffect to resist."
+			return "You are [howMuch]on fire.<br>Taking [damage_burn] burn damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by heat resistance on gear. Click this statuseffect to resist."
 
 		clicked(list/params)
 			if (H)
@@ -738,9 +781,9 @@ var/list/statusGroupLimits = list("Food"=4)
 					.=1
 			.=0
 
-		onUpdate(var/timedPassed)
+		onUpdate(var/timePassed)
 
-			counter += timedPassed
+			counter += timePassed
 			switchStage(getStage())
 
 			var/prot = 1
@@ -762,7 +805,7 @@ var/list/statusGroupLimits = list("Food"=4)
 					damage_burn = 3.5 * prot
 					howMuch = "extremely "
 
-			return ..(timedPassed)
+			return ..(timePassed)
 
 	stuns
 		modify_change(var/change)
@@ -950,13 +993,13 @@ var/list/statusGroupLimits = list("Food"=4)
 		var/count = 7
 		movement_modifier = /datum/movement_modifier/disoriented
 
-		onUpdate(var/timedPassed)
-			counter += timedPassed
+		onUpdate(var/timePassed)
+			counter += timePassed
 			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
 				counter -= count
 				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
-			.=..(timedPassed)
+			.=..(timePassed)
 
 	drunk
 		id = "drunk"
@@ -972,9 +1015,9 @@ var/list/statusGroupLimits = list("Food"=4)
 			changeState()
 			return ..(optional)
 
-		onUpdate(var/timedPassed)
+		onUpdate(var/timePassed)
 			changeState()
-			return ..(timedPassed)
+			return ..(timePassed)
 
 		proc/changeState()
 			if(owner?.reagents)
@@ -1024,8 +1067,8 @@ var/list/statusGroupLimits = list("Food"=4)
 			animate(owner,alpha=255,flags=ANIMATION_PARALLEL, time=30)
 			return
 
-		onUpdate(var/timedPassed)
-			wait += timedPassed
+		onUpdate(var/timePassed)
+			wait += timePassed
 			if(owner.alpha > 33 && wait > 40)
 				animate(owner, alpha=30,flags=ANIMATION_PARALLEL, time=30)
 				wait = 0
@@ -1121,12 +1164,12 @@ var/list/statusGroupLimits = list("Food"=4)
 			if(H.buckled)
 				H.buckled.attack_hand(H)
 
-		onUpdate(var/timedPassed)
+		onUpdate(var/timePassed)
 			if (H && !H.buckled)
 				owner.delStatus("buckled")
 			else
 				if (sleepcount > 0)
-					sleepcount -= timedPassed
+					sleepcount -= timePassed
 					if (sleepcount <= 0)
 						if (H.hasStatus("resting") && istype(H.buckled,/obj/stool/bed))
 							var/obj/stool/bed/B = H.buckled
@@ -1159,6 +1202,7 @@ var/list/statusGroupLimits = list("Food"=4)
 				owner.delStatus("resting")
 
 		clicked(list/params)
+			if(ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			L.delStatus("resting")
 			L.force_laydown_standup()
 			if (ishuman(L))
@@ -1202,7 +1246,7 @@ var/list/statusGroupLimits = list("Food"=4)
 			H.remove_stam_mod_regen("ganger_regen")
 			gang = null
 
-		onUpdate(var/timedPassed)
+		onUpdate(var/timePassed)
 			var/area/cur_area = get_area(H)
 			if (cur_area?.gang_owners == gang && prob(50))
 				on_turf = 1
@@ -1264,7 +1308,7 @@ var/list/statusGroupLimits = list("Food"=4)
 				M.remove_stun_resist_mod("janktank")
 			return
 
-		onUpdate(var/timedPassed)
+		onUpdate(var/timePassed)
 			var/mob/living/carbon/human/H
 			if(ishuman(owner))
 				H = owner
@@ -1297,7 +1341,7 @@ var/list/statusGroupLimits = list("Food"=4)
 				change = optional
 			return
 
-		onUpdate(var/timedPassed)
+		onUpdate(var/timePassed)
 			var/mob/living/carbon/human/M
 			if(ishuman(owner))
 				M = owner

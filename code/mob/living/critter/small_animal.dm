@@ -73,14 +73,14 @@ todo: add more small animals!
 		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
 			src.is_pet = 0
 		if(src.is_pet)
-			pets += src
+			START_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
 		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
 
 	disposing()
 		if(src.is_pet)
-			pets -= src
+			STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
 	setup_healths()
@@ -271,7 +271,7 @@ todo: add more small animals!
 	New()
 		..()
 		if (src.randomize_name)
-			src.name = pick(cat_names)
+			src.name = pick_string_autokey("names/cats.txt")
 			src.real_name = src.name
 		if (src.randomize_look)
 #ifdef HALLOWEEN
@@ -2012,6 +2012,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 	var/butterflytype = 1
+	isFlying = 1
 
 	New()
 		..()
@@ -2103,6 +2104,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_walk_delay = 1.8
 	health_brute = 8
 	health_burn = 8
+	isFlying = 1
 
 	New()
 		..()
@@ -2166,6 +2168,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_walk_delay = 1.8
 	health_brute = 8
 	health_burn = 8
+	isFlying = 1
 
 	New()
 		..()
@@ -2602,7 +2605,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.into_pocket(M, 0)
 		else
 			return ..()
-	
+
 	understands_language(language)
 		if(language == "animal") // by default admin mice speak english but we want them to understand animal-ese
 			return 1
