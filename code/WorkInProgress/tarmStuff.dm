@@ -173,11 +173,14 @@
 		return round(E.cell.charge * E.current_projectile.cost)
 	else return G.canshoot() * INFINITY //idk, just let it happen
 
-/obj/item/gun/kinetic/pistol/gyrojet //awaiting sprites!
+/obj/item/gun/kinetic/gyrojet
 	name = "gyrojet pistol"
 	desc = "A semi-automatic pistol that fires rocket-propelled bullets"
+	icon_state = "gyrojet"
+	item_state = "gyrojet"
 	caliber = 0.512
 	max_ammo_capacity = 6
+	has_empty_state = 1
 
 	New()
 		. = ..()
@@ -200,7 +203,7 @@ obj/item/ammo/bullets/gyrojet
 	power = 10
 	precalculated = 0
 	caliber = 0.512
-	shot_volume = 0.1
+	shot_volume = 2
 
 	on_launch(obj/projectile/O)
 		O.internal_speed = projectile_speed
