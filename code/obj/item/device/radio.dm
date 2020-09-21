@@ -307,6 +307,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				if (secure)
 					for (var/i in R.send_hear())
 						if (!(i in receive))
+							if (signal_loss && !I.hardened && I.frequency >= R_FREQ_MINIMUM && I.frequency <= R_FREQ_MAXIMUM)
+								continue
+
 							receive += i
 
 							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
@@ -320,6 +323,8 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				else
 					for (var/i in R.send_hear())
 						if (!(i in receive))
+							if (signal_loss && !I.hardened && I.frequency >= R_FREQ_MINIMUM && I.frequency <= R_FREQ_MAXIMUM)
+								continue
 							receive += i
 
 							if (ai_sender)
@@ -360,6 +365,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		var/mob/dead/D = C.mob
 
 		if ((istype(D, /mob/dead/observer) || (iswraith(D) && !D.density)) || ((!isturf(src.loc) && src.loc == D.loc) && !istype(D, /mob/dead/target_observer)))
+
 			if (!(D in receive))
 				receive += D
 
