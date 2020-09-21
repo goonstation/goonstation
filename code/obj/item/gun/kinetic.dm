@@ -447,8 +447,8 @@
 /obj/item/gun/kinetic/clock_188
 	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm NATO rounds."
 	name = "Clock 188"
-	icon_state = "clock-188-beige"
-	item_state = "clock-188-beige"
+	icon_state = "glock"
+	item_state = "glock"
 	shoot_delay = 2
 	w_class = 2.0
 	force = 7.0
@@ -456,11 +456,12 @@
 	max_ammo_capacity = 18
 	auto_eject = 1
 	has_empty_state = 1
+	gildable = 1
 
 	New()
-		if (prob(30))
-			icon_state = "clock-188-black"
-			item_state = "clock-188-black"
+		if (prob(70))
+			icon_state = "glocktan"
+			item_state = "glocktan"
 
 		ammo = new/obj/item/ammo/bullets/nine_mm_NATO
 		current_projectile = new/datum/projectile/bullet/nine_mm_NATO

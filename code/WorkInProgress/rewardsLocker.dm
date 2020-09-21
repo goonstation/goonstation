@@ -767,6 +767,8 @@
 			gunmod.name = "Golden [gunmod.name]"
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
+			gunmod.update_icon()
+			H.update_inhands()
 			return 1
 
 
