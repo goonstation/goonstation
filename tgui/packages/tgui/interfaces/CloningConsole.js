@@ -8,9 +8,9 @@
 import { Fragment } from "inferno";
 import { useBackend, useSharedState, useLocalState } from "../backend";
 import { truncate } from "../format.js";
-import { Box, Button, ColorBox, Section, Table, Tabs, ProgressBar, NoticeBox, LabeledList, Tooltip, Flex, Modal, Icon } from "../components";
-import { COLORS } from "../constants";
+import { Box, Button, ColorBox, Section, Table, Tabs, ProgressBar, NoticeBox, LabeledList, Tooltip, Flex, Modal, Icon, HealthStat } from "../components";
 import { Window } from "../layouts";
+import { clamp } from 'common/math';
 
 const HEALTH_COLOR_BY_LEVEL = [
   "#17d568",
@@ -21,24 +21,10 @@ const HEALTH_COLOR_BY_LEVEL = [
   "#ed2814",
 ];
 
-
 const healthToColor = (oxy, tox, burn, brute) => {
   const healthSum = oxy + tox + burn + brute;
-  const level = Math.min(Math.max(Math.ceil(healthSum / 25), 0), 5);
+  const level = clamp(Math.ceil(healthSum / 25), 0, 5);
   return HEALTH_COLOR_BY_LEVEL[level];
-};
-
-const HealthStat = props => {
-  const { type, value } = props;
-  return (
-    <Box
-      inline
-      width={2}
-      color={COLORS.damageType[type]}
-      textAlign="center">
-      {value}
-    </Box>
-  );
 };
 
 const Types = {
@@ -46,6 +32,8 @@ const Types = {
   Info: 'info',
   Success: 'success',
 };
+
+// future proofing a better way of setting type by mordent
 
 export const TypedNoticeBox = props => {
   const {
@@ -66,7 +54,6 @@ export const CloningConsole = (props, context) => {
   const { data, act } = useBackend(context);
   const {
     cloneSlave,
-    message,
     clones_for_cash,
     balance,
   } = data;
@@ -76,7 +63,6 @@ export const CloningConsole = (props, context) => {
   ] = useLocalState(context, 'deletionTarget', '');
 
   const [tab, setTab] = useSharedState(context, "tab", "checkRecords");
-  const messageColors = { info: "blue", warning: "orange", success: "green", danger: "red" };
 
   return (
     <Window
@@ -255,8 +241,9 @@ const StatusSection = (props, context) => {
     scannerOccupied,
     scannerGone,
     podGone,
-    message,
   } = data;
+
+  const message = data.message || { text: "", status: "" };
 
   return (
     <Section>
@@ -295,7 +282,7 @@ const StatusSection = (props, context) => {
         </LabeledList.Item>
       </LabeledList>
       <Flex>
-        <Flex.Item mt={2}>
+        <Flex.Item mt={3.5}>
           <Button
             width={7}
             icon="dna"
@@ -315,18 +302,14 @@ const StatusSection = (props, context) => {
             {scannerLocked ? "Locked" : "Unlocked"}
           </Button>
         </Flex.Item>
-        <Flex.Item width={25} mt={2} ml={5}>
+        <Flex.Item width={25} ml={5}>
           {message.text && (
             <TypedNoticeBox
-              as="span"
-              type={"message.status"}
+              mt={2}
+              type={message.status}
               textColor="white"
               textAlign="center"
-              width={30}
-              p={1}
-              pl={8}
-              pr={8}
-              mt={5}>
+              width={25}>
               {message.text}
             </TypedNoticeBox>
           )}
@@ -365,18 +348,18 @@ const Records = (props, context) => {
           </Table.Cell>
         </Table.Row>
         {records.map(record => (
-          <Table.Row key={record.name}>
+          <Table.Row key={record.id}>
             <Table.Cell collapsing textAlign="center">
               <Box
                 position="relative">
-                {record.id}-{truncate(record.name, 15)}
-                {/* shorten down that name so it doesn"t break the damn gui */}
-                {record.name.length > 20 && (
+                {truncate(record.name.toLowerCase(), 16)}
+                {/* shorten down that name so it doesn't break the damn gui */}
+                {record.name.length > 16 && (
                   <Tooltip
                     overrideLong
                     position="right"
                     content={truncate(record.name.toLowerCase(), 39)} />
-                /* if you have a name over 39 chars fuckyou cause itll not shw*/
+                /* if you have a name over 39 chars it'll not show*/
                 )}
               </Box>
             </Table.Cell>
@@ -392,13 +375,13 @@ const Records = (props, context) => {
             <Table.Cell collapsing textAlign="center">
               {record.implant ? (
                 <Box inline>
-                  <HealthStat type="oxy" value={record.health.OXY} />
+                  <HealthStat inline type="oxy" width={2} content={record.health.OXY} />
                   {"/"}
-                  <HealthStat type="toxin" value={record.health.TOX} />
+                  <HealthStat inline type="toxin" width={2} content={record.health.TOX} />
                   {"/"}
-                  <HealthStat type="burn" value={record.health.BURN} />
+                  <HealthStat inline type="burn" width={2} content={record.health.BURN} />
                   {"/"}
-                  <HealthStat type="brute" value={record.health.BRUTE} />
+                  <HealthStat inline type="brute" width={2} content={record.health.BRUTE} />
                 </Box>
               ) : (
                 "No Implant Detected"

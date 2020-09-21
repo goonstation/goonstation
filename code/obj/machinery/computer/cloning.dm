@@ -12,6 +12,7 @@
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
 	var/currentStatusMessage = list()
+	var/currentMessageNumber = 0
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
 	var/obj/item/disk/data/floppy/diskette = null //Mostly so the geneticist can steal somebody's identity while pretending to give them a handy backup profile.
@@ -175,8 +176,9 @@
 	src.currentStatusMessage["text"] = message
 	src.currentStatusMessage["status"] = status
 	tgui_process.update_uis(src)
+	var/messageNumber = currentMessageNumber
 	SPAWN_DBG(5 SECONDS)
-	if(src.currentStatusMessage == message)
+	if(src.currentMessageNumber == messageNumber)
 		src.currentStatusMessage["text"] = ""
 		src.currentStatusMessage["status"] = ""
 		tgui_process.update_uis(src)

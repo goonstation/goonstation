@@ -22,10 +22,19 @@
 
 			if(computer) computer.portable = 1
 			if(pod1) pod1.portable = 1
-			SPAWN_DBG(1 SECOND)
-				computer.scanner = scanner
-				computer.pod1 = pod1
-		return
+		SPAWN_DBG(1 SECOND)
+			computer.scanner = scanner
+			computer.pod1 = pod1
+
+			if (!isnull(computer.pod1))
+				computer.pod1.connected = computer
+
+			if (!isnull(computer.scanner) || !isnull(computer.pod1))
+				computer.show_message((isnull(computer.pod1) & "POD1-ERROR") || (isnull(computer.pod1) & "SCNR-ERROR"), "success")
+				return
+			else
+				computer.show_message("System ready.", "success")
+				return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W)
