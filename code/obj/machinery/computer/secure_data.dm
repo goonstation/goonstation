@@ -1,3 +1,9 @@
+#define SECREC_MAIN_MENU 1
+#define SECREC_LIST_RECORDS 2
+#define SECREC_MANAGE_RECORDS 3
+#define SECREC_VIEW_RECORD 4
+
+
 /obj/machinery/computer/secure_data
 	name = "Security Records"
 	icon_state = "datasec"
@@ -71,17 +77,17 @@
 		dat = text("Confirm Identity: <A href='?src=\ref[];scan=1'>[]</A><HR>", src, (src.scan ? text("[]", src.scan.name) : "----------"))
 		if (src.authenticated)
 			switch(src.screen)
-				if(1.0)
+				if (SECREC_MAIN_MENU)
 					dat += text("<A href='?src=\ref[];search=1'>Search Records</A><BR><br><A href='?src=\ref[];list=1'>List Records</A><BR><br><A href='?src=\ref[];search_f=1'>Search Fingerprints</A><BR><br><A href='?src=\ref[];new_r=1'>New Record</A><BR><br><BR><br><A href='?src=\ref[];rec_m=1'>Record Maintenance</A><BR><br><A href='?src=\ref[];logout=1'>{Log Out}</A><BR><br>", src, src, src, src, src, src)
-				if(2.0)
+				if (SECREC_LIST_RECORDS)
 					dat += "<B>Record List</B>:<HR>"
 					for(var/datum/data/record/R in data_core.general)
 						dat += text("<A href='?src=\ref[];d_rec=\ref[]'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
 						//Foreach goto(136)
 					dat += text("<HR><A href='?src=\ref[];main=1'>Back</A>", src)
-				if(3.0)
+				if (SECREC_MANAGE_RECORDS)
 					dat += text("<B>Records Maintenance</B><HR><br><A href='?src=\ref[];back=1'>Backup To Disk</A><BR><br><A href='?src=\ref[];u_load=1'>Upload From disk</A><BR><br><A href='?src=\ref[];del_all=1'>Delete All Records</A><BR><br><BR><br><A href='?src=\ref[];main=1'>Back</A>", src, src, src, src)
-				if(4.0)
+				if (SECREC_VIEW_RECORD)
 					dat += "<CENTER><B>Security Record</B></CENTER><BR>"
 					if ((istype(src.active_record_general, /datum/data/record) && data_core.general.Find(src.active_record_general)))
 						dat += text("Name: <A href='?src=\ref[];field=name'>[]</A> ID: <A href='?src=\ref[];field=id'>[]</A><BR><br>Sex: <A href='?src=\ref[];field=sex'>[]</A><BR><br>Age: <A href='?src=\ref[];field=age'>[]</A><BR><br>Rank: <A href='?src=\ref[];field=rank'>[]</A><BR><br>Fingerprint: <A href='?src=\ref[];field=fingerprint'>[]</A><br><br>DNA: []<BR><br>Physical Status: []<BR><br>Mental Status: []<BR>", src, src.active_record_general.fields["name"], src, src.active_record_general.fields["id"], src, src.active_record_general.fields["sex"], src, src.active_record_general.fields["age"], src, src.active_record_general.fields["rank"], src, src.active_record_general.fields["fingerprint"], src.active_record_general.fields["dna"], src.active_record_general.fields["p_stat"], src.active_record_general.fields["m_stat"])
@@ -151,24 +157,24 @@
 			src.active_record_security = null
 			src.authenticated = 1
 			src.rank = "AI"
-			src.screen = 1
+			src.screen = SECREC_MAIN_MENU
 		if (istype(src.scan, /obj/item/card/id))
 			src.active_record_general = null
 			src.active_record_security = null
 			if(check_access(src.scan))
 				src.authenticated = src.scan.registered
 				src.rank = src.scan.assignment
-				src.screen = 1
+				src.screen = SECREC_MAIN_MENU
 
 	if (src.authenticated)
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
 		if (href_list["list"])
-			src.screen = 2
+			src.screen = SECREC_LIST_RECORDS
 			src.active_record_general = null
 			src.active_record_security = null
 
 		else if (href_list["rec_m"])
-			src.screen = 3
+			src.screen = SECREC_MANAGE_RECORDS
 			src.active_record_general = null
 			src.active_record_security = null
 
@@ -184,7 +190,7 @@
 			src.temp = "All records deleted."
 
 		else if (href_list["main"])
-			src.screen = 1
+			src.screen = SECREC_MAIN_MENU
 			src.active_record_general = null
 			src.active_record_security = null
 
@@ -367,7 +373,7 @@
 					//Foreach continue //goto(2614)
 			src.active_record_general = R
 			src.active_record_security = S
-			src.screen = 4
+			src.screen = SECREC_VIEW_RECORD
 
 		else if (href_list["new_r"])
 			var/datum/data/record/G = new /datum/data/record(  )
@@ -397,7 +403,7 @@
 				R.fields["notes"] = "No notes."
 				data_core.security += R
 				src.active_record_security = R
-				src.screen = 4
+				src.screen = SECREC_VIEW_RECORD
 
 		else if (href_list["add_c"])
 			if (!( istype(src.active_record_security, /datum/data/record) ))
@@ -437,7 +443,7 @@
 						src.active_record_security = E
 					else
 						//Foreach continue //goto(3502)
-				src.screen = 4
+				src.screen = SECREC_VIEW_RECORD
 
 		else if (href_list["search"])
 			var/t1 = input("Search String: (Name, DNA, or ID)", "Secure. records", null, null)  as text
@@ -460,7 +466,7 @@
 						src.active_record_security = E
 					else
 						//Foreach continue //goto(3813)
-				src.screen = 4
+				src.screen = SECREC_VIEW_RECORD
 
 		else if (href_list["print_p"])
 			if (!( src.printing ))
@@ -488,3 +494,7 @@
 
 	return
 
+#undef SECREC_MAIN_MENU
+#undef SECREC_LIST_RECORDS
+#undef SECREC_MANAGE_RECORDS
+#undef SECREC_VIEW_RECORD
