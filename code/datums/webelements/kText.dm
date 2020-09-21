@@ -344,16 +344,21 @@ kText
 					return string
 
 		/**
-		 * Checks if any of the space-delimited words within [needle] match to the space-delimited words in [string].
+		 * Checks if any of the space-delimited words within {needle} match to the space-delimited words in {string}.
+		 *
 		 * This matching uses the same method of matching as autoComplete().
+		 *
 		 * Basically, "c p" matches "cake pie", because "c" and "p" autocomplete to "cake" and "pie", respectively.
-		 * It should also be noted that if one of the keywords in [needle] does not have a match in [string],
-		 * the match will fail.
-		 * @param	string		The set of words to match against.
-		 * @param	needle		The set of words to be searched for.
-		 * @return	if all the keywords in [needle] have a matching keyword in [string], returns [string].
-		 * otherwise, null.
+		 *
+		 * It should also be noted that if one of the keywords in {needle} does not have a match in {string}, the match will fail.
+		 *
+		 * * {string}	- The set of words to match against.
+		 * * {needle} - The set of words to be searched for.
+		 *
+		 * * return	- if all the keywords in {needle} have a matching keyword in {string}, returns {string}. Otherwise, null.
+		 *
 		 * matchKeys("giant king monster", "giant monster") would return "giant king monster".
+		 *
 		 * matchKeys("giant king monster", "giant snail") would return null, because "snail" has no match.
 		 */
 		matchKeys(string, needle)
