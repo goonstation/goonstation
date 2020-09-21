@@ -1127,7 +1127,7 @@
 			return ..()
 
 		if (!ishuman(user))
-			boutput(user, "<span class='notice'>You don't know what to do with the glass.</span>")
+			boutput(user, "<span class='notice'>You don't know what to do with [src].</span>")
 			return
 		var/mob/living/carbon/human/H = user
 		var/list/choices = list()
@@ -1143,10 +1143,10 @@
 			choices += "remove [src.wedge] wedge"
 			choices += "eat [src.wedge] wedge"
 		if (!choices.len)
-			boutput(user, "<span class='notice'>You can't think of anything to do with the glass.</span>")
+			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
 
-		var/selection = input(user, "What do you want to do with the glass?") as null|anything in choices
+		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
 		if (isnull(selection) || get_dist(src, user) > 1)
 			return
 
