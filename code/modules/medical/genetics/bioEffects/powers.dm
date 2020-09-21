@@ -1864,17 +1864,23 @@
 
 	OnLife()
 		if(..()) return
+		if(!src.active) return
+		boutput(world, "onLife")
 		if(isliving(owner))
 			var/mob/living/L = owner
 			if (last_moved == owner.l_move_time)
+				boutput(world, "1")
 				if (last_moved_world == 0)
+					boutput(world, "2")
 					last_moved_world = world.timeofday
 					return
-				if ((world.timeofday - last_moved_world) >= 30 && can_act(owner) && src.active)
+				if ((world.timeofday - last_moved_world) >= 30 && can_act(owner))
+					boutput(world, "3")
 					L.UpdateOverlays(overlay_image, id)
 					L.invisibility = 1
 
 	proc/decloak()
+		var/mob/living/L = owner
 		last_moved_world = world.timeofday
 		L.UpdateOverlays(null, id)
 		L.invisibility = 0
@@ -1893,11 +1899,13 @@
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0
-			RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED), .proc/decloak)
+			CH.UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+			CH.decloak()
 		else
 			boutput(usr, "You start using your chameleon cloaking.")
+			CH.last_moved_world = 0
 			CH.active = 1
-			UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+			CH.RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED), /datum/bioEffect/power/chameleon/proc/decloak)
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
