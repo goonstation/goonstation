@@ -307,7 +307,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				if (secure)
 					for (var/i in R.send_hear())
 						if (!(i in receive))
-							if (signal_loss && !I.hardened && I.frequency >= R_FREQ_MINIMUM && I.frequency <= R_FREQ_MAXIMUM)
+							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
 								continue
 
 							receive += i
@@ -323,7 +323,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				else
 					for (var/i in R.send_hear())
 						if (!(i in receive))
-							if (signal_loss && !I.hardened && I.frequency >= R_FREQ_MINIMUM && I.frequency <= R_FREQ_MAXIMUM)
+							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
 								continue
 							receive += i
 
