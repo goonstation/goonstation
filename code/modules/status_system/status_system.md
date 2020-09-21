@@ -36,11 +36,19 @@ var/mob/living/carbon/human/H = new
 H.changeStatus("bababooey", 2 SECONDS)
 ```
 
+### Additional notes
+
+Non-unique status effects (effects that can be applied several times to the same atom) can not be changed by normal means after they are added. Keep a reference if you need to change them.
+
+Status effect procs have comments in their base definition below. Check there if you want to know more about what they do.
+
+Status effects with a duration of INFINITE_STATUS (null) last indefinitely. (Shows as a duration of * in the UI) ((Keep in mind that null is distinct from 0))
+
 ## Food Status Effects
 
 Food status effects are a special subclass of status effects.
 They are intended to apply special effects to mobs based on the eaten food. Duration of the effects are determined by the quality of the food and reagent contents.
 
-There exists a special wrapper to handle these, `/mob/living/proc/add_food_bonus`.
+There exists a special wrapper to handle these, [/mob/living/proc/add_food_bonus].
 
-You can only have 4 food status effects active at once, determined by `exclusiveGroup = "Food"` and `statusGroupLimits`.
+You can only have 4 food status effects active at once, determined by [exclusiveGroup = "Food"][/datum/statusEffect/exclusiveGroup] and [statusGroupLimits][var/list/statusGroupLimits].

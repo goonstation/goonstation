@@ -1,15 +1,8 @@
 
-/*
-Additional notes:
-Non-unique status effects (effects that can be applied several times to the same atom) can not be changed by normal means after they are added. Keep a reference if you need to change them.
-Status effect procs have comments in their base definition below. Check there if you want to know more about what they do.
-Status effects with a duration of INFINITE_STATUS (null) last indefinitely. (Shows as a duration of * in the UI) ((Keep in mind that null is distinct from 0))
-*/
-
 var/list/globalStatusPrototypes = list()
 var/list/globalStatusInstances = list()
 
-//Simple global list of groupname : amount, that tells the system how many effects of a group we can have active at most. See exclusiveGroup. Buffs above the max will not be applied.
+/// Simple global list of groupname : amount, that tells the system how many effects of a group we can have active at most. See exclusiveGroup. Buffs above the max will not be applied.
 var/list/statusGroupLimits = list("Food"=4)
 
 /proc/testStatus()
@@ -107,114 +100,96 @@ var/list/statusGroupLimits = list("Food"=4)
 		maptext = "<text align=center><FONT FACE=Arial COLOR=white SIZE=1>[str]</FONT></text>"
 		return
 
+/* BASE PROCS */
 
-/atom
-	var/list/statusEffects = null //List of status effects.
-	var/list/statusLimits //only instantiated if we actually need it
+/atom/var/list/statusEffects = null //List of status effects.
+/atom/var/list/statusLimits //only instantiated if we actually need it
 
-	proc/updateStatusUi() //Stub. Override for objects that need to update their ui with status information.
-		return
+/// Stub. Override for objects that need to update their ui with status effect information.
+/atom/proc/updateStatusUi()
+	return
 
-	/**
-		* If atom has status with [statusId], change by [duration].
-		*
-		* (The change is relative to the current value, think +=)
-		* If atom does not have status, add it with given [duration].
-		* In both cases [optional] will be passed into either .onAdd or .onChange on the status effect. Useful for custom behaviour.
-		*
-		* * Returns: The changed/added status effect or null on errors.
-		*/
-	proc/changeStatus(statusId, duration, optional)
-		var/datum/statusEffect/globalInstance = null
-		for(var/datum/statusEffect/status in globalStatusPrototypes)
-			if(status.id == statusId)
-				globalInstance = status
-				break
+/**
+	* If atom has status with [statusId], change by [duration].
+	*
+	* (The change is relative to the current value, think +=)
+	* If atom does not have status, add it with given [duration].
+	* In both cases [optional] will be passed into either .onAdd or .onChange on the status effect. Useful for custom behaviour.
+	*
+	* * Returns: The changed/added status effect or null on errors.
+	*/
+/atom/proc/changeStatus(statusId, duration, optional)
+	var/datum/statusEffect/globalInstance = null
+	for(var/datum/statusEffect/status in globalStatusPrototypes)
+		if(status.id == statusId)
+			globalInstance = status
+			break
 
-		if(!globalInstance)
-			throw EXCEPTION("Unknown status type passed: [statusId]")
-			return null
-
-		if(!globalInstance.preCheck(src)) return null
-
-		if(hasStatus(statusId))
-			var/datum/statusEffect/S = hasStatus(statusId)
-			setStatus(statusId, (isnull(S.maxDuration) ? (S.duration + duration):(min(S.duration + duration, S.maxDuration))), optional)
-			return S
-		else
-			if(duration > 0)
-				return setStatus(statusId, (isnull(globalInstance.maxDuration) ? (duration):(min(duration, globalInstance.maxDuration))), optional)
-
+	if(!globalInstance)
+		throw EXCEPTION("Unknown status type passed: [statusId]")
 		return null
 
-	/**
-		* If atom has status with [statusId], set it to [duration].
-		*
-		* (The change is absolute, think =)
-		*
-		* If atom does not have status, add it with given [duration].
-		*
-		* In both cases [optional] will be passed into either .onAdd or .onChange on the status effect. Useful for custom behaviour.
-		*
-		* * Returns: The changed/added status effect or null on errors.
-		*/
-	proc/setStatus(statusId, duration, optional)
-		if(statusEffects == null) statusEffects = list()
+	if(!globalInstance.preCheck(src)) return null
 
-		var/datum/statusEffect/globalInstance = null
-		for(var/datum/statusEffect/status in globalStatusPrototypes)
-			if(status.id == statusId)
-				globalInstance = status
-				break
+	if(hasStatus(statusId))
+		var/datum/statusEffect/S = hasStatus(statusId)
+		setStatus(statusId, (isnull(S.maxDuration) ? (S.duration + duration):(min(S.duration + duration, S.maxDuration))), optional)
+		return S
+	else
+		if(duration > 0)
+			return setStatus(statusId, (isnull(globalInstance.maxDuration) ? (duration):(min(duration, globalInstance.maxDuration))), optional)
 
-		if(globalInstance != null)
-			if(!globalInstance.preCheck(src)) return null
+	return null
 
-			var/groupFull = 0
-			var/groupCount = 0
-			var/list/groupLimits = (length(src.statusLimits) ? src.statusLimits | statusGroupLimits : statusGroupLimits)
-			if(globalInstance.exclusiveGroup != "" && groupLimits.Find(globalInstance.exclusiveGroup))
-				for(var/datum/statusEffect/status in statusEffects)
-					if(status.exclusiveGroup == globalInstance.exclusiveGroup && status.id != statusId)
-						groupCount++
-				if(groupCount >= groupLimits[globalInstance.exclusiveGroup])
-					groupFull = 1
+/**
+	* If atom has status with [statusId], set it to [duration].
+	*
+	* (The change is absolute, think =)
+	*
+	* If atom does not have status, add it with given [duration].
+	*
+	* In both cases [optional] will be passed into either .onAdd or .onChange on the status effect. Useful for custom behaviour.
+	*
+	* * Returns: The changed/added status effect or null on errors.
+	*/
+/atom/proc/setStatus(statusId, duration, optional)
+	if(statusEffects == null) statusEffects = list()
 
-			if(globalInstance.unique) //unique, easy.
-				if(hasStatus(statusId))
-					//Update it
-					if(duration > 0 || isnull(duration))
-						var/datum/statusEffect/localInstance = hasStatus(statusId)
-						if (duration)
-							duration = localInstance.duration + localInstance.modify_change(duration - localInstance.duration)
-						localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
-						localInstance.onChange(optional)
-						src.updateStatusUi()
-						return localInstance
-					else
-						delStatus(statusId)
+	var/datum/statusEffect/globalInstance = null
+	for(var/datum/statusEffect/status in globalStatusPrototypes)
+		if(status.id == statusId)
+			globalInstance = status
+			break
+
+	if(globalInstance != null)
+		if(!globalInstance.preCheck(src)) return null
+
+		var/groupFull = 0
+		var/groupCount = 0
+		var/list/groupLimits = (length(src.statusLimits) ? src.statusLimits | statusGroupLimits : statusGroupLimits)
+		if(globalInstance.exclusiveGroup != "" && groupLimits.Find(globalInstance.exclusiveGroup))
+			for(var/datum/statusEffect/status in statusEffects)
+				if(status.exclusiveGroup == globalInstance.exclusiveGroup && status.id != statusId)
+					groupCount++
+			if(groupCount >= groupLimits[globalInstance.exclusiveGroup])
+				groupFull = 1
+
+		if(globalInstance.unique) //unique, easy.
+			if(hasStatus(statusId))
+				//Update it
+				if(duration > 0 || isnull(duration))
+					var/datum/statusEffect/localInstance = hasStatus(statusId)
+					if (duration)
+						duration = localInstance.duration + localInstance.modify_change(duration - localInstance.duration)
+					localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
+					localInstance.onChange(optional)
+					src.updateStatusUi()
+					return localInstance
 				else
-					if((duration > 0 || isnull(duration)) && !groupFull)
-						//Add it
-						var/datum/statusEffect/localInstance = new globalInstance.type()
-						localInstance.owner = src
-						if (duration)
-							duration = localInstance.duration + localInstance.modify_change(duration - localInstance.duration)
-							if (!duration) //if we ended up reducing it to 0, just clear it without ever applying
-								localInstance.owner = null
-								return null
-						localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
-						localInstance.archivedOwnerInfo = "OwnerName:[src.name] - OwnerType:[src.type] - ContLen:[src.contents.len] - StatusLen:[src.statusEffects.len]"
-						localInstance.onAdd(optional)
-						if(!statusEffects.Find(localInstance)) statusEffects.Add(localInstance)
-						if(!globalStatusInstances.Find(localInstance)) globalStatusInstances.Add(localInstance)
-						src.updateStatusUi()
-						return localInstance
-					else return null
+					delStatus(statusId)
 			else
-				//Not unique, no changing it. Only adding supported.
-				//Add it
 				if((duration > 0 || isnull(duration)) && !groupFull)
+					//Add it
 					var/datum/statusEffect/localInstance = new globalInstance.type()
 					localInstance.owner = src
 					if (duration)
@@ -222,7 +197,6 @@ var/list/statusGroupLimits = list("Food"=4)
 						if (!duration) //if we ended up reducing it to 0, just clear it without ever applying
 							localInstance.owner = null
 							return null
-
 					localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
 					localInstance.archivedOwnerInfo = "OwnerName:[src.name] - OwnerType:[src.type] - ContLen:[src.contents.len] - StatusLen:[src.statusEffects.len]"
 					localInstance.onAdd(optional)
@@ -232,79 +206,104 @@ var/list/statusGroupLimits = list("Food"=4)
 					return localInstance
 				else return null
 		else
-			throw EXCEPTION("Unknown status type passed: [statusId]")
-			return null
+			//Not unique, no changing it. Only adding supported.
+			//Add it
+			if((duration > 0 || isnull(duration)) && !groupFull)
+				var/datum/statusEffect/localInstance = new globalInstance.type()
+				localInstance.owner = src
+				if (duration)
+					duration = localInstance.duration + localInstance.modify_change(duration - localInstance.duration)
+					if (!duration) //if we ended up reducing it to 0, just clear it without ever applying
+						localInstance.owner = null
+						return null
 
-	/**
-		* Returns duration of status with given [statusId], or null if not found.
-		*/
-	proc/getStatusDuration(statusId)
-		.= null
-		if(statusEffects)
-			var/datum/statusEffect/status = 0
+				localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
+				localInstance.archivedOwnerInfo = "OwnerName:[src.name] - OwnerType:[src.type] - ContLen:[src.contents.len] - StatusLen:[src.statusEffects.len]"
+				localInstance.onAdd(optional)
+				if(!statusEffects.Find(localInstance)) statusEffects.Add(localInstance)
+				if(!globalStatusInstances.Find(localInstance)) globalStatusInstances.Add(localInstance)
+				src.updateStatusUi()
+				return localInstance
+			else return null
+	else
+		throw EXCEPTION("Unknown status type passed: [statusId]")
+		return null
+
+/**
+	* Returns duration of status with given [statusId], or null if not found.
+	*/
+/atom/proc/getStatusDuration(statusId)
+	.= null
+	if(statusEffects)
+		var/datum/statusEffect/status = 0
+		for(var/S in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
+			status = S
+			if(status.id == statusId)
+				.= status.duration
+				break
+
+/**
+	* Returns first status with given [statusId] or null if not found.
+	*
+	* [optionalArgs] can be passed in for additional checks that are handled in the effects .onCheck proc.
+	* Useful if you want to check some custom conditions on status effects.
+	*/
+/atom/proc/hasStatus(statusId, optionalArgs = null)
+	if(statusEffects)
+		if (!islist(statusId))
+			var/datum/statusEffect/status
 			for(var/S in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
 				status = S
-				if(status.id == statusId)
-					.= status.duration
-					break
-
-	/**
-		* Returns first status with given [statusId] or null if not found.
-		*
-		* [optionalArgs] can be passed in for additional checks that are handled in the effects .onCheck proc.
-		*
-		* Useful if you want to check some custom conditions on status effects.
-		*/
-	proc/hasStatus(statusId, optionalArgs = null)
-		if(statusEffects)
-			if (!islist(statusId))
-				var/datum/statusEffect/status
-				for(var/S in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
-					status = S
-					if(status.id == statusId && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
-						return status
-			else
-				var/list/idlist = statusId
-				var/datum/statusEffect/status
-				for(var/S in statusEffects)
-					status = S
-					if((status.id in idlist) && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
-						return status
-
-	proc/getStatusList(optionalArgs = null)
-		. = list()
-		if (statusEffects)
+				if(status.id == statusId && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
+					return status
+		else
+			var/list/idlist = statusId
 			var/datum/statusEffect/status
 			for(var/S in statusEffects)
 				status = S
-				if((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs))
-					.[status.id] = status
+				if((status.id in idlist) && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
+					return status
 
-	/**
-		* Deletes the given status from the atom.
-		*
-		* [status] can either be a reference to a status effect or a status effect ID.
-		*/
-	proc/delStatus(var/status)
-		if(statusEffects == null)
-			return null
+/**
+	* Returns a list of all the datum/statusEffect on source atom.
+	*
+	* [optionalArgs] can be passed in for additional checks that are handled in the effects .onCheck proc.
+	* Useful if you want to check some custom conditions on status effects.
+	*/
+/atom/proc/getStatusList(optionalArgs = null)
+	. = list()
+	if (statusEffects)
+		var/datum/statusEffect/status
+		for(var/S in statusEffects)
+			status = S
+			if((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs))
+				.[status.id] = status
 
-		if(istext(status)) //ID was passed in.
-			for(var/datum/statusEffect/statcurr in statusEffects)
-				if(statcurr.id == status)
-					if(globalStatusInstances.Find(statcurr)) globalStatusInstances.Remove(statcurr)
-					statusEffects.Remove(statcurr)
-					statcurr.onRemove()
-		else if(istype(status, /datum/statusEffect)) //Instance was passed in.
-			if(statusEffects.Find(status))
-				if(globalStatusInstances.Find(status)) globalStatusInstances.Remove(status)
-				statusEffects.Remove(status)
-				var/datum/statusEffect/S = status
-				S.onRemove()
-
-		src.updateStatusUi()
-
+/**
+	* Deletes the given status from the atom.
+	*
+	* [status] can either be a reference to a status effect or a status effect ID.
+	*/
+/atom/proc/delStatus(var/status)
+	if(statusEffects == null)
 		return null
+
+	if(istext(status)) //ID was passed in.
+		for(var/datum/statusEffect/statcurr in statusEffects)
+			if(statcurr.id == status)
+				if(globalStatusInstances.Find(statcurr)) globalStatusInstances.Remove(statcurr)
+				statusEffects.Remove(statcurr)
+				statcurr.onRemove()
+	else if(istype(status, /datum/statusEffect)) //Instance was passed in.
+		if(statusEffects.Find(status))
+			if(globalStatusInstances.Find(status)) globalStatusInstances.Remove(status)
+			statusEffects.Remove(status)
+			var/datum/statusEffect/S = status
+			S.onRemove()
+
+	src.updateStatusUi()
+
+	return null
 
 /// Our datum that keeps track of an individual status effect.
 /datum/statusEffect
