@@ -51,4 +51,4 @@ They are intended to apply special effects to mobs based on the eaten food. Dura
 
 There exists a special wrapper to handle these, [/mob/living/proc/add_food_bonus].
 
-You can only have 4 food status effects active at once, determined by [exclusiveGroup = "Food"][/datum/statusEffect/exclusiveGroup] and [statusGroupLimits][var/global/list/statusGroupLimits].
+You can only have 4 food status effects active at once, determined by [exclusiveGroup = "Food"][/datum/statusEffect/exclusiveGroup] and [statusGroupLimits][/var/statusGroupLimits].
