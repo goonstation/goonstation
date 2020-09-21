@@ -116,11 +116,13 @@ var/list/statusGroupLimits = list("Food"=4)
 		return
 
 	/**
-		* If atom has status with [statusId], change by [duration]. (The change is relative to the current value, think +=)
+		* If atom has status with [statusId], change by [duration].
+		*
+		* (The change is relative to the current value, think +=)
 		* If atom does not have status, add it with given [duration].
 		* In both cases [optional] will be passed into either .onAdd or .onChange on the status effect. Useful for custom behaviour.
 		*
-		* Returns: The changed/added status effect or null on errors.
+		* * Returns: The changed/added status effect or null on errors.
 		*/
 	proc/changeStatus(statusId, duration, optional)
 		var/datum/statusEffect/globalInstance = null
@@ -146,11 +148,15 @@ var/list/statusGroupLimits = list("Food"=4)
 		return null
 
 	/**
-		* If atom has status with [statusId], set it to [duration]. (The change is absolute, think =)
+		* If atom has status with [statusId], set it to [duration].
+		*
+		* (The change is absolute, think =)
+		*
 		* If atom does not have status, add it with given [duration].
+		*
 		* In both cases [optional] will be passed into either .onAdd or .onChange on the status effect. Useful for custom behaviour.
 		*
-		* Returns: The changed/added status effect or null on errors.
+		* * Returns: The changed/added status effect or null on errors.
 		*/
 	proc/setStatus(statusId, duration, optional)
 		if(statusEffects == null) statusEffects = list()
@@ -246,6 +252,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		* Returns first status with given [statusId] or null if not found.
 		*
 		* [optionalArgs] can be passed in for additional checks that are handled in the effects .onCheck proc.
+		*
 		* Useful if you want to check some custom conditions on status effects.
 		*/
 	proc/hasStatus(statusId, optionalArgs = null)
@@ -275,6 +282,7 @@ var/list/statusGroupLimits = list("Food"=4)
 
 	/**
 		* Deletes the given status from the atom.
+		*
 		* [status] can either be a reference to a status effect or a status effect ID.
 		*/
 	proc/delStatus(var/status)
@@ -318,7 +326,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	/**
 		* Used to run a custom check before adding status to an object. For when you want something to be flat out immune or something.
 		*
-		* return = 1 allow, 0 = do not allow
+		* * return = 1 allow, 0 = do not allow
 		*/
 	proc/preCheck(var/atom/A)
 		return 1
@@ -329,7 +337,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	/**
 		* Called when the status is added to an object. owner is already set at this point.
 		*
-		* optional optional - arg from setStatus (passed in)
+		* optional [optional] - arg from setStatus (passed in)
 		*/
 	proc/onAdd(var/optional=null)
 		if (movement_modifier && ismob(owner))
@@ -349,7 +357,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	/**
 		* Called every tick by the status controller.
 		*
-		* required timePassed - the actual time since the last update call.
+		* required [timePassed] - the actual time since the last update call.
 		*/
 	proc/onUpdate(var/timePassed)
 		return
@@ -357,7 +365,7 @@ var/list/statusGroupLimits = list("Food"=4)
 	/**
 		* Called when the status is changed using setStatus. Called after duration is updated etc.
 		*
-		* optional optional - arg from setStatus (passed in)
+		* optional [optional] - arg from setStatus (passed in)
 		*/
 	proc/onChange(var/optional=null)
 		return
