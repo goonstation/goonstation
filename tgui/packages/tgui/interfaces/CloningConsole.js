@@ -282,9 +282,9 @@ const StatusSection = (props, context) => {
         </LabeledList.Item>
       </LabeledList>
       <Flex>
-        <Flex.Item mt={3.5}>
+        <Flex.Item mt={3.5} width={scannerGone ? 16 : 15}>
           <Button
-            width={7}
+            width={scannerGone ? 8 : 7}
             icon="dna"
             align={"center"}
             color={(occupantScanned ? "average" : (scannerGone ? "bad" : "good"))}
@@ -302,15 +302,20 @@ const StatusSection = (props, context) => {
             {scannerLocked ? "Locked" : "Unlocked"}
           </Button>
         </Flex.Item>
-        <Flex.Item width={25} ml={5}>
+        <Flex.Item width={25} mt={2} height={1} ml={5}>
           {message.text && (
             <TypedNoticeBox
-              mt={2}
               type={message.status}
               textColor="white"
               textAlign="center"
-              width={25}>
-              {message.text}
+              width={25.45}
+              height={3.17}>
+              <Box inline style={{
+                'textAlignVertical': 'center',
+                'textAlign': 'center',
+              }}>
+                {message.text}
+              </Box>
             </TypedNoticeBox>
           )}
         </Flex.Item>
