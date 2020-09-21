@@ -13,7 +13,7 @@ Examples of effects:
 
 Most status effects are intended to be applied on mobs, but they can be applied to any atom.
 
-Status effects do not need to have their behaivor defined within them, they can also be checked externally with `hasStatus` or similar procs.
+Status effects do not need to have their behaivor defined within them, they can also be checked externally with [hasStatus][/atom/proc/hasStatus] or similar procs.
 
 Example of a basic status effect:
 
@@ -42,7 +42,7 @@ Non-unique status effects (effects that can be applied several times to the same
 
 Status effect procs have comments in their base definition below. Check there if you want to know more about what they do.
 
-Status effects with a duration of INFINITE_STATUS (null) last indefinitely. (Shows as a duration of * in the UI) ((Keep in mind that null is distinct from 0))
+Status effects with a duration of [INFINITE_STATUS] (null) last indefinitely. (Shows as a duration of * in the UI) ((Keep in mind that null is distinct from 0))
 
 ## Food Status Effects
 
@@ -51,4 +51,4 @@ They are intended to apply special effects to mobs based on the eaten food. Dura
 
 There exists a special wrapper to handle these, [/mob/living/proc/add_food_bonus].
 
-You can only have 4 food status effects active at once, determined by [exclusiveGroup = "Food"][/datum/statusEffect/exclusiveGroup] and [statusGroupLimits].
+You can only have 4 food status effects active at once, determined by [exclusiveGroup = "Food"][/datum/statusEffect/exclusiveGroup] and [statusGroupLimits][var/global/list/statusGroupLimits].

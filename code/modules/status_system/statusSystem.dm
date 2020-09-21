@@ -3,7 +3,7 @@ var/list/globalStatusPrototypes = list()
 var/list/globalStatusInstances = list()
 
 /// Simple global list of groupname : amount, that tells the system how many effects of a group we can have active at most. See exclusiveGroup. Buffs above the max will not be applied.
-var/list/statusGroupLimits = list("Food"=4)
+var/global/list/statusGroupLimits = list("Food"=4)
 
 /proc/testStatus()
 	var/inp = input(usr,"Which status?","Test status","airrit") as text
@@ -307,19 +307,32 @@ var/list/statusGroupLimits = list("Food"=4)
 
 /// Our datum that keeps track of an individual status effect.
 /datum/statusEffect
-	var/id = ""							/// Unique ID of the status effect
-	var/name = ""						/// Tooltip name to display
-	var/icon_state = ""			/// Icon state to display.
-	var/desc = ""						/// Tooltip desc
-	var/duration = 0 				/// In deciseconds (tenths of a second, same as ticks just sane). A duration of NULL is infinite. (This is distinct from 0)
-	var/atom/owner = null 	/// Owner of the status effect
+
+	/// Unique ID of the status effect
+	var/id = ""
+	/// Tooltip name to display
+	var/name = ""
+	/// Icon state to display.
+	var/icon_state = ""
+	/// Tooltip desc
+	var/desc = ""
+	/// In deciseconds (tenths of a second, same as ticks just sane). A duration of NULL is infinite. (This is distinct from 0)
+	var/duration = 0
+	/// Owner of the status effect
+	var/atom/owner = null
 	var/archivedOwnerInfo = ""
-	var/unique = 1 					/// If true, this status effect can only have one instance on any given object.
-	var/visible = 1 				/// Is this visible in the status effect bar?
-	var/exclusiveGroup = "" /// optional name of a group of buffs. players can only have a certain number of buffs of a given group - any new applications fail. useful for food buffs etc.
-	var/maxDuration = null	/// If non-null, duration of the effect will be clamped to be max. this amount.
-	var/move_triggered = 0 	/// has an on-move effect
-	var/datum/movement_modifier/movement_modifier /// Has a movement-modifying effect
+	/// If true, this status effect can only have one instance on any given object.
+	var/unique = 1
+	/// Is this visible in the status effect bar?
+	var/visible = 1
+	/// optional name of a group of buffs. players can only have a certain number of buffs of a given group - any new applications fail. useful for food buffs etc.
+	var/exclusiveGroup = ""
+	/// If non-null, duration of the effect will be clamped to be max. this amount.
+	var/maxDuration = null
+	/// has an on-move effect
+	var/move_triggered = 0
+	/// Has a movement-modifying effect
+	var/datum/movement_modifier/movement_modifier
 
 
 	/**
