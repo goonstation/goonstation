@@ -1,4 +1,69 @@
 
+(t)sat sep 19 20
+(u)ThePotato97
+(p)1986
+(e)🆕📄|feature, tgui
+(+)Converted AI airlock controls to tgui
+(u)zjdtmkhzt
+(p)2219
+(e)⚖|balance
+(+)The Detectives BloodTrak now also works while moving but will shut down after a while, depending on how fresh the used blood was.
+(u)kyle
+(+)Lowered standard kudzu's to_spread cap somewhat. Trying to make placing the kudzu a more strategic selection than just placing it anywhere.
+(+)Health analyzers with a reagent scan upgrade now show if a subject is OD-ing on a reagent in their system. (note. Not all dangerous or deadly chems have OD thresholds so this doens't necessarily indicate poisons)
+(t)thu sep 17 20
+(u)adharainspace
+(p)2201
+(e)🆕|feature
+(+)your playtime is now tracked (use the .stats command in our <a target="_blank" href="https://discord.com/invite/zd8t6pY">Discord server</a> to see your playtime)
+(t)mon sep 14 20
+(u)Zamujasa
+(+)PDAs have an option to change the backlight color. You no longer have to use that wonky olive green color.
+(+)PDA window is now resizable and respects the "Popup Font Size" option in your preferences.
+(u)kyle
+(*)Rounds no longer end when the sol nerds trigger a disaster round. Play through to the end of the round before the disaster starts.
+(+)Undo last multitool cooldown change. Now it just checks if it is over a blob tile or a med kudzu tile and doesn't make a spark.
+(t)sun sep 13 20
+(u)kyle
+(+)Multitool pulse spark special attack now has a 3 second cooldown. Should make it slightly less oppressive for blobs and kudzu.
+(u)Comradef191
+(p)2166
+(e)🗺🎨|mapping, sprites
+(*)Overhauled Mushroom Stations Armoury, AI Satellite, Kitchen & Disposals system.
+(+)Mushroom Station now has a large Prototype Engine to the North-East!
+(+)Mushroom Station now has its Second Reset Board in the Computer Core, rather then Tech Storage.
+(u)RichardGere
+(p)2003
+(e)🆕📄|feature, tgui
+(+)Door hacking UI has been converted to TGUI.
+(u)warc
+(*)horizon fixes: you can sell small items thu the ejection chute now - also i guess i forgot to put a still in the bar?????????
+(t)sat sep 12 20
+(u)Medoublej
+(p)2153
+(e)⚖🐛|balance, bug
+(+)Vampire's chiropteran screech MK2 now silences radios properly and no longer emags robots.
+(u)Luxizzle
+(p)2146
+(e)|
+(+)Jailbird no longer overwrites personal security note.
+(+)Jailbird now informs you of what crimes you've committed.
+(u)monochromatism
+(p)2108
+(e)🆕|feature
+(+)Added the "atheist" trait. Disables faith healing and has interesting flavor text about prayer, but might have an upside...
+(u)Flourish
+(p)2110
+(e)🆕|feature
+(*)If you flip with a grab on help intent, your grabee will flip with you. And if they also have a grab and are on help intent, their grabee will also flip. And so on.
+(u)eckff
+(p)2131
+(e)🎨|sprites
+(+)Space tiles now more darker than before! Like real space!
+(u)Enfaeutchie
+(p)2150
+(e)⚖|balance
+(*)On the RP servers, changelings have had their neurotoxin sting replaced with a non-lethal capulettium sting which will make their victims appear to drop dead.
 (t)fri sep 11 20
 (u)makkipakki
 (p)2122
@@ -13,6 +78,9 @@
 (p)2068
 (e)|
 (+)Port-a-Gene can now be entered by dragging and can also redeem filled injectors!
+(u)UrsulaMejor
+(e)🐛|bug
+(+)You can now change your preferred maps to maps that aren't currently pickable
 (t)thu sep 10 20
 (u)Gannets
 (p)2129

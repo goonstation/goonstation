@@ -3053,6 +3053,9 @@ Returns:
 			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 			qdel(src)
 
+	ex_act()
+		return
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /* var/list/raisinlist = new/list()

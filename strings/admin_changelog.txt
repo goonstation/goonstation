@@ -1,4 +1,7 @@
 
+(t)fri sep 19 20
+(u)kyle
+(*)New admin verb Retreat-To-Office. Use it to go directly to your own admin office. It determins which office to go to by ckey, I might be missing one or two people so leme know if I forgot you.
 (t)wed sep 09 20
 (u)pali
 (*)Debug Overlays now has an alias Info Overlays available in the Server tab

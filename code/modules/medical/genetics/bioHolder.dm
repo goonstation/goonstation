@@ -16,14 +16,15 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 /datum/appearanceHolder
 	//Holds all the appearance information.
+
 	//_carry holds our "actual" color, in case it changes and we want the old one back
 	var/mob_color_flags = (HAS_HAIR_COLORED_HAIR)
 
-	var/customization_first_color_carry = "#101010"
+	var/customization_first_color_carry = "#101010" //Holds someone's original colors if they need to be changed temporarily
 	var/customization_first_color = "#101010"
 	var/customization_first = "Trimmed"
 
-	var/customization_second_color_carry = "#101010"
+	var/customization_second_color_carry = "#101010" // This way, they can return to their orignal colors
 	var/customization_second_color = "#101010"
 	var/customization_second = "None"
 
@@ -33,6 +34,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/e_color = "#101010"
 
+	var/s_tone_carry = "#FFCC99"
 	var/s_tone = "#FFCC99"
 	// Standard tone reference:
 	// FAD7D0 - Albino
@@ -106,6 +108,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		e_color = toCopy.e_color
 
 		s_tone = toCopy.s_tone
+		s_tone_carry = toCopy.s_tone_carry
 
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color

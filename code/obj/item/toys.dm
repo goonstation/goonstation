@@ -895,8 +895,8 @@ var/list/figure_patreon_rarity = list(\
 	New()
 		..()
 		//Products
-		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=500)
+		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
 		src.icon_state = "machine[rand(1,6)]"
 		src.capsule_image = image(src.icon, "m_caps26")
 		src.UpdateOverlays(src.capsule_image, "capsules")

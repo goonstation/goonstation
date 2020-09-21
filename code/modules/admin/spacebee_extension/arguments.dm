@@ -22,6 +22,11 @@
 			. = replacetext(., "\\\"", "\"")
 			. = replacetext(., "✌🤣😂😭", "\\")
 
+/// a quoted or unquoted string argument that gets `ckey` applied to it
+/datum/command_argument/string/ckey
+	process_match()
+		return ckey(..())
+
 /// a string argument that doesn't have to exist (only supported as the last argument really)
 /datum/command_argument/string/optional
 	regex = new(@{"(?:([^ \n\t"]+)|"((?:[^"\\]|\\.)*)")?"})

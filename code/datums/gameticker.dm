@@ -44,10 +44,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	pregame_timeleft = PREGAME_LOBBY_TICKS
 	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B><br>Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds.")
-	#if ASS_JAM
-	vote_manager.active_vote = new/datum/vote_new/mode("everyone-is-a-traitor")
-	boutput(world, "<B>ASS JAM: Everyone-Is-A-Traitor Mode vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
-	#endif
 
 	// let's try doing this here, yoloooo
 	// zamu 20200823: idk if this is even getting called...
@@ -61,6 +57,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for(var/mob/new_player/C in world)
 		C.ready = 1
 	pregame_timeleft = 1
+	#endif
+
+	#if ASS_JAM
+	SPAWN_DBG(10 SECONDS) // wait for people to login etc.
+		vote_manager.active_vote = new/datum/vote_new/mode("everyone-is-a-traitor")
+		boutput(world, "<B>ASS JAM: Everyone-Is-A-Traitor Mode vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
 	#endif
 
 	var/did_mapvote = 0
@@ -764,7 +766,19 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] finished spacebux updates")
 
-
+	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
+	for(var/datum/player/P in by_type[/datum/player])
+		if (!P.ckey)
+			continue
+		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
+		if (!P.current_playtime)
+			continue
+		playtimes["ckeys\[[P.ckey]]"] = round((P.current_playtime / (1 SECOND))) //rounds 1/10th seconds to seconds
+	try
+		apiHandler.queryAPI("playtime/record-multiple", playtimes)
+	catch(var/exception/e)
+		logTheThing("debug", null, null, "playtime was unable to be logged because of: [e.name]")
+		logTheThing("diary", null, null, "playtime was unable to be logged because of: [e.name]", "debug")
 	return 1
 
 /////

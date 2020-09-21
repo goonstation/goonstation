@@ -1780,6 +1780,7 @@
 		src.update_clothing()
 	else if (W == src.handcuffs)
 		src.handcuffs = null
+		src.delStatus("handcuffed")
 		src.update_clothing()
 
 	if (W && W == src.r_hand)
@@ -3147,11 +3148,11 @@
 
 					if (priority)
 						if (priority > 0)
-							priority = NewLoc.step_material
+							priority = "[NewLoc.step_material]"
 						else if (priority < 0)
 							priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
 
-						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
+						playsound(NewLoc, priority, src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
 	//STEP SOUND HANDLING OVER
 

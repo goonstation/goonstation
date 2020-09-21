@@ -173,6 +173,44 @@
 		return round(E.cell.charge * E.current_projectile.cost)
 	else return G.canshoot() * INFINITY //idk, just let it happen
 
+/obj/item/gun/kinetic/pistol/gyrojet //awaiting sprites!
+	name = "gyrojet pistol"
+	desc = "A semi-automatic pistol that fires rocket-propelled bullets"
+	caliber = 0.512
+	max_ammo_capacity = 6
+
+	New()
+		. = ..()
+		ammo = new/obj/item/ammo/bullets/gyrojet
+		current_projectile = new/datum/projectile/bullet/gyrojet
+
+obj/item/ammo/bullets/gyrojet
+	sname = "13mm Gyrojet"
+	name = "gyrojet magazine"
+	icon_state = "pistol_magazine"
+	amount_left = 6.0
+	max_amount = 6.0
+	ammo_type = new/datum/projectile/bullet/gyrojet
+	caliber = 0.512
+
+/datum/projectile/bullet/gyrojet
+	projectile_speed = 5
+	max_range = 500
+	dissipation_rate = 0
+	power = 10
+	precalculated = 0
+	caliber = 0.512
+	shot_volume = 0.1
+
+	on_launch(obj/projectile/O)
+		O.internal_speed = projectile_speed
+
+	tick(obj/projectile/O)
+		O.internal_speed = min(O.internal_speed * 1.15, 56)
+
+	get_power(obj/projectile/P, atom/A)
+		return 10 + P.internal_speed
+
 //magical crap
 /obj/item/enchantment_scroll
 	name = "Scroll of Enchantment"
@@ -198,14 +236,12 @@
 					incr = (currentench <= 2) ? rand(1, 3) : 1
 					I.setProperty("enchantarmor", currentench+incr)
 					success = 1
-			else if(I.force >= 5)
+			else
 				currentench = I.getProperty("enchantweapon")
 				if(currentench <= 2 || !rand(0, currentench))
 					incr = (currentench <= 2) ? rand(1, 3) : 1
 					I.setProperty("enchantweapon", currentench+incr)
 					success = 1
-			else
-				return ..()
 			if(success)
 				var/turf/T = get_turf(target)
 				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
@@ -227,11 +263,9 @@
 	if(istype(src, /obj/item/clothing))
 		currentench = src.getProperty("enchantarmor")
 		src.setProperty("enchantarmor", currentench+incr)
-	else if(src.force >= 5)
+	else
 		currentench = src.getProperty("enchantweapon")
 		src.setProperty("enchantweapon", currentench+incr)
-	else
-		return
 	src.remove_prefixes("[currentench>0?"+":""][currentench]")
 	if(currentench+incr)
 		src.name_prefix("[(currentench+incr)>0?"+":""][currentench+incr]")
@@ -240,3 +274,91 @@
 		src.rarity = initial(src.rarity)
 	src.tooltip_rebuild = 1
 	src.UpdateName()
+
+///Office stuff
+//Suggestion box
+/obj/suggestion_box
+	name = "suggestion box"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "voting_box"
+	density = 1
+	flags = FPRINT
+	anchored = 1.0
+	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
+	var/taken_suggestion = 0
+	var/list/turf/floors = null
+
+	New()
+		. = ..()
+		floors = list()
+		for(var/turf/T in orange(1, src))
+			if(!T.density)
+				floors += T
+		if(!floors.len)	//fall back on own turf
+			floors += get_turf(src)
+
+	attackby(obj/item/I, mob/user)
+		if(istype(I, /obj/item/paper))
+			var/obj/item/paper/P = I
+			if(P.info && !taken_suggestion)
+				message_admins("[user] ([user?.ckey]) has made a suggestion in [src]:<br>[P.name]<br><br>[copytext(P.info,1,MAX_MESSAGE_LEN)]")
+				var/ircmsg[] = new()
+				ircmsg["msg"] = "[user] ([user?.ckey]) has made a suggestion in [src]:\n**[P.name]**\n[strip_html_tags(P.info)]"
+				ircbot.export("admin", ircmsg)
+				taken_suggestion = 1
+			user.u_equip(P)
+			qdel(P)
+			playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
+			var/turf/T = pick(floors)
+			if(T)
+				new /obj/decal/cleanable/paper(T)
+		return ..()
+
+//lily's office
+obj/item/gun/reagent/syringe/lovefilled
+	ammo_reagents = list("love")
+	New()
+		. = ..()
+		src.reagents?.maximum_volume = 750
+		src.reagents.add_reagent("love", src.reagents.maximum_volume)
+
+/obj/item/storage/desk_drawer/lily/
+	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
+	/obj/item/reagent_containers/food/snacks/cake,\
+	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
+	/obj/item/reagent_containers/food/snacks/cake/cream,\
+	/obj/item/reagent_containers/food/snacks/cake/cream,\
+	/obj/item/reagent_containers/food/snacks/cake/chocolate,\
+	/obj/item/reagent_containers/food/snacks/cake,\
+)
+
+/obj/table/wood/auto/desk/lily
+	New()
+		..()
+		var/obj/item/storage/desk_drawer/lily/L = new(src)
+		src.desk_drawer = L
+
+/obj/machinery/door/unpowered/wood/lily
+
+/obj/machinery/door/unpowered/wood/lily/open()
+	if(src.locked) return
+	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1)
+	. = ..()
+
+/obj/machinery/door/unpowered/wood/lily/close()
+	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1)
+	. = ..()
+
+
+/obj/trigger/lovefill
+	name = "A lovely spot"
+	desc = "For lovely people"
+	var/list/loved = list()
+
+	on_trigger(var/atom/movable/triggerer)
+		var/mob/living/M = triggerer
+		if(!istype(M) || (M in loved))
+			return
+		M.reagents?.add_reagent("love", 20)
+		boutput(M, "<span class='notice'>You feel loved</span>")
+		loved += M

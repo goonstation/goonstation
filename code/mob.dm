@@ -477,10 +477,6 @@
 	src.need_update_item_abilities = 1
 	src.antagonist_overlay_refresh(1, 0)
 
-#if ASS_JAM
-	ass_day_popup(src)
-#endif
-
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
@@ -1278,6 +1274,7 @@
 
 	if (W == src.handcuffs)
 		src.handcuffs = null
+		src.delStatus("handcuffed")
 	else if (W == src.back)
 		src.back = null
 	else if (W == src.wear_mask)
