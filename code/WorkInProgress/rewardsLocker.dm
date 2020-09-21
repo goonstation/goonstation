@@ -753,16 +753,20 @@
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
 			var/obj/item/gun/kinetic/gunmod
-			if (H.l_hand && (H.l_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle)))
+			if (istype(H.l_hand, gunmod))
 				gunmod = H.l_hand
-			else if (H.r_hand && (H.r_hand.type in list(/obj/item/gun/kinetic/detectiverevolver, /obj/item/gun/kinetic/riotgun, /obj/item/gun/kinetic/ak47, /obj/item/gun/kinetic/hunting_rifle)))
+			else if (istype(H.r_hand, gunmod))
 				gunmod = H.r_hand
 			if (!gunmod)
 				boutput(activator, "<span class='alert'>You can't be the man with the golden gun if you ain't got a got dang gun!</span>")
 				return
+			if(!gunmod.gildable)
+				boutput(activator, "<span class='alert'>This gun doesn't seem to be gildable!</span>")
+				return
 
 			gunmod.name = "Golden [gunmod.name]"
-			gunmod.icon_state = "golden_[gunmod.icon_state]"
+			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
+			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
 			return 1
 
 
