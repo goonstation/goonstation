@@ -1140,8 +1140,8 @@
 			if (!istype(src.in_glass, /obj/item/cocktail_stuff/drink_umbrella) || (H.bioHolder && (H.bioHolder.HasEffect("clumsy") || H.bioHolder.HasEffect("mattereater"))))
 				choices += "eat [src.in_glass]"
 		if (src.wedge)
-			choices += "remove [src.wedge] wedge"
-			choices += "eat [src.wedge] wedge"
+			choices += "remove [src.wedge]"
+			choices += "eat [src.wedge]"
 		if (!choices.len)
 			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
@@ -1171,7 +1171,7 @@
 			remove_thing = src.in_glass
 			src.in_glass = null
 
-		else if (selection == "remove [src.wedge] wedge")
+		else if (selection == "remove [src.wedge]")
 			remove_thing = src.wedge
 			src.wedge = null
 
@@ -1179,7 +1179,7 @@
 			eat_thing = src.in_glass
 			src.in_glass = null
 
-		else if (selection == "eat [src.wedge] wedge")
+		else if (selection == "eat [src.wedge]")
 			eat_thing = src.wedge
 			src.wedge = null
 
