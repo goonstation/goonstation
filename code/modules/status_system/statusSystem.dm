@@ -1,27 +1,5 @@
+
 /*
--- atom.changeStatus(statusId, duration, optional)
-If atom has status with [statusId], change by [duration]. (The change is relative to the current value, think +=)
-If atom does not have status, add it with given [duration].
-In both cases [optional] will be passed into either .onAdd or .onChange on the status effect. Useful for custom behaviour.
-Returns: The changed/added status effect or null on errors.
-
--- atom.setStatus(statusId, duration, optional)
-If atom has status with [statusId], set it to [duration]. (The change is absolute, think =)
-If atom does not have status, add it with given [duration].
-In both cases [optional] will be passed into either .onAdd or .onChange on the status effect. Useful for custom behaviour.
-Returns: The changed/added status effect or null on errors.
-
--- atom.getStatusDuration(statusId)
-Returns duration of status with given [statusId], or null if not found.
-
--- atom.hasStatus(statusId, optionalArgs = null)
-Returns first status with given [statusId] or null if not found.
-[optionalArgs] can be passed in for additional checks that are handled in the effects .onCheck proc. Useful if you want to check some custom conditions on status effects
-
--- atom.delStatus(var/status)
-Deletes the given status from the atom.
-[status] can either be a reference to a status effect or a status effect ID.
-
 Additional notes:
 Non-unique status effects (effects that can be applied several times to the same atom) can not be changed by normal means after they are added. Keep a reference if you need to change them.
 Status effect procs have comments in their base definition below. Check there if you want to know more about what they do.
@@ -137,6 +115,13 @@ var/list/statusGroupLimits = list("Food"=4)
 	proc/updateStatusUi() //Stub. Override for objects that need to update their ui with status information.
 		return
 
+	/**
+		* If atom has status with [statusId], change by [duration]. (The change is relative to the current value, think +=)
+		* If atom does not have status, add it with given [duration].
+		* In both cases [optional] will be passed into either .onAdd or .onChange on the status effect. Useful for custom behaviour.
+		*
+		* Returns: The changed/added status effect or null on errors.
+		*/
 	proc/changeStatus(statusId, duration, optional)
 		var/datum/statusEffect/globalInstance = null
 		for(var/datum/statusEffect/status in globalStatusPrototypes)
@@ -160,6 +145,13 @@ var/list/statusGroupLimits = list("Food"=4)
 
 		return null
 
+	/**
+		* If atom has status with [statusId], set it to [duration]. (The change is absolute, think =)
+		* If atom does not have status, add it with given [duration].
+		* In both cases [optional] will be passed into either .onAdd or .onChange on the status effect. Useful for custom behaviour.
+		*
+		* Returns: The changed/added status effect or null on errors.
+		*/
 	proc/setStatus(statusId, duration, optional)
 		if(statusEffects == null) statusEffects = list()
 
@@ -237,6 +229,9 @@ var/list/statusGroupLimits = list("Food"=4)
 			throw EXCEPTION("Unknown status type passed: [statusId]")
 			return null
 
+	/**
+		* Returns duration of status with given [statusId], or null if not found.
+		*/
 	proc/getStatusDuration(statusId)
 		.= null
 		if(statusEffects)
@@ -247,6 +242,12 @@ var/list/statusGroupLimits = list("Food"=4)
 					.= status.duration
 					break
 
+	/**
+		* Returns first status with given [statusId] or null if not found.
+		*
+		* [optionalArgs] can be passed in for additional checks that are handled in the effects .onCheck proc.
+		* Useful if you want to check some custom conditions on status effects.
+		*/
 	proc/hasStatus(statusId, optionalArgs = null)
 		if(statusEffects)
 			if (!islist(statusId))
@@ -272,6 +273,10 @@ var/list/statusGroupLimits = list("Food"=4)
 				if((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs))
 					.[status.id] = status
 
+	/**
+		* Deletes the given status from the atom.
+		* [status] can either be a reference to a status effect or a status effect ID.
+		*/
 	proc/delStatus(var/status)
 		if(statusEffects == null)
 			return null
@@ -293,6 +298,7 @@ var/list/statusGroupLimits = list("Food"=4)
 
 		return null
 
+/// Our datum that keeps track of an individual status effect.
 /datum/statusEffect
 	var/id = ""							// Unique ID of the status effect
 	var/name = ""
