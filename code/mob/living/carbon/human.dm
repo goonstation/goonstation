@@ -1834,6 +1834,11 @@
 		hud.set_visible(hud.twohandr, 1)
 		hud.remove_item(I)
 		hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
+		var/regex/offset = new(@"^icons/obj/(\d+)x\d+.dmi$")
+		if(offset.Find("[I.icon]"))
+			var/regex/off2 = new(@"^(CENTER[+-]\d:)(\d+)(.*)$")
+			off2.Find("[I.screen_loc]")
+			I.screen_loc = "[off2.group[1]][text2num(off2.group[2])-(text2num(offset.group[1])-32)/2][off2.group[3]]"
 		src.l_hand = I
 		src.r_hand = I
 	else //Object is 1-hand, remove ui elements, set item to proper location.
@@ -1880,6 +1885,11 @@
 		hud.set_visible(hud.rhand, 0)
 		hud.set_visible(hud.twohandl, 1)
 		hud.set_visible(hud.twohandr, 1)
+		var/regex/offset = new(@"^icons/obj/(\d+)x\d+.dmi$")
+		if(offset.Find("[I.icon]"))
+			var/regex/off2 = new(@"^(CENTER[+-]\d:)(\d+)(.*)$")
+			off2.Find("[I.screen_loc]")
+			I.screen_loc = "[off2.group[1]][text2num(off2.group[2])-(text2num(offset.group[1])-32)/2][off2.group[3]]"
 		return 1
 	else
 		if (isnull(hand))
