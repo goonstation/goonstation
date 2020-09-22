@@ -980,7 +980,7 @@
 	name = "Tesla Coil"
 	desc = ""
 	icon_state = "comp_zap"
-	cooldown_time = 3 SECONDS
+	cooldown_time = 1 SECOND
 	cabinet_banned = true
 	one_per_tile = true
 	var/zap_power = 2
@@ -998,7 +998,7 @@
 		
 	proc/setPower(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Power(1 - 3):","Power setting", zap_power) as num
-		if(!in_range(src, user) || user.stat)
+		if(!in_range(src, user) || !isalive(user))
 			return 0
 		inp = clamp(round(inp), 1, 3)
 		zap_power = inp
