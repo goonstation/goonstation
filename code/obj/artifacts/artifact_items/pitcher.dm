@@ -181,9 +181,9 @@
 			if(2.0)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-		 	if(3.0)
-		 		src.ArtifactStimulus("force", 25)
-		 		src.ArtifactStimulus("heat", 380)
+			if(3.0)
+				src.ArtifactStimulus("force", 25)
+				src.ArtifactStimulus("heat", 380)
 		return
 
 	//Bastard child of artifact destuction behavior and drinkingglass smash behavior
