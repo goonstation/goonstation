@@ -1,7 +1,7 @@
-//The neon lining object, used for placing neon lining.
 
 #define MAXLINING 40
 #define STARTLINING 1
+/// The neon lining object, used for placing neon lining.
 /obj/item/neon_lining
 	name = "neon lining"
 	var/base_name = "neon lining"

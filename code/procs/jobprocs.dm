@@ -645,7 +645,12 @@
 		var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 		S.setup(src,wagesystem.jobs[JOB.name] * cashModifier)
 
-		src.equip_if_possible(S, slot_r_store)
+		if (isnull(src.get_slot(slot_r_store)))
+			src.equip_if_possible(S, slot_r_store)
+		else if (isnull(src.get_slot(slot_l_store)))
+			src.equip_if_possible(S, slot_l_store)
+		else
+			src.equip_if_possible(S, slot_in_backpack)
 	else
 		var/shitstore = rand(1,3)
 		switch(shitstore)

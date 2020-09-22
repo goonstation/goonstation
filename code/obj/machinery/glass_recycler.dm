@@ -19,6 +19,10 @@
 		if(istype(W.loc, /obj/item/storage))
 			var/obj/item/storage/storage = W.loc
 			storage.hud.remove_object(W)
+		if(W.cant_drop)
+			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
+			return
+
 		if (istype(W, /obj/item/reagent_containers/glass/beaker))
 			if (istype(W, /obj/item/reagent_containers/glass/beaker/large))
 				glass_amt += 2

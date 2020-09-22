@@ -1,4 +1,4 @@
-#define KUDZU_TO_SPREAD_INITIAL 50
+#define KUDZU_TO_SPREAD_INITIAL 40
 /obj/item/kudzuseed//TODO: Move all this to respective files everything works right.
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
