@@ -19,142 +19,116 @@
 		gulp_size = rand(2, 10) * 5 //How fast will you drink from this? Who knows!
 		var/capacity = rand(5,20)
 		capacity *= 100
-		var/usedCapacity = 0
 		src.reagents.maximum_volume = capacity
 		//Fun stuff
 		if (prob(7))
 			reagents.add_reagent("dbreath", 30)
-			usedCapacity += 30
 		if (prob(7))
 			reagents.add_reagent("freeze", 30)
-			usedCapacity += 30
 		if (prob(3))
 			reagents.add_reagent("stimulants", 20)
-			usedCapacity += 20
+		if(prob(15))
+			reagents.add_reagent("hairgrownium", 30)
 		if (prob(10))
-			reagents.add_reagent("super_hairgrownium", 25)
-			usedCapacity += 25
+			reagents.add_reagent("super_hairgrownium", 20)
+		if(prob(7))
+			reagents.add_reagent("reversium", 15)
 		if (prob(12))
 			reagents.add_reagent("strange_reagent", 20)
-			usedCapacity += 20
 		if (prob(10))
 			reagents.add_reagent("booster_enzyme", 30)
-			usedCapacity += 30
 		if (prob(10))
 			reagents.add_reagent("hugs", 25)
-			usedCapacity += 25
 		if (prob(10))
 			reagents.add_reagent("love", 25)
-			usedCapacity += 25
 		if (prob(10))
 			reagents.add_reagent("colors", 40)
-			usedCapacity += 40
 		if (prob(7))
 			reagents.add_reagent("fliptonium", 50)
-			usedCapacity += 50
 		if (prob(3))
 			reagents.add_reagent("glowing_fliptonium", 3)
-			usedCapacity += 3
 		if (prob(10))
 			reagents.add_reagent("fartonium", 30)
-			usedCapacity += 30
 		if (prob(10))
 			reagents.add_reagent("glitter", 30)
-			usedCapacity += 30
 		if (prob(10))
 			reagents.add_reagent("voltagen", 50)
-			usedCapacity += 50
 		if (prob(5))
 			reagents.add_reagent("rainbow fluid", 30)
-			usedCapacity += 30
 		if (prob(1))
 			reagents.add_reagent("vampire_serum", 5)
-			usedCapacity += 5
 		if (prob(3))
 			reagents.add_reagent("painbow fluid", 10)
-			usedCapacity += 10
 		if (prob(1))
 			reagents.add_reagent("werewolf_serum", 2)
-			usedCapacity += 2
 		/* Removed pending patho rework, in case this becomes functional again
 		if (prob(2))
 			reagents.add_reagent("liquid plasma", 15)
-			usedCapacity += 15
 			*/
 		if (prob(3))
 			reagents.add_reagent("liquid spacetime", 25)
-			usedCapacity += 25
 		if (prob(1))
 			reagents.add_reagent("fuzz", 5)
-			usedCapacity += 5
 		if (prob(3))
 			reagents.add_reagent("loose_screws", 25)
-			usedCapacity += 25
 		if (prob(1))
 			reagents.add_reagent("spidereggs", 5)
-			usedCapacity += 5
 		if (prob(10))
 			reagents.add_reagent("bathsalts", 25)
-			usedCapacity += 25
 		if (prob(10))
 			reagents.add_reagent("crank", 35)
-			usedCapacity += 35
 		if (prob(10))
 			reagents.add_reagent("sonic", 40)
-			usedCapacity += 40
 		if (prob(13))
 			reagents.add_reagent("catdrugs", 30)
-			usedCapacity += 30
 		if (prob(10))
 			reagents.add_reagent("amanitin", 20)
-			usedCapacity += 20
 		if (prob(5))
 			reagents.add_reagent("argine", 15)
-			usedCapacity += 15
 		if (prob(10))
 			reagents.add_reagent("firedust", 40)
-			usedCapacity += 40
 		if (prob(10))
 			reagents.add_reagent("beepskybeer", 100)
-			usedCapacity += 100
 		if (prob(5))
 			reagents.add_reagent("moonshine", 20)
-			usedCapacity += 20
 		if (prob(5))
 			reagents.add_reagent("grog", 15)
-			usedCapacity += 15
 		if (prob(15))
 			reagents.add_reagent("ectocooler", 35)
-			usedCapacity += 35
 		if (prob(15))
 			reagents.add_reagent("energydrink", 35)
-			usedCapacity += 35
 		if (prob(3))
 			reagents.add_reagent("enriched_msg", 15)
-			usedCapacity += 15
 		if (prob(15))
 			reagents.add_reagent("omnizine", 50)
-			usedCapacity += 50
+		if (prob(15))
+			reagents.add_reagent("mutagen", 30)
 		if (prob(10))
 			reagents.add_reagent("omega_mutagen", 30)
-			usedCapacity += 30
 		if (prob(5))
 			reagents.add_reagent("madness_toxin", 10)
-			usedCapacity += 10
 		if (prob(20))
 			reagents.add_reagent("mutini", 50)
-			usedCapacity += 50
 		if(prob(3))
 			reagents.add_reagent("feather_fluid", 20)
-			usedCapacity += 20
 		if(prob(3))
 			reagents.add_reagent("bee", 10)
-			usedCapacity += 10
+		if(prob(15))
+			reagents.add_reagent("port", 30)
+		//Reagent IDs might be wrong for these two
 		if(prob(7))
 			reagents.add_reagent("bombini", 15)
-		//Filler stuff
+		if(prob(3))
+			reagents.add_reagent("medusa", 10)
 
-		// replace with random bar stuff - triple citrus, vodka, ciroc, sugar, milk, beer, etc
+		//Filler stuff - Alcohol dispenser list, plus some extras
+		var/static/list/fillerDrinks =  list("beer", "cider", "gin", "wine", "champagne", \
+								"rum", "vodka", "bourbon", "vermouth", "tequila", \
+								"bitters", "tonic", "mead", "cocktail_citrus", "tea", \
+								"coffee", "sodawater", "sugar")
+		var fillerAmt = rand(3, 6)
+		for(var/i in 1 to filleramt)
+			reagents.add_reagent(pick(fillerdrinks), 50)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.Artifact_attackby(W,user))
