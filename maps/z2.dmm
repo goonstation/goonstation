@@ -24782,7 +24782,7 @@
 /area/precursor)
 "bhD" = (
 /obj/lattice,
-/obj/item/casing/shotgun_orange{
+/obj/item/casing/shotgun/orange{
 	alpha = 200;
 	anchored = 1;
 	desc = "A spent flare cartridge. It's stuck in the ice.";
@@ -27728,7 +27728,7 @@
 	},
 /area/crater/cave/lower)
 "boq" = (
-/obj/item/casing/shotgun_orange{
+/obj/item/casing/shotgun/orange{
 	alpha = 200;
 	anchored = 1;
 	desc = "A spent flare cartridge. It's stuck in the ice.";
@@ -30994,7 +30994,7 @@
 /area/iomoon/caves)
 "bwk" = (
 /obj/decal/cleanable/blood,
-/obj/item/casing/shotgun_orange{
+/obj/item/casing/shotgun/orange{
 	alpha = 200;
 	anchored = 1;
 	desc = "A spent flare cartridge. It's stuck in the ice.";
@@ -31017,7 +31017,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 8
 	},
-/obj/item/casing/shotgun_orange{
+/obj/item/casing/shotgun/orange{
 	alpha = 200;
 	anchored = 1;
 	desc = "A spent flare cartridge. It's stuck in the ice.";
@@ -52813,7 +52813,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cyP" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "u_ketchup"
 	},
@@ -52955,7 +52955,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "czg" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /obj/decal/cleanable/blood/tracks{
 	dir = 8
 	},
@@ -53068,7 +53068,7 @@
 	},
 /area/owlery/staffhall)
 "czv" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "czw" = (
@@ -54020,7 +54020,7 @@
 /turf/space,
 /area)
 "cBO" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /obj/decal/cleanable/blood{
 	icon_state = "drip2b"
 	},
@@ -57733,7 +57733,7 @@
 	},
 /area/owlery/owleryhall)
 "cKo" = (
-/obj/item/casing/shotgun_red,
+/obj/item/casing/shotgun/red,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cKp" = (
@@ -58181,7 +58181,7 @@
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "cLw" = (
-/obj/item/casing/shotgun_red,
+/obj/item/casing/shotgun/red,
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "cLx" = (
@@ -60411,7 +60411,7 @@
 	dir = 1;
 	name = "exhibit window"
 	},
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "cQy" = (
@@ -60614,7 +60614,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cQS" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cQT" = (
@@ -61898,7 +61898,7 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood/tracks,
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "cTC" = (
@@ -62174,7 +62174,7 @@
 	dir = 2;
 	name = "exhibit window"
 	},
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "cUa" = (
@@ -62893,7 +62893,7 @@
 /turf/unsimulated/wall/auto/reinforced/gannets,
 /area/syndicate/minerva5/command)
 "cVx" = (
-/obj/item/casing/shotgun_red,
+/obj/item/casing/shotgun/red,
 /obj/decal/tile_edge/carpet{
 	dir = 9;
 	icon_state = "frug1"
@@ -63929,7 +63929,7 @@
 /turf/unsimulated/floor/airless/grime,
 /area/owlery/Owlmait2)
 "cXs" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/greenwhite{
 	dir = 8
