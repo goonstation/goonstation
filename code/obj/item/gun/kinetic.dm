@@ -287,22 +287,26 @@
 			..()
 			SPAWN_DBG(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.9)
+	shotgun
+		red
+			icon_state = "shotgun_red"
+			desc = "A red shotgun shell."
 
-	shotgun_red
-		icon_state = "shotgun_red"
-		desc = "A red shotgun shell."
+		blue
+			icon_state = "shotgun_blue"
+			desc = "A blue shotgun shell."
 
-	shotgun_blue
-		icon_state = "shotgun_blue"
-		desc = "A blue shotgun shell."
+		orange
+			icon_state = "shotgun_orange"
+			desc = "An orange shotgun shell."
 
-	shotgun_orange
-		icon_state = "shotgun_orange"
-		desc = "An orange shotgun shell."
-
-	shotgun_gray
-		icon_state = "shotgun_gray"
-		desc = "An gray shotgun shell."
+		gray
+			icon_state = "shotgun_gray"
+			desc = "An gray shotgun shell."
+		New()
+			..()
+			SPAWN_DBG(rand(4, 7))
+				playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 20, 0.1)
 
 	cannon
 		icon_state = "rifle"
@@ -317,6 +321,12 @@
 		w_class = 2
 		icon_state = "40mm"
 		desc = "A 40mm grenade round casing. Huh."
+		New()
+			..()
+			SPAWN_DBG(rand(3, 6))
+				playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 30, 0.1, 0.8)
+
+
 
 	New()
 		..()
