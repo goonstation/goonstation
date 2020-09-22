@@ -33,11 +33,11 @@
 /obj/machinery/computer/secure_data/attackby(obj/item/I as obj, user as mob)
 	if (isscrewingtool(I))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if (do_after(user, 20))
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
+				if (src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
 				G.set_loc(src.loc)
 				var/obj/item/circuitboard/secure_data/M = new /obj/item/circuitboard/secure_data( A )
@@ -51,7 +51,7 @@
 			else
 				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
+				if (src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/secure_data/M = new /obj/item/circuitboard/secure_data( A )
 				for (var/obj/C in src)
 					C.set_loc(src.loc)
@@ -68,7 +68,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
-	if(..())
+	if (..())
 		return
 	var/dat
 
@@ -151,11 +151,26 @@
 					else
 						dat += "<b>General Record Lost!</b><br>"
 					if (src.active_record_security)
+
+						var/list/record_to_display = list(
+							"none" = "None",
+							"arrest" = "*Arrest*",
+							"parolled" = "Parolled",
+							"incarcerated" = "Incarcerated",
+							"released" = "Released"
+							)
+
+						var/list/arrest_status = list()
+
+						for (var/n in record_to_display)
+							arrest_status += {"<a href="javascript:goBYOND('action=criminal2;criminal2=[n]');" class="[n] [record_to_display[n] == src.active_record_security.fields["criminal"] ? "active" : ""]">[record_to_display[n]]</a>"}
+
 						dat += {"
 						<br>
 						<br><center><b>Security Data</b></center>
 						<br>
-						<br>Criminal Status: <a href="javascript:goBYOND('action=field;field=criminal');">[src.active_record_security.fields["criminal"]]</a>
+						<br>Criminal Status: <!-- <a href="javascript:goBYOND('action=field;field=criminal');">[src.active_record_security.fields["criminal"]]</a> -->
+						<br><div class="crimer">[arrest_status.Join(" ")]</div>
 						<br>
 						<br>Minor Crimes: <a href="javascript:goBYOND('action=field;field=mi_crim');">[src.active_record_security.fields["mi_crim"]]</a>
 						<br>
@@ -244,6 +259,30 @@
 			background: #aaf;
 			color: #008;
 		}
+
+		.crimer a {
+			display: inline-block;
+			vertical-align: middle;
+			border: 3px double #666;
+			background: #eee;
+			font-weight: bold;
+			padding: 0.1em 0.3em;
+			border-radius: 3px;
+			text-decoration: none;
+		}
+
+		.none         {}
+		.arrest       { color: #ff0000; background: #ffeeee; }
+		.parolled     { color: #888800; background: #ffffbb; }
+		.incarcerated { color: #339966; background: #bbffdd; }
+		.released     { color: #3366ff; background: #bbddff; }
+		.crimer .active { border: 3px solid black; }
+		.none.active, .none:hover                 { background: #ffffff; color: black; }
+		.arrest.active, .arrest:hover             { background: #ff0000; color: white; }
+		.parolled.active, .parolled:hover         { background: #ffff33; color: black; }
+		.incarcerated.active, .incarcerated:hover { background: #33cc66; color: black; }
+		.released.active, .released:hover         { background: #3399ff; color: black; }
+
 	</style>
 	<script>
 		function goBYOND(url) {
@@ -284,7 +323,7 @@
 	// Check if we can still use it (after the input() calls)
 	if ((general_record && general_record != src.active_record_general) || (security_record && security_record != src.active_record_security))
 		return 1
-	if(user && (user.lying || user.stat))
+	if (user && (user.lying || user.stat))
 		return 1
 	if (user && (get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user) && !isAI(usr))
 		return 1
@@ -292,7 +331,7 @@
 
 
 /obj/machinery/computer/secure_data/Topic(href, href_list)
-	if(..())
+	if (..())
 		return
 
 	src.validate_records()
@@ -340,7 +379,7 @@
 			if (istype(src.scan, /obj/item/card/id))
 				src.active_record_general = null
 				src.active_record_security = null
-				if(check_access(src.scan))
+				if (check_access(src.scan))
 					src.authenticated = src.scan.registered
 					src.rank = src.scan.assignment
 					src.screen = SECREC_MAIN_MENU
@@ -377,76 +416,76 @@
 				var/datum/data/record/current_security = src.active_record_security
 
 				switch(href_list["field"])
-					if("name") //todo: sanitize these fucking inputs jesus christ
+					if ("name") //todo: sanitize these fucking inputs jesus christ
 						if (istype(src.active_record_general, /datum/data/record))
 							var/t1 = input("Please input name:", "Security Records", src.active_record_general.fields["name"], null) as text
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general.fields["name"] = t1
-					if("id")
+					if ("id")
 						if (istype(src.active_record_security, /datum/data/record))
 							var/t1 = input("Please input id:", "Security Records", src.active_record_general.fields["id"], null) as text
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general.fields["id"] = t1
-					if("fingerprint")
+					if ("fingerprint")
 						if (istype(src.active_record_general, /datum/data/record))
 							var/t1 = input("Please input fingerprint hash:", "Security Records", src.active_record_general.fields["fingerprint"], null) as text
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general.fields["fingerprint"] = t1
-					if("sex")
+					if ("sex")
 						if (istype(src.active_record_general, /datum/data/record))
 							if (src.active_record_general.fields["sex"] == "Male")
 								src.active_record_general.fields["sex"] = "Female"
 							else
 								src.active_record_general.fields["sex"] = "Male"
-					if("age")
+					if ("age")
 						if (istype(src.active_record_general, /datum/data/record))
 							var/t1 = input("Age:", "Security Records", src.active_record_general.fields["age"], null) as num
 							t1 = max(1, min(t1, 99))
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general.fields["age"] = t1
-					if("mi_crim")
+					if ("mi_crim")
 						if (istype(src.active_record_security, /datum/data/record))
 							var/t1 = input("Minor crimes:", "Security Records", src.active_record_security.fields["mi_crim"], null) as text
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security.fields["mi_crim"] = t1
-					if("mi_crim_d")
+					if ("mi_crim_d")
 						if (istype(src.active_record_security, /datum/data/record))
 							var/t1 = input("Minor detail crimes:", "Security Records", src.active_record_security.fields["mi_crim_d"], null) as message
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security.fields["mi_crim_d"] = t1
-					if("ma_crim")
+					if ("ma_crim")
 						if (istype(src.active_record_security, /datum/data/record))
 							var/t1 = input("Major crimes:", "Security Records", src.active_record_security.fields["ma_crim"], null) as text
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security.fields["ma_crim"] = t1
-					if("ma_crim_d")
+					if ("ma_crim_d")
 						if (istype(src.active_record_security, /datum/data/record))
 							var/t1 = input("Major crime details:", "Security Records", src.active_record_security.fields["ma_crim_d"], null) as message
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security.fields["ma_crim_d"] = t1
-					if("notes")
+					if ("notes")
 						if (istype(src.active_record_security, /datum/data/record))
 							var/t1 = input("Notes:", "Security Records", src.active_record_security.fields["notes"], null) as message
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security.fields["notes"] = t1
-					if("criminal")
+					if ("criminal")
 						if (istype(src.active_record_security, /datum/data/record))
 							src.temp = {"
 						<b>Criminal Status:</b>
@@ -462,7 +501,7 @@
 						<br>&emsp;<a href="javascript:goBYOND('action=criminal2;criminal2=released');">Released</a>
 						<br>
 						"}
-					if("rank")
+					if ("rank")
 						var/list/L = list( "Head of Personnel", "Captain", "AI" )
 						if ((istype(src.active_record_general, /datum/data/record) && L.Find(src.rank)))
 							src.temp = {"
@@ -507,35 +546,35 @@
 			if ("rank")
 				if (src.active_record_general)
 					switch(href_list["rank"])
-						if("res_assist")
+						if ("res_assist")
 							src.active_record_general.fields["rank"] = "Assistant"
-						if("foren_tech")
+						if ("foren_tech")
 							src.active_record_general.fields["rank"] = "Detective"
-						if("atmo_tech")
+						if ("atmo_tech")
 							src.active_record_general.fields["rank"] = "Atmospheric Technician"
-						if("engineer")
+						if ("engineer")
 							src.active_record_general.fields["rank"] = "Station Engineer"
-						if("med_res")
+						if ("med_res")
 							src.active_record_general.fields["rank"] = "Geneticist"
-						if("tox_res")
+						if ("tox_res")
 							src.active_record_general.fields["rank"] = "Scientist"
-						if("med_doc")
+						if ("med_doc")
 							src.active_record_general.fields["rank"] = "Medical Doctor"
-						if("secure_off")
+						if ("secure_off")
 							src.active_record_general.fields["rank"] = "Security Officer"
-						if("hoperson")
+						if ("hoperson")
 							src.active_record_general.fields["rank"] = "Head of Security"
-						if("hosecurity")
+						if ("hosecurity")
 							src.active_record_general.fields["rank"] = "Head of Personnel"
-						if("captain")
+						if ("captain")
 							src.active_record_general.fields["rank"] = "Captain"
-						if("barman")
+						if ("barman")
 							src.active_record_general.fields["rank"] = "Barman"
-						if("chemist")
+						if ("chemist")
 							src.active_record_general.fields["rank"] = "Chemist"
-						if("janitor")
+						if ("janitor")
 							src.active_record_general.fields["rank"] = "Janitor"
-						if("clown")
+						if ("clown")
 							src.active_record_general.fields["rank"] = "Clown"
 					src.temp = null
 
@@ -543,17 +582,17 @@
 			if ("criminal2")
 				if (src.active_record_security)
 					switch(href_list["criminal2"])
-						if("none")
+						if ("none")
 							src.active_record_security.fields["criminal"] = "None"
-						if("arrest")
+						if ("arrest")
 							src.active_record_security.fields["criminal"] = "*Arrest*"
 							if (usr && src.active_record_general.fields["name"])
 								logTheThing("station", usr, null, "[src.active_record_general.fields["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
-						if("incarcerated")
+						if ("incarcerated")
 							src.active_record_security.fields["criminal"] = "Incarcerated"
-						if("parolled")
+						if ("parolled")
 							src.active_record_security.fields["criminal"] = "Parolled"
-						if("released")
+						if ("released")
 							src.active_record_security.fields["criminal"] = "Released"
 					src.temp = null
 
