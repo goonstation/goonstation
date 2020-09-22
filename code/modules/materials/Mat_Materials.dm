@@ -6,37 +6,59 @@
 		..()
 		owner = D
 		procname = name
-///
+
+/// Base material datum definition
 /datum/material
+	/// The atom that this material is applied to
 	var/atom/owner = null
-	var/mat_id = "ohshitium" //used to retrieve instances of these base materials from the cache.
+	/// used to retrieve instances of these base materials from the cache.
+	var/mat_id = "ohshitium"
+	/// Name of the material, used for combination and scanning
 	var/name = "Youshouldneverseemeium"
+	/// Description of the material, used for scanning
 	var/desc = "This is a custom material."
-	var/list/parent_materials = list() //Holds the parent materials.
+
+	/// Holds the parent materials.
+	var/list/parent_materials = list()
+	/// List of all the various [/datum/material_property] that apply.
 	var/list/properties = list()
 
-	var/generation = 0 //Compound generation
+	/// Compound generation
+	var/generation = 0
 
-	var/canMix = 1 						//Can this be mixed with other materials?
-	var/mixOnly = 0						//Can this only be used after being combined with another material?
+	/// Can this be mixed with other materials?
+	var/canMix = 1
+	/// Can this only be used after being combined with another material?
+	var/mixOnly = 0
 
-	var/material_flags = 0				//Various flags. See defines in _setup.dm.
-	var/value = 100 					//In percent of a base value. How much this sells for.
+	/// Various flags. See [material_properties.dm]
+	var/material_flags = 0
+	/// In percent of a base value. How much this sells for.
+	var/value = 100
 
-	var/list/prefixes = list() //goes before the name
-	var/list/suffixes = list() //and after it.
+	/// words that go before the name, used in combination
+	var/list/prefixes = list()
+	/// words that go after the name, used in combination
+	var/list/suffixes = list()
 
-	var/texture = "" //if not null, texture will be set when mat is applied.
-	var/texture_blend = ICON_MULTIPLY //How to blend the texture.
+	/// if not null, texture will be set when mat is applied.
+	var/texture = ""
+	/// How to blend the [texture].
+	var/texture_blend = ICON_MULTIPLY
 
-	var/applyColor = 1 //Should this even color the objects made from it? Mostly used for base station materials like steel
-	var/color = "#FFFFFF" //The color of the material
-	var/alpha = 255 //The "transparency" of the material. Kept as alpha for logical reasons. Displayed as percentage ingame.
+	/// Should this even color the objects made from it? Mostly used for base station materials like steel
+	var/applyColor = 1
+	/// The color of the material
+	var/color = "#FFFFFF"
+	/// The "transparency" of the material. Kept as alpha for logical reasons. Displayed as percentage ingame.
+	var/alpha = 255
+	/// The 'quality' of the material
 	var/quality = 0
 
-	var/edible_exact = 0 //The actual value. Changes internally and sets the below value.
-	var/edible = 0		//The functional value. Edible or not? This is what you check from the outside to see if material is edible.
-	//Other
+	/// The actual value of edibility. Changes internally and sets [edible].
+	var/edible_exact = 0
+	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [edible_exact].
+	var/edible = 0
 
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
 		for(var/datum/material_property/P in properties)
@@ -106,19 +128,32 @@
 		del(owner)
 		return
 
-	var/list/triggersFail = list()  //Called when the material fails due to instability.
-	var/list/triggersTemp = list()  //Called when exposed to temperatures.
-	var/list/triggersChem = list()	//Called when exposed to chemicals
-	var/list/triggersPickup = list()//Called when owning object is picked up
-	var/list/triggersDrop = list()	//Called when owning object is dropped
-	var/list/triggersExp = list()	//Called when exposed to explosions
-	var/list/triggersOnAdd = list()	//Called when the material is added to an object
-	var/list/triggersOnLife = list()//Called when the life proc of a mob that has the owning item equipped runs
-	var/list/triggersOnAttack = list()//Called when the owning object is used to attack something or someone.
-	var/list/triggersOnAttacked = list()//Called when a mob wearing the owning object is attacked.
-	var/list/triggersOnBullet = list()//Called when a mob wearing the owning object is shot.
-	var/list/triggersOnEntered = list()//Called when *something* enters a turf with the material assigned. Also called on all objects on the turf with a material.
-	var/list/triggersOnEat = list()//Called when someone eats a thing with this material assigned.
+	/// Called when the material fails due to instability.
+	var/list/triggersFail = list()
+	/// Called when exposed to temperatures.
+	var/list/triggersTemp = list()
+	/// Called when exposed to chemicals.
+	var/list/triggersChem = list()
+	/// Called when owning object is picked up.
+	var/list/triggersPickup = list()
+	/// Called when owning object is dropped.
+	var/list/triggersDrop = list()
+	/// Called when exposed to explosions.
+	var/list/triggersExp = list()
+	/// Called when the material is added to an object
+	var/list/triggersOnAdd = list()
+	/// Called when the life proc of a mob that has the owning item equipped runs.
+	var/list/triggersOnLife = list()
+	/// Called when the owning object is used to attack something or someone.
+	var/list/triggersOnAttack = list()
+	/// Called when a mob wearing the owning object is attacked.
+	var/list/triggersOnAttacked = list()
+	/// Called when a mob wearing the owning object is shot.
+	var/list/triggersOnBullet = list()
+	/// Called when *something* enters a turf with the material assigned. Also called on all objects on the turf with a material.
+	var/list/triggersOnEntered = list()
+	/// Called when someone eats a thing with this material assigned.
+	var/list/triggersOnEat = list()
 
 	proc/triggerOnFail(var/atom/owner)
 		for(var/datum/materialProc/X in triggersFail)
@@ -188,6 +223,7 @@
 
 // Metals
 
+/// Base metal material parent
 /datum/material/metal
 	material_flags = MATERIAL_METAL
 	color = "#8C8C8C"
@@ -806,6 +842,7 @@
 
 // Organics
 
+/// Base organic material parent
 /datum/material/organic
 	color = "#555555"
 	material_flags = MATERIAL_ORGANIC
