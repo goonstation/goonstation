@@ -127,8 +127,8 @@
 								"bitters", "tonic", "mead", "cocktail_citrus", "tea", \
 								"coffee", "sodawater", "sugar")
 		var fillerAmt = rand(3, 6)
-		for(var/i in 1 to filleramt)
-			reagents.add_reagent(pick(fillerdrinks), 50)
+		for(var/i in 1 to fillerAmt)
+			reagents.add_reagent(pick(fillerDrinks), 50)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.Artifact_attackby(W,user))
