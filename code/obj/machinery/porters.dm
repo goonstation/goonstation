@@ -167,6 +167,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 						var/obj/machinery/sleeper/port_a_medbay/PM = P
 						if (PM.occupant)
 							PM.occupant.set_loc(PM)
+							PM.PDA_alert_check()
 				if (istype(P, /obj/storage/closet/port_a_sci/))
 					var/obj/storage/closet/port_a_sci/PS = P
 					PS.on_teleport()
@@ -321,7 +322,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 	SubscribeToProcess()
 		..()
-		unlock_timer_start = TIME
+		unlock_timer_start = world.timeofday
 		processing = 1
 
 	UnsubscribeProcess()
@@ -329,7 +330,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		processing = 0
 
 	process()
-		var/req = unlock_timer_req - (TIME - unlock_timer_start)
+		var/req = unlock_timer_req - (world.timeofday - unlock_timer_start)
 		if (req <= 0)
 			locked = 0
 			go_out()

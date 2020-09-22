@@ -509,7 +509,7 @@
 			src.now_pushing = null
 
 		if(AM)
-			AM.last_bumped = TIME
+			AM.last_bumped = world.timeofday
 			AM.Bumped(src)
 		return
 	return

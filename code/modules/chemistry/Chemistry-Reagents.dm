@@ -147,7 +147,7 @@ datum
 						boutput(M, "<span class='alert'><B>You suddenly feel invigorated and guilty...</B></span>")
 						AD = new
 						AD.associated_reagent = src.name
-						AD.last_reagent_dose = TIME
+						AD.last_reagent_dose = world.timeofday
 						AD.name = "[src.name] addiction"
 						AD.affected_mob = M
 						AD.max_severity = src.max_addiction_severity
@@ -155,7 +155,7 @@ datum
 					else */if (AD)
 						boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
 						M.make_jittery(-5)
-						AD.last_reagent_dose = TIME
+						AD.last_reagent_dose = world.timeofday
 						AD.stage = 1
 /*					if (ishuman(M) && thirst_value)
 						var/mob/living/carbon/human/H = M
@@ -304,7 +304,7 @@ datum
 				boutput(M, "<span class='alert'><b>You suddenly feel invigorated and guilty...</b></span>")
 				AD = new
 				AD.associated_reagent = src.name
-				AD.last_reagent_dose = TIME
+				AD.last_reagent_dose = world.timeofday
 				AD.name = "[src.name] addiction"
 				AD.affected_mob = M
 				AD.max_severity = src.max_addiction_severity

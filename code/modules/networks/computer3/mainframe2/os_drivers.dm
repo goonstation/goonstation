@@ -290,7 +290,7 @@
 			return 0
 
 		if (!(file in to_add) && !(file in contents_mirror))
-			var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+			var/sessionid = "[world.timeofday%100][rand(0,9)]"
 			to_add[sessionid] = file
 			//file.holder = src.holder
 			lastOperationResponse = null
@@ -306,7 +306,7 @@
 			return 0
 
 		if ((file in contents_mirror) && !(file in to_remove))
-			var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+			var/sessionid = "[world.timeofday%100][rand(0,9)]"
 			to_remove[sessionid] = file
 			contents_mirror -= file
 			lastOperationResponse = null
@@ -326,7 +326,7 @@
 		if (!(file in checklist))
 			return 0
 
-		var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+		var/sessionid = "[world.timeofday%100][rand(0,9)]"
 		to_adjust[sessionid] = list(file, field, newval)
 		lastOperationResponse = null
 		message_device("command=modfile&fname=[file.name]&field=[field]&val=[newval]&session=[sessionid]")
@@ -660,7 +660,7 @@
 				new_coords.destz = new_z - ZSUBTRACT
 //				boutput(world, "[XMULTIPLY] [XSUBTRACT]  [YMULTIPLY] [YSUBTRACT]  [ZSUBTRACT]")
 
-				var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				sessions[sessionid] = ESIG_USR1
 
 				message_device("command=set_coords&session=[sessionid]", new_coords)
@@ -709,13 +709,13 @@
 				new_coords.origy = (source_y * YMULTIPLY) - YSUBTRACT
 				new_coords.origz = source_z - ZSUBTRACT
 
-				var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				sessions[sessionid] = ESIG_USR1
 
 				message_device("command=relay&session=[sessionid]", new_coords)
 
 			if ("send", "receive", "portal", "scan")
-				var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				sessions[sessionid] = ESIG_USR1
 				message_device("command=[lowertext(data["command"])]&session=[sessionid]")
 				sleep(0.6 SECONDS)
@@ -1066,7 +1066,7 @@
 
 				var/newtime = max(0, min(data["time"], 440))
 
-				var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				message_device("command=settime&time=[newtime]&session=[sessionid]")
 				sessions[sessionid] = SESSION_TIMER
 				sessiondata[sessionid] = newtime
@@ -1079,7 +1079,7 @@
 				if (nuke_active)
 					return ESIG_USR2
 
-				var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				message_device("command=act&auth=[netpass_heads]&session=[sessionid]")
 				sessions[sessionid] = SESSION_ARM
 				return ESIG_SUCCESS
@@ -1091,7 +1091,7 @@
 				if (!nuke_active)
 					return ESIG_USR2
 
-				var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				message_device("command=deact&auth=[netpass_heads]&session=[sessionid]")
 				sessions[sessionid] = SESSION_DISARM
 				return ESIG_SUCCESS
@@ -1121,7 +1121,7 @@
 		var/list/datalist = params2list(data)
 		switch(lowertext(datalist["command"]))
 			if ("register")
-				var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				sessions["[sessionid]"] = "stat"
 				message_device("command=status&session=[sessionid]")
 
@@ -1373,10 +1373,10 @@
 				else
 					src.clear_bot()
 
-				last_sync = TIME
+				last_sync = world.timeofday
 
 			if ("reply")
-				last_sync = TIME
+				last_sync = world.timeofday
 				if (datalist["status"] == "nobot")
 					src.clear_bot()
 					return
@@ -1394,7 +1394,7 @@
 				return
 
 			if ("trep")
-				last_sync = TIME
+				last_sync = world.timeofday
 
 				src.bot_taskid = (datalist["curtask"] ? datalist["curtask"] : "NONE")
 				src.bot_taskid_default = (datalist["deftask"] ? datalist["deftask"] : "NONE")
@@ -2394,7 +2394,7 @@
 		last_action = lowertext(data["command"])
 		switch (last_action)
 			if ("info") //Send info request (Device ID and capabilities, separate from status)
-				var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				sessions["[sessionid]"] = sendid
 
 				message_device("command=info&session=[sessionid]")
@@ -2409,7 +2409,7 @@
 					if (isnum(data["value"]))
 						data["value"] = round(max(1, min(data["value"], 255)))
 
-					var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+					var/sessionid = "[world.timeofday%100][rand(0,9)]"
 					sessions["[sessionid]"] = sendid
 					message_device("command=poke&field=[data["field"]]&value=[data["value"]]&session=[sessionid]")
 					return ESIG_SUCCESS
@@ -2418,7 +2418,7 @@
 
 			if ("peek") //Read the value of configuration value on device.
 				if (!isnull(data["field"]))
-					var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+					var/sessionid = "[world.timeofday%100][rand(0,9)]"
 					sessions["[sessionid]"] = sendid
 					message_device("command=peek&field=[data["field"]]&session=[sessionid]")
 					return ESIG_SUCCESS
@@ -2462,7 +2462,7 @@
 
 			if ("read") //Send read command, if sensor.
 				if (isSensor)
-					var/sessionid = "[TIME % (10 SECONDS)][rand(0,9)]"
+					var/sessionid = "[world.timeofday%100][rand(0,9)]"
 					sessions["[sessionid]"] = sendid
 					message_device("command=read&session=[sessionid]")
 					return ESIG_SUCCESS

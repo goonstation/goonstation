@@ -99,8 +99,8 @@
 
 			else if (ticker.round_elapsed_ticks)
 				stats["Time To Start:"] = 0
-				var/shiftTime = round(ticker.round_elapsed_ticks / (1 MINUTE))
-				saveStat("Shift Time:", "[shiftTime] minute[s_es(shiftTime)]")
+				var/shiftTime = round(ticker.round_elapsed_ticks / 600)
+				saveStat("Shift Time:", "[shiftTime] minute[shiftTime == 1 ? "" : "s"]")
 
 				//MBC : nah we don't run construction anyway
 				//if (ticker.mode && istype(ticker.mode, /datum/game_mode/construction))

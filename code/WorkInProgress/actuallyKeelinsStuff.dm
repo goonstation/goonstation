@@ -447,12 +447,12 @@ Returns:
 	var/trgZ = input(usr, "Enter target Z:", "", 1) as num
 
 	if(trgX && trgY && trgZ)
-		var/startTime = TIME
+		var/startTime = world.timeofday
 		var/dmm_suite/D = new/dmm_suite()
 		if(loaded && length(loaded))
 			usr.set_loc(locate(trgX,trgY,trgZ))
 			D.read_map(loaded,trgX,trgY,trgZ)
-			boutput(usr, "<span class='alert'>LOADED '[mapPath]' IN [((TIME - startTime)/(1 SECOND))] SEC</span>")
+			boutput(usr, "<span class='alert'>LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC</span>")
 		else
 			boutput(usr, "<span class='alert'>COULDNT LOAD '[mapPath]'</span>")
 	return
@@ -623,8 +623,10 @@ Returns:
 		return
 
 /proc/fuckthestationuphorribly()
+	//var/startTime = world.timeofday
 
 	var/list/areas = list()
+
 	var/list/ignoreAreas = list(/area/station/solar,/area/station/catwalk,/area/wizard_station,/area/syndicate_station,/area/listeningpost,/area/station/hallway,/area/station/com_dish,/area/shuttle,/area/station/maintenance,/area/ghostdrone_factory,/area/abandonedship,/area/supply,/area/mining/magnet)
 
 	outer:
@@ -657,6 +659,10 @@ Returns:
 
 		if(one && two)
 			swapareaobjects(one, two)
+
+	//boutput(world, "Done ([round((world.timeofday - startTime) / 10)] secs)")
+
+	return
 
 /proc/swapareaobjects(var/area/one, var/area/two)
 	var/list/oneContents = one.contents.Copy()
@@ -3361,9 +3367,9 @@ var/list/lag_list = new/list()
 			lag_string = "Oh Sh*t"
 
 /proc/lag_loop()
-	var/before = TIME
+	var/before = world.timeofday
 	sleep(0.1 SECONDS)
-	add_and_average( (TIME - before) )
+	add_and_average( (world.timeofday - before) )
 	SPAWN_DBG(0.5 SECONDS) lag_loop()
 
 /proc/get_lag_average()

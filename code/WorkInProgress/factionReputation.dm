@@ -70,13 +70,14 @@
 			if(!ignore_limiter)
 				var/count = 0
 				for(var/X in rep_changes_recent)
-					var/diff = TIME - text2num(X)
-					if(diff > (1 MINUTE)) rep_changes_recent.Remove(X)
+					var/diff = world.timeofday - text2num(X)
+					if(diff < 0) diff += 864000 //Wrapping protection.
+					if(diff > 600) rep_changes_recent.Remove(X)
 					else count++
 				if(count > REP_MAX_CHANGES_PER_MIN)
-					message_coders("reputation error 3b (2manychanges/min): [count]")
+					boutput(world, "[count] 3b")
 					return 0
-			var/time = num2text(TIME)
+			var/time = num2text(world.timeofday)
 			var/what = "[absolute?"!":""][amt]"
 			rep_changes_recent.Add(time)
 			rep_changes_recent[time] = what

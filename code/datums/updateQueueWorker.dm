@@ -28,7 +28,7 @@ datum/updateQueueWorker/proc/doWork()
 	// If there's nothing left to execute or we were killed, mark finished and return.
 	if (!objects || !objects.len) return finished()
 
-	lastStart = TIME // Absolute number of ticks since the world started up
+	lastStart = world.timeofday // Absolute number of ticks since the world started up
 
 	var/datum/object = objects[objects.len] // Pull out the object
 	objects.len-- // Remove the object from the list

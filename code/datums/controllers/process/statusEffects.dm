@@ -6,11 +6,11 @@ datum/controller/process/statusEffects
 	setup()
 		name = "StatusEffects"
 		schedule_interval = 3 //Adjust as needed; Wouldnt go over 10.
-		lastUpdate = TIME
+		lastUpdate = world.timeofday
 
 	doWork()
-		lastProcessLength = TIME
-		var/actual = (TIME - lastUpdate)
+		lastProcessLength = world.timeofday
+		var/actual = (world.timeofday - lastUpdate)
 		if(actual < 0) //Wrapped
 			actual += 864000 //Add one day worth of ticks to this. I think this should work?
 
@@ -44,8 +44,8 @@ datum/controller/process/statusEffects
 		for(var/atom/A in notifyUiUpdate)
 			SPAWN_DBG(0) if(A && A.statusEffects) A.updateStatusUi()
 
-		lastUpdate = TIME
-		lastProcessLength =  (TIME - lastProcessLength)
+		lastUpdate = world.timeofday
+		lastProcessLength =  (world.timeofday - lastProcessLength)
 
 	tickDetail()
 		var/stats = "<b>Processing [globalStatusInstances.len] items every [schedule_interval] ticks</b><br>"

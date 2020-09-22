@@ -23,7 +23,7 @@
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL
 	var/timing = 0 // Timer running?
 	var/time = null // In 1/10th seconds.
-	var/time_started = 0 // TIME when the timer was started
+	var/time_started = 0 // world.timeofday when the timer was started
 	var/obj/machinery/sleeper/our_sleeper = null
 	var/find_sleeper_in_range = 1
 
@@ -88,7 +88,11 @@
 			src.updateDialog()
 			return
 		if (src.timing)
-			if ((src.time_started + src.time) > TIME) // is the time started plus the time we're set to greater than the current time? the mob hasn't waited long enough
+			//if (src.time > 0)
+				//src.time = round(src.time) - 1
+			var/time_of_day = world.timeofday + ((world.timeofday < src.time_started) ? 864000 : 0) // Offset the time of day in case of midnight rollover
+			if ((src.time_started + src.time) > time_of_day) // is the time started plus the time we're set to greater than the current time? the mob hasn't waited long enough
+			//if ((src.time_started + src.time) > world.timeofday)
 				var/mob/occupant = src.our_sleeper.occupant
 				if (occupant)
 					if (ishuman(occupant))
@@ -179,9 +183,10 @@
 						<br><font size=2>Note: Use separate reagent scanner for complete analysis.</font><br><hr>"}
 
 				// Capped at 3 min. Used to be 10 min, Christ.
-				var/time_left = src.timing ? round((src.time_started + src.time - TIME) / 10) : round(src.time / 10)
-				var/second = time_left % 6
-				var/minute = round(time_left / 60)
+				var/time_of_day = world.timeofday + ((world.timeofday < src.time_started) ? 864000 : 0)
+				var/time_left = src.timing ? round((src.time_started + src.time - time_of_day) / 10) : round(src.time / 10)
+				var/second = time_left % 60//src.time % 60
+				var/minute = round(time_left / 60)//(src.time - second) / 60
 				//DEBUG_MESSAGE("[time_of_day] - [time_left] - [minute]:[second]")
 				dat += {"<TT><B>Occupant Alarm Clock</B><br>[src.timing ? "<A href='?src=\ref[src];time=0'>Timing</A>" : "<A href='?src=\ref[src];time=1'>Not Timing</A>"] [minute]:[second]<br>
 						<A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A><br></TT>
@@ -221,7 +226,7 @@
 					src.timing = text2num(href_list["time"])
 					src.visible_message("<span class='notice'>[usr] [src.timing ? "sets" : "stops"] the [src]'s occupant alarm clock.</span>")
 					if (src.timing)
-						src.time_started = TIME
+						src.time_started = world.timeofday//realtime
 						// People do use sleepers for grief from time to time.
 						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
 					else
@@ -429,7 +434,7 @@
 				if (istype(D.master, /datum/ailment/addiction))
 					var/datum/ailment_data/addiction/A = D
 					var/probability = 5
-					if (TIME > A.last_reagent_dose + 150 SECONDS)
+					if (world.timeofday > A.last_reagent_dose + 1500)
 						probability = 10
 					if (prob(probability))
 						//DEBUG_MESSAGE("Healed [M]'s [A.associated_reagent] addiction.")
@@ -677,6 +682,8 @@
 	mats = 30
 	p_class = 1.2
 	var/homeloc = null
+	/// Mailgroups it'll try to send PDA notifications to
+	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
 	New()
 		..()
@@ -738,6 +745,32 @@
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
+ 
+/// Yells at doctors to check the thing when it's sent home
+/obj/machinery/sleeper/port_a_medbay/proc/PDA_alert_check()
+	if (src.loc != homeloc)
+		return
+	if (!occupant)
+		return
+	var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
+	if (!transmit_connection)
+		return
+
+	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
+	if (isdead(occupant))
+		PDAalert += "deceased body - please process the occupant as soon as possible."
+	else if (occupant.health < 0)
+		PDAalert += "patient in critical condition - respond and treat immediately."
+	else
+		PDAalert += "patient - please check in on the occupant."
+
+	for(var/mailgroup in mailgroups)
+		var/datum/signal/PDAsignal = get_free_signal()
+
+		PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroup, "sender"="00000000", "message"="[PDAalert]")
+		PDAsignal.transmission_method = TRANSMISSION_RADIO
+		transmit_connection.post_signal(src, PDAsignal)
+
 
 /obj/machinery/sleeper/compact
 	name = "Compact Sleeper"

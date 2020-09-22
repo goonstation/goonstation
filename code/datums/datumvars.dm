@@ -300,7 +300,7 @@
 		}
 </style>"}
 
-/client/proc/debug_variable(name, value, var/fullvar, level, max_list_len=1500)
+/client/proc/debug_variable(name, value, var/fullvar, level, max_list_len=150)
 	var/html = ""
 	html += "<tr>"
 	if (level == 0)
@@ -346,13 +346,17 @@
 */
 	else if (isfile(value))
 		html += "\[[name]\]</th><td>file (<em class='value'>[value]</em>)"
-
+	
 	else if (istype(value, /datum))
 		var/datum/D = value
 		var/dname = null
 		if ("name" in D.vars)
 			dname = " (" + html_encode( "[D.vars["name"]]" ) + ")"
-		html += "<a href='byond://?src=\ref[src];Vars=\ref[value]'>\[[name]\]</a></th><td>[dname] (<span class='value'>[D.type][src.holder.level >= LEVEL_ADMIN ? " <em>\ref[value]</em>" : ""])"
+		if (istype(value, /matrix))
+			var/matrix/M = value
+			html += "<a href='byond://?src=\ref[src];Vars=\ref[value]'>\[[name]\]</a></th><td>[dname] (<span class='value'>[M.type][src.holder.level >= LEVEL_ADMIN ? " <em>\ref[value] | a-f = [M.a],[M.b],[M.c],[M.d],[M.e],[M.f]</em>" : ""])"
+		else
+			html += "<a href='byond://?src=\ref[src];Vars=\ref[value]'>\[[name]\]</a></th><td>[dname] (<span class='value'>[D.type][src.holder.level >= LEVEL_ADMIN ? " <em>\ref[value]</em>" : ""])"
 
 	else if (isclient(value))
 		var/client/C = value
@@ -386,7 +390,6 @@
 				html += "<tr><th>\[...\]</th><td><em class='value'>...</em></td>"
 
 			html += "</tbody></table>"
-
 	else
 		html += "\[[name]\]</th><td><em class='value'>[html_encode("[value]")]</em>"
 
@@ -497,7 +500,7 @@
 	if (href_list["Display"])
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
-			var/fname = "varview_preview_[href_list["Display"]]_[TIME].png"
+			var/fname = "varview_preview_[href_list["Display"]]_[world.timeofday].png"
 			src << browse_rsc(getFlatIcon(locate(href_list["Display"])), fname)
 			sleep(0.4 SECONDS)
 			boutput(src, {"<img src="[fname]" style="-ms-interpolation-mode: nearest-neighbor;zoom:200%;">"})
@@ -664,6 +667,10 @@
 
 	if (isnull(var_value))
 		boutput(usr, "Unable to determine variable type.")
+	
+	else if (istype(var_value, /matrix))
+		boutput(usr, "Variable appears to be <b>MATRIX</b>.")
+		default = "matrix"
 
 	else if (isnum(var_value))
 		boutput(usr, "Variable appears to be <b>NUM</b>.")
@@ -694,10 +701,10 @@
 	else if (islist(var_value))
 		boutput(usr, "Variable appears to be <b>LIST</b>.")
 		default = "list"
-
 	else if (isclient(var_value))
 		boutput(usr, "Variable appears to be <b>CLIENT</b>.")
 		default = "cancel"
+
 
 	else
 		boutput(usr, "Variable appears to be <b>FILE</b>.")
@@ -728,7 +735,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","edit referenced object","create new list","null", "ref", "restore to default")
+		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
 
 	if(!class)
 		return
@@ -939,6 +946,44 @@
 					global.vars[variable] = theInput
 				else
 					D.vars[variable] = theInput
+
+		if("matrix")
+			var/matrix/DM = D == "GLOB" ? global.vars[variable] : D.vars[variable]	//default matrix
+			var/default_matrix_text
+			if (istype(DM))
+				default_matrix_text = "[DM.a],[DM.b],[DM.c],[DM.d],[DM.e],[DM.f]"
+
+			var/theInput = input("Create a matrix:  (format: \"a,b,c,d,e,f\" without quotes). Must have a leading 0 for decimals:","[variable]", default_matrix_text) as null|message
+			if(theInput == null) return
+
+
+			var/regex/R = new("(\\w*\\.*\\w+)(,|$)", "gi")
+			var/list/MV = list()
+			var/i = 1
+			while (R.Find(theInput))
+				if (i <= 6)
+					var/temp = R.group[1]
+					MV.Add(text2num(temp))
+					i++
+
+
+			var/matrix/M
+			if (MV.len >= 6)
+				M = matrix(MV[1],MV[2],MV[3],MV[4],MV[5],MV[6])
+			else
+				return
+
+			if(set_global)
+				for(var/x in world)
+					if(!istype(x, D.type)) continue
+					x:vars[variable] = M
+					LAGCHECK(LAG_LOW)
+			else
+				if(D == "GLOB")
+					global.vars[variable] = M
+				else
+					D.vars[variable] = M
+
 
 		if("turf by coordinates")
 			var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", 1) as num

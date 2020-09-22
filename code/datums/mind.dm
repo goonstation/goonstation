@@ -78,7 +78,7 @@ datum/mind
 			key = M.key
 			ckey = M.ckey
 			src.handwriting = pick(handwriting_styles)
-		src.last_death_time = TIME // I DON'T KNOW SHUT UP YOU'RE NOT MY REAL DAD
+		src.last_death_time = world.timeofday // I DON'T KNOW SHUT UP YOU'RE NOT MY REAL DAD
 
 	proc/transfer_to(mob/new_character)
 		Z_LOG_DEBUG("Mind/TransferTo", "Transferring \ref[src] (\ref[current], [current]) ...")
@@ -206,7 +206,7 @@ datum/mind
 		var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 		src.store_memory("Time of death: [tod]", 0)
 		// stuff for critter respawns
-		src.last_death_time = TIME
+		src.last_death_time = world.timeofday
 
 	disposing()
 		logTheThing("debug", null, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")

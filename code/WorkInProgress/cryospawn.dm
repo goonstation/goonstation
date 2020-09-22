@@ -155,7 +155,7 @@
 		if (!voluntary) // someone shoved us in here, mark them as not being in here of their own choice (this can only be done with braindead people who have a ckey, so you can't just grief some guy by shoving them in)
 			stored_mobs[L] = "involuntary"
 		else
-			stored_mobs[L] = TIME
+			stored_mobs[L] = world.timeofday
 		L.set_loc(src)
 		L.hibernating = 1
 		if (L.client)
@@ -207,10 +207,11 @@
 	proc/exit_prompt(var/mob/living/user as mob)
 		if (!user || !stored_mobs.Find(user))
 			return 0
-		var/entered = stored_mobs[user] // this will be the TIME that the mob went into the cryotron, or a text string if they were forced in
+		var/entered = stored_mobs[user] // this will be the world.timeofday that the mob went into the cryotron, or a text string if they were forced in
 		if (isnum(entered)) // fix for cannot compare 614825 to "involuntary" (sadly there is no fix for spy sassing me about a runtime HE CAUSED, THE BUTT)
-			if ((entered + CRYOSLEEP_DELAY) > TIME) // is the time entered plus 15 minutes greater than the current time? the mob hasn't waited long enough
-				var/time_left = round((entered + CRYOSLEEP_DELAY - TIME)/ (1 MINUTE)) // format this so it's nice and clear how many minutes are left to wait
+			var/time_of_day = world.timeofday + ((world.timeofday < entered) ? 864000 : 0) //Offset the time of day in case of midnight rollover
+			if ((entered + CRYOSLEEP_DELAY) > time_of_day) // is the time entered plus 15 minutes greater than the current time? the mob hasn't waited long enough
+				var/time_left = round((entered + CRYOSLEEP_DELAY - time_of_day)/600) // format this so it's nice and clear how many minutes are left to wait
 
 				if (time_left >= 0)
 					boutput(user, "<b>You must wait [time_left] minute[s_es(time_left)] before you can leave cryosleep.</b>")

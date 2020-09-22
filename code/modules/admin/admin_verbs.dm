@@ -64,7 +64,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_remove_label_from,
 		/client/proc/cmd_admin_antag_popups,
 		/client/proc/retreat_to_office,
-
+		
 		),
 
 
@@ -1367,7 +1367,7 @@ var/list/fun_images = list()
 				C.chatOutput.playDectalk(audio["audio"], trigger, vol)
 		return 1
 	else if (audio && audio["cooldown"])
-		alert(src, "There is a [nextDectalkDelay] second global cooldown between uses of this verb. Please wait [((TIME + nextDectalkDelay * (1 SECOND)) - TIME)/10] seconds.")
+		alert(src, "There is a [nextDectalkDelay] second global cooldown between uses of this verb. Please wait [((world.timeofday + nextDectalkDelay * 10) - world.timeofday)/10] seconds.")
 		src.cmd_dectalk(msg)
 		return 0
 	else

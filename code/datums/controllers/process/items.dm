@@ -22,8 +22,8 @@ datum/controller/process/items
 			object.initialize()
 			itemcount++
 			if (game_start_countdown)
-				if (lasttime != TIME)
-					lasttime = TIME
+				if (lasttime != world.timeofday)
+					lasttime = world.timeofday
 					game_start_countdown.update_status("Initializing items\n([itemcount], [round(itemcount / totalcount * 100)]%)")
 
 			LAGCHECK(LAG_HIGH)

@@ -84,7 +84,7 @@
   ..()
   if(thing_to_spawn)
     src.spawn_path = thing_to_spawn
-    src.time_started = TIME
+    src.time_started = world.timeofday
     src.growth_time = initial(thing_to_spawn.growthTime) * 10 // growthTime for the biotech is specified in seconds
     src.health = 1 // let's do the zerg thing of growth = health
     src.active = 1
@@ -96,7 +96,8 @@
 /obj/martianBiotech/structureSpawner/process()
   ..()
   if(src.active)
-    src.time_elapsed = TIME - src.time_started
+    var/time_of_day = world.timeofday + ((world.timeofday < src.time_started) ? 864000 : 0) // Offset the time of day in case of midnight rollover
+    src.time_elapsed = time_of_day - src.time_started
     var/percent = src.time_elapsed/src.growth_time * 100
     src.maxHealth = max(1, round(percent))
     switch(percent)

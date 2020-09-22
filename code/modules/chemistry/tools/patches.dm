@@ -231,7 +231,7 @@
 
 			sticker.pixel_x = pox
 			sticker.pixel_y = poy
-			overlay_key = "patch[TIME]"
+			overlay_key = "patch[world.timeofday]"
 			attached = A
 			A.UpdateOverlays(sticker, overlay_key)
 
@@ -252,7 +252,7 @@
 
 			sticker.pixel_x = pox
 			sticker.pixel_y = poy
-			overlay_key = "patch[TIME]"
+			overlay_key = "patch[world.timeofday]"
 			attached = A
 			A.UpdateOverlays(sticker, overlay_key)
 			.= 1

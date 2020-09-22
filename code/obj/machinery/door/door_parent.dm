@@ -132,7 +132,7 @@
 		return 1 // they can pass through a closed door
 
 	if (density && next_timeofday_opened)
-		return (TIME >= next_timeofday_opened) //Hey this is a really janky fix. Makes it so the door 'opens' on realtime even if the animations and sounds are laggin
+		return (world.timeofday >= next_timeofday_opened) //Hey this is a really janky fix. Makes it so the door 'opens' on realtime even if the animations and sounds are laggin
 
 	return !density
 
@@ -500,7 +500,7 @@
 
 	SPAWN_DBG(-1)
 		play_animation("opening")
-		next_timeofday_opened = TIME + (src.operation_time)
+		next_timeofday_opened = world.timeofday + (src.operation_time)
 		SPAWN_DBG(-1)
 			if (ignore_light_or_cam_opacity)
 				src.opacity = 0

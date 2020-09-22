@@ -1,4 +1,7 @@
 
+(t)sun sep 21 20
+(u)kyle
+(*)Edit vars screen now lets you add matrices to variables, like transform. Must provide variables in format:a,b,c,d,e,f as text. Useful for manually changing a transform var via matrix math.
 (t)fri sep 19 20
 (u)kyle
 (*)New admin verb Retreat-To-Office. Use it to go directly to your own admin office. It determins which office to go to by ckey, I might be missing one or two people so leme know if I forgot you.

@@ -270,7 +270,7 @@ var/global/list/atomTooltips = new()
 			src.screenProperties = src.owner.screenSizeHelper.getData()
 
 			if (src.isClone)
-				src.uid = "[TIME][rand(1,10000)]"
+				src.uid = "[world.timeofday][rand(1,10000)]"
 				var/newWindow = "[src.window][src.uid]"
 				winclone(src.owner, newWindow, src.window)
 				src.window = newWindow

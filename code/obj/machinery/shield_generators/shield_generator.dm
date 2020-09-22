@@ -124,9 +124,15 @@
 				src.deactivate()
 				src.post_reply("SGEN_DACTVD", target)
 
+	// for testing atm
 	attack_hand(mob/user as mob)
-		if((TIME - lastuse) > 150 SECONDS)
-			lastuse = TIME
+
+		var/diff = world.timeofday - lastuse
+		if(diff < 0) diff += 864000 //Wrapping protection.
+
+
+		if(diff > 1500)
+			lastuse = world.timeofday
 			user.show_text("You flip the switch on [src].")
 			if (src.active)
 				src.deactivate()
@@ -137,7 +143,7 @@
 		else
 			user.show_text("<span class='alert'><b>That is still not ready to be used again.</b></span>")
 
-	proc/post_status(target_id, key, value, key2, value2, key3, value3)
+	proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
 		if (!src.link || !target_id)
 			return
 

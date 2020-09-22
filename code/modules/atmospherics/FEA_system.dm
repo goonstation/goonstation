@@ -176,9 +176,9 @@ datum
 				return
 				#else
 
-				boutput(world, "<span class='alert'>Processing Atmospheric Geometry...</span>")
+				boutput(world, "<span class='alert'>Processing Geometry...</span>")
 
-				var/start_time = TIME
+				var/start_time = world.timeofday
 
 				for(var/turf/simulated/S in world)
 					if(!S.blocks_air && !S.parent)
@@ -192,7 +192,7 @@ datum
 				for(var/obj/movable/floor/S in world) //Update all pathing and border information as well
 					S.update_air_properties()
 */
-				boutput(world, "<span class='alert'>Geometry processed in [(TIME-start_time)/(1 SECOND)] seconds!</span>")
+				boutput(world, "<span class='alert'>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>")
 				#endif
 
 			assemble_group_turf(turf/simulated/base)

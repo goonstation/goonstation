@@ -20,7 +20,7 @@
 /obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
 	..()
 	health_max = health
-	time_started = TIME
+	time_started = world.timeofday
 	processing_items |= src
 	if(F)
 		src.flock = F

@@ -146,11 +146,11 @@
 			message = process_accents(H, message) //Slurred announcements? YES!
 
 		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", sound_to_play)
-		last_announcement = TIME
+		last_announcement = world.timeofday
 		message = ""
 
 	proc/nice_timer()
-		if (TIME < last_announcement)
+		if (world.timeofday < last_announcement)
 			last_announcement = 0
 		var/time = get_time()
 		if(time < 0)
@@ -166,7 +166,7 @@
 			return "[minutes][flick_seperator ? ":" : " "][seconds]"
 
 	proc/get_time()
-		return max(((last_announcement + announcement_delay) - TIME ) / 10, 0)
+		return max(((last_announcement + announcement_delay) - world.timeofday ) / 10, 0)
 
 	proc/set_arrival_alert(var/mob/user)
 		if (!user)

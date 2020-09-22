@@ -10,13 +10,13 @@
 /datum/ailment/addiction/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/addiction/D)
 	if (..())
 		return
-	if (prob(20) && (TIME > (D.last_reagent_dose + D.withdrawal_duration)))
+	if (prob(20) && (world.timeofday > (D.last_reagent_dose + D.withdrawal_duration)))
 		boutput(affected_mob, "<span class='notice'>You no longer feel reliant on [D.associated_reagent]!</span>")
 		affected_mob.ailments -= D
 		qdel(D)
 		return
 	if (affected_mob.reagents && affected_mob.reagents.has_reagent(D.associated_reagent))
-		D.last_reagent_dose = TIME
+		D.last_reagent_dose = world.timeofday
 		D.stage = 1
 		return
 	switch(D.stage)

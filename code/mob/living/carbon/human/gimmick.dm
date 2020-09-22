@@ -209,7 +209,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = 2
-			src.ai_threatened = TIME
+			src.ai_threatened = world.timeofday
 			src.ai_target = M
 
 		//Bartender isnt' used right now.
@@ -630,7 +630,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = 2
-			src.ai_threatened = TIME
+			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.a_intent = INTENT_HARM
 			src.ai_set_active(1)
@@ -786,7 +786,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = 2
-			src.ai_threatened = TIME
+			src.ai_threatened = world.timeofday
 			src.ai_target = M
 
 		//Bartender isnt' used right now.

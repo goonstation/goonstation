@@ -178,7 +178,7 @@ Contains:
 		return
 	if(AM == rider || !rider)
 		return
-	if(TIME - AM.last_bumped <= (10 SECONDS))
+	if(world.timeofday - AM.last_bumped <= 100)
 		return
 	walk(src, 0)
 	update()
@@ -667,7 +667,7 @@ Contains:
 		return
 	if(AM == rider || !rider)
 		return
-	if(TIME - AM.last_bumped <= (10 SECONDS))
+	if(world.timeofday - AM.last_bumped <= 100)
 		return
 	walk(src, 0)
 	update()
@@ -925,8 +925,8 @@ Contains:
 		icon_state = "clowncar2"
 		walk(src, dir, 2)
 		moving = 1
-		if(!(TIME - src.antispam <= (6 SECONDS)))
-			src.antispam = TIME
+		if(!(world.timeofday - src.antispam <= 60))
+			src.antispam = world.timeofday
 			playsound(src, "sound/machines/rev_engine.ogg", 50, 1)
 			playsound(src.loc, "sound/machines/rev_engine.ogg", 50, 1)
 			//play engine sound
@@ -1062,7 +1062,7 @@ Contains:
 		return
 	if(AM == rider || !rider)
 		return
-	if(TIME - AM.last_bumped <= (10 SECONDS))
+	if(world.timeofday - AM.last_bumped <= 100)
 		return
 	walk(src, 0)
 	moving = 0
@@ -1336,7 +1336,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 	if(AM == rider || !rider)
 		return
-	if(TIME - AM.last_bumped <= (10 SECONDS))
+	if(world.timeofday - AM.last_bumped <= 100)
 		return
 	walk(src, 0)
 	..()
@@ -1623,8 +1623,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			src.overlays += image('icons/mob/robots.dmi', "up-speed")
 		icon_state = moving_state
 		walk(src, dir, 1)
-		if(!(TIME - src.antispam <= 6 SECONDS))
-			src.antispam = TIME
+		if(!(world.timeofday - src.antispam <= 60))
+			src.antispam = world.timeofday
 			playsound(src, "sound/machines/rev_engine.ogg", 50, 1)
 			playsound(src.loc, "sound/machines/rev_engine.ogg", 50, 1)
 			//play engine sound
@@ -1766,10 +1766,9 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 	if(AM == rider || !rider)
 		return
-	if (is_badmin_bus)
-		if (TIME - AM.last_bumped <= 5 SECONDS)
-			return
-	else if (TIME - AM.last_bumped <= 10 SECONDS)
+	if(!is_badmin_bus && world.timeofday - AM.last_bumped <= 100)
+		return
+	if(is_badmin_bus && world.timeofday - AM.last_bumped <= 50)
 		return
 	walk(src, 0)
 	icon_state = nonmoving_state

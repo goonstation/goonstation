@@ -309,8 +309,8 @@
 		return
 
 	use_power(250)
-	if(track==1 && nexttime < TIME && trackrate)
-		nexttime = TIME + (1 HOUR)/abs(trackrate)
+	if(track==1 && nexttime < world.timeofday && trackrate)
+		nexttime = world.timeofday + 3600/abs(trackrate)
 		cdir = (cdir+trackrate/abs(trackrate)+360)%360
 
 		set_panels(cdir)
@@ -386,10 +386,10 @@
 				updateicon()
 		if(href_list["tdir"])
 			src.trackrate = clamp(src.trackrate+text2num(href_list["tdir"]), -7200,7200)
-			if(src.trackrate) nexttime = TIME + (1 HOUR)/abs(trackrate)
+			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
 
 	if(href_list["track"])
-		if(src.trackrate) nexttime = TIME + (1 HOUR)/abs(trackrate)
+		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
 		track = text2num(href_list["track"])
 		if(track == 2)
 			var/obj/machinery/power/tracker/T = locate() in machine_registry[MACHINES_POWER]

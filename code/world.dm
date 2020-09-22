@@ -830,7 +830,7 @@ var/f_color_selector_handler/F_Color_Selector
 	else
 		logTheThing("diary", null, null, "No update found. Skipping update process.", "admin")
 
-
+/// world Topic. This is where external shit comes into byond and does shit.
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	// logging for these is done in TGS
 	logDiary("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
@@ -1522,9 +1522,9 @@ var/f_color_selector_handler/F_Color_Selector
 				var/ircmsg[] = new()
 				ircmsg["cpu"] = world.cpu
 				ircmsg["queue_len"] = delete_queue ? delete_queue.count() : 0
-				var/curtime = TIME
+				var/curtime = world.timeofday
 				sleep(1 SECOND)
-				ircmsg["time"] = (TIME - curtime) / (1 SECOND)
+				ircmsg["time"] = (world.timeofday - curtime) / 10
 				return ircbot.response(ircmsg)
 
 			if ("rev")
@@ -1661,13 +1661,13 @@ var/f_color_selector_handler/F_Color_Selector
 var/opt_inactive = null
 /world/proc/Optimize()
 	SPAWN_DBG(0)
-		if(!opt_inactive) opt_inactive  = TIME
+		if(!opt_inactive) opt_inactive  = world.timeofday
 
-		if(TIME - opt_inactive >= (1 MINUTE) || TIME - opt_inactive < 0)
+		if(world.timeofday - opt_inactive >= 600 || world.timeofday - opt_inactive < 0)
 			KickInactiveClients()
 			//if(mysql)
 				//mysql.CleanQueries()
-			opt_inactive = TIME
+			opt_inactive = world.timeofday
 
 		sleep(10 SECONDS)
 
