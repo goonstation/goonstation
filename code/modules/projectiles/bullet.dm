@@ -188,7 +188,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
 	dissipation_delay = 10
-	casing = /obj/item/casing/rifle
+	casing = /obj/item/casing/rifle_loud
 	caliber = 0.308
 	icon_turf_hit = "bhole-small"
 
@@ -219,7 +219,7 @@ toxic - poisons
 	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
 	projectile_speed = 56
 	max_range = 100
-	casing = /obj/item/casing/rifle
+	casing = /obj/item/casing/rifle_loud
 	caliber = 0.308
 	icon_turf_hit = "bhole-small"
 	on_launch(obj/projectile/O)
