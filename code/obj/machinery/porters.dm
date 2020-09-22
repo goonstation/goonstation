@@ -167,6 +167,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 						var/obj/machinery/sleeper/port_a_medbay/PM = P
 						if (PM.occupant)
 							PM.occupant.set_loc(PM)
+							PM.PDA_alert_check()
 				if (istype(P, /obj/storage/closet/port_a_sci/))
 					var/obj/storage/closet/port_a_sci/PS = P
 					PS.on_teleport()
