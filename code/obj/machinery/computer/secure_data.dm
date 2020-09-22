@@ -72,16 +72,18 @@
 		return
 	var/dat
 	var/list/htmlOut = list()
+
 	if (src.temp)
-		dat = text({"
-					<TT>[]</TT>
-					<br>
-					<br><a href="javascript:goBYOND('temp=1');">Clear Screen</a>
-					"}, src.temp)
+		dat = {"
+			<TT>[src.temp]</TT>
+			<br>
+			<br><a href="javascript:goBYOND('temp=1');">Clear Screen</a>
+			"}
 	else
-		dat = text({"
-					Confirm Identity: <a href="javascript:goBYOND('scan=1');">[]</a><hr>
-					"}, (src.scan ? text("[]", src.scan.name) : "----------"))
+		dat = {"
+			Confirm Identity: <a href="javascript:goBYOND('scan=1');">[src.scan ? src.scan.name : "----------"]</a><hr>
+			"}
+
 		if (src.authenticated)
 			src.validate_records()
 			switch(src.screen)
@@ -107,14 +109,14 @@
 				if (SECREC_LIST_RECORDS)
 					dat += "<b>Record List</b>:<hr>"
 					for(var/datum/data/record/R in data_core.general)
-						dat += text({"
-						<a href="javascript:goBYOND('d_rec=\ref[]');">[]: []
-						<br>
-						"}, R, R.fields["id"], R.fields["name"])
+						dat += {"
+							<a href="javascript:goBYOND('d_rec=\ref[R]');">[R.fields["id"]]: [R.fields["name"]]
+							<br>
+							"}
 
 					dat += {"
-					<hr><a href="javascript:goBYOND('main=1');">Back</a>
-					"}
+						<hr><a href="javascript:goBYOND('main=1');">Back</a>
+						"}
 
 				if (SECREC_MANAGE_RECORDS)
 					dat += {"
@@ -135,73 +137,68 @@
 					<center><b>Security Record</b></center><br>
 					"}
 					if (src.active_record_general)
-						dat += text({"
-						Name: <a href="javascript:goBYOND('field=name');">[]</a> ID: <a href="javascript:goBYOND('field=id');">[]</a>
-						<br>
-						<br>Sex: <a href="javascript:goBYOND('field=sex');">[]</a>
-						<br>
-						<br>Age: <a href="javascript:goBYOND('field=age');">[]</a>
-						<br>
-						<br>Rank: <a href="javascript:goBYOND('field=rank');">[]</a>
-						<br>
-						<br>Fingerprint: <a href="javascript:goBYOND('field=fingerprint');">[]</a>
-						<br>
-						<br>DNA: []
-						<br>
-						<br>Physical Status: []
-						<br>
-						<br>Mental Status: []
-						<br>
-						"}, src.active_record_general.fields["name"], src.active_record_general.fields["id"], src.active_record_general.fields["sex"], src.active_record_general.fields["age"], src.active_record_general.fields["rank"], src.active_record_general.fields["fingerprint"], src.active_record_general.fields["dna"], src.active_record_general.fields["p_stat"], src.active_record_general.fields["m_stat"])
+						dat += {"
+							Name: <a href="javascript:goBYOND('field=name');">[src.active_record_general.fields["name"]]</a> ID: <a href="javascript:goBYOND('field=id');">[src.active_record_general.fields["id"]]</a>
+							<br>
+							<br>Sex: <a href="javascript:goBYOND('field=sex');">[src.active_record_general.fields["sex"]]</a>
+							<br>
+							<br>Age: <a href="javascript:goBYOND('field=age');">[src.active_record_general.fields["age"]]</a>
+							<br>
+							<br>Rank: <a href="javascript:goBYOND('field=rank');">[src.active_record_general.fields["rank"]]</a>
+							<br>
+							<br>Fingerprint: <a href="javascript:goBYOND('field=fingerprint');">[src.active_record_general.fields["fingerprint"]]</a>
+							<br>
+							<br>DNA: [src.active_record_general.fields["dna"]]
+							<br>
+							<br>Physical Status: [src.active_record_general.fields["p_stat"]]
+							<br>
+							<br>Mental Status: [src.active_record_general.fields["m_stat"]]
+							<br>
+						"}
 					else
 						dat += "<b>General Record Lost!</b><br>"
 					if (src.active_record_security)
-						dat += text({"
+						dat += {"
 						<br>
 						<br><center><b>Security Data</b></center>
 						<br>
-						<br>Criminal Status: <a href="javascript:goBYOND('field=criminal');">[]</a>
+						<br>Criminal Status: <a href="javascript:goBYOND('field=criminal');">[src.active_record_security.fields["criminal"]]</a>
+						<br>
+						<br>Minor Crimes: <a href="javascript:goBYOND('field=mi_crim');">[src.active_record_security.fields["mi_crim"]]</a>
+						<br>
+						<br>Details: <a href="javascript:goBYOND('field=mi_crim_d');">[src.active_record_security.fields["mi_crim_d"]]</a>
 						<br>
 						<br>
 						<br>
-						<br>Minor Crimes: <a href="javascript:goBYOND('field=mi_crim');">[]</a>
+						<br>Major Crimes: <a href="javascript:goBYOND('field=ma_crim');">[src.active_record_security.fields["ma_crim"]]</a>
 						<br>
-						<br>Details: <a href="javascript:goBYOND('field=mi_crim_d');">[]</a>
-						<br>
-						<br>
-						<br>
-						<br>Major Crimes: <a href="javascript:goBYOND('field=ma_crim');">[]</a>
-						<br>
-						<br>Details: <a href="javascript:goBYOND('field=ma_crim_d');">[]</a>
+						<br>Details: <a href="javascript:goBYOND('field=ma_crim_d');">[src.active_record_security.fields["ma_crim_d"]]</a>
 						<br>
 						<br>
 						<br>
 						<br>Important Notes:
 						<br>
-						<br>&emsp;<a href="javascript:goBYOND('field=notes');">[]</a>
+						<br>&emsp;<a href="javascript:goBYOND('field=notes');">[src.active_record_security.fields["notes"]]</a>
 						<br>
 						<br>
 						<br>
 						<br><center><b>Comments/Log</b></center>
 						<br>
-						"}, src.active_record_security.fields["criminal"], src.active_record_security.fields["mi_crim"], src.active_record_security.fields["mi_crim_d"], src.active_record_security.fields["ma_crim"], src.active_record_security.fields["ma_crim_d"], src.active_record_security.fields["notes"])
+						"}
 
 						var/counter = 1
 						while (src.active_record_security.fields["com_[counter]"])
-							dat += text({"
-							[]
-							<br><a href="javascript:goBYOND('del_c=[]');">Delete Entry</a>
-							<br>
-							<br>"}, src.active_record_security.fields["com_[counter]"], counter)
-							counter++
+							dat += {"
+								[src.active_record_security.fields["com_[counter]"]]
+								<br><a href="javascript:goBYOND('del_c=[counter]');">Delete Entry</a>
+								<br>
+								<br>"}
+								counter++
 
 						dat += {"
 							<a href="javascript:goBYOND('add_c=1');">Add Entry</a>
 							<br>
 							<br>
-							"}
-
-						dat += {"
 							<a href="javascript:goBYOND('del_r=1');">Delete Record (Security Only)</a>
 							<br>
 							<br>
@@ -320,14 +317,14 @@
 			src.active_record_security = null
 
 		else if (href_list["del_all"])
-			src.temp = text({"
+			src.temp = {"
 					Are you sure you wish to delete all records?
 					<br>
 					<br>&emsp;<a href="javascript:goBYOND('temp=1;del_all2=1');">Yes</a>
 					<br>
 					<br>&emsp;<a href="javascript:goBYOND('temp=1');">No</a>
 					<br>
-					"})
+					"}
 
 		else if (href_list["del_all2"])
 			for(var/datum/data/record/R in data_core.security)
@@ -417,7 +414,7 @@
 						src.active_record_security.fields["notes"] = t1
 				if("criminal")
 					if (istype(src.active_record_security, /datum/data/record))
-						src.temp = text({"
+						src.temp = {"
 					<b>Criminal Status:</b>
 					<br>
 					<br>&emsp;<a href="javascript:goBYOND('temp=1;criminal2=none');">None</a>
@@ -430,11 +427,11 @@
 					<br>
 					<br>&emsp;<a href="javascript:goBYOND('temp=1;criminal2=released');">Released</a>
 					<br>
-					"})
+					"}
 				if("rank")
 					var/list/L = list( "Head of Personnel", "Captain", "AI" )
 					if ((istype(src.active_record_general, /datum/data/record) && L.Find(src.rank)))
-						src.temp = text({"
+						src.temp = {"
 					<b>Rank:</b>
 					<br>
 					<br><b>Assistants:</b>
@@ -469,7 +466,7 @@
 					<br>
 					<br><a href="javascript:goBYOND('temp=1;rank=captain');">Captain</a>
 					<br>
-					"})
+					"}
 					else
 						alert(usr, "You do not have the required rank to do this!")
 
@@ -527,14 +524,14 @@
 
 		else if (href_list["del_r"])
 			if (src.active_record_security)
-				src.temp = text({"
+				src.temp = {"
 					Are you sure you wish to delete the record (Security Portion Only)?
 					<br>
 					<br>&emsp;<a href="javascript:goBYOND('temp=1;del_r2=1');">Yes</a>
 					<br>
 					<br>&emsp;<a href="javascript:goBYOND('temp=1');">No</a>
 					<br>
-					"})
+					"}
 
 		else if (href_list["del_r2"])
 			if (src.active_record_security)
@@ -544,14 +541,14 @@
 
 		else if (href_list["dela_r"])
 			if (src.active_record_general)
-				src.temp = text({"
+				src.temp = {"
 					Are you sure you wish to delete the record (ALL)?
 					<br>
 					<br>&emsp;<a href="javascript:goBYOND('temp=1;dela_r2=1');">Yes</a>
 					<br>
 					<br>&emsp;<a href="javascript:goBYOND('temp=1');">No</a>
 					<br>
-					"})
+					"}
 
 		else if (href_list["dela_r2"])
 			for(var/datum/data/record/R in data_core.medical)
@@ -600,9 +597,7 @@
 				var/datum/data/record/R = new /datum/data/record(  )
 				R.fields["name"] = src.active_record_general.fields["name"]
 				R.fields["id"] = src.active_record_general.fields["id"]
-				R.name = text({"
-					Security Record #[]
-					"}, R.fields["id"])
+				R.name = {"Security Record #[R.fields["id"]]"}
 				R.fields["criminal"] = "None"
 				R.fields["mi_crim"] = "None"
 				R.fields["mi_crim_d"] = "No minor crime convictions."
@@ -622,15 +617,15 @@
 			if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)) || src.active_record_security != a2))
 				return
 			var/counter = 1
-			while(src.active_record_security.fields[text({"com_[]"}, counter)])
+			while (src.active_record_security.fields["com_[counter]"])
 				counter++
-			src.active_record_security.fields[text({"com_[]"}, counter)] = text({"Made by [] ([]) on [], [CURRENT_SPACE_YEAR]
-					<br>[]
-					"}, src.authenticated, src.rank, time2text(world.realtime, "DDD MMM DD hh:mm:ss"), t1)
+			src.active_record_security.fields["com_[counter]"] = {"Made by [src.authenticated] ([src.rank]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [CURRENT_SPACE_YEAR]
+					<br>[t1]
+					"}
 
 		else if (href_list["del_c"])
-			if ((istype(src.active_record_security, /datum/data/record) && src.active_record_security.fields[text({"com_[]"}, href_list["del_c"])]))
-				src.active_record_security.fields[text({"com_[]"}, href_list["del_c"])] = "<b>Deleted</b>"
+			if ((istype(src.active_record_security, /datum/data/record) && src.active_record_security.fields["com_[href_list["del_c"]]"]))
+				src.active_record_security.fields["com_[href_list["del_c"]]"] = "<b>Deleted</b>"
 
 		else if (href_list["search_f"])
 			var/t1 = input("Search String: (Fingerprint)", "Secure. records", null, null)  as text
@@ -644,9 +639,7 @@
 				if (lowertext(R.fields["fingerprint"]) == t1)
 					src.active_record_general = R
 			if (!( src.active_record_general ))
-				src.temp = text({"
-					Could not locate record [].
-					"}, t1)
+				src.temp = "Could not locate record [t1]."
 			else
 				for(var/datum/data/record/E in data_core.security)
 					if ((E.fields["name"] == src.active_record_general.fields["name"] || E.fields["id"] == src.active_record_general.fields["id"]))
@@ -665,9 +658,7 @@
 				if ((lowertext(R.fields["name"]) == t1 || t1 == lowertext(R.fields["dna"]) || t1 == lowertext(R.fields["id"])))
 					src.active_record_general = R
 			if (!( src.active_record_general ))
-				src.temp = text({"
-					Could not locate record [].
-					"}, t1)
+				src.temp = "Could not locate record [t1]."
 			else
 				for(var/datum/data/record/E in data_core.security)
 					if ((E.fields["name"] == src.active_record_general.fields["name"] || E.fields["id"] == src.active_record_general.fields["id"]))
@@ -682,57 +673,55 @@
 				P.info = "<center><b>Security Record</b></center><br>"
 				src.validate_records()
 				if (src.active_record_general)
-					P.info += text({"
-					Name: [] ID: []
+					P.info += {"
+					Name: [src.active_record_general.fields["name"]] ID: [src.active_record_general.fields["id"]]
 					<br>
-					<br>Sex: []
+					<br>Sex: [src.active_record_general.fields["sex"]]
 					<br>
-					<br>Age: []
+					<br>Age: [src.active_record_general.fields["age"]]
 					<br>
-					<br>Fingerprint: []
+					<br>Fingerprint: [src.active_record_general.fields["fingerprint"]]
 					<br>
-					<br>Physical Status: []
+					<br>Physical Status: [src.active_record_general.fields["p_stat"]]
 					<br>
-					<br>Mental Status: []
+					<br>Mental Status: [src.active_record_general.fields["m_stat"]]
 					<br>
-					"}, src.active_record_general.fields["name"], src.active_record_general.fields["id"], src.active_record_general.fields["sex"], src.active_record_general.fields["age"], src.active_record_general.fields["fingerprint"], src.active_record_general.fields["p_stat"], src.active_record_general.fields["m_stat"])
+					"}
 				else
 					P.info += "<b>General Record Lost!</b><br>"
 				if (src.active_record_security)
-					P.info += text({"
+					P.info += {"
 					<br>
 					<br><center><b>Security Data</b></center>
 					<br>
-					<br>Criminal Status: []
+					<br>Criminal Status: [src.active_record_security.fields["criminal"]]
 					<br>
 					<br>
 					<br>
-					<br>Minor Crimes: []
+					<br>Minor Crimes: [src.active_record_security.fields["mi_crim"]]
 					<br>
-					<br>Details: []
+					<br>Details: [src.active_record_security.fields["mi_crim_d"]]
 					<br>
 					<br>
 					<br>
-					<br>Major Crimes: []
+					<br>Major Crimes: [src.active_record_security.fields["ma_crim"]]
 					<br>
-					<br>Details: []
+					<br>Details: [src.active_record_security.fields["ma_crim_d"]]
 					<br>
 					<br>
 					<br>
 					<br>Important Notes:
 					<br>
-					<br>&emsp;[]
+					<br>&emsp;[src.active_record_security.fields["notes"]]
 					<br>
 					<br>
 					<br>
 					<br><center><b>Comments/Log</b></center>
 					<br>
-					"}, src.active_record_security.fields["criminal"], src.active_record_security.fields["mi_crim"], src.active_record_security.fields["mi_crim_d"], src.active_record_security.fields["ma_crim"], src.active_record_security.fields["ma_crim_d"], src.active_record_security.fields["notes"])
+					"}
 					var/counter = 1
-					while(src.active_record_security.fields[text({"com_[]"}, counter)])
-						P.info += text({"
-					[]
-					<br>"}, src.active_record_security.fields[text("com_[]", counter)])
+					while (src.active_record_security.fields["com_[counter]"])
+						P.info += {"[src.active_record_security.fields["com_[counter]"]]<br>"}
 						counter++
 				else
 					P.info += "<b>Security Record Lost!</b><br>"
