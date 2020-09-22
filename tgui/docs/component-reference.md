@@ -509,7 +509,7 @@ Example:
 
 ### `HealthStat`
 
-A box that applies colors to its contents depending on the damage type.
+A box that applies a color to its contents depending on the damage type.
 
 **Props:**
 
