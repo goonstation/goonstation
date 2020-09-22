@@ -321,10 +321,6 @@
 	else if (href_list["del_rec"])
 		if ((!src.active_record) || (src.menu < 3))
 			return
-		if (!src.allowed(usr))
-			src.temp = "Insufficient access."
-			src.updateUsrDialog()
-			return
 		if (src.menu == 3) //If we are viewing a record, confirm deletion
 			src.temp = "Delete record?"
 			src.menu = 4
