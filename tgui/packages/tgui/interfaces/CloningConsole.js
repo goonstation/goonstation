@@ -12,7 +12,7 @@ import { Box, Button, ColorBox, Section, Table, Tabs, ProgressBar, NoticeBox, La
 import { Window } from "../layouts";
 import { clamp } from 'common/math';
 
-const HEALTH_COLOR_BY_LEVEL = [
+const healthColorByLevel = [
   "#17d568",
   "#2ecc71",
   "#e67e22",
@@ -24,7 +24,7 @@ const HEALTH_COLOR_BY_LEVEL = [
 const healthToColor = (oxy, tox, burn, brute) => {
   const healthSum = oxy + tox + burn + brute;
   const level = clamp(Math.ceil(healthSum / 25), 0, 5);
-  return HEALTH_COLOR_BY_LEVEL[level];
+  return healthColorByLevel[level];
 };
 
 const Types = {
@@ -54,7 +54,7 @@ export const CloningConsole = (props, context) => {
   const { data, act } = useBackend(context);
   const {
     cloneSlave,
-    clones_for_cash,
+    clonesForCash,
     balance,
   } = data;
   const [
@@ -135,7 +135,7 @@ export const CloningConsole = (props, context) => {
           </Tabs>
         </Section>
         {/* used for the wage system */}
-        {(clones_for_cash && (
+        {(clonesForCash && (
           <Section>
             Current machine credit: {balance}
           </Section>
