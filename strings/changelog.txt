@@ -1,4 +1,23 @@
 
+(t)tue sep 22 20
+(u)Zamujasa
+(e)🆕|feature
+(*)The Security Records computer has been more or less refurbished.
+(*)No, not that one. The one with the really old UI that was in Cog1's morgue, for example.
+(*)Some things aren't fully updated yet, but it should be at least slightly more usable?
+(*)No it isn't tgui, stop asking.
+(u)schwicky-schwag
+(p)2230
+(e)🎨|sprites
+(*)Added a whole bunch of new gun sprites (with in-hands included) to replace old ones, and ones for coders to use in the future.
+(u)kyle
+(+)Removed Real Katana and C-Saber from gang item pool. The Reverse-Blade Katana and D-Saber are still available.
+(+)Gangers can no longer use a gang flyer on a person to show them a popup to join the gang, instead a player must pick up the flyer and use it in-hand.
+(t)mon sep 21 20
+(u)zjdtmkhzt
+(p)2233
+(e)🆕|feature
+(+)All types of sea plants (or plantlike organisms) should now be removable with wirecutters.
 (t)sat sep 19 20
 (u)ThePotato97
 (p)1986

@@ -81,7 +81,7 @@
 #define TGS_EVENT_COMPILE_START 8
 /// When a compile is cancelled. No parameters
 #define TGS_EVENT_COMPILE_CANCELLED 9
-/// When a compile fails. Parameters: Game directory path, [TRUE]/[FALSE] based on if the cause for failure was DMAPI validation
+/// When a compile fails. Parameters: Game directory path, TRUE/FALSE based on if the cause for failure was DMAPI validation
 #define TGS_EVENT_COMPILE_FAILURE 10
 /// When a compile operation completes. Note, this event fires before the new .dmb is loaded into the watchdog. Consider using the [TGS_EVENT_DEPLOYMENT_COMPLETE] instead. Parameters: Game directory path
 #define TGS_EVENT_COMPILE_COMPLETE 11
@@ -173,13 +173,13 @@
 	var/deprefixed_parameter
 
 /**
-  * Returns [TRUE]/[FALSE] based on if the [/datum/tgs_version] contains wildcards.
+  * Returns TRUE/FALSE based on if the [/datum/tgs_version] contains wildcards.
   */
 /datum/tgs_version/proc/Wildcard()
 	return
 
 /**
-  * Returns [TRUE]/[FALSE] based on if the [/datum/tgs_version] equals some other version.
+  * Returns TRUE/FALSE based on if the [/datum/tgs_version] equals some other version.
   *
   * other_version - The [/datum/tgs_version] to compare against.
   */
@@ -213,9 +213,9 @@
 	var/friendly_name
 	/// Name of the chat connection. This is the IRC server address or the Discord guild.
 	var/connection_name
-	/// [TRUE]/[FALSE] based on if the server operator has marked this channel for game admins only.
+	/// TRUE/FALSE based on if the server operator has marked this channel for game admins only.
 	var/is_admin_channel
-	/// [TRUE]/[FALSE] if the channel is a private message channel for a [/datum/tgs_chat_user].
+	/// TRUE/FALSE if the channel is a private message channel for a [/datum/tgs_chat_user].
 	var/is_private_channel
 	/// Tag string associated with the channel in TGS
 	var/custom_tag
@@ -269,7 +269,7 @@
 	return
 
 /**
-  * Returns [TRUE] if DreamDaemon was launched under TGS, the API matches, and was properly initialized. [FALSE] will be returned otherwise.
+  * Returns TRUE if DreamDaemon was launched under TGS, the API matches, and was properly initialized. FALSE will be returned otherwise.
   */
 /world/proc/TgsAvailable()
 	return
@@ -289,7 +289,7 @@
   * Send a message to connected chats.
   *
   * message - The string to send.
-  * admin_only: If [TRUE], message will be sent to admin connected chats. Vice-versa applies.
+  * admin_only: If TRUE, message will be sent to admin connected chats. Vice-versa applies.
   */
 /world/proc/TgsTargetedChatBroadcast(message, admin_only_goon_sucks = FALSE)
 	return

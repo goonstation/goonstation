@@ -211,7 +211,7 @@ proc/Create_Tommyname()
 /obj/item/gun/energy/tommy_gun
 	name = "Tommy Gun"
 	icon = 'icons/obj/items/gun.dmi'
-	icon_state = "tommy1"
+	icon_state = "tommygun"
 	m_amt = 4000
 	rechargeable = 1
 	force = 0.0
@@ -234,7 +234,7 @@ proc/Create_Tommyname()
 
 	update_icon()
 		if(cell)
-			src.icon_state = "tommy[src.cell.charge > 0]"
+			src.icon_state = "tommygun[src.cell.charge <= 0 ? "-empty" : ""]"
 			return
 
 ///////////////////////////////////////Analysis datum for the spectrometer

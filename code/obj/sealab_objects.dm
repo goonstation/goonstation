@@ -49,9 +49,10 @@
 			src.pixel_y = rand(-8,8)
 
 	attackby(obj/item/W, mob/user)
-		if (drop_type && issnippingtool(W))
-			var/obj/item/drop = new drop_type
-			drop.set_loc(src.loc)
+		if (issnippingtool(W))
+			if(drop_type)
+				var/obj/item/drop = new drop_type
+				drop.set_loc(src.loc)
 			src.visible_message("<span class='alert'>[user] cuts down [src].</span>")
 			qdel(src)
 		..()

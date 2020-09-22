@@ -5,7 +5,7 @@
 /datum/data/record
 	name = "record"
 	size = 5.0
-	var/list/fields = list(  )
+	var/list/list/fields = list(  )
 
 /datum/station_state
 	var/floor = 0
