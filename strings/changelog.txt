@@ -1,5 +1,11 @@
 
 (t)tue sep 22 20
+(u)Zamujasa
+(e)🆕|feature
+(*)The Security Records computer has been more or less refurbished.
+(*)No, not that one. The one with the really old UI that was in Cog1's morgue, for example.
+(*)Some things aren't fully updated yet, but it should be at least slightly more usable?
+(*)No it isn't tgui, stop asking.
 (u)schwicky-schwag
 (p)2230
 (e)🎨|sprites
