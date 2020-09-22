@@ -131,7 +131,8 @@
 					if (src.active_record_general)
 						var/photo_filename = null
 						try
-							var/datum/computer/file/image/photo = src.active_record_general.fields["file_photo"]?.ourIcon
+							var/datum/computer/file/image/img_record = src.active_record_general.fields["file_photo"]
+							var/icon/photo = img_record.ourIcon
 							if (!photo)
 								photo = wanted_poster_unknown
 							photo_filename = copytext("\ref[src.active_record_general]", 4, -1)

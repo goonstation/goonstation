@@ -44,8 +44,7 @@ jobs:
       - name: Run Linter
         id: linter
         run: |
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1 | tee errors.log
-          cat errors.log
+          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
 
       - name: Annotate Linter
         uses: yogstation13/DreamAnnotate@34029606cd7c22a08a589e084f860c1cc287363c # v1 - security concerns and all that shit
@@ -202,8 +201,7 @@ jobs:
       - name: Run Linter
         id: linter
         run: |
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1 | tee errors.log
-          cat errors.log
+          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
 
       - name: Compile
         run: |
