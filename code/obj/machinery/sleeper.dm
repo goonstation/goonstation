@@ -745,8 +745,8 @@
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
-
-//Yells at doctors to check the thing when it's sent home
+ 
+/// Yells at doctors to check the thing when it's sent home
 /obj/machinery/sleeper/port_a_medbay/proc/PDA_alert_check()
 	if (src.loc != homeloc)
 		return
