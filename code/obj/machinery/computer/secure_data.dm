@@ -182,7 +182,7 @@
 			"}
 					else
 						dat += {"
-		<tr><td colspan='3'>General record missing!</td></tr>
+		<tr><td colspan='3' style='text-align: center;'>General record missing.</td></tr>
 						"}
 
 					dat += {"
@@ -195,8 +195,8 @@
 						var/list/record_to_display = list(
 							"none" = "None",
 							"arrest" = "*Arrest*",
-							"parolled" = "Parolled",
 							"incarcerated" = "Incarcerated",
+							"parolled" = "Parolled",
 							"released" = "Released"
 							)
 
@@ -232,16 +232,18 @@
 		</tr>
 						"}
 
-						var/counter = 1
-						while (src.active_record_security.fields["com_[counter]"])
-							dat += {"
-		<tr>
-			<td colspan="3">
-				<div class="monospace">[src.active_record_security.fields["com_[counter]"]]</div>
-				<br><a href="javascript:doPopup('del_comment;comment=[counter]', 'Delete this entry?');">Delete Entry</a>
-			</td>
-		</tr>"}
-								counter++
+						if (src.active_record_security.fields["log"])
+							for (var/comment_num in 1 to src.active_record_security.fields["log"].len)
+								var/list/comment = src.active_record_security.fields["log"][comment_num]
+								dat += {"
+			<tr>
+				<th colspan="2" style="font-weight: normal; text-align: left;">
+					[comment["time"]] - <strong>[comment["author"]]</strong>
+				</th>
+				<th>[comment["author"] != "Deleted" ? "<a href=\"javascript:doPopup('del_comment;comment=[comment_num]', 'Delete this entry?');\">Delete</a>" : "&mdash;"]</th>
+			</tr>
+			<tr><td colspan="3" class="monospace">[comment["text"]]</td></tr>
+			"}
 
 						dat += {"
 		<tr>
@@ -253,8 +255,8 @@
 							"}
 					else
 						dat += {"
-		<tr><td colspan='3'>
-			Security record missing!
+		<tr><td colspan='3' style='text-align: center;'>
+			Security record missing.
 			<br><br><a href="javascript:goBYOND('action=new_security_record');">Create new record</a>
 		</td></tr>
 	</tbody>
@@ -314,15 +316,15 @@
 
 		.none         {}
 		.arrest       { color: #ff0000; background: #ffeeee; }
-		.parolled     { color: #888800; background: #ffffbb; }
-		.incarcerated { color: #339966; background: #bbffdd; }
+		.incarcerated { color: #888800; background: #ffffbb; }
+		.parolled     { color: #339966; background: #bbffdd; }
 		.released     { color: #3366ff; background: #bbddff; }
 		.crimer .active { border: 3px solid black; }
-		.none.active, .none:hover                 { background: #ffffff; color: black; }
-		.arrest.active, .arrest:hover             { background: #ff0000; color: white; }
-		.parolled.active, .parolled:hover         { background: #ffff33; color: black; }
-		.incarcerated.active, .incarcerated:hover { background: #33cc66; color: black; }
-		.released.active, .released:hover         { background: #3399ff; color: black; }
+		.none.active,         .none:hover         { background: #ffffff; color: black; }
+		.arrest.active,       .arrest:hover       { background: #ff0000; color: white; }
+		.incarcerated.active, .incarcerated:hover { background: #ffff33; color: black; }
+		.parolled.active,     .parolled:hover     { background: #33cc66; color: black; }
+		.released.active,     .released:hover     { background: #3399ff; color: black; }
 
 	/* borrowed from char prefs */
 	table {
@@ -730,16 +732,28 @@
 				t1 = adminscrub(t1)
 				if (!t1 || src.validate_can_still_use(null, current_security, usr))
 					return
-				var/counter = 1
-				while (src.active_record_security.fields["com_[counter]"])
-					counter++
-				src.active_record_security.fields["com_[counter]"] = {"Made by [src.authenticated] ([src.rank]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [CURRENT_SPACE_YEAR]
-						<br>[t1]
-						"}
+				// var/counter = 1
+				// while (src.active_record_security.fields["com_[counter]"])
+				// 	counter++
+
+				var/list/new_comment = list(
+					"author" = "[src.authenticated] ([src.rank])",
+					"time" = "[time2text(world.realtime, "hh:mm:ss")]",
+					"text" = t1
+					)
+
+				if (!src.active_record_security.fields["log"])
+					src.active_record_security.fields["log"] = list()
+
+				// this looks dumb as fuck, but: byond
+				src.active_record_security.fields["log"] += list( new_comment )
 
 			if ("del_comment")
-				if (src.active_record_security && src.active_record_security.fields["com_[href_list["comment"]]"])
-					src.active_record_security.fields["com_[href_list["comment"]]"] = "<b>Deleted</b>"
+				var/comment_num = text2num(href_list["comment"])
+				if (src.active_record_security && src.active_record_security.fields["log"] && src.active_record_security.fields["log"][comment_num])
+					src.active_record_security.fields["log"][comment_num]["author"] = "Deleted"
+					src.active_record_security.fields["log"][comment_num]["text"] = "<div style='text-align: center;'>Deleted at [time2text(world.realtime, "hh:mm:ss")]</div>"
+
 
 			if ("search_fingerprint")
 				var/t1 = input("Search String: (Fingerprint)", "Security Records", null, null) as text
