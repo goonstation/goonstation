@@ -32,7 +32,7 @@ var/global/datum/ehjax/ehjax = new /datum/ehjax()
 			*
 			* * href_list -> "proc" (string) The proc to call (no paths included)
 			* * href_list -> "window" (string) The browser window name to send return data to (required for callback)
-			* * href_list -> "param" (string) A url-encoded array of arguments to pass to the proc (e.g. param[foo]=bar&param[bar]=foo)
+			* * href_list -> "param" (string) A url-encoded array of arguments to pass to the proc (e.g. `param[foo]=bar&param[bar]=foo`)
 			* * href_list -> "type" (string) Type of proc to call. If none, assumes global proc.
 			* * href_list -> "datum" (string) Requires type=datum. Name of the datum the proc belongs to (/datum/ path not required) Note: datum is relative to client ONLY.
 			* * href_list -> "passClient" (boolean) Whether or not to send the client to the called proc

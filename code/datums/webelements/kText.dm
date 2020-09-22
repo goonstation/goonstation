@@ -85,8 +85,8 @@ kText
 		 * Finds the xth occurence of a string within another string.
 		 * @param string	The string to be queried.
 		 * @param sub		The string to search for.
-		 * @param which		Which occurrence of the string [sub] to look for.
-		 * @return the starting position of the xth (which) occurrence of [sub] within [string].
+		 * @param which		Which occurrence of the string {sub} to look for.
+		 * @return the starting position of the xth (which) occurrence of {sub} within {string}.
 		 * 0 if nothing is found.
 		 * IE: findWhich("a b a", "a", 2) would return 5 (where the second occurrence of "a" is).
 		 * if which is -1, it will find the last occurrence of the substring.
@@ -192,7 +192,7 @@ kText
 		 * @param string	The string to be queried.
 		 * @param sub		The string to be searched for.
 		 * @param replace	The string to be used as a replacement.
-		 * @return the given string, with all occurrences of [sub] replaced with [replace].
+		 * @return the given string, with all occurrences of {sub} replaced with {replace}.
 		 * IE: replaceText("i love cake", "cake", "pie") would return "i love pie".
 		 */
 		replaceText(string, sub, replace)

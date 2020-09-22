@@ -37,7 +37,7 @@
 		return
 
 
-////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
 /datum/abilityHolder/santa
 	usesPoints = 0
