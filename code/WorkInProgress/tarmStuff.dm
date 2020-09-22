@@ -173,6 +173,44 @@
 		return round(E.cell.charge * E.current_projectile.cost)
 	else return G.canshoot() * INFINITY //idk, just let it happen
 
+/obj/item/gun/kinetic/pistol/gyrojet //awaiting sprites!
+	name = "gyrojet pistol"
+	desc = "A semi-automatic pistol that fires rocket-propelled bullets"
+	caliber = 0.512
+	max_ammo_capacity = 6
+
+	New()
+		. = ..()
+		ammo = new/obj/item/ammo/bullets/gyrojet
+		current_projectile = new/datum/projectile/bullet/gyrojet
+
+obj/item/ammo/bullets/gyrojet
+	sname = "13mm Gyrojet"
+	name = "gyrojet magazine"
+	icon_state = "pistol_magazine"
+	amount_left = 6.0
+	max_amount = 6.0
+	ammo_type = new/datum/projectile/bullet/gyrojet
+	caliber = 0.512
+
+/datum/projectile/bullet/gyrojet
+	projectile_speed = 5
+	max_range = 500
+	dissipation_rate = 0
+	power = 10
+	precalculated = 0
+	caliber = 0.512
+	shot_volume = 0.1
+
+	on_launch(obj/projectile/O)
+		O.internal_speed = projectile_speed
+
+	tick(obj/projectile/O)
+		O.internal_speed = min(O.internal_speed * 1.15, 56)
+
+	get_power(obj/projectile/P, atom/A)
+		return 10 + P.internal_speed
+
 //magical crap
 /obj/item/enchantment_scroll
 	name = "Scroll of Enchantment"
@@ -198,14 +236,12 @@
 					incr = (currentench <= 2) ? rand(1, 3) : 1
 					I.setProperty("enchantarmor", currentench+incr)
 					success = 1
-			else if(I.force >= 5)
+			else
 				currentench = I.getProperty("enchantweapon")
 				if(currentench <= 2 || !rand(0, currentench))
 					incr = (currentench <= 2) ? rand(1, 3) : 1
 					I.setProperty("enchantweapon", currentench+incr)
 					success = 1
-			else
-				return ..()
 			if(success)
 				var/turf/T = get_turf(target)
 				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
@@ -227,11 +263,9 @@
 	if(istype(src, /obj/item/clothing))
 		currentench = src.getProperty("enchantarmor")
 		src.setProperty("enchantarmor", currentench+incr)
-	else if(src.force >= 5)
+	else
 		currentench = src.getProperty("enchantweapon")
 		src.setProperty("enchantweapon", currentench+incr)
-	else
-		return
 	src.remove_prefixes("[currentench>0?"+":""][currentench]")
 	if(currentench+incr)
 		src.name_prefix("[(currentench+incr)>0?"+":""][currentench+incr]")

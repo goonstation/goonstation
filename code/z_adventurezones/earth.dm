@@ -94,61 +94,171 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 /area/centcom/offices
 	name = "NT Offices"
 	icon_state = "red"
+	var/ckey = ""
 
-	urs/name = "Office of UrsulaMajor"
-	gannets/name = "Office of Hannah Strawberry"
-	sydne66/name = "Office of Throrvardr Finvardrardson"
-	darkchis/name = "Office of Walter Poehl"
-	dions/name = "Office of Dions"
-	zewaka/name = "Office of Shitty Bill Jr."
-	wire/name = "Office of Wire"
-	drsingh/name = "Office of DrSingh"
-	aphtonites/name = "Office of Aphtonites"
-	bubs/name = "Office of bubs"
-	mbc/name = "Office of Dotty Spud"
-	pope/name = "Office of Popecrunch"
-	ines/name = "Office of Ines"
-	shotgunbill/name = "Office of Shotgunbill"
-	burntcornmuffin/name = "Office of BurntCornMuffin"
-	grayshift/name = "Office of Grayshift"
-	freshlemon/name = "Office of Belkis Tekeli"
-	nakar/name = "Office of Nakar"
-	mordent/name = "Office of Mordent"
-	tobba/name =  "Office of Tobba"
-	pacra/name = "Office of Pacra"
-	atomicthumbs/name = "Office of Atomicthumbs"
-	supernorn/name = "Office of Supernorn"
-	flourish/name = "Office of Flourish"
-	gibbed/name = "Office of Rick"
-	edad/name = "Office of Edad"
-	souricelle/name = "Office of Souricelle"
-	hufflaw/name = "Office of Hufflaw"
-	aibm/name = "Office of AngriestIBM"
-	cogwerks/name = "Office of Cogwerks"
-	a69/name = "Office of Dixon Balls"
-	hydro/name = "Office of HydroFloric"
-	crimes/name = "Office of Warcrimes"
-	hazoflabs/name = "Shared Office Space of Gerhazo and Flaborized"
-	reginaldhj/name = "Office of ReginaldHJ"
-	gerhazo/name = "Office of Casey Spark"
-	flaborized/name = "Office of Flaborized"
-	questx/name = "Office of Boris Bubbleton"
-	simianc/name = "Office of C.U.T.I.E."
-	kyle/name = "Office of Kyle"
-	patrickstar/name = "Office of Patrick Star"
-	sageacrin/name = "Office of Escha Thermic"
-	pali/name = "Office of Pali"
-	maid/name = "Office of Maid"
-	studenterhue/name = "Office of Studenterhue"
-	zamujasa/name = "Office of Zamujasa"
-	lyra/name = "Office of Lyra"
-	efrem/name = "Office of Vaughn Moon"
-	sovexe/name = "Office of Sov Extant"
-	enakai/name = "Office of Enakai"
-	hukhukhuk/name = "Office of HukHukHuk"
-	tarmunora/name = "Office of yass"
-	rodney/name = "Office of Lily"
 
+	a69
+		ckey = ""
+		name = "Office of Dixon Balls"
+	aibm
+		ckey = "angriestibm"
+		name = "Office of AngriestIBM"
+	aphtonites
+		ckey = ""
+		name = "Office of Aphtonites"
+	atomicthumbs
+		ckey = ""
+		name = "Office of Atomicthumbs"
+	bubs
+		ckey = "insanoblan"
+		name = "Office of bubs"
+	burntcornmuffin
+		ckey = ""
+		name = "Office of BurntCornMuffin"
+	cogwerks
+		ckey = "drcogwerks"
+		name = "Office of Cogwerks"
+	crimes
+		ckey = "warc"
+		name = "Office of Warcrimes"
+	darkchis
+		ckey = "darkchis"
+		name = "Office of Walter Poehl"
+	dions
+		ckey = "dionsu"
+		name = "Office of Dions"
+	drsingh
+		ckey = "magicmountain"
+		name = "Office of DrSingh"
+	edad
+		ckey = ""
+		name = "Office of Edad"
+	efrem
+		ckey = "captainbravo"
+		name = "Office of Vaughn Moon"
+	enakai
+		ckey = "enakai"
+		name = "Office of Enakai"
+	flaborized
+		ckey = "flaborized"
+		name = "Office of Flaborized"
+	flourish
+		ckey = "flourish"
+		name = "Office of Flourish"
+	freshlemon
+		ckey = ""
+		name = "Office of Belkis Tekeli"
+	gannets
+		ckey = "gannets"
+		name = "Office of Hannah Strawberry"
+	gerhazo
+		ckey = "gerhazo"
+		name = "Office of Casey Spark"
+	gibbed
+		ckey = "gibbed"
+		name = "Office of Rick"
+	grayshift
+		ckey = "grayshift"
+		name = "Office of Grayshift"
+	hazoflabs
+		// ckey = ""
+		name = "Shared Office Space of Gerhazo and Flaborized"
+	hufflaw
+		ckey = "hufflaw"
+		name = "Office of Hufflaw"
+	hukhukhuk
+		ckey = "hukhukhuk"
+		name = "Office of HukHukHuk"
+	hydro
+		ckey = "hydrofloric"
+		name = "Office of HydroFloric"
+	ines
+		ckey = "hokie"
+		name = "Office of Ines"
+	kyle
+		ckey = "kyle2143"
+		name = "Office of Kyle"
+	lyra
+		ckey = "lison"
+		name = "Office of Lyra"
+	maid
+		ckey = "housekeep"
+		name = "Office of Maid"
+	mbc
+		ckey = "mybluecorners"
+		name = "Office of Dotty Spud"
+	mordent
+		ckey = "mordent"
+		name = "Office of Mordent"
+	mrfishstick
+		ckey = "mrfishstick"
+		name = "Office of Mr Fishstick"
+	nakar
+		ckey = ""
+		name = "Office of Nakar"
+	pacra
+		ckey = "pacra"
+		name = "Office of Pacra"
+	pali
+		ckey = "pali6"
+		name = "Office of Pali"
+	patrickstar
+		ckey = ""
+		name = "Office of Patrick Star"
+	pope
+		ckey = "popecrunch"
+		name = "Office of Popecrunch"
+	questx
+		ckey = "questx"
+		name = "Office of Boris Bubbleton"
+	reginaldhj
+		ckey = "reginaldhj"
+		name = "Office of ReginaldHJ"
+	rodney
+		ckey = "rodneydick"
+		name = "Office of Lily"
+	sageacrin
+		ckey = "sageacrin"
+		name = "Office of Escha Thermic"
+	shotgunbill
+		ckey = "shotgunbill"
+		name = "Office of Shotgunbill"
+	simianc
+		ckey = "simianc"
+		name = "Office of C.U.T.I.E."
+	souricelle
+		ckey = "souricelle"
+		name = "Office of Souricelle"
+	sovexe
+		ckey = "sovexe"
+		name = "Office of Sov Extant"
+	studenterhue
+		ckey = "studenterhue"
+		name = "Office of Studenterhue"
+	supernorn
+		ckey = "supernorn"
+		name = "Office of Supernorn"
+	sydne66
+		ckey = "sydne66"
+		name = "Office of Throrvardr Finvardrardson"
+	tarmunora
+		ckey = "tarmunora"
+		name = "Office of yass"
+	tobba
+		ckey = "tobba"
+		name =  "Office of Tobba"
+	urs
+		ckey = "ursulamajor"
+		name = "Office of UrsulaMajor"
+	wire
+		ckey = "wirewraith"
+		name = "Office of Wire"
+	zamujasa
+		ckey = "zamujasa"
+		name = "Office of Zamujasa"
+	zewaka
+		ckey = "zewaka"
+		name = "Office of Shitty Bill Jr."
 
 /area/centcom/lobby
 	name = "NT Offices Lobby"
