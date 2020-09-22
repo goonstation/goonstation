@@ -981,7 +981,7 @@
 	name = "Tesla Coil"
 	desc = ""
 	icon_state = "comp_zap"
-	cooldown_time = 3 SECONDS
+	cooldown_time = 1 SECOND
 	cabinet_banned = true
 	one_per_tile = true
 	own_id = "/obj/item/mechanics/zapper"
