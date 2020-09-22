@@ -170,12 +170,15 @@
 		src.attack_hand(user)
 	return
 
+// message = message you want to pass to the noticebox
 // status = warning/success/danger/info which changes the color of the noticebox on the frontend
 
 /obj/machinery/computer/cloning/proc/show_message(message, status)
 	src.currentStatusMessage["text"] = message
 	src.currentStatusMessage["status"] = status
 	tgui_process.update_uis(src)
+	//prevents us from overwriting the wrong message
+	currentMessageNumber += 1
 	var/messageNumber = currentMessageNumber
 	SPAWN_DBG(5 SECONDS)
 	if(src.currentMessageNumber == messageNumber)
@@ -766,7 +769,7 @@
 	if(!isnull(src.scanner))
 		data["scannerOccupied"] = src.scanner.occupant
 		data["scannerLocked"] = src.scanner.locked
-		if(src.scanner.occupant)
+		if(!isnull(src.scanner?.occupant?.mind))
 			data["occupantScanned"] = !isnull(find_record(ckey(src.scanner.occupant.mind.key)))
 	data["message"] = src.currentStatusMessage
 	data["disk"] = !isnull(src.diskette)

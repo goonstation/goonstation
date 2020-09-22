@@ -307,13 +307,18 @@ const StatusSection = (props, context) => {
             <TypedNoticeBox
               type={message.status}
               textColor="white"
-              textAlign="center"
               width={25.45}
-              height={3.17}>
-              <Box inline style={{
-                'textAlignVertical': 'center',
-                'textAlign': 'center',
+              height={3.17}
+              align="center"
+              style={{
+                'vertical-align': 'middle',
+                'horizontal-align': 'middle',
               }}>
+              <Box
+                style={{
+                  position: 'relative', left: '50%', top: '50%',
+                  transform: 'translate(-50%, -50%)',
+                }}>
                 {message.text}
               </Box>
             </TypedNoticeBox>
