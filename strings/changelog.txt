@@ -1,5 +1,9 @@
 
 (t)tue sep 22 20
+(u)BatElite
+(p)2235
+(e)🆕|feature
+(*)The Port-a-Medbay now sends notifications to medical PDAs when sent to home turf with someone inside.
 (u)Zamujasa
 (e)🆕|feature
 (*)The Security Records computer has been more or less refurbished.
