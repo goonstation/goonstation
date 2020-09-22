@@ -7,7 +7,11 @@
 		owner = D
 		procname = name
 
-/// Base material datum definition
+///
+/**
+	* # material
+	* Base material datum definition
+	*/
 /datum/material
 	/// The atom that this material is applied to
 	var/atom/owner = null
@@ -43,7 +47,7 @@
 
 	/// if not null, texture will be set when mat is applied.
 	var/texture = ""
-	/// How to blend the [texture].
+	/// How to blend the [/datum/material/var/texture].
 	var/texture_blend = ICON_MULTIPLY
 
 	/// Should this even color the objects made from it? Mostly used for base station materials like steel
@@ -55,9 +59,9 @@
 	/// The 'quality' of the material
 	var/quality = 0
 
-	/// The actual value of edibility. Changes internally and sets [edible].
+	/// The actual value of edibility. Changes internally and sets [/datum/material/var/edible].
 	var/edible_exact = 0
-	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [edible_exact].
+	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [/datum/material/var/edible_exact].
 	var/edible = 0
 
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
