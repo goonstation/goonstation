@@ -819,9 +819,9 @@
 			new/datum/gang_item/country_western/colt_45_bullet,
 
 			new/datum/gang_item/space/discount_csaber,
-			new/datum/gang_item/space/csaber,
+			// new/datum/gang_item/space/csaber,
 			new/datum/gang_item/ninja/discount_katana,
-			new/datum/gang_item/ninja/katana,
+			// new/datum/gang_item/ninja/katana,
 			new/datum/gang_item/street/cop_car,
 
 			new/datum/gang_item/misc/janktank,
@@ -1195,7 +1195,7 @@
 		if (istype(target,/mob/living) && user.a_intent != INTENT_HARM)
 			if(user != target)
 				user.visible_message("<span class='alert'><b>[user] shows [src] to [target]!</b></span>")
-			induct_to_gang(target)
+			// induct_to_gang(target)		//this was sometimes kinda causing people to accidentally accept joining a gang.
 			return
 		else
 			return ..()

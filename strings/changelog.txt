@@ -10,6 +10,9 @@
 (p)2230
 (e)🎨|sprites
 (*)Added a whole bunch of new gun sprites (with in-hands included) to replace old ones, and ones for coders to use in the future.
+(u)kyle
+(+)Removed Real Katana and C-Saber from gang item pool. The Reverse-Blade Katana and D-Saber are still available.
+(+)Gangers can no longer use a gang flyer on a person to show them a popup to join the gang, instead a player must pick up the flyer and use it in-hand.
 (t)mon sep 21 20
 (u)zjdtmkhzt
 (p)2233
