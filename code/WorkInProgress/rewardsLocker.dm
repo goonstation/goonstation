@@ -753,9 +753,9 @@
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
 			var/obj/item/gun/kinetic/gunmod
-			if (istype(H.l_hand, gunmod))
+			if (istype(H.l_hand, /obj/item/gun/kinetic))
 				gunmod = H.l_hand
-			else if (istype(H.r_hand, gunmod))
+			else if (istype(H.r_hand, /obj/item/gun/kinetic))
 				gunmod = H.r_hand
 			if (!gunmod)
 				boutput(activator, "<span class='alert'>You can't be the man with the golden gun if you ain't got a got dang gun!</span>")
