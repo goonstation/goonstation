@@ -1,4 +1,9 @@
 
+(t)tue sep 22 20
+(u)schwicky-schwag
+(p)2230
+(e)🎨|sprites
+(*)Added a whole bunch of new gun sprites (with in-hands included) to replace old ones, and ones for coders to use in the future.
 (t)mon sep 21 20
 (u)zjdtmkhzt
 (p)2233
