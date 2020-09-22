@@ -682,7 +682,7 @@
 	mats = 30
 	p_class = 1.2
 	var/homeloc = null
-	//Mailgroups it'll try to send PDA notifications to
+	/// Mailgroups it'll try to send PDA notifications to
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
 	New()
