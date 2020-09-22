@@ -76,6 +76,7 @@
 	else
 		dat = text("Confirm Identity: <A href='?src=\ref[];scan=1'>[]</A><HR>", src, (src.scan ? text("[]", src.scan.name) : "----------"))
 		if (src.authenticated)
+			src.validate_records()
 			switch(src.screen)
 				if (SECREC_MAIN_MENU)
 					dat += text("<A href='?src=\ref[];search=1'>Search Records</A><BR><br><A href='?src=\ref[];list=1'>List Records</A><BR><br><A href='?src=\ref[];search_f=1'>Search Fingerprints</A><BR><br><A href='?src=\ref[];new_r=1'>New Record</A><BR><br><BR><br><A href='?src=\ref[];rec_m=1'>Record Maintenance</A><BR><br><A href='?src=\ref[];logout=1'>{Log Out}</A><BR><br>", src, src, src, src, src, src)
@@ -89,11 +90,11 @@
 					dat += text("<B>Records Maintenance</B><HR><br><A href='?src=\ref[];back=1'>Backup To Disk</A><BR><br><A href='?src=\ref[];u_load=1'>Upload From disk</A><BR><br><A href='?src=\ref[];del_all=1'>Delete All Records</A><BR><br><BR><br><A href='?src=\ref[];main=1'>Back</A>", src, src, src, src)
 				if (SECREC_VIEW_RECORD)
 					dat += "<CENTER><B>Security Record</B></CENTER><BR>"
-					if ((istype(src.active_record_general, /datum/data/record) && data_core.general.Find(src.active_record_general)))
+					if (src.active_record_general)
 						dat += text("Name: <A href='?src=\ref[];field=name'>[]</A> ID: <A href='?src=\ref[];field=id'>[]</A><BR><br>Sex: <A href='?src=\ref[];field=sex'>[]</A><BR><br>Age: <A href='?src=\ref[];field=age'>[]</A><BR><br>Rank: <A href='?src=\ref[];field=rank'>[]</A><BR><br>Fingerprint: <A href='?src=\ref[];field=fingerprint'>[]</A><br><br>DNA: []<BR><br>Physical Status: []<BR><br>Mental Status: []<BR>", src, src.active_record_general.fields["name"], src, src.active_record_general.fields["id"], src, src.active_record_general.fields["sex"], src, src.active_record_general.fields["age"], src, src.active_record_general.fields["rank"], src, src.active_record_general.fields["fingerprint"], src.active_record_general.fields["dna"], src.active_record_general.fields["p_stat"], src.active_record_general.fields["m_stat"])
 					else
 						dat += "<B>General Record Lost!</B><BR>"
-					if ((istype(src.active_record_security, /datum/data/record) && data_core.security.Find(src.active_record_security)))
+					if (src.active_record_security)
 						dat += text("<BR><br><CENTER><B>Security Data</B></CENTER><BR><br>Criminal Status: <A href='?src=\ref[];field=criminal'>[]</A><BR><br><BR><br>Minor Crimes: <A href='?src=\ref[];field=mi_crim'>[]</A><BR><br>Details: <A href='?src=\ref[];field=mi_crim_d'>[]</A><BR><br><BR><br>Major Crimes: <A href='?src=\ref[];field=ma_crim'>[]</A><BR><br>Details: <A href='?src=\ref[];field=ma_crim_d'>[]</A><BR><br><BR><br>Important Notes:<BR><br>&emsp;<A href='?src=\ref[];field=notes'>[]</A><BR><br><BR><br><CENTER><B>Comments/Log</B></CENTER><BR>", src, src.active_record_security.fields["criminal"], src, src.active_record_security.fields["mi_crim"], src, src.active_record_security.fields["mi_crim_d"], src, src.active_record_security.fields["ma_crim"], src, src.active_record_security.fields["ma_crim_d"], src, src.active_record_security.fields["notes"])
 						var/counter = 1
 						while(src.active_record_security.fields[text("com_[]", counter)])
@@ -105,23 +106,25 @@
 						dat += "<B>Security Record Lost!</B><BR>"
 						dat += text("<A href='?src=\ref[];new=1'>New Record</A><BR><BR>", src)
 					dat += text("<br><A href='?src=\ref[];dela_r=1'>Delete Record (ALL)</A><BR><BR><br><A href='?src=\ref[];print_p=1'>Print Record</A><BR><br><A href='?src=\ref[];list=1'>Back</A><BR>", src, src, src)
-				else
 		else
 			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
 	user.Browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec")
 	onclose(user, "secure_rec")
 	return
 
+/obj/machinery/computer/secure_data/proc/validate_records()
+	// Most of these checks were done inline; moved here for ease-of-use
+	if (src.active_record_general && (!istype(src.active_record_general, /datum/data/record) || !data_core.general.Find(src.active_record_general)))
+		src.active_record_general = null
+	if (src.active_record_security && (!istype(src.active_record_security, /datum/data/record) || !data_core.security.Find(src.active_record_security)))
+		src.active_record_security = null
+
+
 /obj/machinery/computer/secure_data/Topic(href, href_list)
 	if(..())
 		return
-	if (src.active_record_general && !data_core.general.Find(src.active_record_general))
-		src.active_record_general = null
-	if (src.active_record_general && !data_core.security.Find(src.active_record_security))
-		src.active_record_security = null
 
-	// Topic ..() handles returning 1 if a user shouldn't be able to interact
-	// if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr) || isAI(usr)))
+	src.validate_records()
 
 	src.add_dialog(usr)
 	if (href_list["temp"])
@@ -276,7 +279,6 @@
 						src.temp = text("<B>Rank:</B><BR><br><B>Assistants:</B><BR><br><A href='?src=\ref[];temp=1;rank=res_assist'>Assistant</A><BR><br><B>Technicians:</B><BR><br><A href='?src=\ref[];temp=1;rank=foren_tech'>Detective</A><BR><br><A href='?src=\ref[];temp=1;rank=atmo_tech'>Atmospheric Technician</A><BR><br><A href='?src=\ref[];temp=1;rank=engineer'>Station Engineer</A><BR><br><B>Researchers:</B><BR><br><A href='?src=\ref[];temp=1;rank=med_res'>Geneticist</A><BR><br><A href='?src=\ref[];temp=1;rank=tox_res'>Scientist</A><BR><br><B>Officers:</B><BR><br><A href='?src=\ref[];temp=1;rank=med_doc'>Medical Doctor</A><BR><br><A href='?src=\ref[];temp=1;rank=secure_off'>Security Officer</A><BR><br><B>Higher Officers:</B><BR><br><A href='?src=\ref[];temp=1;rank=hoperson'>Head of Security</A><BR><br><A href='?src=\ref[];temp=1;rank=hosecurity'>Head of Personnel</A><BR><br><A href='?src=\ref[];temp=1;rank=captain'>Captain</A><BR>", src, src, src, src, src, src, src, src, src, src, src)
 					else
 						alert(usr, "You do not have the required rank to do this!")
-				else
 
 		else if (href_list["rank"])
 			if (src.active_record_general)
@@ -350,7 +352,6 @@
 					//R = null
 					data_core.medical -= R
 					qdel(R)
-				else
 			if (src.active_record_security)
 				//src.active_record_security = null
 				data_core.security -= src.active_record_security
@@ -369,8 +370,6 @@
 			for(var/datum/data/record/E in data_core.security)
 				if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 					S = E
-				else
-					//Foreach continue //goto(2614)
 			src.active_record_general = R
 			src.active_record_security = S
 			src.screen = SECREC_VIEW_RECORD
@@ -433,16 +432,12 @@
 			for(var/datum/data/record/R in data_core.general)
 				if (lowertext(R.fields["fingerprint"]) == t1)
 					src.active_record_general = R
-				else
-					//Foreach continue //goto(3414)
 			if (!( src.active_record_general ))
 				src.temp = text("Could not locate record [].", t1)
 			else
 				for(var/datum/data/record/E in data_core.security)
 					if ((E.fields["name"] == src.active_record_general.fields["name"] || E.fields["id"] == src.active_record_general.fields["id"]))
 						src.active_record_security = E
-					else
-						//Foreach continue //goto(3502)
 				src.screen = SECREC_VIEW_RECORD
 
 		else if (href_list["search"])
@@ -456,16 +451,12 @@
 			for(var/datum/data/record/R in data_core.general)
 				if ((lowertext(R.fields["name"]) == t1 || t1 == lowertext(R.fields["dna"]) || t1 == lowertext(R.fields["id"])))
 					src.active_record_general = R
-				else
-					//Foreach continue //goto(3708)
 			if (!( src.active_record_general ))
 				src.temp = text("Could not locate record [].", t1)
 			else
 				for(var/datum/data/record/E in data_core.security)
 					if ((E.fields["name"] == src.active_record_general.fields["name"] || E.fields["id"] == src.active_record_general.fields["id"]))
 						src.active_record_security = E
-					else
-						//Foreach continue //goto(3813)
 				src.screen = SECREC_VIEW_RECORD
 
 		else if (href_list["print_p"])
@@ -474,11 +465,12 @@
 				sleep(5 SECONDS)
 				var/obj/item/paper/P = new /obj/item/paper( src.loc )
 				P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
-				if ((istype(src.active_record_general, /datum/data/record) && data_core.general.Find(src.active_record_general)))
+				src.validate_records()
+				if (src.active_record_general)
 					P.info += text("Name: [] ID: []<BR><br>Sex: []<BR><br>Age: []<BR><br>Fingerprint: []<BR><br>Physical Status: []<BR><br>Mental Status: []<BR>", src.active_record_general.fields["name"], src.active_record_general.fields["id"], src.active_record_general.fields["sex"], src.active_record_general.fields["age"], src.active_record_general.fields["fingerprint"], src.active_record_general.fields["p_stat"], src.active_record_general.fields["m_stat"])
 				else
 					P.info += "<B>General Record Lost!</B><BR>"
-				if ((istype(src.active_record_security, /datum/data/record) && data_core.security.Find(src.active_record_security)))
+				if (src.active_record_security)
 					P.info += text("<BR><br><CENTER><B>Security Data</B></CENTER><BR><br>Criminal Status: []<BR><br><BR><br>Minor Crimes: []<BR><br>Details: []<BR><br><BR><br>Major Crimes: []<BR><br>Details: []<BR><br><BR><br>Important Notes:<BR><br>&emsp;[]<BR><br><BR><br><CENTER><B>Comments/Log</B></CENTER><BR>", src.active_record_security.fields["criminal"], src.active_record_security.fields["mi_crim"], src.active_record_security.fields["mi_crim_d"], src.active_record_security.fields["ma_crim"], src.active_record_security.fields["ma_crim_d"], src.active_record_security.fields["notes"])
 					var/counter = 1
 					while(src.active_record_security.fields[text("com_[]", counter)])
