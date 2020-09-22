@@ -993,14 +993,14 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power","setPower")
 
 	proc/eleczap(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+		if(level == 2 && isReady()) return
 		unReady()
 		LIGHT_UP_HOUSING
 		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
 		
 	proc/setPower(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Power(1 - 3):","Power setting", zap_power) as num
-		if(!in_range(src, user) || user.stat)
+		if(!in_range(src, user) && isalive(user))
 			return 0
 		inp = clamp(round(inp), 1, 3)
 		zap_power = inp
