@@ -80,30 +80,26 @@
 			"}
 	else
 		dat = {"
-			Confirm Identity: <a href="javascript:goBYOND('action=scan');">[src.scan ? src.scan.name : "----------"]</a><hr>
+			Confirm Identity: <a href="javascript:goBYOND('action=scan');">[src.scan ? src.scan.name : "----------"]</a>
+			[src.authenticated ? "&mdash; <a href=\"javascript:goBYOND('action=logout');\">Log Out</a>" : ""]<hr>
 			"}
 
 		if (src.authenticated)
 			src.validate_records()
+
 			switch(src.screen)
 				if (SECREC_MAIN_MENU)
 					dat += {"
-					<a href="javascript:goBYOND('action=search');">Search Records</a>
-					<br>
-					<br><a href="javascript:goBYOND('action=list');">List Records</a>
-					<br>
+					<h3>Security Records</h3>
+					<a href="javascript:goBYOND('action=list');">List Records</a>
+					<br><a href="javascript:goBYOND('action=search');">Search Records</a>
 					<br><a href="javascript:goBYOND('action=search_fingerprint');">Search Fingerprints</a>
-					<br>
-					<br>
-					<br><a href="javascript:goBYOND('action=record_maintenance');">Record Maintenance</a>
-					<br>
-					<br><a href="javascript:goBYOND('action=logout');">Log Out</a>
-					<br>
-					<br>
+					<hr>
+					<a href="javascript:goBYOND('action=record_maintenance');">Record Maintenance</a>
 					"}
 
 				if (SECREC_LIST_RECORDS)
-					dat += "<b>Record List</b>:<hr>"
+					dat += "<h3>Security Record List</h3><hr>"
 					for (var/datum/data/record/R in data_core.general)
 						dat += {"
 							<a href="javascript:goBYOND('action=view_record;rec=\ref[R]');">[R.fields["id"]]: [R.fields["name"]]
@@ -116,9 +112,9 @@
 
 				if (SECREC_MANAGE_RECORDS)
 					dat += {"
-					<b>Record Maintenance</b>
+					<h3>Security Record Maintenance</h3>
 					<hr>
-					<br><a href="javascript:goBYOND('action=new_general_record');">New Record</a>
+					<a href="javascript:goBYOND('action=new_general_record');">Create New Record</a>
 					<br>
 					<br><a href="javascript:doPopup('del_all_records', 'Really delete ALL security records?');">Delete All Records</a>
 					<br>
@@ -127,29 +123,73 @@
 
 				if (SECREC_VIEW_RECORD)
 					dat += {"
-					<center><b>Security Record</b></center><br>
+					<h3>Security Record</h3>
+<table>
+	<tbody>
+		<tr><th colspan='3'>General Record</th></tr>
 					"}
 					if (src.active_record_general)
+						var/photo_filename = null
+						try
+							var/datum/computer/file/image/photo = src.active_record_general.fields["file_photo"]?.ourIcon
+							if (!photo)
+								photo = wanted_poster_unknown
+							photo_filename = copytext("\ref[src.active_record_general]", 4, -1)
+							if (photo)
+								usr << browse_rsc(photo, "[photo_filename].png")
+						catch
+							photo_filename = null
+
 						dat += {"
-							Name: <a href="javascript:goBYOND('action=field;field=name');">[src.active_record_general.fields["name"]]</a> ID: <a href="javascript:goBYOND('action=field;field=id');">[src.active_record_general.fields["id"]]</a>
-							<br>
-							<br>Sex: <a href="javascript:goBYOND('action=field;field=sex');">[src.active_record_general.fields["sex"]]</a>
-							<br>
-							<br>Age: <a href="javascript:goBYOND('action=field;field=age');">[src.active_record_general.fields["age"]]</a>
-							<br>
-							<br>Rank: <a href="javascript:goBYOND('action=field;field=rank');">[src.active_record_general.fields["rank"]]</a>
-							<br>
-							<br>Fingerprint: <a href="javascript:goBYOND('action=field;field=fingerprint');">[src.active_record_general.fields["fingerprint"]]</a>
-							<br>
-							<br>DNA: [src.active_record_general.fields["dna"]]
-							<br>
-							<br>Physical Status: [src.active_record_general.fields["p_stat"]]
-							<br>
-							<br>Mental Status: [src.active_record_general.fields["m_stat"]]
-							<br>
-						"}
+		<tr>
+			<th>Name</th>
+			<td><a href="javascript:goBYOND('action=field;field=name');">[src.active_record_general.fields["name"]]</a></td>
+			<td rowspan="9" style="text-align: center; vertical-align: middle;">[photo_filename ? {"<img style="-ms-interpolation-mode:nearest-neighbor;" height="64" width="64" src="[photo_filename].png">"} : "No photo<br>available"]
+			<br>File Photo</td>
+		</tr>
+		<tr>
+			<th>ID No.</th>
+			<td><a href="javascript:goBYOND('action=field;field=id');">[src.active_record_general.fields["id"]]</a></td>
+		</tr>
+		<tr>
+			<th>Gender</th>
+			<td><a href="javascript:goBYOND('action=field;field=sex');">[src.active_record_general.fields["sex"]]</a></td>
+		</tr>
+		<tr>
+			<th>Age</th>
+			<td><a href="javascript:goBYOND('action=field;field=age');">[src.active_record_general.fields["age"]]</a></td>
+		</tr>
+		<tr>
+			<th>Job</th>
+			<td><a href="javascript:goBYOND('action=field;field=rank');">[src.active_record_general.fields["rank"]]</a></td>
+		</tr>
+		<tr>
+			<th>Fingerprint</th>
+			<td><a href="javascript:goBYOND('action=field;field=fingerprint');">[src.active_record_general.fields["fingerprint"]]</a></td>
+		</tr>
+		<tr>
+			<th>DNA</th>
+			<td>[src.active_record_general.fields["dna"]]</td>
+		</tr>
+		<tr>
+			<th>Physical Status</th>
+			<td>[src.active_record_general.fields["p_stat"]]</td>
+		</tr>
+		<tr>
+			<th>Mental Status</th>
+			<td>[src.active_record_general.fields["m_stat"]]</td>
+		</tr>
+			"}
 					else
-						dat += "<b>General Record Lost!</b><br>"
+						dat += {"
+		<tr><td colspan='3'>General record missing!</td></tr>
+						"}
+
+					dat += {"
+		<tr><th colspan='3'>Security Record</th></tr>
+
+					"}
+
 					if (src.active_record_security)
 
 						var/list/record_to_display = list(
@@ -166,65 +206,65 @@
 							arrest_status += {"<a href="javascript:goBYOND('action=criminal;criminal=[n]');" class="[n] [record_to_display[n] == src.active_record_security.fields["criminal"] ? "active" : ""]">[record_to_display[n]]</a>"}
 
 						dat += {"
-						<br>
-						<br><center><b>Security Data</b></center>
-						<br>
-						<br>Criminal Status: <!-- <a href="javascript:goBYOND('action=field;field=criminal');">[src.active_record_security.fields["criminal"]]</a> -->
-						<br><div class="crimer">[arrest_status.Join(" ")]</div>
-						<br>
-						<br>Minor Crimes: <a href="javascript:goBYOND('action=field;field=minor_crimes');">[src.active_record_security.fields["mi_crim"]]</a>
-						<br>
-						<br>Details: <a href="javascript:goBYOND('action=field;field=minor_crime_details');">[src.active_record_security.fields["mi_crim_d"]]</a>
-						<br>
-						<br>
-						<br>
-						<br>Major Crimes: <a href="javascript:goBYOND('action=field;field=major_crimes');">[src.active_record_security.fields["ma_crim"]]</a>
-						<br>
-						<br>Details: <a href="javascript:goBYOND('action=field;field=major_crime_details');">[src.active_record_security.fields["ma_crim_d"]]</a>
-						<br>
-						<br>
-						<br>
-						<br>Important Notes:
-						<br>
-						<br>&emsp;<a href="javascript:goBYOND('action=field;field=notes');">[src.active_record_security.fields["notes"]]</a>
-						<br>
-						<br>
-						<br>
-						<br><center><b>Comments/Log</b></center>
-						<br>
+		<tr>
+			<th>Criminal Status</th>
+			<td colspan='2'><div class="crimer">[arrest_status.Join(" ")]</div></td>
+		</tr>
+		<tr>
+			<th>Major Crimes</th>
+			<td colspan='2'><a href="javascript:goBYOND('action=field;field=major_crimes');">[src.active_record_security.fields["ma_crim"]]</a>
+			<br>
+			<br><strong>Details:</strong> (<a href="javascript:goBYOND('action=field;field=major_crime_details');">&#9998; Edit</a>)<br><div class='monospace'>[src.active_record_security.fields["ma_crim_d"]]</div></td>
+		</tr>
+		<tr>
+			<th>Minor Crimes</th>
+			<td colspan='2'><a href="javascript:goBYOND('action=field;field=minor_crimes');">[src.active_record_security.fields["mi_crim"]]</a>
+			<br>
+			<br><strong>Details:</strong> (<a href="javascript:goBYOND('action=field;field=minor_crime_details');">&#9998; Edit</a>)<br><div class='monospace'>[src.active_record_security.fields["mi_crim_d"]]</div></td>
+		</tr>
+		<tr>
+			<th>Notes</th>
+			<td colspan='2'><a href="javascript:goBYOND('action=field;field=notes');">&#9998; Edit</a>
+			<br><div class='monospace'>[src.active_record_security.fields["notes"]]</div></td>
+		</tr>
+		<tr>
+			<th colspan="3">Comments / Log</th>
+		</tr>
 						"}
 
 						var/counter = 1
 						while (src.active_record_security.fields["com_[counter]"])
 							dat += {"
-								[src.active_record_security.fields["com_[counter]"]]
-								<br><a href="javascript:doPopup('del_comment;comment=[counter]', 'Delete this entry?');">Delete Entry</a>
-								<br>
-								<br>"}
+		<tr>
+			<td colspan="3">
+				<div class="monospace">[src.active_record_security.fields["com_[counter]"]]</div>
+				<br><a href="javascript:doPopup('del_comment;comment=[counter]', 'Delete this entry?');">Delete Entry</a>
+			</td>
+		</tr>"}
 								counter++
 
 						dat += {"
-							<a href="javascript:goBYOND('action=add_comment');">Add Entry</a>
-							<br>
-							<br><a href="javascript:doPopup('del_security_record', 'Delete security record?');">Delete Security Record</a>
-							<br>
-							<br>
+		<tr>
+			<th colspan="3"><a href="javascript:goBYOND('action=add_comment');">Add Entry</a></th>
+		</tr>
+	</tbody>
+</table>
+<br><a href="javascript:doPopup('del_security_record', 'Delete security record?');">Delete Security Record</a>
 							"}
 					else
 						dat += {"
-							<b>Security Record Lost!</b><br>
-							<a href="javascript:goBYOND('action=new_security_record');">New Record</a>
-							<br>
-							<br>
+		<tr><td colspan='3'>
+			Security record missing!
+			<br><br><a href="javascript:goBYOND('action=new_security_record');">Create new record</a>
+		</td></tr>
+	</tbody>
+</table>
 							"}
 					dat += {"
-						<br><a href="javascript:doPopup('del_full_record', 'Delete full record?');">Delete Full Record</a>
-						<br>
-						<br>
-						<br><a href="javascript:goBYOND('action=print_record');">Print Record</a>
-						<br>
-						<br><a href="javascript:goBYOND('action=list');">Back</a>
-						<br>
+<br><a href="javascript:doPopup('del_full_record', 'Delete full record?');">Delete Full Record</a>
+<br><a href="javascript:goBYOND('action=print_record');">Print Record</a>
+<br>
+<br><a href="javascript:goBYOND('action=list');">Back</a>
 						"}
 
 		else
@@ -235,7 +275,7 @@
 	user.Browse({"
 	<title>Security Records</title>
 	<style>
-		body { font-family: Consolas, monospace; }
+		.monospace { white-space: pre-wrap; }
 		#popup-container {
 			position: fixed;
 			top: 0;
@@ -244,6 +284,7 @@
 			bottom: 0;
 			background: rgba(128, 128, 128, 0.5);
 		}
+
 		#popup {
 			margin: 1em;
 			padding: 1em;
@@ -283,6 +324,25 @@
 		.incarcerated.active, .incarcerated:hover { background: #33cc66; color: black; }
 		.released.active, .released:hover         { background: #3399ff; color: black; }
 
+	/* borrowed from char prefs */
+	table {
+		border-collapse: collapse;
+		font-size: 100%;
+		width: 100%;
+	}
+	td, th {
+		border: 1px solid #888;
+		padding: 0.1em 0.3em;
+	}
+	th {
+		background: rgba(125, 125, 125, 0.4);
+		white-space: nowrap;
+	}
+
+	th\[colspan="3"] {
+		background: rgba(125, 125, 125, 0.6);
+		padding: 0.5em;
+	}
 	</style>
 	<script>
 		function goBYOND(url) {
@@ -308,7 +368,7 @@
 
 
 	[dat]
-</body></html>"}, "window=secure_rec")
+</body></html>"}, "window=secure_rec;size=600x700")
 	onclose(user, "secure_rec")
 	return
 
