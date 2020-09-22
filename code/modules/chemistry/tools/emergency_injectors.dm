@@ -103,6 +103,11 @@
 	name = "emergency auto-injector (potassium iodide)"
 	initial_reagents = "anti_rad"
 	label = "green"
+	
+/obj/item/reagent_containers/emergency_injector/pentetic_acid
+	name = "emergency auto-injector (pentetic acid)"
+	initial_reagents = list("penteticacid"=5)
+	label = "blue"
 
 /obj/item/reagent_containers/emergency_injector/insulin
 	name = "emergency auto-injector (insulin)"
@@ -132,6 +137,11 @@
 /obj/item/reagent_containers/emergency_injector/salbutamol
 	name = "emergency auto-injector (salbutamol)"
 	initial_reagents = "salbutamol"
+	label = "blue"
+	
+/obj/item/reagent_containers/emergency_injector/perf
+	name = "emergency auto-injector (perfluorodecalin)"
+	initial_reagents = "perfluorodecalin"
 	label = "blue"
 
 /obj/item/reagent_containers/emergency_injector/mannitol

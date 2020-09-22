@@ -14,6 +14,7 @@
 
 
 	New(var/obj/item/parts/holder)
+		..()
 		src.holder = holder
 
 		src.setDisarmSpecial (/datum/item_special/disarm)
@@ -722,8 +723,7 @@
 				if (prob(66) && T && isturf(T))
 					user.visible_message("<span class='alert'><B>[user] mauls [victim] viciously, sending them flying!</B></span>")
 					victim.health -= 6 * victim.brutevuln
-					SPAWN_DBG (0)
-						victim.throw_at(T, 10, 2)
+					victim.throw_at(T, 10, 2)
 				else
 					user.visible_message("<span class='alert'><B>[user] savagely slashes [victim]!</span>")
 					victim.health -= 4 * victim.brutevuln
@@ -736,8 +736,7 @@
 				if (prob(66) && T && isturf(T))
 					user.visible_message("<span class='alert'><B>[user] savagely punches [victim], sending them flying!</B></span>")
 					victim.health -= 6 * victim.brutevuln
-					SPAWN_DBG (0)
-						victim.throw_at(T, 10, 2)
+					victim.throw_at(T, 10, 2)
 				else
 					user.visible_message("<span class='alert'><B>[user] punches [victim]!</span>")
 					victim.health -= 4 * victim.brutevuln
@@ -987,7 +986,7 @@
 			else
 				msgs.base_attack_message = "<span class='alert'><B>[user] punches [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 
-			msgs.played_sound = 'sound/impact_sounds/Generic_Punch_2.ogg'
+			msgs.played_sound = pick(sounds_punch)
 			msgs.damage = rand(6, 13)
 			msgs.damage_type = DAMAGE_BLUNT
 
@@ -1138,8 +1137,7 @@
 			if (isitem(O) && !O.anchored)
 				playsound(user,'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, pitch = 1.7)
 				var/turf/throw_to = get_edge_target_turf(user, get_dir(user,target))
-				SPAWN_DBG(0)
-					O.throw_at(throw_to, 8, 2)
+				O.throw_at(throw_to, 8, 2)
 
 		..()
 		return
@@ -1380,7 +1378,6 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 			if (prob(66) && T && isturf(T))
 				user.visible_message("<span class='alert'><B>[user] savagely punches [victim], sending them flying!</B></span>")
 				victim.health -= 6 * victim.brutevuln
-				SPAWN_DBG (0)
 				victim.throw_at(T, 10, 2)
 			else
 				user.visible_message("<span class='alert'><B>[user] punches [victim]!</span>")
@@ -1585,7 +1582,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		else
 			msgs.base_attack_message = "<span class='alert'><B>[user] punches [target] with their[pick("enormous", "giant", "gargantuan", "strong")] steel fist[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
 
-			msgs.played_sound = 'sound/impact_sounds/Generic_Punch_2.ogg'
+			msgs.played_sound = pick(sounds_punch)
 			msgs.damage = rand(6, 13)
 			msgs.damage_type = DAMAGE_BLUNT
 

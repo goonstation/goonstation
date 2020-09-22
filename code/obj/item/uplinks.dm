@@ -34,10 +34,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
+		..()
 		SPAWN_DBG (10)
 			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !src.items_objective.len))
 				src.setup()
-		return
 
 	proc/generate_code()
 		if (!src || !istype(src))
@@ -697,7 +697,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					return 0
 				B.claimed = 1
 				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
-					M.loc = get_turf(delivery)
+					M.set_loc(get_turf(delivery))
 				if (istype(delivery.loc, /mob))
 					var/mob/M = delivery.loc
 					if (istype(delivery,/obj/item/parts/human_parts) && ishuman(M))

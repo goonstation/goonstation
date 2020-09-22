@@ -1,4 +1,8 @@
 //Contains exotic or special reagents.
+
+ABSTRACT_TYPE(/datum/reagent/cement)
+ABSTRACT_TYPE(/datum/reagent/concrete)
+
 datum
 	reagent
 		nitroglycerin // Yes, this is a bad idea.
@@ -193,7 +197,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (prob(volume))
+				if (probmult(volume))
 					explode()
 				..()
 				return
@@ -240,8 +244,8 @@ datum
 				if (!M) M = holder.my_atom
 				if (prob(90))
 					M.take_toxin_damage(1 * mult)
-				if (prob(5)) M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
-				if (prob(8)) boutput(M, "<span class='notice'>You feel [pick("really buff", "on top of the world","like you're made of steel", "food_energized", "invigorated", "full of energy")]!</span>")
+				if (probmult(5)) M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
+				if (probmult(8)) boutput(M, "<span class='notice'>You feel [pick("really buff", "on top of the world","like you're made of steel", "food_energized", "invigorated", "full of energy")]!</span>")
 				if (prob(5))
 					boutput(M, "<span class='alert'>You cannot breathe!</span>")
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 20 * mult))
@@ -311,7 +315,7 @@ datum
 				else
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 1 * mult)
-					if (prob(10))
+					if (probmult(10))
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 40))
 				..()
 				return
@@ -331,7 +335,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (prob(10) && ishuman(M))
+				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					H.bioHolder.mobAppearance.customization_first = pick(feminine_hstyles + masculine_hstyles)
 					H.bioHolder.mobAppearance.UpdateMob()
@@ -396,7 +400,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (prob(35*mult) && ishuman(M))
+				if (probmult(35) && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.reagents && H.reagents.has_reagent("stable_omega_hairgrownium"))
 						omega_hairgrownium_drop_hair(H)
@@ -420,7 +424,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (prob(35*mult) && ishuman(M))
+				if (probmult(35) && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.reagents && H.reagents.has_reagent("unstable_omega_hairgrownium"))
 						omega_hairgrownium_drop_hair(H)
@@ -481,7 +485,7 @@ datum
 				if (volume < 5 || istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility) return
 				O.visible_message("<span class='alert'>The [O] comes to life!</span>")
 				var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
-				O.loc = L
+				O.set_loc(L)
 				L.name = "Living [O.name]"
 				L.desc = "[O.desc]. It appears to be alive!"
 				L.overlays += O
@@ -498,7 +502,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if (prob(8))
+				if (probmult(8))
 					boutput(M, "<span class='alert'>The voices ...</span>")
 					M.playsound_local(M, pick(ghostly_sounds), 100, 1)
 
@@ -737,7 +741,7 @@ datum
 			fluid_g = 255
 			value = 4 // 1 1 1
 			hygiene_value = 0.25
-			block_slippy = -1
+			block_slippy = -2
 
 			reaction_turf(var/turf/target, var/volume)
 				src = null
@@ -880,7 +884,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if ((holder.get_reagent_amount(src.id) >= 10) && prob(8))
+				if ((holder.get_reagent_amount(src.id) >= 10) && probmult(8))
 					var/Message = rand(1,6)
 					switch(Message)
 						if (1)
@@ -897,7 +901,7 @@ datum
 						if (6)
 							boutput(M, "<span class='alert'>You've got the heebie-jeebies.</span>")
 
-					if (prob(1))
+					if (probmult(1))
 						for (var/obj/W in orange(5,M))
 							if (prob(25) && !W.anchored)
 								step_rand(W)
@@ -1033,13 +1037,13 @@ datum
 			fluid_b = 192
 			transparency = 255
 			viscosity = 0.15
+			var/static/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
 
 			on_mob_life(var/mob/M, var/mult = 1)
-
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
 					var/check_amount = holder.get_reagent_amount(booster_enzyme_reagents_to_check[i])
 					if (check_amount && check_amount < 18)
-						holder.add_reagent("[booster_enzyme_reagents_to_check[i]]", min(2 * mult, 20-check_amount))
+						holder.add_reagent(booster_enzyme_reagents_to_check[i], min(2 * mult, 20-check_amount))
 				..()
 				return
 
@@ -1142,8 +1146,8 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T) && T.wet) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					src = null
-					if (T.wet >= 1) return
-					T.wet = 1
+					if (T.wet >= 2) return
+					T.wet = 2
 					if (!locate(/obj/decal/cleanable/oil) in T)
 						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 						switch(volume)
@@ -1225,7 +1229,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				if (counter += (1*mult) >= 10 && !fakedeathed)
+				if ((counter += (1*mult)) >= 10 && !fakedeathed)
 					M.setStatus("resting", INFINITE_STATUS)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
 					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
@@ -1291,9 +1295,9 @@ datum
 					var/mob/living/carbon/human/H = M
 					if (H.bioHolder.age < 140)
 						H.bioHolder.age += 1 * mult
-					if (prob(10))
+					if (probmult(10))
 						boutput(H, "<span class='alert'>You feel [pick("old", "strange", "frail", "peculiar", "odd")].</span>")
-					if (prob(4))
+					if (probmult(4))
 						H.emote("scream")
 				..()
 				return
@@ -1377,13 +1381,13 @@ datum
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 10)
-					if (prob(8))
+					if (probmult(8))
 						M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 
-				else if (prob(4))
+				else if (probmult(4))
 					M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 150 * mult))
 					M.make_jittery(1000)
@@ -1417,12 +1421,12 @@ datum
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 20)
-					if (prob(8))
+					if (probmult(8))
 						M.visible_message("<span class='alert'>[M] hoots all over \himself.</span>", "<span class='alert'>You hoot all over yourself!</span>")
 						M.vomit()
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
-				else if (prob(4))
+				else if (probmult(4))
 					M.visible_message("<span class='alert'><B>[M]</B> starts hooting violently!</span>", "You feel as if your body is hooting itself apart!")
 					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 150 * mult))
 					M.make_jittery(1000)
@@ -1665,7 +1669,7 @@ datum
 				if (M.a_intent == INTENT_HARM)
 					M.a_intent = INTENT_HELP
 
-				if (prob(8))
+				if (probmult(8))
 					. = ""
 					switch (rand(1, 9))
 						if (1)
@@ -2001,22 +2005,22 @@ datum
 					H.reagents.add_reagent(id, amt)
 					if(holder.get_reagent_amount(src.id) > 300)
 						// oh no
-						if(prob(1)) // i hate you all, players
+						if(probmult(1)) // i hate you all, players
 							H.visible_message("<span class='alert bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
 							var/mob/living/critter/flock/bit/B = new()
-							B.loc = get_turf(H)
+							B.set_loc(get_turf(H))
 							H.gib()
 					else
 						// DO SPOOKY THINGS
 						if(holder.get_reagent_amount(src.id) < 100)
-							if(prob(2))
+							if(probmult(2))
 								M.playsound_local(get_turf(M), pick(sounds), 20, 1)
-							if(prob(6))
+							if(probmult(6))
 								boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_low")]</span>")
 						else
-							if(prob(20))
+							if(probmult(20))
 								M.playsound_local(get_turf(M), pick(sounds), 40, 1)
-							if(prob(30))
+							if(probmult(30))
 								boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_high")]</span>")
 
 				..()
@@ -2366,7 +2370,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if (prob(10))
+				if (probmult(10))
 					var/list/mob/nerds = list()
 					for (var/mob/living/some_idiot in oviewers(M, 7))
 						nerds.Add(some_idiot)
@@ -2483,7 +2487,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (prob(66))
+				if (probmult(66))
 					M.emote("fart")
 
 				if (M?.reagents.has_reagent("anti_fart"))
@@ -2547,7 +2551,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if (prob(10))
+				if (probmult(10))
 					if (prob(50))
 						M.visible_message("<span class='emote'><B>[M]</B> flaps [his_or_her(M)] arms!</span>")
 					else
@@ -2741,7 +2745,7 @@ datum
 
 			on_mob_life(mob/M, var/mult = 1)
 
-				if (prob(10))
+				if (probmult(10))
 					elecflash(M)
 				..()
 
@@ -3237,7 +3241,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				M.ex_act(1 * mult)
+				M.ex_act(1)
 				M.gib()
 
 		cyclopentanol
@@ -3410,12 +3414,12 @@ datum
 					if (src.the_bioeffect_you_had_before_it_was_affected_by_yee != "lizard")	// Just for consistency
 						M.bioHolder.AddEffect("lizard", timeleft = 180)
 					M.bioHolder.AddEffect("accent_yee", timeleft = 180)
-				if (prob(20))
+				if (probmult(20))
 					M.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
 					playsound(get_turf(M), "sound/misc/yee.ogg", 50, 1)
-				if (prob(8))
+				if (probmult(8))
 					fake_attackEx(M, 'icons/effects/hallucinations.dmi', "bop-bop", "bop-bop")
-				if (prob(8))
+				if (probmult(8))
 					fake_attackEx(M, 'icons/effects/hallucinations.dmi', "yee", "yee")
 				..()
 				return
@@ -3667,7 +3671,7 @@ datum
 				if (!M)
 					M = holder.my_atom
 				var/our_amt = holder.get_reagent_amount(src.id)
-				if(prob(3) && ishuman(M))
+				if(probmult(3) && ishuman(M))
 					M.say("Hm!")
 				if(M && our_amt > 20)
 					if(M.bioHolder && !M.bioHolder.HasEffect("fat"))
@@ -3679,7 +3683,7 @@ datum
 
 				for (var/mob/living/N in orange(clamp(our_amt / 5, 2,10),M))
 					step_towards(N,M)
-					if(ishuman(N) && prob(1))
+					if(ishuman(N) && probmult(1))
 						N.say("[M.name] is an ocean of muscle.")
 				..()
 
@@ -3963,7 +3967,7 @@ datum
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50,1,-1)
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 				sleep(1 SECOND)
-				playsound(src.loc, 'sound/impact_sounds/Generic_Punch_4.ogg', 50, 1, -1)
+				playsound(src.loc, pick(sounds_punch), 50, 1, -1)
 				deathtarget.emote("scream")
 				deathtarget.setStatus("stunned", max(deathtarget.getStatusDuration("stunned"), 50))
 				deathtarget.setStatus("weakened", max(deathtarget.getStatusDuration("weakened"), 50))

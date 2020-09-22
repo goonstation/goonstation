@@ -1,86 +1,3 @@
-#define DESERIALIZE_ERROR 0
-#define DESERIALIZE_OK 1
-#define DESERIALIZE_NEED_POSTPROCESS 2
-#define DESERIALIZE_NOT_IMPLEMENTED 4
-
-/datum/sandbox
-	var/list/context = list()
-
-/proc/icon_serializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/icon, var/icon_state)
-	var/iname = "[icon]"
-	F["[path].icon"] << iname
-	F["[path].icon_state"] << icon_state
-	if (!("icon" in sandbox.context))
-		sandbox.context += "icon"
-		sandbox.context["icon"] = list()
-	if (!(iname in sandbox.context["icon"]))
-		sandbox.context["icon"] += iname
-		sandbox.context["icon"][iname] = icon
-		F["ICONS.[iname]"] << icon
-
-/datum/iconDeserializerData
-	var/icon/icon
-	var/icon_state
-
-/proc/icon_deserializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/defaultIcon, var/defaultState)
-	var/iname
-	var/datum/iconDeserializerData/IDS = new()
-	IDS.icon = defaultIcon
-	IDS.icon_state = defaultState
-	F["[path].icon"] >> iname
-	if (!fexists(iname))
-		if ("[defaultIcon]" == iname) // fuck off byond fuck you
-			F["[path].icon_state"] >> IDS.icon_state
-		else
-			if (!("icon_failures" in sandbox.context))
-				sandbox.context += "icon_failures"
-				sandbox.context["icon_failures"] = list("total" = 0)
-			if (!(iname in sandbox.context["icon_failures"]))
-				sandbox.context["icon_failures"] += iname
-				sandbox.context["icon_failures"][iname] = 0
-			sandbox.context["icon_failures"]["total"]++
-			sandbox.context["icon_failures"][iname]++
-
-			F["ICONS.[iname]"] >> IDS.icon
-			if (!IDS.icon && usr)
-				boutput(usr, "<span class='alert'>Fatal error: Saved copy of icon [iname] cannot be loaded. Local loading failed. Falling back to default icon.</span>")
-			else if (IDS.icon)
-				F["[path].icon_state"] >> IDS.icon_state
-	else
-		IDS.icon = icon(file(iname))
-		F["[path].icon_state"] >> IDS.icon_state
-	return IDS
-
-/proc/matrix_serializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/name, var/matrix/mx)
-	var/base = "[path].[name]"
-	F["[base].a"] << mx.a
-	F["[base].b"] << mx.b
-	F["[base].c"] << mx.c
-	F["[base].d"] << mx.d
-	F["[base].e"] << mx.e
-	F["[base].f"] << mx.f
-
-/proc/matrix_deserializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/name, var/matrix/defMx = matrix())
-	var/a
-	var/b
-	var/c
-	var/d
-	var/e
-	var/f
-
-	var/base = "[path].[name]"
-	F["[base].a"] >> a
-	if (!a)
-		return defMx
-	F["[base].d"] >> d
-	if (!d)
-		return defMx
-	F["[base].b"] >> b
-	F["[base].c"] >> c
-	F["[base].e"] >> e
-	F["[base].f"] >> f
-	return new /matrix(a,b,c,d,e,f)
-
 /**
   * The base type for nearly all physical objects in SS13
 	*
@@ -95,6 +12,7 @@
 	var/tmp/temp_flags = 0
 	var/tmp/last_bumped = 0
 	var/shrunk = 0
+	var/list/cooldowns
 
 	/// Override for the texture size used by setTexture.
 	var/texture_size = 0
@@ -378,17 +296,15 @@
 	//Wire note: hascall check below added as fix for: undefined proc or verb /datum/targetable/changeling/monkey/attackby() (lmao)
 	if (src.master && hascall(src.master, "attackby"))
 		return src.master.attackby(a, b)
-	return
 
 /atom/movable/overlay/attack_hand(a, b, c, d, e)
 	if (src.master)
 		return src.master.attack_hand(a, b, c, d, e)
-	return
 
 /atom/movable/overlay/New()
+	..()
 	for(var/x in src.verbs)
 		src.verbs -= x
-	return
 
 /atom/movable/overlay
 	var/atom/master = null
@@ -533,12 +449,13 @@
 
 	var/atom/A = src.loc
 	. = ..()
-	src.move_speed = world.timeofday - src.l_move_time
-	src.l_move_time = world.timeofday
-	if ((A != src.loc && A && A.z == src.z))
+	src.move_speed = TIME - src.l_move_time
+	src.l_move_time = TIME
+	if (A != src.loc && A?.z == src.z)
 		src.last_move = get_dir(A, src.loc)
-		if (src.attached_objs && islist(src.attached_objs) && src.attached_objs.len)
-			for (var/atom/movable/M in attached_objs)
+		if (length(src.attached_objs))
+			for (var/_M in attached_objs)
+				var/atom/movable/M = _M
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()
@@ -565,26 +482,19 @@
 
 	if (isturf(src.loc))
 		last_turf = src.loc
+		var/turf/T = src.loc
 		if (src.event_handler_flags & USE_CHECKEXIT)
-			var/turf/T = src.loc
-			if (T)
-				T.checkingexit++
+			T.checkingexit++
 		if (src.event_handler_flags & USE_CANPASS || src.density)
-			var/turf/T = src.loc
-			if (T)
-				if (bound_width + bound_height > 64)
-					for(var/turf/BT in bounds(src))
-						BT.checkingcanpass++
-				else
-					T.checkingcanpass++
+			if (bound_width + bound_height > 64)
+				for(var/turf/BT in bounds(src))
+					BT.checkingcanpass++
+			else
+				T.checkingcanpass++
 		if (src.event_handler_flags & USE_HASENTERED)
-			var/turf/T = src.loc
-			if (T)
-				T.checkinghasentered++
+			T.checkinghasentered++
 		if (src.event_handler_flags & USE_PROXIMITY)
-			var/turf/T = src.loc
-			if (T)
-				T.checkinghasproximity++
+			T.checkinghasproximity++
 	else
 		last_turf = 0
 
@@ -700,9 +610,6 @@
 	return
 
 /atom/proc/attack_ai(mob/user as mob)
-	return
-
-/atom/proc/hitby(atom/movable/AM as mob|obj)
 	return
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
@@ -907,7 +814,7 @@
 
 
 	// We only need to do any of these checks if one of the flags is set OR density = 1
-	var/do_checks = (src.event_handler_flags & (USE_CHECKEXIT | USE_CANPASS | USE_HASENTERED | USE_HASENTERED)) || src.density == 1
+	var/do_checks = (src.event_handler_flags & (USE_CHECKEXIT | USE_CANPASS | USE_HASENTERED | USE_HASENTERED | USE_PROXIMITY)) || src.density == 1
 
 	if (do_checks && last_turf && isturf(last_turf))
 		if (src.event_handler_flags & USE_CHECKEXIT)

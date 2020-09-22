@@ -363,12 +363,13 @@ turf
 							if(enemy_tile.archived_cycle < archived_cycle) //archive bordering tile information if not already done
 								enemy_tile.archive()
 #endif
-							if(enemy_tile.parent && enemy_tile.parent.group_processing) //apply tile to group sharing
-								if(enemy_tile.parent.current_cycle < current_cycle)
-									if(enemy_tile.parent.air.check_gas_mixture(air))
-										connection_difference = air.share(enemy_tile.parent.air)
+							var/datum/air_group/sharegroup = enemy_tile.parent //move tile's group to a new variable so we're not referencing multiple layers deep
+							if(sharegroup && sharegroup.group_processing)
+								if(sharegroup.current_cycle < current_cycle)
+									if(sharegroup.air.check_gas_mixture(air))
+										connection_difference = air.share(sharegroup.air)
 									else
-										enemy_tile.parent.suspend_group_processing()
+										sharegroup.suspend_group_processing()
 										connection_difference = air.share(enemy_tile.air)
 										//group processing failed so interact with individual tile
 							else

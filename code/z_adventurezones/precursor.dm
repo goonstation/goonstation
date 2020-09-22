@@ -226,7 +226,7 @@
 				var/mob/living/carbon/human/H = A
 				H.emote(pick("shiver","shudder"))
 				H.change_misstep_chance(5)
-				shake_camera(H, 25, 2)
+				shake_camera(H, 25, 16)
 			if(istype(A, /obj/precursor_puzzle/glowing_door))
 				var/obj/precursor_puzzle/glowing_door/D = A
 				if(src.pitch == D.pitch)
@@ -934,7 +934,7 @@
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
 			boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 			user.unlock_medal("HIGH VOLTAGE", 1)
-			user.Virus_ShockCure(user, 100)
+			user.Virus_ShockCure(100)
 			user:shock_cyberheart(100)
 			user.changeStatus("stunned", 2 SECONDS)
 			user.changeStatus("weakened", 2 SECONDS)
@@ -1317,7 +1317,7 @@
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-			poorSoul:Virus_ShockCure(poorSoul, 100)
+			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart( 100)
 			poorSoul:changeStatus("weakened", 3 SECONDS)
 			if (isdead(poorSoul) && prob(25))

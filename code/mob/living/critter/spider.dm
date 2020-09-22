@@ -174,6 +174,7 @@
 	density = 0
 	flags = TABLEPASS
 	fits_under_table = 1
+	can_grab = 0 // Causes issues with tablepass, and doesn't make too much sense
 	health_brute = 25
 	health_burn = 25
 	good_grip = 0

@@ -172,6 +172,7 @@
 		..()
 
 	New(M)
+		..()
 		master = M
 
 		SPAWN_DBG(0)
@@ -433,6 +434,7 @@
 				src.update_pulling()
 
 			if ("rest")
+				if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 				if(master.ai_active && !master.hasStatus("resting"))
 					master.show_text("You feel too restless to do that!", "red")
 				else

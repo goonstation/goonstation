@@ -286,25 +286,26 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		if(T.z == AST_ZLEVEL)
 			miningZ.Add(T)
 
-	var/extra = rand(0,AST_NUMPREFABSEXTRA)
-	for(var/n=0, n<AST_NUMPREFABS+extra, n++)
+	var/num_to_place = AST_NUMPREFABS + rand(0,AST_NUMPREFABSEXTRA)
+	for (var/n = 1, n <= num_to_place, n++)
+		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
 		var/datum/generatorPrefab/M = pickPrefab()
-		if(M)
+		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
 			var/stop = 0
 			var/count= 0
 			var/maxTries = (M.required ? 200:33)
-			while(!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(1+AST_MAPBORDER, maxX), rand(1+AST_MAPBORDER,maxY), AST_ZLEVEL)
 				var/ret = M.applyTo(target)
-				if(ret == 0)
+				if (ret == 0)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
 				else
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
 					stop = 1
 				count++
-				if(count >= 33)
+				if (count >= 33)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
 		else break
 
@@ -315,6 +316,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	else
 		D = new/datum/mapGenerator/asteroidsDistance()
 
+	game_start_countdown?.update_status("Setting up mining level...\nGenerating terrain...")
 	miningZ = D.generate(miningZ)
 
 	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")

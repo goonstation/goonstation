@@ -529,7 +529,7 @@
 /turf/simulated/floor/caution/corner/ne,
 /area/station/hallway/secondary/entry)
 "abw" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/black,
@@ -5055,13 +5055,6 @@
 /obj/lattice,
 /turf/space,
 /area/station/wreckage)
-"alE" = (
-/obj/lattice,
-/obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
-	},
-/turf/space,
-/area/station/wreckage)
 "alF" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/wreckage)
@@ -6008,6 +6001,14 @@
 "anN" = (
 /obj/structure/girder,
 /obj/grille/steel,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north{
+	autoname_on_spawn = 0;
+	name = "Abandoned APC"
+	},
 /turf/simulated/floor/airless/damaged2,
 /area/station/wreckage)
 "anO" = (
@@ -6527,10 +6528,20 @@
 /area/station/wreckage)
 "aoY" = (
 /obj/decal/cleanable/oil,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/airless/grime,
 /area/station/wreckage)
 "aoZ" = (
 /obj/item/raw_material/rock,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/airless/grime,
 /area/station/wreckage)
 "apa" = (
@@ -6540,6 +6551,11 @@
 	icon_state = "2-4"
 	},
 /obj/creepy_sound_trigger,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/wreckage)
 "apb" = (
@@ -6972,6 +6988,9 @@
 /area/station/hangar/sec)
 "aqf" = (
 /obj/table/auto,
+/obj/machinery/defib_mount{
+	pixel_y = 2
+	},
 /obj/item/storage/firstaid/regular,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/reagent_containers/syringe,
@@ -8442,7 +8461,7 @@
 /area/station/crew_quarters/cafeteria)
 "atC" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "atD" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/table/reinforced/auto,
@@ -8457,10 +8476,10 @@
 	},
 /obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "atE" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "atF" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -8584,7 +8603,7 @@
 /obj/item/gun/russianrevolver,
 /obj/item/storage/firstaid/toxin,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "atR" = (
 /obj/storage/cart,
 /turf/simulated/floor/grime,
@@ -8973,10 +8992,10 @@
 	},
 /obj/machinery/vending/alcohol,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "auR" = (
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "auS" = (
 /obj/stool,
 /obj/machinery/firealarm{
@@ -8985,7 +9004,7 @@
 	},
 /obj/item/clothing/head/helmet/space/santahat,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "auT" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -8995,7 +9014,7 @@
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "auU" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -9516,7 +9535,7 @@
 	name = "Barman"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "awe" = (
 /obj/cable{
 	d1 = 1;
@@ -9524,7 +9543,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "awf" = (
 /obj/cable{
 	d1 = 4;
@@ -9539,7 +9558,7 @@
 /obj/access_spawn/bar,
 /obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "awg" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -10187,7 +10206,7 @@
 	name = "Cafeteria Intercom"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "axt" = (
 /obj/storage/secure/closet/civilian/bartender,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -10197,7 +10216,7 @@
 /obj/item/reagent_containers/food/drinks/bottle,
 /obj/item/reagent_containers/food/drinks/bottle,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "axu" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -10212,7 +10231,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "axw" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -10669,7 +10688,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/grime,
@@ -10821,7 +10840,7 @@
 /area/station/crew_quarters/cafeteria)
 "ayL" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -11100,7 +11119,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics)
 "azo" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor,
@@ -14595,8 +14614,6 @@
 /area/station/security/main)
 "aGy" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "aGz" = (
@@ -17721,7 +17738,7 @@
 	},
 /area/station/crew_quarters/pool)
 "aMW" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/pool/no_animate,
@@ -33435,7 +33452,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/carpet{
@@ -43208,7 +43225,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "bMT" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor,
@@ -50534,7 +50551,7 @@
 	name = "Supply Lobby"
 	})
 "ccu" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,
@@ -51611,7 +51628,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor,
@@ -57005,7 +57022,7 @@
 /turf/simulated/floor/white,
 /area/station/chemistry)
 "cqu" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/purplewhite/corner,
@@ -60401,7 +60418,7 @@
 	},
 /area/station/medical/research)
 "cxr" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{
@@ -60644,7 +60661,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxS" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light,
@@ -63003,6 +63020,13 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"fSi" = (
+/obj/lattice,
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
+/turf/space,
+/area/station/wreckage)
 "fVA" = (
 /obj/machinery/portable_atmospherics/canister/empty,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -98446,7 +98470,7 @@ aaa
 aaa
 ajz
 aky
-alE
+fSi
 amz
 anO
 apa

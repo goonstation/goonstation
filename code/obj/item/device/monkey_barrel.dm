@@ -12,9 +12,16 @@
 	spawn_contents = list(/mob/living/carbon/human/npc/monkey/angry = 6)
 
 	New()
+		..()
 		var/obj/item/barrel_signaller/M = new /obj/item/barrel_signaller(src.loc)
 		SPAWN_DBG(0)
 			M.my_barrel = src
+
+	is_acceptable_content(atom/A)
+		return istype(A, /mob/living/carbon/human/npc/monkey)
+
+	update_icon()
+		return
 
 
 /obj/item/barrel_signaller

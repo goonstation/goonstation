@@ -73,7 +73,7 @@
 		if (href_list["ejectsrc"])
 			if (src.source && !src.on)
 				src.source.master = null
-				src.source.loc = src.loc
+				src.source.set_loc(src.loc)
 				src.contents -= src.target
 				src.source.layer = initial(src.source.layer)
 				src.source = null
@@ -81,7 +81,7 @@
 		else if (href_list["ejectdish"])
 			if (src.target && !src.on)
 				src.target.master = null
-				src.target.loc = src.loc
+				src.target.set_loc(src.loc)
 				src.contents -= src.target
 				src.target.layer = initial(src.target.layer)
 				src.target = null
@@ -130,8 +130,7 @@
 					else
 						P.pathogens = B.pathogens.Copy()
 					P.volume = 5
-					if (!(src in processing_items))
-						processing_items.Add(src)
+					processing_items |= src
 					src.process_pathogen = P
 					src.process_source = S
 					counter = 25
@@ -144,7 +143,7 @@
 				return
 			else
 				src.source = O
-				O.loc = src
+				O.set_loc(src)
 				O.master = src
 				O.layer = src.layer
 				src.contents += O
@@ -163,7 +162,7 @@
 				return
 			else
 				src.target = O
-				O.loc = src
+				O.set_loc(src)
 				O.master = src
 				O.layer = src.layer
 				src.contents += O
@@ -324,7 +323,7 @@
 					user.show_message("The microscope is now zoomed in.")
 				else if (action == "Remove [target]")
 					user.show_message("<span class='notice'>You remove the [target] from the microscope.</span>")
-					src.target.loc = src.loc
+					src.target.set_loc(src.loc)
 					src.target.layer = initial(src.target.layer)
 					src.target.master = null
 					icon_state = zoom ? "microscope2" : "microscope0"
@@ -338,7 +337,7 @@
 				return
 			else
 				src.target = O
-				O.loc = src
+				O.set_loc(src)
 				O.master = src
 				O.layer = src.layer
 				src.contents += O
@@ -790,7 +789,7 @@
 				var/obj/item/reagent_containers/glass/vial/vial = new
 				vial.reagents.reagent_list[P.id] = P
 				vial.reagents.total_volume = 2
-				vial.loc = src.manip.loc
+				vial.set_loc(src.manip.loc)
 				usr.put_in_hand_or_eject(vial) // try to eject it into the users hand, if we can
 				vial.icon_state = "vial1"
 				src.manip.slots[src.manip.exposed] = null
@@ -1256,7 +1255,7 @@
 			return 0
 		else
 			modules[M.id] = M
-			M.loc = src
+			M.set_loc(src)
 			M.received(src)
 			return 1
 
@@ -1273,7 +1272,7 @@
 					done = 1
 					vials[i] = O
 					user.u_equip(O)
-					O.loc = src
+					O.set_loc(src)
 					O.master = src
 					user.client.screen -= O
 					break
@@ -1294,7 +1293,7 @@
 				if (!antiagent)
 					antiagent = O
 					user.u_equip(O)
-					O.loc = src
+					O.set_loc(src)
 					O.master = src
 					user.client.screen -= O
 					boutput(usr, "<span class='notice'>You insert the beaker into the machine.</span>")
@@ -1310,7 +1309,7 @@
 				if (!suppressant)
 					suppressant = O
 					user.u_equip(O)
-					O.loc = src
+					O.set_loc(src)
 					O.master = src
 					user.client.screen -= O
 					boutput(usr, "<span class='notice'>You insert the beaker into the machine.</span>")
@@ -1503,7 +1502,7 @@
 				if (modules[href_list["remove"]])
 					var/obj/item/synthmodule/M = modules[href_list["remove"]]
 					modules -= href_list["remove"]
-					M.loc = src.loc
+					M.set_loc(src.loc)
 					M.master = null
 		else
 			if (href_list["eject"])
@@ -1513,19 +1512,19 @@
 					if (vials[index])
 						var/obj/item/reagent_containers/glass/vial/V = vials[index]
 						vials[index] = null
-						V.loc = src.loc
+						V.set_loc(src.loc)
 						usr.put_in_hand_or_eject(V) // try to eject it into the users hand, if we can
 						V.master = null
 						if (sel_vial == index)
 							sel_vial = 0
 			else if (href_list["ejectanti"])
 				if (antiagent)
-					antiagent.loc = src.loc
+					antiagent.set_loc(src.loc)
 					antiagent.master = null
 					antiagent = null
 			else if (href_list["ejectsupp"])
 				if (suppressant)
-					suppressant.loc = src.loc
+					suppressant.set_loc(src.loc)
 					suppressant.master = null
 					suppressant = null
 			else if (href_list["vial"])
@@ -1659,7 +1658,7 @@
 			if (!sanitizing)
 				boutput(usr, "<span class='notice'>You place the [O] inside the machine.</span>")
 				sanitizing = O
-				O.loc = src
+				O.set_loc(src)
 				O.master = src
 				user.u_equip(O)
 				user.client.screen -= O
@@ -1688,7 +1687,7 @@
 						P.nutrition -= N
 					P.dirty_reason = ""
 					P.dirty = 0
-				sanitizing.loc = src.loc
+				sanitizing.set_loc(src.loc)
 				sanitizing.master = null
 				sanitizing = null
 				icon_state = "autoclave"

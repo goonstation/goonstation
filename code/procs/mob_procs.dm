@@ -53,10 +53,13 @@
 		return 0 // vOv
 
 /**
- * @param {int} tool_flag See _setup.dm for valid TOOL_X values
- * @param {string} [hand] If set, checks only in specific hand, else checks all hands
- * @returns {obj/item | 0} Tool that matched flag (and was in specific hand, if specified)
- */
+	* Given a tool flag, returns the src mob's tool in hand that matches the flag, or null
+	*
+	* * tool_flag {int} - See defines/item.dm for valid TOOL_X values
+	* * hand {string} - If set, checks only in specific hand, else checks all hands
+	*
+	* * return {[obj/item] | 0} - Tool that matched flag (and was in specific hand, if specified)
+	*/
 /mob/proc/find_tool_in_hand(var/tool_flag, var/hand)
 	if (hand)
 		// check specific hand
@@ -140,12 +143,11 @@
 		src.pulling = null
 
 		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
-		SPAWN_DBG(0)
-			src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
+		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
 		.= 1
 
 /mob/living/carbon/human/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
-	..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
+	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
 
 
 /mob/living/carbon/human/proc/skeletonize()
@@ -521,7 +523,7 @@
 	return 0
 
 /mob/living/carbon/human/get_explosion_resistance()
-	// @todo
+	return GET_MOB_PROPERTY(src, PROP_EXPLOPROT)/100
 
 /mob/proc/spread_blood_clothes(mob/whose)
 	return

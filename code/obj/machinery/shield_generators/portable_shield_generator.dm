@@ -174,7 +174,7 @@
 	proc/pulse(var/mob/user)
 		set_range(user)
 
-	examine()
+	get_desc(dist, mob/user)
 		. = ..()
 		var/charge_percentage = 0
 		if(PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)

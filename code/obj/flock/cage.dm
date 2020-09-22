@@ -129,7 +129,7 @@
 			else if(occupant)
 				occupant.gib() // sorry buddy but if you're some freaky-deaky cube thing or some other weird living thing we can't be doing with this now
 			if(target)
-				target.loc = src
+				target.set_loc(src)
 		else
 			underlays -= target
 			if(hasvar(target, "health"))

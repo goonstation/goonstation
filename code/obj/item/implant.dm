@@ -339,8 +339,6 @@ THROWING DARTS
 		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		boutput(source, "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 
-var/global/list/tracking_implants = list() // things were looping through world to find these so let's just stop doing that and have this shit add itself to a global list instead maybe
-
 /obj/item/implant/tracking
 	name = "tracking implant"
 	//life_tick_energy = 0.1
@@ -349,19 +347,10 @@ var/global/list/tracking_implants = list() // things were looping through world 
 
 	New()
 		..()
-		SPAWN_DBG(0)
-			if (!islist(tracking_implants))
-				tracking_implants = list()
-			tracking_implants.Add(src)
+		START_TRACKING
 
 	disposing()
-		..()
-		if (islist(tracking_implants))
-			tracking_implants.Remove(src)
-
-	disposing()
-		if (islist(tracking_implants))
-			tracking_implants.Remove(src)
+		STOP_TRACKING
 		..()
 
 /** Deprecated **/
@@ -452,6 +441,18 @@ var/global/list/tracking_implants = list() // things were looping through world 
 						H.emote("twitch_v")
 
 		..()
+
+
+// dumb joke
+/obj/item/implant/antirot
+	name = "\improper Rotbusttec implant"
+	icon_state = "implant-r"
+	impcolor = "r"
+
+	on_death()
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = owner
+			H.reagents.add_reagent("formaldehyde", 5)
 
 
 /* Deprecated old turds shit */
@@ -680,7 +681,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 
 		if (expire)
 			//25 minutes +/- 5
-			SPAWN_DBG(600 * (25 + rand(-5,5)) )
+			SPAWN_DBG((25 + rand(-5,5)) MINUTES)
 				if (src && !ishuman(src.loc)) // Drop-all, gibbed etc (Convair880).
 					if (src.expire && (src.expired != 1)) src.expired = 1
 					return
@@ -689,18 +690,18 @@ var/global/list/tracking_implants = list() // things were looping through world 
 				boutput(M, "<span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span>")
 
 				// 1 minute left
-				SPAWN_DBG(1 MINUTE)
-					if (src && !ishuman(src.loc))
-						if (src.expire && (src.expired != 1)) src.expired = 1
-						return
-					if (!src || !owner || (M != owner) || src.expired)
-						return
-					// There's a proc for this now (Convair880).
-					if (M.mind && M.mind.special_role == "mindslave")
-						remove_mindslave_status(M, "mslave", "expired")
-					else if (M.mind && M.mind.master)
-						remove_mindslave_status(M, "otherslave", "expired")
-					src.expired = 1
+				sleep(1 MINUTE)
+				if (src && !ishuman(src.loc))
+					if (src.expire && (src.expired != 1)) src.expired = 1
+					return
+				if (!src || !owner || (M != owner) || src.expired)
+					return
+				// There's a proc for this now (Convair880).
+				if (M.mind && M.mind.special_role == "mindslave")
+					remove_mindslave_status(M, "mslave", "expired")
+				else if (M.mind && M.mind.master)
+					remove_mindslave_status(M, "otherslave", "expired")
+				src.expired = 1
 		return
 
 	on_remove(var/mob/M)
@@ -801,6 +802,9 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		desc = "Rather unperfect round ball. Looks very old."
 		icon_state = "flintlockbullet"
 
+	bullet_50
+		name = ".50AE round"
+		desc = "Ouch."
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
@@ -1177,6 +1181,10 @@ var/global/list/tracking_implants = list() // things were looping through world 
 	name = "glass case - 'Robusttec'"
 	implant_type = "/obj/item/implant/robust"
 
+/obj/item/implantcase/antirot
+	name = "glass case - 'Rotbusttec'"
+	implant_type = "/obj/item/implant/antirot"
+
 /obj/item/implantcase/access
 	name = "glass case - 'Electronic Access'"
 	implant_type = "/obj/item/implant/access"
@@ -1540,7 +1548,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			my_datum.implant_master = user
 		return 1
 
-	alter_projectile(var/obj/projectile/P)
+	alter_projectile(source, var/obj/projectile/P)
 		if (!P || !my_implant)
 			return ..()
 		my_implant.set_loc(P)
@@ -1597,7 +1605,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	icon_state = "dart"
 	throw_spin = 0
 
-	throw_impact(M)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (ishuman(M) && prob(5))
 			var/mob/living/carbon/human/H = M
@@ -1622,7 +1630,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	throw_spin = 0
 	throw_speed = 3
 
-	throw_impact(M)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M

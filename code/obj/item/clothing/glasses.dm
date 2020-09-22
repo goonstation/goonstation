@@ -204,8 +204,7 @@
 		if (slot == SLOT_GLASSES)
 			assigned = user.client
 			SPAWN_DBG(-1)
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 		return
 
 	unequipped(var/mob/user)
@@ -316,8 +315,8 @@
 				pinhole = 1
 				block_eye = null
 				equipper.u_equip(src)
-				theEye.loc = W
-				src.loc = W
+				theEye.set_loc(W)
+				src.set_loc(W)
 				equipper = null
 				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your [theEye] and when you pull [W] away your eye comes with it!!</span>")
 
@@ -349,7 +348,7 @@
 	desc = "A pair of VR goggles running a personal simulation."
 	icon_state = "vr"
 	item_state = "sunglasses"
-	var/network = "det_net"
+	var/network = LANDMARK_VR_DET_NET
 
 	setupProperties()
 		..()
@@ -391,15 +390,15 @@
 		return
 
 /obj/item/clothing/glasses/vr/arcade
-	network = "arcadevr"
+	network = LANDMARK_VR_ARCADE
 
 /obj/item/clothing/glasses/vr/bomb
-	network = "bombtest"
+	network = LANDMARK_VR_BOMBTEST
 
 /obj/item/clothing/glasses/healthgoggles
 	name = "\improper ProDoc Healthgoggles"
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
-	icon_state = "ectoglasses"
+	icon_state = "prodocs"
 	uses_multiple_icon_states = 1
 	var/client/assigned = null
 	var/scan_upgrade = 0
@@ -443,8 +442,7 @@
 			assigned = user.client
 			SPAWN_DBG(-1)
 				//updateIcons()
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 		return
 
 	unequipped(var/mob/user)
@@ -463,8 +461,7 @@
 			else
 				src.scan_upgrade = 1
 				src.health_scan = 1
-				src.icon_state = "prodocs"
-				src.item_state = "prodocs"
+				src.icon_state = "prodocs-upgraded"
 				boutput(user, "<span class='notice'>Health scan upgrade installed.</span>")
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 				user.u_equip(W)
@@ -483,8 +480,7 @@
 			return
 
 /obj/item/clothing/glasses/healthgoggles/upgraded
-	icon_state = "prodocs"
-	item_state = "prodocs"
+	icon_state = "prodocs-upgraded"
 	scan_upgrade = 1
 	health_scan = 1
 
@@ -548,8 +544,7 @@
 			assigned = user.client
 			SPAWN_DBG(-1)
 				//updateIcons()
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 		return
 
 	unequipped(var/mob/user)

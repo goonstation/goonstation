@@ -1,5 +1,6 @@
 
-/obj/item/item_box // for when you want something that "contains" a certain amount of an item
+/// for when you want something that "contains" a certain amount of an item
+/obj/item/item_box
 	name = "box"
 	desc = "A little cardboard box for keeping stuff in. Woah! We're truly in the future with technology like this."
 	icon = 'icons/obj/items/storage.dmi'
@@ -186,6 +187,12 @@
 		icon_closed = "patchbox-med"
 		icon_open = "patchbox-med-open"
 		icon_empty = "patchbox-med-empty"
+
+#if ASS_JAM
+		New()
+			. = ..()
+			ADD_MORTY(13, 11, 7, 7)
+#endif
 
 		attack(mob/M as mob, mob/user as mob)
 			if (src.open)

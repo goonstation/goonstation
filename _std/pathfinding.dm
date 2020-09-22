@@ -1,4 +1,6 @@
 /proc/AStar(start, end, adjacent, heuristic, maxtraverse = 30, adjacent_param = null, exclude = null)
+	if(isnull(end) || isnull(start))
+		return
 	var/list/open = list(start), list/nodeG = list(), list/nodeParent = list(), P = 0
 	while (P++ < open.len)
 		var/T = open[P], TG = nodeG[T]
@@ -140,15 +142,16 @@
 		return 0
 	for(var/atom/O in T.contents)
 		if (O.density) // && !(O.flags & ON_BORDER)) -- fuck you, windows, you're dead to me
-			if (istype(O, /obj/machinery/door))
-				var/obj/machinery/door/D = O
-				if (D.isblocked())
-					return 0 // a blocked door is a blocking door
-			if (ismob(O))
-				var/mob/M = O
-				if (M.anchored)
-					return 0 // an anchored mob is a blocking mob
-				else
+			// @FIXME this entire block of code does nothing
+			// if (istype(O, /obj/machinery/door))
+			// 	var/obj/machinery/door/D = O
+			// 	if (D.isblocked())
+			// 		return 0 // a blocked door is a blocking door
+			// if (ismob(O))
+			// 	var/mob/M = O
+			// 	if (M.anchored)
+			// 		return 0 // an anchored mob is a blocking mob
+			// 	else
 			return 0 // not a special case, so this is a blocking object
 	return 1
 
@@ -326,12 +329,24 @@
 					L.Add(t)
 		return L
 	Distance(turf/t)
-		if(get_dist(src,t) == 1)
-			var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
-			cost *= (pathweight+t.pathweight)/2
-			return cost
-		else
-			return get_dist(src,t)
+		return sqrt((src.x - t.x) ** 2 + (src.y - t.y) ** 2)
+
+		// pathweight is never set and this creates a bizarre/stupid distance calc:
+		//
+		//  3333333
+		//  3222223
+		//  3221223
+		//  321*123 <-- note how the immediate diagonals count as 2
+		//  3221223     but only for the immediate ones, not further ones
+		//  3222223
+		//  3333333  i'm sure this made sense to someone at some point.
+		//
+		// if(get_dist(src,t) == 1)
+		// 	var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
+		// 	cost *= (pathweight+t.pathweight)/2
+		// 	return cost
+		// else
+		// 	return get_dist(src,t)
 	AdjacentTurfsSpace()
 		var/L[] = new()
 		for(var/turf/t in oview(src,1))

@@ -58,6 +58,7 @@
 	/obj/item/device/flash,
 	/obj/item/storage/box/clothing/hos,
 	/obj/item/clothing/suit/det_suit/hos,
+	/obj/item/clothing/suit/armor/hoscape,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
@@ -153,6 +154,13 @@
 	/obj/item/device/multitool,
 	/obj/item/device/flash,
 	/obj/item/stamp/ce,
+#ifdef UNDERWATER_MAP
+	/obj/item/clothing/suit/space/diving/engineering,
+	/obj/item/clothing/head/helmet/space/engineer/diving,
+#else
+	/obj/item/clothing/suit/space/engineer,
+	/obj/item/clothing/head/helmet/space/engineer,
+#endif
 	/obj/item/device/radio/headset/command/ce)
 
 /* ==================== */
@@ -315,6 +323,15 @@
 	icon_closed = "medical"
 	icon_opened = "secure_white-open"
 	req_access_txt = "10"
+
+#if ASS_JAM
+	update_icon()
+		. = ..()
+		if(src.open)
+			src.UpdateOverlays(null, "morty")
+		else
+			ADD_MORTY(11, 11, 7, 7)
+#endif
 
 /obj/storage/secure/closet/medical/medicine
 	name = "medicine storage locker"
@@ -570,7 +587,8 @@
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/caution = 4)
+	/obj/item/caution = 4,
+	/obj/item/clothing/gloves/long)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"

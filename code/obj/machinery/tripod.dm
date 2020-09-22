@@ -27,7 +27,7 @@
 		if (istype(W, /obj/item/tripod_bulb) && !bulb)
 			user.drop_item()
 			bulb = W
-			W.loc = src
+			W.set_loc(src)
 			bulb.inserted(src)
 			src.updateicon()
 

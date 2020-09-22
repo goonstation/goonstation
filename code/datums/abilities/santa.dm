@@ -37,7 +37,7 @@
 		return
 
 
-////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
 /datum/abilityHolder/santa
 	usesPoints = 0
@@ -238,7 +238,7 @@
 						break
 				if(clear)
 					L+=T
-		holder.owner.loc = pick(L)
+		holder.owner.set_loc(pick(L))
 
 /datum/targetable/santa/banish
 	name = "Banish Krampus"
@@ -261,4 +261,3 @@
 			return
 
 		boutput(holder.owner, "<span class='alert'>Can't find any Krampuses to banish! (you must be within 7 tiles)</span>")
-

@@ -6,13 +6,11 @@
 	anchored = 1
 	deconstruct_flags = DECON_SIMPLE
 	layer = MOB_LAYER_BASE+1 // TODO LAYER
-	var/list/hit_sounds = list('sound/impact_sounds/Generic_Hit_1.ogg', 'sound/impact_sounds/Generic_Hit_2.ogg', 'sound/impact_sounds/Generic_Hit_3.ogg',\
-	'sound/impact_sounds/Generic_Punch_2.ogg', 'sound/impact_sounds/Generic_Punch_3.ogg', 'sound/impact_sounds/Generic_Punch_4.ogg', 'sound/impact_sounds/Generic_Punch_5.ogg')
 
 	attack_hand(mob/user as mob)
 		user.lastattacked = src
 		flick("[icon_state]2", src)
-		playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
+		playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
@@ -43,7 +41,7 @@
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 				playsound(src.loc, 'sound/vox/honk.ogg', 50, 1, -1)
 			else
-				playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
+				playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
 				playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
 			user.changeStatus("fitness_stam_regen",1000)
 
@@ -116,7 +114,7 @@
 			var/obj/decal/W = new /obj/decal/
 			W.icon = 'icons/obj/stationobjs.dmi'
 			W.icon_state = "fitnessweight-w"
-			W.loc = loc
+			W.set_loc(loc)
 			W.anchored = 1
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")

@@ -127,6 +127,23 @@
 
 ////////armed civ putt
 
+obj/machinery/vehicle/miniputt/pilot
+	New()
+		. = ..()
+		src.com_system.deactivate()
+		qdel(src.engine)
+		qdel(src.com_system)
+		src.components -= src.engine
+		src.components -= src.com_system
+		src.engine = new /obj/item/shipcomponent/engine/zero(src)
+		src.engine.ship = src
+		src.components += src.engine
+		src.engine.activate()
+		src.com_system = null
+		myhud.update_systems()
+		myhud.update_states()
+		return
+
 /obj/machinery/vehicle/miniputt/armed
 	New()
 		..()
@@ -1767,10 +1784,10 @@
 
 			var/obj/portal/P = unpool(/obj/portal)
 			P.set_loc(get_turf(src))
-			var/obj/landmark/L = pick(escape_pod_success)
-			src.dir = L.dir
-			P.target = L.loc
-			src.set_loc(L.loc)
+			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
+			src.dir = landmarks[LANDMARK_ESCAPE_POD_SUCCESS][T]
+			P.target = T
+			src.set_loc(T)
 
 			logTheThing("station", src, null, "creates an escape portal at [log_loc(src)].")
 

@@ -2,7 +2,11 @@
 	name = "wall"
 	desc = "Looks like a regular wall."
 	icon = 'icons/turf/walls.dmi'
+#ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
+#else
+	plane = PLANE_FLOOR
+#endif
 	opacity = 1
 	density = 1
 	blocks_air = 1
@@ -282,7 +286,7 @@
 				src.material.triggerOnAttacked(src, user, user, src)
 			for (var/mob/N in AIviewers(usr, null))
 				if (N.client)
-					shake_camera(N, 4, 1, 0.5)
+					shake_camera(N, 4, 8, 0.5)
 		if (prob(40))
 			boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
 			dismantle_wall(1)

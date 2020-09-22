@@ -1,5 +1,3 @@
-var/global/life_pause_check = 0
-
 /datum/lifeprocess
 	var/mob/living/owner
 	var/last_process = 0
@@ -34,7 +32,7 @@ var/global/life_pause_check = 0
 		robot_owner = null
 		critter_owner = null
 
-	proc/process(var/datum/gas_mixture/environment)
+	proc/process(var/datum/gas_mixture/environment, mult)
 		last_process = TIME
 
 	proc/get_multiplier()
@@ -183,7 +181,8 @@ var/global/life_pause_check = 0
 
 	var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
 
-	life_pause_check = 0
+	var/life_mult = life_time_passed / tick_spacing
+
 	// Jewel's attempted fix for: null.return_air()
 	// These objects should be garbage collected the next tick, so it's not too bad if it's not breathing I think? I might be totallly wrong here.
 	if (loc)
@@ -203,7 +202,7 @@ var/global/life_pause_check = 0
 			L.process(environment)
 
 		for (var/obj/item/implant/I in src.implant)
-			I.on_life((life_time_passed / tick_spacing))
+			I.on_life(life_mult)
 
 		update_item_abilities()
 
@@ -211,7 +210,7 @@ var/global/life_pause_check = 0
 
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
-			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
+			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, life_mult)
 
 			if (last_no_gravity != src.no_gravity)
 				if(src.no_gravity)
@@ -247,13 +246,13 @@ var/global/life_pause_check = 0
 					src.updateOverlaysClient(x.client)
 
 		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-			G.process((life_time_passed / tick_spacing))
+			G.process(life_mult)
 
 		if (!can_act(M=src,include_cuffs=0))
 			actions.interrupt(src, INTERRUPT_STUNNED)
 
 		if (src.abilityHolder)
-			src.abilityHolder.onLife((life_time_passed / tick_spacing))
+			src.abilityHolder.onLife(life_mult)
 
 	last_life_tick = TIME
 
@@ -419,7 +418,7 @@ var/global/life_pause_check = 0
 
 	if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
 		if (isturf(src.item.loc))
-			src.item.loc = src
+			src.item.set_loc(src)
 		else
 			src.death(0)
 
@@ -513,7 +512,7 @@ var/global/life_pause_check = 0
 		if (src.mind.stealth_objective)
 			for (var/datum/objective/O in src.mind.objectives)
 				if (istype(O, /datum/objective/specialist/stealth))
-					var/turf/T = get_turf_loc(src)
+					var/turf/T = get_turf(src)
 					if (T && isturf(T) && (istype(T, /turf/space) || T.loc.name == "Space" || T.loc.name == "Ocean" || T.z != 1))
 						O:score = max(0, O:score - 1)
 						if (prob(20))
@@ -709,7 +708,7 @@ var/global/life_pause_check = 0
 
 		// Resistance from Clothing
 		protection += GET_MOB_PROPERTY(src, PROP_RANGEDPROT)
-
+		protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/10 //enchanted clothing isn't that bulletproof at all
 		return protection
 
 	get_melee_protection(zone, damage_type)
@@ -729,7 +728,7 @@ var/global/life_pause_check = 0
 				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
 			else //can only be head
 				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
-
+			protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
 			//protection from blocks
 			var/obj/item/grab/block/G = src.check_block()
 			if (G)

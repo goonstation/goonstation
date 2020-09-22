@@ -72,7 +72,7 @@
 				src.icon_state = "stove1"
 				src.pot = W
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 
 		if (!src.on && src.pot)
 
@@ -111,7 +111,7 @@
 			return
 		if(src.pot)
 			src.icon_state = "stove0"
-			src.pot.loc = src.loc
+			src.pot.set_loc(src.loc)
 			user.put_in_hand_or_drop(src.pot)
 			src.pot = null
 
@@ -287,10 +287,7 @@
 	New()
 		..()
 		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "souppot-f")
-		var/datum/reagents/R = new/datum/reagents(max_reagents)
-		reagents = R
-		R.my_atom = src
-		return
+		src.create_reagents(max_reagents)
 
 	get_desc(var/dist)
 		if(dist>1)

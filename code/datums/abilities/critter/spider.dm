@@ -212,8 +212,7 @@
 								"<span class='combat'><b>You encase [H] in ice!</b></span>")
 
 				if (istype(S) && S.babyspider)
-					SPAWN_DBG(0)
-						S.grow_up()
+					S.grow_up()
 
 			doCooldown()
 			disabled = 0
@@ -361,8 +360,7 @@
 	cast(atom/T)
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/ammo = new egg_path(holder.owner.loc)
 		ammo.parent = holder.owner
-		SPAWN_DBG(1)
-			ammo.throw_at(T, 32, 2)
+		ammo.throw_at(T, 32, 2)
 		doCooldown()
 
 		if (istype(holder.owner, /mob/living/critter/spider/clownqueen))

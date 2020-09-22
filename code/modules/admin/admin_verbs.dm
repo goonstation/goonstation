@@ -63,6 +63,8 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_station_name_changing,
 		/client/proc/cmd_admin_remove_label_from,
 		/client/proc/cmd_admin_antag_popups,
+		/client/proc/retreat_to_office,
+		
 		),
 
 
@@ -264,6 +266,7 @@ var/list/admin_verbs = list(
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
+		/client/proc/SetInfoOverlayAlias,
 
 		),
 
@@ -297,7 +300,6 @@ var/list/admin_verbs = list(
 		/client/proc/sendmobs,
 		/client/proc/gettraitors,
 		/client/proc/getnontraitors,
-		/client/proc/Debug2,
 		/datum/admins/proc/adrev,
 		/datum/admins/proc/adspawn,
 		/datum/admins/proc/adjump,
@@ -1449,16 +1451,14 @@ var/list/fun_images = list()
 		return
 
 	if(new_grenade)
-		var/obj/item/old_grenade/thing_thrower/nade = new
+		var/obj/item/old_grenade/thing_thrower/nade = new(usr.loc)
 		nade.count = input("How many things?", "How many things?", 8) as null|num
 		nade.payload = obj_path
-		nade.loc = usr.loc
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
 	else
-		var/obj/item/old_grenade/banana/nade = new /obj/item/old_grenade/banana
+		var/obj/item/old_grenade/banana/nade = new /obj/item/old_grenade/banana(usr.loc)
 		nade.payload = obj_path
-		nade.loc = usr.loc
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
 	logTheThing("admin", src, null, "spawned a custom grenade at [usr.loc]")

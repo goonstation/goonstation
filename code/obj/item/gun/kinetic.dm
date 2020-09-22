@@ -6,6 +6,8 @@
 	var/obj/item/ammo/bullets/ammo = null
 	var/max_ammo_capacity = 1 // How much ammo can this gun hold? Don't make this null (Convair880).
 	var/caliber = null // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
+	var/has_empty_state = 0 //does this gun have a special icon state for having no ammo lefT?
+	var/gildable = 0 //can this gun be affected by the [Helios] medal reward?
 
 	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
 	var/casings_to_eject = 0 // If we don't automatically ejected them, we need to keep track (Convair880).
@@ -50,6 +52,12 @@
 			inventory_counter.update_number(src.ammo.amount_left)
 		else
 			inventory_counter.update_text("-")
+
+		if(src.has_empty_state)
+			if (src.ammo.amount_left < 1 && !findtext(src.icon_state, "-empty")) //sanity check
+				src.icon_state = "[src.icon_state]-empty"
+			else
+				src.icon_state = replacetext(src.icon_state, "-empty", "")
 		return 0
 
 	canshoot()
@@ -173,7 +181,7 @@
 						for (var/i = 1, i <= number_of_casings, i++)
 							var/obj/item/casing/C = new src.current_projectile.casing(T)
 							C.forensic_ID = src.forensic_ID
-							C.loc = T
+							C.set_loc(T)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -191,7 +199,7 @@
 						for (var/i = 1, i <= number_of_casings, i++)
 							var/obj/item/casing/C = new src.current_projectile.casing(T)
 							C.forensic_ID = src.forensic_ID
-							C.loc = T
+							C.set_loc(T)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -207,7 +215,7 @@
 				while (src.casings_to_eject > 0)
 					C = new src.current_projectile.casing(T)
 					C.forensic_ID = src.forensic_ID
-					C.loc = T
+					C.set_loc(T)
 					src.casings_to_eject--
 		return
 
@@ -234,18 +242,51 @@
 	small
 		icon_state = "small"
 		desc = "Seems to be a small pistol cartridge."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-small-0[rand(1,6)].ogg", 20, 0.1)
 
 	medium
 		icon_state = "medium"
 		desc = "Seems to be a common revolver cartridge."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
 
 	rifle
 		icon_state = "rifle"
 		desc = "Seems to be a rifle cartridge."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.8)
+
+
+	rifle_loud
+		icon_state = "rifle"
+		desc = "Seems to be a rifle cartridge."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 25, 0.1)
 
 	derringer
 		icon_state = "medium"
 		desc = "A fat and stumpy bullet casing. Looks pretty old."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
+
+	deagle
+		icon_state = "medium"
+		desc = "An uncomfortably large pistol cartridge."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.9)
 
 	shotgun_red
 		icon_state = "shotgun_red"
@@ -267,6 +308,10 @@
 		icon_state = "rifle"
 		desc = "A cannon shell."
 		w_class = 2
+		New()
+			..()
+			SPAWN_DBG(rand(2, 4))
+				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 35, 0.1, 0, 0.8)
 
 	grenade
 		w_class = 2
@@ -362,19 +407,13 @@
 	auto_eject = 1
 	w_class = 2
 	muzzle_flash = null
+	has_empty_state = 1
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_22/faith
 		current_projectile = new/datum/projectile/bullet/bullet_22
 		..()
 
-	update_icon()
-		..()
-		if (src.ammo.amount_left < 1)
-			src.icon_state = "faith-empty"
-		else
-			src.icon_state = "faith"
-		return
 
 /obj/item/gun/kinetic/detectiverevolver
 	name = "CPA Detective Special"
@@ -385,6 +424,7 @@
 	force = 2.0
 	caliber = 0.38
 	max_ammo_capacity = 7
+	gildable = 1
 
 	New()
 		ammo = new/obj/item/ammo/bullets/a38/stun
@@ -444,23 +484,28 @@
 /obj/item/gun/kinetic/clock_188
 	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm NATO rounds."
 	name = "Clock 188"
-	icon_state = "clock-188-beige"
-	item_state = "clock-188-beige"
+	icon_state = "glock"
+	item_state = "glock"
 	shoot_delay = 2
 	w_class = 2.0
 	force = 7.0
 	caliber = 0.355
 	max_ammo_capacity = 18
 	auto_eject = 1
+	has_empty_state = 1
+	gildable = 1
 
 	New()
-		if (prob(30))
-			icon_state = "clock-188-black"
-			item_state = "clock-188-black"
+		if (prob(70))
+			icon_state = "glocktan"
+			item_state = "glocktan"
 
 		ammo = new/obj/item/ammo/bullets/nine_mm_NATO
 		current_projectile = new/datum/projectile/bullet/nine_mm_NATO
-		projectiles = list(current_projectile,new/datum/projectile/bullet/nine_mm_NATO/burst)
+		if(throw_return)
+			projectiles = list(current_projectile)
+		else
+			projectiles = list(current_projectile,new/datum/projectile/bullet/nine_mm_NATO/burst)
 		..()
 
 	attack_self(mob/user as mob)
@@ -470,25 +515,51 @@
 		else
 			spread_angle = 0
 
-	update_icon()
-		..()
-		if (src.item_state == "clock-188-black")
-			if (src.ammo.amount_left < 1)
-				src.icon_state = "clock-188-black_empty"
+/obj/item/gun/kinetic/clock_188/boomerang
+	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."
+	name = "Clock 180"
+	throw_range = 10
+	throwforce = 1
+	throw_speed = 1
+	throw_return = 1
+	var/prob_clonk = 0
+
+	throw_begin(atom/target)
+		playsound(src.loc, "rustle", 50, 1)
+		return ..(target)
+
+	throw_impact(atom/hit_atom)
+		if(hit_atom == usr)
+			if(prob(prob_clonk))
+				var/mob/living/carbon/human/user = usr
+				user.visible_message("<span class='alert'><B>[user] fumbles the catch and accidentally discharges [src]!</B></span>")
+				src.shoot_point_blank(user, user)
+				user.force_laydown_standup()
 			else
-				src.icon_state = "clock-188-black"
+				src.attack_hand(usr)
+			return
 		else
-			if (src.ammo.amount_left < 1)
-				src.icon_state = "clock-188-beige_empty"
-			else
-				src.icon_state = "clock-188-beige"
-		return
+			var/mob/M = hit_atom
+			if(istype(M))
+				var/mob/living/carbon/human/user = usr
+				if(istype(user.wear_suit, /obj/item/clothing/suit/security_badge))
+					src.silenced = 1
+					src.shoot_point_blank(M, M)
+					M.visible_message("<span class='alert'><B>[src] fires, hitting [M] point blank!</B></span>")
+					src.silenced = initial(src.silenced)
+
+			prob_clonk = min(prob_clonk + 5, 100)
+			SPAWN_DBG(1 SECONDS)
+				prob_clonk = max(prob_clonk - 5, 0)
+
+		return ..(hit_atom)
+
 
 /obj/item/gun/kinetic/spes
 	name = "SPES-12"
 	desc = "Multi-purpose high-grade military shotgun. Very spiffy."
-	icon_state = "shotgun"
-	item_state = "shotgun"
+	icon_state = "spas"
+	item_state = "spas"
 	force = 18.0
 	contraband = 7
 	caliber = 0.72
@@ -522,22 +593,19 @@
 		return 1
 
 	engineer
-		name = "SPES-6" // it's half as good
-
 		New()
 			..()
+			src.name = replacetext("[src.name]", "12", "6") //only half as good
 			ammo = new/obj/item/ammo/bullets/a12/weak
 			current_projectile = new/datum/projectile/bullet/a12/weak
 
 
-/obj/item/gun/kinetic/spes/vr
-	icon = 'icons/effects/VR.dmi'
-
 /obj/item/gun/kinetic/riotgun
 	name = "Riot Shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
-	icon_state = "shotgund"
-	item_state = "shotgund"
+	icon = 'icons/obj/48x32.dmi'
+	icon_state = "shotty"
+	item_state = "shotty"
 	force = 15.0
 	contraband = 5
 	caliber = 0.72
@@ -545,6 +613,8 @@
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
+	has_empty_state = 1
+	gildable = 1
 
 	New()
 		ammo = new/obj/item/ammo/bullets/abg
@@ -561,7 +631,7 @@
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
 	desc = "Based on an old Cold War relic, often used by paramilitary organizations and space terrorists."
-	icon = 'icons/obj/64x32.dmi' // big guns get big icons
+	icon = 'icons/obj/48x32.dmi' // big guns get big icons
 	icon_state = "ak47"
 	item_state = "ak47"
 	force = 30.0
@@ -571,20 +641,19 @@
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
+	gildable = 1
 
 	New()
 		ammo = new/obj/item/ammo/bullets/ak47
 		current_projectile = new/datum/projectile/bullet/ak47
 		..()
 
-/obj/item/gun/kinetic/ak47/vr
-	icon = 'icons/effects/VR.dmi'
-
 /obj/item/gun/kinetic/hunting_rifle
 	name = "Old Hunting Rifle"
 	desc = "A powerful antique hunting rifle."
-	icon_state = "hunting_rifle"
-	item_state = "hunting_rifle"
+	icon = 'icons/obj/48x32.dmi'
+	icon_state = "ohr"
+	item_state = "ohr"
 	force = 10
 	contraband = 8
 	caliber = 0.308
@@ -592,20 +661,20 @@
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
+	has_empty_state = 1
+	gildable = 1
 
 	New()
 		ammo = new/obj/item/ammo/bullets/rifle_3006
 		current_projectile = new/datum/projectile/bullet/rifle_3006
 		..()
 
-/obj/item/gun/kinetic/hunting_rifle/vr
-	icon = 'icons/effects/VR.dmi'
-
 /obj/item/gun/kinetic/dart_rifle
 	name = "Tranquilizer Rifle"
 	desc = "A veterinary tranquilizer rifle chambered in .308 caliber."
-	icon_state = "dart_rifle"
-	item_state = "hunting_rifle"
+	icon = 'icons/obj/48x32.dmi'
+	icon_state = "tranq"
+	item_state = "tranq"
 	force = 10
 	//contraband = 8
 	caliber = 0.308
@@ -613,6 +682,7 @@
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
+	gildable = 1
 
 	New()
 		ammo = new/obj/item/ammo/bullets/tranq_darts
@@ -674,19 +744,12 @@
 	auto_eject = 1
 	hide_attack = 1
 	muzzle_flash = null
+	has_empty_state = 1
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_22HP
 		current_projectile = new/datum/projectile/bullet/bullet_22/HP
 		..()
-
-	update_icon()
-		..()
-		if (src.ammo.amount_left < 1)
-			src.icon_state = "silenced_empty"
-		else
-			src.icon_state = "silenced"
-		return
 
 /obj/item/gun/kinetic/vgun
 	name = "Virtual Pistol"
@@ -702,7 +765,7 @@
 		..()
 
 	shoot(var/target,var/start ,var/mob/user)
-		var/turf/T = get_turf_loc(src)
+		var/turf/T = get_turf(src)
 
 		if (!istype(T.loc, /area/sim))
 			boutput(user, "<span class='alert'>You can't use the guns outside of the combat simulation, fuckhead!</span>")
@@ -713,12 +776,13 @@
 /obj/item/gun/kinetic/flaregun
 	desc = "A 12-gauge flaregun."
 	name = "Flare Gun"
-	icon_state = "flaregun"
+	icon_state = "flare"
 	item_state = "flaregun"
 	force = 5.0
 	contraband = 2
 	caliber = 0.72
 	max_ammo_capacity = 1
+	has_empty_state = 1
 
 	New()
 		ammo = new/obj/item/ammo/bullets/flare/single
@@ -761,9 +825,9 @@
 	name = "MPRT-7"
 	icon = 'icons/obj/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	icon_state = "rpg7_empty"
+	icon_state = "rpg7"
 	uses_multiple_icon_states = 1
-	item_state = "rpg7_empty"
+	item_state = "rpg7"
 	wear_image_icon = 'icons/mob/back.dmi'
 	flags = ONBACK
 	w_class = 4
@@ -776,23 +840,22 @@
 	can_dual_wield = 0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
+	has_empty_state = 1
 
 	New()
 		ammo = new /obj/item/ammo/bullets/rpg
 		ammo.amount_left = 0 // Spawn empty.
 		current_projectile = new /datum/projectile/bullet/rpg
+		src.update_icon()
 		..()
 		return
 
 	update_icon()
 		..()
 		if (src.ammo.amount_left < 1)
-			src.icon_state = "rpg7_empty"
 			src.item_state = "rpg7_empty"
 		else
-			src.icon_state = "rpg7"
 			src.item_state = "rpg7"
-		return
 
 	loaded
 		New()
@@ -861,19 +924,12 @@
 	caliber = 0.355
 	max_ammo_capacity = 15
 	auto_eject = 1
+	has_empty_state = 1
 
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_9mm
 		current_projectile = new/datum/projectile/bullet/bullet_9mm
 		..()
-
-	update_icon()
-		..()
-		if (src.ammo.amount_left < 1)
-			src.icon_state = "9mm_pistol_empty"
-		else
-			src.icon_state = "9mm_pistol"
-		return
 
 /obj/item/gun/kinetic/tranq_pistol
 	name = "tranquilizer pistol"
@@ -1455,3 +1511,85 @@
 		..()
 		ammo = new/obj/item/ammo/bullets/meowitzer/inert
 		current_projectile = new/datum/projectile/special/meowitzer/inert
+
+
+
+
+/obj/item/gun/kinetic/SMG_briefcase
+	name = "secure briefcase"
+	icon = 'icons/obj/items/storage.dmi'
+	icon_state = "secure"
+	item_state = "sec-case"
+	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
+	force = 8.0
+	caliber = 0.355
+	max_ammo_capacity = 30
+	auto_eject = 0
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	object_flags = NO_ARM_ATTACH
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	spread_angle = 2
+	can_dual_wield = 0
+	var/cases_to_eject = 0
+	var/open = FALSE
+
+
+	New()
+		ammo = new/obj/item/ammo/bullets/nine_mm_NATO
+		current_projectile = new/datum/projectile/bullet/nine_mm_NATO/burst
+		..()
+
+	attack_hand(mob/user as mob)
+		if(!user.find_in_hand(src))
+			..() //this works, dont touch it
+		else if(open)
+			.=..()
+		else
+			boutput(user, "<span class='alert'>You can't unload the [src] while it is closed.</span>")
+
+	attackby(obj/item/ammo/bullets/b as obj, mob/user)
+		if(open)
+			.=..()
+		else
+			boutput(user, "<span class='alert'>You can't access the gun inside the [src] while it's closed! You'll have to open the [src]!</span>")
+
+	attack_self(mob/user)
+		if(open)
+			open = FALSE
+			update_icon()
+			boutput(user, "<span class='alert'>You close the [src]!</span>")
+		else
+			boutput(user, "<span class='alert'>You open the [src].</span>")
+			open = TRUE
+			update_icon()
+			if (src.loc == user && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
+				src.add_fingerprint(user)
+				if (!src.sanitycheck(0, 1))
+					user.show_text("You can't unload this gun.", "red")
+					return
+				if (src.casings_to_eject > 0 && src.current_projectile.casing)
+					if (!src.sanitycheck(1, 0))
+						logTheThing("debug", usr, null, "<b>Convair880</b>: [user]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
+						src.casings_to_eject = 0
+						return
+					else
+						user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
+						src.ejectcasings()
+						return
+				else
+					user.show_text("[src] is empty!", "red")
+					return
+
+	canshoot()
+		if(open)
+			return 0
+		else
+			. = ..()
+
+	update_icon()
+		if(open)
+			icon_state="guncase"
+		else
+			icon_state="secure"

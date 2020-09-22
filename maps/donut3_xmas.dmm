@@ -1013,7 +1013,6 @@
 /obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/decal/mule/beacon,
 /obj/item/clothing/gloves/fingerless,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/black,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
@@ -9215,7 +9214,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/grimycarpet,
@@ -12510,7 +12509,6 @@
 /obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/decal/mule/beacon,
 /obj/item/clothing/gloves/fingerless,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "dnG" = (
@@ -17163,7 +17161,6 @@
 	dir = 1
 	},
 /obj/item/clothing/gloves/fingerless,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "eJu" = (
@@ -20520,7 +20517,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/space,
@@ -22081,7 +22078,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/junction/right/south,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/wood/six,
@@ -28603,7 +28600,7 @@
 /area/station/storage/primary)
 "idd" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/plating/jen,
@@ -31186,7 +31183,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/black,
@@ -36360,7 +36357,7 @@
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum)
 "kzV" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -38078,7 +38075,7 @@
 "lda" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/black,
@@ -47838,7 +47835,7 @@
 	},
 /area/station/engine/ptl)
 "nVl" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/snow/snowball,
@@ -60441,7 +60438,7 @@
 	pixel_x = 10;
 	pixel_y = 20
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/camera{
@@ -60641,7 +60638,7 @@
 	dir = 9;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/black/grime,
@@ -69722,7 +69719,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "ukP" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/white,
@@ -74016,7 +74013,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "vwH" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/drainage,

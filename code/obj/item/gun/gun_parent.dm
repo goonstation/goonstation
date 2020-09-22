@@ -48,7 +48,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/shoot_delay = 4
 
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
-	var/list/muzzle_flash_simplelight_color
 
 	buildTooltipContent()
 		. = ..()
@@ -57,6 +56,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		lastTooltipContent = .
 
 	New()
+		RegisterSignal(src, COMSIG_ALTER_PROJECTILE, .proc/alter_projectile)
 		SPAWN_DBG(2 SECONDS)
 			src.forensic_ID = src.CreateID()
 			forensic_IDs.Add(src.forensic_ID)
@@ -326,14 +326,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	spread = max(spread, spread_angle)
 
 	for (var/i = 0; i < current_projectile.shot_number; i++)
-		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread)
+		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread, projsource = src)
 		if (!P)
 			return
 		if (user == M)
 			P.shooter = null
 			P.mob_shooter = user
 
-		alter_projectile(P)
 		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
 		if(get_dist(user,M) <= 1)
 			hit_with_existing_projectile(P, M) // Includes log entry.
@@ -354,7 +353,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (flag)
 		return
 
-/obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
+/obj/item/gun/proc/alter_projectile(source, var/obj/projectile/P)
 	return
 
 /obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
@@ -403,9 +402,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread)
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, projsource = src)
 	if (P)
-		alter_projectile(P)
 		P.forensic_ID = src.forensic_ID
 
 	if(user && !suppress_fire_msg)

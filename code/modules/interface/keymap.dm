@@ -3,6 +3,7 @@
 	var/list/keys = list()
 
 	New(data)
+		..()
 		if (data)
 			for (var/key in data)
 				keys[parse_keybind(key)] = data[key]

@@ -1605,7 +1605,7 @@
 "dI" = (
 /obj/table,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/bridge)
@@ -3006,7 +3006,7 @@
 	name = "Captain"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
@@ -3715,7 +3715,7 @@
 /area/crew_quarters/courtroom)
 "is" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/courtroom)
@@ -3927,7 +3927,7 @@
 /obj/table,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/medical/medbay)
@@ -5835,7 +5835,7 @@
 "nl" = (
 /obj/secure_closet/personal,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -6820,7 +6820,7 @@
 /obj/item/cleaner,
 /obj/item/cleaner,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -6958,7 +6958,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/security/main)
@@ -7077,7 +7077,7 @@
 /area/hallway/secondary/exit)
 "qb" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
@@ -7286,7 +7286,7 @@
 "qF" = (
 /obj/closet/wardrobe/pink,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -7355,7 +7355,7 @@
 /area/atmos)
 "qO" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
@@ -8405,7 +8405,7 @@
 	c_tag = "Bar"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
@@ -8454,7 +8454,7 @@
 /area/crew_quarters/cafeteria)
 "tr" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/crew_quarters/cafeteria)
@@ -12448,7 +12448,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/turret_protected/aisat_interior)
@@ -12957,9 +12957,7 @@
 /turf/simulated/floor/white,
 /area/space_diner)
 "DG" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
 "DH" = (

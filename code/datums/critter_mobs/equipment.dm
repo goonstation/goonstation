@@ -40,7 +40,7 @@
 		if (screenObj)
 			I.screen_loc = screenObj.screen_loc
 		item = I
-		item.loc = holder
+		item.set_loc(holder)
 		holder.update_clothing()
 		on_equip()
 		return 1
@@ -50,7 +50,7 @@
 			return 0
 		if ((item.cant_drop || item.cant_other_remove) && !force)
 			return 0
-		item.loc = get_turf(holder)
+		item.set_loc(get_turf(holder))
 		item.master = null
 		item.layer = initial(item.layer)
 		item = null

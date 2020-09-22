@@ -12,7 +12,9 @@ client/proc/open_dj_panel()
 
 	global.dj_panel.ui_interact(src.mob)
 
-/** DJ Panel for Admins
+/**
+ * # DJ Panel for Admins
+ *
  *  Allows for easily accessible music/sound playing for admins/allowed players.
  */
 /datum/dj_panel
@@ -25,7 +27,7 @@ client/proc/open_dj_panel()
 	return tgui_always_state
 
 /datum/dj_panel/ui_status(mob/user)
-  return min(
+  return max(
 		tgui_admin_state.can_use_topic(src, user),
 		src.dj_access_check(user)
 	)
@@ -109,7 +111,7 @@ client/proc/open_dj_panel()
 			logTheThing("admin", usr, null, "played ambient sound [loaded_sound]")
 			logTheThing("diary", usr, null, "played ambient sound [loaded_sound]", "admin")
 			message_admins("[admin_key(usr.client)] played ambient sound [loaded_sound]")
-			playsound(get_turf_loc(usr), loaded_sound, sound_volume, sound_frequency)
+			playsound(get_turf(usr), loaded_sound, sound_volume, sound_frequency)
 
 		if("play-remote")
 			usr.client?.play_youtube_audio()
@@ -144,9 +146,10 @@ client/proc/open_dj_panel()
 					LAGCHECK(LAG_MED)
 
 
-/** Moves the global admin sound channel up or down one
+/**
+ * Moves the global admin sound channel up or down one
  *
- * backwards - Moves it backwards if true
+ * * backwards - Moves it backwards if true
  */
 /datum/dj_panel/proc/move_admin_sound_channel(backwards = FALSE)
 	if (backwards)
@@ -160,10 +163,11 @@ client/proc/open_dj_panel()
 		else //At 1024, set it back down 10.
 			admin_sound_channel = 1014
 
-/** Toggles the DJ Mode for a given client
+/**
+ * Toggles the DJ Mode for a given client
  *
- * required C - Client to toggle the DJ Mode of
- * required actor - The client actor toggled the DJ Mode
+ * * required C - Client to toggle the DJ Mode of
+ * * required actor - The client actor toggled the DJ Mode
  */
 /datum/dj_panel/proc/toggledj(client/C, client/actor)
 	C.non_admin_dj = !C.non_admin_dj

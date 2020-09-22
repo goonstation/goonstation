@@ -61,11 +61,10 @@
 			continue
 		if(istype(wizard))
 			wizard.special_role = "wizard"
-			if(wizardstart.len == 0)
+			if(!pick(job_start_locations["wizard"]))
 				boutput(wizard.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
-				var/starting_loc = pick(wizardstart)
-				wizard.current.set_loc(starting_loc)
+				wizard.current.set_loc(pick(job_start_locations["wizard"]))
 			bestow_objective(wizard,/datum/objective/regular/assassinate)
 			bestow_objective(wizard,/datum/objective/regular/assassinate)
 			bestow_objective(wizard,/datum/objective/regular/assassinate)
@@ -84,8 +83,8 @@
 
 	for(var/datum/mind/wizard in src.traitors)
 		var/randomname
-		if (wizard.current.gender == "female") randomname = wiz_female.len ? pick(wiz_female) : "Witch"
-		else randomname = wiz_male.len ? pick(wiz_male) : "Wizard"
+		if (wizard.current.gender == "female") randomname = pick_string_autokey("names/wizard_female.txt")
+		else randomname = pick_string_autokey("names/wizard_male.txt")
 		SPAWN_DBG(0)
 			var/newname = adminscrub(input(wizard.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname) as text)
 
@@ -158,7 +157,7 @@
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 */
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")

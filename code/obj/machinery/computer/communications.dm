@@ -175,7 +175,7 @@
 			if(FA.lockdownbyai == 1)
 				FA.lockdownbyai = 0
 				FA.reset()
-	for(var/obj/machinery/door/airlock/AL in doors) //open airlocks
+	for(var/obj/machinery/door/airlock/AL in by_type[/obj/machinery/door]) //open airlocks
 		SPAWN_DBG ( 0 )
 			if(AL.canAIControl() && AL.lockdownbyai == 1)
 				AL.open()

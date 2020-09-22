@@ -1602,7 +1602,7 @@ datum
 			name = "Hot Toddy"
 			id = "hottoddy"
 			result = "hottoddy"
-			required_reagents = list("sweet_tea", "bourbon" = 1, "juice_lemon" = 1)
+			required_reagents = list("sweet_tea" = 1, "bourbon" = 1, "juice_lemon" = 1)
 			result_amount = 3
 			mix_phrase = "The drink suddenly fills the room with a festive aroma."
 			mix_sound = 'sound/misc/drinkfizz.ogg'

@@ -42,11 +42,11 @@
 	var/cant_take_hat = 0 // maybe they already have a hat, or maybe they just don't want a hat?  I dunno, bees are allowed to have their own fashion sense
 	var/royal = 0 // maybe they'll have a little crown  c:
 	var/list/hat_list = list("detective","hoscap","hardhat0","hardhat1","hosberet","ntberet","chef","souschef",
-	"captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1","butt","santa",
-	"yellow","blue","red","green","black","white","psyche","wizard","wizardred","wizardpurple","witch",
-	"obcrown","macrown","safari","viking","dolan","camhat","redcamhat","mailcap","paper","policehelm",
-	"bikercap","apprentice","chavcap","flatcap","ntberet","captain-fancy","rank-fancy","mime_beret","mime_bowler",
-	"buckethat")
+	"captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1",
+	"butt-nc","butt-plant","butt-cyber","purplebutt","santa","yellow","blue","red","green","black","white",
+	"psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","viking","dolan",
+	"camhat","redcamhat","mailcap","paper","policehelm","bikercap","apprentice","chavcap","flatcap","ntberet",
+	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat")
 
 	var/sleep_y_offset = 5 // this amount removed from the hat's pixel_y on sleep or death
 	var/hat_y_offset = 0
@@ -241,7 +241,7 @@
 		is_pet = 2
 		var/tier = 0
 		var/original_tier = 0
-		var/original_hat_ref = ""
+		var/obj/item/clothing/head/original_hat
 		var/static/hat_tier_list = list(
 			///obj/item/clothing/head/butt,
 			/obj/item/clothing/head/paper_hat,
@@ -304,7 +304,7 @@
 					trans.Scale((ubertier - 4) / 3) // mmm, large hat
 					hat.transform = trans
 			hat.name = "[src]'s [hat.name]"
-			src.original_hat_ref = ref(hat)
+			src.original_hat = hat
 			src.hat_that_bee(hat)
 			src.update_icon()
 
@@ -320,7 +320,7 @@
 			. = ..()
 
 		attackby(obj/item/W, mob/living/user)
-			if(!src.hat && ref(W) == src.original_hat_ref) // ...unless you return the hat!
+			if(!src.hat && W == src.original_hat) // ...unless you return the hat!
 				if(src.alive)
 					boutput(user, "<span class='emote'>[src] bubmles happily at the sight of [W]!</span>")
 				src.tier = src.original_tier
@@ -350,7 +350,7 @@
 			if (src.alive)
 				if (user.a_intent == INTENT_HELP)
 					src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
-					karma_update(1, "SAINT", user)
+					user.add_karma(1)
 
 					if (masked == 1)
 						src.visible_message("<span class='alert'>[src]'s halloween mask falls off!<br>[src] stares at the fallen mask for a moment, then buzzes wearily.</span>")
@@ -368,7 +368,7 @@
 							user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
 							if (user.reagents)
 								user.reagents.add_reagent("hugs", 10)
-							karma_update(2, "SAINT", user)
+							user.add_karma(2)
 
 					return
 			else
@@ -497,13 +497,12 @@
 			//1 am to 9 am cst is a little offset from the Real Bubs Jobtime
 			//of course, this is tied to the server's local time so G4 will be different
 			if (. >= 1 && . < 9)
-				var/obj/landmark/bubs_bee_job = locate("landmark*bubsbeejob")
-				if (istype(bubs_bee_job))
+				var/turf/T = pick_landmark(LANDMARK_BUBS_BEE_JOB)
+				if (istype(T))
 					src.hat = new /obj/item/clothing/head/flatcap (src)
 					src.hat_that_bee(src.hat)
 					src.update_icon()
-
-					src.set_loc(get_turf(bubs_bee_job))
+					src.set_loc(T)
 
 			return 1
 
@@ -827,9 +826,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(honey_production_amount)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(honey_production_amount)
 
 		statlog_bees(src)
 
@@ -1086,7 +1083,7 @@
 		modify_christmas_cheer(-5)
 		var/mob/M = src.lastattacker
 		if (M)
-			karma_update(5, "SIN", M)
+			M.add_karma(-5)
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src))
 			if(fellow_bee.alive)
 				fellow_bee.aggressive = 1
@@ -1150,7 +1147,7 @@
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if(findtext(W.name,"bee") && !istype(W, /obj/item/reagent_containers/food/snacks/beefood)) // You just know somebody will do this
 				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!", 1)
-				karma_update(1, "SIN", user)
+				user.add_karma(-1)
 
 				if (user != src.target)
 					walk_away(src,user,10,1)
@@ -1360,7 +1357,7 @@
 		else
 			return ..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		if (src.alive && !src.sleeping)
 			animate_bumble(src) // please keep bumbling tia
@@ -1547,7 +1544,7 @@
 			src.visible_message("<b>[src]</b> squeals in a SCOLDED MANNER.")
 
 		else
-			karma_update(1, "SIN", user)
+			user.add_karma(-1)
 			..()
 
 	CritterDeath()
@@ -1642,7 +1639,7 @@
 
 			qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (hatched || 0)//todo: re-enable this when people stop abusing bees!!!
 			return
@@ -1724,13 +1721,10 @@
 					newLarva.custom_desc = "A moon bee.  It's like a regular space bee, but it has a peculiar gleam in its eyes..."
 				newLarva.custom_bee_type = /obj/critter/domestic_bee/moon
 				newLarva.blog += "larva hatched by [key_name(user)]"
-				var/datum/reagents/R = new/datum/reagents(50)
-				newLarva.reagents = R
-				R.my_atom = newLarva
-				R.add_reagent("wolfsbane", 10)
+				newLarva.reagents.add_reagent("wolfsbane", 10)
 				qdel (src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (hatched || 0)//replace me too!!!
 			return
@@ -1822,16 +1816,14 @@
 	amount = 4
 	heal_amt = 1
 	doants = 0
+	initial_volume = 50
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("nectar", 10)
-		R.add_reagent("honey", 10)
-		R.add_reagent("cornstarch", 5)
-		R.add_reagent("pollen", 20)
+		reagents.add_reagent("nectar", 10)
+		reagents.add_reagent("honey", 10)
+		reagents.add_reagent("cornstarch", 5)
+		reagents.add_reagent("pollen", 20)
 
 /* -------------------- END -------------------- */
 

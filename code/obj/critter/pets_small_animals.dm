@@ -206,20 +206,6 @@
 	name = "Morty"
 	generic = 0
 
-var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "Litterbox",
-"Reginald", "Poosycat", "Dr. Purrsworthy", "Lt. Scratches", "Michael Catson",
-"Fluffy", "Mr. Purrfect", "Lord Furstooth", "Lion-O", "Johnathan", "Gary Catglitter",
-"Chat de Gaulle", "Ratbag",
-"Baron Fuzzykins, Defiler of Carpets", "Robert Meowgabe", "Chairman Meow", "Bacon",
-"Prunella", "Poonella", "SEXCOPTER", "Fat, Lazy Piece of Shit", "Jones Mk. II",
-"Jones Mk. III", "Jones Mk. IV", "Jones Mk.V", "Mr. Meowgi",
-"Furrston von Purringsworth", "Garfadukecliff", "SyndiCat", "Rosa Fluffemberg",
-"Karl Meowx", "Margaret Scratcher", "Marcel Purroust", "Franz Katka", "Das Katpital",
-"Proletaricat", "Perestroikat", "Mewy P. Newton", "Fidel Catstro", "George Lucats",
-"Lin Miao", "Felix Purrzhinsky", "Pol Pet", "Piggy", "Long Kitty", "Caterella", "Aristocat",
-"Arthur Cat Clarke", "Prick", "Pantalaimon", "Purrsula K. Le Guin", "Douglas Pat 'Ems",
-"Gato", "Zebra", "Possum", "Myst", "Too", "P", "Z", "Catopus")
-
 // hi I added my childhood cats' names to the list cause I miss em, they aren't really funny names but they were great cats
 // remove em if you want I guess
 // - Haine
@@ -251,7 +237,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			src.is_pet = 1
 		..()
 		if (src.randomize_cat)
-			src.name = pick(cat_names)
+			src.name = pick_string_autokey("names/cats.txt")
 
 #ifdef HALLOWEEN
 			src.cattype = 3 //Black cats for halloween.
@@ -453,7 +439,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	desc = "Although this cat is vegan, it's still a carnivore."
 
 	New()
-		name = pick(cat_names)
+		name = pick_string_autokey("names/cats.txt")
 		..()
 
 /obj/critter/dog/george
@@ -1797,6 +1783,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	chase_text = "boogies right into"
 	atk_brute_amt = 5
 	generic = 0
+	var/emagged = 0
 	var/dance_forever = 0
 	death_text = "%src% stops dancing forever."
 
@@ -1807,6 +1794,13 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.visible_message("<b>[src]</b> [msg]!",2)
 			src.icon_state = pick("boogie-d1","boogie-d2","boogie-d3")
 			// maybe later make it ambient play a short chiptune here later or at least some new sound effect
+			if (emagged)
+				SPAWN_DBG(0.5 SECONDS)
+					for (var/mob/living/carbon/human/responseMonkey in orange(2, src)) // they don't have to be monkeys, but it's signifying monkey code
+						LAGCHECK(LAG_MED)
+						if (!can_act(responseMonkey, 0))
+							continue
+						responseMonkey.emote("dance")
 			SPAWN_DBG(20 SECONDS)
 				if (src) src.icon_state = "boogie"
 
@@ -1840,6 +1834,15 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			return
 		else
 			. = ..()
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			if(user)
+				boutput(user, "<span class='alert'>You short out the [src]'s dancing intensity setting to 'flashmob'.</span>")
+			src.visible_message("<span class='alert'><b>[src] lights up with determination!</b></span>")
+			src.emagged = TRUE
+			return 1
+		return 0
 
 /obj/critter/meatslinky // ferrets for wire
 	name = "space ferret"

@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1
 	New()
+		..()
 		SPAWN_DBG(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
 			term.dir = get_dir(get_turf(term), src)
@@ -45,7 +46,6 @@
 			M.set_loc(get_turf(src))
 			var/mob/living/silicon/ai/TheAI = M.AIize(0, 1)
 			TheAI.set_loc(src)
-			src.loc = null
 			B.set_loc(TheAI)
 			TheAI.brain = B
 			TheAI.anchored = 0
@@ -226,8 +226,8 @@
 
 /obj/item/clothing/glasses/construction
 	name = "\improper Construction Visualizer"
-	icon_state = "meson"
-	item_state = "glasses"
+	icon_state = "construction"
+	item_state = "construction"
 	mats = 6
 	desc = "The latest technology in viewing live blueprints."
 
@@ -416,7 +416,6 @@
 					continue
 				if (MT.mat_id == DM.mat_id)
 					playsound(src.loc, sound_process, 40, 1)
-					M.loc = null
 					if (which == "metal")
 						metal_count += 10
 					else
@@ -680,8 +679,6 @@
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
 			W.dir = 8
 			W.setMaterial(glass)
-
-		src.loc = null
 		qdel(src)
 
 	proc/cancelled()
@@ -689,7 +686,6 @@
 		var/turf/S = locate(x, y - 1, 1)
 		var/turf/W = locate(x - 1, y, 1)
 		var/turf/E = locate(x + 1, y, 1)
-		src.loc = null
 		if (N)
 			var/obj/plan_marker/glass_shaper/G = locate() in N
 			if (G)
@@ -747,8 +743,6 @@
 				AT:allows_vehicles = initial(AT.allows_vehicles)
 				AT.update_icon()
 				AT.update_neighbors()
-
-			src.loc = null
 			qdel(src)
 
 /obj/plan_marker/floor
@@ -765,5 +759,4 @@
 			T.icon_state = src.icon_state
 			T.dir = src.dir
 			// T:allows_vehicles = src.allows_vehicles
-			src.loc = null
 			qdel(src)

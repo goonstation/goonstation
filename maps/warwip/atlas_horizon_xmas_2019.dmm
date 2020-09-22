@@ -18603,7 +18603,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "aPU" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor/carpet/grime,
@@ -33315,7 +33315,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "bvV" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /obj/item/device/radio/intercom/science,
@@ -34157,7 +34157,7 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/teleporter)
 "bxP" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/darkblue/checker,
@@ -46397,7 +46397,7 @@
 	dir = 8;
 	name = "Farty Justice Chair"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/black,
@@ -52052,7 +52052,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/pool/no_animate,
@@ -53723,7 +53723,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /obj/machinery/light{
@@ -64411,7 +64411,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "cLH" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/plating,
@@ -66874,7 +66874,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/simulated/floor,
 /area/station/storage/emergency2{
 	name = "Hilarious Storage B"
@@ -70828,7 +70828,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/listeningpost/power)
 "dbX" = (
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /turf/simulated/floor/shuttlebay,
 /area/listeningpost/power)
 "dbY" = (
@@ -71563,7 +71563,7 @@
 	name = "ratty blue couch"
 	},
 /obj/item/clothing/glasses/blindfold,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass,
@@ -71725,7 +71725,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "ded" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass,
@@ -71739,7 +71739,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "def" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -71764,7 +71764,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "deh" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{

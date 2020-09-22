@@ -174,7 +174,7 @@
 			src.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [src.loc]!</span>")
 			burst()
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if (heated > 0 && on && prob(30 + (heated * 20)))
 			if(iscarbon(A))
@@ -348,8 +348,7 @@
 			src.force = 3
 			src.icon_state = src.icon_on
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		return
 
 	proc/put_out(var/mob/user as mob)
@@ -360,8 +359,7 @@
 			src.force = 0
 			src.icon_state = src.icon_off
 			light.disable()
-			if (src in processing_items)
-				processing_items.Remove(src)
+			processing_items -= src
 		return
 
 /obj/item/device/light/candle/spooky

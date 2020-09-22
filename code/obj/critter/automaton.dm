@@ -197,14 +197,14 @@ var/global/the_automaton = null
 			if (istype(W, /obj/item/device/key/cheget)) //I don' like yer new-fangled mumbo-jumbo
 				user.u_equip(W)
 				W.dropped(user)
-				W.loc = src
+				W.set_loc(src)
 				src.visible_message("<span class='alert'><b>[src]</b> takes \the [W] and studies it intently for a moment.</span>")
 				sleep(3 SECONDS)
 				if (!got_cheget_key)
 					got_cheget_key = 1
 					src.visible_message("<span class='alert'><B>[src]</B> clacks angrily and throws \the [W] at [user]!</span>")
 					playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
-					W.loc = src.loc
+					W.set_loc(src.loc)
 					W.throw_at(user, 20, 2)
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> makes a loud ratcheting noise and crumples up \the [W]!</span>")

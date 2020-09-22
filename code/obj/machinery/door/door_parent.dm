@@ -161,13 +161,13 @@
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
 		update_nearby_tiles(need_rebuild=1)
-		doors.Add(src)
+		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
 			T.update_icon()
 
 	disposing()
 		update_nearby_tiles()
-		doors.Remove(src)
+		STOP_TRACKING
 		..()
 
 	proc/toggleinput()

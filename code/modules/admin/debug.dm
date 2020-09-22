@@ -11,26 +11,6 @@ var/global/debug_messages = 0
 	logTheThing("diary", usr, null, "toggled debug messages [debug_messages ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled debug messages [debug_messages ? "on" : "off"]")
 
-/client/proc/Debug2()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "Debug-Game"
-	admin_only
-	if(src.holder.rank == "Coder")
-		Debug2 = !Debug2
-
-		boutput(src, "Debugging [Debug2 ? "On" : "Off"]")
-		logTheThing("admin", src, null, "toggled debugging to [Debug2]")
-		logTheThing("diary", src, null, "toggled debugging to [Debug2]", "admin")
-	else if(src.holder.rank == "Host")
-		Debug2 = !Debug2
-
-		boutput(src, "Debugging [Debug2 ? "On" : "Off"]")
-		logTheThing("admin", src, null, "toggled debugging to [Debug2]")
-		logTheThing("diary", src, null, "toggled debugging to [Debug2]", "admin")
-	else
-		alert("Coders only baby")
-		return
-
 /client/proc/debug_deletions()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Deletions"
@@ -454,10 +434,12 @@ var/global/debug_messages = 0
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/S = locate(text("start*AI"))
-		if ((istype(S, /obj/landmark/start) && istype(S.loc, /turf)))
+		var/turf/new_loc
+		if (job_start_locations["AI"])
+			new_loc = pick(job_start_locations["AI"])
+		if (new_loc)
 			boutput(M, "<span class='notice'><B>You have been teleported to your new starting location!</B></span>")
-			M.set_loc(S.loc)
+			M.set_loc(new_loc)
 			M.buckled = null
 		message_admins("<span class='alert'>Admin [key_name(src)] AIized [key_name(M)]!</span>")
 		logTheThing("admin", src, M, "AIized [constructTarget(M,"admin")]")
@@ -703,16 +685,16 @@ body
 	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail")
 	switch (selected)
 		if ("Disco Inferno")
-			for (var/turf/T in blobstart)
+			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
 				var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
 				gas.toxins = 10000
 				gas.oxygen = 10000
 				gas.temperature = 10000
 				T.assume_air(gas)
-			for (var/obj/machinery/door/airlock/maintenance/door in doors)
+			for (var/obj/machinery/door/airlock/maintenance/door in by_type[/obj/machinery/door])
 				LAGCHECK(LAG_LOW)
 				qdel(door)
-			for (var/obj/machinery/door/firedoor/door in doors)
+			for (var/obj/machinery/door/firedoor/door in by_type[/obj/machinery/door])
 				LAGCHECK(LAG_LOW)
 				qdel(door)
 		if ("Chemist's Delight")
@@ -929,7 +911,7 @@ var/global/debug_camera_paths = 0
 
 proc/display_camera_paths()
 	remove_camera_paths() //Clean up any old ones laying around before displaying this
-	for (var/obj/machinery/camera/C in cameras)
+	for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		if (C.c_north)
 			camera_path_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(C.loc, C.c_north.loc)))
 

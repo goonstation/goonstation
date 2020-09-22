@@ -123,8 +123,8 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					O.icon = 'icons/effects/effects.dmi'
 					O.icon_state = "nothing"
 					flick("empdisable",O)
-					SPAWN_DBG(0.5 SECONDS)
-						qdel(O)
+					sleep(0.5 SECONDS)
+					qdel(O)
 
 				return 1
 		else if (istype(source, /obj/machinery) && isAI(user))
@@ -212,7 +212,7 @@ var/obj/item/dummy/click_dummy = new
 	. = list()
 
 	var/turf/T = get_turf(center)
-	for (var/mob/living/silicon/ai/theAI in AIs)
+	for (var/mob/living/silicon/ai/theAI in by_type[/mob/living/silicon/ai])
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
 //			if (AIeye in view(center, distance))
@@ -504,6 +504,7 @@ var/obj/item/dummy/click_dummy = new
 	var/a = null
 
 	New(_r,_g,_b,_a=255)
+		..()
 		r = _r
 		g = _g
 		b = _b

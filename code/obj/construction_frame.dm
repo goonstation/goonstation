@@ -37,14 +37,14 @@
 			if (istype(W, /obj/item/coil/large))
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 				user.drop_item()
-				W.loc = src
+				W.set_loc(src)
 				coil = W
 				boutput(user, "<span class='notice'>You insert the coil.</span>")
 		else if (!circuitboard)
 			if (istype(W, /obj/item/circuit/smes))
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 				user.drop_item()
-				W.loc = src
+				W.set_loc(src)
 				circuitboard = W
 				circuit_secured = 0
 				boutput(user, "<span class='notice'>You insert the control circuitry.</span>")

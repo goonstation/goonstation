@@ -19,12 +19,10 @@
 	New()
 		..()
 		UnsubscribeProcess()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(50)
 
-		R.add_reagent("charcoal", 25)
-		R.set_reagent_temp(src.grilltemp)
+		reagents.add_reagent("charcoal", 25)
+		reagents.set_reagent_temp(src.grilltemp)
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
@@ -195,9 +193,7 @@
 */
 		if(src.grillitem)
 			if (!src.grillitem.reagents)
-				var/datum/reagents/R = new/datum/reagents(50)
-				src.grillitem.reagents = R
-				R.my_atom = src.grillitem
+				src.grillitem.create_reagents(50)
 
 
 			src.reagents.trans_to(src.grillitem, 2)
@@ -253,9 +249,7 @@
 			qdel(src.grillitem)
 			src.grillitem = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
 			if (!src.grillitem.reagents)
-				var/datum/reagents/R = new/datum/reagents(50)
-				src.grillitem.reagents = R
-				R.my_atom = src.grillitem
+				src.grillitem.create_reagents(50)
 
 			src.grillitem.reagents.add_reagent("charcoal", 50)
 			shittysteak.desc = "A heavily grilled...something.  It's mostly ash now."

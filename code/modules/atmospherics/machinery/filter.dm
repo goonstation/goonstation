@@ -71,7 +71,6 @@ Filter types:
 		air_out2.volume = 200
 
 	disposing()
-		loc = null
 
 		if (network_in)
 			network_in.air_disposing_hook(air_in, air_out1, air_out2)

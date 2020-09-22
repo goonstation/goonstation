@@ -491,7 +491,11 @@
 			AM.pixel_y = initial(AM.pixel_y)
 		mode = 0
 
+	var/last_process_time
+
 	process()
+		var/time_since_last = TIME - last_process_time
+		last_process_time = TIME
 		if(!has_power())
 			on = 0
 			return
@@ -500,22 +504,13 @@
 				var/speed = ((wires & wire_motor1) ? 1:0) + ((wires & wire_motor2) ? 2:0)
 				//boutput(world, "speed: [speed]")
 
-				switch(speed)
-				// 0 is can't move, 1 is fastest, 3 is slowest (normal unhacked)
-					if(0)
-						// do nothing
-					if(1)
-						for (var/i = 1 to 6)
-							sleep(0.2 SECONDS)
-							process_bot()
-					if(2)
-						for (var/i = 1 to 6)
-							sleep(0.3 SECONDS)
-							process_bot()
-					if(3)
-						for (var/i = 1 to 5)
-							sleep(0.4 SECONDS)
-							process_bot()
+				var/n_steps = list(0, 12, 7, 6)[speed]
+
+				var/sleep_time = n_steps ? clamp(time_since_last / n_steps, 0.04 SECONDS, 1.5 SECONDS) : 0
+
+				for (var/i = 1 to n_steps)
+					sleep(sleep_time)
+					process_bot()
 
 	proc/process_bot()
 		//if(mode) boutput(world, "Mode: [mode]")
@@ -555,7 +550,8 @@
 								B.dir = newdir
 							bloodiness--
 
-						var/moved = step_towards(src, next)	// attempt to move
+						step_towards(src, next)	// attempt to move
+						var/moved = src.loc == next // step_towards return value is unreliable at best and always false at worst
 						if(cell) cell.use(1)
 						if(moved)	// successful move
 							//boutput(world, "Successful move.")

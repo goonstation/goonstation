@@ -156,9 +156,9 @@
 		..()
 		SPAWN_DBG(0)
 			if (src.gender && src.gender == "female")
-				src.real_name = wiz_female.len ? pick(wiz_female) : "Witch"
+				src.real_name = pick_string_autokey("names/wizard_female.txt")
 			else
-				src.real_name = wiz_male.len ? pick(wiz_male) : "Wizard"
+				src.real_name = pick_string_autokey("names/wizard_male.txt")
 
 			equip_wizard(src, 1)
 		return

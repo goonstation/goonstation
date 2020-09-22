@@ -1344,6 +1344,7 @@ var/global/list/soundCache = list(
  	"sound/voice/screams/Robot_Scream_2.ogg" = 'sound/voice/screams/Robot_Scream_2.ogg',\
  	"sound/voice/screams/sillyscream1.ogg" = 'sound/voice/screams/sillyscream1.ogg',\
  	"sound/voice/screams/sillyscream2.ogg" = 'sound/voice/screams/sillyscream2.ogg',\
+ 	"sound/voice/screams/sillyscream3.ogg" = 'sound/voice/screams/sillyscream3.ogg',\
  	"sound/voice/wizard/AnimateDeadFem.ogg" = 'sound/voice/wizard/AnimateDeadFem.ogg',\
  	"sound/voice/wizard/AnimateDeadGrim.ogg" = 'sound/voice/wizard/AnimateDeadGrim.ogg',\
  	"sound/voice/wizard/AnimateDeadLoud.ogg" = 'sound/voice/wizard/AnimateDeadLoud.ogg',\

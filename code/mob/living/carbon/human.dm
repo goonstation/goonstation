@@ -74,7 +74,7 @@
 	var/yeet_chance = 0.1 //yeet
 
 	var/decomp_stage = 0 // 1 = bloat, 2 = decay, 3 = advanced decay, 4 = skeletonized
-	var/next_decomp_time = 0
+	var/time_until_decomposition = 0
 	var/uses_damage_overlays = 1 //If set to 0, the mob won't receive any damage overlays.
 
 	var/datum/mutantrace/mutantrace = null
@@ -155,9 +155,7 @@
 	image_cust_two = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 	image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 
-	var/datum/reagents/R = new/datum/reagents(330)
-	reagents = R
-	R.my_atom = src
+	src.create_reagents(330)
 
 	hud = new(src)
 	src.attach_hud(hud)
@@ -681,7 +679,7 @@
 		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
 		A.trigger(src)
 
-	src.next_decomp_time = world.time + rand(480,900)*10
+	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		src.mind.register_death()
@@ -696,7 +694,7 @@
 	//src.icon_state = "dead"
 
 	if (!src.suiciding)
-		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+		if (emergency_shuttle?.location == SHUTTLE_LOC_STATION)
 			src.unlock_medal("HUMANOID MUST NOT ESCAPE", 1)
 
 		if (src.hasStatus("handcuffed"))
@@ -710,6 +708,13 @@
 		if (src.getStatusDuration("burning") > 400)
 			src.unlock_medal("Black and Blue", 1)
 		JOB_XP(src, "Clown", 10)
+
+		if (src.hasStatus("drunk"))
+			if(locate(/obj/item/device/light/glowstick) in src.contents)
+				src.unlock_medal("Party Hard", 1)
+			for(var/turf/T in view(2, src.loc))
+				if(locate(/obj/neon_lining) in T.contents)
+					src.unlock_medal("Party Hard", 1)
 
 	ticker.mode.check_win()
 
@@ -759,7 +764,7 @@
 		if(istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
 			reappear_turf = get_turf(src)
 		else
-			reappear_turf = pick(wizardstart)
+			reappear_turf = pick(job_start_locations["wizard"])
 
 	////////////////Set up the new body./////////////////
 
@@ -889,6 +894,7 @@
 			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		if ("rest")
+			if(ON_COOLDOWN(src, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			if(src.ai_active && !src.hasStatus("resting"))
 				src.show_text("You feel too restless to do that!", "red")
 			else
@@ -977,13 +983,13 @@
 		attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
-
-		if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
-			yeet_chance = 1
-		if(src.mind.karma < 0) //you come and go, you come and go.
-			yeet_chance = 0
-		if(src.mind.karma < 50 && src.mind.karma >= 0)
-			yeet_chance = 0.1
+		if(src.mind)
+			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
+				yeet_chance = 1
+			if(src.mind.karma < 0) //you come and go, you come and go.
+				yeet_chance = 0
+			if(src.mind.karma < 50 && src.mind.karma >= 0)
+				yeet_chance = 0.1
 
 		if(prob(yeet_chance))
 			src.visible_message("<span class='alert'>[src] yeets [I].</span>")
@@ -1008,16 +1014,16 @@
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
-		SPAWN_DBG(I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from))
-			if(yeet)
-				new/obj/effect/supplyexplosion(I.loc)
+		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from)
+		if(yeet)
+			new/obj/effect/supplyexplosion(I.loc)
 #if ASS_JAM
-				explosion_new(I,get_turf(I),20,1)
+			explosion_new(I,get_turf(I),20,1)
 #else
-				playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+			playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 #endif
-				for(var/mob/M in view(7, I.loc))
-					shake_camera(M, 20, 1)
+			for(var/mob/M in view(7, I.loc))
+				shake_camera(M, 20, 8)
 
 		if (mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in grabbed_by)
@@ -1774,6 +1780,7 @@
 		src.update_clothing()
 	else if (W == src.handcuffs)
 		src.handcuffs = null
+		src.delStatus("handcuffed")
 		src.update_clothing()
 
 	if (W && W == src.r_hand)
@@ -1827,6 +1834,11 @@
 		hud.set_visible(hud.twohandr, 1)
 		hud.remove_item(I)
 		hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
+		var/regex/offset = new(@"^icons/obj/(\d+)x\d+.dmi$") //matches icon path of "icons/obj/<width>x<height>.dmi" (e.g.: 'icons/obj/64x32.dmi'), and saves the width
+		if(offset.Find("[I.icon]")) //is our iconpath in the above format? (icons/obj/<width>x<height>.dmi)
+			var/regex/off2 = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
+			if(off2.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
+				I.screen_loc = "[off2.group[1]][text2num(off2.group[2])-(text2num(offset.group[1])-32)/2][off2.group[3]]"
 		src.l_hand = I
 		src.r_hand = I
 	else //Object is 1-hand, remove ui elements, set item to proper location.
@@ -1873,6 +1885,11 @@
 		hud.set_visible(hud.rhand, 0)
 		hud.set_visible(hud.twohandl, 1)
 		hud.set_visible(hud.twohandr, 1)
+		var/regex/offset = new(@"^icons/obj/(\d+)x\d+.dmi$") //matches icon path of "icons/obj/<width>x<height>.dmi" (e.g.: 'icons/obj/64x32.dmi'), and saves the width
+		if(offset.Find("[I.icon]")) //is our iconpath in the above format? (icons/obj/<width>x<height>.dmi)
+			var/regex/off2 = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
+			if(off2.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
+				I.screen_loc = "[off2.group[1]][text2num(off2.group[2])-(text2num(offset.group[1])-32)/2][off2.group[3]]"
 		return 1
 	else
 		if (isnull(hand))
@@ -2289,7 +2306,7 @@
 	..()
 
 	if (src.bioHolder)
-		bioHolder.RemoveAllEffects(effectTypeDisability)
+		bioHolder.RemoveAllEffects(EFFECT_TYPE_DISABILITY)
 
 	if (src.sims)
 		for (var/name in sims.motives)
@@ -3141,11 +3158,11 @@
 
 					if (priority)
 						if (priority > 0)
-							priority = NewLoc.step_material
+							priority = "[NewLoc.step_material]"
 						else if (priority < 0)
 							priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
 
-						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
+						playsound(NewLoc, priority, src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
 	//STEP SOUND HANDLING OVER
 
@@ -3237,3 +3254,60 @@
 /mob/living/carbon/human/proc/check_for_intent_trigger()
 	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER))
 		src.equipped().intent_switch_trigger(src)
+
+/mob/living/carbon/human/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	. = ..()
+
+	if(isobj(AM) && src.juggling())
+		if (prob(40))
+			src.visible_message("<span class='alert'><b>[src]<b> gets hit in the face by [AM]!</span>")
+			src.TakeDamageAccountArmor("head", AM.throwforce, 0)
+		else
+			if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
+				src.drop_juggle()
+			else
+				src.add_juggle(AM)
+		return
+
+	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
+		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (thr?.get_throw_travelled() <= 1 && AM.last_throw_x == AM.x && AM.last_throw_y == AM.y))
+			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+			logTheThing("combat", src, thr.user, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
+			random_brute_damage(src, AM.throwforce,1)
+			if(thr?.user)
+				src.was_harmed(thr.user, AM)
+
+			#ifdef DATALOGGER
+			game_stats.Increment("violence")
+			#endif
+
+			if(AM.throwforce >= 40)
+				src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
+				src.changeStatus("stunned", 3 SECONDS)
+
+		else
+			AM.attack_hand(src)	// nice catch, hayes. don't ever fuckin do it again
+			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
+			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+			src.throw_mode_off()
+			#ifdef DATALOGGER
+			game_stats.Increment("catches")
+			#endif
+
+	else  //normmal thingy hit me
+		if (AM.throwing & THROW_CHAIRFLIP)
+			src.visible_message("<span class='alert'>[AM] slams into [src] midair!</span>")
+		else
+			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+			random_brute_damage(src, AM.throwforce,1)
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+			if(thr?.user)
+				src.was_harmed(thr.user, AM)
+
+		#ifdef DATALOGGER
+		game_stats.Increment("violence")
+		#endif
+
+		if(AM.throwforce >= 40)
+			src.throw_at(get_edge_target_turf(src, get_dir(AM, src)), 10, 1)
+			src.changeStatus("stunned", 3 SECONDS)

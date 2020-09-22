@@ -102,8 +102,7 @@ var/image/blob_icon_cache
 			setMaterial(copyMaterial(O.my_material))
 			color = material.color
 			original_color = color
-			if (!(src in O.blobs))
-				O.blobs += src
+			O.blobs |= src
 			onAttach(O)
 			if( state_overlay )
 				blob_icon_cache.color = O.organ_color
@@ -142,7 +141,6 @@ var/image/blob_icon_cache
 		in_disposing = 1
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B.blobs -= src
-		blobs -= src
 		if (istype(overmind))
 			overmind.blobs -= src
 			if (gen_rate_value > 0)
@@ -153,7 +151,7 @@ var/image/blob_icon_cache
 		if (istype(src.loc,/turf))
 			if (istype(src.loc.loc,/area))
 				src.loc.loc.Exited(src)
-		healthbar.onDelete()
+		healthbar?.onDelete()
 		qdel(healthbar)
 		healthbar = null
 		..()
@@ -314,6 +312,11 @@ var/image/blob_icon_cache
 				else
 					amount = min(amount, health_max * 0.8)
 				amount *= fire_coefficient
+				//search for ectothermids.
+				if (amount)
+					for (var/obj/blob/ectothermid/T in range(3, src))
+						if (T && amount > 0)
+							amount -= T.consume(amount)
 			if ("laser")
 				ignore_armor = 1
 			if ("poison","self_poison")
@@ -322,6 +325,15 @@ var/image/blob_icon_cache
 				else
 					armor_value = max(2, armor)
 				amount *= poison_coefficient
+				//handle poison overlay
+				if (amount && damtype == "poison")
+					src.poison += amount
+					updatePoisonOverlay()
+					if (!overmind)
+						SPAWN_DBG(1 SECOND)
+							while (poison)
+								Life()
+								sleep(1 SECOND)
 			if ("chaos")
 				ignore_armor = 1
 		if (!ignore_armor && armor_value > 0)
@@ -329,21 +341,9 @@ var/image/blob_icon_cache
 
 		amount *= damage_mult
 
-		if (damtype == "burn")
-			for (var/obj/blob/ectothermid/T in range(3, src))
-				if (T && amount > 0)
-					amount -= T.consume(amount)
 		if (!amount)
 			return
 
-		if (damtype == "poison")
-			src.poison += amount
-			updatePoisonOverlay()
-			if (!overmind)
-				SPAWN_DBG(1 SECOND)
-					while (poison)
-						Life()
-						sleep(1 SECOND)
 
 		src.health -= amount
 		src.health = max(0,min(src.health_max,src.health))

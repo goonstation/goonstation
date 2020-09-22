@@ -88,7 +88,6 @@ var/list/ban_from_airborne_fluid = list()
 		is_setup = 0
 		blocked_dirs = 0
 		blocked_perspective_objects["[dir]"] = 0
-		src.loc = null
 		my_depth_level = 0
 		..()
 
@@ -101,12 +100,12 @@ var/list/ban_from_airborne_fluid = list()
 		src.step_sound = 0
 
 	//ALTERNATIVE to force ingest in life
-	proc/just_do_the_apply_thing(var/mob/M,var/hasmask = 0)
+	proc/just_do_the_apply_thing(var/mob/M, var/mult = 1, var/hasmask = 0)
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
-		react_volume = min(react_volume,20)
+		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 
@@ -123,12 +122,12 @@ var/list/ban_from_airborne_fluid = list()
 			src.group.reagents.reaction(M, INGEST, react_volume/2,1,src.group.members.len, paramslist = plist)
 			src.group.reagents.trans_to(M, react_volume)
 
-	force_mob_to_ingest(var/mob/M)//called when mob is drowning/standing in the smoke
+	force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning/standing in the smoke
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
-		react_volume = min(react_volume,20)
+		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 

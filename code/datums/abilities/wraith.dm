@@ -385,7 +385,7 @@
 				return 1
 			O.visible_message("<span class='alert'>The [O] comes to life!</span>")
 			var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
-			O.loc = L
+			O.set_loc(L)
 			L.name = "Living [O.name]"
 			L.desc = "[O.desc]. It appears to be alive!"
 			L.overlays += O

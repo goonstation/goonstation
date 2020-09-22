@@ -135,16 +135,12 @@ var/datum/action_controller/actions
 		var/atom/movable/A = owner
 		if(owner != null)
 			bar = unpool(/obj/actions/bar)
-			bar.loc = owner.loc
 			border = unpool(/obj/actions/border)
-			border.loc = owner.loc
 			bar.pixel_y = 5
 			bar.pixel_x = 0
 			border.pixel_y = 5
-			if (!islist(A.attached_objs))
-				A.attached_objs = list()
-			A.attached_objs.Add(bar)
-			A.attached_objs.Add(border)
+			A.vis_contents += bar
+			A.vis_contents += border
 			// this will absolutely obviously cause no problems.
 			bar.color = "#4444FF"
 			updateBar()
@@ -157,9 +153,9 @@ var/datum/action_controller/actions
 	onDelete()
 		..()
 		var/atom/movable/A = owner
-		if (owner != null && islist(A.attached_objs))
-			A.attached_objs.Remove(bar)
-			A.attached_objs.Remove(border)
+		if (owner != null)
+			A.vis_contents -= bar
+			A.vis_contents -= border
 		SPAWN_DBG(0.5 SECONDS)
 			if (bar)
 				bar.set_loc(null)
@@ -172,9 +168,9 @@ var/datum/action_controller/actions
 
 	disposing()
 		var/atom/movable/A = owner
-		if (owner != null && islist(A.attached_objs))
-			A.attached_objs.Remove(bar)
-			A.attached_objs.Remove(border)
+		if (owner != null)
+			A.vis_contents -= bar
+			A.vis_contents -= border
 		if (bar)
 			bar.set_loc(null)
 			pool(bar)
@@ -884,8 +880,10 @@ var/datum/action_controller/actions
 	icon_state = "bar"
 	layer = 101
 	plane = PLANE_HUD + 1
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 
 	unpooled()
@@ -904,8 +902,10 @@ var/datum/action_controller/actions
 	layer = 100
 	icon_state = "border"
 	plane = PLANE_HUD + 1
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"border",5)
 
 	unpooled()
@@ -1305,3 +1305,65 @@ var/datum/action_controller/actions
 			..()
 			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
 				over_object.attackby(target, owner, params)
+
+/// general purpose action to anchor or unanchor stuff
+/datum/action/bar/icon/anchor_or_unanchor
+	id = "table_tool_interact"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/target
+	var/obj/item/tool
+	var/unanchor = FALSE
+
+	New(var/obj/target, var/obj/item/tool, var/unanchor=null, var/duration=null)
+		..()
+		if (target)
+			src.target = target
+		if (tool)
+			src.tool = tool
+			icon = src.tool.icon
+			icon_state = src.tool.icon_state
+		if (!isnull(unanchor))
+			src.unanchor = unanchor
+		else
+			src.unanchor = target.anchored
+		if (duration)
+			src.duration = duration
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("carpenter"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (target == null || tool == null || owner == null || get_dist(owner, target) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(unanchor && !target.anchored || !unanchor && target.anchored)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(iswrenchingtool(tool))
+			playsound(get_turf(target), "sound/items/Ratchet.ogg", 50, 1)
+		else if(isweldingtool(tool))
+			playsound(get_turf(target), "sound/items/Welder.ogg", 50, 1)
+		else if(isscrewingtool(tool))
+			playsound(get_turf(target), "sound/items/Screwdriver.ogg", 50, 1)
+		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
+
+	onEnd()
+		..()
+		owner.visible_message("<span class='notice'>[owner]  [unanchor ? "un" : ""]anchors [target].</span>")
+		if(unanchor)
+			target.anchored = FALSE
+		else
+			target.anchored = TRUE

@@ -71,10 +71,9 @@
 	if (!istype(A))
 		return
 	//A.alpha = 200
-	var/matrix/M = matrix()
-	M.Scale(0.6, 1)
-	animate(A, transform=M, time = 3,easing = BOUNCE_EASING)
-	animate(transform=null, time = 3,easing = BOUNCE_EASING)
+	var/matrix/M = matrix(A.transform)
+	animate(A, transform = A.transform.Scale(0.6, 1), time = 3,easing = BOUNCE_EASING,flags=ANIMATION_PARALLEL)
+	animate(transform = M, time = 3,easing = BOUNCE_EASING)
 	return
 
 /proc/animate_flockdrone_item_absorb(var/atom/A)
@@ -174,8 +173,6 @@
 		unpooled()
 			..()
 			src.alpha = 255
-			src.pixel_x = 0
-			src.pixel_y = 0
 
 		pooled()
 			..()
@@ -448,64 +445,51 @@ proc/fuckup_attack_particle(var/mob/M)
 		y *= 22
 		animate(M.attack_particle, pixel_x = M.attack_particle.pixel_x + x , pixel_y = M.attack_particle.pixel_y + y, time = 5, easing = BOUNCE_EASING, flags = ANIMATION_END_NOW)
 
-proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim)
+var/global/obj/overlay/simple_light/muzzle_simple_light = new	/obj/overlay/simple_light{appearance_flags = RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART}
+
+var/global/list/default_muzzle_flash_colors = list(
+	"muzzle_flash" = "#FFEE9980",
+	"muzzle_flash_laser" = "#FF333380",
+	"muzzle_flash_elec" = "#FFC80080",
+	"muzzle_flash_bluezap" = "#00FFFF80",
+	"muzzle_flash_plaser" = "#00A9FB80",
+	"muzzle_flash_phaser" = "#F41C2080",
+	"muzzle_flash_launch" = "#FFFFFF50",
+	"muzzle_flash_wavep" = "#B3234E80",
+	"muzzle_flash_waveg" = "#33CC0080",
+	"muzzle_flash_waveb" = "#87BBE380"
+)
+
+proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim, var/muzzle_light_color=null, var/offset=25)
 	if (!M || !origin || !target || !muzzle_anim) return
-
-	var/offset = 22 //amt of pixels the muzzle flash sprite is offset the shooting mob by
 	var/firing_angle = get_angle(origin, target)
-	var/firing_dir = angle_to_dir(firing_angle)
+	muzzle_flash_any(M, firing_angle, muzzle_anim, muzzle_light_color, offset)
 
-	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
-
-	switch(firing_dir) //so we apply the correct offset
-		if (NORTH)
-			muzzleflash.pixel_y = 32
-		if (SOUTH)
-			muzzleflash.pixel_y = -32
-		if (EAST)
-			muzzleflash.pixel_x = offset
-		if (WEST)
-			muzzleflash.pixel_x = -offset
-		if (NORTHEAST) //diags look a little weird but what can you do
-			muzzleflash.pixel_y = offset
-			muzzleflash.pixel_x = offset
-		if (NORTHWEST)
-			muzzleflash.pixel_y = offset
-			muzzleflash.pixel_x = -offset
-		if (SOUTHEAST)
-			muzzleflash.pixel_y = -offset
-			muzzleflash.pixel_x = offset
-		if (SOUTHWEST)
-			muzzleflash.pixel_y = -offset
-			muzzleflash.pixel_x = -offset
-
-
-	muzzleflash.Turn(firing_angle)
-	muzzleflash.layer = MOB_INHAND_LAYER
-	muzzleflash.set_loc(M)
-	M.vis_contents.Add(muzzleflash)
-	if (muzzleflash.icon_state == muzzle_anim)
-		flick(muzzle_anim,muzzleflash)
-	muzzleflash.icon_state = muzzle_anim
-
-	SPAWN_DBG(0.6 SECONDS)
-		M.vis_contents.Remove(muzzleflash)
-		pool(muzzleflash)
-
-proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
 	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
-	muzzleflash.pixel_y = cos(firing_angle) * 22
-	muzzleflash.pixel_x = sin(firing_angle) * 22
 
-	muzzleflash.Turn(firing_angle)
+	if(isnull(muzzle_light_color))
+		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
+	muzzleflash.overlays.Cut()
+	if(muzzle_light_color)
+		muzzle_simple_light.color = muzzle_light_color
+		muzzleflash.overlays += muzzle_simple_light
+
+	var/matrix/mat = new
+	mat.Translate(0, offset)
+	mat.Turn(firing_angle)
+	muzzleflash.transform = mat
 	muzzleflash.layer = A.layer
 	muzzleflash.set_loc(A)
 	A.vis_contents.Add(muzzleflash)
 	if (muzzleflash.icon_state == muzzle_anim)
 		flick(muzzle_anim,muzzleflash)
 	muzzleflash.icon_state = muzzle_anim
+
+	animate(muzzleflash, time=0.4 SECONDS)
+	animate(alpha=0, easing=SINE_EASING, time=0.2 SECONDS)
 
 	SPAWN_DBG(0.6 SECONDS)
 		A.vis_contents.Remove(muzzleflash)
@@ -595,7 +579,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
 		var/x = movepx + ipx
 		var/y = movepy + ipy
 		//Shift pixel offset
-		animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT)
+		animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT,flags=ANIMATION_PARALLEL)
 		var/matrix/M = matrix(A.transform)
 		animate(transform = turn(A.transform, (movepx - movepy) * 4), time = 0.6, easing = EASE_OUT)
 		animate(pixel_x = ipx, pixel_y = ipy, time = 0.6,easing = EASE_IN)
@@ -605,7 +589,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
 
 
 /proc/hit_twitch(var/atom/A)
-	if (!A || istype(A, /mob/living/object))
+	if (!A || istype(A, /mob/living/object) || ON_COOLDOWN(A, "hit_twitch", 0.1 SECONDS))
 		return
 	var/which = 0
 	if (usr)
@@ -644,16 +628,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
 	var/x = movepx + ipx
 	var/y = movepy + ipy
 
-	animate(A, pixel_x = x, pixel_y = y, time = 2,easing = EASE_IN)
-	animate(A, pixel_x = ipx, pixel_y = ipy, time = 2,easing = EASE_IN)
+	animate(A, pixel_x = x, pixel_y = y, time = 2,easing = EASE_IN,flags=ANIMATION_PARALLEL)
+	animate(pixel_x = ipx, pixel_y = ipy, time = 2,easing = EASE_IN)
 
 //only call this from disorient. ITS NOT YOURS DAD
 /proc/violent_twitch(var/atom/A)
 	SPAWN_DBG(0)
-		var/matrix/start = matrix(A.transform)
 		var/matrix/target = matrix(A.transform)
-		target.Scale(1,1)
-		target.Turn(rand(-45,45))
+		var/deg = rand(-45,45)
+		target.Turn(deg)
 
 
 		A.transform = target
@@ -664,9 +647,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
 
 		sleep(0.2 SECONDS)
 
-		//Look i know this check looks janky. that's because IT IS. violent_twitch is ONLY called for disorient. okay. this stops it fucking up rest animation
-		if (!A.hasStatus(list("weakened", "paralysis")))
-			A.transform = start
+		A.transform = A.transform.Turn(-deg)
 		A.pixel_x = old_x
 		A.pixel_y = old_y
 
@@ -675,29 +656,31 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
 	SPAWN_DBG(-1)
 		var/matrix/start = matrix(A.transform)
 		var/matrix/target = matrix(A.transform)
-		target.Scale(1,1)
-		target.Turn(rand(-45,45))
+		var/last_angle = rand(-45,45)
+		target.Turn(last_angle)
 		A.transform = target
+		var/orig_x = A.pixel_x
+		var/orig_y = A.pixel_y
 
 		for (var/i = 0, (i < 7 && A), i++)
-			target = matrix(start)
-			target.Turn(rand(-45,45))
+			var/new_angle = rand(-45, 45)
+			target = A.transform.Turn(-last_angle + new_angle)
+			last_angle = new_angle
 			A.transform = target
 
-			A.pixel_x = rand(-3,3)
-			A.pixel_y = rand(-2,2)
+			A.pixel_x = orig_x + rand(-3,3)
+			A.pixel_y = orig_y + rand(-2,2)
 			sleep(0.1 SECONDS)
 
-		animate(A, pixel_x = 0, pixel_y = 0, transform = null, time = 1, easing = LINEAR_EASING)
+		animate(A, pixel_x = orig_x, pixel_y = orig_y, transform = UNDO_TRANSFORMATION(start, target, A.transform), time = 1, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/eat_twitch(var/atom/A)
 	var/matrix/squish_matrix = matrix(A.transform)
 	squish_matrix.Scale(1,0.92)
 	var/matrix/M = matrix(A.transform)
-	squish_matrix.Scale(1,1)
 	var/ipy = A.pixel_y
 
-	animate(A, transform = squish_matrix, time = 1,easing = EASE_OUT)
+	animate(A, transform = squish_matrix, time = 1,easing = EASE_OUT, flags=ANIMATION_PARALLEL)
 	animate(pixel_y = -1, time = 1,easing = EASE_OUT)
 	animate(transform = M, time = 1, easing = EASE_IN)
 	animate(pixel_y = ipy, time = 1,easing = EASE_IN)
@@ -811,30 +794,32 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
 	var/x_severity_inverse = 0 - x_severity
 	var/y_severity_inverse = 0 - y_severity
 
-	animate(A, transform = null, pixel_y = rand(y_severity_inverse,y_severity), pixel_x = rand(x_severity_inverse,x_severity),time = 1,loop = amount, easing = ELASTIC_EASING)
+	animate(A, pixel_y = rand(y_severity_inverse,y_severity), pixel_x = rand(x_severity_inverse,x_severity),time = 1,loop = amount, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 	SPAWN_DBG(amount)
 		if (A)
-			animate(A, transform = null, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
+			animate(A, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
 	return
 
 /proc/animate_teleport(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix(1, 3, MATRIX_SCALE)
-	animate(A, transform = M, pixel_y = 32, time = 10, alpha = 50, easing = CIRCULAR_EASING)
+	var/matrix/original = matrix(A.transform)
+	var/matrix/M = A.transform.Scale(1, 3)
+	animate(A, transform = M, pixel_y = 32, time = 10, alpha = 50, easing = CIRCULAR_EASING, flags=ANIMATION_PARALLEL)
 	M.Scale(0,4)
 	animate(transform = M, time = 5, color = "#1111ff", alpha = 0, easing = CIRCULAR_EASING)
-	animate(transform = null, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
+	animate(transform = original, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	return
 
 /proc/animate_teleport_wiz(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix(0, 4, MATRIX_SCALE)
-	animate(A, color = "#ddddff", time = 20, alpha = 70, easing = LINEAR_EASING)
+	var/matrix/original = matrix(A.transform)
+	var/matrix/M = A.transform.Scale(0, 4)
+	animate(A, color = "#ddddff", time = 20, alpha = 70, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 	animate(transform = M, pixel_y = 32, time = 20, color = "#2222ff", alpha = 0, easing = CIRCULAR_EASING)
 	animate(time = 8, transform = M, alpha = 5) //Do nothing, essentially
-	animate(transform = null, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
+	animate(transform = original, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	return
 
 /proc/animate_rainbow_glow_old(var/atom/A)
@@ -1003,23 +988,18 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
 	if(!istype(A))
 		return
 
-	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease)
+	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease, flags=ANIMATION_PARALLEL)
 
 /proc/animate_rest(var/atom/A, var/stand)
 	if(!istype(A))
 		return
-
-	var/matrix/M = matrix()
-	if (A.shrunk)
-		M *= (0.75 ** A.shrunk)
-
 	if(stand)
-		animate(A, pixel_x = 0, pixel_y = 0, transform = M, time = 3, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform.Turn(-90), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 	else
-		animate(A, pixel_x = 0, pixel_y = -4, transform = M.Turn(90), time = 2, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/animate_flip(var/atom/A, var/T)
-	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T)
+	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T, flags=ANIMATION_PARALLEL)
 	animate(transform = matrix(A.transform, 180, MATRIX_ROTATE), time = T)
 
 

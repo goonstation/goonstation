@@ -77,7 +77,7 @@
 "by" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 4},/turf/simulated/floor/carpet/blue/fancy/edge/nw,/area/blind_pig)
 "bz" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/shot{pixel_x = -6},/turf/simulated/floor/carpet/blue/fancy/edge/north,/area/blind_pig)
 "bA" = (/turf/simulated/floor/carpet/blue/fancy/edge/ne,/area/blind_pig)
-"bB" = (/obj/landmark{name = "waiter"},/turf/simulated/floor/plating/random,/area/blind_pig)
+"bB" = (/obj/landmark/spawner{name = "waiter"},/turf/simulated/floor/plating/random,/area/blind_pig)
 "bC" = (/obj/shrub{icon_state = "shrub"; dir = 1},/turf/simulated/floor/wood,/area/blind_pig)
 "bD" = (/turf/simulated/floor/carpet/blue/fancy/edge/sw,/area/blind_pig)
 "bE" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff{pixel_y = 8},/obj/item/reagent_containers/food/drinks/drinkingglass/shot{pixel_x = 6},/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/carpet/blue/fancy/edge/south,/area/blind_pig)

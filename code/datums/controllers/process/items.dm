@@ -12,13 +12,19 @@ datum/controller/process/items
 		// plus i like watching number go up
 		var/itemcount = 0
 		var/lasttime = 0
+
+		// Zamu here -- I checked and this doesn't even register as 1 on a timeofday check
+		var/totalcount = 0
+		for(var/obj/object in world)
+			totalcount++
+
 		for(var/obj/object in world)
 			object.initialize()
 			itemcount++
 			if (game_start_countdown)
 				if (lasttime != world.timeofday)
 					lasttime = world.timeofday
-					game_start_countdown.update_status("Initializing items\n([itemcount])")
+					game_start_countdown.update_status("Initializing items\n([itemcount], [round(itemcount / totalcount * 100)]%)")
 
 			LAGCHECK(LAG_HIGH)
 
@@ -28,10 +34,11 @@ datum/controller/process/items
 
 	doWork()
 		var/c
-		for(var/datum/i in global.processing_items)
+		for(var/i in global.processing_items)
+			if (!i || i:pooled || i:qdeled) //if the object was pooled or qdeled we have to remove it from this list... otherwise the lagchecks cause this loop to hold refs and block GC!!!
+				global.processing_items -= i
+				continue
 			i:process()
-			if (i.pooled || i.qdeled) //if the object was pooled or qdeled we have to remove it from this list... otherwise the lagchecks cause this loop to hold refs and block GC!!!
-				i = null //this might not even be working consistenlty after testing? or somethin else has a lingering ref >:(
 			if (!(c++ % 20))
 				scheck()
 

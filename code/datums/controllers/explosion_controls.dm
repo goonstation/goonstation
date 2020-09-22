@@ -135,6 +135,7 @@ var/datum/explosion_controller/explosions
 	var/brisance
 
 	New(atom/source, turf/epicenter, power, brisance)
+		..()
 		src.source = source
 		src.epicenter = epicenter
 		src.power = power
@@ -155,7 +156,7 @@ var/datum/explosion_controller/explosions
 
 		for(var/client/C in clients)
 			if(C.mob && (C.mob.z == epicenter.z) && power > 15)
-				shake_camera(C.mob, 8, 3) // remove if this is too laggy
+				shake_camera(C.mob, 8, 24) // remove if this is too laggy
 
 				C << sound(explosions.distant_sound)
 
@@ -206,7 +207,7 @@ var/datum/explosion_controller/explosions
 			p = min(p, 10)
 			for(var/mob/living/carbon/C in T)
 				if (!isdead(C) && C.client)
-					shake_camera(C, 3 * p, p)
+					shake_camera(C, 3 * p, p * 4)
 				C.changeStatus("stunned", p * 10)
 				C.stuttering += p
 				C.lying = 1

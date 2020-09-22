@@ -405,7 +405,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
@@ -11620,7 +11620,7 @@
 /area/station/crew_quarters/quarters)
 "axr" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -19344,7 +19344,7 @@
 	icon_state = "on";
 	on = 1
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor/engine/vacuum,
@@ -26071,7 +26071,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -34618,7 +34618,7 @@
 /area/station/crew_quarters/juryroom)
 "brd" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/juryroom)
@@ -35093,7 +35093,7 @@
 "brZ" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -38898,7 +38898,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -41589,13 +41589,13 @@
 	icon_state = "reinf_tabledir";
 	dir = 10
 	},
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/spacevine{
 	density = 1;
 	icon_state = "vine-med1"
 	},
 /obj/item/injector_belt,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/unsimulated/grass,
 /area/crater/biodome/north)
 "bFQ" = (
@@ -41604,7 +41604,7 @@
 	icon_state = "reinf_tabledir";
 	dir = 6
 	},
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/item/reagent_containers/glass/compostbag,
 /obj/spacevine{
 	density = 1;
@@ -41668,7 +41668,7 @@
 	icon_state = "reinf_tabledir";
 	dir = 10
 	},
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/item/reagent_containers/glass/wateringcan,
 /obj/spacevine{
 	density = 1;
@@ -41682,8 +41682,8 @@
 	icon_state = "reinf_tabledir";
 	dir = 6
 	},
-/obj/landmark/artifact/seed,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
 /obj/item/satchel/hydro,
 /obj/spacevine{
 	density = 1;
@@ -48782,7 +48782,7 @@
 	tag = "icon-reinf_tabledir (SOUTHWEST)"
 	},
 /obj/item/plantanalyzer,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/unsimulated/grass,
 /area/crater/biodome/south)
 "bWy" = (
@@ -48803,7 +48803,7 @@
 	icon_state = "reinf_tabledir";
 	tag = "icon-reinf_tabledir (SOUTHWEST)"
 	},
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/unsimulated/grass,
 /area/crater/biodome/south)
 "bWA" = (
@@ -73806,7 +73806,7 @@
 	},
 /area/syndicate_station)
 "cWn" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
 	},
 /turf/simulated/floor/shuttle{
@@ -79460,9 +79460,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
 /area)
 "dip" = (
@@ -80133,10 +80131,10 @@
 /area/salyut)
 "djJ" = (
 /obj/table,
-/obj/landmark/artifact/seed,
-/obj/landmark/artifact/seed,
-/obj/landmark/artifact/seed,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -80522,9 +80520,7 @@
 /area/salyut)
 "dkE" = (
 /obj/decal/fakeobjects/lightbulb_broken,
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -80543,7 +80539,7 @@
 	dir = 4;
 	reinf = 1
 	},
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},

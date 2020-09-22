@@ -27,7 +27,7 @@
 	var/jerk = 0				// Should robots arrest these by default?
 
 	var/icon = 'icons/effects/genetics.dmi'
-	var/icon_state = "epileptic"
+	var/icon_state = "psyche"
 	var/icon_head = null
 	var/icon_beard = null
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
@@ -68,6 +68,8 @@
 
 	var/datum/movement_modifier/movement_modifier
 
+	var/decomposes = TRUE
+
 
 	proc/say_filter(var/message)
 		return message
@@ -99,6 +101,9 @@
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 		if(ishuman(M))
 			src.mob = M
+			var/datum/appearanceHolder/AHM = mob?.bioHolder?.mobAppearance
+			if (AHM)
+				AHM.mutant_race = src.type
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
@@ -241,6 +246,9 @@
 				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
 				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
 				H.image_cust_three.pixel_y = initial(H.image_cust_three.pixel_y)
+				var/datum/appearanceHolder/AHM = H?.bioHolder?.mobAppearance
+				if (AHM)
+					AHM.mutant_race = null
 
 				// And the other way around (Convair880).
 				if (src.r_limb_arm_type_mutantrace)
@@ -463,8 +471,6 @@
 			detail_3 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-3", layer = MOB_LIMB_LAYER+0.3)
 			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
 
-			hex_to_rgb_list(aH.customization_first_color)
-
 			detail_1.color = fix_colors(aH.customization_first_color)
 			detail_2.color = fix_colors(aH.customization_second_color)
 			detail_3.color = fix_colors(aH.customization_third_color)
@@ -493,6 +499,9 @@
 
 	say_filter(var/message)
 		return replacetext(message, "s", stutter("ss"))
+
+	say_verb()
+		return "hisses"
 
 /datum/mutantrace/zombie
 	name = "zombie"
@@ -685,6 +694,7 @@
 	icon_state = "skeleton"
 	icon_override_static = 1
 	voice_override = "skelly"
+	decomposes = FALSE
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -812,6 +822,7 @@
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/werewolf
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/werewolf
 	ignore_missing_limbs = 0
+	var/old_client_color = null
 
 	New()
 		..()
@@ -825,6 +836,10 @@
 
 			var/duration = 3000
 			var/datum/ailment_data/disease/D = mob.find_ailment_by_type(/datum/ailment/disease/lycanthropy/)
+
+			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
+			mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
+
 			if(D)
 				D.cycles++
 				duration = rand(2000, 4000) * D.cycles
@@ -839,6 +854,8 @@
 			mob.remove_stam_mod_regen("werewolf")
 			mob.remove_stun_resist_mod("werewolf")
 			mob.max_health -= 30
+			mob.bioHolder.RemoveEffect("protanopia")
+			mob.bioHolder.RemoveEffect("accent_scoob")
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name

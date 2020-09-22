@@ -51,15 +51,29 @@
 		for(var/key in aiImages)
 			var/image/I = aiImages[key]
 			src.client << I
+		SPAWN_DBG(0)
+			var/sleep_counter = 0
+			for(var/key in aiImagesLowPriority)
+				var/image/I = aiImagesLowPriority[key]
+				src.client << I
+				if(sleep_counter++ % (300 * 10) == 0)
+					LAGCHECK(LAG_LOW)
 
 	Logout()
 		//if (src.client)
 		//	src.client.show_popup_menus = 1
-
-		if(src.last_client)
+		var/client/cl = src.last_client
+		if(cl)
 			for(var/key in aiImages)
 				var/image/I = aiImages[key]
-				src.last_client.images -= I
+				cl.images -= I
+		SPAWN_DBG(0)
+			var/sleep_counter = 0
+			for(var/key in aiImagesLowPriority)
+				var/image/I = aiImagesLowPriority[key]
+				cl.images -= I
+				if(sleep_counter++ % (300 * 10) == 0)
+					LAGCHECK(LAG_LOW)
 
 		.=..()
 
@@ -89,7 +103,7 @@
 
 		if (NewLoc)
 			dir = get_dir(loc, NewLoc)
-			src.loc = (NewLoc) //src.set_loc(NewLoc) we don't wanna refresh last_range here and as fas as i can tell there's no reason we Need set_loc
+			src.set_loc(NewLoc) //src.set_loc(NewLoc) we don't wanna refresh last_range here and as fas as i can tell there's no reason we Need set_loc
 		else
 
 			dir = direct
@@ -402,7 +416,7 @@
 		set name = "Show Alerts"
 		if(mainframe)
 			mainframe.ai_alerts()
-	
+
 	verb/ai_station_announcement()
 		set name = "AI Station Announcement"
 		set desc = "Makes a station announcement."
@@ -689,6 +703,10 @@ var/list/camImages = list()
 var/aiDirty = 2
 world/proc/updateCameraVisibility()
 	if(!aiDirty) return
+#if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
+	// I don't wanna wait for this camera setup shit just GO
+	return
+#endif
 	if(aiDirty == 2)
 		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
 		ma.plane = PLANE_HUD
@@ -697,20 +715,41 @@ world/proc/updateCameraVisibility()
 		ma.dir = pick(alldirs)
 		ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
 		ma.name = " "
+
+		var/lastpct = 0
+		var/thispct = 0
+		var/donecount = 0
+
+		// takes about one second compared to the ~12++ that the actual calculations take
+		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
+		var/list/turf/cam_candidates = list()
 		for(var/turf/t in world)//ugh
 			if( t.z != 1 ) continue
+			cam_candidates += t
+
+
+		for(var/turf/t in cam_candidates)//ugh
+			//if( t.z != 1 ) continue
 			//t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
 
 			t.aiImage = new
 			t.aiImage.appearance = ma
+			t.aiImage.dir = pick(alldirs)
 			t.aiImage.loc = t
 
-			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]")
+			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]", low_priority=istype(t, /turf/space))
+
+			donecount++
+			thispct = round(donecount / cam_candidates.len * 100)
+			if (thispct != lastpct)
+				lastpct = thispct
+				game_start_countdown?.update_status("Updating cameras...\n[thispct]%")
 
 			LAGCHECK(100)
 
 		aiDirty = 1
-	for(var/obj/machinery/camera/C in cameras)
+		game_start_countdown?.update_status("Updating camera vis...\n")
+	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
 			LAGCHECK(LAG_HIGH)
 			if (!t.aiImage) continue

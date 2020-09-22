@@ -92,7 +92,7 @@
 				N.changeStatus("weakened", 5 SECONDS)
 				random_brute_damage(N, 10)
 		if(N.client)
-			shake_camera(N, 6, 5)
+			shake_camera(N, 6, 32)
 			N.show_message("<span class='alert'>[M] showboat slams [target] to the ground!</span>", 1)
 	random_brute_damage(target, 40)
 
@@ -143,7 +143,7 @@
 				if(ishuman(N) && istype(N:mutantrace, /datum/mutantrace/zombie))
 					N.gib()
 		if(N.client)
-			shake_camera(N, 6, 4)
+			shake_camera(N, 6, 16)
 			N.show_message("<span class='alert'>[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
 
 	playsound(M.loc, "sound/weapons/flashbang.ogg", 50, 1)
@@ -224,7 +224,7 @@
 			if(N != M)
 				N.changeStatus("weakened", 5 SECONDS)
 		if(N.client)
-			shake_camera(N, 6, 4)
+			shake_camera(N, 6, 16)
 			N.show_message("<span class='alert'>[M] clown jams [target]!</span>", 1)
 
 	for(var/obj/item/basketball/B in M.contents)
@@ -351,8 +351,7 @@
 		A.updateicon()
 		LAGCHECK(LAG_LOW)
 	for(var/mob/N in mobs)
-		SPAWN_DBG(0)
-			shake_camera(N, 120, 2)
+		shake_camera(N, 120, 8)
 	SPAWN_DBG(0)
 		var/thunder = 70
 		while(thunder > 0)

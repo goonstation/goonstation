@@ -94,7 +94,7 @@ var/global/obj/flashDummy
 
 /proc/arcFlashTurf(var/atom/from, var/turf/target, var/wattage)
 	var/obj/O = getFlashDummy()
-	O.loc = target
+	O.set_loc(target)
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
 
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -118,12 +118,18 @@ var/global/obj/flashDummy
 		elecflashpower = 2
 
 	elecflash(target,power = elecflashpower)
-	O.loc = null
+	O.set_loc(null)
 
 /proc/arcFlash(var/atom/from, var/atom/target, var/wattage)
+	var/target_r = target
+	if (isturf(target))
+		var/obj/O = getFlashDummy()
+		O.set_loc(target)
+		target_r = O
+
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
 
-	var/list/affected = DrawLine(from, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/O in affected)
 		SPAWN_DBG(0.6 SECONDS) pool(O)
@@ -334,6 +340,11 @@ proc/get_angle(atom/a, atom/b)
 		t = copytext(t, 1, index) + copytext(t, index+1)
 		index = findtext(t, ">")
 	. = sanitize(t)
+
+/proc/strip_html_tags(var/t,var/limit=MAX_MESSAGE_LEN)
+	. = html_decode(copytext(t,1,limit))
+	. = replacetext(., "<br>", "\n")
+	. = replacetext(., regex("<\[^>\]*>", "gm"), "")
 
 /proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
 	t = html_decode(copytext(t,1,limit))
@@ -654,7 +665,7 @@ proc/get_angle(atom/a, atom/b)
 /proc/sortmobs()
 
 	var/list/mob_list = list()
-	for(var/mob/living/silicon/ai/M in AIs)
+	for(var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
 		mob_list.Add(M)
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/dead/aieye/M in mobs)
@@ -851,16 +862,6 @@ proc/get_angle(atom/a, atom/b)
 		src.mob.remove_dialogs()
 	return
 
-/proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the mob is on, or what the mob is in is on, etc
-	//in case they're in a closet or sleeper or something
-	if (!M) return null
-	var/atom/loc = M.loc
-	while(!istype(loc, /turf/))
-		if (!loc)
-			break
-		loc = loc.loc
-	return loc
-
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
 /proc/get_edge_target_turf(var/atom/A, var/direction)
@@ -1026,8 +1027,8 @@ proc/get_angle(atom/a, atom/b)
 		var/client/client = M.client
 
 		for(var/i=0, i<duration, i++)
-			var/off_x = (rand(0, strength*32) * (prob(50) ? -1:1))
-			var/off_y = (rand(0, strength*32) * (prob(50) ? -1:1))
+			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
+			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
 			animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			sleep(delay)
@@ -1445,8 +1446,9 @@ var/list/hex_chars = list("0","1","2","3","4","5","6","7","8","9","A","B","C","D
 var/list/all_functional_reagent_ids = list()
 
 proc/get_all_functional_reagent_ids()
-	for (var/X in childrentypesof(/datum/reagent) )
-		all_functional_reagent_ids += initial(X:id)
+	for (var/X in concrete_typesof(/datum/reagent))
+		var/datum/reagent/R = X
+		all_functional_reagent_ids += initial(R.id)
 
 proc/reagent_id_to_name(var/reagent_id)
 	if (!reagent_id || !reagents_cache.len)
@@ -1752,7 +1754,7 @@ proc/countJob(rank)
 
 // Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 // Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
-/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0)
+/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0, var/require_client = FALSE)
 	var/list/candidates = list()
 
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
@@ -1782,7 +1784,7 @@ proc/countJob(rank)
 		// Run prompts. Minds are preferable to mob references because of the confirmation delay.
 		for (var/datum/mind/M in ticker.minds)
 			if (M.current && M.current.client)
-				if (dead_player_list_helper(M.current, allow_dead_antags) != 1)
+				if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
 					continue
 
 				SPAWN_DBG (0) // Don't lock up the entire proc.
@@ -1793,7 +1795,7 @@ proc/countJob(rank)
 						if (ghost_timestamp && world.time > ghost_timestamp + confirmation_spawn)
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
-						if (dead_player_list_helper(M.current, allow_dead_antags) != 1)
+						if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
 							if (M.current) boutput(M.current, text_chat_failed)
 							return
 
@@ -1809,7 +1811,7 @@ proc/countJob(rank)
 		// Filter list again.
 		if (candidates.len)
 			for (var/datum/mind/M2 in candidates)
-				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags) != 1)
+				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags, require_client) != 1)
 					candidates.Remove(M2)
 					continue
 
@@ -1833,7 +1835,7 @@ proc/countJob(rank)
 	candidates = list()
 
 	for (var/mob/O in mobs)
-		if (dead_player_list_helper(O, allow_dead_antags) != 1)
+		if (dead_player_list_helper(O, allow_dead_antags, require_client) != 1)
 			continue
 		if (!(O in candidates))
 			candidates.Add(O)
@@ -1849,7 +1851,7 @@ proc/countJob(rank)
 	return candidates
 
 // So there aren't multiple instances of C&P code (Convair880).
-/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0)
+/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
 	if (!G || !ismob(G))
 		return 0
 	if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
@@ -1859,6 +1861,8 @@ proc/countJob(rank)
 	if (jobban_isbanned(G, "Syndicate"))
 		return 0
 	if (jobban_isbanned(G, "Special Respawn"))
+		return 0
+	if (require_client && !G.client)
 		return 0
 
 	if (isobserver(G))
@@ -1993,7 +1997,7 @@ proc/countJob(rank)
   * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
   */
 /proc/whois(target, limit = 0, admin)
-	target = trim(lowertext(target))
+	target = trim(ckey(target))
 	if (!target) return 0
 	var/list/found = list()
 	for (var/mob/M in mobs)
@@ -2224,7 +2228,7 @@ var/global/list/allowed_restricted_z_areas
 	return rgb(r,g,b)
 
 /**
-  * Returns a string based on the current job and antag role of the mob e.g. Staff Assistant [Traitor]
+  * Returns a string based on the current job and antag role of the mob e.g. `"Staff Assistant [Traitor]"`
   */
 /proc/getRole(var/mob/M, strip = 0)
 	if (!M || !istype(M)) return
@@ -2608,3 +2612,9 @@ proc/weighted_pick(list/choices)
 		if(weighted_num <= running_total)
 			return key
 	return
+
+proc/keep_truthy(some_list)
+	. = list()
+	for(var/x in some_list)
+		if(x)
+			. += x

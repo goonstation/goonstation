@@ -14610,7 +14610,7 @@
 "aGa" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -16951,7 +16951,7 @@
 	icon_state = "chair_couch-brown";
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
@@ -19017,7 +19017,7 @@
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "aPM" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/grime,
@@ -19094,7 +19094,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/maintcentral)
 "aPX" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor/plating,
@@ -20785,7 +20785,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "aTX" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/wood/two,
@@ -31290,7 +31290,7 @@
 	},
 /area/station/storage/warehouse)
 "bqA" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,
@@ -31434,7 +31434,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "bqR" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light{
@@ -31887,7 +31887,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "brP" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass,
@@ -33387,7 +33387,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "bvq" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light,
@@ -33604,7 +33604,7 @@
 	},
 /area/station/crew_quarters/pool)
 "bvR" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/pool/no_animate,
@@ -34063,7 +34063,7 @@
 /turf/space,
 /area)
 "bwW" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/grass,
@@ -38106,7 +38106,7 @@
 /area/station/science/teleporter)
 "bGo" = (
 /obj/disposalpipe/segment/mail,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/white,
@@ -39388,7 +39388,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "bJe" = (
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/simulated/floor/plating/airless/asteroid,
 /area)
 "bJf" = (
@@ -42684,7 +42684,7 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -42981,7 +42981,7 @@
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/south)
 "bQf" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/wood,
@@ -43226,7 +43226,7 @@
 	pixel_y = 21
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
@@ -44992,7 +44992,7 @@
 /area/research_outpost/hangar)
 "bUk" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
@@ -45044,7 +45044,7 @@
 /area/research_outpost)
 "bUp" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -46387,7 +46387,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -48386,7 +48386,7 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /obj/cable{
 	icon_state = "0-2"
 	},

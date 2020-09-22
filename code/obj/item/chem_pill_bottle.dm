@@ -52,7 +52,7 @@
 					src.pcount = 0
 				else
 					P = unpool(/obj/item/reagent_containers/pill)
-					P.loc = src
+					P.set_loc(src)
 					P.name = "[pname] pill"
 
 					src.reagents_internal.trans_to(P,src.pvol)

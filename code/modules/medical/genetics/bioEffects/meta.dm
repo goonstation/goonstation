@@ -94,7 +94,7 @@
 	desc = "No effect on subject. Unlocks new research possibilities and can be used as a wildcard in combinations."
 	id = "early_secret_access"
 	secret = 1
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	mob_exclusive = /mob/living/carbon/human/
 	can_research = 0
 	blockCount = 1

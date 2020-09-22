@@ -4,7 +4,8 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	//event_handler_flags = 0//USE_FLUID_ENTER  //maybe? //Gerhazo : commented out due to ghosts having an interaction with the ectoplasmic destabilizer, this made their collision with the projectile not work
+	plane = PLANE_NOSHADOW_ABOVE
+	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH | USE_FLUID_ENTER //maybe?
 	density = 0
 	canmove = 1
 	blinded = 0
@@ -151,7 +152,7 @@
 /mob/dead/observer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
-		if (istype(proj.proj_data, /datum/projectile/energy_bolt_antighost))
+		if (proj.proj_data.hits_ghosts)
 			return 0
 
 	return 1
@@ -164,7 +165,7 @@
 	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
 
 	if (wig)
-		wig.loc = src.loc
+		wig.set_loc(src.loc)
 	new /obj/item/reagent_containers/food/snacks/ectoplasm(get_turf(src))
 	overlays.len = 0
 	log_shot(P,src)
@@ -272,11 +273,7 @@
 		var/mob/dead/observer/O = new/mob/dead/observer(src)
 		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
-			var/OS = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
-			if (OS)
-				O.set_loc(OS)
-			else
-				O.z = 1
+			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 		if (client) client.color = null  //needed for mesons dont kill me thx - ZeWaka
 		if (src.client && src.client.holder && src.stat !=2)
 			// genuinely not sure what this is here for since we're setting the
@@ -435,7 +432,7 @@
 	if(!canmove) return
 
 	if (NewLoc && isghostrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder && !src.client.holder.tempmin))
-		var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 		if (OS)
 			src.set_loc(OS)
 		else
@@ -788,6 +785,4 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 		src.client.mob = newobs
 	set_loc(newobs)
 	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
-		var/OS = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
-		if (OS)
-			newobs.set_loc(OS)
+		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
