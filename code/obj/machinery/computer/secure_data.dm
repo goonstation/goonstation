@@ -106,7 +106,7 @@
 					dat += "<b>Record List</b>:<hr>"
 					for (var/datum/data/record/R in data_core.general)
 						dat += {"
-							<a href="javascript:goBYOND('action=d_rec;rec=\ref[R]');">[R.fields["id"]]: [R.fields["name"]]
+							<a href="javascript:goBYOND('action=view_record;rec=\ref[R]');">[R.fields["id"]]: [R.fields["name"]]
 							<br>
 							"}
 
@@ -118,7 +118,7 @@
 					dat += {"
 					<b>Record Maintenance</b>
 					<hr>
-					<br><a href="javascript:goBYOND('action=new_r');">New Record</a>
+					<br><a href="javascript:goBYOND('action=new_general_record');">New Record</a>
 					<br>
 					<br><a href="javascript:doPopup('del_all_records', 'Really delete ALL security records?');">Delete All Records</a>
 					<br>
@@ -163,7 +163,7 @@
 						var/list/arrest_status = list()
 
 						for (var/n in record_to_display)
-							arrest_status += {"<a href="javascript:goBYOND('action=criminal2;criminal2=[n]');" class="[n] [record_to_display[n] == src.active_record_security.fields["criminal"] ? "active" : ""]">[record_to_display[n]]</a>"}
+							arrest_status += {"<a href="javascript:goBYOND('action=criminal;criminal=[n]');" class="[n] [record_to_display[n] == src.active_record_security.fields["criminal"] ? "active" : ""]">[record_to_display[n]]</a>"}
 
 						dat += {"
 						<br>
@@ -172,15 +172,15 @@
 						<br>Criminal Status: <!-- <a href="javascript:goBYOND('action=field;field=criminal');">[src.active_record_security.fields["criminal"]]</a> -->
 						<br><div class="crimer">[arrest_status.Join(" ")]</div>
 						<br>
-						<br>Minor Crimes: <a href="javascript:goBYOND('action=field;field=mi_crim');">[src.active_record_security.fields["mi_crim"]]</a>
+						<br>Minor Crimes: <a href="javascript:goBYOND('action=field;field=minor_crimes');">[src.active_record_security.fields["mi_crim"]]</a>
 						<br>
-						<br>Details: <a href="javascript:goBYOND('action=field;field=mi_crim_d');">[src.active_record_security.fields["mi_crim_d"]]</a>
+						<br>Details: <a href="javascript:goBYOND('action=field;field=minor_crime_details');">[src.active_record_security.fields["mi_crim_d"]]</a>
 						<br>
 						<br>
 						<br>
-						<br>Major Crimes: <a href="javascript:goBYOND('action=field;field=ma_crim');">[src.active_record_security.fields["ma_crim"]]</a>
+						<br>Major Crimes: <a href="javascript:goBYOND('action=field;field=major_crimes');">[src.active_record_security.fields["ma_crim"]]</a>
 						<br>
-						<br>Details: <a href="javascript:goBYOND('action=field;field=ma_crim_d');">[src.active_record_security.fields["ma_crim_d"]]</a>
+						<br>Details: <a href="javascript:goBYOND('action=field;field=major_crime_details');">[src.active_record_security.fields["ma_crim_d"]]</a>
 						<br>
 						<br>
 						<br>
@@ -213,7 +213,7 @@
 					else
 						dat += {"
 							<b>Security Record Lost!</b><br>
-							<a href="javascript:goBYOND('action=new');">New Record</a>
+							<a href="javascript:goBYOND('action=new_security_record');">New Record</a>
 							<br>
 							<br>
 							"}
@@ -450,28 +450,28 @@
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general.fields["age"] = t1
-					if ("mi_crim")
+					if ("minor_crimes")
 						if (istype(src.active_record_security, /datum/data/record))
 							var/t1 = input("Minor crimes:", "Security Records", src.active_record_security.fields["mi_crim"], null) as text
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security.fields["mi_crim"] = t1
-					if ("mi_crim_d")
+					if ("minor_crime_details")
 						if (istype(src.active_record_security, /datum/data/record))
-							var/t1 = input("Minor detail crimes:", "Security Records", src.active_record_security.fields["mi_crim_d"], null) as message
+							var/t1 = input("Minor crime details:", "Security Records", src.active_record_security.fields["mi_crim_d"], null) as message
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security.fields["mi_crim_d"] = t1
-					if ("ma_crim")
+					if ("major_crimes")
 						if (istype(src.active_record_security, /datum/data/record))
 							var/t1 = input("Major crimes:", "Security Records", src.active_record_security.fields["ma_crim"], null) as text
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security.fields["ma_crim"] = t1
-					if ("ma_crim_d")
+					if ("major_crime_details")
 						if (istype(src.active_record_security, /datum/data/record))
 							var/t1 = input("Major crime details:", "Security Records", src.active_record_security.fields["ma_crim_d"], null) as message
 							t1 = adminscrub(t1)
@@ -485,22 +485,6 @@
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security.fields["notes"] = t1
-					if ("criminal")
-						if (istype(src.active_record_security, /datum/data/record))
-							src.temp = {"
-						<b>Criminal Status:</b>
-						<br>
-						<br>&emsp;<a href="javascript:goBYOND('action=criminal2;criminal2=none');">None</a>
-						<br>
-						<br>&emsp;<a href="javascript:goBYOND('action=criminal2;criminal2=arrest');">*Arrest*</a>
-						<br>
-						<br>&emsp;<a href="javascript:goBYOND('action=criminal2;criminal2=incarcerated');">Incarcerated</a>
-						<br>
-						<br>&emsp;<a href="javascript:goBYOND('action=criminal2;criminal2=parolled');">Parolled</a>
-						<br>
-						<br>&emsp;<a href="javascript:goBYOND('action=criminal2;criminal2=released');">Released</a>
-						<br>
-						"}
 					if ("rank")
 						var/list/L = list( "Head of Personnel", "Captain", "AI" )
 						if ((istype(src.active_record_general, /datum/data/record) && L.Find(src.rank)))
@@ -579,9 +563,9 @@
 					src.temp = null
 
 
-			if ("criminal2")
+			if ("criminal")
 				if (src.active_record_security)
-					switch(href_list["criminal2"])
+					switch(href_list["criminal"])
 						if ("none")
 							src.active_record_security.fields["criminal"] = "None"
 						if ("arrest")
@@ -626,7 +610,7 @@
 				else
 					src.temp = null
 
-			if ("d_rec")
+			if ("view_record")
 				var/datum/data/record/R = locate(href_list["rec"])
 				var/S = locate(href_list["rec"])
 				if (!data_core.general.Find(R))
@@ -639,7 +623,7 @@
 				src.active_record_security = S
 				src.screen = SECREC_VIEW_RECORD
 
-			if ("new_r")
+			if ("new_general_record")
 				var/datum/data/record/G = new /datum/data/record()
 				G.fields["name"] = "New Record"
 				G.fields["id"] = num2hex(rand(1, 1.6777215E7), 6)
@@ -652,8 +636,9 @@
 				data_core.general += G
 				src.active_record_general = G
 				src.active_record_security = null
+				src.screen = SECREC_VIEW_RECORD
 
-			if ("new")
+			if ("new_security_record")
 				if ((istype(src.active_record_general, /datum/data/record) && !( istype(src.active_record_security, /datum/data/record) )))
 					var/datum/data/record/R = new /datum/data/record(  )
 					R.fields["name"] = src.active_record_general.fields["name"]
