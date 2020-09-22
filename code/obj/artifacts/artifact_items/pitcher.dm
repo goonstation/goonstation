@@ -1,10 +1,11 @@
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/artifact
+/obj/item/reagent_containers/food/drinks/drinkingglass/artifact
 	name = "artifact pitcher"
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	desc = "You have no idea what this thing is!"
 	artifact = 1
 	module_research_no_diminish = 1
 	mat_changename = 0
+	can_recycle = 0
 
 	New(var/loc, var/forceartitype)
 		..()
@@ -19,7 +20,8 @@
 		var/capacity = rand(5,20)
 		capacity *= 100
 		var/usedCapacity = 0
-		src.reagents.maximum_volume = capacity //TODO: Should this be initial_capacity?
+		src.reagents.maximum_volume = capacity
+		//Fun stuff
 		if (prob(7))
 			reagents.add_reagent("dbreath", 30)
 			usedCapacity += 30
@@ -104,7 +106,7 @@
 			reagents.add_reagent("catdrugs", 30)
 			usedCapacity += 30
 		if (prob(10))
-			reagents.add_reagent("amatin", 20)
+			reagents.add_reagent("amanitin", 20)
 			usedCapacity += 20
 		if (prob(5))
 			reagents.add_reagent("argine", 15)
@@ -148,10 +150,11 @@
 		if(prob(3))
 			reagents.add_reagent("bee", 10)
 			usedCapacity += 10
-		reagents.add_reagent("vodka", max((capacity-usedCapacity) / 2, 0))
-		reagents.add_reagent("cocktail_citrus", max((capacity-usedCapacity) / 2, 0))
+		if(prob(7))
+			reagents.add_reagent("bombini", 15)
+		//Filler stuff
+
 		// replace with random bar stuff - triple citrus, vodka, ciroc, sugar, milk, beer, etc
-		//TODO: Add final reagents to replace saltpetre
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.Artifact_attackby(W,user))
@@ -163,8 +166,44 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
+	update_icon()
+		return //Can't be activated, so the icon should never change
+
+	smash()
+		return //Prevents pitcher from smashing into glass
+
+	//Annoyingly duplicated code to override pitcher's explosion behavior (smashing)
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				src.ArtifactStimulus("force", 200)
+				src.ArtifactStimulus("heat", 500)
+			if(2.0)
+				src.ArtifactStimulus("force", 75)
+				src.ArtifactStimulus("heat", 450)
+		 	if(3.0)
+		 		src.ArtifactStimulus("force", 25)
+		 		src.ArtifactStimulus("heat", 380)
+		return
+
+	//Bastard child of artifact destuction behavior and drinkingglass smash behavior
+	ArtifactDestroyed()
+		var/turf/T = get_turf(src)
+		if(!T)
+			qdel(src)
+			return
+		if(src.reagents)
+			src.reagents.reaction(T)
+		if (src.in_glass)
+			src.in_glass.set_loc(T)
+			src.in_glass = null
+		if (src.wedge)
+			src.wedge.set_loc(T)
+			src.wedge = null
+		..()
+
 /datum/artifact/pitcher
-	associated_object = /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/artifact
+	associated_object = /obj/item/reagent_containers/food/drinks/drinkingglass/artifact
 	rarity_class = 2
 	validtypes = list("martian","wizard","eldritch")
 	min_triggers = 0
