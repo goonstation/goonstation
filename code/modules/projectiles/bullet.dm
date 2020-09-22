@@ -163,6 +163,7 @@ toxic - poisons
 	projectile_speed = 36
 	caliber = 0.355
 	icon_turf_hit = "bhole-small"
+	hit_type = DAMAGE_BLUNT
 	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
 	casing = /obj/item/casing/small
 
