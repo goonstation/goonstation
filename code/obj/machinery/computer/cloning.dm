@@ -1,6 +1,9 @@
 //Cloning revival method.
 //The pod handles the actual cloning while the computer manages the clone profiles
-//todo fix port-a-clone
+
+// time to show the message for before removing it
+#define MESSAGE_SHOW_TIME 	5 SECONDS
+
 /obj/machinery/computer/cloning
 	name = "Cloning console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
@@ -180,7 +183,7 @@
 	//prevents us from overwriting the wrong message
 	currentMessageNumber += 1
 	var/messageNumber = currentMessageNumber
-	SPAWN_DBG(5 SECONDS)
+	SPAWN_DBG(MESSAGE_SHOW_TIME)
 	if(src.currentMessageNumber == messageNumber)
 		src.currentStatusMessage["text"] = ""
 		src.currentStatusMessage["status"] = ""
