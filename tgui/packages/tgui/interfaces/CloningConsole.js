@@ -135,7 +135,7 @@ export const CloningConsole = (props, context) => {
           </Tabs>
         </Section>
         {/* used for the wage system */}
-        {(clonesForCash && (
+        {(!!clonesForCash && (
           <Section>
             Current machine credit: {balance}
           </Section>
@@ -337,10 +337,8 @@ const Records = (props, context) => {
     podGone,
     diskReadOnly,
   } = data;
-  const [
-    deletionTarget,
-    setDeletionTarget,
-  ] = useLocalState(context, 'deletionTarget', '');
+  const [,
+    setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
 
   return (
     <Section title="Records">
