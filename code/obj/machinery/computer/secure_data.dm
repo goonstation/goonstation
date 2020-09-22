@@ -234,8 +234,9 @@
 						"}
 
 						if (src.active_record_security.fields["log"])
-							for (var/comment_num in 1 to src.active_record_security.fields["log"].len)
-								var/list/comment = src.active_record_security.fields["log"][comment_num]
+							var/list/log_list = active_record_security.fields["log"]
+							for (var/comment_num in 1 to log_list.len)
+								var/list/comment = log_list[comment_num]
 								dat += {"
 			<tr>
 				<th colspan="2" style="font-weight: normal; text-align: left;">

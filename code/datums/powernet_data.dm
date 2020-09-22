@@ -5,7 +5,8 @@
 /datum/data/record
 	name = "record"
 	size = 5.0
-	var/list/list/fields = list(  )
+	/// associated list of various data fields
+	var/list/fields = list(  )
 
 /datum/powernet
 	/// all cables & junctions
