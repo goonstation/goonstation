@@ -94,7 +94,7 @@
 	var/amount = 1
 
 /**
- * * contnts {[/obj/item]} - Instantiated contents
+ * * contents {[/obj/item]} - Instantiated contents
  * * proxy_loc {[/atom]} - Location used in `instantiate`
  *
  * * return {[/obj/item]} result

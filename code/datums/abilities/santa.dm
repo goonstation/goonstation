@@ -261,4 +261,3 @@
 			return
 
 		boutput(holder.owner, "<span class='alert'>Can't find any Krampuses to banish! (you must be within 7 tiles)</span>")
-
