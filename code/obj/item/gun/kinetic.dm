@@ -500,8 +500,13 @@
 			icon_state = "glocktan"
 			item_state = "glocktan"
 
-		ammo = new/obj/item/ammo/bullets/nine_mm_NATO
+		if(throw_return)
+			ammo = new/obj/item/ammo/bullets/nine_mm_NATO/boomerang
+		else
+			ammo = new/obj/item/ammo/bullets/nine_mm_NATO
+
 		current_projectile = new/datum/projectile/bullet/nine_mm_NATO
+
 		if(throw_return)
 			projectiles = list(current_projectile)
 		else
