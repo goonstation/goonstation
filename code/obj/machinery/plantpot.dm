@@ -1261,7 +1261,7 @@
 				harvest_string += " and [seedcount] seed"
 				if (seedcount > 1)
 					harvest_string += "s"
-			boutput(user, "<span class='notice'>[harvest_string.Join()]</span>")
+			boutput(user, "<span class='notice'>[harvest_string.Join()].</span>")
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))

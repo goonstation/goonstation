@@ -46,6 +46,21 @@
 	name = "planet gehenna"
 	desc = "errrr"
 
+/turf/simulated/wall/asteroid/gehenna
+	name = "sulferous rock"
+	desc = "looks loosely packed"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "gehenna_rock"
+
+/turf/simulated/wall/asteroid/gehenna/tough
+	desc = "looks densely packed"
+	icon_state = "gehenna_rock2"
+
+/turf/unsimulated/wall/gehenna/
+	desc = "looks conveniently impenetrable"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "gehenna_rock3"
+
 /turf/gehenna/desert
 	name = "barren wasteland"
 	desc = "Looks really dry out there."

@@ -7,6 +7,7 @@
 
 #include "__build.dm" //this controls how a lot of our defines and macros and code is compiled, so it absolutely needs to be the first
 #include "macros\_metamacros.dm" //this has some structural helpers that a lot of other macros/defines use, so it needs to be near the start
+#include "_spaceman_dmm.dm" //linter stuff is used in other macros
 #include "mapDefines.dm" // knowing if we're underwater is important for some later macros
 #include "setup.dm" // initializes important stuff for later macros
 #include "defines\_units.dm" //this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
@@ -59,6 +60,7 @@
 #include "defines\turf.dm"
 #include "defines\ui.dm"
 #include "defines\vehicles.dm"
+#include "defines\wages.dm"
 #include "defines\watermap.dm"
 #include "defines\worldgen.dm"
 #include "defines\_frequency.dm"
@@ -86,7 +88,6 @@
 #include "macros\movable.dm"
 #include "macros\movement_modifiers.dm"
 #include "macros\procs.dm"
-#include "macros\spaceman_dmm.dm"
 #include "macros\spawn.dm"
 #include "macros\strings.dm"
 #include "macros\time.dm"

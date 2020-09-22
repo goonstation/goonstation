@@ -1,0 +1,8 @@
+@use '../colors.scss';
+@use '../components/Button.scss';
+
+.AccessPanel-wires-btn {
+  &.Button--selected {
+    @include Button.button-color(colors.bg(colors.$average));
+  }
+}

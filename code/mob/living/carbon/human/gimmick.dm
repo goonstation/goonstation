@@ -855,7 +855,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		default_task = B
 
 
-#define SPACER_PICK(WHAT) pick_string("spacers.txt", WHAT)
+
 
 /mob/living/carbon/human/proc/spacer_name(var/type = "spacer")
 	var/constructed_name = ""
@@ -880,6 +880,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			gender = pick(MALE,FEMALE)
 			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
+				src.say("Hey there [JOHN_PICK("insults")]")//debug
 
 			src.equip_new_if_possible(/obj/item/clothing/shoes/orange, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/chief_engineer, slot_w_uniform)

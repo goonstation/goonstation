@@ -63,6 +63,8 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_station_name_changing,
 		/client/proc/cmd_admin_remove_label_from,
 		/client/proc/cmd_admin_antag_popups,
+		/client/proc/retreat_to_office,
+		
 		),
 
 

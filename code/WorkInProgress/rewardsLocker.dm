@@ -912,7 +912,7 @@
 		SPAWN_DBG(20 SECONDS)
 			if(activator && !isdead(activator))
 				activator.suiciding = 0*/
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Management stuff below.
+/*                                  / Management stuff below. /              */
 /chui/window/contributorrewards
 	name = "Contributor Rewards"
 

@@ -147,8 +147,8 @@
 			if(src.welded)
 				src.icon_state=initial(src.icon_state)+"_w"
 			else if(src.open)
-				// ugly warning, the istype() is 1 when there's a trigger in the container\
-				//	it subtracts 1 from the list of contents when there's a trigger \
+				// ugly warning, the istype() is 1 when there's a trigger in the container
+				//	it subtracts 1 from the list of contents when there's a trigger
 				//	doing arithmatic on bools is probably not good!
 				var/has_trigger = istype(locate(/obj/item/mechanics/trigger/trigger) in src.contents,/obj/item/mechanics/trigger/trigger)
 				var/len_contents = src.contents.len - has_trigger
@@ -216,7 +216,7 @@
 		can_be_welded=true
 		can_be_anchored=true
 		slots=CABINET_CAPACITY // wew, dont use this in-hand or equipped!
-		name="Component Cabinet" // i tried to replace "23" below with "[CABINET_CAPACITY]", but byond \
+		name="Component Cabinet" // i tried to replace "23" below with "[CABINET_CAPACITY]", but byond
 									 // thinks it's not a constant and refuses to work with it.
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
@@ -251,8 +251,8 @@
 		slots=HANDHELD_CAPACITY + 1 // One slot used by the permanent button
 		name="Device Frame"
 		desc="A massively shrunken component cabinet fitted with a handle and an external\
-		 button. Due to the average mechanic's low arm strength, it only holds 6 components." // same as above\
-		 												if you change the capacity, remember to manually update this string
+		 button. Due to the average mechanic's low arm strength, it only holds 6 components." // same as above
+		 												//if you change the capacity, remember to manually update this string
 		w_class = 3.0 // fits in backpacks but not pockets. no quickdraw honk boxess
 		density=0
 		anchored=0
@@ -2413,16 +2413,27 @@
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, "[frequency]")
 		tooltip_rebuild = 1
-	proc/hear_radio(mob/M as mob, msg, lang_id)
+	proc/hear_radio(atom/movable/AM, msg, lang_id)
 		if (level == 2) return
 		LIGHT_UP_HOUSING
 		var/message = msg[2]
 		if (lang_id in list("english", ""))
 			message = msg[1]
 		message = strip_html(html_decode(message))
-		var/heardname = M.real_name
-		if (M.wear_mask && M.wear_mask.vchange)
-			heardname = M:wear_id ? M:wear_id:registered : "Unknown"
+		var/heardname = null
+		if (isobj(AM))
+			heardname = AM.name
+		else if (ismob(AM))
+			heardname = AM:real_name
+			if (ishuman(AM))
+				var/mob/living/carbon/human/H = AM
+				if (H.wear_mask && H.wear_mask.vchange)
+					if (istype(H.wear_id, /obj/item/card/id))
+						var/obj/item/card/id/ID = H.wear_id
+						heardname = ID.registered
+					else
+						heardname = "Unknown"
+
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"name=[heardname]&message=[message]")
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 		return

@@ -409,8 +409,11 @@ WET FLOOR SIGN
 
 /obj/item/sponge/New()
 	..()
-	src.create_reagents(50)
+	// We use this instead of create_reagents because sponges need a special reagent holder to grow in size
+	reagents = new/datum/reagents/sponge(50)
+	reagents.my_atom = src
 	processing_items |= src
+
 /obj/item/sponge/disposing()
 	processing_items -= src
 	..()

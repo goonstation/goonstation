@@ -218,6 +218,13 @@
 			name = "very harsh incandescent light bulb"
 			light_type = /obj/item/light/bulb/harsh/very
 
+	broken //Made at first to replace a decal in cog1's wreckage area
+		name = "shattered light bulb"
+
+		New()
+			..()
+			current_lamp.light_status = LIGHT_BROKEN
+
 	//The only difference between these small lights and others are that these automatically stick to walls! Wow!!
 	sticky
 		nostick = 0
@@ -256,6 +263,8 @@
 			very
 				name = "very harsh incandescent light bulb"
 				light_type = /obj/item/light/bulb/harsh/very
+
+
 
 //floor lights
 /obj/machinery/light/small/floor

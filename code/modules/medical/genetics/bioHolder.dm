@@ -16,17 +16,21 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 /datum/appearanceHolder
 	//Holds all the appearance information.
+	var/customization_first_color_carry = "#101010" //Holds someone's original colors if they need to be changed temporarily
 	var/customization_first_color = "#101010"
 	var/customization_first = "Trimmed"
 
+	var/customization_second_color_carry = "#101010" // This way, they can return to their orignal colors
 	var/customization_second_color = "#101010"
 	var/customization_second = "None"
 
+	var/customization_third_color_carry = "#101010"
 	var/customization_third_color = "#101010"
 	var/customization_third = "None"
 
 	var/e_color = "#101010"
 
+	var/s_tone_carry = "#FFCC99"
 	var/s_tone = "#FFCC99"
 	// Standard tone reference:
 	// FAD7D0 - Albino
@@ -83,18 +87,22 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/CopyOther(var/datum/appearanceHolder/toCopy)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
+		customization_first_color_carry = toCopy.customization_first_color_carry
 		customization_first_color = toCopy.customization_first_color
 		customization_first = toCopy.customization_first
 
+		customization_second_color_carry = toCopy.customization_second_color_carry
 		customization_second_color = toCopy.customization_second_color
 		customization_second = toCopy.customization_second
 
+		customization_third_color_carry = toCopy.customization_third_color_carry
 		customization_third_color = toCopy.customization_third_color
 		customization_third = toCopy.customization_third
 
 		e_color = toCopy.e_color
 
 		s_tone = toCopy.s_tone
+		s_tone_carry = toCopy.s_tone_carry
 
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color

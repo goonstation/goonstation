@@ -1254,7 +1254,6 @@
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
 		asign_name(M)
 
-		update_icon()
 		..()
 
 	disposing()
