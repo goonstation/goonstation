@@ -219,7 +219,7 @@
 
 //desert eagle. The biggest, baddest handgun
 /obj/item/gun/kinetic/deagle
-	name = "\improperDesert Eagle"
+	name = "\improper Desert Eagle"
 	desc = "The heaviest handgun you've ever seen. Is this legal?"
 	icon_state = "deag"
 	item_state = "deag"
