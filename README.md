@@ -31,6 +31,8 @@ Space Station 13 is a community developed, multiplayer round-based role playing 
 
 [Code Guide](https://hackmd.io/@ZeWaka/gooncode)
 
+[Code Documentation](https://docs.goonhub.com/)
+
 [Spriting Guidelines](https://hackmd.io/@ZeWaka/goonsprite)
 
 [Mapping Guidelines](https://hackmd.io/@ZeWaka/goonmap)
