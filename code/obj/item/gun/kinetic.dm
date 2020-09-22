@@ -242,18 +242,51 @@
 	small
 		icon_state = "small"
 		desc = "Seems to be a small pistol cartridge."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-small-0[rand(1,6)].ogg", 20, 0.1)
 
 	medium
 		icon_state = "medium"
 		desc = "Seems to be a common revolver cartridge."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
 
 	rifle
 		icon_state = "rifle"
 		desc = "Seems to be a rifle cartridge."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.8)
+
+
+	rifle_loud
+		icon_state = "rifle"
+		desc = "Seems to be a rifle cartridge."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 25, 0.1)
 
 	derringer
 		icon_state = "medium"
 		desc = "A fat and stumpy bullet casing. Looks pretty old."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
+
+	deagle
+		icon_state = "medium"
+		desc = "An uncomfortably large pistol cartridge."
+		New()
+			..()
+			SPAWN_DBG(rand(1, 3))
+				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.9)
 
 	shotgun_red
 		icon_state = "shotgun_red"
@@ -275,6 +308,10 @@
 		icon_state = "rifle"
 		desc = "A cannon shell."
 		w_class = 2
+		New()
+			..()
+			SPAWN_DBG(rand(2, 4))
+				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 35, 0.1, 0, 0.8)
 
 	grenade
 		w_class = 2
@@ -812,6 +849,13 @@
 		src.update_icon()
 		..()
 		return
+
+	update_icon()
+		..()
+		if (src.ammo.amount_left < 1)
+			src.item_state = "rpg7_empty"
+		else
+			src.item_state = "rpg7"
 
 	loaded
 		New()

@@ -266,6 +266,7 @@
 	implanted = /obj/item/implant/projectile/bullet_50
 	caliber = 0.50
 	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/deagle
 	shot_sound = 'sound/weapons/deagle.ogg'
 
 	//gimmick deagle ammo that decapitates
