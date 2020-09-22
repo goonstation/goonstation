@@ -779,7 +779,6 @@
 	if(!isnull(src.diskette))
 		data["diskReadOnly"] = src.diskette.read_only
 	data["allowMindErasure"] = src.allow_mind_erasure
-	data["mindWipeActive"] = src.mindwipe
 	data["clonesForCash"] = wagesystem.clones_for_cash
 	data["balance"] = src.held_credit
 
