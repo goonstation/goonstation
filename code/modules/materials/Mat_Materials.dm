@@ -7,7 +7,7 @@
 		owner = D
 		procname = name
 
-///
+
 /**
 	* # material
 	* Base material datum definition
