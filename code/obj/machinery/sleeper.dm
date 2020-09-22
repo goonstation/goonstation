@@ -682,6 +682,7 @@
 	mats = 30
 	p_class = 1.2
 	var/homeloc = null
+	//Mailgroups it'll try to send PDA notifications to
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
 	New()
@@ -745,7 +746,8 @@
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
-/obj/machinery/sleeper/port_a_medbay/proc/PDA_alert_check() //Yell at doctors to check the thing when it's sent home
+//Yells at doctors to check the thing when it's sent home
+/obj/machinery/sleeper/port_a_medbay/proc/PDA_alert_check()
 	if (src.loc != homeloc)
 		return
 	if (!occupant)
