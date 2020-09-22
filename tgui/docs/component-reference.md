@@ -523,7 +523,7 @@ Example:
 ```jsx
 <HealthStat
   type="DamageType"
-  content=content />
+  content="content" />
 ```
 
 ### `Icon`
