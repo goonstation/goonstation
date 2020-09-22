@@ -92,10 +92,10 @@
 					<br>
 					<br><a href="javascript:goBYOND('action=list');">List Records</a>
 					<br>
-					<br><a href="javascript:goBYOND('action=search_f');">Search Fingerprints</a>
+					<br><a href="javascript:goBYOND('action=search_fingerprint');">Search Fingerprints</a>
 					<br>
 					<br>
-					<br><a href="javascript:goBYOND('action=rec_m');">Record Maintenance</a>
+					<br><a href="javascript:goBYOND('action=record_maintenance');">Record Maintenance</a>
 					<br>
 					<br><a href="javascript:goBYOND('action=logout');">Log Out</a>
 					<br>
@@ -120,7 +120,7 @@
 					<hr>
 					<br><a href="javascript:goBYOND('action=new_r');">New Record</a>
 					<br>
-					<br><a href="javascript:doPopup('del_all2', 'Really delete ALL security records?');">Delete All Records</a>
+					<br><a href="javascript:doPopup('del_all_records', 'Really delete ALL security records?');">Delete All Records</a>
 					<br>
 					<br><a href="javascript:goBYOND('action=main');">Back</a>
 					"}
@@ -183,15 +183,15 @@
 						while (src.active_record_security.fields["com_[counter]"])
 							dat += {"
 								[src.active_record_security.fields["com_[counter]"]]
-								<br><a href="javascript:doPopup('del_c;comment=[counter]', 'Delete this entry?');">Delete Entry</a>
+								<br><a href="javascript:doPopup('del_comment;comment=[counter]', 'Delete this entry?');">Delete Entry</a>
 								<br>
 								<br>"}
 								counter++
 
 						dat += {"
-							<a href="javascript:goBYOND('action=add_c');">Add Entry</a>
+							<a href="javascript:goBYOND('action=add_comment');">Add Entry</a>
 							<br>
-							<br><a href="javascript:doPopup('del_r2', 'Delete security record?');">Delete Security Record</a>
+							<br><a href="javascript:doPopup('del_security_record', 'Delete security record?');">Delete Security Record</a>
 							<br>
 							<br>
 							"}
@@ -203,10 +203,10 @@
 							<br>
 							"}
 					dat += {"
-						<br><a href="javascript:doPopup('dela_r2', 'Delete entire record?');">Delete Entire Record</a>
+						<br><a href="javascript:doPopup('del_full_record', 'Delete full record?');">Delete Full Record</a>
 						<br>
 						<br>
-						<br><a href="javascript:goBYOND('action=print_p');">Print Record</a>
+						<br><a href="javascript:goBYOND('action=print_record');">Print Record</a>
 						<br>
 						<br><a href="javascript:goBYOND('action=list');">Back</a>
 						<br>
@@ -353,12 +353,12 @@
 				src.active_record_general = null
 				src.active_record_security = null
 
-			if ("rec_m")
+			if ("record_maintenance")
 				src.screen = SECREC_MANAGE_RECORDS
 				src.active_record_general = null
 				src.active_record_security = null
 
-			if ("del_all2")
+			if ("del_all_records")
 				if (href_list["answer"] == "yes")
 					for (var/datum/data/record/R in data_core.security)
 						data_core.security -= R
@@ -557,32 +557,33 @@
 							src.active_record_security.fields["criminal"] = "Released"
 					src.temp = null
 
-			if ("del_r2")
+			if ("del_security_record")
 				if (href_list["answer"] == "yes" && src.active_record_security)
-					//src.active_record_security = null
 					data_core.security -= src.active_record_security
 					qdel(src.active_record_security)
+					src.active_record_security = null
 					src.temp = "Security record deleted."
 				else
 					src.temp = null
 
-			if ("dela_r2")
+			if ("del_full_record")
 				if (href_list["answer"] == "yes")
 					for (var/datum/data/record/R in data_core.medical)
 						if ((R.fields["name"] == src.active_record_general.fields["name"] || R.fields["id"] == src.active_record_general.fields["id"]))
-							//R = null
 							data_core.medical -= R
 							qdel(R)
 					if (src.active_record_security)
-						//src.active_record_security = null
 						data_core.security -= src.active_record_security
 						qdel(src.active_record_security)
 					if (src.active_record_general)
-						//src.active_record_general = null
 						data_core.general -= src.active_record_general
 						qdel(src.active_record_general)
 
+					src.active_record_general = null
+					src.active_record_security = null
+					src.screen = SECREC_LIST_RECORDS
 					src.temp = "Record deleted."
+
 				else
 					src.temp = null
 
@@ -629,7 +630,7 @@
 					src.active_record_security = R
 					src.screen = SECREC_VIEW_RECORD
 
-			if ("add_c")
+			if ("add_comment")
 				if (!src.active_record_security)
 					return
 				var/current_security = src.active_record_security
@@ -644,11 +645,11 @@
 						<br>[t1]
 						"}
 
-			if ("del_c")
+			if ("del_comment")
 				if (src.active_record_security && src.active_record_security.fields["com_[href_list["comment"]]"])
 					src.active_record_security.fields["com_[href_list["comment"]]"] = "<b>Deleted</b>"
 
-			if ("search_f")
+			if ("search_fingerprint")
 				var/t1 = input("Search String: (Fingerprint)", "Security Records", null, null) as text
 				t1 = adminscrub(t1)
 				if (!t1 || src.validate_can_still_use(null, null, usr))
@@ -686,7 +687,7 @@
 							src.active_record_security = E
 					src.screen = SECREC_VIEW_RECORD
 
-			if ("print_p")
+			if ("print_record")
 				if (!( src.printing ))
 					src.printing = 1
 					sleep(5 SECONDS)
