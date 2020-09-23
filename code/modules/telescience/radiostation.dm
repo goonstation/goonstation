@@ -614,7 +614,7 @@
 	name_of_thing = "some shitty movie"
 
 /obj/item/radio_tape/advertisement/pope_crunch
-	name = "compact tape - Pope Crunch"
+	name = "compact tape - 'Pope Crunch'"
 	audio = "sound/radio_station/pope_crunch_cereal.ogg"
 	name_of_thing = "Pope Crunch Cereal"
 	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
