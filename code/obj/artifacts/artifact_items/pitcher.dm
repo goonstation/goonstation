@@ -33,8 +33,8 @@
 			reagents.add_reagent("super_hairgrownium", 20)
 		if(prob(5))
 			reagents.add_reagent("unstable_omega_hairgrownium", 10)
-		if(prob(5)
-			reagents.add_reagent("stable_omega_hairgrownium"), 10)
+		if(prob(5))
+			reagents.add_reagent("stable_omega_hairgrownium", 10)
 		if(prob(7))
 			reagents.add_reagent("reversium", 15)
 		if (prob(12))
@@ -117,7 +117,6 @@
 			reagents.add_reagent("bee", 10)
 		if(prob(15))
 			reagents.add_reagent("port", 30)
-		//Reagent IDs might be wrong for these two
 		if(prob(7))
 			reagents.add_reagent("bombini", 15)
 		if(prob(3))
