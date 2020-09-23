@@ -140,3 +140,14 @@ export const formatTime = (time, msg = "") => {
 export const truncate = (str, n = 25) => {
   return (str.length > n) ? str.substr(0, n-1) + '…' : str;
 };
+
+/**
+ * Converts numbers to a shorter format to save space
+ */
+const Suffixes = ["", "k", "M", "B", "T"];
+// Can be extended infinitely
+export const shortenNumber = (value, decimals = 0) => {
+  let tier = Math.log10(Math.abs(value)) / 3 | 0;
+  if (tier === 0) return value;
+  return (value / Math.pow(10, tier * 3)).toFixed(decimals) + Suffixes[tier];
+};

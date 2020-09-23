@@ -7,10 +7,12 @@
 
 import { Fragment } from "inferno";
 import { useBackend, useSharedState, useLocalState } from "../backend";
-import { truncate } from "../format.js";
+import { truncate, shortenNumber } from "../format.js";
 import { Box, Button, ColorBox, Section, Table, Tabs, ProgressBar, NoticeBox, LabeledList, Tooltip, Flex, Modal, Icon, HealthStat } from "../components";
 import { Window } from "../layouts";
 import { clamp } from 'common/math';
+
+
 
 const healthColorByLevel = [
   "#17d568",
@@ -20,6 +22,8 @@ const healthColorByLevel = [
   "#e74c3c",
   "#ed2814",
 ];
+
+
 
 const healthToColor = (oxy, tox, burn, brute) => {
   const healthSum = oxy + tox + burn + brute;
@@ -353,7 +357,7 @@ const Records = (props, context) => {
                 Name
               </Flex.Item>
               <Flex.Item className="Cloning-Console_HeadRow_Item"
-                width={10.5}>
+                width={11.5}>
                 Damage
               </Flex.Item>
               <Flex.Item className="Cloning-Console_HeadRow_Item"
@@ -385,8 +389,9 @@ const Records = (props, context) => {
                 </Flex.Item>
                 <Flex.Item
                   className="Cloning-Console_BodyRow_Item"
-                  width={10.5}>
+                  width={11.5}>
                   <ColorBox
+                    mr={1}
                     color={healthToColor(
                       record.health.OXY,
                       record.health.TOX,
@@ -395,16 +400,16 @@ const Records = (props, context) => {
                   {record.implant ? (
                     <Box inline>
                       <HealthStat inline align="center" type="oxy" width={2}
-                        content={record.health.OXY} />
+                        content={shortenNumber(record.health.OXY)} />
                       {"/"}
                       <HealthStat inline align="center" type="toxin" width={2}
-                        content={record.health.TOX} />
+                        content={shortenNumber(record.health.TOX)} />
                       {"/"}
                       <HealthStat inline align="center" type="burn" width={2}
-                        content={record.health.BURN} />
+                        content={shortenNumber(record.health.BURN)} />
                       {"/"}
                       <HealthStat inline align="center" type="brute" width={2}
-                        content={record.health.BRUTE} />
+                        content={shortenNumber(record.health.BRUTE)} />
                     </Box>
                   ) : (
                     "No Implant Detected"
