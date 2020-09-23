@@ -149,5 +149,5 @@ const Suffixes = ["", "k", "M", "B", "T"];
 export const shortenNumber = (value, decimals = 0) => {
   let tier = Math.log10(Math.abs(value)) / 3 | 0;
   if (tier === 0) return value;
-  return (value / Math.pow(10, tier * 3)).toFixed(decimals) + Suffixes[tier];
+  return `(value / Math.pow(10, tier * 3)).toFixed(decimals):${Suffixes[tier]}`;
 };
