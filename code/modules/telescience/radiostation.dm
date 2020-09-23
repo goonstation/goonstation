@@ -618,7 +618,7 @@
 	audio = "sound/radio_station/pope_crunch_cereal.ogg"
 	name_of_thing = "Pope Crunch Cereal"
 	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
-	The music is Smooth Talker by Apoxode licensed under Creative Commons Attribution (3.0)"}
+	The music is Smooth Talker by Apoxode (CC BY 3.0)"}
 
 /obj/item/radio_tape/audio_book
 	audio_type = "Audio book"
