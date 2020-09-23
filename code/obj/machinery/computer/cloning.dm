@@ -790,8 +790,6 @@
 		var/currentHealth = ""
 		if ((H) && (istype(H)))
 			currentHealth = H.getHealthList()
-		else
-			currentHealth = H.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
 				saved = (F.fields["ckey"] == r["fields"]["ckey"]) ? true : false

@@ -68,8 +68,8 @@ export const CloningConsole = (props, context) => {
     <Window
       theme={cloneSlave ? "syndicate" : "ntos"}
       width={550}
-      height={550}>
-      <Window.Content scrollable>
+      height={580}>
+      <Window.Content>
         {(deletionTarget && (
           <Modal
             mx={7}
@@ -341,92 +341,116 @@ const Records = (props, context) => {
     setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
 
   return (
-    <Section title="Records">
-      <Table>
-        <Table.Row>
-          <Table.Cell bold collapsing textAlign="center">
-            Name
-          </Table.Cell>
-          <Table.Cell collapsing />
-          <Table.Cell bold textAlign="center">
-            Damage
-          </Table.Cell>
-          <Table.Cell bold textAlign="center">
-            Actions
-          </Table.Cell>
-        </Table.Row>
-        {records.map(record => (
-          <Table.Row key={record.id}>
-            <Table.Cell collapsing textAlign="center">
-              <Box
-                position="relative">
-                {truncate(record.name.toLowerCase(), 16)}
-                {/* shorten down that name so it doesn't break the damn gui */}
-                {record.name.length > 16 && (
-                  <Tooltip
-                    overrideLong
-                    position="right"
-                    content={truncate(record.name.toLowerCase(), 39)} />
-                /* if you have a name over 39 chars it'll not show*/
-                )}
-              </Box>
-            </Table.Cell>
-            <Table.Cell collapsing textAlign="center" px={-5}>
-              <ColorBox
-                mx={1}
-                color={healthToColor(
-                  record.health.OXY,
-                  record.health.TOX,
-                  record.health.BURN,
-                  record.health.BRUTE)} />
-            </Table.Cell>
-            <Table.Cell collapsing textAlign="center">
-              {record.implant ? (
-                <Box inline>
-                  <HealthStat inline type="oxy" width={2} content={record.health.OXY} />
-                  {"/"}
-                  <HealthStat inline type="toxin" width={2} content={record.health.TOX} />
-                  {"/"}
-                  <HealthStat inline type="burn" width={2} content={record.health.BURN} />
-                  {"/"}
-                  <HealthStat inline type="brute" width={2} content={record.health.BRUTE} />
-                </Box>
-              ) : (
-                "No Implant Detected"
-              )}
-            </Table.Cell>
-            <Table.Cell textAlign="center">
-              <Button
-                icon="trash"
-                mt={1.2}
-                color={"bad"}
-                onClick={() =>
-                { setDeletionTarget(record.ckey);
-                }}>
-                Delete
-              </Button>
-              {(!!disk && (
-                <Button
-                  icon="save"
-                  mt={1.2}
-                  color={"blue"}
-                  disabled={record.saved || diskReadOnly}
-                  onClick={() => act("saveToDisk", { ckey: record.ckey })}>
-                  {record.saved ? (diskReadOnly ? "Read Only" : "Saved") : (diskReadOnly ? "Read Only" : "Save")}
-                </Button>
-              ))}
-              <Button
-                icon="dna"
-                mt={1.2}
-                color={"good"}
-                disabled={podGone}
-                onClick={() => act("clone", { ckey: record.ckey })}>
-                Clone
-              </Button>
-            </Table.Cell>
-          </Table.Row>
-        ))}
-      </Table>
+    <Section title="Records" scrollable>
+      <Flex>
+
+        <Flex.Item className="Cloning-Console_FlexTable">
+
+          <Flex.Item className="Cloning-Console_FlexHead">
+            <Flex.Item className="Cloning-Console_HeadRow">
+              <Flex.Item className="Cloning-Console_HeadRow_Item"
+                width={14.5}>
+                Name
+              </Flex.Item>
+              <Flex.Item className="Cloning-Console_HeadRow_Item"
+                width={10.5}>
+                Damage
+              </Flex.Item>
+              <Flex.Item className="Cloning-Console_HeadRow_Item"
+                width={16}>
+                Actions
+              </Flex.Item>
+            </Flex.Item>
+          </Flex.Item>
+
+          <Flex.Item className="Cloning-Console_Body">
+            {records.map(record => (
+              <Flex.Item key={record.id} className="Cloning-Console_BodyRow">
+                <Flex.Item className="Cloning-Console_BodyRow_Item"
+                  width={14.5}>
+                  <Box
+                    align="center"
+                    position="relative">
+                    {truncate(record.name, 20)}
+                    {/* shorten down that name so it
+                    doesn't break the damn gui */}
+                    {record.name.length > 16 && (
+                      <Tooltip
+                        overrideLong
+                        position="right"
+                        content={truncate(record.name.toLowerCase(), 39)} />
+                    /* if you have a name over 39 chars it'll not show*/
+                    )}
+                  </Box>
+                </Flex.Item>
+                <Flex.Item
+                  className="Cloning-Console_BodyRow_Item"
+                  width={10.5}>
+                  <ColorBox
+                    color={healthToColor(
+                      record.health.OXY,
+                      record.health.TOX,
+                      record.health.BURN,
+                      record.health.BRUTE)} />
+                  {record.implant ? (
+                    <Box inline>
+                      <HealthStat inline align="center" type="oxy" width={2}
+                        content={record.health.OXY} />
+                      {"/"}
+                      <HealthStat inline align="center" type="toxin" width={2}
+                        content={record.health.TOX} />
+                      {"/"}
+                      <HealthStat inline align="center" type="burn" width={2}
+                        content={record.health.BURN} />
+                      {"/"}
+                      <HealthStat inline align="center" type="brute" width={2}
+                        content={record.health.BRUTE} />
+                    </Box>
+                  ) : (
+                    "No Implant Detected"
+                  )}
+                </Flex.Item>
+                <Flex.Item className="Cloning-Console_BodyRow_Item"
+                  width={16}>
+                  <Box inline
+                    style={{
+                      position: 'relative', left: '50%', top: '50%',
+                      transform: 'translate(-50%, -10%)',
+                    }}>
+                    <Button
+                      icon="trash"
+                      mt={1.2}
+                      color={"bad"}
+                      onClick={() =>
+                      { setDeletionTarget(record.ckey);
+                      }}>
+                      Delete
+                    </Button>
+                    {(!!disk && (
+                      <Button
+                        icon="save"
+                        mt={1.2}
+                        color={"blue"}
+                        disabled={record.saved || diskReadOnly}
+                        onClick={() => act("saveToDisk", { ckey: record.ckey })}>
+                        {record.saved ? (diskReadOnly ? "Read Only" : "Saved") : (diskReadOnly ? "Read Only" : "Save")}
+                      </Button>
+                    ))}
+                    <Button
+                      icon="dna"
+                      mt={1.2}
+                      color={"good"}
+                      disabled={podGone}
+                      onClick={() => act("clone", { ckey: record.ckey })}>
+                      Clone
+                    </Button>
+                  </Box>
+                </Flex.Item>
+              </Flex.Item>
+            ))}
+          </Flex.Item>
+        </Flex.Item>
+      </Flex>
     </Section>
   );
 };
