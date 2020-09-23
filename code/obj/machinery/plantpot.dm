@@ -455,7 +455,7 @@
 
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			// These allow you to unanchor the plantpots to move them around, or re-anchor them.
-			if(src.anchored == 1)
+			if(src.anchored)
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor.")
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
 				src.anchored = 0

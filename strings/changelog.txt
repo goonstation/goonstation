@@ -1,5 +1,23 @@
 
+(t)wed sep 23 20
+(u)kyle
+(p)2232
+(e)🆕|feature
+(*)Solar Flares block all general radio frequencies from and to headsets. Secure/department radios now work through the solar flare though to compensate. Station bounced radios can send and receive radio signals through the flare.
 (t)tue sep 22 20
+(u)makkipakki and (u)Adharainspace
+(p)2197
+(e)🐛|bug
+(+)NTSOs can no longer be sleeper agents, and the way the sleeper agent event chooses who is ineligible is now decided by whether the job can roll traitor, rather than a list of specific jobs.
+(+)Added security training to NTSOs of both flavors
+(u)Flourish
+(p)2160
+(e)⚖🆕|balance, feature
+(+)You will now need medical locker access to unlock cloning pods.
+(u)UrsulaMejor
+(p)2244
+(e)|
+(+)Clock 180s at QM now spawn unloaded
 (u)BatElite
 (p)2235
 (e)🆕|feature
