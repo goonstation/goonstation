@@ -16,7 +16,6 @@
 "ap" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "wall3dir"},/area)
 "aq" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "wall3dir"},/area)
 "ar" = (/turf/simulated/floor/circuit/red,/area)
-"as" = (/obj/item/radio_tape/advertisement/pope_crunch,/turf/simulated/wall/auto/supernorn,/area)
 "at" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "wall3dir"},/area)
 "au" = (/obj/machinery/vending/snack,/turf/simulated/floor/black,/area)
 "av" = (/obj/decal/tile_edge/line/grey{dir = 4; icon_state = "line-broken1"},/obj/reagent_dispensers/watertank/fountain,/turf/simulated/floor/black,/area)
@@ -48,7 +47,6 @@
 "aV" = (/obj/lattice{icon_state = "lattice-dir"},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/space,/area)
 "aW" = (/turf/simulated/shuttle/wall{dir = 5; icon_state = "wall3dir"},/area)
 "aX" = (/obj/machinery/weapon_stand/taser_rack/recharger,/turf/simulated/floor/black,/area)
-"aY" = (/obj/item/radio_tape/advertisement/pope_crunch,/turf/simulated/floor,/area)
 "aZ" = (/obj/indestructible/shuttle_corner,/turf/space,/area)
 "ba" = (/obj/decal/tile_edge/line/grey{dir = 8; icon_state = "line-broken1"},/turf/simulated/floor/shuttle{icon_state = "floor4"},/area)
 "bb" = (/obj/decal/tile_edge/line/grey{dir = 4; icon_state = "line-broken1"},/turf/simulated/floor/shuttle{icon_state = "floor4"},/area)
@@ -1491,7 +1489,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacQchdCchbZchdDch
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacodHczcpcodIdedIcoaaaaaaaaaaaaaaaaaabWcDbRaaaabQdJdKbQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahbgOgOgOgOjohAjpjqjrjmjshAjogOgOgOgOhbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacodHczcAcodIdedIcoaaaaaaaaaaaaaaaaaZchcgcfdNcddOcEcEcacdcdbZbRaaaaaaaaaaaaaaaaaaaaaajujvjwjxhAjyhAjzjAjBjmjChAjDhAjEjFjGjHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacodHczcpcodIdedIcoaaaaaaaaaaaaaabWdTdHdUcocKcKcKcncncKcKcKcLcfcxbRaaaaaaaaaaaaaaaaaajIjvjJjKjLikhAjMjNjOjmjPhAiLjLjQjRjSjTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabUdQdRdScRdQdRdSbVaaaaaaaaaaaaaabWdWcAczcycncncncncncKcKcKcKcxdqcvbRaaaaaaaaaaaaaaaajUjvjVjWhAikhAhAhAhAjXhAasaYhAjYjZjvkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabUdQdRdScRdQdRdSbVaaaaaaaaaaaaaabWdWcAczcycncncncncncKcKcKcKcxdqcvbRaaaaaaaaaaaaaaaajUjvjVjWhAikhAhAhAhAjXhAhAikhAjYjZjvkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalglglgaalglglgaaaaaaaaaaaaaaaabWdXdHdUcocKcKcIcncncncKcKcKcoduducobOaaaaaaaaaaaaaakbgOgOhAkckdgOgOkekfkggOgOkhkihAgOgOkjaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacDchchcTcKcKcdcncncncncncndYcGdZcobXaaaaaaaaaaaaaayGyAklkmikknkogOkpkqkrgOksiQiQiQklsnrCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabWdTdAdAcocKcKcRcncncncKcKcKcoduducobOaaaaaaaaaaaaaazraagOkwhAkxkygOkzkAkzgOkBkChAkDgOaazraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
