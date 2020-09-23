@@ -7,11 +7,11 @@
 	mat_changename = 0
 	can_recycle = 0
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/pitcher/AS = new /datum/artifact/pitcher(src)
-		if (forceartitype)
-			AS.validtypes = list("[forceartitype]")
+		if (forceartiorigin)
+			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 		SPAWN_DBG(0)
 			src.ArtifactSetup()
