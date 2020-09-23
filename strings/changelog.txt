@@ -1,5 +1,10 @@
 
 (t)tue sep 22 20
+(u)makkipakki and (u)Adharainspace
+(p)2197
+(e)🐛|bug
+(+)NTSOs can no longer be sleeper agents, and the way the sleeper agent event chooses who is ineligible is now decided by whether the job can roll traitor, rather than a list of specific jobs.
+(+)Added security training to NTSOs of both flavors
 (u)Flourish
 (p)2160
 (e)⚖🆕|balance, feature
