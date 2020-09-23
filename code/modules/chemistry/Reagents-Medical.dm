@@ -20,11 +20,25 @@ datum
 			depletion_rate = 0.2
 			value = 3
 
+			on_add()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_REBREATHING, src.type)
+				return
+
+			on_remove()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_REBREATHING, src.type)
+				return
+
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.take_toxin_damage(1 * mult)
 				..()
 				return
+
 
 		medical/spaceacillin
 			name = "spaceacillin"

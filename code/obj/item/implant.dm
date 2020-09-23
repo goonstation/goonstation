@@ -818,6 +818,9 @@ THROWING DARTS
 		desc = "Rather unperfect round ball. Looks very old."
 		icon_state = "flintlockbullet"
 
+	bullet_50
+		name = ".50AE round"
+		desc = "Ouch."
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.

@@ -59,6 +59,7 @@
 	name = "Nano-fabricator (Protoype)"
 	color = "#496ba3"
 
+/// Material science fabricator
 /obj/machinery/nanofab
 	name = "Nano-fabricator"
 	desc = "'Nano' means it's high-tech stuff."
@@ -70,10 +71,12 @@
 	flags = NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
-	var/outputInternal = 0 //Produced objects are fed back into the fabricator.
+	/// Produced objects are fed back into the fabricator.
+	var/outputInternal = 0
 
 	var/list/queue = list()
-	var/tab = "recipes" //recipes,storage,selected,part
+	/// recipes,storage,selected,part
+	var/tab = "recipes"
 
 	var/datum/matfab_recipe/selectedRecipe = null
 	var/list/recipes = list()

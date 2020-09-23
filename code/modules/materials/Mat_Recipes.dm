@@ -1,16 +1,24 @@
+/// material recipie definition
 /datum/material_recipe
 	var/name = ""
-	var/result_id = null //Id of the result material. used as fallback or when you do not want to use a result item.
-	var/result_item = null //Path of the resulting material item.
+	/// ID of the result material. used as fallback or when you do not want to use a result item.
+	var/result_id = null
+	/// Path of the resulting material item.
+	var/result_item = null
 
-	//This checks if the recipe applies to the given result material.
-	//This is a proc so you can do practically anything for recipes.
-	//Want a recipe that only applies to wool + erebite composites and only if they have a high temperature resistance? You can.
-	//Try to keep these cheap if you can.
+	/**
+		* This checks if the recipe applies to the given result material.
+		*
+		* This is a proc so you can do practically anything for recipes.
+		*
+		* Want a recipe that only applies to wool + erebite composites and only if they have a high temperature resistance? You can.
+		*
+		* Try to keep these cheap if you can.
+		*/
 	proc/validate(var/datum/material/M)
 		return null
 
-	//If no result id or result items are defined, this proc will be executed on the material. Do this if you want a recipe to just modifiy a material.
+	/// If no result id or result items are defined, this proc will be executed on the material. Do this if you want a recipe to just modifiy a material.
 	proc/apply_to(var/datum/material/M)
 		return M
 

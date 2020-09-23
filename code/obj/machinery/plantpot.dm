@@ -455,7 +455,7 @@
 
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			// These allow you to unanchor the plantpots to move them around, or re-anchor them.
-			if(src.anchored == 1)
+			if(src.anchored)
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor.")
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
 				src.anchored = 0
@@ -1261,7 +1261,7 @@
 				harvest_string += " and [seedcount] seed"
 				if (seedcount > 1)
 					harvest_string += "s"
-			boutput(user, "<span class='notice'>[harvest_string.Join()]</span>")
+			boutput(user, "<span class='notice'>[harvest_string.Join()].</span>")
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))

@@ -9,7 +9,7 @@
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
-	req_access = list(access_heads) //Only used for record deletion right now.
+	req_access = list(access_medical_lockers) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
@@ -476,6 +476,7 @@
 			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
+		src?.connected.updateUsrDialog()
 
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 
@@ -689,7 +690,7 @@
 				clone_record(find_record(ckey))
 				. = TRUE
 		if("toggleGeneticAnalysis")
-			if(pod1 && !pod1.operating)
+			if(pod1 && !pod1.attempting)
 				pod1.gen_analysis = !pod1.gen_analysis
 				. = TRUE
 			else
@@ -749,7 +750,7 @@
 					src.scanner.locked = 0
 					. = TRUE
 		if("mindWipeToggle")
-			if(!pod1.operating && src.allow_mind_erasure)
+			if(!pod1.attempting && src.allow_mind_erasure)
 				pod1.mindwipe = !pod1.mindwipe
 				. = TRUE
 			else

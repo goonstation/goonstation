@@ -1,3 +1,4 @@
+/// Base item. These are objects you can hold, generally.
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
@@ -6,8 +7,9 @@
 	var/uses_multiple_icon_states = 0
 	var/force = null
 	var/item_state = null
-	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
-	throwforce = 1//4
+	/// for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
+	var/hit_type = DAMAGE_BLUNT
+	throwforce = 1
 	var/r_speed = 1.0
 	var/health = 4 // burn faster
 	var/burn_point = 15000  // this already exists but nothing uses it???
@@ -15,15 +17,21 @@
 	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
 
 	var/burn_output = 1500 //how hot should it burn
-	var/burn_type = 0 // 0 = ash, 1 = melt
+	/// 0 = ash, 1 = melt
+	var/burn_type = 0
 	var/burning = null
 	var/burning_last_process = 0
 	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-	var/w_class = 3.0 // how big they are, determines if they can fit in backpacks and pockets and the like
-	p_class = 1.5 // how hard they are to pull around, determines how much something slows you down while pulling it
-	var/cant_self_remove = 0 //Can't remove from non-hand slots
-	var/cant_other_remove = 0 //Can't be removed from non-hand slots by others
-	var/cant_drop = 0 //Cant' be removed in general. I guess.
+	/// how big they are, determines if they can fit in backpacks and pockets and the like
+	var/w_class = 3.0
+	/// how hard they are to pull around, determines how much something slows you down while pulling it
+	p_class = 1.5
+	/// Can't remove from non-hand slots
+	var/cant_self_remove = 0
+	/// Can't be removed from non-hand slots by others
+	var/cant_other_remove = 0
+	/// Cant' be removed in general. I guess.
+	var/cant_drop = 0
 
 	flags = FPRINT | TABLEPASS
 	var/tool_flags = 0
@@ -36,8 +44,10 @@
 	var/obj/item/master = null
 	var/amount = 1
 	var/max_stack = 1
-	var/stack_type = null // if null, only current type. otherwise uses this
-	var/contraband = 0 //If nonzero, bots consider this a thing people shouldn't be carrying without authorization
+	/// if null, only current type. otherwise uses this
+	var/stack_type = null
+	/// If nonzero, bots consider this a thing people shouldn't be carrying without authorization
+	var/contraband = 0
 	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
 						//If 2, play the attack animation but hide the attack particles.
 
@@ -63,17 +73,21 @@
 	var/module_research_type = null
 	var/module_research_no_diminish = 0
 
-	var/edible = 0 // can you eat the thing?
+	/// can you eat the thing?
+	var/edible = 0
 
-	var/duration_put    = -1 //If set to something other than -1 these will control
-	var/duration_remove = -1 //how long it takes to remove or put the item onto a person. 1/10ths of a second.
+	var/duration_put    = -1 // If set to something other than -1 these will control
+	var/duration_remove = -1 // how long it takes to remove or put the item onto a person. 1/10ths of a second.
 
 	var/rand_pos = 0
-	var/useInnerItem = 0 //Should this item use a contained item (in contents) to attack with instead?
+	/// Should this item use a contained item (in contents) to attack with instead?
+	var/useInnerItem = 0
 	var/obj/item/holding = null
 
-	var/two_handed = 0 //Requires both hands. Do not change while equipped. Use proc for that (TBI)
-	var/click_delay = DEFAULT_CLICK_DELAY //Delay before next click after using this.
+	/// Requires both hands. Do not change while equipped. Use proc for that (TBI)
+	var/two_handed = 0
+	///Delay before next click after using this.
+	var/click_delay = DEFAULT_CLICK_DELAY
 	var/combat_click_delay = COMBAT_CLICK_DELAY
 
 	var/showTooltip = 1
@@ -85,9 +99,11 @@
 	var/tmp/lastTooltipUser = null
 	var/tmp/lastTooltipSpectro = null
 	var/tmp/tooltip_rebuild = 1
-	var/rarity = ITEM_RARITY_COMMON //Just a little thing to indicate item rarity. RPG fluff.
+	/// Just a little thing to indicate item rarity. RPG fluff.
+	var/rarity = ITEM_RARITY_COMMON
 
-	var/datum/item_special/special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
+	/// Contains the datum which executes the items special, if it has one, when used beyond melee range.
+	var/datum/item_special/special = null
 
 	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
 
@@ -102,11 +118,12 @@
 
 	var/block_vision = 0 //cannot see when worn
 
-	// Inventory count display. Call create_inventory_counter in New()
+	/// Inventory count display. Call create_inventory_counter in New()
 	var/inventory_counter_enabled = 0
 	var/obj/overlay/inventory_counter/inventory_counter = null
 
-	proc/setTwoHanded(var/twohanded = 1) //This is the safe way of changing 2-handed-ness at runtime. Use this please.
+	/// This is the safe way of changing 2-handed-ness at runtime. Use this please.
+	proc/setTwoHanded(var/twohanded = 1)
 		if(ismob(src.loc))
 			var/mob/L = src.loc
 			return L.updateTwoHanded(src, twohanded)
