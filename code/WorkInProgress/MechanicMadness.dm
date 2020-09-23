@@ -978,6 +978,7 @@
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
 
+/// Tesla Coil mechanics component - zaps people
 /obj/item/mechanics/zapper
 	name = "Tesla Coil"
 	desc = ""
