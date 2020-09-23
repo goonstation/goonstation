@@ -1,4 +1,9 @@
 
+(t)wed sep 23 20
+(u)kyle
+(p)2232
+(e)🆕|feature
+(*)Solar Flares block all general radio frequencies from and to headsets. Secure/department radios now work through the solar flare though to compensate. Station bounced radios can send and receive radio signals through the flare.
 (t)tue sep 22 20
 (u)makkipakki and (u)Adharainspace
 (p)2197
