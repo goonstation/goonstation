@@ -617,7 +617,8 @@
 				return
 
 		if(istype(W, /obj/item/wizard_crystal) && components.len < 2 && !W.material)
-			W.setMaterial(W:assoc_material, appearance = 0, setname = 0)
+			var/obj/item/wizard_crystal/wc = W
+			wc.setMaterial(getMaterial(wc.assoc_material), appearance = 0, setname = 0)
 
 		if(W.material != null)
 			if(!W.material.canMix)
