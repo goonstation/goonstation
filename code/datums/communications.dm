@@ -134,17 +134,6 @@ datum/radio_frequency
 				reusable_signals |= signal
 			LAGCHECK(LAG_MED)
 
-		// check_for_jammer(obj/source)
-		// 	.= 0
-		// 	if (prob(signal_loss))
-		// 		.= 1
-		// 	else
-		// 		if (radio_controller.active_jammers.len)
-		// 			for (var/atom in radio_controller.active_jammers) // Can be a mob or obj.
-		// 				var/atom/A = atom
-		// 				if (A && get_dist(get_turf(source), get_turf(A)) <= 6)
-		// 					return 1
-
 		//assumes that list radio_controller.active_jammers is not null or empty.
 		check_for_jammer(obj/source)
 			.= 0
