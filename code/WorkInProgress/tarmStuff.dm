@@ -173,18 +173,21 @@
 		return round(E.cell.charge * E.current_projectile.cost)
 	else return G.canshoot() * INFINITY //idk, just let it happen
 
-/obj/item/gun/kinetic/pistol/gyrojet //awaiting sprites!
+/obj/item/gun/kinetic/gyrojet
 	name = "gyrojet pistol"
 	desc = "A semi-automatic pistol that fires rocket-propelled bullets"
+	icon_state = "gyrojet"
+	item_state = "gyrojet"
 	caliber = 0.512
 	max_ammo_capacity = 6
+	has_empty_state = 1
 
 	New()
-		. = ..()
 		ammo = new/obj/item/ammo/bullets/gyrojet
 		current_projectile = new/datum/projectile/bullet/gyrojet
+		. = ..()
 
-obj/item/ammo/bullets/gyrojet
+/obj/item/ammo/bullets/gyrojet
 	sname = "13mm Gyrojet"
 	name = "gyrojet magazine"
 	icon_state = "pistol_magazine"
@@ -194,13 +197,16 @@ obj/item/ammo/bullets/gyrojet
 	caliber = 0.512
 
 /datum/projectile/bullet/gyrojet
+	name = "gyrojet bullet"
 	projectile_speed = 5
 	max_range = 500
 	dissipation_rate = 0
 	power = 10
 	precalculated = 0
 	caliber = 0.512
-	shot_volume = 0.1
+	shot_volume = 2
+	ks_ratio = 1
+	icon_turf_hit = "bhole-small"
 
 	on_launch(obj/projectile/O)
 		O.internal_speed = projectile_speed
@@ -210,6 +216,69 @@ obj/item/ammo/bullets/gyrojet
 
 	get_power(obj/projectile/P, atom/A)
 		return 10 + P.internal_speed
+
+//desert eagle. The biggest, baddest handgun
+/obj/item/gun/kinetic/deagle
+	name = "\improper Desert Eagle"
+	desc = "The heaviest handgun you've ever seen. Is this legal?"
+	icon_state = "deag"
+	item_state = "deag"
+	force = 12.0 //mmm, pistol whip
+	throwforce = 30 //HEAVY pistol
+	auto_eject = 1
+	max_ammo_capacity = 7
+	caliber = list(0.50, 0.41, 0.357, 0.38) //the omnihandgun
+	has_empty_state = 1
+	gildable = 1
+
+	New()
+		current_projectile = new/datum/projectile/bullet/deagle50cal
+		ammo = new/obj/item/ammo/bullets/deagle50cal
+		. = ..()
+
+	//gimmick deagle that decapitates
+	decapitation
+		New()
+			. = ..()
+			current_projectile = new/datum/projectile/bullet/deagle50cal/decapitation
+			ammo = new/obj/item/ammo/bullets/deagle50cal/decapitation
+
+//.50AE deagle ammo
+/obj/item/ammo/bullets/deagle50cal
+	sname = "0.50 AE"
+	name = "desert eagle magazine"
+	icon_state = "pistol_magazine"
+	amount_left = 7.0
+	max_amount = 7.0
+	ammo_type = new/datum/projectile/bullet/deagle50cal
+	caliber = 0.50
+
+	//gimmick deagle ammo that decapitates
+	decapitation
+		ammo_type = new/datum/projectile/bullet/deagle50cal/decapitation
+
+/datum/projectile/bullet/deagle50cal
+	name = "bullet"
+	power = 120
+	dissipation_delay = 5
+	dissipation_rate = 5
+	ks_ratio = 1.0
+	implanted = /obj/item/implant/projectile/bullet_50
+	caliber = 0.50
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/deagle
+	shot_sound = 'sound/weapons/deagle.ogg'
+
+	//gimmick deagle ammo that decapitates
+	decapitation
+		on_hit(atom/hit, angle, obj/projectile/O)
+			. = ..()
+			if(ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				var/obj/item/organ/head/head = H.drop_organ("head", get_turf(H))
+				if(head)
+					head.throw_at(get_edge_target_turf(head, get_dir(O, H) ? get_dir(O, H) : H.dir),2,1)
+				H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
 
 //magical crap
 /obj/item/enchantment_scroll

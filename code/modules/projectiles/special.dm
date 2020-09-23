@@ -214,7 +214,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	pellets_to_fire = 8
 	spread_projectile_type = /datum/projectile/bullet/nails
-	casing = /obj/item/casing/shotgun_gray
+	casing = /obj/item/casing/shotgun/gray
 	spread_angle_variance = 10
 	damage_type = D_SPECIAL
 	power = 32

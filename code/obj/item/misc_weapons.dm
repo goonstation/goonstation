@@ -1,6 +1,5 @@
 // Contains:
 //
-// - obj/item/weapon parent (now unused and commented out)
 // - Esword
 // - Dagger
 // - Butcher's knife
@@ -15,15 +14,8 @@
 // - Bloodthirsty Blade
 // - Fragile Sword
 
-////////////////////////////////////////////// Weapon parent //////////////////////////////////
-/* unused now
-/obj/item/weapon
-	name = "weapon"
-	icon = 'icons/obj/items/weapons.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-*/
-/////////////////////////////////////////////// Esword /////////////////////////////////////////
 
+/// Cyalume saber/esword, famed traitor item
 /obj/item/sword
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'

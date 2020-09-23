@@ -101,6 +101,8 @@
 		..()
 		if (movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
+		if (!needs_oxy)
+			APPLY_MOB_PROPERTY(M, PROP_BREATHLESS, src.type)
 		if(ishuman(M))
 			src.mob = M
 			var/datum/appearanceHolder/AHM = mob?.bioHolder?.mobAppearance
@@ -230,6 +232,8 @@
 
 			if (movement_modifier)
 				REMOVE_MOVEMENT_MODIFIER(mob, movement_modifier, src.type)
+			if(needs_oxy)
+				REMOVE_MOB_PROPERTY(mob, PROP_BREATHLESS, src.type)
 
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for (var/obj/item/clothing/W in restricted)
