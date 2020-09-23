@@ -61,10 +61,6 @@
 			reagents.add_reagent("painbow fluid", 10)
 		if (prob(1))
 			reagents.add_reagent("werewolf_serum", 2)
-		/* Removed pending patho rework, in case this becomes functional again
-		if (prob(2))
-			reagents.add_reagent("liquid plasma", 15)
-			*/
 		if (prob(3))
 			reagents.add_reagent("liquid spacetime", 25)
 		if (prob(1))
