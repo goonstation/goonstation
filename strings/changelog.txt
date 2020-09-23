@@ -1,5 +1,9 @@
 
 (t)tue sep 22 20
+(u)Flourish
+(p)2160
+(e)⚖🆕|balance, feature
+(+)You will now need medical locker access to unlock cloning pods.
 (u)UrsulaMejor
 (p)2244
 (e)|
