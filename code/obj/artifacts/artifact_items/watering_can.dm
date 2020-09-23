@@ -7,11 +7,11 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/watercan/AS = new /datum/artifact/watercan(src)
-		if (forceartitype)
-			AS.validtypes = list("[forceartitype]")
+		if (forceartiorigin)
+			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 		SPAWN_DBG(0)
 			src.ArtifactSetup()

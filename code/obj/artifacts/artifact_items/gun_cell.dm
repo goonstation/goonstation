@@ -9,11 +9,11 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		//src.artifact = new /datum/artifact/energyammo(src)
 		var/datum/artifact/energyammo/A = new /datum/artifact/energyammo(src)
-		if (forceartitype)
-			A.validtypes = list("[forceartitype]")
+		if (forceartiorigin)
+			A.validtypes = list("[forceartiorigin]")
 		src.artifact = A
 		SPAWN_DBG(0)
 			src.ArtifactSetup()
