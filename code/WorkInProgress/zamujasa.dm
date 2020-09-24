@@ -707,7 +707,8 @@
 	var/maptext_suffix = "</span></span>"
 	var/ding_on_change = 0
 	var/ding_sound = "sound/machines/ping.ogg"
-	var/update_delay = null
+	var/update_delay = 0
+	var/require_var_or_list = 1
 
 	New()
 		..()
@@ -731,7 +732,13 @@
 
 				SubscribeToProcess()
 
-	proc/update_monitor()
+	/**
+	* Checks if a monitored thing still exists
+	*
+	* Returns 0 if monitoring should stop,
+	* 1 if monitoring is okay
+	*/
+	proc/validate_monitored()
 		if (src.monitored_ref)
 			var/datum/thing = locate(src.monitored_ref)
 			if (thing)
@@ -742,27 +749,41 @@
 			if (monitored.pooled || monitored.qdeled)
 				// The thing we were watching was deleted/removed! Welp.
 				monitored = null
-				return
+				return 0
 
-			if (!src.monitored_list && !src.monitored_var)
-				return
-			try
-				var/current_value
-				if (src.monitored_list && !src.monitored_var)
-					var/list/monlist = monitored.vars[src.monitored_list]
-					current_value = monlist.len
-				else if (src.monitored_list)
-					current_value = monitored.vars[src.monitored_list][src.monitored_var]
-				else
-					current_value = monitored.vars[monitored_var]
+			if (src.require_var_or_list && !src.monitored_list && !src.monitored_var)
+				return 0
+			return 1
 
-				if (current_value != last_value)
-					src.maptext = "[maptext_prefix][format_value(current_value)][maptext_suffix]"
-					src.last_value = current_value
-					if (src.ding_on_change)
-						playsound(src, src.ding_sound, 33, 0)
-			catch(var/exception/e)
-				src.maptext = "(Err: [e])"
+		return 0
+
+	/**
+	* Updates the maptext monitor
+	*/
+	proc/update_monitor()
+		if (!src.validate_monitored())
+			return
+
+		try
+			var/current_value = src.get_value()
+
+			if (current_value != last_value)
+				src.maptext = "[maptext_prefix][format_value(current_value)][maptext_suffix]"
+				src.last_value = current_value
+				if (src.ding_on_change)
+					playsound(src, src.ding_sound, 33, 0)
+		catch(var/exception/e)
+			src.maptext = "(Err: [e])"
+
+
+	proc/get_value()
+		if (src.monitored_list && !src.monitored_var)
+			var/list/monlist = monitored.vars[src.monitored_list]
+			. = monlist.len
+		else if (src.monitored_list)
+			. = monitored.vars[src.monitored_list][src.monitored_var]
+		else
+			. = monitored.vars[monitored_var]
 
 
 	proc/format_value(var/val)
@@ -783,6 +804,87 @@
 		return
 
 
+	location
+		require_var_or_list = 0
+		maptext_prefix = "<span class='c pixel sh'><span class='vga'>"
+		maptext_srefix = "</span>"
+
+		get_value()
+			var/turf/where = get_turf(monitored)
+			if (!where)
+				. = "Unknown</span>\n(?, ?, ?)"
+			else
+				. = "[where.loc]</span>\n([where.x], [where.y], [where.z])"
+
+
+	stats
+		monitored_list = "stats"
+		ding_on_change = 1
+
+		New()
+			src.monitored = game_stats
+			..()
+
+		farts
+			monitored_var = "farts"
+			maptext_prefix = "<span class='c pixel sh'>Farts:\n<span class='vga'>"
+			update_delay = 1 SECOND
+
+		deaths
+			monitored_var = "deaths"
+			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
+			ding_sound = "sound/misc/lose.ogg"
+
+		adminhelps
+			monitored_var = "adminhelps"
+			maptext_prefix = "<span class='c pixel sh'>Adminhelps:\n<span class='vga'>"
+			ding_sound = "sound/voice/screams/mascream6.ogg"
+
+	budget
+		New()
+			src.monitored = wagesystem
+			..()
+
+		display_mode = "round"
+		monitored_var = "station_budget"
+		maptext_prefix = "<span class='c pixel sh'>Station Budget:\n<span class='vga'>$"
+
+		station
+			// the default, but explicit...
+		shipping
+			monitored_var = "shipping_budget"
+			maptext_prefix = "<span class='c pixel sh'>Shipping Budget:\n<span class='vga'>$"
+		research
+			monitored_var = "research_budget"
+			maptext_prefix = "<span class='c pixel sh'>Research Budget:\n<span class='vga'>$"
+
+
+	clients
+		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>$"
+		validate_monitored()
+			return 1
+		get_value()
+			. = total_clients()
+
+	load
+		maptext_prefix = "<span class='c pixel sh'>Server Load:\n<span class='vga'>"
+		update_delay = 1 SECOND
+
+		validate_monitored()
+			return 1
+		get_value()
+			var/lagc = "#ffffff"
+			switch (world.tick_lag)
+				if (0 to 0.4)
+					lagc = "#00ff00"
+				if (0.4 to 0.6)
+					lagc = "#ffff00"
+				if (0.6 to 0.8)
+					lagc = "#ff8800"
+				if (0.8 to INFINITY)
+					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
+
+			. = "<span style='color: [lagc];'>[world.cpu]% @ [world.tick_lag]s</span>"
 
 
 /obj/overlay/zamujasa/football_wave_timer
