@@ -7,7 +7,7 @@
 
 import { Fragment } from "inferno";
 import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Box, Button, ColorBox, Section, Tabs, ProgressBar, NoticeBox, LabeledList, Tooltip, Flex, Modal, Icon, HealthStat } from "../components";
+import { Box, Button, ColorBox, Section, Tabs, ProgressBar, NoticeBox, LabeledList, Flex, Modal, Icon, HealthStat } from "../components";
 import { Window } from "../layouts";
 import { clamp } from 'common/math';
 
