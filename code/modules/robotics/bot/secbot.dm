@@ -503,7 +503,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				else if (target)		// make sure target exists
 					if (!IN_RANGE(src, src.target, 1))
 						src.moving = 0
-						navigate_to(src.target, ARREST_SPEED * move_arrest_delay_mult, max_dist = 50)
+						navigate_to(src.target, ARREST_SPEED * move_arrest_delay_mult, max_dist = 18)
 						return
 					else
 						SPAWN_DBG(0)
