@@ -7,7 +7,7 @@
   position: relative;
   overflow: none;
   width: 100vw;
-  height: 60vh;
+  height: 295px;
 }
 .Cloning-Console_FlexHead {
   display: flex;
@@ -39,18 +39,17 @@
 }
 .Cloning-Console_BodyRow {
   display: flex;
+  height: 30px;
   align-items: center;
   justify-content: space-around;
   flex: 0 0 auto;
 }
-.Cloning-Console_BodyRow_item {
+.Cloning-Console_BodyRow_Item {
   display: flex;
-  height: 46px;
+  height: 20px;
   align-items: center;
-  justify-content: flex-start;
-  padding: 0 10px;
-  font-size: 14px;
+  justify-content: center;
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
 }
