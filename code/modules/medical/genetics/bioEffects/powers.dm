@@ -522,7 +522,7 @@
 			boutput(H, "<span class='notice'>Whatever hair you have isn't affected!</span>")
 			return
 
-		if (H?.bioHolder?.mobAppearance)
+		if (H.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = H.bioHolder.mobAppearance
 
 			var/col1 = AHs.customization_first_color
