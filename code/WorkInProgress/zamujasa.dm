@@ -860,7 +860,7 @@
 
 
 	clients
-		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>$"
+		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>"
 		validate_monitored()
 			return 1
 		get_value()
