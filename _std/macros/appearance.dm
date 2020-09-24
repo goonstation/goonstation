@@ -4,8 +4,10 @@
 #define BODY_DETAIL_2	(1<<1)	//
 #define BODY_DETAIL_3	(1<<2)	//
 
-#define HAS_HAIR_COLORED_HAIR			(1<<3)		// Hair (if any) is/are the color/s you/we (hopefully) set/assigned
-#define HAS_HAIR_COLORED_DETAILS	(1<<5)	// Hair color is used to determine the color of certain non-hair things. Like horns or scales
+/// Hair (if any) is/are the color/s you/we (hopefully) set/assigned
+#define HAS_HAIR_COLORED_HAIR			(1<<3)		
+/// Hair color is used to determine the color of certain non-hair things. Like horns or scales
+#define HAS_HAIR_COLORED_DETAILS	(1<<5)	
 
 /// Has a detail that goes over the suit, like a cute little enormous cow muzzle
 #define BODY_DETAIL_OVERSUIT_1		(1<<7)		
