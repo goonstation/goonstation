@@ -10,5 +10,7 @@
 #define BODY_DETAIL_OVERSUIT_1		(1<<7)		// Has a detail that goes over the suit, like a cute little enormous cow muzzle
 #define BODY_DETAIL_OVERSUIT_IS_COLORFUL		(1<<8)		// The oversuit is colorful, otherwise don't color it. Defaults to first customization color
 
-#define FIX_COLORS										(1<<9)	// Clamp customization RBG vals between 50 and 190, lizard-style
-#define	HEAD_HAS_OWN_COLORS						(1<<10)	// our head has its own colors that would look weird if tinted
+/// Clamp customization RBG vals between 50 and 190, lizard-style
+#define FIX_COLORS										(1<<9)	
+/// our head has its own colors that would look weird if tinted
+#define	HEAD_HAS_OWN_COLORS						(1<<10)	
