@@ -518,7 +518,7 @@
 		if (istype(H.mutantrace, /datum/mutantrace/lizard))
 			boutput(H, "<span class='notice'>You don't have any hair!</span>")
 			return
-		else if (H?.mutantrace?.override_hair && !istype(H.mutantrace, /datum/mutantrace/cow))
+		else if (H.mutantrace?.override_hair && !istype(H.mutantrace, /datum/mutantrace/cow))
 			boutput(H, "<span class='notice'>Whatever hair you have isn't affected!</span>")
 			return
 
