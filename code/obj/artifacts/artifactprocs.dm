@@ -22,7 +22,8 @@
 	if(forceartitype)
 		selection_pool += forceartitype
 	else
-		for (var/datum/artifact/A in concrete_typesof(/datum/artifact))
+		for (var/atype in concrete_typesof(/datum/artifact))
+			var/datum/artifact/A = atype
 			if (initial(A.rarity_class) != rarityroll)
 				continue
 			if (istext(forceartiorigin) && !(forceartiorigin in initial(A.validtypes)))
