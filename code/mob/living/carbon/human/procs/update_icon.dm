@@ -1210,7 +1210,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				src.body_standing.overlays += mutant_image
 
 			if (AHol.mob_color_flags & BODY_DETAIL_OVERSUIT_1)
-				mutant_image = src.mutantrace.detail_over_suit
+				mutant_image = src.mutantrace.detail_over_suit // used by lizards so that when they're facing upwards their tail doesn't look awkward.
 				if (AHol.mob_color_flags & BODY_DETAIL_OVERSUIT_IS_COLORFUL)
 					mutant_image.color = src.bioHolder?.mobAppearance.customization_first_color
 				else
