@@ -163,6 +163,7 @@ toxic - poisons
 	projectile_speed = 36
 	caliber = 0.355
 	icon_turf_hit = "bhole-small"
+	hit_type = DAMAGE_BLUNT
 	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
 	casing = /obj/item/casing/small
 
@@ -188,7 +189,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
 	dissipation_delay = 10
-	casing = /obj/item/casing/rifle
+	casing = /obj/item/casing/rifle_loud
 	caliber = 0.308
 	icon_turf_hit = "bhole-small"
 
@@ -219,7 +220,7 @@ toxic - poisons
 	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
 	projectile_speed = 56
 	max_range = 100
-	casing = /obj/item/casing/rifle
+	casing = /obj/item/casing/rifle_loud
 	caliber = 0.308
 	icon_turf_hit = "bhole-small"
 	on_launch(obj/projectile/O)
@@ -332,7 +333,7 @@ toxic - poisons
 	icon_turf_hit = "bhole"
 	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_12ga
-	casing = /obj/item/casing/shotgun_red
+	casing = /obj/item/casing/shotgun/red
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
@@ -423,7 +424,7 @@ toxic - poisons
 	hit_type = DAMAGE_BLUNT
 	caliber = 0.72
 	icon_turf_hit = "bhole"
-	casing = /obj/item/casing/shotgun_orange
+	casing = /obj/item/casing/shotgun/orange
 
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 2)
@@ -455,7 +456,7 @@ toxic - poisons
 	hit_type = DAMAGE_BLUNT
 	caliber = 0.72
 	icon_turf_hit = "bhole"
-	casing = /obj/item/casing/shotgun_blue
+	casing = /obj/item/casing/shotgun/blue
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
@@ -484,7 +485,7 @@ toxic - poisons
 	hit_type = DAMAGE_BLUNT
 	caliber = 0.72
 	icon_turf_hit = "bhole"
-	casing = /obj/item/casing/shotgun_blue //todo
+	casing = /obj/item/casing/shotgun/blue //todo
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
@@ -633,7 +634,7 @@ toxic - poisons
 	implanted = null
 	caliber = 0.72 // 12 guage
 	icon_turf_hit = "bhole"
-	casing = /obj/item/casing/shotgun_orange
+	casing = /obj/item/casing/shotgun/orange
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (isliving(hit))
@@ -1141,7 +1142,7 @@ toxic - poisons
 	dissipation_rate = 3
 	dissipation_delay = 4
 	damage_type = D_SLASHING
-	casing = /obj/item/casing/shotgun_gray
+	casing = /obj/item/casing/shotgun/gray
 
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"

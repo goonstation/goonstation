@@ -14080,10 +14080,7 @@
 "aAb" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery"
-	},
+/obj/item/clothing/suit/cultist/nerd,
 /obj/item/dice/magic8ball,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)

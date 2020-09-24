@@ -24880,10 +24880,7 @@
 "baw" = (
 /obj/table/wood/auto,
 /obj/machinery/light,
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery"
-	},
+/obj/item/clothing/suit/cultist/nerd,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 2

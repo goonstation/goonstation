@@ -1345,8 +1345,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (src.lying != src.lying_old)
 		src.lying_old = src.lying
-		animate_rest(src, !src.lying)
+		src.animate_lying(src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
+
+/mob/living/proc/animate_lying(lying)
+	animate_rest(src, !lying)
 
 
 /mob/living/attack_hand(mob/living/M as mob, params, location, control)

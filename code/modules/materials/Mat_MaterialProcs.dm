@@ -11,11 +11,13 @@ triggerExp(var/owner, var/severity)
 triggerOnEntered(var/atom/owner, var/atom/entering)
 */
 
-//!!!!!!!!!!!!!!!!!!!! THINGS LIKE GOLD SPARKLES ARE NOT REMOVED WHEN MATERIAL CHANGES!. MOVE THESE TO NEW APPEARANCE SYSTEM.
+// THINGS LIKE GOLD SPARKLES ARE NOT REMOVED WHEN MATERIAL CHANGES!. MOVE THESE TO NEW APPEARANCE SYSTEM.
 
 /datum/materialProc
-	var/max_generations = 2 //After how many material "generations" this trait disappears. -1 = does not disappear.
-	var/desc = "" //Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
+	/// After how many material "generations" this trait disappears. `-1` = does not disappear.
+	var/max_generations = 2
+	/// Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
+	var/desc = ""
 
 	proc/execute()
 		return

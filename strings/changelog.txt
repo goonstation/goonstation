@@ -1,4 +1,48 @@
 
+(t)wed sep 23 20
+(u)Phuzzy
+(p)2229
+(e)🗺|mapping
+(*)Adds a new ad! Find it at your local space radio station!
+(u)zjdtmkhzt
+(p)2215
+(e)⚖|balance
+(+)Purchasing artifacts from Cargo will now properly choose artifact type. (They will no longer all be the same type and they can't be broken and useless.)
+(u)kyle
+(p)2232
+(e)🆕|feature
+(*)Solar Flares block all general radio frequencies from and to headsets. Secure/department radios now work through the solar flare though to compensate. Station bounced radios can send and receive radio signals through the flare.
+(t)tue sep 22 20
+(u)makkipakki and (u)Adharainspace
+(p)2197
+(e)🐛|bug
+(+)NTSOs can no longer be sleeper agents, and the way the sleeper agent event chooses who is ineligible is now decided by whether the job can roll traitor, rather than a list of specific jobs.
+(+)Added security training to NTSOs of both flavors
+(u)Flourish
+(p)2160
+(e)⚖🆕|balance, feature
+(+)You will now need medical locker access to unlock cloning pods.
+(u)UrsulaMejor
+(p)2244
+(e)|
+(+)Clock 180s at QM now spawn unloaded
+(u)BatElite
+(p)2235
+(e)🆕|feature
+(*)The Port-a-Medbay now sends notifications to medical PDAs when sent to home turf with someone inside.
+(u)Zamujasa
+(e)🆕|feature
+(*)The Security Records computer has been more or less refurbished.
+(*)No, not that one. The one with the really old UI that was in Cog1's morgue, for example.
+(*)Some things aren't fully updated yet, but it should be at least slightly more usable?
+(*)No it isn't tgui, stop asking.
+(u)schwicky-schwag
+(p)2230
+(e)🎨|sprites
+(*)Added a whole bunch of new gun sprites (with in-hands included) to replace old ones, and ones for coders to use in the future.
+(u)kyle
+(+)Removed Real Katana and C-Saber from gang item pool. The Reverse-Blade Katana and D-Saber are still available.
+(+)Gangers can no longer use a gang flyer on a person to show them a popup to join the gang, instead a player must pick up the flyer and use it in-hand.
 (t)mon sep 21 20
 (u)zjdtmkhzt
 (p)2233

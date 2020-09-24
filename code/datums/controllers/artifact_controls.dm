@@ -9,10 +9,6 @@ var/datum/artifact_controller/artifact_controls
 
 	New()
 		..()
-		for (var/X in childrentypesof(/datum/artifact) - /datum/artifact/art)
-			var/datum/artifact/A = new X
-			artifact_types += A
-
 		for (var/X in childrentypesof(/datum/artifact_origin))
 			var/datum/artifact_origin/AO = new X
 			artifact_origins += AO

@@ -5,6 +5,7 @@
 // hi i fucked up this file p bad. if it ends up being as bad as
 // it looks pls do "git revert (whatever hash this has)"
 // otherwise this will stink up everything forever
+var/global/harddel_count = 0
 
 datum/controller/process/delete_queue
 	var/tmp/delcount = 0
@@ -94,6 +95,7 @@ datum/controller/process/delete_queue
 #endif
 
 			delcount++
+			harddel_count++
 #ifndef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 			D.qdeled = 0
 

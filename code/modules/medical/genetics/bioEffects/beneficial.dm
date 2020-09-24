@@ -168,7 +168,12 @@
 		var/mob/living/carbon/human/H = owner
 		H.oxyloss = 0
 		H.losebreath = 0
+		APPLY_MOB_PROPERTY(H, PROP_BREATHLESS, src.type)
 		health_update_queue |= H
+
+	OnRemove()
+		. = ..()
+		REMOVE_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"

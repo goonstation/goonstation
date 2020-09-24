@@ -1,4 +1,4 @@
-//This serves as a bridge between old materials pieces and new ones. Eventually old ones should just be updated.
+/// This serves as a bridge between old materials pieces and new ones. Eventually old ones should just be updated.
 /obj/machinery/processor
 	name = "Material processor"
 	desc = "Turns raw materials, and objects containing materials, into processed pieces."

@@ -1439,6 +1439,14 @@
 				user.u_equip(T)
 				qdel(T)
 			return
+		if(intact)
+			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
+			if (!P)
+				return
+			// Call ourselves w/ the tool, then continue
+			src.attackby(P, user)
+
+		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
 			restore_tile()
 			src.plate_mat = src.material
@@ -1453,16 +1461,6 @@
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
 			//	return
-
-		else
-			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
-
-			if (!P)
-				return
-
-			// Call ourselves w/ the tool, then the tile
-			src.attackby(P, user)
-			src.attackby(C, user)
 
 
 	if(istype(C, /obj/item/sheet))
