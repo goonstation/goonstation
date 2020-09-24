@@ -807,7 +807,7 @@
 	location
 		require_var_or_list = 0
 		maptext_prefix = "<span class='c pixel sh'><span class='vga'>"
-		maptext_srefix = "</span>"
+		maptext_suffix = "</span>"
 
 		get_value()
 			var/turf/where = get_turf(monitored)
