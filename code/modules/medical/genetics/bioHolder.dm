@@ -14,8 +14,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 	M.bioHolder.AddEffect(id)
 	return
 
-/datum/appearanceHolder
-	//Holds all the appearance information.
+/// Holds all the appearance information.
+/datum/appearanceHolder	
 
 	//_carry holds our "actual" color, in case it changes and we want the old one back
 	var/mob_color_flags = (HAS_HAIR_COLORED_HAIR)
