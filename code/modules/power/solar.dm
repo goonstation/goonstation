@@ -178,7 +178,7 @@
 		SPAWN_DBG(10+rand(0,15))
 			var/old_adir = adir
 			adir = (360+adir+clamp(ndir-adir,-10,10))%360
-			if (round((old_adir+22.5)%360) != round((old_adir+22.5)%360)) // it's basically angle2dir except it returns wrong values, but it changes when angle2dir changes and stays the same when angle2dir stays the same
+			if (round((old_adir+22.5)%360) != round((adir+22.5)%360)) // it's basically angle2dir except it returns wrong values, but it changes when angle2dir changes and stays the same when angle2dir stays the same
 				updateicon()
 			update_solar_exposure()
 
