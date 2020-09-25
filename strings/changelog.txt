@@ -1,5 +1,9 @@
 
 (t)fri sep 25 20
+(u)pali
+(p)2144
+(e)⚖|balance
+(*)Eating food now has a short cooldown
 (u)Superlagg
 (p)1998
 (e)🆕|feature
