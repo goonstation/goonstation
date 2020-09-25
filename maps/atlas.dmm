@@ -15392,7 +15392,7 @@
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "MK" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "ML" = (
@@ -18198,6 +18198,10 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/lounge)
+"VB" = (
+/obj/reagent_dispensers/heliumtank,
+/turf/simulated/floor/grime,
+/area/ghostdrone_factory)
 "VC" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 10;
@@ -59086,7 +59090,7 @@ La
 La
 La
 La
-Ln
+VB
 Lu
 LE
 LL
