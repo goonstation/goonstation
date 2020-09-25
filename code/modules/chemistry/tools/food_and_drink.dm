@@ -176,6 +176,8 @@
 		// in this case m is the consumer and user is the one holding it
 		if (!src.edible)
 			return 0
+		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
+			return 0
 		if (M == user && user.mob_flags & IS_RELIQUARY)
 			boutput(user, "<span class='alert'>You don't come equipped with a digestive system, there would be no point in eating this.</span>")
 			return 0

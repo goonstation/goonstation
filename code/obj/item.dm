@@ -379,9 +379,13 @@
 
 //disgusting proc. merge with foods later. PLEASE
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
-	if (!src.edible && !(src.material && src.material.edible))
-		return 0
 	if (!iscarbon(M) && !ismobcritter(M))
+		return 0
+	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
+		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
+			return 0
+	var/edibility_override = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)
+	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & FORCE_EDIBILITY))
 		return 0
 
 	if (M == user)
@@ -400,13 +404,9 @@
 		SPAWN_DBG (10)
 			if (!src || !M || !user)
 				return 0
-			// Why not, I guess. Adds a bit of flavour (Convair880).
-			if (iswerewolf(M) && istype(src, /obj/item/organ/))
-				M.show_text("Mmmmm, tasty organs. How refreshing.", "blue")
-				M.HealDamage("All", 5, 5)
-
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
 			user.u_equip(src)
 			qdel(src)
 		return 1
@@ -442,13 +442,10 @@
 		SPAWN_DBG (10)
 			if (!src || !M || !user)
 				return 0
-			// Ditto (Convair880).
-			if (iswerewolf(M) && istype(src, /obj/item/organ/))
-				M.show_text("Mmmmm, tasty organs. How refreshing.", "blue")
-				M.HealDamage("All", 5, 5)
 
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
 			user.u_equip(src)
 			qdel(src)
 		return 1
@@ -1110,12 +1107,13 @@
 /obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
-	if ((src.edible && (ishuman(M) || ismobcritter(M)) || (src.material && src.material.edible)) && src.Eat(M, user))
-		return
 
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions
 		if(insertChestItem(M, user))	// Puting item in patient's chest
 			return
+
+	if (src.Eat(M, user)) // All those checks were done in there anyway
+		return
 
 	if (src.flags & SUPPRESSATTACK)
 		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")

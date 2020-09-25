@@ -264,6 +264,7 @@
 		user.unequip_all()
 		user.set_loc(src)
 		user.make_cube(life = 5 MINUTES, T = src.loc)
+
 /obj/machinery/neosmelter
 	name = "Nano-crucible"
 	desc = "A huge furnace-like machine used to combine materials."

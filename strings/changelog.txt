@@ -1,4 +1,19 @@
 
+(t)fri sep 25 20
+(u)pali
+(p)2144
+(e)⚖|balance
+(*)Eating food now has a short cooldown
+(u)Superlagg
+(p)1998
+(e)🆕|feature
+(*)Lizards can now change up their colors if they eat enough human organs.
+(+)Added a mutation that lets people swap their hair colors around.
+(+)Increased the healing certain organs give when eaten by a werewolf.
+(u)Sidewinder7
+(p)2204
+(e)🆕🎨|feature, sprites
+(*)Added LSBee, a new psychedelic that's all the buzz right now!
 (t)wed sep 23 20
 (u)Phuzzy
 (p)2229

@@ -858,11 +858,10 @@
 	has_empty_state = 1
 
 	New()
-		..()
 		ammo = new /obj/item/ammo/bullets/rpg
 		ammo.amount_left = 0 // Spawn empty.
 		current_projectile = new /datum/projectile/bullet/rpg
-		src.update_icon()
+		..()
 		return
 
 	update_icon()
