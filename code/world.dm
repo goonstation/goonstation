@@ -783,24 +783,18 @@ var/f_color_selector_handler/F_Color_Selector
 	if (abandon_allowed)
 		features += "respawn allowed"
 
-	if (abandon_allowed)
-		features += "respawn allowed"
-
 #if ASS_JAM
 	features += "Ass Jam"
 #endif
 
-	var/n = 0
-	for (var/client/C in clients)
-		if (C)
-			n++
+	var/n = length(clients)
 
-	if (n > 1)
-		features += "~[n] players"
-	else if (n > 0)
+	if(n == 1)
 		features += "~[n] player"
+	else
+		features += "~[n] players"
 
-	if (features)
+	if(features)
 		s += ": [jointext(features, ", ")]"
 
 	s += " (<a href=\"https://ss13.co\">Website</a>)"
