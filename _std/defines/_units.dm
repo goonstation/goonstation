@@ -1,5 +1,6 @@
 
-#define INFINITY 1e31 //closer then enough
+/// closer then enough
+#define INFINITY 1e31
 
 // SI UNIT DEFINES
 

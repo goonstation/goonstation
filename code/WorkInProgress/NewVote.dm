@@ -106,7 +106,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 				boutput(world, "<span class='success'><BIG><B>Vote gamemode ([mode]) initiated by [C.ckey]</B></BIG></span>")
 				show_vote(C)
 				return 1
-			/**if("Player Ban")
+			/*if("Player Ban")
 				if(world.time < 6000)
 					boutput(C, "<span class='alert'>You may not start this type of vote yet.</span>")
 					return

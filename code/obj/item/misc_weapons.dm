@@ -1,6 +1,5 @@
 // Contains:
 //
-// - obj/item/weapon parent (now unused and commented out)
 // - Esword
 // - Dagger
 // - Butcher's knife
@@ -15,15 +14,8 @@
 // - Bloodthirsty Blade
 // - Fragile Sword
 
-////////////////////////////////////////////// Weapon parent //////////////////////////////////
-/* unused now
-/obj/item/weapon
-	name = "weapon"
-	icon = 'icons/obj/items/weapons.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-*/
-/////////////////////////////////////////////// Esword /////////////////////////////////////////
 
+/// Cyalume saber/esword, famed traitor item
 /obj/item/sword
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -302,11 +294,15 @@
 			else
 				src.icon_state = "[state_name]-open"
 			return
-		else
+		else if (src.open && src.bladecolor)
 			user.visible_message("<b>[user]</b> closes and screws [src] shut.")
 			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
 			src.open = 0
 			src.icon_state = "[state_name]0"
+		else
+			boutput(user, "<span class='alert'>The screw spins freely in place without a blade to screw into.</span>")
+			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			return
 
 	if (istype(W, /obj/item/device/light/glowstick) && !loaded_glowstick && open)
 		if (!W:on)
@@ -1189,18 +1185,13 @@
 
 	attack_hand(mob/living/carbon/human/user as mob)
 		if(user.r_hand == src || user.l_hand == src || user.belt == src)
-			if(src.sword_inside) //Checks if a katana is inside
-				sword_inside.clean_forensic()
-				boutput(user, "You draw [sword_inside] from your sheath.")
-				playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
-				icon_state = sheath_state
-				item_state = ih_sheath_state
-				user.put_in_hand_or_drop(sword_inside)
-				sword_inside = null //No more sword inside.
-				user.update_clothing()
-			else
-				return ..()//Katana doesn't exist, and takes the sheath off your belt or switches hands.
+			draw_sword(user)
+		else
+			return ..()
 
+	attack_self(mob/living/carbon/human/user as mob)
+		if(user.r_hand == src || user.l_hand == src)
+			draw_sword(user)
 		else
 			return ..()
 
@@ -1218,6 +1209,23 @@
 			..()
 			if(W.cant_drop == 1)
 				boutput(user, "<span class='notice'>You can't sheathe the [W] while its attached to your arm.</span>")
+
+/obj/item/katana_sheath/proc/draw_sword(mob/living/carbon/human/user)
+	if(src.sword_inside) //Checks if a katana is inside
+		if (!user.r_hand || !user.l_hand)
+			sword_inside.clean_forensic()
+			boutput(user, "You draw [sword_inside] from your sheath.")
+			playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
+			icon_state = sheath_state
+			item_state = ih_sheath_state
+			user.put_in_hand_or_drop(sword_inside)
+			sword_inside = null //No more sword inside.
+			user.update_clothing()
+		else
+			boutput(user, "You don't have a free hand to draw with!")
+			return
+	else
+		return
 
 /obj/item/katana_sheath/reverse
 	name = "reverse-blade katana sheath"

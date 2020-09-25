@@ -16,6 +16,7 @@
 	var/broken = 0
 	var/burnt = 0
 	var/plate_mat = null
+	var/reinforced = FALSE
 
 	New()
 		..()
@@ -642,6 +643,7 @@
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
 
+	reinforced = TRUE
 	allows_vehicles = 1
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -1058,6 +1060,7 @@
 	name = "shuttle bay plating"
 	icon_state = "engine"
 	allows_vehicles = 1
+	reinforced = TRUE
 
 /turf/simulated/floor/shuttlebay
 	name = "shuttle bay plating"
@@ -1065,6 +1068,7 @@
 	allows_vehicles = 1
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	reinforced = TRUE
 
 /turf/simulated/floor/metalfoam
 	icon = 'icons/turf/floors.dmi'
@@ -1245,39 +1249,9 @@
 		step(user.pulling, get_dir(fuck_u, src))
 	return
 
-/turf/simulated/floor/engine/attackby(obj/item/C as obj, mob/user as mob, params)
-	if (!C)
-		return
-	if (!user)
-		return
-	if (ispryingtool(C))
-		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead.</span>")
-		return
-	if (istype(C, /obj/item/pen))
-		var/obj/item/pen/P = C
-		P.write_on_turf(src, user, params)
-		return
-	else if ((isweldingtool(C) && C:try_weld(user,0,-1,0,1)) || iswrenchingtool(C))
-		boutput(user, "<span class='notice'>Loosening rods...</span>")
-		if(iswrenchingtool(C))
-			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
-		if(do_after(user, 30))
-			var/obj/R1 = new /obj/item/rods(src)
-			var/obj/R2 = new /obj/item/rods(src)
-			if (material)
-				R1.setMaterial(material)
-				R2.setMaterial(material)
-			else
-				R1.setMaterial(getMaterial("steel"))
-				R2.setMaterial(getMaterial("steel"))
-			ReplaceWithFloor()
-			var/turf/simulated/floor/F = src
-			F.to_plating()
-			return
-
 /turf/simulated/floor/proc/to_plating(var/force_break)
 	if(!force_break)
-		if(istype(src,/turf/simulated/floor/engine)) return
+		if(src.reinforced) return
 	if(!intact) return
 	if (!icon_old)
 		icon_old = icon_state
@@ -1303,8 +1277,7 @@
 
 /turf/simulated/floor/proc/break_tile(var/force_break)
 	if(!force_break)
-		if(istype(src,/turf/simulated/floor/engine)) return
-		if(istype(src,/turf/simulated/floor/shuttlebay)) return
+		if(src.reinforced) return
 
 	if(broken) return
 	if (!icon_old)
@@ -1317,7 +1290,7 @@
 		broken = 1
 
 /turf/simulated/floor/proc/burn_tile()
-	if(broken || burnt) return
+	if(broken || burnt || reinforced) return
 	if (!icon_old)
 		icon_old = icon_state
 	if(intact)
@@ -1325,12 +1298,6 @@
 	else
 		src.icon_state = "panelscorched"
 	burnt = 1
-
-/turf/simulated/floor/engine/burn_tile()
-	return
-
-/turf/simulated/floor/shuttlebay/burn_tile()
-	return
 
 /turf/simulated/floor/shuttle/burn_tile()
 	return
@@ -1390,11 +1357,12 @@
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
 		return
+	if(src.reinforced)
+		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead.</span>")
+		return
 
 	if(broken || burnt)
 		boutput(user, "<span class='alert'>You remove the broken plating.</span>")
-	else if (istype(src,/turf/simulated/floor/engine))
-		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring!</span>")
 	else
 		var/atom/A = new /obj/item/tile(src)
 		if(src.material)
@@ -1425,6 +1393,23 @@
 		src.attach_light_fixture_parts(user, C) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
+	if (src.reinforced && ((isweldingtool(C) && C:try_weld(user,0,-1,0,1)) || iswrenchingtool(C)))
+		boutput(user, "<span class='notice'>Loosening rods...</span>")
+		if(iswrenchingtool(C))
+			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
+		if(do_after(user, 30))
+			var/obj/R1 = new /obj/item/rods(src)
+			var/obj/R2 = new /obj/item/rods(src)
+			if (material)
+				R1.setMaterial(material)
+				R2.setMaterial(material)
+			else
+				R1.setMaterial(getMaterial("steel"))
+				R2.setMaterial(getMaterial("steel"))
+			ReplaceWithFloor()
+			src.to_plating()
+			return
+
 	if(istype(C, /obj/item/rods))
 		if (!src.intact)
 			if (C:amount >= 2)
@@ -1454,6 +1439,14 @@
 				user.u_equip(T)
 				qdel(T)
 			return
+		if(intact)
+			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
+			if (!P)
+				return
+			// Call ourselves w/ the tool, then continue
+			src.attackby(P, user)
+
+		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
 			restore_tile()
 			src.plate_mat = src.material
@@ -1468,16 +1461,6 @@
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
 			//	return
-
-		else
-			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
-
-			if (!P)
-				return
-
-			// Call ourselves w/ the tool, then the tile
-			src.attackby(P, user)
-			src.attackby(C, user)
 
 
 	if(istype(C, /obj/item/sheet))

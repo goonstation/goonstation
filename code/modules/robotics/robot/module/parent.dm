@@ -1,3 +1,4 @@
+/// Job/tool modules for cyborgs
 /obj/item/robot_module
 	name = "blank cyborg module"
 	desc = "A blank cyborg module. It has minimal function in its current state."

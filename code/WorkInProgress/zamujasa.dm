@@ -937,3 +937,26 @@ Read the rules, don't grief, and have fun!</div>"}
 		src.maptext = ""
 		src.invisibility = 101
 		..()
+
+
+
+/mob/living/critter/small_animal/bee/zombee/zambee
+	name = "zambee"
+	real_name = "zambee"
+	desc = "Genetically engineered for passiveness and bred for badminning, the greater domestic zambee is increasingly unpopular among grayshirts and griefers."
+	limb_path = /datum/limb/small_critter/bee/strong
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+						 /datum/targetable/critter/bee_sting/zambee,
+						 /datum/targetable/critter/bee_swallow,
+						 /datum/targetable/critter/bee_teleport)
+
+	setup_equipment_slots()
+		equipment += new /datum/equipmentHolder/ears(src)
+		equipment += new /datum/equipmentHolder/head/bee(src)
+
+
+/datum/targetable/critter/bee_sting/zambee
+	venom1 = "saline"
+	amt1 = 15
+	venom2 = "omnizine"
+	amt2 = 5

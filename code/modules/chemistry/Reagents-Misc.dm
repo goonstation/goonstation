@@ -1229,7 +1229,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				if (counter += (1*mult) >= 10 && !fakedeathed)
+				if ((counter += (1*mult)) >= 10 && !fakedeathed)
 					M.setStatus("resting", INFINITE_STATUS)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
 					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())

@@ -1,5 +1,6 @@
 // base
 
+ABSTRACT_TYPE(/datum/artifact/bomb)
 /datum/artifact/bomb
 	associated_object = null
 	rarity_class = 0

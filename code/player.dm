@@ -20,10 +20,17 @@
 	var/list/cooldowns = null
 	/// position of client in in global.clients
 	var/clients_pos = null
+	/// the server time that this player joined the game, in 1/10ths of a second
+	var/round_join_time = null
+	/// the server time that this player left the game, in 1/10ths of a second
+	var/round_leave_time = null
+	/// the total time that this player has been playing the game this round, in 1/10ths of a second
+	var/current_playtime = null
 
-	/// sets up vars and caches player stats
+	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)
 		..()
+		START_TRACKING
 		src.key = key
 		src.ckey = ckey(key)
 		src.tag = "player-[src.ckey]"
@@ -33,6 +40,14 @@
 
 		if (src.key) //just a safety check!
 			src.cache_round_stats()
+
+	/// removes by_type list entry for this datum, clears dangling references
+	disposing()
+		STOP_TRACKING
+		if (src.client)
+			src.client.player = null
+			src.client = null
+		..()
 
 	/// queries api to cache stats so its only done once per player per round (please update this proc when adding more player stat vars)
 	proc/cache_round_stats()
@@ -70,6 +85,23 @@
 				return null
 		else
 			return src.rounds_seen
+
+	/// sets the join time to the current server time, in 1/10ths of a second
+	proc/log_join_time()
+		src.round_join_time = TIME
+
+	/// sets the leave time to the current server time, in 1/10ths of a second
+	proc/log_leave_time()
+		src.round_leave_time = TIME
+		src.calculate_played_time()
+
+	/// adds the calculated playtime (in 1/10ths of a second) to the playtime variable
+	proc/calculate_played_time()
+		if (isnull(src.round_join_time) || isnull(src.round_leave_time)) //acts as a safety, in case we call log_leave_time without setting a join time (end of round usually)
+			return
+		src.current_playtime += (src.round_leave_time - round_join_time)
+		src.round_leave_time = null //reset this - null value is important
+		src.round_join_time = null //reset this - null value is important
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)

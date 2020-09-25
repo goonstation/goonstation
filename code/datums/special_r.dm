@@ -3,8 +3,8 @@ datum/special_respawn
 //	var/list/dead = list()
 	var/mob/dead/observer/target
 
-	proc/find_player(var/type = "an unknown")
-		var/list/eligible = dead_player_list()
+	proc/find_player(var/type = "an unknown", var/require_client)
+		var/list/eligible = dead_player_list(require_client = require_client)
 
 		if (!eligible.len)
 			return 0
@@ -17,8 +17,8 @@ datum/special_respawn
 		else
 			return 0
 
-	proc/find_player_any(var/type = "an unknown")
-		var/list/eligible = dead_player_list(allow_dead_antags = 1)
+	proc/find_player_any(var/type = "an unknown", var/require_client)
+		var/list/eligible = dead_player_list(allow_dead_antags = 1, require_client = require_client)
 
 		if (!eligible.len)
 			return 0
@@ -37,7 +37,7 @@ datum/special_respawn
 
 		if(!B)	return
 		for(var/c = 0, c < number, c++)
-			var/player = find_player("a syndicate agent")
+			var/player = find_player("a syndicate agent", TRUE)
 			if(player)
 				var/check = spawn_character_human("[syndicate_name()] Operative #[c+1]", player, pick_landmark(LANDMARK_SYNDICATE), "syndie")
 				if(!check)
@@ -64,9 +64,9 @@ datum/special_respawn
 		var/mob/player = null
 		for(var/c = 0, c < number, c++)
 			if(include_antags)
-				player = src.find_player_any("a person")
+				player = src.find_player_any("a person", TRUE)
 			else
-				player = src.find_player("a person")
+				player = src.find_player("a person", TRUE)
 			if(player)
 				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick_landmark(LANDMARK_LATEJOIN))
 				if(!player.mind)
@@ -89,9 +89,9 @@ datum/special_respawn
 		var/mob/player = null
 		for(var/c = 0, c < number, c++)
 			if(include_antags)
-				player = src.find_player_any("a person")
+				player = src.find_player_any("a person", TRUE)
 			else
-				player = src.find_player("a person")
+				player = src.find_player("a person", TRUE)
 			if(player)
 				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick_landmark(LANDMARK_LATEJOIN))
 				SPAWN_DBG(0)
@@ -114,7 +114,7 @@ datum/special_respawn
 	proc/spawn_custom(var/blType, var/number = 3)
 		var/r_number = 0
 		for(var/c = 0, c < number, c++)
-			var/mob/player = find_player("a person")
+			var/mob/player = find_player("a person", TRUE)
 			if(player)
 				var/mob/M = new blType(pick_landmark(LANDMARK_LATEJOIN))
 				if(!player.mind)

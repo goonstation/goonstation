@@ -830,7 +830,7 @@ var/f_color_selector_handler/F_Color_Selector
 	else
 		logTheThing("diary", null, null, "No update found. Skipping update process.", "admin")
 
-
+/// world Topic. This is where external shit comes into byond and does shit.
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	// logging for these is done in TGS
 	logDiary("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")

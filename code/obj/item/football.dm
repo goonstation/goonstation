@@ -22,7 +22,7 @@
 	c_flags = COVERSEYES | COVERSMOUTH
 	setupProperties()
 		..()
-		setProperty("meleeprot", 6)
+		setProperty("meleeprot_head", 6)
 
 	red
 		desc = "Gotta protect your head! This helmet will certainly do the job. It has a Spacissippi Timberdoodles logo printed on it!"
