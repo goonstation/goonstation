@@ -805,9 +805,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	s += " (<a href=\"https://ss13.co\">Website</a>)"
 
-	//Temporary while we rebrand
-	s += " (Previously LLJK)"
-
 	/* does this help? I do not know */
 	if (src.status != s)
 		src.status = s
