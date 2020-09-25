@@ -381,6 +381,9 @@
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
 	if (!iscarbon(M) && !ismobcritter(M))
 		return 0
+	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
+		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
+			return 0
 	var/edibility_override = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)
 	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & FORCE_EDIBILITY))
 		return 0
