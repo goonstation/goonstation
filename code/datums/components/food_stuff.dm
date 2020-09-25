@@ -1,4 +1,8 @@
+/// handles various overrides regarding eating things, like making certain inedible things edible, or eaten organs restore health
 /datum/component/consume
+	var/static/list/flock_adjectives_1 = list("Syrupy", "Tangy", "Schlumpy", "Viscous", "Grumpy")
+	var/static/list/flock_adjectives_2 = list("pulsating", "jiggling", "quivering", "flapping")
+	var/static/list/flock_adjectives_3 = list("</span><span style=\"color: teal; font-family: Fixedsys, monospace;\"><i>teal</i></span><span class='notice'>", "electric", "ferrofluid", "assimilatory")
 /datum/component/consume/Initialize()
 	if(!istype(parent, /mob))
 		return COMPONENT_INCOMPATIBLE
@@ -12,7 +16,7 @@
 
 /datum/component/consume/can_eat_inedible_organs/proc/is_it_organs(var/mob/M, var/mob/user, var/obj/item/I)
 	if (istype(I, /obj/item/skull) || (istype(I, /obj/item/organ/head) && can_eat_heads)) // skulls, heads
-		return GOOD_4_ME_2_EAT
+		return FORCE_EDIBILITY
 	else
 		return 0
 
@@ -113,7 +117,7 @@
 				if (/obj/item/organ/heart/synth)
 					boutput(L, "<span class='notice'>Full of pharosium!</span>")
 				if (/obj/item/organ/heart/flock)
-					boutput(L, "<span class='notice'>Full of iron...?</span>")
+					boutput(L, "<span class='notice'>Tastes like chicken. [pick(flock_adjectives_1)], [pick(flock_adjectives_2)], [pick(flock_adjectives_3)] chicken.</span>")
 				if (/obj/item/organ/appendix)
 					boutput(L, "<span class='alert'>Urgh, that tasted like a thumb made out of Discount Dan's.</span>")
 				if (/obj/item/clothing/head/butt)
@@ -219,7 +223,7 @@
 				if (/obj/item/organ/heart/synth)
 					boutput(M, "<span class='notice'>Full of pharosium!</span>")
 				if (/obj/item/organ/heart/flock)
-					boutput(M, "<span class='notice'>Full of iron...?</span>")
+					boutput(M, "<span class='notice'>Tastes like chicken. [pick(flock_adjectives_1)], [pick(flock_adjectives_2)], [pick(flock_adjectives_3)] chicken.</span>")
 				if (/obj/item/organ/appendix)
 					boutput(M, "<span class='alert'>Urgh, that tasted like a thumb made out of Discount Dan's.</span>")
 				if (/obj/item/clothing/head/butt)

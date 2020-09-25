@@ -94,7 +94,7 @@
 #define ITEM_RARITY_MYTHIC 7
 
 // item comp defs
-#define GOOD_4_ME_2_EAT 1
+#define FORCE_EDIBILITY 1
 //item attack bitflags
 /// The pre-attack signal doesnt want the attack to continue, so don't
 #define ATTACK_PRE_DONT_ATTACK 1

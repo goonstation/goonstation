@@ -313,6 +313,7 @@
 		..()
 		return
 
+	/// Clamps each of the RGB values between 50 and 190
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
 		for (var/i in L)

@@ -377,7 +377,7 @@
 	if (!iscarbon(M) && !ismobcritter(M))
 		return 0
 	var/edibility_override = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)
-	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & GOOD_4_ME_2_EAT))
+	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & FORCE_EDIBILITY))
 		return 0
 
 	if (M == user)
