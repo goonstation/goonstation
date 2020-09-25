@@ -1195,6 +1195,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+				msg = discord_emojify(msg)
 
 				logTheThing("ooc", null, null, "Discord OOC: [nick]: [msg]")
 
@@ -1223,6 +1224,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+				msg = discord_emojify(msg)
 				logTheThing("ooc", nick, null, "OOC: [msg]")
 				logTheThing("diary", nick, null, ": [msg]", "ooc")
 				var/rendered = "<span class=\"adminooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[nick]:</span> <span class=\"message\">[msg]</span></span>"
@@ -1250,6 +1252,7 @@ var/f_color_selector_handler/F_Color_Selector
 					return ircbot.response(ircmsg)
 
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+				msg = discord_emojify(msg)
 
 				logTheThing("admin", null, null, "Discord ASAY: [nick]: [msg]")
 				logTheThing("diary", null, null, "Discord ASAY: [nick]: [msg]", "admin")
@@ -1295,6 +1298,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
+				msg = discord_emojify(msg)
 
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M?.client)
@@ -1338,6 +1342,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				msg = discord_emojify(msg)
 				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
