@@ -87,3 +87,5 @@
 #define access_polarisimportant 74
 
 #define access_contrabandpermit 75
+
+#define access_syndicate_commander 76

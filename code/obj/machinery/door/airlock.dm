@@ -335,6 +335,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "2_welded"
 	req_access = null
 
+/obj/machinery/door/airlock/pyro/command/syndicate
+	req_access = list(access_syndicate_commander)
+
 /obj/machinery/door/airlock/pyro/weapons
 	icon_state = "manta_closed"
 	icon_base = "manta"
