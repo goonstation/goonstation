@@ -176,7 +176,7 @@
 		// in this case m is the consumer and user is the one holding it
 		if (!src.edible)
 			return 0
-		if (M?.bioHolder && !src.bioHolder.HasEffect("mattereater"))
+		if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
 			if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 				return 0
 		if (M == user && user.mob_flags & IS_RELIQUARY)

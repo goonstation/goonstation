@@ -361,7 +361,7 @@
 		return 0
 	if (!iscarbon(M) && !ismobcritter(M))
 		return 0
-	if (M?.bioHolder && !src.bioHolder.HasEffect("mattereater"))
+	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
 		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 			return 0
 
