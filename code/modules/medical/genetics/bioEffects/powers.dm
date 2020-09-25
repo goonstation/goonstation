@@ -455,6 +455,8 @@
 				owner.name = H.name
 				if(owner.bioHolder?.mobAppearance?.mutant_race)
 					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race)
+				else
+					owner.set_mutantrace(null)
 		return
 
 	cast_misfire(atom/target)

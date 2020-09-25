@@ -284,8 +284,13 @@
 
 /obj/item/unpooled()
 	..()
-	src.amount = 1
+	src.amount = initial(src.amount)
 
+	// Reset scaling/transforms/etc.
+	src.transform = initial(transform)
+
+	// @TODO should we just like. clear all overlays? this seems particularly hacky
+	// or maybe this should be done in pooled / disposing???
 	if (src.burning)
 		if (src.burn_output >= 1000)
 			src.overlays -= image('icons/effects/fire.dmi', "2old")
@@ -294,8 +299,7 @@
 	src.burning = 0
 
 	if (inventory_counter_enabled)
-		src.inventory_counter = unpool(/obj/overlay/inventory_counter)
-		src.inventory_counter.update_number(src.amount)
+		src.create_inventory_counter()
 
 /obj/item/pooled()
 	src.amount = 0
@@ -313,6 +317,7 @@
 		M.u_equip(src)
 
 	if (src.inventory_counter)
+		src.vis_contents -= src.inventory_counter
 		pool(src.inventory_counter)
 		src.inventory_counter = null
 
@@ -1460,8 +1465,9 @@
 				possible_mob_holder.hand = !possible_mob_holder.hand
 
 /obj/item/proc/create_inventory_counter()
-	src.inventory_counter = unpool(/obj/overlay/inventory_counter)
-	src.vis_contents += src.inventory_counter
+	if (!src.inventory_counter)
+		src.inventory_counter = unpool(/obj/overlay/inventory_counter)
+		src.vis_contents += src.inventory_counter
 
 /obj/item/proc/dropped(mob/user)
 	if (user)
