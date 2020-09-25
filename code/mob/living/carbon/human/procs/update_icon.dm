@@ -823,6 +823,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 /mob/living/carbon/human/update_body()
 	..()
 
+	var/datum/appearanceHolder/AHol = src?.bioHolder.mobAppearance
+
 	var/file
 	if (!src.decomp_stage)
 		file = 'icons/mob/human.dmi'
@@ -1190,11 +1192,30 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 			human_image.color = "#fff"
 		else
+			var/image/mutant_image
 			src.body_standing.overlays += image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-			src.body_standing.overlays += mutantrace.detail_1//image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-			src.body_standing.overlays += mutantrace.detail_2//image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-			src.body_standing.overlays += mutantrace.detail_3//image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-		src.body_standing.overlays += mutantrace.detail_over_suit// used by lizards so that when they're facing upwards their tail doesn't look awkward.
+			if (AHol.mob_color_flags & BODY_DETAIL_1)
+				mutant_image = src.mutantrace.detail_1
+				mutant_image.color = src.bioHolder?.mobAppearance.customization_first_color
+				src.body_standing.overlays += mutant_image
+
+			if (AHol.mob_color_flags & BODY_DETAIL_2)
+				mutant_image = src.mutantrace.detail_2
+				mutant_image.color = src.bioHolder?.mobAppearance.customization_second_color
+				src.body_standing.overlays += mutant_image
+
+			if (AHol.mob_color_flags & BODY_DETAIL_3)
+				mutant_image = src.mutantrace.detail_3
+				mutant_image.color = src.bioHolder?.mobAppearance.customization_third_color
+				src.body_standing.overlays += mutant_image
+
+			if (AHol.mob_color_flags & BODY_DETAIL_OVERSUIT_1)
+				mutant_image = src.mutantrace.detail_over_suit // used by lizards so that when they're facing upwards their tail doesn't look awkward.
+				if (AHol.mob_color_flags & BODY_DETAIL_OVERSUIT_IS_COLORFUL)
+					mutant_image.color = src.bioHolder?.mobAppearance.customization_first_color
+				else
+					mutant_image.color = "#FFFFFF"
+				src.body_standing.overlays += mutant_image
 
 #if ASS_JAM
 	src.maptext_y = 32
