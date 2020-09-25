@@ -1289,7 +1289,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
-				msg = discord_emojify(msg)
+				var/game_msg = discord_emojify(msg)
 
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M?.client)
@@ -1299,7 +1299,7 @@ var/f_color_selector_handler/F_Color_Selector
 								Admin PM from <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a>
 							</div>
 							<div style="padding: 0.2em 0.5em;">
-								[msg]
+								[game_msg]
 							</div>
 							<div style="font-size: 90%; background: #fcc; font-weight: bold; border-top: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
 								<a href=\"byond://?action=priv_msg_irc&nick=[nick]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
@@ -1314,7 +1314,7 @@ var/f_color_selector_handler/F_Color_Selector
 							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
-								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</span>")
+								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [game_msg]</span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1333,9 +1333,10 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
-				msg = discord_emojify(msg)
+				var/game_msg = discord_emojify(msg)
+
 				if (M?.client)
-					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
+					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)
@@ -1344,9 +1345,9 @@ var/f_color_selector_handler/F_Color_Selector
 								if (C.player_mode && !C.player_mode_mhelp)
 									continue
 								else
-									boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
+									boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[game_msg]</span></span>")
 							else
-								boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
+								boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[game_msg]</span></span>")
 
 				if (M)
 					var/ircmsg[] = new()
