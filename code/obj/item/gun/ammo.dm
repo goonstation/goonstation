@@ -447,6 +447,9 @@
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
 	caliber = 0.355
 
+/obj/item/ammo/bullets/nine_mm_NATO/boomerang //empty clip for the clock_188/boomerang
+	amount_left = 0
+
 /obj/item/ammo/bullets/a12
 	sname = "12ga Buckshot"
 	name = "12ga buckshot ammo box"

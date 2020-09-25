@@ -103,7 +103,7 @@
 	name = "emergency auto-injector (potassium iodide)"
 	initial_reagents = "anti_rad"
 	label = "green"
-	
+
 /obj/item/reagent_containers/emergency_injector/pentetic_acid
 	name = "emergency auto-injector (pentetic acid)"
 	initial_reagents = list("penteticacid"=5)
@@ -138,7 +138,7 @@
 	name = "emergency auto-injector (salbutamol)"
 	initial_reagents = "salbutamol"
 	label = "blue"
-	
+
 /obj/item/reagent_containers/emergency_injector/perf
 	name = "emergency auto-injector (perfluorodecalin)"
 	initial_reagents = "perfluorodecalin"
@@ -193,7 +193,7 @@
 	name = "emergency auto-injector (???)"
 	label = "black"
 	New()
-		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "space_drugs", "THC", "mucus", "green_mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
+		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green_mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
 		..()
 
 /obj/item/reagent_containers/emergency_injector/vr/epinephrine

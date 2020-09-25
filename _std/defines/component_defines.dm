@@ -106,7 +106,8 @@
 // projectile signals
 /// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)
 #define COMSIG_PROJ_COLLIDE "proj_collide_atom"
-
+/// callback to gun/etc after projectile initalization (projectile)
+#define COMSIG_ALTER_PROJECTILE "alter_proj"
 
 // MechComp signals - Content signals - Use these in you MechComp compatible devices
 /// Add an input chanel for a device to send into
@@ -127,9 +128,9 @@
 // MechComp signals - Internal signals - Do not use these
 /// Receiving a message from a mechcomp device for handling
 #define _COMSIG_MECHCOMP_RECEIVE_MSG "_mechcomp_receive_message"
-/// Remove [the caller] from the list of transmitting devices
+/// Remove {the caller} from the list of transmitting devices
 #define _COMSIG_MECHCOMP_RM_INCOMING "_mechcomp_remove_incoming"
-/// Remove [the caller] from the list of receiving devices
+/// Remove {the caller} from the list of receiving devices
 #define _COMSIG_MECHCOMP_RM_OUTGOING "_mechcomp_remove_outgoing"
 /// Return the component's outgoing connections
 #define _COMSIG_MECHCOMP_GET_OUTGOING "_mechcomp_get_outgoing_connections"

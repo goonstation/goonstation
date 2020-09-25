@@ -62,7 +62,8 @@
 			signal.transmission_method = TRANSMISSION_WIRE
 			signal.channels_passed += "PN[src.netnum];"
 
-			for(var/obj/machinery/power/device in src.powernet.data_nodes)
+			for(var/networked in src.powernet.data_nodes)
+				var/obj/machinery/power/device = networked
 				if(device != src)
 					device.receive_signal(signal, TRANSMISSION_WIRE)
 
@@ -132,7 +133,8 @@
 			signal.channels_passed += "PN[src.netnum];"
 
 			var/iterations = 0
-			for(var/obj/machinery/power/device in src.powernet.data_nodes)
+			for(var/networked in src.powernet.data_nodes)
+				var/obj/machinery/power/device = networked
 				if(device != src)
 					device.receive_signal(signal, TRANSMISSION_WIRE)
 

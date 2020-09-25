@@ -23,7 +23,7 @@
 
 /datum/matfab_part/optionalmat_mining
 	name = "Optional Mod"
-	optional = 1
+	optional = TRUE
 	checkMatch(var/obj/item/I)
 		if(!istype(I, /obj/item/mining_mod)) return 0
 		return ..()
@@ -187,19 +187,27 @@
 		return ..()
 //////////////////////////////////////////////BASE CLASS BELOW
 
+/// Base material fabrication part
 /datum/matfab_part
-	var/name = "" //Name of the material or component required.
-	var/part_name = "" //Name of the part that this will be used for. Set in the recipes New proc.
-	var/required_amount = 1 //How much we need of this. also set in the recipe.
-	var/obj/item/assigned = null //What is currently assigned to this slot.
-	var/optional = 0 //If 1, slot does not have to be filled.
+	/// Name of the material or component required.
+	var/name = ""
+	/// Name of the part that this will be used for. Set in the [recipes][/datum/matfab_recipe] New proc.
+	var/part_name = ""
+	/// How much we need of this. also set in the [recipe][/datum/matfab_recipe].
+	var/required_amount = 1
+	/// What is currently assigned to this slot.
+	var/obj/item/assigned = null
+	/// If TRUE, slot does not have to be filled.
+	var/optional = FALSE
 
-	proc/checkMatch(var/obj/item/I) //Does the object match our conditions?
+	/// Does the object match our conditions?
+	proc/checkMatch(var/obj/item/I)
 		if(I.material && I.material.mixOnly) return 0
 		if(I.amount >= required_amount)
 			return 1
 		return -1 //Return -1 if theres not enough of the material. This will show up differently on the fab.
 
-	proc/clear() //Clear all assigned items etc. Used to reset the recipe.
+	/// Clear all assigned items etc. Used to reset the recipe.
+	proc/clear()
 		assigned = null
 		return
