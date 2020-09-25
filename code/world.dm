@@ -1330,7 +1330,7 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!plist["nick"] || !plist["msg"] || !plist["target"]) return 0
 
 				var/nick = plist["nick"]
-				var/msg = plist["msg"]
+				var/msg = html_encode(plist["msg"])
 				var/who = lowertext(plist["target"])
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				var/game_msg = discord_emojify(msg)
