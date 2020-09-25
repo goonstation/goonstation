@@ -1,4 +1,9 @@
 
+(t)fri sep 25 20
+(u)Sidewinder7
+(p)2204
+(e)🆕🎨|feature, sprites
+(*)Added LSBee, a new psychedelic that's all the buzz right now!
 (t)wed sep 23 20
 (u)Phuzzy
 (p)2229
