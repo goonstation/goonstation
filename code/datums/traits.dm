@@ -1035,7 +1035,7 @@ obj/trait/pilot
 	name = "Reptilian (-1) \[Species\]"
 	cleanName = "Reptilian"
 	icon_state = "lizardT"
-	desc = "Trade in your human status and become a scaly, hissing lizardperson!"
+	desc = "You are an abhorrent humanoid reptile, cold-blooded and ssssibilant."
 	id = "lizard"
 	points = -1
 	isPositive = 1
@@ -1051,7 +1051,7 @@ obj/trait/pilot
 	name = "Bovine (-1) \[Species\]"
 	cleanName = "Bovine"
 	icon_state = "cowT"
-	desc = "Trade in your human status and become a furry, mooing cow!"
+	desc = "You are a hummman, always have been, always will be, and any claimmms to the contrary are mmmoooonstrous lies."
 	id = "cow"
 	points = -1
 	isPositive = 1
@@ -1067,7 +1067,7 @@ obj/trait/pilot
 	name = "Skeleton (-2) \[Species\]"
 	cleanName = "Skeleton"
 	icon_state = "skeletonT"
-	desc = "Trade in your human flesh and become a spooky, scary skeleton!"
+	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
 	points = -2
 	isPositive = 1
@@ -1083,7 +1083,7 @@ obj/trait/pilot
 	name = "Roach (-1) \[Species\]"
 	cleanName = "Roach"
 	icon_state = "roachT"
-	desc = "Trade in your human status and become a chitinous, skittering humanoid cockroach!"
+	desc = "One space-morning, on the shuttle-ride to the station, you found yourself transformed in your seat into a horrible vermin. A cockroach, specifically."
 	id = "roach"
 	points = -1
 	isPositive = 1
