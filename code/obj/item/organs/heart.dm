@@ -18,10 +18,11 @@
 	var/body_image = null // don't have time to completely refactor this, but, what name does the heart icon have in human.dmi?
 	var/transplant_XP = 5
 	var/blood_id = "blood"
+	var/reag_cap = 100
 
 	New(loc, datum/organHolder/nholder)
 		. = ..()
-		reagents = new/datum/reagents(100)
+		reagents = new/datum/reagents(reag_cap)
 
 	disposing()
 		if (holder)
