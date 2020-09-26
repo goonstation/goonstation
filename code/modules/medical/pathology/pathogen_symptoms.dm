@@ -1892,7 +1892,7 @@ datum/pathogeneffects/malevolent/beesneeze
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/toThrow = new /obj/item/reagent_containers/food/snacks/ingredient/egg/bee(T)
 		M.visible_message("<span class='alert'>[M] sneezes out a space bee egg!</span> [chosen_phrase]", "<span class='alert'>You sneeze out a bee egg!</span> [chosen_phrase]", "<span class='alert'>You hear someone sneezing.</span>")
 		toThrow.throw_at(target, 6, 1)
-		src.infect_cloud(M, origin, origin.spread) // at some point I want the bees to spread this instead
+		src.infect_cloud(M, origin, origin.spread) // TODO: at some point I want the bees to spread this instead
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -2207,4 +2207,3 @@ datum/pathogeneffects/malevolent/detonation
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
 			return "There are stray synthflesh pieces all over the dish."
-
