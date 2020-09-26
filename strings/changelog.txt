@@ -1,4 +1,9 @@
 
+(t)sat sep 26 20
+(u)Asche
+(p)2245
+(e)🆕|feature
+(+)Added a new artifact type.
 (t)fri sep 25 20
 (u)pali
 (p)2144
