@@ -17,7 +17,7 @@
 			return "Something went wrong loading your bank! If the issue persists, try relogging or asking an admin for help."
 
 		var/thing_we_bought
-		if(usr.client.persistent_bank_item && usr.client.persistent_bank_item in persistent_bank_purchaseables)
+		if(usr.client.persistent_bank_item && (usr.client.persistent_bank_item in persistent_bank_purchaseables))
 			thing_we_bought = usr.client.persistent_bank_item
 		else
 			thing_we_bought = "Nothing!"
