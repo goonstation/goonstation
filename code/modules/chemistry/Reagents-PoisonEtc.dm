@@ -1398,7 +1398,7 @@ datum
 
 				// Hyperallergic
 				if(M.traitHolder.hasTrait("allergic"))
-					holder.add_reagent(src.id, min(4 + src.volume/15, 15) * mult)
+					holder.add_reagent(src.id, min(2 + src.volume/10, 15) * mult)
 				..()
 				return
 
