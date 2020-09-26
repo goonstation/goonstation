@@ -460,6 +460,16 @@
 			var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(src.loc)
 			C.amount = src.wires
 			src.wires = 0
+
+		else if (isweldingtool(W) && src.type == /obj/item/parts/robot_parts/chest)
+			var/obj/item/weldingtool/welder = W
+			if (welder.try_weld(user, 3, 3))
+				var/obj/item/clothing/suit/armor/makeshift/R = new /obj/item/clothing/suit/armor/makeshift(get_turf(user))
+				boutput(user, "<span class='notice'>You remove the internal support structures of the [src.name]. It's structural integrity is ruined, but you could squeeze into it now.</span>")
+				user.u_equip(src)
+				user.put_in_hand_or_drop(R)
+				qdel(src)
+
 		else ..()
 
 /obj/item/parts/robot_parts/chest/light
