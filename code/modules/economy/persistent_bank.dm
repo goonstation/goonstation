@@ -16,8 +16,14 @@
 		if (!usr.client)
 			return "Something went wrong loading your bank! If the issue persists, try relogging or asking an admin for help."
 
+		var/thing_we_bought
+		if(usr.client.persistent_bank_item && usr.client.persistent_bank_item in persistent_bank_purchaseables)
+			thing_we_bought = usr.client.persistent_bank_item
+		else
+			thing_we_bought = "Nothing!"
+
 		var/ret = "<p style=\"font-size:125%;\">BALANCE :  <b>[usr.client.persistent_bank]</b></p><br/>"
-		ret += "<p style=\"font-size:110%;\">HELD ITEM :  <b>[usr.client.persistent_bank_item ? usr.client.persistent_bank_item : "none"]</b></p><br/>"
+		ret += "<p style=\"font-size:110%;\">HELD ITEM :  <b>[thing_we_bought]</b></p><br/>"
 		ret += "Purchase an item for the upcoming round. Earn more cash by completing rounds.<br/>"
 		ret += "A purchased item will persist until you die or fail to escape the station. If you have a Held Item, buying a new one will replace it.<br/><br/>"
 		for(var/i=1, i <= persistent_bank_purchaseables.len, i++)
@@ -120,10 +126,15 @@
 	if (!purchase)
 		return
 
-	if (purchase.Create(src))
-		boutput( src, "<span class='notice'><b>[purchase.name] equipped successfully.</b></span>" )
+	if(purchase in persistent_bank_purchaseables)
+		if (purchase.Create(src))
+			boutput( src, "<span class='notice'><b>[purchase.name] equipped successfully.</b></span>" )
+		else
+			boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It will remain as your held item if possible.</b></span>" )
 	else
-		boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It will remain as your held item if possible.</b></span>" )
+		boutput( src, "<span class='notice'><b>The thing you purchased no longer exists.</b></span>" )
+		src.client.set_last_purchase(null)
+		return
 
 	if (src.client.persistent_bank_item != purchase.name) //Only sub_from_bank if the purchase does not match the Held Item
 		src.client.sub_from_bank(purchase)
