@@ -1,5 +1,9 @@
 
 (t)sat sep 26 20
+(u)Gannets
+(p)2271
+(e)🗺|mapping
+(+)Nuclear operative commanders now have an elevated level of access, required to open their office and the syndicate radio station on the Cairngorm.
 (u)Asche
 (p)2245
 (e)🆕|feature
