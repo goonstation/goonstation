@@ -61,6 +61,8 @@
 			if (src.donor.reagents && src.reagents)
 				src.donor.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.total_volume)
 
+			src.blood_id = src.donor.blood_id //keep our owner's blood (for mutantraces etc)
+
 			if (src.robotic)
 				src.donor.remove_stam_mod_regen("heart")
 				src.donor.remove_stam_mod_max("heart")
