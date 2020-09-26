@@ -19,7 +19,6 @@
 	var/delete_on_logout_reset = 1
 	var/obj/item/clothing/head/wig/wig = null
 	var/in_point_mode = 0
-
 	var/datum/hud/ghost_observer/hud
 
 	mob_flags = MOB_HEARS_ALL
@@ -154,6 +153,12 @@
 		var/obj/projectile/proj = mover
 		if (proj.proj_data.hits_ghosts)
 			return 0
+#ifdef HALLOWEEN
+	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder		
+	if (GH.spooking)
+		GH.stop_spooking()
+#endif
 
 	return 1
 
@@ -161,8 +166,20 @@
 	if (src.icon_state == "doubleghost")
 		return
 
+#ifdef HALLOWEEN
+	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder		
+		if (GH.spooking)
+			GH.stop_spooking()
+			//animate(src, )	explode?
+			src.visible_message("<span class='alert'><b>[src] is busted! Maybe?!</b></span>","<span class='alert'>You are knocked out of your powerful state and feel dead again!</span>")
+			log_shot(P,src)
+			return
+#endif
+
 	src.icon_state = "doubleghost"
 	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
+
 
 	if (wig)
 		wig.set_loc(src.loc)

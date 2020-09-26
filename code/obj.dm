@@ -189,6 +189,20 @@
 				src.throw_at(over_object, 7, 1)
 				logTheThing("combat", usr, null, "throws \the [src] with telekinesis.")
 
+		#ifdef HALLOWEEN
+			if (istype(x, /mob/dead/observer))	//ghost
+				if(!src.anchored && isitem(src))
+					var/obj/item/I = src
+					if (I.w_class > 3)
+						return
+					if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+						var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder		
+						if (GH.spooking)
+							src.throw_at(over_object, 3+I.w_class, 1)
+							logTheThing("combat", usr, null, "throws [src] with g_tk.")
+
+		#endif
+
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].type"] << type
 		serialize_icon(F, path, sandbox)
