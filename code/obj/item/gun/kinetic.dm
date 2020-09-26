@@ -366,7 +366,7 @@
 		setProperty("movespeed", 0.4)
 
 /obj/item/gun/kinetic/revolver
-	name = "CPA Predator MKII"
+	name = "Predator revolver"
 	desc = "A hefty combat revolver developed by Cormorant Precision Arms. Uses .357 caliber rounds."
 	icon_state = "revolver"
 	item_state = "revolver"
@@ -426,7 +426,7 @@
 
 
 /obj/item/gun/kinetic/detectiverevolver
-	name = "CPA Detective Special"
+	name = "Detective Special revolver"
 	desc = "A snubnosed police-issue revolver developed by Cormorant Precision Arms. Uses .38-Special rounds."
 	icon_state = "detective"
 	item_state = "detective"
@@ -454,7 +454,7 @@
 	var/hammer_cocked = 0
 
 	detective
-		name = "peacemaker"
+		name = "Peacemaker"
 		desc = "A barely adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so. Its calibur is obviously the wrong size though."
 		w_class = 2.0
 		force = 2.0
@@ -747,7 +747,7 @@
 		return
 
 /obj/item/gun/kinetic/silenced_22
-	name = "STL Orion"
+	name = "Orion silenced pistol"
 	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Uses .22 rounds."
 	icon_state = "silenced"
 	w_class = 2
@@ -929,8 +929,8 @@
 
 // agent
 /obj/item/gun/kinetic/pistol
-	name = "M1992 pistol"
-	desc = "A semi-automatic, 9mm caliber service pistol issued by the Syndicate."
+	name = "Antares pistol"
+	desc = "A semi-automatic, 9mm caliber service pistol developed by Almagest Weapons Fabrication."
 	icon_state = "9mm_pistol"
 	w_class = 2
 	force = 3
@@ -996,8 +996,8 @@
 
 // assault
 /obj/item/gun/kinetic/assault_rifle
-	name = "M19A4 assault rifle"
-	desc = "A modified Syndicate battle rifle fitted with several fancy, tactically useless attachments."
+	name = "Sirius assault rifle"
+	desc = "A bullpup assault rifle capable of semi-automatic and burst fire modes, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
@@ -1049,8 +1049,8 @@
 
 // heavy
 /obj/item/gun/kinetic/light_machine_gun
-	name = "M90 machine gun"
-	desc = "Looks pretty heavy to me."
+	name = "Canopus light machine gun"
+	desc = "A 100 round light machine gun, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "lmg"
 	item_state = "lmg"
@@ -1122,8 +1122,8 @@
 
 // demo
 /obj/item/gun/kinetic/grenade_launcher
-	desc = "A 40mm hand-held grenade launcher able to fire a variety of explosives."
-	name = "grenade launcher"
+	name = "Rigil grenade launcher"
+	desc = "A 40mm hand-held grenade launcher, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
@@ -1282,8 +1282,8 @@
 
 // sniper
 /obj/item/gun/kinetic/sniper
-	name = "S90A1 marksman's rifle"
-	desc = "The Syndicate standard issue bolt-action sniper rifle, for engaging hostiles at range."
+	name = "Arcturus sniper rifle"
+	desc = "A semi-automatic bullpup sniper rifle, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/64x32.dmi' // big guns get big icons
 	icon_state = "sniper"
 	item_state = "sniper"
