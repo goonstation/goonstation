@@ -846,6 +846,14 @@ var/list/figure_patreon_rarity = list(\
 		name = "\improper Tomato"
 		icon_state = "tomato"
 
+	zooblarskrippus
+		name = "\improper Zooblar Skrippus"
+		icon_state = "zooblarskrippus"
+
+	vivi
+		name = "\improper Vivi"
+		icon_state = "vivi"
+
 #ifdef XMAS
 	santa
 		name = "\improper Santa Claus"
