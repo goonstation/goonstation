@@ -21,7 +21,7 @@
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool)
-	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba, /obj/item/toy/plush/small/chris)
+	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba, /obj/item/toy/plush/small/chris, /obj/item/toy/plush/small/fancyflippers)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -192,6 +192,10 @@
 /obj/item/toy/plush/small/chris
 	name = "Chris the goat"
 	icon_state = "chris"
+
+/obj/item/toy/plush/small/fancyflippers
+	name = "Fancyflippers the gentoo penguin"
+	icon_state = "fancyflippers"
 
 /obj/item/toy/sword
 	name = "toy sword"
