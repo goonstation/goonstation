@@ -61,10 +61,10 @@ datum/microbody
 	// The amount of nutrition of each type required per unit of pathogen to continue cultivation.
 	var/amount = 0.07
 
-	// The amount of sequences worth of symptoms the microbody can support. -1 is unlimited
+	/// The amount of sequences worth of symptoms the microbody can support. -1 is unlimited
 	var/seqMax = -1
 
-	// The maximum amount of points that can be spread over the various stats
+	/// The maximum amount of points that can be spread over the various stats
 	var/maxStats = 100
 
 	disposing()
