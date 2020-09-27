@@ -741,6 +741,8 @@ datum
 					M.druggy = max(0, M.druggy)
 				if(holder.has_reagent("LSD"))
 					holder.remove_reagent("LSD", 5 * mult)
+				if(holder.has_reagent("lsd_bee"))
+					holder.remove_reagent("lsd_bee", 5 * mult)
 				if(holder.has_reagent("psilocybin"))
 					holder.remove_reagent("psilocybin", 5 * mult)
 				if(holder.has_reagent("crank"))

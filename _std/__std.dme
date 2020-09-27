@@ -66,6 +66,7 @@
 #include "defines\_frequency.dm"
 #include "macros\antag_popups.dm"
 #include "macros\antagchecks.dm"
+#include "macros\appearance.dm"
 #include "macros\area.dm"
 #include "macros\atmos.dm"
 #include "macros\client.dm"

@@ -1,4 +1,32 @@
 
+(t)sun sep 27 20
+(u)Tarmunora
+(e)⚖|balance
+(+)Increased the rate at which shock grenade's smoke will decay when zapping people
+(t)sat sep 26 20
+(u)Gannets
+(p)2271
+(e)🗺|mapping
+(+)Nuclear operative commanders now have an elevated level of access, required to open their office and the syndicate radio station on the Cairngorm.
+(u)Asche
+(p)2245
+(e)🆕|feature
+(+)Added a new artifact type.
+(t)fri sep 25 20
+(u)pali
+(p)2144
+(e)⚖|balance
+(*)Eating food now has a short cooldown
+(u)Superlagg
+(p)1998
+(e)🆕|feature
+(*)Lizards can now change up their colors if they eat enough human organs.
+(+)Added a mutation that lets people swap their hair colors around.
+(+)Increased the healing certain organs give when eaten by a werewolf.
+(u)Sidewinder7
+(p)2204
+(e)🆕🎨|feature, sprites
+(*)Added LSBee, a new psychedelic that's all the buzz right now!
 (t)wed sep 23 20
 (u)Phuzzy
 (p)2229

@@ -2725,10 +2725,12 @@ datum
 						multiplier /= 2
 					arcFlash(grenade, A, 0)
 
-			reaction_mob(var/mob/M, var/method = TOUCH)
-				var/vol = max(1,volume)
+			reaction_mob(var/mob/M, var/method = TOUCH, volume_passed)
+				var/vol = max(1,volume_passed)
 				if (method == TOUCH)
 					M.shock(src.holder.my_atom, min(7500 * multiplier, vol * 100 * multiplier), "chest", 1, 1)
+				if(istype(holder, /datum/reagents/fluid_group))
+					holder.remove_reagent(src.id, vol)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (reacting)

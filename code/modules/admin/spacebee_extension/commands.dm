@@ -57,6 +57,8 @@
 	execute(user, headline, body)
 		for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 			C.add_centcom_report("[command_name()] Update", body)
+		body = discord_emojify(body)
+		headline = discord_emojify(headline)
 		command_alert(body, headline, "sound/misc/announcement_1.ogg")
 		logTheThing("admin", "[user] (Discord)", null, "has created a command report: [body]")
 		logTheThing("diary", "[user] (Discord)", null, "has created a command report: [body]", "admin")

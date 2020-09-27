@@ -14,8 +14,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 	M.bioHolder.AddEffect(id)
 	return
 
-/datum/appearanceHolder
-	//Holds all the appearance information.
+/// Holds all the appearance information.
+/datum/appearanceHolder	
+
+	//_carry holds our "actual" color, in case it changes and we want the old one back
+	var/mob_color_flags = (HAS_HAIR_COLORED_HAIR)
+
 	var/customization_first_color_carry = "#101010" //Holds someone's original colors if they need to be changed temporarily
 	var/customization_first_color = "#101010"
 	var/customization_first = "Trimmed"
@@ -98,6 +102,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		customization_third_color_carry = toCopy.customization_third_color_carry
 		customization_third_color = toCopy.customization_third_color
 		customization_third = toCopy.customization_third
+
+		mob_color_flags = toCopy.mob_color_flags
 
 		e_color = toCopy.e_color
 

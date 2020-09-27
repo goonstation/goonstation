@@ -148,7 +148,7 @@
 		src.icon_state = "solar_panel"
 		// src.dir = angle2dir(adir)
 		src.dir = NORTH
-		animate(src, time=rand(0, 8 SECONDS), flags=ANIMATION_END_NOW | ANIMATION_PARALLEL)
+		animate(src, time=rand(1, 7 SECONDS))
 		animate(transform=matrix(adir, MATRIX_ROTATE), time=rand(1 SECOND, 4 SECONDS))
 
 /obj/machinery/power/solar/proc/update_solar_exposure()
@@ -179,7 +179,8 @@
 
 	if(adir != ndir)
 		var/old_adir = adir
-		adir = (360+adir+clamp(ndir-adir,-10,10))%360
+		var/max_move = rand(8, 12)
+		adir = (360 + adir + clamp(ndir - adir, -max_move, max_move)) % 360
 		if(adir != old_adir)
 			updateicon()
 
