@@ -1,4 +1,8 @@
 
+(t)sun sep 27 20
+(u)Tarmunora
+(e)⚖|balance
+(+)Increased the rate at which shock grenade's smoke will decay when zapping people
 (t)sat sep 26 20
 (u)Gannets
 (p)2271
