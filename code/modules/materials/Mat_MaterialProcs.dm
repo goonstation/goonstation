@@ -55,16 +55,17 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/ffart_add
 	desc = "It's very hard to move around."
 	max_generations = 1
-
+/// made it impossible to get the material close to a nanofab
+/*
 	execute(var/atom/owner)
 		if(istype(owner, /atom/movable))
 			var/atom/movable/A = owner
 			A.anchored = 1
 		return
-
+*/
 /datum/materialProc/ffart_pickup
 	execute(var/mob/M, var/obj/item/I)
-		SPAWN_DBG(1 SECOND)
+		SPAWN_DBG(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
 			M.remove_item(I)
 			I.set_loc(get_turf(I))
 		return
