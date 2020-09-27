@@ -28,7 +28,6 @@ export const uiCurrentUserPermissions = data => {
         && panelOpen) || (panelOpen && !userStates.isBorg)
     ),
   };
-
 };
 
 export const Airlock = (props, context) => {
