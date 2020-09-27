@@ -148,7 +148,7 @@
 		src.icon_state = "solar_panel"
 		// src.dir = angle2dir(adir)
 		src.dir = NORTH
-		animate(src, time=rand(0, 7 SECONDS))
+		animate(src, time=rand(1, 7 SECONDS))
 		animate(transform=matrix(adir, MATRIX_ROTATE), time=rand(1 SECOND, 4 SECONDS))
 
 /obj/machinery/power/solar/proc/update_solar_exposure()
