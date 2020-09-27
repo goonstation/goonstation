@@ -43,7 +43,7 @@ export const Airlock = (props, context) => {
           <Modal
             textAlign="center"
             fontSize="24px">
-            <Box width={30} height={5} align="center">
+            <Box width={25} height={5} align="center">
               Access Panel is Closed
             </Box>
           </Modal>
