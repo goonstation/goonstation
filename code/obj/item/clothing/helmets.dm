@@ -355,6 +355,7 @@
 	icon_state = "hardhat0"
 	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
 	var/on = 0
@@ -391,7 +392,7 @@
 			qdel(T)
 			qdel(src)
 			return
-		else 
+		else
 			..()
 
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
@@ -402,6 +403,7 @@
 	item_state = "helmet"
 	desc = "Somewhat protects your head from being bashed in."
 	protective_temperature = 500
+	body_parts_covered = HEAD
 
 	setupProperties()
 		..()
@@ -440,6 +442,7 @@
 	c_flags = COVERSEYES | COVERSMOUTH
 	seal_hair = 1
 	item_state = "helmet-sec-elite"
+	body_parts_covered = HEAD
 
 	setupProperties()
 		..()
@@ -459,6 +462,7 @@
 	icon_state = "camhat"
 	c_flags = SPACEWEAR
 	item_state = "camhat"
+	body_parts_covered = 0
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
 	var/camera_network = "Zeta"
@@ -568,6 +572,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "siren"
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 	mats = 8
 	abilities = list(/obj/ability_button/weeoo) // is near segway code in vehicle.dm
 	var/weeoo_in_progress = 0

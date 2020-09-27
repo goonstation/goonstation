@@ -22,42 +22,50 @@
 	desc = "A knit cap in red."
 	icon_state = "red"
 	item_state = "rgloves"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/blue
 	desc = "A knit cap in blue."
 	icon_state = "blue"
 	item_state = "bgloves"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/yellow
 	desc = "A knit cap in yellow."
 	icon_state = "yellow"
 	item_state = "ygloves"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/dolan
 	name = "Dolan's Hat"
 	desc = "A plsing hat."
 	icon_state = "dolan"
 	item_state = "dolan"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/green
 	desc = "A knit cap in green."
 	icon_state = "green"
 	item_state = "ggloves"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/black
 	desc = "A knit cap in black."
 	icon_state = "black"
 	item_state = "swat_gl"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/white
 	desc = "A knit cap in white."
 	icon_state = "white"
 	item_state = "lgloves"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/psyche
 	desc = "A knit cap in...what the hell?"
 	icon_state = "psyche"
 	item_state = "bgloves"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/serpico
 	icon_state = "serpico"
@@ -138,6 +146,7 @@
 	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
 	var/datum/light/light
 	var/on = 0
+	body_parts_covered = 0
 
 	New()
 		..()
@@ -215,6 +224,7 @@
 	c_flags = SPACEWEAR
 	item_state = "caphat"
 	desc = "A symbol of the captain's rank, and the source of all his power."
+	body_parts_covered = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 4)
@@ -224,6 +234,7 @@
 	icon_state = "centcom"
 	c_flags = SPACEWEAR
 	item_state = "centcom"
+	body_parts_covered = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 4)
@@ -236,6 +247,7 @@
 	desc = "A dashing white sea captain's hat. Probably blown off of some poor sod's head in a storm."
 	icon_state = "sea_captain"
 	item_state = "sea_captain"
+	body_parts_covered = 0
 
 	comm_officer_hat //Need the same hat but with different description
 		desc = "Hat that is awarded to only the finest navy officers. And a few others."
@@ -245,6 +257,7 @@
 	desc = "Someone who wears this will look very smart."
 	icon_state = "detective"
 	item_state = "det_hat"
+	body_parts_covered = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -380,6 +393,7 @@
 	desc = "A powdered wig"
 	icon_state = "pwig"
 	item_state = "pwig"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/that
 	name = "hat"
@@ -387,6 +401,7 @@
 	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "tophat"
 	item_state = "that"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/that/purple
 	name = "purple hat"
@@ -396,6 +411,7 @@
 	item_state = "pthat"
 	c_flags = SPACEWEAR
 	protective_temperature = 500
+	body_parts_covered = 0
 
 	setupProperties()
 		..()
@@ -412,6 +428,7 @@
 	protective_temperature = 500
 	mat_changename = 0
 	mat_appearances_to_ignore = list("gold") // we already look fine ty
+	body_parts_covered = 0
 
 	setupProperties()
 		..()
@@ -429,12 +446,14 @@
 	item_state = "chefhat"
 	wear_image_icon = 'icons/mob/fruithat.dmi'
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 
 /obj/item/clothing/head/souschefhat
 	name = "Sous-Chef's hat"
 	icon_state = "souschef"
 	item_state = "chefhat" //TODO: unique inhand sprite?
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 
 /obj/item/clothing/head/dramachefhat
 	name = "Dramatic Chef's Hat"
@@ -442,6 +461,7 @@
 	icon_state = "drama"
 	item_state = "chefhat" //TODO: unique inhand sprite?
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 
 /obj/item/clothing/head/mailcap
 	name = "Mailman's Hat"
@@ -449,6 +469,7 @@
 	icon_state = "mailcap"
 	item_state = "mailcap"
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 
 /obj/item/clothing/head/policecap
 	name = "Police Hat"
@@ -456,6 +477,7 @@
 	icon_state = "mailcap"
 	item_state = "mailcap"
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 
 /obj/item/clothing/head/plunger
 	name = "plunger"
@@ -464,6 +486,7 @@
 	icon_state = "plunger"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "plunger"
+	body_parts_covered = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 2)
@@ -474,6 +497,7 @@
 	icon_state = "hosberet"
 	item_state = "hosberet"
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -484,6 +508,7 @@
 	icon_state = "ntberet"
 	item_state = "ntberet"
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 
 /obj/item/clothing/head/XComHair
 	name = "Rookie Scalp"
@@ -491,6 +516,7 @@
 	icon_state = "xcomhair"
 	item_state = "xcomhair"
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 
 /obj/item/clothing/head/apprentice
 	name = "Apprentice's Cap"
@@ -498,6 +524,7 @@
 	icon_state = "apprentice"
 	item_state = "apprentice"
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 
 	dan
 		name = "Royal Apprentice's Cap"
@@ -519,12 +546,14 @@
 	desc = "Complete with peyois. Perfect for Purim!"
 	icon_state = "rabbihat"
 	item_state = "that"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/formal_turban
 	name = "formal turban"
 	desc = "A very stylish formal turban."
 	icon_state = "formal_turban"
 	item_state = "egg5"
+	body_parts_covered = 0
 
 	setupProperties()
 		..()
@@ -536,6 +565,7 @@
 	desc = "A very comfortable cotton turban."
 	icon_state = "turban"
 	item_state = "that"
+	body_parts_covered = 0
 
 	setupProperties()
 		..()
@@ -553,6 +583,7 @@
 	desc = "Tip your fedora to the fair maiden and win her heart. A foolproof plan."
 	icon_state = "fdora"
 	item_state = "fdora"
+	body_parts_covered = 0
 
 	New()
 		..()
@@ -564,12 +595,14 @@
 	icon_state = "cowboy"
 	item_state = "cowboy"
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 
 /obj/item/clothing/head/fancy // placeholder icons until someone sprites an actual fancy hat
 	name = "fancy hat"
 	icon_state = "rank-fancy"
 	item_state = "that"  // todo actual inhands for this and children ?
 	desc = "What do you mean this is hat isn't fancy?"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/fancy/captain
 	name = "captain's hat"
@@ -648,7 +681,7 @@
 	icon_state = "paper"
 	item_state = "lgloves"
 	see_face = 1
-	body_parts_covered = HEAD
+	body_parts_covered = 0
 
 /obj/item/paper_hat/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/pen))
@@ -666,14 +699,14 @@
 	item_state = "lgloves"
 	c_flags = SPACEWEAR
 	see_face = 1
-	body_parts_covered = HEAD
+	body_parts_covered = 0
 
 /obj/item/clothing/head/crown
 	name = "crown"
 	desc = "Yeah, big deal, you got a fancy crown, what does that do for you against the <b>HORRORS OF SPACE</b>, tough guy?"
 	icon_state = "crown"
 	see_face = 1
-	body_parts_covered = HEAD
+	body_parts_covered = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -694,6 +727,7 @@
 	throw_return = 1
 	throw_speed = 1
 	var/turf/throw_source = null
+	body_parts_covered = 0
 
 	attack_self (mob/user as mob)
 		user.visible_message("<span class='combat'><b>[user] fiddles with [src]!</b></span>")
@@ -771,6 +805,7 @@
 	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "bigtex"
 	item_state = "bigtex"
+	body_parts_covered = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -780,6 +815,7 @@
 	desc = "A blue beret with no affiliations to NanoTrasen."
 	icon_state = "beret_base"
 	c_flags = SPACEWEAR
+	body_parts_covered = 0
 
 	New()
 		..()
@@ -795,6 +831,7 @@
 /obj/item/clothing/head/beret/prisoner
 	name = "prisoner's beret"
 	desc = "This is a prisoner's beret. <i>Allons enfants de la Patrie, Le jour de gloire est arrivé!</i>"
+	body_parts_covered = 0
 
 	New()
 		..()
@@ -804,6 +841,7 @@
 	name = "bandana"
 	desc = "A bandana. You've seen space action stars wear these things."
 	icon_state = "bandana_base"
+	body_parts_covered = 0
 
 	random_color
 		desc = "A colorful bandana."
@@ -821,6 +859,7 @@
 	name = "laurels"
 	desc = "Symbols of victory and achievement."
 	icon_state = "laurels"
+	body_parts_covered = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -835,6 +874,7 @@
 	desc = "A hat that looks like a purple butt."
 	icon_state = "purplebutt"
 	c_flags = COVERSEYES
+	body_parts_covered = 0
 
 // BIGHATS - taller than normal hats! Like fruithat.dmi but bigger! To a max icon size of 64px
 
@@ -844,6 +884,7 @@
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "tophat"
 	w_class = 4
+	body_parts_covered = 0
 
 /obj/item/clothing/head/bighat/syndicate
 	name = "syndicate hat"
@@ -955,11 +996,13 @@
 	desc = "To hide most of your emotionless facial features."
 	icon_state = "witchfinder"
 	item_state = "witchfinder"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/aviator
 	name = "aviator hat and goggles"
 	desc = "Won't you run, live to fly, fly to live, Aces high."
 	icon_state = "aviator"
+	body_parts_covered = 0
 
 	setupProperties()
 		..()
@@ -981,6 +1024,7 @@
 	desc = "It's good to hide away from the sun. With this hat."
 	icon_state = "sunhatb"
 	item_state = "sunhatb"
+	body_parts_covered = 0
 	var/max_uses = 1 // If can_be_charged == 1, how many charges can this stupid hat store?
 	var/stunready = 0
 	var/uses = 0 //this is stupid but I love it
@@ -1048,12 +1092,14 @@
 	desc = "Old diagnostic device which allowed shadow free inspection of the patient."
 	icon_state = "headmirror"
 	item_state = "headmirror"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/nursehat
 	name = "nurse hat"
 	desc = "A hat often worn by a nurse. And nurse enthusiasts."
 	icon_state = "nursehat"
 	item_state = "nursehat"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/chemhood
 	name = "chemical protection hood"
@@ -1075,12 +1121,14 @@
 	icon_state = "jester"
 	item_state = "jester"
 	seal_hair = 1
+	body_parts_covered = 0
 
 /obj/item/clothing/head/party
 	name = "party hat"
 	icon_state = "party-cardboard"
 	item_state = "party-cardboard"
 	desc = "A party hat made of cardboard. How tacky."
+	body_parts_covered = 0
 
 /obj/item/clothing/head/party/random
 	desc = "All the coolest party people wear these hats!"
@@ -1114,6 +1162,7 @@
 	item_state = "cat-gray"
 	w_class = 1.0
 	throwforce = 0
+	body_parts_covered = 0
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		..()
@@ -1177,15 +1226,18 @@
 	desc = "Do both gambling and accounting with style."
 	icon_state = "pokervis"
 	item_state = "pokervis"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/graduation_cap
 	name = "graduation cap"
 	desc = "Hey, kid. You did it. Despite everything, you persevered. I'm proud of you."
 	icon_state = "graduation_cap"
 	item_state = "graduation_cap"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/danberet
 	name = "Discount Dan's beret"
 	desc = "A highly advanced textile experience!"
 	icon_state = "danberet"
 	item_state = "danberet"
+	body_parts_covered = 0
