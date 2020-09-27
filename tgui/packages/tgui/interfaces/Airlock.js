@@ -25,7 +25,7 @@ export const uiCurrentUserPermissions = data => {
     */
     accessPanel: (
       (userStates.isBorg && userStates.distance <= 1
-        && panelOpen) || (userStates.isCarbon)
+        && panelOpen) || (panelOpen && !userStates.isBorg)
     ),
   };
 
