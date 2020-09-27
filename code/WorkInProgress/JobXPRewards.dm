@@ -123,7 +123,7 @@ mob/verb/checkrewards()
 		return
 
 /datum/jobXpReward/janitor10
-	name = "Holographic signs (WIP)"
+	name = "Holographic Signs"
 	desc = "Gives access to a hologram emitter loaded with various signs."
 	required_levels = list("Janitor"=10)
 	icon_state = "holo"
@@ -140,7 +140,6 @@ mob/verb/checkrewards()
 /datum/jobXpReward/janitor15
 	name = "Orange Mop"
 	desc = "A mop! And it's orange! Amazing."
-	icon_state = "tsunami"
 	required_levels = list("Janitor"=15)
 	claimable = 1
 	claimPerRound = 1
