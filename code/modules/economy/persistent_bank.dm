@@ -16,7 +16,7 @@
 		if (!usr.client)
 			return "Something went wrong loading your bank! If the issue persists, try relogging or asking an admin for help."
 
-		if(usr.client.persistent_bank_item && (usr.client.persistent_bank_item in persistent_bank_purchaseables))
+		if(usr.client.persistent_bank_item && !(usr.client.persistent_bank_item in persistent_bank_purchaseables))
 			usr.client.persistent_bank_item = null
 
 		var/ret = "<p style=\"font-size:125%;\">BALANCE :  <b>[usr.client.persistent_bank]</b></p><br/>"
