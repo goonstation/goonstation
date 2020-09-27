@@ -7,6 +7,7 @@
 
 import { Fragment } from "inferno";
 import { useBackend, useLocalState } from "../backend";
+import { truncate } from '../format';
 import { Button, LabeledList, Section, Modal, Flex, Tabs, Box, NoticeBox, Divider } from "../components";
 import { Window } from "../layouts";
 
@@ -38,10 +39,19 @@ export const Airlock = (props, context) => {
     <Window
       theme="ntos">
       <Window.Content>
-        {(userPerms["airlock"] && userPerms["accessPanel"])
+        {(!userPerms["airlock"] && !userPerms["accessPanel"]) && (
+          <Modal
+            textAlign="center"
+            fontSize="24px">
+            <Box width={30} height={5} align="center">
+              Access Panel is Closed
+            </Box>
+          </Modal>
+        )}
+        {(!!userPerms["airlock"] && !!userPerms["accessPanel"])
           && <AirlockAndAccessPanel />
-          || userPerms["airlock"] && <AirlockControlsOnly />
-          || userPerms["accessPanel"] && <AccessPanelOnly />}
+          || !!userPerms["airlock"] && <AirlockControlsOnly />
+          || !!userPerms["accessPanel"] && <AccessPanelOnly />}
       </Window.Content>
     </Window>
   );
@@ -64,7 +74,7 @@ const AirlockAndAccessPanel = (props, context) => {
     <Window
       width={354}
       height={495}
-      title={`Airlock - ${name}`}>
+      title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         <Tabs>
           <Tabs.Tab
@@ -126,7 +136,7 @@ const AirlockControlsOnly = (props, context) => {
     <Window
       width={315}
       height={375}
-      title={`Airlock - ${name}`}>
+      title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         {(!canAiControl || !!noPower) && (
           <Modal
@@ -158,7 +168,7 @@ const AccessPanelOnly = (props, context) => {
     <Window
       width={354}
       height={460}
-      title={`Airlock - ${name}`}>
+      title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         <AccessPanel />
       </Window.Content>
@@ -387,8 +397,10 @@ const Hack = (props, context) => {
       fitted py={0.5} pt={2}
       align="center">
       <Button
+        className="Airlock-hack-button"
         fontSize="29px"
-        disabled={!aiHacking}
+        backgroundColor="#00FF00"
+        disabled={aiHacking}
         textColor="black"
         textAlign="center"
         width={16}
