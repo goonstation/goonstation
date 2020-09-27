@@ -115,23 +115,17 @@
 		setProperty("heatprot", 7)
 		setProperty("disorient_resist_eye", 10)
 
-/obj/item/clothing/mask/gasNT
+/obj/item/clothing/mask/gas/NTSO
 	name = "NT-SO gas mask"
 	desc = "A close-fitting CBRN mask with dual filters and a tinted lens, designed to protect elite Nanotrasen personnel from environmental threats."
 	icon_state = "gas_mask_NT"
-	c_flags = SPACEWEAR | COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
-	w_class = 3.0
-	see_face = 0.0
 	item_state = "gas_mask_NT"
-	permeability_coefficient = 0.01
 	color_r = 0.8 // cool blueberry nanotrasen tint provides disorientation resist
 	color_g = 0.8
 	color_b = 1
 
 	setupProperties()
 		..()
-		setProperty("coldprot", 7)
-		setProperty("heatprot", 7)
 		setProperty("disorient_resist_eye", 20)
 
 /obj/item/clothing/mask/moustache
