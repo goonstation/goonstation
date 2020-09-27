@@ -1843,7 +1843,6 @@
 	lockedTries = 8
 	stability_loss = 20
 	cooldown = 0
-	var/last_moved = 0;
 	var/last_moved_world = 0;
 	var/active = 0
 	ability_path = /datum/targetable/geneticsAbility/chameleon
@@ -1865,25 +1864,20 @@
 	OnLife()
 		if(..()) return
 		if(!src.active) return
-		boutput(world, "onLife")
 		if(isliving(owner))
 			var/mob/living/L = owner
-			if (last_moved == owner.l_move_time)
-				boutput(world, "1")
-				if (last_moved_world == 0)
-					boutput(world, "2")
-					last_moved_world = world.timeofday
-					return
-				if ((world.timeofday - last_moved_world) >= 30 && can_act(owner))
-					boutput(world, "3")
-					L.UpdateOverlays(overlay_image, id)
-					L.invisibility = 1
+			if ((world.timeofday - last_moved_world) >= 30 && can_act(owner))
+				boutput(world, "cloak")
+				L.UpdateOverlays(overlay_image, id)
+				L.invisibility = 1
 
 	proc/decloak()
-		var/mob/living/L = owner
-		last_moved_world = world.timeofday
-		L.UpdateOverlays(null, id)
-		L.invisibility = 0
+		boutput(world, "decloak")
+		if(isliving(owner))
+			var/mob/living/L = owner
+			last_moved_world = world.timeofday
+			L.UpdateOverlays(null, id)
+			L.invisibility = 0
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"
@@ -1899,13 +1893,13 @@
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0
-			CH.UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+			CH.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE, COMSIG_ATTACKBY))
 			CH.decloak()
 		else
 			boutput(usr, "You start using your chameleon cloaking.")
-			CH.last_moved_world = 0
+			CH.last_moved_world = world.timeofday
 			CH.active = 1
-			CH.RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED), /datum/bioEffect/power/chameleon/proc/decloak)
+			CH.RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE, COMSIG_ATTACKBY), /datum/bioEffect/power/chameleon/proc/decloak, FALSE)
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
