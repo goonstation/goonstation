@@ -109,6 +109,19 @@ mob/verb/checkrewards()
 
 //JANITOR
 
+/datum/jobXpReward/janitor5
+	name = "Red Bucket"
+	desc = "A bucket! And it's red! Wow."
+	required_levels = list("Janitor"=5)
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/reagent_containers/glass/bucket/red/T = new/obj/item/reagent_containers/glass/bucket/red(get_turf(C.mob))
+		T.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(T)
+		return
+
 /datum/jobXpReward/janitor10
 	name = "Holographic signs (WIP)"
 	desc = "Gives access to a hologram emitter loaded with various signs."
@@ -120,6 +133,33 @@ mob/verb/checkrewards()
 	activate(var/client/C)
 		var/obj/item/holoemitter/T = new/obj/item/holoemitter(get_turf(C.mob))
 		T.ownerKey = C.key
+		T.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(T)
+		return
+
+/datum/jobXpReward/janitor15
+	name = "Orange Mop"
+	desc = "A mop! And it's orange! Amazing."
+	icon_state = "tsunami"
+	required_levels = list("Janitor"=15)
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/mop/orange/T = new/obj/item/mop/orange(get_turf(C.mob))
+		T.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(T)
+		return
+
+/datum/jobXpReward/janitor20
+	name = "Head of Sanitation beret"
+	desc = "You've seen it all.  You've seen entirely too much. Was it worth it? Maybe this hat will help you forget..."
+	required_levels = list("Janitor"=20)
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/clothing/head/janiberet/T = new/obj/item/clothing/head/janiberet(get_turf(C.mob))
 		T.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(T)
 		return
@@ -151,12 +191,6 @@ mob/verb/checkrewards()
 // 		T.set_loc(get_turf(C.mob))
 // 		C.mob.put_in_hand(T)
 // 		return
-
-/datum/jobXpReward/janitor20
-	name = "(TBI)"
-	desc = "(TBI)"
-	required_levels = list("Janitor"=20)
-	icon_state = "?"
 
 //JANITOR END
 
