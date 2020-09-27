@@ -929,8 +929,8 @@
 
 // agent
 /obj/item/gun/kinetic/pistol
-	name = "Antares pistol"
-	desc = "A semi-automatic, 9mm caliber service pistol developed by Almagest Weapons Fabrication."
+	name = "Branwen pistol"
+	desc = "A semi-automatic, 9mm caliber service pistol, developed by Mabinogi Firearms Company."
 	icon_state = "9mm_pistol"
 	w_class = 2
 	force = 3
@@ -946,8 +946,8 @@
 		..()
 
 /obj/item/gun/kinetic/tranq_pistol
-	name = "tranquilizer pistol"
-	desc = "A silenced tranquilizer pistol chambered in .308 caliber."
+	name = "Gwydion tranquilizer pistol"
+	desc = "A silenced tranquilizer pistol chambered in .308 caliber, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"
 	w_class = 2
@@ -1049,7 +1049,7 @@
 
 // heavy
 /obj/item/gun/kinetic/light_machine_gun
-	name = "Canopus light machine gun"
+	name = "Antares light machine gun"
 	desc = "A 100 round light machine gun, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "lmg"
@@ -1282,7 +1282,7 @@
 
 // sniper
 /obj/item/gun/kinetic/sniper
-	name = "Arcturus sniper rifle"
+	name = "Betelgeuse sniper rifle"
 	desc = "A semi-automatic bullpup sniper rifle, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/64x32.dmi' // big guns get big icons
 	icon_state = "sniper"
