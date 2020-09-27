@@ -1069,8 +1069,8 @@
 	spread_angle = 8
 	can_dual_wield = 0
 
-	slowdown = 5
-	slowdown_time = 10
+	slowdown = 0.5
+	slowdown_time = 3
 
 	two_handed = 1
 	w_class = 4
