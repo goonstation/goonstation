@@ -18,7 +18,7 @@
 
 		if(usr.client.persistent_bank_item && !(usr.client.persistent_bank_item in persistent_bank_purchaseables))
 			usr.client.set_last_purchase(null)
-			boutput( src, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>"
+			boutput( src, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
 
 		var/ret = "<p style=\"font-size:125%;\">BALANCE :  <b>[usr.client.persistent_bank]</b></p><br/>"
 		ret += "<p style=\"font-size:110%;\">HELD ITEM :  <b>[usr.client.persistent_bank_item ? usr.client.persistent_bank_item : "Nothing!"]</b></p><br/>"
