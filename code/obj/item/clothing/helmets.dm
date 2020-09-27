@@ -510,7 +510,7 @@
 		setProperty("disorient_resist_eye", 100)
 
 	proc/flip_down()
-		c_flags = SPACEWEAR | COVERSEYES | UNCHOKE
+		c_flags |= (COVERSEYES | UNCHOKE)
 		setProperty("meleeprot_head", 2)
 		setProperty("disorient_resist_eye", 100)
 
