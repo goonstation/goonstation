@@ -16,14 +16,11 @@
 		if (!usr.client)
 			return "Something went wrong loading your bank! If the issue persists, try relogging or asking an admin for help."
 
-		var/thing_we_bought
 		if(usr.client.persistent_bank_item && (usr.client.persistent_bank_item in persistent_bank_purchaseables))
-			thing_we_bought = usr.client.persistent_bank_item
-		else
-			thing_we_bought = "Nothing!"
+			usr.client.persistent_bank_item = null
 
 		var/ret = "<p style=\"font-size:125%;\">BALANCE :  <b>[usr.client.persistent_bank]</b></p><br/>"
-		ret += "<p style=\"font-size:110%;\">HELD ITEM :  <b>[thing_we_bought]</b></p><br/>"
+		ret += "<p style=\"font-size:110%;\">HELD ITEM :  <b>[usr.client.persistent_bank_item ? usr.client.persistent_bank_item : "Nothing!"]</b></p><br/>"
 		ret += "Purchase an item for the upcoming round. Earn more cash by completing rounds.<br/>"
 		ret += "A purchased item will persist until you die or fail to escape the station. If you have a Held Item, buying a new one will replace it.<br/><br/>"
 		for(var/i=1, i <= persistent_bank_purchaseables.len, i++)
