@@ -1816,7 +1816,6 @@
 				set_frequency(newfreq)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
-
 		return
 
 	proc/set_frequency(new_frequency)
