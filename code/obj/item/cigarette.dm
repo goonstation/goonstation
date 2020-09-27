@@ -29,6 +29,7 @@
 	var/numpuffs = 40 //number of times the cig can dispense reagents
 	rand_pos = 1
 	use_bloodoverlay = 0
+	body_parts_covered = 0
 
 	setupProperties()
 		..()
