@@ -1,5 +1,9 @@
 
 (t)mon sep 28 20
+(u)UrsulaMajor
+(p)2302
+(e)⚖|balance
+(*)Security Officers no longer have supply console access
 (u)Nebulacrity
 (p)2112
 (e)🆕🎨|feature, sprites
