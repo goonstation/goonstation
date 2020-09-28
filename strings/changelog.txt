@@ -1,5 +1,10 @@
 
 (t)mon sep 28 20
+(u)Nebulacrity
+(p)2112
+(e)🆕🎨|feature, sprites
+(*)Added a new mutation: Achromia. A mild dosage of colorlessness doesn't hurt.
+(*)Added a new mutation: Noir. Colorlessness taken to the extreme has its benefits.
 (u)Tarmunora
 (p)2292
 (e)⚖|balance
