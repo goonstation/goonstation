@@ -1,5 +1,9 @@
 
 (t)mon sep 28 20
+(u)Tarmunora
+(p)2292
+(e)⚖|balance
+(*)Rebalanced a number of nukie guns. See PR for details.
 (u)Gannets
 (p)2291
 (e)🆕|feature
