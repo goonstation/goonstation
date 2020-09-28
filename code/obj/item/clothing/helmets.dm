@@ -510,7 +510,7 @@
 		setProperty("disorient_resist_eye", 100)
 
 	proc/flip_down()
-		src.c_flags |= COVERSEYES | BLOCKCHOKE
+		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
