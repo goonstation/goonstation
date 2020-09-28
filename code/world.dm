@@ -883,7 +883,7 @@ var/f_color_selector_handler/F_Color_Selector
 		else elapsed = "welp"
 		s["elapsed"] = elapsed
 		var/n = 0
-		for(var/client/C)
+		for(var/client/C in clients)
 			s["player[n]"] = "[(C.stealth || C.alt_key) ? C.fakekey : C.key]"
 			n++
 		s["players"] = n
