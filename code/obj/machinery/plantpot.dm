@@ -1783,6 +1783,18 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 		else
 			light.disable()
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			if(!src.anchored)
+				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				src.anchored = 1
+			else
+				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				src.anchored = 0
+			return
+
 /obj/machinery/hydro_mister
 	name = "\improper Botanical Mister"
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
