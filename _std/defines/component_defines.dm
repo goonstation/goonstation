@@ -102,9 +102,6 @@
 //attack_X signals
 /// Attacking wiht an item in-hand
 #define COMSIG_ATTACKBY "attackby"
-/// Bitflag return of an attackby proc successfuly reacting (based on it's own conditions)
-/// I dunno, feel free to improve this; make global bitflag returns for all components.
-#define COMSIGBIT_ATTACKBY_COMPLETE 1
 
 
 // projectile signals
