@@ -16,7 +16,7 @@
 		processing_items += src
 
 	proc/process()
-		if (world.time >= created_time + 150) //15secs
+		if (world.time >= created_time + 15 SECONDS)
 			var/obj/concrete_wall/C = new(get_turf(src))
 			C.update_strength(c_quality)
 			qdel(src)
@@ -33,28 +33,21 @@
 			boutput(M, "<span class='alert'>Running through the wet concrete is slowing you down...</span>")
 
 	attack_hand(var/mob/user)
-		if (health <= 0)
-			user.visible_message("<span class='alert'>[user] breaks apart the lump of wet concrete with their bare hands!</span>")
-			qdel(src)
-			return
 		health--
-		if (health <= 0)
-			user.visible_message("<span class='alert'>[user] breaks apart the lump of wet concrete with their bare hands!</span>")
-			qdel(src)
-			return
+		if (checkShouldBreak(user)) return 1
 		..()
 
 	attackby(var/obj/item/I, var/mob/user)
-		if (health <= 0)
-			user.visible_message("<span class='alert'>[user] breaks apart the lump of wet concrete!!</span>")
-			qdel(src)
-			return
 		health -= 2
+		if (checkShouldBreak(user)) return 1
+		..()
+
+	proc/checkShouldBreak(var/mob/user)
 		if (health <= 0)
 			user.visible_message("<span class='alert'>[user] breaks apart the lump of wet concrete!</span>")
 			qdel(src)
-			return
-		..()
+			return 	TRUE
+		return FALSE
 
 /obj/concrete_wall
 	name = "concrete wall"
@@ -68,7 +61,7 @@
 	flags = FPRINT | CONDUCT | USEDELAY
 	var/strength = 0 // 1=poor, 2=ok, 3=good, 4=perfect
 	var/health = 30 //health num modified in New, 30 for poor, 60 for ok, 90 for good, 120 for perfect
-	var/max_health = 0 //allows our description to show how close it is to dying
+	var/max_health = 30 //allows our description to show how close it is to dying
 
 	New()
 		..()
@@ -79,8 +72,8 @@
 			loc:ReplaceWithConcreteFloor()
 
 		update_nearby_tiles(1)
-		SPAWN_DBG(1)
-			RL_SetOpacity(1)
+		sleep(1)
+		RL_SetOpacity(1)
 
 	disposing()
 		RL_SetOpacity(0)
@@ -94,11 +87,7 @@
 			health *= strength
 			max_health = health
 
-	ex_act(severity) //hopefully this works
-		if (health <= 0)
-			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
-			qdel(src)
-			return
+	ex_act(severity)
 		switch(severity)
 			if (3)
 				health -= 40
@@ -107,16 +96,14 @@
 			if (1)
 				qdel(src)
 				return
-		if (health <= 0)
-			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
-			qdel(src)
-			return
+		checkShouldBreak(user = null)
 
 	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 		user.lastattacked = src
 		if (user.bioHolder.HasEffect("hulk") && (prob(100 - strength*20))) //hulk smash
 			user.visible_message("<span class='alert'>[user] smashes through the concrete wall! OH YEAH!!!</span>")
+			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
 			qdel(src)
 		else
 			boutput(user, "<span class='alert'>You hit the concrete wall and really hurt your hand!</span>")
@@ -127,18 +114,17 @@
 	attackby(var/obj/item/I, var/mob/user)
 		src.add_fingerprint(user)
 		user.lastattacked = src
-		if (health <= 0)
-			user.visible_message( "<span class='alert'>[user] smashes through the concrete wall.</span>", "<span class='notice'>You smash through the concrete wall with \the [I].</span>")
-			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
-			qdel(src)
-			return
 		health -= I.force
+		if (checkShouldBreak(user)) return 1
+		..()
+
+	proc/checkShouldBreak(var/mob/user)
 		if (health <= 0)
-			user.visible_message( "<span class='alert'>[user] smashes through the concrete wall.</span>", "<span class='notice'>You smash through the concrete wall with \the [I].</span>")
+			if(user) user.visible_message( "<span class='alert'>[user] smashes through the concrete wall.</span>", "<span class='notice'>You smash through the concrete wall.</span>")
 			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
 			qdel(src)
-			return
-		..()
+			return 	TRUE
+		return FALSE
 
 	proc/update_nearby_tiles(need_rebuild)
 		var/turf/simulated/source = loc
