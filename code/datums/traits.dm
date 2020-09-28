@@ -746,6 +746,20 @@ obj/trait/pilot
 	points = 1
 	isPositive = 0
 
+//Flourish felt like this was bloating the traits so I've disabled it for now.
+///obj/trait/color_shift
+//	name = "Color Shift (0)"
+//	cleanName = "Color Shift"
+//	desc = "You are more depressing on the outside but more colorful on the inside."
+//	id = "color_shift"
+//	points = 0
+//	isPositive = 1
+//	
+//	onAdd(var/mob/owner)	Not enforcing any of them with onLife because Hemochromia is a multi-mutation thing while Achromia would darken the skin color every tick until it's pitch black.
+//		if(owner.bioHolder)
+//			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
+//			owner.bioHolder.AddEffect("hemochromia_unknown", 0, 0, 0, 1)
+
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
 	cleanName = "Slow Metabolism"
