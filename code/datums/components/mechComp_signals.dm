@@ -311,7 +311,7 @@
 				else
 					//must be a custom config specific to the device, so let the device handle it
 					var/path = src.configs[selected_config]
-					var/ret = call(parent, path)(W, user)
+					call(parent, path)(W, user)
 
 //If it's a multi-tool, let the user configure the device.
 /datum/component/mechanics_holder/proc/compatible()
