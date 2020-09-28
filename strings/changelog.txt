@@ -1,5 +1,10 @@
 
 (t)mon sep 28 20
+(u)Tarmunora
+(p)2267
+(e)⚖🆕|balance, feature
+(*)Heart transplants only move a limited amount of reagents from the patient
+(+)Skeletons have calcium blood.
 (u)Superlagg
 (p)2260
 (e)🔄🎨|rework, sprites
