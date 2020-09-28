@@ -615,7 +615,7 @@
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 /atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
 	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
-		if (SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user) & COMSIGBIT_ATTACKBY_COMPLETE ? 0 : 1)
+		if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user))
 			return
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
 	return
