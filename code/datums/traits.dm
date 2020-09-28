@@ -1,6 +1,6 @@
 //Unlockable traits? tied to achievements?
 #define TRAIT_STARTING_POINTS 1 //How many "free" points you get
-#define TRAIT_MAX 6			    //How many traits people can select at most.
+#define TRAIT_MAX 7			    //How many traits people can select at most.
 
 /proc/getTraitById(var/id)
 	return traitList[id]
@@ -1030,3 +1030,67 @@ obj/trait/pilot
 	id = "atheist"
 	points = 0
 	isPositive = 0
+
+/obj/trait/lizard
+	name = "Reptilian (-1) \[Species\]"
+	cleanName = "Reptilian"
+	icon_state = "lizardT"
+	desc = "You are an abhorrent humanoid reptile, cold-blooded and ssssibilant."
+	id = "lizard"
+	points = -1
+	isPositive = 1
+	category = "species"
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(/datum/mutantrace/lizard)
+		return
+
+/obj/trait/cow
+	name = "Bovine (-1) \[Species\]"
+	cleanName = "Bovine"
+	icon_state = "cowT"
+	desc = "You are a hummman, always have been, always will be, and any claimmms to the contrary are mmmoooonstrous lies."
+	id = "cow"
+	points = -1
+	isPositive = 1
+	category = "species"
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(/datum/mutantrace/cow)
+		return
+
+/obj/trait/skeleton
+	name = "Skeleton (-2) \[Species\]"
+	cleanName = "Skeleton"
+	icon_state = "skeletonT"
+	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
+	id = "skeleton"
+	points = -2
+	isPositive = 1
+	category = "species"
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(/datum/mutantrace/skeleton)
+		return
+
+/obj/trait/roach
+	name = "Roach (-1) \[Species\]"
+	cleanName = "Roach"
+	icon_state = "roachT"
+	desc = "One space-morning, on the shuttle-ride to the station, you found yourself transformed in your seat into a horrible vermin. A cockroach, specifically."
+	id = "roach"
+	points = -1
+	isPositive = 1
+	category = "species"
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(/datum/mutantrace/roach)
+		return
