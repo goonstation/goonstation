@@ -515,7 +515,7 @@
 		setProperty("disorient_resist_eye", 100)
 
 	proc/flip_up()
-		src.c_flags &= SPACEWEAR
+		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
 
