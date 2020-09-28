@@ -1041,9 +1041,11 @@
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
 		if (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))
-			spread_angle = 8
+			spread_angle = 12.5
+			shoot_delay = 4 DECI SECONDS
 		else
 			spread_angle = 0
+			shoot_delay = 3 DECI SECONDS
 
 
 
@@ -1067,8 +1069,8 @@
 	spread_angle = 8
 	can_dual_wield = 0
 
-	slowdown = 5
-	slowdown_time = 10
+	slowdown = 0.5
+	slowdown_time = 3
 
 	two_handed = 1
 	w_class = 4
@@ -1076,6 +1078,7 @@
 	New()
 		ammo = new/obj/item/ammo/bullets/lmg
 		current_projectile = new/datum/projectile/bullet/lmg
+		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
 		..()
 
 	setupProperties()
@@ -1134,9 +1137,11 @@
 	two_handed = 1
 	can_dual_wield = 0
 	object_flags = NO_ARM_ATTACH
+	auto_eject = 1
 
 	New()
 		ammo = new/obj/item/ammo/bullets/grenade_round/explosive
+		ammo.amount_left = max_ammo_capacity
 		current_projectile = new/datum/projectile/bullet/grenade_round/explosive
 		..()
 

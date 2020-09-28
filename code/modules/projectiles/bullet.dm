@@ -589,7 +589,7 @@ toxic - poisons
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
 	shot_sound = 'sound/weapons/ak47shot.ogg'
-	power = 18
+	power = 30
 	cost = 3
 	shot_number = 3
 
@@ -899,14 +899,14 @@ toxic - poisons
 		name = "40mm HEDP round"
 
 		on_hit(atom/hit)
-			explosion_new(null, get_turf(hit),4,2)
+			explosion_new(null, get_turf(hit), 2.5, 1.75)
 
 	high_explosive //more powerful than HEDP
 		name = "40mm HE round"
 		power = 10
 
 		on_hit(atom/hit)
-			explosion_new(null,get_turf(hit),10)
+			explosion_new(null,get_turf(hit), 8, 0.75)
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /datum/projectile/bullet/rpg
