@@ -1,5 +1,9 @@
 
 (t)mon sep 28 20
+(u)Fosstar
+(p)2284
+(e)🆕|feature
+(+)New red alert message for the NSS Manta
 (u)Tarmunora
 (p)2267
 (e)⚖🆕|balance, feature
