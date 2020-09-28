@@ -1,5 +1,9 @@
 
 (t)mon sep 28 20
+(u)Gannets
+(p)2291
+(e)🆕|feature
+(+)Re-named many kinetic firearms.
 (u)Fosstar
 (p)2284
 (e)🆕|feature
