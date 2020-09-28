@@ -94,7 +94,7 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 		if(..()) return
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if(H.blood_volume < 500 && H.blood_volume > 0 && !H.traitHolder.hasTrait("color_shift"))
+			if(H.blood_volume < 500 && H.blood_volume > 0)
 				H.blood_volume += 2
 			if(prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
