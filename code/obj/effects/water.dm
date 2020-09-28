@@ -3,11 +3,13 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	var/life = 15.0
+	var/mob/owner
 	flags = TABLEPASS
 	mouse_opacity = 0
 
 /obj/effects/water/pooled(var/poolname)
 	 life = initial(life)
+	 owner = null
 	 ..()
 
 /obj/effects/water/Move(turf/newloc)
@@ -40,6 +42,10 @@
 			if (!R || !R.total_volume) //i guess they can get removed after the first reaction
 				break
 			for(var/atom/atm in T)
+				if(isliving(atm) && src.owner && (R.total_temperature != T20C || R.get_reagent_amount("ff-foam") != R.total_volume))
+					logTheThing("combat", atm, null, "is hit by water spray [log_reagents(R)] from [owner] at [log_loc(atm)].")
+					logTheThing("combat", owner, atm, "hits [constructTarget(atm,"combat")], with extinguisher spray [log_reagents(R)] at [log_loc(atm)]")
+
 				R.reaction(atm,TOUCH,1)
 			R.remove_any(1)
 
