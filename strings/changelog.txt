@@ -1,5 +1,10 @@
 
 (t)sun sep 27 20
+(u)MarkNstein
+(p)2261
+(e)⚖|balance
+(+)Carty Party: Apps are now sorted alphabetical.
+(+)Carty Party: Swapped the Diagnostic cart for the Mechanics cart (has the scanner app).
 (u)Tarmunora
 (e)⚖|balance
 (+)Increased the rate at which shock grenade's smoke will decay when zapping people
