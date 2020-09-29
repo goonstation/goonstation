@@ -1,5 +1,8 @@
 
 (t)tue sep 29 20
+(u)Tarmunora
+(e)⚖|balance
+(+)Changed Moonshine to be much more potent when used to spike drinks
 (u)RSG250
 (p)2301
 (e)|
