@@ -625,7 +625,7 @@
 				boutput(user, "<span class='alert'>This material can not be used in the [src].</span>")
 				return
 
-			if((W.material.material_flags & MATERIAL_METAL || W.material.material_flags & MATERIAL_CRYSTAL) && (istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material)) )
+			if((W.material.material_flags & MATERIAL_METAL || W.material.material_flags & MATERIAL_CRYSTAL) && (istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material) || istype(W, /obj/item/wizard_crystal)) )
 				if(components.len < 2)
 					src.visible_message("<span class='notice'>[user] puts [W] into [src]</span>")
 					user.drop_item()
