@@ -1,18 +1,4 @@
 //GUNS GUNS GUNS
-/obj/item/gun/kinetic/light_machine_gun/fullauto
-	name = "M91 machine gun"
-	desc = "Looks pretty heavy to me. Hold shift to begin automatic fire!"
-	icon = 'icons/obj/64x32.dmi'
-	slowdown = 0
-	var/shooting = 0
-	var/turf/target = null
-
-	New()
-		..()
-		ammo.amount_left=1000
-		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
-
-
 /mob/living/proc/betterdir()
 	return ((src.dir in ordinal) || (src.last_move_dir in cardinal)) ? src.dir : src.last_move_dir
 

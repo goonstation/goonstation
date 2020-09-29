@@ -161,7 +161,8 @@
 					return
 				if (!src.reagents)
 					return
-				var/obj/effects/water/W = unpool(/obj/effects/water)
+				var/obj/effects/water/W = unpool(/obj/effects/water, user)
+				W.owner = user
 				if (!W) return
 				W.set_loc( get_turf(src) )
 				var/turf/my_target = pick(the_targets)

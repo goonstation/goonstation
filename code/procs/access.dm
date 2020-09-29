@@ -203,7 +203,7 @@
 						access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_emergency_storage, access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers,
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-						access_crematorium, access_kitchen, access_robotics, access_cargo,
+						access_crematorium, access_kitchen, access_robotics, access_cargo, access_supply_console,
 						access_research, access_hydro, access_mail, access_ai_upload)
 		if("Head of Security")
 #ifdef RP_MODE
@@ -233,7 +233,7 @@
 						access_tech_storage, access_engineering_storage, access_engineering_eva, access_engineering_atmos,
 						access_engineering_power, access_engineering_engine, access_mining_shuttle,
 						access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
-						access_heads, access_ai_upload, access_construction, access_eva, access_cargo, access_hangar)
+						access_heads, access_ai_upload, access_construction, access_eva, access_cargo, access_supply_console, access_hangar)
 		if("Head of Mining", "Mining Supervisor")
 			return list(access_engineering, access_maint_tunnels, access_external_airlocks,
 						access_engineering_eva, access_mining_shuttle, access_mining,
@@ -304,7 +304,7 @@
 						access_engineering_eva, access_mining_shuttle, access_mining,
 						access_mining_outpost, access_hangar)
 		if("Quartermaster")
-			return list(access_maint_tunnels, access_cargo, access_hangar)
+			return list(access_maint_tunnels, access_cargo, access_supply_console, access_hangar)
 		if("Construction Worker")
 			return list(access_engineering,access_maint_tunnels,access_external_airlocks,
 						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
@@ -353,7 +353,7 @@
 	            access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
 	            access_chapel_office, access_kitchen, access_medical_lockers,
-	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction, access_hydro, access_mail,
+	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_mail,
 	            access_engineering, access_maint_tunnels, access_external_airlocks,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
 	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
@@ -367,7 +367,7 @@
 	            access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
 	            access_chapel_office, access_kitchen, access_medical_lockers,
-	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction, access_hydro, access_mail,
+	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_mail,
 	            access_engineering, access_maint_tunnels, access_external_airlocks,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
 	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
@@ -429,6 +429,8 @@ var/list/access_name_lookup //Generated at round start.
 			return "ID Computer"
 		if(access_ai_upload)
 			return "AI Upload"
+		if(access_supply_console)
+			return "Quartermaster Supply Console"
 		if(access_teleporter)
 			return "Teleporter"
 		if(access_eva)

@@ -1,7 +1,60 @@
-(t)mon sep 28 20
+
+(t)tue sep 29 20
+(u)makkipakki & Flaborized
+(p)2275
+(e)🆕🎨|feature, sprites
+(*)Reworked NTSO starting inventory (see linked PR for details), and added some cool new NTSO gear sprites by Flaborized! The exosuit and helmet are visually changed, plus a brand new gas mask.
+(u)Tarmunora
+(e)⚖|balance
+(+)Changed Moonshine to be much more potent when used to spike drinks
+(u)RSG250
+(p)2301
+(e)|
+(+)can now secure the UV lamp to the floor via Wrench or Screwdriver
 (u)Kyle
 (+)Significantly lower power costs for energy shield generator for low power levels. (I always felt like this number was too high for use with a modest sized power cell but was too lazy to lower it)
+(t)mon sep 28 20
+(u)Janonas
+(p)1989
+(e)🆕🎨|feature, sprites
+(*)Added tesla coils to the mechcomp dispenser - what will you do with the power of lightning at your disposal?
+(u)UrsulaMajor
+(p)2302
+(e)⚖|balance
+(*)Security Officers no longer have supply console access
+(u)Nebulacrity
+(p)2112
+(e)🆕🎨|feature, sprites
+(*)Added a new mutation: Achromia. A mild dosage of colorlessness doesn't hurt.
+(*)Added a new mutation: Noir. Colorlessness taken to the extreme has its benefits.
+(u)Tarmunora
+(p)2292
+(e)⚖|balance
+(*)Rebalanced a number of nukie guns. See PR for details.
+(u)Gannets
+(p)2291
+(e)🆕|feature
+(+)Re-named many kinetic firearms.
+(u)Fosstar
+(p)2284
+(e)🆕|feature
+(+)New red alert message for the NSS Manta
+(u)Tarmunora
+(p)2267
+(e)⚖🆕|balance, feature
+(*)Heart transplants only move a limited amount of reagents from the patient
+(+)Skeletons have calcium blood.
+(u)Superlagg
+(p)2260
+(e)🔄🎨|rework, sprites
+(*)Lizards, cows, skeletons, and roaches are removed from SpaceBux and moved to character traits.
+>>>>>>> 7b3e94c03bb4bce0e22c42ac00c270c673de2fb7
 (t)sun sep 27 20
+(u)MarkNstein
+(p)2261
+(e)⚖|balance
+(+)Carty Party: Apps are now sorted alphabetical.
+(+)Carty Party: Swapped the Diagnostic cart for the Mechanics cart (has the scanner app).
 (u)Tarmunora
 (e)⚖|balance
 (+)Increased the rate at which shock grenade's smoke will decay when zapping people
