@@ -743,6 +743,10 @@
 		icon_state = "reclaimer-on"
 
 		for (var/obj/item/M in src.contents)
+			if (istype(M, /obj/item/wizard_crystal))
+				var/obj/item/wizard_crystal/wc = M
+				wc.setMaterial(getMaterial(wc.assoc_material),0,0,1,0)
+
 			if (!istype(M.material) || !(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL) && !(M.material.material_flags & MATERIAL_RUBBER))
 				M.set_loc(src.loc)
 				src.reject = 1
@@ -770,8 +774,6 @@
 					qdel(C)
 
 			else if (istype(M, /obj/item/wizard_crystal))
-				var/obj/item/wizard_crystal/wc = M
-				wc.setMaterial(getMaterial(wc.assoc_material,0,0))
 				if (output_bar_from_item(M))
 					qdel(M)
 
