@@ -19,10 +19,13 @@
 		if(isnull(the_bomb))
 			boutput(user, "<span class='alert'>No teleportation target found!</span>")
 			return
+		if(the_bomb.anchored)
+			boutput(user, "<span class='alert'>\The [the_bomb] is currently secured to the floor and cannot be teleported.</span>")
+			return
 		tele_the_bomb(user)
 	else
 		boutput(user, "<span class='alert'>The [src] is out of charge and can't be used again!</span>")
-	
+
 /obj/item/remote/nuke_summon_remote/proc/try_to_find_the_nuke()
 	if(ticker.mode.type == /datum/game_mode/nuclear)
 		var/datum/game_mode/nuclear/mode = ticker.mode
