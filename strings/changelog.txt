@@ -1,5 +1,9 @@
 
 (t)tue sep 29 20
+(u)makkipakki & Flaborized
+(p)2275
+(e)🆕🎨|feature, sprites
+(*)Reworked NTSO starting inventory (see linked PR for details), and added some cool new NTSO gear sprites by Flaborized! The exosuit and helmet are visually changed, plus a brand new gas mask.
 (u)Tarmunora
 (e)⚖|balance
 (+)Changed Moonshine to be much more potent when used to spike drinks
