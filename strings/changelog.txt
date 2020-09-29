@@ -1,5 +1,9 @@
 
 (t)mon sep 28 20
+(u)Janonas
+(p)1989
+(e)🆕🎨|feature, sprites
+(*)Added tesla coils to the mechcomp dispenser - what will you do with the power of lightning at your disposal?
 (u)UrsulaMajor
 (p)2302
 (e)⚖|balance
