@@ -26,7 +26,7 @@
 			. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
 		else
 			. += "It seems to be missing a usable battery."
-		. += "The unit will consume [30 * src.range * (src.power_level * src.power_level)] power a second."
+		. += "The unit will consume [10 * src.range * (src.power_level * src.power_level)] power a second."
 		. += "The range setting is set to [src.range]."
 		. += "The power setting is set to [src.power_level]."
 
@@ -36,7 +36,7 @@
 				src.power_usage = 0
 				return
 			else //no power cell, not connected to grid: power down if active, do nothing otherwise
-				src.power_usage = 30 * (src.range + 1) * (power_level * power_level)
+				src.power_usage = 10 * (src.range) * (power_level * power_level)
 				generate_shield()
 				return
 		else

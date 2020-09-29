@@ -1,4 +1,6 @@
-
+(t)mon sep 28 20
+(u)Kyle
+(+)Significantly lower power costs for energy shield generator for low power levels. (I always felt like this number was too high for use with a modest sized power cell but was too lazy to lower it)
 (t)sun sep 27 20
 (u)Tarmunora
 (e)⚖|balance
