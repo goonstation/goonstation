@@ -1787,13 +1787,10 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 		if(isscrewingtool(W) || iswrenchingtool(W))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
-				src.anchored = 1
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
-				src.anchored = 0
-			return
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			src.anchored = !src.anchored
 
 /obj/machinery/hydro_mister
 	name = "\improper Botanical Mister"
