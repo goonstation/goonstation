@@ -342,7 +342,10 @@
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = 1.0
 	level = 2
-	var/cabinet_banned = false // whether or not this component is prevented from being anchored in cabinets
+	/// whether or not this component is prevented from being anchored in cabinets
+	var/cabinet_banned = FALSE
+	/// if true makes it so that only one component can be wrenched on the tile
+	var/one_per_tile = FALSE
 	var/under_floor = 0
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
@@ -425,6 +428,11 @@
 					if(IN_CABINET && src.cabinet_banned)
 						boutput(usr,"<span class='alert'>[src] is not allowed in component housings.</span>")
 						return
+					if(src.one_per_tile)
+						for(var/obj/item/mechanics/Z in src.loc)
+							if (Z.type == src.type && Z.level == 1)
+								boutput(usr,"<span class='alert'>No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile.</span>")
+								return
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
 					logTheThing("station", usr, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
@@ -967,6 +975,39 @@
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
+
+/// Tesla Coil mechanics component - zaps people
+/obj/item/mechanics/zapper
+	name = "Tesla Coil"
+	desc = ""
+	icon_state = "comp_zap"
+	cooldown_time = 1 SECOND
+	cabinet_banned = true
+	one_per_tile = true
+	var/zap_power = 2
+
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "eleczap")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power","setPower")
+
+	proc/eleczap(var/datum/mechanicsMessage/input)
+		if(level == 2 || !isReady()) return
+		unReady()
+		LIGHT_UP_HOUSING
+		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
+		
+	proc/setPower(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Please enter Power(1 - 3):","Power setting", zap_power) as num
+		if(!in_range(src, user) || !isalive(user))
+			return 0
+		inp = clamp(round(inp), 1, 3)
+		zap_power = inp
+		boutput(user, "Power set to [inp]")
+		return 1
+		
+	updateIcon()
+		icon_state = "[under_floor ? "u":""]comp_zap"
 
 /obj/item/mechanics/pausecomp
 	name = "Delay Component"
