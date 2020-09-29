@@ -14,10 +14,14 @@
 
 /obj/item/remote/nuke_summon_remote/attack_self(mob/user as mob)
 	if(charges >= 1)
+		var/turf/T = get_turf(user)
 		if(isnull(the_bomb))
 			try_to_find_the_nuke()
 		if(isnull(the_bomb))
 			boutput(user, "<span class='alert'>No teleportation target found!</span>")
+			return
+		if(T.z != Z_LEVEL_STATION)
+			boutput(user, "<span class='alert'>You cannot summon the bomb here!</span>")
 			return
 		if(the_bomb.anchored)
 			boutput(user, "<span class='alert'>\The [the_bomb] is currently secured to the floor and cannot be teleported.</span>")
