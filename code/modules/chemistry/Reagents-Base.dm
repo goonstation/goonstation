@@ -154,8 +154,10 @@ datum
 				if(!M) M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
+					if(H?.reagents.has_reagent("moonshine"))
+						mult *= 3
 					var/liver_damage = 0
-					if (!isalcoholresistant(H))
+					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (holder.get_reagent_amount(src.id) >= 15)
 							if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 							H.stuttering += 1

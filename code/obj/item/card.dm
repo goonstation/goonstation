@@ -267,6 +267,10 @@ GAUNTLET CARDS
 	input = jointext(namecheck, " ")
 	return input
 
+/obj/item/card/id/syndicate/commander
+	name = "commander card"
+	access = list(access_maint_tunnels, access_syndicate_shuttle, access_syndicate_commander)
+
 /obj/item/card/id/temporary
 	name = "temporary identification card"
 	icon_state = "id"

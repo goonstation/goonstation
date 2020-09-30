@@ -736,6 +736,7 @@
 		..()
 		if(ishuman(M))
 			M.mob_flags |= IS_BONER
+		M.blood_id = "calcium"
 
 	disposing()
 		if (ishuman(mob) && (mob.mob_flags & IS_BONER))

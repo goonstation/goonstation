@@ -17,6 +17,12 @@
 	var/list/diseases = null
 	var/body_image = null // don't have time to completely refactor this, but, what name does the heart icon have in human.dmi?
 	var/transplant_XP = 5
+	var/blood_id = "blood"
+	var/reag_cap = 100
+
+	New(loc, datum/organHolder/nholder)
+		. = ..()
+		reagents = new/datum/reagents(reag_cap)
 
 	disposing()
 		if (holder)
@@ -25,6 +31,9 @@
 
 	on_transplant(var/mob/M as mob)
 		..()
+		if (src.donor.reagents && src.reagents)
+			src.reagents.trans_to(src.donor, src.reagents.total_volume)
+
 		if (src.robotic)
 			if (src.emagged)
 				src.donor.add_stam_mod_regen("heart", 15)
@@ -39,6 +48,7 @@
 			for (var/datum/ailment_data/disease in src.donor.ailments)
 				if (disease.cure == "Heart Transplant")
 					src.donor.cure_disease(disease)
+			src.donor.blood_id = (ischangeling(src.donor) && src.blood_id == "blood") ? "bloodc" : src.blood_id
 		if (ishuman(M) && islist(src.diseases))
 			var/mob/living/carbon/human/H = M
 			for (var/datum/ailment_data/AD in src.diseases)
@@ -49,6 +59,11 @@
 	on_removal()
 		..()
 		if (donor)
+			if (src.donor.reagents && src.reagents)
+				src.donor.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.total_volume)
+
+			src.blood_id = src.donor.blood_id //keep our owner's blood (for mutantraces etc)
+
 			if (src.robotic)
 				src.donor.remove_stam_mod_regen("heart")
 				src.donor.remove_stam_mod_max("heart")
@@ -119,6 +134,7 @@
 	var/resources = 0 // reagents for humans go in heart, resources for flockdrone go in heart, now, not the brain
 	var/flockjuice_limit = 20 // pump flockjuice into the human host forever, but only a small bit
 	var/min_blood_amount = 450
+	blood_id = "flockdrone_fluid"
 
 	on_transplant(var/mob/M as mob)
 		..()
