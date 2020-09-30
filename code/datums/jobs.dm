@@ -660,7 +660,7 @@
 	slot_poc1 = /obj/item/material_shaper
 	slot_poc2 = /obj/item/room_planner
 
-	items_in_backpack = list(/obj/item/rcd/construction/safe, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/caution, /obj/item/caution)
+	items_in_backpack = list(/obj/item/rcd/construction/safe, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/caution, /obj/item/lamp_manufacturer/organic)
 
 	New()
 		..()
