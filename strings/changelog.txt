@@ -1,4 +1,9 @@
 
+(t)wed sep 30 20
+(u)BatElite
+(p)2274
+(e)⚖🆕🎨|balance, feature, sprites
+(+)Standard cyborg chests can now be turned into makeshift armor with a welder.
 (t)tue sep 29 20
 (u)MarkNstein
 (p)2294
