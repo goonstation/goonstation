@@ -7694,10 +7694,7 @@
 /obj/item/storage/box/nerd_kit,
 /obj/item/clothing/mask/skull,
 /obj/item/clothing/head/apprentice,
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery"
-	},
+/obj/item/clothing/suit/cultist/nerd,
 /obj/item/paper/book/critter_compendium,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner)

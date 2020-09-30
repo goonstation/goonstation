@@ -2228,7 +2228,7 @@ var/global/list/allowed_restricted_z_areas
 	return rgb(r,g,b)
 
 /**
-  * Returns a string based on the current job and antag role of the mob e.g. Staff Assistant [Traitor]
+  * Returns a string based on the current job and antag role of the mob e.g. `"Staff Assistant [Traitor]"`
   */
 /proc/getRole(var/mob/M, strip = 0)
 	if (!M || !istype(M)) return

@@ -1274,6 +1274,7 @@
 
 	if (W == src.handcuffs)
 		src.handcuffs = null
+		src.delStatus("handcuffed")
 	else if (W == src.back)
 		src.back = null
 	else if (W == src.wear_mask)

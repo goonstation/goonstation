@@ -7,6 +7,8 @@
 // Now a robust object-oriented version!!!!
 /datum/mutantrace
 	var/name = null				// used for identification in diseases, clothing, etc
+	var/datum/appearanceHolder/AH
+	var/mutant_color_flags = null
 	var/override_eyes = 1
 	var/override_hair = 1
 	var/override_beard = 1
@@ -99,12 +101,15 @@
 		..()
 		if (movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
+		if (!needs_oxy)
+			APPLY_MOB_PROPERTY(M, PROP_BREATHLESS, src.type)
 		if(ishuman(M))
 			src.mob = M
 			var/datum/appearanceHolder/AHM = mob?.bioHolder?.mobAppearance
 			if (AHM)
 				AHM.mutant_race = src.type
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
+			AppearanceSetter(M, "set")
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
 					if(W.compatible_species.Find(src.name) || (src.human_compatible && W.compatible_species.Find("human")))
@@ -227,6 +232,8 @@
 
 			if (movement_modifier)
 				REMOVE_MOVEMENT_MODIFIER(mob, movement_modifier, src.type)
+			if(needs_oxy)
+				REMOVE_MOB_PROPERTY(mob, PROP_BREATHLESS, src.type)
 
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for (var/obj/item/clothing/W in restricted)
@@ -242,6 +249,7 @@
 
 			if (ishuman(mob))
 				var/mob/living/carbon/human/H = mob
+				AppearanceSetter(H, "reset")
 				H.image_eyes.pixel_y = initial(H.image_eyes.pixel_y)
 				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
 				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
@@ -292,11 +300,6 @@
 							limb.holder = H
 							limb.remove_stage = 0
 
-				detail_1 = null
-				detail_2 = null
-				detail_3 = null
-				detail_over_suit = null
-
 				H.set_face_icon_dirty()
 				H.set_body_icon_dirty()
 
@@ -309,6 +312,44 @@
 
 		..()
 		return
+
+	/// Clamps each of the RGB values between 50 and 190
+	proc/fix_colors(var/hex)
+		var/list/L = hex_to_rgb_list(hex)
+		for (var/i in L)
+			L[i] = min(L[i], 190)
+			L[i] = max(L[i], 50)
+		if (L.len == 3)
+			return rgb(L["r"], L["g"], L["b"])
+		return rgb(22, 210, 22)
+
+	proc/AppearanceSetter(var/mob/living/carbon/human/Q, var/mode as text)
+		if(!ishuman(Q) || !(Q?.bioHolder?.mobAppearance))
+			return // please dont call set_mutantrace on a non-human non-appearanceholder
+
+		src.AH = Q.bioHolder.mobAppearance // i mean its called appearance holder for a reason
+
+		switch(mode)
+			if("set")	// upload everything, the appearance flags'll determine what gets used
+				AH.mob_color_flags = src.mutant_color_flags
+				// Store our old colors, just in case we stop being a weirdo
+				AH.customization_first_color_carry = AH.customization_first_color
+				AH.customization_second_color_carry = AH.customization_second_color
+				AH.customization_third_color_carry = AH.customization_third_color
+				if (src.mutant_color_flags & FIX_COLORS)
+					AH.customization_first_color = fix_colors(AH.customization_first_color)
+					AH.customization_second_color = fix_colors(AH.customization_second_color)
+					AH.customization_third_color = fix_colors(AH.customization_third_color)
+
+			if("reset")
+				AH.mob_color_flags = (HAS_HAIR_COLORED_HAIR)
+				AH.customization_first_color = AH.customization_first_color_carry
+				AH.customization_second_color = AH.customization_second_color_carry
+				AH.customization_third_color = AH.customization_third_color_carry
+				detail_1 = null
+				detail_2 = null
+				detail_3 = null
+				detail_over_suit = null
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
@@ -460,38 +501,23 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "lizard"
+	mutant_color_flags = (BODY_DETAIL_1 | BODY_DETAIL_2 | BODY_DETAIL_3 | HAS_HAIR_COLORED_DETAILS | BODY_DETAIL_OVERSUIT_1 | BODY_DETAIL_OVERSUIT_IS_COLORFUL | FIX_COLORS)
 
 	New(var/mob/living/carbon/human/H)
 		..()
-		if(ishuman(mob))
-			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
+		if(istype(H))
+			H.give_lizard_powers()
+			H.AddComponent(/datum/component/consume/organpoints, /datum/abilityHolder/lizard)
+			H.AddComponent(/datum/component/consume/can_eat_inedible_organs)
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-1", layer = MOB_LIMB_LAYER+0.1)
 			detail_2 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-2", layer = MOB_LIMB_LAYER+0.2)
 			detail_3 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-3", layer = MOB_LIMB_LAYER+0.3)
 			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
 
-			detail_1.color = fix_colors(aH.customization_first_color)
-			detail_2.color = fix_colors(aH.customization_second_color)
-			detail_3.color = fix_colors(aH.customization_third_color)
-			detail_over_suit.color = fix_colors(aH.customization_first_color)
-
-			// detail_1.color = aH.customization_first_color
-			// detail_2.color = aH.customization_second_color
-			// detail_3.color = aH.customization_third_color
-
-			mob.update_face()
-			mob.update_body()
-			mob.update_clothing()
-
-	proc/fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
+			H.update_face()
+			H.update_body()
+			H.update_clothing()
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
@@ -499,6 +525,16 @@
 
 	say_filter(var/message)
 		return replacetext(message, "s", stutter("ss"))
+
+	disposing()
+		if(ishuman(mob))
+			var/mob/living/carbon/human/L = mob
+			var/datum/component/C = L.GetComponent(/datum/component/consume/organpoints)
+			C?.RemoveComponent(/datum/component/consume/organpoints)
+			var/datum/component/D = L.GetComponent(/datum/component/consume/can_eat_inedible_organs)
+			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
+			L.remove_lizard_powers()
+		. = ..()
 
 	say_verb()
 		return "hisses"
@@ -700,6 +736,7 @@
 		..()
 		if(ishuman(M))
 			M.mob_flags |= IS_BONER
+		M.blood_id = "calcium"
 
 	disposing()
 		if (ishuman(mob) && (mob.mob_flags & IS_BONER))
@@ -824,9 +861,12 @@
 	ignore_missing_limbs = 0
 	var/old_client_color = null
 
+
 	New()
 		..()
 		if (mob)
+			mob.AddComponent(/datum/component/consume/organheal)
+			mob.AddComponent(/datum/component/consume/can_eat_inedible_organs, 1) // can also eat heads
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
@@ -850,6 +890,10 @@
 
 	disposing()
 		if (mob)
+			var/datum/component/C = mob.GetComponent(/datum/component/consume/organheal)
+			C?.RemoveComponent(/datum/component/consume/organheal)
+			var/datum/component/D = mob.GetComponent(/datum/component/consume/can_eat_inedible_organs)
+			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
 			mob.remove_stam_mod_max("werewolf")
 			mob.remove_stam_mod_regen("werewolf")
 			mob.remove_stun_resist_mod("werewolf")
@@ -1573,18 +1617,14 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "cow"
+	mutant_color_flags = (HAS_HAIR_COLORED_DETAILS | BODY_DETAIL_1 | BODY_DETAIL_OVERSUIT_1 | FIX_COLORS)
 
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
-			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
 			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="cow_over_suit", layer = MOB_LAYER_BASE+0.3)
-
-			hex_to_rgb_list(aH.customization_first_color)
-
-			detail_1.color = fix_colors(aH.customization_first_color)
 
 			mob.update_face()
 			mob.update_body()
@@ -1600,16 +1640,6 @@
 			H.blood_id = initial(H.blood_id)
 			H.blood_color = initial(H.blood_color)
 		..()
-
-
-	proc/fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")

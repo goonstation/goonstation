@@ -231,6 +231,20 @@
 	mats = 6
 	desc = "The latest technology in viewing live blueprints."
 
+/obj/item/lamp_manufacturer/organic
+	icon = 'icons/obj/items/tools/lampman.dmi'
+	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
+	icon_state = "bio-white"
+	flags = FPRINT | TABLEPASS | EXTRADELAY
+	w_class = 2
+	click_delay = 1
+	prefix = "bio"
+	metal_ammo = 20
+	inventory_counter_enabled = 1
+	New()
+		..()
+		inventory_counter.update_number(metal_ammo)
+
 /obj/item/material_shaper
 	name = "\improper Window Planner"
 	icon = 'icons/obj/construction.dmi'
