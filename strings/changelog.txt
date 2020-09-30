@@ -1,5 +1,9 @@
 
 (t)wed sep 30 20
+(u)UrsulaMajor
+(p)2209
+(e)🆕🎨|feature, sprites
+(*)Melee damage reduction by armor now has red sparks for heavy reduction and deflected attack particles for no damage.
 (u)monochromatism
 (p)2099
 (e)🎨|sprites
