@@ -1323,9 +1323,8 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 			A.alpha = 0
 
 //size_max really can't go higher than 0.2 on 32x32 sprites that are sized about the same as humans. Can go higher on larger sprite resolutions or smaller sprites that are in the center, like cigarettes or coins.
-//uses a single filter
 /proc/anim_f_ghost_blur(atom/A, var/size_min = 0.075 as num, var/size_max=0.18 as num)
 	A.filters += filter(type="radial_blur",size=size_min)
 
-	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING,flags=ANIMATION_PARALLEL)
+	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
 	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)

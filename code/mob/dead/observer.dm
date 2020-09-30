@@ -90,8 +90,13 @@
 	P.pixel_x = target.pixel_x
 	P.pixel_y = target.pixel_y
 	P.color = "#5c00e6"
-	P.invisibility = src.invisibility
 
+#ifdef HALLOWEEN
+	//ghost points have a 20% chance to be seen by the living.
+	P.invisibility = prob(80) ? src.invisibility : 0
+#else
+	P.invisibility = src.invisibility
+#endif
 	src = null // required to make sure its deleted
 	SPAWN_DBG (20)
 		P.invisibility = 101
@@ -156,8 +161,8 @@
 #ifdef HALLOWEEN
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder		
-	if (GH.spooking)
-		GH.stop_spooking()
+		if (GH.spooking)
+			GH.stop_spooking()
 #endif
 
 	return 1
@@ -313,10 +318,24 @@
 
 
 /mob/dead/observer/movement_delay()
-	if (src.client && src.client.check_key(KEY_RUN))
+#ifdef HALLOWEEN
+	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+		var/datum/abilityHolder/ghost_observer/GAH = src.abilityHolder
+		if (GAH.spooking)
+			return movement_delay_modifier - 1.0
+
+	if (src?.client.check_key(KEY_RUN))
 		return 0.4 + movement_delay_modifier
 	else
 		return 0.75 + movement_delay_modifier
+
+#else
+	if (src?.client.check_key(KEY_RUN))
+		return 0.4 + movement_delay_modifier
+	else
+		return 0.75 + movement_delay_modifier
+
+#endif
 
 /mob/dead/observer/build_keybind_styles(client/C)
 	..()
