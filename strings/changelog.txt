@@ -1,5 +1,9 @@
 
 (t)tue sep 29 20
+(u)MarkNstein
+(p)2294
+(e)🆕🗺|feature, mapping
+(*)VR Murderbox: Added Nukie equip' vendor, changeling, and vampire features.
 (u)makkipakki & Flaborized
 (p)2275
 (e)🆕🎨|feature, sprites
