@@ -495,7 +495,7 @@
 					else
 						incidence &= NORTH | SOUTH
 
-			if (!loc)
+			if (!loc && !pooled)
 				die()
 				return
 

@@ -43,3 +43,4 @@
 
 //cooldowns
 #define REST_TOGGLE_COOLDOWN 0.1 SECONDS
+#define EAT_COOLDOWN 0.5 SECONDS

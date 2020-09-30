@@ -205,7 +205,7 @@
 	if (..())
 		return
 
-	if (src.bioHolder && src.bioHolder.HasEffect("breathless"))
+	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
 		src.oxyloss = 0
 		return
 #if ASS_JAM //pausing damage for timestop

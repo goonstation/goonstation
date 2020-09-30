@@ -1,6 +1,6 @@
 //Unlockable traits? tied to achievements?
 #define TRAIT_STARTING_POINTS 1 //How many "free" points you get
-#define TRAIT_MAX 6			    //How many traits people can select at most.
+#define TRAIT_MAX 7			    //How many traits people can select at most.
 
 /proc/getTraitById(var/id)
 	return traitList[id]
@@ -746,6 +746,20 @@ obj/trait/pilot
 	points = 1
 	isPositive = 0
 
+//Flourish felt like this was bloating the traits so I've disabled it for now.
+///obj/trait/color_shift
+//	name = "Color Shift (0)"
+//	cleanName = "Color Shift"
+//	desc = "You are more depressing on the outside but more colorful on the inside."
+//	id = "color_shift"
+//	points = 0
+//	isPositive = 1
+//	
+//	onAdd(var/mob/owner)	Not enforcing any of them with onLife because Hemochromia is a multi-mutation thing while Achromia would darken the skin color every tick until it's pitch black.
+//		if(owner.bioHolder)
+//			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
+//			owner.bioHolder.AddEffect("hemochromia_unknown", 0, 0, 0, 1)
+
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
 	cleanName = "Slow Metabolism"
@@ -799,7 +813,7 @@ obj/trait/pilot
 
 	onLife(var/mob/owner)
 		if (owner?.reagents?.has_reagent(allergen))
-			owner.reagents.add_reagent("histamine", 1.4) //1.4 units of histamine per life cycle? is that too much?
+			owner.reagents.add_reagent("histamine", 1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1)) //1.4 units of histamine per life cycle? is that too much? Halved with antihistamine
 
 /obj/trait/random_allergy/medical_allergy
 	name = "Medical Allergy (+1)"
@@ -1030,3 +1044,67 @@ obj/trait/pilot
 	id = "atheist"
 	points = 0
 	isPositive = 0
+
+/obj/trait/lizard
+	name = "Reptilian (-1) \[Species\]"
+	cleanName = "Reptilian"
+	icon_state = "lizardT"
+	desc = "You are an abhorrent humanoid reptile, cold-blooded and ssssibilant."
+	id = "lizard"
+	points = -1
+	isPositive = 1
+	category = "species"
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(/datum/mutantrace/lizard)
+		return
+
+/obj/trait/cow
+	name = "Bovine (-1) \[Species\]"
+	cleanName = "Bovine"
+	icon_state = "cowT"
+	desc = "You are a hummman, always have been, always will be, and any claimmms to the contrary are mmmoooonstrous lies."
+	id = "cow"
+	points = -1
+	isPositive = 1
+	category = "species"
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(/datum/mutantrace/cow)
+		return
+
+/obj/trait/skeleton
+	name = "Skeleton (-2) \[Species\]"
+	cleanName = "Skeleton"
+	icon_state = "skeletonT"
+	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
+	id = "skeleton"
+	points = -2
+	isPositive = 1
+	category = "species"
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(/datum/mutantrace/skeleton)
+		return
+
+/obj/trait/roach
+	name = "Roach (-1) \[Species\]"
+	cleanName = "Roach"
+	icon_state = "roachT"
+	desc = "One space-morning, on the shuttle-ride to the station, you found yourself transformed in your seat into a horrible vermin. A cockroach, specifically."
+	id = "roach"
+	points = -1
+	isPositive = 1
+	category = "species"
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(/datum/mutantrace/roach)
+		return

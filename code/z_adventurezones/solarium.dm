@@ -142,8 +142,8 @@ var/global/derelict_mode = 0
 					H.flash(3 SECONDS)
 					shake_camera(H, 210, 16)
 					SPAWN_DBG(rand(1,10))
-						H.bodytemperature = 1000
-						H.update_burning(50)
+						// H.bodytemperature = 1000
+						H.update_burning(10)
 					SPAWN_DBG(rand(50,90))
 						H.emote("scream")
 			creepify_station() // creep as heck

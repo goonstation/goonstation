@@ -1,4 +1,4 @@
-//Pick(1 tile), hammer(line across), drill(line in front), blaster(cone),
+/// Pick(1 tile), hammer(line across), drill(line in front), blaster(cone),
 /obj/item/mining_head
 	name = "mining tool head"
 	desc = "A mining tool head."

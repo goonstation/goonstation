@@ -21,7 +21,7 @@
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool)
-	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba, /obj/item/toy/plush/small/chris)
+	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba, /obj/item/toy/plush/small/chris, /obj/item/toy/plush/small/fancyflippers)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -192,6 +192,10 @@
 /obj/item/toy/plush/small/chris
 	name = "Chris the goat"
 	icon_state = "chris"
+
+/obj/item/toy/plush/small/fancyflippers
+	name = "Fancyflippers the gentoo penguin"
+	icon_state = "fancyflippers"
 
 /obj/item/toy/sword
 	name = "toy sword"
@@ -842,6 +846,14 @@ var/list/figure_patreon_rarity = list(\
 		name = "\improper Tomato"
 		icon_state = "tomato"
 
+	zooblarskrippus
+		name = "\improper Zooblar Skrippus"
+		icon_state = "zooblarskrippus"
+
+	vivi
+		name = "\improper Vivi"
+		icon_state = "vivi"
+
 #ifdef XMAS
 	santa
 		name = "\improper Santa Claus"
@@ -895,8 +907,8 @@ var/list/figure_patreon_rarity = list(\
 	New()
 		..()
 		//Products
-		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=500)
+		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
 		src.icon_state = "machine[rand(1,6)]"
 		src.capsule_image = image(src.icon, "m_caps26")
 		src.UpdateOverlays(src.capsule_image, "capsules")

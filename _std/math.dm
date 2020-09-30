@@ -9,6 +9,7 @@
 #define nround(x) (((x % 1) >= 0.5)? round(x) : ceil(x))
 #define sign(x) ((x) != 0 ? (x) / abs(x) : 0)
 #define tanR(x) (cos(x) / sin(x))
+//takes a probability 'x' (0-100) and returns the probability (0-100) of seeing at least 1 success were you to test 'x' 'mult' times. Used for lag-compensating prob rolls.
 #define percentmult(x, mult) (100 * (1 - ((1 - (clamp((x), 0, 100) / 100))**mult)))
 
 //#define angledifference(x,y) ((((y) - (x) + 180) % 360 - 180) + (((((y) - (x) + 180) % 360 - 180) < -180) ? 360 : 0))

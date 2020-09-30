@@ -347,15 +347,15 @@
 
 /obj/item/clothing/head/seaman
 	name = "seaman's peaked cap"
-	desc = "This hood protects you from harmful biological contaminants. This one has a blue visor."
+	desc = "A service cap, to go with the seaman's uniform of Nanotrasen's naval branch. Snazzy!"
 	icon_state = "nt1"
 	item_state = "nt1"
 	icon = 'icons/obj/clothing/item_hats.dmi'
 	wear_image_icon = 'icons/mob/head.dmi'
 
 /obj/item/clothing/head/officer
-	name = "Nanotrasen officer's peaked cap"
-	desc = "This hood protects you from harmful biological contaminants. This one has a blue visor."
+	name = "officer's peaked cap"
+	desc = "A service cap, to go with the officer's uniform of Nanotrasen's naval branch. Looking sharp, chief!"
 	icon_state = "nt2"
 	item_state = "nt2"
 	icon = 'icons/obj/clothing/item_hats.dmi'

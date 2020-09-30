@@ -218,11 +218,17 @@
 	proc/onAbilityStat()
 		return
 
-	proc/deductPoints(cost)
+	proc/deductPoints(cost, target_ah_type)
 		if (!usesPoints || cost == 0)
 			return
 
 		points -= cost
+
+	proc/addPoints(add_points, target_ah_type)
+		if (!usesPoints)
+			return
+
+		points += add_points
 
 	proc/suspendAllAbilities()
 		src.suspended = src.abilities.Copy()
@@ -898,15 +904,15 @@
 					boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 					src.holder.locked = 0
 					return 999
+				var/area/A = get_area(T)
 				switch (src.restricted_area_check)
 					if (1)
-						if (isrestrictedz(T.z))
+						if (!A || (isrestrictedz(T.z) && !istype(A, /area/sim/gunsim)))
 							boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 							src.holder.locked = 0
 							return 999
 					if (2)
-						var/area/A = get_area(T)
-						if (A && istype(A, /area/sim))
+						if (A && istype(A, /area/sim) && !istype(A, /area/sim/gunsim))
 							boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
 							src.holder.locked = 0
 							return 999
@@ -1189,9 +1195,17 @@
 		for (var/datum/abilityHolder/H in holders)
 			H.StatAbilities()
 
-	deductPoints(cost)
+	deductPoints(cost, target_ah_type)
 		for (var/datum/abilityHolder/H in holders)
+			if (target_ah_type && !istype(H, target_ah_type))
+				continue
 			H.deductPoints(cost)
+
+	addPoints(add_points, target_ah_type)
+		for (var/datum/abilityHolder/H in holders)
+			if (target_ah_type && !istype(H, target_ah_type))
+				continue
+			H.addPoints(add_points)
 
 	suspendAllAbilities()
 		for (var/datum/abilityHolder/H in holders)
