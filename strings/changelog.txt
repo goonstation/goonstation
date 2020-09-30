@@ -1,5 +1,9 @@
 
 (t)wed sep 30 20
+(u)monochromatism
+(p)2099
+(e)🎨|sprites
+(+)Added a lamp manufacturer balanced for human use to the construction worker's toolset.
 (u)BatElite
 (p)2274
 (e)⚖🆕🎨|balance, feature, sprites
