@@ -2125,6 +2125,4 @@
 		product_list += new/datum/data/vending_product(/obj/item/caution, 10)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/long, 2)
 
-		product_list += new/datum/data/vending_product(/obj/janitorTsunamiWave, rand(0, 1), hidden=1,)
-		product_list += new/datum/data/vending_product(/obj/item/mop/old, rand(0, 1), hidden=1,)
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 3, hidden=1)
