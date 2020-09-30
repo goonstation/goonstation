@@ -361,17 +361,14 @@
 	proc/MutateMutant(var/mob/living/carbon/human/H, var/mode as text)
 		if (!H || !mode || !race_mutation)
 			return
+		var/datum/bioEffect/mutantrace/mr = src.race_mutation
 		switch (mode)
 			if ("set")
-				var/datum/bioEffect/mutantrace/mr = new src.race_mutation
-				if(!H.bioHolder.HasEffect(mr.id))
-					H.bioHolder.AddEffect(mr.id, 0, 0, 0, 1)
-				qdel(mr)
+				if(!H.bioHolder.HasEffect(initial(mr.id)))
+					H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
 			if ("reset")
-				var/datum/bioEffect/mutantrace/mr = new src.race_mutation
-				if(H.bioHolder.HasEffect(mr.id))
-					H.bioHolder.RemoveEffect(mr.id)
-				qdel(mr)
+				if(H.bioHolder.HasEffect(initial(mr.id)))
+					H.bioHolder.RemoveEffect(initial(mr.id))
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
