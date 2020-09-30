@@ -65,30 +65,6 @@
 	var/shorn_item = null
 
 	var/lastattacker
-	var/static/list/shit_bees_say_when_your_high_af = list("Hello (your name).",
-	"Will you bee my friend?", "I missed you.",	"I've always loved you.",
-	"Where's (beemomnamehere) I miss them.",	"Did you hear about the space wasp rebellion?",
-	"I wonder where they keep the good stuff.",	"To bee or not to bee, that is the question.",
-	"Where does Heisenbee get her hats?",	"I wish that the kibble tasted better.",
-	"You don't look like yourself. Are you okay?",	"Even though I smile a lot, I'm actually really sad inside.",
-	"Do you need a hug?",	"Go ahead, make one more bee joke. I dare you.",
-	"Bee grateful that I haven't stabbed you already.",	"You look weird.",
-	"Maybe things will get better after all.", "Please, don't leave. We have so much to talk about.",
-	"I'm kinda lonely.", "I could use a hug.", "Did you hear about the Syndibees? Nasty bees, those ones.",
-	"Who let the bees out?", "Just keep buzzin'!", "According to all known laws of aviation, there is no way that a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyways. Because bee don't care what humans think is impossible.",
-	"Have you talked to Bombini lately? She's pretty cute.", "lmao u look high af",	"I wonder where bees come from.",	"Only a wasp lover would say that.",
-	"Do you like me?", "Do you hate me?",	"Can we leave this place?",	"I wanna go home.",	"Please take me with you.",	"We have a lot in common, you and I.",
-	"I like the funny honking person.",	"Seabees are not as cool as spacebees.", "I wish my legs were longer.",	"What do you wanna be when you grow up?",
-	"I've always wanted to know what its like to have fingers.", "Don't worry [O.name], I'll always be with you. Always.", "I like you.",
-	"What the buzz did you just say about me, you little buzzer?", "Don't worry, bee happy.",
-	"Just stay calm and everything will bee all right.")
-
-	Life(datum/controller/process/mobs/parent)
-
-		//if(prob(25))
-		for(var/mob/O in hearers(src, null))
-			if(!isnull(O.reagents) && (O.reagents?.has_reagent("THC") || O.reagents?.has_reagent("LSD")))
-				O.show_message("[src] buzzes \"pick(shit_bees_say_when_your_high_af)\"",2)
 
 /* -------------------- BEES -------------------- */
 
