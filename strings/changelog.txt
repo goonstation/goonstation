@@ -1,5 +1,9 @@
 
 (t)wed sep 30 20
+(u)Tarmunora
+(p)2268
+(e)⚖|balance
+(*)Rebalanced hyperallergenic, as well as the effects of epinephrine and diphenhydramine on histamine. Check PR for details
 (u)UrsulaMajor
 (p)2209
 (e)🆕🎨|feature, sprites
