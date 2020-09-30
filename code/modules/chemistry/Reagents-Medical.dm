@@ -810,7 +810,7 @@ datum
 				if(M.sleeping && probmult(5)) M.sleeping = 0
 				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1 * mult)
 				if(holder.has_reagent("histamine"))
-					holder.remove_reagent("histamine", 15 * mult)
+					holder.remove_reagent("histamine", 1 * mult) //combats symptoms not source
 				if(M.losebreath > 3)
 					M.losebreath -= (1 * mult)
 				if(M.get_oxygen_deprivation() > 35)
