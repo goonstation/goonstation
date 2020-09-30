@@ -696,8 +696,8 @@
 		var/pre_armor_damage = damage
 		damage -= armor_mod
 		if(damage/pre_armor_damage <= 0.66)
-			block_spark(target)
-			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+			block_spark(target,armor=1)
+			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
 		if(damage <= 0)
 			fuckup_attack_particle(src)
 
@@ -718,8 +718,8 @@
 		var/armor_blocked = 0
 
 		if(pre_armor_damage > 0 && damage/pre_armor_damage <= 0.66)
-			block_spark(target)
-			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+			block_spark(target,armor=1)
+			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1,pitch=1.5)
 			if(damage <= 0)
 				fuckup_attack_particle(src)
 				armor_blocked = 1

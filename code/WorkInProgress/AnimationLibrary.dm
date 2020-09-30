@@ -414,16 +414,21 @@
 	SPAWN_DBG(5)
 		M.attack_particle.alpha = 0
 
-/proc/block_spark(var/mob/M)
+/proc/block_spark(var/mob/M, armor = 0)
 	if (!M || !M.attack_particle) return
+	var/state_string = ""
+	if(armor)
+		state_string = "block_spark_armor"
+	else
+		state_string = "block_spark"
 
 	M.attack_particle.invisibility = M.invisibility
 	M.last_interact_particle = world.time
 
 	M.attack_particle.icon = 'icons/mob/mob.dmi'
-	if (M.attack_particle.icon_state == "block_spark")
-		flick("block_spark",M.attack_particle)
-	M.attack_particle.icon_state = "block_spark"
+	if (M.attack_particle.icon_state == state_string)
+		flick(state_string,M.attack_particle)
+	M.attack_particle.icon_state = state_string
 
 	M.attack_particle.alpha = 255
 	M.attack_particle.loc = M.loc

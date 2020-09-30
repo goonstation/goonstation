@@ -1251,16 +1251,16 @@
 	var/armor_blocked = 0
 
 	if(pre_armor_power > 0 && power/pre_armor_power <= 0.66)
-		block_spark(M)
+		block_spark(M,armor=1)
 		switch(hit_type)
 			if (DAMAGE_BLUNT)
-				playsound(get_turf(M), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+				playsound(get_turf(M), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
 			if (DAMAGE_CUT)
-				playsound(get_turf(M), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
+				playsound(get_turf(M), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1, pitch=1.5)
 			if (DAMAGE_STAB)
-				playsound(get_turf(M), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+				playsound(get_turf(M), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1, pitch=1.5)
 			if (DAMAGE_BURN)
-				playsound(get_turf(M), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
+				playsound(get_turf(M), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1, pitch=1.5)
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1
