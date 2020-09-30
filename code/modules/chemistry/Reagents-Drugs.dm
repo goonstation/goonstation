@@ -439,10 +439,10 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.stuttering += rand(0,2)
-				if(M.client && prob(5))
+				if(M.client && probmult(5))
 					for (var/obj/critter/domestic_bee/bee in range(7,M))
 						var/chat_text = null
-						var/text = pick(list("Hello [M].",
+						var/shit_bees_say = list("Hello [M].",
 						"Will you bee my friend?", "I missed you.",	"I've always loved you.",
 						"Where's [bee.beeMom ? bee.beeMom : "Mom"]? I miss them.",	"Did you hear about the space wasp rebellion?",
 						"I wonder where they keep the good stuff.",	"To bee or not to bee, that is the question.",
@@ -452,13 +452,18 @@ datum
 						"Bee grateful that I haven't stabbed you already.",	"You look weird.",
 						"Maybe things will get better after all.", "Please, don't leave. We have so much to talk about.",
 						"I'm kinda lonely.", "I could use a hug.", "Did you hear about the Syndibees? Nasty bees, those ones.",
-						"Who let the bees out?", "Just keep buzzin'!", "According to all known laws of aviation, there is no way that a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyways. Because bee don't care what humans think is impossible.",
-						"Have you talked to Bombini lately? She's pretty cute.", "lmao u look high af",	"I wonder where bees come from.",	"Only a wasp lover would say that.",
+						"Who let the bees out?", "Just keep buzzin'!","Have you talked to Bombini lately? She's pretty cute.",
+						"lmao u look high af",	"I wonder where bees come from.",	"Only a wasp lover would say that.",
 						"Do you like me?", "Do you hate me?",	"Can we leave this place?",	"I wanna go home.",	"Please take me with you.",	"We have a lot in common, you and I.",
-						"I like the funny honking person.",	"Seabees are not as cool as spacebees.", "I wish my legs were longer.",	"What do you wanna be when you grow up?",
+						"I like the funny honking person.",	"I wish my legs were longer.",	"What do you wanna be when you grow up?",
 						"I've always wanted to know what its like to have fingers.", "Don't worry [M], I'll always be with you. Always.", "I like you.",
 						"What the buzz did you just say about me, you little buzzer?", "Don't worry, bee happy.",
-						"Just stay calm and everything will bee all right."))
+						"Just stay calm and everything will bee all right.")
+						if(istype(bee, /obj/critter/domestic_bee/sea))
+							shit_bees_say += "Spacebees are not as cool as Seabees."
+						else
+							shit_bees_say += "Seabees are not as cool as Spacebees."
+						var/text = pick(shit_bees_say)
 						if(!M.client.preferences.flying_chat_hidden)
 							var/speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
 							chat_text = make_chat_maptext(bee, text, "color: [rgb(194,190,190)];" + speechpopupstyle, alpha = 140)
