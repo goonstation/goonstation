@@ -1321,3 +1321,11 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		SPAWN_DBG(time)
 			A.filters.len -= 2
 			A.alpha = 0
+
+/proc/animate_bouncy(var/atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
+	if (!istype(A))
+		return
+	animate(A, pixel_y = (A.pixel_y + 4), time = 1.5, dir = EAST)
+	animate(pixel_y = (A.pixel_y - 4), time = 1.5, dir = EAST)
+	animate(pixel_y = (A.pixel_y + 4), time = 1.5, dir = WEST)
+	animate(pixel_y = (A.pixel_y - 4), time = 1.5, dir = WEST)
