@@ -2370,18 +2370,16 @@ proc/getClientFromCkey(ckey)
 		throw EXCEPTION("Client not found")
 
 	return C
-
 /**
-  * Returns true if a given atom is within a given holder's contents
-  */
-/atom/proc/isInContents(var/atom/item, var/atom/holder)
-	//boutput(holder.contents)
-	for(var/atom/content in holder.contents)
-		if(content == item)
-			return true
-		if(isInContents(item,content))
-			return true
-	return false
+	* Returns true if the given atom is within src's contents (deeply/recursively)
+	*/
+/atom/proc/contains(var/atom/to_find)
+	. = FALSE
+	if(!A)
+		return FALSE
+	for(var/atom/found = A.loc, found, found = found.loc)
+		if(found == src)
+			return TRUE
 
 /**
   * Returns the vector magnitude of an x value and a y value
