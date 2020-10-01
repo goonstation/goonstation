@@ -178,7 +178,7 @@
 	var/count = 0
 	for (var/obj/item/I in range(src, 2))
 		if (count > 5)
-		var/success = 0
+			var/success = 0
 		switch (type)
 			if ("fart")
 				animate_levitate(I, 1, 8)
