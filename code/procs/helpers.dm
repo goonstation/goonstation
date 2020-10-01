@@ -2370,10 +2370,11 @@ proc/getClientFromCkey(ckey)
 		throw EXCEPTION("Client not found")
 
 	return C
+
 /**
 	* Returns true if the given atom is within src's contents (deeply/recursively)
 	*/
-/atom/proc/contains(var/atom/to_find)
+/atom/proc/contains(var/atom/A)
 	. = FALSE
 	if(!A)
 		return FALSE
@@ -2478,19 +2479,21 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 		else
 			TA.visible_message("[custom_message]")
 
-/proc/in_cone_of_vision(var/atom/seer, var/atom/target)
-	/*
-		This proc checks if one atom is in the cone of vision of
-		another one. It uses the following map grid for the check,
-		where each point is an integer coordinate and the seer is
-		at point X:
-			 	  *
-			 	* *
-	POV ->	X * * *
-				* *
-				  *
-		A '*' represents a point that is within X's FOV
+/**
+	*This proc checks if one atom is in the cone of vision of another one.
+	*
+	* It uses the following map grid for the check, where each point is an integer coordinate and the seer is at point X:
+	*	```
+	*					*
+	*				* *
+	*	POV ->	X * * *
+	*				* *
+	*					*
+	*	```
+	*
+	* A '*' represents a point that is within X's FOV
 	*/
+/proc/in_cone_of_vision(var/atom/seer, var/atom/target)
 	var/dir = get_dir(seer, target)
 	switch(dir)
 		if(NORTHEAST, SOUTHWEST)
@@ -2513,7 +2516,9 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 	return (seer.dir == dir)
 
 
-
+/**
+	* Linear interpolation
+	*/
 /proc/lerp(var/a, var/b, var/t)
 		return a * (1 - t) + b * t
 
