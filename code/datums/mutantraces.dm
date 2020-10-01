@@ -922,6 +922,7 @@
 			mob.max_health -= 30
 			mob.bioHolder.RemoveEffect("protanopia")
 			mob.bioHolder.RemoveEffect("accent_scoob")
+			mob.bioHolder.RemoveEffect("accent_scoob_nerf")
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name
