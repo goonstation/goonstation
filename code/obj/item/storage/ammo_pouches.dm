@@ -144,3 +144,15 @@
 	/obj/item/ammo/power_cell/high_power,\
 	/obj/item/device/flash,\
 	/obj/item/instrument/whistle)
+
+/obj/item/storage/ntso_pouch
+	name = "tacticool pouch"
+	desc = "A dump pouch for various security accessories, partially-loaded magazines, or maybe even a snack! Attaches to virtually any webbing system through an incredibly complex and very patented Nanotrasen design."
+	icon_state = "ammopouch-large"
+	w_class = 2.00
+	slots = 5
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/item/handcuffs/ = 1,
+	/obj/item/handcuffs/guardbot = 2,
+	/obj/item/device/flash,
+	/obj/item/reagent_containers/food/snacks/candy/candyheart)

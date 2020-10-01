@@ -360,7 +360,7 @@ GAUNTLET CARDS
 
 	process()
 		if(!owner) return
-		if(!isInContents(src,owner))
+		if(!owner.contains(src))
 			boutput(owner, "<h3><span class='alert'>You have lost your license to kill!</span></h3>")
 			logTheThing("combat",owner,null,"dropped their license to kill")
 			logTheThing("admin",owner,null,"dropped their license to kill")

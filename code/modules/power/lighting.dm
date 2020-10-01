@@ -601,6 +601,22 @@
 
 		var/obj/item/lamp_manufacturer/M = W
 		var/obj/item/light/L = null
+
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			if (S.cell)
+				if (!inserted_lamp)
+					S.cell.charge -= M.cost_empty
+				else
+					S.cell.charge -= M.cost_broken
+		else
+			if (M.metal_ammo > 0)
+				M.metal_ammo--
+				M.inventory_counter.update_number(M.metal_ammo)
+			else
+				boutput(user, "You need to load up some metal sheets.")
+				return // Stop lights from being made if a human user lacks materials.
+
 		if (fitting == "tube")
 			L = new M.dispensing_tube()
 		else
@@ -610,14 +626,6 @@
 				boutput(user, "This fitting already has an identical lamp.")
 				qdel(L)
 				return //Stop borgs from making more sparks than necessary
-
-		if (issilicon(user)) //Not that non-silicons should have these
-			var/mob/living/silicon/S = user
-			if (S.cell)
-				if (!inserted_lamp)
-					S.cell.charge -= M.cost_empty
-				else
-					S.cell.charge -= M.cost_broken
 
 		insert(user, L)
 		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
