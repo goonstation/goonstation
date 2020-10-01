@@ -115,7 +115,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //////////// HOLIDAYS AND OTHER SUCH TOGGLES
 
 //#define RP_MODE
-#define HALLOWEEN 1
+// #define HALLOWEEN 1
 //#define XMAS 1
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
