@@ -5,7 +5,7 @@
 #define TABLE_ADJUST 3
 #define TABLE_LOCKPICK 4
 
-//table defines
+//girder defines
 #define GIRDER_DISASSEMBLE 0
 #define GIRDER_UNSECURESUPPORT 1
 #define GIRDER_REMOVESUPPORT 2
@@ -13,6 +13,18 @@
 #define GIRDER_REINFORCE 4
 #define GIRDER_SECURE 5
 #define GIRDER_PLATE 6
+
+//wall construction defines
+#define WALL_REMOVERERODS 0
+#define WALL_REMOVESUPPORTLINES 1
+#define WALL_SLICECOVER 2
+#define WALL_REMOVESUPPORTRODS 1
+#define WALL_PRYCOVER 4
+#define WALL_PRYSHEATH 5
+#define WALL_DETATCHSUPPORTRODS 6
+
+//
+
 //railing defines
 #define RAILING_DISASSEMBLE 0
 #define RAILING_UNFASTEN 1
