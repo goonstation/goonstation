@@ -191,6 +191,7 @@
 			if ("flip")
 				animate_flip(I, 10)
 				success = 1
+		count ++
 		if (success)
 			sleep(rand(1,4))
 #endif
