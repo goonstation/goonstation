@@ -438,7 +438,7 @@ var/syndicate_name = null
 	name += pick("Merry", "Jingle", "Holiday", "Santa", "Gift", "Elf", "Jolly")
 #else
 #ifdef HALLOWEEN
-	name += pick("Hell", "Demon", "Blood", "Murder", "Gore")
+	name += pick("Hell", "Demon", "Blood", "Murder", "Gore", "Grave", "Sin", "Slaughter")
 #else
 	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint")
 #endif
