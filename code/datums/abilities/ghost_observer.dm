@@ -586,6 +586,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	proc/start_spooking()
 		src.holder.owner.color = rgb(170, 0, 0)
+		src.holder.owner.name = "ghost"
 		anim_f_ghost_blur(src.holder.owner)
 		applied_filter_index = src.holder.owner.filters.len
 
@@ -598,6 +599,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	//remove the filter animation when we're done.
 	proc/stop_spooking()
 		src.holder.owner.color = null
+		src.holder.owner.name = src.holder.owner.real_name
 		src.holder.owner.filters[applied_filter_index] = null
 		applied_filter_index = 0
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
