@@ -66,6 +66,8 @@
 
 #define access_centcom 57 // self-explanatory?  :v
 
+#define access_supply_console 58 // QM Console
+
 // skipping a few here to reserve a block
 // for terra 8 and syndicate security clearances
 #define access_syndicate_4 60
@@ -87,3 +89,5 @@
 #define access_polarisimportant 74
 
 #define access_contrabandpermit 75
+
+#define access_syndicate_commander 76

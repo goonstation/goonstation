@@ -258,6 +258,20 @@
 
 		return
 
+/obj/item/clothing/suit/armor/makeshift
+	name = "makeshift armor"
+	desc = "A standard cyborg chest modified to function as uncomfortable, somewhat flimsy improvised armor."
+	icon_state = "makeshift"
+	item_state = "makeshift"
+	body_parts_covered = TORSO
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 10)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.8)
+		setProperty("movespeed", 0.5)
+
 /obj/item/clothing/suit/armor/captain
 	name = "captain's armor"
 	desc = "A suit of protective formal armor made for the station's captain."

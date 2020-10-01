@@ -115,6 +115,19 @@
 		setProperty("heatprot", 7)
 		setProperty("disorient_resist_eye", 10)
 
+/obj/item/clothing/mask/gas/NTSO
+	name = "NT-SO gas mask"
+	desc = "A close-fitting CBRN mask with dual filters and a tinted lens, designed to protect elite Nanotrasen personnel from environmental threats."
+	icon_state = "gas_mask_NT"
+	item_state = "gas_mask_NT"
+	color_r = 0.8 // cool blueberry nanotrasen tint provides disorientation resist
+	color_g = 0.8
+	color_b = 1
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 20)
+
 /obj/item/clothing/mask/moustache
 	name = "fake moustache"
 	desc = "Nobody will know who you are if you put this on. Nobody."

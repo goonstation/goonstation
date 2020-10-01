@@ -969,9 +969,13 @@
 	opacity = 1
 	hitsound = 'sound/impact_sounds/Metal_Hit_Light_1.ogg'
 	shattersound = 'sound/impact_sounds/Metal_Hit_Light_1.ogg'
+	default_material = null
 
 	New()
-		SHOULD_CALL_PARENT(FALSE) // I hate this but I don't feel lik refactoring cubicle panels, fuck that
+		..()
+
+	update_nearby_tiles(need_rebuild, selfnotify)
+		return
 
 	smash()
 		if(health <= 0)
