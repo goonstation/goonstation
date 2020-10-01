@@ -146,7 +146,6 @@
 				SPAWN_DBG(1 SECOND)
 					animate_bumble(src)
 #ifdef HALLOWEEN
-				src.drop_item()
 				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 					if (GH.spooking)
