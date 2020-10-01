@@ -146,6 +146,7 @@
 				SPAWN_DBG(1 SECOND)
 					animate_bumble(src)
 #ifdef HALLOWEEN
+				src.drop_item()
 				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 					if (GH.spooking)
@@ -177,7 +178,8 @@
 /mob/dead/proc/animate_surroundings(var/type="fart", var/range = 2)
 	var/count = 0
 	for (var/obj/item/I in range(src, 2))
-		if (count > max)
+		if (count > 5)
+			return
 		var/success = 0
 		switch (type)
 			if ("fart")
