@@ -177,7 +177,7 @@
 /mob/dead/proc/animate_surroundings(var/type="fart", var/range = 2)
 	var/count = 0
 	for (var/obj/item/I in range(src, 2))
-		if (count > max)
+		if (count > 5)
 		var/success = 0
 		switch (type)
 			if ("fart")
