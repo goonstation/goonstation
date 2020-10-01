@@ -188,7 +188,7 @@
 				eat_twitch(I)
 				success = 1
 			if ("flip")
-				animate_flip(I, 10)
+				animate_spin(src, prob(50) ? "R" : "L", 1, 0)
 				success = 1
 		count ++
 		if (success)
