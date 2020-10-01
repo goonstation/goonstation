@@ -564,11 +564,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	targeted = 0
 	target_anything = 0
 	max_range = 0
-	cooldown = 30//10 MINUTES
+	cooldown = 7 MINUTES
 	start_on_cooldown = 1
 	special_screen_loc = "SOUTH,CENTER+3"
-	pointCost = 1//1500
-	var/time_to_manifest = 30 SECONDS		//How much time should they spend in the form if left uninterrupted.
+	pointCost = 1500
+	var/time_to_manifest = 1 MINUTES		//How much time should they spend in the form if left uninterrupted.
 	var/applied_filter_index
 
 
