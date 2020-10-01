@@ -210,34 +210,3 @@
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>You're a wizard, <s>Harry</s> [M]! Don't forget to pick your spells.</span>")
 			equip_wizard(M, 1, 1)
-
-	vampire
-		name = "VAMPIRE.EXE"
-		desc = "Bloodsucking Bill's Shitty Virus. Lets you be a bat or something."
-		icon = 'icons/ui/actions.dmi'
-		icon_state = "blood"
-
-		makeAntag(mob/living/carbon/human/M as mob)
-			boutput(M, "<span class='combat'>Your teeth are sharper, and you have a thirst most peculiar.</span>")
-			M.make_vampire()
-
-	changeling
-		name = "ALIEN.TROJAN"
-		desc = "Rampantly modifies your code to allow shapesifting and other mutations."
-		icon = 'icons/obj/clothing/item_hats.dmi'
-		icon_state = "abommask"
-
-		makeAntag(mob/living/carbon/human/M as mob)
-			boutput(M, "<span class='combat'>Your teeth are sharper, and you have a thirst most peculiar.</span>")
-			M.make_changeling()
-
-	nukie
-		name = "NUCLEAR.EXE"
-		desc = "An API key for the neighbouroing software vendor."
-		icon = 'icons/obj/items/items.dmi'
-		icon_state = "req-token"
-
-		makeAntag(mob/living/carbon/human/M as mob)
-			var/nukeToken = new /obj/item/requisition_token/syndicate(get_turf(M))
-			M.put_in_hand_or_eject(nukeToken) // try to eject it into the users hand, if we can
-			boutput(M, "<span class='combat'>You can spawn fancy Nuclear Operative gear with the virual token! Go hog wild.</span>")

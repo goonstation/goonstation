@@ -904,15 +904,15 @@
 					boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 					src.holder.locked = 0
 					return 999
-				var/area/A = get_area(T)
 				switch (src.restricted_area_check)
 					if (1)
-						if (!A || (isrestrictedz(T.z) && !istype(A, /area/sim/gunsim)))
+						if (isrestrictedz(T.z))
 							boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 							src.holder.locked = 0
 							return 999
 					if (2)
-						if (A && istype(A, /area/sim) && !istype(A, /area/sim/gunsim))
+						var/area/A = get_area(T)
+						if (A && istype(A, /area/sim))
 							boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
 							src.holder.locked = 0
 							return 999
