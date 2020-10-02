@@ -711,6 +711,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\chemistry\tools\jars.dm"
 #include "code\modules\chemistry\tools\patches.dm"
 #include "code\modules\chemistry\tools\pills.dm"
+#include "code\modules\chemistry\tools\robospray.dm"
 #include "code\modules\chemistry\tools\sleepy_pen.dm"
 #include "code\modules\chemistry\tools\stimpack.dm"
 #include "code\modules\chemistry\tools\syringes.dm"
