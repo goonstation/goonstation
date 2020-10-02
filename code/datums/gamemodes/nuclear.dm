@@ -434,10 +434,9 @@ var/syndicate_name = null
 	var/name = ""
 
 	// Prefix
-#ifdef XMAS
+#if defined(XMAS)
 	name += pick("Merry", "Jingle", "Holiday", "Santa", "Gift", "Elf", "Jolly")
-#else
-#ifdef HALLOWEEN
+#elif defined(HALLOWEEN)
 	name += pick("Hell", "Demon", "Blood", "Murder", "Gore", "Grave", "Sin", "Slaughter")
 #else
 	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint")
