@@ -58,7 +58,7 @@
 				pingsignal.transmission_method = TRANSMISSION_RADIO
 
 				radio_connection.post_signal(src, pingsignal, radiorange)
-				return
+			return
 
 		switch(signal.data["command"])
 			if ("authorize")
