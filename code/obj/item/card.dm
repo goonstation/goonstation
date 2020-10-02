@@ -135,6 +135,7 @@ GAUNTLET CARDS
 	item_state = "gold_id"
 	registered = "Member"
 	assignment = "Member"
+	var/jones_swiped = 0
 
 /obj/item/card/id/captains_spare
 	name = "Captain's spare ID"
