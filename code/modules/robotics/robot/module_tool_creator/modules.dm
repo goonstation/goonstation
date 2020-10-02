@@ -137,7 +137,7 @@
 		///obj/item/reagent_containers/patch/bruise/medbot,
 		/obj/item/reagent_containers/mender/brute/medbot,
 		/obj/item/reagent_containers/mender/burn/medbot,
-		/obj/item/cyberspray, // TODO: make large version
+		/obj/item/robospray, // TODO: make large version
 		/obj/item/reagent_containers/hypospray, // TODO: make large version
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/syringe,

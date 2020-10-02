@@ -1,4 +1,4 @@
-/obj/item/cyberspray
+/obj/item/robospray
 	name = "cybernetic hypospray"
 	desc = "An automated injector for cyborgs."
 	icon = 'icons/obj/chemical.dmi'
@@ -11,15 +11,14 @@
 	var/botreagents = list(
 		"epinephrine" = 25,
 		"charcoal" = 25,
-		"anti_rad" = 15,
-		"saline" = 15,
-		"salicylic_acid" = 15,
-		"salbutamol" = 15,
-		"antihistamine" = 15,
-		"mannitol" = 10,
-		"proconvertin" = 10,
-		"atropine" = 10
-
+		"anti_rad" = 25,
+		"saline" = 25,
+		"salicylic_acid" = 25,
+		"salbutamol" = 25,
+		"antihistamine" = 25,
+		"mannitol" = 25,
+		"proconvertin" = 25,
+		"atropine" = 25
 	)
 	var/currentreagent = "epinephrine"
 
