@@ -561,6 +561,7 @@
 	name = "spy radio"
 	desc = "Spy radio housed in a sticker. Wait, how are you reading this?"
 	listening = 0
+	hardened = 0
 
 /obj/item/device/radio/spy/sec_only
 	locked_frequency = 1

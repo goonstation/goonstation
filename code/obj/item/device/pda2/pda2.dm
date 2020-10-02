@@ -82,6 +82,12 @@
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
 
+	ntso
+		icon_state = "pda-nt"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
+		setup_drive_size = 32
+		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
+
 	ai
 		icon_state = "pda-h"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/ai

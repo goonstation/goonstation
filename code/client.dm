@@ -218,30 +218,31 @@
 
 	if (IsGuestKey(src.key))
 		if(!src.address || src.address == world.host)
-			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
-		var/gueststring = {"
-						<!doctype html>
-						<html>
-							<head>
-								<title>No guest logins allowed!</title>
-								<style>
-									h1, .banreason {
-										font-color:#F00;
-									}
+			world.log << ("Hello host or developer person! You're not logged into BYOND. You should really do something about that!")
+		else
+			var/gueststring = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>No guest logins allowed!</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
 
-								</style>
-							</head>
-							<body>
-								<h1>Guest Login Denied</h1>
-								Don't forget to log in to your byond account prior to connecting to this server.
-							</body>
-						</html>
-					"}
-		src.mob.Browse(gueststring, "window=getout")
-		sleep(10)
-		if (src)
-			del(src)
-		return
+									</style>
+								</head>
+								<body>
+									<h1>Guest Login Denied</h1>
+									Don't forget to log in to your byond account prior to connecting to this server.
+								</body>
+							</html>
+						"}
+			src.mob.Browse(gueststring, "window=getout")
+			sleep(10)
+			if (src)
+				del(src)
+			return
 
 	if (world.time < 7 SECONDS)
 		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))

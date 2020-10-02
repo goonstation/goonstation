@@ -429,8 +429,13 @@
 /mob/living/Click(location,control,params)
 	if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
 		var/mob/dead/observer/O = usr
+#ifdef HALLOWEEN
+		//when spooking, clicking on a mob doesn't put us in them.
+		var/datum/abilityHolder/ghost_observer/GH = O:abilityHolder
+		if (GH.spooking)
+			return ..()
+#endif
 		O.insert_observer(src)
-
 	else return ..()
 
 /mob/living/click(atom/target, params, location, control)
@@ -1345,8 +1350,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (src.lying != src.lying_old)
 		src.lying_old = src.lying
-		animate_rest(src, !src.lying)
+		src.animate_lying(src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
+
+/mob/living/proc/animate_lying(lying)
+	animate_rest(src, !lying)
 
 
 /mob/living/attack_hand(mob/living/M as mob, params, location, control)

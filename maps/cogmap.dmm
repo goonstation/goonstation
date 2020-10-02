@@ -836,7 +836,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "aco" = (
-/obj/machinery/weapon_stand/shotgun_rack/pbr,
+/obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "acp" = (
@@ -23505,10 +23505,7 @@
 "aYV" = (
 /obj/table/wood/auto,
 /obj/machinery/light,
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery"
-	},
+/obj/item/clothing/suit/cultist/nerd,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},

@@ -743,6 +743,10 @@
 		icon_state = "reclaimer-on"
 
 		for (var/obj/item/M in src.contents)
+			if (istype(M, /obj/item/wizard_crystal))
+				var/obj/item/wizard_crystal/wc = M
+				wc.setMaterial(getMaterial(wc.assoc_material),0,0,1,0)
+
 			if (!istype(M.material) || !(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL) && !(M.material.material_flags & MATERIAL_RUBBER))
 				M.set_loc(src.loc)
 				src.reject = 1
@@ -769,9 +773,9 @@
 				if (output_bar_from_item(M, 30, C.conductor.mat_id))
 					qdel(C)
 
-			/*else if (istype(M, /obj/item/wizard_crystal))
-				W.create_bar(src)
-				qdel(W)*/
+			else if (istype(M, /obj/item/wizard_crystal))
+				if (output_bar_from_item(M))
+					qdel(M)
 
 			sleep(smelt_interval)
 
@@ -869,7 +873,7 @@
 		playsound(src.loc, sound_process, 40, 1)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil))
+		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil) || istype(W,/obj/item/wizard_crystal))
 			boutput(user, "You load [W] into [src].")
 			W.set_loc(src)
 			user.u_equip(W)

@@ -267,6 +267,10 @@ GAUNTLET CARDS
 	input = jointext(namecheck, " ")
 	return input
 
+/obj/item/card/id/syndicate/commander
+	name = "commander card"
+	access = list(access_maint_tunnels, access_syndicate_shuttle, access_syndicate_commander)
+
 /obj/item/card/id/temporary
 	name = "temporary identification card"
 	icon_state = "id"
@@ -356,7 +360,7 @@ GAUNTLET CARDS
 
 	process()
 		if(!owner) return
-		if(!isInContents(src,owner))
+		if(!owner.contains(src))
 			boutput(owner, "<h3><span class='alert'>You have lost your license to kill!</span></h3>")
 			logTheThing("combat",owner,null,"dropped their license to kill")
 			logTheThing("admin",owner,null,"dropped their license to kill")
