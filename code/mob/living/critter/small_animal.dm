@@ -2563,10 +2563,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					if(src.icon_state_exclaim)
 						flick(src.icon_state_exclaim, src)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
-		return ..()
-
-	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3)
@@ -2576,6 +2572,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 							playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4)
 							B.visible_message("<span class='notice'>[B] toots back [pick("grumpily","complaintively","indignantly","sadly","annoyedly","gruffly","quietly","crossly")].</span>")
 					return "<span class='emote'><b>[src]</b> toots helpfully!</span>"
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					animate_bouncy(src) // bouncy!
+					return "<span class='emote'><b>[src]</b> [pick("bounces","dances","boogies","frolics","prances","hops")] around with [pick("joy","fervor","excitement","vigor","happiness")]!</span>"
 		return ..()
 
 	specific_emote_type(var/act)
