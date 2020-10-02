@@ -9,6 +9,7 @@
 
 /atom/movable
 	var/tracked_blood = null // list(bDNA, btype, color, count)
+	var/tracked_mud = null
 
 /*
 /atom/proc/add_forensic_info(var/key, var/value)
