@@ -1,5 +1,9 @@
 
 (t)fri oct 02 20
+(u)makkipakki
+(p)2336
+(e)🆕|feature
+(+)For mentor and admin mice, added a bouncy dance animation and text for the *dance emote
 (u)Tarmunora
 (e)|
 (+)changed food synth to dispense water instead of milk
