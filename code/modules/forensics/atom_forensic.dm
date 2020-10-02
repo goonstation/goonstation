@@ -247,6 +247,8 @@
 
 /atom/movable/proc/track_blood()
 	return
+/atom/movable/proc/track_mud()
+	return
 /* needs adjustment so let's stick with mobs for now
 /obj/track_blood()
 	if (!islist(src.tracked_blood))
