@@ -6,7 +6,6 @@
 	item_state = "syringe_0"
 	icon_state = "hypo0"
 	var/inj_amount = 5
-	var/cooldown = 0
 	var/picker = 1
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
 	var/botreagents = list(
@@ -37,7 +36,7 @@
 		return
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
-		if(cooldown)
+		if(ON_COOLDOWN(src, "injection_cooldown", 0.5 SECONDS))
 			user.show_text("[src] is still recharging, give it a moment! ", "red")
 
 		var/datum/reagent/temp_reagent = reagents_cache[currentreagent]
@@ -69,10 +68,6 @@
 		botreagents[currentreagent] = botreagents[currentreagent] - amt_prop
 
 		playsound(get_turf(M), src.sound_inject, 80, 0)
-
-		cooldown = 1
-		SPAWN_DBG(5 DECI SECONDS)
-			cooldown = 0
 
 	process()
 		..()
