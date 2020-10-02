@@ -71,7 +71,7 @@
 		playsound(get_turf(M), src.sound_inject, 80, 0)
 
 		cooldown = 1
-		SPAWN_DBG(.5 SECONDS)
+		SPAWN_DBG(5 DECI SECONDS)
 			cooldown = 0
 
 	process()
