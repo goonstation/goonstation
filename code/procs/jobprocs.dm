@@ -466,6 +466,11 @@
 				R.fields["mind"] = src.mind
 				R.name = "CloneRecord-[ckey(src.real_name)]"
 				D.root.add_file(R)
+
+				var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
+				authrec.fields = list("SEC"="[netpass_security]")
+				D.root.add_file( authrec )
+
 				D.name = "data disk - '[src.real_name]'"
 
 			if(JOB.receives_badge)
