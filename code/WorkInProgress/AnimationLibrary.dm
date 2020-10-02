@@ -1333,3 +1333,11 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 
 	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
 	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)
+
+/proc/animate_bouncy(var/atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
+	if (!istype(A))
+		return
+	animate(A, pixel_y = (A.pixel_y + 4), time = 1.5, dir = EAST)
+	animate(pixel_y = (A.pixel_y - 4), time = 1.5, dir = EAST)
+	animate(pixel_y = (A.pixel_y + 4), time = 1.5, dir = WEST)
+	animate(pixel_y = (A.pixel_y - 4), time = 1.5, dir = WEST)

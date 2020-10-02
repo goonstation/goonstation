@@ -2584,6 +2584,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				return 2
 		return ..()
 
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					SPAWN_DBG(0)
+					animate_bouncy(src) // bouncy!
+				return "<span class='emote'><b>[src]</b> [pick("bounces","dances","boogies","frolics","prances","hops")] around with [pick("joy","fervor","excitement","vigor","happiness")]!</span>"
+		return ..()
+
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"
 	real_name = "mentor mouse"
