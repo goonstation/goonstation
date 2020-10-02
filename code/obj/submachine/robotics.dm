@@ -235,8 +235,8 @@
 							new /obj/item/reagent_containers/food/snacks/moon_pie/jaffa(get_turf(src))
 				if ("Cola")
 					new /obj/item/reagent_containers/food/drinks/cola(get_turf(src))
-				if ("Milk")
-					new /obj/item/reagent_containers/food/drinks/milk(get_turf(src))
+				if ("Water")
+					new /obj/item/reagent_containers/food/drinks/bottle/bottledwater(get_turf(src))
 				else
 					user.show_text("<b>ERROR</b> - Invalid item! Resetting...", "red")
 					logTheThing("debug", user, null, "<b>Convair880</b>: [user]'s food synthesizer was set to an invalid value.")
