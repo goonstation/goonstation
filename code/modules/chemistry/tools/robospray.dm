@@ -10,15 +10,13 @@
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
 	var/botreagents = list(
 		"epinephrine" = 25,
+		"salbutamol" = 25,
+		"mannitol" = 25,
+		"saline" = 25,
 		"charcoal" = 25,
 		"anti_rad" = 25,
-		"saline" = 25,
 		"salicylic_acid" = 25,
-		"salbutamol" = 25,
 		"antihistamine" = 25,
-		"mannitol" = 25,
-		"proconvertin" = 25,
-		"atropine" = 25
 	)
 	var/currentreagent = "epinephrine"
 
