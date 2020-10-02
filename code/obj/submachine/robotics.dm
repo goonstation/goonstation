@@ -198,7 +198,7 @@
 
 	attack_self(var/mob/user as mob)
 		if (!vend_this)
-			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Milk")
+			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water")
 			src.vend_this = pickme
 			user.show_text("[pickme] selected. Click with the synthesizer on yourself to pick a different item.", "blue")
 			return
