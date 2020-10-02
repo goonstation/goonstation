@@ -6,6 +6,7 @@
 	item_state = "syringe_0"
 	icon_state = "hypo0"
 	var/inj_amount = 5
+	var/cooldown = 0
 	var/picker = 1
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
 	var/botreagents = list(
@@ -36,6 +37,12 @@
 		return
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
+		if(cooldown)
+			user.show_text("[src] is still recharging, give it a moment! ", "red")
+
+		var/datum/reagent/temp_reagent = reagents_cache[currentreagent]
+		var/propername = temp_reagent.name
+
 		if (issilicon(M))
 			user.show_text("[src] cannot be used on silicon lifeforms!", "red")
 			return
@@ -54,14 +61,18 @@
 
 		var/amt_prop = min(inj_amount, botreagents[currentreagent])
 
-		user.visible_message("<span class='notice'><B>[user] injects [M] with [amt_prop] units of [botreagents[picker]].</B></span>",\
-		"<span class='notice'>You inject [amt_prop] units of [botreagents[picker]]. [src] now contains [botreagents[currentreagent] - amt_prop] units.</span>")
-		logTheThing("combat", user, M, "uses a cybernetic hypospray to inject [constructTarget(M,"combat")] with [amt_prop] units of [botreagents[picker]] at [log_loc(user)].")
+		user.visible_message("<span class='notice'><B>[user] injects [M] with [amt_prop] units of [propername].</B></span>",\
+		"<span class='notice'>You inject [amt_prop] units of [propername]. [src] now contains [botreagents[currentreagent] - amt_prop] units.</span>")
+		logTheThing("combat", user, M, "uses a cybernetic hypospray to inject [constructTarget(M,"combat")] with [amt_prop] units of [propername] at [log_loc(user)].")
 
 		M.reagents.add_reagent(botreagents[picker], amt_prop)
 		botreagents[currentreagent] = botreagents[currentreagent] - amt_prop
 
 		playsound(get_turf(M), src.sound_inject, 80, 0)
+
+		cooldown = 1
+		SPAWN_DBG(.5 SECONDS)
+			cooldown = 0
 
 	process()
 		..()
