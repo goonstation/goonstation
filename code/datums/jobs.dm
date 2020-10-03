@@ -1643,7 +1643,7 @@
 		src.access = get_access("Psychologist")
 		return
 
-/*
+
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
 
@@ -1979,7 +1979,7 @@
 		if (!M)
 			return
 		M.bioHolder.AddEffect("hell_fire")
-
+/*
 /datum/job/special/halloween/remy
 	name = "Remy"
 	wages = PAY_DUMBCLOWN
