@@ -1979,7 +1979,7 @@
 		if (!M)
 			return
 		M.bioHolder.AddEffect("hell_fire")
-/*
+
 /datum/job/special/halloween/remy
 	name = "Remy"
 	wages = PAY_DUMBCLOWN
@@ -2027,7 +2027,7 @@
 		if (!M)
 			return
 		M.critterize(/mob/living/critter/small_animal/bird/crow)
-*/
+
 
 /datum/job/special/syndicate_operative
 	name = "Syndicate"
