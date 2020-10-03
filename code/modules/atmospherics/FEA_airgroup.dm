@@ -61,11 +61,6 @@
 	// Single sample? Seems like not very many...
 	// Local var, direct access to gas_mixture, no need to pool
 	var/sample_member
-	for (var/M in members)
-		var/turf/simulated/S = M
-		if (!istype(S))
-			message_coders("ZeWaka/Atmos: Fucko in members: [S] - [S.type], ([S.x], [S.y], [S.z])")
-			members -= S
 
 	if(!members || !members.len ) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
 		qdel(src)
@@ -101,14 +96,6 @@
 	//Purpose: Checks to see if group processing should be turned back on
 	//Returns: group_processing
 	if(group_processing) return 1
-
-	// I don't know why the fuck space tiles are even getting into
-	// airgroups, but this should sort of fix it. This is a bad
-	// hack and I'm sorry. This should eliminate the runtime
-	// "undefined variable: /turf/space/var/air"
-	for(var/turf/space/BADSPACE in members)
-		message_coders("ZeWaka/Atmos: BADSPACE - [BADSPACE] ([BADSPACE.x], [BADSPACE.y], [BADSPACE.z])")
-		members -= BADSPACE
 
 	if(!members || !members.len ) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
 		qdel(src)
