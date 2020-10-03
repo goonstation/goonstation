@@ -6,7 +6,7 @@
 	var/activator = 1 // can also be a DEactivator key sometimes!
 	module_research_no_diminish = 1
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		/*if (prob(10))
 			src.universal = 1

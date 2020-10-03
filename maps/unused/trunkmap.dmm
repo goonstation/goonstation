@@ -31885,7 +31885,7 @@
 /turf/simulated/floor,
 /area/station/security/armory)
 "buj" = (
-/obj/machinery/weapon_stand/shotgun_rack/pbr,
+/obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/black,
 /area)
 "buk" = (

@@ -2,7 +2,7 @@
 	name = "artifact sealed container"
 	associated_datum = /datum/artifact/container
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 
 	ArtifactActivated(var/mob/living/user as mob)

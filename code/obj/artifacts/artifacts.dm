@@ -12,10 +12,10 @@
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/AS = new src.associated_datum(src)
-		if (forceartitype) AS.validtypes = list("[forceartitype]")
+		if (forceartiorigin) AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
 		SPAWN_DBG(0)
@@ -154,11 +154,11 @@
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/AS = new src.associated_datum(src)
-		if (forceartitype)
-			AS.validtypes = list("[forceartitype]")
+		if (forceartiorigin)
+			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
 		SPAWN_DBG(0)
@@ -298,11 +298,11 @@
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/AS = new src.associated_datum(src)
-		if (forceartitype)
-			AS.validtypes = list("[forceartitype]")
+		if (forceartiorigin)
+			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
 		SPAWN_DBG(0)
@@ -337,7 +337,7 @@
 
 /obj/artifact_spawner
 	// pretty much entirely for debugging/gimmick use
-	New(var/loc,var/forceartitype = null,var/cinematic = 0)
+	New(var/loc,var/forceartiorigin = null,var/cinematic = 0)
 		..()
 		var/turf/T = get_turf(src)
 		if (cinematic)
@@ -347,6 +347,32 @@
 			swirl.set_loc(T)
 			SPAWN_DBG(1.5 SECONDS)
 				pool(swirl)
-		Artifact_Spawn(T,forceartitype)
+		Artifact_Spawn(T,forceartiorigin)
 		qdel(src)
 		return
+
+/obj/artifact_type_spawner
+	var/list/types = list()
+
+	New(var/loc)
+		..()
+		Artifact_Spawn(src.loc, forceartitype = pick(src.types))
+		qdel(src)
+		return
+
+/obj/artifact_type_spawner/vurdalak
+
+	New(var/loc)
+		src.types = concrete_typesof(/datum/artifact)
+		..()
+
+// I removed mining artifacts from this list because they are kinda not in the game right now
+/obj/artifact_type_spawner/gragg
+	types = list(
+		/datum/artifact/activator_key,
+		/datum/artifact/wallwand,
+		/datum/artifact/melee,
+		/datum/artifact/telewand,
+		/datum/artifact/energygun,
+		/datum/artifact/watercan
+		)
