@@ -1246,8 +1246,7 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_viewers(var/range,var/centre)
 	. = list()
-	for(var/thing in viewers(range,centre))
-		var/atom/A = thing
+	for (var/atom/A as anything in viewers(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
@@ -1256,8 +1255,7 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_range(var/range,var/centre) //above two are blocked by opaque objects
 	. = list()
-	for(var/thing in range(range,centre))
-		var/atom/A = thing
+	for (var/atom/A as anything in range(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
@@ -1446,8 +1444,7 @@ var/list/hex_chars = list("0","1","2","3","4","5","6","7","8","9","A","B","C","D
 var/list/all_functional_reagent_ids = list()
 
 proc/get_all_functional_reagent_ids()
-	for (var/X in concrete_typesof(/datum/reagent))
-		var/datum/reagent/R = X
+	for (var/datum/reagent/R as anything in concrete_typesof(/datum/reagent))
 		all_functional_reagent_ids += initial(R.id)
 
 proc/reagent_id_to_name(var/reagent_id)

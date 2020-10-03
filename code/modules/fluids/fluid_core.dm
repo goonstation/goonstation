@@ -314,9 +314,8 @@ var/mutable_appearance/fluid_ma
 		else
 			pool(src)
 
-		for(var/A in src.loc)
-			var/atom/atom = A
-			if (atom && atom.flags & FLUID_SUBMERGE)
+		for(var/atom/A as anything in src.loc)
+			if (A && A.flags & FLUID_SUBMERGE)
 				var/mob/living/M = A
 				var/obj/O = A
 				if (istype(M))

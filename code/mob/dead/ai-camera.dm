@@ -507,8 +507,7 @@
 		new_tiles += T
 
 	if (prev_tiles)
-		for(var/atom in (prev_tiles - new_tiles))
-			var/turf/O = atom
+		for (var/turf/O as anything in (prev_tiles - new_tiles))
 			//O.removeCameraCoverage(src)
 			//removeCameraCoverage copy+paste begin!
 			if(O.cameras == null) continue
@@ -529,8 +528,7 @@
 			LAGCHECK(LAG_HIGH)
 			//copy paste end!
 
-	for(var/atom in (new_tiles - prev_tiles))
-		var/turf/t = atom
+	for (var/turf/t as anything in (new_tiles - prev_tiles))
 
 		//t.addCameraCoverage(src)
 		//add camera coverage copy+paste begin!

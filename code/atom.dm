@@ -454,8 +454,7 @@
 	if (A != src.loc && A?.z == src.z)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
-			for (var/_M in attached_objs)
-				var/atom/movable/M = _M
+			for (var/atom/movable/M as anything in attached_objs)
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()

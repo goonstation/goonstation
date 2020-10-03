@@ -117,7 +117,7 @@
 	var/obj/hud/hud_used = null
 
 	var/list/organs = null
-	var/list/grabbed_by = null
+	var/list/obj/item/grab/grabbed_by = null
 
 	var/datum/traitHolder/traitHolder = null
 

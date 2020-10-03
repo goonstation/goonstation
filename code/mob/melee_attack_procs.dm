@@ -531,8 +531,7 @@
 	if(getStatusDuration("stonerit"))
 		ret += 20
 
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as anything in src.get_equipped_items())
 		ret += C.getProperty("block")
 
 	return ret

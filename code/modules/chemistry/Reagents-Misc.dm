@@ -840,8 +840,7 @@ datum
 					if (!target)
 						return
 
-				for(var/atom in target)
-					var/atom/A = atom
+				for (var/atom/A as anything in target)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							target.visible_message("<span class='alert'><b>[A]</b> dissolves completely!</span>")

@@ -69,13 +69,11 @@ turf
 				return 0
 
 			if (src.checkingcanpass > 0)
-				for(var/atom in src)
-					var/obj/obstacle = atom
+				for (var/obj/obstacle as anything in src)
 					if(!obstacle.CanPass(mover, target, height, air_group))
 						return 0
 			if (target && target.checkingcanpass > 0)
-				for(var/atom in target)
-					var/obj/obstacle = atom
+				for (var/obj/obstacle as anything in target)
 					if(!obstacle.CanPass(mover, src, height, air_group))
 						return 0
 
@@ -382,8 +380,7 @@ datum
 				groups_to_rebuild.len = 0
 
 			process_groups()
-				for(var/x in air_groups)
-					var/datum/air_group/AG = x
+				for (var/datum/air_group/AG as anything in air_groups)
 					AG?.process_group(parent_controller)
 					LAGCHECK(LAG_HIGH)
 
