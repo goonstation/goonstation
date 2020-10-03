@@ -236,7 +236,8 @@
 		// Process connections to adjacent tiles
 		border_index = 1
 		if(!abort_group && border_individual)
-			for (var/turf/simulated/enemy_tile as anything in border_individual)
+			for(var/border_tile in border_individual)
+				var/turf/enemy_tile = border_tile
 
 				var/connection_difference = 0
 				var/turf/simulated/floor/self_border

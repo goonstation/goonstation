@@ -69,11 +69,13 @@ turf
 				return 0
 
 			if (src.checkingcanpass > 0)
-				for (var/obj/obstacle as anything in src)
+				for(var/atom in src)
+					var/obj/obstacle = atom
 					if(!obstacle.CanPass(mover, target, height, air_group))
 						return 0
 			if (target && target.checkingcanpass > 0)
-				for (var/obj/obstacle as anything in target)
+				for(var/atom in target)
+					var/obj/obstacle = atom
 					if(!obstacle.CanPass(mover, src, height, air_group))
 						return 0
 

@@ -100,8 +100,10 @@
 	proc/canpass()
 		if( density )
 			return 0
-		for (var/atom/A as anything in contents )
-			if( A.density && !ismob(A) ) return 0
+		for( var/thing in contents )
+			var/atom/A = thing
+			if( A.density && !ismob(A) )
+				return 0
 		return 1
 
 	proc/tilenotify(turf/notifier)
@@ -110,7 +112,7 @@
 
 	proc/generate_worldgen()
 
-	proc/inherit_area()//jerko built a thing
+	proc/inherit_area() //jerko built a thing
 		if(!loc:expandable) return
 		for(var/dir in (cardinal + 0))
 			var/turf/thing = get_step(src, dir)
@@ -246,7 +248,7 @@
 	if (density)
 		pathable = 0
 	for(var/atom/movable/AM as mob|obj in src)
-		if (AM) // ????
+		if (AM) // ???? x2
 			src.Entered(AM)
 	RL_Init()
 	return
@@ -261,8 +263,10 @@
 
 	//First, check objects to block exit
 	if (cturf && cturf.checkingexit > 0) //dont bother checking unless the turf actually contains a checkable :)
-		for (var/obj/obstacle as anything in cturf)
-			if(obstacle == mover) continue
+		for(var/thing in cturf)
+			var/obj/obstacle = thing
+			if(obstacle == mover)
+				continue
 			if((mover != obstacle) && (forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CHECKEXIT)
 					if(!obstacle.CheckExit(mover, src))
@@ -276,7 +280,8 @@
 
 	//Finally, check objects/mobs to block entry
 	if (src.checkingcanpass > 0)  //dont bother checking unless the turf actually contains a checkable :)
-		for (var/atom/movable/obstacle as anything in src)
+		for(var/thing in src)
+			var/atom/movable/obstacle = thing
 			if(obstacle == mover) continue
 			if(!mover)	return 0
 			if ((forget != obstacle))
@@ -298,7 +303,8 @@
 	//MBC : nothing in the game even uses PrxoimityLeave meaningfully. I'm disabling the proc call here.
 	//for(var/atom/A as mob|obj|turf|area in range(1, src))
 	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
-		for (var/atom/A as anything in src)
+		for(var/thing in src)
+			var/atom/A = thing
 			// I Said No sanity check
 			if(i >= 50)
 				break
@@ -340,7 +346,8 @@
 
 	var/i = 0
 	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
-		for (var/atom/A as anything in src)
+		for(var/thing in src)
+			var/atom/A = thing
 			// I Said No sanity check
 			if(i++ >= 50)
 				break
@@ -352,7 +359,8 @@
 	i = 0
 	for (var/turf/T in range(1,src))
 		if (T.checkinghasproximity > 0)
-			for (var/atom/A as anything in T)
+			for(var/thing in T)
+				var/atom/A = thing
 				// I Said No sanity check
 				if(i++ >= 50)
 					break
