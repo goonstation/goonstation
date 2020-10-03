@@ -12,16 +12,16 @@
 	//	to be rolled into the updating step
 	var/tmp/archived_cycle = 0
 
-	//Tiles that connect this group to other groups/individual tiles
-	var/list/borders
+	/// Tiles that connect this group to other groups/individual tiles
+	var/list/turf/simulated/borders
 
-	//All tiles in this group
-	var/list/members
+	/// All tiles in this group
+	var/list/turf/simulated/members
 
-	// Space tiles that border this group
+	/// Space tiles that border this group
 	var/list/space_borders
 
-	// Length of space border
+	/// Length of space border
 	var/length_space_border = 0
 
 	// drsingh - lets try caching these lists from process_group, see if we can't reduce the garbage collection
@@ -61,12 +61,16 @@
 	// Single sample? Seems like not very many...
 	// Local var, direct access to gas_mixture, no need to pool
 	var/sample_member
-	for (var/turf/S in members)
-		if (istype(S, /turf/space))
+	for (var/M in members)
+		var/turf/simulated/S = M
+		if (!istype(S))
+			message_coders("ZeWaka/Atmos: Fucko in members: [S] - [S.type], ([S.x], [S.y], [S.z])")
 			members -= S
+
 	if(!members || !members.len ) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
 		qdel(src)
 		return 0
+
 	sample_member = pick(members)
 	if (sample_member:air)
 		var/datum/gas_mixture/sample_air = sample_member:air
@@ -79,7 +83,8 @@
 //Copy group air information to individual tile air
 //Used right before turning off group processing
 /datum/air_group/proc/update_tiles_from_group()
-	for(var/turf/simulated/member in members)
+	for(var/M in members)
+		var/turf/simulated/member = M
 		if (member.air) member.air.copy_from(air)
 
 #ifdef ATMOS_ARCHIVING
@@ -102,15 +107,16 @@
 	// hack and I'm sorry. This should eliminate the runtime
 	// "undefined variable: /turf/space/var/air"
 	for(var/turf/space/BADSPACE in members)
-		if(istype(BADSPACE))
-			members -= BADSPACE
+		message_coders("ZeWaka/Atmos: BADSPACE - [BADSPACE] ([BADSPACE.x], [BADSPACE.y], [BADSPACE.z])")
+		members -= BADSPACE
 
 	if(!members || !members.len ) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
 		qdel(src)
 		return 0
 
 	var/turf/simulated/sample = pick(members)
-	for(var/turf/simulated/member in members)
+	for(var/M in members)
+		var/turf/simulated/member = M
 		if(member.active_hotspot)
 			return 0
 		if(member.air && member.air.compare(sample.air)) continue
@@ -146,8 +152,8 @@
 				//But only if another group didn't store it for us
 #endif
 
-		for(var/turf/simulated/border_tile in src.borders)
-			//var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in border_tile
+		for(var/T in src.borders)
+			var/turf/simulated/border_tile = T
 			for(var/direction in cardinal) //Go through all border tiles and get bordering groups and individuals
 				if(border_tile.group_border&direction)
 					var/turf/simulated/enemy_tile = get_step(border_tile, direction) //Add found tile to appropriate category
@@ -306,7 +312,8 @@
 			suspend_group_processing()
 		else
 			if(air && air.check_tile_graphic())
-				for(var/turf/simulated/member in members)
+				for(var/M in members)
+					var/turf/simulated/member = M
 					member.update_visuals(air)
 
 					LAGCHECK(LAG_REALTIME)
@@ -321,13 +328,15 @@
 				// If the fastpath resulted in the group being zeroed, return early.
 				return
 
-		for(var/turf/simulated/member in members)
+		for(var/M in members)
+			var/turf/simulated/member = M
 			member.process_cell()
 
 			LAGCHECK(LAG_REALTIME)
 	else
 		if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-			for(var/turf/simulated/member in members)
+			for(var/M in members)
+				var/turf/simulated/member = M
 				member.hotspot_expose(air.temperature, CELL_VOLUME)
 				member.consider_superconductivity(starting=1)
 
@@ -354,7 +363,8 @@
 
 	var/totalPressure = 0
 
-	for(var/turf/simulated/member in members)
+	for(var/M in members)
+		var/turf/simulated/member = M
 /* // commented out temporarily, it will probably have to be reenabled later
 		minDist = null
 		// find nearest space border tile
@@ -388,9 +398,9 @@
 			return 1
 
 /datum/air_group/proc/space_group()
-	for(var/turf/simulated/member in members)
-		if (member.air)
-			member.air.zero()
+	for(var/M in members)
+		var/turf/simulated/member = M
+		member.air?.zero()
 	if (length_space_border)
 		spaced = 1
 		resume_group_processing()

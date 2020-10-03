@@ -213,7 +213,8 @@ What are the archived variables for?
 	APPLY_TO_GASES(_ARCHIVE_GAS)
 	#undef _ARCHIVE_GAS
 	if(length(trace_gases))
-		for(var/datum/gas/trace_gas in trace_gases)
+		for(var/G in trace_gases)
+			var/datum/gas/trace_gas = G
 			trace_gas.ARCHIVED(moles) = trace_gas.moles
 	ARCHIVED(temperature) = temperature
 	graphic_archived = graphic
@@ -234,7 +235,8 @@ What are the archived variables for?
 		return 0
 
 	if(length(giver.trace_gases))
-		for(var/datum/gas/trace_gas in giver.trace_gases)
+		for(var/G in giver.trace_gases)
+			var/datum/gas/trace_gas = G
 			var/datum/gas/corresponding
 			if(length(trace_gases))
 				corresponding = locate(trace_gas.type) in trace_gases
@@ -266,7 +268,8 @@ What are the archived variables for?
 		#undef _MERGE_GAS
 
 	if(length(giver.trace_gases))
-		for(var/datum/gas/trace_gas in giver.trace_gases)
+		for(var/G in giver.trace_gases)
+			var/datum/gas/trace_gas = G
 			var/datum/gas/corresponding
 			if(length(trace_gases))
 				corresponding = locate(trace_gas.type) in trace_gases
@@ -297,7 +300,8 @@ What are the archived variables for?
 	#undef _REMOVE_GAS
 
 	if(length(trace_gases))
-		for(var/datum/gas/trace_gas in trace_gases)
+		for(var/G in trace_gases)
+			var/datum/gas/trace_gas = G
 			var/datum/gas/corresponding = new trace_gas.type()
 			if(!removed.trace_gases)
 				removed.trace_gases = list()
@@ -327,7 +331,8 @@ What are the archived variables for?
 	#undef _REMOVE_GAS_RATIO
 
 	if(length(trace_gases))
-		for(var/datum/gas/trace_gas in trace_gases)
+		for(var/G in trace_gases)
+			var/datum/gas/trace_gas = G
 			var/datum/gas/corresponding = new trace_gas.type()
 			if(!removed.trace_gases)
 				removed.trace_gases = list()
@@ -365,7 +370,8 @@ What are the archived variables for?
 	trace_gases = null
 	if(length(sample.trace_gases) > 0)
 		trace_gases = list()
-		for(var/datum/gas/trace_gas in sample.trace_gases)
+		for(var/G in sample.trace_gases)
+			var/datum/gas/trace_gas = G
 			var/datum/gas/corresponding = new trace_gas.type()
 			trace_gases += corresponding
 
@@ -384,7 +390,8 @@ What are the archived variables for?
 	if(length(right_side.trace_gases) > 0)
 		trace_gases = list()
 
-		for(var/datum/gas/trace_gas in right_side.trace_gases)
+		for(var/G in right_side.trace_gases)
+			var/datum/gas/trace_gas = G
 			var/datum/gas/corresponding = locate(trace_gas.type) in trace_gases
 			if(!corresponding)
 				corresponding = new trace_gas.type()
@@ -415,7 +422,8 @@ What are the archived variables for?
 	if(length(sharer.trace_gases))
 		if(!trace_gases || !trace_gases.len)
 			return 0
-		for(var/datum/gas/trace_gas in sharer.trace_gases)
+		for(var/G in sharer.trace_gases)
+			var/datum/gas/trace_gas = G
 			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
 				var/datum/gas/corresponding = locate(trace_gas.type) in trace_gases
 				if(corresponding)
@@ -427,7 +435,8 @@ What are the archived variables for?
 	if(length(trace_gases))
 		if(!sharer.trace_gases || !sharer.trace_gases.len)
 			return 0
-		for(var/datum/gas/trace_gas in trace_gases)
+		for(var/G in trace_gases)
+			var/datum/gas/trace_gas = G
 			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
 				if(!locate(trace_gas.type) in sharer.trace_gases)
 					return 0
@@ -438,7 +447,8 @@ What are the archived variables for?
 	#undef _ABOVE_SUSPEND_THRESHOLD
 
 	if(length(trace_gases))
-		for(var/datum/gas/trace_gas in trace_gases)
+		for(var/G in trace_gases)
+			var/datum/gas/trace_gas = G
 			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
 				var/datum/gas/corresponding
 				if(length(sharer.trace_gases))
@@ -467,7 +477,8 @@ What are the archived variables for?
 		return 0
 
 	if(length(trace_gases))
-		for(var/datum/gas/trace_gas in trace_gases)
+		for(var/G in trace_gases)
+			var/datum/gas/trace_gas = G
 			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
 				return 0
 
@@ -514,7 +525,8 @@ What are the archived variables for?
 	if(length(trace_gases))
 		trace_types_considered = list()
 
-		for(var/datum/gas/trace_gas in trace_gases)
+		for(var/G in trace_gases)
+			var/datum/gas/trace_gas = G
 
 			var/datum/gas/corresponding
 			if(length(sharer.trace_gases))
@@ -547,7 +559,8 @@ What are the archived variables for?
 
 
 	if(length(sharer.trace_gases))
-		for(var/datum/gas/trace_gas in sharer.trace_gases)
+		for(var/G in sharer.trace_gases)
+			var/datum/gas/trace_gas = G
 			if(trace_types_considered && (trace_gas.type in trace_types_considered)) continue
 			else
 				var/datum/gas/corresponding
@@ -625,7 +638,8 @@ What are the archived variables for?
 	#undef _MIMIC_GAS
 
 	if(length(trace_gases))
-		for(var/datum/gas/trace_gas in trace_gases)
+		for(var/G in trace_gases)
+			var/datum/gas/trace_gas = G
 			var/delta = 0
 
 			delta = QUANTIZE((trace_gas.ARCHIVED(moles)/5)*border_multiplier/group_multiplier)
@@ -804,7 +818,7 @@ What are the archived variables for?
 			temperature -= heat/(self_heat_capacity*group_multiplier)
 			sharer.temperature += heat/sharer.heat_capacity
 
-//Compares sample to self to see if within acceptable ranges that group processing may be enabled
+/// Compares sample to src to see if within acceptable ranges that group processing may be enabled
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
 	if (!sample)
 		return 0
@@ -821,7 +835,8 @@ What are the archived variables for?
 			return 0
 
 	if(length(sample.trace_gases))
-		for(var/datum/gas/trace_gas in sample.trace_gases)
+		for(var/G in sample.trace_gases)
+			var/datum/gas/trace_gas = G
 			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND)
 				var/datum/gas/corresponding
 				if(length(trace_gases))
@@ -834,7 +849,8 @@ What are the archived variables for?
 					return 0
 
 	if(length(trace_gases))
-		for(var/datum/gas/trace_gas in trace_gases)
+		for(var/G in trace_gases)
+			var/datum/gas/trace_gas = G
 			if(trace_gas.moles > MINIMUM_AIR_TO_SUSPEND)
 				var/datum/gas/corresponding
 				if(sample.trace_gases)

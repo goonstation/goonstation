@@ -7,55 +7,40 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 	else if(!anchored)
 		if(pressure_difference > pressure_resistance)
 			last_forced_movement = air_master.current_cycle
-			SPAWN_DBG(0) step(src, direction)
+			SPAWN_DBG(0)
+				step(src, direction) // ZEWAKA-ATMOS: HIGH PRESSURE DIFFERENTIAL HERE
 		return 1
 
-turf
-	assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-		//First, ensure there is no movable shuttle or what not on tile that is taking over
-//		var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in src
-//		if(istype(movable_on_me))
-//			return movable_on_me.assume_air(giver)
+turf/proc/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
+	return 0
 
-		return 0
+turf/proc/return_air()
+	//Create gas mixture to hold data for passing
+	// TODO this is returning a new air object, but object_tile returns the existing air
+	//  This is used in a lot of places and thrown away, so it should be pooled,
+	//  But there is no way to tell here if it will be retained or discarded, so
+	//  we can't pool the object returned by return_air. Bad news, man.
+	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
 
-	return_air()
-		//First, ensure there is no movable shuttle or what not on tile that is taking over
-//		var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in src
-//		if(istype(movable_on_me))
-//			return movable_on_me.return_air()
+	#define _TRANSFER_GAS_TO_GM(GAS, ...) GM.GAS = GAS;
+	APPLY_TO_GASES(_TRANSFER_GAS_TO_GM)
+	#undef _TRANSFER_GAS_TO_GM
 
-		//Create gas mixture to hold data for passing
-		// TODO this is returning a new air object, but object_tile returns the existing air
-		//  This is used in a lot of places and thrown away, so it should be pooled,
-		//  But there is no way to tell here if it will be retained or discarded, so
-		//  we can't pool the object returned by return_air. Bad news, man.
-		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+	GM.temperature = temperature
 
-		#define _TRANSFER_GAS_TO_GM(GAS, ...) GM.GAS = GAS;
-		APPLY_TO_GASES(_TRANSFER_GAS_TO_GM)
-		#undef _TRANSFER_GAS_TO_GM
+	return GM
 
-		GM.temperature = temperature
+turf/proc/remove_air(amount as num)//, remove_water = 0)
+	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+	var/sum = BASE_GASES_TOTAL_MOLES(src)
+	if(sum>0)
+		#define _TRANSFER_AMOUNT_TO_GM(GAS, ...) GM.GAS = (GAS / sum) * amount;
+		APPLY_TO_GASES(_TRANSFER_AMOUNT_TO_GM)
+		#undef _TRANSFER_AMOUNT_TO_GM
 
-		return GM
+	GM.temperature = temperature
 
-	remove_air(amount as num)//, remove_water = 0)
-		//First, ensure there is no movable shuttle or what not on tile that is taking over
-//		var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in src
-//		if(istype(movable_on_me))
-//			return movable_on_me.remove_air(amount)
-
-		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
-		var/sum = BASE_GASES_TOTAL_MOLES(src)
-		if(sum>0)
-			#define _TRANSFER_AMOUNT_TO_GM(GAS, ...) GM.GAS = (GAS / sum) * amount;
-			APPLY_TO_GASES(_TRANSFER_AMOUNT_TO_GM)
-			#undef _TRANSFER_AMOUNT_TO_GM
-
-		GM.temperature = temperature
-
-		return GM
+	return GM
 
 turf
 	var/tmp/pressure_difference = 0
@@ -74,7 +59,7 @@ turf
 			if( loc:sanctuary ) return//no atmos updates in sanctuaries
 			if(connection_difference < 0)
 				connection_difference = -connection_difference
-				connection_direction = turn(connection_direction,180)
+				connection_direction = turn(connection_direction, 180)
 
 			if(connection_difference > pressure_difference)
 				if(!pressure_difference)
@@ -152,14 +137,6 @@ turf
 
 				for(var/str in graphics)
 					switch(str)
-						/*
-						if("water3")
-							effect_overlay.overlays.Add(w3master)
-						if("water2")
-							effect_overlay.overlays.Add(w2master)
-						if("water1")
-							effect_overlay.overlays.Add(w1master)
-						*/
 						if("plasma")
 							new_visuals_state |= 1
 						if("n2o")
@@ -200,8 +177,6 @@ turf
 					air_master.queue_update_tile(src)
 
 					find_group()
-
-//				air.parent = src //TODO DEBUG REMOVE
 
 			else
 				if(air_master)

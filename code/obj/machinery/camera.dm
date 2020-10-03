@@ -138,7 +138,7 @@
 		camnets[network] = net
 
 /obj/machinery/camera/proc/addToReferrers(var/obj/machinery/camera/C) //Safe addition
-	if(!(C in referrers)) referrers += C
+	referrers |= C
 
 /obj/machinery/camera/proc/removeNode(var/obj/machinery/camera/node) //Completely remove a node from this camera
 	for(var/N in list("c_north", "c_east", "c_south", "c_west"))
@@ -174,7 +174,8 @@
 	if (c_west)
 		c_west.referrers -= src
 
-	for(var/obj/machinery/camera/C in referrers)
+	for(var/R in referrers)
+		var/obj/machinery/camera/C = R
 		if (C.c_north == src)
 			C.c_north = null
 		if (C.c_east == src)
@@ -442,7 +443,8 @@
 
 	logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Starting to connect cameras")
 	var/count = 0
-	for(var/obj/machinery/camera/C in camlist)
+	for(var/O in camlist)
+		var/obj/machinery/camera/C = O
 		if(!isturf(C.loc) || C.disposed || C.qdeled) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
 			continue
 
