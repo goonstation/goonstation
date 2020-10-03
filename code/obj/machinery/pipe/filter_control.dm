@@ -4,7 +4,7 @@
 /obj/machinery/filter_control/New()
 	..()
 	SPAWN_DBG(0.5 SECONDS)	//wait for world
-		for(var/obj/machinery/inlet/filter/F in machine_registry[MACHINES_INLETS])
+		for(var/obj/machinery/inlet/filter/F as anything in machine_registry[MACHINES_INLETS])
 			if(F.control == src.control)
 				F.f_mask = src.f_mask
 		desc = "A remote control for a filter: [control]"
@@ -61,7 +61,7 @@
 	var/IGoodConnection = 0
 	var/IBadConnection = 0
 
-	for(var/obj/machinery/inlet/filter/F in machine_registry[MACHINES_INLETS])
+	for(var/obj/machinery/inlet/filter/F as anything in machine_registry[MACHINES_INLETS])
 		if((F.control == src.control) && !(F.stat && (NOPOWER|BROKEN)))
 			IGoodConnection++
 		else if(F.control == src.control)
@@ -95,7 +95,7 @@
 			if (href_list["tg"])	//someone modified the html so I added a check here
 				// toggle gas
 				src.f_mask ^= text2num(href_list["tg"])
-				for(var/obj/machinery/inlet/filter/FI in machine_registry[MACHINES_INLETS])
+				for(var/obj/machinery/inlet/filter/FI as anything in machine_registry[MACHINES_INLETS])
 					if(FI.control == src.control)
 						FI.f_mask ^= text2num(href_list["tg"])
 		else
@@ -125,7 +125,7 @@
 			return
 
 	var/GoodConnection = 0
-	for(var/obj/machinery/inlet/filter/F in machine_registry[MACHINES_INLETS])
+	for(var/obj/machinery/inlet/filter/F as anything in machine_registry[MACHINES_INLETS])
 		if((F.control == src.control) && !(F.stat && (NOPOWER|BROKEN)))
 			GoodConnection++
 			break

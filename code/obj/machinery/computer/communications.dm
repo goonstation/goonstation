@@ -364,7 +364,7 @@
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)
-		var/obj/machinery/computer/communications/C = locate() in machine_registry[MACHINES_COMMSCONSOLES]//world
+		var/obj/machinery/computer/communications/C = locate() as anything in machine_registry[MACHINES_COMMSCONSOLES]
 		if(C)
 			C.post_status("shuttle")
 

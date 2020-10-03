@@ -3231,7 +3231,7 @@ area/station/security/visitation
 		for (var/mob/living/silicon/ai/aiPlayer as anything in by_type[/mob/living/silicon/ai])
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 			LAGCHECK(LAG_HIGH)
-		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])
+		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
 			a.triggerAlarm("Fire", src, cameras, src)
 			LAGCHECK(LAG_HIGH)
 
@@ -3250,7 +3250,7 @@ area/station/security/visitation
 		for (var/mob/living/silicon/ai/aiPlayer as anything in by_type[/mob/living/silicon/ai])
 			aiPlayer.cancelAlarm("Fire", src, src)
 			LAGCHECK(LAG_HIGH)
-		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])
+		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
 			a.cancelAlarm("Fire", src, src)
 			LAGCHECK(LAG_HIGH)
 
