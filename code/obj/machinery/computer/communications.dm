@@ -364,11 +364,9 @@
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)
-		var/obj/machinery/computer/communications/C = locate() as anything in machine_registry[MACHINES_COMMSCONSOLES]
+		var/obj/machinery/computer/communications/C = locate() in machine_registry[MACHINES_COMMSCONSOLES]
 		if(C)
 			C.post_status("shuttle")
-
-	return
 
 /proc/call_prison_shuttle(var/mob/usr)
 	if ((!(ticker && ticker.mode) || emergency_shuttle.location == SHUTTLE_LOC_STATION))
@@ -384,6 +382,7 @@
 
 /proc/enable_prison_shuttle(var/mob/user)
 	return
+
 /proc/call_shuttle_proc(var/mob/user, var/call_reason)
 	if ((!( ticker ) || emergency_shuttle.location))
 		return 1
