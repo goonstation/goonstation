@@ -66,7 +66,7 @@
 			for (var/obj/health_scanner/floor/possible_partner in orange(src.partner_range, src))
 				src.add_partner(possible_partner)
 		else
-			for (var/obj/health_scanner/floor/possible_partner as anything in by_type[/obj/health_scanner])
+			for (var/obj/health_scanner/floor/possible_partner in by_type[/obj/health_scanner])
 				LAGCHECK(LAG_LOW)
 				if (possible_partner.id == src.id)
 					src.add_partner(possible_partner)
@@ -88,7 +88,7 @@
 			for (var/obj/health_scanner/wall/possible_partner in orange(src.partner_range, src))
 				possible_partner.add_partner(src)
 		else
-			for (var/obj/health_scanner/wall/possible_partner as anything in by_type[/obj/health_scanner])
+			for (var/obj/health_scanner/wall/possible_partner in by_type[/obj/health_scanner])
 				LAGCHECK(LAG_LOW)
 				if (possible_partner.id == src.id)
 					possible_partner.add_partner(src)
