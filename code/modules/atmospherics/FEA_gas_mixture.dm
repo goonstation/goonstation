@@ -327,7 +327,7 @@ What are the archived variables for?
 	#undef _REMOVE_GAS_RATIO
 
 	if(length(trace_gases))
-		for(var/datum/gas/trace_gas as anything in trace_gasess)
+		for(var/datum/gas/trace_gas as anything in trace_gases)
 			var/datum/gas/corresponding = new trace_gas.type()
 			if(!removed.trace_gases)
 				removed.trace_gases = list()
