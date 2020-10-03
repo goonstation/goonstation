@@ -133,7 +133,6 @@ var/list/list/by_cat = list()
 // tracked categories
 
 #define TR_CAT_ATMOS_MACHINES "atmos_machines"
-#define TR_CAT_MANTA_TILES "manta_tiles"
 #define TR_CAT_LIGHT_GENERATING_TURFS "light_generating_turfs"
 #define TR_CAT_CRITTERS "critters"
 #define TR_CAT_PETS "pets"

@@ -163,8 +163,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			var/mob/M = C.mob
 			if(M && M.z == 1) shake_camera(M, 5, 32, 0.2)
 
-	for(var/A in by_cat[TR_CAT_MANTA_TILES])
-		var/turf/space/fluid/manta/T = A
+	for(var/turf/space/fluid/manta/T as anything in by_type[/turf/space/fluid/manta])
 		T.setScroll(moving)
 
 	for(var/obj/decal/mantaBubbles/O as anything in by_type[/obj/decal/mantaBubbles])
@@ -923,7 +922,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/list/L = list()
 
 	New()
-		START_TRACKING_CAT(TR_CAT_MANTA_TILES)
+		START_TRACKING
 		. = ..()
 		stateOff = "manta_sand"
 		stateOn = "[stateOff]_scroll"
@@ -932,7 +931,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return .
 
 	Del()
-		STOP_TRACKING_CAT(TR_CAT_MANTA_TILES)
+		STOP_TRACKING
 		return ..()
 
 	ex_act(severity)
