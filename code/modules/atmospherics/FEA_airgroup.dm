@@ -19,7 +19,7 @@
 	var/list/turf/simulated/members
 
 	/// Space tiles that border this group
-	var/list/space_borders
+	var/list/turf/space_borders // ZeWaka/Atmos: SHOULD JUST BE SPACE TILES??? HOW SIM GETTING IN
 
 	/// Length of space border
 	var/length_space_border = 0
@@ -78,8 +78,7 @@
 //Copy group air information to individual tile air
 //Used right before turning off group processing
 /datum/air_group/proc/update_tiles_from_group()
-	for(var/M in members)
-		var/turf/simulated/member = M
+	for(var/turf/simulated/member as anything in members)
 		if (member.air) member.air.copy_from(air)
 
 #ifdef ATMOS_ARCHIVING
@@ -102,8 +101,7 @@
 		return 0
 
 	var/turf/simulated/sample = pick(members)
-	for(var/M in members)
-		var/turf/simulated/member = M
+	for(var/turf/simulated/member as anything in members)
 		if(member.active_hotspot)
 			return 0
 		if(member.air && member.air.compare(sample.air))
@@ -140,8 +138,7 @@
 				//But only if another group didn't store it for us
 #endif
 
-		for(var/T in src.borders)
-			var/turf/simulated/border_tile = T
+		for(var/turf/simulated/border_tile as anything in src.borders)
 			for(var/direction in cardinal) //Go through all border tiles and get bordering groups and individuals
 				if(border_tile.group_border&direction)
 					var/turf/simulated/enemy_tile = get_step(border_tile, direction) //Add found tile to appropriate category
@@ -186,8 +183,7 @@
 		// Process connections to adjacent groups
 		var/border_index = 1
 		if(border_group)
-			for(var/G in border_group)
-				var/datum/air_group/AG = G
+			for(var/datum/air_group/AG as anything in border_group)
 #ifdef ATMOS_ARCHIVING
 				if(AG.archived_cycle < archived_cycle)
 					//archive other groups information if it has not been archived yet this cycle
@@ -231,8 +227,7 @@
 		// Process connections to adjacent tiles
 		border_index = 1
 		if(!abort_group && border_individual)
-			for(var/border_tile in border_individual)
-				var/turf/enemy_tile = border_tile
+			for(var/turf/enemy_tile as anything in border_individual)
 
 				var/connection_difference = 0
 				var/turf/simulated/floor/self_border
@@ -301,8 +296,7 @@
 			suspend_group_processing()
 		else
 			if(air && air.check_tile_graphic())
-				for(var/M in members)
-					var/turf/simulated/member = M
+				for(var/turf/simulated/member as anything in members)
 					member.update_visuals(air)
 
 					LAGCHECK(LAG_REALTIME)
@@ -317,15 +311,13 @@
 				// If the fastpath resulted in the group being zeroed, return early.
 				return
 
-		for(var/M in members)
-			var/turf/simulated/member = M
+		for(var/turf/simulated/member as anything in members)
 			member.process_cell()
 
 			LAGCHECK(LAG_REALTIME)
 	else
 		if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-			for(var/M in members)
-				var/turf/simulated/member = M
+			for(var/turf/simulated/member as anything in members)
 				member.hotspot_expose(air.temperature, CELL_VOLUME)
 				member.consider_superconductivity(starting=1)
 
@@ -352,8 +344,7 @@
 
 	var/totalPressure = 0
 
-	for(var/M in members)
-		var/turf/simulated/member = M
+	for(var/turf/simulated/member as anything in members)
 /* // commented out temporarily, it will probably have to be reenabled later
 		minDist = null
 		// find nearest space border tile
@@ -387,8 +378,7 @@
 			return 1
 
 /datum/air_group/proc/space_group()
-	for(var/M in members)
-		var/turf/simulated/member = M
+	for(var/turf/simulated/member as anything in members)
 		member.air?.zero()
 	if (length_space_border)
 		spaced = 1
