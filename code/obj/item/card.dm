@@ -135,6 +135,7 @@ GAUNTLET CARDS
 	item_state = "gold_id"
 	registered = "Member"
 	assignment = "Member"
+	var/jones_swiped = 0
 
 /obj/item/card/id/captains_spare
 	name = "Captain's spare ID"
@@ -360,7 +361,7 @@ GAUNTLET CARDS
 
 	process()
 		if(!owner) return
-		if(!isInContents(src,owner))
+		if(!owner.contains(src))
 			boutput(owner, "<h3><span class='alert'>You have lost your license to kill!</span></h3>")
 			logTheThing("combat",owner,null,"dropped their license to kill")
 			logTheThing("admin",owner,null,"dropped their license to kill")

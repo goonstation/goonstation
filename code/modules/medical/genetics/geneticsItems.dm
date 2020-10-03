@@ -145,7 +145,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS | CONDUCT
-	w_class = 0
+	w_class = 1
 	hide_attack = 1
 	var/obj/item/genetics_injector/dna_injector/payload = null
 

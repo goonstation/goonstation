@@ -315,6 +315,28 @@
 	icon_state  = "dead"
 	isBad = 1
 
+/datum/bioEffect/noir
+	name = "Noir"
+	desc = "The subject generates a light-defying aura, equalizing photons in such a way that make them look completely grayscale."
+	id = "noir"
+	probability = 99
+	stability_loss = 5
+	icon_state  = "noir"
+	msgGain = "You feel chromatic pain."
+	msgLose = "Colors around you begin returning to normal."
+
+	OnAdd()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			animate_fade_grayscale(H, 5)
+
+	OnRemove()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			animate_fade_from_grayscale(H, 5)
+
 ///////////////////
 // General buffs //
 ///////////////////

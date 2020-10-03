@@ -401,15 +401,16 @@
 		if (istype(W, /obj/item/card/emag))
 			emag_act(usr, W)
 		if (istype(W, /obj/item/card/id/blank_deluxe))
-			if (W.desc == "Some type of microchipped payment card. Looks like it's designed to deal with catcoins.")//Can't change descs
-				if (!swiped && W.stamina_cost == 1)
+			var/obj/item/card/id/blank_deluxe/CARD = W
+			if (CARD.desc == "Some type of microchipped payment card. Looks like it's designed to deal with catcoins.")//Can't change descs
+				if (!swiped && !CARD.jones_swiped)
 					if (user)
 						user.show_text("You swipe down [src]'s back in a petting motion...")
 					src.visible_message("<span class='combat'>[src] vomits out a wad of paper!</span>") //Jones City Puzzle
 					make_cleanable( /obj/decal/cleanable/vomit,src.loc)
 					new /obj/item/paper/jones_note(src.loc)
 					swiped++
-					W.stamina_cost = 2 //Can only use the card once.
+					CARD.jones_swiped = 1 //Can only use the card once.
 		else
 			..()
 
