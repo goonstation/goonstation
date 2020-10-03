@@ -17,6 +17,7 @@
 	var/list/annotations = list() // key is atom ref, value is image
 	var/mob/living/intangible/flock/flockmind/flockmind
 	var/snoop_clarity = 40 // how easily we can see silicon messages, how easily silicons can see this flock's messages
+	var/snooping = /*0*/1//are both sides of communication currently accessible?
 	var/chui/window/flockpanel/panel
 
 /datum/flock/New()

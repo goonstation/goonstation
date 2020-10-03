@@ -51,6 +51,7 @@
 		maptext = "<span class='ps2p l vt ol' style=\"font-size: 6px;\">[msg] </span>"
 
 /turf/simulated/floor/feather/disposing()
+	..()//linter angri
 	processing_items -= src
 //debuggin end
 

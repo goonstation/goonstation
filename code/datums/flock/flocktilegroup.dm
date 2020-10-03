@@ -16,6 +16,7 @@
 	id = rand(1, 1000)
 
 /datum/flock_tile_group/disposing()
+	..() //linter machine go ANGRY
 	members.len = 0 //delete the list
 	connected.len = 0
 	flock = null
