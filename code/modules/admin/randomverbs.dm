@@ -2569,3 +2569,36 @@ var/global/night_mode_enabled = 0
 	logTheThing("diary", usr, C.mob, "has toggled [constructTarget(C.mob,"diary")]'s text mode to [!is_text]", "admin")
 	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s text mode to [!is_text]")
 	winset(C, "mapwindow.map", "text-mode=[is_text ? "false" : "true"]" )
+
+
+/client/proc/retreat_to_office()
+	set name = "Retreat To Office"
+	set desc = "Retreat to my office at centcom."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = 0
+	admin_only
+
+	//it's a mess, sue me
+	var/list/areas = get_areas(/area/centcom/offices)
+	for (var/area/centcom/offices/office in areas)
+		//search all offices for an office with the same ckey variable as the usr.
+		if (office.ckey == src.ckey)
+			var/list/turfs = get_area_turfs(office.type)
+			if (islist(turfs) && turfs.len)
+
+				for (var/turf/T in turfs)
+					//search all turfs for a chair if we can't find one, put em anywhere (might make personalized chairs in the future...)
+					var/obj/stool/chair/chair = locate(/obj/stool/chair) in T
+					if (istype(chair))
+						var/turf/chair_turf = get_turf(chair)
+						src.mob.set_loc(chair_turf)
+						src.mob.dir = chair.dir
+						boutput(src, "<span class='notice'>Arrived at your office, safe and sound in your favorite chair!</span>")
+						return
+				//put em in a random place in their office if they don't have a chair.
+				src.mob.set_loc(pick(turfs))
+				boutput(src, "<span class='alert'>Arrived at your office, but where's your chair? Maybe someone stole it!</span>")
+			else
+				boutput(src, "Can't seem to find any turfs in your office. You must not have one here!")
+			return
+	boutput(src, "You don't seem to have an office, so sad. :(")

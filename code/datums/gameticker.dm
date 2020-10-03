@@ -723,6 +723,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					if (player.client.persistent_bank != player.client.persistent_bank)
 						player.client.set_persistent_bank(50000)
 					if (player_loses_held_item)
+						logTheThing("debug", null, null, "[player.ckey] lost held item")
 						player.client.set_last_purchase(0)
 
 					bank_earnings.pilot_bonus = pilot_bonus
@@ -766,7 +767,19 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] finished spacebux updates")
 
-
+	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
+	for(var/datum/player/P in by_type[/datum/player])
+		if (!P.ckey)
+			continue
+		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
+		if (!P.current_playtime)
+			continue
+		playtimes["ckeys\[[P.ckey]]"] = round((P.current_playtime / (1 SECOND))) //rounds 1/10th seconds to seconds
+	try
+		apiHandler.queryAPI("playtime/record-multiple", playtimes)
+	catch(var/exception/e)
+		logTheThing("debug", null, null, "playtime was unable to be logged because of: [e.name]")
+		logTheThing("diary", null, null, "playtime was unable to be logged because of: [e.name]", "debug")
 	return 1
 
 /////

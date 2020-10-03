@@ -247,7 +247,7 @@ Contains:
 
 /obj/item/assembly/prox_ignite/HasProximity(atom/movable/AM as mob|obj)
 
-	if (istype(AM, /obj/projectile))
+	if (isobserver(AM) || iswraith(AM) || isintangible(AM) || istype(AM, /obj/projectile))
 		return
 	if (AM.move_speed < 12 && src.part1)
 		src.part1.sense()

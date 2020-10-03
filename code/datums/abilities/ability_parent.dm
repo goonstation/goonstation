@@ -218,11 +218,17 @@
 	proc/onAbilityStat()
 		return
 
-	proc/deductPoints(cost)
+	proc/deductPoints(cost, target_ah_type)
 		if (!usesPoints || cost == 0)
 			return
 
 		points -= cost
+
+	proc/addPoints(add_points, target_ah_type)
+		if (!usesPoints)
+			return
+
+		points += add_points
 
 	proc/suspendAllAbilities()
 		src.suspended = src.abilities.Copy()
@@ -1189,9 +1195,17 @@
 		for (var/datum/abilityHolder/H in holders)
 			H.StatAbilities()
 
-	deductPoints(cost)
+	deductPoints(cost, target_ah_type)
 		for (var/datum/abilityHolder/H in holders)
+			if (target_ah_type && !istype(H, target_ah_type))
+				continue
 			H.deductPoints(cost)
+
+	addPoints(add_points, target_ah_type)
+		for (var/datum/abilityHolder/H in holders)
+			if (target_ah_type && !istype(H, target_ah_type))
+				continue
+			H.addPoints(add_points)
 
 	suspendAllAbilities()
 		for (var/datum/abilityHolder/H in holders)

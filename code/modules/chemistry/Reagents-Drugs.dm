@@ -338,6 +338,57 @@ datum
 					boutput(M, "<span class='alert'><font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font></span>")
 				return
 
+		drugs/lsd_bee
+			name = "lsbee"
+			id = "lsd_bee"
+			description = "A highly potent hallucinogenic substance. It smells like honey."
+			taste = "sweet"
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 235
+			fluid_b = 0
+			transparency = 100
+			value = 5
+			thirst_value = -0.03
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.druggy = max(M.druggy, 5)
+				if (probmult(10))
+					var/hstate = null
+					var/hname = null
+					switch(rand(1,5))
+						if(1)
+							hstate = "zombee-wings"
+							hname = pick("zombee", "undead bee", "BZZZZZZZZ")
+						if(2)
+							hstate = "syndiebee-wings"
+							hname = pick("syndiebee", "evil bee", "syndicate assassin bee", "IT HAS A GUN")
+						if(3)
+							hstate = "bigbee-angry"
+							hname = pick("very angry bee", "extremely angry bee", "GIANT FRICKEN BEE")
+						if(4)
+							hstate = "lichbee-wings"
+							hname = pick("evil bee", "demon bee", "YOU CAN'T BZZZZ FOREVER")
+						if(5)
+							hstate = "voorbees-wings"
+							hname = pick("killer bee", "murder bee", "bad news bee", "RUN")
+					fake_attackEx(M, 'icons/misc/bee.dmi', hstate, hname)
+				if (probmult(12))
+					M.visible_message(pick("<b>[M]</b> makes a buzzing sound.", "<b>[M]</b> buzzes."),pick("BZZZZZZZZZZZZZZZ", "<span class='alert'><b>THE BUZZING GETS LOUDER</b></span>", "<span class='alert'><b>THE BUZZING WON'T STOP</b></span>"))
+				if (probmult(15))
+					switch(rand(1,2))
+						if(1)
+							M.emote("twitch")
+						if(2)
+							M.emote("scream")
+				..()
+				return
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				if(method == INGEST)
+					boutput(M, "Your ears start buzzing.")
+
 		drug/space_drugs
 			name = "space drugs"
 			id = "space_drugs"

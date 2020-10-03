@@ -1,4 +1,4 @@
-//////////////////////////////////////////// Setup //////////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
 /proc/equip_wizard(mob/living/carbon/human/wizard_mob, var/robe = 0, var/vr = 0)
 	if (!ishuman(wizard_mob)) return
@@ -304,12 +304,12 @@
 	cast(atom/target)
 		if(ishuman(holder.owner))
 			var/mob/living/carbon/human/O = holder.owner
-			if(O && istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))
-				playsound(holder.owner.loc, voice_grim, 50, 0, -1)
-			else if(holder.owner.gender == "female")
-				playsound(holder.owner.loc, voice_fem, 50, 0, -1)
-			else
-				playsound(holder.owner.loc, voice_other, 50, 0, -1)
+			if(src.voice_grim && O && istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))
+				playsound(O.loc, src.voice_grim, 50, 0, -1)
+			else if(src.voice_fem && O.gender == "female")
+				playsound(O.loc, src.voice_fem, 50, 0, -1)
+			else if (src.voice_other)
+				playsound(O.loc, src.voice_other, 50, 0, -1)
 
 		if (offensive)
 			logTheThing("combat", holder.owner, target, "casts [src.name] from [log_loc(holder.owner)], at [target].")

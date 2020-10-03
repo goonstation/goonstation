@@ -8,19 +8,32 @@
 
 // slime
 
+/// Special wrapper to add food status effects, due to special overriding and duration behaivor.
 /mob/living/proc/add_food_bonus(var/id, var/obj/item/reagent_containers/food/snacks/eaten)
 	if(id)
-		//bleh. We don't want the 'tiny' version to override the 'big' version.
-		if (src.hasStatus("[id]_big"))
-			return
-		else if (findtextEx(id,"_big"))
-			var/id_no_big = copytext(id, 1, length(id)-3)
-			if (src.hasStatus(id_no_big))
-				src.delStatus(id_no_big)
 
-		var/bite_time = 600
+		/*
+		Sorry about this findtext junk. Kinda needed while we're still working with just IDs,
+		can't implement a priority system on the datums unless we're passing those around... could do an initial() thing for good perf with those tho
+		*/
+
+		// We don't want the 'small' version to override the 'normal' or 'big' version
+		if (findtextEx(id,"_small"))
+			var/id_regular = copytext(id, 1, length(id)-5)
+			if (src.hasStatus(id_regular) || src.hasStatus("[id_regular]_big"))
+				return
+		else
+			//bleh. We don't want the 'normal' version to override the 'big' version.
+			if (src.hasStatus("[id]_big"))
+				return
+			else if (findtextEx(id,"_big"))
+				var/id_no_big = copytext(id, 1, length(id)-3)
+				if (src.hasStatus(id_no_big))
+					src.delStatus(id_no_big)
+
+		var/bite_time = (1 MINUTE)
 		if (src.reagents && src.reagents.has_reagent("THC"))
-			bite_time = 1200
+			bite_time = (2 MINUTES)
 		if (eaten)
 			if (eaten.quality >= 5)
 				bite_time *= 2
@@ -82,7 +95,7 @@
 	tickSpacing = 20
 
 	getTooltip()
-		return "Healing [heal_brute] brute damage every [tickSpacing/10] sec."
+		return "Healing [heal_brute] brute damage every [tickSpacing/(1 SECOND)] sec."
 
 /datum/statusEffect/simplehot/foodTox
 	id = "food_tox"
@@ -95,7 +108,7 @@
 	tickSpacing = 20
 
 	getTooltip()
-		return "Healing [heal_tox] toxin damage every [tickSpacing/10] sec."
+		return "Healing [heal_tox] toxin damage every [tickSpacing/(1 SECOND)] sec."
 
 /datum/statusEffect/simplehot/foodBurn
 	id = "food_burn"
@@ -108,7 +121,7 @@
 	tickSpacing = 20
 
 	getTooltip()
-		return "Healing [heal_burn] burn damage every [tickSpacing/10] sec."
+		return "Healing [heal_burn] burn damage every [tickSpacing/(1 SECOND)] sec."
 
 /datum/statusEffect/simplehot/foodAll
 	id = "food_all"
@@ -123,7 +136,7 @@
 	tickSpacing = 20
 
 	getTooltip()
-		return "Healing 0.26 damage spread across Brute/Burn/Toxin damage [tickSpacing/10] sec."
+		return "Healing 0.26 damage spread across Brute/Burn/Toxin damage [tickSpacing/(1 SECOND)] sec."
 
 /datum/statusEffect/foodcold
 	id = "food_cold"
@@ -137,8 +150,8 @@
 	var/tickCount = 0
 	var/tickSpacing = 20 //Time between ticks.
 
-	onUpdate(var/timedPassed)
-		tickCount += timedPassed
+	onUpdate(var/timePassed)
+		tickCount += timePassed
 		var/times = (tickCount / tickSpacing)
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
@@ -160,8 +173,8 @@
 	var/tickCount = 0
 	var/tickSpacing = 20 //Time between ticks.
 
-	onUpdate(var/timedPassed)
-		tickCount += timedPassed
+	onUpdate(var/timePassed)
+		tickCount += timePassed
 		var/times = (tickCount / tickSpacing)
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
@@ -230,7 +243,7 @@
 
 /datum/statusEffect/maxhealth/food
 	id = "food_hp_up"
-	name = "Food (HP Up)"
+	name = "Food (HP++)"
 	desc = ""
 	icon_state = "foodbuff"
 	exclusiveGroup = "Food"
@@ -238,8 +251,13 @@
 	unique = 1
 	change = 20
 
+	small
+		name = "Food (HP+)"
+		id = "food_hp_up_small"
+		change = 10
+
 	big
-		name = "Food (HP Up+)"
+		name = "Food (HP+++)"
 		id = "food_hp_up_big"
 		change = 40
 
@@ -407,8 +425,8 @@
 		desc = "You feel really sweaty!"
 		sweat_prob = 5
 
-	onUpdate(var/timedPassed)
-		tickCount += timedPassed
+	onUpdate(var/timePassed)
+		tickCount += timePassed
 		var/times = (tickCount / tickSpacing)
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)

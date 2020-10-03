@@ -393,8 +393,7 @@ var/list/ban_from_airborne_fluid = list()
 
 	if (entered_group)
 		if (!src.clothing_protects_from_chems())
-			var/protected = (src.wear_mask && (src.wear_mask.c_flags & BLOCKSMOKE || (src.wear_mask.c_flags & MASKINTERNALS && src.internal)))
-			F.just_do_the_apply_thing(src, hasmask = protected)
+			F.just_do_the_apply_thing(src, hasmask = issmokeimmune(src))
 
 /mob/living/silicon/EnteredAirborneFluid(obj/fluid/airborne/F as obj, atom/oldloc)
 	.=0

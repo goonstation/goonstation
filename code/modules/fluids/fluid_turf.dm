@@ -352,6 +352,27 @@
 	ex_act(severity)
 		return
 
+
+//cenote for the biodome area
+/turf/space/fluid/cenote
+	fullbright = 0
+	luminosity = 1
+	generateLight = 0
+	spawningFlags = null
+	icon_state = "cenote"
+	name = "cenote"
+	desc = "A deep flooded sinkhole."
+	randomIcon = 0
+
+	New()
+		..()
+		src.dir = pick(NORTH,SOUTH)
+
+
+	ex_act(severity)
+		return
+
+
 //Manta
 /turf/space/fluid/manta
 	luminosity = 1

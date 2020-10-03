@@ -57,6 +57,8 @@
 	execute(user, headline, body)
 		for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 			C.add_centcom_report("[command_name()] Update", body)
+		body = discord_emojify(body)
+		headline = discord_emojify(headline)
 		command_alert(body, headline, "sound/misc/announcement_1.ogg")
 		logTheThing("admin", "[user] (Discord)", null, "has created a command report: [body]")
 		logTheThing("diary", "[user] (Discord)", null, "has created a command report: [body]", "admin")
@@ -206,14 +208,30 @@
 			return
 		var/list/log = logs[log_name]
 		var/list/result = list()
-		for (var/i=length(log); i >= 1; i--)
-			if(n <= 0)
-				return
+		for(var/i=length(log); i >= 1 && n > 0; i--)
 			var/log_line = log[i]
-			if (findtext(log_line, ckey, 1, null))
-				result += log_line
-				n -= 1
+			if(findtext(log_line, ckey, 1, null))
+				result += strip_html_tags(log_line)
+				n--
 		if(!length(result))
-			system.reply("No results.")
+			system.reply("No results.", user)
 		else
 			system.reply(reverse_list(result).Join("\n"), user)
+
+/datum/spacebee_extension_command/crate
+	name = "crate"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Sends items in a crate to cargo. Separate typepaths by spaces."
+	argument_types = list(/datum/command_argument/the_rest="types")
+	execute(user, types)
+		var/obj/to_send = new /obj/storage/crate/packing
+		var/list/type_str_list = splittext(types, " ")
+		for(var/type_str in type_str_list)
+			var/type = text2path(type_str)
+			if(isnull(type))
+				system.reply("Unknown type [type_str], aborting.", user)
+				qdel(to_send)
+				return
+			new type(to_send)
+		shippingmarket.receive_crate(to_send)
+		system.reply("Crate sent.")

@@ -5,6 +5,10 @@
 	bonus = 1 //bonus is a flag that determines whether or not the item tooltip will include "⛨ Block+: RESIST with this item for more info" when not blocking
 	proctype = .proc/warmup //the proc to be called when this component recieves the signal it is listening for, in this case, COMSIG_HUMAN_LIFE_TICK
 
+/datum/component/itemblock/warmsup/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_TOOLTIP_BLOCKING_APPEND, .proc/append_to_tooltip)
+
 //arguments are sent from the the SendSignal() in Life.dm:140
 //SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
 //first argument, src, is the atom to be sending the signal to, and is also the first argument of the proc triggered by the signal
@@ -30,7 +34,6 @@
 	B.delProperty("coldprot") //again, delete property from the block, not the item
 
 //tooltip line that gets appended to the block section of the parent item's tooltip when blocking with it.
-/datum/component/itemblock/warmsup/getTooltipDesc()
-	.= ..() //Call your parents
+/datum/component/itemblock/warmsup/proc/append_to_tooltip(parent, list/tooltip)
 	if(showTooltip) //only add the line if there's an active block on the item
-		. += itemblock_tooltip_entry("special.png", "Warms you up over time!") //macro to handle indentation and other HTML stuff.
+		tooltip += itemblock_tooltip_entry("special.png", "Warms you up over time!") //macro to handle indentation and other HTML stuff.

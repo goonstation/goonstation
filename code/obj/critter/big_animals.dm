@@ -204,7 +204,7 @@ obj/critter/bear/care
 		if (M.client)
 			var/mob/dead/observer/newmob
 			newmob = new/mob/dead/observer(M)
-			M.client:mob = newmob
+			M.client.mob = newmob
 			M.mind.transfer_to(newmob)
 		qdel(M)
 		src.task = "thinking"

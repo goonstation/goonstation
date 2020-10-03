@@ -357,7 +357,7 @@
 			if (y32 < 0)
 				ys = -1
 				y32 = -y32
-		var/max_t = proj_data.max_range // why not
+		var/max_t = proj_data.max_range + 1 // why not  --- off by one error is why not apparently
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -495,7 +495,7 @@
 					else
 						incidence &= NORTH | SOUTH
 
-			if (!loc)
+			if (!loc && !pooled)
 				die()
 				return
 
