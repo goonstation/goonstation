@@ -754,7 +754,7 @@ obj/trait/pilot
 //	id = "color_shift"
 //	points = 0
 //	isPositive = 1
-//	
+//
 //	onAdd(var/mob/owner)	Not enforcing any of them with onLife because Hemochromia is a multi-mutation thing while Achromia would darken the skin color every tick until it's pitch black.
 //		if(owner.bioHolder)
 //			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
@@ -835,6 +835,8 @@ obj/trait/pilot
 	points = 2
 	isPositive = 0
 	var/selected_reagent = "ethanol"
+	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
+	var/addicted_players
 
 	New()
 		selected_reagent = pick("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
@@ -842,15 +844,19 @@ obj/trait/pilot
 
 	onAdd(var/mob/owner)
 		if(isliving(owner))
+			addicted_players[owner] = pick(addictive_reagents)
+			selected_reagent = addicted_players[owner]
 			addAddiction(owner)
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
 		if(isliving(owner) && prob(1))
 			var/mob/living/M = owner
+			selected_reagent = addicted_players[owner]
 			for(var/datum/ailment_data/addiction/A in M.ailments)
 				if(istype(A, /datum/ailment_data/addiction))
-					if(A.associated_reagent == selected_reagent) return
+					if(A.associated_reagent == selected_reagent)
+						 return
 			addAddiction(owner)
 		return
 
