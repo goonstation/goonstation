@@ -100,7 +100,7 @@
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>GPS Units</b></div>"
-		for (var/obj/item/device/gps/G in by_type[/obj/item/device/gps])
+		for (var/obj/item/device/gps/G as anything in by_type[/obj/item/device/gps])
 			LAGCHECK(LAG_LOW)
 			if (G.allowtrack == 1)
 				var/turf/T = get_turf(G.loc)
@@ -111,7 +111,7 @@
 				HTML += "<br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
 
 		HTML += "<div class='gps group'><b>Tracking Implants</b></div>"
-		for (var/obj/item/implant/tracking/imp in by_type[/obj/item/implant/tracking])
+		for (var/obj/item/implant/tracking/imp as anything in by_type[/obj/item/implant/tracking])
 			LAGCHECK(LAG_LOW)
 			if (isliving(imp.loc))
 				var/turf/T = get_turf(imp.loc)

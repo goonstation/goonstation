@@ -84,7 +84,7 @@ var/makingpowernetssince = 0
 	var/netcount = 0
 	powernets = list()
 
-	for(var/obj/cable/PC in by_type[/obj/cable])
+	for(var/obj/cable/PC as anything in by_type[/obj/cable])
 		PC.netnum = 0
 	LAGCHECK(LAG_MED)
 
@@ -94,7 +94,7 @@ var/makingpowernetssince = 0
 			M.netnum = 0
 	LAGCHECK(LAG_MED)
 
-	for(var/obj/cable/PC in by_type[/obj/cable])
+	for(var/obj/cable/PC as anything in by_type[/obj/cable])
 		if(!PC.netnum)
 			powernet_nextlink(PC, ++netcount)
 		LAGCHECK(LAG_MED)
@@ -105,7 +105,7 @@ var/makingpowernetssince = 0
 		powernets += PN
 		PN.number = L
 
-	for(var/obj/cable/C in by_type[/obj/cable])
+	for(var/obj/cable/C as anything in by_type[/obj/cable])
 		if(!C.netnum) continue
 		var/datum/powernet/PN = powernets[C.netnum]
 		PN.cables += C

@@ -1139,7 +1139,7 @@
 		else if (O.ai_interface)
 			if (!(O in available_ai_shells))
 				available_ai_shells += O
-			for (var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
+			for (var/mob/living/silicon/ai/AI as anything in by_type[/mob/living/silicon/ai])
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 			O.shell = 1
 		else if (istype(O.brain, /obj/item/organ/brain/latejoin))

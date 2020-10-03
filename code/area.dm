@@ -3203,7 +3203,7 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/aiPlayer in by_type[/mob/living/silicon/ai])
+		for (var/mob/living/silicon/aiPlayer as anything in by_type[/mob/living/silicon/ai])
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
@@ -3228,7 +3228,7 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
+		for (var/mob/living/silicon/ai/aiPlayer as anything in by_type[/mob/living/silicon/ai])
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 			LAGCHECK(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])
@@ -3247,7 +3247,7 @@ area/station/security/visitation
 		for (var/obj/machinery/firealarm/F in src)
 			F.icon_state = "fire0"
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
+		for (var/mob/living/silicon/ai/aiPlayer as anything in by_type[/mob/living/silicon/ai])
 			aiPlayer.cancelAlarm("Fire", src, src)
 			LAGCHECK(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])

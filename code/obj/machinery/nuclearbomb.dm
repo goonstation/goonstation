@@ -198,8 +198,7 @@
 
 			if (istype(W, /obj/item/remote/syndicate_teleporter))
 				for(var/obj/submachine/syndicate_teleporter/S in get_turf(src)) //sender
-					for(var/X in by_type[/obj/submachine/syndicate_teleporter]) // receiver
-						var/obj/submachine/syndicate_teleporter/R = X
+					for(var/obj/submachine/syndicate_teleporter/R as anything in by_type[/obj/submachine/syndicate_teleporter]) // receiver
 						if(R.id == S.id && S != R)
 							if(S.recharging == 1)
 								return

@@ -89,7 +89,7 @@
 		logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]")
 		logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
 
-		for(var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
+		for(var/mob/living/silicon/ai/M as anything in by_type[/mob/living/silicon/ai])
 			if (M.deployed_to_eyecam && M.eyecam)
 				M.eyecam.return_mainframe()
 			if(!isdead(M) && M.see_in_dark != 0)
@@ -150,7 +150,7 @@
 		// Fuck up a couple of doors
 		if (!station_doors.len)
 			var/turf/T = null
-			for (var/obj/machinery/door/foundDoor in by_type[/obj/machinery/door])
+			for (var/obj/machinery/door/foundDoor as anything in by_type[/obj/machinery/door])
 				if (foundDoor.z != 1)
 					continue
 				T = get_turf(foundDoor)

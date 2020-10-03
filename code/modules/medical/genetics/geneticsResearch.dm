@@ -164,7 +164,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/htmlIcon = null
 
 	proc/onFinish()
-		for (var/obj/machinery/computer/genetics/C in by_type[/obj/machinery/computer/genetics])
+		for (var/obj/machinery/computer/genetics/C as anything in by_type[/obj/machinery/computer/genetics])
 			if (C.tracked_research == src)
 				C.tracked_research = null
 				break

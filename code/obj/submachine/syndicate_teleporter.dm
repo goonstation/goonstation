@@ -18,8 +18,7 @@
 		STOP_TRACKING
 
 	proc/teleport(mob/user)
-		for(var/X in by_type[/obj/submachine/syndicate_teleporter])
-			var/obj/submachine/syndicate_teleporter/S = X
+		for(var/obj/submachine/syndicate_teleporter/S as anything in by_type[/obj/submachine/syndicate_teleporter])
 			if(S.id == src.id && S != src)
 				if(recharging == 1)
 					return 1

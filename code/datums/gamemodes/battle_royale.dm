@@ -172,12 +172,10 @@ proc/hide_weapons_everywhere()
 	murder_supplies.Add(/obj/item/gun/kinetic/pistol)
 
 
-	for(var/obj/O in by_type[/obj/storage]) // imcoder
+	for(var/obj/storage/S as anything in by_type[/obj/storage]) // imcoder
 		if(prob(33))
 			weapon = pick(murder_supplies)
-			new weapon(O)
-	return
-
+			new weapon(S)
 
 
 proc/equip_battler(mob/living/carbon/human/battler)

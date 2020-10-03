@@ -225,7 +225,7 @@
 			if(id == C.comp_id)
 				compressor = C
 		doors = new /list()
-		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
+		for(var/obj/machinery/door/poddoor/P as anything in by_type[/obj/machinery/door])
 			if(P.id == id)
 				doors += P
 

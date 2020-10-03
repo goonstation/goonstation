@@ -691,10 +691,10 @@ body
 				gas.oxygen = 10000
 				gas.temperature = 10000
 				T.assume_air(gas)
-			for (var/obj/machinery/door/airlock/maintenance/door in by_type[/obj/machinery/door])
+			for (var/obj/machinery/door/airlock/maintenance/door as anything in by_type[/obj/machinery/door])
 				LAGCHECK(LAG_LOW)
 				qdel(door)
-			for (var/obj/machinery/door/firedoor/door in by_type[/obj/machinery/door])
+			for (var/obj/machinery/door/firedoor/door as anything in by_type[/obj/machinery/door])
 				LAGCHECK(LAG_LOW)
 				qdel(door)
 		if ("Chemist's Delight")
@@ -911,7 +911,7 @@ var/global/debug_camera_paths = 0
 
 proc/display_camera_paths()
 	remove_camera_paths() //Clean up any old ones laying around before displaying this
-	for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for (var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
 		if (C.c_north)
 			camera_path_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(C.loc, C.c_north.loc)))
 

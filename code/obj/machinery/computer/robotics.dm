@@ -72,7 +72,7 @@
 		return
 	src.add_dialog(user)
 	var/dat = "Located AI Units<BR><BR>"
-	for(var/mob/living/silicon/ai/A in by_type[/mob/living/silicon/ai])
+	for(var/mob/living/silicon/ai/A as anything in by_type[/mob/living/silicon/ai])
 		dat += "[A.name] |"
 		if(A.stat)
 			dat += "ERROR: Not Responding!<BR>"

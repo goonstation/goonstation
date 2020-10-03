@@ -54,8 +54,7 @@
 							//else
 							playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch())
 						var/possumMax = 15
-						for (var/poss in by_type[/obj/critter/opossum])
-							var/obj/critter/opossum/responsePossum = poss
+						for (var/obj/critter/opossum/responsePossum as anything in by_type[/obj/critter/opossum])
 							if (!responsePossum.alive)
 								continue
 							if(!IN_RANGE(responsePossum, src, 4))
@@ -63,8 +62,7 @@
 							if (possumMax-- < 0)
 								break
 							responsePossum.CritterDeath() // startled into playing dead!
-						for (var/poss in by_type[/mob/living/critter/small_animal/opossum]) // is this more or less intensive than a range(4)?
-							var/mob/living/critter/small_animal/opossum/P = poss
+						for (var/mob/living/critter/small_animal/opossum/P as anything in by_type[/mob/living/critter/small_animal/opossum]) // is this more or less intensive than a range(4)?
 							if (P.playing_dead) // already out
 								continue
 							if(!IN_RANGE(P, src, 4))

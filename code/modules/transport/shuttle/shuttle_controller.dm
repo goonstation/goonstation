@@ -68,7 +68,7 @@ datum/shuttle_controller
 
 		New()
 			..()
-			for (var/obj/machinery/computer/airbr/S in by_type[/obj/machinery/computer/airbr])
+			for (var/obj/machinery/computer/airbr/S as anything in by_type[/obj/machinery/computer/airbr])
 				if (S.emergency && !(S in src.airbridges))
 					src.airbridges += S
 			map_turf = map_settings.shuttle_map_turf

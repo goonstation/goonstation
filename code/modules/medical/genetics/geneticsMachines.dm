@@ -754,7 +754,7 @@
 		var/booth_effect_desc = input(usr, "Please enter a product description.", "$$$", "") as null|text
 		booth_effect_desc = strip_html(booth_effect_desc,280)
 
-		for (var/obj/machinery/genetics_booth/GB in by_type[/obj/machinery/genetics_booth])
+		for (var/obj/machinery/genetics_booth/GB as anything in by_type[/obj/machinery/genetics_booth])
 			var/already_has = 0
 			for (var/datum/geneboothproduct/P in GB.offered_genes)
 				if (P.id == E.id)

@@ -17,7 +17,7 @@
 /datum/game_mode/malfunction/post_setup()
 	for(var/turf/T in landmarks[LANDMARK_MALF_GEAR_CLOSET])
 		new /obj/storage/closet/syndicate/malf(T)
-	for (var/mob/living/silicon/ai/aiplayer in by_type[/mob/living/silicon/ai])
+	for (var/mob/living/silicon/ai/aiplayer as anything in by_type[/mob/living/silicon/ai])
 		malf_ai += aiplayer.mind
 
 	/*if(malf_ai.len < 1)

@@ -399,9 +399,7 @@
 /proc/name_autoname_cameras()
 	var/list/counts_by_area = list()
 	var/list/obj/machinery/camera/first_cam_by_area = list()
-	for(var/X in by_type[/obj/machinery/camera])
-		var/obj/machinery/camera/C = X
-		if(!istype(C)) continue
+	for(var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
 		if (dd_hasprefix(C.name, "autoname"))
 			var/area/where = get_area(C)
 			if (isarea(where))
@@ -430,7 +428,7 @@
 	camnet_needs_rebuild = 0
 
 /proc/disconnect_camera_network()
-	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for(var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
 		C.c_north = null
 		C.c_east = null
 		C.c_south = null

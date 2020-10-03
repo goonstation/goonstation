@@ -160,7 +160,7 @@
 			return 0
 #ifdef HALLOWEEN
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
-		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder		
+		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 		if (GH.spooking)
 			GH.stop_spooking()
 #endif
@@ -173,7 +173,7 @@
 
 #ifdef HALLOWEEN
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
-		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder		
+		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 		if (GH.spooking)
 			GH.stop_spooking()
 			//animate(src, )	explode?
@@ -697,8 +697,7 @@
 			creatures[name] = F.the_football
 
 
-	for (var/X in by_type[/obj/observable])
-		var/obj/observable/O = X
+	for (var/obj/observable/O as anything in by_type[/obj/observable])
 		LAGCHECK(LAG_LOW)
 		var/name = O.name
 		if (name in names)
@@ -709,8 +708,7 @@
 			namecounts[name] = 1
 		creatures[name] = O
 
-	for (var/X in by_type[/obj/item/ghostboard])
-		var/obj/item/ghostboard/GB = X
+	for (var/obj/item/ghostboard/GB as anything in by_type[/obj/item/ghostboard])
 		LAGCHECK(LAG_LOW)
 		var/name = "Ouija board"
 		if (name in names)
@@ -721,8 +719,7 @@
 			namecounts[name] = 1
 		creatures[name] = GB
 
-	for (var/X in by_type[/obj/item/gnomechompski])
-		var/obj/item/gnomechompski/G = X
+	for (var/obj/item/gnomechompski/G as anything in by_type[/obj/item/gnomechompski])
 		var/name = "Gnome Chompski"
 		if (name in names)
 			namecounts[name]++
@@ -732,8 +729,7 @@
 			namecounts[name] = 1
 		creatures[name] = G
 
-	for (var/X in by_type[/obj/cruiser_camera_dummy])
-		var/obj/cruiser_camera_dummy/CR = X
+	for (var/obj/cruiser_camera_dummy/CR as anything in by_type[/obj/cruiser_camera_dummy])
 		var/name = CR.name
 		if (name in names)
 			namecounts[name]++
@@ -743,8 +739,7 @@
 			namecounts[name] = 1
 		creatures[name] = CR
 
-	for (var/X in by_type[/obj/item/reagent_containers/food/snacks/prison_loaf])
-		var/obj/item/reagent_containers/food/snacks/prison_loaf/L = X
+	for (var/obj/item/reagent_containers/food/snacks/prison_loaf/L as anything in by_type[/obj/item/reagent_containers/food/snacks/prison_loaf])
 		var/name = L.name
 		if (name != "strangelet loaf")
 			continue

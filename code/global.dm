@@ -678,7 +678,7 @@ var/global
 			aiImagesLowPriority[key] = I
 		else
 			aiImages[key] = I
-		for(var/mob/M in by_type[/mob/living/silicon/ai])
+		for(var/mob/living/silicon/ai/M as anything in by_type[/mob/living/silicon/ai])
 			if (M.client)
 				M << I
 		return I

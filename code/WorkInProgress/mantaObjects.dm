@@ -144,7 +144,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /proc/mantaIsBroken()
 	var/broken = 0
-	for(var/obj/machinery/mantapropulsion/A in by_type[/obj/machinery/mantapropulsion])
+	for(var/obj/machinery/mantapropulsion/A as anything in by_type[/obj/machinery/mantapropulsion])
 		if(!A.important) continue
 		if(A.health == 0) broken++
 		if(A.health > 0) broken--
@@ -166,14 +166,14 @@ var/obj/manta_speed_lever/mantaLever = null
 	for(var/A in by_cat[TR_CAT_MANTA_TILES])
 		var/turf/space/fluid/manta/T = A
 		T.setScroll(moving)
-	for(var/A in by_type[/obj/decal/mantaBubbles])
-		var/obj/O = A
+
+	for(var/obj/decal/mantaBubbles/O as anything in by_type[/obj/decal/mantaBubbles])
 		O.alpha = (moving ? 255:0)
-	for(var/A in by_type[/obj/sea_plant_manta])
-		var/obj/O = A
+
+	for(var/obj/sea_plant_manta/O as anything in by_type[/obj/sea_plant_manta])
 		O.alpha = (moving ? 0:255)
-	for(var/A in by_type[/obj/machinery/mantapropulsion])
-		var/obj/machinery/mantapropulsion/O = A
+
+	for(var/obj/machinery/mantapropulsion/O as anything in by_type[/obj/machinery/mantapropulsion])
 		O.setOn(moving)
 
 	mantaMoving = moving
@@ -708,7 +708,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		busy = 0
 
 	proc/teleport(mob/user)
-		for(var/X in by_type[/obj/miningteleporter])
+		for(var/X as anything in by_type[/obj/miningteleporter])
 			var/obj/miningteleporter/S = X
 			if(S.id == src.id && S != src)
 				if(recharging == 1)
@@ -1509,7 +1509,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if(istype(W, /obj/item/parts/human_parts/arm/right/polaris))
 			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 			playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
-			for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+			for (var/obj/machinery/door/airlock/M as anything in by_type[/obj/machinery/door])
 				if (M.id == src.id)
 					if (M.density)
 						M.open()
@@ -1527,12 +1527,12 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (H.limbs && (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/polaris)))
 				user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 
-				for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
+				for (var/obj/machinery/door/poddoor/M as anything in by_type[/obj/machinery/door])
 					if (M.id == src.id)
 						if (M.density)
 							M.open()
 
-				for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+				for (var/obj/machinery/door/airlock/M as anything in by_type[/obj/machinery/door])
 					if (M.id == src.id)
 						if (M.density)
 							M.open()
