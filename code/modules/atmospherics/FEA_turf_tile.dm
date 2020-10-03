@@ -11,10 +11,10 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 				step(src, direction) // ZEWAKA-ATMOS: HIGH PRESSURE DIFFERENTIAL HERE
 		return 1
 
-turf/proc/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
+turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
 	return 0
 
-turf/proc/return_air()
+turf/return_air()
 	//Create gas mixture to hold data for passing
 	// TODO this is returning a new air object, but object_tile returns the existing air
 	//  This is used in a lot of places and thrown away, so it should be pooled,
@@ -30,7 +30,7 @@ turf/proc/return_air()
 
 	return GM
 
-turf/proc/remove_air(amount as num)//, remove_water = 0)
+turf/remove_air(amount as num)//, remove_water = 0)
 	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
 	var/sum = BASE_GASES_TOTAL_MOLES(src)
 	if(sum>0)
@@ -50,7 +50,8 @@ turf
 	proc
 		high_pressure_movements()
 			if( !loc:sanctuary )
-				for(var/atom/movable/in_tile in src)
+				for(var/AM in src)
+					var/atom/movable/in_tile = AM
 					in_tile.experience_pressure_difference(pressure_difference, pressure_direction)
 
 			pressure_difference = 0
