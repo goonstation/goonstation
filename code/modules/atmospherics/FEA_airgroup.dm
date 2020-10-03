@@ -106,7 +106,8 @@
 		var/turf/simulated/member = M
 		if(member.active_hotspot)
 			return 0
-		if(member.air && member.air.compare(sample.air)) continue
+		if(member.air && member.air.compare(sample.air))
+			continue
 		else
 			return 0
 
@@ -185,7 +186,8 @@
 		// Process connections to adjacent groups
 		var/border_index = 1
 		if(border_group)
-			for(var/datum/air_group/AG in border_group)
+			for(var/G in border_group)
+				var/datum/air_group/AG = G
 #ifdef ATMOS_ARCHIVING
 				if(AG.archived_cycle < archived_cycle)
 					//archive other groups information if it has not been archived yet this cycle
@@ -292,7 +294,7 @@
 						abort_group = 1
 
 				if(connection_difference)
-					for(var/turf/simulated/self_border in space_borders)
+					for(var/turf/simulated/self_border in space_borders) // ZeWaka/Atmos: BOTH SPACE AND SIM?
 						self_border.consider_pressure_difference_space(connection_difference)
 
 		if(abort_group)

@@ -10,30 +10,34 @@
 #define MOLES_O2STANDARD MOLES_CELLSTANDARD*O2STANDARD	// O2 standard value (21%)
 #define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD	// N2 standard value (79%)
 
-#define MOLES_PLASMA_VISIBLE	2 //Moles in a standard cell after which plasma is visible
+/// Moles in a standard cell after which plasma is visible
+#define MOLES_PLASMA_VISIBLE	2
 
-#define BREATH_VOLUME 0.5	//liters in a normal breath
+/// liters in a normal breath
+#define BREATH_VOLUME 0.5
+/// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
-	//Amount of air to take a from a tile
+/// Amount of air needed before pass out/suffocation commences
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
-	//Amount of air needed before pass out/suffocation commences
 
 
-#define MINIMUM_AIR_RATIO_TO_SUSPEND 0.08
-	//Minimum ratio of air that must move to/from a tile to suspend group processing
+/// Minimum ratio of air that must move to/from a tile to suspend group processing
+#define MINIMUM_AIR_RATIO_TO_SUSPEND 0.1
+/// Minimum amount of air that has to move before a group processing can be suspended
 #define MINIMUM_AIR_TO_SUSPEND MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND
-	//Minimum amount of air that has to move before a group processing can be suspended
+
 
 #define MINIMUM_WATER_TO_SUSPEND MOLAR_DENSITY_WATER*CELL_VOLUME*MINIMUM_AIR_RATIO_TO_SUSPEND
 
 #define MINIMUM_MOLES_DELTA_TO_MOVE MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND //Either this must be active
 #define MINIMUM_TEMPERATURE_TO_MOVE	(T20C+100) 		  //or this (or both, obviously)
 
-#define MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND 0.012
-#define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND 5
-	//Minimum temperature difference before group processing is suspended
+#define MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND 0.02
+/// Minimum temperature difference before group processing is suspended
+#define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND 6
+/// Minimum temperature difference before the gas temperatures are just set to be equa
 #define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER 1
-	//Minimum temperature difference before the gas temperatures are just set to be equal
+
 
 #define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		(T20C+10)
 #define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	(T20C+200)
@@ -49,9 +53,12 @@
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	(120+T0C)
 #define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	(100+T0C)
 #define FIRE_SPREAD_RADIOSITY_SCALE		0.85
-#define FIRE_CARBON_ENERGY_RELEASED	  500000 //Amount of heat released per mole of burnt carbon into the tile
-#define FIRE_PLASMA_ENERGY_RELEASED	 3000000 //Amount of heat released per mole of burnt plasma into the tile
-#define FIRE_GROWTH_RATE			25000 //For small fires
+/// Amount of heat released per mole of burnt carbon into the tile
+#define FIRE_CARBON_ENERGY_RELEASED	  500000
+/// Amount of heat released per mole of burnt plasma into the tile
+#define FIRE_PLASMA_ENERGY_RELEASED	 3000000
+/// For small fires
+#define FIRE_GROWTH_RATE			25000
 
 //Plasma fire properties
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		(100+T0C)

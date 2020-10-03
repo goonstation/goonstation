@@ -276,7 +276,7 @@ datum
 				process_high_pressure_delta()
 				LAGCHECK(LAG_HIGH)
 
-				if(current_cycle%10 == 5) //Check for groups of tiles to resume group processing every 10 cycles
+				if(current_cycle % 7 == 0) //Check for groups of tiles to resume group processing every 7 cycles
 					for(var/D in air_groups)
 						var/datum/air_group/AG = D
 						AG.check_regroup()
