@@ -1,7 +1,7 @@
 
 import { useBackend, useSharedState, useLocalState } from "../backend";
 import { truncate } from "../format.js";
-import { Button, NumberInput, Section, Box, Table, Tooltip, Icon, Tabs, Input, Fragment, Modal, Flex } from "../components";
+import { Button, NumberInput, Section, Box, Table, Tooltip, Icon, Tabs, Input, Fragment, Modal } from "../components";
 import { Window } from "../layouts";
 
 export const titleCase = str => {
@@ -32,7 +32,7 @@ const stateMap = {
 
 
 export const ChemDispenser = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const {
     beakerContents,
   } = data;
@@ -206,8 +206,8 @@ export const Beaker = (props, context) => {
           "No Contents"
         )}
       </Box>
-      {beakerContents.map((reagent, index) => (
-        <Table.Row key={index}>
+      {beakerContents.map((reagent, indexContents) => (
+        <Table.Row key={indexContents}>
           <Table.Cell collapsing
             textAlign="left"
             position="relative">
@@ -241,9 +241,9 @@ export const Beaker = (props, context) => {
                 })}>
                 All
               </Button>
-              {removeReagentButtons.map((amount, index) => (
+              {removeReagentButtons.map((amount, indexButtons) => (
                 <Button
-                  key={index}
+                  key={indexButtons}
                   icon="minus"
                   onClick={() => act("remove", {
                     amount: amount, reagentId: reagent.id,
@@ -262,7 +262,7 @@ export const Beaker = (props, context) => {
 
 
 export const BeakerContentsGraph = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const [sort, setSort] = useSharedState(context, 'sort', 1);
   const {
     beakerContents,
