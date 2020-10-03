@@ -459,6 +459,8 @@
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()
+		if (islist(src.tracked_mud))
+			src.track_mud()
 		actions.interrupt(src, INTERRUPT_MOVE)
 		#ifdef COMSIG_MOVABLE_MOVED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
