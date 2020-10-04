@@ -915,8 +915,6 @@
 		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [speaker ? "data-ctx='\ref[speaker.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
 		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock ? "<a href='?src=\ref[flock.flockmind];origin=\ref[speaker]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
 		siliconrendered = "<span class='game [class]'><span class='bold'>\[[flock ? flockBasedGarbleText(flock.name, -30, flock) : "--.--"]\] </span><span class='name' [speaker ? "data-ctx='\ref[speaker.mind]'" : ""]>[flockBasedGarbleText(name, -20, flock)]</span> <span class='message'>[flockBasedGarbleText(message, 0, flock)]</span></span>"
-		message_admins("[name] is name, '[flockBasedGarbleText(name, -20, flock)]' is it garbled, [message] is message, '[flockBasedGarbleText(message, 0, flock)]' is it garbled")
-		message_admins("[siliconrendered] is the message in its entirety")
 
 	for (var/client/CC)
 		if (!CC.mob) continue
