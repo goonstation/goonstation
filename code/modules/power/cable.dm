@@ -125,13 +125,20 @@
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
 
 
-//Coloured Cables yaaaay
-obj/cable/coloured/yellow
+/////////Coloured Cables yaaaay
+/obj/cable/coloured/yellow
 	name = "yellow-coloured power cable"
 	desc = "A flexible power cable. This one is Yellow."
 	color = "#EED202"
 	insulator_default = "yellowrubber"
 
+/obj/cable/coloured/orange
+	name = "orange-coloured power cable"
+	desc = "A flexible power cable. This one is Orange."
+	color = "#C46210"
+	insulator_default = "orangerubber"
+
+/////////The rest of the shit
 /obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
 	..()
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable

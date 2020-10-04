@@ -174,7 +174,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 /////////////////////////////////////////////////REINFORCED CABLE
 /////////////////////////////////////////////////COLOURED CABLES
-
+//yellow
 /obj/item/cable_coil/coloured/yellow
 	name = "yellow-coloured cable coil"
 	base_name = "yellow-coloured cable coil"
@@ -184,7 +184,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	spawn_insulator_name = "yellowrubber"
 	cable_obj_type = /obj/cable/coloured/yellow
 
-obj/item/cable_coil/coloured/yellow/cut/
+/obj/item/cable_coil/coloured/yellow/cut/
 	icon_state = "coil2"
 	New(loc, length)
 		if (length)
@@ -195,6 +195,30 @@ obj/item/cable_coil/coloured/yellow/cut/
 /obj/item/cable_coil/coloured/yellow/cut/small
 	New(loc, length)
 		..(loc, rand(1,5))
+//orange
+/obj/item/cable_coil/coloured/orange
+	name = "orange-coloured cable coil"
+	base_name = "orange-coloured cable coil"
+	desc = "A coil of Orange-Coloured power cable."
+	stack_type = /obj/item/cable_coil/coloured/orange
+
+	spawn_insulator_name = "orangerubber"
+	cable_obj_type = /obj/cable/coloured/orange
+
+/obj/item/cable_coil/coloured/orange/cut/
+	icon_state = "coil2"
+	New(loc, length)
+		if (length)
+			..(loc, length)
+		else
+			..(loc, rand(1,2))
+
+/obj/item/cable_coil/coloured/orange/cut/small
+	New(loc, length)
+		..(loc, rand(1,5))
+
+
+
 
 /////////////////////////////////////////////////COLOURED CABLES
 /obj/item/cable_coil/attack_self(var/mob/living/M)
