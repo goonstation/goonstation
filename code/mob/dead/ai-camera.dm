@@ -501,7 +501,7 @@
 		new_tiles += T
 
 	if (prev_tiles)
-		for(var/turf/O as anything in (prev_tiles - new_tiles))
+		for(var/turf/O as() in (prev_tiles - new_tiles))
 			//O.removeCameraCoverage(src)
 			//removeCameraCoverage copy+paste begin!
 			if(O.cameras == null) continue
@@ -522,7 +522,7 @@
 			LAGCHECK(LAG_HIGH)
 			//copy paste end!
 
-	for(var/turf/t as anything in (new_tiles - prev_tiles))
+	for(var/turf/t as() in (new_tiles - prev_tiles))
 
 		//t.addCameraCoverage(src)
 		//add camera coverage copy+paste begin!
@@ -604,7 +604,7 @@ world/proc/updateCameraVisibility()
 			cam_candidates += t
 
 
-		for(var/turf/t as anything in cam_candidates)//ugh
+		for(var/turf/t as() in cam_candidates)//ugh
 			//if( t.z != 1 ) continue
 			//t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
 
@@ -625,7 +625,7 @@ world/proc/updateCameraVisibility()
 
 		aiDirty = 1
 		game_start_countdown?.update_status("Updating camera vis...\n")
-	for(var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
+	for(var/obj/machinery/camera/C as() in by_type[/obj/machinery/camera])
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
 			LAGCHECK(LAG_HIGH)
 			if (!t.aiImage) continue
