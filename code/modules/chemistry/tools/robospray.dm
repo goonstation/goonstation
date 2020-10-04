@@ -32,10 +32,11 @@
 		var/datum/reagent/temp_reagent = reagents_cache[currentreagent]
 		propername = temp_reagent.name
 		user.show_text("[src] is now injecting [propername], [botreagents[currentreagent]] units left.", "blue")
+		tooltip_rebuild = 1
 		return
 
 	get_desc(dist)
-		. += "It is injecting [propername]."
+		. += "It is injecting [propername]. There are [botreagents[currentreagent]] left"
 		return
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
