@@ -1103,6 +1103,48 @@
 		setProperty("thermal", 40)
 		return ..()
 
+//Coloured Cable Materials, because just red or reinforced isn't enough sometimes
+
+/datum/material/fabric/synthrubber/coloured/yellow
+	mat_id = "yellowrubber"
+	name = "yellowrubber"
+	desc = "A type of synthetic rubber. This one is Yellow."
+	color = "#EED202" //Safety Yellow
+
+/datum/material/fabric/synthrubber/coloured/orange
+	mat_id = "orangerubber"
+	name = "orangerubber"
+	desc = "A type of synthetic rubber. This one is Orange."
+	color = "#C46210" //Alloy Orange
+
+/datum/material/fabric/synthrubber/coloured/blue
+	mat_id = "bluerubber"
+	name = "bluerubber"
+	desc = "A type of synthetic rubber. This one is Blue."
+	color = "#72A0C1" //PRU Blue
+
+/datum/material/fabric/synthrubber/coloured/green
+	mat_id = "greenrubber"
+	name = "greenrubber"
+	desc = "A type of synthetic rubber. This one is Green."
+	color = "#00AD83" //Pantone Green
+/datum/material/fabric/synthrubber/coloured/purple
+	mat_id = "purplerubber"
+	name = "purplerubber"
+	desc = "A type of synthetic rubber. This one is Purple."
+	color = "#9370DB" //Medium Purple
+/datum/material/fabric/synthrubber/coloured/black
+	mat_id = "blackrubber"
+	name = "blackrubber"
+	desc = "A type of synthetic rubber. This one is Black."
+	color = "#414A4C" //Outer Space Black
+/datum/material/fabric/synthrubber/coloured/hotpink
+	mat_id = "hotpinkrubber"
+	name = "hotpinkrubber"
+	desc = "A type of synthetic rubber. This one is Hot Pink."
+	color = "#FF69B4" //Hot Pink
+
+//End of Coloured Cable materials
 /datum/material/fabric/synthblubber //it had to be done
 	mat_id = "synthblubber"
 	name = "synthblubber"
