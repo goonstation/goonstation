@@ -1,5 +1,9 @@
 
 (t)sun oct 04 20
+(u)ThePotato97
+(p)2025
+(e)🆕📄|feature, tgui
+(*)Converted cloning console UI to tgui.
 (u)Fosstar
 (p)2334
 (e)⚖🆕🎨|balance, feature, sprites
