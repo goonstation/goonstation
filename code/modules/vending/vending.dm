@@ -131,13 +131,13 @@
 		if( world.time < lastvend ) return//aaaaaaa
 		lastvend = world.time + 2
 		throw_item()
-		return
+		return TRUE
 	proc/vendname(var/datum/mechanicsMessage/inp)
 		if( world.time < lastvend || !inp) return//aaaaaaa
 		if(!length(inp.signal)) return//aaaaaaa
 		lastvend = world.time + 5 //Make it slower to vend by name?
 		throw_item(inp.signal)
-		return
+		return TRUE
 
 	// just making this proc so we don't have to override New() for every vending machine, which seems to lead to bad things
 	// because someone, somewhere, always forgets to use a ..()
@@ -1677,6 +1677,14 @@
 		product_list += new/datum/data/vending_product(/mob/living/carbon/human/npc/monkey, rand(10, 15))
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
+
+	vendinput(var/datum/mechanicsMessage/inp)
+		if (..())
+			logTheThing("station", usr, null, "triggered a mechcomp random vend from [src] at [log_loc(src)].")
+
+	vendname(var/datum/mechanicsMessage/inp)
+		if (..())
+			logTheThing("station", usr, null, "triggered a mechcomp vend by name ([inp.signal]) from [src] at [log_loc(src)].")
 
 	Topic(href, href_list)
 		if (..() && href_list["vend"])
