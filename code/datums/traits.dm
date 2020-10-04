@@ -838,10 +838,6 @@ obj/trait/pilot
 	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
 	var/addicted_players
 
-	New()
-		selected_reagent = pick("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
-		. = ..()
-
 	onAdd(var/mob/owner)
 		if(isliving(owner))
 			addicted_players[owner] = pick(addictive_reagents)
