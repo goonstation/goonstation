@@ -689,7 +689,7 @@
 */
 
 /datum/achievementReward/ai_malf
-	title = "(AI Skin) Malfuction"
+	title = "(AI Skin) Malfunction"
 	desc = "Turns you into a scary malfunctioning AI! Only in appearance, of course."
 	required_medal = "HUMANOID MUST NOT ESCAPE"
 
