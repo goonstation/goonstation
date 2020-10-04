@@ -1,4 +1,9 @@
 
+(t)sat oct 03 20
+(u)Nebulacrity
+(p)2304
+(e)🎨|sprites
+(+)Added a grayscale portal sprite.
 (t)fri oct 02 20
 (u)makkipakki
 (p)2336
