@@ -130,14 +130,13 @@
 	proc/vendinput(var/datum/mechanicsMessage/inp)
 		if( world.time < lastvend ) return//aaaaaaa
 		lastvend = world.time + 2
-		throw_item()
-		return TRUE
+		. = throw_item()
+
 	proc/vendname(var/datum/mechanicsMessage/inp)
 		if( world.time < lastvend || !inp) return//aaaaaaa
 		if(!length(inp.signal)) return//aaaaaaa
 		lastvend = world.time + 5 //Make it slower to vend by name?
-		throw_item(inp.signal)
-		return TRUE
+		. = throw_item(inp.signal)
 
 	// just making this proc so we don't have to override New() for every vending machine, which seems to lead to bad things
 	// because someone, somewhere, always forgets to use a ..()
@@ -799,7 +798,8 @@
 			if(item_name_to_throw == product.product_name_cache[product.product_path])
 				if(product.product_amount > 0)
 					thrown = throw_item_act(product, target)
-				break
+					return thrown
+				return
 	else
 		for(var/datum/data/vending_product/R in src.product_list)
 			if (R.product_amount <= 0) //Try to use a record that actually has something to dump.
@@ -807,7 +807,7 @@
 			valid_products.Add(R)
 		if (valid_products.len)
 			thrown = throw_item_act(pick(valid_products), target)
-	return thrown
+			return thrown
 
 /obj/machinery/vending/proc/throw_item_act(var/datum/data/vending_product/R, var/mob/living/target)
 	var/obj/throw_item = null
@@ -1680,11 +1680,11 @@
 
 	vendinput(var/datum/mechanicsMessage/inp)
 		if (..())
-			logTheThing("station", usr, null, "triggered a mechcomp random vend from [src] at [log_loc(src)].")
+			logTheThing("station", usr, null, "vended a random product using mechcomp from [src] at [log_loc(src)].")
 
 	vendname(var/datum/mechanicsMessage/inp)
 		if (..())
-			logTheThing("station", usr, null, "triggered a mechcomp vend by name ([inp.signal]) from [src] at [log_loc(src)].")
+			logTheThing("station", usr, null, "vended a product by name ([inp.signal]) using mechcomp from [src] at [log_loc(src)].")
 
 	Topic(href, href_list)
 		if (..() && href_list["vend"])
