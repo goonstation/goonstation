@@ -36,7 +36,7 @@
 		return
 
 	get_desc(dist)
-		. += "It is injecting [propername]. There are [botreagents[currentreagent]] left"
+		. += "It is injecting [propername]. There are [botreagents[currentreagent]] left."
 		return
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
