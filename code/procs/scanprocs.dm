@@ -247,7 +247,6 @@
 	if (!O)
 		return null
 	var/damage = O.get_damage()
-
 	if (damage >= O.MAX_DAMAGE)
 		return "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
 	else if (damage >= O.MAX_DAMAGE*0.9)
@@ -258,7 +257,9 @@
 		return "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
 		return "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
-
+	else
+		if (O.robotic)
+			return "<br><span style='color:purple'><b>[O.name]</b> - Robotic organ detected</span>"
 	return null
 
 /proc/update_medical_record(var/mob/living/carbon/human/M)
