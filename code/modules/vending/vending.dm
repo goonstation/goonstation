@@ -621,6 +621,7 @@
 				src.paying_for = null
 				src.scan = null
 			src.generate_HTML(1)
+			return TRUE
 
 		if (href_list["logout"])
 			src.scan = null
@@ -1676,6 +1677,11 @@
 		product_list += new/datum/data/vending_product(/mob/living/carbon/human/npc/monkey, rand(10, 15))
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
+
+	Topic(href, href_list)
+		if (..() && href_list["vend"])
+			var/datum/data/vending_product/R = locate(href_list["vend"]) in src.product_list
+			logTheThing("station", usr, null, "vended a [R.product_path] from [src] at [log_loc(src)].")
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
