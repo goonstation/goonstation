@@ -67,8 +67,9 @@
 
 		M.reagents.add_reagent(botreagents[picker], amt_prop)
 		botreagents[currentreagent] = botreagents[currentreagent] - amt_prop
-
+		tooltip_rebuild = 1
 		playsound(get_turf(M), src.sound_inject, 80, 0)
+		return 0
 
 	process()
 		..()
@@ -77,3 +78,6 @@
 			if(amt >= 25)
 				continue
 			botreagents[reagent] += 1
+			tooltip_rebuild = 1
+		return 0
+
