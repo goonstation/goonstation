@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "syringe_0"
-	icon_state = "hypo0"
+	icon_state = "hypoborg"
 	var/inj_amount = 5
 	var/picker = 1
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
@@ -14,9 +14,7 @@
 		"mannitol" = 25,
 		"saline" = 25,
 		"charcoal" = 25,
-		"anti_rad" = 25,
-		"salicylic_acid" = 25,
-		"antihistamine" = 25,
+		"anti_rad" = 25
 	)
 	var/currentreagent = "epinephrine"
 
