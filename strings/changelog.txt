@@ -1,4 +1,10 @@
 
+(t)sun oct 04 20
+(u)Fosstar
+(p)2334
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Added a neat new tool to medical borgs, allowing them to administer better first-aid. Try it!
+(*)This replaces the epinephrine and charcoal beakers borgs used to have.
 (t)sat oct 03 20
 (u)Nebulacrity
 (p)2304
