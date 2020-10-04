@@ -321,6 +321,49 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 /obj/item/cable_coil/coloured/hotpink/cut/small
 	New(loc, length)
 		..(loc, rand(1,5))
+//Brown
+/obj/item/cable_coil/coloured/brown
+	name = "brown-coloured cable coil"
+	base_name = "brown-coloured cable coil"
+	desc = "A coil of Brown-Coloured power cable."
+	stack_type = /obj/item/cable_coil/coloured/brown
+
+	spawn_insulator_name = "brownrubber"
+	cable_obj_type = /obj/cable/coloured/brown
+
+/obj/item/cable_coil/coloured/brown/cut/
+	icon_state = "coil2"
+	New(loc, length)
+		if (length)
+			..(loc, length)
+		else
+			..(loc, rand(1,2))
+
+/obj/item/cable_coil/coloured/brown/cut/small
+	New(loc, length)
+		..(loc, rand(1,5))
+//White
+/obj/item/cable_coil/coloured/white
+	name = "white-coloured cable coil"
+	base_name = "white-coloured cable coil"
+	desc = "A coil of White-Coloured power cable."
+	stack_type = /obj/item/cable_coil/coloured/white
+
+	spawn_insulator_name = "whiterubber"
+	cable_obj_type = /obj/cable/coloured/white
+
+/obj/item/cable_coil/coloured/white/cut/
+	icon_state = "coil2"
+	New(loc, length)
+		if (length)
+			..(loc, length)
+		else
+			..(loc, rand(1,2))
+
+/obj/item/cable_coil/coloured/white/cut/small
+	New(loc, length)
+		..(loc, rand(1,5))
+
 /////////////////////////////////////////////////COLOURED CABLES
 /obj/item/cable_coil/attack_self(var/mob/living/M)
 	if (istype(M))

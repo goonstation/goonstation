@@ -168,6 +168,18 @@
 	color = "#FF69B4"
 	insulator_default = "hotpinkrubber"
 
+/obj/cable/coloured/brown
+	name = "brown-coloured power cable"
+	desc = "A flexible power cable. This one is Brown."
+	color = "#832A0D"
+	insulator_default = "brownrubber"
+
+/obj/cable/coloured/white
+	name = "white-coloured power cable"
+	desc = "A flexible power cable. This one is White."
+	color = "#EDEAE0"
+	insulator_default = "whiterubber"
+
 /////////The rest of the shit
 /obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
 	..()

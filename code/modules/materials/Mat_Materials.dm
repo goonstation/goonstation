@@ -1146,6 +1146,18 @@
 	desc = "A type of synthetic rubber. This one is Hot Pink."
 	color = "#FF69B4" //Hot Pink
 
+/datum/material/fabric/synthrubber/coloured/brown
+	mat_id = "brownrubber"
+	name = "brownrubber"
+	desc = "A type of synthetic rubber. This one is Brown."
+	color = "#832A0D" //Smokey Topaz Brown
+
+/datum/material/fabric/synthrubber/coloured/white
+	mat_id = "whiterubber"
+	name = "whiterubber"
+	desc = "A type of synthetic rubber. This one is White."
+	color = "#EDEAE0" //Alabaster White
+
 //End of Coloured Cable materials
 /datum/material/fabric/synthblubber //it had to be done
 	mat_id = "synthblubber"
