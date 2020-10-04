@@ -1,5 +1,5 @@
 
-	/obj/item/storage/box/cablesbox
+/obj/item/storage/box/cablesbox
 	name = "electrical cables storage"
 	icon_state = "cables"
 	spawn_contents = list(/obj/item/cable_coil = 7)
@@ -7,6 +7,7 @@
 /obj/item/storage/box/cablesbox/reinforced
 	name = "reinforced electrical cables storage"
 	spawn_contents = list(/obj/item/cable_coil/reinforced = 7)
+
 //cable boxes...but colourful
 /obj/item/storage/box/cablesbox/coloured/yellow
 	name = "yellow-coloured electrical cables storage"
@@ -47,7 +48,7 @@
 /obj/item/storage/box/cablesbox/coloured/white
 	name = "white-coloured electrical cables storage"
 	spawn_contents = list(/obj/item/cable_coil/coloured/white = 7)
-
+//end of colourful cable boxes
 /obj/item/storage/box/PDAbox
 	name = "spare PDAs"
 	desc = "A box of spare PDA microcomputers."
