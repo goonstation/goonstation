@@ -723,6 +723,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					if (player.client.persistent_bank != player.client.persistent_bank)
 						player.client.set_persistent_bank(50000)
 					if (player_loses_held_item)
+						logTheThing("debug", null, null, "[player.ckey] lost held item")
 						player.client.set_last_purchase(0)
 
 					bank_earnings.pilot_bonus = pilot_bonus

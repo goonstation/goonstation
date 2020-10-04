@@ -88,7 +88,8 @@ var/makingpowernetssince = 0
 		PC.netnum = 0
 	LAGCHECK(LAG_MED)
 
-	for(var/obj/machinery/power/M in machine_registry[MACHINES_POWER])
+	for(var/P in machine_registry[MACHINES_POWER])
+		var/obj/machinery/power/M = P
 		if(M.netnum >=0)
 			M.netnum = 0
 	LAGCHECK(LAG_MED)
@@ -110,7 +111,8 @@ var/makingpowernetssince = 0
 		PN.cables += C
 		LAGCHECK(LAG_MED)
 
-	for(var/obj/machinery/power/M in machine_registry[MACHINES_POWER])
+	for(var/P in machine_registry[MACHINES_POWER])
+		var/obj/machinery/power/M = P
 		if(M.netnum<=0)		// APCs have netnum=-1 so they don't count as network nodes directly
 			continue
 
@@ -295,9 +297,11 @@ var/makingpowernetssince = 0
 
 	// zero the netnum of all cables & nodes in this powernet
 
-	for(var/obj/cable/OC in cables)
+	for(var/cable in cables)
+		var/obj/cable/OC = cable
 		OC.netnum = 0
-	for(var/obj/machinery/power/OM in nodes)
+	for(var/P in nodes)
+		var/obj/machinery/power/OM = P
 		OM.netnum = 0
 
 
@@ -333,14 +337,16 @@ var/makingpowernetssince = 0
 		powernets += PN
 		PN.number = powernets.len
 
-		for(var/obj/cable/OC in cables)
+		for(var/cable in cables)
+			var/obj/cable/OC = cable
 			if(!OC.netnum)		// non-connected cables will have netnum==0, since they weren't reached by propagation
 				OC.netnum = PN.number
 				cables -= OC
 				PN.cables += OC		// remove from old network & add to new one
 			LAGCHECK(LAG_MED)
 
-		for(var/obj/machinery/power/OM in nodes)
+		for(var/P in nodes)
+			var/obj/machinery/power/OM = P
 			if(!OM.netnum)
 				OM.netnum = PN.number
 				OM.powernet = PN
@@ -358,11 +364,13 @@ var/makingpowernetssince = 0
 	return
 
 /datum/powernet/proc/join_to(var/datum/powernet/PN) // maybe pool powernets someday
-	for(var/obj/cable/C in src.cables)
+	for(var/cable in src.cables)
+		var/obj/cable/C = cable
 		C.netnum = PN.number
 		PN.cables += C
 
-	for(var/obj/machinery/power/M in src.nodes)
+	for(var/P in src.nodes)
+		var/obj/machinery/power/M = P
 		M.netnum = PN.number
 		M.powernet = PN
 		PN.nodes += M

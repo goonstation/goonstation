@@ -96,10 +96,13 @@
 				if (!fart_on_other)
 					message = "<B>[src]</B> lets out \an [fluff] fart!"
 #ifdef HALLOWEEN
-				if (fart_on_other)
-					if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
-						var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
-						GH.change_points(20)
+				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
+					if (fart_on_other)
+						GH.change_points(15)
+					else if (GH.spooking)
+						animate_surroundings("fart")
+
 #endif
 
 		if ("scream")
@@ -128,6 +131,12 @@
 							continue
 						responseParrot.dance_response()
 						break
+#ifdef HALLOWEEN
+				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
+					if (GH.spooking)
+						animate_surroundings("dance")
+#endif
 
 		if ("flip")
 			if (src.emote_check(voluntary, 100, 1, 0))
@@ -136,6 +145,12 @@
 				animate_spin(src, prob(50) ? "R" : "L", 1, 0)
 				SPAWN_DBG(1 SECOND)
 					animate_bumble(src)
+#ifdef HALLOWEEN
+				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
+					if (GH.spooking)
+						animate_surroundings("flip")
+#endif
 
 		if ("wave","salute","nod")
 			if (src.emote_check(voluntary, 10, 1, 0))
@@ -158,7 +173,27 @@
 		return 1
 	return 0
 
-
+#ifdef HALLOWEEN
+/mob/dead/proc/animate_surroundings(var/type="fart", var/range = 2)
+	var/count = 0
+	for (var/obj/item/I in range(src, 2))
+		if (count > 5)
+			return
+		var/success = 0
+		switch (type)
+			if ("fart")
+				animate_levitate(I, 1, 8)
+				success = 1
+			if ("dance")
+				eat_twitch(I)
+				success = 1
+			if ("flip")
+				animate_spin(src, prob(50) ? "R" : "L", 1, 0)
+				success = 1
+		count ++
+		if (success)
+			sleep(rand(1,4))
+#endif
 // nothing in the game currently forces dead mobs to vomit. this will probably change or end up exposed via someone fucking up (likely me) in future. - cirr
 /mob/dead/vomit(var/nutrition=0, var/specialType=null)
 	..(0, /obj/item/reagent_containers/food/snacks/ectoplasm)

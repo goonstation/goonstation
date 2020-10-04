@@ -25,7 +25,8 @@
 				// clear away any existing mutantraces first
 				if (istype(H.bioHolder.GetEffect(ID), /datum/bioEffect/mutantrace) && ID != src.id)
 					H.bioHolder.RemoveEffect(ID)
-			H.set_mutantrace(src.mutantrace_path)
+			if (!istype(H.mutantrace, src.mutantrace_path))
+				H.set_mutantrace(src.mutantrace_path)
 		return
 
 	OnRemove()

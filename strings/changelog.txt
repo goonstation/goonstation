@@ -1,4 +1,170 @@
 
+(t)fri oct 02 20
+(u)makkipakki
+(p)2336
+(e)🆕|feature
+(+)For mentor and admin mice, added a bouncy dance animation and text for the *dance emote
+(u)Tarmunora
+(e)|
+(+)changed food synth to dispense water instead of milk
+(t)thu oct 01 20
+(u)Spooktober
+(p)2314
+(e)|
+(*)We are officially in the happiest and spookiest of seasons, Spooktober!
+(t)wed sep 30 20
+(u)Tarmunora
+(p)2268
+(e)⚖|balance
+(*)Rebalanced hyperallergenic, as well as the effects of epinephrine and diphenhydramine on histamine. Check PR for details
+(u)UrsulaMajor
+(p)2209
+(e)🆕🎨|feature, sprites
+(*)Melee damage reduction by armor now has red sparks for heavy reduction and deflected attack particles for no damage.
+(u)monochromatism
+(p)2099
+(e)🎨|sprites
+(+)Added a lamp manufacturer balanced for human use to the construction worker's toolset.
+(u)BatElite
+(p)2274
+(e)⚖🆕🎨|balance, feature, sprites
+(+)Standard cyborg chests can now be turned into makeshift armor with a welder.
+(t)tue sep 29 20
+(u)MarkNstein
+(p)2294
+(e)🆕🗺|feature, mapping
+(*)VR Murderbox: Added Nukie equip' vendor, changeling, and vampire features.
+(u)makkipakki & Flaborized
+(p)2275
+(e)🆕🎨|feature, sprites
+(*)Reworked NTSO starting inventory (see linked PR for details), and added some cool new NTSO gear sprites by Flaborized! The exosuit and helmet are visually changed, plus a brand new gas mask.
+(u)Tarmunora
+(e)⚖|balance
+(+)Changed Moonshine to be much more potent when used to spike drinks
+(u)RSG250
+(p)2301
+(e)|
+(+)can now secure the UV lamp to the floor via Wrench or Screwdriver
+(u)Kyle
+(+)Significantly lower power costs for energy shield generator for low power levels. (I always felt like this number was too high for use with a modest sized power cell but was too lazy to lower it)
+(t)mon sep 28 20
+(u)Janonas
+(p)1989
+(e)🆕🎨|feature, sprites
+(*)Added tesla coils to the mechcomp dispenser - what will you do with the power of lightning at your disposal?
+(u)UrsulaMajor
+(p)2302
+(e)⚖|balance
+(*)Security Officers no longer have supply console access
+(u)Nebulacrity
+(p)2112
+(e)🆕🎨|feature, sprites
+(*)Added a new mutation: Achromia. A mild dosage of colorlessness doesn't hurt.
+(*)Added a new mutation: Noir. Colorlessness taken to the extreme has its benefits.
+(u)Tarmunora
+(p)2292
+(e)⚖|balance
+(*)Rebalanced a number of nukie guns. See PR for details.
+(u)Gannets
+(p)2291
+(e)🆕|feature
+(+)Re-named many kinetic firearms.
+(u)Fosstar
+(p)2284
+(e)🆕|feature
+(+)New red alert message for the NSS Manta
+(u)Tarmunora
+(p)2267
+(e)⚖🆕|balance, feature
+(*)Heart transplants only move a limited amount of reagents from the patient
+(+)Skeletons have calcium blood.
+(u)Superlagg
+(p)2260
+(e)🔄🎨|rework, sprites
+(*)Lizards, cows, skeletons, and roaches are removed from SpaceBux and moved to character traits.
+>>>>>>> 7b3e94c03bb4bce0e22c42ac00c270c673de2fb7
+(t)sun sep 27 20
+(u)MarkNstein
+(p)2261
+(e)⚖|balance
+(+)Carty Party: Apps are now sorted alphabetical.
+(+)Carty Party: Swapped the Diagnostic cart for the Mechanics cart (has the scanner app).
+(u)Tarmunora
+(e)⚖|balance
+(+)Increased the rate at which shock grenade's smoke will decay when zapping people
+(t)sat sep 26 20
+(u)Gannets
+(p)2271
+(e)🗺|mapping
+(+)Nuclear operative commanders now have an elevated level of access, required to open their office and the syndicate radio station on the Cairngorm.
+(u)Asche
+(p)2245
+(e)🆕|feature
+(+)Added a new artifact type.
+(t)fri sep 25 20
+(u)pali
+(p)2144
+(e)⚖|balance
+(*)Eating food now has a short cooldown
+(u)Superlagg
+(p)1998
+(e)🆕|feature
+(*)Lizards can now change up their colors if they eat enough human organs.
+(+)Added a mutation that lets people swap their hair colors around.
+(+)Increased the healing certain organs give when eaten by a werewolf.
+(u)Sidewinder7
+(p)2204
+(e)🆕🎨|feature, sprites
+(*)Added LSBee, a new psychedelic that's all the buzz right now!
+(t)wed sep 23 20
+(u)Phuzzy
+(p)2229
+(e)🗺|mapping
+(*)Adds a new ad! Find it at your local space radio station!
+(u)zjdtmkhzt
+(p)2215
+(e)⚖|balance
+(+)Purchasing artifacts from Cargo will now properly choose artifact type. (They will no longer all be the same type and they can't be broken and useless.)
+(u)kyle
+(p)2232
+(e)🆕|feature
+(*)Solar Flares block all general radio frequencies from and to headsets. Secure/department radios now work through the solar flare though to compensate. Station bounced radios can send and receive radio signals through the flare.
+(t)tue sep 22 20
+(u)makkipakki and (u)Adharainspace
+(p)2197
+(e)🐛|bug
+(+)NTSOs can no longer be sleeper agents, and the way the sleeper agent event chooses who is ineligible is now decided by whether the job can roll traitor, rather than a list of specific jobs.
+(+)Added security training to NTSOs of both flavors
+(u)Flourish
+(p)2160
+(e)⚖🆕|balance, feature
+(+)You will now need medical locker access to unlock cloning pods.
+(u)UrsulaMejor
+(p)2244
+(e)|
+(+)Clock 180s at QM now spawn unloaded
+(u)BatElite
+(p)2235
+(e)🆕|feature
+(*)The Port-a-Medbay now sends notifications to medical PDAs when sent to home turf with someone inside.
+(u)Zamujasa
+(e)🆕|feature
+(*)The Security Records computer has been more or less refurbished.
+(*)No, not that one. The one with the really old UI that was in Cog1's morgue, for example.
+(*)Some things aren't fully updated yet, but it should be at least slightly more usable?
+(*)No it isn't tgui, stop asking.
+(u)schwicky-schwag
+(p)2230
+(e)🎨|sprites
+(*)Added a whole bunch of new gun sprites (with in-hands included) to replace old ones, and ones for coders to use in the future.
+(u)kyle
+(+)Removed Real Katana and C-Saber from gang item pool. The Reverse-Blade Katana and D-Saber are still available.
+(+)Gangers can no longer use a gang flyer on a person to show them a popup to join the gang, instead a player must pick up the flyer and use it in-hand.
+(t)mon sep 21 20
+(u)zjdtmkhzt
+(p)2233
+(e)🆕|feature
+(+)All types of sea plants (or plantlike organisms) should now be removable with wirecutters.
 (t)sat sep 19 20
 (u)ThePotato97
 (p)1986
