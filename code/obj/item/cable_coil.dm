@@ -180,7 +180,6 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	base_name = "yellow-coloured cable coil"
 	desc = "A coil of Yellow-Coloured power cable."
 	stack_type = /obj/item/cable_coil/coloured/yellow
-	namemod = "coloured"
 
 	spawn_insulator_name = "yellowrubber"
 	cable_obj_type = /obj/cable/coloured/yellow
