@@ -1681,7 +1681,7 @@
 	Topic(href, href_list)
 		if (..() && href_list["vend"])
 			var/datum/data/vending_product/R = locate(href_list["vend"]) in src.product_list
-			logTheThing("station", usr, null, "vended a [R.product_path] from [src] at [log_loc(src)].")
+			logTheThing("station", usr, null, "vended [R.product_name] from [src] at [log_loc(src)].")
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
