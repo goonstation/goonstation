@@ -124,6 +124,16 @@
 		else
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
 
+
+//Coloured Cables yaaaay
+obj/cable/coloured/yellow
+	name = "yellow-coloured power cable"
+	desc = "A flexible power cable. This one is Yellow."
+	color = "#EED202"
+
+	condcutor_default = "pharosium"
+	insulator_default = "yellowrubber"
+
 /obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
 	..()
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
