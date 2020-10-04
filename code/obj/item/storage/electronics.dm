@@ -1,5 +1,5 @@
 
-/obj/item/storage/box/cablesbox
+	/obj/item/storage/box/cablesbox
 	name = "electrical cables storage"
 	icon_state = "cables"
 	spawn_contents = list(/obj/item/cable_coil = 7)
@@ -7,6 +7,46 @@
 /obj/item/storage/box/cablesbox/reinforced
 	name = "reinforced electrical cables storage"
 	spawn_contents = list(/obj/item/cable_coil/reinforced = 7)
+//cable boxes...but colourful
+/obj/item/storage/box/cablesbox/coloured/yellow
+	name = "yellow-coloured electrical cables storage"
+	spawn_contents = list(/obj/item/cable_coil/coloured/yellow = 7)
+
+/obj/item/storage/box/cablesbox/coloured/orange
+	name = "orange-coloured electrical cables storage"
+	spawn_contents = list(/obj/item/cable_coil/coloured/orange = 7)
+
+/obj/item/storage/box/cablesbox/coloured/blue
+	name = "blue-coloured electrical cables storage"
+	spawn_contents = list(/obj/item/cable_coil/coloured/blue = 7)
+
+/obj/item/storage/box/cablesbox/coloured/blue
+	name = "blue-coloured electrical cables storage"
+	spawn_contents = list(/obj/item/cable_coil/coloured/blue = 7)
+
+/obj/item/storage/box/cablesbox/coloured/green
+	name = "green-coloured electrical cables storage"
+	spawn_contents = list(/obj/item/cable_coil/coloured/green = 7)
+
+/obj/item/storage/box/cablesbox/coloured/purple
+	name = "purple-coloured electrical cables storage"
+	spawn_contents = list(/obj/item/cable_coil/coloured/purple = 7)
+
+/obj/item/storage/box/cablesbox/coloured/black
+	name = "black-coloured electrical cables storage"
+	spawn_contents = list(/obj/item/cable_coil/coloured/black = 7)
+
+/obj/item/storage/box/cablesbox/coloured/hotpink
+	name = "hotpink-coloured electrical cables storage"
+	spawn_contents = list(/obj/item/cable_coil/coloured/hotpink = 7)
+
+/obj/item/storage/box/cablesbox/coloured/brown
+	name = "brown-coloured electrical cables storage"
+	spawn_contents = list(/obj/item/cable_coil/coloured/brown = 7)
+
+/obj/item/storage/box/cablesbox/coloured/white
+	name = "white-coloured electrical cables storage"
+	spawn_contents = list(/obj/item/cable_coil/coloured/white = 7)
 
 /obj/item/storage/box/PDAbox
 	name = "spare PDAs"
