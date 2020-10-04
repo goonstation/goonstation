@@ -17,6 +17,7 @@
 		"anti_rad" = 25
 	)
 	var/currentreagent = "epinephrine"
+	var/propername = "Epinephrine"
 
 	hide_attack = 2
 	inventory_counter_enabled = 1
@@ -28,15 +29,18 @@
 	attack_self(mob/user as mob)
 		picker = picker % length(botreagents) + 1
 		currentreagent = botreagents[picker]
-		user.show_text("[src] is now injecting [currentreagent], [botreagents[currentreagent]] units left.", "blue")
+		var/datum/reagent/temp_reagent = reagents_cache[currentreagent]
+		propername = temp_reagent.name
+		user.show_text("[src] is now injecting [propername], [botreagents[currentreagent]] units left.", "blue")
+		return
+
+	get_desc(dist)
+		. += "It is injecting [propername]."
 		return
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(ON_COOLDOWN(src, "injection_cooldown", 0.5 SECONDS))
 			user.show_text("[src] is still recharging, give it a moment! ", "red")
-
-		var/datum/reagent/temp_reagent = reagents_cache[currentreagent]
-		var/propername = temp_reagent.name
 
 		if (issilicon(M))
 			user.show_text("[src] cannot be used on silicon lifeforms!", "red")
@@ -71,5 +75,4 @@
 			var/amt = botreagents[reagent]
 			if(amt >= 25)
 				continue
-			if(prob(66))
-				botreagents[reagent] += 1
+			botreagents[reagent] += 1
