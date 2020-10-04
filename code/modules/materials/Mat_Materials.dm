@@ -1133,11 +1133,13 @@
 	name = "purplerubber"
 	desc = "A type of synthetic rubber. This one is Purple."
 	color = "#9370DB" //Medium Purple
+
 /datum/material/fabric/synthrubber/coloured/black
 	mat_id = "blackrubber"
 	name = "blackrubber"
 	desc = "A type of synthetic rubber. This one is Black."
 	color = "#414A4C" //Outer Space Black
+
 /datum/material/fabric/synthrubber/coloured/hotpink
 	mat_id = "hotpinkrubber"
 	name = "hotpinkrubber"

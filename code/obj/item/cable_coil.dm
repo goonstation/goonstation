@@ -184,7 +184,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	spawn_insulator_name = "yellowrubber"
 	cable_obj_type = /obj/cable/coloured/yellow
 
-/obj/item/cable_coil/coloured/yellow/cut/
+/obj/item/cable_coil/coloured/yellow/cut
 	icon_state = "coil2"
 	New(loc, length)
 		if (length)
@@ -205,7 +205,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	spawn_insulator_name = "orangerubber"
 	cable_obj_type = /obj/cable/coloured/orange
 
-/obj/item/cable_coil/coloured/orange/cut/
+/obj/item/cable_coil/coloured/orange/cut
 	icon_state = "coil2"
 	New(loc, length)
 		if (length)
@@ -216,10 +216,111 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 /obj/item/cable_coil/coloured/orange/cut/small
 	New(loc, length)
 		..(loc, rand(1,5))
+//blue
+/obj/item/cable_coil/coloured/blue
+	name = "blue-coloured cable coil"
+	base_name = "blue-coloured cable coil"
+	desc = "A coil of Blue-Coloured power cable."
+	stack_type = /obj/item/cable_coil/coloured/blue
 
+	spawn_insulator_name = "bluerubber"
+	cable_obj_type = /obj/cable/coloured/blue
 
+/obj/item/cable_coil/coloured/blue/cut
+	icon_state = "coil2"
+	New(loc, length)
+		if (length)
+			..(loc, length)
+		else
+			..(loc, rand(1,2))
 
+/obj/item/cable_coil/coloured/blue/cut/small
+	New(loc, length)
+		..(loc, rand(1,5))
+//green
+/obj/item/cable_coil/coloured/green
+	name = "green-coloured cable coil"
+	base_name = "green-coloured cable coil"
+	desc = "A coil of Green-Coloured power cable."
+	stack_type = /obj/item/cable_coil/coloured/green
 
+	spawn_insulator_name = "greenrubber"
+	cable_obj_type = /obj/cable/coloured/green
+
+/obj/item/cable_coil/coloured/green/cut
+	icon_state = "coil2"
+	New(loc, length)
+		if (length)
+			..(loc, length)
+		else
+			..(loc, rand(1,2))
+
+/obj/item/cable_coil/coloured/green/cut/small
+	New(loc, length)
+		..(loc, rand(1,5))
+//Purple
+/obj/item/cable_coil/coloured/purple
+	name = "purple-coloured cable coil"
+	base_name = "purple-coloured cable coil"
+	desc = "A coil of Purple-Coloured power cable."
+	stack_type = /obj/item/cable_coil/coloured/purple
+
+	spawn_insulator_name = "purplerubber"
+	cable_obj_type = /obj/cable/coloured/purple
+
+/obj/item/cable_coil/coloured/purple/cut/
+	icon_state = "coil2"
+	New(loc, length)
+		if (length)
+			..(loc, length)
+		else
+			..(loc, rand(1,2))
+
+/obj/item/cable_coil/coloured/purple/cut/small
+	New(loc, length)
+		..(loc, rand(1,5))
+//Black
+/obj/item/cable_coil/coloured/black
+	name = "black-coloured cable coil"
+	base_name = "black-coloured cable coil"
+	desc = "A coil of Black-Coloured power cable."
+	stack_type = /obj/item/cable_coil/coloured/black
+
+	spawn_insulator_name = "blackrubber"
+	cable_obj_type = /obj/cable/coloured/black
+
+/obj/item/cable_coil/coloured/black/cut/
+	icon_state = "coil2"
+	New(loc, length)
+		if (length)
+			..(loc, length)
+		else
+			..(loc, rand(1,2))
+
+/obj/item/cable_coil/coloured/black/cut/small
+	New(loc, length)
+		..(loc, rand(1,5))
+//Hot Pink
+/obj/item/cable_coil/coloured/hotpink
+	name = "hotpink-coloured cable coil"
+	base_name = "hotpink-coloured cable coil"
+	desc = "A coil of Hot Pink-Coloured power cable."
+	stack_type = /obj/item/cable_coil/coloured/hotpink
+
+	spawn_insulator_name = "hotpinkrubber"
+	cable_obj_type = /obj/cable/coloured/hotpink
+
+/obj/item/cable_coil/coloured/hotpink/cut/
+	icon_state = "coil2"
+	New(loc, length)
+		if (length)
+			..(loc, length)
+		else
+			..(loc, rand(1,2))
+
+/obj/item/cable_coil/coloured/hotpink/cut/small
+	New(loc, length)
+		..(loc, rand(1,5))
 /////////////////////////////////////////////////COLOURED CABLES
 /obj/item/cable_coil/attack_self(var/mob/living/M)
 	if (istype(M))
