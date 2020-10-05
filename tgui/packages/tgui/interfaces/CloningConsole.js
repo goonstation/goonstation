@@ -312,7 +312,7 @@ const StatusSection = (props, context) => {
             {scannerLocked ? "Locked" : "Unlocked"}
           </Button>
         </Flex.Item>
-        <Flex.Item width={25} mt={2} height={1} ml={5}>
+        <Flex.Item width={25} mt={2} height={1} ml={7.7}>
           {message.text && (
             <TypedNoticeBox
               type={message.status}
@@ -346,6 +346,7 @@ const Records = (props, context) => {
     disk,
     podGone,
     diskReadOnly,
+    allowedToDelete,
   } = data;
   const [,
     setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
@@ -353,17 +354,17 @@ const Records = (props, context) => {
   return (
     <Fragment>
       <Section mb={0}>
-        <Flex>
-          <Flex.Item className="Cloning-Console_HeadRow" mr={2}>
-            <Flex.Item className="Cloning-Console_HeadRow_Item"
+        <Flex className="cloning-console__flex__head">
+          <Flex.Item className="cloning-console__head__row" mr={2}>
+            <Flex.Item className="cloning-console__head__item"
               style={{ 'width': '190px' }}>
               Name
             </Flex.Item>
-            <Flex.Item className="Cloning-Console_HeadRow_Item"
-              style={{ 'width': '150px' }}>
+            <Flex.Item className="cloning-console__head__item"
+              style={{ 'width': '160px' }}>
               Damage
             </Flex.Item>
-            <Flex.Item className="Cloning-Console_HeadRow_Item"
+            <Flex.Item className="cloning-console__head__item"
               style={{ 'width': '205px' }}>
               Actions
             </Flex.Item>
@@ -373,18 +374,18 @@ const Records = (props, context) => {
       <Section scrollable>
         <Flex>
 
-          <Flex.Item className="Cloning-Console_FlexTable">
+          <Flex.Item className="cloning-console__flex__table">
 
-            <Flex.Item className="Cloning-Console_Body">
+            <Flex.Item>
               {records.map(record => (
-                <Flex.Item key={record.id} className="Cloning-Console_BodyRow">
-                  <Flex.Item inline className="Cloning-Console_BodyRow_Item"
+                <Flex.Item key={record.id} className="cloning-console__body__row">
+                  <Flex.Item inline className="cloning-console__body__item"
                     style={{ 'width': '190px', 'height': '15px' }}>
                     {record.name}
                   </Flex.Item>
                   <Flex.Item
-                    className="Cloning-Console_BodyRow_Item"
-                    style={{ 'width': '150px' }}>
+                    className="cloning-console__body__item"
+                    style={{ 'width': '160px' }}>
                     <ColorBox
                       mr={1}
                       color={healthToColor(
@@ -392,34 +393,40 @@ const Records = (props, context) => {
                         record.health.TOX,
                         record.health.BURN,
                         record.health.BRUTE)} />
-                    {record.implant ? (
+                    {record.implant && record.health.OXY === null ? (
                       <Box inline>
-                        <HealthStat inline align="center" type="oxy" width={2}
-                          content={shortenNumber(record.health.OXY)} />
+                        <HealthStat inline align="center" type="oxy" width={2}>
+                          {shortenNumber(record.health.OXY)}
+                        </HealthStat>
                         {"/"}
-                        <HealthStat inline align="center" type="toxin" width={2}
-                          content={shortenNumber(record.health.TOX)} />
+                        <HealthStat inline align="center" type="toxin" width={2}>
+                          {shortenNumber(record.health.TOX)}
+                        </HealthStat>
                         {"/"}
-                        <HealthStat inline align="center" type="burn" width={2}
-                          content={shortenNumber(record.health.BURN)} />
+                        <HealthStat inline align="center" type="burn" width={2}>
+                          {shortenNumber(record.health.BURN)}
+                        </HealthStat>
                         {"/"}
-                        <HealthStat inline align="center" type="brute" width={2}
-                          content={shortenNumber(record.health.BRUTE)} />
+                        <HealthStat inline align="center" type="brute" width={2}>
+                          {shortenNumber(record.health.BRUTE)}
+                        </HealthStat>
                       </Box>
                     ) : (
                       "No Implant Detected"
                     )}
                   </Flex.Item>
-                  <Flex.Item className="Cloning-Console_BodyRow_Item"
+                  <Flex.Item className="cloning-console__body__item"
                     style={{ 'width': '205px' }}>
-                    <Button
-                      icon="trash"
-                      color={"bad"}
-                      onClick={() =>
-                      { setDeletionTarget(record.ckey);
-                      }}>
-                      Delete
-                    </Button>
+                    {(!!allowedToDelete && (
+                      <Button
+                        icon="trash"
+                        color={"bad"}
+                        onClick={() =>
+                        { setDeletionTarget(record.ckey);
+                        }}>
+                        Delete
+                      </Button>
+                    ))}
                     {(!!disk && (
                       <Button
                         icon="save"
