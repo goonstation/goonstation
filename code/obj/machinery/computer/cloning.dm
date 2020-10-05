@@ -673,6 +673,7 @@
 	switch(action)
 		if("delete")
 			if(!src.allowed(usr))
+				show_message("You do not have permission to delete records.", "danger")
 				return
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
@@ -683,6 +684,9 @@
 				show_message("Record deleted.", "danger")
 				. = TRUE
 		if("scan")
+			if(usr == src.scanner.occupant)
+				trigger_anti_cheat(usr, "tried to scan themselves using the cloning machine scanner")
+				// this doesn't need to return we still want to scan them
 			if(!isnull(src.scanner))
 				src.scan_mob(src.scanner.occupant)
 				. = TRUE
