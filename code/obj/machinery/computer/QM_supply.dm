@@ -74,7 +74,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 						D.time_factor = sym_count * rand(10, 15) // 200, 600
 						D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
 						D.name = P.name
-						var/rating = max(P.advance_speed, P.mutation_speed, P.mutativeness, P.suppression_threshold, P.maliciousness)
+						var/rating = max(P.advance_speed, P.suppression_threshold, P.spread)
 						var/ds = "weak"
 						switch (P.stages)
 							if (4)

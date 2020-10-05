@@ -8,7 +8,7 @@
 import { Fragment } from "inferno";
 import { useBackend, useLocalState } from "../backend";
 import { truncate } from '../format';
-import { Button, LabeledList, Section, Modal, Flex, Tabs, Box, NoticeBox, Divider } from "../components";
+import { Button, LabeledList, Section, Modal, Flex, Tabs, Box, NoticeBox, Divider, ProgressBar } from "../components";
 import { Window } from "../layouts";
 
 export const uiCurrentUserPermissions = data => {
@@ -26,7 +26,7 @@ export const uiCurrentUserPermissions = data => {
     */
     accessPanel: (
       (userStates.isBorg && userStates.distance <= 1
-        && panelOpen) || (panelOpen && !userStates.isBorg)
+        && panelOpen) || (panelOpen && !userStates.isBorg && !userStates.isAi)
     ),
   };
 };
@@ -390,23 +390,37 @@ const Hack = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     aiHacking,
+    hackingProgression,
   } = data;
 
   return (
     <Box
       fitted py={0.5} pt={2}
       align="center">
-      <Button
-        className="Airlock-hack-button"
-        fontSize="29px"
-        backgroundColor="#00FF00"
-        disabled={aiHacking}
-        textColor="black"
-        textAlign="center"
-        width={16}
-        onClick={() => act("hackAirlock")}>
-        {aiHacking ? "Hacking..." : "HACK"}
-      </Button>
+      {!aiHacking && (
+        <Button
+          className="Airlock-hack-button"
+          fontSize="29px"
+          backgroundColor="#00FF00"
+          disabled={aiHacking}
+          textColor="black"
+          textAlign="center"
+          width={16}
+          onClick={() => act("hackAirlock")}>
+          HACK
+        </Button>
+      )}
+      {!!aiHacking && (
+        <ProgressBar
+          ranges={{
+            good: [6, Infinity],
+            average: [2, 5],
+            bad: [-Infinity, 1],
+          }}
+          minValue={0}
+          maxValue={6}
+          value={hackingProgression} />
+      )}
     </Box>
   );
 };

@@ -1,0 +1,55 @@
+@use '../colors.scss';
+@use '../components/Button.scss';
+
+.Cloning-Console_FlexTable {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: none;
+  width: 100vw;
+  height: 295px;
+}
+.Cloning-Console_FlexHead {
+  display: flex;
+  flex: 0 0 auto;
+  height: 25px;
+  padding: 0 5px;
+  font-size: 12px;
+}
+.Cloning-Console_HeadRow {
+  display: flex;
+  flex: 1 1 auto;
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: space-between;
+}
+.Cloning-Console_HeadRow_Item {
+  display: flex;
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+.Cloning-Console_HeadRow_Item {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow-x: auto;
+  padding: 0 5px;
+}
+.Cloning-Console_BodyRow {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  justify-content: space-around;
+  flex: 0 0 auto;
+}
+.Cloning-Console_BodyRow_Item {
+  display: flex;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

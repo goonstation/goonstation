@@ -1875,7 +1875,7 @@ Returns:
 #ifdef HALLOWEEN
 							if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
 								var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
-								GH.change_points(50)
+								GH.change_points(30)
 #endif
 			else
 				usr.show_text("Please wait a moment before using the board again.", "red")
@@ -3023,8 +3023,8 @@ Returns:
 		return
 
 /obj/perm_portal
-	icon = 'icons/misc/old_or_unused.dmi'
-	icon_state = "portal1"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "portal"
 	anchored = 1
 	density = 1
 	opacity = 0

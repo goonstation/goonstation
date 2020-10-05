@@ -32,6 +32,3 @@
 	SHOULD_CALL_PARENT(1)
 	UnregisterSignal(B.assailant, signals) //block over, quit listening
 	showTooltip = 0 //hide our tooltips, if any
-
-/datum/component/itemblock/getTooltipDesc()
-	. = ..()//always call your parents here.

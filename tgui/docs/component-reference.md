@@ -27,6 +27,7 @@ Make sure to add new items to this list if you document new components.
   - [`Flex.Item`](#flexitem)
   - [`Grid`](#grid)
   - [`Grid.Column`](#gridcolumn)
+  - [`HealthStat`](#HealthStat)
   - [`Icon`](#icon)
   - [`Input`](#input)
   - [`Knob`](#knob)
@@ -505,6 +506,25 @@ Example:
 
 - See inherited props: [Table.Cell](#tablecell)
 - `size: number` (default: 1) - Size of the column relative to other columns.
+
+### `HealthStat`
+
+A box that applies a color to its contents depending on the damage type.
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `info: boolean` - Info box
+- `type: string` - Damage type oxy, toxin, burn, brute
+- `content: string` - Content to render inside the box.
+
+Example:
+
+```jsx
+<HealthStat
+  type="DamageType"
+  content="content" />
+```
 
 ### `Icon`
 
