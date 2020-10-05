@@ -79,7 +79,7 @@ jobs:
           cd $GITHUB_WORKSPACE
           printenv
           echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
-          echo "/home/runner/BYOND/byond/bin:" >> $GITHUB_PATH
+          echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
           touch +secret/__secret.dme
@@ -129,7 +129,7 @@ jobs:
           cd $GITHUB_WORKSPACE
           printenv
           echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
-          echo "/home/runner/BYOND/byond/bin:" >> $GITHUB_PATH
+          echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
           touch +secret/__secret.dme
@@ -171,7 +171,7 @@ jobs:
           cd $GITHUB_WORKSPACE
           printenv
           echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
-          echo "/home/runner/BYOND/byond/bin:" >> $GITHUB_PATH
+          echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
 
