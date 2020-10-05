@@ -7,7 +7,7 @@
 
 import { Fragment } from "inferno";
 import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Box, Button, ColorBox, Section, Tabs, ProgressBar, NoticeBox, LabeledList, Flex, Modal, Icon, HealthStat } from "../components";
+import { Box, Button, ColorBox, Section, Tabs, ProgressBar, NoticeBox, LabeledList, Flex, Modal, Icon, HealthStat, Divider } from "../components";
 import { Window } from "../layouts";
 import { clamp } from 'common/math';
 
@@ -77,8 +77,8 @@ export const CloningConsole = (props, context) => {
   return (
     <Window
       theme={cloneSlave ? "syndicate" : "ntos"}
-      width={550}
-      height={530}>
+      width={340}
+      height={635}>
       <Window.Content>
         {(deletionTarget && (
           <Modal
@@ -256,86 +256,89 @@ const StatusSection = (props, context) => {
   const message = data.message || { text: "", status: "" };
 
   return (
-    <Section>
-      <LabeledList>
-        <LabeledList.Item label="Completion">
-          {!podGone && (
-            <ProgressBar
-              value={completion}
-              maxValue={100}
-              minValue={0}
-              ranges={{
-                good: [90, Infinity],
-                average: [25, 90],
-                bad: [-Infinity, 25],
-              }} />
-          )}
-          {!!podGone && (
-            "No Pod Detected"
-          )}
-        </LabeledList.Item>
-        <LabeledList.Item label="Bio-Matter">
-          {!podGone && (
-            <ProgressBar
-              value={meatLevels}
-              maxValue={100}
-              minValue={0}
-              ranges={{
-                good: [50, 100],
-                average: [25, 50],
-                bad: [0, 25],
-              }} />
-          )}
-          {!!podGone && (
-            "No Pod Detected"
-          )}
-        </LabeledList.Item>
-      </LabeledList>
-      <Flex>
-        <Flex.Item mt={3.5} width={scannerGone ? 16 : 15}>
-          <Button
-            width={scannerGone ? 8 : 7}
-            icon="dna"
-            align={"center"}
-            color={scannerGone ? "bad" : "good"}
-            disabled={occupantScanned | scannerGone}
-            onClick={() => act("scan")}>
-            {(occupantScanned ? "Scanned" : (scannerGone ? "No Scanner" : "Scan"))}
-          </Button>
-          <Button
-            width={7}
-            icon={scannerLocked ? "unlock" : "lock-open"}
-            align={"center"}
-            disabled={!scannerOccupied}
-            color={scannerLocked ? "bad" : "good"}
-            onClick={() => act("toggleLock")}>
-            {scannerLocked ? "Locked" : "Unlocked"}
-          </Button>
-        </Flex.Item>
-        <Flex.Item width={25} mt={2} height={1} ml={7.7}>
-          {message.text && (
-            <TypedNoticeBox
-              type={message.status}
-              textColor="white"
-              width={25.45}
-              height={3.17}
-              align="center"
+    <Fragment>
+      <Section title="Cloning Pod">
+        {message.text && (
+          <TypedNoticeBox
+            type={message.status}
+            textColor="white"
+            width={25.45}
+            height={3.17}
+            align="center"
+            style={{
+              'vertical-align': 'middle',
+              'horizontal-align': 'middle',
+              'position': 'absolute',
+            }}>
+            <Box
               style={{
-                'vertical-align': 'middle',
-                'horizontal-align': 'middle',
+                position: 'relative', left: '50%', top: '50%',
+                transform: 'translate(-50%, -50%)',
               }}>
-              <Box
-                style={{
-                  position: 'relative', left: '50%', top: '50%',
-                  transform: 'translate(-50%, -50%)',
-                }}>
-                {message.text}
-              </Box>
-            </TypedNoticeBox>
-          )}
-        </Flex.Item>
-      </Flex>
-    </Section>
+              {message.text}
+            </Box>
+          </TypedNoticeBox>
+        )}
+        <LabeledList>
+          <LabeledList.Item label="Completion">
+            {!podGone && (
+              <ProgressBar
+                value={completion}
+                maxValue={100}
+                minValue={0}
+                ranges={{
+                  good: [90, Infinity],
+                  average: [25, 90],
+                  bad: [-Infinity, 25],
+                }} />
+            )}
+            {!!podGone && (
+              "No Pod Detected"
+            )}
+          </LabeledList.Item>
+          <LabeledList.Item label="Bio-Matter">
+            {!podGone && (
+              <ProgressBar
+                value={meatLevels}
+                maxValue={100}
+                minValue={0}
+                ranges={{
+                  good: [50, 100],
+                  average: [25, 50],
+                  bad: [0, 25],
+                }} />
+            )}
+            {!!podGone && (
+              "No Pod Detected"
+            )}
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
+      <Section title="Scanner">
+        <Flex>
+          <Flex.Item width={scannerGone ? 16 : 15}>
+            <Button
+              width={scannerGone ? 8 : 7}
+              icon="dna"
+              align={"center"}
+              color={scannerGone ? "bad" : "good"}
+              disabled={!occupantScanned || scannerGone}
+              onClick={() => act("scan")}>
+              {(occupantScanned ? "Scanned" : (scannerGone ? "No Scanner" : "Scan"))}
+            </Button>
+            <Button
+              width={7}
+              icon={scannerLocked ? "unlock" : "lock-open"}
+              align={"center"}
+              disabled={!scannerOccupied}
+              color={scannerLocked ? "bad" : "good"}
+              onClick={() => act("toggleLock")}>
+              {scannerLocked ? "Locked" : "Unlocked"}
+            </Button>
+          </Flex.Item>
+        </Flex>
+      </Section>
+    </Fragment>
   );
 };
 
@@ -350,105 +353,112 @@ const Records = (props, context) => {
   } = data;
   const [,
     setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
-
+  const [currentRecord, setCurrentRecord] = useLocalState(context, 'currentRecord',
+    { ckey: '', saved: false, index: 0 });
   return (
     <Fragment>
-      <Section mb={0}>
+      <Section mb={0} title="Records">
         <Flex className="cloning-console__flex__head">
           <Flex.Item className="cloning-console__head__row" mr={2}>
             <Flex.Item className="cloning-console__head__item"
-              style={{ 'width': '190px' }}>
+              style={{ 'width': '100px' }}>
               Name
             </Flex.Item>
             <Flex.Item className="cloning-console__head__item"
               style={{ 'width': '160px' }}>
               Damage
             </Flex.Item>
-            <Flex.Item className="cloning-console__head__item"
-              style={{ 'width': '205px' }}>
-              Actions
-            </Flex.Item>
           </Flex.Item>
         </Flex>
       </Section>
-      <Section scrollable>
+      <Section scrollable mb={0}>
         <Flex>
-
           <Flex.Item className="cloning-console__flex__table">
-
             <Flex.Item>
-              {records.map(record => (
-                <Flex.Item key={record.id} className="cloning-console__body__row">
-                  <Flex.Item inline className="cloning-console__body__item"
-                    style={{ 'width': '190px', 'height': '15px' }}>
-                    {record.name}
+              {records.map((record, index) => (
+                <Button
+                  selected={currentRecord.index === index}
+                  key={record.id}
+                  onClick={() => {
+                    setCurrentRecord({ ckey: record.ckey,
+                      saved: record.saved,
+                      index: index });
+                  }}>
+                  <Flex.Item className="cloning-console__body__row">
+                    <Flex.Item inline className="cloning-console__body__item"
+                      style={{ 'width': '120px' }}>
+                      {record.name}
+                    </Flex.Item>
+                    <Flex.Item
+                      className="cloning-console__body__item"
+                      style={{ 'width': '160px' }}>
+                      <ColorBox
+                        mr={1}
+                        color={healthToColor(
+                          record.health.OXY,
+                          record.health.TOX,
+                          record.health.BURN,
+                          record.health.BRUTE)} />
+                      {record.implant && record.health.OXY !== null ? (
+                        <Box inline>
+                          <HealthStat inline align="center" type="oxy" width={2}>
+                            {shortenNumber(record.health.OXY)}
+                          </HealthStat>
+                          {"/"}
+                          <HealthStat inline align="center" type="toxin" width={2}>
+                            {shortenNumber(record.health.TOX)}
+                          </HealthStat>
+                          {"/"}
+                          <HealthStat inline align="center" type="burn" width={2}>
+                            {shortenNumber(record.health.BURN)}
+                          </HealthStat>
+                          {"/"}
+                          <HealthStat inline align="center" type="brute" width={2}>
+                            {shortenNumber(record.health.BRUTE)}
+                          </HealthStat>
+                        </Box>
+                      ) : (
+                        "No Implant Detected"
+                      )}
+                    </Flex.Item>
                   </Flex.Item>
-                  <Flex.Item
-                    className="cloning-console__body__item"
-                    style={{ 'width': '160px' }}>
-                    <ColorBox
-                      mr={1}
-                      color={healthToColor(
-                        record.health.OXY,
-                        record.health.TOX,
-                        record.health.BURN,
-                        record.health.BRUTE)} />
-                    {record.implant && record.health.OXY === null ? (
-                      <Box inline>
-                        <HealthStat inline align="center" type="oxy" width={2}>
-                          {shortenNumber(record.health.OXY)}
-                        </HealthStat>
-                        {"/"}
-                        <HealthStat inline align="center" type="toxin" width={2}>
-                          {shortenNumber(record.health.TOX)}
-                        </HealthStat>
-                        {"/"}
-                        <HealthStat inline align="center" type="burn" width={2}>
-                          {shortenNumber(record.health.BURN)}
-                        </HealthStat>
-                        {"/"}
-                        <HealthStat inline align="center" type="brute" width={2}>
-                          {shortenNumber(record.health.BRUTE)}
-                        </HealthStat>
-                      </Box>
-                    ) : (
-                      "No Implant Detected"
-                    )}
-                  </Flex.Item>
-                  <Flex.Item className="cloning-console__body__item"
-                    style={{ 'width': '205px' }}>
-                    {(!!allowedToDelete && (
-                      <Button
-                        icon="trash"
-                        color={"bad"}
-                        onClick={() =>
-                        { setDeletionTarget(record.ckey);
-                        }}>
-                        Delete
-                      </Button>
-                    ))}
-                    {(!!disk && (
-                      <Button
-                        icon="save"
-                        color={"blue"}
-                        disabled={record.saved || diskReadOnly}
-                        onClick={() => act("saveToDisk", { ckey: record.ckey })}>
-                        {record.saved ? (diskReadOnly ? "Read Only" : "Saved") : (diskReadOnly ? "Read Only" : "Save")}
-                      </Button>
-                    ))}
-                    <Button
-                      icon="dna"
-                      color={"good"}
-                      disabled={podGone}
-                      onClick={() => act("clone", { ckey: record.ckey })}>
-                      Clone
-                    </Button>
-                  </Flex.Item>
-                </Flex.Item>
+                </Button>
               ))}
             </Flex.Item>
           </Flex.Item>
         </Flex>
+      </Section>
+      <Section>
+        <Divider />
+        <Button
+          fontSize="19px"
+          icon="dna"
+          color={"good"}
+          disabled={podGone}
+          onClick={() => act("clone", { ckey: currentRecord.ckey })}>
+          Clone
+        </Button>
+        {(!!disk && (
+          <Button
+            fontSize="19px"
+            icon="save"
+            color={"blue"}
+            disabled={currentRecord.saved || diskReadOnly}
+            onClick={() => act("saveToDisk", { ckey: currentRecord.ckey })}>
+            {currentRecord.saved ? (diskReadOnly ? "Read Only" : "Saved") : (diskReadOnly ? "Read Only" : "Save")}
+          </Button>
+        ))}
+        {(!!allowedToDelete && (
+          <Button
+            fontSize="19px"
+            icon="trash"
+            color={"bad"}
+            onClick={() =>
+            { setDeletionTarget(currentRecord.ckey);
+            }}>
+            Delete
+          </Button>
+        ))}
       </Section>
     </Fragment>
   );
