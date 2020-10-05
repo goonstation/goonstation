@@ -1,4 +1,9 @@
 
+(t)mon oct 05 20
+(u)Flaborized
+(p)2355
+(e)🎨|sprites
+(+)New Syndicate drone sprites
 (t)sun oct 04 20
 (u)AberrantQuerist
 (p)2353
