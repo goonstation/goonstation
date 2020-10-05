@@ -1,5 +1,9 @@
 
 (t)mon oct 05 20
+(u)RSG250
+(p)2288
+(e)⚖|balance
+(*)Changed how choking someone is handled, should be able to choke people if it LOOKS like they can be choked
 (u)Flappybat
 (p)2187
 (e)⚖🐛|balance, bug
