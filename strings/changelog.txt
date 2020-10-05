@@ -1,6 +1,10 @@
 
 (t)mon oct 05 20
 (u)RSG250
+(p)2316
+(e)|
+(+)Made the Material Processor Deconstructable by Deconstruction Device & Scannable by device analyzer
+(u)RSG250
 (p)2289
 (e)⚖🔄|balance, rework
 (+)Frozen Farts are no longer anchored, Still pretty slippery
