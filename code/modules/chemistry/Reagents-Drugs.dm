@@ -440,7 +440,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.stuttering += rand(0,2)
 				if(M.client && probmult(5))
-					for (var/obj/critter/domestic_bee/bee in range(7,M))
+					for (var/obj/critter/domestic_bee/bee in view(7,M))
 						var/chat_text = null
 						var/shit_bees_say = list("Hello [M].",
 						"Will you bee my friend?", "I missed you.",	"I've always loved you.",
