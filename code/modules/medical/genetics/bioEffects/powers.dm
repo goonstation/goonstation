@@ -1918,6 +1918,8 @@
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
 			L.invisibility = 0
+		if (src.active)
+			CH.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
 
 	OnLife()
