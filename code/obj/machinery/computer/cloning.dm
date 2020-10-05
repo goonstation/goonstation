@@ -674,7 +674,7 @@
 		if("delete")
 			if(!src.allowed(usr))
 				show_message("You do not have permission to delete records.", "danger")
-				return
+				return TRUE
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
 				logTheThing("combat", usr, null, "deletes the cloning record [selected_record["fields"]["name"]] for player [selected_record["fields"]["ckey"]] at [log_loc(src)].")
