@@ -135,7 +135,6 @@
 								pdaSignal.data["address_1"] = "00000000"
 								pdaSignal.data["group"] = mailgroup
 								pdaSignal.data["sender"] = "00000000"
-								//pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="NOTIFICATION: [uppertext(perpname)] FAILED A VIBE CHECK AT [uppertext(scan_location)]! BAD VIBES LEVEL : [contraband]")
 								pdaSignal.transmission_method = TRANSMISSION_RADIO
 								if(transmit_connection != null)
 									transmit_connection.post_signal(src, pdaSignal)
@@ -187,7 +186,7 @@
 							pdaSignal.data["address_1"] = "00000000"
 							pdaSignal.data["group"] = mailgroup
 							pdaSignal.data["sender"] = "00000000"
-							//pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: [perpname] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
+							
 							pdaSignal.transmission_method = TRANSMISSION_RADIO
 							if(transmit_connection != null)
 								transmit_connection.post_signal(src, pdaSignal)
