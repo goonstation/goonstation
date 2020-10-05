@@ -1902,7 +1902,7 @@
 	lockedTries = 8
 	stability_loss = 20
 	cooldown = 0
-	var/last_moved = 0;
+	var/last_moved = 0
 	var/active = 0
 	ability_path = /datum/targetable/geneticsAbility/chameleon
 
