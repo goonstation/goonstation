@@ -1,5 +1,9 @@
 
 (t)sun oct 04 20
+(u)AberrantQuerist
+(p)2353
+(e)🎨|sprites
+(+)New crow sprites!
 (u)ThePotato97
 (p)2025
 (e)🆕📄|feature, tgui
