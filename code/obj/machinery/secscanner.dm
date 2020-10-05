@@ -80,8 +80,6 @@
 					pdaSignal.data["group"] = mailgroup
 					pdaSignal.data["sender"] = "00000000"
 
-					//pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: An item [I.name] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
-					//pdaSignal.transmission_method = TRANSMISSION_RADIO
 					if(transmit_connection != null)
 						transmit_connection.post_signal(src, pdaSignal)
 
