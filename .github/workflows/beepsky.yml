@@ -78,10 +78,10 @@ jobs:
           tools/ci/install_byond.sh
           cd $GITHUB_WORKSPACE
           printenv
-          echo "::set-env name=BYOND_SYSTEM::/home/runner/BYOND/byond"
-          echo "::set-env name=PATH::/home/runner/BYOND/byond/bin:$PATH"
-          echo "::set-env name=LD_LIBRARY_PATH::/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH"
-          echo "::set-env name=MANPATH::/home/runner/BYOND/byond/man:$MANPATH"
+          echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
+          echo "/home/runner/BYOND/byond/bin:" >> $GITHUB_PATH
+          echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
           touch +secret/__secret.dme
 
       - name: Compile
@@ -128,10 +128,10 @@ jobs:
           tools/ci/install_byond.sh
           cd $GITHUB_WORKSPACE
           printenv
-          echo "::set-env name=BYOND_SYSTEM::/home/runner/BYOND/byond"
-          echo "::set-env name=PATH::/home/runner/BYOND/byond/bin:$PATH"
-          echo "::set-env name=LD_LIBRARY_PATH::/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH"
-          echo "::set-env name=MANPATH::/home/runner/BYOND/byond/man:$MANPATH"
+          echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
+          echo "/home/runner/BYOND/byond/bin:" >> $GITHUB_PATH
+          echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
           touch +secret/__secret.dme
           sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm
 
