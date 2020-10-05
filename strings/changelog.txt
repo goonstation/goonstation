@@ -1,5 +1,9 @@
 
 (t)mon oct 05 20
+(u)BatElite
+(p)2339
+(e)🆕|feature
+(+)You can now dissolve pills by using a suitable container on them instead of only the other way around. Cyborgs might find this particularly useful.
 (u)RSG250
 (p)2316
 (e)|
