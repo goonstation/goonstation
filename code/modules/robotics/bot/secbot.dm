@@ -974,7 +974,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				pdaSignal.data["address_1"] = "00000000"
 				pdaSignal.data["group"] = mailgroup
 				pdaSignal.data["sender"] = "00000000"
-				//pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="[message2send]")
+				
 				pdaSignal.transmission_method = TRANSMISSION_RADIO
 				if(transmit_connection != null)
 					transmit_connection.post_signal(src, pdaSignal)
@@ -1167,7 +1167,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					pdaSignal.data["address_1"] = "00000000"
 					pdaSignal.data["group"] = mailgroup
 					pdaSignal.data["sender"] = "00000000"
-				//pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000",\
+				
 				"message"="[message2send]")
 					pdaSignal.transmission_method = TRANSMISSION_RADIO
 					if(transmit_connection != null)
