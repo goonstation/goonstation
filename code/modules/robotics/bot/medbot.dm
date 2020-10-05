@@ -25,12 +25,18 @@
 	var/list/path = null
 	var/mob/living/carbon/patient = null
 	var/mob/living/carbon/oldpatient = null
+	var/list/current_treatments = list()
 	var/oldloc = null
 	var/last_found = 0
 	var/last_newpatient_speak = 0 //Don't spam the "HEY I'M COMING" messages
 	var/currently_healing = 0
 	var/injection_amount = 10 //How much reagent do we inject at a time?
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
+	var/oxy_additional_heal_threshold = 15 // additional heal threshold for oxy damage
+	var/brain_heal_threshold = 10 // hardcoded brain heal threshold
+	var/blood_pressure_hypertensive_status = "HYPERTENSIVE"
+	var/blood_pressure_hypotensive_Status = "HYPOTENSIVE"
+	var/histamine_overdose_amount = null
 	var/use_beaker = 0 //Use reagents in beaker instead of default treatment agents.
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute = "saline"
@@ -38,6 +44,15 @@
 	var/treatment_fire = "saline"
 	var/treatment_tox = "charcoal"
 	var/treatment_virus = "spaceacillin"
+	var/treatment_hypertension = null
+	var/treatment_hypotension = null
+	var/treatment_eye_ear = null
+	var/treatment_anaphylaxis = null
+	var/treatment_radiation = null
+	var/treatment_brain = null
+	var/treatment_crit = null
+	var/treament_emag = "pancuronium"
+	var/treatment_terrifying = "haloperidol"
 	var/terrifying = 0 // for making the medbots all super fucked up
 
 /obj/machinery/bot/medbot/no_camera
@@ -140,6 +155,8 @@
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
 			src.update_icon()
+			var/datum/reagent/dummy = /datum/reagent/harmful/histamine // hack to make sure histamine overdose amount is set correctly
+			src.histamine_overdose_amount = initial(dummy.overdose)
 	return
 
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
@@ -330,6 +347,14 @@
 		SPAWN_DBG(2.5 SECONDS)
 			qdel(D)
 
+/obj/machinery/bot/medbot/reset_status(var/last_found = null)
+	src.oldpatient = src.patient
+	src.patient = null
+	src.current_treatments = list()
+	src.currently_healing = 0
+	src.last_found = last_found
+	src.path = null
+
 /obj/machinery/bot/medbot/process()
 	if (!src.on)
 		src.stunned = 0
@@ -339,9 +364,7 @@
 		src.update_icon(stun = 1)
 		src.stunned--
 
-		src.oldpatient = src.patient
-		src.patient = null
-		src.currently_healing = 0
+		src.reset_status
 
 		if(src.stunned <= 0)
 			src.stunned = 0
@@ -349,11 +372,7 @@
 		return
 
 	if (src.frustration > 8)
-		src.oldpatient = src.patient
-		src.patient = null
-		src.currently_healing = 0
-		src.last_found = world.time
-		src.path = null
+		src.reset_status(world.time)
 
 	if (!src.patient)
 		if(prob(1))
@@ -366,8 +385,11 @@
 
 			if ((C == src.oldpatient) && (world.time < src.last_found + 100))
 				continue
+			for (var/treatment in src.assess_patient(C))
+				if (treatment)
+					src.current_treatments += treatment
 
-			if (src.assess_patient(C))
+			if (src.current_treatments.len > 0)
 				src.patient = C
 				src.oldpatient = C
 				src.last_found = world.time
@@ -386,7 +408,8 @@
 		if (!src.currently_healing)
 			src.currently_healing = 1
 			src.frustration = 0
-			src.medicate_patient(src.patient)
+			var/applied_treatment = src.medicate_patient(src.patient)
+			src.current_treatments -= applied_treatment
 		return
 
 	else if (src.patient && src.path && src.path.len && (get_dist(src.patient,src.path[src.path.len]) > 2))
@@ -400,10 +423,7 @@
 				return
 			src.path = AStar(src.loc, get_turf(src.patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, adjacent_param = botcard)
 			if (!src.path)
-				src.oldpatient = src.patient
-				src.patient = null
-				src.currently_healing = 0
-				src.last_found = world.time
+				src.reset_status(world.time)
 		return
 
 	if(src.path && src.path.len && src.patient)
@@ -435,106 +455,136 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
-	//Time to see if they need medical help!
-	if(isdead(C))
-		return 0 //welp too late for them!
-
-	if(C.suiciding)
-		return 0 //Kevorkian school of robotic medical assistants.
-
-	if(src.emagged) //Everyone needs our medicine. (Our medicine is toxins)
-		return 1
-
+/obj/machinery/bot/medbot/proc/brute_check(mob/living/carbon/C as mob)
 	var/brute = C.get_brute_damage()
+	return (brute >= heal_threshold)
+
+/obj/machinery/bot/medbot/proc/burn_check(mob/living/carbon/C as mob)
 	var/burn = C.get_burn_damage()
-	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
-	if((src.reagent_glass) && (src.use_beaker) && ((brute >= heal_threshold) || (burn >= heal_threshold) || (C.get_toxin_damage() >= heal_threshold) || (C.get_oxygen_deprivation() >= (heal_threshold + 15))))
-		for(var/current_id in reagent_glass.reagents.reagent_list)
-			if(!C.reagents.has_reagent(current_id))
-				return 1
-			continue
+	return (burn >= heal_threshold)
 
-	//They're injured enough for it!
-	if((brute >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_brute)))
-		return 1 //If they're already medicated don't bother!
+/obj/machinery/bot/medbot/proc/tox_check(mob/living/carbon/C as mob)
+	var/tox = C.get_toxin_damage()
+	return (tox >= heal_threshold)
 
-	if((C.get_oxygen_deprivation() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(src.treatment_oxy)))
-		return 1
+/obj/machinery/bot/medbot/proc/oxy_check(mob/living/carbon/C as mob)
+	var/oxy = C.get_oxygen_deprivation()
+	return (oxy >= heal_threshold + oxy_additional_heal_threshold)
 
-	if((burn >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_fire)))
-		return 1
+/obj/machinery/bot/medbot/proc/brain_check(mob/living/carbon/C as mob)
+	var/brain = C.get_brain_damage()
+	return (brain >= brain_heal_threshold)
 
-	if((C.get_toxin_damage() >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_tox)))
-		return 1
+/obj/machinery/bot/medbot/proc/crit_check(mob/living/carbon/C as mob)
+	var/health = C.health
+	return (health <= 0)
 
+/obj/machinery/bot/medbot/proc/health_check(mob/living/carbon/C as mob)
+	var/health_percent = 100 * C.health / C.max_health
+	return (100 - health_percent >= heal_threshold)
+
+/obj/machinery/bot/medbot/proc/rad_check(mob/living/carbon/C as mob)
+	var/datum/statusEffect/simpledot/radiation/R = C.hasStatus("radiation")
+	return (isnull(R))
+
+/obj/machinery/bot/medbot/proc/hypertension_check(mob/living/carbon/C as mob)
+	var/blood_pressure_status = C.blood_pressure["status"]
+	return (blood_pressure_status = blood_pressure_hypertensive_status)
+
+/obj/machinery/bot/medbot/proc/hypotension_check(mob/living/carbon/C as mob)
+	var/blood_pressure_status = C.blood_pressure["status"]
+	return (blood_pressure_status = blood_pressure_hypotensive_status)
+
+/obj/machinery/bot/medbot/proc/anaphylaxis_check(mob/living/carbon/C as mob)
+	var/histamine_amt = C.reagents.get_reagent_amount("histamine")
+	return (histamine_amt >= histamine_overdose_amount)
+
+/obj/machinery/bot/medbot/proc/eye_ear_check(mob/living/carbon/C as mob)
+	var/eye = C.get_eye_damage()
+	var/ear = C.get_ear_damage()
+	var/eye_natural_threshold = C.get_eye_damage_natural_healing_threshold()
+	var/ear_natural_threshold = C.get_eye_damage_natural_healing_threshold()
+	return ((eye >= eye_natural_threshold) || (ear >= ear_natural_threshold))
+/obj/machinery/bot/medbot/proc/virus_check(mob/living/carbon/C as mob)
 	for(var/datum/ailment_data/disease/am in C.ailments)
 		if((am.stage > 1) || (am.spread == "Airborne"))
-			if (!C.reagents.has_reagent(src.treatment_virus))
 				return 1 //STOP DISEASE FOREVER
-
 	return 0
+
+/obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
+	.= list()
+	//Time to see if they need medical help!
+	if(isdead(C))
+		return //welp too late for them!
+
+	else if(C.suiciding)
+		return //Kevorkian school of robotic medical assistants.
+
+	else if(src.terrifying)
+		.+= pick(src.treatment_emag, src.treatment_terrifying)
+
+	else if(src.emagged) //Everyone needs our medicine. (Our medicine is toxins)
+		.+= src.treatment_emag
+
+	else if((src.reagent_glass) && (src.use_beaker) && (health_check(C)))
+		.+= "internal_beaker"
+
+	else
+		if(brute_check(C))
+			.+= src.treatment_brute
+		if(burn_check(C))
+			.+= src.treatment_burn
+		if(tox_check(C))
+			.+= src.treatment_tox
+		if(oxy_check(C))
+			.+= src.treatment_oxy
+		if(brain_check(C))
+			.+= src.treatment_brain
+		if(crit_check(C))
+			.+= src.treatment_crit
+		if(rad_check(C))
+			.+= src.treatment_rad
+		if(hypertension_check(C))
+			.+= src.treatment_hypertension
+		if(hypotension_check(C))
+			.+= src.treatment_hypotension
+		if(anaphylaxis_check(C))
+			.+= src.treatment_anaphylaxis
+		if(eye_ear_check(C))
+			.+= treatment_eye_ear
+		if(virus_check(C))
+			.+= treatment_virus
 
 /obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C as mob)
 	if(!src.on)
 		return
 
 	if(!istype(C))
-		src.oldpatient = src.patient
-		src.patient = null
-		src.currently_healing = 0
-		src.last_found = world.time
+		src.reset_status(world.time)
 		return
 
 	if(isdead(C))
 		var/death_message = pick("No! NO!","Live, damnit! LIVE!","I...I've never lost a patient before. Not today, I mean.")
 		src.speak(death_message)
-		src.oldpatient = src.patient
-		src.patient = null
-		src.currently_healing = 0
-		src.last_found = world.time
+		src.reset_status(world.time)
 		return
 
 	var/reagent_id = null
 
-	//Use whatever is inside the loaded beaker. If there is one.
-	if ((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
-		reagent_id = "internal_beaker"
+	if (src.current_treatments.len > 0)
+		reagent_id = src.current_treatments[1]
 
-	if (src.terrifying)
-		reagent_id = pick("pancuronium","haloperidol")
-
-	if (src.emagged && !src.terrifying) //Emagged! Time to poison everybody.
-		reagent_id = "pancuronium" // HEH
-
-	if (!reagent_id)
-		if(!C.reagents.has_reagent(src.treatment_virus))
-			reagent_id = src.treatment_virus
-
-	var/brute = C.get_brute_damage()
-	var/burn = C.get_burn_damage()
-
-	if (!reagent_id && (brute >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_brute))
-			reagent_id = src.treatment_brute
-
-	if (!reagent_id && (C.get_oxygen_deprivation() >= (15 + heal_threshold)))
-		if(!C.reagents.has_reagent(src.treatment_oxy))
-			reagent_id = src.treatment_oxy
-
-	if (!reagent_id && (burn >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_fire))
-			reagent_id = src.treatment_fire
-
-	if (!reagent_id && (C.get_toxin_damage() >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_tox))
-			reagent_id = src.treatment_tox
+	if((src.reagent_glass) && (src.use_beaker) && (reagent_id == "internal_beaker"))
+		var/contains_all_beaker_reagents = 1
+		for(var/current_id in reagent_glass.reagents.reagent_list)
+			if(!C.reagents.has_reagent(current_id))
+				contains_all_beaker_reagents = 0
+				break
+		if(contains_all_beaker_reagents)
+			reagent_id = null
 
 	if (!reagent_id) //If they don't need any of that they're probably cured!
-		src.oldpatient = src.patient
-		src.patient = null
-		src.currently_healing = 0
-		src.last_found = world.time
+		src.reset_status(world.time)
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
 		src.speak(message)
 		return
@@ -549,6 +599,7 @@
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
 				src.visible_message("<span class='alert'><B>[src] injects [src.patient] with the syringe!</B></span>")
+				return reagent_id
 
 			src.update_icon()
 			src.currently_healing = 0
@@ -577,8 +628,6 @@
 
 			return
 
-//	src.speak(reagent_id)
-	reagent_id = null
 	return
 
 // copied from transposed scientists
