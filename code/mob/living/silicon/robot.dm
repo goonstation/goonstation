@@ -2807,11 +2807,9 @@
 				if (part.slot == "leg_right")
 					src.visible_message("<b>[src]'s</b> right leg breaks off!")
 					src.part_leg_r = null
-			//var/loseslot = part.slot //ZeWaka: Fix for null.slot
 			if(part.robot_movement_modifier)
 				REMOVE_MOVEMENT_MODIFIER(src, part.robot_movement_modifier, part.type)
 			src.update_bodypart()
-			//src.update_bodypart(loseslot)
 			qdel(part)
 			return
 
