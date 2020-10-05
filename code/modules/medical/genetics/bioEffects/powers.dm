@@ -1919,7 +1919,7 @@
 			L.UpdateOverlays(null, id)
 			L.invisibility = 0
 		if (src.active)
-			linked_power.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
+			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
 
 	OnLife()
