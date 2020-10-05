@@ -3,7 +3,7 @@
 
 // Added kyle2143's werewolf patch (Gannets).
 
-//////////////////////////////////////////// Setup //////////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
 /mob/proc/make_werewolf(var/force=0)
 	if (ishuman(src))

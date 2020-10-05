@@ -734,6 +734,7 @@ world/proc/updateCameraVisibility()
 
 			t.aiImage = new
 			t.aiImage.appearance = ma
+			t.aiImage.dir = pick(alldirs)
 			t.aiImage.loc = t
 
 			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]", low_priority=istype(t, /turf/space))

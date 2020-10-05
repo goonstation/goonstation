@@ -41,11 +41,7 @@
 
 		if (player.ready)
 			num_players++
-#if ASS_JAM
-	var/num_synds = max(1, min(round(num_players / 3), agents_possible))
-#else
 	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
-#endif
 
 	possible_syndicates = get_possible_syndicates(num_synds)
 
@@ -438,8 +434,10 @@ var/syndicate_name = null
 	var/name = ""
 
 	// Prefix
-#ifdef XMAS
+#if defined(XMAS)
 	name += pick("Merry", "Jingle", "Holiday", "Santa", "Gift", "Elf", "Jolly")
+#elif defined(HALLOWEEN)
+	name += pick("Hell", "Demon", "Blood", "Murder", "Gore", "Grave", "Sin", "Slaughter")
 #else
 	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint")
 #endif

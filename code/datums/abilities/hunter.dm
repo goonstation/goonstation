@@ -1,7 +1,7 @@
 // Converted everything related to hunters from client procs to ability holders and used
 // the opportunity to do some clean-up as well (Convair880).
 
-//////////////////////////////////////////// Setup //////////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
 /mob/proc/make_hunter()
 	if (ishuman(src))
@@ -19,7 +19,7 @@
 
 	else return
 
-////////////////////////////////////////////// Helper procs //////////////////////////////
+/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
 /mob/living/carbon/human/proc/hunter_transform()
 	if (ishuman(src))

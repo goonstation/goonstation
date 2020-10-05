@@ -56,6 +56,64 @@
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
+	relaymove(mob/usr as mob, dir)
+		if (!isalive(usr))
+			return
+		if (src.locked)
+			boutput(usr, "<span class='alert'><b>The scanner door is locked!</b></span>")
+			return
+
+		src.go_out()
+		add_fingerprint(usr)
+		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+		return
+
+	MouseDrop_T(mob/living/target, mob/user)
+		if (!istype(target) || isAI(user))
+			return
+
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+			return
+
+		if (target == user)
+			go_in(target)
+		else if (can_operate(user,target))
+			var/previous_user_intent = user.a_intent
+			user.a_intent = INTENT_GRAB
+			user.drop_item()
+			target.attack_hand(user)
+			user.a_intent = previous_user_intent
+			SPAWN_DBG(user.combat_click_delay + 2)
+				if (can_operate(user,target))
+					if (istype(user.equipped(), /obj/item/grab))
+						src.attackby(user.equipped(), user)
+		return
+
+	proc/can_operate(var/mob/M, var/mob/living/target)
+		if (!isalive(M))
+			return 0
+		if (get_dist(src,M) > 1)
+			return 0
+		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
+			return 0
+		if (src.occupant)
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			return 0
+		if(ismobcritter(target))
+			boutput(M, "<span class='alert'><B>The scanner doesn't support this body type.</B></span>")
+			return 0
+		if(!iscarbon(target) )
+			boutput(M, "<span class='alert'><B>The scanner supports only carbon based lifeforms.</B></span>")
+			return 0
+		if (src.occupant)
+			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			return 0
+		if (src.locked)
+			boutput(M, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
+			return 0
+
+		.= 1
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W) && (src.status & BROKEN))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
@@ -73,6 +131,20 @@
 				A.icon_state = "3"
 				A.anchored = 1
 				qdel(src)
+
+		else if (istype(W,/obj/item/genetics_injector/dna_activator))
+			var/obj/item/genetics_injector/dna_activator/DNA = W
+			if (DNA.expended_properly)
+				user.drop_item()
+				qdel(DNA)
+				activated_bonus(user)
+			else if (DNA.uses < 1)
+				// You get nothing from these but at least let people clean em up
+				boutput(user, "You dispose of the [DNA].")
+				user.drop_item()
+				qdel(DNA)
+			else
+				src.attack_hand(user)
 
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
@@ -120,6 +192,7 @@
 
 		src.go_out()
 		add_fingerprint(usr)
+		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
 		return
 
 	verb/enter()
@@ -139,6 +212,7 @@
 		src.go_in(usr)
 		add_fingerprint(usr)
 		return
+
 
 	verb/lock()
 		set name = "Scanner Lock"
@@ -188,6 +262,7 @@
 		M.set_loc(src)
 		src.occupant = M
 		src.icon_state = "PAG_1"
+		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 		return
 
 	get_scan_subject()

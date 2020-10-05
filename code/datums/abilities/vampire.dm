@@ -1,7 +1,7 @@
 // Converted everything related to vampires from client procs to ability holders and used
 // the opportunity to do some clean-up as well (Convair880).
 
-/////////////////////////////////////////////////// Setup //////////////////////////////////////////
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
 /mob/proc/make_vampire(var/shitty = 0)
 	if (ishuman(src) || ismobcritter(src))

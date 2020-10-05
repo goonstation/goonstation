@@ -294,7 +294,7 @@
 					src.anchored = 0 // It might have happened, I guess?
 					return
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (src.anchored == 1)
+				if (src.anchored)
 					src.anchored = 0
 					src.our_APC = null // It's just gonna cause trouble otherwise.
 				else

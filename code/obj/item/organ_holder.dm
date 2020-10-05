@@ -537,8 +537,6 @@
 				if (!src.heart)
 					return 0
 				var/obj/item/organ/heart/myHeart = src.heart
-				if (src.donor.reagents)
-					src.donor.reagents.trans_to(myHeart, 330)
 				//Commented this out for some reason I forget. I'm sure I'll remember what it is one day. -kyle
 				// if (src.heart.robotic)
 				// 	src.donor.remove_stam_mod_regen("heart")
@@ -1038,8 +1036,6 @@
 			if (istype(I, /obj/item/organ))
 				var/obj/item/organ/O = I
 				O.on_transplant(src.donor)
-			if (I.reagents)
-				I.reagents.trans_to(src.donor, 330)
 			if (is_full_robotic())
 				donor.unlock_medal("Spaceship of Theseus", 1)
 			return 1

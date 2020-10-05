@@ -258,7 +258,7 @@
 /obj/item/record/New()
 	..()
 	if (add_overlay)
-		src.overlays += "record_[rand(1,10)]"
+		src.UpdateOverlays(new /image(src.icon, "record_[rand(1,10)]"), "recordlabel")
 	if (record_name)
 		src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
 
@@ -392,6 +392,16 @@
 /obj/item/record/spacebux // Many thanks to Camryn Buttes!!
 	add_overlay = 0
 	icon_state = "record_red"
+
+/obj/item/record/random/key_lime
+	name = "record - \"key_lime #1\""
+	record_name = "key lime #1"
+	song = "sound/radio_station/key_lime.ogg"
+	add_overlay = FALSE
+
+	New()
+		..()
+		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
 
 /obj/item/record/spacebux/New()
 	..()
@@ -602,6 +612,13 @@
 	name = "compact tape - 'Movie Ad'"
 	audio = "sound/radio_station/bill_movie.ogg"
 	name_of_thing = "some shitty movie"
+
+/obj/item/radio_tape/advertisement/pope_crunch
+	name = "compact tape - 'Pope Crunch'"
+	audio = "sound/radio_station/pope_crunch_cereal.ogg"
+	name_of_thing = "Pope Crunch Cereal"
+	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
+	The music is Smooth Talker by Apoxode (CC BY 3.0)"}
 
 /obj/item/radio_tape/audio_book
 	audio_type = "Audio book"

@@ -194,7 +194,7 @@ var/global/list/falloff_cache = list()
 
 			//sadly, we must generate
 			if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
-			if (!S) CRASH("Did not manage to generate sound [soundin] with source [source].")
+			if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source].")
 			C.sound_playing[ S.channel ][1] = storedVolume
 			C.sound_playing[ S.channel ][2] = channel
 
@@ -386,21 +386,30 @@ var/global/list/falloff_cache = list()
 	return S
 
 
-/* Client part of the Area Ambience Project
- *
- * Calling playAmbience is handled by the Area our client is in, see Exited() and Entered()
- *
- * LOOPING channel sound will keep playing until fed a pass_volume of 0 (done automagically)
- * For FX sounds, they will play once.
- *
- * FX_1 is area-specific background noise handled by area/pickAmbience(), FX_2 is more noticeable stuff directly triggered, normally shorter
- *
- */
-/client/proc/playAmbience(area/A, var/type = AMBIENCE_LOOPING, var/pass_volume)
+/**
+	* Client part of the Area Ambience Project
+ 	*
+ 	* Calling this proc is handled by the Area our client is in, see [area/proc/Exited()] and [area/proc/Entered()]
+ 	*
+ 	* LOOPING channel sound will keep playing until fed a pass_volume of 0 (done automagically)
+ 	* For FX sounds, they will play once.
+ 	*
+ 	* FX_1 is area-specific background noise handled by area/pickAmbience(), FX_2 is more noticeable stuff directly triggered, normally shorter
+ 	*/
+/client/proc/playAmbience(area/A, type = AMBIENCE_LOOPING, pass_volume)
+
+	/// Types of sounds: AMBIENCE_LOOPING, AMBIENCE_FX_1, and AMBIENCE_FX_2
 	var/soundtype = null
-	var/soundchannel
+
+	/// Holds the associated sound channel we want
+	var/soundchannel = 0
+
+	/// Determines if we are repeating or not
 	var/soundrepeat = 0
+
+	/// Should the sound set the wait var?
 	var/soundwait = 0
+
 	switch(type)
 		if (AMBIENCE_LOOPING)
 			if (pass_volume != 0) //lets us cancel loop sounds by passing 0

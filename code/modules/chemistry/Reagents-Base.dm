@@ -154,8 +154,10 @@ datum
 				if(!M) M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
+					if(H?.reagents.has_reagent("moonshine"))
+						mult *= 3
 					var/liver_damage = 0
-					if (!isalcoholresistant(H))
+					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (holder.get_reagent_amount(src.id) >= 15)
 							if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 							H.stuttering += 1
@@ -825,8 +827,11 @@ datum
 						M.change_vampire_blood(-burndmg)
 						reacted = 1
 					else if (method == TOUCH)
-						boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
-						M.take_brain_damage(-10)
+						if (M.traitHolder?.hasTrait("atheist"))
+							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
+						else
+							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
+							M.take_brain_damage(-10)
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))
 								M.cure_disease(V)

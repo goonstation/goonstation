@@ -41,6 +41,11 @@ mob/new_player
 			mind = new(src)
 			keyd = mind.key
 
+		if (src.client?.player) //playtime logging stuff
+			var/datum/player/P = src.client.player
+			if (!isnull(P.round_join_time) && isnull(P.round_leave_time)) //they likely died but didnt d/c b4 respawn
+				P.log_leave_time()
+
 		new_player_panel()
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
@@ -87,6 +92,9 @@ mob/new_player
 		ready = 0
 		if (src.ckey) //Null if the client changed to another mob, but not null if they disconnected.
 			spawned_in_keys -= "[src.ckey]"
+		else if (isclient(src.last_client)) //playtime logging stuff
+			src.last_client.player.log_join_time()
+
 		..()
 		close_spawn_windows()
 		if(!spawning)
@@ -351,7 +359,7 @@ mob/new_player
 			var/miscreant = 0
 #ifdef MISCREANTS
 #ifndef RP_MODE
-			if (ticker && !character.client.using_antag_token && character.mind && JOB.allow_traitors != 0 && prob(10))
+			if (ticker && character.mind && !character.client.using_antag_token && JOB.allow_traitors != 0 && prob(10))
 				ticker.generate_miscreant_objectives(character.mind)
 				miscreant = 1
 #endif

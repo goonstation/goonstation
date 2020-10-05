@@ -1,3 +1,4 @@
+/// Material piece
 /obj/item/material_piece
 	name = "bar"
 	desc = "Some sort of processed material bar."
@@ -5,7 +6,8 @@
 	icon_state = "bar"
 	max_stack = INFINITY
 	stack_type = /obj/item/material_piece
-	var/default_material = null // used for prefab bars
+	/// used for prefab bars
+	var/default_material = null
 
 	New()
 		..()
@@ -217,7 +219,7 @@
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 		..()
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] cuts [src] into a plank.", "You cut the [src] into a plank.")
 			var/obj/item/plankobj = new /obj/item/plank(user.loc)
 			plankobj.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)

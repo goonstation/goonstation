@@ -12,7 +12,7 @@
 	var/desc_sound = list("strange", "odd", "bizarre", "weird", "offputting", "unusual")
 	var/desc_music = list("song", "ditty", "sound", "noise")
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		SPAWN_DBG(1 SECOND)
 			var/datum/artifact/A = src.artifact

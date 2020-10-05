@@ -1,8 +1,7 @@
 // Converted everything related to vampires from client procs to ability holders and used
 // the opportunity to do some clean-up as well (Convair880).
 
-/////////////////////////////////////////////////// Setup //////////////////////////////////////////
-
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 /mob/proc/make_vampiric_zombie()
 	if (ishuman(src))
 		var/datum/abilityHolder/vampiric_zombie/A = src.get_ability_holder(/datum/abilityHolder/vampiric_zombie)
@@ -23,7 +22,7 @@
 	else return
 
 
-////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Ability Holder	/		/		/		/		/		/		/		/		*/
 
 /obj/screen/ability/topBar/vampiric_zombie
 	clicked(params)

@@ -23,6 +23,7 @@
 	}
 
 /proc/uniquelist(var/list/L)
+	RETURN_TYPE(/list)
 	. = list()
 	for(var/item in L)
 		. |= item
@@ -40,6 +41,7 @@ proc/pickweight(list/L)    // make this global
 	return null   // this should never happen, but it's a fallback
 
 /proc/reverse_list(var/list/the_list)
+	RETURN_TYPE(/list)
 	var/list/reverse = list()
 	for(var/i = the_list.len, i > 0, i--)
 		reverse.Add(the_list[i])
@@ -47,6 +49,7 @@ proc/pickweight(list/L)    // make this global
 
 //Based on code from Popisfizzy: http://www.byond.com/forum/?post=134331#comment750984
 proc/params2complexlist(params)
+	RETURN_TYPE(/list)
 	//This is a replacement for params2list that allows grouping with parentheses, to enable
 	//storing a list in a list.
 	//Example input: "name1=val1&name2=(name3=val3&name4=val4)&name5=val5"

@@ -381,15 +381,15 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			how_many_dorkcodes--
 			switch(pick(1,5))
 				if (1)
-					. += pick_string("agent_callsigns", "nato")
+					. += pick_string("agent_callsigns.txt", "nato")
 				if (2)
-					. += pick_string("agent_callsigns", "birds")
+					. += pick_string("agent_callsigns.txt", "birds")
 				if (3)
-					. += pick_string("agent_callsigns", "mammals")
+					. += pick_string("agent_callsigns.txt", "mammals")
 				if (4)
-					. += pick_string("agent_callsigns", "colors")
+					. += pick_string("agent_callsigns.txt", "colors")
 				if (5)
-					. += pick_string("shittybill", "nouns")
+					. += pick_string("shittybill.txt", "nouns")
 			. += "-"
 		. += "[rand(1,99)]-"
 		. += "[rand(1,99)]"
@@ -503,7 +503,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				else if (target)		// make sure target exists
 					if (!IN_RANGE(src, src.target, 1))
 						src.moving = 0
-						navigate_to(src.target, ARREST_SPEED * move_arrest_delay_mult, max_dist = 50)
+						navigate_to(src.target, ARREST_SPEED * move_arrest_delay_mult, max_dist = 18)
 						return
 					else
 						SPAWN_DBG(0)
@@ -1143,7 +1143,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				var/datum/signal/pdaSignal = get_free_signal()
 				var/message2send
 				if (master.tacticool)
-					message2send = "Notification: Tactical law operation agent [master] [master.badge_number] reporting grandslam on tango [last_target] for suspected [rand(10,99)]-[rand(1,999)] \"[pick_string("shittybill", "drugs")]-[pick_string("shittybill", "insults")]\" \
+					message2send = "Notification: Tactical law operation agent [master] [master.badge_number] reporting grandslam on tango [last_target] for suspected [rand(10,99)]-[rand(1,999)] \"[pick_string("shittybill.txt", "drugs")]-[pick_string("shittybill.txt", "insults")]\" \
 					in [bot_location] at grid reference [LT_loc.x][prob(50)?"-niner":""] mark [LT_loc.y][prob(50)?"-niner":""]. Unit requesting law enforcement personnel for further suspect prosecution. [master.badge_number] over and out."
 					master.speak(message2send)
 				else

@@ -1929,13 +1929,6 @@ obj/item/clothing/gloves/concussive
 
 		if(do_after(user, 50))
 			// And these too (Convair880).
-			if(src.target)
-				var/turf/t = get_turf(src.target)
-				if(isrestrictedz(t.z))
-					if(user)
-						user.show_text("<span class='alert'>The [src] fails to power on!")
-						logTheThing("station", user, null, "tried to cargo transport to a restricted z-level: [log_loc(src.target)].")
-					return
 			if (ismob(T.loc) && T.loc == user)
 				user.u_equip(T)
 			if (istype(T.loc, /obj/item/storage))

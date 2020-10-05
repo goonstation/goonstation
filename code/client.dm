@@ -140,6 +140,9 @@
 		onlineAdmins.Remove(src)
 		src.holder.dispose()
 		src.holder = null
+
+	src.player?.log_leave_time() //logs leave time, calculates played time on player datum
+
 	return ..()
 
 /client/New()
@@ -164,8 +167,11 @@
 		player = make_player(key)
 	player.client = src
 
+	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
+		src.player.log_join_time()
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Player set ([player])")
-	
+
 	// moved preferences from new_player so it's accessible in the client scope
 	if (!preferences)
 		preferences = new
@@ -190,7 +196,7 @@
 		)
 		src.loadResourcesFromList(chuiResources)
 
-	if (!istype(src.mob, /mob/new_player))
+	if (!isnewplayer(src.mob))
 		src.loadResources()
 
 /*
@@ -212,30 +218,31 @@
 
 	if (IsGuestKey(src.key))
 		if(!src.address || src.address == world.host)
-			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
-		var/gueststring = {"
-						<!doctype html>
-						<html>
-							<head>
-								<title>No guest logins allowed!</title>
-								<style>
-									h1, .banreason {
-										font-color:#F00;
-									}
+			world.log << ("Hello host or developer person! You're not logged into BYOND. You should really do something about that!")
+		else
+			var/gueststring = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>No guest logins allowed!</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
 
-								</style>
-							</head>
-							<body>
-								<h1>Guest Login Denied</h1>
-								Don't forget to log in to your byond account prior to connecting to this server.
-							</body>
-						</html>
-					"}
-		src.mob.Browse(gueststring, "window=getout")
-		sleep(10)
-		if (src)
-			del(src)
-		return
+									</style>
+								</head>
+								<body>
+									<h1>Guest Login Denied</h1>
+									Don't forget to log in to your byond account prior to connecting to this server.
+								</body>
+							</html>
+						"}
+			src.mob.Browse(gueststring, "window=getout")
+			sleep(10)
+			if (src)
+				del(src)
+			return
 
 	if (world.time < 7 SECONDS)
 		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))

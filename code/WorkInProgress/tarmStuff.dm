@@ -1,18 +1,4 @@
 //GUNS GUNS GUNS
-/obj/item/gun/kinetic/light_machine_gun/fullauto
-	name = "M91 machine gun"
-	desc = "Looks pretty heavy to me. Hold shift to begin automatic fire!"
-	icon = 'icons/obj/64x32.dmi'
-	slowdown = 0
-	var/shooting = 0
-	var/turf/target = null
-
-	New()
-		..()
-		ammo.amount_left=1000
-		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
-
-
 /mob/living/proc/betterdir()
 	return ((src.dir in ordinal) || (src.last_move_dir in cardinal)) ? src.dir : src.last_move_dir
 
@@ -173,6 +159,113 @@
 		return round(E.cell.charge * E.current_projectile.cost)
 	else return G.canshoot() * INFINITY //idk, just let it happen
 
+/obj/item/gun/kinetic/gyrojet
+	name = "Amaethon gyrojet pistol"
+	desc = "A semi-automatic handgun that fires rocket-propelled bullets, developed by Mabinogi Firearms Company."
+	icon_state = "gyrojet"
+	item_state = "gyrojet"
+	caliber = 0.512
+	max_ammo_capacity = 6
+	has_empty_state = 1
+
+	New()
+		ammo = new/obj/item/ammo/bullets/gyrojet
+		current_projectile = new/datum/projectile/bullet/gyrojet
+		. = ..()
+
+/obj/item/ammo/bullets/gyrojet
+	sname = "13mm Gyrojet"
+	name = "gyrojet magazine"
+	icon_state = "pistol_magazine"
+	amount_left = 6.0
+	max_amount = 6.0
+	ammo_type = new/datum/projectile/bullet/gyrojet
+	caliber = 0.512
+
+/datum/projectile/bullet/gyrojet
+	name = "gyrojet bullet"
+	projectile_speed = 5
+	max_range = 500
+	dissipation_rate = 0
+	power = 10
+	precalculated = 0
+	caliber = 0.512
+	shot_volume = 2
+	ks_ratio = 1
+	icon_turf_hit = "bhole-small"
+
+	on_launch(obj/projectile/O)
+		O.internal_speed = projectile_speed
+
+	tick(obj/projectile/O)
+		O.internal_speed = min(O.internal_speed * 1.15, 56)
+
+	get_power(obj/projectile/P, atom/A)
+		return 10 + P.internal_speed
+
+//desert eagle. The biggest, baddest handgun
+/obj/item/gun/kinetic/deagle
+	name = "\improper Desert Eagle"
+	desc = "The heaviest handgun you've ever seen. Is this legal?"
+	icon_state = "deag"
+	item_state = "deag"
+	force = 12.0 //mmm, pistol whip
+	throwforce = 30 //HEAVY pistol
+	auto_eject = 1
+	max_ammo_capacity = 7
+	caliber = list(0.50, 0.41, 0.357, 0.38) //the omnihandgun
+	has_empty_state = 1
+	gildable = 1
+
+	New()
+		current_projectile = new/datum/projectile/bullet/deagle50cal
+		ammo = new/obj/item/ammo/bullets/deagle50cal
+		. = ..()
+
+	//gimmick deagle that decapitates
+	decapitation
+		New()
+			. = ..()
+			current_projectile = new/datum/projectile/bullet/deagle50cal/decapitation
+			ammo = new/obj/item/ammo/bullets/deagle50cal/decapitation
+
+//.50AE deagle ammo
+/obj/item/ammo/bullets/deagle50cal
+	sname = "0.50 AE"
+	name = "desert eagle magazine"
+	icon_state = "pistol_magazine"
+	amount_left = 7.0
+	max_amount = 7.0
+	ammo_type = new/datum/projectile/bullet/deagle50cal
+	caliber = 0.50
+
+	//gimmick deagle ammo that decapitates
+	decapitation
+		ammo_type = new/datum/projectile/bullet/deagle50cal/decapitation
+
+/datum/projectile/bullet/deagle50cal
+	name = "bullet"
+	power = 120
+	dissipation_delay = 5
+	dissipation_rate = 5
+	ks_ratio = 1.0
+	implanted = /obj/item/implant/projectile/bullet_50
+	caliber = 0.50
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/deagle
+	shot_sound = 'sound/weapons/deagle.ogg'
+
+	//gimmick deagle ammo that decapitates
+	decapitation
+		on_hit(atom/hit, angle, obj/projectile/O)
+			. = ..()
+			if(ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				var/obj/item/organ/head/head = H.drop_organ("head", get_turf(H))
+				if(head)
+					head.throw_at(get_edge_target_turf(head, get_dir(O, H) ? get_dir(O, H) : H.dir),2,1)
+				H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
+
 //magical crap
 /obj/item/enchantment_scroll
 	name = "Scroll of Enchantment"
@@ -198,14 +291,12 @@
 					incr = (currentench <= 2) ? rand(1, 3) : 1
 					I.setProperty("enchantarmor", currentench+incr)
 					success = 1
-			else if(I.force >= 5)
+			else
 				currentench = I.getProperty("enchantweapon")
 				if(currentench <= 2 || !rand(0, currentench))
 					incr = (currentench <= 2) ? rand(1, 3) : 1
 					I.setProperty("enchantweapon", currentench+incr)
 					success = 1
-			else
-				return ..()
 			if(success)
 				var/turf/T = get_turf(target)
 				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
@@ -227,11 +318,9 @@
 	if(istype(src, /obj/item/clothing))
 		currentench = src.getProperty("enchantarmor")
 		src.setProperty("enchantarmor", currentench+incr)
-	else if(src.force >= 5)
+	else
 		currentench = src.getProperty("enchantweapon")
 		src.setProperty("enchantweapon", currentench+incr)
-	else
-		return
 	src.remove_prefixes("[currentench>0?"+":""][currentench]")
 	if(currentench+incr)
 		src.name_prefix("[(currentench+incr)>0?"+":""][currentench+incr]")
@@ -240,3 +329,91 @@
 		src.rarity = initial(src.rarity)
 	src.tooltip_rebuild = 1
 	src.UpdateName()
+
+///Office stuff
+//Suggestion box
+/obj/suggestion_box
+	name = "suggestion box"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "voting_box"
+	density = 1
+	flags = FPRINT
+	anchored = 1.0
+	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
+	var/taken_suggestion = 0
+	var/list/turf/floors = null
+
+	New()
+		. = ..()
+		floors = list()
+		for(var/turf/T in orange(1, src))
+			if(!T.density)
+				floors += T
+		if(!floors.len)	//fall back on own turf
+			floors += get_turf(src)
+
+	attackby(obj/item/I, mob/user)
+		if(istype(I, /obj/item/paper))
+			var/obj/item/paper/P = I
+			if(P.info && !taken_suggestion)
+				message_admins("[user] ([user?.ckey]) has made a suggestion in [src]:<br>[P.name]<br><br>[copytext(P.info,1,MAX_MESSAGE_LEN)]")
+				var/ircmsg[] = new()
+				ircmsg["msg"] = "[user] ([user?.ckey]) has made a suggestion in [src]:\n**[P.name]**\n[strip_html_tags(P.info)]"
+				ircbot.export("admin", ircmsg)
+				taken_suggestion = 1
+			user.u_equip(P)
+			qdel(P)
+			playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
+			var/turf/T = pick(floors)
+			if(T)
+				new /obj/decal/cleanable/paper(T)
+		return ..()
+
+//lily's office
+obj/item/gun/reagent/syringe/lovefilled
+	ammo_reagents = list("love")
+	New()
+		. = ..()
+		src.reagents?.maximum_volume = 750
+		src.reagents.add_reagent("love", src.reagents.maximum_volume)
+
+/obj/item/storage/desk_drawer/lily/
+	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
+	/obj/item/reagent_containers/food/snacks/cake,\
+	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
+	/obj/item/reagent_containers/food/snacks/cake/cream,\
+	/obj/item/reagent_containers/food/snacks/cake/cream,\
+	/obj/item/reagent_containers/food/snacks/cake/chocolate,\
+	/obj/item/reagent_containers/food/snacks/cake,\
+)
+
+/obj/table/wood/auto/desk/lily
+	New()
+		..()
+		var/obj/item/storage/desk_drawer/lily/L = new(src)
+		src.desk_drawer = L
+
+/obj/machinery/door/unpowered/wood/lily
+
+/obj/machinery/door/unpowered/wood/lily/open()
+	if(src.locked) return
+	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1)
+	. = ..()
+
+/obj/machinery/door/unpowered/wood/lily/close()
+	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1)
+	. = ..()
+
+
+/obj/trigger/lovefill
+	name = "A lovely spot"
+	desc = "For lovely people"
+	var/list/loved = list()
+
+	on_trigger(var/atom/movable/triggerer)
+		var/mob/living/M = triggerer
+		if(!istype(M) || (M in loved))
+			return
+		M.reagents?.add_reagent("love", 20)
+		boutput(M, "<span class='notice'>You feel loved</span>")
+		loved += M

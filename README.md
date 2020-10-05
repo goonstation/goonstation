@@ -11,7 +11,7 @@
 
 **Website:** [goonhub.com](https://goonhub.com)
 
-**Forums:** [forums.ss13.co](https://forums.ss13.co)
+**Forums:** [forum.ss13.co](https://forum.ss13.co)
 
 **Wiki:** [wiki.ss13.co](https://wiki.ss13.co)
 
@@ -30,6 +30,8 @@ Space Station 13 is a community developed, multiplayer round-based role playing 
 [Contributor Guidelines](https://hackmd.io/@ZeWaka/gooncontributor)
 
 [Code Guide](https://hackmd.io/@ZeWaka/gooncode)
+
+[Code Documentation](https://docs.goonhub.com/)
 
 [Spriting Guidelines](https://hackmd.io/@ZeWaka/goonsprite)
 

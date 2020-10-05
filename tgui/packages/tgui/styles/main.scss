@@ -40,7 +40,9 @@
 @include meta.load-css('./components/Tooltip.scss');
 
 // Interfaces
+@include meta.load-css('./interfaces/Airlock.scss');
 @include meta.load-css('./interfaces/CameraConsole.scss');
+@include meta.load-css('./interfaces/CloningConsole.scss');
 @include meta.load-css('./interfaces/CyborgModuleRewriter.scss');
 @include meta.load-css('./interfaces/GasCanister.scss');
 @include meta.load-css('./interfaces/PortableAtmos.scss');

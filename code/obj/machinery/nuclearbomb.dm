@@ -351,6 +351,9 @@
 			cinematic.add_client(C)
 		cinematic.play("nuke")
 #endif
+		if(istype(NUKEMODE))
+			NUKEMODE.nuke_detonated = 1
+			NUKEMODE.check_win()
 		sleep(5.5 SECONDS)
 
 		enter_allowed = 0
@@ -363,10 +366,7 @@
 
 		creepify_station()
 
-		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			ticker.mode:nuke_detonated = 1
-			ticker.mode.check_win()
-		else
+		if(!istype(NUKEMODE))
 			sleep(1 SECOND)
 			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
 

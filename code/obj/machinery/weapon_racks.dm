@@ -111,9 +111,6 @@
 		contained_weapon_name = "riot shotgun"
 		req_access = list(access_security)
 
-		pbr
-			contained_weapon = /obj/item/gun/kinetic/riotgun/pbr
-
 	rifle_rack
 		name = "pulse rifle rack"
 		desc = "A rack that charges up to 3 pulse rifles."

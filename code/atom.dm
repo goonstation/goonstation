@@ -459,6 +459,8 @@
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()
+		if (islist(src.tracked_mud))
+			src.track_mud()
 		actions.interrupt(src, INTERRUPT_MOVE)
 		#ifdef COMSIG_MOVABLE_MOVED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
@@ -739,13 +741,6 @@
 
 /atom/proc/Bumped(AM as mob|obj)
 	return
-
-/atom/proc/contains(var/atom/A)
-	if(!A)
-		return 0
-	for(var/atom/location = A.loc, location, location = location.loc)
-		if(location == src)
-			return 1
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
 	SPAWN_DBG( 0 )

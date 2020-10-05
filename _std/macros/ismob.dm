@@ -31,3 +31,8 @@
 #define issmallanimal(x) istype(x, /mob/living/critter/small_animal)
 #define isghostcritter(x) (istype(x, /mob/living/critter) && x:ghost_spawned)
 #define ishelpermouse(x) (istype(x, /mob/living/critter/small_animal/mouse/weak/mentor))//mentor and admin mice
+
+#define isnewplayer(x) (istype(x, /mob/new_player)) //new player mobs (what u r if ur in the lobby screen, usually)
+
+//is this mob immune to breathing in smoke?
+#define issmokeimmune(x) (ismob(x) && ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_MOB_PROPERTY(x, PROP_REBREATHING) || HAS_MOB_PROPERTY(x, PROP_BREATHLESS)))

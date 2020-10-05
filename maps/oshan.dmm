@@ -14709,10 +14709,7 @@
 "aHh" = (
 /obj/table/wood/auto,
 /obj/item/clothing/mask/skull,
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery"
-	},
+/obj/item/clothing/suit/cultist/nerd,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "aHi" = (
@@ -40415,6 +40412,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bRN" = (
@@ -45550,14 +45548,18 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot,
+/turf/simulated/floor/bot{
+	dir = NORTH
+	},
 /area/shuttle/sea_elevator/upper)
 "cgh" = (
 /obj/grille/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot,
+/turf/simulated/floor/bot{
+	dir = WEST
+	},
 /area/shuttle/sea_elevator/upper)
 "cgi" = (
 /obj/machinery/light/incandescent/greenish,
@@ -45577,7 +45579,9 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot,
+/turf/simulated/floor/bot{
+	dir = EAST
+	},
 /area/shuttle/sea_elevator/upper)
 "cgl" = (
 /turf/space/fluid/warp_z5,

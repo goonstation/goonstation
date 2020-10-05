@@ -62,10 +62,18 @@
 #define COMSIG_ITEM_DROPPED "itm_drop"
 /// When an item is used to attack a mob
 #define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
+/// Just before an item is eaten
+#define COMSIG_ITEM_CONSUMED_PRE "itm_atk_consumed_pre"
+/// When an item is eaten
+#define COMSIG_ITEM_CONSUMED "itm_atk_consumed"
 /// When an item is used to attack a mob before it actually hurts the mob
 #define COMSIG_ITEM_ATTACK_PRE "itm_atk_pre"
 /// When an item is used in-hand
 #define COMSIG_ITEM_ATTACK_SELF "itm_atk_self"
+
+//tooltip signals
+///append to the end of the blocking section of tooltip (list/tooltip)
+#define COMSIG_TOOLTIP_BLOCKING_APPEND "tooltip_block_append"
 
 // blocking signals
 /// After  an item block is set up
@@ -106,7 +114,8 @@
 // projectile signals
 /// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)
 #define COMSIG_PROJ_COLLIDE "proj_collide_atom"
-
+/// callback to gun/etc after projectile initalization (projectile)
+#define COMSIG_ALTER_PROJECTILE "alter_proj"
 
 // MechComp signals - Content signals - Use these in you MechComp compatible devices
 /// Add an input chanel for a device to send into
@@ -127,9 +136,9 @@
 // MechComp signals - Internal signals - Do not use these
 /// Receiving a message from a mechcomp device for handling
 #define _COMSIG_MECHCOMP_RECEIVE_MSG "_mechcomp_receive_message"
-/// Remove [the caller] from the list of transmitting devices
+/// Remove {the caller} from the list of transmitting devices
 #define _COMSIG_MECHCOMP_RM_INCOMING "_mechcomp_remove_incoming"
-/// Remove [the caller] from the list of receiving devices
+/// Remove {the caller} from the list of receiving devices
 #define _COMSIG_MECHCOMP_RM_OUTGOING "_mechcomp_remove_outgoing"
 /// Return the component's outgoing connections
 #define _COMSIG_MECHCOMP_GET_OUTGOING "_mechcomp_get_outgoing_connections"

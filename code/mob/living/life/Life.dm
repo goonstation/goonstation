@@ -340,6 +340,7 @@
 	process_killswitch()
 	process_locks()
 	process_oil()
+	update_canmove()
 
 	if (metalman_skin && prob(1))
 		var/msg = pick("can't see...","feels bad...","leave me...", "you're cold...", "unwelcome...")
