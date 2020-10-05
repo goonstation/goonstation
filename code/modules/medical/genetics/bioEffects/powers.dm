@@ -1930,7 +1930,6 @@
 				L.invisibility = 1
 
 	proc/decloak()
-		boutput(world, "decloak")
 		if(isliving(owner))
 			var/mob/living/L = owner
 			last_moved = TIME
