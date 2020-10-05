@@ -387,7 +387,7 @@
 			if ((C == src.oldpatient) && (world.time < src.last_found + 100))
 				continue
 			for (var/treatment in src.assess_patient(C))
-				if (treatment)
+				if (!isnull(treatment))
 					src.current_treatments += treatment
 
 			if (src.current_treatments.len > 0)
@@ -405,7 +405,7 @@
 				continue
 
 
-	if (src.patient && (get_dist(src,src.patient) <= 1))
+	if (src.patient && (get_dist(src,src.patient)<= 1))
 		if (!src.currently_healing)
 			src.currently_healing = 1
 			src.frustration = 0
@@ -486,15 +486,15 @@
 
 /obj/machinery/bot/medbot/proc/rad_check(mob/living/carbon/C as mob)
 	var/datum/statusEffect/simpledot/radiation/R = C.hasStatus("radiation")
-	return (isnull(R))
+	return (!isnull(R))
 
 /obj/machinery/bot/medbot/proc/hypertension_check(mob/living/carbon/C as mob)
 	var/blood_pressure_status = C.blood_pressure["status"]
-	return (blood_pressure_status = blood_pressure_hypertensive_status)
+	return (blood_pressure_status == blood_pressure_hypertensive_status)
 
 /obj/machinery/bot/medbot/proc/hypotension_check(mob/living/carbon/C as mob)
 	var/blood_pressure_status = C.blood_pressure["status"]
-	return (blood_pressure_status = src.blood_pressure_hypotensive_status)
+	return (blood_pressure_status == src.blood_pressure_hypotensive_status)
 
 /obj/machinery/bot/medbot/proc/anaphylaxis_check(mob/living/carbon/C as mob)
 	var/histamine_amt = C.reagents.get_reagent_amount("histamine")
@@ -571,22 +571,30 @@
 
 	var/reagent_id = null
 
-	if (src.current_treatments.len > 0)
-		reagent_id = src.current_treatments[1]
-
-	if((src.reagent_glass) && (src.use_beaker) && (reagent_id == "internal_beaker"))
-		var/contains_all_beaker_reagents = 1
-		for(var/current_id in reagent_glass.reagents.reagent_list)
-			if(!C.reagents.has_reagent(current_id))
-				contains_all_beaker_reagents = 0
-				break
-		if(contains_all_beaker_reagents)
-			reagent_id = null
+	while (src.current_treatments.len > 0)
+		var/potential_reagent = src.current_treatments[1]
+		if((potential_reagent == src.treatment_emag) || (potential_reagent == src.treatment_terrifying))
+			reagent_id = potential_reagent
+		else if((src.reagent_glass) && (src.use_beaker) && (potential_reagent == "internal_beaker"))
+			var/contains_all_beaker_reagents = 1
+			for(var/current_id in reagent_glass.reagents.reagent_list)
+				if(!C.reagents.has_reagent(current_id))
+					contains_all_beaker_reagents = 0
+					break
+			if(!contains_all_beaker_reagents)
+				reagent_id = potential_reagent
+		else if(!C.reagents.has_reagent(potential_reagent))
+			reagent_id = potential_reagent
+		if (isnull(reagent_id)) // the reagent isn't valid, so keep trying
+			src.current_treatments -= potential_reagent
+		else // the reagent is valid, so stop going through the list
+			break
 
 	if (!reagent_id) //If they don't need any of that they're probably cured!
 		src.reset_status(world.time)
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
 		src.speak(message)
+		src.update_icon()
 		return
 	else
 		src.update_icon(stun = 0, heal = 1)
@@ -599,7 +607,7 @@
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
 				src.visible_message("<span class='alert'><B>[src] injects [src.patient] with the syringe!</B></span>")
-				return reagent_id
+				.= reagent_id
 
 			src.update_icon()
 			src.currently_healing = 0
