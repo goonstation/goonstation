@@ -516,14 +516,15 @@ A box that applies a color to its contents depending on the damage type.
 - See inherited props: [Box](#box)
 - `info: boolean` - Info box
 - `type: string` - Damage type oxy, toxin, burn, brute
-- `content: string` - Content to render inside the box.
+- `children: any` - Content to render inside the box.
 
 Example:
 
 ```jsx
 <HealthStat
-  type="DamageType"
-  content="content" />
+  type="DamageType">
+  children
+</HealthStat>
 ```
 
 ### `Icon`
