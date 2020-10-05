@@ -629,7 +629,7 @@
 			src.generate_HTML(1)
 
 			if(R.logged_on_vend)
-				logTheThing("station", usr, null, "vended a logged procuct ([R.product_name]) from [src] at [log_loc(src)].")
+				logTheThing("station", usr, null, "vended a logged product ([R.product_name]) from [src] at [log_loc(src)].")
 
 		if (href_list["logout"])
 			src.scan = null
