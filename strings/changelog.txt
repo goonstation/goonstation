@@ -1,5 +1,7 @@
 
 (t)mon oct 05 20
+(u)pali
+(+)Light switches now glow in the dark when powered
 (u)RSG250
 (p)2288
 (e)⚖|balance
