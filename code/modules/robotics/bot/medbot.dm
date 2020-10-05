@@ -35,8 +35,9 @@
 	var/oxy_additional_heal_threshold = 15 // additional heal threshold for oxy damage
 	var/brain_heal_threshold = 10 // hardcoded brain heal threshold
 	var/blood_pressure_hypertensive_status = "HYPERTENSIVE"
-	var/blood_pressure_hypotensive_Status = "HYPOTENSIVE"
+	var/blood_pressure_hypotensive_status = "HYPOTENSIVE"
 	var/histamine_overdose_amount = null
+	var/eye_damage_threshold = 12 // hardcoded eye heal threshold
 	var/use_beaker = 0 //Use reagents in beaker instead of default treatment agents.
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute = "saline"
@@ -48,10 +49,10 @@
 	var/treatment_hypotension = null
 	var/treatment_eye_ear = null
 	var/treatment_anaphylaxis = null
-	var/treatment_radiation = null
+	var/treatment_rad = null
 	var/treatment_brain = null
 	var/treatment_crit = null
-	var/treament_emag = "pancuronium"
+	var/treatment_emag = "pancuronium"
 	var/treatment_terrifying = "haloperidol"
 	var/terrifying = 0 // for making the medbots all super fucked up
 
@@ -347,7 +348,7 @@
 		SPAWN_DBG(2.5 SECONDS)
 			qdel(D)
 
-/obj/machinery/bot/medbot/reset_status(var/last_found = null)
+/obj/machinery/bot/medbot/proc/reset_status(var/last_found = null)
 	src.oldpatient = src.patient
 	src.patient = null
 	src.current_treatments = list()
@@ -364,7 +365,7 @@
 		src.update_icon(stun = 1)
 		src.stunned--
 
-		src.reset_status
+		src.reset_status()
 
 		if(src.stunned <= 0)
 			src.stunned = 0
@@ -493,7 +494,7 @@
 
 /obj/machinery/bot/medbot/proc/hypotension_check(mob/living/carbon/C as mob)
 	var/blood_pressure_status = C.blood_pressure["status"]
-	return (blood_pressure_status = blood_pressure_hypotensive_status)
+	return (blood_pressure_status = src.blood_pressure_hypotensive_status)
 
 /obj/machinery/bot/medbot/proc/anaphylaxis_check(mob/living/carbon/C as mob)
 	var/histamine_amt = C.reagents.get_reagent_amount("histamine")
@@ -502,13 +503,12 @@
 /obj/machinery/bot/medbot/proc/eye_ear_check(mob/living/carbon/C as mob)
 	var/eye = C.get_eye_damage()
 	var/ear = C.get_ear_damage()
-	var/eye_natural_threshold = C.get_eye_damage_natural_healing_threshold()
-	var/ear_natural_threshold = C.get_eye_damage_natural_healing_threshold()
-	return ((eye >= eye_natural_threshold) || (ear >= ear_natural_threshold))
+	var/ear_natural_threshold = C.get_ear_damage_natural_healing_threshold()
+	return ((eye >= src.eye_damage_threshold) || (ear >= ear_natural_threshold))
 /obj/machinery/bot/medbot/proc/virus_check(mob/living/carbon/C as mob)
 	for(var/datum/ailment_data/disease/am in C.ailments)
 		if((am.stage > 1) || (am.spread == "Airborne"))
-				return 1 //STOP DISEASE FOREVER
+			return 1 //STOP DISEASE FOREVER
 	return 0
 
 /obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
@@ -533,7 +533,7 @@
 		if(brute_check(C))
 			.+= src.treatment_brute
 		if(burn_check(C))
-			.+= src.treatment_burn
+			.+= src.treatment_fire
 		if(tox_check(C))
 			.+= src.treatment_tox
 		if(oxy_check(C))
