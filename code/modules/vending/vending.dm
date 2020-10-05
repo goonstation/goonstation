@@ -5,10 +5,11 @@
 	var/product_cost
 	var/product_amount
 	var/product_hidden
+	var/logged_on_vend
 
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
-	New(productpath, amount=0, cost=0, hidden=0)
+	New(productpath, amount=0, cost=0, hidden=0, logged_on_vend=FALSE)
 		..()
 		if (istext(productpath))
 			productpath = text2path(productpath)
@@ -33,6 +34,7 @@
 		src.product_cost -= 0.01
 #endif
 		src.product_hidden = hidden
+		src.logged_on_vend = logged_on_vend
 
 /obj/machinery/vending
 	name = "Vendomat"
@@ -127,17 +129,21 @@
 		..()
 		src.panel_image = image(src.icon, src.icon_panel)
 	var/lastvend = 0
+
 	proc/vendinput(var/datum/mechanicsMessage/inp)
 		if( world.time < lastvend ) return//aaaaaaa
 		lastvend = world.time + 2
-		throw_item()
-		return
+		var/datum/data/vending_product/R = throw_item()
+		if(R?.logged_on_vend)
+			logTheThing("station", usr, null, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
+
 	proc/vendname(var/datum/mechanicsMessage/inp)
 		if( world.time < lastvend || !inp) return//aaaaaaa
 		if(!length(inp.signal)) return//aaaaaaa
 		lastvend = world.time + 5 //Make it slower to vend by name?
-		throw_item(inp.signal)
-		return
+		var/datum/data/vending_product/R = throw_item(inp.signal)
+		if(R?.logged_on_vend)
+			logTheThing("station", usr, null, "vended a logged product by name ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
 	// just making this proc so we don't have to override New() for every vending machine, which seems to lead to bad things
 	// because someone, somewhere, always forgets to use a ..()
@@ -622,6 +628,9 @@
 				src.scan = null
 			src.generate_HTML(1)
 
+			if(R.logged_on_vend)
+				logTheThing("station", usr, null, "vended a logged product ([R.product_name]) from [src] at [log_loc(src)].")
+
 		if (href_list["logout"])
 			src.scan = null
 			src.generate_HTML(1)
@@ -787,26 +796,27 @@
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
-	var/thrown = 0
-	var/list/datum/data/vending_product/valid_products = list()
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
 		return 0
 
 	if(length(item_name_to_throw))
-		for(var/datum/data/vending_product/product in src.product_list)
-			if(item_name_to_throw == product.product_name_cache[product.product_path])
-				if(product.product_amount > 0)
-					thrown = throw_item_act(product, target)
-				break
-	else
 		for(var/datum/data/vending_product/R in src.product_list)
-			if (R.product_amount <= 0) //Try to use a record that actually has something to dump.
+			if(item_name_to_throw == R.product_name_cache[R.product_path])
+				if(R.product_amount > 0)
+					throw_item_act(R, target)
+					return R
+				return
+	else
+		var/list/datum/data/vending_product/valid_products = list()
+		for(var/datum/data/vending_product/R in src.product_list)
+			if(R.product_amount <= 0) //Try to use a record that actually has something to dump.
 				continue
 			valid_products.Add(R)
-		if (valid_products.len)
-			thrown = throw_item_act(pick(valid_products), target)
-	return thrown
+		if(length(valid_products))
+			var/datum/data/vending_product/vending_product = pick(valid_products)
+			throw_item_act(vending_product, target)
+			return vending_product
 
 /obj/machinery/vending/proc/throw_item_act(var/datum/data/vending_product/R, var/mob/living/target)
 	var/obj/throw_item = null
@@ -1673,7 +1683,7 @@
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/mob/living/carbon/human/npc/monkey, rand(10, 15))
+		product_list += new/datum/data/vending_product(/mob/living/carbon/human/npc/monkey, rand(10, 15), logged_on_vend=TRUE)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
 
