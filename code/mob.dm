@@ -477,18 +477,14 @@
 	src.need_update_item_abilities = 1
 	src.antagonist_overlay_refresh(1, 0)
 
-#if ASS_JAM
-	ass_day_popup(src)
-#endif
-
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
 	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
-		src.client?.color = list(MATRIX_PROTANOPIA)
-
-	return
+		// creating a local var for this is actually necessary, byond freaks the fuck out if you do `color = list(blahblah)`. Why? I wish I knew.
+		var/list/matrix_protanopia = list(MATRIX_PROTANOPIA)
+		src.client?.color = matrix_protanopia
 
 /mob/Logout()
 
@@ -558,7 +554,7 @@
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
-			if(tmob.reagents && tmob.reagents.get_reagent_amount("flubber") + src.reagents.get_reagent_amount("flubber") > 0)
+			if(tmob.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0)
 				if(src.next_spammable_chem_reaction_time > world.time || tmob.next_spammable_chem_reaction_time > world.time)
 					src.now_pushing = 0
 					return
@@ -992,7 +988,7 @@
 	return
 
 // for mobs without organs
-/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type)
+/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	hit_twitch(src)
 #if ASS_JAM//pausing damage for timestop
 	if(src.paused)
@@ -1278,6 +1274,7 @@
 
 	if (W == src.handcuffs)
 		src.handcuffs = null
+		src.delStatus("handcuffed")
 	else if (W == src.back)
 		src.back = null
 	else if (W == src.wear_mask)
@@ -1986,7 +1983,7 @@
 	if(src_turf)
 		src_turf.fluid_react_single("toxic_fart",50,airborne = 1)
 		for(var/mob/living/L in range(src_turf, 6))
-			shake_camera(L, 10, 5)
+			shake_camera(L, 10, 32)
 
 	if (animation)
 		animation.delaydispose()
@@ -2878,4 +2875,5 @@
 		A.interact(src)
 
 /mob/proc/add_karma(how_much)
-	src?.mind.add_karma(how_much)
+	src.mind?.add_karma(how_much)
+	// TODO add NPC karma

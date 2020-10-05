@@ -122,7 +122,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 					continue
 			if(!thing || thing.disposed)
 				continue
-			animate(thing, transform=thr.transform_original)
+			animate(thing)
 			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
 
 			if(thr.hitAThing)

@@ -130,6 +130,16 @@
 		if (. && islist(scoot_sounds) && scoot_sounds.len && prob(75))
 			playsound( get_turf(src), pick( scoot_sounds ), 50, 1 )
 
+/obj/stool/bee_bed
+	// idk. Not a bed proper since humans can't lay in it. Weirdos.
+	// would also be cool to make these work with bees.
+	// it's hip to tuck bees!
+	name = "bee bed"
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "beebed"
+	desc = "A soft little bed the general size and shape of a space bee."
+	parts_type = /obj/item/furniture_parts/stool/bee_bed
+
 /obj/stool/bar
 	name = "bar stool"
 	icon_state = "bar-stool"
@@ -830,7 +840,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 /obj/item/chair/folded/attack_self(mob/user as mob)
 	if(cant_drop == 1)

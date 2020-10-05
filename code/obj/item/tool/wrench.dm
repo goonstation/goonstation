@@ -21,7 +21,7 @@
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/wrench/gold
 	name = "golden wrench"

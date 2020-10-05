@@ -14,6 +14,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	icon_override = "civ"
 	var/haswiretap
+	hardened = 0
 
 	attackby(obj/item/R as obj, mob/user as mob)
 		if (istype(R, /obj/item/device/radio_upgrade))

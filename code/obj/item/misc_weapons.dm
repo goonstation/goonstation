@@ -1,6 +1,5 @@
 // Contains:
 //
-// - obj/item/weapon parent (now unused and commented out)
 // - Esword
 // - Dagger
 // - Butcher's knife
@@ -15,15 +14,8 @@
 // - Bloodthirsty Blade
 // - Fragile Sword
 
-////////////////////////////////////////////// Weapon parent //////////////////////////////////
-/* unused now
-/obj/item/weapon
-	name = "weapon"
-	icon = 'icons/obj/items/weapons.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-*/
-/////////////////////////////////////////////// Esword /////////////////////////////////////////
 
+/// Cyalume saber/esword, famed traitor item
 /obj/item/sword
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -111,7 +103,7 @@
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
 		AddComponent(/datum/component/itemblock/saberblock)
-		BLOCK_SWORD
+		BLOCK_SETUP(BLOCK_SWORD)
 
 /obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
 	if(active)
@@ -226,7 +218,7 @@
 	src.active = !( src.active )
 	tooltip_rebuild = 1
 	if (src.active)
-		BLOCK_ALL
+		SET_BLOCKS(BLOCK_ALL)
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 		light_c.update(1)
 		boutput(user, "<span class='notice'>The sword is now active.</span>")
@@ -247,6 +239,7 @@
 		user.unlock_medal("The Force is strong with this one", 1)
 	else
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
+		SET_BLOCKS(BLOCK_SWORD)
 		light_c.update(0)
 		boutput(user, "<span class='notice'>The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
@@ -301,11 +294,15 @@
 			else
 				src.icon_state = "[state_name]-open"
 			return
-		else
+		else if (src.open && src.bladecolor)
 			user.visible_message("<b>[user]</b> closes and screws [src] shut.")
 			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
 			src.open = 0
 			src.icon_state = "[state_name]0"
+		else
+			boutput(user, "<span class='alert'>The screw spins freely in place without a blade to screw into.</span>")
+			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			return
 
 	if (istype(W, /obj/item/device/light/glowstick) && !loaded_glowstick && open)
 		if (!W:on)
@@ -472,7 +469,7 @@
 
 	New()
 		..()
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 /obj/item/dagger/throw_impact(atom/A, datum/thrown_thing/thr)
 	if(iscarbon(A))
@@ -601,7 +598,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/nunchucks)
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/quarterstaff
 	name = "quarterstaff"
@@ -632,7 +629,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/simple)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
@@ -686,7 +683,7 @@
 
 /obj/item/knife/butcher/New()
 	..()
-	BLOCK_KNIFE
+	BLOCK_SETUP(BLOCK_KNIFE)
 
 /obj/item/knife/butcher/throw_impact(atom/A, datum/thrown_thing/thr)
 	if(iscarbon(A))
@@ -787,7 +784,7 @@
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 
 // vvv what the heck why?? vvv
@@ -890,7 +887,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
@@ -911,7 +908,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/ratstick
 	name = "rat stick"
@@ -930,7 +927,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	attack(var/atom/A as mob|obj|turf, var/mob/user as mob)
 		if (prob(50))
@@ -994,7 +991,7 @@
 		mid2 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		end = new/obj/itemspecialeffect/katana_dash/end(src)
 		src.setItemSpecial(/datum/item_special/katana_dash)
-		BLOCK_SWORD
+		BLOCK_SETUP(BLOCK_SWORD)
 
 /obj/item/katana/attack(mob/target as mob, mob/user as mob, def_zone, is_special = 0)
 	if(!ishuman(target)) //only humans can currently be dismembered
@@ -1184,22 +1181,17 @@
 		var/obj/item/katana/K = new sword_path()
 		sword_inside = K
 		K.set_loc(src)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	attack_hand(mob/living/carbon/human/user as mob)
 		if(user.r_hand == src || user.l_hand == src || user.belt == src)
-			if(src.sword_inside) //Checks if a katana is inside
-				sword_inside.clean_forensic()
-				boutput(user, "You draw [sword_inside] from your sheath.")
-				playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
-				icon_state = sheath_state
-				item_state = ih_sheath_state
-				user.put_in_hand_or_drop(sword_inside)
-				sword_inside = null //No more sword inside.
-				user.update_clothing()
-			else
-				return ..()//Katana doesn't exist, and takes the sheath off your belt or switches hands.
+			draw_sword(user)
+		else
+			return ..()
 
+	attack_self(mob/living/carbon/human/user as mob)
+		if(user.r_hand == src || user.l_hand == src)
+			draw_sword(user)
 		else
 			return ..()
 
@@ -1217,6 +1209,23 @@
 			..()
 			if(W.cant_drop == 1)
 				boutput(user, "<span class='notice'>You can't sheathe the [W] while its attached to your arm.</span>")
+
+/obj/item/katana_sheath/proc/draw_sword(mob/living/carbon/human/user)
+	if(src.sword_inside) //Checks if a katana is inside
+		if (!user.r_hand || !user.l_hand)
+			sword_inside.clean_forensic()
+			boutput(user, "You draw [sword_inside] from your sheath.")
+			playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
+			icon_state = sheath_state
+			item_state = ih_sheath_state
+			user.put_in_hand_or_drop(sword_inside)
+			sword_inside = null //No more sword inside.
+			user.update_clothing()
+		else
+			boutput(user, "You don't have a free hand to draw with!")
+			return
+	else
+		return
 
 /obj/item/katana_sheath/reverse
 	name = "reverse-blade katana sheath"
@@ -1331,7 +1340,7 @@
 		..()
 		name = "[pick("Mysterious","Foreboding","Menacing","Terrifying","Malevolent","Ghastly","Bloodthirsty","Vengeful","Loathsome")] [pick("Sword","Blade","Slicer","Knife","Dagger","Cutlass","Gladius","Cleaver","Chopper","Claymore","Zeitgeist")] of [pick("T'pire Weir Isles","Ballingry","Mossmorran","Auchtertool","Kirkcaldy","Auchmuirbridge","Methil","Muiredge","Swords")]"
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_SWORD
+		BLOCK_SETUP(BLOCK_SWORD)
 
 
 /obj/item/bloodthirsty_blade/attack(target as mob, mob/user as mob)
@@ -1372,7 +1381,7 @@ obj/item/fragile_sword
 
 	New()
 		..()
-		BLOCK_SWORD
+		BLOCK_SETUP(BLOCK_SWORD)
 
 	attack(target as mob, mob/user as mob)
 		playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
@@ -1434,7 +1443,7 @@ obj/item/whetstone
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_SWORD
+		BLOCK_SETUP(BLOCK_SWORD)
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(istype (M) | !isdead(M))
@@ -1487,4 +1496,4 @@ obj/item/whetstone
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)

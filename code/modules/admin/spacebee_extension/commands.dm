@@ -18,7 +18,7 @@
 	name = "locate"
 	server_targeting = COMMAND_TARGETING_ALL_SERVERS
 	help_message = "Locates a given ckey on all servers."
-	argument_types = list(/datum/command_argument/string="ckey")
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
 	execute(user, ckey)
 		var/mob/M = whois_ckey_to_mob_reference(ckey, exact=FALSE)
 		if(!M)
@@ -36,9 +36,8 @@
 	name = "addnote"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
 	help_message = "Adds a note to a given ckey."
-	argument_types = list(/datum/command_argument/string="ckey", /datum/command_argument/the_rest="note")
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="note")
 	execute(user, ckey, note)
-		ckey = ckey(ckey)
 		addPlayerNote(ckey, user + " (Discord)", note)
 
 		logTheThing("admin", "[user] (Discord)", null, "added a note for [ckey]: [note]")
@@ -58,6 +57,8 @@
 	execute(user, headline, body)
 		for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 			C.add_centcom_report("[command_name()] Update", body)
+		body = discord_emojify(body)
+		headline = discord_emojify(headline)
 		command_alert(body, headline, "sound/misc/announcement_1.ogg")
 		logTheThing("admin", "[user] (Discord)", null, "has created a command report: [body]")
 		logTheThing("diary", "[user] (Discord)", null, "has created a command report: [body]", "admin")
@@ -113,7 +114,7 @@
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/send_to_arrivals
-	name = "send_to_arrivals"
+	name = "sendtoarrivals"
 	help_message = "Sends a given ckey to arrivals."
 	action_name = "send to arrivals"
 
@@ -175,3 +176,62 @@
 	name = "revive"
 	help_message = "Heal / revive a given ckey. (alias of ;;heal)"
 	action_name = "revive"
+
+/datum/spacebee_extension_command/all_admins
+	name = "adminsall"
+	server_targeting = COMMAND_TARGETING_ALL_SERVERS
+	help_message = "All servers respond with their list of admins (probably)."
+	argument_types = list()
+	execute(user)
+		var/list/admins = list()
+		for(var/client/C in clients)
+			if(!C.holder)
+				continue
+			if (C.stealth || C.alt_key)
+				admins += "[C.key] (as [C.fakekey])"
+			else
+				admins += C.key
+		if(length(admins))
+			system.reply(admins.Join(", "), user)
+
+/datum/spacebee_extension_command/context
+	name = "context"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Gets last N log entries of a given ckey."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string="log_name", /datum/command_argument/number/integer="N")
+	execute(user, ckey, log_name, n)
+		if(log_name == "audit")
+			system.reply("No peeking in the audit log.", user)
+			return
+		if(!(log_name in logs))
+			system.reply("Invalid log name. Valid log names: [logs.Join(" ")]")
+			return
+		var/list/log = logs[log_name]
+		var/list/result = list()
+		for(var/i=length(log); i >= 1 && n > 0; i--)
+			var/log_line = log[i]
+			if(findtext(log_line, ckey, 1, null))
+				result += strip_html_tags(log_line)
+				n--
+		if(!length(result))
+			system.reply("No results.", user)
+		else
+			system.reply(reverse_list(result).Join("\n"), user)
+
+/datum/spacebee_extension_command/crate
+	name = "crate"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Sends items in a crate to cargo. Separate typepaths by spaces."
+	argument_types = list(/datum/command_argument/the_rest="types")
+	execute(user, types)
+		var/obj/to_send = new /obj/storage/crate/packing
+		var/list/type_str_list = splittext(types, " ")
+		for(var/type_str in type_str_list)
+			var/type = text2path(type_str)
+			if(isnull(type))
+				system.reply("Unknown type [type_str], aborting.", user)
+				qdel(to_send)
+				return
+			new type(to_send)
+		shippingmarket.receive_crate(to_send)
+		system.reply("Crate sent.")

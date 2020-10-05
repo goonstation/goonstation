@@ -836,7 +836,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "aco" = (
-/obj/machinery/weapon_stand/shotgun_rack/pbr,
+/obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "acp" = (
@@ -5055,13 +5055,6 @@
 /obj/lattice,
 /turf/space,
 /area/station/wreckage)
-"alE" = (
-/obj/lattice,
-/obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
-	},
-/turf/space,
-/area/station/wreckage)
 "alF" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/wreckage)
@@ -6008,6 +6001,14 @@
 "anN" = (
 /obj/structure/girder,
 /obj/grille/steel,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north{
+	autoname_on_spawn = 0;
+	name = "Abandoned APC"
+	},
 /turf/simulated/floor/airless/damaged2,
 /area/station/wreckage)
 "anO" = (
@@ -6527,10 +6528,20 @@
 /area/station/wreckage)
 "aoY" = (
 /obj/decal/cleanable/oil,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/airless/grime,
 /area/station/wreckage)
 "aoZ" = (
 /obj/item/raw_material/rock,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/airless/grime,
 /area/station/wreckage)
 "apa" = (
@@ -6540,6 +6551,11 @@
 	icon_state = "2-4"
 	},
 /obj/creepy_sound_trigger,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/wreckage)
 "apb" = (
@@ -23489,10 +23505,7 @@
 "aYV" = (
 /obj/table/wood/auto,
 /obj/machinery/light,
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery"
-	},
+/obj/item/clothing/suit/cultist/nerd,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -63004,6 +63017,13 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"fSi" = (
+/obj/lattice,
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
+/turf/space,
+/area/station/wreckage)
 "fVA" = (
 /obj/machinery/portable_atmospherics/canister/empty,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -98447,7 +98467,7 @@ aaa
 aaa
 ajz
 aky
-alE
+fSi
 amz
 anO
 apa

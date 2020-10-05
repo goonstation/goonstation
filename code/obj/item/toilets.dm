@@ -117,7 +117,9 @@ TOILET
 				A.set_loc(target)
 #endif
 		src.clogged = 0
-		src.contents.len = 0
+		for (var/item in src.contents)
+			qdel(item)
+			src.hud?.remove_item(item)
 
 	else if((src.clogged >= 1) || (src.contents.len >= 7) || (user.buckled != src.loc))
 		src.visible_message("<span class='notice'>The toilet is clogged!</span>")

@@ -1,4 +1,8 @@
 //Contains exotic or special reagents.
+
+ABSTRACT_TYPE(/datum/reagent/cement)
+ABSTRACT_TYPE(/datum/reagent/concrete)
+
 datum
 	reagent
 		nitroglycerin // Yes, this is a bad idea.
@@ -154,7 +158,7 @@ datum
 				var/datum/reagents/silver_fulminate_holder = holder
 				var/silver_fulminate_volume = volume
 				silver_fulminate_holder.del_reagent("silver_fulminate")
-				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*200,35,500)
+				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*200,10,35,500)
 
 			reaction_temperature(var/exposed_temperature, var/exposed_volume)
 				if (exposed_temperature >= T0C + 30)
@@ -737,7 +741,7 @@ datum
 			fluid_g = 255
 			value = 4 // 1 1 1
 			hygiene_value = 0.25
-			block_slippy = -1
+			block_slippy = -2
 
 			reaction_turf(var/turf/target, var/volume)
 				src = null
@@ -1225,7 +1229,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				if (counter += (1*mult) >= 10 && !fakedeathed)
+				if ((counter += (1*mult)) >= 10 && !fakedeathed)
 					M.setStatus("resting", INFINITE_STATUS)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
 					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
@@ -2721,10 +2725,12 @@ datum
 						multiplier /= 2
 					arcFlash(grenade, A, 0)
 
-			reaction_mob(var/mob/M, var/method = TOUCH)
-				var/vol = max(1,volume)
+			reaction_mob(var/mob/M, var/method = TOUCH, volume_passed)
+				var/vol = max(1,volume_passed)
 				if (method == TOUCH)
 					M.shock(src.holder.my_atom, min(7500 * multiplier, vol * 100 * multiplier), "chest", 1, 1)
+				if(istype(holder, /datum/reagents/fluid_group))
+					holder.remove_reagent(src.id, vol)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (reacting)

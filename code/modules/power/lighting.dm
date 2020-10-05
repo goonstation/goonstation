@@ -218,6 +218,13 @@
 			name = "very harsh incandescent light bulb"
 			light_type = /obj/item/light/bulb/harsh/very
 
+	broken //Made at first to replace a decal in cog1's wreckage area
+		name = "shattered light bulb"
+
+		New()
+			..()
+			current_lamp.light_status = LIGHT_BROKEN
+
 	//The only difference between these small lights and others are that these automatically stick to walls! Wow!!
 	sticky
 		nostick = 0
@@ -256,6 +263,8 @@
 			very
 				name = "very harsh incandescent light bulb"
 				light_type = /obj/item/light/bulb/harsh/very
+
+
 
 //floor lights
 /obj/machinery/light/small/floor
@@ -404,6 +413,7 @@
 	allowed_type = /obj/item/light/bulb
 	wallmounted = 0
 	deconstruct_flags = DECON_SIMPLE
+	plane = PLANE_DEFAULT
 
 	var/switchon = 0		// independent switching for lamps - not controlled by area lightswitch
 
@@ -591,6 +601,22 @@
 
 		var/obj/item/lamp_manufacturer/M = W
 		var/obj/item/light/L = null
+
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			if (S.cell)
+				if (!inserted_lamp)
+					S.cell.charge -= M.cost_empty
+				else
+					S.cell.charge -= M.cost_broken
+		else
+			if (M.metal_ammo > 0)
+				M.metal_ammo--
+				M.inventory_counter.update_number(M.metal_ammo)
+			else
+				boutput(user, "You need to load up some metal sheets.")
+				return // Stop lights from being made if a human user lacks materials.
+
 		if (fitting == "tube")
 			L = new M.dispensing_tube()
 		else
@@ -600,14 +626,6 @@
 				boutput(user, "This fitting already has an identical lamp.")
 				qdel(L)
 				return //Stop borgs from making more sparks than necessary
-
-		if (issilicon(user)) //Not that non-silicons should have these
-			var/mob/living/silicon/S = user
-			if (S.cell)
-				if (!inserted_lamp)
-					S.cell.charge -= M.cost_empty
-				else
-					S.cell.charge -= M.cost_broken
 
 		insert(user, L)
 		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
@@ -930,6 +948,14 @@
 		color_r = 0.95
 		color_g = 0.2
 		color_b = 0.2
+	reddish
+		name = "reddish light tube"
+		desc = "Fancy."
+		icon_state = "tube-red"
+		base_state = "tube-red"
+		color_r = 0.98
+		color_g = 0.75
+		color_b = 0.5
 	yellow
 		name = "yellow light tube"
 		desc = "Fancy."
@@ -938,6 +964,14 @@
 		color_r = 0.95
 		color_g = 0.95
 		color_b = 0.2
+	yellowish
+		name = "yellowish light tube"
+		desc = "Fancy."
+		icon_state = "tube-yellow"
+		base_state = "tube-yellow"
+		color_r = 0.98
+		color_g = 0.98
+		color_b = 0.75
 	green
 		name = "green light tube"
 		desc = "Fancy."
@@ -970,6 +1004,14 @@
 		color_r = 0.95
 		color_g = 0.2
 		color_b = 0.95
+	light_purpleish
+		name = "light purpleish light tube"
+		desc = "Fancy."
+		icon_state = "tube-purple"
+		base_state = "tube-purple"
+		color_r = 0.98
+		color_g = 0.76
+		color_b = 0.98
 	blacklight
 		name = "black light tube"
 		desc = "Fancy."
@@ -1088,6 +1130,14 @@
 		color_r = 0.95
 		color_g = 0.95
 		color_b = 0.2
+	yellowish
+		name = "yellowish light bulb"
+		desc = "Fancy."
+		icon_state = "bulb-yellow"
+		base_state = "bulb-yellow"
+		color_r = 0.98
+		color_g = 0.98
+		color_b = 0.75
 	green
 		name = "green light bulb"
 		desc = "Fancy."

@@ -25,7 +25,7 @@
 
 	New()
 		..()
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))

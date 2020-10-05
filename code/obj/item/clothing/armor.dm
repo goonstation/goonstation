@@ -258,6 +258,20 @@
 
 		return
 
+/obj/item/clothing/suit/armor/makeshift
+	name = "makeshift armor"
+	desc = "A standard cyborg chest modified to function as uncomfortable, somewhat flimsy improvised armor."
+	icon_state = "makeshift"
+	item_state = "makeshift"
+	body_parts_covered = TORSO
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 10)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.8)
+		setProperty("movespeed", 0.5)
+
 /obj/item/clothing/suit/armor/captain
 	name = "captain's armor"
 	desc = "A suit of protective formal armor made for the station's captain."
@@ -392,15 +406,16 @@
 		setProperty("rangedprot", 2)
 		setProperty("disorient_resist", 10)
 		setProperty("movespeed", 0.6)
-		setProperty("exploprot", 6)
+		setProperty("exploprot", 60)
 
 /obj/item/clothing/suit/armor/hoscape
-	name = "head of securitys cape"
-	desc = "A rather dashing cape."
+	name = "Head of Security's cape"
+	desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
-
 	setupProperties()
 		..()
-		setProperty("meleeprot", 7)
-		setProperty("rangedprot", 1.5)
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.7)
+		setProperty("coldprot", 5)
+		setProperty("heatprot", 35)

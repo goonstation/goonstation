@@ -13,10 +13,10 @@ var/global/list/material_cache = list()
 	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet)) return 1
 	return 0
 
-//This contains the names of the trigger lists on materials. Required for copying materials. Remember to keep this updated if you add new triggers.
+/// This contains the names of the trigger lists on materials. Required for copying materials. Remember to keep this updated if you add new triggers.
 var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "triggersFail", "triggersTemp", "triggersChem", "triggersPickup", "triggersDrop", "triggersExp", "triggersOnAdd", "triggersOnLife", "triggersOnAttack", "triggersOnAttacked", "triggersOnEntered")
 
-//Returns one of the base materials by id.
+/// Returns one of the base materials by id.
 /proc/getMaterial(var/mat)
 	if(!istext(mat) || !length(mat)) return null
 	if(!material_cache.len) buildMaterialCache()
@@ -43,7 +43,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	return merged
 
-//Returns a copy of a given material.
+/// Returns a copy of a given material.
 /proc/copyMaterial(var/datum/material/base)
 	if(!base || !istype(base, /datum/material))
 		var/datum/material/M = new/datum/material()
@@ -86,7 +86,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	return 1
 
 
-//Called AFTER the material of the object was changed.
+/// Called AFTER the material of the object was changed.
 /atom/proc/onMaterialChanged()
 	if(istype(src.material))
 		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_resistance
@@ -95,7 +95,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	return
 
 
-//Simply removes a material from an object.
+/// Simply removes a material from an object.
 /atom/proc/removeMaterial()
 	if(src.mat_changename)
 		src.remove_prefixes(99)
@@ -127,7 +127,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 				string = P.desc
 	return string
 
-// if a material is listed in here then we don't take on its color/alpha (maybe, if this works)
+/// if a material is listed in here then we don't take on its color/alpha (maybe, if this works)
 /atom/var/list/mat_appearances_to_ignore = null
 
 /proc/getMaterialPrefixList(var/datum/material/base)
@@ -144,7 +144,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			continue
 	return thelist
 
-//Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
+/// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
 /atom/proc/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
 	if(!mat1 ||!istype(mat1, /datum/material)) return
 	if(copy) mat1 = copyMaterial(mat1)
@@ -214,7 +214,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	return /obj/item/material_piece
 
-//Increases generations on material triggers and handles removal if over the generation cap.
+/// Increases generations on material triggers and handles removal if over the generation cap.
 /proc/handleTriggerGenerations(var/list/toDo)
 	for(var/datum/materialProc/current in toDo)
 		if(current.max_generations != -1 && (toDo[current] + 1) > current.max_generations)
@@ -223,7 +223,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			toDo[current] = (toDo[current] + 1)
 	return toDo
 
- //Fuses two material trigger lists.
+ /// Fuses two material trigger lists.
 /proc/getFusedTriggers(var/list/L1 , var/list/L2)
 	var/list/newList = list()
 	for(var/datum/materialProc/toCopy in L1) //Copy list 1 with new instances of trigger datum.
@@ -250,8 +250,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 				newProc.vars[varCopy] = A.vars[varCopy]
 	return newList
 
+/// Merges two materials and returns result as new material.
 /proc/getFusedMaterial(var/datum/material/mat1,var/datum/material/mat2)
-	//Merges two materials and returns result as new material.
 	return getInterpolatedMaterial(mat1, mat2, 0.5)
 
 /proc/getInterpolatedMaterial(var/datum/material/mat1,var/datum/material/mat2,var/t)
@@ -343,14 +343,14 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	return newMat
 
-//Merges two material names into one.
+/// Merges two material names into one.
 /proc/getInterpolatedName(var/mat1, var/mat2, var/t)
 	var/ot = 1 - t
 	var/part1 = copytext(mat1, 1, round((length(mat1) * ot) + 0.5))
 	var/part2 = copytext(mat2, round((length(mat2) * ot) + 0.5), 0)
 	return capitalize(ckey("[part1][part2]"))
 
-//Returns a string for when a material fail or breaks depending on its material flags.
+/// Returns a string for when a material fail or breaks depending on its material flags.
 /proc/getMatFailString(var/flag)
 	if(flag & MATERIAL_METAL && flag & MATERIAL_CRYSTAL && flag & MATERIAL_CLOTH)
 		return "frays apart into worthless dusty fibers"
@@ -380,7 +380,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		return "melts into an unworkable pile of slop"
 	return "comes apart"
 
-//Translates a material flag into a string.
+/// Translates a material flag into a string.
 /proc/getMatFlagString(var/flag)
 	switch(flag)
 		if(MATERIAL_CRYSTAL)
@@ -398,7 +398,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		else
 			return "Unknown"
 
-//Simply returns a string for a given quality. Used as prefix for objects.
+/// Simply returns a string for a given quality. Used as prefix for objects.
 /proc/getQualityName(var/quality)
 	switch(quality)
 		if(-INFINITY to -101)
@@ -450,15 +450,19 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		else
 			return "odd"
 
-//Checks if a material matches a recipe and returns the recipe if a match is found. returns null if nothing matches it.
+/// Checks if a material matches a recipe and returns the recipe if a match is found. returns null if nothing matches it.
 /proc/matchesMaterialRecipe(var/datum/material/M)
 	for(var/datum/material_recipe/R in materialRecipes)
 		if(R.validate(M)) return R
 	return null
 
-//Searches the parent materials of the given material, up to a given generation, for an id.
-//Useful if you want to figure out if a given material was used in the making of another material.
-//Keep in mind that this can be expensive so use it only when you have to.
+/**
+	* Searches the parent materials of the given material, up to a given generation, for an id.
+	*
+	* Useful if you want to figure out if a given material was used in the making of another material.
+	*
+	* Keep in mind that this can be expensive so use it only when you have to.
+	*/
 /proc/hasParentMaterial(var/datum/material/M, var/search_id, var/max_generations = 3)
 	return searchMatTree(M, search_id, 0, max_generations)
 
@@ -472,7 +476,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(temp) return temp
 	return null
 
-//Yes hello apparently we need a proc for this because theres a million types of different wires and cables.
+/// Yes hello apparently we need a proc for this because theres a million types of different wires and cables.
 /proc/applyCableMaterials(var/atom/C, var/datum/material/insulator, var/datum/material/conductor)
 	if(!conductor) return // silly
 

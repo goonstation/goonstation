@@ -23,7 +23,7 @@ SYNDICATE DRONE FACTORY AREAS
 \*----------------------------------------------------------------------------- */
 
 /area/crater
-	name = "Crater"
+	name = "Cenote"  // renamed, crater doesn't make any sense here
 	icon_state = "yellow"
 	force_fullbright = 0
 	sound_environment = 18
@@ -127,7 +127,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 
 /area/crypt/graveyard/swamp
-	name = "Spooky Swamp"
+	name = "Courtyard" // renamed
 	icon_state = "red"
 	skip_sims = 1
 	sims_score = 30
@@ -139,6 +139,42 @@ SYNDICATE DRONE FACTORY AREAS
 	sound_environment = 5
 	skip_sims = 1
 	sims_score = 0
+
+
+
+//// Jam Mansion 3.0
+/area/crypt/sigma
+	name = "Research Facility Sigma"
+	icon_state = "derelict"
+	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
+
+/area/crypt/sigma/mainhall
+	icon_state = "chapel"
+	name = "Research Facility Sigma"
+
+/area/crypt/sigma/rd
+	icon_state = "bridge"
+	name = "Director's Quarters"
+
+/area/crypt/sigma/lab
+	icon_state = "toxlab"
+	name = "Laboratory"
+
+/area/crypt/sigma/crew
+	icon_state = "crewquarters"
+	name = "Crew Quarters"
+
+/area/crypt/sigma/kitchen
+	icon_state = "kitchen"
+	name = "Kitchen"
+
+/area/crypt/sigma/storage
+	icon_state = "storage"
+	name = "Storage Rooms"
+
+/area/crypt/sigma/morgue
+	icon_state = "purple"
+	name = "Morgue"
 
 /area/catacombs
 	name = "Catacombs"
@@ -260,6 +296,10 @@ SYNDICATE DRONE FACTORY AREAS
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "cliff"
+
+/obj/decal/cliff/shore
+	name = "water's edge"
+	desc = "The edge of an underground pool."
 
 /obj/decal/statue
 	name = "statue"
@@ -698,7 +738,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/graveyard/lightning_trigger
 	icon = 'icons/misc/mark.dmi'
@@ -943,13 +983,13 @@ SYNDICATE DRONE FACTORY AREAS
 				boutput(usr, "<span class='success'>The Circle begins to vibrate and glow.</span>")
 				playsound(src.loc, "sound/voice/chanting.ogg", 50, 1)
 				sleep(1 SECOND)
-				shake_camera(usr, 15, 1, 0.2)
+				shake_camera(usr, 15, 16, 0.2)
 				sleep(1 SECOND)
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
 				sleep(1 SECOND)
 				world << sound('sound/effects/mag_pandroar.ogg', volume=60) // heh
-				shake_camera(usr, 15, 1, 0.5)
+				shake_camera(usr, 15, 16, 0.5)
 				new/obj/item/alchemy/stone(middle)
 				sleep(0.2 SECONDS)
 				var/obj/graveyard/loose_rock/R = locate("loose_rock_[target_id]")

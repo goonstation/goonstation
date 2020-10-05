@@ -697,7 +697,7 @@
 				animate(cracks, alpha=0, time=30)
 
 				for(var/mob/M in viewers())
-					shake_camera(M, 8, 3)
+					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
 					animate_shake(T)
@@ -742,7 +742,7 @@
 				animate(cracks, alpha=0, time=30)
 
 				for(var/mob/M in viewers())
-					shake_camera(M, 8, 3)
+					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
 					animate_shake(T)
@@ -1251,8 +1251,19 @@
 				var/direction = get_dir_pixel(user, target, params)
 				var/turf/turf = get_step(master, direction)
 
+
 				var/obj/itemspecialeffect/conc/C = unpool(/obj/itemspecialeffect/conc)
 				C.setup(turf)
+				for (var/obj/O in turf.contents)
+					if (istype(O, /obj/blob))
+						boutput(user, "<span class='alert'><b>You try to pulse a spark, but [O] is too wet for it to take!</b></span>")
+						return
+					if (istype(O, /obj/spacevine))
+						var/obj/spacevine/K = O
+						if (K.current_stage >= 2)	//if it's med density
+							boutput(user, "<span class='alert'><b>You try to pulse a spark, but [O] is too dense for it to take!</b></span>")
+							return
+
 				elecflash(turf,0, power=2, exclude_center = 0)
 				afterUse(user)
 			return

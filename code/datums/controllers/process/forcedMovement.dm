@@ -161,7 +161,7 @@ datum/controller/process/fMove
 				if(M.throwing)
 					continue
 
-				if ((M.event_handler_flags & IMMUNE_MANTA_PUSH || M.anchored) && !istype(M,/obj/decal)) //mbc : decal is here for blood cleanables, consider somehow optimizing or adjusting later
+				if ((M.event_handler_flags & IMMUNE_MANTA_PUSH || M.anchored || M.throwing) && !istype(M,/obj/decal)) //mbc : decal is here for blood cleanables, consider somehow optimizing or adjusting later
 					continue
 
 				if(ismob(M))

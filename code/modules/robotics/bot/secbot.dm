@@ -381,15 +381,15 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			how_many_dorkcodes--
 			switch(pick(1,5))
 				if (1)
-					. += pick_string("agent_callsigns", "nato")
+					. += pick_string("agent_callsigns.txt", "nato")
 				if (2)
-					. += pick_string("agent_callsigns", "birds")
+					. += pick_string("agent_callsigns.txt", "birds")
 				if (3)
-					. += pick_string("agent_callsigns", "mammals")
+					. += pick_string("agent_callsigns.txt", "mammals")
 				if (4)
-					. += pick_string("agent_callsigns", "colors")
+					. += pick_string("agent_callsigns.txt", "colors")
 				if (5)
-					. += pick_string("shittybill", "nouns")
+					. += pick_string("shittybill.txt", "nouns")
 			. += "-"
 		. += "[rand(1,99)]-"
 		. += "[rand(1,99)]"
@@ -503,8 +503,11 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				else if (target)		// make sure target exists
 					if (!IN_RANGE(src, src.target, 1))
 						src.moving = 0
-						navigate_to(src.target, ARREST_SPEED * move_arrest_delay_mult, max_dist = 50)
+						navigate_to(src.target, ARREST_SPEED * move_arrest_delay_mult, max_dist = 18)
 						return
+					else
+						SPAWN_DBG(0)
+							src.baton_attack(src.target)
 
 			if(SECBOT_PREP_ARREST)		// preparing to arrest target
 
@@ -1100,14 +1103,14 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	onUpdate()
 		..()
-		if (get_dist(master, master.target) <= 1 || !master.target || master.target.hasStatus("handcuffed"))
+		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed"))
 			interrupt(INTERRUPT_ALWAYS)
 			master.process()
 			return
 
 	onStart()
 		..()
-		if (get_dist(master, master.target) <= 1 || !master.target || master.target.hasStatus("handcuffed"))
+		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed"))
 			interrupt(INTERRUPT_ALWAYS)
 			master.process()
 			return
@@ -1150,7 +1153,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				var/message2send
 				var/list/mailgroups = list(MGD_SECURITY, "AI-Arrest Alerts")
 				if (master.tacticool)
-					message2send = "Notification: Tactical law operation agent [master] [master.badge_number] reporting grandslam on tango [last_target] for suspected [rand(10,99)]-[rand(1,999)] \"[pick_string("shittybill", "drugs")]-[pick_string("shittybill", "insults")]\" \
+					message2send = "Notification: Tactical law operation agent [master] [master.badge_number] reporting grandslam on tango [last_target] for suspected [rand(10,99)]-[rand(1,999)] \"[pick_string("shittybill.txt", "drugs")]-[pick_string("shittybill.txt", "insults")]\" \
 					in [bot_location] at grid reference [LT_loc.x][prob(50)?"-niner":""] mark [LT_loc.y][prob(50)?"-niner":""]. Unit requesting law enforcement personnel for further suspect prosecution. [master.badge_number] over and out."
 					master.speak(message2send)
 				else

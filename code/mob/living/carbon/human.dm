@@ -894,6 +894,7 @@
 			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		if ("rest")
+			if(ON_COOLDOWN(src, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			if(src.ai_active && !src.hasStatus("resting"))
 				src.show_text("You feel too restless to do that!", "red")
 			else
@@ -1022,7 +1023,7 @@
 			playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 #endif
 			for(var/mob/M in view(7, I.loc))
-				shake_camera(M, 20, 1)
+				shake_camera(M, 20, 8)
 
 		if (mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in grabbed_by)
@@ -1779,6 +1780,7 @@
 		src.update_clothing()
 	else if (W == src.handcuffs)
 		src.handcuffs = null
+		src.delStatus("handcuffed")
 		src.update_clothing()
 
 	if (W && W == src.r_hand)
@@ -1832,6 +1834,11 @@
 		hud.set_visible(hud.twohandr, 1)
 		hud.remove_item(I)
 		hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
+		var/regex/offset = new(@"^icons/obj/(\d+)x\d+.dmi$") //matches icon path of "icons/obj/<width>x<height>.dmi" (e.g.: 'icons/obj/64x32.dmi'), and saves the width
+		if(offset.Find("[I.icon]")) //is our iconpath in the above format? (icons/obj/<width>x<height>.dmi)
+			var/regex/off2 = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
+			if(off2.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
+				I.screen_loc = "[off2.group[1]][text2num(off2.group[2])-(text2num(offset.group[1])-32)/2][off2.group[3]]"
 		src.l_hand = I
 		src.r_hand = I
 	else //Object is 1-hand, remove ui elements, set item to proper location.
@@ -1878,6 +1885,11 @@
 		hud.set_visible(hud.rhand, 0)
 		hud.set_visible(hud.twohandl, 1)
 		hud.set_visible(hud.twohandr, 1)
+		var/regex/offset = new(@"^icons/obj/(\d+)x\d+.dmi$") //matches icon path of "icons/obj/<width>x<height>.dmi" (e.g.: 'icons/obj/64x32.dmi'), and saves the width
+		if(offset.Find("[I.icon]")) //is our iconpath in the above format? (icons/obj/<width>x<height>.dmi)
+			var/regex/off2 = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
+			if(off2.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
+				I.screen_loc = "[off2.group[1]][text2num(off2.group[2])-(text2num(offset.group[1])-32)/2][off2.group[3]]"
 		return 1
 	else
 		if (isnull(hand))
@@ -3146,11 +3158,11 @@
 
 					if (priority)
 						if (priority > 0)
-							priority = NewLoc.step_material
+							priority = "[NewLoc.step_material]"
 						else if (priority < 0)
 							priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
 
-						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
+						playsound(NewLoc, priority, src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
 	//STEP SOUND HANDLING OVER
 

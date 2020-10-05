@@ -1462,7 +1462,7 @@
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
 	examine(mob/user)
@@ -1858,7 +1858,7 @@ obj/item/clothing/gloves/concussive
 				C.stuttering += 15
 				boutput(C, "<span class='alert'>The concussive blast knocks you off your feet!</span>")
 			if(get_dist(src,C) <= src.expl_heavy)
-				C.TakeDamage("All",rand(15,25)/C.get_explosion_resistance(),0)
+				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
 				boutput(C, "<span class='alert'>You are battered by the concussive shockwave!</span>")
 
 /obj/item/cargotele
@@ -1929,13 +1929,6 @@ obj/item/clothing/gloves/concussive
 
 		if(do_after(user, 50))
 			// And these too (Convair880).
-			if(src.target)
-				var/turf/t = get_turf(src.target)
-				if(isrestrictedz(t.z))
-					if(user)
-						user.show_text("<span class='alert'>The [src] fails to power on!")
-						logTheThing("station", user, null, "tried to cargo transport to a restricted z-level: [log_loc(src.target)].")
-					return
 			if (ismob(T.loc) && T.loc == user)
 				user.u_equip(T)
 			if (istype(T.loc, /obj/item/storage))

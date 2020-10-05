@@ -286,7 +286,7 @@
 				src.material.triggerOnAttacked(src, user, user, src)
 			for (var/mob/N in AIviewers(usr, null))
 				if (N.client)
-					shake_camera(N, 4, 1, 0.5)
+					shake_camera(N, 4, 8, 0.5)
 		if (prob(40))
 			boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
 			dismantle_wall(1)
@@ -336,11 +336,9 @@
 
 		sleep(10 SECONDS)
 
-		if ((user.loc == T && user.equipped() == W))
+		if (user.loc == T && (user.equipped() == W || isrobot(user)))
 			boutput(user, "<span class='notice'>You disassembled the outer wall plating.</span>")
-			dismantle_wall()
-		else if((isrobot(user) && (user.loc == T)))
-			boutput(user, "<span class='notice'>You disassembled the outer wall plating.</span>")
+			logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 			dismantle_wall()
 
 //Spooky halloween key

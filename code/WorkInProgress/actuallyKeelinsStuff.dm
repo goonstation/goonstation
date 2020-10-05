@@ -1680,7 +1680,7 @@ Returns:
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	rebuild()
 		..()
@@ -1839,7 +1839,7 @@ Returns:
 	New()
 		. = ..()
 		START_TRACKING
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	disposing()
 		. = ..()
@@ -1875,7 +1875,7 @@ Returns:
 #ifdef HALLOWEEN
 							if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
 								var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
-								GH.change_points(50)
+								GH.change_points(30)
 #endif
 			else
 				usr.show_text("Please wait a moment before using the board again.", "red")
@@ -2876,7 +2876,7 @@ Returns:
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	throw_begin(atom/target)
 		icon_state = "boomerang1"
@@ -2964,7 +2964,7 @@ Returns:
 			P = new/obj/fancyportal(get_turf(selected))
 			P.setTarget(target)
 			var/targetThing = isturf(target) ? "" : "[target] in "
-			targetThing += get_area(target)
+			targetThing += "[get_area(target)]"
 			logTheThing("admin", usr, null, "created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
 			logTheThing("diary", usr, null, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
 			message_admins("[key_name(usr)] created a portal at [showCoords(selected.x, selected.y, selected.z)] ([get_area(selected)]) pointing to [showCoords(target.x, target.y, target.z)] ([targetThing])")
@@ -3023,8 +3023,8 @@ Returns:
 		return
 
 /obj/perm_portal
-	icon = 'icons/misc/old_or_unused.dmi'
-	icon_state = "portal1"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "portal"
 	anchored = 1
 	density = 1
 	opacity = 0
@@ -3052,6 +3052,9 @@ Returns:
 			sparks.set_loc(get_turf(src))
 			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 			qdel(src)
+
+	ex_act()
+		return
 
 
 ////////////////////////////////////////////////////////////////////////////////////////

@@ -1608,6 +1608,9 @@
 									continue
 								if (!G.affecting) //Wire note: Fix for Cannot read null.loc
 									continue
+								if (src.a_intent == INTENT_HELP)
+									M.emote("flip", 1) // make it voluntary so there's a cooldown and stuff
+									continue
 								flipped_a_guy = 1
 								if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
 									var/obj/table/tabl = locate() in src.loc.contents
@@ -2048,7 +2051,7 @@
 					else if(!src.reagents.has_reagent("puredabs"))
 						message = "<span class='alert'><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
 						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0)
-						shake_camera(src, 40, 0.5)
+						shake_camera(src, 40, 8)
 						if(H)
 							if(H.limbs.l_arm)
 								src.limbs.l_arm.sever()

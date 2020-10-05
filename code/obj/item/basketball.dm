@@ -100,7 +100,7 @@
 
 	New()
 		..()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iswrenchingtool(W) && mounted)

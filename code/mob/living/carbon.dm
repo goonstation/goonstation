@@ -43,14 +43,6 @@
 						src.changeStatus("weakened", 35)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
-						/*
-						SPAWN_DBG(0)
-							step(src, src.dir)
-							for (var/i = 4, i>0, i--)
-								if (!isturf(src.loc) || !step(src, src.dir) || i == 1)
-									src.throwing = 0
-									break
-						*/
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (3) // superlube
@@ -213,7 +205,7 @@
 	if (..())
 		return
 
-	if (src.bioHolder && src.bioHolder.HasEffect("breathless"))
+	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
 		src.oxyloss = 0
 		return
 #if ASS_JAM //pausing damage for timestop

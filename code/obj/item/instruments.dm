@@ -212,7 +212,7 @@
 		for (var/i in 1 to 12)
 			sounds_instrument += "sound/musical_instruments/sax/sax_[i].ogg"
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/instrument/saxophone/attack(mob/M as mob, mob/user as mob)
 	if(ismob(M))
@@ -237,7 +237,7 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 /* -------------------- Bike Horn -------------------- */
 

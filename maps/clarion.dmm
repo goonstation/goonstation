@@ -11818,10 +11818,7 @@
 "auz" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery"
-	},
+/obj/item/clothing/suit/cultist/nerd,
 /obj/item/pen,
 /turf/simulated/floor/carpet,
 /area/station/hallway/primary/central)
@@ -40884,12 +40881,6 @@
 /obj/cable,
 /obj/item/device/radio/intercom/bridge{
 	broadcasting = 0;
-	dir = 4
-	},
-/obj/item/device/radio/intercom/bridge{
-	dir = 4
-	},
-/obj/item/device/radio/intercom/bridge{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{

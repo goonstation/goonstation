@@ -942,25 +942,49 @@
 				P2.set_loc(locate(src.x+2,src.y+2, src.z))
 				P1.orig_turf = P1.loc //our orig_turf was set in initialize_projectile() but that was before we moved it to the side of the ship
 				P2.orig_turf = P2.loc
-			if(EAST)
-				P1.yo = 0
-				P1.xo = 96
-				P2.yo = 0
-				P2.xo = 96
+			if(EAST, NORTHEAST, SOUTHEAST)
+				switch(src.dir)
+					if(NORTHEAST)
+						P1.yo = 96
+						P1.xo = 96
+						P2.yo = 96
+						P2.xo = 96
+					if(SOUTHEAST)
+						P1.yo = -96
+						P1.xo = 96
+						P2.yo = -96
+						P2.xo = 96
+					else
+						P1.yo = 0
+						P1.xo = 96
+						P2.yo = 0
+						P2.xo = 96
 				P1.set_loc(locate(src.x+2,src.y+2,src.z))
 				P2.set_loc(locate(src.x+2,src.y,src.z))
 				P1.orig_turf = P1.loc
 				P2.orig_turf = P2.loc
-			if(WEST)
-				P1.yo = 0
-				P1.xo = -96
-				P2.yo = 0
-				P2.xo = -96
+			if(WEST, NORTHWEST, SOUTHWEST)
+				switch(src.dir)
+					if(NORTHWEST)
+						P1.yo = 96
+						P1.xo = -96
+						P2.yo = 96
+						P2.xo = -96
+					if(SOUTHWEST)
+						P1.yo = -96
+						P1.xo = -96
+						P2.yo = -96
+						P2.xo = -96
+					else
+						P1.yo = 0
+						P1.xo = -96
+						P2.yo = 0
+						P2.xo = -96
 				P1.set_loc(locate(src.x,src.y, src.z))
 				P2.set_loc(locate(src.x,src.y+2, src.z))
 				P1.orig_turf = P1.loc
 				P2.orig_turf = P2.loc
-			else
+			if(SOUTH)
 				P1.yo = -96
 				P1.xo = 0
 				P2.yo = -96
@@ -969,6 +993,10 @@
 				P2.set_loc(locate(src.x, src.y, src.z))
 				P1.orig_turf = P1.loc
 				P2.orig_turf = P2.loc
+			else
+				P1.die()
+				P2.die()
+				return
 
 		SPAWN_DBG(0)
 			P1.launch()
@@ -986,7 +1014,7 @@
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-			poorSoul:Virus_ShockCure(poorSoul, 100)
+			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
 			poorSoul:changeStatus("weakened", 4 SECONDS)
 			if (isdead(poorSoul) && prob(25))

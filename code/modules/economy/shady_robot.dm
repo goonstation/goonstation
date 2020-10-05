@@ -70,6 +70,7 @@
 	/datum/commodity/drugs/morphine,
 	/datum/commodity/drugs/krokodil,
 	/datum/commodity/drugs/lsd,
+	/datum/commodity/drugs/lsd_bee,
 	/datum/commodity/drugs/shrooms,
 	/datum/commodity/drugs/cannabis,
 	/datum/commodity/drugs/cannabis_mega,

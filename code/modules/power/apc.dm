@@ -26,7 +26,6 @@ var/zapLimiter = 0
 	object_flags = CAN_REPROGRAM_ACCESS
 	netnum = -1		// set so that APCs aren't found as powernet nodes
 	text = ""
-	machine_registry_idx = MACHINES_POWER
 	var/area/area
 	var/areastring = null
 	var/autoname_on_spawn = 0 // Area.name
@@ -188,7 +187,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/disposing()
 	cell = null
-	terminal.master = null
+	terminal?.master = null
 	terminal = null
 	..()
 

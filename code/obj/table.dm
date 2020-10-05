@@ -307,7 +307,7 @@
 					src.material.triggerOnAttacked(src, user, user, src)
 				for (var/mob/N in AIviewers(usr, null))
 					if (N.client)
-						shake_camera(N, 4, 1, 0.5)
+						shake_camera(N, 4, 8, 0.5)
 			if(ismonkey(H))
 				actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
 		return
@@ -392,6 +392,8 @@
 	sendOwner()
 		var/const/throw_speed = 0.5
 		var/datum/thrown_thing/thr = ownerMob.throw_at(jump_target, throw_range, throw_speed)
+		if(isnull(thr))
+			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
 			thr.end_throw_callback = .proc/unset_tablepass_callback
@@ -472,7 +474,7 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				for (var/mob/N in AIviewers(usr, null))
 					if (N.client)
-						shake_camera(N, 4, 1, 0.5)
+						shake_camera(N, 4, 8, 0.5)
 			else
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
 		return

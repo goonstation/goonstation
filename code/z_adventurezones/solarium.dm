@@ -140,10 +140,10 @@ var/global/derelict_mode = 0
 			SPAWN_DBG(1 DECI SECOND)
 				for(var/mob/living/carbon/human/H in mobs)
 					H.flash(3 SECONDS)
-					shake_camera(H, 210, 2)
+					shake_camera(H, 210, 16)
 					SPAWN_DBG(rand(1,10))
-						H.bodytemperature = 1000
-						H.update_burning(50)
+						// H.bodytemperature = 1000
+						H.update_burning(10)
 					SPAWN_DBG(rand(50,90))
 						H.emote("scream")
 			creepify_station() // creep as heck
@@ -154,10 +154,15 @@ var/global/derelict_mode = 0
 			cinematic.play("sadbuddy")
 			sleep(1 SECOND)
 			boutput(world, "<tt>BUG: CPU0 on fire!</tt>")
+			logTheThing("diary", null, null, "The server would have restarted, if I hadn't removed the line of code that does that. Instead, we play through.", "game")
+			
+			SPAWN_DBG(5 SECONDS)
+				for (var/client/C in clients)
+					cinematic.remove_client(C)
 
-			sleep(15 SECONDS)
-			logTheThing("diary", null, null, "Rebooting due to completion of solarium quest.", "game")
-			Reboot_server()
+
+			// sleep(15 SECONDS)
+			// Reboot_server()
 
 proc/voidify_world()
 	var/turf/unsimulated/wall/the_ss13_screen = locate("the_ss13_screen")

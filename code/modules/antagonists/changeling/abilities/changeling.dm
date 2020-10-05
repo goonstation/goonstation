@@ -19,7 +19,11 @@
 	C.addAbility(/datum/targetable/changeling/scream)
 	C.addAbility(/datum/targetable/changeling/spit)
 	C.addAbility(/datum/targetable/changeling/stasis)
+#ifdef RP_MODE
+	C.addAbility(/datum/targetable/changeling/sting/capulettium)
+#else
 	C.addAbility(/datum/targetable/changeling/sting/neurotoxin)
+#endif
 	C.addAbility(/datum/targetable/changeling/sting/lsd)
 	C.addAbility(/datum/targetable/changeling/sting/dna)
 	C.addAbility(/datum/targetable/changeling/transform)

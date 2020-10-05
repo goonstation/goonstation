@@ -38,7 +38,6 @@
 	/// for escape checks
 	var/is_centcom = 0
 
-	var/gencolor
 	level = null
 	#ifdef UNDERWATER_MAP
 	name = "Ocean"
@@ -110,6 +109,7 @@
 	var/list/obj/critter/registered_critters = list()
 	var/waking_critters = 0
 
+	// this chunk zone is for Area Ambience
 	var/sound_loop = null
 	var/sound_loop_vol = 50
 	var/sound_fx_1 = null
@@ -154,6 +154,7 @@
 		else
 			return 1
 
+	/// Gets called when a movable atom enters an area.
 	Entered(var/atom/movable/A, atom/oldloc)
 		if (ismob(A))
 			var/mob/M = A
@@ -211,6 +212,7 @@
 			A.loc = oldloc
 		..()
 
+	/// Gets called when a movable atom exits an area.
 	Exited(var/atom/movable/A)
 		if (ismob(A))
 			var/mob/M = A
@@ -2924,6 +2926,11 @@ area/station/security/visitation
 	sound_environment = 12
 	do_not_irradiate = 1
 
+/area/station/turret_protected/ai_module_storage
+	name = "AI Module Storage"
+	icon_state = "ai_module_storage"
+	sound_environment = 12
+
 /area/station/turret_protected/ai_upload_foyer
 	name = "AI Upload Foyer"
 	icon_state = "ai_foyer"
@@ -2942,7 +2949,7 @@ area/station/security/visitation
 
 /area/station/turret_protected/AIsat
 	name = "AI Satellite"
-	icon_state = "ai_chamber"
+	icon_state = "ai_satellite"
 	sound_environment = 12
 	do_not_irradiate = 1
 

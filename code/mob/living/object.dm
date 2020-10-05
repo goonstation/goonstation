@@ -178,7 +178,7 @@
 			user.visible_message("<span class='alert'>[user] punches [src]!</span>")
 			src.TakeDamage(null, rand(4, 7), 0)
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		health -= burn
 		health -= brute
 		health = min(max_health, health)
