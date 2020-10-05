@@ -1,5 +1,10 @@
 
 (t)mon oct 05 20
+(u)Flappybat
+(p)2187
+(e)⚖🐛|balance, bug
+(*)Fixed chameleon gene not disabling on movement
+(*)Chameleon invisibility drops when attacked, bringing closer parity to cloaking device
 (u)BatElite
 (p)2339
 (e)🆕|feature
