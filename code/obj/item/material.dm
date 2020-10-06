@@ -836,7 +836,7 @@
 			stack_amount = round(divide)
 			if (stack_amount != divide)
 				src.insufficient = 1
-				O.amount -= (stack_amount * amount_modifier)
+				O.change_stack_amount(-stack_amount * amount_modifier)
 				O.set_loc(src.loc)
 				if (!stack_amount)
 					return
