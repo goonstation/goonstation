@@ -172,7 +172,7 @@
 		src.treatment_eye_ear = "oculine"
 		src.treatment_emag = "acetaldehyde"
 	else if ((src.skin == "toxin1") || (src.skin == "toxin2") || (src.skin == "toxin3") || (src.skin == "toxin4"))
-		src.treatment_tox = "smelling_salt"
+		src.treatment_tox = "ammoniumbicarbonate"
 		src.treatment_rad = "anti_rad"
 		src.treatment_emag = "weedkiller"
 	else if ((src.skin == "O21") || (src.skin == "O22") || (src.skin == "O23") || (src.skin == "O24"))
