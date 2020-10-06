@@ -1128,6 +1128,7 @@
 	name = "greenrubber"
 	desc = "A type of synthetic rubber. This one is Green."
 	color = "#00AD83" //Pantone Green
+
 /datum/material/fabric/synthrubber/coloured/purple
 	mat_id = "purplerubber"
 	name = "purplerubber"
