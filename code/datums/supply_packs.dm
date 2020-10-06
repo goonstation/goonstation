@@ -242,6 +242,17 @@
 	containertype = /obj/storage/crate
 	containername = "Electrical Supplies Crate - 2 pack"
 
+ABSTRACT_TYPE (/datum/supply_packs/electrical/coloured/)
+/datum/supply_packs/electrical/coloured/
+	name = "coloured cable crate"
+	desc = "Parent object for Coloured Electrical Cable crates, you shouldn't see this..."
+
+/datum/supply_packs/electrical/coloured/yellow
+	name = "Yellow-Coloured Electrical Supplies Crate - 2 pack"
+	desc = "x2 Yellow Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox/coloured/yellow = 2)
+	containername = "Yellow-Coloured Electrical Supplies Crate - 2 pack"
+
 /datum/supply_packs/engineering
 	name = "Engineering Crate"
 	desc = "x2 Mechanical Toolbox, x2 Welding Mask, x2 Insulated Gloves"
