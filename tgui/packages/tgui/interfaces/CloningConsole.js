@@ -227,6 +227,7 @@ const Functions = (props, context) => {
           buttons={
             <Fragment>
               <Button
+                disabled={diskReadOnly}
                 icon="upload"
                 color={"blue"}
                 onClick={() => act("load")}>
@@ -341,7 +342,7 @@ const StatusSection = (props, context) => {
             <Icon color={(scannerGone || !scannerOccupied) ? "bad" : "good"}
               name={(scannerGone || !scannerOccupied) ? "times" : "check"} />
             {scannerGone ? " No scanner detected."
-              : !scannerOccupied ? " Scanner has no occupant" : " Occupant scanned."}
+              : !scannerOccupied ? " Scanner has no occupant." : " Occupant scanned."}
           </Box>
         )}
         {(!scannerGone && !occupantScanned && scannerOccupied) && (
@@ -457,13 +458,13 @@ const Records = (props, context) => {
                     ))}
                     {(!!disk && (
                       <Button
-                        icon={(!diskReadOnly && record.saved) ? "" : "save"}
+                        icon={(!diskReadOnly || record.saved) ? "" : "save"}
                         color={"blue"}
                         alignText="center"
                         width="22px"
                         disabled={record.saved || diskReadOnly}
                         onClick={() => act("saveToDisk", { ckey: record.ckey })}>
-                        {(!!record.saved && (
+                        {((!diskReadOnly && record.saved) && (
                           <Icon color="black" name="check" />
                         ))}
                         {(!!diskReadOnly && (
