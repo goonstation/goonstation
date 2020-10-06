@@ -792,7 +792,8 @@ obj/trait/pilot
 	isPositive = 0
 
 	var/allergen = ""
-	var/allergen_name = ""
+	var/allergen_name = ""  //No idea what this var is doing, mind if someone explains?
+	var/allergic_players
 
 	var/list/allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
@@ -803,6 +804,7 @@ obj/trait/pilot
 
 	onAdd(var/mob/owner)
 		allergen = pick(allergen_id_list)
+		allergic_players[owner] = allergen
 		if (reagents_cache.len <= 0)
 			build_reagent_cache()
 		var/datum/reagent/R = reagents_cache[allergen]
@@ -812,6 +814,7 @@ obj/trait/pilot
 			throw EXCEPTION("Could not find reagent for id:[allergen]")
 
 	onLife(var/mob/owner)
+		allergen = allergic_players[owner]
 		if (owner?.reagents?.has_reagent(allergen))
 			owner.reagents.add_reagent("histamine", 1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1)) //1.4 units of histamine per life cycle? is that too much? Halved with antihistamine
 
