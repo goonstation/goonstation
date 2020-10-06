@@ -1,4 +1,9 @@
 
+(t)tue oct 06 20
+(u)makkipakki
+(p)2365
+(e)🎨|sprites
+(+)Added directional sprites to the constable helmet.
 (t)mon oct 05 20
 (u)Cenith & Phuzzy
 (p)2357
