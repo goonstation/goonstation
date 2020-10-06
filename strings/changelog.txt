@@ -1,5 +1,15 @@
 
 (t)mon oct 05 20
+(u)Cenith & Phuzzy
+(p)2357
+(e)🆕🗺|feature, mapping
+(*)New radio station tape - Cloning PSA
+(u)adharainspace
+(p)2348
+(e)🆕|feature
+(+)The bodies of ghosts who have respawned as ghost critters/afterlife bar patrons/ghost vr people are now scannable/cloneable.
+(u)pali
+(+)Light switches now glow in the dark when powered
 (u)RSG250
 (p)2288
 (e)⚖|balance
