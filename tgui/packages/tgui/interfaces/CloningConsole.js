@@ -458,21 +458,21 @@ const Records = (props, context) => {
                     ))}
                     {(!!disk && (
                       <Button
-                        icon={(!diskReadOnly || record.saved) ? "" : "save"}
+                        icon={(!!diskReadOnly || !!record.saved) ? "" : "save"}
                         color={"blue"}
                         alignText="center"
                         width="22px"
                         disabled={record.saved || diskReadOnly}
                         onClick={() => act("saveToDisk", { ckey: record.ckey })}>
-                        {((!diskReadOnly && record.saved) && (
+                        {(!diskReadOnly && !!record.saved) && (
                           <Icon color="black" name="check" />
-                        ))}
-                        {(!!diskReadOnly && (
+                        )}
+                        {!!diskReadOnly && (
                           <Icon.Stack>
                             <Icon color="black" name="pen" />
                             <Icon color="black" name="slash" />
                           </Icon.Stack>
-                        ))}
+                        )}
                       </Button>
                     ))}
                     <Button
