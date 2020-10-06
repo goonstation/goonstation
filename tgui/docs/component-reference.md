@@ -28,6 +28,7 @@ Make sure to add new items to this list if you document new components.
   - [`Grid`](#grid)
   - [`Grid.Column`](#gridcolumn)
   - [`HealthStat`](#HealthStat)
+  - [`Icon`](#icon)
   - [`Icon.Stack`](#iconstack)
   - [`Input`](#input)
   - [`Knob`](#knob)
@@ -526,22 +527,6 @@ Example:
   content="content" />
 ```
 
-### `Icon.Stack`
-
-Renders children icons on top of each other in order to make your own icon.
-
-```jsx
-<Icon.Stack>
-  <Icon name="pen" />
-  <Icon name="slash" />
-</Icon.Stack>
-```
-
-**Props:**
-
-- See inherited props: [Box](#box)
-- `children: Icon` - Icons to stack.
-
 ### `Icon`
 
 Renders one of the FontAwesome icons of your choice.
@@ -564,6 +549,22 @@ Fractional numbers are supported.
 - `rotation: number` - Icon rotation, in degrees.
 - `spin: boolean` - Whether an icon should be spinning. Good for load
 indicators.
+
+### `Icon.Stack`
+
+Renders children icons on top of each other in order to make your own icon.
+
+```jsx
+<Icon.Stack>
+  <Icon name="pen" />
+  <Icon name="slash" />
+</Icon.Stack>
+```
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `children: Icon` - Icons to stack.
 
 ### `Input`
 
