@@ -13,7 +13,7 @@
       display: flex;
       overflow: none;
       width: 100vw;
-      height: 290px;
+      height: 270px;
       /* Text Styling */
       flex-direction: column;
     }
@@ -40,20 +40,11 @@
     &__item {
       /* Display & Box Model */
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px;
-      /* Text Styling */
-      text-transform: uppercase;
-    }
-    &__item {
-      /* Display & Box Model */
-      display: flex;
       flex: 1 1 auto;
       flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
       padding: 0 5px;
-      /* Text Styling */
-      overflow-x: auto;
     }
   }
   &__body {
@@ -64,17 +55,18 @@
       flex: 0 0 auto;
       align-items: center;
       justify-content: space-around;
+      /* Text Styling */
+      border-bottom: 2px solid rgba(51, 51, 51, 0.4);
     }
     &__item {
       /* Display & Box Model */
       display: flex;
       overflow: hidden;
-      height: 20px;
-      align-items: center;
+      height: 30px;
+      align-items: baseline;
       justify-content: center;
       /* Text Styling */
       text-overflow: ellipsis;
-      white-space: nowrap;
     }
   }
 }
