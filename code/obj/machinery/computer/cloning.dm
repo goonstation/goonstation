@@ -220,9 +220,9 @@
 		else
 			show_message("Error: Mental interface failure.", "warning")
 			return
-	//if (!isnull(find_record(ckey(subjMind.key))))
-	//	show_message("Subject already in database.", "info")
-	//	return
+	if (!isnull(find_record(ckey(subjMind.key))))
+		show_message("Subject already in database.", "info")
+		return
 
 	var/datum/data/record/R = new /datum/data/record(  )
 	R.fields["ckey"] = ckey(subjMind.key)
@@ -685,7 +685,7 @@
 				. = TRUE
 		if("scan")
 			if(usr == src.scanner.occupant)
-				//trigger_anti_cheat(usr, "tried to scan themselves using the cloning machine scanner")
+				trigger_anti_cheat(usr, "tried to scan themselves using the cloning machine scanner")
 				// this doesn't need to return we still want to scan them
 			if(!isnull(src.scanner))
 				src.scan_mob(src.scanner.occupant)

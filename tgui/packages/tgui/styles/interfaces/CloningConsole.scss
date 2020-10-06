@@ -13,7 +13,7 @@
       display: flex;
       overflow: none;
       width: 100vw;
-      height: 234px;
+      height: 290px;
       /* Text Styling */
       flex-direction: column;
     }
@@ -40,10 +40,17 @@
     &__item {
       /* Display & Box Model */
       display: flex;
-      flex: 1 1 auto;
-      flex-direction: column;
       align-items: center;
       justify-content: space-between;
+      padding: 10px;
+      /* Text Styling */
+      text-transform: uppercase;
+    }
+    &__item {
+      /* Display & Box Model */
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
       padding: 0 5px;
       /* Text Styling */
       overflow-x: auto;
@@ -53,7 +60,7 @@
     &__row {
       /* Positioning & Sizing */
       display: flex;
-      height: 25px;
+      height: 30px;
       flex: 0 0 auto;
       align-items: center;
       justify-content: space-around;
@@ -65,10 +72,8 @@
       height: 20px;
       align-items: center;
       justify-content: center;
-
       /* Text Styling */
       text-overflow: ellipsis;
-      text-shadow: 0 0 4px #000;
       white-space: nowrap;
     }
   }
