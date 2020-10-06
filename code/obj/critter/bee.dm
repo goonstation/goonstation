@@ -1,3 +1,39 @@
+/obj/critter/domestic_bee/proc/do_hug(mob/user as mob)
+	user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
+	if (user.reagents)
+		user.reagents.add_reagent("hugs", 10)
+	return
+
+/obj/critter/domestic_bee/lsbee/do_hug(mob/user as mob)
+	user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
+	if (user.reagents)
+		user.reagents.add_reagent("hugs", 3)
+		user.reagents.add_reagent("lsd_bee", 6)
+	return
+
+/obj/critter/domestic_bee/rgbee/do_hug(mob/user as mob)
+	user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back! You feel colorful inside!</span>")
+	if (user.reagents)
+		user.reagents.add_reagent("hugs", 3)
+		user.reagents.add_reagent("colors", 6)
+	return
+
+/obj/critter/domestic_bee/proc/do_reagentStuff(mob/M)
+	if (M.reagents.get_reagent_amount("histamine") < 10)
+		M.reagents.add_reagent("histamine", 5)
+	M.reagents.add_reagent("toxin", 4)
+
+/obj/critter/domestic_bee/lsbee/do_reagentStuff(mob/M)
+	if (M.reagents.get_reagent_amount("methamphetamine") < 5)
+		M.reagents.add_reagent("methamphetamine", 1)
+	if (M.reagents.get_reagent_amount("lsd_bee") < 20)
+		M.reagents.add_reagent("lsd_bee", 5)
+
+/obj/critter/domestic_bee/rgbee/do_reagentStuff(mob/M)
+	if (M.reagents.get_reagent_amount("methamphetamine") < 5)
+		M.reagents.add_reagent("methamphetamine", 1)
+	if (M.reagents.get_reagent_amount("colors") < 20)
+		M.reagents.add_reagent("colors", 5)
 
 /obj/critter/domestic_bee
 	name = "greater domestic space-bee"
@@ -365,11 +401,8 @@
 							for(var/mob/O in hearers(src, null))
 								O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 						if (prob(10))
-							user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
-							if (user.reagents)
-								user.reagents.add_reagent("hugs", 10)
+							src.do_hug(user)
 							user.add_karma(2)
-
 					return
 			else
 				..()
@@ -829,153 +862,11 @@
 		sleeping_icon_state = "rgbee-sleep"
 		icon_antenna = "antenna-empty"
 
-		attack_hand(mob/user as mob)
-			if (src.alive)
-				if (src.sleeping)
-					sleeping = 0
-					on_wake()
-
-				if (user.a_intent == INTENT_HARM)
-					src.lastattacker = user
-					return ..()
-
-				else if (user.a_intent == INTENT_GRAB)
-					if (src.task == "attacking" && src.target)
-						if (istype(src.target, /obj/machinery/plantpot))
-							src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is too focused on \the [src.target] to be wrangled!</span>")
-						else
-							src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
-						return
-
-					user.pulling = src
-					src.wanderer = 0
-					if (src.task == "wandering")
-						src.task = "thinking"
-					src.wrangler = user
-					src.visible_message("<span class='alert'><b>[user]</b> wrangles [src].</span>")
-
-				else
-					src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
-					if(prob(15))
-						for(var/mob/O in hearers(src, null))
-							O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
-					if (prob(10))
-						user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
-						if (user.reagents)
-							user.reagents.add_reagent("hugs", 3)
-							user.reagents.add_reagent("colors", 6)
-
-					return
-			else
-				..()
-
-			return
-
-		ChaseAttack(mob/M)
-			if (istype(M, /obj/machinery/plantpot))
-				return CritterAttack(M)
-			if (!istype(M))
-				return
-			if (prob(20))
-				return CritterAttack(M)
-			if (M.stat || M.getStatusDuration("paralysis"))
-				src.task = "thinking"
-				return
-			src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>")
-			logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
-			if (isliving(M))
-				var/mob/living/H = M
-				H.was_harmed(src)
-
-			if(M.reagents)
-				if (M.reagents.get_reagent_amount("methamphetamine") < 5)
-					M.reagents.add_reagent("methamphetamine", 1)
-				if (M.reagents.get_reagent_amount("colors") < 20)
-					M.reagents.add_reagent("colors", 5)
-
-			if (isliving(M))
-				var/mob/living/L = M
-				var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
-				if (istype(plague,/datum/ailment_data/disease/))
-					//That bee venom plague treatment does not work at all in this manner. However, future.
-					L.cure_disease(plague)
-
 	lsbee
 		name = "psychedelic space bee"
 		desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types. This one seems... erratic."
 		icon_body = "lsbee"
 		icon_state = "lsbee-wings"
-
-		attack_hand(mob/user as mob)
-			if (src.alive)
-				if (src.sleeping)
-					sleeping = 0
-					on_wake()
-
-				if (user.a_intent == INTENT_HARM)
-					src.lastattacker = user
-					return ..()
-
-				else if (user.a_intent == INTENT_GRAB)
-					if (src.task == "attacking" && src.target)
-						if (istype(src.target, /obj/machinery/plantpot))
-							src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is too focused on \the [src.target] to be wrangled!</span>")
-						else
-							src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
-						return
-
-					user.pulling = src
-					src.wanderer = 0
-					if (src.task == "wandering")
-						src.task = "thinking"
-					src.wrangler = user
-					src.visible_message("<span class='alert'><b>[user]</b> wrangles [src].</span>")
-
-				else
-					src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
-					if(prob(15))
-						for(var/mob/O in hearers(src, null))
-							O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
-					if (prob(10))
-						user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
-						if (user.reagents)
-							user.reagents.add_reagent("hugs", 3)
-							user.reagents.add_reagent("lsd_bee", 6)
-
-					return
-			else
-				..()
-
-			return
-
-		ChaseAttack(mob/M)
-			if (istype(M, /obj/machinery/plantpot))
-				return CritterAttack(M)
-			if (!istype(M))
-				return
-			if (prob(20))
-				return CritterAttack(M)
-			if (M.stat || M.getStatusDuration("paralysis"))
-				src.task = "thinking"
-				return
-			src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>")
-			logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
-			if (isliving(M))
-				var/mob/living/H = M
-				H.was_harmed(src)
-
-			if(M.reagents)
-				if (M.reagents.get_reagent_amount("methamphetamine") < 5)
-					M.reagents.add_reagent("methamphetamine", 1)
-				if (M.reagents.get_reagent_amount("lsd_bee") < 20)
-					M.reagents.add_reagent("lsd_bee", 5)
-
-			if (isliving(M))
-				var/mob/living/L = M
-				var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
-				if (istype(plague,/datum/ailment_data/disease/))
-					//That bee venom plague treatment does not work at all in this manner. However, future.
-					L.cure_disease(plague)
 
 /* -------------------- END -------------------- */
 
@@ -1100,10 +991,7 @@
 					for(var/mob/O in hearers(src, null))
 						O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 				if (prob(10))
-					user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
-					if (user.reagents)
-						user.reagents.add_reagent("hugs", 10)
-
+					src.do_hug(user)
 				return
 		else
 			..()
@@ -1203,9 +1091,7 @@
 			H.was_harmed(src)
 
 		if(M.reagents)
-			if (M.reagents.get_reagent_amount("histamine") < 10)
-				M.reagents.add_reagent("histamine", 5)
-			M.reagents.add_reagent("toxin", 4)
+			src.do_reagentStuff(M)
 
 		if (isliving(M))
 			var/mob/living/L = M
