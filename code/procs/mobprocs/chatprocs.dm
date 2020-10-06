@@ -926,7 +926,7 @@
 
 		if((isflock(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
 			thisR = rendered
-		if(flock.snooping && M.client && M.robot_talk_understand)
+		if(flock?.snooping && M.client && M.robot_talk_understand)
 			thisR = siliconrendered
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(speaker, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered

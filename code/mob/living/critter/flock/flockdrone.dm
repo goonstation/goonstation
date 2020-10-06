@@ -291,6 +291,9 @@
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
 				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1)
 				return "<b>[src]</b> [fart_message]"
+		if ("laugh") //no good sound for it - moon
+			if (src.emote_check(voluntary, 50))
+				return "<b>[src]</b> caws heartily!"
 	return null
 
 /mob/living/critter/flock/drone/specific_emote_type(var/act)
