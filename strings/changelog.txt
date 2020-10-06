@@ -1,5 +1,9 @@
 
 (t)tue oct 06 20
+(u)Flaborized
+(p)2354
+(e)🎨|sprites
+(+)New wraith, vampire ghoul and ling husk sprites
 (u)makkipakki
 (p)2365
 (e)🎨|sprites
