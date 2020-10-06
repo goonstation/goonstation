@@ -1,7 +1,7 @@
 
 /proc/build_supply_pack_cache()
 	qm_supply_cache.Cut()
-	for(var/S in childrentypesof(/datum/supply_packs))
+	for(var/S in concrete_typesof(/datum/supply_packs))
 		qm_supply_cache += new S()
 
 /datum/supply_order
