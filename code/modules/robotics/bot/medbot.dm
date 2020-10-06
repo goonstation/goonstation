@@ -79,7 +79,6 @@
 	name = "Medibot - 'Head Surgeon'"
 	desc = "The HS sure looks different today! Maybe he got a haircut?"
 	skin = "hs"
-	treatment_oxy = "perfluorodecalin"
 	access_lookup = "Head Surgeon"
 	text2speech = 1
 
@@ -158,7 +157,48 @@
 			src.update_icon()
 			var/datum/reagent/dummy = /datum/reagent/harmful/histamine // hack to make sure histamine overdose amount is set correctly
 			src.histamine_overdose_amount = initial(dummy.overdose)
+			if (src.skin)
+				src.initialize_custom_skin()
 	return
+
+/obj/machinery/bot/medbot/proc/initialize_custom_skin()
+	if ((src.skin == "brute1") || (src.skin == "brute2") || (src.skin == "brute3") || (src.skin == "brute3"))
+		src.treatment_brute = "salicylic_acid"
+		src.treatment_hypertension = "heparin"
+		src.treatment_hypotension = "filgrastim"
+		src.treatment_emag = "ants"
+	else if ((src.skin == "burn1") || (src.skin == "burn2") || (src.skin == "burn3") || (src.skin == "burn4"))
+		src.treatment_fire = "menthol"
+		src.treatment_eye_ear = "oculine"
+		src.treatment_emag = "acetaldehyde"
+	else if ((src.skin == "toxin1") || (src.skin == "toxin2") || (src.skin == "toxin3") || (src.skin == "toxin4"))
+		src.treatment_tox = "smelling_salt"
+		src.treatment_rad = "anti_rad"
+		src.treatment_emag = "weedkiller"
+	else if ((src.skin == "O21") || (src.skin == "O22") || (src.skin == "O23") || (src.skin == "O24"))
+		src.treatment_oxy = "perfluorodecalin"
+		src.treatment_anaphylaxis = "antihistamine"
+		src.treatment_emag = "cyanide"
+	else if ((src.skin == "brain1") || (src.skin == "brain2") || (src.skin == "brain3"))
+		src.treatment_virus = "robustussin"
+		src.treatment_brain = "synaptizine"
+		src.treatment_emag = "neurotoxin"
+	else if ((src.skin == "berserk1") || (src.skin == "berserk2") || (src.skin == "berserk3"))
+		src.treatment_crit = "epinephrine"
+		src.treatment_emag = "formaldehyde"
+	else if (src.skin == "psych")
+		src.treatment_brute = "LSD"
+		src.treatment_oxy = "psilocybin"
+		src.treatment_fire = "LSD"
+		src.treatment_tox = "psilocybin"
+		src.treatment_virus = "loose screws"
+	else if (src.skin == "hs")
+		src.treatment_brute = "salicylic_acid"
+		src.treatment_fire = "menthol"
+		src.treatment_tox = "smelling_salt"
+		src.treatment_oxy = "perfluorodecalin"
+		src.treatment_virus = "robustussin"
+		src.treatment_emag = "sarin"
 
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
 	return toggle_power()
