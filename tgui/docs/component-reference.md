@@ -28,7 +28,7 @@ Make sure to add new items to this list if you document new components.
   - [`Grid`](#grid)
   - [`Grid.Column`](#gridcolumn)
   - [`HealthStat`](#HealthStat)
-  - [`Icon`](#icon)
+  - [`Icon.Stack`](#iconstack)
   - [`Input`](#input)
   - [`Knob`](#knob)
   - [`LabeledControls`](#labeledcontrols)
@@ -516,16 +516,31 @@ A box that applies a color to its contents depending on the damage type.
 - See inherited props: [Box](#box)
 - `info: boolean` - Info box
 - `type: string` - Damage type oxy, toxin, burn, brute
-- `children: any` - Content to render inside the box.
+- `content: string` - Content to render inside the box.
 
 Example:
 
 ```jsx
 <HealthStat
-  type="DamageType">
-  children
-</HealthStat>
+  type="DamageType"
+  content="content" />
 ```
+
+### `Icon.Stack`
+
+Renders children icons on top of each other in order to make your own icon.
+
+```jsx
+<Icon.Stack>
+  <Icon name="pen" />
+  <Icon name="slash" />
+</Icon.Stack>
+```
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `children: Icon` - Icons to stack.
 
 ### `Icon`
 
