@@ -232,26 +232,75 @@
 	cost = 450
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Condiment Crate"
-
+//cabling crates
+ABSTRACT_TYPE (/datum/supply_packs/electrical)
 /datum/supply_packs/electrical
-	name = "Electrical Supplies Crate - 2 pack"
-	desc = "x2 Cabling Box (14 cable coils total)"
-	category = "Basic Materials"
-	contains = list(/obj/item/storage/box/cablesbox = 2)
-	cost = 2000
-	containertype = /obj/storage/crate
-	containername = "Electrical Supplies Crate - 2 pack"
-
-ABSTRACT_TYPE (/datum/supply_packs/electrical/coloured/)
-/datum/supply_packs/electrical/coloured/
 	name = "coloured cable crate"
 	desc = "Parent object for Coloured Electrical Cable crates, you shouldn't see this..."
+	contains = list(/obj/item/storage/box/cablesbox = 2)
+	category = "Basic Materials"
+	cost = 2000
+	containertype = /obj/storage/crate
 
-/datum/supply_packs/electrical/coloured/yellow
+/datum/supply_packs/electrical/red
+	name = "Red-Coloured Electrical Supplies Crate - 2 pack"
+	desc = "x2 Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox = 2)
+	containername = "Electrical Supplies Crate - 2 pack"
+
+/datum/supply_packs/electrical/yellow
 	name = "Yellow-Coloured Electrical Supplies Crate - 2 pack"
 	desc = "x2 Yellow Cabling Box (14 cable coils total)"
 	contains = list(/obj/item/storage/box/cablesbox/coloured/yellow = 2)
 	containername = "Yellow-Coloured Electrical Supplies Crate - 2 pack"
+
+/datum/supply_packs/electrical/orange
+	name = "Orange-Coloured Electrical Supplies Crate - 2 pack"
+	desc = "x2 Orange Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox/coloured/orange = 2)
+	containername = "Orange-Coloured Electrical Supplies Crate - 2 pack"
+
+/datum/supply_packs/electrical/blue
+	name = "Blue-Coloured Electrical Supplies Crate - 2 pack"
+	desc = "x2 Blue Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox/coloured/blue = 2)
+	containername = "Blue-Coloured Electrical Supplies Crate - 2 pack"
+
+/datum/supply_packs/electrical/green
+	name = "Green-Coloured Electrical Supplies Crate - 2 pack"
+	desc = "x2 Green Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox/coloured/green = 2)
+	containername = "Green-Coloured Electrical Supplies Crate - 2 pack"
+
+/datum/supply_packs/electrical/purple
+	name = "Purple-Coloured Electrical Supplies Crate - 2 pack"
+	desc = "x2 Purple Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox/coloured/purple = 2)
+	containername = "Purple-Coloured Electrical Supplies Crate - 2 pack"
+
+/datum/supply_packs/electrical/black
+	name = "Black-Coloured Electrical Supplies Crate - 2 pack"
+	desc = "x2 Black Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox/coloured/black = 2)
+	containername = "Black-Coloured Electrical Supplies Crate - 2 pack"
+
+/datum/supply_packs/electrical/hotpink
+	name = "Hot Pink-Coloured Electrical Supplies Crate - 2 pack"
+	desc = "x2 Hot Pink Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox/coloured/hotpink = 2)
+	containername = "Hot Pink-Coloured Electrical Supplies Crate - 2 pack"
+
+/datum/supply_packs/electrical/brown
+	name = "Brown-Coloured Electrical Supplies Crate - 2 pack"
+	desc = "x2 Brown Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox/coloured/brown = 2)
+	containername = "Brown-Coloured Electrical Supplies Crate - 2 pack"
+
+/datum/supply_packs/electrical/white
+	name = "White-Coloured Electrical Supplies Crate - 2 pack"
+	desc = "x2 White Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox/coloured/white = 2)
+	containername = "White-Coloured Electrical Supplies Crate - 2 pack"
 
 /datum/supply_packs/engineering
 	name = "Engineering Crate"
