@@ -1,4 +1,6 @@
-
+(t)wed oct 07 20
+(u)Sovexe
+(+)Oceanify no longer overwrites trench hole turfs.
 (t)tue oct 06 20
 (u)Sovexe
 (*)Added audible ahelps and dectalk ahelps in admin preferences. Only applies to the initial F1 messages not replies.
