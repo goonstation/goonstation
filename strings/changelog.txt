@@ -1,4 +1,7 @@
 
+(t)wed oct 07 20
+(u)Spooktober
+(*)A mysterious altar has a chance at spawning in the chapel. Please investigate, but do so at your own risk.
 (t)tue oct 06 20
 (u)Flaborized
 (p)2354
