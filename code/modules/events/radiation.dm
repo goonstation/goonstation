@@ -19,7 +19,7 @@
 		for (var/pulses = pulse_amt, pulses > 0, pulses--)
 			pulseloc = pick(wormholeturfs)
 			pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
-			pick(prob(50); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(50); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
+			pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(10); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
 			sleep(pulse_delay)
 
 
@@ -80,7 +80,7 @@
 	alpha = 100
 	var/sound/pulse_sound = 'sound/weapons/ACgun1.ogg'
 	var/rad_strength = 10
-	var/pulse_range = 2
+	var/pulse_range = 3
 	var/mutate_prob = 10
 	var/bad_mut_prob = 90
 
