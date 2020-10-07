@@ -640,7 +640,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		tickSpacing = 1.5 SECONDS
 
 		damage_tox = 2
-		damage_brute = 1
+		damage_brute = 2
 		damage_type = DAMAGE_STAB | DAMAGE_BURN
 
 		var/howMuch = ""
@@ -673,6 +673,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 		onUpdate(var/timePassed)
 			counter += timePassed
+
 			if(counter >= stageTime)
 				counter -= stageTime
 				stage = max(stage-1, 1)
@@ -682,15 +683,13 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				var/mob/living/carbon/human/H = owner
 				prot = (1 - (H.get_rad_protection() / 100))
 
+			damage_tox = (stage * prot)
+			damage_brute = ((stage/2) * prot)
+
 			switch(stage)
 				if(1)
-					damage_tox = (1 * prot)
-					damage_brute = (1 * prot)
 					howMuch = ""
-
 				if(2)
-					damage_tox = (2 * prot)
-					damage_brute = (1 * prot)
 					howMuch = "significantly "
 					var/chance = (2 * prot)
 					if(prob(chance) && ismob(owner))
@@ -699,51 +698,36 @@ var/global/list/statusGroupLimits = list("Food"=4)
 							M.changeStatus("weakened", 5 SECONDS)
 							boutput(M, "<span class='alert'>You feel weak.</span>")
 							M.emote("collapse")
-
 				if(3)
-					damage_tox = (3 * prot)
-					damage_brute = (1.5 * prot)
 					howMuch = "very much "
 					if (ismob(owner))
 						var/mob/M = owner
 						var/mutChance = (3 * prot)
-
 						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
 							mutChance = 0
 						if (mutChance < 1) mutChance = 0
-
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
-
 				if(4)
-					damage_tox = (4 * prot)
-					damage_brute = (2 * prot)
 					howMuch = "extremely "
 					if (ismob(owner))
 						var/mob/M = owner
 						var/mutChance = (4 * prot)
-
 						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
 							mutChance = (3 * prot)
 						if (mutChance < 1) mutChance = 0
-
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
-
 				if(5)
-					damage_tox = (5 * prot)
-					damage_brute = (2.5 * prot)
 					howMuch = "horribly "
 					if (ismob(owner))
 						var/mob/M = owner
 						var/mutChance = (5 * prot)
-
 						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
 							mutChance = (4 * prot)
 						if (mutChance < 1) mutChance = 0
-
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")

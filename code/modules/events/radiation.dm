@@ -1,13 +1,13 @@
 /datum/random_event/major/radiation
 	name = "Radiation Storm"
 	centcom_headline = "Radioactive Anomaly"
-	centcom_message = {"Radioactive anomalies have been detected on the station. Evacuate any areas containing abnormal green energy fields. Medical personnel are advised to prepare potassium iodide and anti-toxin treatments, and remain on standby to treat cases of irradiation."}
+	centcom_message = {"Radioactive anomalies have been detected on the station. Evacuate any areas containing abnormal green or blue energy fields. Medical personnel are advised to prepare potassium iodide and anti-toxin treatments, and remain on standby to treat cases of irradiation."}
 	var/min_pulses_per_event = 30
 	var/max_pulses_per_event = 100
 	var/min_delay_between_pulses = 2
 	var/max_delay_between_pulses = 8
 	var/min_pulse_lifespan = 10
-	var/max_pulse_lifespan = 60
+	var/max_pulse_lifespan = 100
 
 	event_effect()
 		..()
@@ -19,7 +19,7 @@
 		for (var/pulses = pulse_amt, pulses > 0, pulses--)
 			pulseloc = pick(wormholeturfs)
 			pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
-			pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(10); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
+			pick(prob(100); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(50); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
 			sleep(pulse_delay)
 
 
