@@ -35,25 +35,6 @@
 	src.checknearby() //check for nearby groups
 	if(!group)//if no group found
 		initializegroup() //make a new one
-//debuggin
-	processing_items |= src
-
-
-
-/turf/simulated/floor/feather/proc/process()
-	if(!group)
-		maptext = ""
-	else
-		var/msg = "[group.id]<br>"
-		msg += "[group.size]<br>"
-		msg += "[group.power]<br>"
-
-		maptext = "<span class='ps2p l vt ol' style=\"font-size: 6px;\">[msg] </span>"
-
-/turf/simulated/floor/feather/disposing()
-	..()//linter angri
-	processing_items -= src
-//debuggin end
 
 /turf/simulated/floor/feather/special_desc(dist, mob/user)
   if(isflock(user))
