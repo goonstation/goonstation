@@ -640,7 +640,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		tickSpacing = 1.5 SECONDS
 
 		damage_tox = 2
-		damage_brute = 2
+		damage_brute = 1
 		damage_type = DAMAGE_STAB | DAMAGE_BURN
 
 		var/howMuch = ""
@@ -652,7 +652,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			return "You are [howMuch]irradiated by neutrons.<br>Taking [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec and [damage_brute] brute damage every [tickSpacing/(1 SECOND)] sec."
 
 		preCheck(var/atom/A)
-			if(isobserver(A) || isintangible(A)) return 0
+			if(issilicon(A) || isobserver(A) || isintangible(A)) return 0
 			return 1
 
 		onAdd(var/optional=null)
@@ -679,7 +679,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 			var/prot = 1
 			if(istype(owner, /mob/living/carbon/human))
-				prot = (1 - (0 / 100))
+				var/mob/living/carbon/human/H = owner
+				prot = (1 - (H.get_rad_protection() / 100))
 
 			switch(stage)
 				if(1)
@@ -689,23 +690,63 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 				if(2)
 					damage_tox = (2 * prot)
-					damage_brute = (2 * prot)
+					damage_brute = (1 * prot)
 					howMuch = "significantly "
+					var/chance = (2 * prot)
+					if(prob(chance) && ismob(owner))
+						var/mob/M = owner
+						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+							M.changeStatus("weakened", 3 SECONDS)
+							boutput(M, "<span class='alert'>You feel weak.</span>")
+							M.emote("collapse")
 
 				if(3)
 					damage_tox = (3 * prot)
-					damage_brute = (3 * prot)
+					damage_brute = (1.5 * prot)
 					howMuch = "very much "
+					if (ismob(owner))
+						var/mob/M = owner
+						var/mutChance = (3 * prot)
+
+						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
+							mutChance = 0
+						if (mutChance < 1) mutChance = 0
+
+						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+							boutput(M, "<span class='alert'>You mutate!</span>")
+							M:bioHolder:RandomEffect("either")
 
 				if(4)
 					damage_tox = (4 * prot)
-					damage_brute = (4 * prot)
+					damage_brute = (2 * prot)
 					howMuch = "extremely "
+					if (ismob(owner))
+						var/mob/M = owner
+						var/mutChance = (4 * prot)
+
+						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
+							mutChance = (3 * prot)
+						if (mutChance < 1) mutChance = 0
+
+						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+							boutput(M, "<span class='alert'>You mutate!</span>")
+							M:bioHolder:RandomEffect("either")
 
 				if(5)
 					damage_tox = (5 * prot)
-					damage_brute = (5 * prot)
+					damage_brute = (2.5 * prot)
 					howMuch = "horribly "
+					if (ismob(owner))
+						var/mob/M = owner
+						var/mutChance = (5 * prot)
+
+						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
+							mutChance = (4 * prot)
+						if (mutChance < 1) mutChance = 0
+
+						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+							boutput(M, "<span class='alert'>You mutate!</span>")
+							M:bioHolder:RandomEffect("either")
 
 			icon_state = "radiation[stage]"
 
