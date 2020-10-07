@@ -1,5 +1,9 @@
 
 (t)wed oct 07 20
+(u)RSG250
+(p)2369
+(e)🐛|bug
+(+)Radiation burst event fixed to properly apply radiation to mobs caught inside the circles.
 (u)Spooktober
 (*)A mysterious altar has a chance at spawning in the chapel. Please investigate, but do so at your own risk. Sprites by Makki.
 (t)tue oct 06 20
