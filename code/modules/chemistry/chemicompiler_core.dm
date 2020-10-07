@@ -603,6 +603,8 @@
 					return "Error: code protected - cannot retrieve."
 				if(CC_ERROR_INSTRUCTION_LIMIT)
 					return "Error: instruction limit reached."
+				if(CC_ERROR_INDEX_INVALID)
+					return "Error: invalid isolation index for source reservoir."
 				if(CC_NOTIFICATION_COMPLETE)
 					return "Notification: program complete."
 				if(CC_NOTIFICATION_SAVED)
@@ -657,6 +659,8 @@
 		if(CC_ERROR_INVALID_CONTAINER_TX)
 			beepCode(3, 1)
 		if(CC_ERROR_INVALID_TEMPERATURE)
+			beepCode(4, 1)
+		if(CC_ERROR_INDEX_INVALID)
 			beepCode(4, 1)
 		if(CC_ERROR_CODE_PROTECTED)
 			beepCode(5, 1)
