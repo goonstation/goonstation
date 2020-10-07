@@ -1385,6 +1385,19 @@
 	icon_body = "lsbee"
 	icon_state = "lsbee-wings"
 
+/obj/critter/domestic_bee/lsbee/do_hug(mob/user as mob)
+	user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
+	if (user.reagents)
+		user.reagents.add_reagent("hugs", 3)
+		user.reagents.add_reagent("lsd_bee", 6)
+	return
+
+/obj/critter/domestic_bee/lsbee/do_reagentStuff(mob/M)
+	if (M.reagents.get_reagent_amount("methamphetamine") < 5)
+		M.reagents.add_reagent("methamphetamine", 1)
+	if (M.reagents.get_reagent_amount("lsd_bee") < 20)
+		M.reagents.add_reagent("lsd_bee", 5)
+
 /* ---------------- END BEE TYPES ---------------- */
 
 /* -------------------- LARVA -------------------- */
