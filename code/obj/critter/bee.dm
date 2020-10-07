@@ -241,7 +241,7 @@
 		is_pet = 2
 		var/tier = 0
 		var/original_tier = 0
-		var/original_hat_ref = ""
+		var/obj/item/clothing/head/original_hat
 		var/static/hat_tier_list = list(
 			///obj/item/clothing/head/butt,
 			/obj/item/clothing/head/paper_hat,
@@ -304,7 +304,7 @@
 					trans.Scale((ubertier - 4) / 3) // mmm, large hat
 					hat.transform = trans
 			hat.name = "[src]'s [hat.name]"
-			src.original_hat_ref = ref(hat)
+			src.original_hat = hat
 			src.hat_that_bee(hat)
 			src.update_icon()
 
@@ -320,7 +320,7 @@
 			. = ..()
 
 		attackby(obj/item/W, mob/living/user)
-			if(!src.hat && ref(W) == src.original_hat_ref) // ...unless you return the hat!
+			if(!src.hat && W == src.original_hat) // ...unless you return the hat!
 				if(src.alive)
 					boutput(user, "<span class='emote'>[src] bubmles happily at the sight of [W]!</span>")
 				src.tier = src.original_tier
@@ -820,15 +820,91 @@
 				return
 			else
 				..()
+
+	lsbee
+		name = "psychedelic space bee"
+		desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types. This one seems... erratic."
+		icon_body = "lsbee"
+		icon_state = "lsbee-wings"
+
+		attack_hand(mob/user as mob)
+			if (src.alive)
+				if (src.sleeping)
+					sleeping = 0
+					on_wake()
+
+				if (user.a_intent == INTENT_HARM)
+					src.lastattacker = user
+					return ..()
+
+				else if (user.a_intent == INTENT_GRAB)
+					if (src.task == "attacking" && src.target)
+						if (istype(src.target, /obj/machinery/plantpot))
+							src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is too focused on \the [src.target] to be wrangled!</span>")
+						else
+							src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is [pick("mad","grumpy","hecka grumpy","agitated", "too angry")] and resists!</span>")
+						return
+
+					user.pulling = src
+					src.wanderer = 0
+					if (src.task == "wandering")
+						src.task = "thinking"
+					src.wrangler = user
+					src.visible_message("<span class='alert'><b>[user]</b> wrangles [src].</span>")
+
+				else
+					src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+					if(prob(15))
+						for(var/mob/O in hearers(src, null))
+							O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
+					if (prob(10))
+						user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
+						if (user.reagents)
+							user.reagents.add_reagent("hugs", 3)
+							user.reagents.add_reagent("lsd_bee", 6)
+
+					return
+			else
+				..()
+
+			return
+
+		ChaseAttack(mob/M)
+			if (istype(M, /obj/machinery/plantpot))
+				return CritterAttack(M)
+			if (!istype(M))
+				return
+			if (prob(20))
+				return CritterAttack(M)
+			if (M.stat || M.getStatusDuration("paralysis"))
+				src.task = "thinking"
+				return
+			src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>")
+			logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
+			if (isliving(M))
+				var/mob/living/H = M
+				H.was_harmed(src)
+
+			if(M.reagents)
+				if (M.reagents.get_reagent_amount("methamphetamine") < 5)
+					M.reagents.add_reagent("methamphetamine", 1)
+				if (M.reagents.get_reagent_amount("lsd_bee") < 20)
+					M.reagents.add_reagent("lsd_bee", 5)
+
+			if (isliving(M))
+				var/mob/living/L = M
+				var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
+				if (istype(plague,/datum/ailment_data/disease/))
+					//That bee venom plague treatment does not work at all in this manner. However, future.
+					L.cure_disease(plague)
+
 /* -------------------- END -------------------- */
 
 /* -------------------- BASE BEE STUFF -------------------- */
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(honey_production_amount)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(honey_production_amount)
 
 		statlog_bees(src)
 
@@ -1359,7 +1435,7 @@
 		else
 			return ..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		if (src.alive && !src.sleeping)
 			animate_bumble(src) // please keep bumbling tia
@@ -1632,6 +1708,12 @@
 			else
 				newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
 
+			reagents.del_reagent("egg")
+			reagents.del_reagent("bee")
+			var/main_reagent = reagents.get_master_reagent()
+			if (main_reagent == "LSD")
+				newLarva.custom_bee_type = /obj/critter/domestic_bee/lsbee
+
 			newLarva.blog += src.blog + "|larva hatched by [key_name(user)]|"
 
 			if (bee_name)
@@ -1641,7 +1723,7 @@
 
 			qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (hatched || 0)//todo: re-enable this when people stop abusing bees!!!
 			return
@@ -1723,13 +1805,10 @@
 					newLarva.custom_desc = "A moon bee.  It's like a regular space bee, but it has a peculiar gleam in its eyes..."
 				newLarva.custom_bee_type = /obj/critter/domestic_bee/moon
 				newLarva.blog += "larva hatched by [key_name(user)]"
-				var/datum/reagents/R = new/datum/reagents(50)
-				newLarva.reagents = R
-				R.my_atom = newLarva
-				R.add_reagent("wolfsbane", 10)
+				newLarva.reagents.add_reagent("wolfsbane", 10)
 				qdel (src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (hatched || 0)//replace me too!!!
 			return
@@ -1821,16 +1900,14 @@
 	amount = 4
 	heal_amt = 1
 	doants = 0
+	initial_volume = 50
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("nectar", 10)
-		R.add_reagent("honey", 10)
-		R.add_reagent("cornstarch", 5)
-		R.add_reagent("pollen", 20)
+		reagents.add_reagent("nectar", 10)
+		reagents.add_reagent("honey", 10)
+		reagents.add_reagent("cornstarch", 5)
+		reagents.add_reagent("pollen", 20)
 
 /* -------------------- END -------------------- */
 

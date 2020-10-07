@@ -5,10 +5,8 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("ketamine", 100)
+		src.create_reagents(100)
+		reagents.add_reagent("ketamine", 100)
 		return
 
 	attack(mob/M, mob/user as mob)
@@ -27,6 +25,9 @@
 			user.show_text("The sleepy pen is empty.", "red")
 		return
 
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 /obj/item/pen/sleepypen/discount
 	name = "greasy pen"
 	icon_state = "pen-greasy"
@@ -45,7 +46,7 @@
 				src.reagents.add_reagent(pick("spiders", "vomit", "space_drugs", "mutagen"), 5)
 			else
 				src.reagents.add_reagent(pick("water", "krokodil", "methamphetamine"), 4)
-				src.reagents.add_reagent(pick("LSD", "nicotine", "jenkem", "glitter"), 6)
+				src.reagents.add_reagent(pick("LSD", "lsd_bee", "nicotine", "jenkem", "glitter"), 6)
 				src.reagents.add_reagent(pick("radium", "porktonium", "bathsalts", "gvomit"), 2)
 		return
 

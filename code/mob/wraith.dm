@@ -6,7 +6,11 @@
 	real_name = "Wraith" //todo: construct name from a user input (e.g. <x> the Impaler)
 	desc = "Jesus Christ, how spooky."
 	icon = 'icons/mob/mob.dmi'
+#ifdef XMAS
+	icon_state = "wraith-love"
+#else
 	icon_state = "wraith"
+#endif
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	density = 0
 	canmove = 1
@@ -14,6 +18,7 @@
 	anchored = 1
 	alpha = 180
 	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	plane = PLANE_NOSHADOW_ABOVE
 
 	var/deaths = 0
 	var/datum/hud/wraith/hud
@@ -27,7 +32,7 @@
 	var/last_life_update = 0
 	var/const/life_tick_spacing = 20
 	var/haunt_duration = 300
-	var/death_icon_state = "wraithdie"
+	var/death_icon_state = "wraith-die"
 	//////////////
 	// Wraith Overrides
 	//////////////
@@ -184,12 +189,16 @@
 				WO.onAbsorb(M)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if (istype(mover, /obj/projectile))
+			var/obj/projectile/proj = mover
+			if (proj.proj_data.hits_wraiths)
+				return 0
 		if (src.density) return 0
 		else return 1
 
 
 	projCanHit(datum/projectile/P)
-		if (src.density) return 1
+		if (src.density || P.hits_wraiths) return 1
 		else return 0
 
 
@@ -213,7 +222,7 @@
 			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (!src.density)
 			return
 		health -= burn

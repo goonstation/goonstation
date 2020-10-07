@@ -163,6 +163,7 @@ toxic - poisons
 	projectile_speed = 36
 	caliber = 0.355
 	icon_turf_hit = "bhole-small"
+	hit_type = DAMAGE_BLUNT
 	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
 	casing = /obj/item/casing/small
 
@@ -188,7 +189,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
 	dissipation_delay = 10
-	casing = /obj/item/casing/rifle
+	casing = /obj/item/casing/rifle_loud
 	caliber = 0.308
 	icon_turf_hit = "bhole-small"
 
@@ -219,7 +220,7 @@ toxic - poisons
 	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
 	projectile_speed = 56
 	max_range = 100
-	casing = /obj/item/casing/rifle
+	casing = /obj/item/casing/rifle_loud
 	caliber = 0.308
 	icon_turf_hit = "bhole-small"
 	on_launch(obj/projectile/O)
@@ -332,7 +333,7 @@ toxic - poisons
 	icon_turf_hit = "bhole"
 	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_12ga
-	casing = /obj/item/casing/shotgun_red
+	casing = /obj/item/casing/shotgun/red
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
@@ -414,7 +415,7 @@ toxic - poisons
 /datum/projectile/bullet/aex
 	name = "explosive slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	power = 35 // the damage should be more from the explosion
+	power = 25 // the damage should be more from the explosion
 	ks_ratio = 1.0
 	dissipation_delay = 6
 	dissipation_rate = 10
@@ -423,10 +424,13 @@ toxic - poisons
 	hit_type = DAMAGE_BLUNT
 	caliber = 0.72
 	icon_turf_hit = "bhole"
-	casing = /obj/item/casing/shotgun_orange
+	casing = /obj/item/casing/shotgun/orange
 
 	on_hit(atom/hit)
-		explosion_new(null, get_turf(hit), 1)
+		explosion_new(null, get_turf(hit), 2)
+
+	on_max_range_die(obj/projectile/O)
+		explosion_new(null, get_turf(O), 2)
 
 	lawbringer
 		name = "lawbringer"
@@ -435,7 +439,10 @@ toxic - poisons
 		cost = 150
 
 		on_hit(atom/hit)
-			explosion_new(null, get_turf(hit), 3)
+			explosion_new(null, get_turf(hit), 6)
+
+		on_max_range_die(obj/projectile/O)
+			explosion_new(null, get_turf(O), 6)
 
 /datum/projectile/bullet/abg
 	name = "rubber slug"
@@ -449,7 +456,7 @@ toxic - poisons
 	hit_type = DAMAGE_BLUNT
 	caliber = 0.72
 	icon_turf_hit = "bhole"
-	casing = /obj/item/casing/shotgun_blue
+	casing = /obj/item/casing/shotgun/blue
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
@@ -465,34 +472,6 @@ toxic - poisons
 			//if (src.hit_type)
 			// impact_image_effect("K", hit)
 				//take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
-
-/datum/projectile/bullet/pbr //more powerful less-than-lethal shotgun option.
-	name = "plastic baton round"
-	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	power = 24
-	ks_ratio = 0.2
-	dissipation_rate = 3
-	dissipation_delay = 5
-	implanted = null
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
-	caliber = 0.72
-	icon_turf_hit = "bhole"
-	casing = /obj/item/casing/shotgun_blue //todo
-
-	on_hit(atom/hit, dirflag, obj/projectile/proj)
-		if (ishuman(hit))
-			var/mob/living/carbon/human/M = hit
-			if(proj.power >= 16)
-				var/throw_range = (proj.power > 20) ? 5 : 3
-
-				var/turf/target = get_edge_target_turf(M, dirflag)
-				if(!M.stat) M.emote("scream")
-				M.changeStatus("stunned", 1 SECONDS)
-				M.changeStatus("weakened", 2 SECONDS)
-				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
-				M.update_canmove()
-			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 
 /datum/projectile/bullet/minigun
 	name = "bullet"
@@ -582,7 +561,7 @@ toxic - poisons
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
 	shot_sound = 'sound/weapons/ak47shot.ogg'
-	power = 18
+	power = 30
 	cost = 3
 	shot_number = 3
 
@@ -627,7 +606,7 @@ toxic - poisons
 	implanted = null
 	caliber = 0.72 // 12 guage
 	icon_turf_hit = "bhole"
-	casing = /obj/item/casing/shotgun_orange
+	casing = /obj/item/casing/shotgun/orange
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (isliving(hit))
@@ -682,7 +661,7 @@ toxic - poisons
 	on_launch(obj/projectile/proj)
 		proj.AddComponent(/datum/component/sniper_wallpierce, 4) //pierces 4 walls/lockers/doors/etc. Does not function on restricted Z, rwalls and blast doors use 2 pierces
 		for(var/mob/M in range(proj.loc, 5))
-			shake_camera(M, 3, 1)
+			shake_camera(M, 3, 8)
 
 
 
@@ -815,11 +794,7 @@ toxic - poisons
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
 		on_hit(atom/hit, angle, var/obj/projectile/P)
-#if ASS_JAM
-			if (P.data || prob(100)) //Removing the data check would mean indenting is fucked, and im lazy
-#else
 			if (P.data || prob(10))
-#endif
 				..()
 			else
 				new /obj/effects/rendersparks(hit.loc)
@@ -896,14 +871,14 @@ toxic - poisons
 		name = "40mm HEDP round"
 
 		on_hit(atom/hit)
-			explosion_new(null, get_turf(hit),4,2)
+			explosion_new(null, get_turf(hit), 2.5, 1.75)
 
 	high_explosive //more powerful than HEDP
 		name = "40mm HE round"
 		power = 10
 
 		on_hit(atom/hit)
-			explosion_new(null,get_turf(hit),10)
+			explosion_new(null,get_turf(hit), 8, 0.75)
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /datum/projectile/bullet/rpg
@@ -1040,6 +1015,41 @@ toxic - poisons
 		startSmoke(hit, dirflag, projectile)
 		return
 
+/datum/projectile/bullet/pbr //direct less-lethal 40mm option
+	name = "plastic baton round"
+	shot_sound = 'sound/weapons/launcher.ogg'
+	power = 50
+	ks_ratio = 0.5
+	dissipation_rate = 5
+	dissipation_delay = 4
+	max_range = 9
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	caliber = 1.57
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/grenade
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(proj.power >= 20)
+				var/throw_range = (proj.power > 30) ? 5 : 3
+
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				if(!M.stat) M.emote("scream")
+				M.changeStatus("stunned", 1 SECONDS)
+				M.changeStatus("weakened", 2 SECONDS)
+				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
+			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
+		if(!ismob(hit))
+			shot_volume = 0
+			var/obj/projectile/P = shoot_reflected_bounce(proj, hit, 1, PROJ_NO_HEADON_BOUNCE)
+			shot_volume = 100
+			if(P)
+				P.travelled = max(proj.travelled, (max_range-2) * 32)
+
 /datum/projectile/bullet/glitch
 	name = "bullet"
 	window_pass = 1
@@ -1139,7 +1149,7 @@ toxic - poisons
 	dissipation_rate = 3
 	dissipation_delay = 4
 	damage_type = D_SLASHING
-	casing = /obj/item/casing/shotgun_gray
+	casing = /obj/item/casing/shotgun/gray
 
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"

@@ -861,9 +861,9 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	New()
 		..()
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			if (ismob(usr))
 				A:lastattacker = usr

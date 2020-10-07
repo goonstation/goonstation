@@ -360,6 +360,7 @@
 			critters_left -= name
 
 	New()
+		..()
 		SPAWN_DBG(0.5 SECONDS)
 			viewing = locate() in world
 			staging = locate() in world
@@ -648,7 +649,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		point_cost = -3
 		minimum_level = 20
 		probability =  20
-		supplies = list(/obj/item/chem_grenade/very_incendiary/vr, /obj/item/gun/kinetic/spes/vr, /obj/item/gun/energy/laser_gun/virtual)
+		supplies = list(/obj/item/chem_grenade/very_incendiary/vr, /obj/item/gun/kinetic/spes, /obj/item/gun/energy/laser_gun/virtual)
 
 	welding
 		name = "Welders"
@@ -672,7 +673,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 25
 		min_percent = 0.25
 		max_percent = 0.5
-		supplies = list(/obj/item/gun/kinetic/spes/vr)
+		supplies = list(/obj/item/gun/kinetic/spes)
 
 	rifle
 		name = "Hunting Rifles"
@@ -680,7 +681,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 25
 		min_percent = 0.25
 		max_percent = 0.5
-		supplies = list(/obj/item/gun/kinetic/hunting_rifle/vr)
+		supplies = list(/obj/item/gun/kinetic/hunting_rifle)
 
 	ak47
 		name = "An AK47"
@@ -689,7 +690,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		min_percent = 0.25
 		max_percent = 0.5
 		max_amount = 1
-		supplies = list(/obj/item/gun/kinetic/ak47/vr)
+		supplies = list(/obj/item/gun/kinetic/ak47)
 
 	bfg
 		name = "The BFG"

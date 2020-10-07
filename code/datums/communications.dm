@@ -80,8 +80,9 @@ datum/radio_frequency
 	var/frequency
 	var/list/obj/devices = list()
 
-	//MBC : check_for_jammer proc was being called thousands of times per second. Do its initial check in a define instead, because proc call overhead. Then call check_for_jammer_bare
-	#define can_check_jammer (!prob(signal_loss) && radio_controller.active_jammers.len)
+	//MBC : check_for_jammer proc was being called thousands of times per second. 
+	//Do its initial check in a define instead, because proc call overhead. Then call check_for_jammer_bare
+	#define can_check_jammer (radio_controller.active_jammers.len)
 
 	disposing()
 		devices = null
@@ -100,8 +101,9 @@ datum/radio_frequency
 						reusable_signals += signal
 					return 0
 
-			if (check_for_jammer(source))
-				return 0
+			if (can_check_jammer)
+				if (check_for_jammer(source))
+					return 0
 
 			signal.channels_passed += "[src.frequency];"
 
@@ -110,7 +112,7 @@ datum/radio_frequency
 
 					//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
 					if (can_check_jammer)
-						if (check_for_jammer_bare(device))
+						if (check_for_jammer(device))
 							continue
 
 					if(range)
@@ -129,27 +131,16 @@ datum/radio_frequency
 				signal.dispose()
 			else if (signal)
 				signal.wipe()
-				if (!(signal in reusable_signals))
-					reusable_signals += signal
+				reusable_signals |= signal
 			LAGCHECK(LAG_MED)
 
+		//assumes that list radio_controller.active_jammers is not null or empty.
 		check_for_jammer(obj/source)
-			.= 0
-			if (prob(signal_loss))
-				.= 1
-			else
-				if (radio_controller.active_jammers.len)
-					for (var/atom in radio_controller.active_jammers) // Can be a mob or obj.
-						var/atom/A = atom
-						if (A && get_dist(get_turf(source), get_turf(A)) <= 6)
-							.= 1
-
-		check_for_jammer_bare(obj/source)
 			.= 0
 			for (var/atom in radio_controller.active_jammers) // Can be a mob or obj.
 				var/atom/A = atom
 				if (A && get_dist(get_turf(source), get_turf(A)) <= 6)
-					.= 1
+					return 1
 
 obj/proc
 	receive_signal(datum/signal/signal, receive_method, receive_param)

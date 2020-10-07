@@ -36,6 +36,7 @@
 	name = "cyberspleen"
 	desc = "A fancy robotic spleen to replace one that someone's lost!"
 	icon_state = "cyber-spleen"
+	made_from = "pharosium"
 	// item_state = "heart_robo1"
 	robotic = 1
 	edible = 0

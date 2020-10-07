@@ -339,7 +339,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	New()
 		..()
-		shittybills += src
+		START_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 		SPAWN_DBG(0)
 			bioHolder.mobAppearance.customization_second = "Tramp"
 			bioHolder.age = 62
@@ -365,14 +365,14 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.chest_item_sewn = 1
 
 	disposing()
-		shittybills -= src
+		STOP_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 		..()
 
 	// Shitty Bill always goes to the afterlife bar unless he has a client
 	death(gibbed)
 		..(gibbed)
 
-		shittybills -= src
+		STOP_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 
 		if (!src.client && src.z != 2)
 			var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
@@ -572,9 +572,9 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 											BT.say("Nah.")
 */
 
-					if (johnbills.len > 0 && prob(25))
+					if (length(by_cat[TR_CAT_JOHNBILLS]) && prob(25))
 						SPAWN_DBG(4 SECONDS)
-							var/mob/living/carbon/human/john/MJ = pick(johnbills)
+							var/mob/living/carbon/human/john/MJ = pick(by_cat[TR_CAT_JOHNBILLS])
 							switch (speech_type)
 								if (4)
 									MJ.say("You're a big boy now brud, find one yourself.")
@@ -635,7 +635,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.a_intent = INTENT_HARM
 			src.ai_set_active(1)
 
-		for (var/mob/JB in johnbills)
+		for (var/mob/JB in by_cat[TR_CAT_JOHNBILLS])
 			var/mob/living/carbon/human/john/J = JB
 			if (get_dist(J,src) <= 7)
 				if((!J.ai_active) || prob(25))
@@ -853,6 +853,52 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		D.transition_task = A
 		A.transition_task = F
 		default_task = B
+
+
+
+
+/mob/living/carbon/human/proc/spacer_name(var/type = "spacer")
+	var/constructed_name = ""
+
+	switch(type)
+		if("spacer")
+			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(80)?SPACER_PICK("pejoratives")+" ":SPACER_PICK("superlatives")+" "][prob(10)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")]"
+		if("juicer")
+			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
+
+	return constructed_name
+
+
+/mob/living/carbon/human/spacer
+	is_npc = 1
+	uses_mobai = 1
+	New()
+		..()
+		SPAWN_DBG(0)
+			randomize_look(src, 1, 1, 1, 1, 1, 0)
+			real_name = spacer_name(pick("spacer","juicer"))
+			gender = pick(MALE,FEMALE)
+			SPAWN_DBG(1 SECOND)
+				bioHolder.mobAppearance.UpdateMob()
+				src.say("Hey there [JOHN_PICK("insults")]")//debug
+
+			src.equip_new_if_possible(/obj/item/clothing/shoes/orange, slot_shoes)
+			src.equip_new_if_possible(/obj/item/clothing/under/rank/chief_engineer, slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, slot_glasses)
+
+			src.ai = new /datum/aiHolder/human/yank(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+			src.ai.enabled = 0
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+		if(isdead(src))
+			return
+		if(prob(10))
+			say(pick("Oh no you don't - not today, not ever!","Nice try fuckass, but I ain't goin' down so easy!","IMMA SCREAM BUDDY!","You wanna fuck around bucko? You wanna try your luck?"))
+			src.ai.interrupt()
+		src.ai.target = M
+		src.ai.enabled = 1
 
 // This is Big Yank, one of John Bill's old buds. Yank owes John a favor. He's a Juicer.
 /mob/living/carbon/human/big_yank

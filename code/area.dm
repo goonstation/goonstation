@@ -38,7 +38,6 @@
 	/// for escape checks
 	var/is_centcom = 0
 
-	var/gencolor
 	level = null
 	#ifdef UNDERWATER_MAP
 	name = "Ocean"
@@ -110,6 +109,7 @@
 	var/list/obj/critter/registered_critters = list()
 	var/waking_critters = 0
 
+	// this chunk zone is for Area Ambience
 	var/sound_loop = null
 	var/sound_loop_vol = 50
 	var/sound_fx_1 = null
@@ -154,6 +154,7 @@
 		else
 			return 1
 
+	/// Gets called when a movable atom enters an area.
 	Entered(var/atom/movable/A, atom/oldloc)
 		if (ismob(A))
 			var/mob/M = A
@@ -199,8 +200,7 @@
 						if( sanctuary && !blocked && !(oldarea.sanctuary))
 							boutput( enteringM, "<b style='color:#31BAE8'>You are entering a sanctuary zone. You cannot be harmed by other players here.</b>" )
 						if (src.name != "Space" || src.name != "Ocean") //Who cares about making space active gosh
-							if (!(enteringM.mind in src.population))
-								src.population += enteringM.mind
+							src.population |= enteringM.mind
 							if (!src.active)
 								src.active = 1
 
@@ -212,6 +212,7 @@
 			A.loc = oldloc
 		..()
 
+	/// Gets called when a movable atom exits an area.
 	Exited(var/atom/movable/A)
 		if (ismob(A))
 			var/mob/M = A
@@ -393,6 +394,7 @@
 		if (light_manager)
 			light_manager.lights -= L
 	New()
+		..()
 		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
 
@@ -1995,17 +1997,23 @@ area/station/crewquarters/cryotron
 /area/station/com_dish/comdish
 	name = "Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1 // ????
+#endif
 
 /area/station/com_dish/auxdish
 	name = "Auxilary Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1
+#endif
 
 /area/station/com_dish/research_outpost
 	name = "Research Outpost Communications Dish"
 	icon_state = "yellow"
+#ifndef UNDERWATER_MAP
 	force_fullbright = 1
+#endif
 
 /area/station/engine
 	sound_environment = 5
@@ -2918,6 +2926,11 @@ area/station/security/visitation
 	sound_environment = 12
 	do_not_irradiate = 1
 
+/area/station/turret_protected/ai_module_storage
+	name = "AI Module Storage"
+	icon_state = "ai_module_storage"
+	sound_environment = 12
+
 /area/station/turret_protected/ai_upload_foyer
 	name = "AI Upload Foyer"
 	icon_state = "ai_foyer"
@@ -2936,7 +2949,7 @@ area/station/security/visitation
 
 /area/station/turret_protected/AIsat
 	name = "AI Satellite"
-	icon_state = "ai_chamber"
+	icon_state = "ai_satellite"
 	sound_environment = 12
 	do_not_irradiate = 1
 
@@ -3156,6 +3169,7 @@ area/station/security/visitation
 	* Called when an area first loads
   */
 /area/New()
+	..()
 	src.icon = 'icons/effects/alert.dmi'
 	src.layer = EFFECTS_LAYER_BASE
 //Halloween is all about darkspace

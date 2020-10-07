@@ -17,6 +17,7 @@
 	name = "HiveBot engineering robot module"
 
 /obj/item/hive_module/New()//Shit all the mods have
+	..()
 	src.tools += new /obj/item/device/flash(src)
 
 
@@ -36,6 +37,7 @@
 	src.tools += R
 
 /obj/item/hive_module/engineering/New()
+	..()
 
 	src.tools += new /obj/item/extinguisher(src)
 
@@ -51,6 +53,7 @@
 
 
 /obj/item/hive_module/construction/New()
+	..()
 
 	src.tools += new /obj/item/crowbar(src)
 	src.tools += new /obj/item/weldingtool(src)

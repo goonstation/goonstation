@@ -1,6 +1,10 @@
 /obj/machinery/launcher_loader
 	icon = 'icons/obj/stationobjs.dmi'
+#ifndef IN_MAP_EDITOR
 	icon_state = "launcher_loader_0"
+#else
+	icon_state = "launcher_loader_0-map"
+#endif
 	name = "Automatic mass-driver loader (AMDL)"
 	desc = "An automated, hydraulic mass-driver loader."
 	density = 0
@@ -8,6 +12,7 @@
 	layer = 2.6
 	anchored = 1
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
 
@@ -39,14 +44,14 @@
 		operating = 1
 		flick("launcher_loader_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
-		sleep(0.3 SECONDS)
-		for(var/atom/movable/AM in src.loc)
-			if(AM.anchored || AM == src) continue
-			if(trash && AM.delivery_destination != "Disposals")
-				AM.delivery_destination = "Disposals"
-			step(AM,src.dir)
-		operating = 0
-		handle_driver()
+		SPAWN_DBG(0.3 SECONDS)
+			for(var/atom/movable/AM in src.loc)
+				if(AM.anchored || AM == src) continue
+				if(trash && AM.delivery_destination != "Disposals")
+					AM.delivery_destination = "Disposals"
+				step(AM,src.dir)
+			operating = 0
+			handle_driver()
 
 	proc/handle_driver()
 		if(driver && !driver_operating)
@@ -66,11 +71,11 @@
 
 				SPAWN_DBG(door ? 55 : 20) driver_operating = 0
 
-				SPAWN_DBG(door ? 20 : 10)
-					if (driver)
-						for(var/obj/machinery/mass_driver/D in machine_registry[MACHINES_MASSDRIVERS])
-							if(D.id == driver.id)
-								D.drive()
+				sleep(door ? 20 : 10)
+				if (driver)
+					for(var/obj/machinery/mass_driver/D in machine_registry[MACHINES_MASSDRIVERS])
+						if(D.id == driver.id)
+							D.drive()
 	process()
 		if(!operating && !driver_operating)
 			var/drive = 0
@@ -107,6 +112,7 @@
 	opacity = 0
 	anchored = 1
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/default_direction = NORTH //The direction things get sent into when the router does not have a destination for the given barcode or when there is none attached.
 	var/list/destinations = new/list() //List of tags and the associated directions.
@@ -140,29 +146,28 @@
 
 		flick("amdl_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
-		sleep(0.3 SECONDS)
 
-		for(var/atom/movable/AM2 in src.loc)
-			if(AM2.anchored || AM2 == src) continue
-			step(AM2,src.dir)
+		SPAWN_DBG(0.3 SECONDS)
+			for(var/atom/movable/AM2 in src.loc)
+				if(AM2.anchored || AM2 == src) continue
+				step(AM2,src.dir)
 
-		driver = (locate(/obj/machinery/mass_driver) in get_step(src,src.dir))
+			driver = (locate(/obj/machinery/mass_driver) in get_step(src,src.dir))
 
-		operating = 0
-		handle_driver()
+			operating = 0
+			handle_driver()
 
 	proc/handle_driver()
 		if(driver && !driver_operating)
 			driver_operating = 1
 
 			SPAWN_DBG(0)
-				SPAWN_DBG(2 SECONDS)
-					driver_operating = 0
-					driver = null
-
-				SPAWN_DBG(1 SECOND)
-					if (driver)
-						driver.drive()
+				sleep(1 SECOND)
+				if (driver)
+					driver.drive()
+				sleep(1 SECOND)
+				driver_operating = 0
+				driver = null
 
 	process()
 		if(!operating && !driver_operating)

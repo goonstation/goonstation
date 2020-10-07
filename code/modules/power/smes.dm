@@ -18,6 +18,7 @@
 	icon_state = "smes"
 	density = 1
 	anchored = 1
+	requires_power = FALSE
 	var/output = 30000
 	var/lastout = 0
 	var/loaddemand = 0

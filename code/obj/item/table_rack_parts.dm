@@ -27,7 +27,7 @@ RACK PARTS
 		if (storage_thing)
 			src.contained_storage = storage_thing
 			src.contained_storage.set_loc(src)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	proc/construct(mob/user as mob, turf/T as turf)
 		var/obj/newThing = null
@@ -270,6 +270,14 @@ RACK PARTS
 	furniture_type = /obj/stool/wooden
 	furniture_name = "wooden stool"
 
+
+/obj/item/furniture_parts/stool/bee_bed
+	name = "bee bed parts"
+	desc = "A collection of parts that can be used to make a bee bed."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "comf_chair_parts-b"	// @TODO new icon, mprobably
+	furniture_type = /obj/stool/bee_bed
+	furniture_name = "bee bed"
 
 /obj/item/furniture_parts/stool/bar
 	name = "bar stool parts"

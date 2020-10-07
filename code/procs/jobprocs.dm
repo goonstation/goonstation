@@ -365,7 +365,7 @@
 		if (ishuman(src))
 			if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
 				src:spawnId(rank)
-			else if (src.traitHolder)
+			if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
 				//Has the immigrant trait - they're hiding in a random locker
 				var/list/obj/storage/SL = list()
 				for(var/obj/storage/S in by_type[/obj/storage])
@@ -378,6 +378,26 @@
 
 				if(SL.len > 0)
 					src.set_loc(pick(SL))
+
+			if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
+				var/turf/pilotSpawnLocation = null
+
+				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
+				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
+				#else														//This part of the code executes only if the map is a space one.
+				while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
+				#endif
+				for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+					qdel(snappedDrone)
+				V.finish_board_pod(src)
 
 			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
@@ -409,7 +429,7 @@
 			var/mob/living/newmob = possible_new_mob
 			newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
 		else
-			src.Equip_Bank_Purchase(src.mind.purchased_bank_item)
+			src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
 
 	return
 
@@ -438,9 +458,9 @@
 					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
 					R.fields["abilities"] = A
 
-				R.fields["traits"] = list()
-				if(src.traitHolder && src.traitHolder.traits.len)
-					R.fields["traits"] = src.traitHolder.traits.Copy()
+				SPAWN_DBG(0)
+					if(src.traitHolder && src.traitHolder.traits.len)
+						R.fields["traits"] = src.traitHolder.traits.Copy()
 
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind
@@ -454,6 +474,24 @@
 				B.badge_owner_name = src.real_name
 				B.badge_owner_job = src.job
 
+	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
+		var/obj/item/tank/emergency_oxygen/E = new /obj/item/tank/emergency_oxygen(src.loc)
+		src.force_equip(E, slot_in_backpack)
+		#ifdef UNDERWATER_MAP
+		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
+		src.force_equip(SSW, slot_in_backpack)
+		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
+		src.force_equip(SHW, slot_in_backpack)
+		#else
+		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
+		src.force_equip(SSS, slot_in_backpack)
+		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
+		src.force_equip(SHS, slot_in_backpack)
+		#endif
+		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
+		src.force_equip(GPSDEVICE, slot_in_backpack)
+
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 
@@ -462,8 +500,6 @@
 			src.equip_new_if_possible(JOB.slot_belt, slot_in_backpack)
 		else
 			src.equip_new_if_possible(JOB.slot_belt, slot_belt)
-			if (src.traitHolder && src.traitHolder.hasTrait("immigrant") && istype(src.belt, /obj/item/device/pda2))
-				del(src.belt) //UGHUGHUGHUGUUUUUUUU
 		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
 			for (var/X in JOB.items_in_belt)
 				if(ispath(X))
@@ -499,9 +535,13 @@
 	if (JOB.slot_lhan)
 		src.equip_new_if_possible(JOB.slot_lhan, slot_l_hand)
 
+	if (src.traitHolder?.hasTrait("immigrant") || src.traitHolder?.hasTrait("pilot"))
+		var/obj/item/device/pda2/pda = locate() in src
+		src.u_equip(pda)
+		qdel(pda)
+
 	var/T = pick(trinket_safelist)
 	var/obj/item/trinket = null
-	var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 		trinket = null //You better stay null, you hear me!
@@ -520,7 +560,10 @@
 	else if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
 		trinket = new/obj/item/device/light/zippo(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
+		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 		trinket = new random_lunchbox_path(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
+		trinket = new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
 	else
 		trinket = new T(src)
 
@@ -604,7 +647,12 @@
 		var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 		S.setup(src,wagesystem.jobs[JOB.name] * cashModifier)
 
-		src.equip_if_possible(S, slot_r_store)
+		if (isnull(src.get_slot(slot_r_store)))
+			src.equip_if_possible(S, slot_r_store)
+		else if (isnull(src.get_slot(slot_l_store)))
+			src.equip_if_possible(S, slot_l_store)
+		else
+			src.equip_if_possible(S, slot_in_backpack)
 	else
 		var/shitstore = rand(1,3)
 		switch(shitstore)
@@ -704,7 +752,7 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 /obj/item/reagent_containers/food/snacks/ingredient/egg/bee,/obj/item/reagent_containers/food/snacks/plant/apple,
 /obj/item/reagent_containers/food/snacks/plant/banana, /obj/item/reagent_containers/food/snacks/plant/potato, /obj/item/reagent_containers/food/snacks/sandwich/pb,
 /obj/item/reagent_containers/food/snacks/sandwich/cheese, /obj/item/reagent_containers/syringe/krokodil, /obj/item/reagent_containers/syringe/morphine,
-/obj/item/reagent_containers/patch/LSD, /obj/item/reagent_containers/patch/nicotine, /obj/item/reagent_containers/glass/bucket, /obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/patch/LSD, /obj/item/reagent_containers/patch/lsd_bee, /obj/item/reagent_containers/patch/nicotine, /obj/item/reagent_containers/glass/bucket, /obj/item/reagent_containers/glass/beaker,
 /obj/item/reagent_containers/food/drinks/drinkingglass, /obj/item/reagent_containers/food/drinks/drinkingglass/shot,/obj/item/storage/pill_bottle/bathsalts,
 /obj/item/storage/pill_bottle/catdrugs, /obj/item/storage/pill_bottle/crank, /obj/item/storage/pill_bottle/cyberpunk, /obj/item/storage/pill_bottle/methamphetamine,
 /obj/item/spraybottle,/obj/item/staple_gun,/obj/item/clothing/head/NTberet,/obj/item/clothing/head/biker_cap, /obj/item/clothing/head/black, /obj/item/clothing/head/blue,
@@ -713,5 +761,5 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 /obj/item/reagent_containers/food/drinks/mug/random_color, /obj/item/reagent_containers/food/drinks/skull_chalice, /obj/item/pen/marker/random, /obj/item/pen/crayon/random,
 /obj/item/clothing/gloves/yellow/unsulated, /obj/item/reagent_containers/food/snacks/fortune_cookie, /obj/item/instrument/triangle, /obj/item/instrument/tambourine, /obj/item/instrument/cowbell,
 /obj/item/toy/plush/small/bee, /obj/item/paper/book/the_trial, /obj/item/paper/book/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
-/obj/item/clothing/mask/cigarette/cigar, /obj/item/device/light/sparkler, /obj/item/toy/sponge_capsule, /datum/plant/fruit/pear, /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
+/obj/item/clothing/mask/cigarette/cigar, /obj/item/device/light/sparkler, /obj/item/toy/sponge_capsule, /obj/item/reagent_containers/food/snacks/plant/pear, /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
 /obj/item/seed/alien)

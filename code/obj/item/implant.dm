@@ -151,7 +151,6 @@ THROWING DARTS
 	impcolor = "b"
 	//life_tick_energy = 0.1
 	var/healthstring = ""
-
 	var/message = null
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 	var/net_id = null
@@ -174,6 +173,23 @@ THROWING DARTS
 		..()
 		if (!isdead(M) && M.client)
 			JOB_XP(I, "Medical Doctor", 5)
+
+	proc/getHealthList()
+		var/healthlist = list()
+		if (!src.implanted)
+			healthlist["OXY"] = 0
+			healthlist["TOX"] = 0
+			healthlist["BURN"] = 0
+			healthlist["BRUTE"] = 0
+		else
+			var/mob/living/L
+			if (isliving(src.owner))
+				L = src.owner
+				healthlist["OXY"] = round(L.get_oxygen_deprivation())
+				healthlist["TOX"] = round(L.get_toxin_damage())
+				healthlist["BURN"] = round(L.get_burn_damage())
+				healthlist["BRUTE"] = round(L.get_brute_damage())
+		return healthlist
 
 	proc/sensehealth()
 		if (!src.implanted)
@@ -443,6 +459,18 @@ THROWING DARTS
 		..()
 
 
+// dumb joke
+/obj/item/implant/antirot
+	name = "\improper Rotbusttec implant"
+	icon_state = "implant-r"
+	impcolor = "r"
+
+	on_death()
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = owner
+			H.reagents.add_reagent("formaldehyde", 5)
+
+
 /* Deprecated old turds shit */
 /obj/item/implant/sec
 	name = "security implant"
@@ -669,7 +697,7 @@ THROWING DARTS
 
 		if (expire)
 			//25 minutes +/- 5
-			SPAWN_DBG(600 * (25 + rand(-5,5)) )
+			SPAWN_DBG((25 + rand(-5,5)) MINUTES)
 				if (src && !ishuman(src.loc)) // Drop-all, gibbed etc (Convair880).
 					if (src.expire && (src.expired != 1)) src.expired = 1
 					return
@@ -678,18 +706,18 @@ THROWING DARTS
 				boutput(M, "<span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span>")
 
 				// 1 minute left
-				SPAWN_DBG(1 MINUTE)
-					if (src && !ishuman(src.loc))
-						if (src.expire && (src.expired != 1)) src.expired = 1
-						return
-					if (!src || !owner || (M != owner) || src.expired)
-						return
-					// There's a proc for this now (Convair880).
-					if (M.mind && M.mind.special_role == "mindslave")
-						remove_mindslave_status(M, "mslave", "expired")
-					else if (M.mind && M.mind.master)
-						remove_mindslave_status(M, "otherslave", "expired")
-					src.expired = 1
+				sleep(1 MINUTE)
+				if (src && !ishuman(src.loc))
+					if (src.expire && (src.expired != 1)) src.expired = 1
+					return
+				if (!src || !owner || (M != owner) || src.expired)
+					return
+				// There's a proc for this now (Convair880).
+				if (M.mind && M.mind.special_role == "mindslave")
+					remove_mindslave_status(M, "mslave", "expired")
+				else if (M.mind && M.mind.master)
+					remove_mindslave_status(M, "otherslave", "expired")
+				src.expired = 1
 		return
 
 	on_remove(var/mob/M)
@@ -790,6 +818,9 @@ THROWING DARTS
 		desc = "Rather unperfect round ball. Looks very old."
 		icon_state = "flintlockbullet"
 
+	bullet_50
+		name = ".50AE round"
+		desc = "Ouch."
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
@@ -1166,6 +1197,10 @@ THROWING DARTS
 	name = "glass case - 'Robusttec'"
 	implant_type = "/obj/item/implant/robust"
 
+/obj/item/implantcase/antirot
+	name = "glass case - 'Rotbusttec'"
+	implant_type = "/obj/item/implant/antirot"
+
 /obj/item/implantcase/access
 	name = "glass case - 'Electronic Access'"
 	implant_type = "/obj/item/implant/access"
@@ -1529,7 +1564,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			my_datum.implant_master = user
 		return 1
 
-	alter_projectile(var/obj/projectile/P)
+	alter_projectile(source, var/obj/projectile/P)
 		if (!P || !my_implant)
 			return ..()
 		my_implant.set_loc(P)
@@ -1586,7 +1621,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	icon_state = "dart"
 	throw_spin = 0
 
-	throw_impact(M)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (ishuman(M) && prob(5))
 			var/mob/living/carbon/human/H = M
@@ -1611,7 +1646,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	throw_spin = 0
 	throw_speed = 3
 
-	throw_impact(M)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M

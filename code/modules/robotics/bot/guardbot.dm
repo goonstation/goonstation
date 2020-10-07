@@ -2001,10 +2001,7 @@
 
 		New()
 			..()
-			var/datum/reagents/R = new/datum/reagents(500)
-			reagents = R
-			R.my_atom = src
-			return
+			src.create_reagents(500)
 
 		// Fixed. Was completely non-functional (Convair880).
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)

@@ -559,7 +559,7 @@
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
-
+	reinforced = TRUE
 	allows_vehicles = 1
 
 /turf/simulated/floor/airless/engine/vacuum

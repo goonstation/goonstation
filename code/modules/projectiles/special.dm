@@ -132,6 +132,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/pellets_to_fire = 15
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
+	var/pellet_shot_volume = 100
 	nomsg = 1
 	// 0 = on spawn
 	// 1 = on impact
@@ -148,6 +149,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(split_type) //don't multihit on pointblank unless we'd be splitting on launch
 			return
 		var/datum/projectile/F = new spread_projectile_type()
+		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(O)
 		var/pellets = pellets_to_fire
 		while (pellets > 0)
@@ -161,6 +163,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	proc/split(var/obj/projectile/P)
 		var/datum/projectile/F = new spread_projectile_type()
+		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(P)
 		var/pellets = pellets_to_fire
 		while (pellets > 0)
@@ -196,13 +199,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/speed_max = 5
 	var/speed_min = 60
 	var/spread_angle_variance = 5
-	var/dissipation_variance = 1
+	var/dissipation_variance = 32
 
 	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
 		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
 		FC.rotateDirection(rand(0-spread_angle_variance,spread_angle_variance))
 		FC.internal_speed = rand(speed_min,speed_max)
-		FC.dissipation_ticker = rand(0,dissipation_variance)
+		FC.travelled = rand(0,dissipation_variance)
 		FC.launch()
 
 /datum/projectile/special/spreader/buckshot_burst/nails
@@ -211,7 +214,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	pellets_to_fire = 8
 	spread_projectile_type = /datum/projectile/bullet/nails
-	casing = /obj/item/casing/shotgun_gray
+	casing = /obj/item/casing/shotgun/gray
 	spread_angle_variance = 10
 	damage_type = D_SPECIAL
 	power = 32
@@ -219,7 +222,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/uniform_burst/circle
 	name = "circular spread"
 	sname = "circular spread"
-	spread_angle = 360
+	spread_angle = 180
 	pellets_to_fire = 20
 
 /datum/projectile/special/spreader/uniform_burst/blaster
@@ -905,9 +908,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(istype(W))
 			W.throw_impact(get_turf(O))
 
-
-
-
 /datum/projectile/special/spawner/beepsky
 	name = "Beepsky"
 	window_pass = 0
@@ -938,3 +938,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/machinery/bot/secbot/beepsky = ..()
 		if(istype(beepsky))
 			beepsky.emagged = 1
+
+/datum/projectile/special/spawner/battlecrate
+	name = "Battlecrate"
+	power = 100
+	cost = 0
+	shot_sound = 'sound/weapons/rocket.ogg'
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "attachecase"
+	typetospawn = /obj/lootbox
+	var/explosion_power = 15
+
+	on_hit(atom/hit, direction, projectile)
+		explosion_new(projectile, get_turf(hit), explosion_power, 1)
+		..()

@@ -235,6 +235,74 @@ PIPE BOMBS + CONSTRUCTION
 		qdel(src)
 		return
 
+/obj/item/old_grenade/singularity
+	desc = "It is set to detonate in 10 seconds."
+	name = "singularity grenade"
+	det_time = 100
+	org_det_time = 100
+	alt_det_time = 60
+	icon_state = "graviton"
+	item_state = "emp"
+	is_syndicate = 1
+	mats = 12
+	sound_armed = "sound/weapons/armbomb.ogg"
+	icon_state_armed = "graviton1"
+	var/icon_state_exploding = "graviton2"
+	var/radius = 3
+
+	attack_self(mob/user as mob)
+		if (!src.state)
+			src.state = 1		//This could help for now. Should leverege the click buffer from combat stuff too.
+			if (!isturf(user.loc))
+				src.state = 0
+				return
+			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+			if (user && user.bioHolder.HasEffect("clumsy"))
+				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+				src.icon_state = src.icon_state_exploding
+				flick(src.icon_state_armed, src)
+				playsound(src.loc, src.sound_armed, 75, 1, -3)
+				src.add_fingerprint(user)
+				SPAWN_DBG(0.5 SECONDS)
+					if (src) prime()
+					return
+			else
+				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
+				src.icon_state = src.icon_state_exploding
+				flick(src.icon_state_armed, src)
+				playsound(src.loc, src.sound_armed, 75, 1, -3)
+				src.add_fingerprint(user)
+				SPAWN_DBG(src.det_time)
+					if (src) prime()
+					return
+		return
+
+	prime()
+		var/turf/T = ..()
+		if (T)
+			if (T && isrestrictedz(T.z) || T.loc:sanctuary)
+				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
+				elecflash(src,power = 4)
+				qdel(src)
+				return
+			src.build_a_singulo()
+
+	proc/build_a_singulo()
+		var/turf/C = get_turf(src)
+		for(var/turf/T in block(locate(C.x - radius, C.y - radius, C.z), locate(C.x + radius, C.y + radius, C.z)))
+			T.ReplaceWith(/turf/simulated/floor/engine, 0, 1, 0, 0)
+		new /obj/machinery/the_singularitygen(C)
+		for(var/dir in ordinal)
+			var/turf/T = get_steps(C, dir, radius)
+			var/obj/machinery/field_generator/gen = new(T)
+			gen.set_active(1)
+			gen.state = 3
+			gen.power = 250
+			gen.anchored = 1
+			icon_state = "Field_Gen +a"
+		qdel(src)
+
 /obj/item/old_grenade/smoke
 	desc = "It is set to detonate in 2 seconds."
 	name = "smoke grenade"
@@ -593,22 +661,22 @@ PIPE BOMBS + CONSTRUCTION
 				for (var/mob/N in viewers(user, null))
 					if (get_dist(N, user) <= 6)
 						N.flash(3 SECONDS)
-				SPAWN_DBG(0.2 SECONDS)
-					if (old_light_grenade)
-						random_brute_damage(user, 200)
-						SPAWN_DBG(1 DECI SECOND)
-							if (isdead(user) || user.nodamage || isAI(user)) return
-							logTheThing("combat", user, null, "was killed by touching a [src] at [log_loc(src)].")
-							var/mob/dead/observer/newmob
-							newmob = new/mob/dead/observer(user)
-							user.client.mob = newmob
-							user.mind.transfer_to(newmob)
-							qdel(user)
+				sleep(0.2 SECONDS)
+				if (old_light_grenade)
+					random_brute_damage(user, 200)
+					sleep(1 DECI SECOND)
+					if (isdead(user) || user.nodamage || isAI(user)) return
+					logTheThing("combat", user, null, "was killed by touching a [src] at [log_loc(src)].")
+					var/mob/dead/observer/newmob
+					newmob = new/mob/dead/observer(user)
+					user.client.mob = newmob
+					user.mind.transfer_to(newmob)
+					qdel(user)
+				else
+					if (destination)
+						user.set_loc(destination)
 					else
-						if (destination)
-							user.set_loc(destination)
-						else
-							user.set_loc(locate(40,19,2))
+						user.set_loc(locate(40,19,2))
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1145,6 +1213,7 @@ PIPE BOMBS + CONSTRUCTION
 				name = "hollow [src.material.name] pipe frame"
 			else
 				name = "hollow pipe frame"
+			src.flags |= NOSPLASH
 
 		if (allowed_items.len && item_mods.len < 3 && state == 2)
 			var/ok = 0
@@ -1201,7 +1270,8 @@ PIPE BOMBS + CONSTRUCTION
 			else
 				name = "pipe bomb frame"
 
-			desc = "Two small pipes joined together, filled with welding fuel and connected with a cable. It needs some kind of ignition switch."
+			desc = "Two small pipes joined together, filled with explosives and connected with a cable. It needs some kind of ignition switch."
+			src.flags &= ~NOSPLASH
 
 		if(istype(W, /obj/item/assembly/time_ignite) && state == 4)
 			boutput(user, "<span class='notice'>You connect the cable to the timer/igniter assembly.</span>")

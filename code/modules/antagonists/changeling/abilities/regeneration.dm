@@ -139,6 +139,11 @@
 				C.set_body_icon_dirty()
 
 		C.organHolder.create_organs()
+		C.organHolder.heal_organs(10 * mult, 10 * mult, 10 * mult, list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix"))
+		for (var/organ_slot in C.organHolder.organ_list)
+			var/obj/item/organ/O = C.organHolder.organ_list[organ_slot]
+			if(istype(O))
+				O.unbreakme()
 
 		if (prob(25))
 			if (changer)

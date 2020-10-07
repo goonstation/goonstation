@@ -40,12 +40,12 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 /proc/changelog_parse(var/changes, var/title, var/logclasses)
-	var/list/html=list()
+	var/list/html = list()
 	var/text = changes
 	if (!text)
 		logDiary("Failed to load changelog.")
 	else
-		html += "<ul class=\"log[logclasses]\"><li class=\"title\"><i class=\"icon-bookmark\"></i> [title] as of [vcs_revision]</li>"
+		html += "<ul class=\"log[logclasses]\"><li class=\"title\"><i class=\"icon-bookmark\"></i> [title] as of [copytext(vcs_revision, 1, 8)]</li>" //truncate to 7 long
 
 		var/list/collapsible_html = list()
 		var/added_collapsible_author = 0
@@ -192,6 +192,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 		return html.Join()
 
 /datum/changelog/New()
+	..()
 //<img alt="Goon Station 13" src="[resource("images/changelog/postcardsmall.jpg")]" class="postcard" />
 
 	html = {"
@@ -213,9 +214,9 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 <p class="team">
     <strong>Host:</strong> Wire (#1, #2, Wiki, Forums, & more)<br>
 
-    <strong>Coders:</strong> stuntwaffle, Showtime, Pantaloons, Nannek, Keelin, Exadv1, hobnob, 0staf, sniperchance, AngriestIBM, BrianOBlivion, I Said No, Harmar, Dropsy, ProcitizenSA, Pacra, LLJK-Mosheninkov, JackMassacre, Jewel, Dr. Singh, Infinite Monkeys, Cogwerks, Aphtonites, Wire, BurntCornMuffin, Tobba, Haine, Marquesas, SpyGuy, Conor12, Daeren, Somepotato, MyBlueCorners, ZeWaka, Gannets, Kremlin, Flourish, Mordent, Cirrial, Grayshift, Firebarrage, Kyle, Azungar, Warcrimes, HydroFloric, Zamujasa, Gerhazo, & Readster
+    <strong>Coders:</strong> stuntwaffle, Showtime, Pantaloons, Nannek, Keelin, Exadv1, hobnob, 0staf, sniperchance, AngriestIBM, BrianOBlivion, I Said No, Harmar, Dropsy, ProcitizenSA, Pacra, LLJK-Mosheninkov, JackMassacre, Jewel, Dr. Singh, Infinite Monkeys, Cogwerks, Aphtonites, Wire, BurntCornMuffin, Tobba, Haine, Marquesas, SpyGuy, Conor12, Daeren, Somepotato, MyBlueCorners, ZeWaka, Gannets, Kremlin, Flourish, Mordent, Cirrial, Grayshift, Firebarrage, Kyle, Azungar, Warcrimes, HydroFloric, Zamujasa, Gerhazo, Readster, pali6, Tarmunora, & UrsulaMejor.
 		<br>
-    <strong>Spriters:</strong> Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange, I Said No, Cogwerks, Aphtonites, Hempuli, Gannets, Haine, SLthePyro, Sundance, Azungar, Flaborized, and a bunch of awesome people from the forums!
+    <strong>Spriters:</strong> Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange, I Said No, Cogwerks, Aphtonites, Hempuli, Gannets, Haine, SLthePyro, Sundance, Azungar, Flaborized, Erinexx, and a bunch of awesome people from the forums!
 </p>
 
 <p id="license" class="lic">

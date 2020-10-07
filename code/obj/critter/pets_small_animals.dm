@@ -401,15 +401,16 @@
 		if (istype(W, /obj/item/card/emag))
 			emag_act(usr, W)
 		if (istype(W, /obj/item/card/id/blank_deluxe))
-			if (W.desc == "Some type of microchipped payment card. Looks like it's designed to deal with catcoins.")//Can't change descs
-				if (!swiped && W.stamina_cost == 1)
+			var/obj/item/card/id/blank_deluxe/CARD = W
+			if (CARD.desc == "Some type of microchipped payment card. Looks like it's designed to deal with catcoins.")//Can't change descs
+				if (!swiped && !CARD.jones_swiped)
 					if (user)
 						user.show_text("You swipe down [src]'s back in a petting motion...")
 					src.visible_message("<span class='combat'>[src] vomits out a wad of paper!</span>") //Jones City Puzzle
 					make_cleanable( /obj/decal/cleanable/vomit,src.loc)
 					new /obj/item/paper/jones_note(src.loc)
 					swiped++
-					W.stamina_cost = 2 //Can only use the card once.
+					CARD.jones_swiped = 1 //Can only use the card once.
 		else
 			..()
 
@@ -1783,6 +1784,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	chase_text = "boogies right into"
 	atk_brute_amt = 5
 	generic = 0
+	var/emagged = 0
 	var/dance_forever = 0
 	death_text = "%src% stops dancing forever."
 
@@ -1793,6 +1795,13 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.visible_message("<b>[src]</b> [msg]!",2)
 			src.icon_state = pick("boogie-d1","boogie-d2","boogie-d3")
 			// maybe later make it ambient play a short chiptune here later or at least some new sound effect
+			if (emagged)
+				SPAWN_DBG(0.5 SECONDS)
+					for (var/mob/living/carbon/human/responseMonkey in orange(2, src)) // they don't have to be monkeys, but it's signifying monkey code
+						LAGCHECK(LAG_MED)
+						if (!can_act(responseMonkey, 0))
+							continue
+						responseMonkey.emote("dance")
 			SPAWN_DBG(20 SECONDS)
 				if (src) src.icon_state = "boogie"
 
@@ -1826,6 +1835,15 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			return
 		else
 			. = ..()
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			if(user)
+				boutput(user, "<span class='alert'>You short out the [src]'s dancing intensity setting to 'flashmob'.</span>")
+			src.visible_message("<span class='alert'><b>[src] lights up with determination!</b></span>")
+			src.emagged = TRUE
+			return 1
+		return 0
 
 /obj/critter/meatslinky // ferrets for wire
 	name = "space ferret"

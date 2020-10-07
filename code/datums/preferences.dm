@@ -215,6 +215,8 @@ datum/preferences
 	var/list/profile_cache
 	var/rebuild_profile
 
+	var/had_cloud = FALSE
+
 	var/list/rebuild_data
 	var/list/data_cache
 
@@ -262,12 +264,17 @@ datum/preferences
 		//var/profile_menu[]
 
 		if (user && !IsGuestKey(user.key)) //ZeWaka: Fix for null.key
-			if (rebuild_profile)
+			var/client/client = ismob( user ) ? user.client : user
+
+			if (!client) return // b r u h
+
+			if (rebuild_profile || client.cloud_available() && !had_cloud)
 				rebuild_profile = 0
+				had_cloud = client.cloud_available()
+				rebuild_data["profile_name"] = 1
 				profile_cache.len = 0
 				profile_cache += "<div id='cloudsaves'><strong>Cloud Saves</strong><hr>"
-				var/client/wtf = ismob( user ) ? user.client : user
-				for( var/name in wtf.cloudsaves )
+				for( var/name in client.cloudsaves )
 					profile_cache += "<a href='[pref_link]cloudload=[url_encode(name)]'>[html_encode(name)]</a> (<a href='[pref_link]cloudsave=[url_encode(name)]'>Save</a> - <a href='[pref_link]clouddelete=[url_encode(name)]'>Delete</a>)<br>"
 					LAGCHECK(LAG_REALTIME)
 				profile_cache += "<a href='[pref_link]cloudnew=1'>Create new save</a></div>"
@@ -1704,7 +1711,7 @@ $(function() {
 
 		if (link_tags["preferred_map"])
 			rebuild_data["map"] = 1
-			src.preferred_map = mapSwitcher.clientSelectMap(usr.client)
+			src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
 
 		if (link_tags["tooltip"])
 			rebuild_data["tooltips"] = 1
@@ -1920,9 +1927,9 @@ $(function() {
 			AH.customization_third = "None"
 			AH.underwear = "No Underwear"
 
-			AH.customization_first_color = 0
-			AH.customization_second_color = 0
-			AH.customization_third_color = 0
+			AH.customization_first_color = initial(AH.customization_first_color)
+			AH.customization_second_color = initial(AH.customization_second_color)
+			AH.customization_third_color = initial(AH.customization_third_color)
 			AH.e_color = 0
 			AH.u_color = "#FEFEFE"
 

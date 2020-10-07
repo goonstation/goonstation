@@ -62,8 +62,7 @@ var/global/datum/controller/processScheduler/processScheduler
  * this treatment.
  */
 /datum/controller/processScheduler/proc/deferSetupFor(var/processPath)
-	if (!(processPath in deferredSetupList))
-		deferredSetupList += processPath
+	deferredSetupList |= processPath
 
 /datum/controller/processScheduler/proc/addNowSkipSetup(var/processPath)
 	src.alreadyCreatedPathsList += processPath
@@ -224,31 +223,22 @@ var/global/datum/controller/processScheduler/processScheduler
 	recordEnd(process)
 
 /datum/controller/processScheduler/proc/setIdleProcessState(var/datum/controller/process/process)
-	if (process in running)
-		running -= process
-	if (process in queued)
-		queued -= process
-	if (!(process in idle))
-		idle += process
+	running -= process
+	queued -= process
+	idle |= process
 
 /datum/controller/processScheduler/proc/setQueuedProcessState(var/datum/controller/process/process)
-	if (process in running)
-		running -= process
-	if (process in idle)
-		idle -= process
-	if (!(process in queued))
-		queued += process
+	running -= process
+	idle -= process
+	queued |= process
 
 	// The other state transitions are handled internally by the process.
 	process.queued()
 
 /datum/controller/processScheduler/proc/setRunningProcessState(var/datum/controller/process/process)
-	if (process in queued)
-		queued -= process
-	if (process in idle)
-		idle -= process
-	if (!(process in running))
-		running += process
+	queued -= process
+	idle -= process
+	running |= process
 
 /datum/controller/processScheduler/proc/recordStart(var/datum/controller/process/process, var/time = null)
 	if (isnull(time))

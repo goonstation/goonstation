@@ -258,7 +258,7 @@
 /obj/item/record/New()
 	..()
 	if (add_overlay)
-		src.overlays += "record_[rand(1,10)]"
+		src.UpdateOverlays(new /image(src.icon, "record_[rand(1,10)]"), "recordlabel")
 	if (record_name)
 		src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
 
@@ -392,6 +392,16 @@
 /obj/item/record/spacebux // Many thanks to Camryn Buttes!!
 	add_overlay = 0
 	icon_state = "record_red"
+
+/obj/item/record/random/key_lime
+	name = "record - \"key_lime #1\""
+	record_name = "key lime #1"
+	song = "sound/radio_station/key_lime.ogg"
+	add_overlay = FALSE
+
+	New()
+		..()
+		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
 
 /obj/item/record/spacebux/New()
 	..()
@@ -602,6 +612,21 @@
 	name = "compact tape - 'Movie Ad'"
 	audio = "sound/radio_station/bill_movie.ogg"
 	name_of_thing = "some shitty movie"
+
+/obj/item/radio_tape/advertisement/pope_crunch
+	name = "compact tape - 'Pope Crunch'"
+	audio = "sound/radio_station/pope_crunch_cereal.ogg"
+	name_of_thing = "Pope Crunch Cereal"
+	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
+	The music is Smooth Talker by Apoxode (CC BY 3.0)"}
+
+/obj/item/radio_tape/advertisement/cloning_psa
+	name = "compact tape - 'Cloning PSA'"
+	audio = "sound/radio_station/cloning_psa.ogg"
+	name_of_thing = "Cloning Public Service Announcement"
+	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
+	Voiceover by Cenith of the Black Pants Legion<br>
+	Musical backing is "Inspretional Wave" by khalafnasirs 2020 (CC-NO 3.0)"}
 
 /obj/item/radio_tape/audio_book
 	audio_type = "Audio book"
@@ -871,10 +896,12 @@ In suppliant Terms implore a kind Redress.</p>
 	name = "nav_logs"
 
 /datum/computer/file/record/radioship/testlog/New()
+	..()
 	fields = strings("radioship/radioship_records.txt","log_1")
 
 /datum/computer/file/record/radioship/testlog2
 	name = "inter-ship_communications"
 
 /datum/computer/file/record/radioship/testlog2/New()
+	..()
 	fields = strings("radioship/radioship_records.txt","log_2")

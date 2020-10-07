@@ -2635,7 +2635,7 @@
 		hud.set_active_tool(null)
 		src.update_appearance()
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		brute = max(brute, 0)
 		burn = max(burn, 0)
 		if (burn == 0 && brute == 0)

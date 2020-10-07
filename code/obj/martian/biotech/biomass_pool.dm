@@ -18,9 +18,7 @@
 
 /obj/martianBiotech/biomassPool/New()
   ..()
-  var/datum/reagents/R = new/datum/reagents(100)
-  reagents = R
-  R.my_atom = src
+  src.create_reagents(100)
 
 /obj/martianBiotech/biomassPool/attack_hand(var/mob/user)
   if(ismartian(user))

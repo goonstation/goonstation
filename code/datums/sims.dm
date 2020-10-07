@@ -201,7 +201,7 @@
 
 			getWarningMessage()
 				if (value < 25)
-					return pick("<span class='alert'>You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] dry!</span>", "<span class='alert'>You feel [pick("like you could die of thirst any moment now", "as dry as [pick("sand", "the moon", "solid carbon dioxyde", "bones")]")]!</span>")
+					return pick("<span class='alert'>You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] dry!</span>", "<span class='alert'>You feel [pick("like you could die of thirst any moment now", "as dry as [pick("sand", "the moon", "solid carbon dioxide", "bones")]")]!</span>")
 				else if (value < 50)
 					return "<span class='alert'>You feel [pick("thirsty", "dry")]!</span>"
 				else if (value < 75)
@@ -664,6 +664,7 @@ var/global/datum/simsControl/simsController = new()
 			//addMotive(/datum/simsMotive/sanity)
 
 	New(var/mob/living/L)
+		..()
 		owner = L
 		simsController.register_simsHolder(src)
 		make_motives()

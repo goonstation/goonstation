@@ -1,6 +1,7 @@
 
 // i think its slightly faster to do this with compiler macros instead of procs. i might be a moron, not sure - drsingh
 // it is. no comment on the moron bit. -- marq
+//this is the home for checks of mob types
 #define ismob(x) istype(x, /mob)
 #define isobserver(x) istype(x, /mob/dead)
 #define isadminghost(x) x.client && x.client.holder && rank_to_level(x.client.holder.rank) >= LEVEL_MOD && (istype(x, /mob/dead/observer) || istype(x, /mob/dead/target_observer)) // For antag overlays.
@@ -30,3 +31,8 @@
 #define issmallanimal(x) istype(x, /mob/living/critter/small_animal)
 #define isghostcritter(x) (istype(x, /mob/living/critter) && x:ghost_spawned)
 #define ishelpermouse(x) (istype(x, /mob/living/critter/small_animal/mouse/weak/mentor))//mentor and admin mice
+
+#define isnewplayer(x) (istype(x, /mob/new_player)) //new player mobs (what u r if ur in the lobby screen, usually)
+
+//is this mob immune to breathing in smoke?
+#define issmokeimmune(x) (ismob(x) && ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_MOB_PROPERTY(x, PROP_REBREATHING) || HAS_MOB_PROPERTY(x, PROP_BREATHLESS)))

@@ -190,6 +190,16 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.audible_prayers = (usr.client.holder.audible_prayers + 1) % 3
 				src.show_pref_window(usr)
+		if ("toggle_audible_ahelps")
+			if (src.level >= LEVEL_MOD)
+				switch(usr.client.holder.audible_ahelps)
+					if (PM_NO_ALERT)
+						usr.client.holder.audible_ahelps = PM_AUDIBLE_ALERT
+					if (PM_AUDIBLE_ALERT)
+						usr.client.holder.audible_ahelps = PM_DECTALK_ALERT
+					if (PM_DECTALK_ALERT)
+						usr.client.holder.audible_ahelps = PM_NO_ALERT
+				src.show_pref_window(usr)
 		if ("toggle_buildmode_view")
 			if (src.level >= LEVEL_PA)
 				usr.client.holder.buildmode_view = !usr.client.holder.buildmode_view
@@ -1413,10 +1423,10 @@ var/global/noir = 0
 				var/list/L = list()
 				var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 				if(searchFor)
-					for(var/R in childrentypesof(/datum/reagent))
+					for(var/R in concrete_typesof(/datum/reagent))
 						if(findtext("[R]", searchFor)) L += R
 				else
-					L = childrentypesof(/datum/reagent)
+					L = concrete_typesof(/datum/reagent)
 
 				var/type
 				if(L.len == 1)
@@ -2963,17 +2973,17 @@ var/global/noir = 0
 
 					if("shakecamera")
 						if (src.level >= LEVEL_ADMIN)
-							var/intensity = input("Enter intensity of the shaking effect. (2 or over  will also cause mobs to trip over.)","Shaking intensity",null) as num|null
+							var/intensity = input("Enter intensity of the shaking effect (pixels to jostle view around by). 64 or over will also cause mobs to trip over.","Shaking intensity",null) as num|null
 							if (!intensity)
 								return
-							var/time = input("Enter lenght of the shaking effect.(In milliseconds, don't use more then 400 unless you want players to complain.) ", "Lenght of shaking effect", 1) as num
-							logTheThing("admin", src, null, "created a shake effect (intensity [intensity], lenght [time])")
-							logTheThing("diary", src, null, "created a shake effect (intensity [intensity], lenght [time])", "admin")
-							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], lenght [time]).")
+							var/time = input("Enter length of the shaking effect in seconds.", "length of shaking effect", 1) as num
+							logTheThing("admin", src, null, "created a shake effect (intensity [intensity], length [time])")
+							logTheThing("diary", src, null, "created a shake effect (intensity [intensity], length [time])", "admin")
+							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], length [time]).")
 							for (var/mob/M in mobs)
 								SPAWN_DBG(0)
-									shake_camera(M, time, intensity)
-								if (intensity >= 2)
+									shake_camera(M, time * 10, intensity)
+								if (intensity >= 64)
 									M.changeStatus("weakened", 2 SECONDS)
 
 						else
@@ -3777,7 +3787,7 @@ var/global/noir = 0
 	switch (originWindow)
 		if ("adminplayeropts")
 			if (href_list["targetckey"])
-				var/mob/target = targetClient.mob
+				var/mob/target = targetClient?.mob
 				if(!target)
 					var/targetCkey = href_list["targetckey"]
 					for (var/mob/M in mobs) //The ref may have changed with our actions, find it again

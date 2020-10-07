@@ -24,3 +24,6 @@
 #define RC_VISIBLE	2		// reagent is visible inside, so color can be described
 #define RC_FULLNESS 4		// can estimate fullness of container
 #define RC_SPECTRO	8		// spectroscopic glasses can analyse contents
+
+//macro for lag-compensated probability - assumes lag-compensation multiplier is always called mult
+#define probmult(x) (prob(percentmult((x), mult)))

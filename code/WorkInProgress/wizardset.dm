@@ -142,6 +142,7 @@
 	var/area/wizard_place/wizard_area
 
 	New()
+		..()
 		ensure_wizard_area()
 
 	proc/ensure_wizard_area()
@@ -583,7 +584,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	var/light_b = 1
 	var/lum = 5
 	var/image/over_image
-	var/assoc_material = /datum/material/crystal/wizard/quartz
+	var/assoc_material = "wiz_quartz"
 	icon = 'icons/turf/adventure.dmi'
 
 	proc/create_bar(var/obj/machinery/portable_reclaimer/creator)
@@ -605,7 +606,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	quartz
 		name = "enchanted quartz"
-		assoc_material = /datum/material/crystal/wizard/quartz
+		assoc_material = "wiz_quartz"
 		icon_state = "quartz"
 
 	topaz
@@ -613,39 +614,39 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		light_r = 1
 		light_g = 0.8
 		light_b = 0.5
-		assoc_material = /datum/material/crystal/wizard/topaz
+		assoc_material = "wiz_topaz"
 		icon_state = "topaz"
-
-	amethyst
-		name = "enchanted amethyst"
-		light_r = 0.6
-		light_g = 0.4
-		assoc_material = /datum/material/crystal/wizard/amethyst
-		icon_state = "amethyst"
 
 	ruby
 		name = "enchanted ruby"
 		light_r = 0.6
 		light_g = 0.1
 		light_b = 0.2
-		assoc_material = /datum/material/crystal/wizard/ruby
+		assoc_material = "wiz_ruby"
 		icon_state = "ruby"
 
-	sapphire
-		name = "enchanted sapphire"
-		light_r = 0.1
+	amethyst
+		name = "enchanted amethyst"
+		light_r = 0.6
 		light_g = 0.4
-		light_b = 0.7
-		assoc_material = /datum/material/crystal/wizard/sapphire
-		icon_state = "sapphire"
+		assoc_material = "wiz_amethyst"
+		icon_state = "amethyst"
 
 	emerald
 		name = "enchanted emerald"
 		light_r = 0.3
 		light_g = 0.8
 		light_b = 0.4
-		assoc_material = /datum/material/crystal/wizard/emerald
+		assoc_material = "wiz_emerald"
 		icon_state = "emerald"
+
+	sapphire
+		name = "enchanted sapphire"
+		light_r = 0.1
+		light_g = 0.4
+		light_b = 0.7
+		assoc_material = "wiz_sapphire"
+		icon_state = "sapphire"
 
 /obj/wizard_light
 	name = "empty crystal socket"

@@ -176,6 +176,8 @@
 		// in this case m is the consumer and user is the one holding it
 		if (!src.edible)
 			return 0
+		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
+			return 0
 		if (M == user && user.mob_flags & IS_RELIQUARY)
 			boutput(user, "<span class='alert'>You don't come equipped with a digestive system, there would be no point in eating this.</span>")
 			return 0
@@ -232,8 +234,8 @@
 				if (src.festivity)
 					modify_christmas_cheer(src.festivity)
 				if (!src.amount)
-					//M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					//"<span class='alert'>You finish eating [src].</span>")
+					/*M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
+					"<span class='alert'>You finish eating [src].</span>")*/
 					boutput(M, "<span class='alert'>You finish eating [src].</span>")
 					if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
 						var/obj/item/reagent_containers/food/snacks/plant/P = src
@@ -1127,7 +1129,7 @@
 			return ..()
 
 		if (!ishuman(user))
-			boutput(user, "<span class='notice'>You don't know what to do with the glass.</span>")
+			boutput(user, "<span class='notice'>You don't know what to do with [src].</span>")
 			return
 		var/mob/living/carbon/human/H = user
 		var/list/choices = list()
@@ -1140,13 +1142,13 @@
 			if (!istype(src.in_glass, /obj/item/cocktail_stuff/drink_umbrella) || (H.bioHolder && (H.bioHolder.HasEffect("clumsy") || H.bioHolder.HasEffect("mattereater"))))
 				choices += "eat [src.in_glass]"
 		if (src.wedge)
-			choices += "remove [src.wedge] wedge"
-			choices += "eat [src.wedge] wedge"
+			choices += "remove [src.wedge]"
+			choices += "eat [src.wedge]"
 		if (!choices.len)
-			boutput(user, "<span class='notice'>You can't think of anything to do with the glass.</span>")
+			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
 
-		var/selection = input(user, "What do you want to do with the glass?") as null|anything in choices
+		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
 		if (isnull(selection) || get_dist(src, user) > 1)
 			return
 
@@ -1171,7 +1173,7 @@
 			remove_thing = src.in_glass
 			src.in_glass = null
 
-		else if (selection == "remove [src.wedge] wedge")
+		else if (selection == "remove [src.wedge]")
 			remove_thing = src.wedge
 			src.wedge = null
 
@@ -1179,7 +1181,7 @@
 			eat_thing = src.in_glass
 			src.in_glass = null
 
-		else if (selection == "eat [src.wedge] wedge")
+		else if (selection == "eat [src.wedge]")
 			eat_thing = src.wedge
 			src.wedge = null
 
@@ -1262,7 +1264,7 @@
 			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
 		return
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		src.smash(A)
 
@@ -1275,11 +1277,11 @@
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/glass
 
 	New(mob/Target, obj/item/reagent_containers/food/drinks/drinkingglass/Glass)
-		target= Target
+		..()
+		target = Target
 		glass = Glass
 		icon = glass.icon
 		icon_state = glass.icon_state
-		return
 
 	proc/checkContinue()
 		if (glass.reagents.total_volume <= 0 || !isalive(glassholder) || !glassholder.find_in_hand(glass))
@@ -1625,7 +1627,7 @@
 			G.set_loc(src.loc)
 		qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)

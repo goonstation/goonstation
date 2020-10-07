@@ -53,10 +53,13 @@
 		return 0 // vOv
 
 /**
- * @param {int} tool_flag See _setup.dm for valid TOOL_X values
- * @param {string} [hand] If set, checks only in specific hand, else checks all hands
- * @returns {obj/item | 0} Tool that matched flag (and was in specific hand, if specified)
- */
+	* Given a tool flag, returns the src mob's tool in hand that matches the flag, or null
+	*
+	* * tool_flag {int} - See defines/item.dm for valid TOOL_X values
+	* * hand {string} - If set, checks only in specific hand, else checks all hands
+	*
+	* * return {[obj/item] | 0} - Tool that matched flag (and was in specific hand, if specified)
+	*/
 /mob/proc/find_tool_in_hand(var/tool_flag, var/hand)
 	if (hand)
 		// check specific hand
@@ -520,7 +523,7 @@
 	return 0
 
 /mob/living/carbon/human/get_explosion_resistance()
-	// @todo
+	return GET_MOB_PROPERTY(src, PROP_EXPLOPROT)/100
 
 /mob/proc/spread_blood_clothes(mob/whose)
 	return

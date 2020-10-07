@@ -1424,6 +1424,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	var/sound/shockwave_sound
 
 	New()
+		..()
 		dummyHolder = new()
 		ability = new()
 		dummyHolder.abilities += ability
@@ -1494,6 +1495,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	abstract = 0
 
 	New()
+		..()
 		template = new /obj/critter/domestic_bee
 		stattype = /obj/critter/domestic_bee
 

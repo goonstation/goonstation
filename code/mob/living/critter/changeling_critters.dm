@@ -110,7 +110,7 @@
 	onAbilityStat()
 		..()
 		.= list()
-		.["DNA Collected:"] = owner:absorbed_dna
+		.["DNA Collected:"] = owner?:absorbed_dna
 
 
 /mob/living/critter/changeling/handspider

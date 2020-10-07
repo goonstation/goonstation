@@ -30,7 +30,10 @@
 		return
 	var/list/frontrefs = get_forward_references(D)
 	var/list/dat = list()
-	dat += "<h2>References of \ref[D] - [D]</h2><br><a href='?src=\ref[src];ViewReferences=\ref[D];window_name=[window_name]'>\[Refresh\]</a> &middot; <a href='?src=\ref[src];Refresh=\ref[D];window_name=[window_name]'>\[View Variables\]</a><hr>"
+	var/maybe_type = ""
+	if(istype(D, /datum))
+		maybe_type = "- [D.type]"
+	dat += "<h2>References of \ref[D] - [D] [maybe_type]</h2><br><a href='?src=\ref[src];ViewReferences=\ref[D];window_name=[window_name]'>\[Refresh\]</a> &middot; <a href='?src=\ref[src];Refresh=\ref[D];window_name=[window_name]'>\[View Variables\]</a><hr>"
 	dat += "<h3>Back references - these things hold references to this object.</h3>"
 	dat += "<table>"
 	dat += "<tr><th>Ref</th><th>Name</th><th>Type</th><th>Variable Name</th><th>Follow</th>"

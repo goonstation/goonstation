@@ -3237,7 +3237,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -17548,7 +17548,7 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/device/radio,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/janitor)
@@ -23138,10 +23138,7 @@
 /area/station/chapel/main)
 "bbc" = (
 /obj/table/wood/auto,
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery"
-	},
+/obj/item/clothing/suit/cultist/nerd,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 2

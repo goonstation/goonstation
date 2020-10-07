@@ -62,6 +62,7 @@
 // Did some streamlining here (Convair880).
 /datum/game_mode/proc/declare_completion()
 	var/list/datum/mind/antags = list()
+	var/list/stuff_to_output = list()
 
 	for (var/datum/mind/traitor in traitors)
 		antags.Add(traitor)
@@ -79,18 +80,18 @@
 				traitor_name = "[traitor.key] (character destroyed)"
 
 			if (traitor.special_role == "mindslave")
-				boutput(world, "<B>[traitor_name] was a mindslave!</B>")
+				stuff_to_output += "<B>[traitor_name] was a mindslave!</B>"
 				continue // Objectives are irrelevant for mindslaves and thralls.
 			else if (traitor.special_role == "vampthrall")
-				boutput(world, "<B>[traitor_name] was a vampire's thrall!</B>")
+				stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
 				continue // Ditto.
 			else
 				if (traitor.late_special_role)
-					boutput(world, "<B>[traitor_name] was a late-joining [traitor.special_role]!</B>")
+					stuff_to_output += "<B>[traitor_name] was a late-joining [traitor.special_role]!</B>"
 				else if (traitor.random_event_special_role)
-					boutput(world, "<B>[traitor_name] was a random event [traitor.special_role]!</B>")
+					stuff_to_output += "<B>[traitor_name] was a random event [traitor.special_role]!</B>"
 				else
-					boutput(world, "<B>[traitor_name] was a [traitor.special_role]!</B>")
+					stuff_to_output += "<B>[traitor_name] was a [traitor.special_role]!</B>"
 
 				if (traitor.special_role == "changeling" && traitor.current)
 					var/dna_absorbed = 0
@@ -99,7 +100,7 @@
 						dna_absorbed = max(0, C.absorbtions)
 					else
 						dna_absorbed = "N/A (body destroyed)"
-					boutput(world, "<B>Absorbed DNA:</b> [dna_absorbed]")
+					stuff_to_output += "<B>Absorbed DNA:</b> [dna_absorbed]"
 
 				if (traitor.special_role == "vampire" && traitor.current)
 					var/blood_acquired = 0
@@ -107,24 +108,24 @@
 						blood_acquired = traitor.current.get_vampire_blood(1)
 					else
 						blood_acquired = "N/A (body destroyed)"
-					boutput(world, "<B>Blood acquired:</b>  [blood_acquired][isnum(blood_acquired) ? " units" : ""]")
+					stuff_to_output += "<B>Blood acquired:</b>  [blood_acquired][isnum(blood_acquired) ? " units" : ""]"
 
 				if (traitor.special_role == "werewolf")
 					// Werewolves may not have the feed objective, so we don't want to make this output universal.
 					for (var/datum/objective/specialist/werewolf/feed/O in traitor.objectives)
 						if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
-							boutput(world, "<B>No. of victims:</b> [O.mobs_fed_on.len]")
+							stuff_to_output += "<B>No. of victims:</b> [O.mobs_fed_on.len]"
 
 				if (traitor.special_role == "hunter")
 					// Same reasoning here, really.
 					for (var/datum/objective/specialist/hunter/trophy/T in traitor.objectives)
 						if (traitor.current && T && istype(T, /datum/objective/specialist/hunter/trophy))
 							var/S = traitor.current.get_skull_value()
-							boutput(world, "<B>Combined trophy value:</b> [S]")
+							stuff_to_output += "<B>Combined trophy value:</b> [S]"
 
 				if (traitor.special_role == "blob")
 					var/victims = traitor.blob_absorb_victims.len
-					boutput(world, "<b>\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span></b>")
+					stuff_to_output += "<b>\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span></b>"
 					if (victims)
 						var/absorbed_announce = "They absorbed: "
 						for (var/mob/living/carbon/human/AV in traitor.blob_absorb_victims)
@@ -132,12 +133,12 @@
 								absorbed_announce += "[AV:real_name](NPC), "
 							else
 								absorbed_announce += "<span class='success'>[AV:real_name]([AV:last_client:key])</span>, "
-						boutput(world, absorbed_announce)
+						stuff_to_output += absorbed_announce
 
 				if (traitor.special_role == "traitor")
 					var/purchases = traitor.purchased_traitor_items.len
 					var/surplus = traitor.traitor_crate_items.len
-					boutput(world, "<b>They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]</b>")
+					stuff_to_output += "<b>They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]</b>"
 					if (purchases)
 						var/item_detail = "They purchased: "
 						for (var/i in traitor.purchased_traitor_items)
@@ -148,12 +149,12 @@
 							for (var/i in traitor.traitor_crate_items)
 								item_detail += "[bicon(i:item)] [i:name], "
 							item_detail = copytext(item_detail, 1, -2)
-						boutput(world, item_detail)
+						stuff_to_output += item_detail
 
 				if (traitor.special_role == "spy_thief")
 					var/purchases = traitor.purchased_traitor_items.len
 					var/stolen = traitor.spy_stolen_items.len
-					boutput(world, "<b>They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!</b>")
+					stuff_to_output += "<b>They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!</b>"
 					if (purchases)
 						var/stolen_detail = "Items Thieved: "
 						for (var/i in traitor.spy_stolen_items)
@@ -162,8 +163,8 @@
 						for (var/i in traitor.purchased_traitor_items)
 							rewarded_detail += "[bicon(i:item)] [i:name], "
 						rewarded_detail = copytext(rewarded_detail, 1, -2)
-						boutput(world, stolen_detail)
-						boutput(world, rewarded_detail)
+						stuff_to_output += stolen_detail
+						stuff_to_output += rewarded_detail
 
 				var/count = 1
 				for (var/datum/objective/objective in traitor.objectives)
@@ -173,12 +174,12 @@
 					if (istype(objective, /datum/objective/miscreant)) continue
 
 					if (objective.check_completion())
-						boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='success'><B>Success</B></span>")
+						stuff_to_output += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='success'><B>Success</B></span>"
 						logTheThing("diary",traitor,null,"completed objective: [objective.explanation_text]")
 						if (!isnull(objective.medal_name) && !isnull(traitor.current))
 							traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
 					else
-						boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='alert'>Failed</span>")
+						stuff_to_output += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='alert'>Failed</span>"
 						logTheThing("diary",traitor,null,"failed objective: [objective.explanation_text]. Womp womp.")
 						traitorwin = 0
 					count++
@@ -191,9 +192,9 @@
 					traitor.current.unlock_medal("You're no Elminster!", 1)
 				if (traitor.special_role == "wrestler" && traitor.current)
 					traitor.current.unlock_medal("Cream of the Crop", 1)
-				boutput(world, "<B>The [traitor.special_role] was successful!<B>")
+				stuff_to_output += "<B>The [traitor.special_role] was successful!<B>"
 			else
-				boutput(world, "<B>The [traitor.special_role] has failed!<B>")
+				stuff_to_output += "<B>The [traitor.special_role] has failed!<B>"
 
 	#ifdef DATALOGGER
 			if (traitorwin)
@@ -218,13 +219,15 @@
 			if (traitor.former_antagonist_roles.len)
 				for (var/string in traitor.former_antagonist_roles)
 					if (string == "mindslave")
-						boutput(world, "<B>[traitor_name] was a mindslave!</B>")
+						stuff_to_output += "<B>[traitor_name] was a mindslave!</B>"
 					else if (string == "vampthrall")
-						boutput(world, "<B>[traitor_name] was a vampire's thrall!</B>")
+						stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
 					else
-						boutput(world, "<B>[traitor_name] was a [string]!</B>")
+						stuff_to_output += "<B>[traitor_name] was a [string]!</B>"
 		catch(var/exception/e)
 			logTheThing("debug", null, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+
+	boutput(world, stuff_to_output.Join("<br>"))
 
 	return 1
 

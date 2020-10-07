@@ -1,4 +1,4 @@
-// Highly modular HUD for critters.
+/// Highly modular HUD for critters.
 /datum/hud/critter
 	var/list/hands = list()
 	var/list/equipment = list()
@@ -32,6 +32,7 @@
 	var/tre = 0
 
 	New(M)
+		..()
 		master = M
 
 		var/hand_s = -round((master.hands.len - 1) / 2)
@@ -208,6 +209,7 @@
 				if ("health")
 					boutput(master, "<span class='notice'>Your health: [master.health]/[master.max_health]</span>")
 				if ("rest")
+					if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 					if(master.ai_active && !master.hasStatus("resting"))
 						master.show_text("You feel too restless to do that!", "red")
 					else

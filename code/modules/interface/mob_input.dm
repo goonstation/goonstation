@@ -83,7 +83,8 @@
 		if (abilityHolder.topBarRendered)
 			if (abilityHolder.click(target, params))
 				return 100
-
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, target, params) & RETURN_CANCEL_CLICK)
+		return 100
 	//Pull cancel 'hotkey'
 	if (src.pulling && get_dist(src,target) > 1)
 		if (!islist(params))
@@ -133,10 +134,13 @@
 				unpull_particle(src,pulling)
 			src.pulling = null
 
-/** build_keybind_styles: Additiviely applies keybind styles onto the client's keymap.
- *	To be extended upon in children types that want to have special keybind handling.
- *	Call this proc first, and then do your specific application of keybind styles.
- */
+/**
+	* Additiviely applies keybind styles onto the client's keymap.
+	*
+	* To be extended upon in children types that want to have special keybind handling.
+	*
+	* Call this proc first, and then do your specific application of keybind styles.
+	*/
 /mob/proc/build_keybind_styles(client/C)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -145,14 +149,16 @@
 
 	C.apply_keybind("base")
 
-	if (C.preferences?.use_azerty) //runtime : preferences is null? idk why, bandaid for now
+	if (C.preferences?.use_azerty) // runtime : preferences is null? idk why, bandaid for now
 		C.apply_keybind("base_azerty")
 	if (C.tg_controls)
 		C.apply_keybind("base_tg")
 
-/** apply_custom_keybinds: Applies the client's custom keybind changelist, fetched from the cloud.
- *	Called by build_keybind_styles if not resetting the custom keybinds of a u
- */
+/**
+	* Applies the client's custom keybind changelist, fetched from the cloud.
+	*
+	* Called by build_keybind_styles if not resetting the custom keybinds of a u
+	*/
 /mob/proc/apply_custom_keybinds(client/C)
 	PROTECTED_PROC(TRUE)
 
@@ -165,9 +171,11 @@
 		var/datum/keymap/new_map = new /datum/keymap(json_decode(fetched_keylist))
 		C.keymap.overwrite_by_action(new_map)
 
-/** reset_keymap: Builds the mob's keybind styles, checks for valid movement controllers, and finally sets the keymap.
- *  Called on: Login, Vehicle change, WASD/TG/AZERTY toggle, Keybind menu Reset
- */
+/**
+	* Builds the mob's keybind styles, checks for valid movement controllers, and finally sets the keymap.
+	*
+	* Called on: Login, Vehicle change, WASD/TG/AZERTY toggle, Keybind menu Reset
+	*/
 /mob/proc/reset_keymap()
 	if (src.client)
 		src.client.applied_keybind_styles = list() //Reset currently applied styles

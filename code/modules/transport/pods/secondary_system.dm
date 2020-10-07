@@ -797,14 +797,17 @@
 /obj/item/shipcomponent/secondary_system/crash/proc/dispense()
 	for (var/mob/living/B in ship.contents)
 		boutput(B, "<span class='alert'>You eject!</span>")
-		ship.eject(B)
+		ship.leave_pod(B)
 		ship.visible_message("<span class='alert'>[B] launches out of the [ship]!</span>")
 		step(B,ship.dir,0)
 		step(B,ship.dir,0)
 		step(B,ship.dir,0)
 		step_rand(B, 0)
 		//B.remove_shipcrewmember_powers(ship.weapon_class)
-	qdel(ship)
+	for(var/obj/item/shipcomponent/SC in src)
+		SC.on_shipdeath()
+	SPAWN_DBG(0) //???? otherwise we runtime
+		qdel(ship)
 
 /obj/item/shipcomponent/secondary_system/crash/proc/crashtime(atom/A)
 	var/tempstate = ship.icon_state
@@ -839,11 +842,15 @@
 			boutput(ship.pilot, "<span class='alert'><B>You crash through the wall!</B></span>")
 			in_bump = 0
 		if(istype(A, /turf/simulated/floor))
-			qdel(A)
+			var/turf/T = A
+			if(prob(50))
+				T.ReplaceWithLattice()
+			else
+				T.ReplaceWithSpace()
 	if(ismob(A))
 		var/mob/M = A
 		boutput(ship.pilot, "<span class='alert'><B>You crash into [M]!</B></span>")
-		shake_camera(M, 8, 3)
+		shake_camera(M, 8, 16)
 		boutput(M, "<span class='alert'><B>The [src] crashes into [M]!</B></span>")
 		M.changeStatus("stunned", 80)
 		M.changeStatus("weakened", 5 SECONDS)

@@ -11,11 +11,10 @@
 	event_handler_flags = USE_HASENTERED
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cleaner", 5)
-		R.add_reagent("water", 5)
+		..()
+		src.create_reagents(10)
+		reagents.add_reagent("cleaner", 5)
+		reagents.add_reagent("water", 5)
 		SPAWN_DBG(0.5 SECONDS)
 			if (src.float_anim)
 				for (var/atom/movable/A in src.loc)

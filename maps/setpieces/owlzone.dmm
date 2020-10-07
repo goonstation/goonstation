@@ -1316,7 +1316,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "do" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "dp" = (
@@ -1713,7 +1713,7 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "ej" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "u_ketchup"
 	},
@@ -2127,7 +2127,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "fh" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "tracks";
 	dir = 8
@@ -3063,7 +3063,7 @@
 /turf/unsimulated/floor/engine,
 /area/owlery/Owlmait)
 "hp" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "hq" = (
@@ -5931,7 +5931,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/owlery/owleryhall)
 "nH" = (
-/obj/item/casing/shotgun_red,
+/obj/item/casing/shotgun/red,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "nI" = (
@@ -8413,7 +8413,7 @@
 	},
 /area/owlery/owleryhall)
 "tl" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/greenwhite{
 	icon_state = "greenwhite";
 	dir = 8
@@ -8530,7 +8530,7 @@
 	dir = 1;
 	name = "exhibit window"
 	},
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "tw" = (
@@ -8726,7 +8726,7 @@
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
 "tO" = (
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "tP" = (
@@ -9725,7 +9725,7 @@
 /turf/unsimulated/floor/grime,
 /area/owlery/Owlmait)
 "vE" = (
-/obj/item/casing/shotgun_red,
+/obj/item/casing/shotgun/red,
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "vF" = (
@@ -10127,7 +10127,7 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood/tracks,
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "wy" = (
@@ -10402,7 +10402,7 @@
 	dir = 2;
 	name = "exhibit window"
 	},
-/obj/item/casing/shotgun_blue,
+/obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "wV" = (

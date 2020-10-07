@@ -71,6 +71,7 @@
   * * datum/P the parent datum this component reacts to signals from
   */
 /datum/component/New(list/raw_args)
+	..()
 	parent = raw_args[1]
 	var/list/arguments = raw_args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
@@ -581,8 +582,3 @@
 
 /datum/proc/AdminAddComponent(...)
 	_AddComponent(args)
-
-//for being appended to tooltips.    //Never iterate over all components on an item when making a tooltip, at least until someone refactors my code -Tarmunora
-/datum/component/proc/getTooltipDesc()
-	SHOULD_CALL_PARENT(1)
-	return list()

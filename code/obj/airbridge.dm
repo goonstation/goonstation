@@ -183,6 +183,9 @@
 			sleep(1 SECOND)
 			for(var/obj/light in my_lights)
 				light.filters = null
+				var/obj/machinery/light/l = light
+				if(istype(l))
+					l.seton(1)
 
 
 			working = 0

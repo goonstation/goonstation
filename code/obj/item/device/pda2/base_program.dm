@@ -17,6 +17,7 @@
 		extension = "PSCAN"
 
 	New(obj/holding as obj)
+		..()
 		if(holding)
 			src.holder = holding
 
@@ -86,8 +87,7 @@
 			if(!src.master || !src.holder)
 				return
 
-			. = " | <a href='byond://?src=\ref[src];quit=1'>Main Menu</a>"
-			. += " | <a href='byond://?src=\ref[src.master];refresh=1'>Refresh</a>"
+			. = "<a href='byond://?src=\ref[src];quit=1'>Main Menu</a> | <a href='byond://?src=\ref[src.master];refresh=1'>Refresh</a>"
 
 
 		post_signal(datum/signal/signal, newfreq)

@@ -44,9 +44,12 @@
 /obj/item/lamp_manufacturer
 	name = "miniaturized lamp manufacturer"
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings."
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "borglampman-white"
-	var/prefix = "borglampman"
+	icon = 'icons/obj/items/tools/lampman.dmi'
+	icon_state = "borg-white"
+	var/prefix = "borg"
+	var/metal_ammo = 0
+	var/max_ammo = 20
+	var/load_interval = 5
 
 	var/cost_broken = 50 //For broken/burned lamps (the old lamp gets recycled in the tool)
 	var/cost_empty = 75
@@ -95,7 +98,32 @@
 	get_desc()
 		. = "It is currently set to dispense [setting] lamps."
 
-
+/obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
+	if (issilicon(user))
+		boutput(user,"You don't have to load this, you're a robot! It uses power instead.")
+	else
+		if (istype(W, /obj/item/sheet))
+			var/obj/item/sheet/S = W
+			if (S.material.material_flags & MATERIAL_METAL)
+				if (src.metal_ammo == src.max_ammo)
+					boutput(user, "The lamp manufacturer is full.")
+				else
+					var/loadAmount = 0
+					if (S.amount < src.load_interval)
+						loadAmount = S.amount
+					else
+						loadAmount = src.load_interval
+					if ((src.metal_ammo + loadAmount) > src.max_ammo)
+						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
+					src.metal_ammo += loadAmount
+					S.consume_sheets(loadAmount)
+					playsound(get_turf(src), "sound/machines/click.ogg", 25, 1)
+					src.inventory_counter.update_number(src.metal_ammo)
+					boutput(user, "You load the metal sheet into the lamp manufacturer.")
+			else
+				boutput(user, "You can't load that! You need metal sheets.")
+		else
+			..()
 
 /obj/item/robot_chemaster
 	name = "mini-ChemMaster"
@@ -170,7 +198,7 @@
 
 	attack_self(var/mob/user as mob)
 		if (!vend_this)
-			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Milk")
+			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water")
 			src.vend_this = pickme
 			user.show_text("[pickme] selected. Click with the synthesizer on yourself to pick a different item.", "blue")
 			return
@@ -207,8 +235,8 @@
 							new /obj/item/reagent_containers/food/snacks/moon_pie/jaffa(get_turf(src))
 				if ("Cola")
 					new /obj/item/reagent_containers/food/drinks/cola(get_turf(src))
-				if ("Milk")
-					new /obj/item/reagent_containers/food/drinks/milk(get_turf(src))
+				if ("Water")
+					new /obj/item/reagent_containers/food/drinks/bottle/bottledwater(get_turf(src))
 				else
 					user.show_text("<b>ERROR</b> - Invalid item! Resetting...", "red")
 					logTheThing("debug", user, null, "<b>Convair880</b>: [user]'s food synthesizer was set to an invalid value.")
@@ -237,12 +265,11 @@
 	splash_all_contents = 0
 	w_class = 3.0
 	rc_flags = RC_FULLNESS
+	initial_volume = 120
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(120)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("oil", 60)
+		..()
+		reagents.add_reagent("oil", 60)
 
 /*
 Jucier container.
@@ -409,8 +436,7 @@ ported and crapped up by: haine
 			var/trans = src.active_tank.reagents.trans_to(target, amt_to_transfer)
 			user.show_text("You transfer [trans] unit\s of the solution to [target]. [active_tank.reagents.total_volume] unit\s remain.", "blue")
 			playsound(loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 0) // Play a sound effect.
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			return ..() // call your parents!!
 

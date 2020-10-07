@@ -1,3 +1,5 @@
+#define PLATE_COST 2
+
 /obj/machinery/glass_recycler
 	name = "glass recycler"//"Kitchenware Recycler"
 	desc = "A machine that recycles glass shards into drinking glasses, beakers, or other glass things."
@@ -17,6 +19,10 @@
 		if(istype(W.loc, /obj/item/storage))
 			var/obj/item/storage/storage = W.loc
 			storage.hud.remove_object(W)
+		if(W.cant_drop)
+			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
+			return
+
 		if (istype(W, /obj/item/reagent_containers/glass/beaker))
 			if (istype(W, /obj/item/reagent_containers/glass/beaker/large))
 				glass_amt += 2
@@ -57,8 +63,16 @@
 				qdel(W)
 			return 1
 		else if (istype(W, /obj/item/plate))
-			glass_amt += 2
+			glass_amt += PLATE_COST
 			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
+			user.u_equip(W)
+			qdel(W)
+			return 1
+		else if (istype(W, /obj/item/platestack))
+			var/obj/item/platestack/PS = W
+			var/plateCount = PS.platenum + 1
+			glass_amt += plateCount * PLATE_COST
+			user.visible_message("<span class='notice'>[user] inserts [plateCount] plates into [src].</span>")
 			user.u_equip(W)
 			qdel(W)
 			return 1
@@ -162,7 +176,7 @@
 				src.glass_amt -= 1
 			if("plate")
 				G = new /obj/item/plate(get_turf(src))
-				src.glass_amt -= 2
+				src.glass_amt -= PLATE_COST
 			if("bowl")
 				G = new /obj/item/reagent_containers/food/drinks/bowl(get_turf(src))
 				src.glass_amt -= 1
@@ -243,3 +257,5 @@
 		if(G)
 			src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
 			return
+
+#undef PLATE_COST

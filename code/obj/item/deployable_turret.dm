@@ -110,8 +110,7 @@
 
 		var/matrix/M = matrix()
 		src.transform = M.Turn(src.external_angle)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		if(active)
 			set_projectile()
 

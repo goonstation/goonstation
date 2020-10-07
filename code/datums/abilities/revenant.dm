@@ -326,26 +326,26 @@
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
 					M.changeStatus("weakened", 2 SECONDS)
 			animate_revenant_shockwave(T, 1, 3)
-			SPAWN_DBG(0.3 SECONDS)
-				for (var/mob/living/carbon/human/M in T)
-					if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
-						M.changeStatus("weakened", 6 SECONDS)
-						M.show_message("<span class='alert'>A shockwave sweeps you off your feet!</span>")
-				for (var/obj/machinery/light/L in T)
-					L.broken()
-				for (var/obj/window/W in T)
-					W.health = 0
-					W.smash()
-				if (istype(T, /turf/simulated/wall))
-					T:dismantle_wall()
-				else if (istype(T, /turf/simulated/floor) && prob(75))
-					if (prob(50))
-						T:to_plating()
-					else
-						T:break_tile()
-				SPAWN_DBG(1 SECOND)
-					T.pixel_y = 0
-					T.transform = null
+			sleep(0.3 SECONDS)
+			for (var/mob/living/carbon/human/M in T)
+				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
+					M.changeStatus("weakened", 6 SECONDS)
+					M.show_message("<span class='alert'>A shockwave sweeps you off your feet!</span>")
+			for (var/obj/machinery/light/L in T)
+				L.broken()
+			for (var/obj/window/W in T)
+				W.health = 0
+				W.smash()
+			if (istype(T, /turf/simulated/wall))
+				T:dismantle_wall()
+			else if (istype(T, /turf/simulated/floor) && prob(75))
+				if (prob(50))
+					T:to_plating()
+				else
+					T:break_tile()
+			sleep(1 SECOND)
+			T.pixel_y = 0
+			T.transform = null
 
 	cast()
 		var/list/next = list()
