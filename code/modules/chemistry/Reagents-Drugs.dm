@@ -447,6 +447,7 @@ datum
 							var/speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
 							chat_text = make_chat_maptext(bee, text, "color: [rgb(194,190,190)];" + speechpopupstyle, alpha = 140)
 						M.show_message("[bee] buzzes \"[text]\"",2, assoc_maptext = chat_text)
+						break
 
 				if(probmult(5))
 					M.emote(pick("laugh","giggle","smile"))
