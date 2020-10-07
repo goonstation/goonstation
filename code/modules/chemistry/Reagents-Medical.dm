@@ -602,6 +602,8 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.getStatusDuration("radiation") && prob(80))
 					M.changeStatus("radiation", -20 * mult, 1)
+				if(M.getStatusDuration("neutron_radiation") && prob(80))
+					M.changeStatus("neutron_radiation", -20 * mult, 1)
 
 				M.take_toxin_damage(-0.5 * mult)
 				M.HealDamage("All", 0, 0, 0.5 * mult)

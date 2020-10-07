@@ -6,8 +6,8 @@
 	var/max_pulses_per_event = 100
 	var/min_delay_between_pulses = 2
 	var/max_delay_between_pulses = 8
-	var/min_pulse_lifespan = 8
-	var/max_pulse_lifespan = 25
+	var/min_pulse_lifespan = 10
+	var/max_pulse_lifespan = 60
 
 	event_effect()
 		..()
@@ -19,8 +19,10 @@
 		for (var/pulses = pulse_amt, pulses > 0, pulses--)
 			pulseloc = pick(wormholeturfs)
 			pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
-			new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan)
+			pick(prob(50); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(50); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
 			sleep(pulse_delay)
+
+
 
 /obj/anomaly/radioactive_burst
 	name = "shimmering anomaly"
@@ -36,7 +38,7 @@
 	var/mutate_prob = 25
 	var/bad_mut_prob = 75
 
-	New(var/loc,var/lifespan = 45)
+	New(var/loc,var/lifespan = 120)
 		..()
 		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
@@ -78,7 +80,7 @@
 	alpha = 100
 	var/sound/pulse_sound = 'sound/weapons/ACgun1.ogg'
 	var/rad_strength = 10
-	var/pulse_range = 3
+	var/pulse_range = 2
 	var/mutate_prob = 10
 	var/bad_mut_prob = 90
 

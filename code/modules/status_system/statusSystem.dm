@@ -634,7 +634,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		id = "neutron_radiation"
 		name = "Neutron Irradiated"
 		desc = ""
-		icon_state = "radiation1"
+		icon_state = "nradiation1"
 		unique = 1
 
 		tickSpacing = 1.5 SECONDS
@@ -660,7 +660,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				stage = optional
 			else
 				stage = 5
-			icon_state = "radiation[stage]"
+			icon_state = "nradiation[stage]"
 			return
 
 		onChange(var/optional=null)
@@ -668,7 +668,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				stage = optional
 			else
 				stage = 5
-			icon_state = "radiation[stage]"
+			icon_state = "nradiation[stage]"
 			return
 
 		onUpdate(var/timePassed)
@@ -696,7 +696,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 					if(prob(chance) && ismob(owner))
 						var/mob/M = owner
 						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
-							M.changeStatus("weakened", 3 SECONDS)
+							M.changeStatus("weakened", 5 SECONDS)
 							boutput(M, "<span class='alert'>You feel weak.</span>")
 							M.emote("collapse")
 
@@ -748,7 +748,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 							boutput(M, "<span class='alert'>You mutate!</span>")
 							M:bioHolder:RandomEffect("either")
 
-			icon_state = "radiation[stage]"
+			icon_state = "nradiation[stage]"
 
 			return ..(timePassed)
 
