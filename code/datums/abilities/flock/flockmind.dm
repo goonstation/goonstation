@@ -321,12 +321,14 @@
 	switch(structurewanted)
 		if("cancel")
 			return
+/*
 		if("Egg")
 			structurewantedtype = /obj/flock_structure/egg//DEBUG
 			resourcecost = 25
 		if("Rift")
 			structurewantedtype = /obj/flock_structure/rift//DEBUG
 			resourcecost = 200
+*/
 		if("Collector")
 			structurewantedtype = /obj/flock_structure/collector
 			resourcecost = 200
