@@ -1,5 +1,7 @@
 
 (t)wed oct 07 20
+(u)Kyle
+(+)Kudzumen heal now heals more, removes implanted bullets, heals organs, and can be used on yourself (at reduced efficacy).
 (u)ThePotato97
 (p)2312
 (e)🆕|feature
