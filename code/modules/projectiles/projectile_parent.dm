@@ -934,6 +934,9 @@ datum/projectile/snowball
 
 	P.set_loc(S)
 	P.proj_data = DATA
+	if(!isnull(projsource))
+		SEND_SIGNAL(projsource, COMSIG_ALTER_PROJECTILE, P)
+	DATA = P.proj_data //could have been changed by alter_projectile
 	P.set_icon()
 	P.shooter = shooter
 	P.name = DATA.name
@@ -966,8 +969,6 @@ datum/projectile/snowball
 
 	P.xo = xo
 	P.yo = yo
-	if(!isnull(projsource))
-		SEND_SIGNAL(projsource, COMSIG_ALTER_PROJECTILE, P)
 
 	if(!DATA.max_range)
 		if(DATA.dissipation_rate <= 0)
