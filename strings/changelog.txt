@@ -1,5 +1,9 @@
 
 (t)thu oct 08 20
+(u)ThePotato97
+(p)2358
+(e)⚖🐛🆕📄|balance, bug, feature, tgui
+(+)Only head IDs can delete cloner records now.
 (u)Jawns
 (p)2373
 (e)🐛|bug
