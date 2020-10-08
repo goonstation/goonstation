@@ -1,5 +1,9 @@
 
 (t)thu oct 08 20
+(u)adharainspace
+(p)2363
+(e)|
+(+)if you die with a health implant, the pda message thats sent out now includes whether or not you were clonescanned.
 (u)Nebulacrity
 (p)2350
 (e)🎨|sprites
