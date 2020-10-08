@@ -1,4 +1,7 @@
 
+(t)thu oct 08 20
+(u)Tarmunora
+(+)Gunbot antag critters get armor equal to secvest.
 (t)wed oct 07 20
 (u)Kyle
 (+)Kudzumen heal now heals more, removes implanted bullets, heals organs, and can be used on yourself (at reduced efficacy).
