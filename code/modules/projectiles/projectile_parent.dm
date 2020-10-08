@@ -934,9 +934,6 @@ datum/projectile/snowball
 
 	P.set_loc(S)
 	P.proj_data = DATA
-	if(!isnull(projsource))
-		SEND_SIGNAL(projsource, COMSIG_ALTER_PROJECTILE, P)
-	DATA = P.proj_data //could have been changed by alter_projectile
 	P.set_icon()
 	P.shooter = shooter
 	P.name = DATA.name
@@ -978,6 +975,8 @@ datum/projectile/snowball
 	else
 		P.max_range = DATA.max_range
 
+	if(!isnull(projsource))
+		SEND_SIGNAL(projsource, COMSIG_ALTER_PROJECTILE, P)
 	return P
 
 /proc/stun_bullet_hit(var/obj/projectile/O, var/mob/living/L)
