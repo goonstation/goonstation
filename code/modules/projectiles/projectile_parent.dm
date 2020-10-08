@@ -966,8 +966,6 @@ datum/projectile/snowball
 
 	P.xo = xo
 	P.yo = yo
-	if(!isnull(projsource))
-		SEND_SIGNAL(projsource, COMSIG_ALTER_PROJECTILE, P)
 
 	if(!DATA.max_range)
 		if(DATA.dissipation_rate <= 0)
@@ -977,6 +975,8 @@ datum/projectile/snowball
 	else
 		P.max_range = DATA.max_range
 
+	if(!isnull(projsource))
+		SEND_SIGNAL(projsource, COMSIG_ALTER_PROJECTILE, P)
 	return P
 
 /proc/stun_bullet_hit(var/obj/projectile/O, var/mob/living/L)
