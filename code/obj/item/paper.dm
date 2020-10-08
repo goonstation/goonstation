@@ -1,5 +1,6 @@
 #define MODE_READING 0
 #define MODE_WRITING 1
+#define MODE_STAMPING 2
 #define MAX_PAPER_LENGTH 5000
 #define MAX_PAPER_STAMPS 30
 #define MAX_PAPER_STAMPS_OVERLAYS 4
@@ -24,7 +25,23 @@
 	burn_output = 900
 	burn_possible = 2
 	health = 10
-
+	var/stamp_assets = list(
+		"stamp-honk" = 'tg/icons/stamp_icons/large_stamp-clown.png',
+		"stamp-deny" = 'tg/icons/stamp_icons/large_stamp-deny.png',
+		"stamp-ok" = 'tg/icons/stamp_icons/large_stamp-ok.png',
+		"stamp-hop" = 'tg/icons/stamp_icons/large_stamp-hop.png',
+		"stamp-cmo" = 'tg/icons/stamp_icons/large_stamp-cmo.png',
+		"stamp-ce" = 'tg/icons/stamp_icons/large_stamp-ce.png',
+		"stamp-hos" = 'tg/icons/stamp_icons/large_stamp-hos.png',
+		"stamp-rd" = 'tg/icons/stamp_icons/large_stamp-rd.png',
+		"stamp-cap" = 'tg/icons/stamp_icons/large_stamp-cap.png',
+		"stamp-qm" = 'tg/icons/stamp_icons/large_stamp-qm.png',
+		"stamp-law" = 'tg/icons/stamp_icons/large_stamp-law.png',
+		"stamp-chap" = 'tg/icons/stamp_icons/large_stamp-chap.png',
+		"stamp-mime" = 'tg/icons/stamp_icons/large_stamp-mime.png',
+		"stamp-centcom" = 'tg/icons/stamp_icons/large_stamp-centcom.png',
+		"stamp-syndicate" = 'tg/icons/stamp_icons/large_stamp-syndicate.png'
+	)
 	var/list/form_startpoints
 	var/list/form_endpoints
 
@@ -63,7 +80,6 @@
 	else
 		src.pixel_y = rand(-8, 8)
 		src.pixel_x = rand(-9, 9)
-
 
 /obj/item/paper/pooled()
 
@@ -240,7 +256,7 @@
 	.["max_length"] = MAX_PAPER_LENGTH
 	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
 	.["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling?
-//	.["stamps"] = stamps
+	.["stamps"] = stamps
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
@@ -263,14 +279,13 @@
 		data["is_crayon"] = FALSE
 		data["stamp_class"] = "FAKE"
 		data["stamp_icon_state"] = "FAKE"
-	//else if(istype(O, /obj/item/stamp))
-		//var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
-		//data["stamp_icon_state"] = O.icon_state
-		//data["stamp_class"] = sheet.icon_class_name(O.icon_state)
-		//data["edit_mode"] = MODE_STAMPING
-		//data["pen_font"] = "FAKE"
-		//data["pen_color"] = "FAKE"
-		//data["is_crayon"] = FALSE
+	else if(istype(O, /obj/item/stamp))
+		data["stamp_icon_state"] = O.icon_state
+		data["stamp_class"] = stamp_assets[O.icon_state]
+		data["edit_mode"] = MODE_STAMPING
+		data["pen_font"] = "FAKE"
+		data["pen_color"] = "FAKE"
+		data["is_crayon"] = FALSE
 	else
 		data["edit_mode"] = MODE_READING
 		data["pen_font"] = "FAKE"
@@ -1232,7 +1247,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		src.desc = "A rubber stamp for stamping important documents."
 		return
 
-/obj/item/stamp/proc/get_stamp_text()
+/* /obj/item/stamp/proc/get_stamp_text()
 	var/T = null;
 	switch (src.current_mode)
 		if ("Approved")
@@ -1258,7 +1273,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		else
 			T = src.current_mode
 	return "<span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 16px; color: red;'><b>\[</b>[T]<b>\]</b></span>"
-
+ */
 /obj/item/stamp/attackby(obj/item/C as obj, mob/user as mob)// assignment with ID
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
@@ -1351,7 +1366,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		icon_state = "stamp-honk"
 		is_reassignable = 0
 		assignment = "Clown"
-		get_stamp_text()
+/* //		get_stamp_text()
 			var/T = null;
 			switch (src.current_mode)
 				if ("Approved")
@@ -1371,7 +1386,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 				else
 					T = src.current_mode
 			return "<span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 24px; color: red;'><b>\[</b><span style='font-family: Comic Sans MS;'>[T]</span><b>\]</b></span>"
-
+ */
 /* who did this
 /obj/item/stamp/New()
 

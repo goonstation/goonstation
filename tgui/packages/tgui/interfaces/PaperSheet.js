@@ -6,7 +6,7 @@
  * @author Changes ThePotato97
  * @license MIT
  */
-
+import { resolveAsset } from '../assets';
 import { classes } from 'common/react';
 import { vecScale, vecSubtract } from 'common/vector';
 import DOMPurify from 'dompurify';
@@ -222,7 +222,7 @@ const Stamp = (props, context) => {
     <div
       className={classes([
         'paper121x54',
-        image.sprite,
+        image.icon,
       ])}
       style={stamp_trasform} />
   );
@@ -313,7 +313,7 @@ class PaperSheetStamper extends Component {
   }
 
   handleMouseMove(e) {
-    const pos = this.findStampPosition(e);
+    const pos = [this.findStampPosition(e)];
     // center offset of stamp
     pauseEvent(e);
     this.setState({ x: pos[0], y: pos[1] });
@@ -629,6 +629,10 @@ export const PaperSheet = (props, context) => {
         <Box
           fillPositionedParent
           backgroundColor={backgroundColor}>
+          {stamp_class}
+          <div className="container">
+            <img src={resolveAsset(stamp_class.icon)} />
+          </div>
           {decide_mode(edit_mode)}
         </Box>
       </Window.Content>
