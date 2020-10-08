@@ -12,6 +12,8 @@
 (+)Radiation burst event fixed to properly apply radiation to mobs caught inside the circles.
 (u)Spooktober
 (*)A mysterious altar has a chance at spawning in the chapel. Please investigate, but do so at your own risk. Sprites by Makki.
+(u)Kyle & BatElite
+(*)Botanists have several job rewards to go with their job XP. Changes to watering can sprites. Sprites by BatElite.
 (t)tue oct 06 20
 (u)Flaborized
 (p)2354
