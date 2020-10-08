@@ -804,7 +804,7 @@
 	if (!singing && dd_hasprefix(message, singing_prefix) && !src.stat)
 		singing = 1
 		message = copytext(message, 2)
-		if (src.traitHolder.hasTrait("scottish"))
+		if (src.bioHolder.HasEffect("accent_scots"))
 			danny_index++
 			if (danny_index > 16)
 				danny_index = 1
@@ -828,7 +828,7 @@
 				VT = "radio"
 				ending = 0
 
-		if (singing || src.traitHolder.hasTrait("elvis"))
+		if (singing || src.bioHolder.HasEffect("accent_elvis"))
 			speech_bubble.icon_state = "note"
 			if (ending == "!")
 				singing = "loud"

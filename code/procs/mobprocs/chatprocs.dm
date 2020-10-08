@@ -428,10 +428,10 @@
 	if (src.get_brain_damage() >= 60)
 		speechverb = pick("says","stutters","mumbles","slurs")
 
-	if (src.singing && src.traitHolder.hasTrait("scottish"))
+	if (src.singing && src.bioHolder.HasEffect("accent_scots"))
 		text = danny_boy(src.danny_index)
 
-	if (src.singing || (src.traitHolder.hasTrait("elvis")))
+	if (src.singing || (src.bioHolder.HasEffect("accent_elvis")))
 		// use note icons instead of normal quotes
 		var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/note.png")]\">"
 		if (singing == "loud" || loudness > 0)
@@ -441,17 +441,17 @@
 			first_quote = note_img
 			second_quote = note_img
 		// select appropriate singing verb
-		if (src.traitHolder.hasTrait("smoker"))
+		if (src.bioHolder.HasEffect("smoker"))
 			speechverb = "rasps"
 			if (singing == "loud" || loudness > 0)
 				speechverb = "sings Tom Waits style"
 		else if (src.traitHolder.hasTrait("french"))
-			speechverb = "sings [pick("Charles Trenet", "Serge Gainsborough", "Edith Piaf", "in a creepy french")] style"
-		else if (src.traitHolder.hasTrait("swedish"))
+			speechverb = "sings [pick("Charles Trenet", "Serge Gainsborough", "Edith Piaf")] style"
+		else if (src.bioHolder.HasEffect("accent_swedish"))
 			speechverb = "sings like a muppet"
-		else if (src.traitHolder.hasTrait("scottish"))
+		else if (src.bioHolder.HasEffect("accent_scots"))
 			speechverb = pick("laments", "softly sings", "croons", "sorrowfully intones", "sobs", "bemoans")
-		else if (src.traitHolder.hasTrait("chav"))
+		else if (src.bioHolder.HasEffect("accent_chav"))
 			speechverb = "raps grime"
 		else if (loudness < 0)
 			speechverb = pick("hums", "lullabies", "softly intones")
