@@ -298,7 +298,7 @@ THROWING DARTS
 
 	proc/check_for_valid_record() //returns the area of the cloner where we found our valid record - jank, but idk
 		if (src.owner && src.owner.ckey)
-			for(var/obj/machinery/computer/cloning/comp as() in by_type[/obj/machinery/computer/cloning])
+			for(var/obj/machinery/computer/cloning/comp as anything in by_type[/obj/machinery/computer/cloning])
 				if (comp.find_record(src.owner.ckey))
 					return get_area(comp)
 		return null
