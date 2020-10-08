@@ -127,6 +127,8 @@
 
 	can_lie = 1
 
+	var/const/singing_prefix = "%"
+
 /mob/living/New()
 	..()
 	vision = new()
@@ -661,6 +663,7 @@
 				src.emote("handpuppet")
 
 /mob/living/say(var/message, ignore_stamina_winded)
+	singing=0;
 	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
@@ -797,6 +800,11 @@
 						secure_headset_mode = lowertext(copytext(message,2,3))
 					message = copytext(message, 3)
 
+	// check for singing prefix
+	if (!singing && dd_hasprefix(message, singing_prefix) && !src.stat)
+		singing = 1
+		message = copytext(message, 2)
+	
 	forced_language = get_special_language(secure_headset_mode)
 
 	message = trim(message)
@@ -816,7 +824,11 @@
 				VT = "radio"
 				ending = 0
 
-		if (ending == "?")
+		if (singing || src.traitHolder.hasTrait("elvis"))
+			speech_bubble.icon_state = "note"
+			if (ending == "!")
+				singing = "loud"
+		else if (ending == "?")
 			playsound(src, sounds_speak["[VT]?"], 55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
 			speech_bubble.icon_state = "?"
 		else if (ending == "!")
@@ -1045,6 +1057,8 @@
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
 	message = src.say_quote(messages[1])
+		
+
 	if (italics)
 		message = "<i>[message]</i>"
 

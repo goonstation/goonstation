@@ -395,6 +395,8 @@
 	var/loudness = 0
 	var/font_accent = null
 	var/style = ""
+	var/first_quote = " \""
+	var/second_quote = "\""
 
 	if (ending == "?")
 		speechverb = speechverb_ask
@@ -426,6 +428,39 @@
 	if (src.get_brain_damage() >= 60)
 		speechverb = pick("says","stutters","mumbles","slurs")
 
+	if (src.singing || (src.traitHolder.hasTrait("elvis")))
+		// use note icons instead of normal quotes
+		var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/note.png")]\">"
+		if (singing == "loud" || loudness > 0)
+			first_quote = "[note_img][note_img]"
+			second_quote = first_quote
+		else
+			first_quote = note_img
+			second_quote = note_img
+		// select appropriate singing verb
+		if (src.traitHolder.hasTrait("smoker"))
+			speechverb = "rasps"
+			if (singing == "loud" || loudness > 0)
+				speechverb = "sings Tom Waits style"
+		else if (src.traitHolder.hasTrait("french"))
+			speechverb = "sings [pick("Charles Trenet", "Serge Gainsborough", "Edith Piaf", "in a creepy french")] style"
+		else if (src.traitHolder.hasTrait("swedish"))
+			speechverb = "sings like a muppet"
+		else if (src.traitHolder.hasTrait("scottish"))
+			speechverb = "sings a [pick("lament", "ballad")]"
+		else if (src.traitHolder.hasTrait("chav"))
+			speechverb = "raps grime"
+		else if (src.traitHolder.hasTrait("finnish") && rand(3) < 1)
+			speechverb = "sings a Sibelius air"
+		else if (loudness < 0)
+			speechverb = "hums"
+		else if (loudness > 0)
+			speechverb = "belts out"
+		else
+			speechverb = pick("sings",  "croons")
+		text = "<i>[text]</i>"
+		style = "color:thistle;"
+
 	if (special)
 		if (special == "gasp_whisper")
 			speechverb = speechverb_gasp
@@ -450,11 +485,11 @@
 	if(style)
 		style = " style=\"[style]\""
 	if (loudness > 0)
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null]<big><strong><b>[text]</b></strong></big>[font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<big><strong><b [style? style : ""]>[text]</b></strong></big>[font_accent ? "</font>" : null][second_quote]"
 	else if (loudness < 0)
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null]<small>[text]</small>[font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<small [style? style : ""]>[text]</small>[font_accent ? "</font>" : null][second_quote]"
 	else
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null][text][font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [style? style : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
 /mob/proc/emote(var/act, var/voluntary = 0)
 	return
