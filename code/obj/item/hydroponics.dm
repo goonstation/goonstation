@@ -443,7 +443,7 @@
 		//check if target is a plant pot to paste in the cosmetic plant overlay
 ///////////////////////////////////// Watering can ///////////////////////////////////////////////
 
-/obj/item/reagent_containers/glass/wateringcan/
+/obj/item/reagent_containers/glass/wateringcan
 	name = "watering can"
 	desc = "Used to water things. Obviously."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
@@ -464,7 +464,7 @@
 	name = "antique watering can"
 	desc = "Used to water things. Obviously. But in a sort of rustic way..."
 	icon_state = "watercan_old"
-	item_state = "wateringcan"
+	item_state = ""				//it didn't have an in-hand icon ever...
 
 /obj/item/reagent_containers/glass/wateringcan/gold
 	name = "golden watering can"
@@ -473,14 +473,14 @@
 	item_state = "wateringcan_gold"
 
 /obj/item/reagent_containers/glass/wateringcan/weed
-	name = "antique watering can"
+	name = "weed watering can"
 	desc = "Used to water things. Obviously."
 	icon_state = "wateringcan_weed"
 	item_state = "wateringcan_weed"
 
 /obj/item/reagent_containers/glass/wateringcan/rainbow
-	name = "antique watering can"
-	desc = "Used to water things. Obviously. But in a sort of rustic way..."
+	name = "rainbow watering can"
+	desc = "Used to water things. Obviously. It's rainbow..."
 	icon_state = "wateringcan_rainbow"
 	item_state = "wateringcan_rainbow"
 
