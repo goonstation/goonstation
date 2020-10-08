@@ -335,7 +335,7 @@
 
 	attackby(var/obj/item/W , mob/user as mob)
 		if(istype(W, /obj/item/deconstructor))
-			return
+			return ..()
 		if(issilicon(user)) // fix bug where borgs could put things into the nanofab and then reject them
 			boutput(user, "<span class='alert'>You can't put that in, it's attached to you.</span>")
 			return
