@@ -3,6 +3,7 @@
  * @copyright 2020 WarlockD (https://github.com/warlockd)
  * @author Original WarlockD (https://github.com/warlockd)
  * @author Changes stylemistake
+ * @author Changes ThePotato97
  * @license MIT
  */
 
@@ -17,11 +18,11 @@ import { Window } from '../layouts';
 
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
 
-const sanatize_text = value => {
+const sanitize_text = value => {
   // This is VERY important to think first if you NEED
   // the tag you put in here.  We are pushing all this
   // though dangerouslySetInnerHTML and even though
-  // the default DOMPurify kills javascript, it dosn't
+  // the default DOMPurify kills javascript, it doesn't
   // kill href links or such
   return DOMPurify.sanitize(value, {
     FORBID_ATTR: ['class', 'style'],
@@ -59,7 +60,7 @@ const createIDHeader = index => {
   return "paperfield_" + index;
 };
 // To make a field you do a [_______] or however long the field is
-// we will then output a TEXT input for it that hopefuly covers
+// we will then output a TEXT input for it that hopefully covers
 // the exact amount of spaces
 const field_regex = /\[(_+)\]/g;
 const field_tag_regex = /\[<input\s+(.*?)id="(?<id>paperfield_\d+)"(.*?)\/>\]/gm;
@@ -375,7 +376,7 @@ class PaperSheetStamper extends Component {
 
 // ugh.  So have to turn this into a full
 // component too if I want to keep updates
-// low and keep the wierd flashing down
+// low and keep the weird flashing down
 class PaperSheetEdit extends Component {
   constructor(props, context) {
     super(props, context);
@@ -401,29 +402,29 @@ class PaperSheetEdit extends Component {
     } = data;
     const out = { text: text };
     // check if we are adding to paper, if not
-    // we still have to check if somone entered something
+    // we still have to check if someone entered something
     // into the fields
     value = value.trim();
     if (value.length > 0) {
       // First lets make sure it ends in a new line
       value += value[value.length] === "\n" ? " \n" : "\n \n";
-      // Second, we sanatize the text of html
-      const sanatized_text = sanatize_text(value);
-      const signed_text = signDocument(sanatized_text, pen_color, edit_usr);
+      // Second, we sanitize the text of html
+      const sanitized_text = sanitize_text(value);
+      const signed_text = signDocument(sanitized_text, pen_color, edit_usr);
       // Third we replace the [__] with fields as markedjs fucks them up
       const fielded_text = createFields(
         signed_text, pen_font, 12, pen_color, field_counter);
       // Fourth, parse the text using markup
-      const formated_text = run_marked_default(fielded_text.text);
+      const formatted_text = run_marked_default(fielded_text.text);
       // Fifth, we wrap the created text in the pin color, and font.
       // crayon is bold (<b> tags), mabye make fountain pin italic?
       const fonted_text = setFontinText(
-        formated_text, pen_font, pen_color, is_crayon);
+        formatted_text, pen_font, pen_color, is_crayon);
       out.text += fonted_text;
       out.field_counter = fielded_text.counter;
     }
     if (do_fields) {
-      // finaly we check all the form fields to see
+      // finally we check all the form fields to see
       // if any data was entered by the user and
       // if it was return the data and modify the text
       const final_processing = checkAllFields(
@@ -586,7 +587,7 @@ export const PaperSheet = (props, context) => {
   const backgroundColor = paper_color && paper_color !== "white"
     ? paper_color
     : "#FFFFFF";
-  const stamp_list = !stamps || stamps === null
+  const stamp_list = !stamps
     ? []
     : stamps;
   const decide_mode = mode => {

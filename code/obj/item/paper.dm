@@ -1,3 +1,8 @@
+#define MODE_READING 0
+#define MODE_WRITING 1
+#define MAX_PAPER_LENGTH 5000
+#define MAX_PAPER_STAMPS 30
+#define MAX_PAPER_STAMPS_OVERLAYS 4
 
 /obj/item/paper
 	name = "paper"
@@ -7,7 +12,7 @@
 	wear_image_icon = 'icons/mob/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
-	var/info = null
+	var/info = ""
 	var/stampable = 1
 	throwforce = 0
 	w_class = 1.0
@@ -42,6 +47,9 @@
 	stamina_crit_chance = 0
 
 	var/sealed = 0 //Can you write on this with a pen?
+	var/list/stamps
+	var/list/stamped
+	var/field_counter = 1
 
 /obj/item/paper/New()
 	..()
@@ -93,26 +101,12 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
-	var/windowtext
-	if(!user.literate)
-		windowtext = html_encode(illiterateGarbleText(src.info)) // deny them ANY useful information
-	else
-		windowtext = src.info
-		if (src.form_startpoints && src.form_endpoints)
-			for (var/x = src.form_startpoints.len, x > 0, x--)
-				windowtext = copytext(windowtext, 1, src.form_startpoints[src.form_startpoints[x]]) + "<a href='byond://?src=\ref[src];form=[src.form_startpoints[x]]'>" + copytext(windowtext, src.form_startpoints[src.form_startpoints[x]], src.form_endpoints[src.form_endpoints[x]]) + "</a>" + copytext(windowtext, src.form_endpoints[src.form_endpoints[x]])
-
-	var/font_junk = ""
-	for (var/i in src.fonts)
-		font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
-
-	usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[windowtext]</TT></BODY></HTML>", "window=[src.name][(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
-	onclose(usr, "[src.name]")
+	ui_interact(user)
 
 //[(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]
 /obj/item/paper/Map/examine(mob/user)
 	. = ..()
-
+	ui_interact(user)
 	if (!( ishuman(user) || isobserver(user) || issilicon(user) ))
 		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[stars(src.info)]</TT></BODY></HTML>", "window=[src.name]")
 		onclose(user, "[src.name]")
@@ -173,49 +167,140 @@
 		onclose(usr, "[src.name]")
 	return
 
-/obj/item/paper/Topic(href, href_list)
-	..()
-	if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+/obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PaperSheet")
+		ui.open()
+
+/obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
+	// Even harder to read if your blind...braile? humm
+	// .. or if you cannot read
+	if(!user.literate)
+		return UI_CLOSE
+	return ..()
+
+/obj/item/paper/ui_act(action, params,datum/tgui/ui)
+	. = ..()
+	if(.)
 		return
+	switch(action)
+		if("stamp")
+			var/stamp_x = text2num(params["x"])
+			var/stamp_y = text2num(params["y"])
+			var/stamp_r = text2num(params["r"])	// rotation in degrees
+			var/stamp_icon_state = params["stamp_icon_state"]
+			var/stamp_class = params["stamp_class"]
+			if (isnull(stamps))
+				stamps = list()
+			if(stamps.len < MAX_PAPER_STAMPS)
+				// I hate byond when dealing with freaking lists
+				stamps[++stamps.len] = list(stamp_class, stamp_x, stamp_y, stamp_r)	/// WHHHHY
+				src.icon_state = "paper_stamped"
+				/// This does the overlay stuff
+				if (isnull(stamped))
+					stamped = list()
+				//if(stamped.len < MAX_PAPER_STAMPS_OVERLAYS)
+				//	var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[stamp_icon_state]")
+				//	stampoverlay.pixel_x = rand(-2, 2)
+				//	stampoverlay.pixel_y = rand(-3, 2)
+				//	add_overlay(stampoverlay)
+				//	LAZYADD(stamped, stamp_icon_state)
 
-	if (href_list["form"])
-		if (istype(usr.equipped(), /obj/item/pen))
-			. = href_list["form"]
-			if (. in form_startpoints)
-				// fill in field (up to field length)
-				var/t = input(usr, "What text do you wish to add?", "[src.name]", null) as null|text
-				if (!t)
-					return
-				if ((!in_range(src, usr) && src.loc != usr && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != usr))
-					return
-				t = copytext(html_encode(t), 1, (form_endpoints[.] - form_startpoints[.]) + 1)
-				t = sign_name(t, usr)
-				src.info = copytext(src.info, 1, form_startpoints[.]) + "" + t + "" + copytext(src.info, form_startpoints[.] + length(t))
-				build_formpoints()
-				usr.examine_verb(src)
+				update_static_data(usr,ui)
+				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with [stamp_class]!</span>", "<span class='notice'>You stamp [src] with [stamp_class]!</span>")
+			else
+				boutput(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
+			. = TRUE
 
-		if (istype(usr.equipped(), /obj/item/stamp))
-			var/obj/item/stamp/S = usr.equipped()
-			. = href_list["form"]
-			if (S && (. in form_startpoints))
-				switch(input(usr, "Stamp \the [src] with [S.name]?", "[src.name]", "No") in list("Yes", "No"))
-					if ("No")
-						return
-					if ("Yes")
-						var/T = S.get_stamp_text()
-						if (!T)
-							return
-						if ((!in_range(src, usr) && src.loc != usr && !(istype(src.loc, /obj/item/clipboard)) && src.loc.loc != usr))
-							return
-						// replace whole form field with stamp
-						src.info = copytext(src.info, 1, form_startpoints[.]) + "" + T + "" + copytext(src.info, form_endpoints[.])
-						src.icon_state = "paper_stamped"
-						build_formpoints()
-						usr.examine_verb(src)
+		if("save")
+			var/in_paper = params["text"]
+			var/paper_len = length(in_paper)
+			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
 
-	src.add_fingerprint(usr)
+			if(paper_len > MAX_PAPER_LENGTH)
+				// Side note, the only way we should get here is if
+				// the javascript was modified, somehow, outside of
+				// byond.  but right now we are logging it as
+				// the generated html might get beyond this limit
+				logTheThing("PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-MAX_PAPER_LENGTH]")
+			if(paper_len == 0)
+				boutput(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
+			else
+				logTheThing("PAPER: [key_name(ui.user)] writing to paper [name]")
+				if(info != in_paper)
+					boutput(ui.user, "You have added to your paper masterpiece!");
+					info = in_paper
+					update_static_data(usr,ui)
+			. = TRUE
 
-/obj/item/paper/attackby(obj/item/P as obj, mob/user as mob)
+/obj/item/paper/ui_static_data(mob/user)
+	. = list()
+	.["text"] = info
+	.["max_length"] = MAX_PAPER_LENGTH
+	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
+	.["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling?
+//	.["stamps"] = stamps
+
+/obj/item/paper/ui_data(mob/user)
+	var/list/data = list()
+	data["edit_usr"] = "[user]"
+
+	var/obj/O = user.equipped()
+	if(istype(O, /obj/item/pen/crayon))
+		var/obj/item/pen/crayon/PEN = O
+		data["pen_font"] = PEN.font
+		data["pen_color"] = PEN.font_color
+		data["edit_mode"] = MODE_WRITING
+		data["is_crayon"] = TRUE
+		data["stamp_class"] = "FAKE"
+		data["stamp_icon_state"] = "FAKE"
+	else if(istype(O, /obj/item/pen))
+		var/obj/item/pen/PEN = O
+		data["pen_font"] = PEN.font
+		data["pen_color"] = PEN.color
+		data["edit_mode"] = MODE_WRITING
+		data["is_crayon"] = FALSE
+		data["stamp_class"] = "FAKE"
+		data["stamp_icon_state"] = "FAKE"
+	//else if(istype(O, /obj/item/stamp))
+		//var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
+		//data["stamp_icon_state"] = O.icon_state
+		//data["stamp_class"] = sheet.icon_class_name(O.icon_state)
+		//data["edit_mode"] = MODE_STAMPING
+		//data["pen_font"] = "FAKE"
+		//data["pen_color"] = "FAKE"
+		//data["is_crayon"] = FALSE
+	else
+		data["edit_mode"] = MODE_READING
+		data["pen_font"] = "FAKE"
+		data["pen_color"] = "FAKE"
+		data["is_crayon"] = FALSE
+		data["stamp_icon_state"] = "FAKE"
+		data["stamp_class"] = "FAKE"
+//	data["field_counter"] = field_counter
+//	data["form_fields"] = form_fields
+
+	return data
+
+/obj/item/paper/attackby(obj/item/P, mob/living/user, params)
+	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
+		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
+			boutput(user, "<span class='warning'>This sheet of paper is full!</span>")
+			return
+		ui_interact(user)
+		return
+	else if(istype(P, /obj/item/stamp))
+		boutput(user, "<span class='notice'>You ready your stamp over the paper! </span>")
+		ui_interact(user)
+		return /// Normaly you just stamp, you don't need to read the thing
+	else
+		// cut paper?  the sky is the limit!
+		ui_interact(user)	// The other ui will be created with just read mode outside of this
+
+	return ..()
+
+/* /obj/item/paper/attackby(obj/item/P as obj, mob/user as mob)
 
 	if (istype(P, /obj/item/pen))
 		if(!user.literate)
@@ -335,7 +420,7 @@
 			..()
 
 	src.add_fingerprint(user)
-	return
+	return */
 
 /obj/item/paper/proc/sign_name(var/t as text, mob/user as mob)
 	var/writing_style = "Dancing Script"
