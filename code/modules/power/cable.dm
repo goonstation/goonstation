@@ -128,55 +128,46 @@
 /////////Coloured Cables yaaaay
 /obj/cable/coloured/yellow
 	name = "yellow-coloured power cable"
-	desc = "A flexible power cable. This one is Yellow."
 	color = "#EED202"
 	insulator_default = "yellowrubber"
 
 /obj/cable/coloured/orange
 	name = "orange-coloured power cable"
-	desc = "A flexible power cable. This one is Orange."
 	color = "#C46210"
 	insulator_default = "orangerubber"
 
 /obj/cable/coloured/blue
 	name = "blue-coloured power cable"
-	desc = "A flexible power cable. This one is Blue."
 	color = "#72A0C1"
 	insulator_default = "bluerubber"
 
 /obj/cable/coloured/green
 	name = "green-coloured power cable"
-	desc = "A flexible power cable. This one is Green."
 	color = "#00AD83"
 	insulator_default = "greenrubber"
 
 /obj/cable/coloured/purple
 	name = "purple-coloured power cable"
-	desc = "A flexible power cable. This one is purple."
 	color = "#9370DB"
 	insulator_default = "purplerubber"
 
 /obj/cable/coloured/black
 	name = "black-coloured power cable"
-	desc = "A flexible power cable. This one is Black."
 	color = "#414A4C"
 	insulator_default = "blackrubber"
 
 /obj/cable/coloured/hotpink
 	name = "hotpink-coloured power cable"
-	desc = "A flexible power cable. This one is Hot Pink."
 	color = "#FF69B4"
 	insulator_default = "hotpinkrubber"
 
 /obj/cable/coloured/brown
 	name = "brown-coloured power cable"
-	desc = "A flexible power cable. This one is Brown."
 	color = "#832A0D"
 	insulator_default = "brownrubber"
 
 /obj/cable/coloured/white
 	name = "white-coloured power cable"
-	desc = "A flexible power cable. This one is White."
 	color = "#EDEAE0"
 	insulator_default = "whiterubber"
 
