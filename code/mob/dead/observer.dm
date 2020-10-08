@@ -322,7 +322,7 @@
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 		var/datum/abilityHolder/ghost_observer/GAH = src.abilityHolder
 		if (GAH.spooking)
-			return movement_delay_modifier - 1.0
+			return movement_delay_modifier + 1.5
 
 	if (src?.client.check_key(KEY_RUN))
 		return 0.4 + movement_delay_modifier

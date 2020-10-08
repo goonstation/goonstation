@@ -160,8 +160,8 @@
 	else return G.canshoot() * INFINITY //idk, just let it happen
 
 /obj/item/gun/kinetic/gyrojet
-	name = "gyrojet pistol"
-	desc = "A semi-automatic pistol that fires rocket-propelled bullets"
+	name = "Amaethon gyrojet pistol"
+	desc = "A semi-automatic handgun that fires rocket-propelled bullets, developed by Mabinogi Firearms Company."
 	icon_state = "gyrojet"
 	item_state = "gyrojet"
 	caliber = 0.512

@@ -7,6 +7,9 @@
 	anchored = 1
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
+	mats = 20
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+
 	var/atom/output_location = null
 
 	New()
