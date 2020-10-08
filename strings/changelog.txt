@@ -1,5 +1,9 @@
 
 (t)thu oct 08 20
+(u)ThePotato97
+(p)2367
+(e)🆕|feature
+(+)Added github button to right panel and changed the order.
 (u)Tarmunora
 (+)Gunbot antag critters get armor equal to secvest.
 (t)wed oct 07 20
