@@ -41,9 +41,9 @@
 	var/use_beaker = 0 //Use reagents in beaker instead of default treatment agents.
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute = "saline"
-	var/treatment_oxy = "salbutamol"
+	var/treatment_oxy = "dexamethasone"
 	var/treatment_fire = "saline"
-	var/treatment_tox = "charcoal"
+	var/treatment_tox = "healing_crystals"
 	var/treatment_virus = "spaceacillin"
 	var/treatment_hypertension = null
 	var/treatment_hypotension = null
@@ -172,11 +172,11 @@
 		src.treatment_eye_ear = "oculine"
 		src.treatment_emag = "acetaldehyde"
 	else if ((src.skin == "toxin1") || (src.skin == "toxin2") || (src.skin == "toxin3") || (src.skin == "toxin4"))
-		src.treatment_tox = "smelling_salt"
+		src.treatment_tox = "charcoal"
 		src.treatment_rad = "anti_rad"
 		src.treatment_emag = "weedkiller"
 	else if ((src.skin == "O21") || (src.skin == "O22") || (src.skin == "O23") || (src.skin == "O24"))
-		src.treatment_oxy = "perfluorodecalin"
+		src.treatment_oxy = "salbutamol"
 		src.treatment_anaphylaxis = "antihistamine"
 		src.treatment_emag = "cyanide"
 	else if ((src.skin == "brain1") || (src.skin == "brain2") || (src.skin == "brain3"))
@@ -195,7 +195,7 @@
 	else if (src.skin == "hs")
 		src.treatment_brute = "salicylic_acid"
 		src.treatment_fire = "menthol"
-		src.treatment_tox = "smelling_salt"
+		src.treatment_tox = "charcoal"
 		src.treatment_oxy = "perfluorodecalin"
 		src.treatment_virus = "robustussin"
 		src.treatment_emag = "sarin"
