@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic
 	name = "kinetic weapon"
 	icon = 'icons/obj/items/gun.dmi'
@@ -634,13 +635,6 @@
 	New()
 		ammo = new/obj/item/ammo/bullets/abg
 		current_projectile = new/datum/projectile/bullet/abg
-		..()
-
-/obj/item/gun/kinetic/riotgun/pbr
-
-	New()
-		ammo = new/obj/item/ammo/bullets/pbr
-		current_projectile = new/datum/projectile/bullet/pbr
 		..()
 
 /obj/item/gun/kinetic/ak47

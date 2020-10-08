@@ -198,7 +198,7 @@
 
 	attack_self(var/mob/user as mob)
 		if (!vend_this)
-			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Milk")
+			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water")
 			src.vend_this = pickme
 			user.show_text("[pickme] selected. Click with the synthesizer on yourself to pick a different item.", "blue")
 			return
@@ -235,8 +235,8 @@
 							new /obj/item/reagent_containers/food/snacks/moon_pie/jaffa(get_turf(src))
 				if ("Cola")
 					new /obj/item/reagent_containers/food/drinks/cola(get_turf(src))
-				if ("Milk")
-					new /obj/item/reagent_containers/food/drinks/milk(get_turf(src))
+				if ("Water")
+					new /obj/item/reagent_containers/food/drinks/bottle/bottledwater(get_turf(src))
 				else
 					user.show_text("<b>ERROR</b> - Invalid item! Resetting...", "red")
 					logTheThing("debug", user, null, "<b>Convair880</b>: [user]'s food synthesizer was set to an invalid value.")

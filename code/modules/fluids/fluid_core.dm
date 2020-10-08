@@ -16,6 +16,7 @@ var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a
 	"blackpowder",\
 	"reliquary_blood",\
 	"leaves",\
+	"poo",\
 )
 
 ///////////////////

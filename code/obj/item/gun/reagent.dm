@@ -12,6 +12,7 @@
 	var/dump_reagents_on_turf = 0 //set this to 1 if you want the dumped reagents to be put onto the turf instead of just evaporated into nothingness
 	var/custom_reject_message = "" //set this to a string if you want a custom message to be shown instead of the default when a reagent isnt accepted by the gun
 	inventory_counter_enabled = 1
+	move_triggered = 1
 
 	New()
 		src.create_reagents(capacity)

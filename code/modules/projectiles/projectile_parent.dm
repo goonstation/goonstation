@@ -16,7 +16,9 @@
 	var/datum/projectile/proj_data = null
 	//var/obj/o_shooter = null
 	var/list/targets = list()
-	var/power = 20 // local copy of power for proper dissipation tracking
+	var/power = 20 // temp var to store what the current power of the projectile should be when it hits something
+	var/max_range = 0 //max range
+	var/initial_power = 20 // local copy of power for determining power when hitting things
 	var/implanted = null
 	var/forensic_ID = null
 	var/atom/shooter = null // Who/what fired this?
@@ -232,6 +234,8 @@
 		pixel_x = 0
 		pixel_y = 0
 		power = 0
+		initial_power = 0
+		max_range = 0
 		travelled = 0
 		target = null
 		proj_data = null
@@ -357,7 +361,7 @@
 			if (y32 < 0)
 				ys = -1
 				y32 = -y32
-		var/max_t = proj_data.max_range // why not
+		var/max_t = src.max_range + 1 // why not  --- off by one error is why not apparently
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -422,7 +426,7 @@
 		src.ticks_until_can_hit_mob--
 
 		// The bullet has expired/decayed.
-		if (src.travelled > src.proj_data.max_range * 32)
+		if (src.travelled > src.max_range * 32)
 			proj_data.on_max_range_die(src)
 			die()
 			return
@@ -602,14 +606,6 @@ datum/projectile
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
-	New()
-		. = ..()
-		if(!max_range)
-			if(dissipation_rate <= 0)
-				max_range = 500
-			else
-				max_range = dissipation_delay + round(power / dissipation_rate)
-
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
 			var/obj/itemspecialeffect/impact/E = null
@@ -658,7 +654,7 @@ datum/projectile
 			.= 1
 
 		get_power(obj/projectile/P, atom/A)
-			return src.power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
+			return P.initial_power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
 
 // WOO IMPACT RANGES
 // Meticulously calculated by hand.
@@ -943,6 +939,7 @@ datum/projectile/snowball
 	P.name = DATA.name
 	P.setMaterial(DATA.material)
 	P.power = DATA.power
+	P.initial_power = DATA.power
 	P.orig_turf = S
 
 	if (DATA.implanted)
@@ -969,6 +966,15 @@ datum/projectile/snowball
 
 	P.xo = xo
 	P.yo = yo
+
+	if(!DATA.max_range)
+		if(DATA.dissipation_rate <= 0)
+			P.max_range = 500
+		else
+			P.max_range = DATA.dissipation_delay + round(P.power / DATA.dissipation_rate)
+	else
+		P.max_range = DATA.max_range
+
 	if(!isnull(projsource))
 		SEND_SIGNAL(projsource, COMSIG_ALTER_PROJECTILE, P)
 	return P

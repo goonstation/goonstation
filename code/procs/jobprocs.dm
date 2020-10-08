@@ -429,7 +429,7 @@
 			var/mob/living/newmob = possible_new_mob
 			newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
 		else
-			src.Equip_Bank_Purchase(src.mind.purchased_bank_item)
+			src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
 
 	return
 
@@ -562,6 +562,8 @@
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
 		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 		trinket = new random_lunchbox_path(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
+		trinket = new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
 	else
 		trinket = new T(src)
 

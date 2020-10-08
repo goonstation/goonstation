@@ -109,6 +109,7 @@
 	var/list/obj/critter/registered_critters = list()
 	var/waking_critters = 0
 
+	// this chunk zone is for Area Ambience
 	var/sound_loop = null
 	var/sound_loop_vol = 50
 	var/sound_fx_1 = null
@@ -153,6 +154,7 @@
 		else
 			return 1
 
+	/// Gets called when a movable atom enters an area.
 	Entered(var/atom/movable/A, atom/oldloc)
 		if (ismob(A))
 			var/mob/M = A
@@ -210,6 +212,7 @@
 			A.loc = oldloc
 		..()
 
+	/// Gets called when a movable atom exits an area.
 	Exited(var/atom/movable/A)
 		if (ismob(A))
 			var/mob/M = A

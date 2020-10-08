@@ -16,9 +16,14 @@
 		if (!usr.client)
 			return "Something went wrong loading your bank! If the issue persists, try relogging or asking an admin for help."
 
-		if(usr.client.persistent_bank_item && !(usr.client.persistent_bank_item in persistent_bank_purchaseables))
+		var/found_held = FALSE
+		for(var/datum/bank_purchaseable/p in persistent_bank_purchaseables)
+			if(p.name == usr.client.persistent_bank_item)
+				found_held = TRUE
+				break
+		if(usr.client.persistent_bank_item && usr.client.persistent_bank_item != "none" && !found_held)
 			usr.client.set_last_purchase(null)
-			boutput( src, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
+			boutput( usr, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
 
 		var/ret = "<p style=\"font-size:125%;\">BALANCE :  <b>[usr.client.persistent_bank]</b></p><br/>"
 		ret += "<p style=\"font-size:110%;\">HELD ITEM :  <b>[usr.client.persistent_bank_item ? usr.client.persistent_bank_item : "Nothing!"]</b></p><br/>"
