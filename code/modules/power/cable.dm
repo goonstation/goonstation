@@ -124,54 +124,6 @@
 		else
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
 
-
-/////////Coloured Cables yaaaay
-/obj/cable/coloured/yellow
-	name = "yellow-coloured power cable"
-	color = "#EED202"
-	insulator_default = "yellowrubber"
-
-/obj/cable/coloured/orange
-	name = "orange-coloured power cable"
-	color = "#C46210"
-	insulator_default = "orangerubber"
-
-/obj/cable/coloured/blue
-	name = "blue-coloured power cable"
-	color = "#72A0C1"
-	insulator_default = "bluerubber"
-
-/obj/cable/coloured/green
-	name = "green-coloured power cable"
-	color = "#00AD83"
-	insulator_default = "greenrubber"
-
-/obj/cable/coloured/purple
-	name = "purple-coloured power cable"
-	color = "#9370DB"
-	insulator_default = "purplerubber"
-
-/obj/cable/coloured/black
-	name = "black-coloured power cable"
-	color = "#414A4C"
-	insulator_default = "blackrubber"
-
-/obj/cable/coloured/hotpink
-	name = "hotpink-coloured power cable"
-	color = "#FF69B4"
-	insulator_default = "hotpinkrubber"
-
-/obj/cable/coloured/brown
-	name = "brown-coloured power cable"
-	color = "#832A0D"
-	insulator_default = "brownrubber"
-
-/obj/cable/coloured/white
-	name = "white-coloured power cable"
-	color = "#EDEAE0"
-	insulator_default = "whiterubber"
-
-/////////The rest of the shit
 /obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
 	..()
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
