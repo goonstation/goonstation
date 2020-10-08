@@ -5,11 +5,11 @@
 #define MESSAGE_SHOW_TIME 	5 SECONDS
 
 /obj/machinery/computer/cloning
-	name = "Cloning console"
+	name = "Cloning Console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
-	req_access = list(access_medical_lockers) //Only used for record deletion right now.
+	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
@@ -667,6 +667,9 @@ proc/find_ghost_by_key(var/find_key)
 		return
 	switch(action)
 		if("delete")
+			if(!src.allowed(usr))
+				show_message("You do not have permission to delete records.", "danger")
+				return TRUE
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
 				logTheThing("combat", usr, null, "deletes the cloning record [selected_record["fields"]["name"]] for player [selected_record["fields"]["ckey"]] at [log_loc(src)].")
@@ -676,6 +679,9 @@ proc/find_ghost_by_key(var/find_key)
 				show_message("Record deleted.", "danger")
 				. = TRUE
 		if("scan")
+			if(usr == src.scanner.occupant)
+				trigger_anti_cheat(usr, "tried to scan themselves using the cloning machine scanner")
+				// this doesn't need to return we still want to scan them
 			if(!isnull(src.scanner))
 				src.scan_mob(src.scanner.occupant)
 				. = TRUE
@@ -756,6 +762,7 @@ proc/find_ghost_by_key(var/find_key)
 /obj/machinery/computer/cloning/ui_data(mob/user)
 	var/list/data = list()
 	var/list/recordsTemp = list()
+	data["allowedToDelete"] = src.allowed(user)
 	data["scannerGone"] = isnull(src.scanner)
 	data["occupantScanned"] = false
 	data["podGone"] = isnull(src.pod1)
