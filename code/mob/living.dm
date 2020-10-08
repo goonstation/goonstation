@@ -804,6 +804,10 @@
 	if (!singing && dd_hasprefix(message, singing_prefix) && !src.stat)
 		singing = 1
 		message = copytext(message, 2)
+		if (src.traitHolder.hasTrait("scottish"))
+			danny_index++
+			if (danny_index > 16)
+				danny_index = 1
 	
 	forced_language = get_special_language(secure_headset_mode)
 

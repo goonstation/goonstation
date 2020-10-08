@@ -428,6 +428,9 @@
 	if (src.get_brain_damage() >= 60)
 		speechverb = pick("says","stutters","mumbles","slurs")
 
+	if (src.singing && src.traitHolder.hasTrait("scottish"))
+		text = danny_boy(src.danny_index)
+
 	if (src.singing || (src.traitHolder.hasTrait("elvis")))
 		// use note icons instead of normal quotes
 		var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/note.png")]\">"
@@ -447,17 +450,15 @@
 		else if (src.traitHolder.hasTrait("swedish"))
 			speechverb = "sings like a muppet"
 		else if (src.traitHolder.hasTrait("scottish"))
-			speechverb = "sings a [pick("lament", "ballad")]"
+			speechverb = pick("laments", "softly sings", "croons", "sorrowfully intones", "sobs", "bemoans")
 		else if (src.traitHolder.hasTrait("chav"))
 			speechverb = "raps grime"
-		else if (src.traitHolder.hasTrait("finnish") && rand(3) < 1)
-			speechverb = "sings a Sibelius air"
 		else if (loudness < 0)
-			speechverb = "hums"
+			speechverb = pick("hums", "lullabies", "softly intones")
 		else if (loudness > 0)
-			speechverb = "belts out"
+			speechverb = pick("belts out", "yodels", "squeals")
 		else
-			speechverb = pick("sings",  "croons")
+			speechverb = pick("sings",  "croons", "intones", "warbles")
 		text = "<i>[text]</i>"
 		style = "color:thistle;"
 
@@ -974,3 +975,28 @@
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 		if(thisR != "")
 			M.show_message(thisR, 2)
+
+// I am deeply moved every time ;_;
+/proc/danny_boy(var/index)
+	var/danny_boy_lyrics = list(
+		"Oh, Danny boy, the pipes, the pipes are calling",
+		"From glen to glen, and down the mountain side.",
+		"The summer's gone, and all the roses falling,",
+		"It's you, it's you must go and I must bide.",
+		"But come ye back when summer's in the meadow,",
+		"Or when the valley's hushed and white with snow,",
+		"It's I'll be here in sunshine or in shadow,",
+		"Oh, Danny boy, oh Danny boy, I love you so!",
+		"But when ye come, and all the flowers are dying,",
+		"If I am dead, as dead I well may be,",
+		"You'll come and find the place where I am lying,",
+		"And kneel and say an Ave there for me.",
+		"And I shall hear, though soft you tread above me,",
+		"And all my grave will warmer, sweeter be,",
+		"For you will bend and tell me that you love me,",
+		"And I shall sleep in peace until you come to me!"
+		)
+	var/lyric = scotify(danny_boy_lyrics[index])
+	return lyric
+
+	
