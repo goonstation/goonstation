@@ -37,6 +37,7 @@
 		pod1 = null
 		diskette = null
 		records = null
+		STOP_TRACKING
 		..()
 
 	old
@@ -74,6 +75,7 @@
 
 /obj/machinery/computer/cloning/New()
 	..()
+	START_TRACKING
 	SPAWN_DBG(0.7 SECONDS)
 		if(portable) return
 		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
