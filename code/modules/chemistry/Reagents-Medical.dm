@@ -1487,6 +1487,30 @@ datum
 				..()
 				return
 
+		medical/healing_crystals
+			name = "healing crystals"
+			id = "healing_crystals"
+			description = "Is this really state-of-the-art medicine?"
+			reagent_state = SOLID
+			fluid_r = 216
+			fluid_b = 161
+			fluid_g = 201
+			transparency = 200
+			value = 0 // fuck you
+			depletion_rate = 0.2
+			target_plant_reagents = list("toxin", "toxic_slurry", "acid", "plasma", "mercury", "fuel", "chlorine", "radium")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.take_toxin_damage(-0.75 * mult)
+				..()
+				return
+
+			on_plant_life(var/obj/machinery/plantpot/P)
+				for(var/reagent in target_plant_reagents)
+					if(P.reagents.has_reagent(reagent))
+						P.reagents.remove_reagent(reagent, 1)
+
 		medical/charcoal
 			name = "charcoal"
 			id = "charcoal"
@@ -1497,6 +1521,7 @@ datum
 			fluid_g = 0
 			value = 5 // 3c + 1c + heat
 			target_organs = list("left_kidney", "right_kidney", "liver", "stomach", "intestines")
+			target_plant_reagents = list("toxin", "toxic_slurry", "acid", "plasma", "mercury", "fuel", "chlorine", "radium")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1515,22 +1540,9 @@ datum
 				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
-				if(P.reagents.has_reagent("toxin"))
-					P.reagents.remove_reagent("toxin", 2)
-				if(P.reagents.has_reagent("toxic_slurry"))
-					P.reagents.remove_reagent("toxic_slurry", 2)
-				if(P.reagents.has_reagent("acid"))
-					P.reagents.remove_reagent("acid", 2)
-				if(P.reagents.has_reagent("plasma"))
-					P.reagents.remove_reagent("plasma", 2)
-				if(P.reagents.has_reagent("mercury"))
-					P.reagents.remove_reagent("mercury", 2)
-				if(P.reagents.has_reagent("fuel"))
-					P.reagents.remove_reagent("fuel", 2)
-				if(P.reagents.has_reagent("chlorine"))
-					P.reagents.remove_reagent("chlorine", 2)
-				if(P.reagents.has_reagent("radium"))
-					P.reagents.remove_reagent("radium", 2)
+				for(var/reagent in target_plant_reagents)
+					if(P.reagents.has_reagent(reagent))
+						P.reagents.remove_reagent(reagent, 2)
 
 		medical/antihol // COGWERKS CHEM REVISION PROJECT. maybe a diuretic or some sort of goofy common hangover cure
 			name = "antihol"

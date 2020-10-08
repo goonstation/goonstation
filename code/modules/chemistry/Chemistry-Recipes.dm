@@ -2141,6 +2141,14 @@ datum
 			required_reagents = list("silver" = 1, "sulfur" = 1, "oxygen" = 1, "weedkiller" = 3)
 			result_amount = 5
 		*/
+		healing_crystals
+			name = "Healing Crystals"
+			id = "healing_crystals"
+			result = "healing_crystals"
+			required_reagents = list("salt" = 1, "plasma" = 1)
+			result_amount = 4
+			mix_phrase = "The salt crystals precipitate. You feel pretty silly."
+
 		charcoal // antitoxin
 			name = "Activated Charcoal"
 			id = "charcoal"
