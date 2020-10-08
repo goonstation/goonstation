@@ -2203,6 +2203,15 @@ datum
 			result_amount = 2
 			mix_phrase = "The mixture bubbles slowly, making a slightly sweet odor."
 
+		dexamethasone // COGWERKS CHEM REVISION PROJECT: possibly dexamesothone, anti-edema medication
+			name = "Dexamethasone"
+			id = "dexamethasone"
+			result = "dexamethasone"
+			required_reagents = list("hydrogen" = 1, "oxygen" = 1, "sodium" = 1, "carbon" = 1, "fluorine" = 1, "bromine" = 1)
+			result_amount = 6
+			mix_phrase = "The liquid fizzles and turns a light shade of blue."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		salbutamol // COGWERKS CHEM REVISION PROJECT: possibly dexamesothone, anti-edema medication
 			name = "Salbutamol"
 			id = "salbutamol"

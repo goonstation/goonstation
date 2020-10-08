@@ -1378,6 +1378,26 @@ datum
 				..()
 				return
 
+		medical/dexamethasone // Same volume heals same amount as salbutamol, but twice as slow, no overdose, no organ healing
+			name = "dexamethasone"
+			id = "dexamethasone"
+			description = "Dexamethasone is a corticosteroid hormone used to treat asthma and other chronic obstructive lung disorders."
+			reagent_state = LIQUID
+			fluid_r = 102
+			fluid_g = 178
+			fluid_b = 255
+			transparency = 255
+			depletion_rate = 0.1
+			value = 6 // 1 1 1 1 1 1
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.take_oxygen_deprivation(-3 * mult)
+				if(M.losebreath)
+					M.losebreath = max(0, M.losebreath-(2 * mult))
+				..()
+				return
+
 		medical/salbutamol // COGWERKS CHEM REVISION PROJECT. marked for revision. Could be Dexamesathone
 			name = "salbutamol"
 			id = "salbutamol"
