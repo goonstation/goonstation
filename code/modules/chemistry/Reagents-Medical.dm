@@ -1507,7 +1507,7 @@ datum
 				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
-				for(var/reagent in target_plant_reagents)
+				for(var/reagent in src.target_plant_reagents)
 					if(P.reagents.has_reagent(reagent))
 						P.reagents.remove_reagent(reagent, 1)
 
@@ -1540,7 +1540,7 @@ datum
 				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
-				for(var/reagent in target_plant_reagents)
+				for(var/reagent in src.target_plant_reagents)
 					if(P.reagents.has_reagent(reagent))
 						P.reagents.remove_reagent(reagent, 2)
 
