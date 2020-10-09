@@ -181,7 +181,7 @@
 	return 1
 
 /mob/living/carbon/human/sight_check(var/consciousness_check = 0)
-	if (consciousness_check && (!can_act(src, 0) || src.sleeping || src.hibernating))
+	if (consciousness_check && (src.hasStatus("paralysis") || src.sleeping || src.stat || src.hibernating))
 		return 0
 
 	if (istype(src.glasses, /obj/item/clothing/glasses/))
@@ -197,7 +197,7 @@
 	return 1
 
 /mob/living/critter/sight_check(var/consciousness_check = 0)
-	if (consciousness_check && (!can_act(src, 0) || src.sleeping))
+	if (consciousness_check && (src.getStatusDuration("paralysis") || src.sleeping || src.stat))
 		return 0
 	return 1
 
@@ -323,7 +323,7 @@
 	return 1
 
 /mob/living/carbon/human/hearing_check(var/consciousness_check = 0)
-	if (consciousness_check && (!can_act(src, 0) || src.sleeping))
+	if (consciousness_check && (src.stat || src.getStatusDuration("paralysis") || src.sleeping))
 		// you may be physically capable of hearing it, but you're sure as hell not mentally able when you're out cold
 		.= 0
 	else
@@ -339,7 +339,7 @@
 			.= 0
 
 /mob/living/silicon/hearing_check(var/consciousness_check = 0)
-	if (consciousness_check && (!can_act(src, 0) || src.sleeping))
+	if (consciousness_check && (src.getStatusDuration("paralysis") || src.sleeping || src.stat))
 		return 0
 
 	if (src.ear_disability)
