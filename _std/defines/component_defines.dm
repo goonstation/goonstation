@@ -134,8 +134,6 @@
 
 /// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)
 #define COMSIG_PROJ_COLLIDE "proj_collide_atom"
-/// callback to gun/etc after projectile initalization (projectile)
-#define COMSIG_ALTER_PROJECTILE "alter_proj"
 
 // ---- MechComp signals - Content signals - Use these in you MechComp compatible devices ----
 
