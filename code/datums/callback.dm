@@ -41,52 +41,52 @@
 */
 
 /datum/callback
-		var/datum/object = GLOBAL_PROC
-		var/delegate
-		var/list/arguments
+	var/datum/object = GLOBAL_PROC
+	var/delegate
+	var/list/arguments
 
 /datum/callback/New(thingToCall, procToCall, ...)
 	..()
 	if (thingToCall)
-			src.object = thingToCall
+		src.object = thingToCall
 
 	src.delegate = procToCall
 
 	if (length(args) > 2)
-			src.arguments = args.Copy(3)
+		src.arguments = args.Copy(3)
 
 /datum/callback/proc/Invoke(...)
 	if (!src.object)
-			CRASH("Cannot call null. [src.delegate]")
+		CRASH("Cannot call null. [src.delegate]")
 
 	var/list/callingArguments = src.arguments
 
 	if (length(args))
-			if (length(src.arguments))
-					callingArguments = callingArguments + args //not += so that it creates a new list so the arguments list stays clean
-			else
-					callingArguments = args
+		if (length(src.arguments))
+			callingArguments = callingArguments + args //not += so that it creates a new list so the arguments list stays clean
+		else
+			callingArguments = args
 
 	if (src.object == GLOBAL_PROC)
-			return call(src.delegate)(arglist(callingArguments))
+		return call(src.delegate)(arglist(callingArguments))
 
 	return call(src.object, src.delegate)(arglist(callingArguments))
 
 /datum/callback/proc/InvokeAsync(...)
 	set waitfor = FALSE
 	if (!src.object)
-			CRASH("Cannot call null. [src.delegate]")
+		CRASH("Cannot call null. [src.delegate]")
 
 	var/list/callingArguments = src.arguments
 
 	if (length(args))
-			if (length(src.arguments))
-					callingArguments = callingArguments + args //not += so that it creates a new list so the arguments list stays clean
-			else
-					callingArguments = args
+		if (length(src.arguments))
+			callingArguments = callingArguments + args //not += so that it creates a new list so the arguments list stays clean
+		else
+			callingArguments = args
 
 	if (src.object == GLOBAL_PROC)
-			return call(src.delegate)(arglist(callingArguments))
+		return call(src.delegate)(arglist(callingArguments))
 
 	return call(src.object, src.delegate)(arglist(callingArguments))
 
