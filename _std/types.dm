@@ -94,7 +94,7 @@ proc/filtered_concrete_typesof(type, filter)
 
 /**
 	* Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
-*/
+	*/
 proc/get_singleton(type)
 	if(!singletons)
 		singletons = list()
