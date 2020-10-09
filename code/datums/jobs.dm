@@ -633,7 +633,7 @@
 	linkcolor = "#FF9900"
 	slot_card = /obj/item/card/id/engineering
 
-/datum/job/engineering/construction_worker
+/datum/job/daily/monday
 	name = "Construction Worker"
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
