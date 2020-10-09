@@ -430,13 +430,12 @@
 		qdel(src)
 
 	else if (istype(W, /obj/item/pen))
-		spawn(0)
-			var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-			t = strip_html(replacetext(t, "'",""))
-			t = copytext(t, 1, 45)
-			if (!t)
-				return
-			if (!in_range(src, usr) && src.loc != usr)
-				return
+		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
+		t = strip_html(replacetext(t, "'",""))
+		t = copytext(t, 1, 45)
+		if (!t)
+			return
+		if (!in_range(src, usr) && src.loc != usr)
+			return
 
-			src.created_name = t
+		src.created_name = t
