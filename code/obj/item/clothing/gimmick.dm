@@ -1442,6 +1442,12 @@
 	body_parts_covered = TORSO
 	icon_state = "vampcape"
 
+/obj/item/clothing/under/gimmick/superhero
+	name = "crimefighting costume"
+	desc = "Definitely not just a pair of pajamas."
+	body_parts_covered = TORSO|LEGS|ARMS
+	icon_state = "superhero"
+
 /obj/item/clothing/under/gimmick/mummy
 	name = "linen body wrappings"
 	desc = "I used to be the star of horror movies, now I'm just a tottering extra."

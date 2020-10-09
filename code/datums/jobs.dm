@@ -1980,6 +1980,32 @@
 			return
 		M.bioHolder.AddEffect("hell_fire")
 
+/datum/job/special/halloween/superhero
+	name = "Discount Superhero"
+	wages = PAY_UNTRAINED
+	limit = 1
+	change_name_on_spawn = 1
+	allow_traitors = 0
+	allow_spy_theft = 0
+	cant_spawn_as_rev = 1
+	slot_ears = /obj/item/device/radio/headset/security
+	slot_jump = /obj/item/clothing/under/gimmick/superhero
+	slot_foot = /obj/item/clothing/shoes/tourist
+	slot_belt = /obj/item/storage/belt/utility/superhero
+	slot_back = null
+	slot_poc2 = /obj/item/device/pda2
+
+	New()
+		..()
+		src.access = get_access("Security Officer")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.bioHolder.AddEffect("eyebeams")
+
 /datum/job/special/halloween/remy
 	name = "Remy"
 	wages = PAY_DUMBCLOWN
