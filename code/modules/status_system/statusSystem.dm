@@ -631,7 +631,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			return ..(timePassed)
 
 	simpledot/n_radiation
-		id = "neutron_radiation"
+		id = "n_radiation"
 		name = "Neutron Irradiated"
 		desc = ""
 		icon_state = "nradiation1"

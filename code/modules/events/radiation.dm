@@ -109,7 +109,7 @@
 			return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
 		for (var/mob/living/carbon/M in T.contents)
-			M.changeStatus("neutron_radiation", (rad_strength)*10, 3)
+			M.changeStatus("n_radiation", (rad_strength)*10, 3)
 			if (prob(mutate_prob) && M.bioHolder)
 				if (prob(bad_mut_prob))
 					M.bioHolder.RandomEffect("bad")

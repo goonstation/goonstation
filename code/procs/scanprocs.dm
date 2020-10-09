@@ -174,7 +174,7 @@
 
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
-	var/datum/statusEffect/simpledot/radiation/NR = M.hasStatus("neutron_radiation")
+	var/datum/statusEffect/simpledot/radiation/NR = M.hasStatus("n_radiation")
 	if (R)
 		rad_data = "&emsp;<span class='alert'>Radiation poisoning: Lv [R.stage]</span>"
 	if (NR)
