@@ -92,12 +92,24 @@
 				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 				return
 
-			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+			else if (istype(W, /obj/item/match))
+				var/obj/item/match/match = W
+				switch (match.on)
+					if (-1) // broken
+						user.visible_message("[user] stares at [match] for a while. Seeming confused, they just chuck it into the [src].", "\The [match] confuses you, so you just chuck it into the [src].")
+					if (0) // unlit
+						src.light(user, "<span class='alert'><b>With a swift motion, [user] strikes [match] on [src] and lights both ablaze. Damn, they're slick.</b></span>")
+						return
+					if (1) // lit
+						src.light(user, "<span class='alert'>[user] lights [src] with [match].</span>")
+						return
+
+			else if (istype(W, /obj/item/device/light/candle) && W:on)
+				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</b></span>")
 				return
 
 			else if (W.burning)
-				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				src.light(user, "<span class='alert'><b>[user] lights [src] with [W]. Goddamn.</span>")
 				return
 
 			else

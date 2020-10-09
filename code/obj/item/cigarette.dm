@@ -840,7 +840,10 @@
 	burn_output = 600
 	burn_possible = 1
 	health = 10
-	var/on = 0 // -1 is burnt out/broken or otherwise unable to be lit
+
+	/// 0 = unlit, 1 = lit, -1 is burnt out/broken or otherwise unable to be lit
+	var/on = 0
+
 	var/light_mob = 0
 	var/life_timer = 0
 	rand_pos = 1
