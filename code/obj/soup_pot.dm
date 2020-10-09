@@ -96,7 +96,7 @@
 				var/obj/item/match/match = W
 				switch (match.on)
 					if (-1) // broken
-						user.visible_message("[user] stares at [match] for a while. Seeming confused, they just chuck it into the [src].", "\The [match] confuses you, so you just chuck it into the [src].")
+						user.visible_message("[user] stares at [match] for a while. Seeming confused, they just chuck it into [src].", "\The [match] confuses you, so you just chuck it into [src].")
 					if (0) // unlit
 						src.light(user, "<span class='alert'><b>With a swift motion, [user] strikes [match] on [src] and lights both ablaze. Damn, they're slick.</b></span>")
 						return
