@@ -10,6 +10,7 @@
 	var/id = 0 //debuggin id
 
 /datum/flock_tile_group/New(var/f = null)
+	..()
 	if(f)
 		flock = f
 	processing_items |= src
