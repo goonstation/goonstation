@@ -14,12 +14,28 @@ import DOMPurify from 'dompurify';
 import { Component } from 'inferno';
 import marked from 'marked';
 import { useBackend } from '../backend';
-import { Box, Flex, Tabs, TextArea } from '../components';
+import { Box, Flex, Tabs, TextArea, Button } from '../components';
 import { Window } from '../layouts';
 import { createLogger } from '../logging';
 
 const logger = createLogger('Paper');
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
+
+const findNearestScrollableParent = startingNode => {
+  const body = document.body;
+  let node = startingNode;
+  while (node && node !== body) {
+    // This definitely has a vertical scrollbar, because it reduces
+    // scrollWidth of the element. Might not work if element uses
+    // overflow: hidden.
+    if (node.scrollHeight < node.offsetHeight) {
+      return node;
+    }
+    node = node.parentNode;
+  }
+  return window;
+};
+
 
 const sanitize_text = value => {
   // This is VERY important to think first if you NEED
@@ -251,7 +267,7 @@ const PaperSheetView = (props, context) => {
   return (
     <Box
       position="relative"
-      backgroundColor={"backgroundColor"}
+      backgroundColor={backgroundColor}
       width="100%"
       height="100%" >
       <Box
@@ -272,7 +288,7 @@ const PaperSheetView = (props, context) => {
 class PaperSheetStamper extends Component {
   constructor(props, context) {
     super(props, context);
-    this.windowRef = this.props.windowRef;
+    this.fakeRef = createRef();
     this.state = {
       x: 0,
       y: 0,
@@ -315,22 +331,10 @@ class PaperSheetStamper extends Component {
 
   findStampPosition(e) {
     logger.log('line breaks');
-    for (let key in this.windowRef) {
-      logger.log(key, this.windowRef[key]);
-    }
-    const position = {
-      x: e.pageX,
-      y: e.pageY,
-    };
-
-
-    const offset = {
-      left: e.target.offsetLeft,
-      top: e.target.offsetTop,
-    };
+    const windowRef = document.querySelector('.Layout__content');
     const pos = [
       e.pageX,
-      e.pageY + document.body.scrollTop,
+      e.pageY + windowRef.scrollTop,
     ];
     const centerOffset = vecScale([121, 120], 0.5);
     const center = vecSubtract(pos, centerOffset);
@@ -574,8 +578,11 @@ class PaperSheetEdit extends Component {
 export class PaperSheet extends Component {
   constructor(props, context) {
     super(props, context);
-    this.windowRef = createRef();
+    this.handleMouseMove = e => {
+      logger.log(this.windowRef.parentNode);
+    };
   }
+
 
 
   render() {
@@ -627,7 +634,6 @@ export class PaperSheet extends Component {
         case 2:
           return (
             <PaperSheetStamper
-              windowRef={this.windowRef}
               value={text}
               stamps={stamp_list}
               stamp_class={stamp_class} />

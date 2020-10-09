@@ -30,7 +30,7 @@
 		"Rejected" = "large_stamp-deny.png",
 		"Approved" = "large_stamp-ok.png",
 		"Head of Personnel" = "large_stamp-hop.png",
-		"Medical Director" = "large_stamp-cmo.png",
+		"Medical Director" = "large_stamp-md.png",
 		"Chief Engineer" = "large_stamp-ce.png",
 		"Head of Security" = "large_stamp-hos.png",
 		"Research Director" = "large_stamp-rd.png",
@@ -41,8 +41,6 @@
 		"stamp-mime" = "large_stamp-mime.png",
 		"stamp-centcom" = "large_stamp-centcom.png",
 		"stamp-syndicate" = "large_stamp-syndicate.png",
-/* 		"Current Time" = "SHIFT TIME: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]", */
-		"X" = "todo make an X stamp",
 		"Void" = "todo make a void stamp"
 	)
 	var/list/form_startpoints
@@ -1242,11 +1240,13 @@ Only trained personnel should operate station systems. Follow all procedures car
 	var/special_mode = null
 	var/is_reassignable = 1
 	var/assignment = null
-	var/available_modes = list("Approved", "Rejected", "Void", "X", "Current Time");
+	var/available_modes = list("Approved", "Rejected", "Void", "Current Time");
 	var/current_mode = "Approved"
 
 /obj/item/stamp/New()
 	..()
+
+	//"Current Time" = "SHIFT TIME: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
 	if(special_mode)
 		available_modes += special_mode
 		current_mode = special_mode
