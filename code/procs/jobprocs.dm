@@ -429,7 +429,7 @@
 			var/mob/living/newmob = possible_new_mob
 			newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
 		else
-			src.Equip_Bank_Purchase(src.mind.purchased_bank_item)
+			src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
 
 	return
 

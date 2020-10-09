@@ -170,8 +170,9 @@ datum
 
 			reaction_turf(var/turf/T, var/amount)
 				// adding a slight delay solely to make silver fulminate foam way more fun
-				sleep(rand(0, 5))
-				pop(T, amount)
+				spawn(rand(0, 5))
+					if (src && T)
+						pop(T, amount)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/amount_passed)
 				if (method == TOUCH)

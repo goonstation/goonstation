@@ -11,7 +11,7 @@ turf
 			src.material.triggerTemp(src, exposed_temperature)
 
 	simulated
-		hotspot_expose(exposed_temperature, exposed_volume, soh,electric = 0)
+		hotspot_expose(exposed_temperature, exposed_volume, soh, electric = 0)
 			var/datum/gas_mixture/air_contents = return_air()
 			if(src.material)
 				src.material.triggerTemp(src, exposed_temperature)

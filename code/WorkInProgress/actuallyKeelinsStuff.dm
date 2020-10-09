@@ -3023,8 +3023,8 @@ Returns:
 		return
 
 /obj/perm_portal
-	icon = 'icons/misc/old_or_unused.dmi'
-	icon_state = "portal1"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "portal"
 	anchored = 1
 	density = 1
 	opacity = 0

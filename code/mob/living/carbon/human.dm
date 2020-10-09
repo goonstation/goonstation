@@ -214,7 +214,7 @@
 			MB.explosionPower = microbombs_4_everyone
 			MB.implanted = 1
 			src.implant.Add(MB)
-			MB.implanted(src)
+			INVOKE_ASYNC(MB, /obj/item/implant/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
 

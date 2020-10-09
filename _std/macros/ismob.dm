@@ -1,11 +1,17 @@
 
 // i think its slightly faster to do this with compiler macros instead of procs. i might be a moron, not sure - drsingh
 // it is. no comment on the moron bit. -- marq
+
 //this is the home for checks of mob types
+
+/// Returns true if the given x is a mob
 #define ismob(x) istype(x, /mob)
+/// Returns true if the given x is an observer
 #define isobserver(x) istype(x, /mob/dead)
+/// Returns true if the given x is an observer and an admin
 #define isadminghost(x) x.client && x.client.holder && rank_to_level(x.client.holder.rank) >= LEVEL_MOD && (istype(x, /mob/dead/observer) || istype(x, /mob/dead/target_observer)) // For antag overlays.
 
+/// Returns true if the given x is a mob/living type
 #define isliving(x) istype(x, /mob/living)
 
 #define iscarbon(x) istype(x, /mob/living/carbon)
@@ -32,7 +38,8 @@
 #define isghostcritter(x) (istype(x, /mob/living/critter) && x:ghost_spawned)
 #define ishelpermouse(x) (istype(x, /mob/living/critter/small_animal/mouse/weak/mentor))//mentor and admin mice
 
-#define isnewplayer(x) (istype(x, /mob/new_player)) //new player mobs (what u r if ur in the lobby screen, usually)
+/// Returns true if x is a new player mob (what u r if ur in the lobby screen, usually)
+#define isnewplayer(x) (istype(x, /mob/new_player))
 
-//is this mob immune to breathing in smoke?
+/// Returns true if this mob immune to breathing in smoke?
 #define issmokeimmune(x) (ismob(x) && ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_MOB_PROPERTY(x, PROP_REBREATHING) || HAS_MOB_PROPERTY(x, PROP_BREATHLESS)))

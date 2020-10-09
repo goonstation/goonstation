@@ -290,7 +290,7 @@
 	RETURN_TYPE(/mob/dead/observer)
 	if(src.key || src.client)
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
-			src.hell_respawn(src.mind)
+			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
 			return null
 		var/mob/dead/observer/O = new/mob/dead/observer(src)
 		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)

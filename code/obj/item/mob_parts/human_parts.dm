@@ -206,6 +206,28 @@
 			holder.losebreath = 5
 			strangling = 1
 
+	sever(mob/user)
+		if(holder?.handcuffs)
+			var/obj/item/I = holder.handcuffs
+			holder.u_equip(I)
+			I.set_loc(holder.loc)
+		. = ..()
+
+	disposing()
+		if(holder?.handcuffs)
+			var/obj/item/I = holder.handcuffs
+			holder.u_equip(I)
+			I.set_loc(holder.loc)
+		. = ..()
+
+	remove(show_message = 1)
+		if(holder?.handcuffs)
+			var/obj/item/I = holder.handcuffs
+			holder.u_equip(I)
+			I.set_loc(holder.loc)
+		. = ..()
+
+
 /obj/item/parts/human_parts/arm/left
 	name = "left arm"
 	icon_state = "arm_left"

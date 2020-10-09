@@ -145,7 +145,7 @@ client/proc/replace_space_exclusive()
 
 		map_currently_underwater = 1
 		for(var/turf/space/S in world)
-			if (S.z != 1) continue
+			if (S.z != 1 || istype(S, /turf/space/fluid/warp_z5)) continue
 
 #ifdef MOVING_SUB_MAP
 			var/turf/space/fluid/manta/T = new /turf/space/fluid/manta( locate(S.x, S.y, S.z) )
