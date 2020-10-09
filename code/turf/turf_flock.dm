@@ -71,8 +71,6 @@
 /turf/simulated/floor/feather/break_tile_to_plating()
 	// if the turf's on, turn it off
 	off()
-	src.group.removetile(src)
-	src.group = null
 	var/turf/simulated/floor/F = src.ReplaceWithFloor()
 	F.to_plating()
 
@@ -156,16 +154,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //start of flocktilegroup stuff
 
-/*
-/proc/adjacenttiles(var/turf/t)
-	. = list() //???
-	for(var/d in cardinal)
-		message_admins("thingle")
-		. += get_step(t, d)
-*/
-
-
-
 /turf/simulated/floor/feather/proc/initializegroup() //make a new group
 	group = new/datum/flock_tile_group
 	group.addtile(src)
@@ -231,9 +219,8 @@
 					for(var/obj/flock_structure/s in F)
 						s.groupcheck()
 
+// TODO: make this use typeless lists
 // TODO: currently MASSIVE problem, it does the thing on a random group in range and not on the largest, FIX ASAP.
-// also fix the excluded groups not nulling the group, and not making their own
-
 
 turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by richardgere(god bless)
 	var/list/queue = list()
@@ -267,12 +254,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 
 //end of flocktilegroup stuff
 ////////////////////////////////////////////////////////////////////////////////////////
-/*
-	for(var/f in visited) //deref the stuff
-		visited -= f
-		locate(f)
-		output += f
-*/
+
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
 	desc = "You can feel it thrumming and pulsing."
