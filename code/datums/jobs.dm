@@ -707,7 +707,7 @@
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if (prob(20))
+		if (prob(20) && !M.mutantrace)
 			M.bioHolder.AddEffect("dwarf") // heh
 
 /datum/job/engineering/mechanic
@@ -2250,7 +2250,7 @@
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if (prob(20))
+		if (prob(20) && !M.mutantrace)
 			M.bioHolder.AddEffect("dwarf") // heh
 
 /datum/job/special/machoman
