@@ -52,6 +52,7 @@
 //hearing
 #define HEARING_NORMAL 0
 #define HEARING_BLOCKED 1
+/// cures deafness when worn
 #define HEARING_ANTIDEAF -1 // w h a t the fuck is an anti deaf
 
 //cooldowns
