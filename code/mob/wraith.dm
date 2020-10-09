@@ -6,7 +6,11 @@
 	real_name = "Wraith" //todo: construct name from a user input (e.g. <x> the Impaler)
 	desc = "Jesus Christ, how spooky."
 	icon = 'icons/mob/mob.dmi'
+#ifdef XMAS
+	icon_state = "wraith-love"
+#else
 	icon_state = "wraith"
+#endif
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	density = 0
 	canmove = 1
@@ -28,7 +32,7 @@
 	var/last_life_update = 0
 	var/const/life_tick_spacing = 20
 	var/haunt_duration = 300
-	var/death_icon_state = "wraithdie"
+	var/death_icon_state = "wraith-die"
 	//////////////
 	// Wraith Overrides
 	//////////////

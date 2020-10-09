@@ -301,6 +301,7 @@
 	amount = 1
 	max_stack = 50
 	appearance_flags = RESET_COLOR | RESET_ALPHA
+	move_triggered = 1
 
 	New()
 		..()
@@ -372,6 +373,10 @@
 	update_stack_appearance()
 		setName()
 		return
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 	proc/setName()
 		if (head_material && shaft_material)
@@ -485,6 +490,7 @@
 	wear_image_icon = 'icons/mob/back.dmi'
 	item_state = "quiver"
 	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
+	move_triggered = 1
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))
@@ -560,6 +566,12 @@
 						I.set_loc(T)
 						I.layer = initial(I.layer)
 
+	move_trigger(var/mob/M, kindof)
+		if (..())
+			for (var/obj/O in contents)
+				if (O.move_triggered)
+					O.move_trigger(M, kindof)
+
 /datum/projectile/arrow
 	name = "arrow"
 	power = 17
@@ -598,6 +610,7 @@
 	force = 5
 	can_dual_wield = 0
 	contraband = 0
+	move_triggered = 1
 
 	proc/loadFromQuiver(var/mob/user)
 		if(ishuman(user))
@@ -632,6 +645,9 @@
 		else
 			..()
 
+	move_trigger(var/mob/M, kindof)
+		if (istype(loaded))
+			loaded.move_trigger(M, kindof)
 
 
 	attack(var/mob/target, var/mob/user)

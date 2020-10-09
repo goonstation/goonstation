@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic
 	name = "kinetic weapon"
 	icon = 'icons/obj/items/gun.dmi'

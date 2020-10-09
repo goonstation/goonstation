@@ -779,38 +779,6 @@
 
 			sleep(smelt_interval)
 
-		/*var/list/cable_materials = list()
-		var/list/quality_sum = list()
-		for (var/obj/item/cable_coil/C in src.contents)
-			if (!(C.conductor.mat_id in cable_materials))
-				cable_materials += C.conductor.mat_id
-				cable_materials[C.conductor.mat_id] = 0
-				quality_sum += C.conductor.mat_id
-				quality_sum[C.conductor.mat_id] = 0
-			if (!(C.insulator.mat_id in cable_materials))
-				cable_materials += C.insulator.mat_id
-				cable_materials[C.insulator.mat_id] = 0
-				quality_sum += C.insulator.mat_id
-				quality_sum[C.insulator.mat_id] = 0
-			cable_materials[C.conductor.mat_id] += C.amount
-			quality_sum[C.conductor.mat_id] += C.amount * C.quality
-			cable_materials[C.insulator.mat_id] += C.amount
-			quality_sum[C.insulator.mat_id] += C.amount * C.quality
-			qdel(C)
-
-		var/bad_flag = 0
-		for (var/mat_id in cable_materials)
-			var/total = cable_materials[mat_id]
-			while(cable_materials[mat_id] >= 30)
-				output_bar_with_quality(quality_sum[mat_id] / total, mat_id)
-				cable_materials[mat_id] -= 30
-				sleep(smelt_interval)
-				if (cable_materials[mat_id] < 30)
-					bad_flag = 1
-
-		if (bad_flag)
-			src.visible_message("<b>[src]</b> emits a grumpy buzz.")*/
-
 		if (reject)
 			src.reject = 0
 			src.visible_message("<b>[src]</b> emits an angry buzz and rejects some unsuitable materials!")
@@ -836,7 +804,7 @@
 			stack_amount = round(divide)
 			if (stack_amount != divide)
 				src.insufficient = 1
-				O.amount -= (stack_amount * amount_modifier)
+				O.change_stack_amount(-stack_amount * amount_modifier)
 				O.set_loc(src.loc)
 				if (!stack_amount)
 					return
