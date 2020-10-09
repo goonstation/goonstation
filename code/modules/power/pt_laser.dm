@@ -530,7 +530,8 @@
 	if(power < 10) return
 	if(isintangible(L)) return // somehow flocktraces are still getting destroyed by the laser. maybe this will fix it
 
-	if(prob(min(power/1e5,50))) L.emote("scream") //might be spammy if they stand in it for ages, idk
+	if(prob(min(power/1e5,50)))
+		INVOKE_ASYNC(L, /mob/living.proc/emote, "scream") //might be spammy if they stand in it for ages, idk
 
 	if(L.dir == turn(src.dir,180) && ishuman(L)) //they're looking into the beam!
 		var/safety = 1

@@ -41,6 +41,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -112,6 +113,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -180,6 +182,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -1651,6 +1654,7 @@ keeping this here because I want to make something else with it eventually
 	throw_range = 5
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 	var/image/handle = null
 
 	New()

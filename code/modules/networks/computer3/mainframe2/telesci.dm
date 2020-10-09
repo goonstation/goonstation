@@ -604,7 +604,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		else //MAJOR EFFECTS
 			effect = pick("mutatearea","areascatter","majorsummon")
 		logTheThing("station", usr, null, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
-		processbadeffect(effect)
+		INVOKE_ASYNC(src, /obj/machinery/networked/telepad.proc/processbadeffect, effect)
 
 	proc/processbadeffect(var/effect)
 		switch(effect)
@@ -754,7 +754,8 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("tinyfire")
 				fireflash(src.loc, 3)
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
+				for(var/mob/O in AIviewers(src, null))
+					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
 				var/summon = pick("maneater","killertomato","bee","golem","magiczombie","mimic")

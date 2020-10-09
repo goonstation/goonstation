@@ -25,6 +25,7 @@
 	module_research = list("tools" = 5, "science" = 1)
 	rand_pos = 1
 	inventory_counter_enabled = 1
+	move_triggered = 1
 	var/list/banned_reagents = list("vomit",
 	"blackpowder",
 	"blood",

@@ -12,5 +12,5 @@
 #define IS_PERSPECTIVE_WALL(T) (T.flags & IS_PERSPECTIVE_FLUID)
 #define IS_PERSPECTIVE_BLOCK(A) (A.flags & IS_PERSPECTIVE_FLUID)
 
-//control which objects and mobs get submerge overlay:
+/// Check if object or mobs gets a submerge overlay
 #define IS_VALID_SUBMERGE_OBJ(O) (O.flags & FLUID_SUBMERGE)
