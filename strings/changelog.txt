@@ -1,4 +1,28 @@
 
+(t)thu oct 08 20
+(u)adharainspace
+(p)2363
+(e)|
+(+)if you die with a health implant, the pda message thats sent out now includes whether or not you were clonescanned.
+(u)Nebulacrity
+(p)2350
+(e)🎨|sprites
+(*)A new colorful space bee type has been discovered recently!
+(u)ThePotato97
+(p)2358
+(e)⚖🐛🆕📄|balance, bug, feature, tgui
+(+)Only head IDs can delete cloner records now.
+(u)Jawns
+(p)2373
+(e)🐛|bug
+(+)Chemicompiler isolate and dump features now work together as expected
+(+)Chemicompiler can now dump paper, thermite, and other chemicals too fun for the fluid system.
+(u)ThePotato97
+(p)2367
+(e)🆕|feature
+(+)Added github button to right panel and changed the order.
+(u)Tarmunora
+(+)Gunbot antag critters get armor equal to secvest.
 (t)wed oct 07 20
 (u)Kyle
 (+)Kudzumen heal now heals more, removes implanted bullets, heals organs, and can be used on yourself (at reduced efficacy).
