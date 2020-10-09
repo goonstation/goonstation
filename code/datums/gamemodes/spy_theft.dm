@@ -30,6 +30,9 @@
 
 	var/list/uplinks = list()
 
+	var/list/area_blacklist = list()
+
+
 /datum/bounty_item
 	var/name = "bounty name (this is a BUG)" 	//when a bounty object is deleted, we will still need a ref to its name
 	var/obj/item = 0							//ref to exact item
@@ -125,6 +128,10 @@
 		return 1
 
 
+
+/datum/game_mode/spy_theft/New()
+	src.area_blacklist = list("AI Perimeter Defenses", "VR Test Area", "Storage Area")
+	return ..()
 
 /datum/game_mode/spy_theft/announce()
 	boutput(world, "<B>The current game mode is - Spy!</B>")
@@ -577,7 +584,7 @@
 			choice = pick(S)
 			item_existing = locate(choice)
 			var/turf/T = get_turf(item_existing)
-			if (item_existing && T.z == 1)
+			if (item_existing && istype(T) && T.z == 1)
 				break
 			else
 				item_existing = 0
@@ -599,22 +606,13 @@
 
 
 	//Set delivery areas
-	possible_areas = get_areas_with_turfs(/area/station)
-	possible_areas += get_areas_with_turfs(/area/diner)
+	possible_areas = get_nonvirtual_areas_with_turfs(/area/station, src.area_blacklist)
+	possible_areas += get_nonvirtual_areas_with_turfs(/area/diner, src.area_blacklist)
 	possible_areas -= get_areas_with_turfs(/area/diner/tug)
 	possible_areas -= get_areas_with_turfs(/area/station/maintenance)
 	possible_areas -= get_areas_with_turfs(/area/station/hallway)
 	possible_areas -= get_areas_with_turfs(/area/station/engine/substation)
 	possible_areas -= /area/station/test_area
-
-	for (var/area/A in possible_areas)
-		LAGCHECK(LAG_LOW)
-		if (A.virtual)
-			possible_areas -= A
-			break
-		if (A.name == "AI Perimeter Defenses" || A.name == "VR Test Area") //I have no idea what this "AI Perimeter Defenses" is, can't find it in code! All I know is that it's an area that the game can choose that DOESNT HAVE ANY TURFS
-			possible_areas -= A
-			break
 
 	for (var/datum/bounty_item/B in active_bounties)
 		if ((B.item && !istype(B.item,/obj/item)) || B.organ)
