@@ -2355,20 +2355,7 @@
 		src.access = get_access("Boxer")
 		return
 
-/datum/job/daily/monday
-	name = "Mime"
-	limit = 1
-	wages = PAY_DUMBCLOWN*2
-	slot_belt = /obj/item/device/pda2
-	slot_head = /obj/item/clothing/head/mime_bowler
-	slot_mask = /obj/item/clothing/mask/mime
-	slot_jump = /obj/item/clothing/under/misc/mime/alt
-	slot_suit = /obj/item/clothing/suit/scarf
-	slot_glov = /obj/item/clothing/gloves/latex
-	slot_foot = /obj/item/clothing/shoes/black
-	slot_poc1 = /obj/item/pen/crayon/white
-	slot_poc2 = /obj/item/paper
-	change_name_on_spawn = 1
+
 
 	New()
 		..()
