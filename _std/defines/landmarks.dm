@@ -29,7 +29,8 @@
 
 // misc and unused
 
-#define LANDMARK_TWITCHY_BILL_RESPAWN "shitty_bill_respawn" // Twitch Plays Shitty Bill respawn points
+/// Twitch Plays Shitty Bill respawn points
+#define LANDMARK_TWITCHY_BILL_RESPAWN "shitty_bill_respawn"
 #define LANDMARK_PRISONWARP "prisonwarp"
 #define LANDMARK_PRISONSECURITYWARP "prisonsecuritywarp"
 #define LANDMARK_THUNDERDOME_1 "tdome1"
@@ -67,7 +68,8 @@
 
 // misc adventure zone stuff
 
-#define LANDMARK_TELESCI "telesci" // allowed turfs for telesci
+/// allowed turfs for telesci
+#define LANDMARK_TELESCI "telesci"
 #define LANDMARK_LRT "lrt landmark"
 #define LANDMARK_SAMOSTREL_WARP "samostrel"
 #define LANDMARK_EVIL_CHEF_CORPSE "evilchef_corpse"
