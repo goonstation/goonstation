@@ -1,3 +1,10 @@
+/**
+* @file
+* @copyright 2020
+* @author ThePotato97 (https://github.com/ThePotato97)
+* @license ISC
+*/
+
 import { classes } from 'common/react';
 import { COLORS } from "../constants";
 import { computeBoxClassName, Box } from './Box';
@@ -8,7 +15,7 @@ import { computeBoxClassName, Box } from './Box';
 export const HealthStat = props => {
   const {
     type,
-    content,
+    children,
     className,
     ...rest
   } = props;
@@ -22,7 +29,7 @@ export const HealthStat = props => {
         computeBoxClassName(rest),
       ])}
       color={COLORS.damageType[type]}>
-      {content}
+      {children}
     </Box>
   );
 };

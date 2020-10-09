@@ -1,4 +1,5 @@
 
+/// Given a map type, returns true if it is that map.
 #define ismap(x) (map_setting == x)
 
 #ifdef UNDERWATER_MAP //should this be using z level defines? maybe not

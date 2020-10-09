@@ -15,7 +15,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	return
 
 /// Holds all the appearance information.
-/datum/appearanceHolder	
+/datum/appearanceHolder
 
 	//_carry holds our "actual" color, in case it changes and we want the old one back
 	var/mob_color_flags = (HAS_HAIR_COLORED_HAIR)
@@ -33,6 +33,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/customization_third = "None"
 
 	var/e_color = "#101010"
+	var/e_color_carry = "#101010"
 
 	var/s_tone_carry = "#FFCC99"
 	var/s_tone = "#FFCC99"

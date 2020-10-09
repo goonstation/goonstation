@@ -131,7 +131,7 @@ For the _first case_, we can do some special optimization, in what we call a "ty
 
 The syntax looks like this:
 ```js
-for (var/obj/foo/bar as anything in my_list)
+for (var/obj/foo/bar as() in my_list)
 	bar.boogie()
 ```
 
