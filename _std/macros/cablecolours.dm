@@ -19,7 +19,15 @@
 /datum/material/fabric/synthrubber/coloured/_color/mat_id = ""+#_color+"rubber";\
 /datum/material/fabric/synthrubber/coloured/_color/name = ""+#_color+"rubber";\
 /datum/material/fabric/synthrubber/coloured/_color/desc = ""+"A type of synthetic rubber. This one is "+#_color+".";\
-/datum/material/fabric/synthrubber/coloured/_color/color = _hexcolor
+/datum/material/fabric/synthrubber/coloured/_color/color = _hexcolor;\
+/obj/item/storage/box/cablesbox/coloured/_color;\
+/obj/item/storage/box/cablesbox/coloured/_color/desc = "x2 "+#_color+" Cabling Box (14 cable coils total)";\
+/obj/item/storage/box/cablesbox/coloured/_color/spawn_contents = list(/obj/item/cable_coil/+#_color+ = 7);\
+/datum/supply_packs/electrical/_color;\
+/datum/supply_packs/electrical/_color/name = ""+#_color+-"Electrical Supplies Crate - 2 pack";\
+/datum/supply_packs/electrical/_color/desc = "x2 "+#_color+" Cabling Box (14 cable coils total)";\
+/datum/supply_packs/electrical/_color/contains = list(/obj/item/storage/box/+#_color+ = 2);\
+/datum/supply_packs/electrical/_color/containername = ""+#_color+"-Coloured Electrical Supplies Crate - 2 pack"
 
 colorcable(yellow, "#EED202")
 colorcable(orange, "#C46210")
@@ -30,3 +38,12 @@ colorcable(black, "#414A4C")
 colorcable(hotpink, "#FF69B4")
 colorcable(brown, "#832A0D")
 colorcable(white, "#EDEAE0")
+
+///datum/supply_packs/electrical/yellow
+//	name = "Yellow-Coloured Electrical Supplies Crate - 2 pack"
+//	desc = "x2 Yellow Cabling Box (14 cable coils total)"
+//	contains = list(/obj/item/storage/box/cablesbox/coloured/yellow = 2)
+//	containername = "Yellow-Coloured Electrical Supplies Crate - 2 pack"
+//obj/item/storage/box/cablesbox/coloured/yellow
+//	name = "yellow-coloured electrical cables storage"
+//	spawn_contents = list(/obj/item/cable_coil/coloured/yellow = 7)
