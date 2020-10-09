@@ -274,7 +274,7 @@ datum
 
 			if (do_fluid_react && issimulatedturf(target))
 				var/turf/simulated/T = target
-				return T.fluid_react(src, amount)
+				return T.fluid_react(src, amount, index = index)
 
 			return trans_to_direct(target_reagents, amount, multiplier, index = index)
 

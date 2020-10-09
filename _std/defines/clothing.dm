@@ -42,24 +42,27 @@
 #define SLEEVELESS					64
 /// block smoke inhalations (gas mask)
 #define BLOCKSMOKE					128
+/// blocks choking, also a very silly flag name
+#define BLOCKCHOKE					256
 /// is this clothing a jetpack
-#define IS_JETPACK					256
+#define IS_JETPACK					512
 /// doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
-#define EQUIPPED_WHILE_HELD			512
+#define EQUIPPED_WHILE_HELD			1024
 /// return early out of equipped/unequipped, unless in SLOT_L_HAND or SLOT_R_HAND (i.e.: if EQUIPPED_WHILE_HELD)
-#define NOT_EQUIPPED_WHEN_WORN		1024
+#define NOT_EQUIPPED_WHEN_WORN		2048
 /// if we currently have a grab (or by extention, a block) attached to us
-#define HAS_GRAB_EQUIP				2048
+#define HAS_GRAB_EQUIP				4096
 /// whether or not we should show extra tooltip info about blocking with this item
-#define BLOCK_TOOLTIP				4096
+#define BLOCK_TOOLTIP				8192
 /// block an extra point of cut damage when used to block
-#define BLOCK_CUT					8192
+#define BLOCK_CUT					16384
 /// block an extra point of stab damage when used to block
-#define BLOCK_STAB					16384
+#define BLOCK_STAB					32768
 /// block an extra point of burn damage when used to block
-#define BLOCK_BURN					32768
+#define BLOCK_BURN					65536
 /// block an extra point of blunt damage when used to block
-#define BLOCK_BLUNT					65536
+#define BLOCK_BLUNT					131072
+
 
 //Suit blood flags
 #define SUITBLOOD_ARMOR 1

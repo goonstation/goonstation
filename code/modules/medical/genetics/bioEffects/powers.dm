@@ -1902,6 +1902,7 @@
 	lockedTries = 8
 	stability_loss = 20
 	cooldown = 0
+	var/last_moved = 0
 	var/active = 0
 	ability_path = /datum/targetable/geneticsAbility/chameleon
 
@@ -1917,18 +1918,25 @@
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
 			L.invisibility = 0
+		if (src.active)
+			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
 
 	OnLife()
 		if(..()) return
+		if(!src.active) return
 		if(isliving(owner))
 			var/mob/living/L = owner
-			if ((world.timeofday - owner.l_move_time) >= 30 && can_act(owner) && src.active)
+			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
 				L.invisibility = 1
-			else
-				L.UpdateOverlays(null, id)
-				L.invisibility = 0
+
+	proc/decloak()
+		if(isliving(owner))
+			var/mob/living/L = owner
+			last_moved = TIME
+			L.UpdateOverlays(null, id)
+			L.invisibility = 0
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"
@@ -1944,9 +1952,13 @@
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0
+			CH.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
+			CH.decloak()
 		else
 			boutput(usr, "You start using your chameleon cloaking.")
+			CH.last_moved = TIME
 			CH.active = 1
+			CH.RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

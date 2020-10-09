@@ -460,16 +460,6 @@
 			W.addAbility(/datum/targetable/virtual/logout)
 //for sure didnt steal code from ww. no siree
 
-/datum/mutantrace/blank
-	name = "blank"
-	icon_state = "blank"
-	override_eyes = 0
-	override_hair = 0
-	override_beard = 0
-	override_detail = 0
-	override_attack = 0
-	race_mutation = /datum/bioEffect/mutantrace/blank
-
 /datum/mutantrace/grey
 	name = "grey"
 	icon_state = "grey"

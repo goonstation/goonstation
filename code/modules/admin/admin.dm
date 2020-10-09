@@ -190,6 +190,16 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.audible_prayers = (usr.client.holder.audible_prayers + 1) % 3
 				src.show_pref_window(usr)
+		if ("toggle_audible_ahelps")
+			if (src.level >= LEVEL_MOD)
+				switch(usr.client.holder.audible_ahelps)
+					if (PM_NO_ALERT)
+						usr.client.holder.audible_ahelps = PM_AUDIBLE_ALERT
+					if (PM_AUDIBLE_ALERT)
+						usr.client.holder.audible_ahelps = PM_DECTALK_ALERT
+					if (PM_DECTALK_ALERT)
+						usr.client.holder.audible_ahelps = PM_NO_ALERT
+				src.show_pref_window(usr)
 		if ("toggle_buildmode_view")
 			if (src.level >= LEVEL_PA)
 				usr.client.holder.buildmode_view = !usr.client.holder.buildmode_view

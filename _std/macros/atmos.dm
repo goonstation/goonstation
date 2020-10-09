@@ -1,5 +1,7 @@
-#define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
-#define ONE_ATMOSPHERE		101.325	//kPa
+/// in kPa*L/(K*mol)
+#define R_IDEAL_GAS_EQUATION	8.31
+/// 1atm, now in kPa
+#define ONE_ATMOSPHERE		101.325
 
 #define CELL_VOLUME 2500	//liters in a cell
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
@@ -7,8 +9,10 @@
 #define O2STANDARD 0.21
 #define N2STANDARD 0.79
 
-#define MOLES_O2STANDARD MOLES_CELLSTANDARD*O2STANDARD	// O2 standard value (21%)
-#define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD	// N2 standard value (79%)
+/// O2 standard value (21%)
+#define MOLES_O2STANDARD MOLES_CELLSTANDARD*O2STANDARD
+/// N2 standard value (79%)
+#define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD
 
 /// Moles in a standard cell after which plasma is visible
 #define MOLES_PLASMA_VISIBLE	2
@@ -57,8 +61,7 @@
 #define FIRE_CARBON_ENERGY_RELEASED	  500000
 /// Amount of heat released per mole of burnt plasma into the tile
 #define FIRE_PLASMA_ENERGY_RELEASED	 3000000
-/// For small fires
-#define FIRE_GROWTH_RATE			25000
+#define FIRE_GROWTH_RATE			25000 //For small fires
 
 //Plasma fire properties
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		(100+T0C)
@@ -69,8 +72,10 @@
 
 // tank properties
 
-#define TANK_LEAK_PRESSURE		(30.*ONE_ATMOSPHERE)	// Tank starts leaking
-#define TANK_RUPTURE_PRESSURE	(40.*ONE_ATMOSPHERE) // Tank spills all contents into atmosphere
+/// Tank starts leaking
+#define TANK_LEAK_PRESSURE		(30.*ONE_ATMOSPHERE)
+/// Tank spills all contents into atmosphere
+#define TANK_RUPTURE_PRESSURE	(40.*ONE_ATMOSPHERE)
 
 #define TANK_FRAGMENT_PRESSURE	(50.*ONE_ATMOSPHERE) // Boom 3x3 base explosion
 #define TANK_FRAGMENT_SCALE	    (10.*ONE_ATMOSPHERE) // +1 for each SCALE kPa aboe threshold
@@ -151,7 +156,11 @@ What can break when adding new gases:
 	APPLY_TO_GASES(MACRO, ARGS)
 #endif
 
-// This is used only in the gas mixer computer as of now. No need to define gas colour for new gases if you don't want to.
+/**
+	* Returns the color of a given gas ID.
+	*
+	* This is used only in the gas mixer computer as of now.
+	*/
 proc/gas_text_color(gas_id)
 	switch(gas_id)
 		if("oxygen")
@@ -162,6 +171,8 @@ proc/gas_text_color(gas_id)
 			return "orange"
 		if("toxins")
 			return "red"
+		if ("farts")
+			return "purple"
 	return "black"
 
 ////////////////////////////
@@ -172,6 +183,7 @@ proc/gas_text_color(gas_id)
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable, ATMOS_EPSILON))
 
+/// Given a gas mixture, zeroes it
 #define _ZERO_GAS(GAS, _, _, MIXTURE) (MIXTURE).GAS = 0;
 #define ZERO_BASE_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)
 #define ZERO_ARCHIVED_BASE_GASES(MIXTURE) APPLY_TO_ARCHIVED_GASES(_ZERO_GAS, MIXTURE)
@@ -187,6 +199,7 @@ proc/gas_text_color(gas_id)
 		var/datum/gas/trace_gas = x
 		. += trace_gas.moles
 
+/// Returns total moles of a given gas mixture
 #define TOTAL_MOLES(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).total_moles_full() : BASE_GASES_TOTAL_MOLES(MIXTURE))
 
 // pressure
