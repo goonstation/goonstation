@@ -604,7 +604,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		else //MAJOR EFFECTS
 			effect = pick("mutatearea","areascatter","majorsummon")
 		logTheThing("station", usr, null, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
-		processbadeffect(effect)
+		INVOKE_ASYNC(src, /obj/machinery/networked/telepad.proc/processbadeffect, effect)
 
 	proc/processbadeffect(var/effect)
 		switch(effect)
