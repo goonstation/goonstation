@@ -828,10 +828,14 @@
 				VT = "radio"
 				ending = 0
 
-		if (singing || src.bioHolder.HasEffect("accent_elvis"))
-			speech_bubble.icon_state = "note"
-			if (ending == "!")
-				singing = "loud"
+		if (singing || (src.bioHolder && src.bioHolder.HasEffect("elvis")))
+			if (src.get_brain_damage() >= 60 || (src.bioHolder && (src.bioHolder.HasEffect("unintelligable") || src.bioHolder.HasEffect("drunk"))))
+				singing = "bad"
+				speech_bubble.icon_state = "notebad"
+			else
+				speech_bubble.icon_state = "note"
+				if (ending == "!")
+					singing = "loud"
 		else if (ending == "?")
 			playsound(src, sounds_speak["[VT]?"], 55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
 			speech_bubble.icon_state = "?"
