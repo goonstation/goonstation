@@ -1988,7 +1988,10 @@
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
+	recieves_miranda = 1
 	slot_ears = /obj/item/device/radio/headset/security
+	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud/superhero
+	slot_glov = /obj/item/clothing/gloves/latex/blue
 	slot_jump = /obj/item/clothing/under/gimmick/superhero
 	slot_foot = /obj/item/clothing/shoes/tourist
 	slot_belt = /obj/item/storage/belt/utility/superhero
