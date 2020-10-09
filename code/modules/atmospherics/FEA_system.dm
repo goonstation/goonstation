@@ -56,30 +56,28 @@ Important Procedures
 atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	return (!density || !height || air_group)
 
-//turf/canpass()
-turf
-	CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
-		if(!target) return 0
 
-		if(istype(mover)) // turf/Enter(...) will perform more advanced checks
-			return !density
+turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
+	if(!target) return 0
 
-		else // Now, doing more detailed checks for air movement and air group formation
-			if(target.blocks_air||blocks_air)
-				return 0
+	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
+		return !density
 
-			if (src.checkingcanpass > 0)
-				for(var/atom in src)
-					var/obj/obstacle = atom
-					if(!obstacle.CanPass(mover, target, height, air_group))
-						return 0
-			if (target && target.checkingcanpass > 0)
-				for(var/atom in target)
-					var/obj/obstacle = atom
-					if(!obstacle.CanPass(mover, src, height, air_group))
-						return 0
+	else // Now, doing more detailed checks for air movement and air group formation
+		if(target.blocks_air||blocks_air)
+			return 0
 
-			return 1
+		if (src.checkingcanpass > 0)
+			for(var/obj/obstacle as() in src)
+				if(!obstacle.CanPass(mover, target, height, air_group))
+					return 0
+
+		if (target && target.checkingcanpass > 0)
+			for(var/obj/obstacle as() in target)
+				if(!obstacle.CanPass(mover, src, height, air_group))
+					return 0
+
+		return 1
 
 
 var/global/datum/controller/air_system/air_master
@@ -115,8 +113,6 @@ datum
 					//Call this to try to construct a group starting from base and merging with neighboring unparented tiles
 					//Expands the group until all valid borders explored
 
-//				assemble_group_object(obj/movable/floor/base)
-
 				process()
 					//Call this to process air movements for a cycle
 
@@ -149,8 +145,7 @@ datum
 					//Warning: Do not call this, add the group to air_master.groups_to_rebuild instead
 
 				add_singleton(turf/simulated/T)
-					if(!active_singletons.Find(T))
-						active_singletons += T
+					active_singletons |= T
 
 				set_controller(datum/controller/process/air_system/controller)
 					parent_controller = controller
@@ -183,28 +178,21 @@ datum
 				for(var/turf/simulated/S in world)
 					if(!S.blocks_air && !S.parent)
 						assemble_group_turf(S)
-				//for(var/turf/simulated/S in world) //Update all pathing and border information as well
 					S.update_air_properties()
-/*
-				for(var/obj/movable/floor/S in world)
-					if(!S.parent)
-						assemble_group_object(S)
-				for(var/obj/movable/floor/S in world) //Update all pathing and border information as well
-					S.update_air_properties()
-*/
+
 				boutput(world, "<span class='alert'>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>")
 				#endif
 
 			assemble_group_turf(turf/simulated/base)
 				set waitfor = 0
-				var/list/turf/simulated/members = list(base) //Confirmed group members
-				var/list/turf/simulated/possible_members = list(base) //Possible places for group expansion
+				var/list/turf/simulated/members = list(base) // Confirmed group members
+				var/list/turf/simulated/possible_members = list(base) // Possible places for group expansion
 				var/list/turf/simulated/possible_borders
 				var/list/turf/simulated/possible_space_borders
 				var/possible_space_length = 0
 
-				while(possible_members.len>0) //Keep expanding, looking for new members
-					for(var/turf/simulated/test in possible_members)
+				while(possible_members.len > 0) //Keep expanding, looking for new members
+					for(var/turf/simulated/test as() in possible_members)
 						test.length_space_border = 0
 						for(var/direction in cardinal)
 							var/turf/T = get_step(test,direction)
@@ -212,42 +200,40 @@ datum
 								if(istype(T,/turf/simulated) && !T:parent)
 									possible_members += T
 									members += T
-								else if(istype(T,/turf/space))
-									if(!possible_space_borders)
-										possible_space_borders = list()
-									if(!possible_space_borders.Find(test))
-										possible_space_borders += test
+								else if(istype(T, /turf/space))
+									LAZYLISTINIT(possible_space_borders)
+									possible_space_borders |= test
 									test.length_space_border++
 								else
-									if(!possible_borders)
-										possible_borders = list()
-									if(!possible_borders.Find(test))
-										possible_borders += test
+									LAZYLISTINIT(possible_borders)
+									possible_borders |= test
+
 						if(test.length_space_border > 0)
 							possible_space_length += test.length_space_border
 						possible_members -= test
 
 				if(members.len > 1)
 					var/datum/air_group/group = new
-					if(possible_borders && possible_borders.len>0)
+					if(possible_borders && (possible_borders.len > 0))
 						group.borders = possible_borders
-					if(possible_space_borders && possible_space_borders.len>0)
+					if(possible_space_borders && (possible_space_borders.len > 0))
 						group.space_borders = possible_space_borders
 						group.length_space_border = possible_space_length
 
-					for(var/turf/simulated/test in members)
+					for(var/turf/simulated/test as() in members)
 						test.parent = group
 						test.processing = 0
 						active_singletons -= test
 
 						test.dist_to_space = null
 						var/dist
-						for(var/turf/simulated/b in possible_space_borders)
+						for(var/P in possible_space_borders)
+							var/turf/simulated/b = P
 							if (b == test)
 								test.dist_to_space = 1
 								break
 							dist = get_dist(b, test)
-							if (test.dist_to_space == null || dist < test.dist_to_space)
+							if ((test.dist_to_space == null) || (dist < test.dist_to_space))
 								test.dist_to_space = dist
 
 					group.members = members
@@ -263,49 +249,7 @@ datum
 						base.update_visuals(base.air)
 
 				return null
-/*
-			assemble_group_object(obj/movable/floor/base)
 
-				var/list/obj/movable/floor/members = list(base) //Confirmed group members
-				var/list/obj/movable/floor/possible_members = list(base) //Possible places for group expansion
-				var/list/obj/movable/floor/possible_borders = list()
-
-				while(possible_members.len>0) //Keep expanding, looking for new members
-					for(var/obj/movable/floor/test in possible_members)
-						for(var/direction in cardinal)
-							var/turf/T = get_step(test.loc,direction)
-							if(T && test.loc.CanPass(null, T, null, 1))
-								var/obj/movable/floor/O = locate(/obj/movable/floor) in T
-								if(istype(O) && !O.parent)
-									if(!members.Find(O))
-										possible_members += O
-										members += O
-								else
-									possible_borders -= test
-									possible_borders += test
-						possible_members -= test
-
-				if(members.len > 1)
-					var/datum/air_group/object/group = new
-					if(possible_borders.len>0)
-						group.borders = possible_borders
-
-					for(var/obj/movable/floor/test in members)
-						test.parent = group
-						test.processing = 0
-						active_singletons -= test
-
-					group.members = members
-					air_groups += group
-
-					group.update_group_from_tiles() //Initialize air group variables
-					return group
-				else
-					base.processing = 0 //singletons at startup are technically unconnected anyway
-					base.parent = null
-
-				return null
-*/
 			process()
 				current_cycle++
 				if(groups_to_rebuild.len > 0)
@@ -328,62 +272,42 @@ datum
 				process_high_pressure_delta()
 				LAGCHECK(LAG_HIGH)
 
-				if(current_cycle%10==5) //Check for groups of tiles to resume group processing every 10 cycles
-					for(var/datum/air_group/AG in air_groups)
+				if(current_cycle % 7 == 0) //Check for groups of tiles to resume group processing every 7 cycles
+					for(var/datum/air_group/AG as() in air_groups)
 						AG.check_regroup()
 						LAGCHECK(LAG_HIGH)
 
 				return 1
 
 			process_update_tiles()
-				for(var/turf/simulated/T in tiles_to_update)
+				for(var/turf/simulated/T as() in tiles_to_update)
 					T.update_air_properties()
-/*
-				for(var/obj/movable/floor/O in tiles_to_update)
-					O.update_air_properties()
-*/
 				tiles_to_update.len = 0
 
 			process_rebuild_select_groups()
-				var/list/turf/turfs = list()
+				var/list/turf/turf_list = list()
 
-				for(var/datum/air_group/turf_AG in groups_to_rebuild) //Deconstruct groups, gathering their old members
-					for(var/turf/simulated/T in turf_AG.members)
+				for(var/datum/air_group/turf_AG in groups_to_rebuild) // Deconstruct groups, gathering their old members
+					for(var/turf/simulated/T as() in turf_AG.members)
 						T.parent = null
-						turfs += T
+						turf_list += T
 					air_master.air_groups -= turf_AG
 					turf_AG.members.len = 0
 				LAGCHECK(LAG_HIGH)
 
-				for(var/turf/simulated/S in turfs) //Have old members try to form new groups
+				for(var/turf/simulated/S as() in turf_list) // Have old members try to form new groups
 					if(!S.parent)
 						assemble_group_turf(S)
 				LAGCHECK(LAG_HIGH)
 
-				for(var/turf/simulated/S in turfs)
+				for(var/turf/simulated/S as() in turf_list)
 					S.update_air_properties()
 				LAGCHECK(LAG_HIGH)
 
-//				var/obj/movable/list/movable_objects = list()
-/*
-				for(var/datum/air_group/object/object_AG in groups_to_rebuild) //Deconstruct groups, gathering their old members
-
-					for(var/obj/movable/floor/OM in object_AG.members)
-						OM.parent = null
-						movable_objects += OM
-					qdel(object_AG)
-
-				for(var/obj/movable/floor/OM in movable_objects) //Have old members try to form new groups
-					if(!OM.parent)
-						assemble_group_object(OM)
-				for(var/obj/movable/floor/OM in movable_objects)
-					OM.update_air_properties()
-*/
 				groups_to_rebuild.len = 0
 
 			process_groups()
-				for(var/x in air_groups)
-					var/datum/air_group/AG = x
+				for(var/datum/air_group/AG as() in air_groups)
 					AG?.process_group(parent_controller)
 					LAGCHECK(LAG_HIGH)
 
@@ -393,12 +317,12 @@ datum
 					LAGCHECK(LAG_HIGH)
 
 			process_super_conductivity()
-				for(var/turf/simulated/hot_potato in active_super_conductivity)
+				for(var/turf/simulated/hot_potato as() in active_super_conductivity)
 					hot_potato.super_conduct()
 					LAGCHECK(LAG_HIGH)
 
 			process_high_pressure_delta()
-				for(var/turf/pressurized in high_pressure_delta)
+				for(var/turf/simulated/pressurized as() in high_pressure_delta)
 					pressurized.high_pressure_movements()
 					LAGCHECK(LAG_HIGH)
 

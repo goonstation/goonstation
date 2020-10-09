@@ -194,7 +194,8 @@ Filter types:
 				if(4) //removing trace gases
 					if(removed)
 						if(length(removed.trace_gases))
-							for(var/datum/gas/trace_gas in removed.trace_gases)
+							for(var/G in removed.trace_gases)
+								var/datum/gas/trace_gas = G
 								if(trace_gas)
 									removed.trace_gases -= trace_gas
 									if(!removed.trace_gases.len)
