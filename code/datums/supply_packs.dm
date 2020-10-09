@@ -232,12 +232,11 @@
 	cost = 450
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Condiment Crate"
-//cabling crates
+
 ABSTRACT_TYPE (/datum/supply_packs/electrical)
 /datum/supply_packs/electrical
 	name = "coloured cable crate"
-	desc = "Parent object for Coloured Electrical Cable crates, you shouldn't see this..."
-	contains = list(/obj/item/storage/box/cablesbox = 2)
+	desc = "Parent object for Electrical Cable crates, you shouldn't see this..."
 	category = "Basic Materials"
 	cost = 2000
 	containertype = /obj/storage/crate
