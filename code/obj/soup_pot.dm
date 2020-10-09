@@ -77,19 +77,19 @@
 		if (!src.on && src.pot)
 
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				src.light(user, "<span class='alert'><b>[user] casually lights [src] with [W], what a badass.</b></span>")
 				return
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.light(user, "<span class='alert'><b>Did [user] just light \his [src] with [W]? Holy Shit.</b></span>")
 				return
 
 			else if (istype(W, /obj/item/device/igniter))
-				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
+				src.light(user, "<span class='alert'>[user] fumbles around with [W]; a small flame erupts from [src].</span>")
 				return
 
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.light(user, "<span class='alert'><b>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</b></span>")
 				return
 
 			else if (istype(W, /obj/item/match))
@@ -119,7 +119,7 @@
 
 	attack_hand(mob/user as mob)
 		if(src.on)
-			boutput(user,"<span class='alert'><b>Cooking soup takes time, be patient!</span>")
+			boutput(user,"<span class='alert'><b>Cooking soup takes time, be patient!</b></span>")
 			return
 		if(src.pot)
 			src.icon_state = "stove0"
@@ -129,13 +129,13 @@
 
 	proc/light(var/mob/user, var/message as text)
 		if(pot.my_soup)
-			boutput(user,"<span class='alert'><b>There's still soup in the pot, dummy!</span>")
+			boutput(user,"<span class='alert'><b>There's still soup in the pot, dummy!</b></span>")
 			return
 		if(!pot.total_wclass)
-			boutput(user,"<span class='alert'><b>You can't have a soup with no ingredients, dummy!</span>")
+			boutput(user,"<span class='alert'><b>You can't have a soup with no ingredients, dummy!</b></span>")
 			return
 		if(!pot.reagents.total_volume)
-			boutput(user,"<span class='alert'><b>You can't have a soup with no broth, dummy!</span>")
+			boutput(user,"<span class='alert'><b>You can't have a soup with no broth, dummy!</b></span>")
 			return
 		user.visible_message(message)
 		src.on = 1
