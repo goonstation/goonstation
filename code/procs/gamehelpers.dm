@@ -452,6 +452,28 @@ var/obj/item/dummy/click_dummy = new
 				. += R
 				break
 
+/proc/get_nonvirtual_areas_with_turfs(var/areatype, var/list/blacklist = null) // for spy thief!
+	//Takes: Area type as text string or as typepath OR an instance of the area.
+	//Returns: A list of all areas of that type in the world that aren't virtual, or aren't in the blacklist.
+	//Notes: Simple!
+	if(!areatype) return null
+	if(istext(areatype)) areatype = text2path(areatype)
+	if(isarea(areatype))
+		var/area/areatemp = areatype
+		areatype = areatemp.type
+
+	. = new/list()
+
+	for(var/area/R in world)
+		LAGCHECK(LAG_LOW)
+		if(!(istype(R, areatype) || R.virtual))
+			continue
+		if (istype(blacklist) && (R.name in blacklist))
+			continue
+		for (var/turf/T in R)
+			. += R
+			break
+
 /proc/get_area_turfs(var/areatype, var/floors_only)
 	//Takes: Area type as text string or as typepath OR an instance of the area.
 	//Returns: A list of all turfs in areas of that type of that type in the world.
