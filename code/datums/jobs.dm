@@ -1257,7 +1257,7 @@
 		src.access = get_access("Space Cowboy")
 		return
 
-/datum/job/special/mime
+/datum/job/civilian/mime
 	name = "Mime"
 	limit = 1
 	wages = PAY_DUMBCLOWN*2 // lol okay whatever
