@@ -105,11 +105,11 @@
 						return
 
 			else if (istype(W, /obj/item/device/light/candle) && W:on)
-				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</b></span>")
+				src.light(user, "<span class='alert'>[user] lights [src] with [W].</span>")
 				return
 
 			else if (W.burning)
-				src.light(user, "<span class='alert'><b>[user] lights [src] with [W]. Goddamn.</span>")
+				src.light(user, "<span class='alert'><b>[user] lights [src] with [W]. Goddamn.</b></span>")
 				return
 
 			else
