@@ -375,6 +375,15 @@ var/global/IP_alerts = 1
 	logTheThing("diary", usr, null, "toggled force mixed blob [debug_mixed_forced_blob ? "on" : "off"]")
 	message_admins("[key_name(usr)] toggled force mixed blob [debug_mixed_forced_blob ? "on" : "off"]")
 
+/client/proc/toggle_force_mixed_spy()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Toggle Force Spy"
+	set desc = "If turned on, a spy will always appear in mixed or traitor, regardless of player count or probabilities."
+	debug_mixed_forced_spy = !debug_mixed_forced_spy
+	logTheThing("admin", usr, null, "toggled force mixed spy [debug_mixed_forced_wraith ? "on" : "off"]")
+	logTheThing("diary", usr, null, "toggled force mixed spy [debug_mixed_forced_spy ? "on" : "off"]")
+	message_admins("[key_name(usr)] toggled force mixed spy [debug_mixed_forced_spy ? "on" : "off"]")
+
 /client/proc/toggle_jobban_announcements()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Jobban Alerts"

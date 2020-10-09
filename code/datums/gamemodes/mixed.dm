@@ -55,8 +55,11 @@
 	src.latejoin_antag_roles += "grinch"
 #endif
 
-	if ((num_enemies >= 4 && prob(20)) || debug_mixed_forced_wraith || debug_mixed_forced_blob)
-		if (prob(50) || debug_mixed_forced_wraith)
+	if ((num_enemies >= 4 && prob(20)) || debug_mixed_forced_wraith || debug_mixed_forced_blob || debug_mixed_forced_spy)
+		if(debug_mixed_forced_spy)
+			num_enemies = max(num_enemies - 4, 1)
+			num_spy_thiefs = 1
+		else if (prob(50) || debug_mixed_forced_wraith)
 			num_enemies = max(num_enemies - 4, 1)
 			num_wraiths = 1
 		else if (has_blobs)

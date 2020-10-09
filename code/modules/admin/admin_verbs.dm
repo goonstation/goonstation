@@ -64,7 +64,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_remove_label_from,
 		/client/proc/cmd_admin_antag_popups,
 		/client/proc/retreat_to_office,
-		
+
 		),
 
 
@@ -214,6 +214,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_rejuvenate_all,
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
+		/client/proc/toggle_force_mixed_spy,
 		///proc/possess,
 		/proc/possessmob,
 		/proc/releasemob,
