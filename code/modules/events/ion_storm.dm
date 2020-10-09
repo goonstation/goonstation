@@ -150,7 +150,7 @@
 		// Fuck up a couple of doors
 		if (!station_doors.len)
 			var/turf/T = null
-			for (var/obj/machinery/door/foundDoor as anything in by_type[/obj/machinery/door])
+			for (var/obj/machinery/door/foundDoor in by_type[/obj/machinery/door])
 				if (foundDoor.z != 1)
 					continue
 				T = get_turf(foundDoor)

@@ -707,8 +707,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		busy = 0
 
 	proc/teleport(mob/user)
-		for(var/X as anything in by_type[/obj/miningteleporter])
-			var/obj/miningteleporter/S = X
+		for(var/obj/miningteleporter/S as anything in by_type[/obj/miningteleporter])
 			if(S.id == src.id && S != src)
 				if(recharging == 1)
 					return 1
@@ -1508,7 +1507,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if(istype(W, /obj/item/parts/human_parts/arm/right/polaris))
 			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 			playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
-			for (var/obj/machinery/door/airlock/M as anything in by_type[/obj/machinery/door])
+			for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 				if (M.id == src.id)
 					if (M.density)
 						M.open()
@@ -1526,12 +1525,12 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (H.limbs && (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/polaris)))
 				user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 
-				for (var/obj/machinery/door/poddoor/M as anything in by_type[/obj/machinery/door])
+				for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 					if (M.id == src.id)
 						if (M.density)
 							M.open()
 
-				for (var/obj/machinery/door/airlock/M as anything in by_type[/obj/machinery/door])
+				for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 					if (M.id == src.id)
 						if (M.density)
 							M.open()
