@@ -6,8 +6,9 @@
  * @author Changes ThePotato97
  * @license MIT
  */
+import { Fragment, createRef } from 'inferno';
 import { resolveAsset } from '../assets';
-import { classes } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 import { vecScale, vecSubtract } from 'common/vector';
 import DOMPurify from 'dompurify';
 import { Component } from 'inferno';
@@ -15,7 +16,9 @@ import marked from 'marked';
 import { useBackend } from '../backend';
 import { Box, Flex, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
+import { createLogger } from '../logging';
 
+const logger = createLogger('Paper');
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
 
 const sanitize_text = value => {
@@ -207,23 +210,19 @@ const Stamp = (props, context) => {
   const {
     image,
     opacity,
-    ...rest
   } = props;
-  const matrix_trasform = 'rotate(' + image.rotate
-    + 'deg) translate(' + image.x + 'px,' + image.y + 'px)';
   const stamp_trasform = {
-    'transform': matrix_trasform,
-    '-ms-transform': matrix_trasform,
-    '-webkit-transform': matrix_trasform,
+    'left': image.x + 'px',
+    'top': image.y + 'px',
     'opacity': opacity || 1.0,
     'position': 'absolute',
   };
   return (
-    <div
+    <img
       className={classes([
         'paper121x54',
-        image.icon,
       ])}
+      src={resolveAsset(image.sprite)}
       style={stamp_trasform} />
   );
 };
@@ -252,7 +251,7 @@ const PaperSheetView = (props, context) => {
   return (
     <Box
       position="relative"
-      backgroundColor={backgroundColor}
+      backgroundColor={"backgroundColor"}
       width="100%"
       height="100%" >
       <Box
@@ -273,75 +272,81 @@ const PaperSheetView = (props, context) => {
 class PaperSheetStamper extends Component {
   constructor(props, context) {
     super(props, context);
+    this.windowRef = this.props.windowRef;
     this.state = {
       x: 0,
       y: 0,
       rotate: 0,
     };
+    this.handleMouseMove = e => {
+      const pos = this.findStampPosition(e);
+      // center offset of stamp
+      pauseEvent(e);
+      this.setState({ x: pos[0], y: pos[1] });
+    };
+    this.handleMouseClick = e => {
+      const pos = this.findStampPosition(e);
+      const { act, data } = useBackend(this.context);
+      const stamp_obj = {
+        x: pos[0], y: pos[1], r: this.state.rotate,
+        stamp_class: this.props.stamp_class,
+        stamp_icon_state: data.stamp_icon_state,
+      };
+      act("stamp", stamp_obj);
+      this.setState({ x: pos[0], y: pos[1] });
+    };
+    this.handleWheel = e => {
+      const rotate_amount = e.deltaY > 0 ? 15 : -15;
+      if (e.deltaY < 0 && this.state.rotate === 0) {
+        this.setState({ rotate: (360+rotate_amount) });
+      } else if (e.deltaY > 0 && this.state.rotate === 360) {
+        this.setState({ rotate: rotate_amount });
+      } else {
+        const rotate = { rotate: rotate_amount + this.state.rotate };
+        this.setState(() => rotate);
+      }
+      pauseEvent(e);
+    };
+    this.getScroll = e => {
+      return window.scrollX;
+    };
   }
 
+
   findStampPosition(e) {
+    logger.log('line breaks');
+    for (let key in this.windowRef) {
+      logger.log(key, this.windowRef[key]);
+    }
     const position = {
-      x: event.pageX,
-      y: event.pageY,
+      x: e.pageX,
+      y: e.pageY,
     };
+
 
     const offset = {
       left: e.target.offsetLeft,
       top: e.target.offsetTop,
     };
-
-    let reference = e.target.offsetParent;
-
-    while (reference) {
-      offset.left += reference.offsetLeft;
-      offset.top += reference.offsetTop;
-      reference = reference.offsetParent;
-    }
-
     const pos = [
-      position.x - offset.left,
-      position.y - offset.top,
+      e.pageX,
+      e.pageY + document.body.scrollTop,
     ];
-    const centerOffset = vecScale([121, 51], 0.5);
+    const centerOffset = vecScale([121, 120], 0.5);
     const center = vecSubtract(pos, centerOffset);
     return center;
   }
 
   componentDidMount() {
-    document.onwheel = this.handleWheel.bind(this);
+    document.addEventListener("onscroll", this.handleWheel);
+    document.addEventListener("mousemove", this.handleMouseMove);
+    document.addEventListener("click", this.handleMouseClick);
   }
 
-  handleMouseMove(e) {
-    const pos = [this.findStampPosition(e)];
-    // center offset of stamp
-    pauseEvent(e);
-    this.setState({ x: pos[0], y: pos[1] });
-  }
-
-  handleMouseClick(e) {
-    const pos = this.findStampPosition(e);
-    const { act, data } = useBackend(this.context);
-    const stamp_obj = {
-      x: pos[0], y: pos[1], r: this.state.rotate,
-      stamp_class: this.props.stamp_class,
-      stamp_icon_state: data.stamp_icon_state,
-    };
-    act("stamp", stamp_obj);
-    this.setState({ x: pos[0], y: pos[1] });
-  }
-
-  handleWheel(e) {
-    const rotate_amount = e.deltaY > 0 ? 15 : -15;
-    if (e.deltaY < 0 && this.state.rotate === 0) {
-      this.setState({ rotate: (360+rotate_amount) });
-    } else if (e.deltaY > 0 && this.state.rotate === 360) {
-      this.setState({ rotate: rotate_amount });
-    } else {
-      const rotate = { rotate: rotate_amount + this.state.rotate };
-      this.setState(() => rotate);
-    }
-    pauseEvent(e);
+  componentWillUnmount() {
+    document.removeEventListener("scroll", this.handleWheel);
+    document.removeEventListener("mousemove", this.handleMouseMove);
+    document.removeEventListener("click", this.handleMouseClick);
   }
 
   render() {
@@ -359,17 +364,14 @@ class PaperSheetStamper extends Component {
       rotate: this.state.rotate,
     };
     return (
-      <Box
-        onClick={this.handleMouseClick.bind(this)}
-        onMouseMove={this.handleMouseMove.bind(this)}
-        onwheel={this.handleWheel.bind(this)} {...rest}>
+      <Fragment>
         <PaperSheetView
           readOnly
           value={value}
           stamps={stamp_list} />
         <Stamp
           opacity={0.5} image={current_pos} />
-      </Box>
+      </Fragment>
     );
   }
 }
@@ -569,73 +571,85 @@ class PaperSheetEdit extends Component {
     );
   }
 }
+export class PaperSheet extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.windowRef = createRef();
+  }
 
-export const PaperSheet = (props, context) => {
-  const { data } = useBackend(context);
-  const {
-    edit_mode,
-    text,
-    paper_color,
-    pen_color = "black",
-    pen_font = "Verdana",
-    stamps,
-    stamp_class,
-    stamped,
-  } = data;
-  // You might ask why?  Because Window/window content do wierd
-  // css stuff with white for some reason
-  const backgroundColor = paper_color && paper_color !== "white"
-    ? paper_color
-    : "#FFFFFF";
-  const stamp_list = !stamps
-    ? []
-    : stamps;
-  const decide_mode = mode => {
-    switch (mode) {
-      case 0:
-        return (
-          <PaperSheetView
-            value={text}
-            stamps={stamp_list}
-            readOnly />
-        );
-      case 1:
-        return (
-          <PaperSheetEdit
-            value={text}
-            textColor={pen_color}
-            fontFamily={pen_font}
-            stamps={stamp_list}
-            backgroundColor={backgroundColor} />
-        );
-      case 2:
-        return (
-          <PaperSheetStamper
-            value={text}
-            stamps={stamp_list}
-            stamp_class={stamp_class} />
-        );
-      default:
-        return "ERROR ERROR WE CANNOT BE HERE!!";
-    }
-  };
-  return (
-    <Window
-      theme="paper"
-      width={400}
-      height={500}
-      resizable>
-      <Window.Content>
-        <Box
-          fillPositionedParent
-          backgroundColor={backgroundColor}>
-          {stamp_class}
-          <div className="container">
-            <img src={resolveAsset(stamp_class.icon)} />
-          </div>
-          {decide_mode(edit_mode)}
-        </Box>
-      </Window.Content>
-    </Window>
-  );
-};
+
+  render() {
+    const { data } = useBackend(this.context);
+    const {
+      edit_mode,
+      text,
+      paper_color,
+      pen_color = "black",
+      pen_font = "Verdana",
+      stamps,
+      stamp_class,
+      sizeX,
+      sizeY,
+      stamped,
+    } = data;
+    const current_pos = {
+      sprite: stamp_class,
+      x: 0,
+      y: 0,
+      rotate: 0,
+    };
+    // You might ask why?  Because Window/window content do wierd
+    // css stuff with white for some reason
+    const backgroundColor = paper_color && paper_color !== "white"
+      ? paper_color
+      : "#FFFFFF";
+    const stamp_list = !stamps
+      ? []
+      : stamps;
+    const decide_mode = mode => {
+      switch (mode) {
+        case 0:
+          return (
+            <PaperSheetView
+              value={text}
+              stamps={stamp_list}
+              readOnly />
+          );
+        case 1:
+          return (
+            <PaperSheetEdit
+              value={text}
+              textColor={pen_color}
+              fontFamily={pen_font}
+              stamps={stamp_list}
+              backgroundColor={backgroundColor} />
+          );
+        case 2:
+          return (
+            <PaperSheetStamper
+              windowRef={this.windowRef}
+              value={text}
+              stamps={stamp_list}
+              stamp_class={stamp_class} />
+          );
+        default:
+          return "ERROR ERROR WE CANNOT BE HERE!!";
+      }
+    };
+    return (
+      <Window
+        theme="paper"
+        width={sizeX || 400}
+        height={sizeY || 500}
+        resizable>
+        <Window.Content ref={this.windowRef} scrollable>
+          <Box
+            fillPositionedParent
+            backgroundColor={backgroundColor}>
+            {decide_mode(edit_mode)}
+          </Box>
+        </Window.Content>
+      </Window>
+    );
+  }
+}

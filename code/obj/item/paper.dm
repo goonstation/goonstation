@@ -26,21 +26,24 @@
 	burn_possible = 2
 	health = 10
 	var/stamp_assets = list(
-		"stamp-honk" = 'tg/icons/stamp_icons/large_stamp-clown.png',
-		"stamp-deny" = 'tg/icons/stamp_icons/large_stamp-deny.png',
-		"stamp-ok" = 'tg/icons/stamp_icons/large_stamp-ok.png',
-		"stamp-hop" = 'tg/icons/stamp_icons/large_stamp-hop.png',
-		"stamp-cmo" = 'tg/icons/stamp_icons/large_stamp-cmo.png',
-		"stamp-ce" = 'tg/icons/stamp_icons/large_stamp-ce.png',
-		"stamp-hos" = 'tg/icons/stamp_icons/large_stamp-hos.png',
-		"stamp-rd" = 'tg/icons/stamp_icons/large_stamp-rd.png',
-		"stamp-cap" = 'tg/icons/stamp_icons/large_stamp-cap.png',
-		"stamp-qm" = 'tg/icons/stamp_icons/large_stamp-qm.png',
-		"stamp-law" = 'tg/icons/stamp_icons/large_stamp-law.png',
-		"stamp-chap" = 'tg/icons/stamp_icons/large_stamp-chap.png',
-		"stamp-mime" = 'tg/icons/stamp_icons/large_stamp-mime.png',
-		"stamp-centcom" = 'tg/icons/stamp_icons/large_stamp-centcom.png',
-		"stamp-syndicate" = 'tg/icons/stamp_icons/large_stamp-syndicate.png'
+		"Clown" = "large_stamp-clown.png",
+		"Rejected" = "large_stamp-deny.png",
+		"Approved" = "large_stamp-ok.png",
+		"Head of Personnel" = "large_stamp-hop.png",
+		"Medical Director" = "large_stamp-cmo.png",
+		"Chief Engineer" = "large_stamp-ce.png",
+		"Head of Security" = "large_stamp-hos.png",
+		"Research Director" = "large_stamp-rd.png",
+		"Captain" = "large_stamp-cap.png",
+		"stamp-qm" = "large_stamp-qm.png",
+		"stamp-law" = "large_stamp-law.png",
+		"stamp-chap" = "large_stamp-chap.png",
+		"stamp-mime" = "large_stamp-mime.png",
+		"stamp-centcom" = "large_stamp-centcom.png",
+		"stamp-syndicate" = "large_stamp-syndicate.png",
+/* 		"Current Time" = "SHIFT TIME: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]", */
+		"X" = "todo make an X stamp",
+		"Void" = "todo make a void stamp"
 	)
 	var/list/form_startpoints
 	var/list/form_endpoints
@@ -252,6 +255,9 @@
 
 /obj/item/paper/ui_static_data(mob/user)
 	. = list()
+	.["name"] = src.name
+	.["sizeX"] = src.sizex
+	.["sizeY"] = src.sizey
 	.["text"] = info
 	.["max_length"] = MAX_PAPER_LENGTH
 	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
@@ -280,8 +286,9 @@
 		data["stamp_class"] = "FAKE"
 		data["stamp_icon_state"] = "FAKE"
 	else if(istype(O, /obj/item/stamp))
-		data["stamp_icon_state"] = O.icon_state
-		data["stamp_class"] = stamp_assets[O.icon_state]
+		var/obj/item/stamp/stamp = O
+		data["stamp_icon_state"] = stamp.current_mode
+		data["stamp_class"] = stamp_assets[stamp.current_mode]
 		data["edit_mode"] = MODE_STAMPING
 		data["pen_font"] = "FAKE"
 		data["pen_color"] = "FAKE"
@@ -1232,10 +1239,17 @@ Only trained personnel should operate station systems. Follow all procedures car
 	stamina_damage = 0
 	stamina_cost = 0
 	rand_pos = 1
+	var/special_mode = null
 	var/is_reassignable = 1
 	var/assignment = null
 	var/available_modes = list("Approved", "Rejected", "Void", "X", "Current Time");
 	var/current_mode = "Approved"
+
+/obj/item/stamp/New()
+	..()
+	if(special_mode)
+		available_modes += special_mode
+		current_mode = special_mode
 
 /obj/item/stamp/proc/set_assignment(A)
 	if (istext(A))
@@ -1328,42 +1342,49 @@ Only trained personnel should operate station systems. Follow all procedures car
 		name = "captain's rubber stamp"
 		desc = "The Captain's rubber stamp for stamping important documents."
 		icon_state = "stamp-cap"
+		special_mode = "Captain"
 		is_reassignable = 0
 		assignment = "Captain"
 	hop
 		name = "head of personnel's rubber stamp"
 		desc = "The Head of Personnel's rubber stamp for stamping important documents."
 		icon_state = "stamp-hop"
+		special_mode = "Head of Personnel"
 		is_reassignable = 0
 		assignment = "Head of Personnel"
 	hos
 		name = "head of security's rubber stamp"
 		desc = "The Head of Security's rubber stamp for stamping important documents."
 		icon_state = "stamp-hos"
+		special_mode = "Head of Security"
 		is_reassignable = 0
 		assignment = "Head of Security"
 	ce
 		name = "chief engineer's rubber stamp"
 		desc = "The Chief Engineer's rubber stamp for stamping important documents."
 		icon_state = "stamp-ce"
+		special_mode = "Chief Engineer"
 		is_reassignable = 0
 		assignment = "Chief Engineer"
 	md
 		name = "medical director's rubber stamp"
 		desc = "The Medical Director's rubber stamp for stamping important documents."
 		icon_state = "stamp-md"
+		special_mode = "Medical Director"
 		is_reassignable = 0
 		assignment = "Medical Director"
 	rd
 		name = "research director's rubber stamp"
 		desc = "The Research Director's rubber stamp for stamping important documents."
 		icon_state = "stamp-rd"
+		special_mode = "Research Director"
 		is_reassignable = 0
 		assignment = "Research Director"
 	clown
 		name = "clown's rubber stamp"
 		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on."
 		icon_state = "stamp-honk"
+		special_mode = "Clown"
 		is_reassignable = 0
 		assignment = "Clown"
 /* //		get_stamp_text()
@@ -1553,9 +1574,8 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	name = "Mushroom Station postcard"
 	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
 	icon_state = "postcard-mushroom"
-
-	//sizex = 1066
-	//sizey = 735
+	sizex = 1066
+	sizey = 735
 
 	New()
 		..()

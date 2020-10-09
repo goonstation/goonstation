@@ -13,8 +13,8 @@ obj/decal/floor/displays/owlsign
 	icon_state = "postcard-owlery"
 	interesting = "There are traces of hydrocarbons, collagens, proteins, and sugars deposited in the cellulose of the card"
 
-	sizex = 1066
-	sizey = 735
+	sizex = 1040
+	sizey = 705
 
 	New()
 		..()
