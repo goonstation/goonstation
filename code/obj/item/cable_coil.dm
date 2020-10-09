@@ -143,6 +143,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 /////////////////////////////////////////////////REINFORCED CABLE
 
+
 /obj/item/cable_coil/reinforced
 	name = "reinforced cable coil"
 	base_name = "reinforced cable coil"
@@ -171,6 +172,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 /obj/item/cable_coil/reinforced/cut/small
 	New(loc, length)
 		..(loc, rand(1,5))
+
 
 /////////////////////////////////////////////////REINFORCED CABLE
 

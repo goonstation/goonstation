@@ -8,7 +8,6 @@
 	name = "reinforced electrical cables storage"
 	spawn_contents = list(/obj/item/cable_coil/reinforced = 7)
 
-
 /obj/item/storage/box/PDAbox
 	name = "spare PDAs"
 	desc = "A box of spare PDA microcomputers."
