@@ -30,7 +30,7 @@
 
 	var/list/uplinks = list()
 
-	var/list/area_blacklist = list()
+	var/list/area_blacklist = list("AI Perimeter Defenses", "VR Test Area", "Storage Area")
 
 
 /datum/bounty_item
@@ -126,12 +126,6 @@
 
 		reward_was_spawned = 1
 		return 1
-
-
-
-/datum/game_mode/spy_theft/New()
-	src.area_blacklist = list("AI Perimeter Defenses", "VR Test Area", "Storage Area")
-	return ..()
 
 /datum/game_mode/spy_theft/announce()
 	boutput(world, "<B>The current game mode is - Spy!</B>")
