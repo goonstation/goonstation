@@ -13,7 +13,7 @@
 //deconstruction_flags
 
 #define DECON_NONE 0
-/// no reqs, just deconstruct!
+//// no reqs, just deconstruct!
 #define DECON_SIMPLE 1
 #define DECON_SCREWDRIVER 2
 #define DECON_WRENCH 4

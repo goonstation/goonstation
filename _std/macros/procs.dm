@@ -4,5 +4,5 @@
 //supposedly for direct arg instertion. whatever that means??
 #define CONCALL(OBJ, TYPE, CALL, VARNAME) var##TYPE/##VARNAME=OBJ;if(istype(##VARNAME)) ##VARNAME.##CALL
 
-//returns early if its an overlay or effect
+/// returns early if x is an overlay or effect
 #define return_if_overlay_or_effect(x) if (istype(x, /obj/overlay) || istype(x, /obj/effects)) return
