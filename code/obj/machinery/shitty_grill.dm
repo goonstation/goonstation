@@ -242,7 +242,8 @@
 		if (src.cooktime >= 60)
 			if (ismob(src.grillitem))
 				var/mob/M = src.grillitem
-				M.ghostize()
+				spawn(0)
+					M.ghostize()
 			else
 				for (var/mob/M in src.grillitem)
 					M.ghostize()
