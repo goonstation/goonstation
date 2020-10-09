@@ -38,12 +38,3 @@ colourcable(black, "#414A4C")
 colourcable(hotpink, "#FF69B4")
 colourcable(brown, "#832A0D")
 colourcable(white, "#EDEAE0")
-
-///datum/supply_packs/electrical/yellow
-//	name = "Yellow-Coloured Electrical Supplies Crate - 2 pack"
-//	desc = "x2 Yellow Cabling Box (14 cable coils total)"
-//	contains = list(/obj/item/storage/box/cablesbox/coloured/yellow = 2)
-//	containername = "Yellow-Coloured Electrical Supplies Crate - 2 pack"
-//obj/item/storage/box/cablesbox/coloured/yellow
-//	name = "yellow-coloured electrical cables storage"
-//	spawn_contents = list(/obj/item/cable_coil/coloured/yellow = 7)
