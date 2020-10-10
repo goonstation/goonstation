@@ -144,18 +144,6 @@ datum
 					//Used by process_rebuild_select_groups()
 					//Warning: Do not call this, add the group to air_master.groups_to_rebuild instead
 
-				add_singleton(turf/simulated/T)
-					active_singletons |= T
-
-				set_controller(datum/controller/process/air_system/controller)
-					parent_controller = controller
-
-				queue_update_tile(turf/simulated/T)
-					tiles_to_update |= T
-
-				queue_update_group(datum/air_group)
-					groups_to_rebuild |= air_group
-
 				update_space_sample()
 					if (!space_sample || !(space_sample.turf_flags & CAN_BE_SPACE_SAMPLE))
 						if (map_currently_underwater)
@@ -165,7 +153,7 @@ datum
 					return space_sample
 
 			setup(datum/controller/process/air_system/controller)
-				set_controller(controller)
+				parent_controller = controller
 
 				#if SKIP_FEA_SETUP == 1
 				return
