@@ -139,7 +139,8 @@
 	src.health = initial(health)
 	src.name = initial(name)
 	src.desc = initial(desc)
-	if(isnull(src.group)) checknearby() //check for groups to join
+	if(isnull(src.group))
+		checknearby() //check for groups to join
 	for(var/obj/flock_structure/f in get_turf(src))
 		if(f.usesgroups)
 			f.group = src.group
@@ -233,7 +234,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	queue += start
 	visited[start] = TRUE
 
-	while(true)
+	while(queue.len > 0)
 		// dequeue
 		current = queue[1]
 		queue -= current
@@ -243,13 +244,10 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 			var/next_turf = get_step(current, dir)
 			if(!visited[next_turf] && istype(next_turf, /turf/simulated/floor/feather))
 				var/turf/simulated/floor/feather/f = next_turf
-				if(f.broken) continue//skip broken tiles
+				if(f.broken) 
+					continue //skip broken tiles
 				queue += get_step(current, dir)
 				visited[next_turf] = TRUE
-
-		if(queue.len == 0) break
-
-
 	return visited
 
 //end of flocktilegroup stuff
