@@ -4,6 +4,8 @@
 (p)2371
 (e)🆕|feature
 (*)"This object menaces with spikes of..." medal reintroduced. Try your hand at crafting the ultimate mining tool!
+(u)kyle
+(+)Kudzumen now have a chance 7%(per tick) to cure their heart attack if they get it if they are receiving the healing benefits of standing on kudzu with max nutrients. 
 (t)thu oct 08 20
 (u)adharainspace
 (p)2363
