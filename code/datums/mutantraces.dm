@@ -1524,6 +1524,10 @@
 				//at max points, so heal
 				mob.take_toxin_damage(-round_mult)
 				mob.HealDamage("All", round_mult, round_mult)
+				if (prob(7) && mob.find_ailment_by_type(/datum/ailment/malady/flatline))
+					mob.cure_disease_by_path(/datum/ailment/malady/heartfailure)
+					mob.cure_disease_by_path(/datum/ailment/malady/flatline)
+
 		else
 			//nutrients for a bit of grace period
 			if (KAH.points > 0)

@@ -7,12 +7,16 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	var/cur_meter_location = 0
 	var/last_meter_location = 0			//the amount of points at the last update. Used for deciding when to redraw the sprite to have less progress
 	var/net_points = list()				//assoc list of ckeys to their net points.
+	var/maxed_out = 0					//set to 1 if the points get up to MAX_POINTS so we can play the special event/thing
 
 	var/obj/screen/spooktober_meter/meter = new()
 
 	proc/change_points(var/ckey, var/added as num)
 		net_points[ckey] += added
 		src.points += added
+		if (src.points >= MAX_POINTS)
+			do_event()
+			
 
 	proc/update()
 
@@ -26,6 +30,12 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			meter.overlays += IB
 
 		last_meter_location = cur_meter_location
+
+	proc/do_event()
+		if (maxed_out)
+			return
+		maxed_out = 1
+		
 
 /obj/screen/spooktober_meter
 	icon = 'icons/mob/spooktober_ghost_hud160x32.dmi'
