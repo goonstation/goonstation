@@ -140,7 +140,7 @@ var/global/list/ghostdrone_candidates = list()
 			for (var/obj/machinery/conveyor/C as anything in src.conveyors)
 				if (C.id != src.id)
 					src.conveyors -= C
-		for (var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
+		for (var/obj/machinery/conveyor/C as() in machine_registry[MACHINES_CONVEYORS])
 			if (C.id == src.id)
 				if (C in src.conveyors)
 					continue
@@ -335,7 +335,7 @@ var/global/list/ghostdrone_candidates = list()
 			for (var/obj/machinery/conveyor/C as anything in src.conveyors)
 				if (C.id != src.id_belt)
 					src.conveyors -= C
-		for (var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
+		for (var/obj/machinery/conveyor/C as() in machine_registry[MACHINES_CONVEYORS])
 			if (C.id == src.id_belt)
 				if (C in src.conveyors)
 					continue

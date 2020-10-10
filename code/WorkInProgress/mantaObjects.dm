@@ -1507,7 +1507,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if(istype(W, /obj/item/parts/human_parts/arm/right/polaris))
 			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 			playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
-			for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+			for_by_tcl(M, /obj/machinery/door/airlock)
 				if (M.id == src.id)
 					if (M.density)
 						M.open()
@@ -1530,7 +1530,7 @@ var/obj/manta_speed_lever/mantaLever = null
 						if (M.density)
 							M.open()
 
-				for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+				for_by_tcl(M, /obj/machinery/door/airlock)
 					if (M.id == src.id)
 						if (M.density)
 							M.open()

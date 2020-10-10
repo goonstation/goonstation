@@ -71,7 +71,7 @@ Frequency:
 							src.temp += "[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/implant/tracking/W as anything in by_type[/obj/item/implant/tracking])
+				for_by_tcl(W, /obj/item/implant/tracking)
 					if (W.frequency == src.frequency)
 						if (!W.implanted || !ismob(W.loc))
 							continue
@@ -181,7 +181,7 @@ Frequency:
 		if (random_turfs && random_turfs.len)
 			L["None (Dangerous)"] += pick(random_turfs)
 
-		for(var/obj/machinery/teleport/portal_generator/PG as anything in machine_registry[MACHINES_PORTALGENERATORS])
+		for(var/obj/machinery/teleport/portal_generator/PG as() in machine_registry[MACHINES_PORTALGENERATORS])
 			if (!PG.linked_computer || !PG.linked_rings)
 				continue
 			var/turf/PG_loc = get_turf(PG)

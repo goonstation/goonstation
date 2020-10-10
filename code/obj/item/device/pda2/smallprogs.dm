@@ -317,7 +317,7 @@ Code:
 			dat += "<h4>Located Mops:</h4>"
 
 			var/ldat
-			for (var/obj/item/mop/M as anything in by_type[/obj/item/mop])
+			for_by_tcl(M, /obj/item/mop)
 				var/turf/ml = get_turf(M)
 
 				if(!ml || !istype(ml))
@@ -336,7 +336,7 @@ Code:
 			dat += "<h4>Located Mop Buckets:</h4>"
 
 			ldat = null
-			for (var/obj/mopbucket/B as anything in by_type[/obj/mopbucket])
+			for_by_tcl(B, /obj/mopbucket)
 				var/turf/bl = get_turf(B)
 
 				if(!bl || !istype(bl))

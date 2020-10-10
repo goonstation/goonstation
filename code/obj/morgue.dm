@@ -399,7 +399,7 @@
 	if (src.allowed(user))
 		if (!islist(src.crematoriums))
 			src.crematoriums = list()
-			for (var/obj/crematorium/C as anything in by_type[/obj/crematorium])
+			for_by_tcl(C, /obj/crematorium)
 				if (C.id == src.id)
 					src.crematoriums.Add(C)
 		for (var/obj/crematorium/C as anything in src.crematoriums)

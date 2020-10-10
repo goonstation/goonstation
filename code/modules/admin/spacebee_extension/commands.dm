@@ -55,7 +55,7 @@
 	help_message = "Creates a command report on a given server."
 	argument_types = list(/datum/command_argument/string="headline", /datum/command_argument/the_rest="body")
 	execute(user, headline, body)
-		for (var/obj/machinery/communications_dish/C as anything in by_type[/obj/machinery/communications_dish])
+		for_by_tcl(C, /obj/machinery/communications_dish)
 			C.add_centcom_report("[command_name()] Update", body)
 		body = discord_emojify(body)
 		headline = discord_emojify(headline)

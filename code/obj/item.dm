@@ -1085,7 +1085,7 @@
 		oldloc_sfx = oldloc.loc
 	if (src in bible_contents)
 		bible_contents.Remove(src) // UNF
-		for (var/obj/item/storage/bible/bible as anything in by_type[/obj/item/storage/bible])
+		for_by_tcl(bible, /obj/item/storage/bible)
 			bible.hud.remove_item(src)
 	user.put_in_hand_or_drop(src)
 

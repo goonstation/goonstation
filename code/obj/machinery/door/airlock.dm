@@ -1469,7 +1469,7 @@ About the new airlock wires panel:
 	if (src.closeOtherId != null)
 		src.closeOtherId = ckeyEx(src.closeOtherId)
 		SPAWN_DBG (5)
-			for (var/obj/machinery/door/airlock/A as anything in by_type[/obj/machinery/door/airlock])
+			for_by_tcl(A, /obj/machinery/door/airlock)
 				if (A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break

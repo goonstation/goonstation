@@ -212,7 +212,7 @@ var/obj/item/dummy/click_dummy = new
 	. = list()
 
 	var/turf/T = get_turf(center)
-	for (var/mob/living/silicon/ai/theAI as anything in by_type[/mob/living/silicon/ai])
+	for_by_tcl(theAI, /mob/living/silicon/ai)
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
 //			if (AIeye in view(center, distance))

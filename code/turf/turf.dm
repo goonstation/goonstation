@@ -1036,7 +1036,7 @@ Other Goonstation servers:[serverList]"}
 
 	if (A.z == 1 && zlevel != A.z)
 		if (!(isitem(A) && A:w_class <= 2))
-			for (var/obj/machinery/communications_dish/C as anything in by_type[/obj/machinery/communications_dish])
+			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
 	A.z = zlevel

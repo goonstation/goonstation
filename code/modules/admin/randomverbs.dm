@@ -462,7 +462,7 @@
 		return
 	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 /*
-	for (var/obj/machinery/computer/communications/C as anything in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/C as() in machine_registry[MACHINES_COMMSCONSOLES])
 		if(! (C.status & (BROKEN|NOPOWER) ) )
 			var/obj/item/paper/P = new /obj/item/paper( C.loc )
 			P.name = "paper- '[command_name()] Update.'"
@@ -472,7 +472,7 @@
 */
 
 	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-		for (var/obj/machinery/communications_dish/C as anything in by_type[/obj/machinery/communications_dish])
+		for_by_tcl(C, /obj/machinery/communications_dish)
 			C.add_centcom_report("[command_name()] Update", input)
 
 		var/sound_to_play = "sound/misc/announcement_1.ogg"

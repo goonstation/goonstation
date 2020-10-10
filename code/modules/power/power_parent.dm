@@ -88,7 +88,7 @@ var/makingpowernetssince = 0
 		PC.netnum = 0
 	LAGCHECK(LAG_MED)
 
-	for(var/obj/machinery/power/M as anything in machine_registry[MACHINES_POWER])
+	for(var/obj/machinery/power/M as() in machine_registry[MACHINES_POWER])
 		if(M.netnum >=0)
 			M.netnum = 0
 	LAGCHECK(LAG_MED)
@@ -110,7 +110,7 @@ var/makingpowernetssince = 0
 		PN.cables += C
 		LAGCHECK(LAG_MED)
 
-	for(var/obj/machinery/power/M as anything in machine_registry[MACHINES_POWER])
+	for(var/obj/machinery/power/M as() in machine_registry[MACHINES_POWER])
 		if(M.netnum<=0)		// APCs have netnum=-1 so they don't count as network nodes directly
 			continue
 

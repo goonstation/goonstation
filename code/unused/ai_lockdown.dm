@@ -12,7 +12,7 @@ This shit isn't good for anything and lags like fuck. Commented it out for now.
 
 	boutput(world, "<span class='alert'>Lockdown initiated by [usr.name]!</span>")
 
-	for(var/obj/machinery/firealarm/FA as anything in machine_registry[MACHINES_FIREALARMS]) //activate firealarms
+	for(var/obj/machinery/firealarm/FA as() in machine_registry[MACHINES_FIREALARMS]) //activate firealarms
 		SPAWN_DBG( 0 )
 			if(FA.lockdownbyai == 0)
 				FA.lockdownbyai = 1

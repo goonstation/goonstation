@@ -73,7 +73,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-	for (var/obj/item/implant/tracking/I as anything in by_type[/obj/item/implant/tracking])
+	for_by_tcl(I, /obj/item/implant/tracking)
 		if (!I.implanted || !ismob(I.loc))
 			continue
 		else

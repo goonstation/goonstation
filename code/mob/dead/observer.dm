@@ -697,7 +697,7 @@
 			creatures[name] = F.the_football
 
 
-	for (var/obj/observable/O as anything in by_type[/obj/observable])
+	for_by_tcl(O, /obj/observable)
 		LAGCHECK(LAG_LOW)
 		var/name = O.name
 		if (name in names)
@@ -708,7 +708,7 @@
 			namecounts[name] = 1
 		creatures[name] = O
 
-	for (var/obj/item/ghostboard/GB as anything in by_type[/obj/item/ghostboard])
+	for_by_tcl(GB, /obj/item/ghostboard)
 		LAGCHECK(LAG_LOW)
 		var/name = "Ouija board"
 		if (name in names)
@@ -719,7 +719,7 @@
 			namecounts[name] = 1
 		creatures[name] = GB
 
-	for (var/obj/item/gnomechompski/G as anything in by_type[/obj/item/gnomechompski])
+	for_by_tcl(G, /obj/item/gnomechompski)
 		var/name = "Gnome Chompski"
 		if (name in names)
 			namecounts[name]++
@@ -729,7 +729,7 @@
 			namecounts[name] = 1
 		creatures[name] = G
 
-	for (var/obj/cruiser_camera_dummy/CR as anything in by_type[/obj/cruiser_camera_dummy])
+	for_by_tcl(CR, /obj/cruiser_camera_dummy)
 		var/name = CR.name
 		if (name in names)
 			namecounts[name]++
@@ -739,7 +739,7 @@
 			namecounts[name] = 1
 		creatures[name] = CR
 
-	for (var/obj/item/reagent_containers/food/snacks/prison_loaf/L as anything in by_type[/obj/item/reagent_containers/food/snacks/prison_loaf])
+	for_by_tcl(L, /obj/item/reagent_containers/food/snacks/prison_loaf)
 		var/name = L.name
 		if (name != "strangelet loaf")
 			continue
