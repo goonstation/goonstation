@@ -170,7 +170,7 @@
 			winningNumbers[i][j] = rand(1,3)
 			dat += "[winningNumbers[i][j]] "
 
-		for(var/obj/item/lotteryTicket/T as anything in by_type[/obj/item/lotteryTicket])
+		for_by_tcl(T, /obj/item/lotteryTicket)
 			// If the round associated on the lottery ticked is this round
 			if(lotteryRound == T.lotteryRound)
 				// Check the nubers

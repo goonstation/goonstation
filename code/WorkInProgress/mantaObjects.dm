@@ -144,7 +144,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /proc/mantaIsBroken()
 	var/broken = 0
-	for(var/obj/machinery/mantapropulsion/A as anything in by_type[/obj/machinery/mantapropulsion])
+	for_by_tcl(A, /obj/machinery/mantapropulsion)
 		if(!A.important) continue
 		if(A.health == 0) broken++
 		if(A.health > 0) broken--
@@ -163,16 +163,16 @@ var/obj/manta_speed_lever/mantaLever = null
 			var/mob/M = C.mob
 			if(M && M.z == 1) shake_camera(M, 5, 32, 0.2)
 
-	for(var/turf/space/fluid/manta/T as anything in by_type[/turf/space/fluid/manta])
+	for_by_tcl(T, /turf/space/fluid/manta)
 		T.setScroll(moving)
 
-	for(var/obj/decal/mantaBubbles/O as anything in by_type[/obj/decal/mantaBubbles])
+	for_by_tcl(O, /obj/decal/mantaBubbles)
 		O.alpha = (moving ? 255:0)
 
-	for(var/obj/sea_plant_manta/O as anything in by_type[/obj/sea_plant_manta])
+	for_by_tcl(O, /obj/sea_plant_manta)
 		O.alpha = (moving ? 0:255)
 
-	for(var/obj/machinery/mantapropulsion/O as anything in by_type[/obj/machinery/mantapropulsion])
+	for_by_tcl(O, /obj/machinery/mantapropulsion)
 		O.setOn(moving)
 
 	mantaMoving = moving
@@ -707,7 +707,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		busy = 0
 
 	proc/teleport(mob/user)
-		for(var/obj/miningteleporter/S as anything in by_type[/obj/miningteleporter])
+		for_by_tcl(S, /obj/miningteleporter)
 			if(S.id == src.id && S != src)
 				if(recharging == 1)
 					return 1

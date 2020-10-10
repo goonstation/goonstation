@@ -62,7 +62,7 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 
-	for(var/obj/item/device/radio/beacon/R as anything in by_type[/obj/item/device/radio/beacon])
+	for_by_tcl(R, /obj/item/device/radio/beacon)
 		if (!istype(R, /obj/item/device/radio/beacon/jones))
 			var/turf/T = get_turf(R)
 			if (!T)	continue

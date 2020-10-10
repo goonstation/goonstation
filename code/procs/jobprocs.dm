@@ -368,7 +368,7 @@
 			if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
 				//Has the immigrant trait - they're hiding in a random locker
 				var/list/obj/storage/SL = list()
-				for(var/obj/storage/S as anything in by_type[/obj/storage])
+				for_by_tcl(S, /obj/storage)
 					// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post
 					if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost))
 						var/turf/simulated/T = S.loc

@@ -650,7 +650,7 @@
 		get_link()
 
 	proc/get_link()
-		for(var/obj/crematorium/tanning/C as anything in by_type[/obj/crematorium])
+		for(var/obj/crematorium/tanning/C in by_type[/obj/crematorium])
 			if(C.z == src.z && C.id == src.id && C != src)
 				linked = C
 				break

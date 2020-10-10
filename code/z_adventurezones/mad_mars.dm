@@ -815,11 +815,11 @@
 				for(var/area/marsoutpost/vault/V in world)
 					V.overlays += image(icon = 'icons/effects/alert.dmi', icon_state = "blue", layer = EFFECTS_LAYER_1)
 					LAGCHECK(LAG_LOW)
-				for(var/obj/machinery/door/poddoor/P as anything in by_type[/obj/machinery/door/poddoor])
+				for_by_tcl(P, /obj/machinery/door/poddoor)
 					if (P.id == "mars_vault")
 						SPAWN_DBG(0)
 							P.open()
-				for(var/obj/item/storage/secure/ssafe/marsvault/M as anything in by_type[/obj/item/storage/secure/ssafe/marsvault])
+				for_by_tcl(M, /obj/item/storage/secure/ssafe/marsvault)
 					M.disabled = 0
 
 				playsound(src.loc, 'sound/machines/engine_alert1.ogg', 50, 1)

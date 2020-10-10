@@ -139,6 +139,13 @@ This ends up giving us a 50% increase in speed, as with a normal typed for-loop 
 
 **Be warned:** If something in the list is not of the type provided, it will runtime!
 
+*Additional note*: If you are using `by_type[]`, there exists a macro to do this automagically:
+```js
+for_by_tcl(iterator, type)
+	loop stuff
+```
+As long as you don't want to filter out between specific children types of a by_type, you should be able to use this construction.
+
 ### for-in-to loops
 
 `for (var/i = 1, i <= some_value, i++)` is the standard way to write a for-loop in most languages, but DM's `for(var/i in 1 to some_value)` syntax is actually faster in its implementation.

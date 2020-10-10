@@ -2259,7 +2259,7 @@
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
 		var/list/destinations = new/list()
 
-		for(var/obj/item/mechanics/telecomp/T as anything in by_type[/obj/item/mechanics/telecomp])
+		for_by_tcl(T, /obj/item/mechanics/telecomp)
 			if(T == src || T.level == 2 || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
 
 #ifdef UNDERWATER_MAP

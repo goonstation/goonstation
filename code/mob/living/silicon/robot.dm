@@ -177,7 +177,7 @@
 				src.emagged = frame_emagged
 		SPAWN_DBG (4)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
-				for(var/mob/living/silicon/ai/A as anything in by_type[/mob/living/silicon/ai])
+				for_by_tcl(A, /mob/living/silicon/ai)
 					src.connected_ai = A
 					A.connected_robots += src
 					break

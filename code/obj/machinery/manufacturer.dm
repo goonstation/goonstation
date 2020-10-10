@@ -489,7 +489,7 @@
 				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
-		for(var/obj/machinery/ore_cloud_storage_container/S as anything in by_type[/obj/machinery/ore_cloud_storage_container])
+		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			if(S.broken)
 				continue
 			dat += "<B>[S.name] at [get_area(S)]:</B><br>"

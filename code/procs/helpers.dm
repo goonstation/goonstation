@@ -665,7 +665,7 @@ proc/get_angle(atom/a, atom/b)
 /proc/sortmobs()
 
 	var/list/mob_list = list()
-	for(var/mob/living/silicon/ai/M as anything in by_type[/mob/living/silicon/ai])
+	for_by_tcl(M, /mob/living/silicon/ai)
 		mob_list.Add(M)
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/dead/aieye/M in mobs)

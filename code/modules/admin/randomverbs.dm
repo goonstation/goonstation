@@ -14,9 +14,9 @@
 	set name = "Print Flow Networks"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	DEBUG_MESSAGE("Dumping flow network refs")
-	for(var/datum/flow_network/network as anything in by_type[/datum/flow_network])
+	for_by_tcl(network, /datum/flow_network)
 		DEBUG_MESSAGE_VARDBG("[showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)]", network)
-	for(var/datum/flow_network/network as anything in by_type[/datum/flow_network])
+	for_by_tcl(network, /datum/flow_network)
 		DEBUG_MESSAGE("Printing flow network rooted at [showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)] (\ref[network])")
 		// Clear DFS flags
 		network.clear_DFS_flags()
@@ -1572,7 +1572,7 @@
 	admin_only
 
 	var/catcounter = 0
-	for(var/obj/vehicle/segway/S as anything in by_type[/obj/vehicle])
+	for(var/obj/vehicle/segway/S in by_type[/obj/vehicle])
 		new /obj/vehicle/cat(S.loc)
 		qdel(S)
 		catcounter++
@@ -2078,7 +2078,7 @@ var/global/night_mode_enabled = 0
 			logTheThing("admin", src, null, "granted VOX access to all AIs!")
 			logTheThing("diary", src, null, "granted VOX access to all AIs!", "admin")
 			boutput(world, "<B>The AI may now use VOX!</B>")
-			for(var/mob/living/silicon/ai/AI as anything in by_type[/mob/living/silicon/ai])
+			for_by_tcl(AI, /mob/living/silicon/ai)
 				AI.cancel_camera()
 				AI.verbs += /mob/living/silicon/ai/proc/ai_vox_announcement
 				AI.verbs += /mob/living/silicon/ai/proc/ai_vox_help
@@ -2090,7 +2090,7 @@ var/global/night_mode_enabled = 0
 			logTheThing("admin", src, null, "revoked VOX access from all AIs!")
 			logTheThing("diary", src, null, "revoked VOX access from all AIs!", "admin")
 			boutput(world, "<B>The AI may no longer use VOX!</B>")
-			for(var/mob/living/silicon/ai/AI as anything in by_type[/mob/living/silicon/ai])
+			for_by_tcl(AI, /mob/living/silicon/ai)
 				AI.cancel_camera()
 				AI.verbs -= /mob/living/silicon/ai/proc/ai_vox_announcement
 				AI.verbs -= /mob/living/silicon/ai/proc/ai_vox_help
