@@ -91,7 +91,7 @@ datum
 			var/list/turf/simulated/active_singletons = list()
 
 			//Special functions lists
-			var/list/turf/simulated/active_super_conductivity = list()
+			var/list/turf/active_super_conductivity = list() //gets space in here somehow ZEWAKA/ATMOS
 			var/list/turf/simulated/high_pressure_delta = list()
 
 			//Geometry updates lists
@@ -317,7 +317,7 @@ datum
 					LAGCHECK(LAG_HIGH)
 
 			process_super_conductivity()
-				for(var/turf/simulated/hot_potato as() in active_super_conductivity)
+				for(var/turf/simulated/hot_potato in active_super_conductivity) //gets space tiles in here somehow -ZEWAKA/ATMOS
 					hot_potato.super_conduct()
 					LAGCHECK(LAG_HIGH)
 
