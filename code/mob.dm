@@ -117,7 +117,7 @@
 	var/obj/hud/hud_used = null
 
 	var/list/organs = null
-	var/list/grabbed_by = null
+	var/list/obj/item/grab/grabbed_by = null
 
 	var/datum/traitHolder/traitHolder = null
 
@@ -2871,7 +2871,7 @@
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
+		var/atom/A = input(usr, "What do you want to pick up?") as() in items
 		A.interact(src)
 
 /mob/proc/add_karma(how_much)

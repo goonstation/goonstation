@@ -625,7 +625,7 @@ world/proc/updateCameraVisibility()
 
 		aiDirty = 1
 		game_start_countdown?.update_status("Updating camera vis...\n")
-	for(var/obj/machinery/camera/C as() in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
 			LAGCHECK(LAG_HIGH)
 			if (!t.aiImage) continue

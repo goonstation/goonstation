@@ -888,11 +888,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			var/perpname = see_face ? perp.real_name : perp.name
 
-			for (var/i in data_core.general)
-				var/datum/data/record/E = i
+			for (var/datum/data/record/E as() in data_core.general)
 				if (E.fields["name"] == perpname)
-					for (var/j in data_core.security)
-						var/datum/data/record/R = j
+					for (var/datum/data/record/R as() in data_core.security)
 						if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 							threatcount = 4
 							break

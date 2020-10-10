@@ -429,7 +429,7 @@
 	camnet_needs_rebuild = 0
 
 /proc/disconnect_camera_network()
-	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		C.c_north = null
 		C.c_east = null
 		C.c_south = null

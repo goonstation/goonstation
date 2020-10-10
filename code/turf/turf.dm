@@ -102,7 +102,8 @@
 			return 0
 		for( var/thing in contents )
 			var/atom/A = thing
-			if( A.density && !ismob(A) ) return 0
+			if( A.density && !ismob(A) )
+				return 0
 		return 1
 
 	proc/tilenotify(turf/notifier)
@@ -111,7 +112,7 @@
 
 	proc/generate_worldgen()
 
-	proc/inherit_area()//jerko built a thing
+	proc/inherit_area() //jerko built a thing
 		if(!loc:expandable) return
 		for(var/dir in (cardinal + 0))
 			var/turf/thing = get_step(src, dir)
@@ -247,7 +248,7 @@
 	if (density)
 		pathable = 0
 	for(var/atom/movable/AM as mob|obj in src)
-		if (AM) // ????
+		if (AM) // ???? x2
 			src.Entered(AM)
 	RL_Init()
 	return
@@ -264,7 +265,8 @@
 	if (cturf && cturf.checkingexit > 0) //dont bother checking unless the turf actually contains a checkable :)
 		for(var/thing in cturf)
 			var/obj/obstacle = thing
-			if(obstacle == mover) continue
+			if(obstacle == mover)
+				continue
 			if((mover != obstacle) && (forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CHECKEXIT)
 					if(!obstacle.CheckExit(mover, src))
@@ -1034,7 +1036,7 @@ Other Goonstation servers:[serverList]"}
 
 	if (A.z == 1 && zlevel != A.z)
 		if (!(isitem(A) && A:w_class <= 2))
-			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
 	A.z = zlevel

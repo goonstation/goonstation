@@ -640,8 +640,7 @@ proc/debug_color_of(var/thing)
 			// I should probably also count overlays on overlays but I'm lazy
 			img.app.alpha = 0
 			var/num = 1 + theTurf.overlays.len + theTurf.underlays.len
-			for(var/X in theTurf)
-				var/atom/A = X
+			for (var/atom/A as() in theTurf)
 				num += 1 + A.overlays.len + A.underlays.len
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
@@ -650,11 +649,9 @@ proc/debug_color_of(var/thing)
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			img.app.alpha = 0
 			var/num = 0
-			for(var/X in theTurf.contents + theTurf)
-				var/atom/A = X
+			for (var/atom/A as() in theTurf.contents + theTurf)
 				num += 1 + A.overlays.len + A.underlays.len
-				for(var/O in A.overlays + A.underlays)
-					var/atom/A2 = O
+				for (var/atom/A2 as() in A.overlays + A.underlays)
 					num += A2.overlays.len + A2.underlays.len
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
@@ -892,12 +889,11 @@ proc/debug_color_of(var/thing)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 	var/list/available_overlays = list()
-	for(var/iov_type in childrentypesof(/datum/infooverlay))
-		var/datum/infooverlay/dummy = iov_type
+	for (var/datum/infooverlay/dummy as() in childrentypesof(/datum/infooverlay))
 		var/name = initial(dummy.name)
 		if(isnull(name))
-			name = replacetext("[iov_type]", "/datum/infooverlay/", "")
-		available_overlays[name] = iov_type
+			name = replacetext("[dummy]", "/datum/infooverlay/", "")
+		available_overlays[name] = dummy
 	var/name = input("Choose an overlay") in (available_overlays + "REMOVE")
 	if(activeOverlay)
 		activeOverlay.OnDisabled(src)

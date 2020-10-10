@@ -150,7 +150,7 @@ Contains:
 			range = min(range, 12)		// was 8
 
 			if(src in bible_contents)
-				for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])//world)
+				for_by_tcl(B, /obj/item/storage/bible)//world)
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing("bombing", src, null, "exploded at [showCoords(T.x, T.y, T.z)], range: [range], last touched by: [src.fingerprintslast]")
@@ -479,7 +479,7 @@ Contains:
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
-			for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])//world)
+			for_by_tcl(B, /obj/item/storage/bible)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					explosion(src, T, 0, strength, strength*2, strength*3)

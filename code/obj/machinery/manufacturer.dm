@@ -489,7 +489,7 @@
 				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
-		for(var/obj/machinery/ore_cloud_storage_container/S in by_type[/obj/machinery/ore_cloud_storage_container])
+		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			if(S.broken)
 				continue
 			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
@@ -2420,8 +2420,7 @@
 
 /proc/build_manufacturer_icons()
 	// pre-build all the icons for shit manufacturers make
-	for (var/type in typesof(/datum/manufacture))
-		var/datum/manufacture/P = type
+	for (var/datum/manufacture/P as() in typesof(/datum/manufacture))
 		if (ispath(P, /datum/manufacture/mechanics))
 			var/datum/manufacture/mechanics/M = P
 			if (!initial(M.frame_path))

@@ -475,7 +475,7 @@
 
 
 /obj/machinery/turretid/proc/updateTurrets()
-	for (var/obj/machinery/turret/turret in by_type[/obj/machinery/turret])
+	for_by_tcl(turret, /obj/machinery/turret)
 		var/area/A = get_area(turret)
 		if (A.type == src.turretArea)
 			turret.setState(enabled, lethal)

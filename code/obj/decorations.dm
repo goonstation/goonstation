@@ -472,8 +472,7 @@
 				if(prob(50))
 					qdel(src)
 	proc/locate_blinds()
-		for (var/X in by_type[/obj/window_blinds])
-			var/obj/window_blinds/blind = X
+		for_by_tcl(blind, /obj/window_blinds)
 			if (blind.id == src.id)
 				if (!(blind in src.myBlinds))
 					src.myBlinds += blind
@@ -515,8 +514,7 @@
 /obj/blind_switch/area
 	locate_blinds()
 		var/area/A = get_area(src)
-		for (var/X in by_type[/obj/window_blinds])
-			var/obj/window_blinds/blind = X
+		for_by_tcl(blind, /obj/window_blinds)
 			var/area/blind_area = get_area(blind)
 			if(blind_area != A)
 				continue
