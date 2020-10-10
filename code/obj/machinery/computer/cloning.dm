@@ -188,8 +188,7 @@
 	if(src.currentMessageNumber == messageNumber)
 		src.currentStatusMessage["text"] = ""
 		src.currentStatusMessage["status"] = ""
-		if(tgui_process)
-			tgui_process.update_uis(src)
+		tgui_process?.update_uis(src)
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
 	if ((isnull(subject)) || (!ishuman(subject)))
