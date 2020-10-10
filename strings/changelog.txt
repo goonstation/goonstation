@@ -1,4 +1,9 @@
 
+(t)sat oct 10 20
+(u)Flaborized
+(p)2368
+(e)🎨|sprites
+(+)Added health indicator sprite animations to the Old, Mithril, and Vaporized themes, which also makes Colourblind redundant so it's been removed. New theme now contains the Colourblind theme health indicator.
 (t)fri oct 09 20
 (u)Jawns
 (p)2371
