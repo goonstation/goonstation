@@ -180,8 +180,7 @@
 /obj/machinery/computer/cloning/proc/show_message(message = "", status = "info")
 	src.currentStatusMessage["text"] = message
 	src.currentStatusMessage["status"] = status
-	if(tgui_process)
-		tgui_process.update_uis(src)
+	tgui_process?.update_uis(src)
 	//prevents us from overwriting the wrong message
 	currentMessageNumber += 1
 	var/messageNumber = currentMessageNumber
