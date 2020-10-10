@@ -175,7 +175,7 @@ turf
 				air.temperature = temperature
 
 				if(air_master)
-					air_master.queue_update_tile(src)
+					air_master.tiles_to_update |= src
 
 					find_group()
 
@@ -184,12 +184,12 @@ turf
 					for(var/direction in cardinal)
 						var/turf/simulated/floor/target = get_step(src,direction)
 						if(istype(target))
-							air_master.queue_update_tile(target)
+							air_master.tiles_to_update |= target
 
 		Del()
 			if(air_master)
 				if(parent)
-					air_master.queue_update_group(parent)
+					air_master.groups_to_rebuild |= parent
 					parent.members.Remove(src)
 				else
 					air_master.active_singletons.Remove(src)
@@ -202,7 +202,7 @@ turf
 				for(var/direction in cardinal)
 					var/turf/simulated/tile = get_step(src,direction)
 					if(air_master && istype(tile) && !tile.blocks_air)
-						air_master.queue_update_tile(tile)
+						air_master.tiles_to_update |= tile
 			pool(air)
 			air = null
 			parent = null
@@ -315,7 +315,7 @@ turf
 			if(air_check_directions)
 				processing = 1
 				if(!parent)
-					air_master.add_singleton(src)
+					air_master.active_singletons |= src
 			else
 				processing = 0
 
@@ -566,48 +566,48 @@ turf
 			if(need_rebuild)
 				if(istype(src)) //Rebuild/update nearby group geometry
 					if(src.parent)
-						air_master.queue_update_group(src.parent)
+						air_master.groups_to_rebuild |= src.parent
 					else
-						air_master.queue_update_tile(src)
+						air_master.tiles_to_update |= src
 
 				if(istype(north))
 					north.tilenotify(src)
 					if(north.parent)
-						air_master.queue_update_group(north.parent)
+						air_master.groups_to_rebuild |= north.parent
 					else
-						air_master.queue_update_tile(north)
+						air_master.tiles_to_update |= north
 				if(istype(south))
 					south.tilenotify(src)
 					if(south.parent)
-						air_master.queue_update_group(south.parent)
+						air_master.groups_to_rebuild |= south.parent
 					else
-						air_master.queue_update_tile(south)
+						air_master.tiles_to_update |= south
 				if(istype(east))
 					east.tilenotify(src)
 					if(east.parent)
-						air_master.queue_update_group(east.parent)
+						air_master.groups_to_rebuild |= east.parent
 					else
-						air_master.queue_update_tile(east)
+						air_master.tiles_to_update |= east
 				if(istype(west))
 					west.tilenotify(src)
 					if(west.parent)
-						air_master.queue_update_group(west.parent)
+						air_master.groups_to_rebuild |= west.parent
 					else
-						air_master.queue_update_tile(west)
+						air_master.tiles_to_update |= west
 			else
-				if(istype(src)) air_master.queue_update_tile(src)
+				if(istype(src)) air_master.tiles_to_update |= src
 				if(istype(north))
 					north.tilenotify(src)
-					air_master.queue_update_tile(north)
+					air_master.tiles_to_update |= north
 				if(istype(south))
 					south.tilenotify(src)
-					air_master.queue_update_tile(south)
+					air_master.tiles_to_update |= south
 				if(istype(east))
 					east.tilenotify(src)
-					air_master.queue_update_tile(east)
+					air_master.tiles_to_update |= east
 				if(istype(west))
 					west.tilenotify(src)
-					air_master.queue_update_tile(west)
+					air_master.tiles_to_update |= west
 
 			if (map_currently_underwater)
 				var/turf/space/fluid/n = get_step(src,NORTH)
