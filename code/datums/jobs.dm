@@ -633,7 +633,7 @@
 	linkcolor = "#FF9900"
 	slot_card = /obj/item/card/id/engineering
 
-/datum/job/daily/monday
+/datum/job/engineering/constructionworker
 	name = "Construction Worker"
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
@@ -1506,7 +1506,7 @@
 
 		return
 
-/datum/job/special/random/beekeeper
+/datum/job/daily/monday/
 	name = "Apiculturist"
 	wages = PAY_TRADESMAN
 	slot_jump = /obj/item/clothing/under/rank/beekeeper
