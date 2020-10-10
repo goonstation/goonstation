@@ -257,3 +257,20 @@
 				hublog << list2params(message)
 
 		return 1
+
+#ifdef HALLOWEEN
+/proc/statlog_spookpoints()//(/datum/spooktober_ghost_handler/SGH)
+	var/message[] = new()
+	for (var/i in spooktober_GH.earned_points)
+		message["ckey_earned"] = i
+		message["sp_earned"] = spooktober_GH.earned_points[i]
+	for (var/i in spooktober_GH.spent_points)
+		message["ckey_spent"] = i
+		message["sp_spent"] = spooktober_GH.spent_points[i]
+
+
+
+
+	hublog << list2params(message)
+
+#endif
