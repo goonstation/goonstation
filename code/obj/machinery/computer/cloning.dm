@@ -81,7 +81,6 @@
 		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
 
-		show_message("")
 		var/hookup_error = FALSE
 		if (isnull(src.scanner))
 			hookup_error = TRUE
@@ -178,10 +177,10 @@
 // message = message you want to pass to the noticebox
 // status = warning/success/danger/info which changes the color of the noticebox on the frontend
 
-/obj/machinery/computer/cloning/proc/show_message(message, status)
+/obj/machinery/computer/cloning/proc/show_message(message = "", status = "info")
 	src.currentStatusMessage["text"] = message
 	src.currentStatusMessage["status"] = status
-	tgui_process.update_uis(src)
+	tgui_process?.update_uis(src)
 	//prevents us from overwriting the wrong message
 	currentMessageNumber += 1
 	var/messageNumber = currentMessageNumber
@@ -189,7 +188,7 @@
 	if(src.currentMessageNumber == messageNumber)
 		src.currentStatusMessage["text"] = ""
 		src.currentStatusMessage["status"] = ""
-		tgui_process.update_uis(src)
+		tgui_process?.update_uis(src)
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
 	if ((isnull(subject)) || (!ishuman(subject)))
