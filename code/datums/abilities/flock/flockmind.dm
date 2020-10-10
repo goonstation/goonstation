@@ -317,18 +317,10 @@
 /datum/targetable/flockmindAbility/createStructure/cast()
 	var/resourcecost = null
 	var/structurewantedtype = null
-	var/structurewanted = input("Select which structure you would like to create", "Tealprint Selection", "cancel") in list("Egg", "Rift", "Collector", "cancel")
+	var/structurewanted = input("Select which structure you would like to create", "Tealprint Selection", "cancel") in list("Collector", "cancel")
 	switch(structurewanted)
 		if("cancel")
 			return
-/*
-		if("Egg")
-			structurewantedtype = /obj/flock_structure/egg//DEBUG
-			resourcecost = 25
-		if("Rift")
-			structurewantedtype = /obj/flock_structure/rift//DEBUG
-			resourcecost = 200
-*/
 		if("Collector")
 			structurewantedtype = /obj/flock_structure/collector
 			resourcecost = 200

@@ -173,17 +173,17 @@
 		src.group = tiles[1] //set it to the group found.
 		src.group.addtile(src)
 	else if(tiles.len > 1) //if there is more then one, then join the largest (add merging functionality here later)
-		for(var/datum/flock_tile_group/FUCK in tiles)
-			if(FUCK == largestgroup) continue
-			largestgroup.powergen += FUCK.powergen
-			largestgroup.poweruse += FUCK.poweruse
-			for(var/turf/simulated/floor/feather/F in FUCK.members)
+		for(var/datum/flock_tile_group/oldgroup in tiles)
+			if(oldgroup == largestgroup) continue
+			largestgroup.powergen += oldgroup.powergen
+			largestgroup.poweruse += oldgroup.poweruse
+			for(var/turf/simulated/floor/feather/F in oldgroup.members)
 				F.group = largestgroup
 				largestgroup.addtile(F)
-			for(var/obj/flock_structure/f in FUCK.connected)
+			for(var/obj/flock_structure/f in oldgroup.connected)
 				f.group = largestgroup
 				largestgroup.addstructure(f)
-			qdel(FUCK)
+			qdel(oldgroup)
 		src.group = largestgroup
 		largestgroup.addtile(src)
 

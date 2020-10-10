@@ -79,11 +79,11 @@
 			src.grouptile = f
 			src.group?.removestructure(src)
 			src.group = f.group
-			src.group?.addstructure(src)
+			src.group.addstructure(src)
 		else if(src.grouptile == f && !grouptile.group == src.group)//if just the tile's group is different
 			src.group?.removestructure(src)
 			src.group = grouptile.group
-			src.group?.addstructure(src)
+			src.group.addstructure(src)
 
 /obj/flock_structure/proc/takeDamage(var/damageType, var/amount)
 	switch(damageType)
