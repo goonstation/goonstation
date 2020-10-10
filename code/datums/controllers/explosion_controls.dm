@@ -41,7 +41,7 @@ var/datum/explosion_controller/explosions
 		var/p
 		var/last_touched
 
-		for (var/turf/T as anything in queued_turfs)
+		for (var/turf/T as() in queued_turfs)
 			queued_turfs[T]=sqrt(queued_turfs[T])*2
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
@@ -58,7 +58,7 @@ var/datum/explosion_controller/explosions
 
 		LAGCHECK(LAG_HIGH)
 
-		for (var/turf/T as anything in queued_turfs)
+		for (var/turf/T as() in queued_turfs)
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P1 [p]")
@@ -85,7 +85,7 @@ var/datum/explosion_controller/explosions
 		LAGCHECK(LAG_HIGH)
 
 		// BEFORE that ordeal (which may sleep quite a few times), fuck the turfs up all at once to prevent lag
-		for (var/turf/T as anything in queued_turfs)
+		for (var/turf/T as() in queued_turfs)
 #ifndef UNDERWATER_MAP
 			if(istype(T, /turf/space))
 				continue

@@ -640,7 +640,7 @@ proc/debug_color_of(var/thing)
 			// I should probably also count overlays on overlays but I'm lazy
 			img.app.alpha = 0
 			var/num = 1 + theTurf.overlays.len + theTurf.underlays.len
-			for (var/atom/A as anything in theTurf)
+			for (var/atom/A as() in theTurf)
 				num += 1 + A.overlays.len + A.underlays.len
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
@@ -649,9 +649,9 @@ proc/debug_color_of(var/thing)
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			img.app.alpha = 0
 			var/num = 0
-			for (var/atom/A as anything in theTurf.contents + theTurf)
+			for (var/atom/A as() in theTurf.contents + theTurf)
 				num += 1 + A.overlays.len + A.underlays.len
-				for (var/atom/A2 as anything in A.overlays + A.underlays)
+				for (var/atom/A2 as() in A.overlays + A.underlays)
 					num += A2.overlays.len + A2.underlays.len
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
@@ -889,7 +889,7 @@ proc/debug_color_of(var/thing)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 	var/list/available_overlays = list()
-	for (var/datum/infooverlay/dummy as anything in childrentypesof(/datum/infooverlay))
+	for (var/datum/infooverlay/dummy as() in childrentypesof(/datum/infooverlay))
 		var/name = initial(dummy.name)
 		if(isnull(name))
 			name = replacetext("[dummy]", "/datum/infooverlay/", "")

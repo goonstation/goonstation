@@ -621,7 +621,7 @@
 
 	var/shielded = 0
 
-	for (var/atom/A as anything in src)
+	for (var/atom/A as() in src)
 		if (A.flags & NOSHIELD)
 			if (istype(A,/obj/item/device/shield))
 				var/obj/item/device/shield/S = A

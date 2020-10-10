@@ -161,9 +161,9 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as anything in stomach_process)
+	for (var/atom/A as() in stomach_process)
 		qdel(A)
-	for (var/atom/A as anything in skin_process)
+	for (var/atom/A as() in skin_process)
 		qdel(A)
 	stomach_process = null
 	skin_process = null
@@ -1100,7 +1100,7 @@
 // helper proooocs
 
 /mob/proc/send_hear_talks(var/message_range, var/messages, var/heardname, var/lang_id)	//helper to send hear_talk to all mob, obj, and turf
-	for (var/atom/A as anything in all_view(message_range, src))
+	for (var/atom/A as() in all_view(message_range, src))
 		A.hear_talk(src,messages,heardname,lang_id)
 
 /mob/proc/get_heard_name()

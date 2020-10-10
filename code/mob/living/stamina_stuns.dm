@@ -47,7 +47,7 @@
 		val += stamina_mods_max[x]
 
 	var/stam_mod_items = 0
-	for (var/obj/item/C as anything in src.get_equipped_items())
+	for (var/obj/item/C as() in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stammax")
 
 	return (val + stam_mod_items)
@@ -86,7 +86,7 @@
 		val += stamina_mods_regen[x]
 
 	var/stam_mod_items = 0
-	for (var/obj/item/C as anything in src.get_equipped_items())
+	for (var/obj/item/C as() in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stamregen")
 	return val
 
@@ -147,7 +147,7 @@
 			del(src.client)
 
 	var/stam_mod_items = 0
-	for (var/obj/item/C as anything in src.get_equipped_items())
+	for (var/obj/item/C as() in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stamcost")
 
 	var/percReduction = 0
@@ -252,7 +252,7 @@
 	.= 0
 
 	var/res = 0
-	for (var/obj/item/C as anything in src.get_equipped_items())
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist"))
 			res = C.getProperty("disorient_resist")
 			if (res >= 100)
@@ -271,7 +271,7 @@
 	.= 0
 
 	var/res = 0
-	for (var/obj/item/C as anything in src.get_equipped_items())
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist_eye"))
 			res = C.getProperty("disorient_resist_eye")
 			if (res >= 100)
@@ -304,7 +304,7 @@
 	.= 0
 
 	var/res = 0
-	for (var/obj/item/C as anything in src.get_equipped_items())
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist_ear"))
 			res = C.getProperty("disorient_resist_ear")
 			if (res >= 100)

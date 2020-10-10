@@ -1137,7 +1137,7 @@
 			O.move_trigger(src, ev)
 	if(reagents)
 		reagents.move_trigger(src, ev)
-	for (var/datum/statusEffect/S as anything in statusEffects)
+	for (var/datum/statusEffect/S as() in statusEffects)
 		if (S && S.move_triggered)
 			S.move_trigger(src, ev)
 

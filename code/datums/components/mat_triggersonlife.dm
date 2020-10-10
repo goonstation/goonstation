@@ -14,7 +14,7 @@
 	if (ismob(I.loc))
 		var/mob/user = I.loc
 		user.mob_flags &= ~MAT_TRIGGER_LIFE
-		for (var/atom/movable/A as anything in user)
+		for (var/atom/movable/A as() in user)
 
 			if (A != src && A.GetComponent(/datum/component/holdertargeting/mat_triggersonlife))
 				user.mob_flags |= MAT_TRIGGER_LIFE
@@ -30,7 +30,7 @@
 	var/obj/item/I = parent
 	if (user && I.loc != user)
 		user.mob_flags &= ~MAT_TRIGGER_LIFE
-		for (var/atom/movable/A as anything in user)
+		for (var/atom/movable/A as() in user)
 			if (A != src && A.GetComponent(/datum/component/holdertargeting/mat_triggersonlife))
 				user.mob_flags |= MAT_TRIGGER_LIFE
 	. = ..()
