@@ -388,10 +388,12 @@
 			src.UpdateDamageIcon()
 			health_update_queue |= src
 	else
+		var/obj/item/E = null
 		try
-			var/obj/item/E = src.organs[zone]
+			E = src.organs[zone]
 		catch
 			logTheThing("debug", null, null, "<b>ORGAN/INDEX_DMG</b> Invalid index: [zone]")
+			return 0
 		if (isitem(E))
 			if (E.take_damage(brute, burn, 0/*tox*/, damage_type))
 				src.UpdateDamageIcon()
