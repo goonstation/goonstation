@@ -92,7 +92,7 @@ datum/controller/air_system
 	var/list/turf/simulated/high_pressure_delta = list()
 
 	//Geometry updates lists
-	var/list/turf/simulated/tiles_to_update = list()
+	var/list/turf/tiles_to_update = list()
 	var/list/datum/air_group/groups_to_rebuild = list()
 
 	var/current_cycle = 0
@@ -264,7 +264,7 @@ datum/controller/air_system
 		return 1
 
 	process_update_tiles()
-		for(var/turf/simulated/T as() in tiles_to_update)
+		for(var/turf/simulated/T in tiles_to_update) // ZEWAKA-ATMOS SPACE + SPACE FLUID LEAKAGE
 			T.update_air_properties()
 		tiles_to_update.len = 0
 
