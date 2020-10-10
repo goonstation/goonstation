@@ -308,39 +308,6 @@
 
 		if (holder.client) holder.next_move = world.time + 7 //Fix for not being able to move after you got new limbs.
 
-	proc/reliquarymend(var/howmany = 4)
-		if (!holder)
-			return
-
-		if (!l_arm && howmany > 0)
-			l_arm = new /obj/item/parts/robot_parts/arm/left/reliquary(holder)
-			l_arm.holder = holder
-			boutput(holder, "<span class='notice'>Your left arm rebuilds itself!</span>")
-			holder.hud.update_hands()
-			howmany--
-
-		if (!r_arm && howmany > 0)
-			r_arm = new /obj/item/parts/robot_parts/arm/right/reliquary(holder)
-			r_arm.holder = holder
-			boutput(holder, "<span class='notice'>Your right arm rebuilds itself!</span>")
-			holder.hud.update_hands()
-			howmany--
-
-		if (!l_leg && howmany > 0)
-			l_leg = new /obj/item/parts/robot_parts/leg/left/reliquary(holder)
-			l_leg.holder = holder
-			boutput(holder, "<span class='notice'>Your left leg rebuilds itself!</span>")
-			howmany--
-
-		if (!r_leg && howmany > 0)
-			r_leg = new /obj/item/parts/robot_parts/leg/right/reliquary(holder)
-			r_leg.holder = holder
-			boutput(holder, "<span class='notice'>Your right rebuilds itself!</span>")
-			howmany--
-
-		if (holder.client) holder.next_move = world.time + 7 //Fix for not being able to move after you got new limbs.
-		holder.update_body()
-
 	proc/reset_stone() // reset skintone to whatever the holder's s_tone is
 		if (l_arm && istype(l_arm, /obj/item/parts/human_parts))
 			l_arm:set_skin_tone()
