@@ -190,7 +190,8 @@
 	power = 10
 	precalculated = 0
 	caliber = 0.512
-	shot_volume = 2
+	shot_volume = 100
+	shot_sound = 'sound/weapons/gyrojet.ogg'
 	ks_ratio = 1
 	icon_turf_hit = "bhole-small"
 
@@ -198,7 +199,7 @@
 		O.internal_speed = projectile_speed
 
 	tick(obj/projectile/O)
-		O.internal_speed = min(O.internal_speed * 1.15, 56)
+		O.internal_speed = min(O.internal_speed * 1.25, 56)
 
 	get_power(obj/projectile/P, atom/A)
 		return 10 + P.internal_speed
