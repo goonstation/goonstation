@@ -216,18 +216,18 @@
 		if(need_rebuild)
 			if(istype(source)) //Rebuild/update nearby group geometry
 				if(source.parent)
-					air_master.queue_update_group(source.parent)
+					air_master.groups_to_rebuild |= source.parent
 				else
-					air_master.queue_update_tile(source)
+					air_master.tiles_to_update |= source
 			if(istype(destination))
 				if(destination.parent)
-					air_master.queue_update_group(destination.parent)
+					air_master.groups_to_rebuild |= destination.parent
 				else
-					air_master.queue_update_tile(destination)
+					air_master.tiles_to_update |= destination
 
 		else
-			if(istype(source)) air_master.queue_update_tile(source)
-			if(istype(destination)) air_master.queue_update_tile(destination)
+			if(istype(source)) air_master.tiles_to_update |= source
+			if(istype(destination)) air_master.tiles_to_update |= destination
 
 		return 1
 

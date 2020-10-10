@@ -57,7 +57,7 @@
 
 	Del()
 		if (cameras && cameras.len)
-			for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+			for (var/obj/machinery/camera/C as() in by_type[/obj/machinery/camera])
 				if(C.coveredTiles)
 					C.coveredTiles -= src
 		cameras = null
@@ -587,10 +587,10 @@
 
 			// tell atmos to update this tile's air settings
 			if (air_master)
-				air_master.queue_update_tile(N)
+				air_master.tiles_to_update |= N
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
-			air_master.queue_update_group(oldparent) //Puts the oldparent into a queue to update the members.
+			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
 
 	if (istype(new_turf, /turf/simulated))
 		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
