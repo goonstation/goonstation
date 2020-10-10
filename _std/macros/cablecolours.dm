@@ -28,7 +28,7 @@
 /datum/supply_packs/electrical/_color/desc = ""+"x2 Cabling Box - "+#_color+" (14 cable coils total)";\
 /datum/supply_packs/electrical/_color/contains = list(/obj/item/storage/box/cablesbox/colored/_color = 2);\
 /datum/supply_packs/electrical/_color/containername = ""+"Electrical Supplies Crate ("+#_color+")- 2 pack"
-
+//
 colorcable(yellow, "#EED202")
 colorcable(orange, "#C46210")
 colorcable(blue, "#72A0C1")
