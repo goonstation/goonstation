@@ -664,6 +664,7 @@ CONTAINS:
 		..()
 
 	attack_hand(mob/living/user as mob)
+		if (isAI(user) || isintangible(user) || isobserver(user)) return
 		user.lastattacked = src
 		..()
 		if (!defib)
