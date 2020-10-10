@@ -6,7 +6,7 @@
  * @author Changes ThePotato97
  * @license MIT
  */
-import { Fragment, createRef } from 'inferno';
+import { Fragment } from 'inferno';
 import { resolveAsset } from '../assets';
 import { classes, pureComponentHooks } from 'common/react';
 import { vecScale, vecSubtract } from 'common/vector';
@@ -227,19 +227,40 @@ const Stamp = (props, context) => {
     image,
     opacity,
   } = props;
-  const stamp_trasform = {
+  const stamp_transform = {
     'left': image.x + 'px',
     'top': image.y + 'px',
+    'transform': 'rotate(' + image.rotate + 'deg)',
     'opacity': opacity || 1.0,
     'position': 'absolute',
+    'user-select': 'none',
+    '-ms-user-select': 'none',
+  };
+  const stamp_text_transform = {
+    'left': image.x + 'px',
+    'top': image.y + 20 + 'px',
+    'transform': 'rotate(' + image.rotate + 'deg)',
+    'opacity': opacity || 1.0,
   };
   return (
-    <img
-      className={classes([
-        'paper121x54',
-      ])}
-      src={resolveAsset(image.sprite)}
-      style={stamp_trasform} />
+    <Fragment>
+      {!image.sprite.includes(".png") && (
+        <Box
+          style={stamp_text_transform}
+          className="Paper__Stamp-Text">
+          {image.sprite}
+        </Box>
+      )}
+      {image.sprite.includes(".png") && (
+        <img
+          unselectable="on"
+          className={classes([
+            'paper121x54',
+          ])}
+          src={resolveAsset(image.sprite)}
+          style={stamp_transform} />
+      )}
+    </Fragment>
   );
 };
 
@@ -288,20 +309,28 @@ const PaperSheetView = (props, context) => {
 class PaperSheetStamper extends Component {
   constructor(props, context) {
     super(props, context);
-    this.fakeRef = createRef();
     this.state = {
       x: 0,
       y: 0,
+      rotating: false,
+      heldX: 0,
       rotate: 0,
     };
     this.handleMouseMove = e => {
       const pos = this.findStampPosition(e);
+      if (!pos) { return; }
       // center offset of stamp
       pauseEvent(e);
       this.setState({ x: pos[0], y: pos[1] });
     };
     this.handleMouseClick = e => {
-      const pos = this.findStampPosition(e);
+      let pos = this.findStampPosition(e);
+      if (!pos) {
+        pos = [
+          this.state.x,
+          this.state.y,
+        ];
+      }
       const { act, data } = useBackend(this.context);
       const stamp_obj = {
         x: pos[0], y: pos[1], r: this.state.rotate,
@@ -311,18 +340,6 @@ class PaperSheetStamper extends Component {
       act("stamp", stamp_obj);
       this.setState({ x: pos[0], y: pos[1] });
     };
-    this.handleWheel = e => {
-      const rotate_amount = e.deltaY > 0 ? 15 : -15;
-      if (e.deltaY < 0 && this.state.rotate === 0) {
-        this.setState({ rotate: (360+rotate_amount) });
-      } else if (e.deltaY > 0 && this.state.rotate === 360) {
-        this.setState({ rotate: rotate_amount });
-      } else {
-        const rotate = { rotate: rotate_amount + this.state.rotate };
-        this.setState(() => rotate);
-      }
-      pauseEvent(e);
-    };
     this.getScroll = e => {
       return window.scrollX;
     };
@@ -330,7 +347,21 @@ class PaperSheetStamper extends Component {
 
 
   findStampPosition(e) {
-    logger.log('line breaks');
+    if (e.shiftKey) {
+      if (!this.state.rotating) {
+        const rotating = { rotating: true };
+        this.setState(() => rotating);
+        const heldX = { heldX: e.pageX + this.state.rotate };
+        this.setState(() => heldX);
+      }
+      const rotate = { rotate: (this.state.heldX - e.pageX) };
+      this.setState(() => rotate);
+      logger.log(this.state.rotate);
+      // logger.log(this.state.heldX - e.pageX);
+      return;
+    }
+    const rotating = { rotating: false };
+    this.setState(() => rotating);
     const windowRef = document.querySelector('.Layout__content');
     const pos = [
       e.pageX,
@@ -342,13 +373,11 @@ class PaperSheetStamper extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener("onscroll", this.handleWheel);
     document.addEventListener("mousemove", this.handleMouseMove);
     document.addEventListener("click", this.handleMouseClick);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("scroll", this.handleWheel);
     document.removeEventListener("mousemove", this.handleMouseMove);
     document.removeEventListener("click", this.handleMouseClick);
   }

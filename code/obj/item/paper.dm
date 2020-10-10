@@ -25,24 +25,6 @@
 	burn_output = 900
 	burn_possible = 2
 	health = 10
-	var/stamp_assets = list(
-		"Clown" = "large_stamp-clown.png",
-		"Rejected" = "large_stamp-deny.png",
-		"Approved" = "large_stamp-ok.png",
-		"Head of Personnel" = "large_stamp-hop.png",
-		"Medical Director" = "large_stamp-md.png",
-		"Chief Engineer" = "large_stamp-ce.png",
-		"Head of Security" = "large_stamp-hos.png",
-		"Research Director" = "large_stamp-rd.png",
-		"Captain" = "large_stamp-cap.png",
-		"stamp-qm" = "large_stamp-qm.png",
-		"stamp-law" = "large_stamp-law.png",
-		"stamp-chap" = "large_stamp-chap.png",
-		"stamp-mime" = "large_stamp-mime.png",
-		"stamp-centcom" = "large_stamp-centcom.png",
-		"stamp-syndicate" = "large_stamp-syndicate.png",
-		"Void" = "todo make a void stamp"
-	)
 	var/list/form_startpoints
 	var/list/form_endpoints
 
@@ -264,6 +246,34 @@
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
+
+	var/T = ""
+	if (ticker)
+		var/S = round(ticker.round_elapsed_ticks / 10)
+		T = "SHIFT TIME: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
+	else
+		T = "SHIFT TIME"
+	boutput(world,T)
+	var/stamp_assets = list(
+		"Clown" = "large_stamp-clown.png",
+		"Rejected" = "large_stamp-deny.png",
+		"Approved" = "large_stamp-ok.png",
+		"Head of Personnel" = "large_stamp-hop.png",
+		"Medical Director" = "large_stamp-md.png",
+		"Chief Engineer" = "large_stamp-ce.png",
+		"Head of Security" = "large_stamp-hos.png",
+		"Research Director" = "large_stamp-rd.png",
+		"Captain" = "large_stamp-cap.png",
+		"stamp-qm" = "large_stamp-qm.png",
+		"stamp-law" = "large_stamp-law.png",
+		"stamp-chap" = "large_stamp-chap.png",
+		"stamp-mime" = "large_stamp-mime.png",
+		"stamp-centcom" = "large_stamp-centcom.png",
+		"stamp-syndicate" = "large_stamp-syndicate.png",
+		"Void" = "large_stamp-void.png",
+		"Current Time" =  T,
+		"Your Name" = user.name
+	)
 	data["edit_usr"] = "[user]"
 
 	var/obj/O = user.equipped()
@@ -1240,13 +1250,11 @@ Only trained personnel should operate station systems. Follow all procedures car
 	var/special_mode = null
 	var/is_reassignable = 1
 	var/assignment = null
-	var/available_modes = list("Approved", "Rejected", "Void", "Current Time");
+	var/available_modes = list("Approved", "Rejected", "Void", "Current Time", "Your Name");
 	var/current_mode = "Approved"
 
 /obj/item/stamp/New()
 	..()
-
-	//"Current Time" = "SHIFT TIME: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
 	if(special_mode)
 		available_modes += special_mode
 		current_mode = special_mode
