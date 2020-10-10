@@ -103,7 +103,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	deductPoints(cost)
 		..()
-		spooktober_GH.change_points(owner.client.ckey, -abs(cost))	//idk what format this comes in, I'll be safe
+		if (owner.client)
+			spooktober_GH.change_points(owner.client.ckey, -abs(cost))	//idk what format this comes in, I'll be safe
 
 
 #endif
@@ -581,7 +582,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		sleep(time_to_manifest)
 		//////////////////////////////////////////////////////////////////////
 		stop_spooking()
-			
+
 
 
 	proc/start_spooking()
