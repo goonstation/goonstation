@@ -96,7 +96,7 @@ datum
 
 			//Geometry updates lists
 			var/list/turf/simulated/tiles_to_update = list()
-			var/list/turf/simulated/groups_to_rebuild = list()
+			var/list/datum/air_group/groups_to_rebuild = list()
 
 			var/current_cycle = 0
 			var/datum/controller/process/air_system/parent_controller = null
