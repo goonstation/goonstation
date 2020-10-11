@@ -420,6 +420,12 @@
 
 /obj/machinery/portable_atmospherics/canister/ui_static_data(mob/user)
 	var/list/static_data = list()
+	var/has_paper = false
+
+	for(var/obj/item/paper in src.det.attachments)
+		static_data["paperData"] = paper.ui_static_data()
+		has_paper = true
+	static_data["hasPaper"] = has_paper
 
 	if(src?.det?.attachments)
 		static_data["detonatorAttachments"] = list()

@@ -272,10 +272,10 @@ const setInputReadonly = (text, readonly) => {
 
 // got to make this a full component if we
 // want to control updates
-const PaperSheetView = (props, context) => {
+export const PaperSheetView = (props, context) => {
   const {
-    value,
-    stamps,
+    value = "",
+    stamps = [],
     backgroundColor,
     readOnly,
   } = props;
@@ -298,7 +298,7 @@ const PaperSheetView = (props, context) => {
         dangerouslySetInnerHTML={text_html}
         p="10px" />
       {stamp_list.map((o, i) => (
-        <Stamp key={o[0] + i}
+        <Stamp key={i}
           image={{ sprite: o[0], x: o[1], y: o[2], rotate: o[3] }} />
       ))}
     </Box>
@@ -626,7 +626,7 @@ export class PaperSheet extends Component {
       stamp_class,
       sizeX,
       sizeY,
-      stamped,
+      name,
     } = data;
     const current_pos = {
       sprite: stamp_class,
@@ -673,6 +673,7 @@ export class PaperSheet extends Component {
     };
     return (
       <Window
+        title={name}
         theme="paper"
         width={sizeX || 400}
         height={sizeY || 500}

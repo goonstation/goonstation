@@ -5,6 +5,26 @@
 #define MAX_PAPER_STAMPS 30
 #define MAX_PAPER_STAMPS_OVERLAYS 4
 
+#define CLEAN_NAME list(;\
+	"Clown" = "stamp-clown",;\
+	"Denied" = "stamp-deny" ,;\
+	"Granted" = "stamp-ok",;\
+	"Head of Personnel" = "stamp-hop",;\
+	"Medical Director" = "stamp-md",;\
+	"Chief Engineer" = "stamp-ce",;\
+	"Head of Security" = "stamp-hos",;\
+	"Research Director" = "stamp-rd",;\
+	"Captain" = "stamp-cap",;\
+	"Quartermaster" = "stamp-qm",;\
+	"Security" = "stamp-law",;\
+	"Chaplain" = "stamp-chap",;\
+	"Mime" = "stamp-mime",;\
+	"Centcom" = "stamp-centcom",;\
+	"Syndicate" = "stamp-syndicate",;\
+	"Void" = "stamp-void",;\
+	"Your Name" = "stamp-name",;\
+	"Current Time" = "stamp-time",)
+
 /obj/item/paper
 	name = "paper"
 	icon = 'icons/obj/writing.dmi'
@@ -27,17 +47,16 @@
 	health = 10
 	var/list/form_startpoints
 	var/list/form_endpoints
-
 	var/font_css_crap = null
 	var/list/fonts = list()
-	//
+
 	var/see_face = 1
 	var/body_parts_covered = HEAD
 	var/protective_temperature = T0C + 10
 	var/heat_transfer_coefficient = 0.99
 	var/permeability_coefficient = 0.99
 	var/siemens_coefficient = 0.80
-
+	var/stampNum = 0
 	var/sizex = 0
 	var/sizey = 0
 	var/offset = 0
@@ -47,7 +66,7 @@
 	stamina_crit_chance = 0
 
 	var/sealed = 0 //Can you write on this with a pen?
-	var/list/stamps
+	var/list/stamps = list()
 	var/list/stamped
 	var/field_counter = 1
 
@@ -190,26 +209,22 @@
 			var/stamp_r = text2num(params["r"])	// rotation in degrees
 			var/stamp_icon_state = params["stamp_icon_state"]
 			var/stamp_class = params["stamp_class"]
-			if (isnull(stamps))
-				stamps = list()
 			if(stamps.len < MAX_PAPER_STAMPS)
-				// I hate byond when dealing with freaking lists
-				stamps[++stamps.len] = list(stamp_class, stamp_x, stamp_y, stamp_r)	/// WHHHHY
-				src.icon_state = "paper_stamped"
+				stamps.Add(list(list(stamp_class, stamp_x, stamp_y, stamp_r)))
 				/// This does the overlay stuff
-				if (isnull(stamped))
-					stamped = list()
-				//if(stamped.len < MAX_PAPER_STAMPS_OVERLAYS)
-				//	var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[stamp_icon_state]")
-				//	stampoverlay.pixel_x = rand(-2, 2)
-				//	stampoverlay.pixel_y = rand(-3, 2)
-				//	add_overlay(stampoverlay)
-				//	LAZYADD(stamped, stamp_icon_state)
+				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp_icon_state]");
+				var/matrix/stamp_matrix = matrix()
+				stamp_matrix.Scale(1, 1)
+				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
+				stamp_overlay.transform = stamp_matrix
+
+				boutput(world, "stamps_[stamps.len % MAX_PAPER_STAMPS_OVERLAYS]")
+				src.UpdateOverlays(stamp_overlay, "stamps_[stamps.len % MAX_PAPER_STAMPS_OVERLAYS]")
 
 				update_static_data(usr,ui)
 				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with [stamp_class]!</span>", "<span class='notice'>You stamp [src] with [stamp_class]!</span>")
 			else
-				boutput(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
+				boutput(usr, "There is no where else you can stamp!")
 			. = TRUE
 
 		if("save")
@@ -247,36 +262,43 @@
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
 
+
+
+
+
+
+
+	data["edit_usr"] = "[user]"
+
+	var/obj/O = user.equipped()
+	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
 	var/T = ""
 	if (ticker)
 		var/S = round(ticker.round_elapsed_ticks / 10)
-		T = "SHIFT TIME: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
+		T = time_type + ": [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
 	else
-		T = "SHIFT TIME"
-	boutput(world,T)
+		T = time_type
+
 	var/stamp_assets = list(
-		"Clown" = "large_stamp-clown.png",
-		"Rejected" = "large_stamp-deny.png",
-		"Approved" = "large_stamp-ok.png",
-		"Head of Personnel" = "large_stamp-hop.png",
-		"Medical Director" = "large_stamp-md.png",
-		"Chief Engineer" = "large_stamp-ce.png",
-		"Head of Security" = "large_stamp-hos.png",
-		"Research Director" = "large_stamp-rd.png",
-		"Captain" = "large_stamp-cap.png",
+		"stamp-clown" = "large_stamp-clown.png",
+		"stamp-deny" = "large_stamp-deny.png",
+		"stamp-ok" = "large_stamp-ok.png",
+		"stamp-hop" = "large_stamp-hop.png",
+		"stamp-md" = "large_stamp-md.png",
+		"stamp-ce" = "large_stamp-ce.png",
+		"stamp-hos" = "large_stamp-hos.png",
+		"stamp-rd" = "large_stamp-rd.png",
+		"stamp-cap" = "large_stamp-cap.png",
 		"stamp-qm" = "large_stamp-qm.png",
 		"stamp-law" = "large_stamp-law.png",
 		"stamp-chap" = "large_stamp-chap.png",
 		"stamp-mime" = "large_stamp-mime.png",
 		"stamp-centcom" = "large_stamp-centcom.png",
 		"stamp-syndicate" = "large_stamp-syndicate.png",
-		"Void" = "large_stamp-void.png",
-		"Current Time" =  T,
-		"Your Name" = user.name
+		"stamp-void" = "large_stamp-void.png",
+		"stamp-time" =  T,
+		"stamp-name" = user.name
 	)
-	data["edit_usr"] = "[user]"
-
-	var/obj/O = user.equipped()
 	if(istype(O, /obj/item/pen/crayon))
 		var/obj/item/pen/crayon/PEN = O
 		data["pen_font"] = PEN.font
@@ -1233,7 +1255,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 */ //TODO: FIX
 
 /obj/item/stamp
-	name = "rubber stamp"
+	name = "Rubber Stamp"
 	desc = "A rubber stamp for stamping important documents."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "stamp"
@@ -1250,14 +1272,14 @@ Only trained personnel should operate station systems. Follow all procedures car
 	var/special_mode = null
 	var/is_reassignable = 1
 	var/assignment = null
-	var/available_modes = list("Approved", "Rejected", "Void", "Current Time", "Your Name");
-	var/current_mode = "Approved"
+	var/available_modes = list("Granted", "Denied", "Void", "Current Time", "Your Name");
+	var/current_mode = "Granted"
 
 /obj/item/stamp/New()
 	..()
 	if(special_mode)
 		available_modes += special_mode
-		current_mode = special_mode
+		current_mode = (CLEAN_NAME[special_mode])
 
 /obj/item/stamp/proc/set_assignment(A)
 	if (istext(A))
@@ -1316,7 +1338,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	var/NM = input(usr, "Configure \the [src]?", "[src.name]", src.current_mode) in src.available_modes
 	if (!NM || !length(NM) || !(NM in src.available_modes))
 		return
-	src.current_mode = NM
+	src.current_mode = (CLEAN_NAME[NM])
 	boutput(usr, "<span class='notice'>You set \the [src] to '[NM]'.</span>")
 	return
 
@@ -1347,54 +1369,97 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 /obj/item/stamp // static staff stamps
 	cap
-		name = "captain's rubber stamp"
+		name = "Captain's Rubber Stamp"
 		desc = "The Captain's rubber stamp for stamping important documents."
 		icon_state = "stamp-cap"
 		special_mode = "Captain"
 		is_reassignable = 0
-		assignment = "Captain"
+		assignment = "stamp-cap"
 	hop
-		name = "head of personnel's rubber stamp"
+		name = "Head of Personnel's Rubber Stamp"
 		desc = "The Head of Personnel's rubber stamp for stamping important documents."
 		icon_state = "stamp-hop"
 		special_mode = "Head of Personnel"
 		is_reassignable = 0
-		assignment = "Head of Personnel"
+		assignment = "stamp-hop"
 	hos
-		name = "head of security's rubber stamp"
+		name = "Head of Security's Rubber Stamp"
 		desc = "The Head of Security's rubber stamp for stamping important documents."
 		icon_state = "stamp-hos"
 		special_mode = "Head of Security"
 		is_reassignable = 0
-		assignment = "Head of Security"
+		assignment = "stamp-hos"
 	ce
-		name = "chief engineer's rubber stamp"
+		name = "Chief engineer's Rubber Stamp"
 		desc = "The Chief Engineer's rubber stamp for stamping important documents."
 		icon_state = "stamp-ce"
 		special_mode = "Chief Engineer"
 		is_reassignable = 0
-		assignment = "Chief Engineer"
+		assignment = "stamp-ce"
 	md
-		name = "medical director's rubber stamp"
+		name = "Medical Director's Rubber Stamp"
 		desc = "The Medical Director's rubber stamp for stamping important documents."
 		icon_state = "stamp-md"
 		special_mode = "Medical Director"
 		is_reassignable = 0
-		assignment = "Medical Director"
+		assignment = "stamp-md"
 	rd
-		name = "research director's rubber stamp"
+		name = "Research Director's Rubber Stamp"
 		desc = "The Research Director's rubber stamp for stamping important documents."
 		icon_state = "stamp-rd"
 		special_mode = "Research Director"
 		is_reassignable = 0
-		assignment = "Research Director"
+		assignment = "stamp-rd"
 	clown
-		name = "clown's rubber stamp"
+		name = "Clown's Rubber Stamp"
 		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on."
 		icon_state = "stamp-honk"
 		special_mode = "Clown"
 		is_reassignable = 0
-		assignment = "Clown"
+		assignment = "stamp-honk"
+	centcom
+		name = "Centcom Rubber Stamp"
+		desc = "Centcom rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-centcom"
+		special_mode = "Centcom"
+		is_reassignable = 0
+		assignment = "stamp-centcom"
+	mime
+		name = "Mime's Rubber Stamp"
+		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-mime"
+		special_mode = "Mime"
+		is_reassignable = 0
+		assignment = "stamp-mime"
+	chap
+		name = "Chaplain's Rubber Stamp"
+		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-chap"
+		special_mode = "Chaplain"
+		is_reassignable = 0
+		assignment = "stamp-chap"
+	qm
+		name = "Quartermaster's Rubber Stamp"
+		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-qm"
+		special_mode = "Quartermaster"
+		is_reassignable = 0
+		assignment = "stamp-qm"
+	syndicate
+		name = "Syndicate Rubber Stamp"
+		desc = "Syndicate rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-syndicate"
+		special_mode = "Syndicate"
+		is_reassignable = 0
+		assignment = "stamp-syndicate"
+	law
+		name = "Security's Rubber Stamp"
+		desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		icon_state = "stamp-syndicate"
+		special_mode = "Security"
+		is_reassignable = 0
+		assignment = "stamp-law"
+
 /* //		get_stamp_text()
 			var/T = null;
 			switch (src.current_mode)

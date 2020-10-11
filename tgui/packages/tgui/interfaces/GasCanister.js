@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
 import { Divider, Box } from '../components';
 import { Window } from '../layouts';
+import { PaperSheetView } from './PaperSheet';
 import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
 import { ReleaseValve } from './common/ReleaseValve';
 import { Detonator } from './GasCanister/Detonator';
@@ -20,6 +21,7 @@ export const GasCanister = (props, context) => {
     maxRelease,
     detonator,
     detonatorAttachments,
+    paperData,
   } = data;
 
   const handleSetPressure = releasePressure => {
@@ -77,6 +79,8 @@ export const GasCanister = (props, context) => {
           connected={connected}
           pressure={pressure}
           maxPressure={maxPressure}>
+          <PaperSheetView
+            stamps={paperData.stamp_list} />
           <Divider />
           {
             hasValve
