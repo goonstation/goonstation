@@ -34,11 +34,12 @@
 
 	onMaterialChanged()
 		..()
-		genrate = 0
-		var/rate1 = round((material.getProperty("n_radioactive") / 6.333))
-		var/rate2 = round((material.getProperty("n_radioactive") / 4.333))
-		genrate = (rate1 + rate2)
 		if (istype(src.material))
+			genrate = 0
+			if(src.material.hasProperty("radioactive"))
+				genrate += round((material.getProperty("radioactive") / 6.33))
+			if(src.material.hasProperty("n_radioactive"))
+				genrate += round((material.getProperty("n_radioactive") / 4.33))
 			if(src.material.hasProperty("electrical"))
 				maxcharge = round((src.material.getProperty("electrical") ** 2) * 3.333)
 			else
