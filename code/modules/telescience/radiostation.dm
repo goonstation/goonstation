@@ -645,6 +645,15 @@
 	name_of_thing = "Security Department Public Service Announcement"
 	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
 	Voiceover by Squidchild of the Black Pants Legion"}	
+	
+/obj/item/radio_tape/advertisement/cargonia
+	name = "compact tape - 'Scuffed Compact Tape'"
+	audio = "sound/radio_station/cargonia.ogg"
+	name_of_thing = "Cargo Union Advertisement <VERY ILLEGAL>"
+	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
+	You found this in a locked up chest in the depths. Someone went to a lot of trouble to get rid of it.<br>
+	Voiceover by Tex of the Black Pants Legion<br>
+	Musical Backing is "Valor" by David Fesliyan"}		
 
 /obj/item/radio_tape/audio_book
 	audio_type = "Audio book"
