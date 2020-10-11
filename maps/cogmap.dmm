@@ -280,9 +280,14 @@
 /area/shuttle/arrival/station)
 "aaS" = (
 /obj/table/reinforced/auto,
+/obj/item/device/radio{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 3
+	},
 /obj/item/device/radio/intercom,
-/obj/item/storage/toolbox/emergency,
-/obj/item/device/radio,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -1304,8 +1309,13 @@
 	name = "autoname - SS13"
 	},
 /obj/table/glass/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/device/radio,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -3
+	},
+/obj/item/device/radio{
+	pixel_x = 9;
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "red2"
@@ -1433,12 +1443,22 @@
 /turf/simulated/floor/plating/airless,
 /area/station/security/armory)
 "adI" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/rack,
+/obj/item/clothing/suit/fire,
+/obj/item/tank/air,
+/obj/item/extinguisher{
+	pixel_x = 9
 	},
-/obj/disposalpipe/segment/food,
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = 5;
+	pixel_y = 13
+	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/NWmaint)
+/area)
 "adJ" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
@@ -3519,17 +3539,32 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/NWmaint)
 "aiI" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/rack,
+/obj/item/device/radio{
+	pixel_x = 7;
+	pixel_y = 4
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/item/device/radio{
+	pixel_x = 10;
+	pixel_y = -1
 	},
-/obj/cable{
-	icon_state = "1-4"
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/item/crowbar,
+/obj/item/crowbar{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/device/light/flashlight{
+	pixel_x = -2;
+	pixel_y = -3
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/NWmaint)
+/area)
 "aiJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5407,17 +5442,29 @@
 /area/station/maintenance/NEmaint)
 "ano" = (
 /obj/rack,
-/obj/item/crowbar,
-/obj/item/crowbar,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/item/device/light/flashlight,
+/obj/item/device/radio{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/device/radio{
+	pixel_x = 10;
+	pixel_y = -1
+	},
 /obj/decal/cleanable/cobweb2,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/item/crowbar,
+/obj/item/crowbar{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/device/light/flashlight{
+	pixel_x = -2;
+	pixel_y = -3
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/NEmaint)
@@ -6415,10 +6462,18 @@
 "apN" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
-/obj/item/extinguisher,
+/obj/item/extinguisher{
+	pixel_x = 9
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = 5;
+	pixel_y = 13
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/NEmaint)
 "apO" = (
@@ -11080,18 +11135,47 @@
 /turf/simulated/floor/bot,
 /area/station/storage/emergency)
 "aAA" = (
+/obj/rack,
+/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/fire{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/tank/air,
+/obj/item/tank/air{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/extinguisher{
+	pixel_x = 9
+	},
+/obj/item/extinguisher{
+	pixel_x = 12;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = 9;
+	pixel_y = 11
+	},
+/obj/item/crowbar{
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/tank/air,
-/obj/item/tank/air,
 /turf/simulated/floor/bot,
 /area/station/storage/emergency)
 "aAB" = (
@@ -15577,17 +15661,9 @@
 /turf/simulated/floor,
 /area/station/security/secwing)
 "aKt" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/security/secwing)
+/obj/rack,
+/turf/simulated/floor/plating,
+/area)
 "aKu" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -15882,13 +15958,26 @@
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/main)
 "aKZ" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/rack,
+/obj/item/clothing/suit/fire,
+/obj/item/tank/air,
+/obj/item/extinguisher{
+	pixel_x = 9
 	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 4;
+	pixel_y = 5
 	},
-/area/station/chapel/main)
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/crowbar{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/turf/simulated/floor/plating,
+/area)
 "aLa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17839,13 +17928,46 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/maintcentral)
 "aPi" = (
-/obj/machinery/door/airlock/pyro/maintenance,
-/obj/cable{
-	icon_state = "1-2"
+/obj/rack,
+/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/fire{
+	pixel_x = 4;
+	pixel_y = -2
 	},
-/obj/firedoor_spawn,
+/obj/item/tank/air,
+/obj/item/tank/air{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/extinguisher{
+	pixel_x = 9
+	},
+/obj/item/extinguisher{
+	pixel_x = 12;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = 9;
+	pixel_y = 11
+	},
+/obj/item/crowbar{
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/maintcentral)
+/area)
 "aPj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18048,23 +18170,28 @@
 	},
 /area/station/chapel/main)
 "aPI" = (
-/obj/cable{
-	icon_state = "0-2"
+/obj/rack,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
 	},
-/obj/cable{
-	icon_state = "0-4"
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
 	},
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 9;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
 /turf/simulated/floor/plating,
-/area/station/bridge)
+/area)
 "aPJ" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -18567,11 +18694,38 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aQO" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/rack,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
 	},
-/turf/simulated/floor/black,
-/area/station/bridge)
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/item/spraybottle/cleaner{
+	pixel_x = -5;
+	pixel_y = -8
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/turf/simulated/floor/plating,
+/area)
 "aQP" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -21758,12 +21912,6 @@
 "aYj" = (
 /turf/simulated/floor/green/side,
 /area/station/hallway/primary/central)
-"aYk" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/green/side,
-/area/station/hallway/primary/central)
 "aYl" = (
 /obj/machinery/light,
 /obj/machinery/firealarm{
@@ -23125,12 +23273,6 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon)
-"bbw" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "bbx" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
@@ -32574,12 +32716,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area)
-"bwf" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bwg" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -45749,15 +45885,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"bZa" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "bZb" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -55221,16 +55348,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/research)
-"cuZ" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/medical/research)
 "cvb" = (
 /obj/machinery/door/window/westleft{
 	desc = "5";
@@ -60033,7 +60150,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aKt
 aaa
 aaa
 aaa
@@ -60636,12 +60753,12 @@ aaa
 aaa
 aaa
 aaa
+adI
 aaa
 aaa
+adI
 aaa
-aaa
-aaa
-aaa
+aPi
 aaa
 aaa
 aaa
@@ -60938,10 +61055,10 @@ aaa
 aaa
 aaa
 aaa
+aiI
 aaa
 aaa
-aaa
-aaa
+aKZ
 aaa
 aaa
 aaa
@@ -61245,8 +61362,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aPI
+aQO
 aaa
 aaa
 aaa
@@ -83631,7 +83748,7 @@ aLh
 aMv
 aNE
 aag
-aPI
+aRP
 baN
 aRQ
 aSL
@@ -83938,8 +84055,8 @@ aQK
 aRR
 aSM
 aTT
-aQO
-aQO
+aZO
+aZO
 aXT
 aSM
 aZM
@@ -85444,8 +85561,8 @@ aZr
 aNI
 aOL
 aPO
-aQO
-aQO
+aZO
+aZO
 aSP
 aTX
 aVn
@@ -88225,7 +88342,7 @@ bTT
 bVh
 bWt
 bXx
-bZa
+bZc
 cap
 bHW
 ccU
@@ -94196,7 +94313,7 @@ aFp
 ayy
 aHU
 aJm
-aKt
+aKu
 aLI
 ayy
 aOe
@@ -95074,10 +95191,10 @@ aaa
 aaa
 aca
 acX
-adI
-adI
-adI
-adI
+ahx
+ahx
+ahx
+ahx
 agH
 ahx
 ahx
@@ -97832,7 +97949,7 @@ aaa
 aah
 bUk
 aWW
-aYk
+aYn
 aZp
 bak
 bbm
@@ -99637,7 +99754,7 @@ aaa
 aGT
 aMU
 aOl
-aPi
+aVJ
 aRn
 aSl
 aSl
@@ -100630,7 +100747,7 @@ cuo
 cuo
 cwl
 cwT
-cuZ
+cyc
 cxs
 cxs
 cxs
@@ -102328,7 +102445,7 @@ afm
 agf
 agQ
 ahK
-aiI
+aiJ
 ajP
 akQ
 alS
@@ -102630,7 +102747,7 @@ adW
 adW
 adW
 ahL
-aiI
+aiJ
 ajP
 akR
 akP
@@ -107526,7 +107643,7 @@ bsP
 bsP
 bsP
 bvg
-bwf
+bwk
 bwV
 bCn
 byJ
@@ -112331,7 +112448,7 @@ aXG
 aYI
 aSB
 bav
-bbw
+bbH
 bcA
 bdz
 beB
@@ -113222,7 +113339,7 @@ aGf
 bVV
 aIB
 aGm
-aKZ
+aRG
 aMm
 aNp
 aHs
