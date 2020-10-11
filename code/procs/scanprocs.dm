@@ -246,21 +246,23 @@
 /proc/obfuscate_organ_health(var/obj/item/organ/O)
 	if (!O)
 		return null
+	. = ""
 	var/damage = O.get_damage()
 	if (damage >= O.MAX_DAMAGE)
-		return "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
+		. = "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
 	else if (damage >= O.MAX_DAMAGE*0.9)
-		return "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
+		. = "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
 	else if (damage >= O.MAX_DAMAGE*0.65)
-		return "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
+		. = "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
 	else if (damage >= O.MAX_DAMAGE*0.30)
-		return "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
+		. = "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
-		return "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
-	else
-		if (O.robotic)
-			return "<br><span style='color:purple'><b>[O.name]</b> - Robotic organ detected</span>"
-	return null
+		. = "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
+	else if (O.robotic)
+		. = "<br><span style='color:purple'><b>[O.name]</b>"
+	if (O.robotic)
+		. = (. + "<span style='color:purple'> - Robotic organ detected</span>")
+	return
 
 /proc/update_medical_record(var/mob/living/carbon/human/M)
 	if (!M || !ishuman(M))
