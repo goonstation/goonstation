@@ -40,6 +40,11 @@
 			else
 				genrate = 0
 
+			if(src.material.hasProperty("n_radioactive"))
+				genrate = round((material.getProperty("n_radioactive") / 12.333))
+			else
+				genrate = 0
+
 			if(src.material.hasProperty("electrical"))
 				maxcharge = round((src.material.getProperty("electrical") ** 2) * 3.333)
 			else

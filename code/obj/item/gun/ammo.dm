@@ -1016,6 +1016,12 @@
 				recharge_rate = rate
 			else
 				recharge_rate = 0
+
+			if(src.material.hasProperty("n_radioactive"))
+				var/rate = ((src.material.getProperty("n_radioactive") / 10) / 6.5)
+				recharge_rate = rate
+			else
+				recharge_rate = 0
 		return
 
 	New()
