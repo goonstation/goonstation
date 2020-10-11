@@ -309,9 +309,8 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 
 /obj/machinery/door/unpowered/wood/sordBloodDoor
 	open()
-		var/ret = ..()
-		. = ret
-		if(ret) 
+		. = ..()
+		if(.) 
 			var/const/fluid_amount = 50
 			var/datum/reagents/R = new /datum/reagents(fluid_amount)
 			R.add_reagent("blood", fluid_amount)
