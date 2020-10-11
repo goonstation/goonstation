@@ -388,7 +388,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("neutron_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1))*10, 4)
+			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1))*10, 4)
 		return
 
 /datum/materialProc/erebite_flash
