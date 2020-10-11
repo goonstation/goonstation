@@ -232,9 +232,6 @@ const Stamp = (props, context) => {
     'top': image.y + 'px',
     'transform': 'rotate(' + image.rotate + 'deg)',
     'opacity': opacity || 1.0,
-    'position': 'absolute',
-    'user-select': 'none',
-    '-ms-user-select': 'none',
   };
   const stamp_text_transform = {
     'left': image.x + 'px',
@@ -254,9 +251,7 @@ const Stamp = (props, context) => {
       {image.sprite.includes(".png") && (
         <img
           unselectable="on"
-          className={classes([
-            'paper121x54',
-          ])}
+          className="Paper__Stamp"
           src={resolveAsset(image.sprite)}
           style={stamp_transform} />
       )}
@@ -274,12 +269,14 @@ const setInputReadonly = (text, readonly) => {
 // want to control updates
 export const PaperSheetView = (props, context) => {
   const {
-    value = "",
-    stamps = [],
+    value,
+    stamps,
     backgroundColor,
+    width,
+    height,
     readOnly,
   } = props;
-  const stamp_list = stamps || [];
+  const stamp_list = stamps;
   const text_html = {
     __html: '<span class="paper-text">'
       + setInputReadonly(value, readOnly)
@@ -289,12 +286,13 @@ export const PaperSheetView = (props, context) => {
     <Box
       position="relative"
       backgroundColor={backgroundColor}
-      width="100%"
-      height="100%" >
+      width={width || "100%"}
+      height={height || "100%"} >
       <Box
+        color="black"
         fillPositionedParent
-        width="100%"
-        height="100%"
+        width={width || "100%"}
+        height={height || "100%"}
         dangerouslySetInnerHTML={text_html}
         p="10px" />
       {stamp_list.map((o, i) => (
