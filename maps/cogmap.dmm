@@ -1253,8 +1253,14 @@
 /area/station/hallway/secondary/construction2)
 "adn" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/device/pda_module/flashlight/high_power,
+/obj/item/device/pda_module/flashlight/high_power{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -2;
+	pixel_y = -2
+	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -2661,15 +2667,35 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "agF" = (
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/item/clothing/glasses/eyepatch,
 /obj/storage/crate,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/storage/fanny,
-/obj/item/clothing/suit/hi_vis,
+/obj/item/storage/fanny{
+	pixel_y = -4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 11;
+	pixel_y = -2
+	},
+/obj/item/device/multitool{
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/item/clothing/glasses/eyepatch,
+/obj/item/clothing/suit/hi_vis{
+	pixel_x = 6;
+	pixel_y = -5
+	},
 /turf/space,
 /turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction)
@@ -3331,14 +3357,18 @@
 /area)
 "aik" = (
 /obj/table/auto,
-/obj/item/plate,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
 	},
-/obj/machinery/phone,
+/obj/machinery/phone{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/satchel/hydro{
+	pixel_x = -4;
+	pixel_y = 2
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ail" = (
@@ -4115,15 +4145,34 @@
 /area/station/security/checkpoint/arrivals)
 "ajZ" = (
 /obj/table/auto,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/kitchen/utensil/knife,
+/obj/item/kitchen/utensil/knife{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/bottle/icing{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/bottle/icing{
+	pixel_x = 1;
+	pixel_y = 8
+	},
 /obj/disposalpipe/segment/food,
+/obj/item/kitchen/rollingpin{
+	pixel_x = 4;
+	pixel_y = 2
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aka" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/item/item_box/swedish_bag{
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/obj/submachine/mixer{
+	pixel_x = 6
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "akb" = (
@@ -4587,15 +4636,16 @@
 /area/station/security/checkpoint/arrivals)
 "alf" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/breadloaf,
 /obj/disposalpipe/segment/food,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
 	},
-/obj/item/item_box/swedish_bag{
-	pixel_x = -3;
-	pixel_y = 5
+/obj/item/plate{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/breadloaf{
+	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -4603,7 +4653,6 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "alh" = (
-/obj/item/satchel/hydro,
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
@@ -4984,7 +5033,9 @@
 	},
 /area/station/security/checkpoint/arrivals)
 "ame" = (
-/obj/machinery/deep_fryer,
+/obj/machinery/deep_fryer{
+	dir = 4
+	},
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -5300,26 +5351,66 @@
 	},
 /area/station/security/checkpoint/arrivals)
 "amY" = (
-/obj/submachine/foodprocessor,
+/obj/submachine/foodprocessor{
+	dir = 4
+	},
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "amZ" = (
 /obj/table/auto,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/food/snacks/yoghurt,
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/item/instrument/bikehorn/dramatic{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex{
+	pixel_x = 3;
+	pixel_y = -2
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ana" = (
+/obj/item/plate{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/plate{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/plate{
+	pixel_x = -5;
+	pixel_y = 11
+	},
+/obj/item/plate{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/plate{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/plate{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bowl{
+	pixel_x = 9;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/food/drinks/bowl{
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/snacks/yoghurt{
+	pixel_x = 10;
+	pixel_y = 11
+	},
 /obj/table/auto,
-/obj/item/plate,
-/obj/item/plate,
-/obj/item/plate,
-/obj/item/plate,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/instrument/bikehorn/dramatic,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "anb" = (
@@ -5350,12 +5441,23 @@
 /area/station/crew_quarters/catering)
 "anf" = (
 /obj/table/auto,
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/clothing/shoes/white{
+	pixel_x = -3;
+	pixel_y = -7
+	},
+/obj/item/clothing/suit/chef{
+	pixel_y = 2
+	},
 /obj/item/clothing/under/rank/chef,
-/obj/item/clothing/suit/chef,
-/obj/item/clothing/shoes/white,
-/obj/item/clothing/head/chefhat,
-/obj/item/reagent_containers/food/drinks/milk,
 /obj/item/clothing/gloves/latex,
+/obj/item/clothing/head/chefhat{
+	pixel_x = -1;
+	pixel_y = 8
+	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
@@ -5393,7 +5495,9 @@
 /area/station/crew_quarters/catering)
 "anj" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 10
+	},
 /obj/item/storage/box/beakerbox{
 	pixel_x = -6
 	},
@@ -5876,9 +5980,18 @@
 /area/station/crew_quarters/kitchen)
 "aor" = (
 /obj/table/auto,
-/obj/item/storage/box/cutlery,
-/obj/item/clothing/head/souschefhat,
-/obj/item/clothing/head/helmet/space/santahat,
+/obj/item/storage/box/cutlery{
+	pixel_x = 10;
+	pixel_y = 12
+	},
+/obj/item/clothing/head/helmet/space/santahat{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/clothing/head/souschefhat{
+	pixel_x = -5;
+	pixel_y = -4
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aos" = (
@@ -7467,7 +7580,8 @@
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/cake/chocolate{
 	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
+	name = "Extravagant Chocolate Gateau";
+	pixel_y = 8
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
@@ -20875,17 +20989,34 @@
 /area/station/crew_quarters/jazz)
 "aVZ" = (
 /obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/spraybottle/cleaner,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/item/spraybottle/cleaner{
+	pixel_x = -5;
+	pixel_y = -8
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/maintcentral)
@@ -109242,8 +109373,8 @@ aie
 aiY
 aiW
 alg
-amf
 alg
+amf
 alg
 apF
 apw
