@@ -600,13 +600,15 @@
 	name = "compact tape - 'Discount Dan's Quik Noodles'"
 	audio = "sound/radio_station/quik_noodles.ogg"
 	name_of_thing = "Discount Dan's Quik Noodles"
+	desc = {"A small audio tape. Though, it looks too big to fit in an audio log.<br>
+	The music is "Palast Rock by Stefan Kartenberg (CC BY-NO 3.0)"}
 
 /obj/item/radio_tape/advertisement/danitos_burritos
 	name = "compact tape - 'Descuento Danito's Burritos'"
 	audio = "sound/radio_station/danitos_burritos.ogg"
 	name_of_thing = "Descuento Danito's Burritos"
 	desc = {"A small audio tape. Though, it looks too big to fit in an audio log.<br>
-	The music is Requiem for a Fish by The Freak Fandango Orchestra (CC BY-NC 4.0)"}
+	The music is "Requiem for a Fish" by The Freak Fandango Orchestra (CC BY-NC 4.0)"}
 
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"
@@ -618,6 +620,7 @@
 	audio = "sound/radio_station/pope_crunch_cereal.ogg"
 	name_of_thing = "Pope Crunch Cereal"
 	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
+	Voiceover by Puppet Master and HeadsmanStukka of the Black Pants Legion. <br>
 	The music is Smooth Talker by Apoxode (CC BY 3.0)"}
 
 /obj/item/radio_tape/advertisement/cloning_psa
@@ -626,7 +629,22 @@
 	name_of_thing = "Cloning Public Service Announcement"
 	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
 	Voiceover by Cenith of the Black Pants Legion<br>
-	Musical backing is "Inspretional Wave" by khalafnasirs 2020 (CC-NO 3.0)"}
+	Musical backing is "Inspretional Wave" by khalafnasirs 2020 (CC-BY NO 3.0)"}
+	
+/obj/item/radio_tape/advertisement/captain_psa
+	name = "compact tape - 'Captain's Training Program'"
+	audio = "sound/radio_station/Captain's Training.ogg"
+	name_of_thing = "Nanotrasen Captain's Training Promotional Tape"
+	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
+	Voiceover by Tex of the Black Pants Legion<br>
+	Musical backing is "Out of Space" by Javolenus 2019 CC-BY NO 3.0"}
+	
+/obj/item/radio_tape/advertisement/security_psa
+	name = "compact tape - 'Nanotrasen Security PSA'"
+	audio = "sound/radio_station/security_psa.ogg"
+	name_of_thing = "Security Department Public Service Announcement"
+	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
+	Voiceover by Squidchild of the Black Pants Legion"}	
 
 /obj/item/radio_tape/audio_book
 	audio_type = "Audio book"
