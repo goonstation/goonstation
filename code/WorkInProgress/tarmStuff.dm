@@ -15,6 +15,7 @@
 	max_ammo_capacity = 45
 	can_dual_wield = 0
 	two_handed = 1
+	var/datum/projectile/bullet/g11/small/smallproj = new
 
 	New()
 		current_projectile = new/datum/projectile/bullet/g11
@@ -33,41 +34,70 @@
 
 	alter_projectile(obj/projectile/P)
 		. = ..()
-		if(++shotcount == 3)
-			P.proj_data = new /datum/projectile/bullet/g11/lastshot
+		if(++shotcount < 3)
+			P.proj_data = smallproj
 
 /obj/item/ammo/bullets/g11
-	sname = "G11 Ammo" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
-	name = "G11 magazine"
+	sname = "\improper Manticore rounds" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
+	name = "\improper Manticore magazine"
+	desc = "The side of the magazine is stamped with \"Anderson Para-Munitions\""
 	ammo_type = new/datum/projectile/bullet/g11
-	icon_state = "g11_mag"
+	icon_state = "caseless"
 	amount_left = 45.0
 	max_amount = 45.0
 	caliber = 0.185
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
-	delete_on_reload = 1
+	icon_empty = "caseless-empty"
 
+	blast
+		icon_state = "caseless_grey"
+		ammo_type = new/datum/projectile/bullet/g11/blast
+
+	void
+		icon_state = "caseless_purple"
+		ammo_type = new/datum/projectile/bullet/g11/void
 
 /datum/projectile/bullet/g11
-	name = "bullet"
-	shot_sound = 'sound/weapons/9x19NATO.ogg'
-	shot_volume = 50
-	power = 15
+	name = "\improper Manticore round"
 	cost = 3
+	power = 60
 	ks_ratio = 1.0
+	hit_ground_chance = 100
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 3
 	shot_delay = 0.4
+	shot_sound = 'sound/weapons/gunshot.ogg'
+	shot_volume = 66
 	caliber = 0.185
+	dissipation_delay = 10
+	dissipation_rate = 5
 	icon_turf_hit = "bhole-small"
-	implanted = /obj/item/implant/projectile/bullet_308
 
-	lastshot
-		shot_sound = 'sound/weapons/gunshot.ogg'
-		shot_volume = 66
-		power = 60
-		hit_ground_chance = 100
+	small
+		shot_sound = 'sound/weapons/9x19NATO.ogg'
+		shot_volume = 50
+		power = 15
+
+	void
+		power = 30
+		on_hit(atom/hit, angle, obj/projectile/O)
+			var/turf/T = get_turf(hit)
+			new/obj/decal/implo(T)
+			playsound(T, 'sound/effects/suck.ogg', 100, 1)
+			var/spamcheck = 0
+			for(var/atom/movable/AM in view(2, T))
+				if(AM.anchored || AM == hit || AM.throwing) continue
+				if(spamcheck++ > 20) break
+				AM.throw_at(T, 20, 1)
+			..()
+
+	blast
+		power = 15
+		damage_type = D_KINETIC
+		hit_type = DAMAGE_BLUNT
+		on_hit(atom/hit, angle, obj/projectile/O)
+			explosion_new(O, get_turf(hit), 2)
 
 /mob/living/proc/betterdir()
 	return ((src.dir in ordinal) || (src.last_move_dir in cardinal)) ? src.dir : src.last_move_dir
@@ -304,7 +334,7 @@
 //.50AE deagle ammo
 /obj/item/ammo/bullets/deagle50cal
 	sname = "0.50 AE"
-	name = "desert eagle magazine"
+	name = "\improper Simurgh magazine"
 	icon_state = "pistol_magazine"
 	amount_left = 7.0
 	max_amount = 7.0

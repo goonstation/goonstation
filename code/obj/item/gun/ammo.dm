@@ -269,6 +269,8 @@
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
+			else if(src.icon_empty)
+				src.icon_state = initial(src.icon_state)
 		else
 			if (src.icon_empty)
 				src.icon_state = src.icon_empty
