@@ -413,7 +413,7 @@
 		setProperty("hard", 10)
 		setProperty("electrical", 70)
 		setProperty("stability", 20)
-		setProperty("n_radioactive",85)
+		setProperty("n_radioactive", 85)
 		return ..()
 
 
@@ -1363,4 +1363,3 @@
 /datum/material/cardboard
 
 */
-
