@@ -2007,7 +2007,32 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("eyebeams")
+		M.traitHolder.addTrait("training_security")
+		if(prob(60))
+			var/aggressive = pick("eyebeams","cryokinesis")
+			var/defensive = pick("fire_resist","cold_resist","food_rad_resist","breathless") // no thermal resist, gotta have some sort of comic book weakness
+			var/datum/bioEffect/power/be = M.bioHolder.AddEffect(aggressive, magical=1)
+			if(aggressive == "eyebeams")
+				var/datum/bioEffect/power/eyebeams/eb = be
+				eb.stun_mode = 1
+			else
+				be.power = 1
+				be.altered = 1
+				be.safety = 1
+			be = M.bioHolder.AddEffect(defensive, magical=1)
+		else
+			var/datum/bioEffect/power/shoot_limb/sl = M.bioHolder.AddEffect("shoot_limb", magical=1)
+			sl.safety = 1
+			sl.altered = 1
+			sl.cooldown = 300
+			sl.stun_mode = 1
+			var/datum/bioEffect/regenerator/r = M.bioHolder.AddEffect("regenerator", magical=1)
+			r.regrow_prob = 10
+		var/datum/bioEffect/power/be = M.bioHolder.AddEffect("adrenaline", magical=1)
+		be.safety = 1
+		be.power = 1
+		be.altered = 1
+
 
 /datum/job/special/halloween/remy
 	name = "Remy"
