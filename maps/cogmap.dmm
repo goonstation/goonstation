@@ -31526,9 +31526,7 @@
 	},
 /obj/machinery/phone,
 /turf/simulated/floor/delivery,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bts" = (
 /obj/window/reinforced{
 	dir = 8
@@ -37166,9 +37164,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bFQ" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -38225,9 +38221,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bIf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38235,9 +38229,7 @@
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bIg" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -40051,9 +40043,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/red/side,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bMf" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -40165,9 +40155,7 @@
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bMs" = (
 /obj/stool/chair{
 	dir = 4
@@ -42104,9 +42092,7 @@
 	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor/delivery,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bQC" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -42116,9 +42102,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bQD" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -42131,9 +42115,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bQE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42829,23 +42811,17 @@
 /turf/simulated/floor/neutral/side{
 	dir = 9
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bSd" = (
 /turf/simulated/floor/neutral/side{
 	dir = 5
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bSe" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bSf" = (
 /obj/decal/poster/wallsign/poster_sol,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -42860,9 +42836,7 @@
 /obj/machinery/cashreg,
 /obj/access_spawn/cargo,
 /turf/simulated/floor/delivery,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bSh" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -42873,9 +42847,7 @@
 /obj/item/wrapping_paper,
 /obj/item/wirecutters,
 /turf/simulated/floor/delivery,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bSi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43518,31 +43490,23 @@
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bTz" = (
 /turf/simulated/floor/neutral/corner{
 	dir = 4
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bTA" = (
 /obj/machinery/computer/ordercomp,
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bTB" = (
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bTC" = (
 /obj/stool/chair{
 	dir = 8
@@ -43550,9 +43514,7 @@
 /turf/simulated/floor/neutral/side{
 	dir = 5
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bTD" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -44073,20 +44035,14 @@
 /area/station/quartermaster/office)
 "bUU" = (
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bUV" = (
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bUW" = (
 /obj/machinery/navbeacon/tour/cog1/tour15,
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bUX" = (
 /obj/stool/chair{
 	dir = 8
@@ -44100,9 +44056,7 @@
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bUY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner)
@@ -44572,9 +44526,7 @@
 	},
 /obj/window/auto,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bVY" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -44584,9 +44536,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bVZ" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -44597,18 +44547,14 @@
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bWa" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bWb" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -44617,9 +44563,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bWc" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -44630,9 +44574,7 @@
 	name = "bot navigation beacon"
 	},
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bWd" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -44641,9 +44583,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bWe" = (
 /obj/disposalpipe/junction{
 	dir = 8;
@@ -44654,9 +44594,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bWf" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -44665,9 +44603,7 @@
 /obj/disposalpipe/segment/mail,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bWg" = (
 /obj/disposalpipe/junction{
 	dir = 8;
@@ -44679,9 +44615,7 @@
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bWh" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -44690,9 +44624,7 @@
 /turf/simulated/floor/neutral/corner{
 	dir = 1
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bWi" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'COLLISION HAZARD'";
@@ -45063,48 +44995,36 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bXd" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bXe" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bXf" = (
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bXg" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bXh" = (
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bXi" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/unary/outlet_injector{
@@ -45112,15 +45032,11 @@
 	on = 1
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bXj" = (
 /obj/landmark/halloween,
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bXk" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=warehouse";
@@ -45133,9 +45049,7 @@
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bXl" = (
 /turf/simulated/floor/yellow/side{
 	dir = 9
@@ -45648,9 +45562,7 @@
 	},
 /obj/window/auto,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bYA" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -45659,26 +45571,20 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bYB" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bYC" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bYD" = (
 /obj/disposalpipe/segment/mail{
 	dir = 8;
@@ -45686,23 +45592,17 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bYE" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bYF" = (
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bYG" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -46205,14 +46105,10 @@
 	icon_state = "plant"
 	},
 /turf/simulated/floor/neutral/side,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bZO" = (
 /turf/simulated/floor/neutral/side,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bZP" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -46222,15 +46118,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/neutral/side,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bZQ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bZR" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment,
@@ -46238,20 +46130,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/neutral/side,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bZS" = (
 /obj/machinery/light,
 /turf/simulated/floor/neutral/side,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bZT" = (
 /turf/simulated/floor/red/side,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bZU" = (
 /obj/disposaloutlet{
 	dir = 8;
@@ -46263,9 +46149,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "bZV" = (
 /obj/disposalpipe/segment/ejection{
 	icon_state = "pipe-c"
@@ -46824,27 +46708,19 @@
 "cbk" = (
 /obj/machinery/vending/pda,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cbl" = (
 /turf/simulated/floor/neutral/side{
 	dir = 9
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cbm" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cbn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cbo" = (
 /obj/submachine/ATM{
 	pixel_x = -32
@@ -46856,9 +46732,7 @@
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cbp" = (
 /obj/window/cubicle{
 	dir = 8
@@ -46872,9 +46746,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cbq" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -47277,49 +47149,35 @@
 "ccr" = (
 /obj/machinery/vending/floppy,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "ccs" = (
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cct" = (
 /obj/stool,
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "ccu" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "ccv" = (
 /obj/machinery/vending/book,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "ccw" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/maintenance/SEmaint)
 "ccx" = (
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/maintenance/SEmaint)
 "ccy" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/cargo)
@@ -47777,9 +47635,7 @@
 "cdE" = (
 /obj/machinery/vending/computer3,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cdF" = (
 /obj/table/reinforced/auto,
 /obj/item/device/light/flashlight,
@@ -47793,18 +47649,14 @@
 	},
 /obj/item/paper/book/medical_guide,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cdG" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light,
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cdH" = (
 /obj/table/reinforced/auto,
 /obj/machinery/camera{
@@ -47817,9 +47669,7 @@
 /obj/item/storage/box/diskbox,
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cdI" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -47828,9 +47678,7 @@
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cdJ" = (
 /obj/machinery/disposal{
 	name = "Crematorium Chute"
@@ -48738,11 +48586,13 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc{
+	areastring = "Supply Lobby";
+	name = "Supply Lobby  APC";
+	pixel_y = 24
+	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/maintenance/SEmaint)
 "cgn" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -50892,9 +50742,7 @@
 "clk" = (
 /obj/machinery/air_vendor,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
+/area/station/crew_quarters/supplylobby)
 "cll" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -115524,8 +115372,8 @@ bXh
 bYD
 bZQ
 cbn
-cbn
-cbn
+ceU
+ceU
 ceU
 cgf
 chr
