@@ -623,6 +623,12 @@
 	desc = "Subject is trained in generalized robustness and asskicking."
 	id = "training_security"
 
+/obj/trait/job/bartender
+	name = "Bartender Training"
+	cleanName = "Bartender Training"
+	desc = "Subject is trained in the art of mixology."
+	id = "training_bartender"
+
 // barman, detective, HoS
 /obj/trait/job/drinker
 	name = "Professional Drinker"

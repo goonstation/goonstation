@@ -22,6 +22,7 @@
 			if (H.traitHolder.hasTrait("training_chaplain"))
 				boutput(usr, "<span class='alert'>[H]'s butt has divine protection from magic.</span>")
 				H.visible_message("<span class='alert'>The spell fails to work on [H]!</span>")
+				JOB_XP(H, "Chaplain", 2)
 				continue
 			if (iswizard(H))
 				H.visible_message("<span class='alert'>[H] magically farts the spell away!</span>")

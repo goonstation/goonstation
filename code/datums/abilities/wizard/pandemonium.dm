@@ -123,6 +123,7 @@
 			continue
 		if (ishuman(H) && H.traitHolder && (H.traitHolder.hasTrait("training_chaplain")))
 			H.show_text("You are immune to [src]'s screech!", "blue")
+			JOB_XP(H, "Chaplain", 2)
 			continue
 		if (iswizard(H))
 			continue

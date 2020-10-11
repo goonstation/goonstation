@@ -1046,6 +1046,9 @@
 				"You add [W] to [src].")
 				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
 				pool(W)
+				if (user.traitHolder.hasTrait("training_bartender"))
+					JOB_XP(user, "Bartender", 1)
+					sleep (180 SECONDS) //3 minute cool down to prevent grinding XP
 				return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
@@ -1058,6 +1061,8 @@
 			W.set_loc(src)
 			src.wedge = W
 			src.update_icon()
+			if (user.traitHolder.hasTrait("training_bartender"))
+				JOB_XP(user, "Bartender", 1)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit))
@@ -1102,6 +1107,9 @@
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
 				src.update_icon()
+				if (user.traitHolder.hasTrait("training_bartender"))
+					JOB_XP(user, "Bartender", 1)
+					sleep (60 SECONDS) //shorter cooldown there's already a check above for if a glass rim has already been salted or not. Let me know if this is aye or nay
 				return
 			else
 				boutput(user, "<span class='alert'>There isn't enough salt in here to salt the rim!</span>")
@@ -1723,5 +1731,8 @@
 			src.reagents.inert = 0
 			src.reagents.handle_reactions()
 			src.reagents.inert = 1
+			if (user.traitHolder.hasTrait("training_bartender"))
+				JOB_XP(user, "Bartender", 2)
+				sleep (180 SECONDS) //3 minute cool down to prevent grinding XP
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")

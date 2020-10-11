@@ -25,6 +25,7 @@
 				if (target.traitHolder.hasTrait("training_chaplain"))
 					boutput(holder.owner, "<span class='alert'>[target] has divine protection from magic.</span>")
 					target.visible_message("<span class='alert'>The electric charge courses through [target] harmlessly!</span>")
+					JOB_XP(target, "Chaplain", 2)
 					return
 				else if (iswizard(target))
 					target.visible_message("<span class='alert'>The electric charge somehow completely misses [target]!</span>")

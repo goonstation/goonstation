@@ -35,6 +35,7 @@
 		src.visible_message("<span class='alert'>A divine light absorbs the magical projectile!</span>")
 		playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 		P.die()
+		JOB_XP(src, "Chaplain", 2)
 		return
 
 	if(src.material) src.material.triggerOnBullet(src, src, P)
