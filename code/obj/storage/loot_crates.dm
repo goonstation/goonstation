@@ -118,7 +118,7 @@
 							items += /obj/critter/fermid
 							item_amounts += 1
 				else
-					picker = rand(1,6)
+					picker = rand(1,7)
 					switch(picker)
 						if(1)
 							items += /obj/item/breaching_charge/mining
@@ -141,6 +141,13 @@
 							items += pick(/obj/item/raw_material/syreline,/obj/item/raw_material/bohrum,
 							/obj/item/raw_material/claretine,/obj/item/raw_material/cerenkite)
 							item_amounts += 40
+						if(6)
+							items += /obj/item/radio_tape/advertisement/cargonia
+							item_amounts += 1
+							items += /obj/item/clothing/under/rank/cargo
+							item_amounts += 1
+							items += /obj/decal/skeleton
+							items_amounts += 1
 						else
 							items += /obj/critter/rockworm
 							item_amounts += 3
