@@ -71,14 +71,14 @@
 						owner.show_submerged_image(4)
 
 			else if (T.active_airborne_liquid)
-				if (!(human_owner?.wear_mask && (human_owner?.wear_mask.c_flags & BLOCKSMOKE || (human_owner?.wear_mask.c_flags & MASKINTERNALS && human_owner?.internal))))
+				if (!issmokeimmune(owner))
 					//underwater = T.active_airborne_liquid
 					var/obj/fluid/F = T.active_airborne_liquid
-					F.force_mob_to_ingest(owner)
+					F.force_mob_to_ingest(owner, mult)
 				else
 					if (!owner.clothing_protects_from_chems())
 						var/obj/fluid/airborne/F = T.active_airborne_liquid
-						F.just_do_the_apply_thing(owner, hasmask = 1)
+						F.just_do_the_apply_thing(owner, mult, hasmask = 1)
 
 		else if (istype(owner.loc, /mob/living/object))
 			return // no breathing inside possessed objects
@@ -87,8 +87,8 @@
 
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
-		if (owner.reagents)
-			if (owner.reagents.has_reagent("lexorin") || HAS_MOB_PROPERTY(owner, PROP_REBREATHING)) return
+		if (HAS_MOB_PROPERTY(owner, PROP_REBREATHING))
+			return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.
 		// And because they're excluded from the breathing procs, said damage didn't heal
@@ -97,7 +97,7 @@
 		// If you have the breathless effect, same deal - you'd never heal oxy damage
 		// If your mutant race doesn't need oxygen from breathing, ya no losebreath
 		// so, now you do
-		if (ischangeling(owner) || (owner.bioHolder && owner.bioHolder.HasEffect("breathless") || (human_owner?.mutantrace && !human_owner?.mutantrace.needs_oxy)))
+		if (ischangeling(owner) || HAS_MOB_PROPERTY(owner, PROP_BREATHLESS))
 			if (owner.losebreath)
 				owner.losebreath = 0
 			if (owner.get_oxygen_deprivation())
@@ -202,10 +202,10 @@
 			if (underwater && (owner.get_oxygen_deprivation() > 40 || underwater.type == /obj/fluid/airborne))
 				if (istype(underwater,/obj/fluid))
 					var/obj/fluid/F = underwater
-					F.force_mob_to_ingest(owner)// * mult
+					F.force_mob_to_ingest(owner, mult)// * mult
 				else if (istype(underwater, /turf/space/fluid))
 					var/turf/space/fluid/F = underwater
-					F.force_mob_to_ingest(owner)// * mult
+					F.force_mob_to_ingest(owner, mult)// * mult
 
 
 			return 0

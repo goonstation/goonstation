@@ -50,7 +50,7 @@ NOT OKAY: var/list/hats = concrete_typesof(/obj/item/clothing/head)
           hats -= /obj/item/clothing/head/hosberet
 */
 var/global/list/cached_concrete_types
-proc/concrete_typesof(type)
+proc/concrete_typesof(type, cache=TRUE)
 	if(isnull(cached_concrete_types))
 		cached_concrete_types = list()
 	if(type in cached_concrete_types)
@@ -59,7 +59,8 @@ proc/concrete_typesof(type)
 	for(var/subtype in typesof(type))
 		if(!IS_ABSTRACT(subtype))
 			. += subtype
-	cached_concrete_types[type] = .
+	if(cache)
+		cached_concrete_types[type] = .
 
 /*
 The same thing but now you can filter the types using a proc. Also cached.
@@ -90,3 +91,61 @@ proc/filtered_concrete_typesof(type, filter)
 	if(!(type in cached_filtered_types))
 		cached_filtered_types[type] = list()
 	cached_filtered_types[type][filter] = .
+
+/**
+	* Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
+	*/
+proc/get_singleton(type)
+	if(!singletons)
+		singletons = list()
+	if(!(type in singletons))
+		singletons[type] = new type
+	return singletons[type]
+var/global/list/singletons
+
+// by_type and by_cat stuff
+
+// sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
+// to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/storage/bible] to access the list of things
+
+#ifdef SPACEMAN_DMM // just don't ask
+#define START_TRACKING
+#define STOP_TRACKING
+#else
+#define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1 //we use an assoc list here because removing from one is a lot faster
+#define STOP_TRACKING by_type[.....].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ...... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
+#endif
+
+/// contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
+var/list/list/by_type = list()
+
+/// Performs a typecheckless for loop with var/iterator over by_type[_type]
+#define for_by_tcl(_iterator, _type) for(var ##_type/##_iterator as() in by_type[##_type])
+
+// sometimes we want to have a list of objects of multiple types, without having to traverse multiple lists
+// to do that add START_TRACKING_CAT("category") to New, unpooled, or whatever proc you want to start tracking the objects in (eg: tracking dead humans, put start tracking in death())
+// and add STOP_TRACKING_CAT("category") to disposing, or whatever proc you want to stop tracking the objects in (eg: tracking live humans, put stop tracking in death())
+// and to traverse the list, use by_type_cat["category"] to get the list of objects in that category
+// also ideally youd use defines for by_cat categories!
+#define START_TRACKING_CAT(x) OTHER_START_TRACKING_CAT(src, x)
+#define STOP_TRACKING_CAT(x) OTHER_STOP_TRACKING_CAT(src, x)
+#define OTHER_START_TRACKING_CAT(what, x) if(!by_cat[x]) { by_cat[x] = list() }; by_cat[x][what] = 1
+#define OTHER_STOP_TRACKING_CAT(what, x) by_cat[x].Remove(what)
+
+/// contains lists of objects indexed by a category string based on START_TRACKING_CAT / STOP_TRACKING_CAT
+var/list/list/by_cat = list()
+
+// tracked categories
+
+#define TR_CAT_ATMOS_MACHINES "atmos_machines"
+#define TR_CAT_LIGHT_GENERATING_TURFS "light_generating_turfs"
+#define TR_CAT_CRITTERS "critters"
+#define TR_CAT_PETS "pets"
+#define TR_CAT_PODS_AND_CRUISERS "pods_and_cruisers"
+#define TR_CAT_NERVOUS_MOBS "nervous_mobs"
+#define TR_CAT_SHITTYBILLS "shittybills"
+#define TR_CAT_JOHNBILLS "johnbills"
+#define TR_CAT_OTHERBILLS "otherbills"
+#define TR_CAT_TELEPORT_JAMMERS "teleport_jammers"
+// powernets? processing_items?
+// mobs? ai-mobs?

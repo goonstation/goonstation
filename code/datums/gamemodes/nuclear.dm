@@ -14,7 +14,7 @@
 #if ASS_JAM
 	var/const/agents_possible = 30 // on ass jam theres up to 30 nukies to compensate for the warcrime of the kinetitech
 #else
-	var/const/agents_possible = 6 //If we ever need more syndicate agents. cogwerks - raised from 5
+	var/const/agents_possible = 8 //If we ever need more syndicate agents. cogwerks - raised from 5
 #endif
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -41,11 +41,7 @@
 
 		if (player.ready)
 			num_players++
-#if ASS_JAM
-	var/num_synds = max(1, min(round(num_players / 3), agents_possible))
-#else
 	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
-#endif
 
 	possible_syndicates = get_possible_syndicates(num_synds)
 
@@ -406,7 +402,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(ticker.minds))
 
-	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -438,8 +434,10 @@ var/syndicate_name = null
 	var/name = ""
 
 	// Prefix
-#ifdef XMAS
+#if defined(XMAS)
 	name += pick("Merry", "Jingle", "Holiday", "Santa", "Gift", "Elf", "Jolly")
+#elif defined(HALLOWEEN)
+	name += pick("Hell", "Demon", "Blood", "Murder", "Gore", "Grave", "Sin", "Slaughter")
 #else
 	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint")
 #endif

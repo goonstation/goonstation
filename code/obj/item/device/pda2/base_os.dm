@@ -73,7 +73,7 @@
 			switch(src.mode)
 				if(0)
 					. += {"<h2>PERSONAL DATA ASSISTANT</h2>
-					Owner: [src.master.owner]<br><br>
+					Owner: [src.master.owner]<br>
 
 					<h4>General Functions</h4>
 					<ul>
@@ -84,6 +84,7 @@
 
 					<h4>Utilities</h4>
 					<ul>
+					<li><a href='byond://?src=\ref[src];change_backlight_color=1'>Change Backlight Color</a></li>
 					<li><a href='byond://?src=\ref[src];mode=4'>Atmospheric Scan</a></li>
 					<li>Scanner: [src.master.scan_program ? "<a href='byond://?src=\ref[src];scanner=1'>[src.master.scan_program.name]</a>" : "None loaded"]</li>"}
 #ifdef UNDERWATER_MAP
@@ -134,25 +135,26 @@
 
 				if(2)
 					//Messenger.  Uses Radio.  Is a messenger.
-					src.master.overlays = null //Remove existing alerts
+					// src.master.overlays = null //Remove existing alerts
+					src.master.update_overlay("idle") //Remove existing alerts
 					. += "<h4>SpaceMessenger V4.0.5</h4>"
 
 					if (!src.message_mode)
 
-						. += {"<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> | 
-						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> | 
+						. += {"<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> |
+						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> |
 						<a href='byond://?src=\ref[src];input=tone'>Set Ringtone</a><br>
-						<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> | 
+						<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> |
 						<a href='byond://?src=\ref[src];message_mode=2'>Groups</a><br>
 
 						<font size=2><a href='byond://?src=\ref[src];message_func=scan'>Scan</a></font><br>
-						<b>Detected PDAs</b><br>
+						<b>Detected PDAs</b><br>"}
 
-						<ul>"}
-
-						var/count = 0
-
-						if (src.message_on)
+						if (!src.message_on)
+							. += "Please turn on Send/Receive to use the scan function."
+						else
+							. += "<ul>"
+							var/count = 0
 							if(expand_departments_list)
 								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Collapse DEPT list*</a>"
 								for (var/department_id in page_departments)
@@ -181,14 +183,13 @@
 
 								</li>"}
 								count++
+							. += "</ul>"
 
-						. += "</ul>"
-
-						if (count == 0 && !page_departments.len)
-							. += "None detected.<br>"
+							if (count == 0 && !page_departments.len)
+								. += "None detected.<br>"
 
 					else if (src.message_mode == 1)
-						. += {"<a href='byond://?src=\ref[src];message_func=clear'>Clear</a> | 
+						. += {"<a href='byond://?src=\ref[src];message_func=clear'>Clear</a> |
 						<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>
 
 						<h4>Messages</h4>"}
@@ -197,7 +198,7 @@
 						. += "<br>"
 
 					else
-						. += {"<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a> | 
+						. += {"<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a> |
 						<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>
 						<h4>Groups</h4>"}
 
@@ -304,6 +305,12 @@
 			else if(href_list["trenchmap"])
 				if (usr.client && hotspot_controller)
 					hotspot_controller.show_map(usr.client)
+
+			else if(href_list["change_backlight_color"])
+				var/new_color = input(usr, "Choose a color", "PDA", src.master.bg_color) as color | null
+				if (new_color)
+					var/list/color_vals = hex_to_rgb_list(new_color);
+					src.master.update_colors(new_color, rgb(color_vals["r"] * 0.8, color_vals["g"] * 0.8, color_vals["b"] * 0.8))
 
 			else if(href_list["toggle_departments_list"])
 				expand_departments_list = !expand_departments_list
@@ -851,14 +858,14 @@
 
 			. = ""
 			if(src.mode)
-				. += {" | <a href='byond://?src=\ref[src];mode=0'>Main Menu</a>
+				. += {"<a href='byond://?src=\ref[src];mode=0'>Main Menu</a>
 				 | <a href='byond://?src=\ref[src.master];refresh=1'>Refresh</a>"}
 
 			else
 				if (!isnull(src.master.cartridge) && !istype(src.master,/obj/item/device/pda2/ai))
-					. += " | <a href='byond://?src=\ref[src.master];eject_cart=1'>Eject [src.master.cartridge]</a>"
+					. += "<a href='byond://?src=\ref[src.master];eject_cart=1'>Eject [src.master.cartridge]</a><br>"
 				if (!isnull(src.master.ID_card))
-					. += " | <a href='byond://?src=\ref[src.master];eject_id_card=1'>Eject [src.master.ID_card]</a>"
+					. += "<a href='byond://?src=\ref[src.master];eject_id_card=1'>Eject [src.master.ID_card]</a><br>"
 
 		pda_message(var/target_id, var/target_name, var/message, var/is_department_message)
 			if (!src.master || !src.master.is_user_in_range(usr))

@@ -23,9 +23,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(4000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(4000)
 
 
 	get_desc(dist, mob/user)
@@ -181,9 +179,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(10000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(10000)
 		reagents.add_reagent("water",10000)
 
 /obj/reagent_dispensers/watertank/fountain
@@ -297,9 +293,7 @@
 	piss
 		New()
 			..()
-			var/datum/reagents/R = new/datum/reagents(4000)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(4000)
 			reagents.add_reagent("urine",400)
 			reagents.add_reagent("water",600)
 			src.update_icon()
@@ -310,9 +304,7 @@
 	juicer
 		New()
 			..()
-			var/datum/reagents/R = new/datum/reagents(4000)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(4000)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
@@ -358,7 +350,7 @@
 	electric_expose(var/power = 1) //lets throw in ANOTHER hack to the temp expose one above
 		if (reagents)
 			for (var/i = 0, i < 3, i++)
-				reagents.temperature_reagents(power*400, power*125)
+				reagents.temperature_reagents(power*500, power*125)
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"

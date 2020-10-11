@@ -21,9 +21,8 @@ datum/controller/process/machines
 		var/c = 0
 
 		if (ticker % 8 == 0)
-			src.atmos_machines = global.atmos_machines
-			for(var/X in atmos_machines)
-				var/obj/machinery/machine = X
+			src.atmos_machines = by_cat[TR_CAT_ATMOS_MACHINES]
+			for (var/obj/machinery/machine as() in atmos_machines)
 				if( !machine || machine.z == 4 && !Z4_ACTIVE ) continue
 	#ifdef MACHINE_PROCESSING_DEBUG
 				var/t = world.time

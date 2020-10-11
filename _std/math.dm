@@ -9,6 +9,7 @@
 #define nround(x) (((x % 1) >= 0.5)? round(x) : ceil(x))
 #define sign(x) ((x) != 0 ? (x) / abs(x) : 0)
 #define tanR(x) (cos(x) / sin(x))
+//takes a probability 'x' (0-100) and returns the probability (0-100) of seeing at least 1 success were you to test 'x' 'mult' times. Used for lag-compensating prob rolls.
 #define percentmult(x, mult) (100 * (1 - ((1 - (clamp((x), 0, 100) / 100))**mult)))
 
 //#define angledifference(x,y) ((((y) - (x) + 180) % 360 - 180) + (((((y) - (x) + 180) % 360 - 180) < -180) ? 360 : 0))
@@ -18,3 +19,11 @@
 	.= ( a2 - a1 + 180 ) % 360 - 180
 	if (. < -180)
 		.+= 360
+
+/// isnum() returns TRUE for NaN. Also, NaN != NaN. Checkmate, BYOND.
+#define isnan(x) ( (x) != (x) )
+
+#define isinf(x) (isnum((x)) && (((x) == text2num("inf")) || ((x) == text2num("-inf"))))
+
+/// NaN isn't a number, damn it. Infinity is a problem too.
+#define isnum_safe(x) ( isnum((x)) && !isnan((x)) && !isinf((x)) ) //By ike709

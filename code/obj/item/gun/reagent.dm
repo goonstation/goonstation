@@ -12,10 +12,15 @@
 	var/dump_reagents_on_turf = 0 //set this to 1 if you want the dumped reagents to be put onto the turf instead of just evaporated into nothingness
 	var/custom_reject_message = "" //set this to a string if you want a custom message to be shown instead of the default when a reagent isnt accepted by the gun
 	inventory_counter_enabled = 1
+	move_triggered = 1
 
 	New()
 		src.create_reagents(capacity)
 		..()
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 	is_open_container()
 		return 1
@@ -152,3 +157,32 @@
 	New()
 		..()
 		src.emag_act()
+
+
+/obj/item/gun/reagent/ecto
+	name = "ectoblaster"
+	icon_state = "ecto0"
+	ammo_reagents = list("ectoplasm")
+	force = 7.0
+	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
+
+	New()
+		current_projectile = new/datum/projectile/ectoblaster
+		projectiles = list(current_projectile)
+		..()
+
+	update_icon()
+		if(src.reagents)
+			var/ratio = min(1, src.reagents.total_volume / src.reagents.maximum_volume)
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "ecto[ratio]"
+			return
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (istype(I, /obj/item/reagent_containers/food/snacks/ectoplasm) && !src.reagents.is_full())
+			I.reagents.trans_to(src, I.reagents.total_volume)
+			user.visible_message("<span style=\"color:red\">[user] smooshes a glob of ectoplasm into [src].</span>")
+			qdel(I)
+			return
+
+		return ..()

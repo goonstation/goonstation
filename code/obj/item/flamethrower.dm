@@ -38,7 +38,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		setItemSpecial(null)
 
 /obj/item/flamethrower/assembled
@@ -68,12 +68,11 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
 	var/obj/item/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
+	move_triggered = 1
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(4000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(4000)
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
 	on_reagent_change(add)
@@ -157,8 +156,8 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		..()
 
 /obj/item/flamethrower/backtank
-	name = "tactical flamethrower"
-	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack."
+	name = "Vega flamethrower"
+	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack. Developed by Almagest Weapons Fabrication."
 	icon_state = "syndthrower_0"
 	item_state = "syndthrower_0"
 	uses_multiple_icon_states = 1
@@ -212,6 +211,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	w_class = 2.0
 
 /obj/item/assembly/weld_rod/New()
+	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
 
@@ -232,6 +232,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	w_class = 2.0
 
 /obj/item/assembly/w_r_ignite/New()
+	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
 	igniter = new /obj/item/device/igniter
@@ -479,8 +480,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			item_state = "flamethrower1"
 			force = 10
 			hit_type = DAMAGE_BURN
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			icon_state = "flamethrower_oxy_fuel"
 			force = 3
@@ -566,8 +566,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	if(lit)
 		force = 12
 		hit_type = DAMAGE_BURN
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 	else
 		force = 6
 		hit_type = DAMAGE_BLUNT
@@ -672,8 +671,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		spray_turf(currentturf,reagentperturf, reagsource)
 		reagentperturf += increment
 		if(lit)
-			//currentturf.hotspot_expose(spray_temperature,2)
-			currentturf.reagents.set_reagent_temp(spray_temperature, TRUE)
+			currentturf?.reagents?.set_reagent_temp(spray_temperature, TRUE)
 			spray_temperature = max(0,min(spray_temperature - temp_loss_per_tile, 700))
 
 		var/logString = log_reagents(reagsource)

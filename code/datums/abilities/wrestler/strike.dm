@@ -48,9 +48,9 @@
 					M.dir = turn(M.dir, 90)
 
 				M.set_loc(target.loc)
-				SPAWN_DBG (4)
-					if (M && (T && isturf(T) && get_dist(M, T) <= 1))
-						M.set_loc(T)
+				sleep(4)
+				if (M && (T && isturf(T) && get_dist(M, T) <= 1))
+					M.set_loc(T)
 
 			M.visible_message("<span class='alert'><b>[M] [pick_string("wrestling_belt.txt", "strike")] [target]!</b></span>")
 			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)

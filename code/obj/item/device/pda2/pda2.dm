@@ -36,9 +36,12 @@
 
 	var/tmp/list/pdasay_autocomplete = list()
 
-	var/bg_color = "6F7961"
-	var/link_color = "000000"
-	var/linkbg_color = "565D4B"
+	var/tmp/list/image/overlay_images = null
+	var/tmp/current_overlay = "idle"
+
+	var/bg_color = "#6F7961"
+	var/link_color = "#000000"
+	var/linkbg_color = "#565D4B"
 	var/graphic_mode = 0
 
 	var/setup_default_cartridge = null //Cartridge contains job-specific programs
@@ -76,6 +79,12 @@
 	hos
 		icon_state = "pda-hos"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
+		setup_drive_size = 32
+		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
+
+	ntso
+		icon_state = "pda-nt"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
 
@@ -218,6 +227,8 @@
 	// This should probably be okay before the spawn, this way the HUD ability actually immediately shows up
 	if(src.setup_default_module)
 		src.module = new src.setup_default_module(src)
+	src.update_colors(src.bg_color, src.linkbg_color)
+
 	SPAWN_DBG(0.5 SECONDS)
 		src.hd = new /obj/item/disk/data/fixed_disk(src)
 		src.hd.file_amount = src.setup_drive_size
@@ -252,7 +263,7 @@
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
-		for (var/datum/computer/file/pda_program/P in src.cartridge.root.contents)
+		for (var/datum/computer/file/pda_program/P in src.cartridge.root?.contents)
 			if (P.name == "Packet Sniffer")
 				radio_controller.remove_object(src, "[P:scan_freq]")
 				continue
@@ -266,7 +277,7 @@
 	src.scan_program = null
 
 	if (src.hd)
-		for (var/datum/computer/file/pda_program/P in src.hd.root.contents)
+		for (var/datum/computer/file/pda_program/P in src.hd.root?.contents)
 			if (P.name == "Packet Sniffer")
 				radio_controller.remove_object(src, "[P:scan_freq]")
 				continue
@@ -329,36 +340,47 @@
 		winset(user, "pda2_\ref[src].texto","is-visible=true")
 		winset(user, "pda2_\ref[src].grido","is-visible=false")
 
-		var/dat = {"<html><head>
-		<style type="text/css">
-		hr
-		{
+		var/dat = {"<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<style type='text/css'>
+		hr {
 			color:#000;
 			background-color:#000;
 			height:2px;
 			border-width:0;
 		}
-		body
-		{
-			background-color:#[src.bg_color]
+		h1,h2,h3,h4,h5,h6 { margin: 0.5em 0; padding: 0; }
+		ul, ol { margin: 0.5em; }
+		body {
+			background-color: [src.bg_color];
+			color: #000;
+			font-family: Tahoma, sans-serif;
+			font-size: [(user?.client?.preferences && user?.client?.preferences.font_size) ? "[user?.client?.preferences.font_size]%" : "10pt"];
+;
 		}
+		a {
+			background-color: [src.linkbg_color];
+			color: [src.link_color];
+			text-decoration: none;
+			padding: 0.0em 0.2em;
+		}
+		a:hover   { background-color: [src.link_color];   color: [src.bg_color]; }
 
-		a:link {background-color:#[src.linkbg_color];color:#[src.link_color];text-decoration:none}
-		a:visited {background-color:#[src.linkbg_color];color:#[src.bg_color]}
-		a:active {background-color:#[src.linkbg_color];color:#[src.bg_color]}
-		a:hover {background-color:#[src.link_color];color:#[src.bg_color]}
+	</style>
+</head>
+<body>"}
 
-		</style>
-		</head>
-		<body vlink='#[src.link_color]' alink='#[src.link_color]'>"}
-
-		dat += "<a href='byond://?src=\ref[src];close=1'>Close</a>"
+		// you can just use the windows close button for this...
+		// dat += "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 
 		if (!src.owner)
 			if (src.cartridge && src.ejectable_cartridge)
-				dat += " | <a href='byond://?src=\ref[src];eject_cart=1'>Eject [src.cartridge]</a>"
+				dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [src.cartridge]</a><br>"
 			if (src.ID_card)
-				dat += " | <a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a>"
+				dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
 			dat += "<br>Warning: No owner information entered.  Please swipe card.<br><br>"
 			dat += "<a href='byond://?src=\ref[src];refresh=1'>Retry</a>"
 		else
@@ -370,9 +392,9 @@
 					dat += src.active_program.return_text()
 				else
 					if (src.cartridge && src.ejectable_cartridge)
-						dat += " | <a href='byond://?src=\ref[src];eject_cart=1'>Eject [src.cartridge]</a><br>"
+						dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [src.cartridge]</a><br>"
 					if (src.ID_card)
-						dat += " | <a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a>"
+						dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
 					dat += "<center><font color=red>Fatal Error 0x17<br>"
 					dat += "No System Software Loaded</font></center>"
 
@@ -615,6 +637,21 @@
 	src.updateSelfDialog()
 
 /obj/item/device/pda2
+
+	proc/update_colors(bg, linkbg)
+		src.bg_color = bg
+		src.linkbg_color = linkbg
+
+		if (!overlay_images)
+			src.overlay_images = list()
+			overlay_images["idle"] = image('icons/obj/items/pda.dmi', "screen-idle")
+			overlay_images["alert"] = image('icons/obj/items/pda.dmi', "screen-message")
+
+		for (var/k in src.overlay_images)
+			src.overlay_images[k].color = bg
+
+		src.update_overlay()
+
 	proc/is_user_in_range(var/mob/user)
 		return in_range(src, user) || loc == user || isAI(user)
 
@@ -705,6 +742,14 @@
 
 		src.updateSelfDialog()
 */
+
+	proc/update_overlay(mode = null)
+		if (mode)
+			src.current_overlay = mode
+		src.overlays = null
+		src.overlays += src.overlay_images[src.current_overlay]
+
+
 	proc/display_alert(var/alert_message) //Add alert overlay and beep
 		if (alert_message)
 			playsound(get_turf(src), "sound/machines/twobeep.ogg", 35, 1)
@@ -718,8 +763,10 @@
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))
 
-		src.overlays = null
-		src.overlays += image('icons/obj/items/pda.dmi', "pda-r")
+		update_overlay("alert")
+		// src.overlays = null
+		// // src.overlays += image('icons/obj/items/pda.dmi', "pda-r")
+		// src.overlays += src.overlay_images["alert"]
 		return
 
 	proc/display_message(var/message)
@@ -752,8 +799,7 @@
 		src.active_program = program
 		program.init()
 
-		if(program.setup_use_process && !(src in processing_items))
-			processing_items.Add(src)
+		if(program.setup_use_process) processing_items |= src
 
 		return 1
 
@@ -794,7 +840,7 @@
 			return
 
 		if(src in bible_contents)
-			for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])
+			for_by_tcl(B, /obj/item/storage/bible)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					T.hotspot_expose(700,125)

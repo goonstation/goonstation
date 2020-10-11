@@ -11,11 +11,10 @@
 	event_handler_flags = USE_HASENTERED
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cleaner", 5)
-		R.add_reagent("water", 5)
+		..()
+		src.create_reagents(10)
+		reagents.add_reagent("cleaner", 5)
+		reagents.add_reagent("water", 5)
 		SPAWN_DBG(0.5 SECONDS)
 			if (src.float_anim)
 				for (var/atom/movable/A in src.loc)
@@ -473,8 +472,7 @@
 				if(prob(50))
 					qdel(src)
 	proc/locate_blinds()
-		for (var/X in by_type[/obj/window_blinds])
-			var/obj/window_blinds/blind = X
+		for_by_tcl(blind, /obj/window_blinds)
 			if (blind.id == src.id)
 				if (!(blind in src.myBlinds))
 					src.myBlinds += blind
@@ -516,8 +514,7 @@
 /obj/blind_switch/area
 	locate_blinds()
 		var/area/A = get_area(src)
-		for (var/X in by_type[/obj/window_blinds])
-			var/obj/window_blinds/blind = X
+		for_by_tcl(blind, /obj/window_blinds)
 			var/area/blind_area = get_area(blind)
 			if(blind_area != A)
 				continue

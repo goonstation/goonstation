@@ -86,7 +86,10 @@
 			logTheThing("admin", null, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
 			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
-		for(var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
+		logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]")
+		logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
+
+		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.deployed_to_eyecam && M.eyecam)
 				M.eyecam.return_mainframe()
 			if(!isdead(M) && M.see_in_dark != 0)

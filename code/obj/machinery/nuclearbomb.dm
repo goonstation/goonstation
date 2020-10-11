@@ -70,7 +70,8 @@
 			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
 		if (det_time && ticker.round_elapsed_ticks >= det_time)
-			explode()
+			SPAWN_DBG(0)
+				explode()
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">--:--</span>"
 		else
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[get_countdown_timer()]</span>"
@@ -197,8 +198,7 @@
 
 			if (istype(W, /obj/item/remote/syndicate_teleporter))
 				for(var/obj/submachine/syndicate_teleporter/S in get_turf(src)) //sender
-					for(var/X in by_type[/obj/submachine/syndicate_teleporter]) // receiver
-						var/obj/submachine/syndicate_teleporter/R = X
+					for_by_tcl(R, /obj/submachine/syndicate_teleporter) // receiver
 						if(R.id == S.id && S != R)
 							if(S.recharging == 1)
 								return
@@ -350,6 +350,9 @@
 			cinematic.add_client(C)
 		cinematic.play("nuke")
 #endif
+		if(istype(NUKEMODE))
+			NUKEMODE.nuke_detonated = 1
+			NUKEMODE.check_win()
 		sleep(5.5 SECONDS)
 
 		enter_allowed = 0
@@ -362,10 +365,7 @@
 
 		creepify_station()
 
-		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			ticker.mode:nuke_detonated = 1
-			ticker.mode.check_win()
-		else
+		if(!istype(NUKEMODE))
 			sleep(1 SECOND)
 			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
 

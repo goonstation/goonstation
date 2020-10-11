@@ -1,5 +1,6 @@
 //Effect type defines in _std/_defines/bioeffect.dm
 
+ABSTRACT_TYPE(/datum/bioEffect)
 /datum/bioEffect
 	var/name = "" //Name of the effect.
 	var/id = "goddamn_it"   //Internal ID of the effect.

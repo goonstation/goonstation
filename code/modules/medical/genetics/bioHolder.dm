@@ -14,19 +14,28 @@ var/list/datum/bioEffect/mutini_effects = list()
 	M.bioHolder.AddEffect(id)
 	return
 
+/// Holds all the appearance information.
 /datum/appearanceHolder
-	//Holds all the appearance information.
+
+	//_carry holds our "actual" color, in case it changes and we want the old one back
+	var/mob_color_flags = (HAS_HAIR_COLORED_HAIR)
+
+	var/customization_first_color_carry = "#101010" //Holds someone's original colors if they need to be changed temporarily
 	var/customization_first_color = "#101010"
 	var/customization_first = "Trimmed"
 
+	var/customization_second_color_carry = "#101010" // This way, they can return to their orignal colors
 	var/customization_second_color = "#101010"
 	var/customization_second = "None"
 
+	var/customization_third_color_carry = "#101010"
 	var/customization_third_color = "#101010"
 	var/customization_third = "None"
 
 	var/e_color = "#101010"
+	var/e_color_carry = "#101010"
 
+	var/s_tone_carry = "#FFCC99"
 	var/s_tone = "#FFCC99"
 	// Standard tone reference:
 	// FAD7D0 - Albino
@@ -46,6 +55,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/mob/owner = null
 	var/datum/bioHolder/parentHolder = null
+
+	var/datum/mutantrace/mutant_race = null
 
 	var/gender = MALE
 	var/pronouns = 0		//1 if using neutral pronouns (they/their);  0 if using gendered pronouns matching their gender var
@@ -81,24 +92,31 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/CopyOther(var/datum/appearanceHolder/toCopy)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
+		customization_first_color_carry = toCopy.customization_first_color_carry
 		customization_first_color = toCopy.customization_first_color
 		customization_first = toCopy.customization_first
 
+		customization_second_color_carry = toCopy.customization_second_color_carry
 		customization_second_color = toCopy.customization_second_color
 		customization_second = toCopy.customization_second
 
+		customization_third_color_carry = toCopy.customization_third_color_carry
 		customization_third_color = toCopy.customization_third_color
 		customization_third = toCopy.customization_third
+
+		mob_color_flags = toCopy.mob_color_flags
 
 		e_color = toCopy.e_color
 
 		s_tone = toCopy.s_tone
+		s_tone_carry = toCopy.s_tone_carry
 
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color
 
 		gender = toCopy.gender
 		pronouns = toCopy.pronouns
+		mutant_race = toCopy.mutant_race
 
 		screamsound = toCopy.screamsound
 		fartsound = toCopy.fartsound
@@ -140,6 +158,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (progress > 7 || prob(progress * 10))
 			gender = toCopy.gender
 			pronouns = toCopy.pronouns
+			mutant_race = toCopy.mutant_race
 
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
 			src.CopyOther(toCopy)
@@ -213,14 +232,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 		owner = owneri
 		Uid = CreateUid()
 		uid_hash = md5(Uid)
-		bioUids[Uid] = 1
+		bioUids[Uid] = null
 		mobAppearance = new/datum/appearanceHolder()
 
 		mobAppearance.owner = owner
 		mobAppearance.parentHolder = src
 
-		if(owner)
-			ownerName = owner:real_name
+		SPAWN_DBG(2 SECONDS) // fuck this shit
+			if(owner)
+				ownerName = owner.real_name
+				bioUids[Uid] = owner?.real_name ? owner.real_name : owner?.name
 
 		BuildEffectPool()
 		return ..()
@@ -540,6 +561,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		if (do_delay && BE.add_delay > 0)
 			sleep(BE.add_delay)
+
+		src.AddEffectInstanceNoDelay(BE, do_stability)
+
+	proc/AddEffectInstanceNoDelay(var/datum/bioEffect/BE,var/do_stability = 1)
+		if (!istype(BE) || !owner || HasEffect(BE.id))
+			return null
 		effects[BE.id] = BE
 		BE.owner = owner
 		BE.holder = src
@@ -651,6 +678,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 				tally++
 
 		return tally >= args.len
+
+	proc/GetASubtypeEffect(type)
+		for(var/id in effects)
+			var/datum/bioEffect/BE = effects[id]
+			if(istype(BE, type))
+				return BE
+		return null
 
 	proc/GetEffect(var/id) //Returns the effect with the given ID if it exists else returns null.
 		return effects[id]

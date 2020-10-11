@@ -212,17 +212,15 @@
 	if(src.medium_lights[1].invisibility == 101) // toggled off
 		return
 	if(!isturf(src.loc))
-		for(var/x in src.medium_lights)
-			var/obj/overlay/simple_light/medium/light = x
+		for (var/obj/overlay/simple_light/medium/light as() in src.medium_lights)
 			src:vis_contents -= light
 		return
-	for(var/x in src.medium_lights)
-		var/obj/overlay/simple_light/medium/light = x
+	for (var/obj/overlay/simple_light/medium/light as() in src.medium_lights)
 		if(light.icon_state == "medium_center")
 			src:vis_contents += light
 			continue
 		var/turf/T = get_step(get_turf(src), light.dir)
-		if(T.opacity || T.opaque_atom_count)
+		if(T?.opacity || T?.opaque_atom_count)
 			src:vis_contents -= light
 		else
 			src:vis_contents += light
@@ -336,8 +334,7 @@
 	if(!length(src.mdir_lights) || src.mdir_lights[1].invisibility == 101) // toggled off
 		return
 	if(!isturf(src.loc))
-		for(var/x in src.mdir_lights)
-			var/obj/overlay/simple_light/medium/directional/light = x
+		for (var/obj/overlay/simple_light/medium/directional/light as() in src.mdir_lights)
 			src:vis_contents -= light
 		return
 	if (!direct)
@@ -378,8 +375,7 @@
 	var/turf/TT = getlineopaqueblocked(src,T)
 	var/dist = get_dist(src,TT)-1
 
-	for(var/x in src.mdir_lights)
-		var/obj/overlay/simple_light/medium/directional/light = x
+	for (var/obj/overlay/simple_light/medium/directional/light as() in src.mdir_lights)
 		if(light.icon_state == "medium_center" && light.dist == 0)
 			src:vis_contents += light
 			continue

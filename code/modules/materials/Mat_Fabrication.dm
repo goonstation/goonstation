@@ -59,6 +59,7 @@
 	name = "Nano-fabricator (Protoype)"
 	color = "#496ba3"
 
+/// Material science fabricator
 /obj/machinery/nanofab
 	name = "Nano-fabricator"
 	desc = "'Nano' means it's high-tech stuff."
@@ -70,10 +71,12 @@
 	flags = NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
-	var/outputInternal = 0 //Produced objects are fed back into the fabricator.
+	/// Produced objects are fed back into the fabricator.
+	var/outputInternal = 0
 
 	var/list/queue = list()
-	var/tab = "recipes" //recipes,storage,selected,part
+	/// recipes,storage,selected,part
+	var/tab = "recipes"
 
 	var/datum/matfab_recipe/selectedRecipe = null
 	var/list/recipes = list()
@@ -331,6 +334,8 @@
 		W.set_loc(src)
 
 	attackby(var/obj/item/W , mob/user as mob)
+		if(istype(W, /obj/item/deconstructor))
+			return ..()
 		if(issilicon(user)) // fix bug where borgs could put things into the nanofab and then reject them
 			boutput(user, "<span class='alert'>You can't put that in, it's attached to you.</span>")
 			return
@@ -367,6 +372,7 @@
 	var/datum/matfab_recipe/recipe = null
 
 	New(var/loc,var/schematic = null)
+		..()
 		if (!src.recipe)
 			qdel(src)
 			return 0

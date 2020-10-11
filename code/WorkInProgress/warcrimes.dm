@@ -64,7 +64,11 @@ var/fartcount = 0
 		setProperty("heatprot", 0)
 		setProperty("conductivity", 1)
 
-#define JOHN_PICK(WHAT) pick_string("johnbill.txt", WHAT)
+
+
+
+
+
 
 // all of john's area specific lines here
 /area/var/john_talk = null
@@ -99,6 +103,7 @@ var/fartcount = 0
 /area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Huh, Always wondered what those goggles did.","Huh, Always wondered what those goggles did.","Your hubris will be punished. Will you kill your fellow man to save yourself? Who harvests the harvestmen? What did it feel like when you lost your mind?")
 /area/grillnasium/grill_chamber/john_talk = list("You better know what you've started.","This is where it happens.")
 
+
 // bus driver
 /mob/living/carbon/human/john
 	real_name = "John Bill"
@@ -113,7 +118,7 @@ var/fartcount = 0
 
 	New()
 		..()
-		johnbills += src
+		START_TRACKING_CAT(TR_CAT_JOHNBILLS)
 		SPAWN_DBG(0)
 			bioHolder.mobAppearance.customization_first = "Tramp"
 			bioHolder.mobAppearance.customization_first_color = "#281400"
@@ -140,14 +145,14 @@ var/fartcount = 0
 			implant.implanted(src, src)
 
 	disposing()
-		johnbills -= src
+		STOP_TRACKING_CAT(TR_CAT_JOHNBILLS)
 		..()
 
 	// John Bill always goes to the afterlife bar.
 	death(gibbed)
 		..(gibbed)
 
-		johnbills.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_JOHNBILLS)
 
 		if (!src.client)
 			var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
@@ -319,11 +324,11 @@ var/fartcount = 0
 								say("Man, I sure don't miss [JOHN_PICK("dontmiss")].")
 
 						if(11)
-							say("I think my [JOHN_PICK("friends")] [JOHN_PICK("friendactions")].")
+							say("I think my [JOHN_PICK("friends")] [JOHN_PICK("friendsactions")].")
 
-					if (prob(25) && shittybills.len > 0)
+					if (prob(25) && length(by_cat[TR_CAT_SHITTYBILLS]))
 						SPAWN_DBG(3.5 SECONDS)
-							var/mob/living/carbon/human/biker/MB = pick(shittybills)
+							var/mob/living/carbon/human/biker/MB = pick(by_cat[TR_CAT_SHITTYBILLS])
 							switch (speech_type)
 								if (4)
 									MB.say("You borrowed mine fifty years ago, and I never got it back.")
@@ -436,7 +441,7 @@ var/fartcount = 0
 			src.a_intent = INTENT_HARM
 			src.ai_set_active(1)
 
-		for (var/mob/SB in shittybills)
+		for (var/mob/SB in by_cat[TR_CAT_SHITTYBILLS])
 			var/mob/living/carbon/human/biker/S = SB
 			if (get_dist(S,src) <= 7)
 				if(!(S.ai_active) || (prob(25)))
@@ -552,7 +557,7 @@ var/bombini_saved = 0
 						sleep(5 SECONDS)
 						playsound(T, "sound/impact_sounds/Machinery_Break_1.ogg", 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
-							shake_camera(M, 5, 2)
+							shake_camera(M, 5, 8)
 
 						sleep(2 SECONDS)
 						playsound(T, "sound/effects/creaking_metal2.ogg", 70, 1)
@@ -566,7 +571,7 @@ var/bombini_saved = 0
 						sleep(4 SECONDS)
 						playsound(T, "sound/machines/boost.ogg", 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
-							shake_camera(M, 10, 4)
+							shake_camera(M, 10, 16)
 
 				T = get_turf(src)
 				SPAWN_DBG(25 SECONDS)
@@ -649,7 +654,7 @@ var/bombini_saved = 0
 
 	johnbus_active = 0
 
-	for(var/obj/machinery/computer/shuttle_bus/C in machine_registry[MACHINES_TURRETS])
+	for(var/obj/machinery/computer/shuttle_bus/C in machine_registry[MACHINES_SHUTTLECOMPS])
 
 		C.visible_message("<span class='alert'>John's Juicin' Bus has Moved!</span>")
 
@@ -842,6 +847,3 @@ Urs' Hauntdog critter
 							"NSS Horizon",
 							"???")
 
-
-
-#undef JOHN_PICK

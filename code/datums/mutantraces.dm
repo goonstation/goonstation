@@ -7,6 +7,11 @@
 // Now a robust object-oriented version!!!!
 /datum/mutantrace
 	var/name = null				// used for identification in diseases, clothing, etc
+	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
+	var/race_mutation = null
+
+	var/datum/appearanceHolder/AH
+	var/mutant_color_flags = null
 	var/override_eyes = 1
 	var/override_hair = 1
 	var/override_beard = 1
@@ -27,7 +32,7 @@
 	var/jerk = 0				// Should robots arrest these by default?
 
 	var/icon = 'icons/effects/genetics.dmi'
-	var/icon_state = "epileptic"
+	var/icon_state = "psyche"
 	var/icon_head = null
 	var/icon_beard = null
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
@@ -68,6 +73,8 @@
 
 	var/datum/movement_modifier/movement_modifier
 
+	var/decomposes = TRUE
+
 
 	proc/say_filter(var/message)
 		return message
@@ -97,9 +104,16 @@
 		..()
 		if (movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
+		if (!needs_oxy)
+			APPLY_MOB_PROPERTY(M, PROP_BREATHLESS, src.type)
 		if(ishuman(M))
 			src.mob = M
+			var/datum/appearanceHolder/AHM = mob?.bioHolder?.mobAppearance
+			if (AHM)
+				AHM.mutant_race = src.type
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
+			AppearanceSetter(M, "set")
+			MutateMutant(M, "set")
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
 					if(W.compatible_species.Find(src.name) || (src.human_compatible && W.compatible_species.Find("human")))
@@ -222,6 +236,8 @@
 
 			if (movement_modifier)
 				REMOVE_MOVEMENT_MODIFIER(mob, movement_modifier, src.type)
+			if(needs_oxy)
+				REMOVE_MOB_PROPERTY(mob, PROP_BREATHLESS, src.type)
 
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for (var/obj/item/clothing/W in restricted)
@@ -237,10 +253,15 @@
 
 			if (ishuman(mob))
 				var/mob/living/carbon/human/H = mob
+				AppearanceSetter(H, "reset")
+				MutateMutant(H, "reset")
 				H.image_eyes.pixel_y = initial(H.image_eyes.pixel_y)
 				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
 				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
 				H.image_cust_three.pixel_y = initial(H.image_cust_three.pixel_y)
+				var/datum/appearanceHolder/AHM = H?.bioHolder?.mobAppearance
+				if (AHM)
+					AHM.mutant_race = null
 
 				// And the other way around (Convair880).
 				if (src.r_limb_arm_type_mutantrace)
@@ -284,11 +305,6 @@
 							limb.holder = H
 							limb.remove_stage = 0
 
-				detail_1 = null
-				detail_2 = null
-				detail_3 = null
-				detail_over_suit = null
-
 				H.set_face_icon_dirty()
 				H.set_body_icon_dirty()
 
@@ -301,6 +317,58 @@
 
 		..()
 		return
+
+	/// Clamps each of the RGB values between 50 and 190
+	proc/fix_colors(var/hex)
+		var/list/L = hex_to_rgb_list(hex)
+		for (var/i in L)
+			L[i] = min(L[i], 190)
+			L[i] = max(L[i], 50)
+		if (L.len == 3)
+			return rgb(L["r"], L["g"], L["b"])
+		return rgb(22, 210, 22)
+
+	/// Backs up the character's hair colors, then does fix_colors on those colors if the FIX_COLORS flag is set
+	proc/AppearanceSetter(var/mob/living/carbon/human/Q, var/mode as text)
+		if(!ishuman(Q) || !(Q?.bioHolder?.mobAppearance))
+			return // please dont call set_mutantrace on a non-human non-appearanceholder
+
+		src.AH = Q.bioHolder.mobAppearance // i mean its called appearance holder for a reason
+
+		switch(mode)
+			if("set")	// upload everything, the appearance flags'll determine what gets used
+				AH.mob_color_flags = src.mutant_color_flags
+				// Store our old colors, just in case we stop being a weirdo
+				AH.customization_first_color_carry = AH.customization_first_color
+				AH.customization_second_color_carry = AH.customization_second_color
+				AH.customization_third_color_carry = AH.customization_third_color
+				if (src.mutant_color_flags & FIX_COLORS)
+					AH.customization_first_color = fix_colors(AH.customization_first_color)
+					AH.customization_second_color = fix_colors(AH.customization_second_color)
+					AH.customization_third_color = fix_colors(AH.customization_third_color)
+
+			if("reset")
+				AH.mob_color_flags = (HAS_HAIR_COLORED_HAIR)
+				AH.customization_first_color = AH.customization_first_color_carry
+				AH.customization_second_color = AH.customization_second_color_carry
+				AH.customization_third_color = AH.customization_third_color_carry
+				detail_1 = null
+				detail_2 = null
+				detail_3 = null
+				detail_over_suit = null
+
+	/// Applies or removes the bioeffect associated with the mutantrace
+	proc/MutateMutant(var/mob/living/carbon/human/H, var/mode as text)
+		if (!H || !mode || !race_mutation)
+			return
+		var/datum/bioEffect/mutantrace/mr = src.race_mutation
+		switch (mode)
+			if ("set")
+				if(!H.bioHolder.HasEffect(initial(mr.id)))
+					H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
+			if ("reset")
+				if(H.bioHolder.HasEffect(initial(mr.id)))
+					H.bioHolder.RemoveEffect(initial(mr.id))
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
@@ -371,6 +439,7 @@
 	override_beard = 0
 	override_detail = 0
 	override_attack = 0
+	race_mutation = /datum/bioEffect/mutantrace/flashy
 
 /datum/mutantrace/virtual
 	name = "virtual"
@@ -390,15 +459,6 @@
 			var/datum/abilityHolder/virtual/W = H.add_ability_holder(/datum/abilityHolder/virtual)
 			W.addAbility(/datum/targetable/virtual/logout)
 //for sure didnt steal code from ww. no siree
-
-/datum/mutantrace/blank
-	name = "blank"
-	icon_state = "blank"
-	override_eyes = 0
-	override_hair = 0
-	override_beard = 0
-	override_detail = 0
-	override_attack = 0
 
 /datum/mutantrace/grey
 	name = "grey"
@@ -446,46 +506,29 @@
 
 /datum/mutantrace/lizard
 	name = "lizard"
-	// icon_state = "lizard"
 	icon_state = "lizard"
 	icon_override_static = 1
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "lizard"
+	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
+	mutant_color_flags = (BODY_DETAIL_1 | BODY_DETAIL_2 | BODY_DETAIL_3 | HAS_HAIR_COLORED_DETAILS | BODY_DETAIL_OVERSUIT_1 | BODY_DETAIL_OVERSUIT_IS_COLORFUL | FIX_COLORS)
 
 	New(var/mob/living/carbon/human/H)
 		..()
-		if(ishuman(mob))
-			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
+		if(istype(H))
+			H.give_lizard_powers()
+			H.AddComponent(/datum/component/consume/organpoints, /datum/abilityHolder/lizard)
+			H.AddComponent(/datum/component/consume/can_eat_inedible_organs)
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-1", layer = MOB_LIMB_LAYER+0.1)
 			detail_2 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-2", layer = MOB_LIMB_LAYER+0.2)
 			detail_3 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-3", layer = MOB_LIMB_LAYER+0.3)
 			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
 
-			hex_to_rgb_list(aH.customization_first_color)
-
-			detail_1.color = fix_colors(aH.customization_first_color)
-			detail_2.color = fix_colors(aH.customization_second_color)
-			detail_3.color = fix_colors(aH.customization_third_color)
-			detail_over_suit.color = fix_colors(aH.customization_first_color)
-
-			// detail_1.color = aH.customization_first_color
-			// detail_2.color = aH.customization_second_color
-			// detail_3.color = aH.customization_third_color
-
-			mob.update_face()
-			mob.update_body()
-			mob.update_clothing()
-
-	proc/fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
+			H.update_face()
+			H.update_body()
+			H.update_clothing()
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
@@ -493,6 +536,19 @@
 
 	say_filter(var/message)
 		return replacetext(message, "s", stutter("ss"))
+
+	disposing()
+		if(ishuman(mob))
+			var/mob/living/carbon/human/L = mob
+			var/datum/component/C = L.GetComponent(/datum/component/consume/organpoints)
+			C?.RemoveComponent(/datum/component/consume/organpoints)
+			var/datum/component/D = L.GetComponent(/datum/component/consume/can_eat_inedible_organs)
+			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
+			L.remove_lizard_powers()
+		. = ..()
+
+	say_verb()
+		return "hisses"
 
 /datum/mutantrace/zombie
 	name = "zombie"
@@ -685,11 +741,14 @@
 	icon_state = "skeleton"
 	icon_override_static = 1
 	voice_override = "skelly"
+	decomposes = FALSE
+	race_mutation = /datum/bioEffect/mutantrace/skeleton
 
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
 			M.mob_flags |= IS_BONER
+		M.blood_id = "calcium"
 
 	disposing()
 		if (ishuman(mob) && (mob.mob_flags & IS_BONER))
@@ -814,9 +873,12 @@
 	ignore_missing_limbs = 0
 	var/old_client_color = null
 
+
 	New()
 		..()
 		if (mob)
+			mob.AddComponent(/datum/component/consume/organheal)
+			mob.AddComponent(/datum/component/consume/can_eat_inedible_organs, 1) // can also eat heads
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
@@ -828,7 +890,7 @@
 			var/datum/ailment_data/disease/D = mob.find_ailment_by_type(/datum/ailment/disease/lycanthropy/)
 
 			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
-			mob.bioHolder.AddEffect("accent_scoob", null, null, 0, 1)
+			mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
 
 			if(D)
 				D.cycles++
@@ -840,12 +902,17 @@
 
 	disposing()
 		if (mob)
+			var/datum/component/C = mob.GetComponent(/datum/component/consume/organheal)
+			C?.RemoveComponent(/datum/component/consume/organheal)
+			var/datum/component/D = mob.GetComponent(/datum/component/consume/can_eat_inedible_organs)
+			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
 			mob.remove_stam_mod_max("werewolf")
 			mob.remove_stam_mod_regen("werewolf")
 			mob.remove_stun_resist_mod("werewolf")
 			mob.max_health -= 30
 			mob.bioHolder.RemoveEffect("protanopia")
 			mob.bioHolder.RemoveEffect("accent_scoob")
+			mob.bioHolder.RemoveEffect("accent_scoob_nerf")
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name
@@ -934,6 +1001,7 @@
 	override_attack = 0
 	aquatic = 1
 	voice_override = "blub"
+	race_mutation = /datum/bioEffect/mutantrace/ithillid
 
 	say_verb()
 		return "glubs"
@@ -950,6 +1018,7 @@
 	override_beard = 0
 	override_skintone = 0
 	override_attack = 0
+	race_mutation = /datum/bioEffect/mutantrace/dwarf
 
 /datum/mutantrace/monkey
 	name = "monkey"
@@ -959,7 +1028,7 @@
 	head_offset = -9
 	hand_offset = -5
 	body_offset = -7
-//	uses_human_clothes = 0 // Guess they can keep that ability for now (Convair880).
+	//	uses_human_clothes = 0 // Guess they can keep that ability for now (Convair880).
 	human_compatible = 0
 	exclusive_language = 1
 	voice_message = "chimpers"
@@ -967,6 +1036,7 @@
 	override_language = "monkey"
 	understood_languages = list("english")
 	clothing_icon_override = 'icons/mob/monkey.dmi'
+	race_mutation = /datum/bioEffect/mutantrace/monkey
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	var/had_tablepass = 0
 	var/table_hide = 0
@@ -1153,6 +1223,7 @@
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "seamonkey"
 	aquatic = 1
+	race_mutation = /datum/bioEffect/mutantrace/seamonkey
 
 /datum/mutantrace/martian
 	name = "martian"
@@ -1247,6 +1318,7 @@
 	icon_state = "roach"
 	icon_override_static = 1
 	override_attack = 0
+	race_mutation = /datum/bioEffect/mutantrace/roach
 
 	say_verb()
 		return "clicks"
@@ -1262,6 +1334,7 @@
 	jerk = 1
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
+	race_mutation = /datum/bioEffect/mutantrace/cat
 
 	say_verb()
 		return "meows"
@@ -1451,6 +1524,10 @@
 				//at max points, so heal
 				mob.take_toxin_damage(-round_mult)
 				mob.HealDamage("All", round_mult, round_mult)
+				if (prob(7) && mob.find_ailment_by_type(/datum/ailment/malady/flatline))
+					mob.cure_disease_by_path(/datum/ailment/malady/heartfailure)
+					mob.cure_disease_by_path(/datum/ailment/malady/flatline)
+
 		else
 			//nutrients for a bit of grace period
 			if (KAH.points > 0)
@@ -1465,97 +1542,6 @@
 
 		return
 
-/datum/mutantrace/reliquary_soldier
-	name = "reliquary_soldier"
-	override_eyes = 1
-	override_hair = 1
-	override_beard = 1
-	override_detail = 1
-	override_skintone = 1
-	override_attack = 0
-
-	override_language = null
-	understood_languages = list("english")
-	uses_special_head = 0	// unused
-	human_compatible = 0
-	uses_human_clothes = 0
-	clothing_icon_override = null
-	jerk = 1
-
-	icon_state = "blank_c"
-
-	r_robolimb_arm_type_mutantrace = /obj/item/parts/robot_parts/arm/right/reliquary
-	l_robolimb_arm_type_mutantrace = /obj/item/parts/robot_parts/arm/left/reliquary
-	r_robolimb_leg_type_mutantrace = /obj/item/parts/robot_parts/leg/right/reliquary
-	l_robolimb_leg_type_mutantrace = /obj/item/parts/robot_parts/leg/left/reliquary
-	ignore_missing_limbs = 1
-
-	firevuln = 0.5
-	brutevuln = 0.75
-	toxvuln = 0
-	needs_oxy = 0
-	voice_override = "reliquary"
-
-	New(var/mob/living/carbon/human/M)
-		SPAWN_DBG(0)
-			M.uses_damage_overlays = 0
-			M.add_stam_mod_max("rel_footsoldier", 50)
-			M.blood_id = "reliquary_blood"
-			//M.reagents.maximum_volume = 0
-			M.add_stam_mod_regen("rel_footsoldier", 10)
-			M.blood_color = "#0b1f8f"
-			M.bioHolder.Uid = "--conductive_substance--"
-			M.metabolizes = 0
-			M.speechverb_say = "states"
-			M.speechverb_gasp = "states"
-			M.speechverb_stammer = "states"
-			M.speechverb_exclaim = "declares"
-			M.speechverb_ask = "queries"
-			M.robot_talk_understand = 1
-			M.see_infrared = 1
-			M.mob_flags |= IS_RELIQUARY | IS_RELIQUARY_SOLDIER
-
-
-			//Limb & Organ stuff//
-			return ..(M)
-
-	disposing()
-		if(mob)
-			mob.remove_stam_mod_max("rel_footsoldier")
-			mob.remove_stam_mod_regen("rel_footsoldier")
-		..()
-		return ..()
-
-
-	say_filter(var/message)
-		return message
-
-	emote(var/act)
-		return null
-
-	custom_attack(atom/target)
-		return target.attack_hand(mob)
-
-	sight_modifier()
-		mob.sight |= SEE_MOBS
-		mob.sight |= SEE_OBJS
-		mob.see_in_dark = SEE_DARK_FULL
-		return
-
-	onLife(var/mult = 1)	//Called every Life cycle of our mob
-		return
-
-	onDeath() //Called when our mob dies.  Returning a true value will short circuit the normal death proc right before deathgasp/headspider/etc
-		return
-
-/mob/living/carbon/human/reliquarytest
-
-	New()
-		..()
-		SPAWN_DBG(0)
-			src.real_name = "RELIQUARY TEST - DO NOT USE"
-			src.set_mutantrace(/datum/mutantrace/reliquary_soldier)
-
 /datum/mutantrace/cow
 	name = "cow"
 	icon_state = "cow"
@@ -1563,18 +1549,15 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "cow"
+	race_mutation = /datum/bioEffect/mutantrace/cow
+	mutant_color_flags = (HAS_HAIR_COLORED_DETAILS | BODY_DETAIL_1 | BODY_DETAIL_OVERSUIT_1 | FIX_COLORS)
 
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
-			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
 			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="cow_over_suit", layer = MOB_LAYER_BASE+0.3)
-
-			hex_to_rgb_list(aH.customization_first_color)
-
-			detail_1.color = fix_colors(aH.customization_first_color)
 
 			mob.update_face()
 			mob.update_body()
@@ -1590,16 +1573,6 @@
 			H.blood_id = initial(H.blood_id)
 			H.blood_color = initial(H.blood_color)
 		..()
-
-
-	proc/fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")

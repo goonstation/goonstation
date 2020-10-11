@@ -69,6 +69,8 @@
 				icon_state = "[src.style]_med1"
 			if (reagents.has_reagent("LSD",1))
 				icon_state = "[src.style]_LSD"
+			if (reagents.has_reagent("lsd_bee"))
+				icon_state = "[src.style]_LSBee"
 
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "[src.style]-fluid", -1)
@@ -114,7 +116,7 @@
 			attach_sticker_manual(user)
 		return
 
-	throw_impact(mob/M as mob)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
 			if (prob(30) || good_throw && prob(70))
@@ -315,6 +317,13 @@
 
 	cyborg
 		borg = 1
+
+/obj/item/reagent_containers/patch/lsd_bee
+	name = "bluzzer"
+	desc = "A highly potent hallucinogenic substance. It smells like honey."
+	icon_state = "patch_LSBee"
+	initial_reagents = list("lsd_bee"=20)
+	module_research = list("vice" = 10)
 
 /obj/item/reagent_containers/patch/vr
 	icon = 'icons/effects/VR.dmi'

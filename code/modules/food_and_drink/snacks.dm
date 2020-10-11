@@ -823,8 +823,7 @@
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	process()
 		if (prob(30) && src.icon_state == "surs-open")
@@ -969,7 +968,7 @@
 
 
 	New()
-		..()
+		. = ..()
 		name = "[random_spaghetti_name()] noodles"
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -986,11 +985,27 @@
 			user.put_in_hand_or_drop(D)
 			qdel(W)
 			qdel(src)
-		else return ..()
+
+		// Muppet show EP 111
+		if (istype(W, /obj/item/kitchen/utensil/spoon))
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if (H.a_intent == INTENT_HARM && (H.job == "Chef" || H.job == "Sous-Chef") && H.bioHolder?.HasEffect("accent_swedish"))
+					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!<b></span>")
+					src.visible_message("<span class='alert'>The [src] barks at [H]!</span>")
+					playsound(get_turf(src), "sound/voice/animal/dogbark.ogg", 40, 1)
+					SPAWN_DBG(0.75 SECONDS)
+						if (src && H)
+							src.visible_message("<span class='alert'>The [src] takes a bite out of [H]!</span>")
+							random_brute_damage(H, 10)
+
+		else
+			return ..()
 
 	heal(var/mob/M) // ditto goddammit - arrabiata is not fuckin bland you dorks
-		if (icon_state == "spag_plain") boutput(M, "<span class='alert'>This is really bland.</span>")
-		..()
+		if (icon_state == "spag_plain")
+			boutput(M, "<span class='alert'>This is really bland.</span>")
+		. = ..()
 
 /obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal
 	name = "boneless spaghetti"
@@ -1004,7 +1019,7 @@
 	initial_reagents = list("milk"=50)
 
 	New()
-		..()
+		. = ..()
 		name = "boneless [random_spaghetti_name()]"
 
 	process()
@@ -1021,7 +1036,7 @@
 	food_effects = list("food_energized","food_brute","food_burn")
 
 	New()
-		..()
+		. = ..()
 		name = "[random_spaghetti_name()] with tomato sauce"
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1056,7 +1071,7 @@
 	food_effects = list("food_energized","food_brute","food_burn")
 
 	New()
-		..()
+		. = ..()
 		name = "[random_spaghetti_name()] arrabbiata"
 
 /obj/item/reagent_containers/food/snacks/spaghetti/meatball
@@ -1071,7 +1086,7 @@
 	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
 
 	New()
-		..()
+		. = ..()
 		name = "[random_spaghetti_name()] and meatballs"
 
 /obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti
@@ -1086,12 +1101,12 @@
 	food_effects = list("food_sweaty")
 
 	New()
-		..()
+		. = ..()
 		name = "pizza-ghetti"
 
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>Tastes like pizza and spaghetti, but way less convenient.</span>")
-		..()
+		. = ..()
 
 /obj/item/reagent_containers/food/snacks/donut
 	name = "donut"
@@ -1372,7 +1387,7 @@
 	amount = 2
 	food_color = "#663300"
 	real_name = "Hetz's Cup"
-	initial_reagents = list("chocolate"=10)
+	initial_reagents = list("chocolate" = 10)
 
 /obj/item/reagent_containers/food/snacks/ectoplasm
 	name = "ectoplasm"
@@ -1385,18 +1400,18 @@
 	doants = 0
 	food_color = "#B3E197"
 	initial_volume = 15
-	initial_reagents = list("ectoplasm"=10)
+	initial_reagents = list("ectoplasm" = 10)
+	food_effects = list("food_hp_up_small", "food_damage_tox")
+
 	New()
 		..()
 		flick("ectoplasm-a", src)
 		src.setMaterial(getMaterial("ectoplasm"), appearance = 0, setname = 0)
-		return
 
-	heal(var/mob/M)
+	heal(mob/M)
 		..()
 		var/ughmessage = pick("Your mouth feels haunted. Haunted with bad flavors.","It tastes like flavor died.", "It tastes like a ghost fart.", "It has the texture of ham aspic.  From the 1950s.  Left out in the sun.")
 		boutput(M, "<span class='alert'>Ugh, why did you eat that? [ughmessage]</span>")
-		return
 
 /obj/item/reagent_containers/food/snacks/corndog
 	name = "corndog"

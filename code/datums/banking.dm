@@ -31,7 +31,7 @@
 	var/clone_cost = 2500 // I wanted to make this a var on SOMETHING so that it can be changed during rounds
 
 	New()
-
+		..()
 		// 5 minutes = 3000 milliseconds
 		time_between_paydays = 3000
 		time_between_lotto = 5000 // this was way too fuckin high
@@ -68,38 +68,38 @@
 		// This is gonna throw up some crazy errors if it isn't done right!
 		// cogwerks - raising all of the paychecks, oh god
 
-		jobs["Engineer"] = 500
-		jobs["Miner"] = 550
-		jobs["Mechanic"] = 450
-//		jobs["Atmospheric Technician"] = 400
-		jobs["Security Officer"] = 700
-//		jobs["Vice Officer"] = 500
-		jobs["Detective"] = 300
-		jobs["Geneticist"] = 600
-		jobs["Scientist"] = 400
-		jobs["Medical Doctor"] = 400
-		jobs["Medical Director"] = 750
-		jobs["Head of Personnel"] = 750
-		jobs["Head of Security"] = 750
-//		jobs["Head of Security"] = 1
-		jobs["Chief Engineer"] = 750
-		jobs["Research Director"] = 750
-		jobs["Chaplain"] = 150
-		jobs["Roboticist"] = 450
-//		jobs["Hangar Mechanic"]= 40
-//		jobs["Elite Security"] = 300
-		jobs["Barman"] = 250
-		jobs["Chef"] = 250
-		jobs["Janitor"] = 200
-		jobs["Clown"] = 1
-//		jobs["Chemist"] = 50
-		jobs["Quartermaster"] = 350
-		jobs["Botanist"] = 250
-//		jobs["Attorney at Space-Law"] = 500
-		jobs["Staff Assistant"] = 100
-		jobs["Medical Assistant"] = 150
-		jobs["Technical Assistant"] = 150
-		jobs["Captain"] = 850
+		jobs["Engineer"] = PAY_TRADESMAN
+		jobs["Miner"] = PAY_TRADESMAN
+		jobs["Mechanic"] = PAY_DOCTORATE
+//		jobs["Atmospheric Technician"] = PAY_TRADESMAN
+		jobs["Security Officer"] = PAY_TRADESMAN
+//		jobs["Vice Officer"] = PAY_TRADESMAN
+		jobs["Detective"] = PAY_TRADESMAN
+		jobs["Geneticist"] = PAY_DOCTORATE
+		jobs["Scientist"] = PAY_DOCTORATE
+		jobs["Medical Doctor"] = PAY_DOCTORATE
+		jobs["Medical Director"] = PAY_IMPORTANT
+		jobs["Head of Personnel"] = PAY_IMPORTANT
+		jobs["Head of Security"] = PAY_IMPORTANT
+//		jobs["Head of Security"] = PAY_DUMBCLOWN
+		jobs["Chief Engineer"] = PAY_IMPORTANT
+		jobs["Research Director"] = PAY_IMPORTANT
+		jobs["Chaplain"] = PAY_UNTRAINED
+		jobs["Roboticist"] = PAY_DOCTORATE
+//		jobs["Hangar Mechanic"]= PAY_TRADESMAN
+//		jobs["Elite Security"] = PAY_TRADESMAN
+		jobs["Barman"] = PAY_UNTRAINED
+		jobs["Chef"] = PAY_UNTRAINED
+		jobs["Janitor"] = PAY_TRADESMAN
+		jobs["Clown"] = PAY_DUMBCLOWN
+//		jobs["Chemist"] = PAY_DOCTORATE
+		jobs["Quartermaster"] = PAY_TRADESMAN
+		jobs["Botanist"] = PAY_TRADESMAN
+//		jobs["Attorney at Space-Law"] = PAY_DOCTORATE
+		jobs["Staff Assistant"] = PAY_UNTRAINED
+		jobs["Medical Assistant"] = PAY_UNTRAINED
+		jobs["Technical Assistant"] = PAY_UNTRAINED
+		jobs["Captain"] = PAY_EXECUTIVE
 
 		src.time_until_lotto = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_lotto
 		src.time_until_payday = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_paydays
@@ -170,8 +170,7 @@
 			winningNumbers[i][j] = rand(1,3)
 			dat += "[winningNumbers[i][j]] "
 
-		for(var/x in by_type[/obj/item/lotteryTicket])
-			var/obj/item/lotteryTicket/T = x
+		for_by_tcl(T, /obj/item/lotteryTicket)
 			// If the round associated on the lottery ticked is this round
 			if(lotteryRound == T.lotteryRound)
 				// Check the nubers
@@ -453,7 +452,7 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
@@ -946,7 +945,7 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
@@ -1025,6 +1024,7 @@
 
 	// Give a random set of numbers
 	New()
+		..()
 		START_TRACKING
 
 		lotteryRound = wagesystem.lotteryRound

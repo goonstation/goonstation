@@ -35,8 +35,7 @@ datum/controller/process/fMove
 
 	doWork()
 		//space first :)
-		for(var/A in spacePushList)
-			var/atom/movable/M = A
+		for (var/atom/movable/M as() in spacePushList)
 			if(!M)
 				continue
 
@@ -146,8 +145,7 @@ datum/controller/process/fMove
 		//now manta!
 		debugPushList = mantaPushList
 		if(mantaMoving == 1)
-			for(var/A in mantaPushList)
-				var/atom/movable/M = A
+			for (var/atom/movable/M as() in mantaPushList)
 				if(!M)
 					continue
 
@@ -161,7 +159,7 @@ datum/controller/process/fMove
 				if(M.throwing)
 					continue
 
-				if ((M.event_handler_flags & IMMUNE_MANTA_PUSH || M.anchored) && !istype(M,/obj/decal)) //mbc : decal is here for blood cleanables, consider somehow optimizing or adjusting later
+				if ((M.event_handler_flags & IMMUNE_MANTA_PUSH || M.anchored || M.throwing) && !istype(M,/obj/decal)) //mbc : decal is here for blood cleanables, consider somehow optimizing or adjusting later
 					continue
 
 				if(ismob(M))

@@ -61,7 +61,7 @@ TOILET
 
 			var/list/destinations = list()
 
-			for (var/obj/item/storage/toilet/T in by_type[/obj/item/storage/toilet])
+			for_by_tcl(T, /obj/item/storage/toilet)
 				if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc,/area) && T.loc:teleport_blocked))
 					continue
 				destinations.Add(T)
@@ -117,7 +117,9 @@ TOILET
 				A.set_loc(target)
 #endif
 		src.clogged = 0
-		src.contents.len = 0
+		for (var/item in src.contents)
+			qdel(item)
+			src.hud?.remove_item(item)
 
 	else if((src.clogged >= 1) || (src.contents.len >= 7) || (user.buckled != src.loc))
 		src.visible_message("<span class='notice'>The toilet is clogged!</span>")
@@ -141,7 +143,7 @@ TOILET
 				O.vomit()
 	else
 		var/list/emergeplaces = list()
-		for (var/obj/item/storage/toilet/T in by_type[/obj/item/storage/toilet])
+		for_by_tcl(T, /obj/item/storage/toilet)
 			if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z)) continue
 			emergeplaces.Add(T)
 		if (emergeplaces.len)

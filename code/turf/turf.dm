@@ -57,8 +57,9 @@
 
 	Del()
 		if (cameras && cameras.len)
-			for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
-				C.coveredTiles -= src
+			for (var/obj/machinery/camera/C as() in by_type[/obj/machinery/camera])
+				if(C.coveredTiles)
+					C.coveredTiles -= src
 		cameras = null
 		..()
 
@@ -101,7 +102,8 @@
 			return 0
 		for( var/thing in contents )
 			var/atom/A = thing
-			if( A.density && !ismob(A) ) return 0
+			if( A.density && !ismob(A) )
+				return 0
 		return 1
 
 	proc/tilenotify(turf/notifier)
@@ -110,7 +112,7 @@
 
 	proc/generate_worldgen()
 
-	proc/inherit_area()//jerko built a thing
+	proc/inherit_area() //jerko built a thing
 		if(!loc:expandable) return
 		for(var/dir in (cardinal + 0))
 			var/turf/thing = get_step(src, dir)
@@ -246,7 +248,7 @@
 	if (density)
 		pathable = 0
 	for(var/atom/movable/AM as mob|obj in src)
-		if (AM) // ????
+		if (AM) // ???? x2
 			src.Entered(AM)
 	RL_Init()
 	return
@@ -263,7 +265,8 @@
 	if (cturf && cturf.checkingexit > 0) //dont bother checking unless the turf actually contains a checkable :)
 		for(var/thing in cturf)
 			var/obj/obstacle = thing
-			if(obstacle == mover) continue
+			if(obstacle == mover)
+				continue
 			if((mover != obstacle) && (forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CHECKEXIT)
 					if(!obstacle.CheckExit(mover, src))
@@ -406,7 +409,7 @@
 	else if (A.y >= (world.maxy - 1))
 		edge_step(A, 0, 3)
 
-/turf/hitby(atom/movable/AM)
+/turf/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 	if(src.density)
 		if(AM.throwforce >= 80)
@@ -586,10 +589,10 @@
 
 			// tell atmos to update this tile's air settings
 			if (air_master)
-				air_master.queue_update_tile(N)
+				air_master.tiles_to_update |= N
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
-			air_master.queue_update_group(oldparent) //Puts the oldparent into a queue to update the members.
+			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
 
 	if (istype(new_turf, /turf/simulated))
 		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
@@ -824,7 +827,11 @@
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
+#ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
+#else
+	plane = PLANE_FLOOR
+#endif
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"
@@ -1029,7 +1036,7 @@ Other Goonstation servers:[serverList]"}
 
 	if (A.z == 1 && zlevel != A.z)
 		if (!(isitem(A) && A:w_class <= 2))
-			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
 	A.z = zlevel

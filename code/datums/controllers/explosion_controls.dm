@@ -2,7 +2,7 @@ var/datum/explosion_controller/explosions
 
 /datum/explosion_controller
 	var/list/queued_explosions = list()
-	var/list/queued_turfs = list()
+	var/list/turf/queued_turfs = list()
 	var/list/queued_turfs_blame = list()
 	var/distant_sound = 'sound/effects/explosionfar.ogg'
 	var/exploding = 0
@@ -41,8 +41,7 @@ var/datum/explosion_controller/explosions
 		var/p
 		var/last_touched
 
-		for (var/y in queued_turfs)
-			var/turf/T = y
+		for (var/turf/T as() in queued_turfs)
 			queued_turfs[T]=sqrt(queued_turfs[T])*2
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
@@ -59,8 +58,7 @@ var/datum/explosion_controller/explosions
 
 		LAGCHECK(LAG_HIGH)
 
-		for (var/y in queued_turfs)
-			var/turf/T = y
+		for (var/turf/T as() in queued_turfs)
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P1 [p]")
@@ -87,8 +85,7 @@ var/datum/explosion_controller/explosions
 		LAGCHECK(LAG_HIGH)
 
 		// BEFORE that ordeal (which may sleep quite a few times), fuck the turfs up all at once to prevent lag
-		for (var/x in queued_turfs)
-			var/turf/T = x
+		for (var/turf/T as() in queued_turfs)
 #ifndef UNDERWATER_MAP
 			if(istype(T, /turf/space))
 				continue
@@ -135,6 +132,7 @@ var/datum/explosion_controller/explosions
 	var/brisance
 
 	New(atom/source, turf/epicenter, power, brisance)
+		..()
 		src.source = source
 		src.epicenter = epicenter
 		src.power = power
@@ -155,7 +153,7 @@ var/datum/explosion_controller/explosions
 
 		for(var/client/C in clients)
 			if(C.mob && (C.mob.z == epicenter.z) && power > 15)
-				shake_camera(C.mob, 8, 3) // remove if this is too laggy
+				shake_camera(C.mob, 8, 24) // remove if this is too laggy
 
 				C << sound(explosions.distant_sound)
 
@@ -206,7 +204,7 @@ var/datum/explosion_controller/explosions
 			p = min(p, 10)
 			for(var/mob/living/carbon/C in T)
 				if (!isdead(C) && C.client)
-					shake_camera(C, 3 * p, p)
+					shake_camera(C, 3 * p, p * 4)
 				C.changeStatus("stunned", p * 10)
 				C.stuttering += p
 				C.lying = 1

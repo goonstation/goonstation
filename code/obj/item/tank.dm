@@ -35,9 +35,8 @@ Contains:
 		src.air_contents = unpool(/datum/gas_mixture)
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
-		if (!(src in processing_items))
-			processing_items.Add(src)
-		BLOCK_TANK
+		processing_items |= src
+		BLOCK_SETUP(BLOCK_TANK)
 		return
 
 	disposing()
@@ -151,7 +150,7 @@ Contains:
 			range = min(range, 12)		// was 8
 
 			if(src in bible_contents)
-				for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])//world)
+				for_by_tcl(B, /obj/item/storage/bible)//world)
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing("bombing", src, null, "exploded at [showCoords(T.x, T.y, T.z)], range: [range], last touched by: [src.fingerprintslast]")
@@ -342,9 +341,6 @@ Contains:
 				return 0.5
 			else
 				return 0
-		//G = null
-		qdel(G)
-		return
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 
@@ -483,7 +479,7 @@ Contains:
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
-			for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])//world)
+			for_by_tcl(B, /obj/item/storage/bible)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					explosion(src, T, 0, strength, strength*2, strength*3)

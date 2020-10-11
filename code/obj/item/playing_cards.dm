@@ -25,6 +25,7 @@
 	var/solitaire_offset = 3
 
 	New(cardname, carddesc, cardback, cardface, cardfoil, carddata, cardreversible, cardreversed, cardtappable, cardtapped, cardspooky, cardsolitaire)
+		..()
 		if (cardname) src.card_name = cardname
 		if (carddesc) src.card_desc = carddesc
 		if (cardback) src.card_back = cardback
@@ -631,7 +632,7 @@
 			src.card_human += H
 		for (var/mob/living/silicon/robot/R in mobs)
 			src.card_cyborg += R
-		for (var/mob/living/silicon/ai/A in by_type[/mob/living/silicon/ai])
+		for_by_tcl(A, /mob/living/silicon/ai)
 			src.card_ai += A
 		card_type_mob = childrentypesof(/datum/playing_card/griffening/creature/mob)
 		card_type_friend = childrentypesof(/datum/playing_card/griffening/creature/friend)

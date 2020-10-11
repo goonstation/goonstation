@@ -123,8 +123,8 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					O.icon = 'icons/effects/effects.dmi'
 					O.icon_state = "nothing"
 					flick("empdisable",O)
-					SPAWN_DBG(0.5 SECONDS)
-						qdel(O)
+					sleep(0.5 SECONDS)
+					qdel(O)
 
 				return 1
 		else if (istype(source, /obj/machinery) && isAI(user))
@@ -212,7 +212,7 @@ var/obj/item/dummy/click_dummy = new
 	. = list()
 
 	var/turf/T = get_turf(center)
-	for (var/mob/living/silicon/ai/theAI in by_type[/mob/living/silicon/ai])
+	for_by_tcl(theAI, /mob/living/silicon/ai)
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
 //			if (AIeye in view(center, distance))
@@ -504,6 +504,7 @@ var/obj/item/dummy/click_dummy = new
 	var/a = null
 
 	New(_r,_g,_b,_a=255)
+		..()
 		r = _r
 		g = _g
 		b = _b
@@ -538,8 +539,7 @@ var/obj/item/dummy/click_dummy = new
 
 	var/src_min_x = 0
 	var/src_min_y = 0
-	for (var/x in turfs_src)
-		var/turf/T = x
+	for (var/turf/T as() in turfs_src)
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 	DEBUG_MESSAGE("src_min_x = [src_min_x], src_min_y = [src_min_y]")
@@ -547,8 +547,7 @@ var/obj/item/dummy/click_dummy = new
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	var/trg_z = 0
-	for (var/x in turfs_trg)
-		var/turf/T = x
+	for (var/turf/T as() in turfs_trg)
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 		trg_z = T.z
@@ -564,8 +563,7 @@ var/obj/item/dummy/click_dummy = new
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		for(var/x in S)
-			var/atom/movable/AM = x
+		for (var/atom/movable/AM as() in S)
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			AM.set_loc(T)

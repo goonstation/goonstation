@@ -44,21 +44,17 @@
 	var/sealed = 0 //Can you write on this with a pen?
 
 /obj/item/paper/New()
-
 	..()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("paper", 10)
+	src.create_reagents(10)
+	reagents.add_reagent("paper", 10)
+	SPAWN_DBG(0)
+		if (src.info && src.icon_state == "paper_blank")
+			icon_state = "paper"
 	if (!src.rand_pos)
 		return
 	else
 		src.pixel_y = rand(-8, 8)
 		src.pixel_x = rand(-9, 9)
-	SPAWN_DBG(0)
-		if (src.info && src.icon_state == "paper_blank")
-			icon_state = "paper"
-	return
 
 
 /obj/item/paper/pooled()
@@ -81,10 +77,8 @@
 		src.reagents.clear_reagents()
 		src.reagents.add_reagent("paper", 10)
 	else
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("paper", 10)
+		src.create_reagents(10)
+		reagents.add_reagent("paper", 10)
 
 	if (!src.offset)
 		return
@@ -407,10 +401,10 @@
 	Using the H-87 is almost as simple as brain surgery! Simply insert the target humanoid into the scanning chamber and select the scan option to create a new profile!<br>
 	<b>That's all there is to it!</b><br>
 	<i>Notice, cloning system cannot scan inorganic life or small primates.  Scan may fail if subject has suffered extreme brain damage.</i><br>
-	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary HEALTH MONITOR IMPLANT into the subject, which may be viewed from each profile.
+	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary HEALTH MONITOR IMPLANT into the subject, which may be viewed from the cloning console.
 	Profile Deletion has been restricted to \[Station Head\] level access.</p>
 	<h4>Cloning from a profile</h4>
-	Cloning is as simple as pressing the CLONE option at the bottom of the desired profile.<br>
+	Cloning is as simple as pressing the CLONE option to the right of the desired profile.<br>
 	Per your company's EMPLOYEE PRIVACY RIGHTS agreement, the H-87 has been blocked from cloning crewmembers while they are still alive.<br>
 	<br>
 	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (With SPEEDCLONE technology) are roughly 90 seconds.
@@ -838,21 +832,23 @@ Only trained personnel should operate station systems. Follow all procedures car
 	desc = "A slip of paper with a life-changing prophecy printed on it."
 	icon_state = "fortune"
 
-	var/list/action = list("Beware of", "Keep an eye on", "Seek out", "Be wary of", "Make friends with", "Aid", "Talk to", "Avoid")
-	var/list/who = list("Zero-G Chem-Co Commander", "Shambling Abomination", "Merlin", "GeneTek Operative Javelin (as Destiny Calls)", "Remy", "Dr. Acula", "Morty")
-	var/list/thing = list("are in possession of highly dangerous contraband.", "murdered a bee.", "kicked George.", "are a Syndicate operative.", "are a murderer.", "have disguised themselves from their true form.",
+	var/static/list/action = list("Beware of", "Keep an eye on", "Seek out", "Be wary of", "Make friends with", "Aid", "Talk to", "Avoid")
+	var/static/list/who = list("Zero-G Chem-Co Commander", "Shambling Abomination", "Merlin", "GeneTek Operative Javelin (as Destiny Calls)", "Remy", "Dr. Acula", "Morty")
+	var/static/list/thing = list("are in possession of highly dangerous contraband.", "murdered a bee.", "kicked George.", "are a Syndicate operative.", "are a murderer.", "have disguised themselves from their true form.",
 	"are not who they claim to be.", "know Shitty Bill's secret.", "are lonely.", "hugged a space bear and survived to tell the tale.", "know the legendary double-fry technique.", "have the power to reanimate the dead.",
 	"consort with wizards.", "sell really awesome drugs.", "have all-access.", "know the king.", "make amazing pizza.", "have a toolbox and are not afraid to use it.")
-	var/list/general = list("NanoTrasen locked me to this desk and is forcing me to make fortunes for these cookies please help!", "Help I'm trapped in this cookie!", "Buy Discount Dan's today!")
-	var/list/sol = list("He plunged into the sea.", "Follow the NSS Polaris.", "Across the Channel.", "It's in the Void.")
+	var/static/list/general = list("NanoTrasen locked me to this desk and is forcing me to make fortunes for these cookies please help!", "Help I'm trapped in this cookie!", "Buy Discount Dan's today!")
+	var/static/list/sol = list("He plunged into the sea.", "Follow the NSS Polaris.", "Across the Channel.", "It's in the Void.")
+	var/static/initialized = FALSE
 
 	New()
-
 		var/randme = rand(1,10)
 		var/fortune = "Blah."
 
-		for(var/datum/data/record/t in data_core.general)
-			who += "[t.fields["name"]]"
+		if(!initialized)
+			initialized = TRUE
+			for(var/datum/data/record/t in data_core.general)
+				who += "[t.fields["name"]]"
 
 		switch(randme)
 			if(1)
@@ -865,6 +861,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		info = {"<font face='System' size='3'><center>YOUR FORTUNE</center><br><br>
 		Discount Dan's is the proud sponsor of your magical fortune. Whether good or bad, delightful or alarming, know it to be true.<br><br>
 		[fortune]</font>"}
+		..()
 
 
 /obj/item/paper/thermal/fortune
@@ -1334,7 +1331,7 @@ WHO DID THIS */
 	throw_speed = 1
 	throw_spin = 0
 
-/obj/item/paper/folded/plane/hit_check()
+/obj/item/paper/folded/plane/hit_check(datum/thrown_thing/thr)
 	if(src.throwing)
 		src.throw_unlimited = 1
 

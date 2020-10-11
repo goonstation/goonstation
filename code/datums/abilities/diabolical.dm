@@ -1,4 +1,4 @@
-//////////////////////////////////////////// Setup //////////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
 /mob/proc/make_merchant()
 	if (ishuman(src))
@@ -15,7 +15,7 @@
 
 	else return
 
-//////////////////////////////////////////// Ability holder /////////////////////////////////////////
+/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 /obj/screen/ability/topBar/merchant
 	clicked(params)
 		var/datum/targetable/merchant/spell = owner

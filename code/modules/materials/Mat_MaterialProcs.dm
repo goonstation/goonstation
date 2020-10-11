@@ -11,11 +11,13 @@ triggerExp(var/owner, var/severity)
 triggerOnEntered(var/atom/owner, var/atom/entering)
 */
 
-//!!!!!!!!!!!!!!!!!!!! THINGS LIKE GOLD SPARKLES ARE NOT REMOVED WHEN MATERIAL CHANGES!. MOVE THESE TO NEW APPEARANCE SYSTEM.
+// THINGS LIKE GOLD SPARKLES ARE NOT REMOVED WHEN MATERIAL CHANGES!. MOVE THESE TO NEW APPEARANCE SYSTEM.
 
 /datum/materialProc
-	var/max_generations = 2 //After how many material "generations" this trait disappears. -1 = does not disappear.
-	var/desc = "" //Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
+	/// After how many material "generations" this trait disappears. `-1` = does not disappear.
+	var/max_generations = 2
+	/// Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
+	var/desc = ""
 
 	proc/execute()
 		return
@@ -54,15 +56,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "It's very hard to move around."
 	max_generations = 1
 
-	execute(var/atom/owner)
-		if(istype(owner, /atom/movable))
-			var/atom/movable/A = owner
-			A.anchored = 1
-		return
-
 /datum/materialProc/ffart_pickup
 	execute(var/mob/M, var/obj/item/I)
-		SPAWN_DBG(1 SECOND)
+		SPAWN_DBG(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
 			M.remove_item(I)
 			I.set_loc(get_turf(I))
 		return
@@ -392,7 +388,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("neutron_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1))*10, 4)
+			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1))*10, 4)
 		return
 
 /datum/materialProc/erebite_flash
@@ -441,12 +437,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/slippery_entered
 	execute(var/atom/owner, var/atom/movable/entering)
-		if (iscarbon(entering) && isturf(owner) && prob(75))
-			var/mob/living/carbon/C = entering
-			boutput(C, "You slip on the icy floor!")
-			playsound(get_turf(owner), "sound/misc/slip.ogg", 30, 1)
-			C.changeStatus("weakened", 2 SECONDS)
-			C.force_laydown_standup()
+		if (isliving(entering) && isturf(owner) && prob(75))
+			var/mob/living/L = entering
+			if(L.slip())
+				boutput(L, "You slip on the icy floor!")
+				playsound(get_turf(owner), "sound/misc/slip.ogg", 30, 1)
 		return
 
 /datum/materialProc/ice_life

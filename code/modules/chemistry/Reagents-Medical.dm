@@ -1,4 +1,7 @@
 //Contains medical reagents / drugs.
+
+ABSTRACT_TYPE(/datum/reagent/medical)
+
 datum
 	reagent
 		medical/
@@ -17,11 +20,25 @@ datum
 			depletion_rate = 0.2
 			value = 3
 
+			on_add()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_REBREATHING, src.type)
+				return
+
+			on_remove()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_REBREATHING, src.type)
+				return
+
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.take_toxin_damage(1 * mult)
 				..()
 				return
+
 
 		medical/spaceacillin
 			name = "spaceacillin"
@@ -84,9 +101,9 @@ datum
 				if(!counter) counter = 1
 				M.jitteriness = max(M.jitteriness-25,0)
 
-				switch(counter++)
+				switch(counter += 1 * mult)
 					if(1 to 15)
-						if(prob(7)) M.emote("yawn")
+						if(probmult(7)) M.emote("yawn")
 					if(16 to 35)
 						M.drowsyness  = max(M.drowsyness, 20)
 					if(36 to INFINITY)
@@ -135,9 +152,9 @@ datum
 				if(!counter) counter = 1
 				M.jitteriness = max(M.jitteriness-25,0)
 
-				switch(counter++)
+				switch(counter += 1 * mult)
 					if(1 to 15)
-						if(prob(7)) M.emote("yawn")
+						if(probmult(7)) M.emote("yawn")
 					if(16 to 35)
 						M.drowsyness  = max(M.drowsyness, 20)
 					if(36 to INFINITY)
@@ -162,14 +179,14 @@ datum
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(prob(8))
+				if(probmult(8))
 					M.emote(pick("smile","giggle","yawn"))
 				for(var/datum/ailment_data/disease/virus in M.ailments)
-					if(prob(25) && istype(virus.master,/datum/ailment/disease/cold))
+					if(probmult(25) && istype(virus.master,/datum/ailment/disease/cold))
 						M.cure_disease(virus)
-					if(prob(25) && istype(virus.master,/datum/ailment/disease/flu))
+					if(probmult(25) && istype(virus.master,/datum/ailment/disease/flu))
 						M.cure_disease(virus)
-					if(prob(25) && istype(virus.master,/datum/ailment/disease/food_poisoning))
+					if(probmult(25) && istype(virus.master,/datum/ailment/disease/food_poisoning))
 						M.cure_disease(virus)
 				..()
 				return
@@ -304,10 +321,10 @@ datum
 						M.reagents.remove_reagent(reagent_id, 5 * mult)
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
-				if(prob(6))
+				if(probmult(6))
 					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>")
 					M.vomit()
-				if(prob(4))
+				if(probmult(4))
 					M.emote("piss")
 				..()
 				return
@@ -495,7 +512,7 @@ datum
 				if(M.get_toxin_damage())
 					M.take_toxin_damage(-1 * mult)
 				if(M.losebreath && prob(50))
-					M.lose_breath(-1)
+					M.lose_breath(-1 * mult)
 				M.HealDamage("All", 2 * mult, 2 * mult, 1 * mult)
 				if (isliving(M))
 					var/mob/living/L = M
@@ -585,6 +602,8 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.getStatusDuration("radiation") && prob(80))
 					M.changeStatus("radiation", -20 * mult, 1)
+				if(M.getStatusDuration("n_radiation") && prob(80))
+					M.changeStatus("n_radiation", -20 * mult, 1)
 
 				M.take_toxin_damage(-0.5 * mult)
 				M.HealDamage("All", 0, 0, 0.5 * mult)
@@ -666,11 +685,11 @@ datum
 					M = holder.my_atom
 
 				if (M.bioHolder)
-					if (prob(50) && M.bioHolder.HasEffect("bad_eyesight"))
+					if (probmult(50) && M.bioHolder.HasEffect("bad_eyesight"))
 						M.bioHolder.RemoveEffect("bad_eyesight")
-					if (prob(30) && M.bioHolder.HasEffect("blind"))
+					if (probmult(30) && M.bioHolder.HasEffect("blind"))
 						M.bioHolder.RemoveEffect("blind")
-					if (prob(30) && (M.get_ear_damage() && M.get_ear_damage() <= M.get_ear_damage_natural_healing_threshold()) && M.bioHolder.HasEffect("deaf") || M.ear_disability)
+					if (probmult(30) && (M.get_ear_damage() && M.get_ear_damage() <= M.get_ear_damage_natural_healing_threshold()) && M.bioHolder.HasEffect("deaf") || M.ear_disability)
 						M.bioHolder.RemoveEffect("deaf")
 
 				if (M.get_eye_blurry())
@@ -724,6 +743,8 @@ datum
 					M.druggy = max(0, M.druggy)
 				if(holder.has_reagent("LSD"))
 					holder.remove_reagent("LSD", 5 * mult)
+				if(holder.has_reagent("lsd_bee"))
+					holder.remove_reagent("lsd_bee", 5 * mult)
 				if(holder.has_reagent("psilocybin"))
 					holder.remove_reagent("psilocybin", 5 * mult)
 				if(holder.has_reagent("crank"))
@@ -744,13 +765,13 @@ datum
 					holder.remove_reagent("ephedrine", 5 * mult)
 				if(holder.has_reagent("stimulants"))
 					holder.remove_reagent("stimulants", 3 * mult)
-				if(prob(5))
+				if(probmult(5))
 					for(var/datum/ailment_data/disease/virus in M.ailments)
 						if(istype(virus.master,/datum/ailment/disease/space_madness) || istype(virus.master,/datum/ailment/disease/berserker))
 							M.cure_disease(virus)
 				if(prob(20)) M.take_brain_damage(1 * mult)
-				if(prob(50)) M.drowsyness = max(M.drowsyness, 6)
-				if(prob(10)) M.emote("drool")
+				if(probmult(50)) M.drowsyness = max(M.drowsyness, 6)
+				if(probmult(10)) M.emote("drool")
 				..()
 				return
 
@@ -785,13 +806,13 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(7 * mult))
-				if(prob(10))
+				if(probmult(10))
 					M.make_jittery(4)
 				M.drowsyness = max(M.drowsyness-5, 0)
-				if(M.sleeping && prob(5)) M.sleeping = 0
-				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1)
+				if(M.sleeping && probmult(5)) M.sleeping = 0
+				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1 * mult)
 				if(holder.has_reagent("histamine"))
-					holder.remove_reagent("histamine", 15 * mult)
+					holder.remove_reagent("histamine", 2 * mult) //combats symptoms not source //ok combats source a bit more
 				if(M.losebreath > 3)
 					M.losebreath -= (1 * mult)
 				if(M.get_oxygen_deprivation() > 35)
@@ -892,7 +913,7 @@ datum
 				if (isliving(M))
 					var/mob/living/H = M
 					repair_bleeding_damage(H, 90, 1 * mult)
-					if (prob(2))
+					if (probmult(2))
 						H.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
 				..()
 				return
@@ -1086,7 +1107,7 @@ datum
 					M.losebreath = max(5, M.losebreath-(1 * mult))
 				if(M.get_oxygen_deprivation() > 75)
 					M.take_oxygen_deprivation(-1 * mult)
-				if ((M.health < 0) || (M.health > 0 && prob(33)))
+				if ((M.health < 0) || (M.health > 0 && probmult(33)))
 					if (M.get_toxin_damage() && prob(25))
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult)
@@ -1182,10 +1203,10 @@ datum
 					holder.remove_reagent("histamine", 3 * mult)
 				if(holder.has_reagent("itching"))
 					holder.remove_reagent("itching", 3 * mult)
-				if(prob(7)) M.emote("yawn")
+				if(probmult(7)) M.emote("yawn")
 				if(prob(3))
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30 * mult))
-					M.drowsyness++
+					M.drowsyness += 1
 					M.visible_message("<span class='notice'><b>[M.name]<b> looks a bit dazed.</span>")
 				..()
 				return
@@ -1341,7 +1362,7 @@ datum
 				src.total_misstep += 5 * mult
 				if(M.bodytemperature < M.base_body_temp)
 					M.bodytemperature = min(M.base_body_temp + 10, M.bodytemperature+(10 * mult))
-				if(prob(4)) M.emote("collapse")
+				if(probmult(4)) M.emote("collapse")
 				if(M.losebreath > 5)
 					M.losebreath = max(5, M.losebreath-(5 * mult))
 				if(M.get_oxygen_deprivation() > 65)
@@ -1393,7 +1414,7 @@ datum
 				if (severity >= 2)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.organHolder && prob(40))
+						if (H.organHolder && probmult(40))
 							if (prob(50))
 								H.organHolder.damage_organ(0, 0, severity*mult, "right_kidney")
 							else
@@ -1528,10 +1549,10 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.health > 25)
 					M.take_toxin_damage(1 * mult)
-				if(prob(25))
+				if(probmult(25))
 					M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
 					M.vomit()
-				if(prob(5))
+				if(probmult(5))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 				..()

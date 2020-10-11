@@ -10,8 +10,7 @@
 	covered_turf()
 		.= list()
 		if (my_group)
-			for (var/fluid in my_group.members)
-				var/obj/fluid/F = fluid
+			for (var/obj/fluid/F as() in my_group.members)
 				.+= F.loc
 
 	clear_reagents()
@@ -168,8 +167,7 @@
 		reagents = new /datum/reagents/fluid_group(90000000) //high number lol.
 		reagents.my_group = src
 
-		if (!(src in processing_fluid_groups))
-			processing_fluid_groups.Add(src)
+		processing_fluid_groups |= src
 
 	proc/update_amt_per_tile()
 		contained_amt = src.reagents.total_volume
@@ -181,8 +179,7 @@
 			last_add_time = world.time
 			return
 
-		for (var/fluid in src.members)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in src.members)
 			if (!F) continue
 			if (F.pooled) continue
 			src.remove(F,0,1,1)
@@ -218,7 +215,7 @@
 	//fluid has been removed from its tile. use 'lightweight' in evaporation procedure cause we dont need icon updates / try split / update loop checks at that point
 	// if 'lightweight' parameter is 2, invoke an update loop but still ignore icon updates
 	proc/remove(var/obj/fluid/F, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 0)
-		if (!F || F.pooled) return 0
+		if (!F || F.pooled || src.disposed) return 0
 		if (!members || !members.len || !members.Find(F)) return 0
 
 		if (!lightweight)
@@ -234,6 +231,8 @@
 				t = get_step( F, dir )
 				if (t && t.active_liquid)
 					t.active_liquid.blocked_dirs = 0
+
+		if(src.disposed || F.disposed) return 0 // update_icon lagchecks, rip
 
 		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
 		members -= F //remove after amt per tile ok? otherwise bad thing could happen
@@ -405,15 +404,13 @@
 		if (src.qdeled) return
 
 		src.draining = 1
-		if (!(src in processing_fluid_drains))
-			processing_fluid_drains.Add(src)
+		processing_fluid_drains |= src
 
 	proc/update_loop()
 		if (src.qdeled) return
 
 		src.updating = 1
-		if (!(src in processing_fluid_spreads))
-			processing_fluid_spreads.Add(src)
+		processing_fluid_spreads |= src
 
 	proc/update_required_to_spread()
 		return
@@ -492,8 +489,7 @@
 		var/depth_changed = 0 //force icon update later in the proc if fluid member depth changed
 		var/last_icon = 0
 
-		for(var/fluid in src.members)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in src.members)
 			LAGCHECK(LAG_HIGH)
 			if (!F || F.pooled || src.qdeled) continue
 
@@ -532,8 +528,7 @@
 		fluid_ma.color = targetcolor
 		fluid_ma.alpha = targetalpha
 
-		for(var/fluid in src.members)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in src.members)
 			if (!F || F.pooled || src.qdeled) continue
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//Same shit here with update_icon
@@ -573,9 +568,11 @@
 
 			//air specific (messy)
 			fluid_ma.opacity = master_opacity
-
+			fluid_ma.overlays = F.overlays // gross, needed because of perspective overlays
 			F.appearance = fluid_ma
 
+		if(src.disposed)
+			return 1
 
 		src.last_contained_amt = src.contained_amt
 		src.last_members_amt = src.members.len
@@ -599,8 +596,7 @@
 			if (F.blocked_dirs < 4) //skip that update if we were blocked (not an edge tile)
 				amt_per_tile = contained_amt / (members.len + created)
 
-				for(var/fluid in F.update())
-					var/obj/fluid/C = fluid
+				for (var/obj/fluid/C as() in F.update())
 					LAGCHECK(LAG_HIGH)
 					if (!C || C.pooled) continue
 					var/turf/T = C.loc
@@ -683,8 +679,7 @@
 			src.reagents.remove_any(src.amt_per_tile * removed_len)
 			src.contained_amt = src.reagents.total_volume
 
-		for (var/fluid in fluids_removed)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in fluids_removed)
 			src.remove(F,0,src.updating)
 			LAGCHECK(LAG_HIGH)
 
@@ -697,8 +692,7 @@
 
 		join_with.qdeled = 1 //hacky but stop updating
 
-		for (var/fluid in join_with.members)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in join_with.members)
 			LAGCHECK(LAG_HIGH)
 			if (!F) continue
 			F.group = src
@@ -747,8 +741,7 @@
 		var/datum/fluid_group/FG = new group_type
 		FG.can_update = 0
 		//add members to FG, remove them from src
-		for (var/fluid in connected)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in connected)
 			if (!FG) return 0
 			FG.members += F
 			F.group = FG

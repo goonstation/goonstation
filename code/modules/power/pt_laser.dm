@@ -1,7 +1,5 @@
 #define PTLEFFICIENCY 0.1
-#define PTLMAXINPUT 1e12
-#define PTLMAXOUTPUT 999e10
-#define PTLMINOUTPUT 1e6
+#define PTLMINOUTPUT 1 MEGA WATT
 
 /obj/machinery/power/pt_laser
 	name = "power transmission laser"
@@ -14,7 +12,7 @@
 	bound_height = 96
 	bound_width = 96
 	var/range = 100			//how far the beam goes, set to max(world.maxx,world.maxy) in New()
-	var/output = PTLMINOUTPUT		//power output of the beam
+	var/output = 0		//power output of the beam
 	var/capacity = 1e15
 	var/charge = 0
 	var/charging = 0
@@ -28,14 +26,15 @@
 	var/list/affecting_mobs = list()//mobs in the path of the beam
 	var/list/blocking_objects = list()	//the objects blocking the laser, if any
 	var/selling = FALSE
-	var/autorefresh = 1		//whether to autorefresh the browser menu. set to 0 while awaiting input() so it doesn't take focus away.
 	var/laser_process_counter = 0
 	var/input_number = 0
-	var/output_number = 1
+	var/output_number = 0
 	var/input_multi = 1		//for kW, MW, GW etc
 	var/output_multi = 1e6
 	var/emagged = FALSE
 	var/lifetime_earnings = 0
+	var/excess = null //for tgui readout
+	var/is_charging = FALSE //for tgui readout
 
 /obj/machinery/power/pt_laser/New()
 	..()
@@ -105,6 +104,8 @@
 		overlays += image('icons/obj/pt_laser.dmi', "charge_[clevel]")
 
 /obj/machinery/power/pt_laser/proc/chargedisplay()
+	if(!output)
+		return 0
 	return min(round((charge/abs(output))*6),6) //how close it is to firing power, not to capacity.
 
 /obj/machinery/power/pt_laser/process()
@@ -118,18 +119,20 @@
 	var/dont_update = 0
 
 	if(terminal)
-		var/excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
-		if(charging)
-			if(excess >= chargelevel)		// if there's power available, try to charge
-				var/load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
-				charge += load		// increase the charge
-				add_load(load)		// add the load to the terminal side network
-				load_last_tick = load
-			else load_last_tick = 0
+		src.excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
+		if(charging && src.excess >= src.chargelevel)		// if there's power available, try to charge
+			var/load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
+			charge += load		// increase the charge
+			add_load(load)		// add the load to the terminal side network
+			load_last_tick = load
+			if (!src.is_charging) src.is_charging = TRUE
+		else
+			load_last_tick = 0
+			if (src.is_charging) src.is_charging = FALSE
 
 	if(online) // if it's switched on
 		if(!firing) //not firing
-			if(charge >= abs(output)) //have power to fire
+			if(charge >= abs(output) && (abs(output) >= PTLMINOUTPUT)) //have power to fire
 				if(laser_parts.len == 0)
 					start_firing() //creates all the laser objects then activates the right ones
 				else
@@ -138,7 +141,7 @@
 				charge -= abs(output)
 				if(selling)
 					power_sold()
-		else if(charge < abs(output)) //firing but not enough charge to sustain
+		else if(charge < abs(output) && (abs(src.output) >= PTLMINOUTPUT)) //firing but not enough charge to sustain
 			stop_firing()
 		else //firing and have enough power to carry on
 			for(var/mob/living/L in affecting_mobs) //has to happen every tick
@@ -162,9 +165,6 @@
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
 		updateicon()
-
-	if(autorefresh)
-		src.updateDialog()
 
 /obj/machinery/power/pt_laser/proc/power_sold()
 	if (round(output) == 0)
@@ -280,7 +280,8 @@
 
 	for(var/dist = 0, dist < range, dist += 1)
 		T = get_step(T, dir)
-		if(!T || T.density) return dist
+		if(!T || T.density)
+			if(!istype(T, /turf/unsimulated/wall/trench)) return dist
 		for(var/obj/O in T)
 			if(!istype(O,/obj/window) && !istype(O,/obj/grille) && !ismob(O) && O.density)
 				blocking_objects += O
@@ -331,166 +332,114 @@
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
-	if(abs(output) > charge)
+	//only call stop_firing() if output setting is hire than charge, and if we are actually firing
+	if(src.firing && (abs(src.output) > src.charge))
 		stop_firing()
-		return
 
 	for(var/obj/lpt_laser/L in laser_parts)
-		L.power = round(abs(output)*PTLEFFICIENCY)
+		L.power = round(abs(src.output)*PTLEFFICIENCY)
 		L.alpha = max(50,min(255,L.power/39e7)) //255 (max) alpha at 1e11 power, the point at which the laser's most deadly effect happens
 
-/obj/machinery/power/pt_laser/attack_ai(mob/user)
+/obj/machinery/power/pt_laser/ui_state(mob/user)
+	return tgui_default_state
 
-	add_fingerprint(user)
+/obj/machinery/power/pt_laser/ui_status(mob/user, datum/ui_state/state)
+	return min(
+		state.can_use_topic(src, user),
+		tgui_broken_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
 
-	if(status & BROKEN) return
+/obj/machinery/power/pt_laser/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PowerTransmissionLaser")
+		ui.open()
 
-	interacted(user)
+/obj/machinery/power/pt_laser/ui_data(mob/user)
+	var/list/data = list()
+	data["capacity"] = src.capacity
+	data["charge"] = src.charge
+	data["isEmagged"] = src.emagged
+	data["isChargingEnabled"] = src.charging
+	data["excessPower"] = src.excess
+	data["gridLoad"] = src.terminal?.powernet.load
+	data["inputLevel"] = src.chargelevel
+	data["inputMultiplier"] = src.input_multi
+	data["inputNumber"] = src.input_number
+	data["isCharging"] = src.is_charging
+	data["isFiring"] = src.firing
+	data["isLaserEnabled"] = src.online
+	data["lifetimeEarnings"] = src.lifetime_earnings
+	data["name"] = src.name
+	data["outputLevel"] = src.output
+	data["outputMultiplier"] = src.output_multi
+	data["outputNumber"] = src.output_number
+	data["totalGridPower"] = src.terminal?.powernet.avail
+	return data
 
-/obj/machinery/power/pt_laser/proc/interacted(mob/user)
-
-	if ( (get_dist(src, user) > 1 ))
-		if (!isAI(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=Power Transmission Laser")
-			return
-
-	src.add_dialog(user)
-
-	var/t = "<TT><B>Power Transmission Laser</B><HR><PRE>"
-
-	t += "Efficiency: [PTLEFFICIENCY]<BR><BR>"
-
-	t += "Stored capacity: [engineering_notation(charge)]J ([round(100.0*charge/capacity, 0.1)]%)<BR>"
-
-	t += "Input: [charging ? "Charging" : "Not Charging"]    [charging ? "<B>On</B> <A href = '?src=\ref[src];cmode=1'>Off</A>" : "<A href = '?src=\ref[src];cmode=1'>On</A> <B>Off</B> "]<BR>"
-
-	switch(input_multi)
-		if(1)
-			t += "Input level: <A href = '?src=\ref[src];set_input=1'>[input_number]</A> <B>W</B> <A href = '?src=\ref[src];input=1'>kW</A> <A href = '?src=\ref[src];input=2'>MW</A> <A href = '?src=\ref[src];input=3'>GW</A> <A href = '?src=\ref[src];input=4'>TW</A><BR>"
-		if(1e3)
-			t += "Input level: <A href = '?src=\ref[src];set_input=1'>[input_number]</A> <A href = '?src=\ref[src];input=0'>W</A> <B>kW</B> <A href = '?src=\ref[src];input=2'>MW</A> <A href = '?src=\ref[src];input=3'>GW</A> <A href = '?src=\ref[src];input=4'>TW</A><BR>"
-		if(1e6)
-			t += "Input level: <A href = '?src=\ref[src];set_input=1'>[input_number]</A> <A href = '?src=\ref[src];input=0'>W</A> <A href = '?src=\ref[src];input=1'>kW</A> <B>MW</B> <A href = '?src=\ref[src];input=3'>GW</A> <A href = '?src=\ref[src];input=4'>TW</A><BR>"
-		if(1e9)
-			t += "Input level: <A href = '?src=\ref[src];set_input=1'>[input_number]</A> <A href = '?src=\ref[src];input=0'>W</A> <A href = '?src=\ref[src];input=1'>kW</A> <A href = '?src=\ref[src];input=2'>MW</A> <B>GW</B> <A href = '?src=\ref[src];input=4'>TW</A><BR>"
-		if(1e12)
-			t += "Input level: <A href = '?src=\ref[src];set_input=1'>[input_number]</A> <A href = '?src=\ref[src];input=0'>W</A> <A href = '?src=\ref[src];input=1'>kW</A> <A href = '?src=\ref[src];input=2'>MW</A> <A href = '?src=\ref[src];input=3'>GW</A> <B>TW</B><BR>"
-
-	t += "<BR><BR>"
-
-	t += "Output: [online ? "<B>Online</B> <A href = '?src=\ref[src];online=1'>Offline</A>" : "<A href = '?src=\ref[src];online=1'>Online</A> <B>Offline</B> "]<BR>"
-
-	switch(output_multi)
-		if(1e6)
-			t += "Output level: <A href = '?src=\ref[src];set_output=1'>[output_number]</A> <B>MW</B> <A href = '?src=\ref[src];output=3'>GW</A> <A href = '?src=\ref[src];output=4'>TW</A><BR>"
-		if(1e9)
-			t += "Output level: <A href = '?src=\ref[src];set_output=1'>[output_number]</A> <A href = '?src=\ref[src];output=2'>MW</A> <B>GW</B> <A href = '?src=\ref[src];output=4'>TW</A><BR>"
-		if(1e12)
-			t += "Output level: <A href = '?src=\ref[src];set_output=1'>[output_number]</A> <A href = '?src=\ref[src];output=2'>MW</A> <A href = '?src=\ref[src];output=3'>GW</A> <B>TW</B><BR>"
-
-	t += "<BR><br>lifetime earnings:<br>[engineering_notation(lifetime_earnings)] credits</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
-
-	t += "</TT>"
-	user.Browse(t, "window=Power Transmission Laser;size=460x300")
-	onclose(user, "Power Transmission Laser")
-	return
-
-/obj/machinery/power/pt_laser/Topic(href, href_list)
-	..()
-
-	if (usr.stat || usr.restrained() )
+/obj/machinery/power/pt_laser/ui_act(action, params)
+	if(..())
 		return
-
-	if (( usr.using_dialog_of(src) && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
-		if( href_list["close"] )
-			usr.Browse(null, "window=Power Transmission Laser")
-			src.remove_dialog(usr)
-			return
-
-		else if( href_list["cmode"] )
-			charging = !charging
-			updateicon()
-
-		else if( href_list["online"] )
-			online = !online
-			if(!online) stop_firing()
-			updateicon()
-
-		else if( href_list["input"] )
-			var/i = text2num(href_list["input"])
-
-			switch(i)
-				if(0)
-					input_multi = 1
-				if(1)
-					input_multi = 1e3
-				if(2)
-					input_multi = 1e6
-				if(3)
-					input_multi = 1e9
-				if(4)
-					input_multi = 1e12
-
-			chargelevel = input_multi*input_number
-
-		else if (href_list["set_input"])
-			autorefresh = 0
-			var/change = input(usr,"Input (0-999):","Enter desired input",input_number) as num
-			autorefresh = 1
-			if(!isnum(change)) return
-			input_number = min(max(0, change),999)
-
-			chargelevel = input_multi*input_number
-
-		else if( href_list["output"] )
-			var/i = text2num(href_list["output"])
-
-			switch(i)
-				if(2)
-					output_multi = 1e6
-				if(3)
-					output_multi = 1e9
-				if(4)
-					output_multi = 1e12
-
-			output = output_multi*output_number
-
-			update_laser_power()
-
-		else if (href_list["set_output"])
-			autorefresh = 0
-			var/change
-			if (emagged)
-				change = input(usr,"Output (-999-999):","Enter desired output",output) as num
-				if(!isnum(change)) return
-				output_number = min(max(-999, change),999)
+	switch(action)
+		//Input controls
+		if("toggleInput")
+			src.charging = !src.charging
+			. = TRUE
+		if("setInput")
+			src.input_number = clamp(params["setInput"], 0, 999)
+			src.chargelevel = src.input_number * src.input_multi
+			. = TRUE
+		if("inputW")
+			src.input_multi = 1 WATT
+			src.chargelevel = src.input_number * src.input_multi
+			. = TRUE
+		if("inputkW")
+			src.input_multi = 1 KILO WATT
+			src.chargelevel = src.input_number * src.input_multi
+			. = TRUE
+		if("inputMW")
+			src.input_multi = 1 MEGA WATT
+			src.chargelevel = src.input_number * src.input_multi
+			. = TRUE
+		if("inputGW")
+			src.input_multi = 1 GIGA WATT
+			src.chargelevel = src.input_number * src.input_multi
+			. = TRUE
+		if("inputTW")
+			src.input_multi = 1 TERA WATT
+			src.chargelevel = src.input_number * src.input_multi
+			. = TRUE
+		//Output controls
+		if("toggleOutput")
+			src.online = !src.online
+			if(!online) src.stop_firing()
+			. = TRUE
+		if("setOutput")
+			if (src.emagged)
+				src.output_number = clamp(params["setOutput"], -999, 999)
 			else
-				change = input(usr,"Output (1-999):","Enter desired output",output) as num
-				if(!isnum(change)) return
-				output_number = min(max(1, change),999)
-			autorefresh = 1
-			updateicon() //so that the charge display updates
-
-			output = output_multi*output_number
-
-			update_laser_power()
-
-		src.updateUsrDialog()
-
-	else
-		usr.Browse(null, "window=Power Transmission Laser")
-		src.remove_dialog(usr)
-
-	return
-
-/obj/machinery/power/pt_laser/attack_hand(mob/user)
-
-	add_fingerprint(user)
-
-	if(status & BROKEN) return
-
-	interacted(user)
+				src.output_number = clamp(params["setOutput"], 0, 999)
+			src.output = src.output_number * src.output_multi
+			if(!src.output)
+				src.stop_firing()
+			src.update_laser_power()
+			. = TRUE
+		if("outputMW")
+			src.output_multi = 1 MEGA WATT
+			src.output = src.output_number * src.output_multi
+			src.update_laser_power()
+			. = TRUE
+		if("outputGW")
+			src.output_multi = 1 GIGA WATT
+			src.output = src.output_number * src.output_multi
+			src.update_laser_power()
+			. = TRUE
+		if("outputTW")
+			src.output_multi = 1 TERA WATT
+			src.output = src.output_number * src.output_multi
+			src.update_laser_power()
+			. = TRUE
 
 /obj/machinery/power/pt_laser/ex_act(severity)
 	switch(severity)
@@ -581,7 +530,8 @@
 	if(power < 10) return
 	if(isintangible(L)) return // somehow flocktraces are still getting destroyed by the laser. maybe this will fix it
 
-	if(prob(min(power/1e5,50))) L.emote("scream") //might be spammy if they stand in it for ages, idk
+	if(prob(min(power/1e5,50)))
+		INVOKE_ASYNC(L, /mob/living.proc/emote, "scream") //might be spammy if they stand in it for ages, idk
 
 	if(L.dir == turn(src.dir,180) && ishuman(L)) //they're looking into the beam!
 		var/safety = 1
@@ -632,3 +582,6 @@
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 
 	return 0
+
+#undef PTLEFFICIENCY
+#undef PTLMINOUTPUT

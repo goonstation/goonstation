@@ -16,8 +16,9 @@
 	var/datum/projectile/proj_data = null
 	//var/obj/o_shooter = null
 	var/list/targets = list()
-	var/dissipation_ticker = 0 // moved this from the datum because why the hell was it on there
-	var/power = 20 // local copy of power for proper dissipation tracking
+	var/power = 20 // temp var to store what the current power of the projectile should be when it hits something
+	var/max_range = 0 //max range
+	var/initial_power = 20 // local copy of power for determining power when hitting things
 	var/implanted = null
 	var/forensic_ID = null
 	var/atom/shooter = null // Who/what fired this?
@@ -233,7 +234,8 @@
 		pixel_x = 0
 		pixel_y = 0
 		power = 0
-		dissipation_ticker = 0
+		initial_power = 0
+		max_range = 0
 		travelled = 0
 		target = null
 		proj_data = null
@@ -359,10 +361,7 @@
 			if (y32 < 0)
 				ys = -1
 				y32 = -y32
-		var/max_t
-		if (proj_data.dissipation_rate > 0) //500 is default maximum range
-			proj_data.max_range = min(proj_data.max_range, proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate))
-		max_t = proj_data.max_range // why not
+		var/max_t = src.max_range + 1 // why not  --- off by one error is why not apparently
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -425,10 +424,9 @@
 			die()
 			return
 		src.ticks_until_can_hit_mob--
-		src.dissipation_ticker++
 
 		// The bullet has expired/decayed.
-		if (src.dissipation_ticker > src.proj_data.max_range)
+		if (src.travelled > src.max_range * 32)
 			proj_data.on_max_range_die(src)
 			die()
 			return
@@ -481,6 +479,8 @@
 				else
 					set_loc(Dest) //set loc so we can cross walls etc properly
 					collide_with_applicable_in_tile(Dest)
+				if (disposed || pooled)
+					return
 
 				incidence = get_dir(curr_turf, Dest)
 				if (!(incidence in cardinal))
@@ -501,7 +501,7 @@
 					else
 						incidence &= NORTH | SOUTH
 
-			if (!loc)
+			if (!loc && !pooled)
 				die()
 				return
 
@@ -547,11 +547,10 @@ datum/projectile
 		override_color = 0
 		power = 20               // How much of a punch this has
 		cost = 1                 // How much ammo this costs
-		max_range = 500          // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
+		max_range = 0            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
 		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
 		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
-		dissipation_ticker = 0   // Tracks how many tiles we moved
 		ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
 		                            eg 1.0 will cause damage = to power while 0.0 would cause just stun = to power */
 
@@ -601,13 +600,13 @@ datum/projectile
 
 	// Self-explanatory.
 	var/hits_ghosts = 0
+	var/hits_wraiths = 0
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/pierces = 0
 	var/ticks_between_mob_hits = 0
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
-
 
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
@@ -657,7 +656,7 @@ datum/projectile
 			.= 1
 
 		get_power(obj/projectile/P, atom/A)
-			return src.power - max(0,((isnull(P.orig_turf)? 0 : get_dist(P.orig_turf, get_turf(A)))-src.dissipation_delay))*src.dissipation_rate
+			return P.initial_power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
 
 // WOO IMPACT RANGES
 // Meticulously calculated by hand.
@@ -799,128 +798,128 @@ datum/projectile/snowball
 			P.proj_data.on_pointblank(P, T)
 	P.collide(T) // The other immunity check is in there (Convair880).
 
-/proc/shoot_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source)
+/proc/shoot_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, T, remote_sound_source)
+	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i < DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay(S, DATA, T, remote_sound_source)
+				shoot_projectile_relay(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
 	return Q
 
-/proc/shoot_projectile_ST_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy)
+/proc/shoot_projectile_ST_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, T, pox, poy)
+	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay_pixel(S, DATA, T, pox, poy)
+				shoot_projectile_relay_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
 	return Q
 
-/proc/shoot_projectile_ST_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle)
+/proc/shoot_projectile_ST_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle)
+	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle)
+				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj)
 	return Q
 
-/proc/shoot_projectile_DIR(var/atom/movable/S, var/datum/projectile/DATA, var/dir, var/atom/movable/remote_sound_source)
+/proc/shoot_projectile_DIR(var/atom/movable/S, var/datum/projectile/DATA, var/dir, var/atom/movable/remote_sound_source, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
 	var/turf/T = get_step(get_turf(S), dir)
 	if (T)
-		return shoot_projectile_ST(S, DATA, T, remote_sound_source)
+		return shoot_projectile_ST(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
 	return null
 
-/proc/shoot_projectile_relay(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source)
+/proc/shoot_projectile_relay(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
-	var/obj/projectile/P = initialize_projectile_ST(S, DATA, T, remote_sound_source)
+	var/obj/projectile/P = initialize_projectile_ST(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
 	if (P)
 		P.launch()
 	return P
 
-/proc/shoot_projectile_relay_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy)
+/proc/shoot_projectile_relay_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
-	var/obj/projectile/P = initialize_projectile_pixel(S, DATA, T, pox, poy)
+	var/obj/projectile/P = initialize_projectile_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
 	if (P)
 		P.launch()
 	return P
 
-/proc/shoot_projectile_relay_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle)
+/proc/shoot_projectile_relay_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
-	var/obj/projectile/P = initialize_projectile_pixel_spread(S, DATA, T, pox, poy, spread_angle)
+	var/obj/projectile/P = initialize_projectile_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj)
 	if (P)
 		P.launch()
 	return P
 
-/proc/shoot_projectile_XY(var/atom/movable/S, var/datum/projectile/DATA, var/xo, var/yo)
+/proc/shoot_projectile_XY(var/atom/movable/S, var/datum/projectile/DATA, var/xo, var/yo, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
-	var/obj/projectile/Q = shoot_projectile_XY_relay(S, DATA, xo, yo)
+	var/obj/projectile/Q = shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_XY_relay(S, DATA, xo, yo)
+				shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj)
 	return Q
 
-/proc/shoot_projectile_XY_relay(var/atom/movable/S, var/datum/projectile/DATA, var/xo, var/yo)
+/proc/shoot_projectile_XY_relay(var/atom/movable/S, var/datum/projectile/DATA, var/xo, var/yo, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
-	var/obj/projectile/P = initialize_projectile(get_turf(S), DATA, xo, yo, S)
+	var/obj/projectile/P = initialize_projectile(get_turf(S), DATA, xo, yo, S, alter_proj = alter_proj)
 	if (P)
 		P.launch()
 	return P
 
-/proc/initialize_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source)
+/proc/initialize_projectile_ST(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/atom/movable/remote_sound_source, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
-	return initialize_projectile(Q1, DATA, Q2.x - Q1.x, Q2.y - Q1.y, S, remote_sound_source)
+	return initialize_projectile(Q1, DATA, Q2.x - Q1.x, Q2.y - Q1.y, S, remote_sound_source, alter_proj = alter_proj)
 
-/proc/initialize_projectile_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy)
+/proc/initialize_projectile_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
-	return initialize_projectile(Q1, DATA, (Q2.x - Q1.x) * 32 + pox, (Q2.y - Q1.y) * 32 + poy, S)
+	return initialize_projectile(Q1, DATA, (Q2.x - Q1.x) * 32 + pox, (Q2.y - Q1.y) * 32 + poy, S, alter_proj = alter_proj)
 
-/proc/initialize_projectile_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle)
-	var/obj/projectile/P = initialize_projectile_pixel(S, DATA, T, pox, poy)
+/proc/initialize_projectile_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null)
+	var/obj/projectile/P = initialize_projectile_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
 	if (P && spread_angle)
 		if (spread_angle < 0)
 			spread_angle = -spread_angle
@@ -928,7 +927,7 @@ datum/projectile/snowball
 		P.rotateDirection(prob(50) ? spread : -spread)
 	return P
 
-/proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null, var/turf/remote_sound_source, var/play_shot_sound = TRUE)
+/proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null, var/turf/remote_sound_source, var/play_shot_sound = TRUE, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
 	var/obj/projectile/P = unpool(/obj/projectile)
@@ -936,13 +935,25 @@ datum/projectile/snowball
 		return
 
 	P.set_loc(S)
-	P.proj_data = DATA
-	P.set_icon()
+	P.orig_turf = get_turf(S)
 	P.shooter = shooter
+	P.power = DATA.power
+
+	P.proj_data = DATA
+	if(!isnull(alter_proj))
+		alter_proj.Invoke(P)
+
+
+	if(P.proj_data == DATA)
+		P.initial_power = P.power //allows us to set projectile power in callback without needing a new projectile datum
+	else
+		DATA = P.proj_data //could have been changed by alter_projectile
+		P.initial_power = DATA.power
+
+	P.set_icon()
 	P.name = DATA.name
 	P.setMaterial(DATA.material)
-	P.power = DATA.power
-	P.orig_turf = S
+
 
 	if (DATA.implanted)
 		P.implanted = DATA.implanted
@@ -968,6 +979,15 @@ datum/projectile/snowball
 
 	P.xo = xo
 	P.yo = yo
+
+	if(!DATA.max_range)
+		if(DATA.dissipation_rate <= 0)
+			P.max_range = 500
+		else
+			P.max_range = DATA.dissipation_delay + round(P.power / DATA.dissipation_rate)
+	else
+		P.max_range = DATA.max_range
+
 	return P
 
 /proc/stun_bullet_hit(var/obj/projectile/O, var/mob/living/L)

@@ -1,4 +1,4 @@
-/proc/Artifact_Spawn(var/atom/T,var/forceartitype)
+/proc/Artifact_Spawn(var/atom/T,var/forceartiorigin, var/datum/artifact/forceartitype = null)
 	if (!T)
 		return
 	if (!istype(T,/turf/) && !istype(T,/obj/))
@@ -19,24 +19,31 @@
 
 	var/list/selection_pool = list()
 
-	for (var/datum/artifact/A in artifact_controls.artifact_types)
-		if (A.rarity_class != rarityroll)
-			continue
-		if (istext(forceartitype) && !(forceartitype in A.validtypes))
-			continue
-		selection_pool += A
+	if(forceartitype)
+		selection_pool += forceartitype
+	else
+		for (var/datum/artifact/A as() in concrete_typesof(/datum/artifact))
+			if (initial(A.rarity_class) != rarityroll)
+				continue
+			if (istext(forceartiorigin) && !(forceartiorigin in initial(A.validtypes)))
+				continue
+			selection_pool += A
 
 	if (selection_pool.len < 1)
 		return
 
 	var/datum/artifact/picked = pick(selection_pool)
-	if (!istype(picked,/datum/artifact/))
+
+	var/type = null
+	if(ispath(picked,/datum/artifact/))
+		type = initial(picked.associated_object)	// artifact type
+	else
 		return
 
-	if (istext(forceartitype))
-		new picked.associated_object(T,forceartitype)
+	if (istext(forceartiorigin))
+		new type(T,forceartiorigin)
 	else
-		new picked.associated_object(T)
+		new type(T)
 
 /obj/proc/ArtifactSanityCheck()
 	// This proc is called in any other proc or thing that uses the new artifact shit. If there was an improper artifact variable
@@ -140,7 +147,8 @@
 		return 1
 	var/datum/artifact/A = src.artifact
 	if(A.internal_name)
-		src.name = A.internal_name
+		src.real_name = A.internal_name
+		UpdateName()
 	if (A.activated)
 		return 1
 	if (A.triggers.len < 1 && !A.automatic_activation)
@@ -314,6 +322,8 @@
 	var/turf/T = get_turf(src)
 
 	var/datum/artifact/A = src.artifact
+	if(!istype(A))
+		return
 
 	// Possible stimuli = force, elec, radiate, heat
 	switch(A.artitype.name)

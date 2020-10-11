@@ -65,6 +65,8 @@
 
 	var/login_success = 0
 
+	var/view_tint
+
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
 #ifdef PROC_LOGGING
@@ -122,10 +124,10 @@
 /client/Del()
 	if (player_capa && src.login_success)
 		player_cap_grace[src.ckey] = TIME + 2 MINUTES
-
+	/* // THIS THING IS BREAKING THE REST OF THE PROC FOR SOME REASON AND I HAVE NO IDEA WHY
 	if (current_state < GAME_STATE_FINISHED)
 		ircbot.event("logout", src.key)
-
+	*/
 	logTheThing("admin", src, null, " has disconnected.")
 
 	src.images.Cut() //Probably not needed but eh.
@@ -138,6 +140,9 @@
 		onlineAdmins.Remove(src)
 		src.holder.dispose()
 		src.holder = null
+
+	src.player?.log_leave_time() //logs leave time, calculates played time on player datum
+
 	return ..()
 
 /client/New()
@@ -148,6 +153,7 @@
 
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "Sorry, this game does not support Telnet.")
+		preferences = new
 		sleep(5 SECONDS)
 		del(src)
 		return
@@ -161,7 +167,15 @@
 		player = make_player(key)
 	player.client = src
 
+	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
+		src.player.log_join_time()
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Player set ([player])")
+
+	// moved preferences from new_player so it's accessible in the client scope
+	if (!preferences)
+		preferences = new
+
 
 	//Assign custom interface datums
 	src.chatOutput = new /datum/chatOutput(src)
@@ -182,7 +196,7 @@
 		)
 		src.loadResourcesFromList(chuiResources)
 
-	if (!istype(src.mob, /mob/new_player))
+	if (!isnewplayer(src.mob))
 		src.loadResources()
 
 /*
@@ -203,31 +217,30 @@
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
 
 	if (IsGuestKey(src.key))
-		if(!src.address || src.address == world.host)
-			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
-		var/gueststring = {"
-						<!doctype html>
-						<html>
-							<head>
-								<title>No guest logins allowed!</title>
-								<style>
-									h1, .banreason {
-										font-color:#F00;
-									}
+		if(!(!src.address || src.address == world.host)) // If you're a host or a developer locally, ignore this check.
+			var/gueststring = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>No guest logins allowed!</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
 
-								</style>
-							</head>
-							<body>
-								<h1>Guest Login Denied</h1>
-								Don't forget to log in to your byond account prior to connecting to this server.
-							</body>
-						</html>
-					"}
-		src.mob.Browse(gueststring, "window=getout")
-		sleep(10)
-		if (src)
-			del(src)
-		return
+									</style>
+								</head>
+								<body>
+									<h1>Guest Login Denied</h1>
+									Don't forget to log in to your byond account prior to connecting to this server.
+								</body>
+							</html>
+						"}
+			src.mob.Browse(gueststring, "window=getout")
+			sleep(10)
+			if (src)
+				del(src)
+			return
 
 	if (world.time < 7 SECONDS)
 		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
@@ -313,10 +326,6 @@
 		del(src)
 		return
 
-	// moved preferences from new_player so it's accessible in the client scope
-	if (!preferences)
-		preferences = new
-
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
 
 	clients += src
@@ -347,7 +356,9 @@
 		updateXpRewards()
 
 	SPAWN_DBG(3 SECONDS)
+#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 		var/is_newbie = 0
+#endif
 		// new player logic, moving some of the preferences handling procs from new_player.Login
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - 3 sec spawn stuff")
 		if (!preferences)
@@ -364,8 +375,8 @@
 				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
-#endif
 				is_newbie = 1
+#endif
 			else if(!src.holder)
 				preferences.sanitize_name()
 
@@ -405,6 +416,7 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
+		src.mob.reset_keymap()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
@@ -527,6 +539,9 @@
 		ignore_sound_flags |= SOUND_VOX
 
 	src.reputations = new(src)
+
+	// Set view tint
+	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
 
 	if(src.holder && src.holder.level >= LEVEL_CODER)
 		src.control_freak = 0
@@ -986,7 +1001,7 @@ var/global/curr_day = null
 			src.Browse(null, "window=resourcePreload")
 			return
 
-	..()
+	. = ..()
 	return
 
 /client/proc/mute(len = -1)
@@ -1086,6 +1101,12 @@ var/global/curr_day = null
 	set name ="apply-depth-shadow"
 
 	apply_depth_filter() //see _plane.dm
+
+/client/verb/apply_view_tint()
+	set hidden = 1
+	set name ="apply-view-tint"
+
+	view_tint = !view_tint
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.
@@ -1375,6 +1396,8 @@ menub.background-color=[_SKIN_BG];\
 menub.text-color=[_SKIN_TEXT];\
 bugreportb.background-color=[_SKIN_BG];\
 bugreportb.text-color=[_SKIN_TEXT];\
+githubb.background-color=[_SKIN_BG];\
+githubb.text-color=[_SKIN_TEXT];\
 wikib.background-color=[_SKIN_BG];\
 wikib.text-color=[_SKIN_TEXT];\
 mapb.background-color=[_SKIN_BG];\

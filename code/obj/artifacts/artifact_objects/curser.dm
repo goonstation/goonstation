@@ -2,7 +2,7 @@
 	name = "artifact curser"
 	associated_datum = /datum/artifact/curser
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 
 	ArtifactActivated(var/mob/living/user as mob)

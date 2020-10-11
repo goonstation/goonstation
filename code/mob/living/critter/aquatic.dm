@@ -37,16 +37,17 @@
 	if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
 		src.is_pet = 0
 	if(src.is_pet)
-		pets += src
+		START_TRACKING_CAT(TR_CAT_PETS)
 	src.update_water_status(loc)
 	..()
+	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
 
 /mob/living/critter/aquatic/disposing()
 	if(ai)
 		ai.dispose()
 	ai = null
 	if(src.is_pet)
-		pets -= src
+		STOP_TRACKING_CAT(TR_CAT_PETS)
 	..()
 
 /mob/living/critter/aquatic/setup_healths()
@@ -203,7 +204,7 @@
 	if(!isdead(src))
 		animate_bumble(src)
 
-/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom)
+/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..()
 	if(!water_need && !isdead(src))
 		animate_bumble(src)

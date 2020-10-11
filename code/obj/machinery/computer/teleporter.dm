@@ -62,7 +62,7 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 
-	for(var/obj/item/device/radio/beacon/R in by_type[/obj/item/device/radio/beacon])
+	for_by_tcl(R, /obj/item/device/radio/beacon)
 		if (!istype(R, /obj/item/device/radio/beacon/jones))
 			var/turf/T = get_turf(R)
 			if (!T)	continue
@@ -73,7 +73,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-	for (var/obj/item/implant/tracking/I in by_type[/obj/item/implant/tracking])
+	for_by_tcl(I, /obj/item/implant/tracking)
 		if (!I.implanted || !ismob(I.loc))
 			continue
 		else

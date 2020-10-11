@@ -94,7 +94,7 @@
 		SPAWN_DBG(10 SECONDS)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 8, 3)
+				shake_camera(H, 8, 32)
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(20 SECONDS)
@@ -108,13 +108,13 @@
 		SPAWN_DBG(40 SECONDS)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 8, 2)
+				shake_camera(H, 8, 24)
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(1 MINUTE)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 7, 1)
+				shake_camera(H, 7, 16)
 				H.change_misstep_chance(5)
 
 		SPAWN_DBG(80 SECONDS)

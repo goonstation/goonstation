@@ -41,6 +41,11 @@ mob/new_player
 			mind = new(src)
 			keyd = mind.key
 
+		if (src.client?.player) //playtime logging stuff
+			var/datum/player/P = src.client.player
+			if (!isnull(P.round_join_time) && isnull(P.round_leave_time)) //they likely died but didnt d/c b4 respawn
+				P.log_leave_time()
+
 		new_player_panel()
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
@@ -87,16 +92,22 @@ mob/new_player
 		ready = 0
 		if (src.ckey) //Null if the client changed to another mob, but not null if they disconnected.
 			spawned_in_keys -= "[src.ckey]"
+		else if (isclient(src.last_client)) //playtime logging stuff
+			src.last_client.player.log_join_time()
+
 		..()
 		close_spawn_windows()
 		if(!spawning)
 			qdel(src)
 
 		// Given below call, not much reason to do this if pregameHTML wasn't set
-		if (pregameHTML && src.last_client)
+		// explanation for isnull(src.key) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
+		if (isnull(src.key) && pregameHTML && isclient(src.last_client))
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
-			winshow(src.last_client, "pregameBrowser", 0)
-			src.last_client << browse("", "window=pregameBrowser")
+			SPAWN_DBG(0)
+				if(isclient(src.last_client))
+					winshow(src.last_client, "pregameBrowser", 0)
+					src.last_client << browse("", "window=pregameBrowser")
 		return
 
 	verb/new_player_panel()
@@ -301,6 +312,9 @@ mob/new_player
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
+			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
+				boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
+				//As with the Stowaway trait, location setting is handled elsewhere.
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
@@ -345,7 +359,7 @@ mob/new_player
 			var/miscreant = 0
 #ifdef MISCREANTS
 #ifndef RP_MODE
-			if (ticker && !character.client.using_antag_token && character.mind && JOB.allow_traitors != 0 && prob(10))
+			if (ticker && character.mind && !character.client.using_antag_token && JOB.allow_traitors != 0 && prob(10))
 				ticker.generate_miscreant_objectives(character.mind)
 				miscreant = 1
 #endif

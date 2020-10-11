@@ -79,8 +79,7 @@
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 /obj/item/cell/charged
 	charge = 7500
@@ -110,12 +109,11 @@
 	SPAWN_DBG(0.5 SECONDS)
 		updateicon()
 
-	if (genrate && !(src in processing_items))
-		processing_items.Add(src)
+	if (genrate)
+		processing_items |= src
 
 /obj/item/cell/disposing()
-	if (src in processing_items)
-		processing_items.Remove(src)
+	processing_items -= src
 	..()
 
 /obj/item/cell/proc/updateicon()
@@ -212,7 +210,7 @@
 
 /obj/item/cell/proc/explode()
 	if(src in bible_contents)
-		for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])
+		for_by_tcl(B, /obj/item/storage/bible)
 			var/turf/T = get_turf(B.loc)
 			if(T)
 				T.hotspot_expose(700,125)

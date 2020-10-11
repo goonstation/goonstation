@@ -340,7 +340,10 @@
 
 		else if (href_list["eject"])
 			if (beaker)
-				usr.put_in_hand_or_drop(beaker)
+				if(IN_RANGE(usr, src, 1))
+					usr.put_in_hand_or_drop(beaker)
+				else
+					beaker:set_loc(src.output_target ? src.output_target : get_turf(src))
 				beaker = null
 			else
 				var/obj/item/I = usr.equipped()

@@ -3,7 +3,7 @@
 
 // Added kyle2143's werewolf patch (Gannets).
 
-//////////////////////////////////////////// Setup //////////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
 /mob/proc/make_werewolf(var/force=0)
 	if (ishuman(src))
@@ -44,12 +44,12 @@
 		if (!src.getStatusDuration("weakened"))
 			src.emote("collapse")
 		boutput(src, "<span class='alert'><b>Your body feels as if it's on fire! You think it's... IT'S CHANGING! You should probably get somewhere private!</b></span>")
-		SPAWN_DBG(rand(300, 500))
-			src.emote("scream")
-			if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
-				src.emote("collapse")
-			W.addAbility(/datum/targetable/werewolf/werewolf_transform)
-			src.werewolf_transform(0, 0) // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
+		sleep(rand(300, 500))
+		src.emote("scream")
+		if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
+			src.emote("collapse")
+		W.addAbility(/datum/targetable/werewolf/werewolf_transform)
+		src.werewolf_transform(0, 0) // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
 
 ////////////////////////////////////////////// Helper procs //////////////////////////////
 

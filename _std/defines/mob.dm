@@ -1,6 +1,8 @@
 //various mob_flags go here
-#define MOB_HEARS_ALL 1 	//For mobs who can hear everything (mainly observer ghossts)
-#define SPEECH_REVERSE 2 	//God Ecaps
+/// For mobs who can hear everything (mainly observer ghossts)
+#define MOB_HEARS_ALL 1
+// God Ecaps
+#define SPEECH_REVERSE 2
 #define SPEECH_BLOB 4		//yes
 #define SEE_THRU_CAMERAS 8	//for ai eye
 #define IS_BONER 16			//for skeletals
@@ -27,16 +29,32 @@
 #define LIMB_LEFT_LEG 4
 #define LIMB_RIGHT_LEG 8
 
-//mob damage
-#define MIN_EFFECTIVE_RAD 3 //How many rads after resistances before it actually does anything. Example: This is set to 3, someone takes rad damage that is reduced to 2 by resistances. Nothing happens as its below the min. of 3.
-#define FIRE_DAMAGE_MODIFIER 0.0215 //Higher values result in more external fire damage to the skin (default 0.0215)
-#define AIR_DAMAGE_MODIFIER 2.025 //More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
+// ---- mob damage ----
 
-#define BURNING_LV1 0   //Lv1 starts at this duration.
-#define BURNING_LV2 200 //Lv2 ^^
-#define BURNING_LV3 400 //Lv3 ^^
+/**
+	* How many rads after resistances before it actually does anything.
+	*
+	* Example: This is set to 3, someone takes rad damage that is reduced to 2 by resistances. Nothing happens as its below the min. of 3.
+	*/
+#define MIN_EFFECTIVE_RAD 3
+/// Higher values result in more external fire damage to the skin
+#define FIRE_DAMAGE_MODIFIER 0.0215
+/// More means less damage from hot air scalding lungs, less = more damage.
+#define AIR_DAMAGE_MODIFIER 2.025
+
+/// Burning Lv1 starts at this duration.
+#define BURNING_LV1 0
+/// Burning Lv2 starts at this duration.
+#define BURNING_LV2 200
+/// Burning Lv3 starts at this duration.
+#define BURNING_LV3 400
 
 //hearing
 #define HEARING_NORMAL 0
 #define HEARING_BLOCKED 1
-#define HEARING_ANTIDEAF -1 //what the fuck is an anti deaf
+/// cures deafness when worn
+#define HEARING_ANTIDEAF -1 // w h a t the fuck is an anti deaf
+
+//cooldowns
+#define REST_TOGGLE_COOLDOWN 0.1 SECONDS
+#define EAT_COOLDOWN 0.5 SECONDS

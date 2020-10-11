@@ -77,8 +77,8 @@
 	src.canmove = 0
 	flick("flocktrace-death", src)
 	src.ghostize()
-	sleep(2 SECONDS) // wait for the animation to finish
-	qdel(src)
+	spawn(2 SECONDS) // wait for the animation to finish
+		qdel(src)
 
 /mob/living/intangible/flock/trace/ghostize()
 	var/mob/dead/observer/O = ..()

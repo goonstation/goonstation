@@ -5,7 +5,7 @@
 /////////////////////////////////////////////
 
 proc/ClearBadsmokeRefs(var/atom/A)
-	for (var/datum/effects/system/bad_smoke_spread/BS in by_type[/datum/effects/system/bad_smoke_spread])
+	for_by_tcl(BS, /datum/effects/system/bad_smoke_spread)
 		if (BS.holder == A)
 			BS.holder = null
 
@@ -72,7 +72,7 @@ proc/ClearBadsmokeRefs(var/atom/A)
 					pool(smoke)
 					continue
 				step(smoke,direction)
-			SPAWN_DBG(150+rand(10,30))
-				if (smoke)
-					pool(smoke)
-				src.total_smoke--
+			sleep(150+rand(10,30))
+			if (smoke)
+				pool(smoke)
+			src.total_smoke--

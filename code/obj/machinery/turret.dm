@@ -36,11 +36,13 @@
 	var/area/station/turret_protected/TP = get_area(src)
 	if(istype(TP))
 		TP.turret_list += src
+	START_TRACKING
 
 /obj/machinery/turret/disposing()
 	var/area/station/turret_protected/TP = get_area(src)
 	if(istype(TP))
 		TP.turret_list -= src
+	STOP_TRACKING
 	..()
 
 /obj/machinery/turret/proc/isPopping()
@@ -345,10 +347,16 @@
 	var/lethal = 0
 	var/locked = 1
 	var/emagged = 0
-	var/turretsExist = 1
+	var/turretArea = null
 
 	req_access = list(access_ai_upload)
 	object_flags = CAN_REPROGRAM_ACCESS
+
+	New()
+		..()
+		if (!src.turretArea)
+			var/area/A = get_area(src)
+			src.turretArea = A.type
 
 /obj/machinery/turretid/attackby(obj/item/W, mob/user)
 	if(status & BROKEN) return
@@ -389,7 +397,7 @@
 		return
 	var/t = "<TT><B>Turret Control Panel</B> ([area.name])<HR>"
 
-	if(!src.emagged && turretsExist)
+	if(!src.emagged)
 		if(src.locked && (!issilicon(user) && !isAI(user)))
 			t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 		else
@@ -467,23 +475,20 @@
 
 
 /obj/machinery/turretid/proc/updateTurrets()
-	if(turretsExist) //Let's not waste a lot of time here.
-		if (src.enabled)
-			if (src.lethal)
-				icon_state = "ai1"
-			else
-				icon_state = "ai3"
-		else
-			icon_state = "ai0"
+	for_by_tcl(turret, /obj/machinery/turret)
+		var/area/A = get_area(turret)
+		if (A.type == src.turretArea)
+			turret.setState(enabled, lethal)
+			src.updateicon()
 
-		var/area/area = get_area(src)
-		if (!istype(area))
-			logTheThing("debug", null, null, "Turret badly positioned.")
-			return
-		turretsExist = 0
-		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(area))
-			aTurret.setState(enabled, lethal)
-			turretsExist = 1
+/obj/machinery/turretid/proc/updateicon()
+	if (src.enabled)
+		if (src.lethal)
+			icon_state = "ai1"
+		else
+			icon_state = "ai3"
+	else
+		icon_state = "ai0"
 
 /obj/machinery/turretid/emag_act(var/mob/user)
 	if(!emagged)
@@ -519,4 +524,4 @@
 		updateTurrets()
 
 		sleep(rand(1, 10) * 10)
-	while(emagged && turretsExist)
+	while(emagged)

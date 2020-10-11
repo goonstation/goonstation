@@ -269,6 +269,8 @@
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
+			else if(src.icon_empty)
+				src.icon_state = initial(src.icon_state)
 		else
 			if (src.icon_empty)
 				src.icon_state = src.icon_empty
@@ -447,6 +449,9 @@
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
 	caliber = 0.355
 
+/obj/item/ammo/bullets/nine_mm_NATO/boomerang //empty clip for the clock_188/boomerang
+	amount_left = 0
+
 /obj/item/ammo/bullets/a12
 	sname = "12ga Buckshot"
 	name = "12ga buckshot ammo box"
@@ -504,18 +509,6 @@
 	sname = "12ga Rubber Slug"
 	name = "12ga rubber slugs"
 	ammo_type = new/datum/projectile/bullet/abg
-	icon_state = "bg"
-	amount_left = 8.0
-	max_amount = 8.0
-	caliber = 0.72
-	icon_dynamic = 0
-	icon_empty = "bg-0"
-	sound_load = 'sound/weapons/gunload_click.ogg'
-
-/obj/item/ammo/bullets/pbr
-	sname = "12ga Plastic Baton Rounds"
-	name = "12ga plastic baton rounds"
-	ammo_type = new/datum/projectile/bullet/pbr
 	icon_state = "bg"
 	amount_left = 8.0
 	max_amount = 8.0
@@ -714,6 +707,19 @@
 		amount_left = 1
 		max_amount = 1
 
+/obj/item/ammo/bullets/pbr
+	sname = "40mm Plastic Baton Rounds"
+	name = "40mm plastic baton rounds"
+	ammo_type = new/datum/projectile/bullet/pbr
+	amount_left = 2
+	max_amount = 2
+	icon_state = "40mmB"
+	caliber = 1.57
+	w_class = 3
+	icon_dynamic = 0
+	icon_empty = "40mmB-0"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
 /obj/item/ammo/bullets/grenade_shell
 	sname = "40mm Custom Shell"
@@ -866,8 +872,7 @@
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
 
 	disposing()
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 	emp_act()
@@ -1014,20 +1019,17 @@
 		return
 
 	New()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		..()
 		return
 
 	charge(var/amt = 0)
 		if (src.charge < src.max_charge)
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		return ..()
 
 	use(var/amt = 0)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		return ..()
 
 	process()

@@ -202,6 +202,7 @@
 			update_tools()
 
 	New(M)
+		..()
 		master = M
 
 		// @TODO i fucking hate the boxes not being clickable so here's a gross hack to fix it

@@ -14080,10 +14080,7 @@
 "aAb" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery"
-	},
+/obj/item/clothing/suit/cultist/nerd,
 /obj/item/dice/magic8ball,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
@@ -33691,6 +33688,10 @@
 /obj/table/reinforced/auto,
 /obj/window/crystal/reinforced/north,
 /obj/machinery/light_switch/west,
+/obj/machinery/defib_mount{
+	pixel_x = 2;
+	pixel_y = -4
+	},
 /obj/item/paper/Port_A_Brig,
 /obj/item/remote/porter/port_a_brig,
 /obj/window/crystal/reinforced/north,

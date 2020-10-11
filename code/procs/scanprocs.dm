@@ -178,14 +178,14 @@
 	if (R)
 		rad_data = "&emsp;<span class='alert'>Radiation poisoning: Lv [R.stage]</span>"
 	if (NR)
-		nrad_data = "&emsp;<span class='notice'>Neutron Radiation poisoning: Lv [NR.stage]</span>"
+		nrad_data = "&emsp;<span class='alert'>Neutron Radiation poisoning: Lv [NR.stage]</span>"
 	for (var/datum/ailment_data/A in M.ailments)
 		if (disease_detection >= A.detectability)
 			disease_data += "<br>[A.scan_info()]"
 
 	if (M.reagents)
 		if (verbose_reagent_info)
-			reagent_data = scan_reagents(M, 0)
+			reagent_data = scan_reagents(M, 0, 0, 0, 1)
 		else
 			var/ephe_amt = M.reagents:get_reagent_amount("ephedrine")
 			var/epi_amt = M.reagents:get_reagent_amount("epinephrine")
@@ -293,7 +293,7 @@
 			break
 	return
 
-/proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0)
+/proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -325,15 +325,15 @@
 
 			for (var/current_id in reagents.reagent_list)
 				var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
+				var/show_OD = (medical && current_reagent.overdose != 0 && current_reagent.volume >= current_reagent.overdose)
 				if (single_line)
-					reagent_data += " [current_reagent] ([current_reagent.volume]),"
+					reagent_data += "<span [show_OD ? "class='alert'" : "class='notice'"]>[current_reagent] ([current_reagent.volume])[show_OD? " - OD!":""]</span>,"
 				else
-					reagent_data += "<br>&emsp;[current_reagent.name] - [current_reagent.volume]"
-
+					reagent_data += "<span [show_OD ? "class='alert'" : "class='notice'"]><br>&emsp;[current_reagent.name] - [current_reagent.volume][show_OD? " - OD!":""]</span>"
 			if (single_line)
-				data += "<span class='notice'>[copytext(reagent_data, 1, -1)]</span>"
+				data += "[copytext(reagent_data, 1, -1)]"
 			else
-				data += "<span class='notice'>[reagent_data]</span>"
+				data += "[reagent_data]"
 
 			if (show_temp)
 				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature - T0C]&deg;C ([reagents.total_temperature * 1.8-459.67]&deg;F)</span>"
@@ -535,6 +535,8 @@
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
 /proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0)
+	if (istype(A, /obj/ability_button))
+		return
 	if (!A)
 		if (pda_readout == 1)
 			return "Unable to obtain a reading."

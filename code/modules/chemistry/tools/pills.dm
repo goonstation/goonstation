@@ -11,6 +11,7 @@
 	icon_state = "pill0"
 	item_state = "pill"
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
+	flags = NOSPLASH
 	module_research = list("medicine" = 0.5, "science" = 0.5)
 	module_research_type = /obj/item/reagent_containers/pill
 	rand_pos = 1
@@ -37,8 +38,6 @@
 		if (src.random_icon)
 			src.create_random_icon()
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		return
 
 	attack_self(mob/user as mob)
 		if (!src.reagents || !src.reagents.total_volume)
@@ -97,6 +96,12 @@
 		return 0
 
 	attackby(obj/item/I as obj, mob/user as mob)
+		if (!I)
+			return
+		if (I.is_open_container() && I.reagents)
+			if (istype(I, /obj/item/clothing/mask/cigarette)) //Apparently you can smush a lit cigarette into a pill and destroy both
+				return
+			afterattack(I, user)	//Probably weird but afterattack contains the dissolving code
 		return
 
 	proc/create_random_icon()
@@ -354,45 +359,41 @@
 	name = "mannitol pill"
 	desc = "Used to treat cranial swelling."
 	icon_state = "pill1"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("mannitol", 20)
+		..()
+		reagents.add_reagent("mannitol", 20)
 
 /obj/item/reagent_containers/pill/vr/antitox
 	name = "anti-toxins pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill2"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("charcoal", 50)
+		..()
+		reagents.add_reagent("charcoal", 50)
 
 /obj/item/reagent_containers/pill/vr/salicylic_acid
 	name = "analgesic pill"
 	desc = "Commonly used to treat moderate pain and fevers."
 	icon_state = "pill3"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("salicylic_acid", 20)
+		..()
+		reagents.add_reagent("salicylic_acid", 20)
 
 /obj/item/reagent_containers/pill/vr/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat respiratory distress."
 	icon_state = "pill4"
+	initial_volume = 100
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("salbutamol", 20)
+		..()
+		reagents.add_reagent("salbutamol", 20)
 
 /obj/item/reagent_containers/pill/ipecac
 	name = "space ipecac pill"

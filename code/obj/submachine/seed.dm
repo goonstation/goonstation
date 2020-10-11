@@ -666,6 +666,7 @@
 			var/staystill = user.loc
 			for(var/obj/item/P in view(1,user))
 				sleep(0.2 SECONDS)
+				if (!P) continue
 				if (user.loc != staystill) break
 				if (P.type == O.type)
 					if (istype(O, /obj/item/seed/)) src.seeds.Add(P)
@@ -1357,7 +1358,7 @@
 			//Takes at least 2 hits to kill.
 			if (_health)
 				_health = 0
-				return 
+				return
 
 			if (prob(40))
 				user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W]!</span>")

@@ -309,7 +309,7 @@
 			return 0
 		return 1
 
-	hitby(AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
 		playsound(src.loc, src.hitsound , 100, 1)
@@ -481,17 +481,17 @@
 		if(need_rebuild)
 			if(istype(source)) //Rebuild/update nearby group geometry
 				if(source.parent)
-					air_master.queue_update_group(source.parent)
+					air_master.groups_to_rebuild |= source.parent
 				else
-					air_master.queue_update_tile(source)
+					air_master.tiles_to_update |= source
 			if(istype(target))
 				if(target.parent)
-					air_master.queue_update_group(target.parent)
+					air_master.groups_to_rebuild |= target.parent
 				else
-					air_master.queue_update_tile(target)
+					air_master.tiles_to_update |= target
 		else
-			if(istype(source)) air_master.queue_update_tile(source)
-			if(istype(target)) air_master.queue_update_tile(target)
+			if(istype(source)) air_master.tiles_to_update |= source
+			if(istype(target)) air_master.tiles_to_update |= target
 
 		if (map_currently_underwater)
 			var/turf/space/fluid/n = get_step(src,NORTH)
@@ -818,10 +818,15 @@
 	var/no_dirs = 0 //ignore directional
 
 	New()
-		SPAWN_DBG(1 DECI SECOND)
-			src.set_up()
-			SPAWN_DBG(1 SECOND)
-				qdel(src)
+		..()
+		if(current_state >= GAME_STATE_WORLD_INIT)
+			SPAWN_DBG(0)
+				initialize()
+
+	initialize()
+		. = ..()
+		src.set_up()
+		qdel(src)
 
 	proc/set_up()
 		if (!locate(text2path(src.grille_path)) in get_turf(src))
@@ -831,7 +836,7 @@
 		if (!no_dirs)
 			for (var/dir in cardinal)
 				var/turf/T = get_step(src, dir)
-				if (!locate(/obj/wingrille_spawn) in T)
+				if ((!locate(/obj/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
 					var/obj/window/new_win = text2path("[src.win_path]/[dir2text(dir)]")
 					new new_win(src.loc)
 		if (src.full_win)
@@ -920,8 +925,12 @@
 	opacity = 1
 	hitsound = 'sound/impact_sounds/Metal_Hit_Light_1.ogg'
 	shattersound = 'sound/impact_sounds/Metal_Hit_Light_1.ogg'
+	default_material = null
 
 	New()
+		..()
+
+	update_nearby_tiles(need_rebuild, selfnotify)
 		return
 
 	smash()

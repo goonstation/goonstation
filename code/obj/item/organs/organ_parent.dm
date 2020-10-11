@@ -122,7 +122,7 @@
 		holder = null
 		..()
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A) //
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
 		if (T && !src.decal_done && ispath(src.created_decal))
@@ -239,6 +239,8 @@
 
 	//damage/heal obj. Provide negative values for healing.	//maybe I'll change cause I don't like this. But this functionality is found in some other damage procs for other things, might as well keep it consistent.
 	take_damage(brute, burn, tox, damage_type)
+		if(isvampire(donor) && !(istype(src, /obj/item/organ/chest) || istype(src, /obj/item/organ/head) || istype(src, /obj/item/skull) || istype(src, /obj/item/clothing/head/butt)))
+			return //vampires are already dead inside
 #if ASS_JAM //timestop stuff
 		if (ishuman(donor))
 			var/mob/living/carbon/human/H = donor

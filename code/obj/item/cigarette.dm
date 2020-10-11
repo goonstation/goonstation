@@ -38,9 +38,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(60)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(60)
 
 		if (src.on) //if we spawned lit, do something about it!
 			src.on = 0
@@ -48,17 +46,17 @@
 
 		if (src.exploding)
 			if (src.flavor)
-				R.add_reagent(src.flavor, 5)
-			R.add_reagent("nicotine", 5)
+				reagents.add_reagent(src.flavor, 5)
+			reagents.add_reagent("nicotine", 5)
 			numpuffs = 5 //trickcigs burn out faster
 			return
 		else if (!src.nic_free)
-			R.add_reagent("nicotine", 40)
+			reagents.add_reagent("nicotine", 40)
 			if (src.flavor)
-				R.add_reagent(src.flavor, 20)
+				reagents.add_reagent(src.flavor, 20)
 				return
 		else if (src.flavor)
-			R.add_reagent(src.flavor, 40)
+			reagents.add_reagent(src.flavor, 40)
 			return
 
 	afterattack(atom/target, mob/user, flag) // copied from the propuffs
@@ -101,8 +99,7 @@
 				M.set_clothing_icon_dirty()
 			if(src && src.reagents)
 				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
-			if (!(src in processing_items))
-				processing_items.Add(src) // we have a nice scheduler let's use that instead tia
+			processing_items |= src
 
 			hit_type = DAMAGE_BURN
 
@@ -395,14 +392,12 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(30)
 
 		if(!flavor)
 			src.flavor = pick("rum","menthol","chocolate","coffee","juice_lemon","juice_orange","juice_lime","juice_peach","bourbon","vermouth","yuck","mucus")
 		src.name = "[reagent_id_to_name(src.flavor)]-flavoured blunt wrap"
-		R.add_reagent(src.flavor, 20)
+		reagents.add_reagent(src.flavor, 20)
 
 
 /obj/item/clothing/mask/cigarette/cigarillo
@@ -487,9 +482,8 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(600)
-		reagents = R
-		R.my_atom = src
+		src.reagents.maximum_volume = 600
+		src.reagents.clear_reagents()
 
 	is_open_container()
 		return 1
@@ -620,6 +614,7 @@
 	rand_pos = 1
 
 /obj/item/cigarbox/New()
+	..()
 	src.update_icon()
 
 /obj/item/cigarbox/proc/update_icon()
@@ -845,7 +840,10 @@
 	burn_output = 600
 	burn_possible = 1
 	health = 10
-	var/on = 0 // -1 is burnt out/broken or otherwise unable to be lit
+
+	/// 0 = unlit, 1 = lit, -1 is burnt out/broken or otherwise unable to be lit
+	var/on = 0
+
 	var/light_mob = 0
 	var/life_timer = 0
 	rand_pos = 1
@@ -901,9 +899,7 @@
 		playsound(get_turf(user), "sound/items/matchstick_light.ogg", 50, 1)
 		light.enable()
 
-		if (!(src in processing_items))
-			processing_items.Add(src)
-		return
+		processing_items |= src
 
 	proc/put_out(var/mob/user as mob, var/break_it = 0)
 		src.on = -1
@@ -1048,10 +1044,8 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(100) //this is the max volume
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("fuel", 100)
+		src.create_reagents(100)
+		reagents.add_reagent("fuel", 100)
 
 		src.setItemSpecial(/datum/item_special/flame)
 		return
@@ -1071,8 +1065,7 @@
 				playsound(get_turf(user), 'sound/items/zippo_open.ogg', 30, 1)
 				light.enable()
 
-				if (!(src in processing_items))
-					processing_items.Add(src)
+				processing_items |= src
 			else
 				src.on = 0
 				set_icon_state(src.icon_off)
@@ -1172,8 +1165,7 @@
 				src.item_state = "zippo"
 				light.disable()
 
-				if (src in processing_items)
-					processing_items.Remove(src)
+				processing_items -= src
 				return
 			//sleep(1 SECOND)
 

@@ -58,7 +58,7 @@
 				var/obj/item/getItem = null
 
 				if (src.contents.len > 1)
-					if (usr.a_intent == INTENT_GRAB)
+					if (user.a_intent == INTENT_GRAB)
 						getItem = src.search_through(user)
 
 					else
@@ -71,7 +71,7 @@
 					getItem = src.contents[1]
 
 				if (getItem)
-					user.visible_message("<span class='notice'><b>[usr]</b> takes \a [getItem.name] out of \the [src].</span>",\
+					user.visible_message("<span class='notice'><b>[user]</b> takes \a [getItem.name] out of \the [src].</span>",\
 					"<span class='notice'>You take \a [getItem.name] from [src].</span>")
 					user.put_in_hand_or_drop(getItem)
 					src.satchel_updateicon()

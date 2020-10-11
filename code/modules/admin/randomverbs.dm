@@ -14,9 +14,9 @@
 	set name = "Print Flow Networks"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	DEBUG_MESSAGE("Dumping flow network refs")
-	for(var/datum/flow_network/network in by_type[/datum/flow_network])
+	for_by_tcl(network, /datum/flow_network)
 		DEBUG_MESSAGE_VARDBG("[showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)]", network)
-	for(var/datum/flow_network/network in by_type[/datum/flow_network])
+	for_by_tcl(network, /datum/flow_network)
 		DEBUG_MESSAGE("Printing flow network rooted at [showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)] (\ref[network])")
 		// Clear DFS flags
 		network.clear_DFS_flags()
@@ -293,7 +293,7 @@
 	if (!input)
 		return
 
-	var/law_num = input(usr, "If you don't know what this is you should probably just leave it be. (10 is the freeform slot)", "Enter law number", 99) as null|num
+	var/law_num = input(usr, "If you don't know what this is you should probably just leave it be. (14 is the freeform slot)", "Enter law number", 99) as null|num
 	if (isnull(law_num))
 		return
 	if (law_num == 0)
@@ -315,6 +315,8 @@
 
 	logTheThing("admin", usr, null, "has added a new AI law - [input] (law # [law_num])")
 	logTheThing("diary", usr, null, "has added a new AI law - [input] (law # [law_num])", "admin")
+	logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]")
+	logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has added a new AI law - [input] (law # [law_num])")
 
 //badcode from Somepotato, pls no nerf its very bad AAA
@@ -349,6 +351,8 @@
 			ticker.centralized_ai_laws.supplied += line
 	logTheThing("admin", usr, null, "has set the AI laws to [input]")
 	logTheThing("diary", usr, null, "has set the AI laws to [input]", "admin")
+	logTheThing("admin", usr, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]")
+	logTheThing("diary", usr, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has adjusted all of the AI's laws!")
 
 	for (var/mob/living/silicon/O in mobs)
@@ -458,7 +462,7 @@
 		return
 	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 /*
-	for (var/obj/machinery/computer/communications/C in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/C as() in machine_registry[MACHINES_COMMSCONSOLES])
 		if(! (C.status & (BROKEN|NOPOWER) ) )
 			var/obj/item/paper/P = new /obj/item/paper( C.loc )
 			P.name = "paper- '[command_name()] Update.'"
@@ -468,7 +472,7 @@
 */
 
 	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-		for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+		for_by_tcl(C, /obj/machinery/communications_dish)
 			C.add_centcom_report("[command_name()] Update", input)
 
 		var/sound_to_play = "sound/misc/announcement_1.ogg"
@@ -1305,7 +1309,7 @@
 
 		var/M = alert(usr,S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)","Claim this Reward?","Yes","No")
 		if (M == "Yes")
-			S.rewardActivate(usr)
+			S.rewardActivate(src.mob)
 
 /client/proc/cmd_admin_check_health(var/atom/target as null|mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -1530,10 +1534,10 @@
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 	if(searchFor)
-		for(var/R in childrentypesof(/datum/reagent))
+		for(var/R in concrete_typesof(/datum/reagent))
 			if(findtext("[R]", searchFor)) L += R
 	else
-		L = childrentypesof(/datum/reagent)
+		L = concrete_typesof(/datum/reagent)
 
 	var/type
 	if(L.len == 1)
@@ -1873,10 +1877,10 @@
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 	if(searchFor)
-		for(var/R in childrentypesof(/datum/reagent))
+		for(var/R in concrete_typesof(/datum/reagent))
 			if(findtext("[R]", searchFor)) L += R
 	else
-		L = childrentypesof(/datum/reagent)
+		L = concrete_typesof(/datum/reagent)
 
 	var/type
 	if(L.len == 1)
@@ -1919,10 +1923,10 @@
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 	if(searchFor)
-		for(var/R in childrentypesof(/datum/reagent))
+		for(var/R in concrete_typesof(/datum/reagent))
 			if(findtext("[R]", searchFor)) L += R
 	else
-		L = childrentypesof(/datum/reagent)
+		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
 	if(L.len == 1)
@@ -1958,10 +1962,10 @@
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 	if(searchFor)
-		for(var/R in childrentypesof(/datum/reagent))
+		for(var/R in concrete_typesof(/datum/reagent))
 			if(findtext("[R]", searchFor)) L += R
 	else
-		L = childrentypesof(/datum/reagent)
+		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
 	if(L.len == 1)
@@ -2074,7 +2078,7 @@ var/global/night_mode_enabled = 0
 			logTheThing("admin", src, null, "granted VOX access to all AIs!")
 			logTheThing("diary", src, null, "granted VOX access to all AIs!", "admin")
 			boutput(world, "<B>The AI may now use VOX!</B>")
-			for(var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
+			for_by_tcl(AI, /mob/living/silicon/ai)
 				AI.cancel_camera()
 				AI.verbs += /mob/living/silicon/ai/proc/ai_vox_announcement
 				AI.verbs += /mob/living/silicon/ai/proc/ai_vox_help
@@ -2086,7 +2090,7 @@ var/global/night_mode_enabled = 0
 			logTheThing("admin", src, null, "revoked VOX access from all AIs!")
 			logTheThing("diary", src, null, "revoked VOX access from all AIs!", "admin")
 			boutput(world, "<B>The AI may no longer use VOX!</B>")
-			for(var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
+			for_by_tcl(AI, /mob/living/silicon/ai)
 				AI.cancel_camera()
 				AI.verbs -= /mob/living/silicon/ai/proc/ai_vox_announcement
 				AI.verbs -= /mob/living/silicon/ai/proc/ai_vox_help
@@ -2565,3 +2569,36 @@ var/global/night_mode_enabled = 0
 	logTheThing("diary", usr, C.mob, "has toggled [constructTarget(C.mob,"diary")]'s text mode to [!is_text]", "admin")
 	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s text mode to [!is_text]")
 	winset(C, "mapwindow.map", "text-mode=[is_text ? "false" : "true"]" )
+
+
+/client/proc/retreat_to_office()
+	set name = "Retreat To Office"
+	set desc = "Retreat to my office at centcom."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = 0
+	admin_only
+
+	//it's a mess, sue me
+	var/list/areas = get_areas(/area/centcom/offices)
+	for (var/area/centcom/offices/office in areas)
+		//search all offices for an office with the same ckey variable as the usr.
+		if (office.ckey == src.ckey)
+			var/list/turfs = get_area_turfs(office.type)
+			if (islist(turfs) && turfs.len)
+
+				for (var/turf/T in turfs)
+					//search all turfs for a chair if we can't find one, put em anywhere (might make personalized chairs in the future...)
+					var/obj/stool/chair/chair = locate(/obj/stool/chair) in T
+					if (istype(chair))
+						var/turf/chair_turf = get_turf(chair)
+						src.mob.set_loc(chair_turf)
+						src.mob.dir = chair.dir
+						boutput(src, "<span class='notice'>Arrived at your office, safe and sound in your favorite chair!</span>")
+						return
+				//put em in a random place in their office if they don't have a chair.
+				src.mob.set_loc(pick(turfs))
+				boutput(src, "<span class='alert'>Arrived at your office, but where's your chair? Maybe someone stole it!</span>")
+			else
+				boutput(src, "Can't seem to find any turfs in your office. You must not have one here!")
+			return
+	boutput(src, "You don't seem to have an office, so sad. :(")

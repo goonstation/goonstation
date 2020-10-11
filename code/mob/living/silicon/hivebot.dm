@@ -32,7 +32,7 @@
 
 	var/obj/machinery/camera/camera = null
 
-/mob/living/silicon/hivebot/TakeDamage(zone, brute, burn)
+/mob/living/silicon/hivebot/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	bruteloss += brute
 	fireloss += burn
 	health_update_queue |= src
@@ -97,7 +97,8 @@
 		SPAWN_DBG(0)
 			var/key = src.ckey
 			recently_dead += key
-			SPAWN_DBG(recently_time) recently_dead -= key
+			sleep(recently_time)
+			recently_dead -= key
 */
 	if(src.mind)
 		src.mind.register_death()

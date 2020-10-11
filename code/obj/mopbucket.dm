@@ -11,9 +11,8 @@
 	p_class = 1.2
 
 /obj/mopbucket/New()
-	var/datum/reagents/R = new/datum/reagents(200)
-	reagents = R
-	R.my_atom = src
+	..()
+	create_reagents(200)
 	START_TRACKING
 
 /obj/mopbucket/disposing()

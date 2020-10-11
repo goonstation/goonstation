@@ -58,7 +58,7 @@ var/global/meteor_shower_active = 0
 			command_alert("[comsev] meteor shower approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert")
 			world << 'sound/machines/engine_alert2.ogg'
 			meteor_shower_active = direction
-			for (var/obj/machinery/shield_generator/S in machine_registry[MACHINES_SHIELDGENERATORS])
+			for (var/obj/machinery/shield_generator/S as() in machine_registry[MACHINES_SHIELDGENERATORS])
 				S.update_icon()
 
 		SPAWN_DBG(warning_delay)
@@ -113,7 +113,7 @@ var/global/meteor_shower_active = 0
 				sleep(delay_between_meteors)
 
 			meteor_shower_active = 0
-			for (var/obj/machinery/shield_generator/S in machine_registry[MACHINES_SHIELDGENERATORS])
+			for (var/obj/machinery/shield_generator/S as() in machine_registry[MACHINES_SHIELDGENERATORS])
 				S.update_icon()
 
 	admin_call(var/source)

@@ -1499,7 +1499,7 @@
 
 			if(cell.charge < GUARDBOT_LOWPOWER_IDLE_LEVEL)
 				speak("Critical battery.")
-				src.snooze()
+				INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
 				return 0
 
 			if(cell.charge < GUARDBOT_LOWPOWER_ALERT_LEVEL && !(locate(/datum/computer/file/guardbot_task/recharge) in src.tasks) )
@@ -1874,7 +1874,7 @@
 		if(src.charge_dock)
 			if(charge_dock.loc == src.loc)
 				if(!src.idle)
-					src.snooze()
+					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
 			else
 				src.charge_dock = null
 				src.wakeup()
@@ -2001,10 +2001,7 @@
 
 		New()
 			..()
-			var/datum/reagents/R = new/datum/reagents(500)
-			reagents = R
-			R.my_atom = src
-			return
+			src.create_reagents(500)
 
 		// Fixed. Was completely non-functional (Convair880).
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
@@ -4094,8 +4091,8 @@
 			return
 
 		else
-			..()
-		return
+			spawn(0)
+				..()
 
 
 //The Docking Station.  Recharge here!
@@ -4533,7 +4530,7 @@
 			robot.charge_dock = src
 			src.autoeject = aeject
 			if(!robot.idle)
-				robot.snooze()
+				INVOKE_ASYNC(robot, /obj/machinery/bot/guardbot.proc/snooze)
 			if(src.host_id)
 				src.post_wire_status(src.host_id,"command","term_message","data","command=status&status=connect&botid=[current.net_id]")
 

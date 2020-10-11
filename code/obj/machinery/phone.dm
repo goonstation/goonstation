@@ -54,7 +54,7 @@
 			if(temp_name == initial(src.name) && location)
 				temp_name = location.name
 			var/name_counter = 1
-			for(var/obj/machinery/phone/M in by_type[/obj/machinery/phone])
+			for_by_tcl(M, /obj/machinery/phone)
 				if(M.phone_id && M.phone_id == temp_name)
 					name_counter++
 			if(name_counter > 1)
@@ -249,7 +249,7 @@
 
 	GetBody()
 		var/html = ""
-		for(var/obj/machinery/phone/P in by_type[/obj/machinery/phone])
+		for_by_tcl(P, /obj/machinery/phone)
 			html += "[theme.generateButton(P.phone_id, "[P.phone_id]")] <br/>"
 		return html
 
@@ -257,7 +257,7 @@
 		if(src.owner.dialing == 1 || src.owner.linked)
 			return
 		if(owner)
-			for(var/obj/machinery/phone/P in by_type[/obj/machinery/phone])
+			for_by_tcl(P, /obj/machinery/phone)
 				if(P.phone_id == id)
 					owner.call_other(P)
 					return

@@ -43,6 +43,7 @@
 
 
 /obj/landmark/gps_waypoint
+	icon_state = "gps"
 	name = LANDMARK_GPS_WAYPOINT
 
 /client/var/list/GPS_Path
@@ -114,8 +115,8 @@
 	set name = "GPS"
 	set category = "Commands"
 	set desc = "Find your way around with ease!"
-	if(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 10 SECONDS))
-		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 0))].")
+	if(PROC_ON_COOLDOWN(10 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0))].")
 		return
 	if(hasvar(src,"wear_id"))
 		DoGPS(src:wear_id)
@@ -123,8 +124,8 @@
 	set name = "GPS"
 	set category = "Commands"
 	set desc = "Find your way around with ease!"
-	if(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 10 SECONDS)) // using ..... is very wacked
-		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 0))].")
+	if(PROC_ON_COOLDOWN(10 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0 SECONDS))].")
 		return
 	DoGPS(src.botcard)
 /*
@@ -169,7 +170,7 @@ world/proc/updateCameraVisibility()
 			t.aiImage.override = 1
 			t.aiImage.name = " "
 		aiDirty = 1
-	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		for(var/turf/t in view(7, C))
 			//var/dist = get_dist(t, C)
 			t.aiImage.alpha = 0
@@ -261,7 +262,7 @@ world/proc/updateCameraVisibility()
 	.=..()
 	for(var/turf/t in range(7, src))
 		t.cameraTotal = 0
-	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		if( get_dist(C.loc, src) <= 7 )
 			var/list/inview = view(7,C)
 			for(var/turf/t in range(7, C))
@@ -291,7 +292,6 @@ world/proc/updateCameraVisibility()
 	desc = "To avoid arousing too much suspicion, this fella converts single-phase power to three-phase. Sure, that power is passed down via a 24 AWG USB cable, but it's probably fine."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "vfd"
-	New()
 /obj/somepotato/billiards
 	name = "Billiards Table"
 	desc = "Who in God's name would get enjoyment at beating polyester spheres with wooden sticks???"

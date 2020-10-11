@@ -93,9 +93,10 @@ Fibre wire
 				else //How the fuck did we even get here??
 					H.ghostize()
 
-			SPAWN_DBG(1.5 SECONDS) playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
 			flick("skull_ominous_explode", src)
-			sleep(3 SECONDS)
+			sleep(1.5 SECONDS)
+			playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
+			sleep(1.5 SECONDS)
 			qdel(src)
 
 //////////////////////////////
@@ -210,7 +211,7 @@ proc/Create_Tommyname()
 /obj/item/gun/energy/tommy_gun
 	name = "Tommy Gun"
 	icon = 'icons/obj/items/gun.dmi'
-	icon_state = "tommy1"
+	icon_state = "tommygun"
 	m_amt = 4000
 	rechargeable = 1
 	force = 0.0
@@ -233,7 +234,7 @@ proc/Create_Tommyname()
 
 	update_icon()
 		if(cell)
-			src.icon_state = "tommy[src.cell.charge > 0]"
+			src.icon_state = "tommygun[src.cell.charge <= 0 ? "-empty" : ""]"
 			return
 
 ///////////////////////////////////////Analysis datum for the spectrometer
@@ -868,7 +869,7 @@ proc/Create_Tommyname()
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 
 /obj/item/garrote/proc/toggle_wire_readiness()
@@ -893,7 +894,7 @@ proc/Create_Tommyname()
 	update_state()
 
 /obj/item/garrote/proc/update_state()
-	if(src.chokehold)
+	if(src.chokehold && !istype(src.chokehold, /obj/item/grab/block))
 		var/obj/item/grab/garrote_grab/GG = src.chokehold
 		if(!GG.extra_deadly)
 			icon_state = "garrote2"
@@ -915,7 +916,7 @@ proc/Create_Tommyname()
 		M = src.loc
 	else if (ismob(usr)) // we've tried nothing and we're all out of ideas
 		M = usr
-	M.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while (maybe!) equipped
+	M?.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while (maybe!) equipped
 
 /obj/item/garrote/proc/is_behind_target(var/mob/living/assailant, var/mob/living/target)
 	var/assailant_dir = get_dir(target, assailant)
@@ -966,7 +967,7 @@ proc/Create_Tommyname()
 	..()
 	set_readiness(0)
 
-/obj/item/garrote/throw_impact(atom/hit_atom)
+/obj/item/garrote/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	set_readiness(0)
 
@@ -986,6 +987,7 @@ proc/Create_Tommyname()
 		..()
 		toggle_wire_readiness()
 	else
+		if (istype(src.chokehold, /obj/item/grab/block)) return
 		var/obj/item/grab/garrote_grab/GG = src.chokehold
 		GG.extra_deadly = !GG.extra_deadly
 		if(GG.extra_deadly)

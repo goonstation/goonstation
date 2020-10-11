@@ -167,6 +167,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 						var/obj/machinery/sleeper/port_a_medbay/PM = P
 						if (PM.occupant)
 							PM.occupant.set_loc(PM)
+							PM.PDA_alert_check()
 				if (istype(P, /obj/storage/closet/port_a_sci/))
 					var/obj/storage/closet/port_a_sci/PS = P
 					PS.on_teleport()
@@ -527,7 +528,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			portable_machinery.Remove(src)
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 

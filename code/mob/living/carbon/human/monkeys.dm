@@ -145,6 +145,9 @@
 			..()
 
 	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0)
+		// Dead monkeys can't hold a grude and stops emote
+		if(isdead(src))
+			return ..()
 		//src.ai_aggressive = 1
 		src.target = T
 		src.ai_state = 2
@@ -154,7 +157,7 @@
 		if (prob(40))
 			src.emote("scream")
 		var/pals = 0
-		for (var/mob/living/carbon/human/npc/monkey/pal in by_type[/mob/living/carbon/human/npc/monkey])
+		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
 			if (get_dist(src, pal) > 7)
 				continue
 			if (pals >= 5)

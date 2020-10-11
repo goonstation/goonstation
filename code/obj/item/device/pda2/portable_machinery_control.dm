@@ -276,6 +276,7 @@
 								var/obj/machinery/sleeper/port_a_medbay/PM2 = P5
 								if (PM2.occupant)
 									PM2.occupant.set_loc(PM2)
+									PM2.PDA_alert_check()
 						if (istype(P5, /obj/storage/closet/port_a_sci/))
 							var/obj/storage/closet/port_a_sci/PS2 = P5
 							PS2.on_teleport()

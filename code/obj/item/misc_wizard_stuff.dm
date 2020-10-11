@@ -3,7 +3,7 @@
 // - Staves
 // - Magic mirror
 
-/////////////////////////////////////////////////// Teleportation scroll ///////////////////////////////////
+// // // // // // // // // // Teleportation scroll // // // // // // // // // // // //
 
 /obj/item/teleportation_scroll
 	name = "Teleportation Scroll"
@@ -78,7 +78,7 @@
 
 	New()
 		..()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		. = ..()

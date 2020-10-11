@@ -453,7 +453,10 @@
 				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
 				owner.real_name = H.real_name
 				owner.name = H.name
-
+				if(owner.bioHolder?.mobAppearance?.mutant_race)
+					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race)
+				else
+					owner.set_mutantrace(null)
 		return
 
 	cast_misfire(atom/target)
@@ -481,8 +484,65 @@
 		return
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*  / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /  */
+/* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /  */
+
+/datum/bioEffect/power/colorshift
+	name = "Trichochromatic Shift"
+	desc = "Enables the subject to shift their hair color to a different region."
+	id = "colorshift"
+	msgGain = "Your hair itches."
+	msgLose = "You feel more confident in your hair color."
+	cooldown = 600
+	probability = 66
+	blockCount = 4
+	blockGaps = 4
+	stability_loss = 0
+	ability_path = /datum/targetable/geneticsAbility/colorshift
+
+/datum/targetable/geneticsAbility/colorshift
+	name = "Trichochromatic Shift"
+	desc = "Swap the colors of your hair around."
+	icon_state = "polymorphism"
+	targeted = 0
+
+	cast()
+		if (..())
+			return 1
+
+		var/mob/living/carbon/human/H
+		if (ishuman(owner))
+			H = owner
+		else
+			boutput(H, "<span class='notice'>This only works on human hair!</span>")
+			return
+
+		if (istype(H.mutantrace, /datum/mutantrace/lizard))
+			boutput(H, "<span class='notice'>You don't have any hair!</span>")
+			return
+		else if (H.mutantrace?.override_hair && !istype(H.mutantrace, /datum/mutantrace/cow))
+			boutput(H, "<span class='notice'>Whatever hair you have isn't affected!</span>")
+			return
+
+		if (H.bioHolder?.mobAppearance)
+			var/datum/appearanceHolder/AHs = H.bioHolder.mobAppearance
+
+			var/col1 = AHs.customization_first_color
+			var/col2 = AHs.customization_second_color
+			var/col3 = AHs.customization_third_color
+
+			AHs.customization_first_color = col3
+			AHs.customization_second_color = col1
+			AHs.customization_third_color = col2
+
+			H.visible_message("<span class='notice'><b>[H.name]</b>'s hair changes colors!</span>")
+			H.update_clothing()
+			H.update_body()
+			H.update_face()
+
+/* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
+/* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
+/* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
 
 /datum/bioEffect/power/telepathy
 	name = "Telepathy"
@@ -923,7 +983,7 @@
 				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1)
 
 			for(var/mob/living/V in range(get_turf(owner),fart_range))
-				shake_camera(V,10,5)
+				shake_camera(V,10,64)
 				if (V == owner)
 					continue
 				boutput(V, "<span class='alert'>You are sent flying!</span>")
@@ -1605,8 +1665,10 @@
 			return 1
 		owner.visible_message("<span class='alert'><b>[owner.name] makes a weird noise!</b></span>")
 		playsound(owner.loc, 'sound/musical_instruments/WeirdHorn_0.ogg', 50, 0)
+		var/count = 0
 		for (var/mob/living/L in range(7,owner))
 			if (L.hearing_check(1))
+				if(count++ > (src.linked_power.power ? 10 : 7)) break
 				if(locate(/obj/item/storage/bible) in get_turf(L))
 					owner.visible_message("<span class='alert'><b>A mysterious force smites [owner.name] for inciting blasphemy!</b></span>")
 					owner.gib()
@@ -1840,6 +1902,7 @@
 	lockedTries = 8
 	stability_loss = 20
 	cooldown = 0
+	var/last_moved = 0
 	var/active = 0
 	ability_path = /datum/targetable/geneticsAbility/chameleon
 
@@ -1855,18 +1918,25 @@
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
 			L.invisibility = 0
+		if (src.active)
+			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
 
 	OnLife()
 		if(..()) return
+		if(!src.active) return
 		if(isliving(owner))
 			var/mob/living/L = owner
-			if ((world.timeofday - owner.l_move_time) >= 30 && can_act(owner) && src.active)
+			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
 				L.invisibility = 1
-			else
-				L.UpdateOverlays(null, id)
-				L.invisibility = 0
+
+	proc/decloak()
+		if(isliving(owner))
+			var/mob/living/L = owner
+			last_moved = TIME
+			L.UpdateOverlays(null, id)
+			L.invisibility = 0
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"
@@ -1882,9 +1952,13 @@
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0
+			CH.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
+			CH.decloak()
 		else
 			boutput(usr, "You start using your chameleon cloaking.")
+			CH.last_moved = TIME
 			CH.active = 1
+			CH.RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

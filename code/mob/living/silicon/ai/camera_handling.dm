@@ -170,7 +170,7 @@
 		return
 
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		L.Add(C)
 
 	L = camera_sort(L)
@@ -213,6 +213,7 @@
 	var/fail_delay = 50		// Same but in case we failed
 
 	New(var/mob/living/silicon/ai/A)
+		..()
 		owner = A
 		global.tracking_list += src
 
@@ -288,7 +289,7 @@
 		//Target is inside a dummy
 		//Target is not at a turf
 		//Target is not on station level
-		return (target.loc.z == 1) \
+		return (target.loc?.z == 1) \
 				&& ((issilicon(target) && istype(target.loc, /turf) ) \
 				|| (ismobcritter(target) && istype(target.loc, /turf) ) \
 				|| !((ishuman(target) \

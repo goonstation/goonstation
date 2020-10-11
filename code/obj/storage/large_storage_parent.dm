@@ -51,16 +51,18 @@
 
 	var/list/spawn_contents = list() // maybe better than just a bunch of stuff in New()?
 	var/made_stuff
+
+	var/grab_stuff_on_spawn = TRUE
 	New()
 		..()
 		START_TRACKING
 		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
 
-			if (!src.open)		// if closed, any item at src's loc is put in the contents
-				for (var/obj/O in src.loc)
-					if (src.is_acceptable_content(O))
-						O.set_loc(src)
+			if (!src.open && grab_stuff_on_spawn)		// if closed, any item at src's loc is put in the contents
+				for (var/atom/movable/A in src.loc)
+					if (src.is_acceptable_content(A))
+						A.set_loc(src)
 
 	disposing()
 		STOP_TRACKING
@@ -541,7 +543,7 @@
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
-				for (var/obj/storage/O in by_type[/obj/storage])
+				for_by_tcl(O, /obj/storage)
 					if (O.z != src.z || O.open || !O.can_open())
 						continue
 					myPals.Add(O)

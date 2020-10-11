@@ -12,16 +12,16 @@
 	//	to be rolled into the updating step
 	var/tmp/archived_cycle = 0
 
-	//Tiles that connect this group to other groups/individual tiles
-	var/list/borders
+	/// Tiles that connect this group to other groups/individual tiles
+	var/list/turf/simulated/borders
 
-	//All tiles in this group
-	var/list/members
+	/// All tiles in this group
+	var/list/turf/simulated/members
 
-	// Space tiles that border this group
-	var/list/space_borders
+	/// Space tiles that border this group
+	var/list/turf/space_borders // ZeWaka/Atmos: SHOULD JUST BE SPACE TILES??? HOW SIM GETTING IN
 
-	// Length of space border
+	/// Length of space border
 	var/length_space_border = 0
 
 	// drsingh - lets try caching these lists from process_group, see if we can't reduce the garbage collection
@@ -35,7 +35,6 @@
 
 	var/spaced = 0
 	var/spaced_via_group = 0
-	var/gencolor = null
 
 // overrides
 /datum/air_group/disposing()
@@ -62,12 +61,11 @@
 	// Single sample? Seems like not very many...
 	// Local var, direct access to gas_mixture, no need to pool
 	var/sample_member
-	for (var/turf/S in members)
-		if (istype(S, /turf/space))
-			members -= S
+
 	if(!members || !members.len ) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
 		qdel(src)
 		return 0
+
 	sample_member = pick(members)
 	if (sample_member:air)
 		var/datum/gas_mixture/sample_air = sample_member:air
@@ -80,7 +78,7 @@
 //Copy group air information to individual tile air
 //Used right before turning off group processing
 /datum/air_group/proc/update_tiles_from_group()
-	for(var/turf/simulated/member in members)
+	for(var/turf/simulated/member as() in members)
 		if (member.air) member.air.copy_from(air)
 
 #ifdef ATMOS_ARCHIVING
@@ -98,23 +96,16 @@
 	//Returns: group_processing
 	if(group_processing) return 1
 
-	// I don't know why the fuck space tiles are even getting into
-	// airgroups, but this should sort of fix it. This is a bad
-	// hack and I'm sorry. This should eliminate the runtime
-	// "undefined variable: /turf/space/var/air"
-	for(var/turf/space/BADSPACE in members)
-		if(istype(BADSPACE))
-			members -= BADSPACE
-
 	if(!members || !members.len ) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
 		qdel(src)
 		return 0
 
 	var/turf/simulated/sample = pick(members)
-	for(var/turf/simulated/member in members)
+	for(var/turf/simulated/member as() in members)
 		if(member.active_hotspot)
 			return 0
-		if(member.air && member.air.compare(sample.air)) continue
+		if(member.air && member.air.compare(sample.air))
+			continue
 		else
 			return 0
 
@@ -147,8 +138,7 @@
 				//But only if another group didn't store it for us
 #endif
 
-		for(var/turf/simulated/border_tile in src.borders)
-			//var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in border_tile
+		for(var/turf/simulated/border_tile as() in src.borders)
 			for(var/direction in cardinal) //Go through all border tiles and get bordering groups and individuals
 				if(border_tile.group_border&direction)
 					var/turf/simulated/enemy_tile = get_step(border_tile, direction) //Add found tile to appropriate category
@@ -193,7 +183,7 @@
 		// Process connections to adjacent groups
 		var/border_index = 1
 		if(border_group)
-			for(var/datum/air_group/AG in border_group)
+			for(var/datum/air_group/AG as() in border_group)
 #ifdef ATMOS_ARCHIVING
 				if(AG.archived_cycle < archived_cycle)
 					//archive other groups information if it has not been archived yet this cycle
@@ -237,8 +227,7 @@
 		// Process connections to adjacent tiles
 		border_index = 1
 		if(!abort_group && border_individual)
-			for(var/border_tile in border_individual)
-				var/turf/enemy_tile = border_tile
+			for(var/turf/enemy_tile as() in border_individual)
 
 				var/connection_difference = 0
 				var/turf/simulated/floor/self_border
@@ -300,14 +289,14 @@
 						abort_group = 1
 
 				if(connection_difference)
-					for(var/turf/simulated/self_border in space_borders)
+					for(var/turf/simulated/self_border in space_borders) // ZeWaka/Atmos: BOTH SPACE AND SIM?
 						self_border.consider_pressure_difference_space(connection_difference)
 
 		if(abort_group)
 			suspend_group_processing()
 		else
 			if(air && air.check_tile_graphic())
-				for(var/turf/simulated/member in members)
+				for(var/turf/simulated/member as() in members)
 					member.update_visuals(air)
 
 					LAGCHECK(LAG_REALTIME)
@@ -322,13 +311,13 @@
 				// If the fastpath resulted in the group being zeroed, return early.
 				return
 
-		for(var/turf/simulated/member in members)
+		for(var/turf/simulated/member as() in members)
 			member.process_cell()
 
 			LAGCHECK(LAG_REALTIME)
 	else
 		if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-			for(var/turf/simulated/member in members)
+			for(var/turf/simulated/member as() in members)
 				member.hotspot_expose(air.temperature, CELL_VOLUME)
 				member.consider_superconductivity(starting=1)
 
@@ -355,7 +344,7 @@
 
 	var/totalPressure = 0
 
-	for(var/turf/simulated/member in members)
+	for(var/turf/simulated/member as() in members)
 /* // commented out temporarily, it will probably have to be reenabled later
 		minDist = null
 		// find nearest space border tile
@@ -389,9 +378,8 @@
 			return 1
 
 /datum/air_group/proc/space_group()
-	for(var/turf/simulated/member in members)
-		if (member.air)
-			member.air.zero()
+	for(var/turf/simulated/member as() in members)
+		member.air?.zero()
 	if (length_space_border)
 		spaced = 1
 		resume_group_processing()

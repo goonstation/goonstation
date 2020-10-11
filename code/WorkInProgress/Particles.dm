@@ -50,6 +50,7 @@ var/datum/particleMaster/particleMaster = new
 	var/allowed_particles_per_tick = 7
 
 	New()
+		..()
 		particleTypes = list()
 		particleSystems = list()
 		for (var/ptype in childrentypesof(/datum/particleType))
@@ -177,6 +178,7 @@ var/datum/particleMaster/particleMaster = new
 	var/matrix/third = null
 
 	New()
+		..()
 		MatrixInit()
 
 	proc/MatrixInit()
@@ -1009,6 +1011,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	var/atom/target = null
 
 	New(var/atom/location = null, var/particleTypeName = null, var/particleTime = null, var/particleColor = null, var/atom/target = null, particleSprite = null)
+		..()
 		if (location && particleTypeName)
 			src.location = location
 			src.particleTypeName = particleTypeName
@@ -1470,16 +1473,11 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				copied.reaction(A, TOUCH, 0, 0)
 
 			if(isliving(A))
-				if(hasvar(A,"wear_mask"))
-					// Added log entries (Convair880).
+				var/mob/living/L = A
+				if(!issmokeimmune(L))
 					logTheThing("combat", A, null, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
-					if(!istype(A:wear_mask,/obj/item/clothing/mask/gas) && !(istype(A:wear_mask,/obj/item/clothing/mask/breath) && A:internal != null))
-						if(hasvar(A,"reagents") && A:reagents != null)
-							copied.copy_to(A:reagents, 1)
-				else
-					logTheThing("combat", A, null, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
-					if(hasvar(A,"reagents") && A:reagents != null)
-						copied.copy_to(A:reagents, 1)
+					if(L.reagents)
+						copied.copy_to(L.reagents, 1)
 
 /datum/particleSystem/chemspray
 	var/datum/reagents/copied = null

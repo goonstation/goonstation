@@ -1,3 +1,4 @@
+/// Job/tool modules for cyborgs
 /obj/item/robot_module
 	name = "blank cyborg module"
 	desc = "A blank cyborg module. It has minimal function in its current state."
@@ -17,6 +18,7 @@
 	var/obj/item/device/radio/radio = null
 
 /obj/item/robot_module/New()
+	..()
 	// add contents
 	if (src.include_common_tools)
 		src.add_contents(/datum/robot/module_tool_creator/recursive/module/common)

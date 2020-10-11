@@ -20,6 +20,7 @@
 	var/chui/window/flockpanel/panel
 
 /datum/flock/New()
+	..()
 	src.name = "[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)]"
 	flocks[src.name] = src
 	processing_items |= src

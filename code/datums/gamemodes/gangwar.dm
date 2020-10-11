@@ -143,7 +143,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(leaders))
 
-	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -441,13 +441,13 @@
 
 	SPAWN_DBG(hot_zone_timer-600)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
-		SPAWN_DBG(1 MINUTE)
-			if(hot_zone != null && hot_zone.gang_owners != null)
-				var/datum/gang/G = hot_zone.gang_owners
-				G.score_event += hot_zone_score
-				broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
-				sleep(10 SECONDS)
-			process_hot_zones()
+		sleep(1 MINUTE)
+		if(hot_zone != null && hot_zone.gang_owners != null)
+			var/datum/gang/G = hot_zone.gang_owners
+			G.score_event += hot_zone_score
+			broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
+			sleep(10 SECONDS)
+		process_hot_zones()
 
 /datum/game_mode/gang/proc/process_kidnapping_event()
 	kidnapp_success = 0
@@ -494,20 +494,20 @@
 
 	SPAWN_DBG(kidnapping_timer - 1 MINUTE)
 		if(kidnapping_target != null) broadcast_to_all_gangs("[target_name] has still not been captured by [top_gang.gang_name] and they have 1 minute left!")
-		SPAWN_DBG(1 MINUTE)
-			//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
-			if(!kidnapp_success)
-				//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
-				if (kidnapping_target && kidnapping_target.stat != 2)
-					for (var/datum/gang/G in gangs)
-						if (G != top_gang)
-							G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
-					broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
-				else
-					broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
+		sleep(1 MINUTE)
+		//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
+		if(!kidnapp_success)
+			//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
+			if (kidnapping_target && kidnapping_target.stat != 2)
+				for (var/datum/gang/G in gangs)
+					if (G != top_gang)
+						G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
+				broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
+			else
+				broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
 
-				sleep(delay_between_kidnappings)
-			process_kidnapping_event()
+			sleep(delay_between_kidnappings)
+		process_kidnapping_event()
 
 
 //bleh
@@ -819,9 +819,9 @@
 			new/datum/gang_item/country_western/colt_45_bullet,
 
 			new/datum/gang_item/space/discount_csaber,
-			new/datum/gang_item/space/csaber,
+			// new/datum/gang_item/space/csaber,
 			new/datum/gang_item/ninja/discount_katana,
-			new/datum/gang_item/ninja/katana,
+			// new/datum/gang_item/ninja/katana,
 			new/datum/gang_item/street/cop_car,
 
 			new/datum/gang_item/misc/janktank,
@@ -1013,6 +1013,7 @@
 		score += O.reagents.get_reagent_amount("jenkem")/2
 		score += O.reagents.get_reagent_amount("crank")*1.5
 		score += O.reagents.get_reagent_amount("LSD")/2
+		score += O.reagents.get_reagent_amount("lsd_bee")/3
 		score += O.reagents.get_reagent_amount("space_drugs")/4
 		score += O.reagents.get_reagent_amount("THC")/8
 		score += O.reagents.get_reagent_amount("psilocybin")/2
@@ -1112,7 +1113,7 @@
 
 						mode.kidnapping_target = null
 						mode.kidnapp_success = 1
-						qdel(G.affecting)
+						G.affecting.remove()
 						qdel(G)
 			return
 
@@ -1195,7 +1196,7 @@
 		if (istype(target,/mob/living) && user.a_intent != INTENT_HARM)
 			if(user != target)
 				user.visible_message("<span class='alert'><b>[user] shows [src] to [target]!</b></span>")
-			induct_to_gang(target)
+			// induct_to_gang(target)		//this was sometimes kinda causing people to accidentally accept joining a gang.
 			return
 		else
 			return ..()

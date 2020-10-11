@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1
 	New()
+		..()
 		SPAWN_DBG(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
 			term.dir = get_dir(get_turf(term), src)
@@ -225,10 +226,24 @@
 
 /obj/item/clothing/glasses/construction
 	name = "\improper Construction Visualizer"
-	icon_state = "meson"
-	item_state = "glasses"
+	icon_state = "construction"
+	item_state = "construction"
 	mats = 6
 	desc = "The latest technology in viewing live blueprints."
+
+/obj/item/lamp_manufacturer/organic
+	icon = 'icons/obj/items/tools/lampman.dmi'
+	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
+	icon_state = "bio-white"
+	flags = FPRINT | TABLEPASS | EXTRADELAY
+	w_class = 2
+	click_delay = 1
+	prefix = "bio"
+	metal_ammo = 20
+	inventory_counter_enabled = 1
+	New()
+		..()
+		inventory_counter.update_number(metal_ammo)
 
 /obj/item/material_shaper
 	name = "\improper Window Planner"

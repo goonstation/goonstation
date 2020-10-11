@@ -5,12 +5,16 @@
 
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
+#ifndef IN_MAP_EDITOR
 	icon_state = "conveyor0"
+#else
+	icon_state = "conveyor0-map"
+#endif
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
 	power_usage = 100
-	layer = 2.5
+	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
@@ -414,7 +418,7 @@
 
 	SPAWN_DBG(0.5 SECONDS)		// allow map load
 		conveyors = list()
-		for(var/obj/machinery/conveyor/C in machine_registry[MACHINES_CONVEYORS])
+		for(var/obj/machinery/conveyor/C as() in machine_registry[MACHINES_CONVEYORS])
 			if(C.id == id)
 				conveyors += C
 				C.owner = src
@@ -474,7 +478,7 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
+	for_by_tcl(S, /obj/machinery/conveyor_switch)
 		if(S.id == src.id)
 			S.position = position
 			S.update()
@@ -606,7 +610,7 @@
 			update_icon()
 
 	proc/update_belts()
-		for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if(S.id == "carousel")
 				for(var/obj/machinery/conveyor/C in S.conveyors)
 					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)

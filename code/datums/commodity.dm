@@ -777,6 +777,15 @@
 	upperfluc = 100
 	lowerfluc = -100
 
+/datum/commodity/drugs/lsd_bee
+	comname = "LSBee (1x patch)"
+	comtype = /obj/item/reagent_containers/patch/lsd_bee
+	desc = "A highly potent hallucinogenic substance. It smells like honey."
+	price = 220
+	baseprice = 220
+	upperfluc = 100
+	lowerfluc = -100
+
 /datum/commodity/pills/uranium
 	comname = "Uranium (1x nugget)"
 	comtype = /obj/item/reagent_containers/pill/uranium
@@ -2147,6 +2156,28 @@
 	baseprice = 50
 	upperfluc = 100
 	lowerfluc = -20
+
+#if ASS_JAM
+/datum/commodity/screamshoes
+	comname = "scream shoes"
+	comtype = /obj/item/clothing/shoes/scream
+	desc = "AAAAAAAAAAAAAAAAAAAA!"
+	onmarket = 0
+	price = 50
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -20
+
+/datum/commodity/fartflops
+	comname = "fart-flops"
+	comtype = /obj/item/clothing/shoes/fart
+	desc = "They fart when you walk."
+	onmarket = 0
+	price = 50
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -20
+#endif
 
 /// pathology
 /datum/commodity/synthmodule

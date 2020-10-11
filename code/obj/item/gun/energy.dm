@@ -25,8 +25,7 @@
 		update_icon()
 
 	disposing()
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 
@@ -655,7 +654,7 @@
 		var/list/L = list()
 		L += "None (Cancel)" // So we'll always get a list, even if there's only one teleporter in total.
 
-		for(var/obj/machinery/teleport/portal_generator/PG in machine_registry[MACHINES_PORTALGENERATORS])
+		for(var/obj/machinery/teleport/portal_generator/PG as() in machine_registry[MACHINES_PORTALGENERATORS])
 			if (!PG.linked_computer || !PG.linked_rings)
 				continue
 			var/turf/PG_loc = get_turf(PG)
@@ -870,10 +869,12 @@
 	w_class = 4
 	force = 15
 
+
 	New()
 		cell = new/obj/item/ammo/power_cell/self_charging/big
 		current_projectile = new /datum/projectile/special/spreader/uniform_burst/blaster
 		projectiles = list(current_projectile)
+		flags |= ONBACK
 		..()
 
 
@@ -1253,7 +1254,6 @@
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
 		asign_name(M)
 
-		update_icon()
 		..()
 
 	disposing()

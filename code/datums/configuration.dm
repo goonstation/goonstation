@@ -102,6 +102,7 @@
 	var/whitelistEnabled = 0
 
 /datum/configuration/New()
+	..()
 	var/list/L = childrentypesof(/datum/game_mode)
 	for (var/T in L)
 		// I wish I didn't have to instance the game modes in order to look up

@@ -9,7 +9,6 @@
 
 //******************************************** MANTA COMPATIBLE LISTS HERE ********************************************
 
-var/list/mantaTiles = list()
 var/list/mantaPushList = list()
 var/mantaMoving = 1
 var/MagneticTether = 1
@@ -69,7 +68,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		updateIcon()
 		..()
 //This crap is here so nothing can destroy it.
-	hitby()
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		SHOULD_CALL_PARENT(FALSE)
 	reagent_act()
 	bullet_act()
@@ -145,7 +144,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /proc/mantaIsBroken()
 	var/broken = 0
-	for(var/obj/machinery/mantapropulsion/A in by_type[/obj/machinery/mantapropulsion])
+	for_by_tcl(A, /obj/machinery/mantapropulsion)
 		if(!A.important) continue
 		if(A.health == 0) broken++
 		if(A.health > 0) broken--
@@ -162,22 +161,18 @@ var/obj/manta_speed_lever/mantaLever = null
 	if(doShake)
 		for(var/client/C in clients)
 			var/mob/M = C.mob
-			if(M && M.z == 1) shake_camera(M, 5, 15, 0.2)
+			if(M && M.z == 1) shake_camera(M, 5, 32, 0.2)
 
-	for(var/A in mantaTiles)
-		var/turf/space/fluid/manta/T = A
-		if (!istype(T))
-			mantaTiles.Remove(T)
-			continue
+	for_by_tcl(T, /turf/space/fluid/manta)
 		T.setScroll(moving)
-	for(var/A in by_type[/obj/decal/mantaBubbles])
-		var/obj/O = A
+
+	for_by_tcl(O, /obj/decal/mantaBubbles)
 		O.alpha = (moving ? 255:0)
-	for(var/A in by_type[/obj/sea_plant_manta])
-		var/obj/O = A
+
+	for_by_tcl(O, /obj/sea_plant_manta)
 		O.alpha = (moving ? 0:255)
-	for(var/A in by_type[/obj/machinery/mantapropulsion])
-		var/obj/machinery/mantapropulsion/O = A
+
+	for_by_tcl(O, /obj/machinery/mantapropulsion)
 		O.setOn(moving)
 
 	mantaMoving = moving
@@ -712,8 +707,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		busy = 0
 
 	proc/teleport(mob/user)
-		for(var/X in by_type[/obj/miningteleporter])
-			var/obj/miningteleporter/S = X
+		for_by_tcl(S, /obj/miningteleporter)
 			if(S.id == src.id && S != src)
 				if(recharging == 1)
 					return 1
@@ -736,7 +730,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/rddiploma
 	name = "RD's diploma"
@@ -772,7 +766,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/constructioncone
 	desc = "Caution!"
@@ -927,7 +921,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/list/L = list()
 
 	New()
-		mantaTiles.Add(src)
+		START_TRACKING
 		. = ..()
 		stateOff = "manta_sand"
 		stateOn = "[stateOff]_scroll"
@@ -936,7 +930,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return .
 
 	Del()
-		mantaTiles.Remove(src)
+		STOP_TRACKING
 		return ..()
 
 	ex_act(severity)
@@ -957,7 +951,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
 					L+=T
 
-			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/wraith) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced))
+			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/wraith) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced) || istype(Obj, /obj/arrival_missile))
 				return
 
 			return_if_overlay_or_effect(Obj)
@@ -1513,7 +1507,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if(istype(W, /obj/item/parts/human_parts/arm/right/polaris))
 			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 			playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
-			for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+			for_by_tcl(M, /obj/machinery/door/airlock)
 				if (M.id == src.id)
 					if (M.density)
 						M.open()
@@ -1536,7 +1530,7 @@ var/obj/manta_speed_lever/mantaLever = null
 						if (M.density)
 							M.open()
 
-				for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+				for_by_tcl(M, /obj/machinery/door/airlock)
 					if (M.id == src.id)
 						if (M.density)
 							M.open()

@@ -295,8 +295,7 @@
 		var/mob/living/carbon/human/H = src
 		resist_prob = H.get_disease_protection(ailment_path, ailment_name)
 	else
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
+		for (var/obj/item/C as() in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")
 
 	if (ispath(ailment_path) || istext(ailment_name))

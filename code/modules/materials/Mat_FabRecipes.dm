@@ -48,6 +48,7 @@
 	category = "Blueprints"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/variable {part_name = "Hard material"; required_amount = 5; required_value = 70; greater_than = 1; required_property = "hard"; proper_name = "hardness"} ())
 		required_parts.Add(new/datum/matfab_part/variable {part_name = "Dense material"; required_amount = 2; required_value = 60; greater_than = 1; required_property = "density"; proper_name = "density"} ())
 
@@ -63,6 +64,7 @@
 	category = "Clothing"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Fabric"; required_amount = 3} ())
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Reinforcement"; required_amount = 3} ())
 		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Visor"; required_amount = 2} ())
@@ -85,6 +87,7 @@
 	category = "Mining Tools"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/radiocative_material {part_name = "Internal"; required_amount = 45} ())
 		required_parts.Add(new/datum/matfab_part/charge {part_name = "Charge"; required_amount = 1} ())
 
@@ -100,6 +103,7 @@
 	category = "Mining Tools"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -119,6 +123,7 @@
 	category = "Mining Tools"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -137,6 +142,7 @@
 	category = "Mining Tools"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -155,6 +161,7 @@
 	category = "Mining Tools"
 
 	New()
+		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -216,6 +223,10 @@
 				newObj.desc = "[initial(newObj.desc)] It has \a [head.name]."
 
 			newObj.set_loc(getOutputLocation(owner))
+			if(newObj.power > SPIKES_MEDAL_POWER_THRESHOLD)
+				var/mob/living/player = usr
+				if(istype(player))
+					player.unlock_medal("This object menaces with spikes of...", 1)
 		return
 
 /datum/matfab_recipe/coilsmall
@@ -748,13 +759,19 @@
 
 //////////////////////////////////////////////BASE CLASS BELOW
 
+/// Base material fabricator recipie
 /datum/matfab_recipe
-	var/name = ""			//Name of the recipe.
-	var/desc = ""			//Short description of the item.
-	var/list/required_parts = list() //List of /datum/matfab_part that are required for this.
-	var/category = "Misc"	//Which group this recipe belongs to.
+	/// Name of the recipe.
+	var/name = ""
+	/// Short description of the item.
+	var/desc = ""
+	/// List of [/datum/matfab_part] that are required for this.
+	var/list/required_parts = list()
+	/// Which group this recipe belongs to.
+	var/category = "Misc"
 
-	proc/getMaxAmount()	//Gets the maximum amount of this recipe we can make with the currently assigned objects.
+	/// Gets the maximum amount of this recipe we can make with the currently assigned objects.
+	proc/getMaxAmount()
 		var/maxAmt = INFINITY
 		for(var/datum/matfab_part/P in required_parts)
 			if(!P.assigned)
@@ -768,7 +785,8 @@
 
 		return maxAmt
 
-	proc/canBuild(var/amount = 1, var/atom/owner) //Can we currently build this?
+	/// Can we currently build this?
+	proc/canBuild(var/amount = 1, var/atom/owner)
 		for(var/datum/matfab_part/P in required_parts)
 			if(P.optional)
 				if(P.assigned)
@@ -785,21 +803,25 @@
 					return 0
 		return 1
 
-	proc/build(var/amount = 1, var/obj/machinery/nanofab/owner) //Actually create and place the object.
+	/// Actually create and place the object.
+	proc/build(var/amount = 1, var/obj/machinery/nanofab/owner)
 		return
 
-	proc/clear()	//Clear everything. used to reset the recipe
+	/// Clear everything. used to reset the recipe
+	proc/clear()
 		for(var/datum/matfab_part/P in required_parts)
 			P.clear()
 		return
 
-	proc/getObjectByPartName(var/findName) //Gets the assigned object that matches the given part name i.e. "Lens" or such. Whatever you named it in the recipe New.
+	/// Gets the assigned object that matches the given part name i.e. "Lens" or such. Whatever you named it in the recipe New.
+	proc/getObjectByPartName(var/findName)
 		for(var/datum/matfab_part/P in required_parts)
 			if(P.part_name == findName)
 				return P.assigned
 		return null
 
-	proc/getOutputLocation(var/obj/machinery/nanofab/owner) //Figures out if we should place the result on the ground or inside the fab.
+	/// Figures out if we should place the result on the ground or inside the fab.
+	proc/getOutputLocation(var/obj/machinery/nanofab/owner)
 		var/atom/output = owner.loc
 		if(owner.outputInternal)
 			output = owner
@@ -807,20 +829,31 @@
 			output = owner.get_output_location()
 		return output
 
+/// Simple matfab recipie definition
 /datum/matfab_recipe/simple
-	var/list/materials = list() //Usage: list("!metal"=5, "crystal"=3, "rubber"=1) , putting a ! in front of a material name will make that material the main material that is applied at the end.
-	var/result = null			//Typepath of the resulting item.
-	var/stack = 0				//If 1, we change the stack amount instead of creating multiple objects.
-	var/createMultiplier = 1	//Multiply output numbers by this.
+	/// Usage: list("!metal"=5, "crystal"=3, "rubber"=1) , putting a ! in front of a material name will make that material the main material that is applied at the end.
+	var/list/materials = list()
+	/// Typepath of the resulting item.
+	var/result = null
+	/// If 1, we change the stack amount instead of creating multiple objects.
+	var/stack = 0
+	/// Multiply output numbers by this.
+	var/createMultiplier = 1
 
 	var/datum/matfab_part/finishMaterial = null //Internal use.
 
-	proc/postProcess(var/obj/item/I) //Called after the object is created and the material is assigned to it. Do any additional processing in here.
-		//getObjectByPartName(var/findName) works in here. Check the new proc below to see what the expected names are. This might not work if you have multiple parts of the same type.
-		//A normal metal part would be getObjectByPartName("Metal"), a metal part set to main(!) would be getObjectByPartName("(Main) Metal")
+	/**
+		* Called after the object is created and the material is assigned to it. Do any additional processing in here.
+		*
+		* getObjectByPartName(var/findName) works in here. Check the new proc below to see what the expected names are. This might not work if you have multiple parts of the same type.
+		*
+		* A normal metal part would be getObjectByPartName("Metal"), a metal part set to main(!) would be getObjectByPartName("(Main) Metal")
+		*/
+	proc/postProcess(var/obj/item/I)
 		return
 
 	New()
+		..()
 		for(var/A in materials)
 			var/numReq = materials[A]
 			if(numReq && isnum(numReq) && numReq >= 1)
@@ -902,6 +935,3 @@
 				postProcess(newObj)
 				newObj.set_loc(getOutputLocation(owner))
 		return
-
-
-/////EXPERIMENTAL ARTIFACT ENGINE RELATED STUFF//

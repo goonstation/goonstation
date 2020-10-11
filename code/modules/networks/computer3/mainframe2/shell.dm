@@ -393,7 +393,7 @@
 						if (!isnum(.) || . < 0)
 							continue
 
-						sleep ( max(0, min(., 30)) )
+						sleep(clamp(., 0, 30) SECONDS)
 						continue
 
 					if ("help", "man")

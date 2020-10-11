@@ -12,7 +12,7 @@ $color-disabled: #999999 !default;
 $color-selected: colors.bg(colors.$green) !default;
 $color-caution: colors.bg(colors.$yellow) !default;
 $color-danger: colors.bg(colors.$red) !default;
-$text-color-transparent: rgba(255, 255, 255, 0.5) !default;
+$color-transparent-text: rgba(255, 255, 255, 0.5) !default;
 $border-radius: base.$border-radius !default;
 $bg-map: colors.$bg-map !default;
 
@@ -39,6 +39,10 @@ $bg-map: colors.$bg-map !default;
   &:focus {
     background-color: lighten($color, 15%);
     color: $text-color;
+  }
+
+  &:active {
+    background-color: lighten($color, 60%);
   }
 }
 
@@ -117,7 +121,7 @@ $bg-map: colors.$bg-map !default;
 .Button--color--transparent {
   @include button-color(base.$color-bg);
   background-color: rgba(base.$color-bg, 0);
-  color: $text-color-transparent;
+  color: $color-transparent-text;
 }
 
 .Button--disabled {

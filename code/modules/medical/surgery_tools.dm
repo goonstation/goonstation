@@ -41,6 +41,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -49,7 +50,7 @@ CONTAINS:
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
@@ -63,6 +64,10 @@ CONTAINS:
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
 				src.reagents.trans_to(M,5)
 			return
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -108,6 +113,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -116,7 +122,7 @@ CONTAINS:
 			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
@@ -141,6 +147,10 @@ CONTAINS:
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 /obj/item/circular_saw/vr
 	icon = 'icons/effects/VR.dmi'
@@ -172,6 +182,7 @@ CONTAINS:
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 
 	New()
 		..()
@@ -205,6 +216,10 @@ CONTAINS:
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 /* ==================================================== */
 /* -------------------- Staple Gun -------------------- */
@@ -649,6 +664,7 @@ CONTAINS:
 		..()
 
 	attack_hand(mob/living/user as mob)
+		if (isAI(user) || isintangible(user) || isobserver(user)) return
 		user.lastattacked = src
 		..()
 		if (!defib)
@@ -1110,6 +1126,8 @@ CONTAINS:
 			user.visible_message("<b>[user]</b> unfolds [src].",\
 			"You unfold [src].")
 			user.drop_item()
+			pixel_x = 0
+			pixel_y = 0
 			src.update_icon()
 		else
 			return
@@ -1136,9 +1154,17 @@ CONTAINS:
 		src.open()
 		src.visible_message("<span class='alert'><b>[user]</b> unzips themselves from [src]!</span>")
 
-	MouseDrop(mob/user as mob)
+	MouseDrop(atom/over_object)
+		if (!over_object) return
+		if(isturf(over_object))
+			..() //Lets it do the turf-to-turf slide
+			return
+		else if (istype(over_object, /obj/screen/hud))
+			over_object = usr //Try to fold & pick up the bag with your mob instead
+		else if (!(over_object == usr))
+			return
 		..()
-		if (!(src.contents && src.contents.len) && (usr == user && !usr.restrained() && !usr.stat && in_range(src, usr) && !issilicon(usr)))
+		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && IN_RANGE(src, usr, 1) && !issilicon(usr))
 			if (src.icon_state != "bodybag")
 				usr.visible_message("<b>[usr]</b> folds up [src].",\
 				"You fold up [src].")
@@ -1557,7 +1583,7 @@ keeping this here because I want to make something else with it eventually
 		else
 			return ..()
 
-	hitby(atom/movable/AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		if (isitem(AM))
 			src.visible_message("[AM] lands on [src]!")
@@ -1629,6 +1655,7 @@ keeping this here because I want to make something else with it eventually
 	throw_range = 5
 	var/mob/Poisoner = null
 	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
 	var/image/handle = null
 
 	New()
@@ -1648,3 +1675,7 @@ keeping this here because I want to make something else with it eventually
 		handle = null
 		Poisoner = null
 		..()
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)

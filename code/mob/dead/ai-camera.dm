@@ -51,15 +51,29 @@
 		for(var/key in aiImages)
 			var/image/I = aiImages[key]
 			src.client << I
+		SPAWN_DBG(0)
+			var/sleep_counter = 0
+			for(var/key in aiImagesLowPriority)
+				var/image/I = aiImagesLowPriority[key]
+				src.client << I
+				if(sleep_counter++ % (300 * 10) == 0)
+					LAGCHECK(LAG_LOW)
 
 	Logout()
 		//if (src.client)
 		//	src.client.show_popup_menus = 1
-
-		if(src.last_client)
+		var/client/cl = src.last_client
+		if(cl)
 			for(var/key in aiImages)
 				var/image/I = aiImages[key]
-				src.last_client.images -= I
+				cl.images -= I
+		SPAWN_DBG(0)
+			var/sleep_counter = 0
+			for(var/key in aiImagesLowPriority)
+				var/image/I = aiImagesLowPriority[key]
+				cl.images -= I
+				if(sleep_counter++ % (300 * 10) == 0)
+					LAGCHECK(LAG_LOW)
 
 		.=..()
 
@@ -416,36 +430,31 @@
 
 /turf/proc/addCameraCoverage(var/obj/machinery/camera/C) //copy pasted for use below in updatecoverage to reduce heavy proc calls. dont change one without the other!
 	var/cam_amount = src.cameras ? src.cameras.len : 0
-	if(src.cameras == null)
+	if(!src.cameras)
 		src.cameras = list(C)
-		if(C.coveredTiles == null)
+		if(!C.coveredTiles)
 			C.coveredTiles = list(src)
 		else
-			if(!C.coveredTiles.Find(src))
-				C.coveredTiles.Add(src)
+			C.coveredTiles |= src
+
 	else
-		if(!src.cameras.Find(C))
-			src.cameras.Add(C)
-		if(C.coveredTiles == null)
+		src.cameras |= C
+		if(!C.coveredTiles)
 			C.coveredTiles = list(src)
 		else
-			if(!C.coveredTiles.Find(src))
-				C.coveredTiles.Add(src)
+			C.coveredTiles |= src
 
 	if (cam_amount < src.cameras.len)
 		if (src.aiImage)
 			src.aiImage.loc = null
 
-	return
 
 /turf/proc/removeCameraCoverage(var/obj/machinery/camera/C) //copy pasted for use below in updatecoverage to reduce heavy proc calls. dont change one without the other!
-	if(src.cameras == null) return
+	if(!src.cameras)
+		return
 
-	if(src.cameras.Find(C))
-		src.cameras.Remove(C)
-
-	if(C.coveredTiles.Find(src))
-		C.coveredTiles.Remove(src)
+	src.cameras &= C
+	C.coveredTiles &= src
 
 	if(!src.cameras.len)
 		src.cameras = null
@@ -453,7 +462,6 @@
 		if (src.aiImage)
 			src.aiImage.loc = src
 
-	return
 
 /turf/proc/adjustCameraImage()
 	if(!istype(src.aiImage)) return
@@ -476,7 +484,7 @@
 //---TURF---//
 
 //---CAMERA---//
-/obj/machinery/camera/var/list/coveredTiles = null
+/obj/machinery/camera/var/list/turf/coveredTiles = null
 
 /obj/machinery/camera/proc/updateCoverage()
 	//					HEY READ THIS
@@ -493,8 +501,7 @@
 		new_tiles += T
 
 	if (prev_tiles)
-		for(var/atom in (prev_tiles - new_tiles))
-			var/turf/O = atom
+		for(var/turf/O as() in (prev_tiles - new_tiles))
 			//O.removeCameraCoverage(src)
 			//removeCameraCoverage copy+paste begin!
 			if(O.cameras == null) continue
@@ -515,8 +522,7 @@
 			LAGCHECK(LAG_HIGH)
 			//copy paste end!
 
-	for(var/atom in (new_tiles - prev_tiles))
-		var/turf/t = atom
+	for(var/turf/t as() in (new_tiles - prev_tiles))
 
 		//t.addCameraCoverage(src)
 		//add camera coverage copy+paste begin!
@@ -561,127 +567,11 @@
 	return
 
 
-	//old version below
-	/*
-	if(coveredTiles != null && coveredTiles.len)
-		for(var/turf/O in coveredTiles.Copy())
-			LAGCHECK(LAG_HIGH)
-
-			//O.removeCameraCoverage(src)
-			//removeCameraCoverage copy+paste begin!
-			if(O.cameras == null) continue
-
-			if(O.cameras.Find(src))
-				O.cameras.Remove(src)
-
-			if(src.coveredTiles.Find(O))
-				src.coveredTiles.Remove(O)
-
-			if(!O.cameras.len)
-				O.cameras = null
-
-				if (O.aiImage)
-					O.aiImage.alpha = 255
-					O.aiImage.override = 1
-
-			//copy paste end!
-
-
-
-	for(var/turf/t in view(CAM_RANGE, get_turf(src)))
-		LAGCHECK(LAG_HIGH)
-
-		//t.addCameraCoverage(src)
-		//add camera coverage copy+paste begin!
-		var/cam_amount = t.cameras ? t.cameras.len : 0
-		if(t.cameras == null)
-			t.cameras = list(src)
-			if(src.coveredTiles == null)
-				src.coveredTiles = list(t)
-			else
-				if(!src.coveredTiles.Find(t))
-					src.coveredTiles.Add(t)
-		else
-			if(!t.cameras.Find(src))
-				t.cameras.Add(src)
-			if(src.coveredTiles == null)
-				src.coveredTiles = list(t)
-			else
-				if(!src.coveredTiles.Find(t))
-					src.coveredTiles.Add(t)
-
-		if (cam_amount < t.cameras.len)
-			if (t.aiImage)
-				t.aiImage.alpha = 0
-				t.aiImage.override = 0
-		//copy paste end!
-
-
-		//t.adjustCameraImage()
-		//adjustCameraImage copy+paste begin!
-		if(!istype(t.aiImage)) continue
-
-		if( t.cameras.len >= 1 )
-			t.aiImage.alpha = 0
-			t.aiImage.override = 0
-		else if( t.cameras == null )
-			t.aiImage.alpha = 255
-			t.aiImage.override = 1
-		//copy paste end!
-
-	return
-	*/
-
 //---CAMERA---//
 
 //---MISC---//
 var/list/camImages = list()
 
-
-//moved to input.dm
-/*
-/client/Click(thing)
-	if (src.mob.mob_flags & SEE_THRU_CAMERAS)
-		if(isturf(thing) && (!thing:cameras || !thing:cameras.len))
-			return
-	return ..()
-*/
-
-
-/*
-/atom/RL_SetOpacity(newopacity)
-	if( opacity == newopacity ) return
-	.=..()
-	//for(var/turf/t in range(CAM_RANGE, src))
-	//	t.cameraTotal = 0
-
-	SPAWN_DBG(0) //maybe bad, maybe good... this is a test by MBC, please remove if its shit. (There's just a lot of things that call RL_SetOpacity that we don't really want to be stalled by lagcheck!)
-		if (isturf(src.loc))
-			var/turf/T = src.loc
-			for(var/obj/machinery/camera/C in T.cameras)
-				//if( get_dist(C.loc, src) <= CAM_RANGE )
-				//var/list/inview = view(CAM_RANGE,C)
-				for(var/turf/t in range(CAM_RANGE, C))
-					LAGCHECK(LAG_MED)
-					if( !t.aiImage ) continue
-					//var/camTotal = 0
-
-					//var/dist = get_dist(t, C)
-					//if( t in inview )
-					//	camTotal++
-					//else
-					//	camTotal = max(camTotal-1,0)
-
-					if( t.cameras && t.cameras.len )
-						t.aiImage.alpha = 0
-						t.aiImage.override = 0
-					else
-						t.aiImage.alpha = 255
-						t.aiImage.override = 1
-				if (C.unsubscribe_grace_counter == -1) //we are not a processing camera. Do manual update call!
-					C.updateCoverage()
-			LAGCHECK(LAG_REALTIME)
-*/
 
 //---MISC---//
 
@@ -689,7 +579,7 @@ var/list/camImages = list()
 var/aiDirty = 2
 world/proc/updateCameraVisibility()
 	if(!aiDirty) return
-#ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
+#if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
 	// I don't wanna wait for this camera setup shit just GO
 	return
 #endif
@@ -709,20 +599,21 @@ world/proc/updateCameraVisibility()
 		// takes about one second compared to the ~12++ that the actual calculations take
 		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
 		var/list/turf/cam_candidates = list()
-		for(var/turf/t in world)//ugh
+		for(var/turf/t in world) //ugh x2
 			if( t.z != 1 ) continue
 			cam_candidates += t
 
 
-		for(var/turf/t in cam_candidates)//ugh
+		for(var/turf/t as() in cam_candidates)//ugh
 			//if( t.z != 1 ) continue
 			//t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
 
 			t.aiImage = new
 			t.aiImage.appearance = ma
+			t.aiImage.dir = pick(alldirs)
 			t.aiImage.loc = t
 
-			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]")
+			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]", low_priority=istype(t, /turf/space))
 
 			donecount++
 			thispct = round(donecount / cam_candidates.len * 100)
@@ -734,7 +625,7 @@ world/proc/updateCameraVisibility()
 
 		aiDirty = 1
 		game_start_countdown?.update_status("Updating camera vis...\n")
-	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
 			LAGCHECK(LAG_HIGH)
 			if (!t.aiImage) continue

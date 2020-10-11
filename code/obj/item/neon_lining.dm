@@ -1,7 +1,7 @@
-//The neon lining object, used for placing neon lining.
 
 #define MAXLINING 40
 #define STARTLINING 1
+/// The neon lining object, used for placing neon lining.
 /obj/item/neon_lining
 	name = "neon lining"
 	var/base_name = "neon lining"
@@ -31,7 +31,7 @@
 		pixel_x = rand(-2,2)
 		pixel_y = rand(-2,2)
 		..(loc)
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message("<span class='notice'>[user] begins coiling neon lining!</span>")

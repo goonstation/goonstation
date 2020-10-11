@@ -19,7 +19,7 @@ THROWING DARTS
 	w_class = 1.0
 	var/implanted = null
 	var/impcolor = "g"
-	var/owner = null
+	var/mob/owner = null
 	var/mob/former_implantee = null
 	var/image/implant_overlay = null
 	var/life_tick_energy = 0
@@ -151,7 +151,6 @@ THROWING DARTS
 	impcolor = "b"
 	//life_tick_energy = 0.1
 	var/healthstring = ""
-
 	var/message = null
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 	var/net_id = null
@@ -174,6 +173,23 @@ THROWING DARTS
 		..()
 		if (!isdead(M) && M.client)
 			JOB_XP(I, "Medical Doctor", 5)
+
+	proc/getHealthList()
+		var/healthlist = list()
+		if (!src.implanted)
+			healthlist["OXY"] = 0
+			healthlist["TOX"] = 0
+			healthlist["BURN"] = 0
+			healthlist["BRUTE"] = 0
+		else
+			var/mob/living/L
+			if (isliving(src.owner))
+				L = src.owner
+				healthlist["OXY"] = round(L.get_oxygen_deprivation())
+				healthlist["TOX"] = round(L.get_toxin_damage())
+				healthlist["BURN"] = round(L.get_burn_damage())
+				healthlist["BRUTE"] = round(L.get_brute_damage())
+		return healthlist
 
 	proc/sensehealth()
 		if (!src.implanted)
@@ -255,7 +271,14 @@ THROWING DARTS
 			return
 		var/coords = src.get_coords()
 		var/myarea = get_area(src)
-		src.message = "DEATH ALERT: [src.owner][coords] in [myarea]"
+		var/has_record = src.check_for_valid_record()
+		src.message = "DEATH ALERT: [src.owner][coords] in [myarea], " //youre lucky im not onelining this
+		if (has_record) //the title for this next section of code is grammar sucks
+			if (he_or_she(src.owner) == "they")
+				src.message += "they [has_record ? "have a record in the cloner at [has_record]" : "do not have a cloning record." ]"
+			else
+				src.message += "[he_or_she(src.owner)] [has_record ? "has a record in the cloner at [has_record]" : "does not have a cloning record."]"
+
 		//DEBUG_MESSAGE("implant reporting death")
 		src.send_message()
 
@@ -272,6 +295,13 @@ THROWING DARTS
 				var/turf/T = get_turf(C)
 				if (istype(T))
 					return " at [T.x],[T.y],[T.z]"
+
+	proc/check_for_valid_record() //returns the area of the cloner where we found our valid record - jank, but idk
+		if (src.owner && src.owner.ckey)
+			for_by_tcl(comp, /obj/machinery/computer/cloning)
+				if (comp.find_record(src.owner.ckey))
+					return get_area(comp)
+		return null
 
 	proc/send_message()
 		DEBUG_MESSAGE("sending message: [src.message]")
@@ -441,6 +471,18 @@ THROWING DARTS
 						H.emote("twitch_v")
 
 		..()
+
+
+// dumb joke
+/obj/item/implant/antirot
+	name = "\improper Rotbusttec implant"
+	icon_state = "implant-r"
+	impcolor = "r"
+
+	on_death()
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = owner
+			H.reagents.add_reagent("formaldehyde", 5)
 
 
 /* Deprecated old turds shit */
@@ -669,7 +711,7 @@ THROWING DARTS
 
 		if (expire)
 			//25 minutes +/- 5
-			SPAWN_DBG(600 * (25 + rand(-5,5)) )
+			SPAWN_DBG((25 + rand(-5,5)) MINUTES)
 				if (src && !ishuman(src.loc)) // Drop-all, gibbed etc (Convair880).
 					if (src.expire && (src.expired != 1)) src.expired = 1
 					return
@@ -678,18 +720,18 @@ THROWING DARTS
 				boutput(M, "<span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span>")
 
 				// 1 minute left
-				SPAWN_DBG(1 MINUTE)
-					if (src && !ishuman(src.loc))
-						if (src.expire && (src.expired != 1)) src.expired = 1
-						return
-					if (!src || !owner || (M != owner) || src.expired)
-						return
-					// There's a proc for this now (Convair880).
-					if (M.mind && M.mind.special_role == "mindslave")
-						remove_mindslave_status(M, "mslave", "expired")
-					else if (M.mind && M.mind.master)
-						remove_mindslave_status(M, "otherslave", "expired")
-					src.expired = 1
+				sleep(1 MINUTE)
+				if (src && !ishuman(src.loc))
+					if (src.expire && (src.expired != 1)) src.expired = 1
+					return
+				if (!src || !owner || (M != owner) || src.expired)
+					return
+				// There's a proc for this now (Convair880).
+				if (M.mind && M.mind.special_role == "mindslave")
+					remove_mindslave_status(M, "mslave", "expired")
+				else if (M.mind && M.mind.master)
+					remove_mindslave_status(M, "otherslave", "expired")
+				src.expired = 1
 		return
 
 	on_remove(var/mob/M)
@@ -790,6 +832,9 @@ THROWING DARTS
 		desc = "Rather unperfect round ball. Looks very old."
 		icon_state = "flintlockbullet"
 
+	bullet_50
+		name = ".50AE round"
+		desc = "Ouch."
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
@@ -1165,6 +1210,10 @@ THROWING DARTS
 /obj/item/implantcase/robust
 	name = "glass case - 'Robusttec'"
 	implant_type = "/obj/item/implant/robust"
+
+/obj/item/implantcase/antirot
+	name = "glass case - 'Rotbusttec'"
+	implant_type = "/obj/item/implant/antirot"
 
 /obj/item/implantcase/access
 	name = "glass case - 'Electronic Access'"
@@ -1586,7 +1635,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	icon_state = "dart"
 	throw_spin = 0
 
-	throw_impact(M)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (ishuman(M) && prob(5))
 			var/mob/living/carbon/human/H = M
@@ -1611,7 +1660,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	throw_spin = 0
 	throw_speed = 3
 
-	throw_impact(M)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M

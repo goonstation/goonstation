@@ -642,7 +642,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/security{
-
+	
 	},
 /obj/machinery/light/emergency{
 	icon_state = "ebulb1";
@@ -9281,7 +9281,7 @@
 	id = "crematorium"
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
@@ -9297,7 +9297,7 @@
 "aqn" = (
 /obj/storage/closet/coffin,
 /obj/item/device/radio/intercom/security{
-
+	
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -10224,7 +10224,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-
+	
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -13964,7 +13964,7 @@
 	icon_state = "line3"
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -14641,10 +14641,7 @@
 "aAb" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery"
-	},
+/obj/item/clothing/suit/cultist/nerd,
 /obj/item/dice/magic8ball,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
@@ -17831,7 +17828,7 @@
 /area/station/medical/robotics)
 "aFk" = (
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/stairs{
 	dir = 8;
@@ -19025,7 +19022,7 @@
 /obj/shrub,
 /obj/item/cigpacket,
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /obj/machinery/light/emergency{
 	dir = 8
@@ -19064,7 +19061,7 @@
 	d2 = 2
 	},
 /obj/item/device/radio/intercom/science{
-
+	
 	},
 /obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/white/checker,
@@ -20009,7 +20006,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/red,
@@ -22808,7 +22805,7 @@
 	name = "autoname - SS13"
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /obj/machinery/autoclave,
 /turf/simulated/floor/purplewhite/corner{
@@ -23696,7 +23693,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/purple,
 /area/station/science/research_director{
@@ -23751,7 +23748,7 @@
 	network = "Zeta"
 	},
 /obj/item/device/radio/intercom/science{
-
+	
 	},
 /turf/simulated/floor/purple,
 /area/station/science/research_director{
@@ -27732,7 +27729,7 @@
 	pltanks = 15
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
@@ -27889,7 +27886,7 @@
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /obj/landmark/start{
 	name = "Geneticist"
@@ -32212,7 +32209,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
@@ -32505,7 +32502,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/brig{
-
+	
 	},
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -33177,7 +33174,7 @@
 	d2 = 4
 	},
 /obj/item/device/radio/intercom/science{
-
+	
 	},
 /turf/simulated/floor/engine,
 /area/station/testchamber)
@@ -39154,7 +39151,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
@@ -40064,7 +40061,7 @@
 	},
 /obj/machinery/light_switch/west,
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/engine{
@@ -41066,7 +41063,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom/cargo{
-
+	
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
@@ -44926,7 +44923,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
@@ -45101,7 +45098,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)

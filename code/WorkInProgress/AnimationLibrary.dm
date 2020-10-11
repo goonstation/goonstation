@@ -71,10 +71,9 @@
 	if (!istype(A))
 		return
 	//A.alpha = 200
-	var/matrix/M = matrix()
-	M.Scale(0.6, 1)
-	animate(A, transform=M, time = 3,easing = BOUNCE_EASING)
-	animate(transform=null, time = 3,easing = BOUNCE_EASING)
+	var/matrix/M = matrix(A.transform)
+	animate(A, transform = A.transform.Scale(0.6, 1), time = 3,easing = BOUNCE_EASING,flags=ANIMATION_PARALLEL)
+	animate(transform = M, time = 3,easing = BOUNCE_EASING)
 	return
 
 /proc/animate_flockdrone_item_absorb(var/atom/A)
@@ -415,16 +414,21 @@
 	SPAWN_DBG(5)
 		M.attack_particle.alpha = 0
 
-/proc/block_spark(var/mob/M)
+/proc/block_spark(var/mob/M, armor = 0)
 	if (!M || !M.attack_particle) return
+	var/state_string = ""
+	if(armor)
+		state_string = "block_spark_armor"
+	else
+		state_string = "block_spark"
 
 	M.attack_particle.invisibility = M.invisibility
 	M.last_interact_particle = world.time
 
 	M.attack_particle.icon = 'icons/mob/mob.dmi'
-	if (M.attack_particle.icon_state == "block_spark")
-		flick("block_spark",M.attack_particle)
-	M.attack_particle.icon_state = "block_spark"
+	if (M.attack_particle.icon_state == state_string)
+		flick(state_string,M.attack_particle)
+	M.attack_particle.icon_state = state_string
 
 	M.attack_particle.alpha = 255
 	M.attack_particle.loc = M.loc
@@ -580,7 +584,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/x = movepx + ipx
 		var/y = movepy + ipy
 		//Shift pixel offset
-		animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT)
+		animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT,flags=ANIMATION_PARALLEL)
 		var/matrix/M = matrix(A.transform)
 		animate(transform = turn(A.transform, (movepx - movepy) * 4), time = 0.6, easing = EASE_OUT)
 		animate(pixel_x = ipx, pixel_y = ipy, time = 0.6,easing = EASE_IN)
@@ -590,7 +594,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 
 /proc/hit_twitch(var/atom/A)
-	if (!A || istype(A, /mob/living/object))
+	if (!A || istype(A, /mob/living/object) || ON_COOLDOWN(A, "hit_twitch", 0.1 SECONDS))
 		return
 	var/which = 0
 	if (usr)
@@ -629,16 +633,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/x = movepx + ipx
 	var/y = movepy + ipy
 
-	animate(A, pixel_x = x, pixel_y = y, time = 2,easing = EASE_IN)
-	animate(A, pixel_x = ipx, pixel_y = ipy, time = 2,easing = EASE_IN)
+	animate(A, pixel_x = x, pixel_y = y, time = 2,easing = EASE_IN,flags=ANIMATION_PARALLEL)
+	animate(pixel_x = ipx, pixel_y = ipy, time = 2,easing = EASE_IN)
 
 //only call this from disorient. ITS NOT YOURS DAD
 /proc/violent_twitch(var/atom/A)
 	SPAWN_DBG(0)
-		var/matrix/start = matrix(A.transform)
 		var/matrix/target = matrix(A.transform)
-		target.Scale(1,1)
-		target.Turn(rand(-45,45))
+		var/deg = rand(-45,45)
+		target.Turn(deg)
 
 
 		A.transform = target
@@ -649,9 +652,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 		sleep(0.2 SECONDS)
 
-		//Look i know this check looks janky. that's because IT IS. violent_twitch is ONLY called for disorient. okay. this stops it fucking up rest animation
-		if (!A.hasStatus(list("weakened", "paralysis")))
-			A.transform = start
+		A.transform = A.transform.Turn(-deg)
 		A.pixel_x = old_x
 		A.pixel_y = old_y
 
@@ -660,29 +661,31 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN_DBG(-1)
 		var/matrix/start = matrix(A.transform)
 		var/matrix/target = matrix(A.transform)
-		target.Scale(1,1)
-		target.Turn(rand(-45,45))
+		var/last_angle = rand(-45,45)
+		target.Turn(last_angle)
 		A.transform = target
+		var/orig_x = A.pixel_x
+		var/orig_y = A.pixel_y
 
 		for (var/i = 0, (i < 7 && A), i++)
-			target = matrix(start)
-			target.Turn(rand(-45,45))
+			var/new_angle = rand(-45, 45)
+			target = A.transform.Turn(-last_angle + new_angle)
+			last_angle = new_angle
 			A.transform = target
 
-			A.pixel_x = rand(-3,3)
-			A.pixel_y = rand(-2,2)
+			A.pixel_x = orig_x + rand(-3,3)
+			A.pixel_y = orig_y + rand(-2,2)
 			sleep(0.1 SECONDS)
 
-		animate(A, pixel_x = 0, pixel_y = 0, transform = null, time = 1, easing = LINEAR_EASING)
+		animate(A, pixel_x = orig_x, pixel_y = orig_y, transform = UNDO_TRANSFORMATION(start, target, A.transform), time = 1, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/eat_twitch(var/atom/A)
 	var/matrix/squish_matrix = matrix(A.transform)
 	squish_matrix.Scale(1,0.92)
 	var/matrix/M = matrix(A.transform)
-	squish_matrix.Scale(1,1)
 	var/ipy = A.pixel_y
 
-	animate(A, transform = squish_matrix, time = 1,easing = EASE_OUT)
+	animate(A, transform = squish_matrix, time = 1,easing = EASE_OUT, flags=ANIMATION_PARALLEL)
 	animate(pixel_y = -1, time = 1,easing = EASE_OUT)
 	animate(transform = M, time = 1, easing = EASE_IN)
 	animate(pixel_y = ipy, time = 1,easing = EASE_IN)
@@ -796,30 +799,32 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/x_severity_inverse = 0 - x_severity
 	var/y_severity_inverse = 0 - y_severity
 
-	animate(A, transform = null, pixel_y = rand(y_severity_inverse,y_severity), pixel_x = rand(x_severity_inverse,x_severity),time = 1,loop = amount, easing = ELASTIC_EASING)
+	animate(A, pixel_y = rand(y_severity_inverse,y_severity), pixel_x = rand(x_severity_inverse,x_severity),time = 1,loop = amount, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 	SPAWN_DBG(amount)
 		if (A)
-			animate(A, transform = null, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
+			animate(A, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
 	return
 
 /proc/animate_teleport(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix(1, 3, MATRIX_SCALE)
-	animate(A, transform = M, pixel_y = 32, time = 10, alpha = 50, easing = CIRCULAR_EASING)
+	var/matrix/original = matrix(A.transform)
+	var/matrix/M = A.transform.Scale(1, 3)
+	animate(A, transform = M, pixel_y = 32, time = 10, alpha = 50, easing = CIRCULAR_EASING, flags=ANIMATION_PARALLEL)
 	M.Scale(0,4)
 	animate(transform = M, time = 5, color = "#1111ff", alpha = 0, easing = CIRCULAR_EASING)
-	animate(transform = null, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
+	animate(transform = original, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	return
 
 /proc/animate_teleport_wiz(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix(0, 4, MATRIX_SCALE)
-	animate(A, color = "#ddddff", time = 20, alpha = 70, easing = LINEAR_EASING)
+	var/matrix/original = matrix(A.transform)
+	var/matrix/M = A.transform.Scale(0, 4)
+	animate(A, color = "#ddddff", time = 20, alpha = 70, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 	animate(transform = M, pixel_y = 32, time = 20, color = "#2222ff", alpha = 0, easing = CIRCULAR_EASING)
 	animate(time = 8, transform = M, alpha = 5) //Do nothing, essentially
-	animate(transform = null, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
+	animate(transform = original, time = 5, color = "#ffffff", alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	return
 
 /proc/animate_rainbow_glow_old(var/atom/A)
@@ -988,23 +993,18 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(!istype(A))
 		return
 
-	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease)
+	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease, flags=ANIMATION_PARALLEL)
 
 /proc/animate_rest(var/atom/A, var/stand)
 	if(!istype(A))
 		return
-
-	var/matrix/M = matrix()
-	if (A.shrunk)
-		M *= (0.75 ** A.shrunk)
-
 	if(stand)
-		animate(A, pixel_x = 0, pixel_y = 0, transform = M, time = 3, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform.Turn(-90), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 	else
-		animate(A, pixel_x = 0, pixel_y = -4, transform = M.Turn(90), time = 2, easing = LINEAR_EASING)
+		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 /proc/animate_flip(var/atom/A, var/T)
-	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T)
+	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T, flags=ANIMATION_PARALLEL)
 	animate(transform = matrix(A.transform, 180, MATRIX_ROTATE), time = T)
 
 
@@ -1326,3 +1326,18 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		SPAWN_DBG(time)
 			A.filters.len -= 2
 			A.alpha = 0
+
+//size_max really can't go higher than 0.2 on 32x32 sprites that are sized about the same as humans. Can go higher on larger sprite resolutions or smaller sprites that are in the center, like cigarettes or coins.
+/proc/anim_f_ghost_blur(atom/A, var/size_min = 0.075 as num, var/size_max=0.18 as num)
+	A.filters += filter(type="radial_blur",size=size_min)
+
+	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
+	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)
+
+/proc/animate_bouncy(var/atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
+	if (!istype(A))
+		return
+	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = EAST, flags=ANIMATION_PARALLEL)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = EAST)
+	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)
