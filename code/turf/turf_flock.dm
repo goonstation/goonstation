@@ -205,22 +205,20 @@
 		return
 
 	if(groups.len > 0 && count > 1)//is there atleast one group? and is there atleast 2 tiles nearby to split?
-		F = null//reuse vars
-
 //TODO: fail safe for if there are more then 1 group.
 		var/datum/flock_tile_group/oldgroup = groups[1]//there *really* should only be one group.
-		for(F in getneighbours(get_turf(src)))
-			if(F.group == oldgroup)
-				var/list/listotiles = bfs(F)
+		for(var/turf/simulated/floor/feather/tile in getneighbours(get_turf(src)))
+			if(tile.group == oldgroup)//check if the tile is the same as the old group
+				var/list/listotiles = bfs(tile)//compile a list of connected tiles
 				var/datum/flock_tile_group/newgroup = new
-				for(F in listotiles)
-					F.group.removetile(F)
-					F.group = newgroup
-					F.group.addtile(F)
-					for(var/obj/flock_structure/s in F)
-						s.groupcheck()
+				for(tile in listotiles)
+					tile.group.removetile(tile)//reassign tiles in the list to new group
+					tile.group = newgroup
+					tile.group.addtile(tile)
+					for(var/obj/flock_structure/s in tile)
+						s.groupcheck()//reassign any structures aswell
 
-// TODO: make this use typeless lists
+// TODO: make this use typecheckless lists
 // TODO: currently MASSIVE problem, it does the thing on a random group in range and not on the largest, FIX ASAP.
 
 turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by richardgere(god bless)
@@ -244,7 +242,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 			var/next_turf = get_step(current, dir)
 			if(!visited[next_turf] && istype(next_turf, /turf/simulated/floor/feather))
 				var/turf/simulated/floor/feather/f = next_turf
-				if(f.broken) 
+				if(f.broken)
 					continue //skip broken tiles
 				queue += get_step(current, dir)
 				visited[next_turf] = TRUE
