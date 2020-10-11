@@ -147,7 +147,7 @@
 							items += /obj/item/clothing/under/rank/cargo
 							item_amounts += 1
 							items += /obj/decal/skeleton
-							items_amounts += 1
+							item_amounts += 1
 						else
 							items += /obj/critter/rockworm
 							item_amounts += 3
