@@ -128,7 +128,7 @@
 			if (thePerson)
 				thePerson.hibernating = 0
 				if (thePerson.mind && thePerson.mind.assigned_role && be_loud)
-					for (var/obj/machinery/computer/announcement/A in machine_registry[MACHINES_ANNOUNCEMENTS])
+					for (var/obj/machinery/computer/announcement/A as() in machine_registry[MACHINES_ANNOUNCEMENTS])
 						if (!A.status && A.announces_arrivals)
 							A.announce_arrival(thePerson.real_name, thePerson.mind.assigned_role)
 

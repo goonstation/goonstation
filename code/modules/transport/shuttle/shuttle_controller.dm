@@ -68,7 +68,7 @@ datum/shuttle_controller
 
 		New()
 			..()
-			for (var/obj/machinery/computer/airbr/S in by_type[/obj/machinery/computer/airbr])
+			for_by_tcl(S, /obj/machinery/computer/airbr)
 				if (S.emergency && !(S in src.airbridges))
 					src.airbridges += S
 			map_turf = map_settings.shuttle_map_turf

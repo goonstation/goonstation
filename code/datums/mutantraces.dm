@@ -460,16 +460,6 @@
 			W.addAbility(/datum/targetable/virtual/logout)
 //for sure didnt steal code from ww. no siree
 
-/datum/mutantrace/blank
-	name = "blank"
-	icon_state = "blank"
-	override_eyes = 0
-	override_hair = 0
-	override_beard = 0
-	override_detail = 0
-	override_attack = 0
-	race_mutation = /datum/bioEffect/mutantrace/blank
-
 /datum/mutantrace/grey
 	name = "grey"
 	icon_state = "grey"
@@ -1534,6 +1524,10 @@
 				//at max points, so heal
 				mob.take_toxin_damage(-round_mult)
 				mob.HealDamage("All", round_mult, round_mult)
+				if (prob(7) && mob.find_ailment_by_type(/datum/ailment/malady/flatline))
+					mob.cure_disease_by_path(/datum/ailment/malady/heartfailure)
+					mob.cure_disease_by_path(/datum/ailment/malady/flatline)
+
 		else
 			//nutrients for a bit of grace period
 			if (KAH.points > 0)
@@ -1547,97 +1541,6 @@
 					mob.changeStatus("weakened", 3 SECONDS)
 
 		return
-
-/datum/mutantrace/reliquary_soldier
-	name = "reliquary_soldier"
-	override_eyes = 1
-	override_hair = 1
-	override_beard = 1
-	override_detail = 1
-	override_skintone = 1
-	override_attack = 0
-
-	override_language = null
-	understood_languages = list("english")
-	uses_special_head = 0	// unused
-	human_compatible = 0
-	uses_human_clothes = 0
-	clothing_icon_override = null
-	jerk = 1
-
-	icon_state = "blank_c"
-
-	r_robolimb_arm_type_mutantrace = /obj/item/parts/robot_parts/arm/right/reliquary
-	l_robolimb_arm_type_mutantrace = /obj/item/parts/robot_parts/arm/left/reliquary
-	r_robolimb_leg_type_mutantrace = /obj/item/parts/robot_parts/leg/right/reliquary
-	l_robolimb_leg_type_mutantrace = /obj/item/parts/robot_parts/leg/left/reliquary
-	ignore_missing_limbs = 1
-
-	firevuln = 0.5
-	brutevuln = 0.75
-	toxvuln = 0
-	needs_oxy = 0
-	voice_override = "reliquary"
-
-	New(var/mob/living/carbon/human/M)
-		SPAWN_DBG(0)
-			M.uses_damage_overlays = 0
-			M.add_stam_mod_max("rel_footsoldier", 50)
-			M.blood_id = "reliquary_blood"
-			//M.reagents.maximum_volume = 0
-			M.add_stam_mod_regen("rel_footsoldier", 10)
-			M.blood_color = "#0b1f8f"
-			M.bioHolder.Uid = "--conductive_substance--"
-			M.metabolizes = 0
-			M.speechverb_say = "states"
-			M.speechverb_gasp = "states"
-			M.speechverb_stammer = "states"
-			M.speechverb_exclaim = "declares"
-			M.speechverb_ask = "queries"
-			M.robot_talk_understand = 1
-			M.see_infrared = 1
-			M.mob_flags |= IS_RELIQUARY | IS_RELIQUARY_SOLDIER
-
-
-			//Limb & Organ stuff//
-			return ..(M)
-
-	disposing()
-		if(mob)
-			mob.remove_stam_mod_max("rel_footsoldier")
-			mob.remove_stam_mod_regen("rel_footsoldier")
-		..()
-		return ..()
-
-
-	say_filter(var/message)
-		return message
-
-	emote(var/act)
-		return null
-
-	custom_attack(atom/target)
-		return target.attack_hand(mob)
-
-	sight_modifier()
-		mob.sight |= SEE_MOBS
-		mob.sight |= SEE_OBJS
-		mob.see_in_dark = SEE_DARK_FULL
-		return
-
-	onLife(var/mult = 1)	//Called every Life cycle of our mob
-		return
-
-	onDeath() //Called when our mob dies.  Returning a true value will short circuit the normal death proc right before deathgasp/headspider/etc
-		return
-
-/mob/living/carbon/human/reliquarytest
-
-	New()
-		..()
-		SPAWN_DBG(0)
-			src.real_name = "RELIQUARY TEST - DO NOT USE"
-			src.set_mutantrace(/datum/mutantrace/reliquary_soldier)
 
 /datum/mutantrace/cow
 	name = "cow"

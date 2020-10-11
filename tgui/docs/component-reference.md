@@ -27,7 +27,9 @@ Make sure to add new items to this list if you document new components.
   - [`Flex.Item`](#flexitem)
   - [`Grid`](#grid)
   - [`Grid.Column`](#gridcolumn)
+  - [`HealthStat`](#HealthStat)
   - [`Icon`](#icon)
+  - [`Icon.Stack`](#iconstack)
   - [`Input`](#input)
   - [`Knob`](#knob)
   - [`LabeledControls`](#labeledcontrols)
@@ -506,6 +508,25 @@ Example:
 - See inherited props: [Table.Cell](#tablecell)
 - `size: number` (default: 1) - Size of the column relative to other columns.
 
+### `HealthStat`
+
+A box that applies a color to its contents depending on the damage type.
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `info: boolean` - Info box
+- `type: string` - Damage type oxy, toxin, burn, brute
+- `content: string` - Content to render inside the box.
+
+Example:
+
+```jsx
+<HealthStat
+  type="DamageType"
+  content="content" />
+```
+
 ### `Icon`
 
 Renders one of the FontAwesome icons of your choice.
@@ -528,6 +549,22 @@ Fractional numbers are supported.
 - `rotation: number` - Icon rotation, in degrees.
 - `spin: boolean` - Whether an icon should be spinning. Good for load
 indicators.
+
+### `Icon.Stack`
+
+Renders children icons on top of each other in order to make your own icon.
+
+```jsx
+<Icon.Stack>
+  <Icon name="pen" />
+  <Icon name="slash" />
+</Icon.Stack>
+```
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `children: Icon` - Icons to stack.
 
 ### `Input`
 

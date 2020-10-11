@@ -351,7 +351,7 @@
 	var/mob/using = null
 
 	var/roomname = "NewRoom"
-	var/list/roomList = new/list()
+	var/list/turf/roomList = new/list()
 
 	var/list/permittedObjectTypes = list(\
 	"/obj/closet", \
@@ -430,8 +430,7 @@
 			boutput(user, "<span class='alert'>Unsupported Tile type detected.</span>")
 			return
 
-		for(var/a in roomList)
-			var/turf/t = a
+		for(var/turf/t as() in roomList)
 			if(t.x < minx) minx = t.x
 			if(t.y < miny) miny = t.y
 
@@ -499,8 +498,7 @@
 		var/maxx = 0
 		var/maxy = 0
 
-		for(var/a in roomList)
-			var/turf/t = a
+		for(var/turf/t as() in roomList)
 			if(t.x < minx) minx = t.x
 			if(t.y < miny) miny = t.y
 
