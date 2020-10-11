@@ -17367,7 +17367,11 @@
 	},
 /obj/cable,
 /obj/disposalpipe/segment/mail,
-/obj/machinery/power/apc/autoname_south,
+/obj/machinery/power/apc{
+	areastring = "Bridge";
+	name = "Bridge APC";
+	pixel_y = -24
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/westsolar)
 "aMi" = (
@@ -24174,11 +24178,13 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
-/obj/machinery/power/apc/autoname_north{
-	areastring = null
+/obj/machinery/power/apc{
+	areastring = "Crematorium";
+	name = "Crematorium APC";
+	pixel_y = 24
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/crematorium)
+/area/station/maintenance/east)
 "baw" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
