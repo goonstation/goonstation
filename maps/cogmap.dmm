@@ -6380,9 +6380,13 @@
 /obj/landmark{
 	name = "blobstart"
 	},
-/obj/machinery/power/apc/autoname_south,
+/obj/machinery/power/apc{
+	areastring = "Kitchen";
+	name = "Kitchen APC";
+	pixel_y = -24
+	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/kitchen)
+/area/station/maintenance/NEmaint)
 "aoD" = (
 /obj/cable{
 	d1 = 1;
@@ -18514,9 +18518,14 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_east,
+/obj/machinery/power/apc{
+	areastring = "Pool Room";
+	dir = 4;
+	name = "Pool Room APC";
+	pixel_x = 24
+	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/pool)
+/area/station/maintenance/maintcentral)
 "aOo" = (
 /obj/fluid_spawner{
 	amount = 2700
@@ -23503,11 +23512,13 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_north{
-	areastring = null
+/obj/machinery/power/apc{
+	areastring = "Detective's Office";
+	name = "Detective's Office APC";
+	pixel_y = 24
 	},
 /turf/simulated/floor/plating,
-/area/station/security/detectives_office)
+/area/station/maintenance/east)
 "aYS" = (
 /turf/simulated/wall/false_wall,
 /area/station/chapel/main)
@@ -39425,9 +39436,6 @@
 "bFr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/qm)
-"bFs" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/science)
 "bFt" = (
 /obj/cable,
 /obj/cable{
@@ -53499,9 +53507,13 @@
 	name = "E light switch";
 	pixel_x = 24
 	},
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc{
+	areastring = "Research Storage";
+	name = "Research Storage APC";
+	pixel_y = 24
+	},
 /turf/simulated/floor/plating,
-/area/station/science)
+/area/station/science/gen_storage)
 "cji" = (
 /obj/cable{
 	d1 = 1;
@@ -54868,9 +54880,13 @@
 "clY" = (
 /obj/cable,
 /obj/machinery/fluid_canister,
-/obj/machinery/power/apc/autoname_south,
+/obj/machinery/power/apc{
+	areastring = "Chemistry";
+	name = "Chemistry APC";
+	pixel_y = -24
+	},
 /turf/simulated/floor/plating,
-/area/station/chemistry)
+/area/station/science/gen_storage)
 "clZ" = (
 /obj/machinery/light{
 	dir = 8;
@@ -95300,7 +95316,7 @@ aag
 bVv
 cfx
 cgP
-bFs
+chS
 cjh
 ckB
 clY
