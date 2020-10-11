@@ -235,3 +235,14 @@
 			new type(to_send)
 		shippingmarket.receive_crate(to_send)
 		system.reply("Crate sent.")
+
+/datum/spacebee_extension_command/logs
+	name = "logs"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Returns a link to the weblog of requested server. You really are lazy."
+	execute(user)
+		var/ircmsg[] = new()
+		ircmsg["key"] = "Loggo"
+		ircmsg["name"] = "Lazy Admin Logs"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		ircbot.export("help", ircmsg)
