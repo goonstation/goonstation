@@ -1010,18 +1010,10 @@
 
 	onMaterialChanged()
 		..()
-		if(istype(src.material))
-			if(src.material.hasProperty("radioactive"))
-				var/rate = ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
-				recharge_rate = rate
-			else
-				recharge_rate = 0
-
-			if(src.material.hasProperty("n_radioactive"))
-				var/rate = ((src.material.getProperty("n_radioactive") / 10) / 6.5)
-				recharge_rate = rate
-			else
-				recharge_rate = 0
+		recharge_rate = 0
+		var/rate1 = ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
+		var/rate2 = ((src.material.getProperty("n_radioactive") / 10) / 1.5)
+		recharge_rate = (rate1 + rate2)
 		return
 
 	New()

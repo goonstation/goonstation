@@ -41,7 +41,7 @@
 				genrate = 0
 
 			if(src.material.hasProperty("n_radioactive"))
-				genrate = round((material.getProperty("n_radioactive") / 12.333))
+				genrate = round((material.getProperty("n_radioactive") / 4.333))
 			else
 				genrate = 0
 
