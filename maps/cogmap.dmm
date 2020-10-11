@@ -7583,9 +7583,7 @@
 	name = "Extravagant Chocolate Gateau";
 	pixel_y = 8
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "asn" = (
@@ -8144,7 +8142,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/baroffice)
 "atD" = (
-/obj/machinery/door/firedoor/pyro,
+/obj/firedoor_spawn,
 /obj/table/reinforced/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -15268,9 +15266,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "aJl" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Security Office";
@@ -38180,9 +38176,7 @@
 	dir = 4;
 	id = "enginesupply"
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
+/obj/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -40468,6 +40462,7 @@
 	dir = 1
 	},
 /obj/wingrille_spawn/auto/crystal,
+/obj/firedoor_spawn,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bML" = (
@@ -40718,9 +40713,7 @@
 	dir = 4;
 	id = "enginesupply"
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "engsupply_shutter";
@@ -41576,7 +41569,7 @@
 	id = "cargo"
 	},
 /obj/plasticflaps,
-/obj/machinery/door/firedoor/pyro,
+/obj/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -41592,7 +41585,7 @@
 	id = "cargo"
 	},
 /obj/plasticflaps,
-/obj/machinery/door/firedoor/pyro,
+/obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -41709,13 +41702,11 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bPx" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/wingrille_spawn/auto/crystal,
+/obj/firedoor_spawn,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bPy" = (
@@ -42186,9 +42177,7 @@
 	id = "cargo"
 	},
 /obj/plasticflaps,
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "cargosto";
@@ -43275,9 +43264,7 @@
 	},
 /area/station/science)
 "bSM" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
+/obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -43312,9 +43299,7 @@
 /turf/simulated/floor/purple,
 /area/station/science)
 "bSP" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -43427,7 +43412,7 @@
 /area/station/engine/elect)
 "bTc" = (
 /obj/table/reinforced/auto,
-/obj/machinery/door/firedoor/pyro,
+/obj/firedoor_spawn,
 /obj/machinery/door/window/southleft{
 	name = "Electronics Lab";
 	req_access_txt = "45"
@@ -43439,7 +43424,7 @@
 /area/station/engine/elect)
 "bTd" = (
 /obj/table/reinforced/auto,
-/obj/machinery/door/firedoor/pyro,
+/obj/firedoor_spawn,
 /obj/machinery/door/window/southright{
 	name = "Electronics Lab";
 	req_access_txt = "45"
@@ -43543,7 +43528,7 @@
 "bTq" = (
 /obj/table/reinforced/auto,
 /obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/pyro,
+/obj/firedoor_spawn,
 /obj/machinery/door/window/southleft{
 	name = "Engineering Storage";
 	req_access_txt = "44"
@@ -43553,7 +43538,7 @@
 /area/station/storage/primary)
 "bTr" = (
 /obj/table/reinforced/auto,
-/obj/machinery/door/firedoor/pyro,
+/obj/firedoor_spawn,
 /obj/machinery/door/window/southright{
 	name = "Engineering Storage";
 	req_access_txt = "44"
@@ -51412,9 +51397,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cmB" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
+/obj/firedoor_spawn,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -53517,7 +53500,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/SWmaint)
 "cqV" = (
-/obj/machinery/door/firedoor/pyro,
+/obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null;
 	req_access_txt = null
@@ -59049,7 +59032,7 @@
 	},
 /area/station/quartermaster/refinery)
 "iix" = (
-/obj/machinery/door/firedoor/pyro,
+/obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external{
 	name = "Combustion Chamber Access";
 	req_access_txt = null
@@ -59367,9 +59350,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/firedoor_spawn,
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
