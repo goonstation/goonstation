@@ -21,21 +21,9 @@ import { createLogger } from '../logging';
 const logger = createLogger('Paper');
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
 
-const findNearestScrollableParent = startingNode => {
-  const body = document.body;
-  let node = startingNode;
-  while (node && node !== body) {
-    // This definitely has a vertical scrollbar, because it reduces
-    // scrollWidth of the element. Might not work if element uses
-    // overflow: hidden.
-    if (node.scrollHeight < node.offsetHeight) {
-      return node;
-    }
-    node = node.parentNode;
-  }
-  return window;
+const icon_state_designs = {
+  test: 'test',
 };
-
 
 const sanitize_text = value => {
   // This is VERY important to think first if you NEED
@@ -634,9 +622,7 @@ export class PaperSheet extends Component {
     };
     // You might ask why?  Because Window/window content do wierd
     // css stuff with white for some reason
-    const backgroundColor = paper_color && paper_color !== "white"
-      ? paper_color
-      : "#FFFFFF";
+    const backgroundColor = paper_color;
     const stamp_list = !stamps
       ? []
       : stamps;
@@ -676,10 +662,13 @@ export class PaperSheet extends Component {
         width={sizeX || 400}
         height={sizeY || 500}
         resizable>
-        <Window.Content ref={this.windowRef} scrollable>
+        <Window.Content
+          backgroundColor={paper_color}
+          ref={this.windowRef}
+          scrollable>
           <Box
-            fillPositionedParent
-            backgroundColor={backgroundColor}>
+            fitted
+            fillPositionedParent>
             {decide_mode(edit_mode)}
           </Box>
         </Window.Content>

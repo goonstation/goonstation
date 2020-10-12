@@ -193,15 +193,20 @@
 		ui.open()
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
-	// Even harder to read if your blind...braile? humm
-	// .. or if you cannot read
 	if(!user.literate)
+		boutput(user, "<span class='alert'>You don't know how to write.</span>")
 		return UI_CLOSE
 	return ..()
 
 /obj/item/paper/ui_act(action, params,datum/tgui/ui)
 	. = ..()
 	if(.)
+		return
+	if(src.sealed)
+		boutput(usr, "<span class='alert'>You can't write on [src].</span>")
+		return
+	if(!src.stampable)
+		boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
 		return
 	switch(action)
 		if("stamp")
@@ -229,6 +234,8 @@
 			. = TRUE
 
 		if("save")
+			if (src.icon_state == "paper_blank" && params["text"])
+				src.icon_state = "paper"
 			var/in_paper = params["text"]
 			var/paper_len = length(in_paper)
 			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
@@ -254,20 +261,16 @@
 	.["name"] = src.name
 	.["sizeX"] = src.sizex
 	.["sizeY"] = src.sizey
-	.["text"] = info
+	.["text"] = src.info
 	.["max_length"] = MAX_PAPER_LENGTH
-	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
-	.["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling?
-	.["stamps"] = stamps
+	.["paper_color"] = (color || "white")	// color might not be set
+	.["paper_state"] = src.icon_state	/// TODO: show the sheet will bloodied or crinkling?
+	.["stamps"] = src.stamps
+	.["stampable"] = src.stampable
+	.["sealed"] = src.sealed
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
-
-
-
-
-
-
 
 	data["edit_usr"] = "[user]"
 
