@@ -55,7 +55,7 @@
 	#define LIGHTING_POWER_FACTOR 40
 	event_handler_flags = IMMUNE_SINGULARITY
 	invisibility = 100
-	var/area/my_area = 0
+	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
 

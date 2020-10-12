@@ -900,7 +900,7 @@ var/linenums = 0
 	SPAWN_DBG(0.5 SECONDS)
 		var/obj/machinery/atmoalter/A = locate(/obj/machinery/atmoalter, src.loc)
 
-		if(A?.c_status != 0)
+		if(A && A.c_status != 0)
 			connected = A
 			A.anchored = 1
 

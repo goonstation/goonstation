@@ -368,7 +368,7 @@
 		msgs.base_attack_message = "<span class='alert'><B>[src] rolls [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.disarm_RNG_result = "shoved"
 		var/obj/item/I = target.equipped()
-		if (I?.temp_flags & IS_LIMB_ITEM)
+		if (I && I.temp_flags & IS_LIMB_ITEM)
 			msgs.disarm_RNG_result = "attack_self_with_item_shoved"
 
 		return msgs
@@ -427,7 +427,7 @@
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		msgs.disarm_RNG_result = "shoved_down"
 		var/obj/item/I = target.equipped()
-		if (I?.temp_flags & IS_LIMB_ITEM)
+		if (I && I.temp_flags & IS_LIMB_ITEM)
 			msgs.disarm_RNG_result = "attack_self_with_item_shoved_down"
 
 		return msgs
@@ -1226,7 +1226,7 @@
 /mob/living/carbon/human/get_head_pierce_prot()
 	if (client?.hellbanned)
 		return 0
-	if ((head?.body_parts_covered & HEAD) || (wear_mask?.body_parts_covered & HEAD))
+	if ((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD))
 		if (head && !wear_mask)
 			return max(0, head.getProperty("pierceprot"))
 		else if (!head && wear_mask)
@@ -1241,7 +1241,7 @@
 /mob/living/carbon/human/get_chest_pierce_prot()
 	if (client?.hellbanned)
 		return 0
-	if ((wear_suit?.body_parts_covered & TORSO) || (w_uniform?.body_parts_covered & TORSO))
+	if ((wear_suit && wear_suit.body_parts_covered & TORSO) || (w_uniform && w_uniform.body_parts_covered & TORSO))
 		if (wear_suit && !w_uniform)
 			return max(0, wear_suit.getProperty("pierceprot"))
 		else if (!wear_suit && w_uniform)

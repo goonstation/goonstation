@@ -268,7 +268,7 @@
 		var/other_stupid_var = "[deal_face_up ? " \an [Card.card_name]." : "a card"]"
 
 		if (src.cards.len == 1)
-			if (target == src?.card_tappable)
+			if (target == src && src.card_tappable)
 				if (src.card_tapped)
 					usr.visible_message("<span class='notice'><b>[usr]</b> untaps [src].</span>",\
 					"<span class='notice'>You untap [src].</span>")

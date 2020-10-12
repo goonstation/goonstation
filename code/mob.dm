@@ -293,7 +293,7 @@
 		m.set_loc(src.loc)
 		m.ghostize()
 
-	if (ghost?.corpse == src)
+	if (ghost && ghost.corpse == src)
 		ghost.corpse = null
 
 	if (traitHolder)
@@ -2612,7 +2612,7 @@
 
 /mob/OnMove(source = null)
 	..()
-	if(client?.player && client.player.shamecubed)
+	if(client?.player?.shamecubed)
 		loc = client.player.shamecubed
 		return
 

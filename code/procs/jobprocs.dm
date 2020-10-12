@@ -402,7 +402,7 @@
 			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
 				random_pod_codes -= V
-				if (V?.lock && V.lock.code)
+				if (V?.lock?.code)
 					boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
 					if (src.mind)
 						src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
@@ -415,7 +415,7 @@
 		sleep(0.1 SECONDS)
 		update_icons_if_needed()
 
-		if (joined_late == 1 && map_settings?.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
+		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
 				for (var/obj/machinery/computer/announcement/A as() in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)

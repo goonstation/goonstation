@@ -788,7 +788,7 @@ obj/item/assembly/radio_horn/receive_signal()
 
 /obj/item/assembly/rad_time/receive_signal(datum/signal/signal)
 	// drsingh for cannot read null.source
-	if (signal?.source == src.part2)
+	if (signal && signal.source == src.part2)
 		src.part1.send_signal("ACTIVATE")
 	return
 
@@ -819,7 +819,7 @@ obj/item/assembly/radio_horn/receive_signal()
 /obj/item/assembly/rad_prox/HasProximity(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/projectile))
 		return
-	if (AM.move_speed < 12 && src?.part2)
+	if (AM.move_speed < 12 && src && src.part2)
 		src.part2.sense()
 	return
 
@@ -856,7 +856,7 @@ obj/item/assembly/radio_horn/receive_signal()
 
 /obj/item/assembly/rad_prox/receive_signal(datum/signal/signal)
 	// drsingh for Cannot read null.source
-	if (signal?.source == src.part2)
+	if (signal && signal.source == src.part2)
 		src.part1.send_signal("ACTIVATE")
 	return
 

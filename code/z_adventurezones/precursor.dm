@@ -1224,7 +1224,7 @@
 							I.pixel_y = old_pixel_y + pixel_y_mod + n2 - 1
 							sleep(0.4 SECONDS)
 
-						while (I?.pixel_y > old_pixel_y)
+						while (I && I.pixel_y > old_pixel_y)
 							I.pixel_y--
 							sleep(0.2 SECONDS)
 */

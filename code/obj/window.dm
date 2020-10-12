@@ -320,7 +320,7 @@
 			if (O)
 				damage_blunt(O.throwforce)
 
-		if (src?.health <= 2 && !reinforcement)
+		if (src && src.health <= 2 && !reinforcement)
 			src.anchored = 0
 			step(src, get_dir(AM, src))
 		..()

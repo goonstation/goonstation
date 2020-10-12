@@ -191,7 +191,7 @@
 
 	attack_hand(mob/user as mob)
 		if (!user) return
-		var/can_blow_smoke = (user.wear_mask == src?.on && src.reagents.total_volume > 0 && src.puff_ready)
+		var/can_blow_smoke = (user.wear_mask == src && src.on && src.reagents.total_volume > 0 && src.puff_ready)
 		var/success = ( ..() )
 		if (!(can_blow_smoke && success)) return
 

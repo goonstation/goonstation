@@ -19,9 +19,9 @@
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
 	disposing()
-		if (owner?.brain == src)
+		if (owner && owner.brain == src)
 			owner.brain = null
-		else if (donor?.mind && donor.mind.brain == src)
+		else if (donor && donor.mind && donor.mind.brain == src)
 			donor.mind.brain = null
 		owner = null
 		if (holder)

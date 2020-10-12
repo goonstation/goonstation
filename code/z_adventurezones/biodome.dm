@@ -212,7 +212,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 			if (O.throwing && !isliving(O))
 				SPAWN_DBG(0.8 SECONDS)
-					if (O?.loc == src)
+					if (O && O.loc == src)
 						melt_away(O)
 				return
 

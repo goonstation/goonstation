@@ -462,7 +462,7 @@ CONTAINS:
 	if (!isliving(patient))
 		return 0
 
-	if (cell?.percent() <= 0)
+	if (cell && cell.percent() <= 0)
 		user.show_text("[src] doesn't have enough power in its cell!", "red")
 		return 0
 
@@ -651,7 +651,7 @@ CONTAINS:
 		..()
 
 	proc/update_icon()
-		if (defib?.loc == src)
+		if (defib && defib.loc == src)
 			icon_state = "defib1"
 		else
 			icon_state = "defib0"

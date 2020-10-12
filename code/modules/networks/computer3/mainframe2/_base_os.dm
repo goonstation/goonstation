@@ -83,7 +83,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 			processing_drivers = null
 		sysfolder = null
 
-		if (master?.os == src)
+		if (master && master.os == src)
 			master.os = null
 
 		..()

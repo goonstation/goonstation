@@ -1577,7 +1577,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			boutput(user, "<span class='alert'>You open the [src].</span>")
 			open = TRUE
 			update_icon()
-			if (src.loc == user?.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
+			if (src.loc == user && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
 				src.add_fingerprint(user)
 				if (!src.sanitycheck(0, 1))
 					user.show_text("You can't unload this gun.", "red")

@@ -165,7 +165,7 @@
 			if (!target.reagents.total_volume && target.reagents)
 				user.show_text("[target] is empty.", "red")
 				return
-			if (reagents?.total_volume >= reagents.maximum_volume)
+			if (reagents && reagents.total_volume >= reagents.maximum_volume)
 				user.show_text("[src] is full.", "red")
 				return
 			var/transferamt = src.reagents.maximum_volume - src.reagents.total_volume

@@ -790,13 +790,13 @@
 
 		else if (href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
-			if (P?.loc == src)
+			if (P && P.loc == src)
 				usr.put_in_hand_or_drop(P)
 				src.update()
 
 		else if (href_list["read"])
 			var/obj/item/paper/P = locate(href_list["read"])
-			if ((P?.loc == src))
+			if ((P && P.loc == src))
 				if (!( ishuman(usr) ))
 					usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, stars(P.info)), text("window=[]", P.name))
 					onclose(usr, "[P.name]")
@@ -821,7 +821,7 @@
 
 			if (href_list["write"])
 				var/obj/item/P = locate(href_list["write"])
-				if ((P?.loc == src))
+				if ((P && P.loc == src))
 					P.attackby(available_pen, usr)
 
 			else if (href_list["title"])
@@ -830,7 +830,7 @@
 					src.add_fingerprint(usr)
 					return
 				var/obj/item/P = locate(href_list["title"])
-				if (P?.loc == src)
+				if (P && P.loc == src)
 					var/str = copytext(html_encode(input(usr,"What do you want to title this?","Title document","") as null|text), 1, 32)
 					if (str == null || length(str) == 0)
 						return

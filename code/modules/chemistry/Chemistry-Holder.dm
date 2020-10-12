@@ -691,7 +691,7 @@ datum
 					for(var/current_id in reagent_list)
 						var/datum/reagent/current_reagent = reagent_list[current_id]
 						var/turf_reaction_success = 0
-						if(current_reagent?.volume > minimum_react)
+						if(current_reagent && current_reagent.volume > minimum_react)
 							if(ismob(A) && !isobserver(A))
 								//SPAWN_DBG(0)
 									//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
@@ -793,7 +793,7 @@ datum
 			// I removed a check if reagent_list existed here in the interest of performance
 			// if this happens again try to figure out why the fuck reagent_list would go null
 			var/datum/reagent/current_reagent = reagent_list[reagent]
-			return current_reagent?.volume >= amount
+			return current_reagent && current_reagent.volume >= amount
 
 		proc/get_reagent(var/reagent_id)
 			return reagent_list[reagent_id]

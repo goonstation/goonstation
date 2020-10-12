@@ -80,7 +80,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps
 		for (var/client/C) //register
 			if (C.mob)
 				T = get_turf(C.mob)
-				if (T?.z == my_z)
+				if (T && T.z == my_z)
 					hashmap[CELL_POSITION(T.x,T.y)] += C.mob
 				//a formal spatial map implementation would place an atom into any bucket its bounds occupy (register proc instead of the above line). We don't need that here
 				//register(C.mob)

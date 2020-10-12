@@ -380,7 +380,7 @@
 			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 
 	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newSheet as obj, var/mob/user as mob)
-		if (!newSheet || newSheet.cape || (src.Sheet == newSheet?.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
+		if (!newSheet || newSheet.cape || (src.Sheet == newSheet && newSheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
 			return // nevermind
 
 		if (src.Sheet && src.Sheet.loc != src.loc) // a safety check: do we have a sheet and is it not where we are?
@@ -657,7 +657,7 @@
 			return 0
 		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
 			return 0
-		if(src.buckled_guy && src.buckled_guy.buckled == src?.buckled_guy != M)
+		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
 			user.show_text("There's already someone buckled in [src]!", "red")
 			return 0
 		return 1
@@ -1384,7 +1384,7 @@
 
 		if (netnum)
 			var/datum/powernet/PN
-			if (length(powernets) >= netnum)
+			if (powernets && powernets.len >= netnum)
 				PN = powernets[netnum]
 				return PN.avail
 

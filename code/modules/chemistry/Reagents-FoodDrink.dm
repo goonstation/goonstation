@@ -3322,7 +3322,7 @@ datum
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
 						M.change_eye_blurry(rand(2, 10))
 				else if (method == INGEST)
-					if (prob(60) && (holder?.get_reagent_amount("sugar") < (volume/3)))
+					if (prob(60) && (holder && holder.get_reagent_amount("sugar") < (volume/3)))
 						M.visible_message("<b>[M]'s</b> mouth puckers!","<span class='alert'>Yow! Sour!</span>")
 
 		fooddrink/lemonade/limeade

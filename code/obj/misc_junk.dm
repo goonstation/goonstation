@@ -673,7 +673,7 @@
 			R.my_atom = src
 			src.reagents.trans_to(usr, 5)
 			src.reagents.trans_to_direct(R, 5)
-			if(PH?.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
+			if(PH?.parent.linked?.handset?.holder)
 				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.holder))
 			else
 				smoke_reaction(R, range, get_turf(usr))

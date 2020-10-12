@@ -209,7 +209,7 @@ var/global/list/ghostdrone_candidates = list()
 					src.start_work()
 			else
 				var/obj/item/ghostdrone_assembly/G = locate() in get_turf(src)
-				if (G?.stage == (src.factory_section - 1))
+				if (G && G.stage == (src.factory_section - 1))
 					src.start_work(G)
 
 	proc/start_work(var/obj/item/ghostdrone_assembly/G)

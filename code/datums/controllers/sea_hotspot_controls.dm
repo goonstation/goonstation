@@ -312,7 +312,7 @@
 					vent_capture_amt += 1
 
 				var/obj/item/heat_dowsing/H = locate() in T
-				if (H?.closest_hotspot == src)
+				if (H && H.closest_hotspot == src)
 					dowsers += H
 
 

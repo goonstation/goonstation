@@ -52,7 +52,7 @@ mob/new_player
 
 		if (src.ckey && !adminspawned)
 			if (spawned_in_keys.Find("[src.ckey]"))
-				if (!(client?.holder) && !abandon_allowed)
+				if (!(client && client.holder) && !abandon_allowed)
 					 //They have already been alive this round!!
 					var/mob/dead/observer/observer = new()
 

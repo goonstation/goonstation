@@ -62,7 +62,7 @@
 				src.master = null
 				return 1
 
-			while(master?.path && master.path.len && target_turf && master.moving)
+			while(length(master?.path) && target_turf && master.moving)
 //				boutput(world, "[compare_movepath] : [current_movepath]")
 				//if(compare_movepath != current_movepath)
 				//	break

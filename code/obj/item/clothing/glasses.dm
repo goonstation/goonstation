@@ -303,7 +303,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !pinhole)
-			if( equipper?.glasses == src )
+			if( equipper && equipper.glasses == src )
 				var/obj/item/organ/eye/theEye = equipper.drop_organ((block_eye == "L") ? "left_eye" : "right_eye")
 				if(theEye)
 					user.show_message("<span class='alert'>Um. Wow. Thats kinda grode.<span>")

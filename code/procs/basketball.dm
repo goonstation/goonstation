@@ -282,7 +282,7 @@
 			qdel(H.shoes)
 			H.shoes = new /obj/item/clothing/shoes/black(H)
 
-		if(the_id?.registered == H.real_name)
+		if(the_id && the_id.registered == H.real_name)
 			the_id.assignment = "Lawyer"
 			the_id.name = "[H.real_name]'s ID Card (Lawyer)"
 			H.wear_id = the_id

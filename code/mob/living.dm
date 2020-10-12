@@ -480,7 +480,7 @@
 
 
 		var/obj/item/equipped = src.equipped()
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target?.flags & USEDELAY) || (equipped?.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		var/grace_penalty = 0
 		if ((target == equipped || use_delay) && world.time < src.next_click) // if we ignore next_click on attack_self we get... instachoking, so let's not do that
 			var/time_left = src.next_click - world.time
@@ -508,7 +508,7 @@
 			var/reach = can_reach(src, target)
 			if (src.pre_attack_modify())
 				equipped = src.equipped() //might have changed from successful modify
-			if (reach || (equipped?.special) || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk //MBC : added bit to get weapon_attack->pixelaction to work for itemspecial
+			if (reach || (equipped && equipped.special) || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk //MBC : added bit to get weapon_attack->pixelaction to work for itemspecial
 				if (use_delay)
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
@@ -909,7 +909,7 @@
 
 	// Do they have a phone?
 	var/obj/item/equipped_talk_thing = src.equipped()
-	if(equipped_talk_thing?.flags & TALK_INTO_HAND && !message_mode)
+	if(equipped_talk_thing && equipped_talk_thing.flags & TALK_INTO_HAND && !message_mode)
 		equipped_talk_thing.talk_into(src, messages, secure_headset_mode, src.real_name, lang_id)
 	switch (message_mode)
 		if ("headset", "secure headset", "right hand", "left hand")

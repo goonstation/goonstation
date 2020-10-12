@@ -203,7 +203,7 @@
 								if (42) message = "<b>[src]</B> farts. It might have been the Citizen Kane of farts."
 
 						// If there is a chest item, see if it can be activated on fart (attack_self)
-						if (src?.chest_item != null) //Gotta do that pre-emptive runtime protection!
+						if (src && src.chest_item != null) //Gotta do that pre-emptive runtime protection!
 							src.chest_item_attack_self_on_fart()
 
 						if (src.bioHolder)
@@ -1667,7 +1667,7 @@
 														sleep(1 SECOND) //let us do that combo shit people like with throwing
 														src.force_laydown_standup()
 
-								if (G?.state < 1) //ZeWaka: Fix for null.state
+								if (G && G.state < 1) //ZeWaka: Fix for null.state
 									var/turf/oldloc = src.loc
 									var/turf/newloc = G.affecting.loc
 									if(istype(oldloc) && istype(newloc))
