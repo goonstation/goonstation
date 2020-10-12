@@ -466,6 +466,36 @@
 			target.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = target
 
+/datum/limb/bear/zombie
+
+	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control) //TODO: Make this actually do damage to things instead of just smashing the thing.
+		if (!holder)
+			return
+
+		if (!istype(user))
+			target.attack_hand(user, params, location, control)
+			return
+
+		if (ismob(target))
+			..()
+			return
+
+		if (isobj(target))
+			switch (user.smash_through(target, list("window"))) //No uber grille smashing plz, but you can have windows, as a treat.
+				if (0)
+					if (isitem(target))
+						boutput(user, "<span class='alert'>You try to pick [target] up but it wiggles out of your hand. Opposable thumbs would be nice.</span>")
+						return
+					else if (istype(target, /obj/machinery))
+						boutput(user, "<span class='alert'>You're unlikely to be able to use [target]. You manage to scratch its surface though.</span>")
+						return
+
+				if (1)
+					return
+
+		..()
+		return
+
 /datum/limb/dualsaw
 
 	attack_hand(atom/target, var/mob/living/user, var/reach)

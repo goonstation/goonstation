@@ -556,15 +556,35 @@
 	override_hair = 0
 	override_beard = 0
 	override_detail = 0
+	override_attack = 0
+	allow_fat = 1
 	jerk = 1
 	movement_modifier = /datum/movement_modifier/zombie
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
 
 
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(mob))
 			src.add_ability(mob)
-
+			mob.is_zombie = 1
+		if(prob(20)) //Spin the wheel!
+			var/strain = rand(1,2)
+			if(strain == 1) //Bubs
+				M.bioHolder.AddEffect("fat")
+				M.bioHolder.AddEffect("strong")
+				M.bioHolder.AddEffect("mattereater")
+				M.Scale(1.15, 1.15) //Fat bioeffect wont work, so they're just bigger now.
+				M.max_health += 75
+				M.health = max(M.max_health, M.health)
+			if(strain == 2) // spitter ranged zombie
+				M.max_health -= 45
+				M.health = max(M.max_health, M.health)
+				M.Scale(1, 0.9)
+				M.add_sm_light("glowy", list(94, 209, 31, 175))
+				M.bioHolder.AddEffect("shoot_limb")
+				M.bioHolder.AddEffect("acid_bigpuke")
 		M.add_stam_mod_max("zombie", -100)
 		M.add_stam_mod_regen("zombie", 15)
 
@@ -656,9 +676,9 @@
 /datum/mutantrace/zombie/can_infect
 
 	add_ability(var/mob/living/carbon/human/H)
-		H.abilityHolder = new /datum/abilityHolder/critter(src) //lol
-		H.abilityHolder.owner = H
-		H.abilityHolder.addAbility(/datum/targetable/critter/zombify)
+		var/datum/abilityHolder/critter/C = H.add_ability_holder(/datum/abilityHolder/critter) //lol
+		C.transferOwnership(H)
+		C.addAbility(/datum/targetable/critter/zombify)
 
 	disposing()
 		if (ishuman(mob))
