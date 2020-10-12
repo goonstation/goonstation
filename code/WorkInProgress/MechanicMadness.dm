@@ -996,7 +996,7 @@
 		unReady()
 		LIGHT_UP_HOUSING
 		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
-		
+
 	proc/setPower(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Power(1 - 3):","Power setting", zap_power) as num
 		if(!in_range(src, user) || !isalive(user))
@@ -1005,7 +1005,7 @@
 		zap_power = inp
 		boutput(user, "Power set to [inp]")
 		return 1
-		
+
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_zap"
 
@@ -1897,6 +1897,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add item", "additem")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove item", "remitem")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove all items", "remallitem")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove current + send", "popitem")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"select item", "selitem")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"select item + send", "selitemplus")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next", "next")
@@ -2000,6 +2001,19 @@
 		LIGHT_UP_HOUSING
 		if(input.signal in signals)
 			signals.Remove(input.signal)
+			if(current_index > length(signals))
+				current_index = length(signals) ? length(signals) : 1 // Don't let current_index be 0
+			tooltip_rebuild = 1
+			if(announce)
+				componentSay("Removed : [input.signal]")
+		return
+
+	proc/popitem(var/datum/mechanicsMessage/input)
+		if(level == 2 || !input) return
+		if(current_index <= length(signals))
+			LIGHT_UP_HOUSING
+			sendCurrent(input)
+			signals.Remove(signals[current_index])
 			if(current_index > length(signals))
 				current_index = length(signals) ? length(signals) : 1 // Don't let current_index be 0
 			tooltip_rebuild = 1
