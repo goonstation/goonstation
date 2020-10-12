@@ -624,10 +624,12 @@
 	var/obj/item/the_tool
 	var/interaction = WALL_REMOVERERODS
 
-	New(var/obj/table/girdr, var/obj/item/tool, var/interact, var/duration_i)
+	New(var/obj/table/wall, var/obj/item/tool, var/interact, var/duration_i)
 		..()
-		if (girdr)
-			the_wall = girdr
+		if (wall)
+			the_wall = wall
+		if (usr)
+			owner = usr
 		if (tool)
 			the_tool = tool
 			icon = the_tool.icon
@@ -636,13 +638,15 @@
 			interaction = interact
 		if (duration_i)
 			duration = duration_i
+		boutput(world, owner.name)
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()
 		..()
+		boutput(world, "duration = [duration]")
 		if (the_wall == null || the_tool == null || owner == null || get_dist(owner, the_wall) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return

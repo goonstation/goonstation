@@ -23,8 +23,6 @@
 #define WALL_PRYSHEATH 6
 #define WALL_DETATCHSUPPORTRODS 7
 
-//
-
 //railing defines
 #define RAILING_DISASSEMBLE 0
 #define RAILING_UNFASTEN 1

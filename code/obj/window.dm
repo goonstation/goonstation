@@ -497,7 +497,7 @@
 
 
 /datum/action/bar/icon/deconstruct_window
-	duration = 4 SECONDS
+	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "deconstruct_window"
 	icon = 'icons/ui/actions.dmi'
@@ -513,6 +513,10 @@
 			the_tool = tool
 			icon = the_tool.icon
 			icon_state = the_tool.icon_state
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
 
 	onUpdate()
 		..()
