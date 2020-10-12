@@ -579,6 +579,7 @@
 		if(ishuman(mob))
 			src.add_ability(mob)
 			mob.is_zombie = 1
+		M.max_health += 100
 
 		if (strain == 1)
 			make_bubs(M)
@@ -599,7 +600,7 @@
 		M.bioHolder.AddEffect("strong")
 		M.bioHolder.AddEffect("mattereater")
 		M.Scale(1.15, 1.15) //Fat bioeffect wont work, so they're just bigger now.
-		M.max_health += 75
+		M.max_health += 150
 		M.health = max(M.max_health, M.health)
 
 	proc/make_spitter(var/mob/living/carbon/human/M)
