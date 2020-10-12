@@ -35,9 +35,9 @@
 			var/amt = affected_mob.reagents?.get_reagent_amount("spaceacillin")
 			if (amt)
 				if (amt > 15)
-					remove_reagent("spaceacillin", 1)
+					affected_mob.reagents?.remove_reagent("spaceacillin", 1)
 				else
-					remove_reagent("spaceacillin", 0.4)
+					affected_mob.reagents?.remove_reagent("spaceacillin", 0.4)
 				D.stage--
 
 		if(3)
