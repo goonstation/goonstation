@@ -167,7 +167,7 @@ proc/make_fluid_networks()
 
 	// Populate all edges
 	// TODO in future: We dont need to do this every time we remake the fluid networks, only update the moved pipes.
-	for(var/obj/fluid_pipe/node in by_type[/obj/fluid_pipe])
+	for_by_tcl(node, /obj/fluid_pipe)
 		node.populate_edges()
 
 	var/obj/fluid_pipe/root = find_unvisited_node()
@@ -181,7 +181,7 @@ proc/make_fluid_networks()
 	while(root)
 
 proc/find_unvisited_node()
-	for(var/obj/fluid_pipe/pipe in by_type[/obj/fluid_pipe])
+	for_by_tcl(pipe, /obj/fluid_pipe)
 		if(!pipe.network)
 			return pipe
 	return 0

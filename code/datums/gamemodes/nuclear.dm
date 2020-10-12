@@ -402,7 +402,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(ticker.minds))
 
-	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -434,8 +434,10 @@ var/syndicate_name = null
 	var/name = ""
 
 	// Prefix
-#ifdef XMAS
+#if defined(XMAS)
 	name += pick("Merry", "Jingle", "Holiday", "Santa", "Gift", "Elf", "Jolly")
+#elif defined(HALLOWEEN)
+	name += pick("Hell", "Demon", "Blood", "Murder", "Gore", "Grave", "Sin", "Slaughter")
 #else
 	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint")
 #endif

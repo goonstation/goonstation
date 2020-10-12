@@ -719,7 +719,7 @@
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if (prob(20))
+		if (prob(20) && !M.mutantrace)
 			M.bioHolder.AddEffect("dwarf") // heh
 
 /datum/job/engineering/mechanic
@@ -1673,7 +1673,7 @@
 		src.access = get_access("Psychologist")
 		return
 
-/*
+
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
 
@@ -2057,7 +2057,7 @@
 		if (!M)
 			return
 		M.critterize(/mob/living/critter/small_animal/bird/crow)
-*/
+
 
 /datum/job/special/syndicate_operative
 	name = "Syndicate"
@@ -2280,7 +2280,7 @@
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if (prob(20))
+		if (prob(20) && !M.mutantrace)
 			M.bioHolder.AddEffect("dwarf") // heh
 
 /datum/job/special/machoman

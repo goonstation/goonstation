@@ -1749,18 +1749,10 @@
 	name = "firearm spawner"
 	icon_state = "rand_gun"
 	amt2spawn = 1
-	items2spawn = list(/obj/item/gun/kinetic/minigun,
-						/obj/item/gun/kinetic/revolver,
-						/obj/item/gun/kinetic/derringer,
-						/obj/item/gun/kinetic/detectiverevolver,
-						/obj/item/gun/kinetic/spes,
-						/obj/item/gun/kinetic/riotgun,
-						/obj/item/gun/kinetic/ak47,
-						/obj/item/gun/kinetic/hunting_rifle,
-						/obj/item/gun/kinetic/silenced_22,
-						/obj/item/gun/kinetic/pistol,
-						/obj/item/gun/kinetic/assault_rifle,
-						/obj/item/gun/kinetic/light_machine_gun)
+	items2spawn = null
+	New()
+		items2spawn = concrete_typesof(/obj/item/gun/kinetic) - /obj/item/gun/kinetic/meowitzer //No, just no
+		. = ..()
 
 /obj/random_item_spawner/ai_experimental //used to spawn 'experimental' AI law modules
 //intended to add random chance to what pre-fab 'gimmicky' law modules are available at round-start, such as Equality

@@ -51,7 +51,7 @@
 		..()
 
 	proc/get_link()
-		for(var/obj/airbridge_controller/C in by_type[/obj/airbridge_controller])
+		for_by_tcl(C, /obj/airbridge_controller)
 			LAGCHECK(LAG_LOW)
 			if(C.z == src.z && C.id == src.id && C != src)
 				linked = C
@@ -290,7 +290,7 @@
 		..()
 
 	proc/get_links()
-		for (var/obj/airbridge_controller/C in by_type[/obj/airbridge_controller])
+		for_by_tcl(C, /obj/airbridge_controller)
 			if (C.id == src.id)
 				links.Add(C)
 				if (C.primary_controller)

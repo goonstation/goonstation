@@ -66,8 +66,7 @@
 		LAGCHECK(LAG_REALTIME)
 
 	SPAWN_DBG(3 SECONDS)
-		for(var/atom in hotspots)
-			var/obj/hotspot/A = atom
+		for (var/obj/hotspot/A as() in hotspots)
 			if (!A.pooled)
 				pool(A)
 			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?

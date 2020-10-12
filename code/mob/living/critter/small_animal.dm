@@ -978,7 +978,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		SPAWN_DBG(0)
 			if (!src.species && src.client && islist(parrot_species) && islist(special_parrot_species))
-				var/new_species = input(src, "Select Species", "Select Species") as anything in (parrot_species + special_parrot_species)
+				var/new_species = input(src, "Select Species", "Select Species") as() in (parrot_species + special_parrot_species)
 				if (new_species)
 					src.apply_species(new_species)
 
@@ -2563,10 +2563,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					if(src.icon_state_exclaim)
 						flick(src.icon_state_exclaim, src)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
-		return ..()
-
-	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3)
@@ -2576,6 +2572,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 							playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4)
 							B.visible_message("<span class='notice'>[B] toots back [pick("grumpily","complaintively","indignantly","sadly","annoyedly","gruffly","quietly","crossly")].</span>")
 					return "<span class='emote'><b>[src]</b> toots helpfully!</span>"
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					animate_bouncy(src) // bouncy!
+					return "<span class='emote'><b>[src]</b> [pick("bounces","dances","boogies","frolics","prances","hops")] around with [pick("joy","fervor","excitement","vigor","happiness")]!</span>"
 		return ..()
 
 	specific_emote_type(var/act)
@@ -2586,7 +2586,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"
-	real_name = "mentor mouse"
+	real_name = "admin mouse"
 	desc = "A helpful (?) admin in the form of a mouse. Click to put them in your pocket so they can help you."
 	status_name = "admin_mouse"
 	is_admin = 1

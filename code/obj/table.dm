@@ -392,6 +392,8 @@
 	sendOwner()
 		var/const/throw_speed = 0.5
 		var/datum/thrown_thing/thr = ownerMob.throw_at(jump_target, throw_range, throw_speed)
+		if(isnull(thr))
+			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
 			thr.end_throw_callback = .proc/unset_tablepass_callback

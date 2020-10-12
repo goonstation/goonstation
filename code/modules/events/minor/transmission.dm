@@ -16,8 +16,7 @@
 		var/event = pick(event_transmissions)
 		var/command_report = event["text"]
 		if(event["x"])
-			for(var/x in by_type[/obj/machinery/networked/teleconsole])
-				var/obj/machinery/networked/teleconsole/tele = x
+			for_by_tcl(tele, /obj/machinery/networked/teleconsole)
 				var/datum/teleporter_bookmark/bm = new
 				bm.name = "<b>emergency transmission source</b>"
 				bm.x = (event["x"] + XSUBTRACT) / XMULTIPLY

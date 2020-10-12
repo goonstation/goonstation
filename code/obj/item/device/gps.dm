@@ -100,7 +100,7 @@
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>GPS Units</b></div>"
-		for (var/obj/item/device/gps/G in by_type[/obj/item/device/gps])
+		for_by_tcl(G, /obj/item/device/gps)
 			LAGCHECK(LAG_LOW)
 			if (G.allowtrack == 1)
 				var/turf/T = get_turf(G.loc)
@@ -111,7 +111,7 @@
 				HTML += "<br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
 
 		HTML += "<div class='gps group'><b>Tracking Implants</b></div>"
-		for (var/obj/item/implant/tracking/imp in by_type[/obj/item/implant/tracking])
+		for_by_tcl(imp, /obj/item/implant/tracking)
 			LAGCHECK(LAG_LOW)
 			if (isliving(imp.loc))
 				var/turf/T = get_turf(imp.loc)
@@ -121,7 +121,7 @@
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>Beacons</b></div>"
-		for (var/obj/machinery/beacon/B in machine_registry[MACHINES_BEACONS])
+		for (var/obj/machinery/beacon/B as() in machine_registry[MACHINES_BEACONS])
 			if (B.enabled == 1)
 				var/turf/T = get_turf(B.loc)
 				HTML += "<div class='gps'><span><b>[B.sname]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"

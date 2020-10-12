@@ -140,7 +140,7 @@ var/global/list/bible_contents = list()
 	add_contents(obj/item/I)
 		bible_contents += I
 		I.set_loc(null)
-		for (var/obj/item/storage/bible/bible in by_type[/obj/item/storage/bible])
+		for_by_tcl(bible, /obj/item/storage/bible)
 			bible.hud.update() // fuck bibles
 
 	custom_suicide = 1

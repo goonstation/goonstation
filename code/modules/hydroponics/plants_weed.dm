@@ -108,8 +108,8 @@ ABSTRACT_TYPE(/datum/plant/weed)
 				else if (!C.current)
 					var/obj/item/seed/creeper/WS = new(src)
 					C.HYPnewplant(WS)
-					sleep(0.5 SECONDS)
-					qdel(WS)
+					spawn(0.5 SECONDS)
+						qdel(WS)
 					break
 
 /datum/plant/weed/radweed

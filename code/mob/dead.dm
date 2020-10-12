@@ -177,7 +177,8 @@
 /mob/dead/proc/animate_surroundings(var/type="fart", var/range = 2)
 	var/count = 0
 	for (var/obj/item/I in range(src, 2))
-		if (count > max)
+		if (count > 5)
+			return
 		var/success = 0
 		switch (type)
 			if ("fart")
@@ -187,8 +188,9 @@
 				eat_twitch(I)
 				success = 1
 			if ("flip")
-				animate_flip(I, 10)
+				animate_spin(src, prob(50) ? "R" : "L", 1, 0)
 				success = 1
+		count ++
 		if (success)
 			sleep(rand(1,4))
 #endif

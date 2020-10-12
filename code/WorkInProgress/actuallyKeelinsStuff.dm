@@ -3023,8 +3023,8 @@ Returns:
 		return
 
 /obj/perm_portal
-	icon = 'icons/misc/old_or_unused.dmi'
-	icon_state = "portal1"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "portal"
 	anchored = 1
 	density = 1
 	opacity = 0
@@ -4048,7 +4048,7 @@ var/list/lag_list = new/list()
 
 	if(high_range)
 	//Uses all cameras within viewrange + camera range, significantly slower
-		for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+		for_by_tcl(C, /obj/machinery/camera)
 			if(C.z != src.z || get_dist(src, C) > (src.client.view + CAM_RANGE)) continue
 			visible = (visible | view(CAM_RANGE, C))
 	else

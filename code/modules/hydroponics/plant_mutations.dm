@@ -174,14 +174,7 @@
 
 		if (prob(thud_prob))
 			playsound(POT.loc, "sound/effects/exlow.ogg", 30, 1)
-			var/wiggle = 4
-			while(wiggle > 0)
-				wiggle--
-				POT.pixel_x = rand(-2,2)
-				POT.pixel_y = rand(-2,2)
-				sleep(0.1 SECONDS)
-			POT.pixel_x = 0
-			POT.pixel_y = 0
+			animate_wiggle_then_reset(POT)
 
 
 // Bean Mutations

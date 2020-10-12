@@ -868,7 +868,7 @@ body
 	set popup_menu = 0
 	admin_only
 
-	var/new_level = input(src, null, "Choose New Rank", "Coder") as anything in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
+	var/new_level = input(src, null, "Choose New Rank", "Coder") as() in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
 	if (!new_level)
 		return
 	src.holder.rank = new_level
@@ -911,7 +911,7 @@ var/global/debug_camera_paths = 0
 
 proc/display_camera_paths()
 	remove_camera_paths() //Clean up any old ones laying around before displaying this
-	for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		if (C.c_north)
 			camera_path_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(C.loc, C.c_north.loc)))
 

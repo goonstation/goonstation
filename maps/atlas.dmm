@@ -9882,9 +9882,9 @@
 /obj/decal/poster/wallsign/poster_clown,
 /obj/npc/trader/exclown{
 	name = "Tiny Geoff Honkington";
-	transform = list(0.5, 0, 0, 0, 0.5, 0);
 	pixel_x = 15;
-	pixel_y = -12
+	pixel_y = -12;
+	transform = list(0.5, 0, 0, 0, 0.5, 0)
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
@@ -10410,8 +10410,8 @@
 	},
 /obj/stool/bed,
 /obj/item/pen/crayon/rainbow{
-	pixel_y = -4;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = -4
 	},
 /obj/item/clothing/suit/bedsheet/captain,
 /obj/item/reagent_containers/food/snacks/plant/strawberry{
@@ -10961,9 +10961,9 @@
 "Be" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
+	dir = 8;
 	id = "tele";
-	name = "Teleporter Lockdown Shutter";
-	dir = 8
+	name = "Teleporter Lockdown Shutter"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -12166,9 +12166,9 @@
 "EA" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
+	dir = 8;
 	id = "tele";
-	name = "Teleporter Lockdown Shutter";
-	dir = 8
+	name = "Teleporter Lockdown Shutter"
 	},
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
@@ -12512,16 +12512,16 @@
 /obj/table/auto,
 /obj/machinery/light,
 /obj/item/reagent_containers/food/drinks/cola/random{
-	pixel_y = -2;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = -2
 	},
 /obj/item/reagent_containers/food/drinks/cola/random{
 	pixel_x = -13;
 	pixel_y = -4
 	},
 /obj/item/reagent_containers/food/drinks/cola/random{
-	pixel_y = 7;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 7
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
@@ -13343,8 +13343,8 @@
 	light_type = /obj/item/light/tube/light_purpleish
 	},
 /obj/stool/chair/office/purple{
-	tag = "icon-office_chair_purple (WEST)";
-	dir = 1
+	dir = 1;
+	tag = "icon-office_chair_purple (WEST)"
 	},
 /obj/landmark/start{
 	name = "Scientist"
@@ -14315,8 +14315,8 @@
 	pixel_y = -20
 	},
 /obj/machinery/light/incandescent/purpleish{
-	pixel_x = 10;
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/red,
 /area/station/science/lab)
@@ -16321,8 +16321,8 @@
 "OW" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3";
-	dir = 6
+	dir = 6;
+	icon_state = "wall3"
 	},
 /area)
 "OX" = (
@@ -17300,6 +17300,12 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/station/security/armory)
+"RP" = (
+/obj/machinery/disposal_pipedispenser/mobile{
+	dir = 8
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/SEmaint)
 "RS" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -18009,8 +18015,8 @@
 "UP" = (
 /obj/disposalpipe/segment,
 /obj/decal/poster/wallsign/warning3{
-	pixel_y = -6;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/artifact)
@@ -56295,7 +56301,7 @@ ZM
 rE
 Ra
 wt
-za
+RP
 Bd
 aa
 aa

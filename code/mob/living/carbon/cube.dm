@@ -108,7 +108,6 @@
 							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
-								sleep(0.1 SECONDS)
 								message = "<span class='alert'>[M] vomits!</span>"
 								M.vomit()
 							break
@@ -143,14 +142,7 @@
 							src.changeStatus("weakened", 3 SECONDS)
 							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
 							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-							var/wiggle = 6
-							while(wiggle > 0)
-								wiggle--
-								container.pixel_x = rand(-3,3)
-								container.pixel_y = rand(-3,3)
-								sleep(0.1 SECONDS)
-							container.pixel_x = 0
-							container.pixel_y = 0
+							animate_shake(container)
 							if (prob(33))
 								if (istype(container, /obj/storage))
 									var/obj/storage/C = container
@@ -282,7 +274,6 @@
 							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
-								sleep(0.1 SECONDS)
 								message = "<span class='alert'>[M] vomits!</span>"
 								M.vomit()
 							break

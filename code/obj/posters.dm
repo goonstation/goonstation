@@ -14,7 +14,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/p_image
 	if (alert(usr, "Include picture of atom in poster?", "Add Image", "Yes", "No") == "Yes")
 		if (!target)
-			target = input(usr, "Select target", "Select target") as anything in world
+			target = input(usr, "Select target", "Select target") as() in world
 		if (target)
 			if (ismob(target))
 				p_image = target:build_flat_icon()
