@@ -2015,6 +2015,7 @@
 			if(aggressive == "eyebeams")
 				var/datum/bioEffect/power/eyebeams/eb = be
 				eb.stun_mode = 1
+				eb.altered = 1
 			else
 				be.power = 1
 				be.altered = 1
