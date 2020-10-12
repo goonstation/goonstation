@@ -2018,7 +2018,6 @@
 			else
 				be.power = 1
 				be.altered = 1
-				be.safety = 1
 			be = M.bioHolder.AddEffect(defensive, do_stability=0)
 		else
 			var/datum/bioEffect/power/shoot_limb/sl = M.bioHolder.AddEffect("shoot_limb", do_stability=0)
