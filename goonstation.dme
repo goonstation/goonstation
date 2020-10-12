@@ -25,6 +25,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
+#include "_std\macros\colorcables.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\base_lighting.dm"
@@ -641,11 +642,9 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\grinch\abilities\murder.dm"
 #include "code\modules\antagonists\grinch\abilities\poison.dm"
 #include "code\modules\antagonists\grinch\abilities\vandalism.dm"
-#include "code\modules\atmospherics\DEBUG_REMOVE_BEFORE_RELEASE.dm"
 #include "code\modules\atmospherics\FEA_airgroup.dm"
 #include "code\modules\atmospherics\FEA_fire.dm"
 #include "code\modules\atmospherics\FEA_gas_mixture.dm"
-#include "code\modules\atmospherics\FEA_object_tile.dm"
 #include "code\modules\atmospherics\FEA_group_helpers.dm"
 #include "code\modules\atmospherics\FEA_system.dm"
 #include "code\modules\atmospherics\FEA_turf_tile.dm"
