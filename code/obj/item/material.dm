@@ -62,7 +62,7 @@
 		else if (isliving(AM))
 			var/mob/living/H = AM
 			var/obj/item/ore_scoop/S = H.get_equipped_ore_scoop()
-			if (S && S.satchel && S.satchel.contents.len < S.satchel.maxitems && src.scoopable)
+			if (S?.satchel && S.satchel.contents.len < S.satchel.maxitems && src.scoopable)
 				src.set_loc(S.satchel)
 				S.satchel.satchel_updateicon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)

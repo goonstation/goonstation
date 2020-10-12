@@ -13,7 +13,7 @@
 
 	var/armor_value_bullet = 1
 
-	if (!(client && client.hellbanned))
+	if (!(client?.hellbanned))
 		armor_value_bullet = get_ranged_protection()
 	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type

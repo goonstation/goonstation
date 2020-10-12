@@ -44,7 +44,7 @@
 		..()
 
 	disposing()
-		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
 			NUKEMODE.the_bomb = null
 		qdel(wirepanel)
@@ -116,7 +116,7 @@
 
 
 
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear) || src.target_override)
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear) || src.target_override)
 			NUKEMODE = ticker.mode
 			var/target_area = src.target_override
 			if(isnull(target_area))
@@ -169,7 +169,7 @@
 		src.add_fingerprint(user)
 		user.lastattacked = src
 
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
 			if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
 				if (src.disk && istype(src.disk))
@@ -312,7 +312,7 @@
 			robogibs(src.loc,null)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			var/datum/game_mode/nuclear/NUKEMODE = null
-			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				NUKEMODE = ticker.mode
 				NUKEMODE.the_bomb = null
 				logTheThing("station", null, null, "The nuclear bomb was destroyed at [log_loc(src)].")
@@ -336,7 +336,7 @@
 			area_correct = 1
 		if(istype(ticker?.mode, /datum/game_mode/nuclear) && istype(nuke_area, NUKEMODE.target_location_type))
 			area_correct = 1
-		if ((nuke_turf.z != 1 && !area_correct) && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
+		if ((nuke_turf.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			NUKEMODE.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
 			explosion(src, src.loc, 20, 30, 40, 50)

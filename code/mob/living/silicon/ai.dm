@@ -699,9 +699,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	if (O)
 		if (printalerts)
-			if (C && C.camera_status)
+			if (C?.camera_status)
 				src.show_text("--- [class] alarm detected in [A.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[C]\">[C.c_tag]</A> )")
-			else if (CL && CL.len)
+			else if (CL?.len)
 				var/foo = 0
 				var/dat2 = ""
 				for (var/obj/machinery/camera/I in CL)
@@ -1992,7 +1992,7 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 
 	var/good_camera = 0 //Can't track a person out of range of a functioning camera
 	for(var/obj/machinery/camera/C in range(M))
-		if ( C && C.camera_status )
+		if ( C?.camera_status )
 			good_camera = 1
 			break
 	if(!good_camera)

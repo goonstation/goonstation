@@ -533,7 +533,7 @@ datum
 
 				if (method == TOUCH)
 					var/silent = 0
-					if (paramslist && paramslist.len)
+					if (paramslist?.len)
 						if ("silent" in paramslist)
 							silent = 1
 
@@ -769,7 +769,7 @@ datum
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
 				SPAWN_DBG(power_time*10)
-					if (M && M.bioHolder)
+					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -781,7 +781,7 @@ datum
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time)
 				SPAWN_DBG(power_time*10)
-					if (M && M.bioHolder)
+					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 				..()
 				return
@@ -3322,7 +3322,7 @@ datum
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
 						M.change_eye_blurry(rand(2, 10))
 				else if (method == INGEST)
-					if (prob(60) && (holder && holder.get_reagent_amount("sugar") < (volume/3)))
+					if (prob(60) && (holder?.get_reagent_amount("sugar") < (volume/3)))
 						M.visible_message("<b>[M]'s</b> mouth puckers!","<span class='alert'>Yow! Sour!</span>")
 
 		fooddrink/lemonade/limeade

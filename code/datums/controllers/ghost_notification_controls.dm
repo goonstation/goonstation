@@ -116,7 +116,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 /datum/ghost_notification/proc/dispatch(var/list/toNotify)
 	if(src.dispatched)
 		return // do not dispatch more than once
-	if(toNotify && toNotify.len)
+	if(toNotify?.len)
 		src.window = new(src)
 		for(var/mob/M in toNotify)
 			if(M)

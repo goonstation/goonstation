@@ -95,7 +95,7 @@
 
 /obj/item/disposal_test_dummy/mail_test/pipe_eject()
 	destination_disposal = locate(/obj/machinery/disposal/mail) in src.loc
-	if(destination_disposal && destination_disposal.mail_tag == destination_tag)
+	if(destination_disposal?.mail_tag == destination_tag)
 		success = 1
 	SPAWN_DBG(5 SECONDS)
 		die()
@@ -183,7 +183,7 @@
 				if (src.reagents && src.reagents.total_volume)
 					src.reagents.reaction(src.chewer, INGEST, chew_size)
 					SPAWN_DBG (0)
-						if (src && src.reagents && src.chewer && src.chewer.reagents)
+						if (src?.reagents && src.chewer && src.chewer.reagents)
 							src.reagents.trans_to(src.chewer, min(reagents.total_volume, chew_size))
 			else if (src.spam_flag)
 				src.spam_flag--

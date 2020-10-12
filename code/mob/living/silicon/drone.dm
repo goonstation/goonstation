@@ -180,7 +180,7 @@
 
 	click(atom/target, params)
 		var/obj/item/equipped = src.active_tool
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target?.flags & USEDELAY) || (equipped?.flags & USEDELAY))
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 
@@ -349,7 +349,7 @@
 
 		icon_state = "frame-" + max(0,min(change_to,6))
 		overlays = list()
-		if (part_propulsion && part_propulsion.drone_overlay)
+		if (part_propulsion?.drone_overlay)
 			overlays += part_propulsion.drone_overlay
 
 	examine()

@@ -1044,7 +1044,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			master.moving = 1
 
-			while(master && master.path && master.path.len && target_turf)
+			while(master?.path && master.path.len && target_turf)
 				if(compare_movepath != current_movepath) break
 				if(!master.on)
 					master.frustration = 0

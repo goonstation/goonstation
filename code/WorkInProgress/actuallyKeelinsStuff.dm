@@ -648,7 +648,7 @@ Returns:
 			if(count <= 5)
 				continue
 
-			if(A && A.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
+			if(A?.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
 				areas.Add(A)
 
 	while(areas.len >= 2)
@@ -884,7 +884,7 @@ Returns:
 
 	proc/start(var/mob/source_mob, var/remove, var/freeze)
 		if(source_mob == src) return
-		if(source_mob && source_mob.client)
+		if(source_mob?.client)
 			source = source_mob
 			remove_source = remove
 			freeze_source = freeze
@@ -3222,7 +3222,7 @@ Returns:
 	event_handler_flags = USE_CANPASS
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (mover && mover.throwing)
+		if (mover?.throwing)
 			return 1
 		return ..()
 
@@ -4009,17 +4009,17 @@ var/list/lag_list = new/list()
 	var/blocking = 0
 
 	MouseEntered(location,control,params)
-		if(usr && usr.client)
+		if(usr?.client)
 			usr.client.show_popup_menus = 0
 		return ..()
 
 	MouseExited(location,control,params)
-		if(usr && usr.client)
+		if(usr?.client)
 			usr.client.show_popup_menus = 1
 		return ..()
 
 	MouseDrop_T()
-		if(usr && usr.client && blocking)
+		if(usr?.client && blocking)
 			usr.client.show_popup_menus = 0
 		return ..()
 

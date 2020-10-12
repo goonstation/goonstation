@@ -369,7 +369,7 @@
 			C.post_status("shuttle")
 
 /proc/call_prison_shuttle(var/mob/usr)
-	if ((!(ticker && ticker.mode) || emergency_shuttle.location == SHUTTLE_LOC_STATION))
+	if ((!(ticker?.mode) || emergency_shuttle.location == SHUTTLE_LOC_STATION))
 		return
 	/*if(istype(ticker.mode, /datum/game_mode/sandbox))
 		boutput(usr, "Under directive 7-10, [station_name()] is quarantined until further notice.")

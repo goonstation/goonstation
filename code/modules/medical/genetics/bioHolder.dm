@@ -523,7 +523,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if(istype(newEffect))
 			for(var/datum/bioEffect/curr_id in effects)
 				var/datum/bioEffect/curr = effects[curr_id]
-				if(curr && curr.type == EFFECT_TYPE_MUTANTRACE && newEffect.type == EFFECT_TYPE_MUTANTRACE)
+				if(curr?.type == EFFECT_TYPE_MUTANTRACE && newEffect.type == EFFECT_TYPE_MUTANTRACE)
 					//Can only have one mutant race.
 					RemoveEffect(curr.id)
 					break //Since this cleaning is always done we just ousted the only mutantrace in effects
@@ -635,7 +635,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if(type)
 			for(var/D in effects)
 				var/datum/bioEffect/BE = effects[D]
-				if(BE && BE.effectType == type)
+				if(BE?.effectType == type)
 					return 1
 		else
 			return (effects.len ? 1 : 0)

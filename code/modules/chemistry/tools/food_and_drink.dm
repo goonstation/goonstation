@@ -178,7 +178,7 @@
 			return 0
 		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 			return 0
-		if (M == user && user.mob_flags & IS_RELIQUARY)
+		if (M == user?.mob_flags & IS_RELIQUARY)
 			boutput(user, "<span class='alert'>You don't come equipped with a digestive system, there would be no point in eating this.</span>")
 			return 0
 		if (!src.amount)
@@ -326,7 +326,7 @@
 		return
 
 	proc/on_bite(mob/eater)
-		//if (reagents && reagents.total_volume)
+		//if (reagents?.total_volume)
 		//	reagents.reaction(M, INGEST)
 		//	reagents.trans_to(M, reagents.total_volume/(src.amount ? src.amount : 1))
 
@@ -470,7 +470,7 @@
 			var/obj/item/reagent_containers/food/drinks/bottle/W = src
 			if (W.broken)
 				return
-		if (M == user && user.mob_flags & IS_RELIQUARY)
+		if (M == user?.mob_flags & IS_RELIQUARY)
 			boutput(user, "<span class='alert'>You don't come equipped with a digestive system, there would be no point in drinking this.</span>")
 			return 0
 		if (!src.reagents || !src.reagents.total_volume)
@@ -519,7 +519,7 @@
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, gulp_size)
 				SPAWN_DBG (5)
-					if (src && src.reagents && M && M.reagents)
+					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
 
 			playsound(M.loc,"sound/items/drink.ogg", rand(10,50), 1)

@@ -68,7 +68,7 @@ proc/ClearBadsmokeRefs(var/atom/A)
 			for(var/j=0, j<pick(0,1,1,1,2,2,2,3), j++)
 				sleep(1 SECOND)
 				var/turf/t = get_step(smoke, direction)
-				if( t && t.loc && t.loc:sanctuary )
+				if( t?.loc && t.loc:sanctuary )
 					pool(smoke)
 					continue
 				step(smoke,direction)

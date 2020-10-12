@@ -54,7 +54,7 @@ datum/controller/process/items
 			scheck(currentTick)
 */
 	tickDetail()
-		if (detailed_count && detailed_count.len)
+		if (detailed_count?.len)
 			var/stats = "<b>[name] ticks:</b><br>"
 			var/count
 			for (var/thing in detailed_count)

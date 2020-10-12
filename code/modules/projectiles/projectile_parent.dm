@@ -138,7 +138,7 @@
 			proj_data.on_hit(A, angle_to_dir(src.angle), src)
 
 		//Trigger material on attack.
-		if(proj_data && proj_data.material) //ZeWaka: Fix for null.material
+		if(proj_data?.material) //ZeWaka: Fix for null.material
 			proj_data.material.triggerOnAttack(src, src.shooter, A)
 
 		if (istype(A,/turf))
@@ -147,7 +147,7 @@
 				O.bullet_act(src)
 			var/turf/T = A
 			if (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL))
-				if (proj_data && proj_data.icon_turf_hit && istype(A, /turf/simulated/wall))
+				if (proj_data?.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
 						W.forensic_impacts += src.forensic_ID
@@ -159,7 +159,7 @@
 						impact.pixel_y += rand(-12,12)
 						W.proj_impacts += impact
 						W.update_projectile_image(ticker.round_elapsed_ticks)
-				if (proj_data && proj_data.hit_object_sound)
+				if (proj_data?.hit_object_sound)
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
 		else if (ismob(A))
@@ -217,10 +217,10 @@
 		else if (isobj(A))
 			if (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ))
 				if (iscritter(A))
-					if (proj_data && proj_data.hit_mob_sound)
+					if (proj_data?.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
 				else
-					if (proj_data && proj_data.hit_object_sound)
+					if (proj_data?.hit_object_sound)
 						playsound(A.loc, proj_data.hit_object_sound, 60, 0.5)
 				die()
 		else

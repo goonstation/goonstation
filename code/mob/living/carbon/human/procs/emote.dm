@@ -203,7 +203,7 @@
 								if (42) message = "<b>[src]</B> farts. It might have been the Citizen Kane of farts."
 
 						// If there is a chest item, see if it can be activated on fart (attack_self)
-						if (src && src.chest_item != null) //Gotta do that pre-emptive runtime protection!
+						if (src?.chest_item != null) //Gotta do that pre-emptive runtime protection!
 							src.chest_item_attack_self_on_fart()
 
 						if (src.bioHolder)
@@ -1579,7 +1579,7 @@
 								message = "<B>[src]</B> does a tactical flip!"
 								src.stance = "dodge"
 								SPAWN_DBG(0.2 SECONDS) //I'm sorry for my transgressions there's probably a way better way to do this
-									if(src && src.stance == "dodge")
+									if(src?.stance == "dodge")
 										src.stance = "normal"
 
 							//FLIP OVER TABLES
@@ -1634,7 +1634,7 @@
 									else
 										src.changeStatus("weakened", 3.9 SECONDS)
 
-										if (client && client.hellbanned)
+										if (client?.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
 										if (G.affecting && !G.affecting.hasStatus("weakened"))
 											G.affecting.changeStatus("weakened", 4.5 SECONDS)
@@ -1667,7 +1667,7 @@
 														sleep(1 SECOND) //let us do that combo shit people like with throwing
 														src.force_laydown_standup()
 
-								if (G && G.state < 1) //ZeWaka: Fix for null.state
+								if (G?.state < 1) //ZeWaka: Fix for null.state
 									var/turf/oldloc = src.loc
 									var/turf/newloc = G.affecting.loc
 									if(istype(oldloc) && istype(newloc))
@@ -1863,7 +1863,7 @@
 						var/mob/M = G.affecting
 						src.say_verb("I'll stare the bastard in the face as [he_or_she(M)] screams to God, and I'll laugh harder when [he_or_she(M)] whimpers like a baby.")
 						sleep(0.7 SECONDS)
-						if(G && G.affecting == M)
+						if(G?.affecting == M)
 							src.say_verb("And when [M]'s eyes go dead, the hell I send [him_or_her(M)] to will seem like heaven after what I've done to [him_or_her(M)].")
 						else
 							src.emote("laugh")

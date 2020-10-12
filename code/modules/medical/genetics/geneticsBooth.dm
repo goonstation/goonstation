@@ -126,7 +126,7 @@
 			user.show_text("[src] is currently occupied. Wait until it's done.", "blue")
 			return
 
-		if (offered_genes && offered_genes.len)
+		if (offered_genes?.len)
 			user.show_text("Something went wrong, showing backup menu...", "blue")
 			var/list/names = list()
 
@@ -197,7 +197,7 @@
 		if (occupant)
 
 			if (add_power)
-				if(selected_product && selected_product.BE)
+				if(selected_product?.BE)
 
 					var/datum/bioEffect/NEW = new selected_product.BE.type()
 					copy_datum_vars(selected_product.BE,NEW)
@@ -304,7 +304,7 @@
 
 	CanPass(var/mob/M, var/atom/oldloc)
 		.= ..()
-		if (oldloc && oldloc.y == src.y)
+		if (oldloc?.y == src.y)
 			if (!occupant && selected_product && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.bioHolder && !H.bioHolder.HasEffect(selected_product.id))

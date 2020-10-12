@@ -95,7 +95,7 @@
 					T.target_list = src.target_list
 
 
-		if (target_list && target_list.len)
+		if (target_list?.len)
 			if (!isPopping())
 				if (isDown())
 					popUp()

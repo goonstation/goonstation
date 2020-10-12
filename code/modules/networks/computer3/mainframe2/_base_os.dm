@@ -83,7 +83,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 			processing_drivers = null
 		sysfolder = null
 
-		if (master && master.os == src)
+		if (master?.os == src)
 			master.os = null
 
 		..()
@@ -350,7 +350,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				if (!istype(target))
 					for (var/n in src.users)
 						var/datum/mainframe2_user_data/testTarget = src.users[n]
-						if (testTarget && testTarget.user_file && (lowertext(testTarget.user_file.fields["name"]) == uid))
+						if (testTarget?.user_file && (lowertext(testTarget.user_file.fields["name"]) == uid))
 							target = testTarget
 							uid = n
 							break
@@ -504,7 +504,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				var/datum/mainframe2_user_data/quituser = quitter.useracc
 				var/datum/computer/file/mainframe_program/shellbase = get_file_name(setup_progname_shell, sysfolder)
-				var/shellexit = (shellbase && shellbase.type == quitter.type && quitter.parent_id == src.progid)
+				var/shellexit = (shellbase?.type == quitter.type && quitter.parent_id == src.progid)
 
 				var/datum/computer/file/mainframe_program/quitparent = quitter.parent_task
 				quitter.handle_quit()
@@ -602,7 +602,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 
 				for (var/x = 1, x <= master.processing.len, x++)
 					var/datum/computer/file/mainframe_program/MP = master.processing[x]
-					if (MP && MP.parent_task == caller)
+					if (MP?.parent_task == caller)
 						.[x] = MP
 					else
 						.[x] = null

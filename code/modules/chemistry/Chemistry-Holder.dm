@@ -468,7 +468,7 @@ datum
 							src.add_reagent(C.result, created_volume)
 							if(created_volume <= 0) //MBC : If a fluid reacted but didn't create anything, we require an update_total call to do drain/evaporate checks.
 								src.update_total()
-								if (FG && FG.my_group && src.total_volume <= 0) //also evaporate safety here
+								if (FG?.my_group && src.total_volume <= 0) //also evaporate safety here
 									FG.my_group.evaporate()
 							C.on_reaction(src, created_volume)
 							covered_cache = 0
@@ -517,7 +517,7 @@ datum
 					src.add_reagent(C.result, speed,, src.total_temperature)
 				covered_cache = 0
 
-				if(my_atom && my_atom.loc) //We might be inside a thing, let's tell it we updated our reagents.
+				if(my_atom?.loc) //We might be inside a thing, let's tell it we updated our reagents.
 					my_atom.loc.handle_event("reagent_holder_update", src)
 
 			defer_reactions = 0
@@ -615,7 +615,7 @@ datum
 					if(istype(H) && can_burn)
 						var/temp_to_burn_with = total_temperature
 						var/dmg_multiplier = 1
-						if (paramslist && paramslist.len)
+						if (paramslist?.len)
 							if ("override_can_burn" in paramslist)
 								temp_to_burn_with = paramslist["override_can_burn"]
 							if ("dmg_multiplier" in paramslist)
@@ -669,7 +669,7 @@ datum
 							var/mob/living/carbon/C = A
 							var/temp_to_burn_with = total_temperature
 							var/dmg_multiplier = 1
-							if (paramslist && paramslist.len)
+							if (paramslist?.len)
 								if ("override_can_burn" in paramslist)
 									temp_to_burn_with = paramslist["override_can_burn"]
 								if ("dmg_multiplier" in paramslist)
@@ -691,7 +691,7 @@ datum
 					for(var/current_id in reagent_list)
 						var/datum/reagent/current_reagent = reagent_list[current_id]
 						var/turf_reaction_success = 0
-						if(current_reagent && current_reagent.volume > minimum_react)
+						if(current_reagent?.volume > minimum_react)
 							if(ismob(A) && !isobserver(A))
 								//SPAWN_DBG(0)
 									//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
@@ -793,7 +793,7 @@ datum
 			// I removed a check if reagent_list existed here in the interest of performance
 			// if this happens again try to figure out why the fuck reagent_list would go null
 			var/datum/reagent/current_reagent = reagent_list[reagent]
-			return current_reagent && current_reagent.volume >= amount
+			return current_reagent?.volume >= amount
 
 		proc/get_reagent(var/reagent_id)
 			return reagent_list[reagent_id]

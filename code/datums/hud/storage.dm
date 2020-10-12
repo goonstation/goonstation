@@ -67,7 +67,7 @@
 						var/turfd = (isturf(master.loc) && !istype(master, /obj/item/storage/bible))
 
 						var/pixel_y_adjust = 0
-						if (usr && usr.client && usr.client.tg_layout && !turfd)
+						if (usr?.client && usr.client.tg_layout && !turfd)
 							pixel_y_adjust = 1
 
 						if (pixel_y_adjust && text2num(py) > 16)
@@ -148,7 +148,7 @@
 				boxes.icon = hud_style
 
 		var/pixel_y_adjust = 0
-		if (usr && usr.client && usr.client.tg_layout && !turfd)
+		if (usr?.client && usr.client.tg_layout && !turfd)
 			pixel_y_adjust = -16
 
 		boxes.screen_loc = "[x],[y]:[pixel_y_adjust] to [x+sx-1],[y-sy+1]:[pixel_y_adjust]"
@@ -157,7 +157,7 @@
 		close.screen_loc = "[x+sx-1]:[pixel_y_adjust],[y-sy+1]:[pixel_y_adjust]"
 
 		if (!turfd && istype(usr,/mob/living/carbon/human))
-			if (usr && usr.client && usr.client.tg_layout) //MBC TG OVERRIDE IM SORTY
+			if (usr?.client && usr.client.tg_layout) //MBC TG OVERRIDE IM SORTY
 				boxes.screen_loc = "[x-1],[y]:[pixel_y_adjust] to [x+sx-2],[y-sy+1]:[pixel_y_adjust]"
 				close.screen_loc = "[x-1],[y-sy+1]:[pixel_y_adjust]"
 

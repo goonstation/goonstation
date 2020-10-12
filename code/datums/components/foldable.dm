@@ -108,7 +108,7 @@
 	disposing()
 		if(src.thingInside)
 			var/datum/component/foldable/fold_component = src.thingInside.GetComponent(/datum/component/foldable)
-			if(fold_component && fold_component.the_briefcase == src)
+			if(fold_component?.the_briefcase == src)
 				fold_component.the_briefcase = null
 			src.thingInside = null
 		..()

@@ -82,7 +82,7 @@
 	New()
 		..()
 		SPAWN_DBG(0)
-			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				src.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 				ticker.mode:agent_number++
 			else
@@ -149,7 +149,7 @@
 
 	var/action_delay = 0
 	delStatus("resting")
-	if(hud && hud.master) hud.update_resting()
+	if(hud?.master) hud.update_resting()
 
 	if (isdead(src))
 		ai_set_active(0)

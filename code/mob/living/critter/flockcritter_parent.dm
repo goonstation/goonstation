@@ -310,7 +310,7 @@
 	onEnd()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if(F && F.flock)
+		if(F?.flock)
 			F.canmove = 1
 			F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 			new /obj/flock_structure/egg(get_turf(F), F.flock)

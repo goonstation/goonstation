@@ -43,7 +43,7 @@
 	src.add_dialog(usr)
 	if (href_list["remove"])
 		var/obj/item/P = locate(href_list["remove"])
-		if ((P && P.loc == src))
+		if ((P?.loc == src))
 			P.set_loc(get_turf(src)) //dump paper on the floor because you're a clumsy fuck
 			P.layer = HUD_LAYER
 			P.add_fingerprint(usr)
@@ -54,7 +54,7 @@
 	if(href_list["write"])
 		var/obj/item/P = locate(href_list["write"])
 
-		if((P && P.loc == src)) //if the paper's on the board
+		if((P?.loc == src)) //if the paper's on the board
 			if (istype(usr.r_hand, /obj/item/pen)) //and you're holding a pen
 				src.add_fingerprint(usr)
 				P.attackby(usr.r_hand, usr) //then do ittttt
@@ -67,7 +67,7 @@
 
 	if (href_list["read"])
 		var/obj/item/paper/P = locate(href_list["read"])
-		if ((P && P.loc == src))
+		if ((P?.loc == src))
 			if (!( ishuman(usr) ))
 				usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, stars(P.info)), text("window=[]", P.name))
 				onclose(usr, "[P.name]")

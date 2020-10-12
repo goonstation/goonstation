@@ -173,7 +173,7 @@
 		var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
 		if (!S)
 			S = H.find_type_in_hand(/obj/item/sword, "left")
-		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
+		if (S?.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
 			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
 			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
 			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))

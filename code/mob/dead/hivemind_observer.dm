@@ -114,7 +114,7 @@
 	set category = "Changeling"
 	usr = src
 
-	if(hivemind_owner && hivemind_owner.master == src)
+	if(hivemind_owner?.master == src)
 		if(hivemind_owner.return_control_to_master())
 			qdel(src)
 
@@ -123,7 +123,7 @@
 	set category = "Commands"
 	usr = src
 
-	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
+	if(world.time >= can_exit_hivemind_time && hivemind_owner?.master != src)
 		hivemind_owner.hivemind -= src
 		boutput(src, __red("You have parted with the hivemind."))
 		src.boot()

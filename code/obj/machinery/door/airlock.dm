@@ -1045,7 +1045,7 @@ About the new airlock wires panel:
 		return 0
 
 	var/obj/machinery/power/apc/localAPC = get_local_apc(src)
-	if (localAPC && localAPC.terminal && localAPC.terminal.powernet)
+	if (localAPC?.terminal && localAPC.terminal.powernet)
 		return localAPC.terminal.powernet.number
 
 	return 0
@@ -1097,7 +1097,7 @@ About the new airlock wires panel:
 
 	//ok you're getting shocked now
 	var/datum/powernet/PN			// find the powernet
-	if(powernets && powernets.len >= netnum)
+	if(powernets?.len >= netnum)
 		PN = powernets[netnum]
 
 	elecflash(user,power = 2)

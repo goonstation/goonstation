@@ -13,7 +13,7 @@
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
-			if (kit_styles && kit_styles.len)
+			if (kit_styles?.len)
 				icon_state = pick(kit_styles)
 				item_state = icon_state
 #if ASS_JAM

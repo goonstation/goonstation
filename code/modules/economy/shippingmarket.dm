@@ -222,7 +222,7 @@
 			if (P.id == "qm_dock")
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
 				SPAWN_DBG(SUPPLY_OPEN_TIME)
-					if (P && P.density)
+					if (P?.density)
 						P.open()
 				SPAWN_DBG(SUPPLY_CLOSE_TIME)
 					if (P && !P.density)

@@ -104,7 +104,7 @@
 		if (src.material)
 			G.setMaterial(src.material)
 		/* not used because it doesn't work (yet?)
-		if (src.uses_handwriting && user && user.mind && user.mind.handwriting)
+		if (src.uses_handwriting && user?.mind && user.mind.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
 		*/
@@ -604,7 +604,7 @@
 			G.color = src.font_color
 		if (src.material)
 			G.setMaterial(src.material)
-		/*if (src.uses_handwriting && user && user.mind && user.mind.handwriting)
+		/*if (src.uses_handwriting && user?.mind && user.mind.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
 		*/
@@ -672,7 +672,7 @@
 			return
 		tooltip_rebuild = 1
 		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
-		if(url_regex && url_regex.Find(str))
+		if(url_regex?.Find(str))
 			str = null
 		if (!str || !length(str))
 			boutput(usr, "<span class='notice'>Label text cleared.</span>")
@@ -790,13 +790,13 @@
 
 		else if (href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
-			if (P && P.loc == src)
+			if (P?.loc == src)
 				usr.put_in_hand_or_drop(P)
 				src.update()
 
 		else if (href_list["read"])
 			var/obj/item/paper/P = locate(href_list["read"])
-			if ((P && P.loc == src))
+			if ((P?.loc == src))
 				if (!( ishuman(usr) ))
 					usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, stars(P.info)), text("window=[]", P.name))
 					onclose(usr, "[P.name]")
@@ -821,7 +821,7 @@
 
 			if (href_list["write"])
 				var/obj/item/P = locate(href_list["write"])
-				if ((P && P.loc == src))
+				if ((P?.loc == src))
 					P.attackby(available_pen, usr)
 
 			else if (href_list["title"])
@@ -830,14 +830,14 @@
 					src.add_fingerprint(usr)
 					return
 				var/obj/item/P = locate(href_list["title"])
-				if (P && P.loc == src)
+				if (P?.loc == src)
 					var/str = copytext(html_encode(input(usr,"What do you want to title this?","Title document","") as null|text), 1, 32)
 					if (str == null || length(str) == 0)
 						return
 					if (length(str) > 30)
 						boutput(usr, "<span class='alert'>A title that long will never catch on!</span>") //We're actually checking because titles above a certain length get clipped, but where's the fun in that
 						return
-					if(url_regex && url_regex.Find(str))
+					if(url_regex?.Find(str))
 						return
 					P.name = str
 
@@ -1066,7 +1066,7 @@
 	attackby(var/obj/item/P as obj, mob/user as mob)
 		if (istype(P, /obj/item/paper))
 			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
-			if (S && S.ammo)
+			if (S?.ammo)
 				user.drop_item()
 				src.pages += P
 				P.set_loc(src)

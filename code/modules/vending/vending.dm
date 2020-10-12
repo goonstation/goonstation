@@ -461,7 +461,7 @@
 		attack_particle(user,src)
 		playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
 		..()
-		if (W && W.force >= 5 && prob(4 + (W.force - 5)))
+		if (W?.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
 
 /obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
@@ -934,7 +934,7 @@
 		return 0
 
 	var/datum/powernet/PN			// find the powernet
-	if (powernets && powernets.len >= netnum)
+	if (powernets?.len >= netnum)
 		PN = powernets[netnum]
 
 	elecflash(src)

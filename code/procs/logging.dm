@@ -134,7 +134,7 @@ var/global/first_adminhelp_happened = 0
 	else if(window)
 		entry += " in [window.id]"
 	// Resolve src_object
-	if(!src_object && window && window.locked_by)
+	if(!src_object && window?.locked_by)
 		src_object = window.locked_by.src_object
 	// Insert src_object info
 	if(src_object)

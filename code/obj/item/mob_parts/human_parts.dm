@@ -421,7 +421,7 @@
 			var/mob/living/carbon/human/H = null
 			if (ishuman(src.holder))
 				H = src.holder
-			if (H && H.l_hand == remove_object)
+			if (H?.l_hand == remove_object)
 				H.l_hand = null
 
 		if (delete && remove_object)
@@ -549,7 +549,7 @@
 			var/mob/living/carbon/human/H = null
 			if (ishuman(src.holder))
 				H = src.holder
-			if (H && H.r_hand == remove_object)
+			if (H?.r_hand == remove_object)
 				H.r_hand = null
 
 		if (delete && remove_object)

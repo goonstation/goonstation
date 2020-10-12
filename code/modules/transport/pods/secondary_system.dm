@@ -292,7 +292,7 @@
 	return C
 
 /obj/item/shipcomponent/secondary_system/cargo/on_shipdeath(var/obj/machinery/vehicle/ship)
-	while(load && load.len)
+	while(load?.len)
 		var/obj/O = src.unload(pick(load))
 		if (O)
 			O.visible_message("<span class='alert'><b>[O]</b> is flung out of [src.ship]!</span>")
@@ -502,7 +502,7 @@
 			for(var/mob/M in ship)
 				if(cmptext(href_list["release"], M.name))
 					var/list/turfs = get_area_turfs(/area/shuttle/arrival, 1)
-					if (turfs && turfs.len)
+					if (turfs?.len)
 						M.set_loc(pick(turfs))
 						showswirl(get_turf(M))
 		opencomputer(usr)
@@ -752,7 +752,7 @@
 				boutput(usr, "<span class='alert'>You must be inside the ship to do that!</span>")
 				return
 
-			if (ship && ship.locked)
+			if (ship?.locked)
 				ship.locked = 0
 				boutput(usr, "<span class='alert'>The ship mechanism clicks unlocked.</span>")
 				//ship.access_computer(usr)

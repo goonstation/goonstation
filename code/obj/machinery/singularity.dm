@@ -804,7 +804,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	// Added (Convair880).
 	logTheThing("combat", user, null, "was shocked by a containment field at [log_loc(src)].")
 
-	if (user && user.bioHolder)
+	if (user?.bioHolder)
 		if (user.bioHolder.HasEffect("resist_electric") == 2)
 			var/healing = 0
 			if (shock_damage)

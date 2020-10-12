@@ -75,10 +75,10 @@
 			hit_twitch(src)
 	else if(src.max_health > src.health && prob(10 * src.in_water_buff))
 		var/datum/healthHolder/Br = get_health_holder("brute")
-		if (Br && Br.maximum_value > Br.value)
+		if (Br?.maximum_value > Br.value)
 			Br.TakeDamage(-in_water_buff)
 		var/datum/healthHolder/Bu = get_health_holder("burn")
-		if (Bu && Bu.maximum_value > Bu.value && !is_heat_resistant())
+		if (Bu?.maximum_value > Bu.value && !is_heat_resistant())
 			Bu.TakeDamage(-in_water_buff)
 
 /mob/living/critter/aquatic/set_loc(newloc)

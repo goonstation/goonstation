@@ -716,14 +716,14 @@ var/global/datum/module_research_controller/module_control = new
 					substate = null
 			if (href_list["eject"])
 				var/obj/item/I = locate(href_list["eject"]) in src
-				if (I && I.loc == src)
+				if (I?.loc == src)
 					I.set_loc(src.loc)
 					usr.put_in_hand_or_drop(I) // try to eject it into the users hand, if we can
 					objects -= I
 					modules -= I
 			if (href_list["shred"])
 				var/obj/item/I = locate(href_list["shred"]) in src
-				if (I && I.loc == src)
+				if (I?.loc == src)
 					researching = 1
 					visible_message("<b>[src]</b> powers up and begins its research process!")
 					var/list/res = I.module_research.Copy()

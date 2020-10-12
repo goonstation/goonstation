@@ -104,7 +104,7 @@
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
-				if (picklist && picklist.len >= 1)
+				if (picklist?.len >= 1)
 					for(var/pick in picklist)
 						M.bioHolder.AddEffect(pick)
 
@@ -2046,7 +2046,7 @@
 		..()
 		if (!M)
 			return
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			M.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 			ticker.mode:agent_number++
 		else

@@ -16,7 +16,7 @@
 	if (!istype(M))
 		return
 	src.lastattacked = M
-	if (src != M && M.getStatusDuration("burning")) //help others put out fires!!
+	if (src != M?.getStatusDuration("burning")) //help others put out fires!!
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()
@@ -368,7 +368,7 @@
 		msgs.base_attack_message = "<span class='alert'><B>[src] rolls [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.disarm_RNG_result = "shoved"
 		var/obj/item/I = target.equipped()
-		if (I && I.temp_flags & IS_LIMB_ITEM)
+		if (I?.temp_flags & IS_LIMB_ITEM)
 			msgs.disarm_RNG_result = "attack_self_with_item_shoved"
 
 		return msgs
@@ -427,7 +427,7 @@
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		msgs.disarm_RNG_result = "shoved_down"
 		var/obj/item/I = target.equipped()
-		if (I && I.temp_flags & IS_LIMB_ITEM)
+		if (I?.temp_flags & IS_LIMB_ITEM)
 			msgs.disarm_RNG_result = "attack_self_with_item_shoved_down"
 
 		return msgs
@@ -893,7 +893,7 @@
 
 		if (!(suppress & SUPPRESS_SOUND) && played_sound)
 			var/obj/item/grab/block/G = target.check_block()
-			if (G && G.can_block(damage_type) && damage > 0)
+			if (G?.can_block(damage_type) && damage > 0)
 				G.play_block_sound(damage_type)
 				playsound(owner.loc, played_sound, 15, 1, -1, 1.4)
 			else
@@ -1206,7 +1206,7 @@
 	return null
 
 /mob/living/check_attack_resistance(var/obj/item/I)
-	if (reagents && reagents.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
+	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
 		return "<span class='alert'>You drunkenly shrug off the blow!</span>"
 	return null
 
@@ -1224,9 +1224,9 @@
 	return 0
 
 /mob/living/carbon/human/get_head_pierce_prot()
-	if (client && client.hellbanned)
+	if (client?.hellbanned)
 		return 0
-	if ((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD))
+	if ((head?.body_parts_covered & HEAD) || (wear_mask?.body_parts_covered & HEAD))
 		if (head && !wear_mask)
 			return max(0, head.getProperty("pierceprot"))
 		else if (!head && wear_mask)
@@ -1239,9 +1239,9 @@
 	return 0
 
 /mob/living/carbon/human/get_chest_pierce_prot()
-	if (client && client.hellbanned)
+	if (client?.hellbanned)
 		return 0
-	if ((wear_suit && wear_suit.body_parts_covered & TORSO) || (w_uniform && w_uniform.body_parts_covered & TORSO))
+	if ((wear_suit?.body_parts_covered & TORSO) || (w_uniform?.body_parts_covered & TORSO))
 		if (wear_suit && !w_uniform)
 			return max(0, wear_suit.getProperty("pierceprot"))
 		else if (!wear_suit && w_uniform)
@@ -1342,7 +1342,7 @@
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)
 	if (iswerewolf(src))
 		var/datum/abilityHolder/werewolf/W = src.get_ability_holder(/datum/abilityHolder/werewolf)
-		if (target && W && W.tainted_saliva_reservior.total_volume > 0)
+		if (target && W?.tainted_saliva_reservior.total_volume > 0)
 			W.tainted_saliva_reservior.trans_to(target,5, 2)
 
 

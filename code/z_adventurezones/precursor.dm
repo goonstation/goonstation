@@ -278,7 +278,7 @@
 				src.overlays += icon('icons/obj/artifacts/artifacts.dmi',"precursor-1fx")*/
 		if (isrobot(user)) return
 		user.drop_item()
-		if(W && W.loc)	W.set_loc(src.loc)
+		if(W?.loc)	W.set_loc(src.loc)
 		return
 
 /obj/item/chilly_orb // borb
@@ -1224,7 +1224,7 @@
 							I.pixel_y = old_pixel_y + pixel_y_mod + n2 - 1
 							sleep(0.4 SECONDS)
 
-						while (I && I.pixel_y > old_pixel_y)
+						while (I?.pixel_y > old_pixel_y)
 							I.pixel_y--
 							sleep(0.2 SECONDS)
 */

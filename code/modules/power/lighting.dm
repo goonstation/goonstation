@@ -63,7 +63,7 @@
 	return
 
 /obj/machinery/light_area_manager/process()
-	if(my_area && my_area.power_light && my_area.lightswitch)
+	if(my_area?.power_light && my_area.lightswitch)
 		..()
 		var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
 		use_power(thepower * lights.len, LIGHT)

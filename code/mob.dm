@@ -293,7 +293,7 @@
 		m.set_loc(src.loc)
 		m.ghostize()
 
-	if (ghost && ghost.corpse == src)
+	if (ghost?.corpse == src)
 		ghost.corpse = null
 
 	if (traitHolder)
@@ -407,25 +407,25 @@
 			var/mob/M = C.mob
 			if ((!M) || M == src || M.client == null)
 				continue
-			else if (M && M.client && M.client.address == src.client.address)
+			else if (M?.client && M.client.address == src.client.address)
 				if(!src.client.holder && !M.client.holder)
 					logTheThing("admin", src, M, "has same IP address as [constructTarget(M,"admin")]")
 					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")]", "access")
 					if (IP_alerts)
 						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)]</span>")
-			else if (M && M.lastKnownIP && M.lastKnownIP == src.client.address && M.ckey != src.ckey && M.key)
+			else if (M?.lastKnownIP && M.lastKnownIP == src.client.address && M.ckey != src.ckey && M.key)
 				if(!src.client.holder && !M.client.holder)
 					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", "access")
 					if (IP_alerts)
 						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
-			if (M && M.client && M.client.computer_id == src.client.computer_id)
+			if (M?.client && M.client.computer_id == src.client.computer_id)
 				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
 				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font color='blue'> as [key_name(M)]</span>")
 				SPAWN_DBG(0)
 					if(M.lastKnownIP == src.client.address)
 						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
-			else if (M && M.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
+			else if (M?.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
 				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
 				logTheThing("admin", M, null, "is no longer logged in.")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
@@ -709,7 +709,7 @@
 			hud.add_client(src.client)
 
 /mob/proc/detach_hud(datum/hud/hud)
-	if (src && src.huds) //Wire note: Fix for runtime error: bad list
+	if (src?.huds) //Wire note: Fix for runtime error: bad list
 		huds -= hud
 
 	hud.mobs -= src
@@ -882,7 +882,7 @@
 
 /mob/proc/unequip_all(var/delete_stuff=0)
 	var/list/obj/item/to_unequip = src.get_unequippable()
-	if(to_unequip && to_unequip.len)
+	if(to_unequip?.len)
 		for (var/obj/item/W in to_unequip)
 			src.remove_item(W)
 			if (W)
@@ -894,7 +894,7 @@
 
 /mob/proc/unequip_random(var/delete_stuff=0)
 	var/list/obj/item/to_unequip = get_unequippable()
-	if(to_unequip && to_unequip.len)
+	if(to_unequip?.len)
 		var/obj/item/I = pick(to_unequip)
 		src.remove_item(I)
 		if (I)
@@ -2062,7 +2062,7 @@
 		return 0
 
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (L?.len)
 		for (var/obj/B in L)
 			if (B.type == A || (accept_subtypes && istype(B, A)))
 				return 1
@@ -2074,7 +2074,7 @@
 
 	var/tally = 0
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (L?.len)
 		for (var/obj/B in L)
 			if (B.type == A || (accept_subtypes && istype(B, A)))
 				tally++
@@ -2090,7 +2090,7 @@
 		return
 
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (L?.len)
 		var/list/OL = list() // Sorted output list. Could definitely be improved, but is functional enough.
 		var/list/O_names = list()
 		var/list/O_namecount = list()
@@ -2501,7 +2501,7 @@
 	if (abilityHolder && istype(abilityHolder, /datum/abilityHolder/composite))
 		var/datum/abilityHolder/composite/C = abilityHolder
 		return C.getHolder(holder_type)
-	else if (abilityHolder && abilityHolder.type == holder_type)
+	else if (abilityHolder?.type == holder_type)
 		return abilityHolder
 	return null
 
@@ -2570,7 +2570,7 @@
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					var/datum/data/record/B = FindBankAccountByName(src.real_name)
-					if (B && B.fields["name"])
+					if (B?.fields["name"])
 						B.fields["name"] = newname
 					for (var/obj/item/card/id/ID in src.contents)
 						ID.registered = newname
@@ -2612,7 +2612,7 @@
 
 /mob/OnMove(source = null)
 	..()
-	if(client && client.player && client.player.shamecubed)
+	if(client?.player && client.player.shamecubed)
 		loc = client.player.shamecubed
 		return
 

@@ -315,7 +315,7 @@
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
-		if (usr && usr.is_in_hands(src))
+		if (usr?.is_in_hands(src))
 			if (!src.open)
 				boutput(usr, "<span class='alert'>[src] isn't open, you goof!</span>")
 				return

@@ -296,7 +296,7 @@ var/list/genescanner_addresses = list()
 		return
 
 	disposing()
-		if(usercl && usercl.mob)
+		if(usercl?.mob)
 			usercl.mob.Browse(null, "window=geneticsappearance")
 			usercl = null
 		target_mob = null

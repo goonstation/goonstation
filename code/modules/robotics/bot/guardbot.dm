@@ -62,7 +62,7 @@
 				src.master = null
 				return 1
 
-			while(master && master.path && master.path.len && target_turf && master.moving)
+			while(master?.path && master.path.len && target_turf && master.moving)
 //				boutput(world, "[compare_movepath] : [current_movepath]")
 				//if(compare_movepath != current_movepath)
 				//	break
@@ -2287,7 +2287,7 @@
 
 			if(istype(src.target, /turf/simulated))
 				var/obj/machinery/guardbot_dock/dock = locate() in src.target
-				if(dock && dock.loc == master.loc)
+				if(dock?.loc == master.loc)
 					if(!isnull(dock.current) && dock.current != src)
 						src.next_target()
 					else
@@ -2463,7 +2463,7 @@
 						src.master.remove_current_task()
 						return
 
-					if (our_seat && our_seat.loc != src.master.loc)
+					if (our_seat?.loc != src.master.loc)
 						our_seat = null
 						src.state = 2
 
@@ -2740,7 +2740,7 @@
 											src.drop_arrest_target()
 											master.set_emotion("smug")
 
-											if (arrested_messages && arrested_messages.len)
+											if (arrested_messages?.len)
 												var/arrest_message = pick(arrested_messages)
 												master.speak(arrest_message)
 
@@ -3641,7 +3641,7 @@
 
 		proc/look_for_neat_thing()
 			var/area/spaceArea = get_area(src.master)
-			if (!(src.neat_things & NT_SPACE) && spaceArea && spaceArea.name == "Space" && !istype(get_turf(src.master), /turf/simulated/shuttle))
+			if (!(src.neat_things & NT_SPACE) && spaceArea?.name == "Space" && !istype(get_turf(src.master), /turf/simulated/shuttle))
 				src.neat_things |= NT_SPACE
 				src.master.speak(pick("While you find yourself surrounded by space, please try to avoid the temptation to inhale any of it.  That doesn't work.",\
 				 "Space: the final frontier.  Oh, except for time travel and any other dimensions.  And frontiers on other planets, including other planets in those other dimensions and times.  Maybe I should stick with \"space: a frontier.\"",\

@@ -24,11 +24,11 @@
 			continue
 		var/datum/preferences/P  = player.client.preferences
 		if(checktraitor(player))
-			if ((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && J.cant_spawn_as_rev)
+			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && J.cant_spawn_as_rev)
 				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
 				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
 				continue
-			else if((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)) && (job != "Staff Assistant"))
+			else if((ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && (job != "Staff Assistant"))
 				continue
 
 		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == "spy_thief")
@@ -160,7 +160,7 @@
 		// Now get the in-system job via the string
 		var/datum/job/JOB = find_job_in_controller_by_string(player.client.preferences.job_favorite)
 		// Do a few checks to make sure they're allowed to have this job
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			if(checktraitor(player) && JOB.cant_spawn_as_rev)
 				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
 				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
@@ -402,7 +402,7 @@
 			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
 				random_pod_codes -= V
-				if (V && V.lock && V.lock.code)
+				if (V?.lock && V.lock.code)
 					boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
 					if (src.mind)
 						src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
@@ -415,7 +415,7 @@
 		sleep(0.1 SECONDS)
 		update_icons_if_needed()
 
-		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
+		if (joined_late == 1 && map_settings?.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
 				for (var/obj/machinery/computer/announcement/A as() in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)
@@ -614,7 +614,7 @@
 			if(prob(50)) realName = replacetext(realName, "p", pick("b", "t"))
 
 			var/datum/data/record/B = FindBankAccountByName(src.real_name)
-			if (B && B.fields["name"])
+			if (B?.fields["name"])
 				B.fields["name"] = realName
 
 		C.registered = realName

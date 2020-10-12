@@ -71,7 +71,7 @@ Important Procedures
 				if(!obstacle.CanPass(mover, target, height, air_group))
 					return 0
 
-		if (target && target.checkingcanpass > 0)
+		if (target?.checkingcanpass > 0)
 			for(var/obj/obstacle as() in target)
 				if(!obstacle.CanPass(mover, src, height, air_group))
 					return 0

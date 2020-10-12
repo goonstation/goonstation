@@ -397,7 +397,7 @@
 					if(!(user in src.contributors))
 						src.contributors += user
 					if(do_after(user, 30)) // Same as the gibber and reclaimer. Was 20 (Convair880).
-						if(src && W && W.loc == user && C)
+						if(src && W?.loc == user && C)
 							user.visible_message("<span class='alert'>[src.name] grabs [C] and devours them ravenously!</span>")
 							logTheThing("combat", user, (C), "feeds [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].")
 							message_admins("[key_name(user)] feeds [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
@@ -809,7 +809,7 @@
 		var/iconname = 'icons/obj/hydroponics/plants_weed.dmi'
 		if(growing.plant_icon)
 			iconname = growing.plant_icon
-		else if(MUT && MUT.iconmod)
+		else if(MUT?.iconmod)
 			if(MUT.plant_icon)
 				iconname = MUT.plant_icon
 			else
@@ -834,7 +834,7 @@
 		var/planticon = null
 		if(growing.sprite)
 			planticon = "[growing.sprite]-G[src.grow_level]"
-		if(MUT && MUT.iconmod)
+		if(MUT?.iconmod)
 			planticon = "[MUT.iconmod]-G[src.grow_level]"
 		else if(growing.sprite)
 			planticon = "[growing.sprite]-G[src.grow_level]"
@@ -855,7 +855,7 @@
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/datum/plantmutation/MUT = DNA.mutation
-		if(growing && growing.cantscan) // what if we disable this for a bit, what will happen...
+		if(growing?.cantscan) // what if we disable this for a bit, what will happen...
 			src.name = "\improper strange plant"
 		else
 			if(istype(MUT,/datum/plantmutation/))
@@ -908,7 +908,7 @@
 
 		if(growing.harvested_proc)
 			if(growing.HYPharvested_proc(src,user)) return
-			if(MUT && MUT.HYPharvested_proc_M(src,user)) return
+			if(MUT?.HYPharvested_proc_M(src,user)) return
 			// Does this plant react to being harvested? If so, do it - it also functions as
 			// a check since harvesting will stop here if this returns anything other than 0.
 

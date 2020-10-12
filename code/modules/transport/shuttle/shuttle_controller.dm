@@ -89,7 +89,7 @@ datum/shuttle_controller
 
 					else if (timeleft <= 0)
 						location = SHUTTLE_LOC_STATION
-						if (ticker && ticker.mode)
+						if (ticker?.mode)
 							if (ticker.mode.shuttle_available == 0)
 								command_alert("CentCom has received reports of unusual activity on the station. The shuttle has been returned to base as a precaution, and will not be usable.");
 								online = 0
@@ -231,7 +231,7 @@ datum/shuttle_controller
 									var/bonus_stun = 0
 									if (ishuman(M))
 										var/mob/living/carbon/human/H = M
-										bonus_stun = (H && H.buckled && H.on_chair)
+										bonus_stun = (H?.buckled && H.on_chair)
 										//DEBUG_MESSAGE("[M] is human and bonus_stun is [bonus_stun]")
 									if (!M.buckled || bonus_stun)
 										M.changeStatus("stunned", 2 SECONDS)

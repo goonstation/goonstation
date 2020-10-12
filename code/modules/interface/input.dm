@@ -172,7 +172,7 @@ var/list/clients_move_scheduled = list()
 
 		if(findtext( control, "viewport" ))
 			var/datum/viewport/vp = getViewportById(control)
-			if(vp && vp.clickToMove && object && isturf(object) && (mob.type == /mob/living/intangible/blob_overmind || mob.type == /mob/dead/aieye))//NYI: Replace the typechecks with something Better.
+			if(vp?.clickToMove && object && isturf(object) && (mob.type == /mob/living/intangible/blob_overmind || mob.type == /mob/dead/aieye))//NYI: Replace the typechecks with something Better.
 				mob.set_loc(object)
 				return
 		//In case we receive a dollop of modifier keys with the Click() we should force a keydown immediately.

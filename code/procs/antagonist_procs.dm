@@ -49,7 +49,7 @@
 	if (!(traitor_mob && ishuman(traitor_mob)))
 		return
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/assday))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
 		boutput(traitor_mob, "The Syndicate have clearly forgotten to give you a Syndicate Uplink. Lazy idiots.")
 		SHOW_TRAITOR_HARDMODE_TIPS(traitor_mob)
 		return
@@ -110,7 +110,7 @@
 		traitor_mob.verbs += /client/proc/gearspawn_traitor
 		SHOW_TRAITOR_RADIO_TIPS(traitor_mob)
 	else
-		if (!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && !(traitor_mob.mind && traitor_mob.mind.special_role == "spy"))
+		if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && !(traitor_mob.mind && traitor_mob.mind.special_role == "spy"))
 			SHOW_TRAITOR_PDA_TIPS(traitor_mob)
 
 		if (istype(R, /obj/item/device/radio))
@@ -251,7 +251,7 @@
 	M.implanted(synd_mob)
 
 	var/the_frequency = R_FREQ_SYNDICATE
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 		var/datum/game_mode/nuclear/N = ticker.mode
 		the_frequency = N.agent_radiofreq
 

@@ -19,7 +19,7 @@
 		var/pick = input(usr, "Which reagent(s)?","Add Reagents") as null|text
 		if (pick)
 			picklist = params2list(pick)
-			if (picklist && picklist.len >= 1)
+			if (picklist?.len >= 1)
 				for(pick in picklist)
 					var/amt = input(usr, "How much of [pick]?","Add Reagent") as null|num
 					if(!amt || amt < 0)

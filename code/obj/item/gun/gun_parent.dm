@@ -97,7 +97,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(!c_firing)
 		c_firing = 1
 		SPAWN_DBG(0)
-			while(src && src.c_mouse_down)
+			while(src?.c_mouse_down)
 				pixelaction(src.c_target.target, src.c_target.params, src.c_target.user, 0, 1)
 				suppress_fire_msg = 1
 				sleep(src.c_interval)

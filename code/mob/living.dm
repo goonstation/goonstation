@@ -480,7 +480,7 @@
 
 
 		var/obj/item/equipped = src.equipped()
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target?.flags & USEDELAY) || (equipped?.flags & USEDELAY))
 		var/grace_penalty = 0
 		if ((target == equipped || use_delay) && world.time < src.next_click) // if we ignore next_click on attack_self we get... instachoking, so let's not do that
 			var/time_left = src.next_click - world.time
@@ -508,7 +508,7 @@
 			var/reach = can_reach(src, target)
 			if (src.pre_attack_modify())
 				equipped = src.equipped() //might have changed from successful modify
-			if (reach || (equipped && equipped.special) || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk //MBC : added bit to get weapon_attack->pixelaction to work for itemspecial
+			if (reach || (equipped?.special) || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk //MBC : added bit to get weapon_attack->pixelaction to work for itemspecial
 				if (use_delay)
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
@@ -524,7 +524,7 @@
 					hand_attack(target, params, location, control)
 
 				//If lastattacked was set, this must be a combat action!! Use combat click delay ||  the other condition is whether a special attack was just triggered.
-				if ((lastattacked != null && (src.lastattacked == target || src.lastattacked == equipped || src.lastattacked == src) && use_delay) || (equipped && equipped.special && equipped.special.last_use >= world.time - src.click_delay))
+				if ((lastattacked != null && (src.lastattacked == target || src.lastattacked == equipped || src.lastattacked == src) && use_delay) || (equipped?.special && equipped.special.last_use >= world.time - src.click_delay))
 					src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
 					src.lastattacked = null
 
@@ -909,7 +909,7 @@
 
 	// Do they have a phone?
 	var/obj/item/equipped_talk_thing = src.equipped()
-	if(equipped_talk_thing && equipped_talk_thing.flags & TALK_INTO_HAND && !message_mode)
+	if(equipped_talk_thing?.flags & TALK_INTO_HAND && !message_mode)
 		equipped_talk_thing.talk_into(src, messages, secure_headset_mode, src.real_name, lang_id)
 	switch (message_mode)
 		if ("headset", "secure headset", "right hand", "left hand")
@@ -1127,7 +1127,7 @@
 	. = ..()
 	if (isturf(oldloc) && isturf(loc) && move_laying)
 		var/list/equippedlist = src.equipped_list()
-		if (equippedlist && equippedlist.len)
+		if (equippedlist?.len)
 			var/move_callback_happened = 0
 			for (var/I in equippedlist)
 				if (I == move_laying)
@@ -1382,7 +1382,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		gloves = 0
 		//Todo: get critter gloves if they have a slot. also clean this up in general...
 
-	if (gloves && gloves.material)
+	if (gloves?.material)
 		gloves.material.triggerOnAttack(gloves, M, src)
 		for (var/atom/A in src)
 			if (A.material)
@@ -1436,7 +1436,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				src.gib()
 				return
 			*/
-			if (gloves && gloves.activeweapon)
+			if (gloves?.activeweapon)
 				gloves.special_attack(src)
 				return
 
@@ -1736,7 +1736,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (!meatshield && locate(/obj/item/grab, src))
 		var/mob/hostage = null
 		var/obj/item/grab/G = find_type_in_hand(/obj/item/grab)
-		if(G && G.affecting && G.state >= 2 && P.shooter != G.affecting) //If you grab someone they can still shoot you
+		if(G?.affecting && G.state >= 2 && P.shooter != G.affecting) //If you grab someone they can still shoot you
 			hostage = G.affecting
 		if (hostage)
 			hostage.bullet_act(P, src)
@@ -1935,14 +1935,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				explosion(origin, T, -1,-1,1,2)
 			if (prob(20))
 				boutput(src, "<span class='alert'><b>[origin] vaporizes you with a lethal arc of electricity!</b></span>")
-				if (H && H.shoes)
+				if (H?.shoes)
 					H.drop_from_slot(H.shoes)
 				make_cleanable(/obj/decal/cleanable/ash,src.loc)
 				SPAWN_DBG(1 DECI SECOND)
 					src.elecgib()
 			else
 				boutput(src, "<span class='alert'><b>[origin] blasts you with an arc flash!</b></span>")
-				if (H && H.shoes)
+				if (H?.shoes)
 					H.drop_from_slot(H.shoes)
 				var/atom/targetTurf = get_edge_target_turf(src, get_dir(src, get_step_away(src, origin)))
 				src.throw_at(targetTurf, 200, 4)

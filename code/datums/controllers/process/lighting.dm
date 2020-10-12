@@ -34,7 +34,7 @@ datum/controller/process/lighting
 
 			L = light_update_queue.dequeue()
 
-			if (L && L.dirty_flags != 0)
+			if (L?.dirty_flags != 0)
 
 				if (L.dirty_flags & D_ENABLE)
 					if (L.enabled)

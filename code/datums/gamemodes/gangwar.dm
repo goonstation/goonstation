@@ -498,7 +498,7 @@
 		//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
 		if(!kidnapp_success)
 			//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
-			if (kidnapping_target && kidnapping_target.stat != 2)
+			if (kidnapping_target?.stat != 2)
 				for (var/datum/gang/G in gangs)
 					if (G != top_gang)
 						G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
@@ -728,7 +728,7 @@
 		try
 			if (ismob(owner))
 				M = owner
-			if (M && M.mind && M.mind.gang)
+			if (M?.mind && M.mind.gang)
 				icon = 'icons/obj/decals/graffiti.dmi'
 				icon_state = "gangtag[M.mind.gang.gang_tag]"
 				var/speedup = M.mind.gang.gear_worn(M) + (owner.hasStatus("janktank") ? 1: 0)

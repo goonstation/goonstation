@@ -241,7 +241,7 @@
 
 		if (pen.uses_handwriting)
 			custom_font = "Dancing Script"
-			if (user && user.mind && user.mind.handwriting)
+			if (user?.mind && user.mind.handwriting)
 				custom_font = user.mind.handwriting
 			if (islist(src.fonts) && !src.fonts[custom_font])
 				src.fonts[custom_font] = 1
@@ -254,7 +254,7 @@
 		var/t = input(user, "What text do you wish to add?", "[src.name]", null) as null|message
 		if (!t)
 			return
-		if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != user && user.equipped() != P))
+		if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != user?.equipped() != P))
 			return
 		//t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
@@ -299,7 +299,7 @@
 			src.icon_state = "paper"
 	else
 		if (istype(P, /obj/item/stamp) && src.stampable)
-			if ((!in_range(src, usr) && src.loc != user && !(istype(src.loc, /obj/item/clipboard)) && src.loc.loc != user && user.equipped() != P))
+			if ((!in_range(src, usr) && src.loc != user && !(istype(src.loc, /obj/item/clipboard)) && src.loc.loc != user?.equipped() != P))
 				return
 			var/obj/item/stamp/S = P
 			src.info += "<br>" + S.get_stamp_text() + "<br>"
@@ -317,7 +317,7 @@
 
 		else if (istype(P, /obj/item/paper) && !istype(P, /obj/item/paper/manufacturer_blueprint))
 			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
-			if (S && S.ammo)
+			if (S?.ammo)
 				var/obj/item/paper_booklet/B = new
 				B.set_loc(src.loc)
 				user.drop_item()
@@ -340,7 +340,7 @@
 /obj/item/paper/proc/sign_name(var/t as text, mob/user as mob)
 	var/writing_style = "Dancing Script"
 	if (findtext(t, "\[sign\]") || findtext(t, "\[signature\]"))
-		if (user && user.mind && user.mind.handwriting)
+		if (user?.mind && user.mind.handwriting)
 			writing_style = user.mind.handwriting
 		if (islist(src.fonts) && !src.fonts[writing_style])
 			src.fonts[writing_style] = 1

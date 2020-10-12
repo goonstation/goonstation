@@ -302,12 +302,12 @@ var/list/globalContextActions = null
 	proc/checkContextActions(var/atom/target)
 		var/list/applicable = list()
 		var/obj/item/W = src.equipped()
-		if(W && W.contextActions && W.contextActions.len)
+		if(W?.contextActions && W.contextActions.len)
 			for(var/datum/contextAction/C in W.contextActions)
 				var/action = C.checkRequirements(target, src)
 				if(action) applicable.Add(C)
 
-		if(target && target.contextActions && target.contextActions.len)
+		if(target?.contextActions && target.contextActions.len)
 			for(var/datum/contextAction/C in target.contextActions)
 				var/action = C.checkRequirements(target, src)
 				if(action) applicable.Add(C)
@@ -710,7 +710,7 @@ var/list/globalContextActions = null
 		tooltip_flags = TOOLTIP_LEFT
 
 		checkRequirements(var/atom/target, var/mob/user)
-			return user && user.client && (user.client.holder || user.client.player.mentor)
+			return user?.client && (user.client.holder || user.client.player.mentor)
 
 		execute(var/atom/target, var/mob/user)
 			if (user && istype(user, /mob/dead/observer))
@@ -726,7 +726,7 @@ var/list/globalContextActions = null
 		tooltip_flags = TOOLTIP_LEFT
 
 		checkRequirements(var/atom/target, var/mob/user)
-			return user && user.client && user.client.holder
+			return user?.client && user.client.holder
 
 		execute(var/atom/target, var/mob/user)
 			if (user && istype(user, /mob/dead/observer))
@@ -855,7 +855,7 @@ var/list/globalContextActions = null
 			.= 0
 			if (get_dist(target,user) <= 1 && isliving(user))
 				.= GBP && GB
-				if (GB && GB.occupant && world.time > spamt + 5)
+				if (GB?.occupant && world.time > spamt + 5)
 					user.show_text("[target] is currently occupied. Wait until it's done.", "blue")
 					spamt = world.time
 					.= 0
@@ -866,13 +866,13 @@ var/list/globalContextActions = null
 			.= background
 
 		getIcon()
-			if (GBP && GBP.BE)
+			if (GBP?.BE)
 				.= GBP.BE.icon
 			else
 				..()
 
 		getIconState()
-			if (GBP && GBP.BE)
+			if (GBP?.BE)
 				.= GBP.BE.icon_state
 			else
 				..()

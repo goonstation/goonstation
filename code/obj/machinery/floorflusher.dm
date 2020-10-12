@@ -321,7 +321,7 @@
 			openup()
 
 	Crossed(atom/movable/AM)
-		if (AM && AM.loc == src.loc)
+		if (AM?.loc == src.loc)
 			HasEntered(AM)
 
 		return 1

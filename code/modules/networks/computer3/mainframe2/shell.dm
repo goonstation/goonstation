@@ -586,7 +586,7 @@
 		script_evaluate2(var/list/command_stream, return_bool)
 
 			stack.len = 0
-			while (command_stream && command_stream.len)
+			while (command_stream?.len)
 				var/current_command = command_stream[1]
 				//boutput(world, "current_command = \[[current_command]]")
 				command_stream.Cut(1,2)

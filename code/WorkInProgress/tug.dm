@@ -81,7 +81,7 @@
 			crate.close()
 		C.set_loc(src.loc)
 		SPAWN_DBG(0.2 SECONDS)
-			if (C && C.loc == src.loc)
+			if (C?.loc == src.loc)
 				C.set_loc(src)
 				load = C
 				C.pixel_y += 6

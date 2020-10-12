@@ -64,8 +64,8 @@
 
 
 	remove_air(amount as num)
-		if(atmostank && atmostank.air_contents)
-			if(life_support && life_support.active && MIXTURE_PRESSURE(atmostank.air_contents) < 1000)
+		if(atmostank?.air_contents)
+			if(life_support?.active && MIXTURE_PRESSURE(atmostank.air_contents) < 1000)
 				life_support.power_used = 5 * passengers + 15
 				atmostank.air_contents.oxygen += amount / 5
 				atmostank.air_contents.nitrogen += 4 * amount / 5

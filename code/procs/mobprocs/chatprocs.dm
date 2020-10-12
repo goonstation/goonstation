@@ -10,7 +10,7 @@
 
 	if (!message)
 		return
-	if (src.client && url_regex && url_regex.Find(message) && !client.holder)
+	if (src.client && url_regex?.Find(message) && !client.holder)
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
@@ -123,7 +123,7 @@
 /mob/verb/me_verb(message as text)
 	set name = "me"
 
-	if (src.client && !src.client.holder && url_regex && url_regex.Find(message))
+	if (src.client && !src.client.holder && url_regex?.Find(message))
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
@@ -134,7 +134,7 @@
 	set name = "me_hotkey"
 	set hidden = 1
 
-	if (src.client && !src.client.holder && url_regex && url_regex.Find(message)) //we still do this check just in case they access the hidden emote
+	if (src.client && !src.client.holder && url_regex?.Find(message)) //we still do this check just in case they access the hidden emote
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
@@ -706,7 +706,7 @@
 		return 1
 	if (langname == "english" || !langname)
 		return 1
-	if (langname == "monkey" && (monkeysspeakhuman || (bioHolder && bioHolder.HasEffect("monkey_speak"))))
+	if (langname == "monkey" && (monkeysspeakhuman || (bioHolder?.HasEffect("monkey_speak"))))
 		return 1
 	return 0
 
@@ -912,7 +912,7 @@
 		class = "flocksay bold italics"
 		name = "\[SYSTEM\]"
 
-	if(C && C.holder && speak_as_admin) // for admin verb flocksay
+	if(C?.holder && speak_as_admin) // for admin verb flocksay
 		// admin mode go
 		var/show_other_key = 0
 		if (C.stealth || C.alt_key)
@@ -935,7 +935,7 @@
 			thisR = rendered
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(speaker, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered
-		if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker && speaker.mind)
+		if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker?.mind)
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 		if(thisR != "")
 			M.show_message(thisR, 2)

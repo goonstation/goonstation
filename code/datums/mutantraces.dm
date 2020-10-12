@@ -221,7 +221,7 @@
 				M.bioHolder.mobAppearance.UpdateMob()
 
 			SPAWN_DBG (25) // Don't remove.
-				if (M && M.organHolder && M.organHolder.skull)
+				if (M?.organHolder && M.organHolder.skull)
 					M.assign_gimmick_skull() // For hunters (Convair880).
 
 		else
@@ -309,7 +309,7 @@
 				H.set_body_icon_dirty()
 
 				SPAWN_DBG (25) // Don't remove.
-					if (H && H.organHolder && H.organHolder.skull) // check for H.organHolder as well so we don't get null.skull runtimes
+					if (H?.organHolder && H.organHolder.skull) // check for H.organHolder as well so we don't get null.skull runtimes
 						H.assign_gimmick_skull() // We might have to update the skull (Convair880).
 
 			mob.set_clothing_icon_dirty()
@@ -840,7 +840,7 @@
 		if (drains_dna_on_life) //Do you continuously lose DNA points when in this form?
 			var/datum/abilityHolder/changeling/C = mob.get_ability_holder(/datum/abilityHolder/changeling)
 
-			if (C && C.points)
+			if (C?.points)
 				if (last_drain + 30 <= world.time)
 					C.points = max(0, C.points - (1 * mult))
 
@@ -1537,7 +1537,7 @@
 		var/round_mult = max(1, round((mult)))
 		var/turf/T = get_turf(mob)
 		//if on kudzu, get nutrients for later use. If at max nutrients. Then heal self.
-		if (T && T.temp_flags & HAS_KUDZU)
+		if (T?.temp_flags & HAS_KUDZU)
 			if (KAH.points < KAH.MAX_POINTS)
 				KAH.points += round_mult
 			else

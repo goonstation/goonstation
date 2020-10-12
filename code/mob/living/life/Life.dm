@@ -692,7 +692,7 @@
 		// Resistance from Clothing
 		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
 
-		if (bioHolder && bioHolder.HasEffect("food_rad_resist"))
+		if (bioHolder?.HasEffect("food_rad_resist"))
 			rad_protection += 100
 
 		rad_protection = clamp(rad_protection, 0, 100)

@@ -669,7 +669,7 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Check Gang Scores"
 
-	if(!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)))
+	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)))
 		alert("It isn't gang mode, dummy!")
 		return
 

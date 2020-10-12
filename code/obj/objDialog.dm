@@ -54,7 +54,7 @@ var/global/list/objects_using_dialogs
 			.= O
 
 /obj/proc/updateUsrDialog()
-	if (clients_operating && clients_operating.len)
+	if (clients_operating?.len)
 		var/client/C = null
 		for(var/x in clients_operating)
 			C = x
@@ -68,7 +68,7 @@ var/global/list/objects_using_dialogs
 						src.remove_dialog(C.mob)
 
 /obj/proc/updateDialog()
-	if (clients_operating && clients_operating.len)
+	if (clients_operating?.len)
 		var/client/C = null
 		for(var/x in clients_operating)
 			C = x
@@ -113,7 +113,7 @@ var/global/list/objects_using_dialogs
 		if (M.deployed_to_eyecam)
 			AI = M.eyecam
 
-		if (AI && AI.using_dialog_of(subject))
+		if (AI?.using_dialog_of(subject))
 			subject.attack_ai(AI)
 
 

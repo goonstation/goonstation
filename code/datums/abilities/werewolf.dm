@@ -73,7 +73,7 @@
 
 			playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
 			SPAWN_DBG (5)
-				if (M && M.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
+				if (M?.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
 			M.visible_message("<span class='alert'><B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B></span>")

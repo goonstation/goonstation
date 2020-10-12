@@ -309,7 +309,7 @@
 		I.health -= absorb
 		src.resources += src.absorb_per_health * absorb
 		playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
-		if(I && I.health <= 0) // fix runtime Cannot read null.health
+		if(I?.health <= 0) // fix runtime Cannot read null.health
 			playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
 			I.dropped(src)
 			if(I.contents.len > 0)

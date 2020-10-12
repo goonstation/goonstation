@@ -714,11 +714,11 @@
 				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 
 		else if (href_list["settime"])
-			if (linked && linked.settime < 20)
+			if (linked?.settime < 20)
 				linked.settime++
 
 		else if (href_list["unsettime"])
-			if (linked && linked.settime > 0)
+			if (linked?.settime > 0)
 				linked.settime--
 
 		src.updateDialog()

@@ -315,7 +315,7 @@ var/mutable_appearance/fluid_ma
 			pool(src)
 
 		for(var/atom/A as() in src.loc)
-			if (A && A.flags & FLUID_SUBMERGE)
+			if (A?.flags & FLUID_SUBMERGE)
 				var/mob/living/M = A
 				var/obj/O = A
 				if (istype(M))
@@ -596,7 +596,7 @@ var/mutable_appearance/fluid_ma
 			for (var/dir in cardinal)
 				LAGCHECK(LAG_MED)
 				var/turf/simulated/T = get_step(src, dir)
-				if (T && T.active_liquid && T.active_liquid.group == src.group)
+				if (T?.active_liquid && T.active_liquid.group == src.group)
 					dirs |= dir
 			icon_state = num2text(dirs)
 
@@ -794,7 +794,7 @@ var/mutable_appearance/fluid_ma
 			if (!current_reagent) continue
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
-		if (reacted_ids && reacted_ids.len)
+		if (reacted_ids?.len)
 			src.update_icon()
 		*/
 
@@ -805,7 +805,7 @@ var/mutable_appearance/fluid_ma
 	//SLIPPING
 	//only slip if edge tile
 	var/turf/T = get_turf(oldloc)
-	if (T && T.active_liquid)
+	if (T?.active_liquid)
 		entered_group = 0
 
 	//BLOODSTAINS

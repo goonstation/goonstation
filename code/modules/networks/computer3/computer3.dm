@@ -839,7 +839,7 @@ function lineEnter (ev)
 		//qdel(signal)
 		if (signal)
 
-			if (reusable_signals && reusable_signals.len < 11)
+			if (reusable_signals?.len < 11)
 				if (!(signal in reusable_signals))
 					reusable_signals += signal
 				signal.wipe()
@@ -858,7 +858,7 @@ function lineEnter (ev)
 			//qdel(signal)
 
 			if (signal)
-				if (reusable_signals && reusable_signals.len < 11)
+				if (reusable_signals?.len < 11)
 					if (!(signal in reusable_signals))
 						reusable_signals += signal
 					signal.wipe()
@@ -994,7 +994,7 @@ function lineEnter (ev)
 		return deploy(user)
 
 	disposing()
-		if (luggable && luggable.loc == src)
+		if (luggable?.loc == src)
 			luggable.dispose()
 			luggable = null
 
@@ -1039,7 +1039,7 @@ function lineEnter (ev)
 			src.cell.dispose()
 			src.cell = null
 
-		if (case && case.loc == src)
+		if (case?.loc == src)
 			case.dispose()
 			case = null
 

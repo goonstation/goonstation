@@ -235,7 +235,7 @@
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS
 
 		src.see_in_dark = SEE_DARK_FULL
-		if (client && client.adventure_view)
+		if (client?.adventure_view)
 			src.see_invisible = 21
 		else
 			src.see_invisible = 2
@@ -574,7 +574,7 @@
 
 	examine()
 		. = list()
-		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
+		if(src.hiddenFrom?.Find(usr.client)) //invislist
 			return
 
 		if (isghostdrone(usr))
@@ -843,7 +843,7 @@
 				parts.Add(RP)
 			if (parts.len > 0)
 				PART = pick(parts)
-		if (PART && PART.ropart_take_damage(damage,damage) == 1)
+		if (PART?.ropart_take_damage(damage,damage) == 1)
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -2067,7 +2067,7 @@
 		if(!src.freemodule) return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
 		var/list/starter_modules = list("Civilian", "Engineering", "Mining", "Medical", "Chemistry", "Brobocop")
-		if (ticker && ticker.mode)
+		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/construction))
 				starter_modules += "Construction Worker"
 		var/mod = input("Please, select a module!", "Robot", null, null) in starter_modules
@@ -2412,7 +2412,7 @@
 				total_weight += P.weight
 
 		var/list/color_matrix = null
-		if(C && C.painted)
+		if(C?.painted)
 			var/col = hex_to_rgb_list(C.paint)
 			if(!("r" in col))
 				col = list("r"=255, "g"=255, "b"=255)
@@ -2441,7 +2441,7 @@
 		if(part == "chest" || update_all)
 			if (src.part_chest && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				src.icon_state = "body-" + src.part_chest.appearanceString
-				if (C && C.painted)
+				if (C?.painted)
 					i_chest = image("icon" = src.icon, icon_state = src.icon_state,"layer" = FLOAT_LAYER)
 					i_chest.color = color_matrix
 				else
@@ -3168,7 +3168,7 @@
 					leg = part_leg_r
 
 				src.footstep = 0
-				if (NewLoc.step_material || !leg || (leg && leg.step_sound))
+				if (NewLoc.step_material || !leg || (leg?.step_sound))
 					var/priority = 0
 
 					if (!NewLoc.step_material)

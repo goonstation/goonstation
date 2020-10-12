@@ -496,7 +496,7 @@ var/image/blob_icon_cache
 
 	onMaterialChanged()
 		..()
-		if (material && material.mat_id != "blob")
+		if (material?.mat_id != "blob")
 			src.name = "[material.name] [initial(src.name)]"
 
 			// ARBITRARY MATH TIME! WOO!

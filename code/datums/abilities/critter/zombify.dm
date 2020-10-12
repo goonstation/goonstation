@@ -35,7 +35,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && zombify && zombify.cooldowncheck())
+		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && zombify?.cooldowncheck())
 			logTheThing("combat", ownerMob, target, "zombifies [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully infected [target]!</B></span>", 1)

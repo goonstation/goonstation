@@ -177,7 +177,7 @@
 				var/delay = rand(5, 15)
 				animate_horizontal_wiggle(O, delay, 5, 1, -1) // target, number of animation loops, speed, positive x variation, negative x variation
 				SPAWN_DBG(delay)
-					if (O && O.loc == src.loc)
+					if (O?.loc == src.loc)
 						if (prob(40)) // It goes in!
 							src.visible_message("<span class='notice'>[O] slips into [src]!</span>")
 							src.basket(O)

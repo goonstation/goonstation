@@ -253,7 +253,7 @@
 		/* Not needed with new AI cam system
 		if (isAI(O))
 			var/mob/living/silicon/ai/OAI = O
-			if (OAI && OAI.current == src)
+			if (OAI?.current == src)
 				if( OAI.camera_overlay_check(src) )
 					boutput(OAI, "Your regain your connection to the camera.")
 				else

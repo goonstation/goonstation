@@ -274,7 +274,7 @@
 			if (src)
 				// Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
 				for (var/obj/machinery/door_timer/DT in range(30, src))
-					if (DT && DT.id == src.id)
+					if (DT?.id == src.id)
 						src.our_timer = DT
 						if (src.name == "\improper Automatic Locker")
 							src.name = "\improper Automatic Locker ([src.id])"

@@ -71,7 +71,7 @@ var/sound/mutecache
 			S.recalcClient(src)*/
 /atom/movable/proc/update_sounds()
 	.=..()
-	if(attachedSounds && attachedSounds.len)
+	if(attachedSounds?.len)
 		for (var/sound/S as() in attachedSounds)
 			S.recalculate()
 			//world << "Recalc due to move!"

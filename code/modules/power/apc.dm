@@ -1088,7 +1088,7 @@ var/zapLimiter = 0
 		return 0
 
 /obj/machinery/power/apc/add_load(var/amount)
-	if(terminal && terminal.powernet && !circuit_disabled)
+	if(terminal?.powernet && !circuit_disabled)
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/apc/avail()
@@ -1155,7 +1155,7 @@ var/zapLimiter = 0
 		main_status = 2
 
 	var/perapc = 0
-	if(terminal && terminal.powernet)
+	if(terminal?.powernet)
 		perapc = terminal.powernet.perapc
 
 	if(zapLimiter < APC_ZAP_LIMIT_PER_5 && prob(6) && !shorted && avail() > 3000000)
@@ -1353,7 +1353,7 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/proc/overload_lighting(var/omit_emergency_lights)
 	if(!get_connection() || !operating || shorted)
 		return
-	if( cell && cell.charge>=20)
+	if( cell?.charge>=20)
 		cell.charge-=20;
 		SPAWN_DBG(0)
 			for(var/obj/machinery/light/L in area)
