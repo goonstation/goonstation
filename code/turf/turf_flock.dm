@@ -160,7 +160,7 @@
 	group.addtile(src)
 
 /turf/simulated/floor/feather/proc/checknearby(var/newgroup = 0)//handles merging groups
-	var/list/tiles = list() //list of tile groups found
+	var/list/groups_found = list() //list of tile groups found
 	var/datum/flock_tile_group/largestgroup = null //largest group
 	var/max_group_size = 0
 	for(var/turf/simulated/floor/feather/F in getneighbours(src))//check for nearby flocktiles
@@ -168,12 +168,12 @@
 			if(F.group.size > max_group_size)
 				max_group_size = F.group.size
 				largestgroup = F.group
-			tiles |= F.group
-	if(tiles.len == 1)
-		src.group = tiles[1] //set it to the group found.
+			groups_found |= F.group
+	if(groups_found.len == 1)
+		src.group = groups_found[1] //set it to the group found.
 		src.group.addtile(src)
-	else if(tiles.len > 1) //if there is more then one, then join the largest (add merging functionality here later)
-		for(var/datum/flock_tile_group/oldgroup in tiles)
+	else if(groups_found.len > 1) //if there is more then one, then join the largest (add merging functionality here later)
+		for(var/datum/flock_tile_group/oldgroup in groups_found)
 			if(oldgroup == largestgroup) continue
 			largestgroup.powergen += oldgroup.powergen
 			largestgroup.poweruse += oldgroup.poweruse
