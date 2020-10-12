@@ -79,7 +79,7 @@
 			var/datum/bioEffect/BE
 			for(var/X in target.bioHolder.effectPool)
 				BE = target.bioHolder.effectPool[X]
-				if (BE?.id == gene_to_activate)
+				if (BE && BE.id == gene_to_activate)
 					if (target.bioHolder.ActivatePoolEffect(BE,overrideDNA = 1,grant_research = 0) && !ismonkey(target) && target.client)
 						src.expended_properly = 1
 					break

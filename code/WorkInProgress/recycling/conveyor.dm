@@ -151,7 +151,7 @@
 	if(!loc)
 		return
 
-	if(next_conveyor?.loc == newloc)
+	if(next_conveyor && next_conveyor.loc == newloc)
 		//Ok, they will soon walk() according to the new conveyor
 		//DEBUG_MESSAGE("[AM] exited conveyor at [showCoords(src.x, src.y, src.z)] onto another conveyor! Wow!.")
 		var/mob/M = AM
@@ -201,7 +201,7 @@
 
 	else if (issnippingtool(I))
 		var/mob/M = locate() in src.loc
-		if(M?.buckled == src)
+		if(M && M.buckled == src)
 			M.buckled = null
 			src.add_fingerprint(user)
 			if (M == user)

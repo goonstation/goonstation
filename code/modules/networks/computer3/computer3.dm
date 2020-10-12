@@ -994,7 +994,7 @@ function lineEnter (ev)
 		return deploy(user)
 
 	disposing()
-		if (luggable?.loc == src)
+		if (luggable && luggable.loc == src)
 			luggable.dispose()
 			luggable = null
 
@@ -1039,7 +1039,7 @@ function lineEnter (ev)
 			src.cell.dispose()
 			src.cell = null
 
-		if (case?.loc == src)
+		if (case && case.loc == src)
 			case.dispose()
 			case = null
 

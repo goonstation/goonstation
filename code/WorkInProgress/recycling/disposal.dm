@@ -1775,7 +1775,7 @@
 
 	disposing()
 		var/obj/disposalpipe/trunk/trunk = locate() in src.loc
-		if (trunk?.linked == src)
+		if (trunk && trunk.linked == src)
 			trunk.linked = null
 		trunk = null
 

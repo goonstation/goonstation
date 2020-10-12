@@ -635,7 +635,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if(type)
 			for(var/D in effects)
 				var/datum/bioEffect/BE = effects[D]
-				if(BE?.effectType == type)
+				if(BE && BE.effectType == type)
 					return 1
 		else
 			return (effects.len ? 1 : 0)

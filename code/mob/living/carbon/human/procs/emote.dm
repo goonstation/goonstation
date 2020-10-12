@@ -1863,7 +1863,7 @@
 						var/mob/M = G.affecting
 						src.say_verb("I'll stare the bastard in the face as [he_or_she(M)] screams to God, and I'll laugh harder when [he_or_she(M)] whimpers like a baby.")
 						sleep(0.7 SECONDS)
-						if(G?.affecting == M)
+						if(G && G.affecting == M)
 							src.say_verb("And when [M]'s eyes go dead, the hell I send [him_or_her(M)] to will seem like heaven after what I've done to [him_or_her(M)].")
 						else
 							src.emote("laugh")

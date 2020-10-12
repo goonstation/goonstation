@@ -407,25 +407,25 @@
 			var/mob/M = C.mob
 			if ((!M) || M == src || M.client == null)
 				continue
-			else if (M?.client && M.client.address == src.client.address)
+			else if (M && M.client && M.client.address == src.client.address)
 				if(!src.client.holder && !M.client.holder)
 					logTheThing("admin", src, M, "has same IP address as [constructTarget(M,"admin")]")
 					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")]", "access")
 					if (IP_alerts)
 						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)]</span>")
-			else if (M?.lastKnownIP && M.lastKnownIP == src.client.address && M.ckey != src.ckey && M.key)
+			else if (M && M.lastKnownIP && M.lastKnownIP == src.client.address && M.ckey != src.ckey && M.key)
 				if(!src.client.holder && !M.client.holder)
 					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", "access")
 					if (IP_alerts)
 						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
-			if (M?.client && M.client.computer_id == src.client.computer_id)
+			if (M && M.client && M.client.computer_id == src.client.computer_id)
 				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
 				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font color='blue'> as [key_name(M)]</span>")
 				SPAWN_DBG(0)
 					if(M.lastKnownIP == src.client.address)
 						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
-			else if (M?.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
+			else if (M && M.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
 				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
 				logTheThing("admin", M, null, "is no longer logged in.")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
@@ -2501,7 +2501,7 @@
 	if (abilityHolder && istype(abilityHolder, /datum/abilityHolder/composite))
 		var/datum/abilityHolder/composite/C = abilityHolder
 		return C.getHolder(holder_type)
-	else if (abilityHolder?.type == holder_type)
+	else if (abilityHolder && abilityHolder.type == holder_type)
 		return abilityHolder
 	return null
 

@@ -266,11 +266,11 @@
 
 			ability_toggle = create_screen("ability", "Toggle Ability Hotbar", src.icon_hud, "[layouts[layout_style]["ability_icon"]]1", layouts[layout_style]["abiltoggle"], HUD_LAYER)
 			stats = create_screen("stats", "Character stats", src.icon_hud, "stats", layouts[layout_style]["stats"], HUD_LAYER,
-				tooltipTheme = master?.client && master.client.preferences && master.client.preferences.hud_style == "New" ? "newhud" : "item")
+				tooltipTheme = master && master.client && master.client.preferences && master.client.preferences.hud_style == "New" ? "newhud" : "item")
 			stats.desc = "..."
 
 			legend = create_screen("legend", "Inline Icon Legend", src.icon_hud, "legend", layouts[layout_style]["legend"], HUD_LAYER,
-				tooltipTheme = master?.client && master.client.preferences && master.client.preferences.hud_style == "New" ? "newhud" : "item")
+				tooltipTheme = master && master.client && master.client.preferences && master.client.preferences.hud_style == "New" ? "newhud" : "item")
 			legend.desc = "When blocking:"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/cutprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs cutting attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stabprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs stabbing attacks"+\

@@ -2287,7 +2287,7 @@
 
 			if(istype(src.target, /turf/simulated))
 				var/obj/machinery/guardbot_dock/dock = locate() in src.target
-				if(dock?.loc == master.loc)
+				if(dock && dock.loc == master.loc)
 					if(!isnull(dock.current) && dock.current != src)
 						src.next_target()
 					else
@@ -2463,7 +2463,7 @@
 						src.master.remove_current_task()
 						return
 
-					if (our_seat?.loc != src.master.loc)
+					if (our_seat && our_seat.loc != src.master.loc)
 						our_seat = null
 						src.state = 2
 

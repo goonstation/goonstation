@@ -201,7 +201,7 @@
 							sleep(0.1 SECONDS)
 						if(I) I.pixel_x = in_x
 					sleep(delay)
-					if(I?.loc == src.loc)
+					if(I && I.loc == src.loc)
 						if(prob(40)) //It goes in!
 							src.visible_message("<span class='alert'>\The [I] slips into \the [src]!</span>")
 							I.set_loc(src)

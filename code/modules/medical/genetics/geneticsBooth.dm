@@ -304,7 +304,7 @@
 
 	CanPass(var/mob/M, var/atom/oldloc)
 		.= ..()
-		if (oldloc?.y == src.y)
+		if (oldloc && oldloc.y == src.y)
 			if (!occupant && selected_product && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.bioHolder && !H.bioHolder.HasEffect(selected_product.id))

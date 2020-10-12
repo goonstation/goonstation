@@ -65,7 +65,7 @@
 			if("rally")
 				var/mob/living/intangible/flock/flockmind/F = src.associated.flockmind
 				var/mob/living/critter/flock/C = locate(href_list["origin"])
-				if(C?.flock == src.associated) // no ordering other flocks' drones around
+				if(C && C.flock == src.associated) // no ordering other flocks' drones around
 					C.rally(get_turf(F))
 			if("remove_enemy")
 				var/mob/living/E = locate(href_list["origin"])

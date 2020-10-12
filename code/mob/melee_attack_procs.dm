@@ -16,7 +16,7 @@
 	if (!istype(M))
 		return
 	src.lastattacked = M
-	if (src != M?.getStatusDuration("burning")) //help others put out fires!!
+	if (src != M && M.getStatusDuration("burning")) //help others put out fires!!
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()

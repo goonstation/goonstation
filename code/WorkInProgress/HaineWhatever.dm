@@ -95,7 +95,7 @@
 
 /obj/item/disposal_test_dummy/mail_test/pipe_eject()
 	destination_disposal = locate(/obj/machinery/disposal/mail) in src.loc
-	if(destination_disposal?.mail_tag == destination_tag)
+	if(destination_disposal && destination_disposal.mail_tag == destination_tag)
 		success = 1
 	SPAWN_DBG(5 SECONDS)
 		die()

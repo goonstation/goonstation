@@ -526,7 +526,7 @@
 					at_target()
 					return
 
-				else if(path?.len > 0 && target) // valid path
+				else if(length(path) && target) // valid path
 					var/turf/next = path[1]
 					reached_target = 0
 					if(next == loc)

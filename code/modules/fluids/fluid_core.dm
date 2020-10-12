@@ -596,7 +596,7 @@ var/mutable_appearance/fluid_ma
 			for (var/dir in cardinal)
 				LAGCHECK(LAG_MED)
 				var/turf/simulated/T = get_step(src, dir)
-				if (T?.active_liquid && T.active_liquid.group == src.group)
+				if (T && T.active_liquid && T.active_liquid.group == src.group)
 					dirs |= dir
 			icon_state = num2text(dirs)
 
