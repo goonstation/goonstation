@@ -562,31 +562,62 @@
 	movement_modifier = /datum/movement_modifier/zombie
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
+	var/strain = 0
 
+	//this is terrible, but I do anyway.
+	can_infect/bubs
+		strain = 1
+	
+	can_infect/spitter
+		strain = 2
+
+	can_infect/normal
+		strain = -1
 
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(mob))
 			src.add_ability(mob)
 			mob.is_zombie = 1
-		if(prob(20)) //Spin the wheel!
-			var/strain = rand(1,2)
+
+		if (strain == 1)
+			make_bubs(M)
+		else if (strain == 2)
+			make_spitter(M)
+		else if (strain == 0 && prob(30))	//chance to be one or the other
+			strain = rand(1,2)
 			if(strain == 1) //Bubs
-				M.bioHolder.AddEffect("fat")
-				M.bioHolder.AddEffect("strong")
-				M.bioHolder.AddEffect("mattereater")
-				M.Scale(1.15, 1.15) //Fat bioeffect wont work, so they're just bigger now.
-				M.max_health += 75
-				M.health = max(M.max_health, M.health)
+				make_bubs(M)
 			if(strain == 2) // spitter ranged zombie
-				M.max_health -= 45
-				M.health = max(M.max_health, M.health)
-				M.Scale(1, 0.9)
-				M.add_sm_light("glowy", list(94, 209, 31, 175))
-				M.bioHolder.AddEffect("shoot_limb")
-				M.bioHolder.AddEffect("acid_bigpuke")
-		M.add_stam_mod_max("zombie", -100)
+				make_spitter(M)
+
+		M.add_stam_mod_max("zombie", 100)
 		M.add_stam_mod_regen("zombie", 15)
+
+	proc/make_bubs(var/mob/living/carbon/human/M)
+		M.bioHolder.AddEffect("fat")
+		M.bioHolder.AddEffect("strong")
+		M.bioHolder.AddEffect("mattereater")
+		M.Scale(1.15, 1.15) //Fat bioeffect wont work, so they're just bigger now.
+		M.max_health += 75
+		M.health = max(M.max_health, M.health)
+
+	proc/make_spitter(var/mob/living/carbon/human/M)
+		M.max_health -= 45
+		M.health = max(M.max_health, M.health)
+		M.Scale(1, 0.9)
+		M.add_sm_light("glowy", list(94, 209, 31, 175))
+		M.bioHolder.AddEffect("shoot_limb")
+		M.bioHolder.AddEffect("acid_bigpuke")
+
+	onLife(var/mult = 1)
+		..()
+
+		mob.HealDamage("All", 2*mult, 2*mult)
+		if (strain == 1)
+			mob.HealDamage("All", 1*mult, 1*mult)
+		else if (strain == 2 && prob(5))//spitter, then regrow their arms possibly
+			mob.limbs.mend(1)
 
 	disposing()
 		if (ishuman(mob))

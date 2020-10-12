@@ -273,7 +273,10 @@
 			return
 
 		if (!l_arm && howmany > 0)
-			l_arm = new /obj/item/parts/human_parts/arm/left(holder)
+			if (holder?.mutantrace.l_limb_arm_type_mutantrace)
+				l_arm = new holder.mutantrace.l_limb_arm_type_mutantrace(holder)
+			else
+				l_arm = new /obj/item/parts/human_parts/arm/left(holder)
 			l_arm.holder = holder
 			boutput(holder, "<span class='notice'>Your left arm regrows!</span>")
 			l_arm:original_holder = holder
@@ -282,7 +285,10 @@
 			howmany--
 
 		if (!r_arm && howmany > 0)
-			r_arm = new /obj/item/parts/human_parts/arm/right(holder)
+			if (holder?.mutantrace.r_limb_arm_type_mutantrace)
+				r_arm = new holder.mutantrace.r_limb_arm_type_mutantrace(holder)
+			else
+				r_arm = new /obj/item/parts/human_parts/arm/right(holder)
 			r_arm.holder = holder
 			boutput(holder, "<span class='notice'>Your right arm regrows!</span>")
 			r_arm:original_holder = holder
@@ -291,7 +297,10 @@
 			howmany--
 
 		if (!l_leg && howmany > 0)
-			l_leg = new /obj/item/parts/human_parts/leg/left(holder)
+			if (holder?.mutantrace.l_limb_leg_type_mutantrace)
+				l_leg = new holder.mutantrace.l_limb_leg_type_mutantrace(holder)
+			else
+				l_leg = new /obj/item/parts/human_parts/leg/left(holder)
 			l_leg.holder = holder
 			boutput(holder, "<span class='notice'>Your left leg regrows!</span>")
 			l_leg:original_holder = holder
@@ -299,6 +308,10 @@
 			howmany--
 
 		if (!r_leg && howmany > 0)
+			if (holder?.mutantrace.r_limb_leg_type_mutantrace)
+				r_leg = new holder.mutantrace.r_limb_leg_type_mutantrace(holder)
+			else
+				r_leg = new /obj/item/parts/human_parts/leg/right(holder)
 			r_leg = new /obj/item/parts/human_parts/leg/right(holder)
 			r_leg.holder = holder
 			boutput(holder, "<span class='notice'>Your right leg regrows!</span>")
@@ -2800,6 +2813,14 @@
 			&& (src.shoes && istype(src.shoes,/obj/item/clothing/shoes/cleats)) \
 			&& (src.w_uniform && istype(src.w_uniform,/obj/item/clothing/under/football)) )
 		src.tackle(AM)
+#ifdef HALLOWEEN
+	//only let fat zombies push people during halloween
+	if (istype(src.mutantrace, /datum/mutantrace/zombie) )
+		var/datum/mutantrace/zombie/Z = src.mutantrace
+		if (Z.strain == 1)
+			..()
+#endif
+
 	..()
 
 /mob/living/carbon/human/get_special_language(var/secure_mode)
