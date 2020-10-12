@@ -37,6 +37,9 @@
 		boutput(src,"<span class='alert'>You can't suicide. You're already in hell!</span>")
 		return
 
+	if(src.is_zombie)
+		boutput(src,"<span class='alert'>You can't suicide. Brains...</span>")
+		return
 
 	if (!ticker)
 		boutput(src, "You can't commit suicide before the game starts!")
