@@ -17,7 +17,7 @@
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
 	icon_state = "space"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	see_face = 0.0
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
@@ -326,7 +326,7 @@
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"
 	icon_state = "swat"
-	c_flags = COVERSEYES
+	c_flags = COVERSEYES | BLOCKCHOKE
 	item_state = "swat_hel"
 	setupProperties()
 		..()
@@ -335,7 +335,7 @@
 /obj/item/clothing/head/helmet/turd
 	name = "T.U.R.D.S. helmet"
 	icon_state = "turdhelm"
-	c_flags = COVERSEYES
+	c_flags = COVERSEYES | BLOCKCHOKE
 	item_state = "turdhelm"
 	setupProperties()
 		..()
@@ -344,7 +344,7 @@
 /obj/item/clothing/head/helmet/thunderdome
 	name = "Thunderdome helmet"
 	icon_state = "thunderdome"
-	c_flags = COVERSEYES
+	c_flags = COVERSEYES | BLOCKCHOKE
 	item_state = "tdhelm"
 	setupProperties()
 		..()
@@ -391,14 +391,14 @@
 			qdel(T)
 			qdel(src)
 			return
-		else 
+		else
 			..()
 
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"
 	icon_state = "helmet-sec"
 	uses_multiple_icon_states = 1
-	c_flags = COVERSEYES
+	c_flags = COVERSEYES | BLOCKCHOKE
 	item_state = "helmet"
 	desc = "Somewhat protects your head from being bashed in."
 	protective_temperature = 500
@@ -437,7 +437,7 @@
 	name = "elite helmet"
 	icon_state = "helmet-sec-elite"
 	desc = "Better protection from getting your head bashed in."
-	c_flags = COVERSEYES | COVERSMOUTH
+	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	seal_hair = 1
 	item_state = "helmet-sec-elite"
 
@@ -492,7 +492,7 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye. Can be flipped up for clearer vision."
 	icon_state = "welding"
-	c_flags = SPACEWEAR | COVERSEYES
+	c_flags = SPACEWEAR | COVERSEYES | BLOCKCHOKE
 	see_face = 0.0
 	item_state = "welding"
 	protective_temperature = 1300
@@ -506,14 +506,16 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 2)
+		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
 	proc/flip_down()
-		setProperty("meleeprot_head", 2)
+		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
+		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
 	proc/flip_up()
+		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
 
@@ -525,7 +527,7 @@
 	desc = "A thick head cover made of layers upon layers of space kevlar."
 	icon_state = "EOD"
 	item_state = "tdhelm"
-	c_flags = COVERSEYES
+	c_flags = COVERSEYES | BLOCKCHOKE
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 9)
@@ -537,7 +539,7 @@
 	icon_state = "hoscap"
 	uses_multiple_icon_states = 1
 	item_state = "hoscap"
-	c_flags = SPACEWEAR | COVERSEYES
+	c_flags = SPACEWEAR | COVERSEYES | BLOCKCHOKE
 	var/is_a_communist = 0
 	var/folds = 0
 	desc = "Actually, you got this hat from a fast-food restaurant, that's why it folds like it was made of paper."
@@ -631,6 +633,7 @@
 	color_r = 0.7
 	color_g = 0.7
 	color_b = 0.8
+	c_flags = BLOCKCHOKE
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 10)
@@ -642,7 +645,7 @@
 	desc = "Security has the constitutionality of a vending machine."
 	icon_state = "nthelm"
 	item_state = "nthelm"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	see_face = 0.0
 	setupProperties()
 		..()
@@ -651,6 +654,7 @@
 
 /obj/item/clothing/head/helmet/space/industrial
 	mats = 7
+	c_flags = BLOCKCHOKE
 #ifdef UNDERWATER_MAP
 	icon_state = "diving_suit-industrial"
 	item_state = "diving_suit-industrial"
@@ -684,6 +688,7 @@
 	icon_state = "mining_combat"
 	item_state = "mining_combat"
 	mats = 10
+	c_flags = BLOCKCHOKE
 
 	setupProperties()
 		..()
@@ -698,6 +703,7 @@
 	icon_state = "buckethelm"
 	item_state = "buckethelm"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	c_flags = BLOCKCHOKE
 
 	setupProperties()
 		..()
@@ -768,7 +774,7 @@
 /obj/item/clothing/head/helmet/firefighter
 	name = "firefighter helm"
 	desc = "For fighting fires."
-	c_flags = COVERSEYES
+	c_flags = COVERSEYES | BLOCKCHOKE
 	icon_state = "firefighter"
 	item_state = "firefighter"
 	seal_hair = 1

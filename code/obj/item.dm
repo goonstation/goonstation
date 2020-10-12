@@ -166,8 +166,7 @@
 					for(var/datum/objectProperty/P in B.properties)
 						if(!P.hidden)
 							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
-			for (var/datum/component/C in src.GetComponents(/datum/component/itemblock))
-				. += jointext(C.getTooltipDesc(), "")
+			SEND_SIGNAL(src, COMSIG_TOOLTIP_BLOCKING_APPEND, .)
 		else if(src.c_flags & BLOCK_TOOLTIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
 
@@ -1086,7 +1085,7 @@
 		oldloc_sfx = oldloc.loc
 	if (src in bible_contents)
 		bible_contents.Remove(src) // UNF
-		for (var/obj/item/storage/bible/bible in by_type[/obj/item/storage/bible])
+		for_by_tcl(bible, /obj/item/storage/bible)
 			bible.hud.remove_item(src)
 	user.put_in_hand_or_drop(src)
 
@@ -1199,12 +1198,6 @@
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
-	if (can_disarm)
-		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
-	else
-		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"
-		msgs.visible_message_target(user.item_attack_message(M, src, hit_area, msgs.stamina_crit))
-
 	msgs.played_sound = src.hitsound
 
 	var/power = src.force + src.getProperty("searing")
@@ -1251,7 +1244,31 @@
 	if(user.is_hulk())
 		power *= 1.5
 
+	var/pre_armor_power = power
 	power -= armor_mod
+
+	var/armor_blocked = 0
+
+	if(pre_armor_power > 0 && power/pre_armor_power <= 0.66)
+		block_spark(M,armor=1)
+		switch(hit_type)
+			if (DAMAGE_BLUNT)
+				playsound(get_turf(M), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
+			if (DAMAGE_CUT)
+				playsound(get_turf(M), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1, pitch=1.5)
+			if (DAMAGE_STAB)
+				playsound(get_turf(M), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1, pitch=1.5)
+			if (DAMAGE_BURN)
+				playsound(get_turf(M), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1, pitch=1.5)
+		if(power <= 0)
+			fuckup_attack_particle(user)
+			armor_blocked = 1
+
+	if (can_disarm)
+		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
+	else
+		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"
+		msgs.visible_message_target(user.item_attack_message(M, src, hit_area, msgs.stamina_crit, armor_blocked))
 
 	if (w_class > STAMINA_MIN_WEIGHT_CLASS)
 		var/stam_power = stamina_damage

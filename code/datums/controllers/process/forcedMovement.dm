@@ -35,8 +35,7 @@ datum/controller/process/fMove
 
 	doWork()
 		//space first :)
-		for(var/A in spacePushList)
-			var/atom/movable/M = A
+		for (var/atom/movable/M as() in spacePushList)
 			if(!M)
 				continue
 
@@ -146,8 +145,7 @@ datum/controller/process/fMove
 		//now manta!
 		debugPushList = mantaPushList
 		if(mantaMoving == 1)
-			for(var/A in mantaPushList)
-				var/atom/movable/M = A
+			for (var/atom/movable/M as() in mantaPushList)
 				if(!M)
 					continue
 

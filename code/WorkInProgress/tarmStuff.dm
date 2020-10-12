@@ -1,17 +1,103 @@
 //GUNS GUNS GUNS
-/obj/item/gun/kinetic/light_machine_gun/fullauto
-	name = "M91 machine gun"
-	desc = "Looks pretty heavy to me. Hold shift to begin automatic fire!"
-	icon = 'icons/obj/64x32.dmi'
-	slowdown = 0
-	var/shooting = 0
-	var/turf/target = null
+/obj/item/gun/kinetic/g11
+	name = "\improper Manticore assault rifle"
+	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
+	icon = 'icons/obj/48x32.dmi'
+	icon_state = "g11"
+	item_state = "g11"
+	has_empty_state = 1
+	var/shotcount = 0
+	var/last_shot_time = 0
+	uses_multiple_icon_states = 1
+	force = 15.0
+	contraband = 8
+	caliber = 0.185
+	max_ammo_capacity = 45
+	can_dual_wield = 0
+	two_handed = 1
+	var/datum/projectile/bullet/g11/small/smallproj = new
 
 	New()
-		..()
-		ammo.amount_left=1000
-		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
+		current_projectile = new/datum/projectile/bullet/g11
+		ammo = new/obj/item/ammo/bullets/g11
+		. = ..()
 
+	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+		spread_angle = max(0, shoot_delay*2+last_shot_time-TIME)*0.4
+		shotcount = 0
+		. = ..(target, start, user, POX+rand(-spread_angle, spread_angle)*16, POY+rand(-spread_angle, spread_angle)*16)
+		last_shot_time = TIME
+
+	shoot_point_blank(mob/M, mob/user, second_shot)
+		shotcount = 0
+		. = ..()
+
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		if(++shotcount < 3)
+			P.proj_data = smallproj
+
+/obj/item/ammo/bullets/g11
+	sname = "\improper Manticore rounds" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
+	name = "\improper Manticore magazine"
+	desc = "The side of the magazine is stamped with \"Anderson Para-Munitions\""
+	ammo_type = new/datum/projectile/bullet/g11
+	icon_state = "caseless"
+	amount_left = 45.0
+	max_amount = 45.0
+	caliber = 0.185
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	icon_empty = "caseless-empty"
+
+	blast
+		icon_state = "caseless_grey"
+		ammo_type = new/datum/projectile/bullet/g11/blast
+
+	void
+		icon_state = "caseless_purple"
+		ammo_type = new/datum/projectile/bullet/g11/void
+
+/datum/projectile/bullet/g11
+	name = "\improper Manticore round"
+	cost = 3
+	power = 60
+	ks_ratio = 1.0
+	hit_ground_chance = 100
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	shot_number = 3
+	shot_delay = 0.4
+	shot_sound = 'sound/weapons/gunshot.ogg'
+	shot_volume = 66
+	caliber = 0.185
+	dissipation_delay = 10
+	dissipation_rate = 5
+	icon_turf_hit = "bhole-small"
+
+	small
+		shot_sound = 'sound/weapons/9x19NATO.ogg'
+		shot_volume = 50
+		power = 15
+
+	void
+		power = 30
+		on_hit(atom/hit, angle, obj/projectile/O)
+			var/turf/T = get_turf(hit)
+			new/obj/decal/implo(T)
+			playsound(T, 'sound/effects/suck.ogg', 100, 1)
+			var/spamcheck = 0
+			for(var/atom/movable/AM in view(2, T))
+				if(AM.anchored || AM == hit || AM.throwing) continue
+				if(spamcheck++ > 20) break
+				AM.throw_at(T, 20, 1)
+			..()
+
+	blast
+		power = 15
+		damage_type = D_KINETIC
+		hit_type = DAMAGE_BLUNT
+		on_hit(atom/hit, angle, obj/projectile/O)
+			explosion_new(O, get_turf(hit), 2)
 
 /mob/living/proc/betterdir()
 	return ((src.dir in ordinal) || (src.last_move_dir in cardinal)) ? src.dir : src.last_move_dir
@@ -76,9 +162,8 @@
 
 
 /obj/item/gun/kinetic/pistol/autoaim
-	name = "aimbot pistol"
-	silenced = 1
-
+	name = "\improper Catoblepas pistol"
+	desc = "A semi-smart pistol with moderate aim-correction. The manufacterer markings read \"Anderson Para-Munitions\"."
 	shoot(target, start, mob/user, POX, POY) //checks clicked turf first, so you can choose a target if need be
 		for(var/mob/M in range(2, target))
 			if(M == user || istype(M.get_id(), /obj/item/card/id/syndicate)) continue
@@ -87,8 +172,10 @@
 		..()
 
 /obj/item/gun/kinetic/pistol/smart
-	name = "smart pistol"
+	name = "\improper Hydra smart pistol"
+	desc = "A silenced pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
 	silenced = 1
+	max_ammo_capacity = 30
 	New()
 		..()
 		ammo.amount_left = 30
@@ -153,7 +240,7 @@
 			if(!G || !(user?.client.check_key(KEY_RUN)))
 				targetting = 0
 				break
-			if(IN_RANGE(user, M, 7) && in_cone_of_vision(user, M) && !(targets[M] >= maxlocks || istype(M.get_id(), /obj/item/card/id/syndicate)) && shotcount < checkshots(G))
+			if(IN_RANGE(user, M, 7) && isliving(M) && in_cone_of_vision(user, M) && !(targets[M] >= maxlocks || istype(M.get_id(), /obj/item/card/id/syndicate)) && shotcount < checkshots(G))
 				targets[M] = targets[M] ? targets[M] + 1 : 1
 				ding = 1
 				shotcount++
@@ -174,8 +261,8 @@
 	else return G.canshoot() * INFINITY //idk, just let it happen
 
 /obj/item/gun/kinetic/gyrojet
-	name = "gyrojet pistol"
-	desc = "A semi-automatic pistol that fires rocket-propelled bullets"
+	name = "Amaethon gyrojet pistol"
+	desc = "A semi-automatic handgun that fires rocket-propelled bullets, developed by Mabinogi Firearms Company."
 	icon_state = "gyrojet"
 	item_state = "gyrojet"
 	caliber = 0.512
@@ -204,7 +291,8 @@
 	power = 10
 	precalculated = 0
 	caliber = 0.512
-	shot_volume = 2
+	shot_volume = 100
+	shot_sound = 'sound/weapons/gyrojet.ogg'
 	ks_ratio = 1
 	icon_turf_hit = "bhole-small"
 
@@ -212,19 +300,19 @@
 		O.internal_speed = projectile_speed
 
 	tick(obj/projectile/O)
-		O.internal_speed = min(O.internal_speed * 1.15, 56)
+		O.internal_speed = min(O.internal_speed * 1.25, 56)
 
 	get_power(obj/projectile/P, atom/A)
 		return 10 + P.internal_speed
 
 //desert eagle. The biggest, baddest handgun
 /obj/item/gun/kinetic/deagle
-	name = "\improper Desert Eagle"
-	desc = "The heaviest handgun you've ever seen. Is this legal?"
+	name = "\improper Simurgh heavy pistol"
+	desc = "The heaviest handgun you've ever seen. The grip is stamped \"Anderson Para-Munitions\""
 	icon_state = "deag"
 	item_state = "deag"
-	force = 12.0 //mmm, pistol whip
-	throwforce = 30 //HEAVY pistol
+	force = 18.0 //mmm, pistol whip
+	throwforce = 50 //HEAVY pistol
 	auto_eject = 1
 	max_ammo_capacity = 7
 	caliber = list(0.50, 0.41, 0.357, 0.38) //the omnihandgun
@@ -246,7 +334,7 @@
 //.50AE deagle ammo
 /obj/item/ammo/bullets/deagle50cal
 	sname = "0.50 AE"
-	name = "desert eagle magazine"
+	name = "\improper Simurgh magazine"
 	icon_state = "pistol_magazine"
 	amount_left = 7.0
 	max_amount = 7.0
@@ -431,3 +519,46 @@ obj/item/gun/reagent/syringe/lovefilled
 		M.reagents?.add_reagent("love", 20)
 		boutput(M, "<span class='notice'>You feel loved</span>")
 		loved += M
+
+
+
+#define colorcable(_color, _hexcolor)\
+/obj/item/cable_coil/colored/_color;\
+/obj/item/cable_coil/colored/_color/name = ""+#_color+"-colored cable coil";\
+/obj/item/cable_coil/colored/_color/base_name = ""+#_color+"-colored cable coil";\
+/obj/item/cable_coil/colored/_color/stack_type = /obj/item/cable_coil/colored/_color;\
+/obj/item/cable_coil/colored/_color/spawn_insulator_name = ""+#_color+"rubber";\
+/obj/item/cable_coil/colored/_color/cable_obj_type = /obj/cable/colored/_color;\
+/obj/item/cable_coil/colored/_color/cut;\
+/obj/item/cable_coil/colored/_color/cut/icon_state = "coil2";\
+/obj/item/cable_coil/colored/_color/cut/New(loc, length)\
+{if (length){..(loc, length)};else{..(loc, rand(1,2))};}\
+/obj/item/cable_coil/colored/_color/cut/small;\
+/obj/item/cable_coil/colored/_color/cut/small/New(loc, length){..(loc, rand(1,5))};\
+/obj/cable/colored/_color;\
+/obj/cable/colored/_color/name = ""+#_color+"-colored power cable";\
+/obj/cable/colored/_color/color = _hexcolor;\
+/obj/cable/colored/_color/insulator_default = ""+#_color+"rubber";\
+/datum/material/fabric/synthrubber/colored/_color;\
+/datum/material/fabric/synthrubber/colored/_color/mat_id = ""+#_color+"rubber";\
+/datum/material/fabric/synthrubber/colored/_color/name = ""+#_color+"rubber";\
+/datum/material/fabric/synthrubber/colored/_color/desc = ""+"A type of synthetic rubber. This one is "+#_color+".";\
+/datum/material/fabric/synthrubber/colored/_color/color = _hexcolor;\
+/obj/item/storage/box/cablesbox/colored/_color;\
+/obj/item/storage/box/cablesbox/colored/_color/name = ""+"electrical cables storage ("+#_color+")";\
+/obj/item/storage/box/cablesbox/colored/_color/spawn_contents = list(/obj/item/cable_coil/colored/_color = 7);\
+/datum/supply_packs/electrical/_color;\
+/datum/supply_packs/electrical/_color/name = ""+"Electrical Supplies Crate ("+#_color+") - 2 pack";\
+/datum/supply_packs/electrical/_color/desc = ""+"x2 Cabling Box - "+#_color+" (14 cable coils total)";\
+/datum/supply_packs/electrical/_color/contains = list(/obj/item/storage/box/cablesbox/colored/_color = 2);\
+/datum/supply_packs/electrical/_color/containername = ""+"Electrical Supplies Crate ("+#_color+")- 2 pack"
+
+colorcable(yellow, "#EED202")
+colorcable(orange, "#C46210")
+colorcable(blue, "#72A0C1")
+colorcable(green, "#00AD83")
+colorcable(purple, "#9370DB")
+colorcable(black, "#414A4C")
+colorcable(hotpink, "#FF69B4")
+colorcable(brown, "#832A0D")
+colorcable(white, "#EDEAE0")

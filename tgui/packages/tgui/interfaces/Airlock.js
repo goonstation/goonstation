@@ -7,7 +7,8 @@
 
 import { Fragment } from "inferno";
 import { useBackend, useLocalState } from "../backend";
-import { Button, LabeledList, Section, Modal, Flex, Tabs, Box, NoticeBox, Divider } from "../components";
+import { truncate } from '../format';
+import { Button, LabeledList, Section, Modal, Flex, Tabs, Box, NoticeBox, Divider, ProgressBar } from "../components";
 import { Window } from "../layouts";
 
 export const uiCurrentUserPermissions = data => {
@@ -25,10 +26,9 @@ export const uiCurrentUserPermissions = data => {
     */
     accessPanel: (
       (userStates.isBorg && userStates.distance <= 1
-        && panelOpen) || (userStates.isCarbon)
+        && panelOpen) || (panelOpen && !userStates.isBorg && !userStates.isAi)
     ),
   };
-
 };
 
 export const Airlock = (props, context) => {
@@ -36,12 +36,22 @@ export const Airlock = (props, context) => {
   const userPerms = uiCurrentUserPermissions(data);
   //  We render 3 different interfaces so we can change the window sizes
   return (
-    <Window>
+    <Window
+      theme="ntos">
       <Window.Content>
-        {(userPerms["airlock"] && userPerms["accessPanel"])
+        {(!userPerms["airlock"] && !userPerms["accessPanel"]) && (
+          <Modal
+            textAlign="center"
+            fontSize="24px">
+            <Box width={25} height={5} align="center">
+              Access Panel is Closed
+            </Box>
+          </Modal>
+        )}
+        {(!!userPerms["airlock"] && !!userPerms["accessPanel"])
           && <AirlockAndAccessPanel />
-          || userPerms["airlock"] && <AirlockControlsOnly />
-          || userPerms["accessPanel"] && <AccessPanelOnly />}
+          || !!userPerms["airlock"] && <AirlockControlsOnly />
+          || !!userPerms["accessPanel"] && <AccessPanelOnly />}
       </Window.Content>
     </Window>
   );
@@ -64,8 +74,7 @@ const AirlockAndAccessPanel = (props, context) => {
     <Window
       width={354}
       height={495}
-      theme="ntos"
-      title={`Airlock - ${name}`}>
+      title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         <Tabs>
           <Tabs.Tab
@@ -127,26 +136,23 @@ const AirlockControlsOnly = (props, context) => {
     <Window
       width={315}
       height={375}
-      theme="ntos"
-      title={`Airlock - ${name}`}>
+      title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
-        <Section fitted backgroundColor="transparent">
-          {(!canAiControl || !!noPower) && (
-            <Modal
-              textAlign="center"
-              fontSize="26px">
-              <Box width={20} height={5} algin="center">
-                {hackMessage ? hackMessage : "Airlock Controls Disabled"}
-              </Box>
-              {!!canAiHack && (
-                <Hack />
-              )}
-            </Modal>
-          )}
-          <PowerStatus />
-          <AccessAndDoorControl />
-          <Electrify />
-        </Section>
+        {(!canAiControl || !!noPower) && (
+          <Modal
+            textAlign="center"
+            fontSize="26px">
+            <Box width={20} height={5} algin="center">
+              {hackMessage ? hackMessage : "Airlock Controls Disabled"}
+            </Box>
+            {!!canAiHack && (
+              <Hack />
+            )}
+          </Modal>
+        )}
+        <PowerStatus />
+        <AccessAndDoorControl />
+        <Electrify />
       </Window.Content>
     </Window>
   );
@@ -162,8 +168,7 @@ const AccessPanelOnly = (props, context) => {
     <Window
       width={354}
       height={460}
-      theme="ntos"
-      title={`Airlock - ${name}`}>
+      title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         <AccessPanel />
       </Window.Content>
@@ -357,7 +362,7 @@ const Electrify = (props, context) => {
                 content="Temporary"
                 confirmContent="Are you sure?"
                 icon="bolt"
-                disabled={(!wires.shock) || shockTimeLeft === -1
+                disabled={(!wires.shock)
                 || (mainTimeLeft && backupTimeLeft)}
                 onClick={(() => act("shockTemp"))} />
             ))}
@@ -385,30 +390,37 @@ const Hack = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     aiHacking,
+    hackingProgression,
   } = data;
 
   return (
     <Box
       fitted py={0.5} pt={2}
       align="center">
-      <Button
-        style={{
-          "font-family": "monospace",
-          "border-width": "base.em(2px)",
-          "border-style": "outset",
-          "border-color": "#00AA00",
-          "outline": "base.em(1px) solid rgb(0, 122, 0)",
-        }}
-        backgroundColor="#00ff00"
-        bold
-        textColor="black"
-        fontSize="29px"
-        disabled={aiHacking}
-        textAlign="center"
-        width={16}
-        onClick={() => act("hackAirlock")}>
-        {aiHacking ? "Hacking..." : "HACK"}
-      </Button>
+      {!aiHacking && (
+        <Button
+          className="Airlock-hack-button"
+          fontSize="29px"
+          backgroundColor="#00FF00"
+          disabled={aiHacking}
+          textColor="black"
+          textAlign="center"
+          width={16}
+          onClick={() => act("hackAirlock")}>
+          HACK
+        </Button>
+      )}
+      {!!aiHacking && (
+        <ProgressBar
+          ranges={{
+            good: [6, Infinity],
+            average: [2, 5],
+            bad: [-Infinity, 1],
+          }}
+          minValue={0}
+          maxValue={6}
+          value={hackingProgression} />
+      )}
     </Box>
   );
 };
@@ -473,7 +485,7 @@ export const AccessPanel = (props, context) => {
                       icon="broadcast-tower"
                       width={10.5}
                       className="AccessPanel-wires-btn"
-                      color={!(signalers[i]) ? "default" : "average"}
+                      selected={(signalers[i])}
                       onClick={() => handleWireInteract(i, "signaler")}>
                       {!(signalers[i]) ? "Attach Signaler" : "Detach Signaler"}
                     </Button>

@@ -42,7 +42,7 @@
 		var/turf/my_turf = get_turf(src)
 		if (my_turf)
 			var/obj/fluid/F = my_turf.active_airborne_liquid
-			if (F && F.group) //ZeWaka: Fix for null.group
+			if (F?.group) //ZeWaka: Fix for null.group
 				F.group.queued_drains += rand(drain_min,drain_max)
 				F.group.last_drain = my_turf
 				if (!F.group.draining)
@@ -79,7 +79,8 @@
 			filtered_out.nitrogen = 0
 
 			if(length(removed.trace_gases))
-				for(var/datum/gas/trace_gas in removed.trace_gases)
+				for(var/G in removed.trace_gases)
+					var/datum/gas/trace_gas = G
 //					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
 					removed.trace_gases -= trace_gas
 					if(!removed.trace_gases.len)

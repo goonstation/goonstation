@@ -178,7 +178,7 @@
 	if (R)
 		rad_data = "&emsp;<span class='alert'>Radiation poisoning: Lv [R.stage]</span>"
 	if (NR)
-		nrad_data = "&emsp;<span class='notice'>Neutron Radiation poisoning: Lv [NR.stage]</span>"
+		nrad_data = "&emsp;<span class='alert'>Neutron Radiation poisoning: Lv [NR.stage]</span>"
 	for (var/datum/ailment_data/A in M.ailments)
 		if (disease_detection >= A.detectability)
 			disease_data += "<br>[A.scan_info()]"
@@ -535,6 +535,8 @@
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
 /proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0)
+	if (istype(A, /obj/ability_button))
+		return
 	if (!A)
 		if (pda_readout == 1)
 			return "Unable to obtain a reading."

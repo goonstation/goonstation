@@ -161,11 +161,9 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom in stomach_process)
-		var/atom/A = atom
+	for (var/atom/A as() in stomach_process)
 		qdel(A)
-	for (var/atom in skin_process)
-		var/atom/A = atom
+	for (var/atom/A as() in skin_process)
 		qdel(A)
 	stomach_process = null
 	skin_process = null
@@ -429,8 +427,13 @@
 /mob/living/Click(location,control,params)
 	if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
 		var/mob/dead/observer/O = usr
+#ifdef HALLOWEEN
+		//when spooking, clicking on a mob doesn't put us in them.
+		var/datum/abilityHolder/ghost_observer/GH = O:abilityHolder
+		if (GH.spooking)
+			return ..()
+#endif
 		O.insert_observer(src)
-
 	else return ..()
 
 /mob/living/click(atom/target, params, location, control)
@@ -1097,8 +1100,7 @@
 // helper proooocs
 
 /mob/proc/send_hear_talks(var/message_range, var/messages, var/heardname, var/lang_id)	//helper to send hear_talk to all mob, obj, and turf
-	for (var/thing in all_view(message_range, src))
-		var/atom/A = thing
+	for (var/atom/A as() in all_view(message_range, src))
 		A.hear_talk(src,messages,heardname,lang_id)
 
 /mob/proc/get_heard_name()

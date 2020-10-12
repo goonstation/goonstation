@@ -170,6 +170,9 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 			if(!(T in crossed)) crossed.Add(T)
 	return crossed
 
+/**
+	* Returns the angle between two given atoms
+	*/
 proc/get_angle(atom/a, atom/b)
     .= arctan(b.y - a.y, b.x - a.x)
 
@@ -450,6 +453,9 @@ proc/get_angle(atom/a, atom/b)
 	if(start)
 		. = findtext(text, suffix, start, null) //was findtextEx
 
+/**
+	* Given a list, returns a text string representation of the list's contents.
+	*/
 /proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
 	var/total = input.len
 	if (!total)
@@ -493,6 +499,9 @@ proc/get_angle(atom/a, atom/b)
 	else
 		.= copytext(message, 1, length + 1)
 
+/**
+	* Returns the given degree converted to a text string in the form of a direction
+	*/
 /proc/angle2text(var/degree)
 	. = dir2text(angle2dir(degree))
 
@@ -634,30 +643,21 @@ proc/get_angle(atom/a, atom/b)
 				break
 			. += T
 
-
+/**
+	* Returns true if the given key is a guest key
+	*/
 /proc/IsGuestKey(key)
 	//Wire note: This seems like it would work just fine and is a whole bunch shorter
 	return copytext(key, 1, 7) == "Guest-"
 
-	/*
-	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
-		return 0
 
-	var/i, ch, len = length(key)
-
-	for (i = 7, i <= len, ++i)
-		ch = text2ascii(key, i)
-		if (ch != 87 && (ch < 48 || ch > 57)) // 87 is W for webclients... spec changed.
-			return 0
-
-	return 1
+/**
+	* Returns f, ensured that it's a valid frequency
 	*/
-
 /proc/sanitize_frequency(var/f)
 	. = round(f)
-	. = max(R_FREQ_MINIMUM, .) // 144.1
-	. = min(R_FREQ_MAXIMUM, .) // 148.9
-	. |= 1
+	. = clamp(., R_FREQ_MINIMUM, R_FREQ_MAXIMUM) // 144.1 -148.9
+	. |= 1 // enforces the number being odd (rightmost bit being 1)
 
 /proc/format_frequency(var/f)
 	. = "[round(f / 10)].[f % 10]"
@@ -665,7 +665,7 @@ proc/get_angle(atom/a, atom/b)
 /proc/sortmobs()
 
 	var/list/mob_list = list()
-	for(var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
+	for_by_tcl(M, /mob/living/silicon/ai)
 		mob_list.Add(M)
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/dead/aieye/M in mobs)
@@ -1246,8 +1246,7 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_viewers(var/range,var/centre)
 	. = list()
-	for(var/thing in viewers(range,centre))
-		var/atom/A = thing
+	for (var/atom/A as() in viewers(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
@@ -1256,8 +1255,7 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_range(var/range,var/centre) //above two are blocked by opaque objects
 	. = list()
-	for(var/thing in range(range,centre))
-		var/atom/A = thing
+	for (var/atom/A as() in range(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
@@ -1446,8 +1444,7 @@ var/list/hex_chars = list("0","1","2","3","4","5","6","7","8","9","A","B","C","D
 var/list/all_functional_reagent_ids = list()
 
 proc/get_all_functional_reagent_ids()
-	for (var/X in concrete_typesof(/datum/reagent))
-		var/datum/reagent/R = X
+	for (var/datum/reagent/R as() in concrete_typesof(/datum/reagent))
 		all_functional_reagent_ids += initial(R.id)
 
 proc/reagent_id_to_name(var/reagent_id)
@@ -2372,16 +2369,15 @@ proc/getClientFromCkey(ckey)
 	return C
 
 /**
-  * Returns true if a given atom is within a given holder's contents
-  */
-/atom/proc/isInContents(var/atom/item, var/atom/holder)
-	//boutput(holder.contents)
-	for(var/atom/content in holder.contents)
-		if(content == item)
-			return true
-		if(isInContents(item,content))
-			return true
-	return false
+	* Returns true if the given atom is within src's contents (deeply/recursively)
+	*/
+/atom/proc/contains(var/atom/A)
+	. = FALSE
+	if(!A)
+		return FALSE
+	for(var/atom/found = A.loc, found, found = found.loc)
+		if(found == src)
+			return TRUE
 
 /**
   * Returns the vector magnitude of an x value and a y value
@@ -2453,10 +2449,11 @@ proc/angle_to_vector(ang)
 
 /**
   * Removes non-whitelisted reagents from the reagents of TA
-  * user: the mob that adds a reagent to an atom that has a reagent whitelist
-  * TA: Target Atom. The thing that the user is adding the reagent to
+	*
+  * * user: the mob that adds a reagent to an atom that has a reagent whitelist
+	*
+  * * TA: Target Atom. The thing that the user is adding the reagent to
   */
-
 proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/custom_message = "")
 	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !whitelist.len))
 		return
@@ -2480,19 +2477,21 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 		else
 			TA.visible_message("[custom_message]")
 
-/proc/in_cone_of_vision(var/atom/seer, var/atom/target)
-	/*
-		This proc checks if one atom is in the cone of vision of
-		another one. It uses the following map grid for the check,
-		where each point is an integer coordinate and the seer is
-		at point X:
-			 	  *
-			 	* *
-	POV ->	X * * *
-				* *
-				  *
-		A '*' represents a point that is within X's FOV
+/**
+	*This proc checks if one atom is in the cone of vision of another one.
+	*
+	* It uses the following map grid for the check, where each point is an integer coordinate and the seer is at point X:
+	*	```
+	*					*
+	*				* *
+	*	POV ->	X * * *
+	*				* *
+	*					*
+	*	```
+	*
+	* A '*' represents a point that is within X's FOV
 	*/
+/proc/in_cone_of_vision(var/atom/seer, var/atom/target)
 	var/dir = get_dir(seer, target)
 	switch(dir)
 		if(NORTHEAST, SOUTHWEST)
@@ -2515,13 +2514,17 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 	return (seer.dir == dir)
 
 
-
+/**
+	* Linear interpolation
+	*/
 /proc/lerp(var/a, var/b, var/t)
 		return a * (1 - t) + b * t
 
 
 
-
+/**
+	* Returns the passed decisecond-format time in the form of a text string
+	*/
 proc/time_to_text(var/time)
 	. = list()
 
@@ -2557,7 +2560,7 @@ proc/inline_bicon(the_thing, height=32)
 	</span>"}
 
 
-//fucking clients.len doesnt work, filled with null values
+/// fucking clients.len doesnt work, filled with null values
 proc/total_clients()
 	.= 0
 	for (var/C in clients)
@@ -2584,9 +2587,9 @@ proc/client_has_cap_grace(var/client/C)
 		.= (player_cap_grace[C.ckey] > TIME)
 
 
-/*
-this proc finds the maximal subtype (i.e. the most subby) in a list of types
-*/
+/**
+	* Returns the maximal subtype (i.e. the most subby) in a list of given types
+	*/
 proc/maximal_subtype(var/list/L)
 	if (!(length(L)))
 		.= null

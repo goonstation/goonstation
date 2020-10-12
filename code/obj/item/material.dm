@@ -743,6 +743,10 @@
 		icon_state = "reclaimer-on"
 
 		for (var/obj/item/M in src.contents)
+			if (istype(M, /obj/item/wizard_crystal))
+				var/obj/item/wizard_crystal/wc = M
+				wc.setMaterial(getMaterial(wc.assoc_material),0,0,1,0)
+
 			if (!istype(M.material) || !(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL) && !(M.material.material_flags & MATERIAL_RUBBER))
 				M.set_loc(src.loc)
 				src.reject = 1
@@ -769,43 +773,11 @@
 				if (output_bar_from_item(M, 30, C.conductor.mat_id))
 					qdel(C)
 
-			/*else if (istype(M, /obj/item/wizard_crystal))
-				W.create_bar(src)
-				qdel(W)*/
+			else if (istype(M, /obj/item/wizard_crystal))
+				if (output_bar_from_item(M))
+					qdel(M)
 
 			sleep(smelt_interval)
-
-		/*var/list/cable_materials = list()
-		var/list/quality_sum = list()
-		for (var/obj/item/cable_coil/C in src.contents)
-			if (!(C.conductor.mat_id in cable_materials))
-				cable_materials += C.conductor.mat_id
-				cable_materials[C.conductor.mat_id] = 0
-				quality_sum += C.conductor.mat_id
-				quality_sum[C.conductor.mat_id] = 0
-			if (!(C.insulator.mat_id in cable_materials))
-				cable_materials += C.insulator.mat_id
-				cable_materials[C.insulator.mat_id] = 0
-				quality_sum += C.insulator.mat_id
-				quality_sum[C.insulator.mat_id] = 0
-			cable_materials[C.conductor.mat_id] += C.amount
-			quality_sum[C.conductor.mat_id] += C.amount * C.quality
-			cable_materials[C.insulator.mat_id] += C.amount
-			quality_sum[C.insulator.mat_id] += C.amount * C.quality
-			qdel(C)
-
-		var/bad_flag = 0
-		for (var/mat_id in cable_materials)
-			var/total = cable_materials[mat_id]
-			while(cable_materials[mat_id] >= 30)
-				output_bar_with_quality(quality_sum[mat_id] / total, mat_id)
-				cable_materials[mat_id] -= 30
-				sleep(smelt_interval)
-				if (cable_materials[mat_id] < 30)
-					bad_flag = 1
-
-		if (bad_flag)
-			src.visible_message("<b>[src]</b> emits a grumpy buzz.")*/
 
 		if (reject)
 			src.reject = 0
@@ -832,7 +804,7 @@
 			stack_amount = round(divide)
 			if (stack_amount != divide)
 				src.insufficient = 1
-				O.amount -= (stack_amount * amount_modifier)
+				O.change_stack_amount(-stack_amount * amount_modifier)
 				O.set_loc(src.loc)
 				if (!stack_amount)
 					return
@@ -869,7 +841,7 @@
 		playsound(src.loc, sound_process, 40, 1)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil))
+		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil) || istype(W,/obj/item/wizard_crystal))
 			boutput(user, "You load [W] into [src].")
 			W.set_loc(src)
 			user.u_equip(W)

@@ -112,8 +112,6 @@
 	if((!src.arePowerSystemsOn()) || (status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		boutput(user, "<span class='alert'>The door has no power - you can't open/close it.</span>")
 		return
-	if(!src.allowed(usr))
-		return
 	if(welded)
 		boutput(usr, text("<span class='alert'>The airlock has been welded shut!</span>"))
 	else if(locked)
@@ -194,6 +192,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/id = null
 	var/radiorange = AIRLOCK_CONTROL_RANGE
 	var/safety = 1
+	var/hackingProgression = 0
 	var/HTML = null
 	var/has_panel = 1
 	var/hackMessage = ""
@@ -1202,6 +1201,7 @@ About the new airlock wires panel:
 			//TODO: Make this take a minute
 			boutput(user, "<span class='notice'>Airlock AI control has been blocked. Beginning fault-detection.</span>")
 			hackMessage = "Fault Detection..."
+			hackingProgression = 1
 			tgui_process.update_uis(src)
 			sleep(5 SECONDS)
 			if (src.canAIControl())
@@ -1214,10 +1214,12 @@ About the new airlock wires panel:
 				return
 			boutput(user, "<span class='notice'>Fault confirmed: airlock control wire disabled or cut.</span>")
 			hackMessage = "Fault Confirmed..."
+			hackingProgression = 2
 			tgui_process.update_uis(src)
 			sleep(2 SECONDS)
 			boutput(user, "<span class='notice'>Attempting to hack into airlock. This may take some time.</span>")
 			hackMessage = "Hacking into airlock..."
+			hackingProgression = 3
 			tgui_process.update_uis(src)
 			sleep(20 SECONDS)
 			if (src.canAIControl())
@@ -1230,6 +1232,7 @@ About the new airlock wires panel:
 				return
 			boutput(user, "<span class='notice'>Upload access confirmed. Loading control program into airlock software.</span>")
 			hackMessage = "Uploading..."
+			hackingProgression = 4
 			tgui_process.update_uis(src)
 			sleep(17 SECONDS)
 			if (src.canAIControl())
@@ -1242,14 +1245,17 @@ About the new airlock wires panel:
 				return
 			boutput(user, "<span class='notice'>Transfer complete. Forcing airlock to execute program.</span>")
 			hackMessage = "Transfer complete"
+			hackingProgression = 5
 			tgui_process.update_uis(src)
 			sleep(5 SECONDS)
 			//disable blocked control
 			src.aiControlDisabled = 2
 			boutput(user, "<span class='notice'>Receiving control information from airlock.</span>")
 			hackMessage = "Receiving Information"
+			hackingProgression = 6
 			tgui_process.update_uis(src)
 			sleep(1 SECOND)
+			hackingProgression = 0
 			hackMessage = ""
 			tgui_process.update_uis(src)
 			//bring up airlock dialog
@@ -1463,8 +1469,7 @@ About the new airlock wires panel:
 	if (src.closeOtherId != null)
 		src.closeOtherId = ckeyEx(src.closeOtherId)
 		SPAWN_DBG (5)
-			for (var/X in by_type[/obj/machinery/door/airlock])
-				var/obj/machinery/door/airlock/A = X
+			for_by_tcl(A, /obj/machinery/door/airlock)
 				if (A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break
@@ -1760,6 +1765,7 @@ obj/machinery/door/airlock
 	data["canAiControl"] = canAIControl()
 	data["aiHacking"] = src.aiHacking
 	data["canAiHack"] = canAIHack()
+	data["hackingProgression"] = src.hackingProgression
 	data["hackMessage"] = hackMessage
 	data["aiControlVar"] = aiControlDisabled
 	data["noPower"] = (status & NOPOWER)

@@ -6,13 +6,21 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	var/points = 0
 	var/cur_meter_location = 0
 	var/last_meter_location = 0			//the amount of points at the last update. Used for deciding when to redraw the sprite to have less progress
-	var/net_points = list()				//assoc list of ckeys to their net points.
+	var/earned_points = list()				//assoc list of ckeys to their gained points.
+	var/spent_points = list()				//assoc list of ckeys to their spent points.
+	var/maxed_out = 0					//set to 1 if the points get up to MAX_POINTS so we can play the special event/thing
 
 	var/obj/screen/spooktober_meter/meter = new()
 
 	proc/change_points(var/ckey, var/added as num)
-		net_points[ckey] += added
+		if (added > 0)
+			earned_points[ckey] += added
+		else
+			spent_points[ckey] += added
 		src.points += added
+		if (src.points >= MAX_POINTS)
+			do_event()
+			
 
 	proc/update()
 
@@ -26,6 +34,13 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			meter.overlays += IB
 
 		last_meter_location = cur_meter_location
+
+	proc/do_event()
+		//Only 1 per round
+		if (maxed_out)
+			return
+		maxed_out = 1
+		
 
 /obj/screen/spooktober_meter
 	icon = 'icons/mob/spooktober_ghost_hud160x32.dmi'
@@ -61,6 +76,12 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		SPAWN_DBG(0)
 			abil.handleCast()
 
+#ifdef HALLOWEEN
+	//total hack here, but lazy and in a hurry. -Kyle
+	update_cooldown_cost()
+		owner?.holder.points = spooktober_GH.points
+		..()
+#endif
 /datum/abilityHolder/ghost_observer
 	usesPoints = 0
 	regenRate = 0
@@ -71,14 +92,18 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 #ifdef HALLOWEEN
 	usesPoints = 1
 	var/points_since_last_tick = 0		//resets every life tick, prevents you from getting more than 10 points a tick from spam nonsense.
+	var/spooking = 0		//if they're in their extra spooky form where they're visible and blurry.
 
 	proc/change_points(var/amt as num)
 		if (owner.client)
 			if (points_since_last_tick < 50)
+				var/k = 1
 				if (amt > 0)
 					points_since_last_tick += amt
+					k = 1 //3 //when ready with event.
 
-				spooktober_GH.change_points(owner.client.ckey, amt*3)
+				spooktober_GH.change_points(owner.client.ckey, amt*k)		//idk why I did this with the multiplying by a constant, but I'll keep it
+				src.points = spooktober_GH.points
 
 	pointCheck(cost)
 		// if (!usesPoints)
@@ -93,7 +118,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	deductPoints(cost)
 		..()
-		spooktober_GH.change_points(owner.client.ckey, -abs(cost))	//idk what format this comes in, I'll be safe
+		if (owner.client)
+			spooktober_GH.change_points(owner.client.ckey, -abs(cost))	//idk what format this comes in, I'll be safe
 
 
 #endif
@@ -139,6 +165,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.addAbility(/datum/targetable/ghost_observer/levitate_chair)
 		src.addAbility(/datum/targetable/ghost_observer/spooky_sounds)
 		src.addAbility(/datum/targetable/ghost_observer/summon_bat)
+		src.addAbility(/datum/targetable/ghost_observer/manifest)
 
 		src.addAbility(/datum/targetable/ghost_observer/spooktober_writing)
 #endif
@@ -163,10 +190,20 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.removeAbility(/datum/targetable/ghost_observer/levitate_chair)
 		src.removeAbility(/datum/targetable/ghost_observer/spooky_sounds)
 		src.removeAbility(/datum/targetable/ghost_observer/summon_bat)
+		src.removeAbility(/datum/targetable/ghost_observer/manifest)
 		src.removeAbility(/datum/targetable/ghost_observer/decorate)
 		src.removeAbility(/datum/targetable/ghost_observer/spooktober_writing)
 #endif
 		src.updateButtons()
+
+#ifdef HALLOWEEN
+
+/datum/abilityHolder/ghost_observer/proc/stop_spooking()
+	var/datum/targetable/ghost_observer/manifest/ability = getAbility(/datum/targetable/ghost_observer/manifest)
+	if (istype(ability))
+		ability.stop_spooking()
+
+#endif
 
 /datum/targetable/ghost_observer
 	cooldown = 0
@@ -519,7 +556,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	max_range = 0
 	cooldown = 10 MINUTES
 	start_on_cooldown = 1
-	pointCost = 30
 	special_screen_loc = "SOUTH,CENTER+2"
 	pointCost = 1000
 
@@ -536,5 +572,54 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			boutput(holder.owner, "<span class='alert'>You call forth a bat!</span>")
 		else
 			boutput(holder.owner, "<span class='alert'>You can't put a bat there!</span>")
+
+/datum/targetable/ghost_observer/manifest
+	name = "Manifest"
+	desc = "Push yourself more fully into the material realm and be a bit more powerful for 30 seconds."
+	icon_state = "manifest"
+	targeted = 0
+	target_anything = 0
+	max_range = 0
+	cooldown = 7 MINUTES
+	start_on_cooldown = 1
+	special_screen_loc = "SOUTH,CENTER+3"
+	pointCost = 1500
+	var/time_to_manifest = 1 MINUTES		//How much time should they spend in the form if left uninterrupted.
+	var/applied_filter_index
+
+
+	cast()
+		if (!holder)
+			return 1
+
+		start_spooking()
+		//////////////////////////////////////////////////////////////////////
+		sleep(time_to_manifest)
+		//////////////////////////////////////////////////////////////////////
+		stop_spooking()
+
+
+
+	proc/start_spooking()
+		src.holder.owner.color = rgb(170, 0, 0)
+		anim_f_ghost_blur(src.holder.owner)
+		applied_filter_index = src.holder.owner.filters.len
+
+		if (istype(holder, /datum/abilityHolder/ghost_observer))
+			var/datum/abilityHolder/ghost_observer/GAH = holder
+			GAH.spooking = 1
+		src.holder.owner.invisibility = 0
+		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
+
+	//remove the filter animation when we're done.
+	proc/stop_spooking()
+		src.holder.owner.color = null
+		src.holder.owner.filters[applied_filter_index] = null
+		applied_filter_index = 0
+		if (istype(holder, /datum/abilityHolder/ghost_observer))
+			var/datum/abilityHolder/ghost_observer/GAH = holder
+			GAH.spooking = 0
+		src.holder.owner.invisibility = initial(src.holder.owner.invisibility)
+		boutput(holder.owner, "<span class='alert'>You stop being spooky!</span>")
 
 #endif

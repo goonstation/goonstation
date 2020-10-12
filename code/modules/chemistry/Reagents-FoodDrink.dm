@@ -237,9 +237,9 @@ datum
 		fooddrink/alcoholic/rum
 			name = "rum"
 			id = "rum"
-			fluid_r = 161
-			fluid_g = 71
-			fluid_b = 231
+			fluid_r = 240
+			fluid_g = 120
+			fluid_b = 30
 			alch_strength = 0.6
 			description = "An alcoholic beverage derived from sugar."
 			reagent_state = LIQUID
@@ -248,8 +248,8 @@ datum
 		fooddrink/alcoholic/vodka
 			name = "vodka"
 			id = "vodka"
-			fluid_r = 0
-			fluid_g = 0
+			fluid_r = 165
+			fluid_g = 255
 			fluid_b = 255
 			transparency = 20
 			alch_strength = 0.5
@@ -260,9 +260,9 @@ datum
 		fooddrink/alcoholic/bourbon
 			name = "bourbon"
 			id = "bourbon"
-			fluid_r = 161
-			fluid_g = 71
-			fluid_b = 231
+			fluid_r = 240
+			fluid_g = 120
+			fluid_b = 30
 			alch_strength = 0.45
 			description = "An alcoholic beverage derived from maize."
 			reagent_state = LIQUID
@@ -361,7 +361,8 @@ datum
 			fluid_g = 65
 			fluid_b = 30
 			transparency = 190
-			alch_strength = 2
+			alch_strength = 5
+			depletion_rate = 0.2
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				src = null

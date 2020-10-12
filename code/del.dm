@@ -90,8 +90,7 @@ proc/qdel(var/datum/O)
 	if(dc)
 		var/all_components = dc[/datum/component]
 		if(length(all_components))
-			for(var/I in all_components)
-				var/datum/component/C = I
+			for (var/datum/component/C as() in all_components)
 				qdel(C, FALSE, TRUE)
 		else
 			var/datum/component/C = all_components
@@ -103,8 +102,7 @@ proc/qdel(var/datum/O)
 		for(var/sig in lookup)
 			var/list/comps = lookup[sig]
 			if(length(comps))
-				for(var/i in comps)
-					var/datum/component/comp = i
+				for (var/datum/component/comp as() in comps)
 					comp.UnregisterSignal(src, sig)
 			else
 				var/datum/component/comp = comps

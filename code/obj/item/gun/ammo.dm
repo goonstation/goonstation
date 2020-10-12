@@ -269,6 +269,8 @@
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
+			else if(src.icon_empty)
+				src.icon_state = initial(src.icon_state)
 		else
 			if (src.icon_empty)
 				src.icon_state = src.icon_empty
@@ -515,18 +517,6 @@
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
 
-/obj/item/ammo/bullets/pbr
-	sname = "12ga Plastic Baton Rounds"
-	name = "12ga plastic baton rounds"
-	ammo_type = new/datum/projectile/bullet/pbr
-	icon_state = "bg"
-	amount_left = 8.0
-	max_amount = 8.0
-	caliber = 0.72
-	icon_dynamic = 0
-	icon_empty = "bg-0"
-	sound_load = 'sound/weapons/gunload_click.ogg'
-
 /obj/item/ammo/bullets/ak47
 	sname = ".308 Auto" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
 	name = "AK magazine"
@@ -716,6 +706,19 @@
 	single
 		amount_left = 1
 		max_amount = 1
+
+/obj/item/ammo/bullets/pbr
+	sname = "40mm Plastic Baton Rounds"
+	name = "40mm plastic baton rounds"
+	ammo_type = new/datum/projectile/bullet/pbr
+	amount_left = 2
+	max_amount = 2
+	icon_state = "40mmB"
+	caliber = 1.57
+	w_class = 3
+	icon_dynamic = 0
+	icon_empty = "40mmB-0"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
 /obj/item/ammo/bullets/grenade_shell

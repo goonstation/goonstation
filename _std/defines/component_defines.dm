@@ -4,24 +4,33 @@
 /// Arguments given here are packaged in a list and given to _SendSignal
 #define SEND_SIGNAL(target, sigtype, arguments...) ( !target.comp_lookup || !target.comp_lookup[sigtype] ? 0 : target._SendSignal(sigtype, list(target, ##arguments)) )
 
-/// `target` to use for signals that are global and not tied to a single datum.
-/// Note that this does NOT work with SEND_SIGNAL because of preprocessor weirdness.
-/// Use SEND_GLOBAL_SIGNAL instead.
 #define GLOBAL_SIGNAL preMapLoad // guaranteed to exist and that's all that matters
-#define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( !preMapLoad.comp_lookup || !preMapLoad.comp_lookup[sigtype] ? 0 : preMapLoad._SendSignal(sigtype, list(preMapLoad, ##arguments)) )
 
+/**
+	* `target` to use for signals that are global and not tied to a single datum.
+	*
+	* Note that this does NOT work with SEND_SIGNAL because of preprocessor weirdness.
+	* Use SEND_GLOBAL_SIGNAL instead.
+	*/
+#define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( !preMapLoad.comp_lookup || !preMapLoad.comp_lookup[sigtype] ? 0 : preMapLoad._SendSignal(sigtype, list(preMapLoad, ##arguments)) )
 
 /// A wrapper for _AddComponent that allows us to pretend we're using normal named arguments
 #define AddComponent(arguments...) _AddComponent(list(##arguments))
 
-/// Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
-/// `parent` must not be modified if this is to be returned.
-/// This will be noted in the runtime logs
+/**
+	* Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
+	*
+	* `parent` must not be modified if this is to be returned.
+	* This will be noted in the runtime logs.
+	*/
+
 #define COMPONENT_INCOMPATIBLE 1
 /// Returned in PostTransfer to prevent transfer, similar to `COMPONENT_INCOMPATIBLE`
 #define COMPONENT_NOTRANSFER 2
 
+
 // How multiple components of the exact same type are handled in the same datum
+
 /// old component is deleted (default)
 #define COMPONENT_DUPE_HIGHLANDER		0
 /// duplicates allowed
@@ -34,10 +43,11 @@
 #define COMPONENT_DUPE_SELECTIVE		5
 
 
-// global signals
+// ---- global signals ----
 #define COMSIG_GLOBAL_REBOOT "global_reboot"
 
-// /datum signals
+//  ---- datum signals ----
+
 /// when a component is added to a datum: (/datum/component)
 #define COMSIG_COMPONENT_ADDED "component_added"
 /// before a component is removed from a datum because of RemoveComponent: (/datum/component)
@@ -46,12 +56,14 @@
 #define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
 
 
-// atom/movable signals
+// ---- atom/movable signals ----
+
 /// when an AM moves (user, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
 
 
-// item signals
+// ---- item signals ----
+
 /// When an item is equipped (user, slot)
 #define COMSIG_ITEM_EQUIPPED "itm_equip"
 /// When an item is unequipped (user)
@@ -71,7 +83,13 @@
 /// When an item is used in-hand
 #define COMSIG_ITEM_ATTACK_SELF "itm_atk_self"
 
-// blocking signals
+// ---- tooltip signals ----
+
+/// Append to the end of the blocking section of tooltip (list/tooltip)
+#define COMSIG_TOOLTIP_BLOCKING_APPEND "tooltip_block_append"
+
+// ---- blocking signals ----
+
 /// After  an item block is set up
 #define COMSIG_ITEM_BLOCK_BEGIN "itm_block_begin"
 /// When an item block is disposed
@@ -80,14 +98,17 @@
 #define COMSIG_UNARMED_BLOCK_BEGIN "unarmed_block_begin"
 /// When an item block is created
 #define COMSIG_UNARMED_BLOCK_END "unarmed_block_end"
-// human signals
-///when a human Life tick occurs
+
+// ---- human signals ----
+
+/// When a human Life tick occurs
 #define COMSIG_HUMAN_LIFE_TICK "human_life_tick"
 
-// mob signals
-///At the beginning of when an attackresults datum is being set up
+// ---- mob signals ----
+
+/// At the beginning of when an attackresults datum is being set up
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
-//When a mob dies
+/// When a mob dies
 #define COMSIG_MOB_DEATH "mob_death"
 
 #define COMSIG_MOB_PICKUP "mob_pickup"
@@ -96,10 +117,12 @@
 
 #define COMSIG_MOB_CLICK "mob_click"
 
-// mob/living signals
+// ---- mob/living signals ----
+
 #define COMSIG_LIVING_SPRINT_START "living_sprint_start"
 
-//attack_X signals
+// ---- attack_X signals ----
+
 /// Attacking wiht an item in-hand
 #define COMSIG_ATTACKBY "attackby"
 /// Bitflag return of an attackby proc successfuly reacting (based on it's own conditions)
@@ -107,13 +130,13 @@
 #define COMSIGBIT_ATTACKBY_COMPLETE 1
 
 
-// projectile signals
+// ---- projectile signals ----
+
 /// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)
 #define COMSIG_PROJ_COLLIDE "proj_collide_atom"
-/// callback to gun/etc after projectile initalization (projectile)
-#define COMSIG_ALTER_PROJECTILE "alter_proj"
 
-// MechComp signals - Content signals - Use these in you MechComp compatible devices
+// ---- MechComp signals - Content signals - Use these in you MechComp compatible devices ----
+
 /// Add an input chanel for a device to send into
 #define COMSIG_MECHCOMP_ADD_INPUT "mechcomp_add_input"
 /// Connect two mechcomp devices together
@@ -129,7 +152,8 @@
 /// Passing the stored message to all connected mechcomp devices for handling
 #define COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG "mechcomp_transmit_default_message"
 
-// MechComp signals - Internal signals - Do not use these
+// ---- MechComp signals - Internal signals - Do not use these ----
+
 /// Receiving a message from a mechcomp device for handling
 #define _COMSIG_MECHCOMP_RECEIVE_MSG "_mechcomp_receive_message"
 /// Remove {the caller} from the list of transmitting devices
@@ -146,7 +170,8 @@
 #define _COMSIG_MECHCOMP_LINK "_mechcomp_link_devices"
 /// Returns 1
 #define _COMSIG_MECHCOMP_COMPATIBLE "_mechcomp_check_compatibility"
-//MechComp Dispatch signals - Niche signals - You probably don't want to use thses.
+
+// ---- MechComp Dispatch signals - Niche signals - You probably don't want to use these. ----
 /// Add a filtered connection, getting user input on the filter
 #define _COMSIG_MECHCOMP_DISPATCH_ADD_FILTER "_mechcomp_dispatch_add_filter"
 /// Remove a filtered connection
@@ -155,14 +180,16 @@
 #define _COMSIG_MECHCOMP_DISPATCH_VALIDATE "_mechcomp_dispatch_run_filter"
 
 
-// obj/critter signals
+// ---- obj/critter signals ----
+
 // When an obj/critter dies
 #define COMSIG_OBJ_CRITTER_DEATH "obj_critter_death"
 
 /// general return values //
 // it is a mystery
 
-/// signal specific return values
+/// ---- signal specific return values ----
+
 // COMSIG_LIVING_SPRINT_START
 #define RETURN_SPRINT_OVERRIDDEN 0x001000
 // COMSIG_MOB_CLICK

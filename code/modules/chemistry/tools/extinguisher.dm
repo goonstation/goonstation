@@ -25,6 +25,7 @@
 	module_research = list("tools" = 5, "science" = 1)
 	rand_pos = 1
 	inventory_counter_enabled = 1
+	move_triggered = 1
 	var/list/banned_reagents = list("vomit",
 	"blackpowder",
 	"blood",
@@ -161,7 +162,8 @@
 					return
 				if (!src.reagents)
 					return
-				var/obj/effects/water/W = unpool(/obj/effects/water)
+				var/obj/effects/water/W = unpool(/obj/effects/water, user)
+				W.owner = user
 				if (!W) return
 				W.set_loc( get_turf(src) )
 				var/turf/my_target = pick(the_targets)

@@ -5,18 +5,19 @@
  * the order that things are compiled in is important. please stick with alphabetical order unless it wont compile in alphabetical order.
  */
 
-#include "__build.dm" //this controls how a lot of our defines and macros and code is compiled, so it absolutely needs to be the first
-#include "macros\_metamacros.dm" //this has some structural helpers that a lot of other macros/defines use, so it needs to be near the start
-#include "_spaceman_dmm.dm" //linter stuff is used in other macros
-#include "mapDefines.dm" // knowing if we're underwater is important for some later macros
-#include "setup.dm" // initializes important stuff for later macros
-#include "defines\_units.dm" //this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
+#include "__build.dm"							// this controls how a lot of our defines and macros and code is compiled, so it absolutely needs to be the first
+#include "macros\_metamacros.dm"	// this has some structural helpers that a lot of other macros/defines use, so it needs to be near the start
+#include "_spaceman_dmm.dm"				// linter stuff is used in other macros
+#include "mapDefines.dm"					// knowing if we're underwater is important for some later macros
+#include "setup.dm"								// initializes important stuff for later macros
+#include "defines\_units.dm"			// this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
 #include "defines\access.dm"
 #include "defines\actions.dm"
 #include "defines\admin.dm"
 #include "defines\atom.dm"
 #include "defines\bioeffect.dm"
 #include "defines\blocking.dm"
+#include "defines\chemicompiler.dm"
 #include "defines\chemistry.dm"
 #include "defines\client.dm"
 #include "defines\clothing.dm"
@@ -37,6 +38,7 @@
 #include "defines\layer.dm"
 #include "defines\logic.dm"
 #include "defines\material_properties.dm"
+#include "defines\medals.dm"
 #include "defines\message_lengths.dm"
 #include "defines\mob.dm"
 #include "defines\movement.dm"
@@ -105,7 +107,7 @@
 #include "pathfinding.dm"
 #include "plane.dm"
 #include "text.dm"
-#include "tgs.config.dm" //this needs to be above tgs.dm in the compile order, ugh. can we fix this?
+#include "tgs.config.dm" // this needs to be above tgs.dm in the compile order, ugh. can we fix this?
 #include "tgs.dm"
 #include "tgui.dm"
 #include "types.dm"

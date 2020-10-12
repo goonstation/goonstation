@@ -205,12 +205,12 @@
 			return 0
 
 		if (ghost.mind.dnr)
-			src.connected_message("Ephemereal conscience detected, seance protocols reveal this corpse cannot be cloned.")
+			src.connected_message("Ephemereal conscience detected, seance protocols reveal this corpse cannot be cloned.", "warning")
 			return 0
 
 		//if (src.meat_level < MEAT_NEEDED_TO_CLONE)
 		if (!src.start_clone(1))
-			src.connected_message("Insufficient biomatter to begin.")
+			src.connected_message("Insufficient biomatter to begin.", "warning")
 			return 0
 
 		src.attempting = 1 //One at a time!!
@@ -365,7 +365,7 @@
 			if (src.occupant.traitHolder && src.occupant.traitHolder.hasTrait("puritan"))
 				// puritans get punted out immediately
 				src.go_out(1)
-				src.connected_message("Clone Aborted: Genetic Structure Incompatible.")
+				src.connected_message("Clone Aborted: Genetic Structure Incompatible.", "warning")
 				src.send_pda_message("Clone Aborted: Genetic Structure Incompatible")
 				power_usage = 200
 				return ..()
@@ -378,7 +378,7 @@
 			if (isdead(src.occupant) || src.occupant.suiciding)  //Autoeject corpses and suiciding dudes.
 				// Dead or suiciding people are ejected.
 				src.go_out(1)
-				src.connected_message("Clone Rejected: Deceased.")
+				src.connected_message("Clone Rejected: Deceased.", "danger")
 				src.send_pda_message("Clone Rejected: Deceased")
 				power_usage = 200
 				return ..()
@@ -386,7 +386,7 @@
 			else if (src.failed_tick_counter >= MAX_FAILED_CLONE_TICKS) // you been in there too long, get out
 				// If we've failed to progress the clone for a while, they get ejected too.
 				src.go_out(1)
-				src.connected_message("Clone Ejected: Low Biomatter.")
+				src.connected_message("Clone Ejected: Low Biomatter.", "danger")
 				src.send_pda_message("Clone Ejected: Low Biomatter")
 				power_usage = 200
 				return ..()
@@ -441,7 +441,7 @@
 
 				src.meat_level = max( 0, src.meat_level - meat_used_per_tick * mult )
 				if (!src.meat_level)
-					src.connected_message("Additional biomatter required to continue.")
+					src.connected_message("Additional biomatter required to continue.", "warning")
 					src.send_pda_message("Low Biomatter")
 					src.visible_message("<span class='alert'>[src] emits an urgent boop!</span>")
 					playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
@@ -457,7 +457,7 @@
 				if ((src.occupant.health + (100 - src.occupant.max_health)) > 50 && src.failed_tick_counter >= 2 && (src.time_started + eject_wait < TIME))
 					// Wait a few ticks to see if they stop gaining health.
 					// Once that's the case, boot em
-					src.connected_message("Cloning Process Complete.")
+					src.connected_message("Cloning Process Complete.", "success")
 					src.send_pda_message("Cloning Process Complete")
 					src.go_out(1)
 				else // go_out() updates icon too, so vOv
@@ -472,7 +472,7 @@
 				if (src.attempting && (src.time_started + eject_wait < TIME))
 					// If this body has an actual mind in it, they're done.
 					// Sure hope the outside is safe for ya.
-					src.connected_message("Cloning Process Complete.")
+					src.connected_message("Cloning Process Complete.", "success")
 					src.send_pda_message("Cloning Process Complete")
 					// literally ding like a microwave
 					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
@@ -618,15 +618,19 @@
 			src.reagents.trans_to(src.occupant, 1000)
 
 	//Put messages in the connected computer's temp var for display.
-	proc/connected_message(var/msg)
+	proc/connected_message(var/message, status)
 		if ((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
 			return 0
-		if (!msg)
+		if (!message)
 			return 0
-
-		src.connected.temp = msg
-		src.connected.updateUsrDialog()
-		return 1
+		src.connected.currentStatusMessage["text"] = message
+		src.connected.currentStatusMessage["status"] = status
+		tgui_process.update_uis(src)
+		SPAWN_DBG(5 SECONDS)
+			if(src.connected.currentStatusMessage == message)
+				src.connected.currentStatusMessage["text"] = ""
+				src.connected.currentStatusMessage["status"] = ""
+				tgui_process.update_uis(src)
 
 	verb/eject()
 		set src in oview(1)
@@ -702,7 +706,7 @@
 
 	proc/malfunction()
 		if (src.occupant)
-			src.connected_message("Critical Error!")
+			src.connected_message("Critical Error!", "danger")
 			src.send_pda_message("Critical Error")
 			src.mess = 1
 			src.failed_tick_counter = 0
