@@ -104,7 +104,7 @@
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
-				if (picklist?.len >= 1)
+				if (length(picklist))
 					for(var/pick in picklist)
 						M.bioHolder.AddEffect(pick)
 

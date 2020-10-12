@@ -346,7 +346,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 		// hi it's me cirr here to shoehorn in another thing
 		// flockdrones and flockmind should hear all channels, but with terrible corruption
-		if(flocks?.len)
+		if(length(flocks))
 			for(var/F in flocks)
 				var/datum/flock/flock = flocks[F]
 				if(flock)

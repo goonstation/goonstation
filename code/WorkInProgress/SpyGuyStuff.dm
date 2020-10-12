@@ -242,7 +242,7 @@ proc/Create_Tommyname()
 /datum/spectro_analysis
 
 	proc/analyze_reagents(var/datum/reagents/R, var/check_recipes = 0)
-		if(R?.reagent_list && R.reagent_list.len)
+		if(length(R?.reagent_list))
 			if(check_recipes)
 				. = analyze_reagent_components(R.reagent_list)
 			else
@@ -257,7 +257,7 @@ proc/Create_Tommyname()
 			for (var/id in reagent_ids)
 
 				var/datum/chemical_reaction/recipe = chem_reactions_by_id[id]
-				if(recipe?.required_reagents && recipe.required_reagents.len)
+				if(length(recipe?.required_reagents))
 					analyze_reagent_list(recipe.required_reagents, output)
 				else
 					for(var/i=0, i<rand(2,7), i++) //If it doesn't have a recipe, just spit out some random data

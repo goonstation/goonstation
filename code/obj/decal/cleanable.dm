@@ -49,7 +49,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		..()
 		src.real_name = src.name
 
-		if (viral_list?.len > 0)
+		if (length(viral_list))
 			for (var/datum/ailment_data/AD in viral_list)
 				src.diseases += AD
 		if (src.can_dry)

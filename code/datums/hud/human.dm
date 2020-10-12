@@ -728,7 +728,7 @@
 			I.screen_loc = loc
 
 	proc/remove_item(obj/item/I)
-		if (inventory_items?.len)
+		if (length(inventory_items))
 			inventory_items -= I
 		remove_object(I)
 

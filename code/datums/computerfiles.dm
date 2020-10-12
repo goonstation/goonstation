@@ -357,7 +357,7 @@
 		if (asciiVersion)
 			return asciiVersion
 
-		if (!(ourImage?.icon) && !ourIcon)
+		if (!(ourImage && ourImage.icon) && !ourIcon)
 			return ""
 
 		asciiVersion = ""

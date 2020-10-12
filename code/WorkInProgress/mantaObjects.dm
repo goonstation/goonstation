@@ -956,7 +956,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 			return_if_overlay_or_effect(Obj)
 
-			if (L?.len && !istype(Obj,/obj/overlay) && !istype(Obj,/obj/torpedo_targeter))
+			if (length(L) && !istype(Obj,/obj/overlay) && !istype(Obj,/obj/torpedo_targeter))
 				Obj.set_loc(pick(L))
 		..(Obj,OldLoc)
 

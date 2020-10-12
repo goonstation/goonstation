@@ -377,7 +377,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			return ..()
 		else
 			src.icon_state = initial(src.icon_state)
-			if (prob(10) && dialog?.len)
+			if (prob(10) && length(dialog))
 				speak(pick(dialog))
 			return ..()
 

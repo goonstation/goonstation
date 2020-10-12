@@ -183,6 +183,7 @@
 	attack_self(var/mob/user)
 		if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
 			boutput(user, "<span class='alert'>You can only use this tool in construction mode.</span>")
+			return
 		var/datum/game_mode/construction/C = ticker.mode
 		var/list/pickable = list()
 		for (var/datum/progress/P in C.milestones)

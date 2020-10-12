@@ -848,7 +848,7 @@
 			src.object = B
 
 	disposing()
-		if (object?.owner == src)
+		if (object && object.owner == src)
 			if(src.holder?.hud)
 				src.holder.hud.remove_object(object)
 			object.owner = null

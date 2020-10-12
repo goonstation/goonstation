@@ -352,7 +352,7 @@
 		return
 	if(src.busy_tiles[requester.name])
 		return src.busy_tiles[requester.name] // work on your claimed tile first you JERK
-	if(priority_tiles?.len)
+	if(length(priority_tiles))
 		var/list/available_tiles = priority_tiles
 		for(var/owner in src.busy_tiles)
 			available_tiles -= src.busy_tiles[owner]

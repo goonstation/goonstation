@@ -1800,7 +1800,7 @@
 
 				// Get rid of those uplinks first.
 				var/list/L = H.get_all_items_on_mob()
-				if (L?.len)
+				if (length(L))
 					for (var/obj/item/device/pda2/PDA in L)
 						if (PDA?.uplink)
 							qdel(PDA.uplink)

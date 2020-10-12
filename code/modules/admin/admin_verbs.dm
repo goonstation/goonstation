@@ -1344,7 +1344,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	var/msg
-	if (args?.len > 0)
+	if (length(args))
 		msg = args[1]
 
 	msg = input(src, "Sends a message as voice to all players", "Dectalk", msg) as null|message

@@ -399,7 +399,7 @@ datum
 							repair_bleeding_damage(H, 80, 2)
 
 					var/silent = 0
-					if (paramslist?.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 					if (!silent)
@@ -1012,7 +1012,7 @@ datum
 					M.HealDamage("All", 0, volume_passed)
 
 					var/silent = 0
-					if (paramslist?.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 					if (!silent)
@@ -1257,7 +1257,7 @@ datum
 						//H.bleeding = min(H.bleeding, rand(0,5))
 
 					var/silent = 0
-					if (paramslist?.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 

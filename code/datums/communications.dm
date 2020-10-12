@@ -67,7 +67,7 @@ mob/verb/listfreq()
 
 var/global/list/datum/signal/reusable_signals = list()
 proc/get_free_signal()
-	if (reusable_signals?.len)
+	if (length(reusable_signals))
 		while (. == null && reusable_signals.len)
 			. = reusable_signals[reusable_signals.len]
 			reusable_signals.len--
@@ -94,7 +94,7 @@ datum/radio_frequency
 			if(range)
 				start_point = get_turf(source)
 				if(!start_point)
-					if (reusable_signals?.len && !(signal in reusable_signals))
+					if (length(reusable_signals) && !(signal in reusable_signals))
 						signal.dispose()
 					else if (signal)
 						signal.wipe()

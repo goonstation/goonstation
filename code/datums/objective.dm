@@ -427,7 +427,7 @@ proc/create_fluff(var/datum/mind/target)
 
 		// Tweaked to make it more reliable (Convair880).
 		var/list/L = owner.current.get_all_items_on_mob()
-		if (L?.len)
+		if (length(L))
 			for (var/obj/item/card/id/C in L)
 				current_cash += C.money
 			for (var/obj/item/device/pda2/PDA in L)

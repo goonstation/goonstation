@@ -1384,7 +1384,7 @@
 
 		if (netnum)
 			var/datum/powernet/PN
-			if (powernets?.len >= netnum)
+			if (length(powernets) >= netnum)
 				PN = powernets[netnum]
 				return PN.avail
 

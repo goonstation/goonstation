@@ -498,7 +498,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					else
 						dead_mobs += M
 
-			if(dead_mobs?.len > 0 && prob(60)) //SpyGuy for undefined var/len (what the heck)
+			if(length(dead_mobs) && prob(60)) //SpyGuy for undefined var/len (what the heck)
 				var/mob/M = pick(dead_mobs)
 				say("[BILL_PICK("deadguy")] [M.name]...")
 			else if (alive_mobs.len > 0)

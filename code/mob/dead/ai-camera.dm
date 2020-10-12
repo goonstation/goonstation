@@ -478,7 +478,7 @@
 	.=..()
 	if(istype(usr,/mob/dead/aieye))//todo, make this a var for cheapernesseress?
 		if(aiImage)
-			usr.client.show_popup_menus = (cameras?.len)
+			usr.client.show_popup_menus = (length(cameras))
 */
 
 //---TURF---//

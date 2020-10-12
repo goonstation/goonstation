@@ -8,7 +8,7 @@
 		return 0
 
 	var/datum/powernet/PN
-	if(powernets?.len >= netnum)
+	if(length(powernets) >= netnum)
 		PN = powernets[netnum]
 
 	elecflash(src)
@@ -152,13 +152,13 @@
 
 	if(!defer_powernet_rebuild)	// set if network will be rebuilt manually
 
-		if(netnum && powernets?.len >= netnum)		// make sure cable & powernet data is valid
+		if(netnum && length(powernets) >= netnum)		// make sure cable & powernet data is valid
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
 		defer_powernet_rebuild = 2
 
-		if(netnum && powernets?.len >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
+		if(netnum && length(powernets) >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
 			powernets[netnum].cables -= src
 
 	insulator.owner = null
@@ -184,7 +184,7 @@
 // returns the powernet this cable belongs to
 /obj/cable/proc/get_powernet()
 	var/datum/powernet/PN			// find the powernet
-	if(netnum && powernets?.len >= netnum)
+	if(netnum && length(powernets) >= netnum)
 		PN = powernets[netnum]
 	return PN
 

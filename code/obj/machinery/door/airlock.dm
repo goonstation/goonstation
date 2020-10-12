@@ -1097,7 +1097,7 @@ About the new airlock wires panel:
 
 	//ok you're getting shocked now
 	var/datum/powernet/PN			// find the powernet
-	if(powernets?.len >= netnum)
+	if(length(powernets) >= netnum)
 		PN = powernets[netnum]
 
 	elecflash(user,power = 2)

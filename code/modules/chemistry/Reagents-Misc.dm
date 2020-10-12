@@ -39,7 +39,7 @@ datum
 					if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprintshidden
 						var/list/fh = holder.my_atom.fingerprintshidden
 
-						if (fh?.len) //Wire: Fix for: bad text or out of bounds
+						if (length(fh)) //Wire: Fix for: bad text or out of bounds
 							context = "Fingerprints: [jointext(fh, "")]"
 
 					logTheThing("combat", usr, null, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)]. Context: [context].")
@@ -719,7 +719,7 @@ datum
 				var/turf/simulated/T = target
 				var/volume_mult = 1
 
-				if (covered?.len)
+				if (length(covered))
 					if (volume/covered.len < 2) //reduce time based on dilution
 						volume_mult = min(volume / 9, 1)
 
@@ -961,7 +961,7 @@ datum
 					return
 
 				var/silent = 0
-				if (paramslist?.len)
+				if (length(paramslist))
 					if ("silent" in paramslist)
 						silent = 1
 
@@ -2374,7 +2374,7 @@ datum
 					var/list/mob/nerds = list()
 					for (var/mob/living/some_idiot in oviewers(M, 7))
 						nerds.Add(some_idiot)
-					if (nerds?.len)
+					if (length(nerds))
 						var/mob/some_idiot = pick(nerds)
 						if (prob(50))
 							M.visible_message("<span class='emote'><B>[M]</B> flips off [some_idiot.name]!</span>")

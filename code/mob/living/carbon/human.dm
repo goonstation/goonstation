@@ -2194,7 +2194,7 @@
 	boutput(src, "<span class='alert'><B>Your equipment malfunctions.</B></span>")
 
 	var/list/L = src.get_all_items_on_mob()
-	if (L?.len)
+	if (length(L))
 		for (var/obj/O in L)
 			O.emp_act()
 	boutput(src, "<span class='alert'><B>BZZZT</B></span>")

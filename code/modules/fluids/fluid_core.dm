@@ -794,7 +794,7 @@ var/mutable_appearance/fluid_ma
 			if (!current_reagent) continue
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
-		if (reacted_ids?.len)
+		if (length(reacted_ids))
 			src.update_icon()
 		*/
 

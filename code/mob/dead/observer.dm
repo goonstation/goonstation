@@ -548,7 +548,7 @@
 			continue
 		L+=T
 
-	if (L?.len) //ZeWaka: Fix for pick() from empty list
+	if (length(L)) //ZeWaka: Fix for pick() from empty list
 		usr.set_loc(pick(L))
 		OnMove()
 	else

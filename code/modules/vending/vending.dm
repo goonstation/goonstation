@@ -934,7 +934,7 @@
 		return 0
 
 	var/datum/powernet/PN			// find the powernet
-	if (powernets?.len >= netnum)
+	if (length(powernets) >= netnum)
 		PN = powernets[netnum]
 
 	elecflash(src)

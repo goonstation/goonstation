@@ -533,7 +533,7 @@ datum
 
 				if (method == TOUCH)
 					var/silent = 0
-					if (paramslist?.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 
