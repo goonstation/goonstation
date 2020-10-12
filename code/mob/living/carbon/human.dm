@@ -2813,14 +2813,6 @@
 			&& (src.shoes && istype(src.shoes,/obj/item/clothing/shoes/cleats)) \
 			&& (src.w_uniform && istype(src.w_uniform,/obj/item/clothing/under/football)) )
 		src.tackle(AM)
-#ifdef HALLOWEEN
-	//only let fat zombies push people during halloween
-	if (istype(src.mutantrace, /datum/mutantrace/zombie) )
-		var/datum/mutantrace/zombie/Z = src.mutantrace
-		if (Z.strain == 1)
-			..()
-#endif
-
 	..()
 
 /mob/living/carbon/human/get_special_language(var/secure_mode)
