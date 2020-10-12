@@ -1195,4 +1195,3 @@
 	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 	icon_state = "janitorberet"
 	item_state = "janitorberet"
-	c_flags = SPACEWEAR
