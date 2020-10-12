@@ -126,6 +126,6 @@ var/ZLOG_START_TIME
 
 // IN_MAP_EDITOR macro is used to make some things appear visually more clearly in the map editor
 // this handles StrongDMM (and other editors using SpacemanDMM parser), toggle it manually if using a different editor
-#ifdef SPACEMAN_DMM
+#if (defined(SPACEMAN_DMM) || defined(FASTDMM))
 #define IN_MAP_EDITOR
 #endif

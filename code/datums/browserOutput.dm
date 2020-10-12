@@ -158,6 +158,21 @@ var/global
 		analyzeClientData(cookie = "")
 			if (!cookie) return
 			if (cookie != "none")
+				// Hotfix patch, credit to https://github.com/yogstation13/Yogstation/pull/9951
+				var/regex/json_decode_crasher = regex("^\\s*(\[\\\[\\{\\}\\\]]\\s*){5,}")
+				if (json_decode_crasher.Find(cookie))
+					if (src.owner)
+						message_admins("[src.owner] just attempted to crash the server using at least 5 '\['s in a row.")
+						logTheThing("admin", src.owner, null, "just attempted to crash the server using at least 5 '\['s in a row.", "admin")
+
+						//Irc message too
+						var/ircmsg[] = new()
+						ircmsg["key"] = owner.key
+						ircmsg["name"] = owner.mob.name
+						ircmsg["msg"] = "just attempted to crash the server using at least 5 '\['s in a row."
+						ircbot.export("admin", ircmsg)
+					return
+
 				var/list/connData = json_decode(cookie)
 				if (connData && islist(connData) && connData.len > 0 && connData["connData"])
 					src.connectionHistory = connData["connData"] //lol fuck
