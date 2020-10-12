@@ -2009,16 +2009,8 @@
 		return
 
 	proc/popitem(var/datum/mechanicsMessage/input)
-		if(level == 2 || !input) return
-		if(current_index <= length(signals))
-			LIGHT_UP_HOUSING
-			sendCurrent(input)
-			signals.Remove(signals[current_index])
-			if(current_index > length(signals))
-				current_index = length(signals) ? length(signals) : 1 // Don't let current_index be 0
-			tooltip_rebuild = 1
-			if(announce)
-				componentSay("Removed : [input.signal]")
+		sendCurrent(input)
+		remitem(input)
 		return
 
 	proc/remallitem(var/datum/mechanicsMessage/input)
