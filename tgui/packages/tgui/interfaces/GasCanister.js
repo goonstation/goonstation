@@ -122,7 +122,7 @@ export const GasCanister = (props, context) => {
                 )
             }
           </Flex.Item>
-          {hasPaper && (
+          {!!hasPaper && (
             <Flex.Item width={100}>
               <PaperView />
             </Flex.Item>
@@ -142,7 +142,7 @@ class PaperView extends Component {
   render() {
     const { act, data } = useBackend(this.context);
     const {
-      text,
+      value,
       stamps,
     } = data.paperData;
     return (
@@ -154,7 +154,7 @@ class PaperView extends Component {
         <PaperSheetView
           width={'400'}
           height={'500'}
-          value={text}
+          value={value}
           stamps={stamps}
           readOnly />
       </Section>

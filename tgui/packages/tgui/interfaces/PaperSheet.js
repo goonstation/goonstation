@@ -269,8 +269,8 @@ const setInputReadonly = (text, readonly) => {
 // want to control updates
 export const PaperSheetView = (props, context) => {
   const {
-    value,
-    stamps,
+    value = "",
+    stamps = [],
     backgroundColor,
     width,
     height,

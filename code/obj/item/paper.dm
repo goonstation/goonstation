@@ -68,6 +68,7 @@
 	var/sealed = 0 //Can you write on this with a pen?
 	var/list/stamps = list()
 	var/list/stamped
+	var/list/form_fields = list()
 	var/field_counter = 1
 
 /obj/item/paper/New()
@@ -330,8 +331,8 @@
 		data["is_crayon"] = FALSE
 		data["stamp_icon_state"] = "FAKE"
 		data["stamp_class"] = "FAKE"
-//	data["field_counter"] = field_counter
-//	data["form_fields"] = form_fields
+		data["field_counter"] = field_counter
+		data["form_fields"] = form_fields
 
 	return data
 

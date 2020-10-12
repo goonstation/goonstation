@@ -422,15 +422,14 @@
 	var/list/static_data = list()
 	var/has_paper = false
 
-	for(var/obj/item/paper in src.det.attachments)
-		static_data["paperData"] = paper.ui_static_data()
-		has_paper = true
-	static_data["hasPaper"] = has_paper
-
 	if(src?.det?.attachments)
 		static_data["detonatorAttachments"] = list()
 		for(var/obj/item/I in src.det.attachments)
 			static_data["detonatorAttachments"] += I.name
+		for(var/obj/item/paper in src.det.attachments)
+			static_data["paperData"] = paper.ui_static_data()
+			has_paper = true
+		static_data["hasPaper"] = has_paper
 
 	return static_data
 
