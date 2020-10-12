@@ -45,11 +45,9 @@
 	src.powergen = 0
 	src.poweruse = 0
 	for(var/obj/flock_structure/f in connected)
-		if(!f.poweruse == 0)
-			if(f.poweruse < 0)
-				src.powergen += abs(f.poweruse)
-			else if(f.poweruse > 0)
-				src.poweruse += f.poweruse
+		if(f.poweruse < 0)
+			src.powergen += abs(f.poweruse)
+		else if(f.poweruse > 0)
+			src.poweruse += f.poweruse
 
 	src.power = src.powergen - src.poweruse
-

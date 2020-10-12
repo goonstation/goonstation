@@ -509,16 +509,14 @@
 /datum/action/bar/flock_deposit
 	id = "flock_repair"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 10
+	var/const/default_duration = 1 SECOND
+	duration = default_duration
+	var/obj/flock_structure/ghost/target = null
 
-	var/obj/flock_structure/ghost/target
-
-	New(var/mob/living/critter/flock/drone/ntarg, var/duration_i)
+	New(var/obj/flock_structure/ghost/target, var/duration = default_duration)
 		..()
-		if (ntarg)
-			target = ntarg
-		if (duration_i)
-			duration = duration_i
+		src.target = target
+		src.duration = duration
 
 	onUpdate()
 		..()

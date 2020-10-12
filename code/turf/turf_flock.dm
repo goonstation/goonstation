@@ -244,8 +244,8 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 				var/turf/simulated/floor/feather/f = next_turf
 				if(f.broken)
 					continue //skip broken tiles
-				queue += get_step(current, dir)
-				visited[next_turf] = TRUE
+				queue += f
+		visited[next_turf] = TRUE
 	return visited
 
 //end of flocktilegroup stuff

@@ -45,7 +45,4 @@
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
 		new building(get_turf(src), src.flock)
-		qdel(src)
-	else
-		return
-
+	qdel(src)
