@@ -2029,7 +2029,6 @@
 			r.regrow_prob = 10
 		var/datum/bioEffect/power/be = M.bioHolder.AddEffect("adrenaline", do_stability=0)
 		be.safety = 1
-		be.power = 1
 		be.altered = 1
 
 
