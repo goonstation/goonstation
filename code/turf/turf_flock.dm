@@ -217,6 +217,7 @@
 					tile.group.addtile(tile)
 					for(var/obj/flock_structure/s in tile)
 						s.groupcheck()//reassign any structures aswell
+				qdel(oldgroup)
 
 // TODO: make this use typecheckless lists
 // TODO: currently MASSIVE problem, it does the thing on a random group in range and not on the largest, FIX ASAP.
@@ -245,7 +246,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 				if(f.broken)
 					continue //skip broken tiles
 				queue += f
-		visited[next_turf] = TRUE
+				visited[next_turf] = TRUE
 	return visited
 
 //end of flocktilegroup stuff

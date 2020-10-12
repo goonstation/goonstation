@@ -532,6 +532,11 @@
 		..()
 		owner.visible_message("<span class='alert'>[owner] deposits materials to the [target]!</span>", "<span class='notice'>You deposit materials to the tealprint</span>")
 		var/mob/living/critter/flock/drone/F = owner
-		var/amounttopay = F.resources < 10 ? F.resources : 10
+		var/amounttopay = 0
+		var/difference = target.goal - target.currentmats
+		if(difference > 10)
+			amounttopay = F.resources < 10 ? F.resources : 10
+		else
+			amounttopay = F.resources < difference ? F.resources : difference
 		F.pay_resources(amounttopay)
-		target.currentmats = amounttopay + target.currentmats
+		target.currentmats += amounttopay

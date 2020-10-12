@@ -14,7 +14,7 @@
 	custominfo += "<br><span class='bold'>Construction Progress:</span> [currentmats] materials added, [goal] needed"
 	return custominfo
 
-/obj/flock_structure/ghost/New(var/atom/location, building = null, var/datum/flock/F = null, goal = null)
+/obj/flock_structure/ghost/New(var/atom/location, building = null, var/datum/flock/F = null, goal = 0)
 	..(location, F)
 	if(building)
 		var/atom/b = building
