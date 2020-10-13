@@ -1,5 +1,9 @@
 
 (t)mon oct 12 20
+(u)RSG250
+(p)2406
+(e)🆕|feature
+(*)added Neutronium Alloy, discover how to make it!
 (u)Carbadox
 (p)2416
 (e)🆕🎨|feature, sprites
