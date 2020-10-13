@@ -124,7 +124,7 @@ ABSTRACT_TYPE(/datum/objective/miscreant)
 
 ABSTRACT_TYPE(/datum/objective/miscreantrp)
 /datum/objective/miscreantrp
-shoes
+  shoes
 		explanation_text = "Through trade, sweet-talking, light extortion, blackmail, and other devilish, but non-violent means, secure and deep-fry as many shoes as possible."
 
 	bar
