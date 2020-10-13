@@ -82,6 +82,7 @@
 	var/dizziness = 0
 	var/is_dizzy = 0
 	var/is_jittery = 0
+	var/is_zombie = 0
 	var/jitteriness = 0
 	var/charges = 0.0
 	var/urine = 0.0
@@ -2241,6 +2242,7 @@
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
+	src.delStatus("n_radiation")
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
 	src.take_eye_damage(-INFINITY, 1)

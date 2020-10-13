@@ -326,3 +326,24 @@ obj/structure/ex_act(severity)
 		src.health -= W.force
 		checkhealth()
 		return
+
+/obj/structure/woodwall/anti_zombie
+	desc = "This was thrown up in a hurry. But highly resistant to zombies somehow..."
+
+	attack_hand(mob/user as mob)
+		user.lastattacked = src
+		if (ishuman(user))
+			src.visible_message("<span class='alert'><b>[user]</b> bashes [src]!</span>")
+			playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 100, 1)
+
+			//Zombies do less damage
+			var/mob/living/carbon/human/H = user
+			if (istype(H.mutantrace, /datum/mutantrace/zombie))
+				src.health -= rand(0,1)
+			else
+				src.health -= rand(1,3)
+
+			checkhealth()
+			return
+		else
+			return

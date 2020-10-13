@@ -2129,11 +2129,11 @@
 		product_list += new/datum/data/vending_product(/obj/item/spraybottle/cleaner, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bucket, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/cleaner, 4)
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cleaner, 6)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/trash_bags, 8)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/biohazard_bags, 8)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/mousetraps, 4)
 		product_list += new/datum/data/vending_product(/obj/item/caution, 10)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/long, 2)
 
-		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cleaner, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
