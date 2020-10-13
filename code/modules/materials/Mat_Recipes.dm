@@ -152,15 +152,4 @@
 	result_id = "neutronium"
 
 	validate(var/datum/material/M)
-		var/one = 0
-		var/two = 0
-
-		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "erebite") one = 1
-			if(CM.mat_id == "cerenkite") two = 1
-
-		if(M.mat_id == "erebite") one = 1
-		if(M.mat_id == "cerenkite") two = 1
-
-		if(one && two) return 1
-		else return 0
+		return (M.getProperty("radioactive") >= 60 && M.getProperty("density") >= 60)

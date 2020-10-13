@@ -409,7 +409,7 @@
 	alpha = 255
 
 	New()
-		setProperty("density", 10)
+		setProperty("density", 100) //👀
 		setProperty("hard", 10)
 		setProperty("electrical", 70)
 		setProperty("stability", 20)
