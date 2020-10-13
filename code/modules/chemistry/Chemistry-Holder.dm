@@ -468,7 +468,7 @@ datum
 							src.add_reagent(C.result, created_volume)
 							if(created_volume <= 0) //MBC : If a fluid reacted but didn't create anything, we require an update_total call to do drain/evaporate checks.
 								src.update_total()
-								if (FG?.my_group && src.total_volume <= 0) //also evaporate safety here
+								if (FG && FG.my_group && src.total_volume <= 0) //also evaporate safety here
 									FG.my_group.evaporate()
 							C.on_reaction(src, created_volume)
 							covered_cache = 0

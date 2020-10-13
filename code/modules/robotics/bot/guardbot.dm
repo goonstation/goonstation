@@ -3641,7 +3641,7 @@
 
 		proc/look_for_neat_thing()
 			var/area/spaceArea = get_area(src.master)
-			if (!(src.neat_things & NT_SPACE) && spaceArea?.name == "Space" && !istype(get_turf(src.master), /turf/simulated/shuttle))
+			if (!(src.neat_things & NT_SPACE) && spaceArea && spaceArea.name == "Space" && !istype(get_turf(src.master), /turf/simulated/shuttle))
 				src.neat_things |= NT_SPACE
 				src.master.speak(pick("While you find yourself surrounded by space, please try to avoid the temptation to inhale any of it.  That doesn't work.",\
 				 "Space: the final frontier.  Oh, except for time travel and any other dimensions.  And frontiers on other planets, including other planets in those other dimensions and times.  Maybe I should stick with \"space: a frontier.\"",\

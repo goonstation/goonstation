@@ -218,7 +218,7 @@
 		M = whois_ckey_to_mob_reference(C)
 		user = user_client.mob
 
-		if(!(user?.client && user.client.holder && (user.client.holder.rank in list("Host", "Coder"))))
+		if(!(user && user.client && user.client.holder && (user.client.holder.rank in list("Host", "Coder"))))
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (!( t ))
 			return

@@ -221,7 +221,7 @@
 				M.bioHolder.mobAppearance.UpdateMob()
 
 			SPAWN_DBG (25) // Don't remove.
-				if (M?.organHolder && M.organHolder.skull)
+				if (M?.organHolder?.skull)
 					M.assign_gimmick_skull() // For hunters (Convair880).
 
 		else
@@ -309,7 +309,7 @@
 				H.set_body_icon_dirty()
 
 				SPAWN_DBG (25) // Don't remove.
-					if (H?.organHolder && H.organHolder.skull) // check for H.organHolder as well so we don't get null.skull runtimes
+					if (H?.organHolder?.skull) // check for H.organHolder as well so we don't get null.skull runtimes
 						H.assign_gimmick_skull() // We might have to update the skull (Convair880).
 
 			mob.set_clothing_icon_dirty()
@@ -1537,7 +1537,7 @@
 		var/round_mult = max(1, round((mult)))
 		var/turf/T = get_turf(mob)
 		//if on kudzu, get nutrients for later use. If at max nutrients. Then heal self.
-		if (T?.temp_flags & HAS_KUDZU)
+		if (T && T.temp_flags & HAS_KUDZU)
 			if (KAH.points < KAH.MAX_POINTS)
 				KAH.points += round_mult
 			else

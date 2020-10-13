@@ -689,7 +689,7 @@
 		if (bioEffect_sanity_check(E,0)) return
 		var/mob/living/L = get_scan_subject()
 		//if (!L.bioHolder.HasEffect(E.id) && !saved_mutations.Find(E))
-		if (!((L?.bioHolder && L.bioHolder.HasEffect(E.id)) || saved_mutations.Find(E)))
+		if (!((L && L.bioHolder && L.bioHolder.HasEffect(E.id)) || saved_mutations.Find(E)))
 			src.log_maybe_cheater(usr, "tried to create a [E.id] injector")
 			return
 
@@ -727,7 +727,7 @@
 		var/datum/bioEffect/E = locate(href_list["send_booth"])
 		if (bioEffect_sanity_check(E,0)) return
 		var/mob/living/L = get_scan_subject()
-		if (!((L?.bioHolder && L.bioHolder.HasEffect(E.id)) || saved_mutations.Find(E)))
+		if (!((L && L.bioHolder && L.bioHolder.HasEffect(E.id)) || saved_mutations.Find(E)))
 			src.log_maybe_cheater(usr, "tried to create a [E.id] injector")
 			return
 

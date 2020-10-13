@@ -169,7 +169,7 @@
 			var/drain = rand(65, 75)
 			holder.owner.set_loc(H.loc)
 			holder.owner.canmove = 0
-			while (drain > 0 && H?.stat && !H.disposed)
+			while (drain > 0 && H && H.stat && !H.disposed)
 				if (H.loc && holder.owner.loc != H.loc)
 					break
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
@@ -177,7 +177,7 @@
 				holder.owner.HealDamage("All", 1, 1)
 				sleep(0.4 SECONDS)
 				drain--
-			if (H?.stat && holder.owner.loc == H.loc)
+			if (H && H.stat && holder.owner.loc == H.loc)
 				holder.owner.visible_message("<span class='combat'><b>[src] drains [H] dry!</b></span>",\
 				"<span class='combat'><b>You drain [H] dry!</b></span>")
 				H.death(0)

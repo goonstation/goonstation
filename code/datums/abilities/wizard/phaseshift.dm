@@ -217,7 +217,7 @@
 
 		SPAWN_DBG(-1)
 			var/reduc_count = 0
-			while(src && !src.qdeled && owner?.stamina >= STAMINA_SPRINT && owner.client && owner.client.check_key(KEY_RUN))
+			while(src && !src.qdeled && owner && owner.stamina >= STAMINA_SPRINT && owner.client && owner.client.check_key(KEY_RUN))
 				reduc_count++
 				if (reduc_count >= 4)
 					reduc_count = 0

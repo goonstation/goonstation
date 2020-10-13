@@ -91,7 +91,7 @@
 
 		velocity_magnitude = 0
 		if (user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user))
-			if (owner?.engine && owner.engine.active)
+			if (owner?.engine?.active)
 
 				velocity_x	+= input_x * accel
 				velocity_y  += input_y * accel

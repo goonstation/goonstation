@@ -1215,7 +1215,7 @@ datum/pathogeneffects/malevolent/capacitor
 						load_check(M, origin)
 					else
 						var/obj/machinery/power/apc/A = locate() in view(4, M)
-						if (A?.cell && A.cell.charge > 0)
+						if (A?.cell?.charge > 0)
 							elecflash(A,power = 2)
 							M.visible_message("<span class='alert'>A burst of lightning jumps at [M] from [A].</span>", "<span class='alert'>A burst of lightning jumps at you from [A]. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 							M.TakeDamage("chest", 0, 5)
@@ -1258,7 +1258,7 @@ datum/pathogeneffects/malevolent/capacitor
 						load_check(M, origin)
 					else
 						var/obj/machinery/power/apc/A = locate() in view(4, M)
-						if (A?.cell && A.cell.charge > 0)
+						if (A?.cell?.charge > 0)
 							elecflash(A,power = 2)
 							M.visible_message("<span class='alert'>A burst of lightning jumps at [M] from [A].</span>", "<span class='alert'>A burst of lightning jumps at you from [A]. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 							M.TakeDamage("chest", 0, 5)

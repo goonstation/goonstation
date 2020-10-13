@@ -2395,7 +2395,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	if (H && change_age)
 		H.bioHolder.age = rand(20,80)
 
-	if (H?.organHolder && H.organHolder.head && H.organHolder.head.donor_appearance) // aaaa
+	if (H?.organHolder?.head?.donor_appearance) // aaaa
 		H.organHolder.head.donor_appearance.CopyOther(AH)
 
 	SPAWN_DBG(1 DECI SECOND)

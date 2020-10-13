@@ -110,7 +110,7 @@
 		traitor_mob.verbs += /client/proc/gearspawn_traitor
 		SHOW_TRAITOR_RADIO_TIPS(traitor_mob)
 	else
-		if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && !(traitor_mob.mind && traitor_mob.mind.special_role == "spy"))
+		if (!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && !(traitor_mob.mind && traitor_mob.mind.special_role == "spy"))
 			SHOW_TRAITOR_PDA_TIPS(traitor_mob)
 
 		if (istype(R, /obj/item/device/radio))

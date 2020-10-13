@@ -819,7 +819,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				return
 			logTheThing("station", user, null, "writes on [src] with [pen] at [showCoords(src.x, src.y, src.z)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
-			if (pen.uses_handwriting && user?.mind && user.mind.handwriting)
+			if (pen.uses_handwriting && user?.mind?.handwriting)
 				src.font = user.mind.handwriting
 				src.webfont = 1
 			else if (pen.font)

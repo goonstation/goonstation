@@ -839,7 +839,7 @@ function lineEnter (ev)
 		//qdel(signal)
 		if (signal)
 
-			if (length(reusable_signals) < 11)
+			if (reusable_signals && reusable_signals.len < 11)
 				if (!(signal in reusable_signals))
 					reusable_signals += signal
 				signal.wipe()
@@ -858,7 +858,7 @@ function lineEnter (ev)
 			//qdel(signal)
 
 			if (signal)
-				if (length(reusable_signals) < 11)
+				if (reusable_signals && reusable_signals.len < 11)
 					if (!(signal in reusable_signals))
 						reusable_signals += signal
 					signal.wipe()

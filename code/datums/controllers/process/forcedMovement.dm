@@ -50,7 +50,7 @@ datum/controller/process/fMove
 					EndSpacePush(M)
 					continue
 
-				if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+				if (T && T.turf_flags & CAN_BE_SPACE_SAMPLE)
 					var/prob_slip = 5
 
 					if (tmob.hasStatus("handcuffed"))
