@@ -124,7 +124,7 @@ ABSTRACT_TYPE(/datum/objective/miscreant)
 
 ABSTRACT_TYPE(/datum/objective/miscreantrp)
 /datum/objective/miscreantrp
-  shoes
+	shoes
 		explanation_text = "Through trade, sweet-talking, light extortion, blackmail, and other devilish, but non-violent means, secure and deep-fry as many shoes as possible."
 
 	bar
@@ -162,7 +162,7 @@ ABSTRACT_TYPE(/datum/objective/miscreantrp)
 
 	exterminator
 		explanation_text = "Kill as many non-monkey, non-pet animals aboard the station as possible and bring their corpses to the bridge. Once finished, claim to be a trained exterminator and demand payment for your services."
-		
+
 	business
 		explanation_text = "Establish a business and attempt to convince the command staff and security to recognize the legitimacy of your emerging enterprise."
 
@@ -171,7 +171,7 @@ ABSTRACT_TYPE(/datum/objective/miscreantrp)
 
 	narc
 		explanation_text = "Forge evidence and bribe people into testifying that an entire department is involved in the illegal drug trade with the goal of convincing security to raid that department."
-		
+
 	water
 		explanation_text = "Become an obnoxious hydration advocate. Constantly remind people to drink lots of water."
 
