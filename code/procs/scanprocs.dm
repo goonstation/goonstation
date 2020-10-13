@@ -246,23 +246,23 @@
 /proc/obfuscate_organ_health(var/obj/item/organ/O)
 	if (!O)
 		return null
-	. = ""
+	var/list/ret = list()
 	var/damage = O.get_damage()
 	if (damage >= O.MAX_DAMAGE)
-		. = "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
+		ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
 	else if (damage >= O.MAX_DAMAGE*0.9)
-		. = "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
+		ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
 	else if (damage >= O.MAX_DAMAGE*0.65)
-		. = "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
+		ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
 	else if (damage >= O.MAX_DAMAGE*0.30)
-		. = "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
+		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
-		. = "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
+		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
 	else if (O.robotic)
-		. = "<br><span style='color:purple'><b>[O.name]</b>"
+		ret += "<br><span style='color:purple'><b>[O.name]</b></span>"
 	if (O.robotic)
-		. = (. + "<span style='color:purple'> - Robotic organ detected</span>")
-	return
+		ret += "<span style='color:purple'> - Robotic organ detected</span>"
+	return ret.Join()
 
 /proc/update_medical_record(var/mob/living/carbon/human/M)
 	if (!M || !ishuman(M))
