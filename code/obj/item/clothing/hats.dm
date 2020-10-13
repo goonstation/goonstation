@@ -1189,3 +1189,9 @@
 	desc = "A highly advanced textile experience!"
 	icon_state = "danberet"
 	item_state = "danberet"
+
+/obj/item/clothing/head/janiberet
+	name = "Head of Sanitation beret"
+	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
+	icon_state = "janitorberet"
+	item_state = "janitorberet"
