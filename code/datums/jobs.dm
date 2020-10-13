@@ -708,7 +708,7 @@
 			return
 		M.bioHolder.AddEffect("training_miner")
 		if (prob(20) && !M.mutantrace)
-			M.bioHolder.AddEffect("dwarf") // heh
+			M.bioHolder.AddEffect("dwarf", magical=1) // heh
 
 /datum/job/engineering/mechanic
 	name = "Mechanic"
@@ -794,7 +794,7 @@
 		if (!M)
 			return
 		if (prob(20))
-			M.bioHolder.AddEffect("accent_swedish")
+			M.bioHolder.AddEffect("accent_swedish", magical=1)
 
 /datum/job/civilian/barman
 	name = "Barman"
@@ -917,10 +917,9 @@
 		..()
 		if (!M)
 			return
-		var/datum/bioEffect/incurableClowniness = M.bioHolder.AddEffect("clumsy")
-		incurableClowniness.curable_by_mutadone = 0
+		var/datum/bioEffect/incurableClowniness = M.bioHolder.AddEffect("clumsy", magical=1)
 		if (prob(50))
-			M.bioHolder.AddEffect("accent_comic")
+			M.bioHolder.AddEffect("accent_comic", magical=1)
 
 // AI and Cyborgs
 
@@ -1281,8 +1280,8 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("mute")
-		M.bioHolder.AddEffect("blankman")
+		M.bioHolder.AddEffect("mute", magical=1)
+		M.bioHolder.AddEffect("blankman", magical=1)
 
 // randomizd gimmick jobs
 
@@ -1537,7 +1536,7 @@
 			bee.name = pick_string("bee_names.txt", "beename")
 			bee.name = replacetext(bee.name, "larva", "bee")
 
-		M.bioHolder.AddEffect("bee") //They're one with the bees!
+		M.bioHolder.AddEffect("bee", magical=1) //They're one with the bees!
 
 /datum/job/special/random/souschef
 	name = "Sous-Chef"
@@ -1671,7 +1670,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("regenerator")
+		M.bioHolder.AddEffect("regenerator", magical=1)
 
 /datum/job/special/halloween/candy_salesman
 	name = "Candy Salesman"
@@ -1713,7 +1712,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("quiet_voice")
+		M.bioHolder.AddEffect("quiet_voice", magical=1)
 
 /datum/job/special/halloween/wanna_bee
 	name = "WannaBEE"
@@ -1737,7 +1736,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("drunk_bee")
+		M.bioHolder.AddEffect("drunk_bee", magical=1)
 
 /datum/job/special/halloween/dracula
 	name = "Discount Dracula"
@@ -1763,8 +1762,8 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("aura")
-		M.bioHolder.AddEffect("cloak_of_darkness")
+		M.bioHolder.AddEffect("aura", magical=1)
+		M.bioHolder.AddEffect("cloak_of_darkness", magical=1)
 
 /datum/job/special/halloween/werewolf
 	name = "Discount Werewolf"
@@ -1786,7 +1785,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("jumpy")
+		M.bioHolder.AddEffect("jumpy", magical=1)
 
 /datum/job/special/halloween/mummy
 	name = "Discount Mummy"
@@ -1807,8 +1806,8 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("aura")
-		M.bioHolder.AddEffect("midas")
+		M.bioHolder.AddEffect("aura", magical=1)
+		M.bioHolder.AddEffect("midas", magical=1)
 
 /datum/job/special/halloween/hotdog
 	name = "Hot Dog"
@@ -1850,8 +1849,8 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("lizard")
-		M.bioHolder.AddEffect("loud_voice")
+		M.bioHolder.AddEffect("lizard", magical=1)
+		M.bioHolder.AddEffect("loud_voice", magical=1)
 
 /datum/job/special/halloween/macho
 	name = "Discount Macho Man"
@@ -1876,7 +1875,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("accent_chav")
+		M.bioHolder.AddEffect("accent_chav", magical=1)
 
 /datum/job/special/halloween/ghost
 	name = "Ghost"
@@ -1891,7 +1890,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("chameleon")
+		M.bioHolder.AddEffect("chameleon", magical=1)
 
 /datum/job/special/halloween/ghost_buster
 	name = "Ghost Buster"
@@ -1937,8 +1936,8 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("shiny")
-		M.bioHolder.AddEffect("healing_touch")
+		M.bioHolder.AddEffect("shiny", magical=1)
+		M.bioHolder.AddEffect("healing_touch", magical=1)
 
 /datum/job/special/halloween/vendor
 	name = "Costume Vendor"
@@ -1978,7 +1977,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("hell_fire")
+		M.bioHolder.AddEffect("hell_fire", magical=1)
 
 /datum/job/special/halloween/remy
 	name = "Remy"
@@ -2251,7 +2250,7 @@
 			return
 		M.bioHolder.AddEffect("training_miner")
 		if (prob(20) && !M.mutantrace)
-			M.bioHolder.AddEffect("dwarf") // heh
+			M.bioHolder.AddEffect("dwarf", magical=1) // heh
 
 /datum/job/special/machoman
 	name = "Macho Man"
@@ -2379,7 +2378,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("mute")
+		M.bioHolder.AddEffect("mute", magical=1)
 
 /datum/job/daily/tuesday
 	name = "Barber"
