@@ -2618,7 +2618,7 @@
 	name = "Launcher PBR Ammo"
 	item_paths = list("MET-1", "CON-1", "CRY-1")
 	item_names = list("Metal", "Conductive Material", "Crystal")
-	item_amounts = list(2,4)
+	item_amounts = list(2,4,1)
 	item_outputs = list(/obj/item/ammo/bullets/pbr)
 	time = 10 SECONDS
 	create = 1
@@ -2790,7 +2790,7 @@
 	name = "Shovel"
 	item_paths = list("MET-3", "CON-2")
 	item_names = list("Dense Metal","High Energy Conductor")
-	item_amounts = list(25)
+	item_amounts = list(25, 5)
 	item_outputs = list(/obj/item/shovel)	//this is powerful)
 	time = 40 SECONDS
 	create = 1
