@@ -917,7 +917,7 @@
 		..()
 		if (!M)
 			return
-		var/datum/bioEffect/incurableClowniness = M.bioHolder.AddEffect("clumsy", magical=1)
+		M.bioHolder.AddEffect("clumsy", magical=1)
 		if (prob(50))
 			M.bioHolder.AddEffect("accent_comic", magical=1)
 
