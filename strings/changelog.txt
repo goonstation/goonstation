@@ -1,4 +1,9 @@
 
+(t)mon oct 12 20
+(u)Carbadox
+(p)2416
+(e)🆕🎨|feature, sprites
+(*)Added 3 new Janitor job rewards. Red bucket, orange mop and Head of Sanitations beret as level 5, level 15 and level 20 rewards respectively.
 (t)sun oct 11 20
 (u)RSG250
 (p)2372
