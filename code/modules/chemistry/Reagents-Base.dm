@@ -693,7 +693,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1 )
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 30 * mult, 1)
+				M.changeStatus("n_radiation", 30 * mult, 1)
 				..()
 				return
 
