@@ -84887,9 +84887,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
 "noa" = (
-/obj/suggestion_box{
-	name = "\proper yass' suggestion box"
-	},
+/obj/suggestion_box,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
 "nsm" = (
