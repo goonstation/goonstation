@@ -250,9 +250,6 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	tarmunora
 		ckey = "tarmunora"
 		name = "Office of yass"
-	tobba
-		ckey = "tobba"
-		name =  "Office of Tobba"
 	urs
 		ckey = "ursulamajor"
 		name = "Office of UrsulaMajor"
@@ -313,7 +310,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 /obj/machinery/door/unpowered/wood/sordBloodDoor
 	open()
 		. = ..()
-		if(.) 
+		if(.)
 			var/const/fluid_amount = 50
 			var/datum/reagents/R = new /datum/reagents(fluid_amount)
 			R.add_reagent("blood", fluid_amount)
