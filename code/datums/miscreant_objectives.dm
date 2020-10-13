@@ -125,58 +125,57 @@ ABSTRACT_TYPE(/datum/objective/miscreant)
 ABSTRACT_TYPE(/datum/objective/miscreantrp)
 /datum/objective/miscreantrp
 shoes
-		explanation_text = “Through trade, sweet-talking, light extortion, blackmail, and other devilish, but non-violent means, secure and deep-fry as many shoes as possible.”
+		explanation_text = "Through trade, sweet-talking, light extortion, blackmail, and other devilish, but non-violent means, secure and deep-fry as many shoes as possible."
 
 	bar
-		explanation_text = “Set up and aggressively market an illicit bar to compete with the Barman, try to draw as many customers away as possible!”
+		explanation_text = "Set up and aggressively market an illicit bar to compete with the Barman, try to draw as many customers away as possible!"
 
 	kitchen
-		explanation_text = “Set up and aggressively market an illicit kitchen to compete with the Chef, try to draw as many customers away as possible!”
+		explanation_text = "Set up and aggressively market an illicit kitchen to compete with the Chef, try to draw as many customers away as possible!"
 
 	salvage
-		explanation_text = “Gather as many items as possible from maint-tunnels and spare rooms, try to sell them to the crew for a profit.”
+		explanation_text = "Gather as many items as possible from maint-tunnels and spare rooms, try to sell them to the crew for a profit."
 
 	secret
-		explanation_text = “Spread misinformation about a terrible event to incite a panic among the crew. If caught, claim it was a safety drill.”
+		explanation_text = "Spread misinformation about a terrible event to incite a panic among the crew. If caught, claim it was a safety drill."
 
 	ai
-		explanation_text = “Start and deliver a petition to the captain to secure equal rights for the AI and cyborgs. Try to get as many signatures as you can.”
+		explanation_text = "Start and deliver a petition to the captain to secure equal rights for the AI and cyborgs. Try to get as many signatures as you can."
 
 	union
-		explanation_text = “Work with your coworkers to found a union. Once formed, make increasingly radical demands for pay and benefits to command.”
+		explanation_text = "Work with your coworkers to found a union. Once formed, make increasingly radical demands for pay and benefits to command."
 
 	museum
-		explanation_text = “Found and curate a museum.”
+		explanation_text = "Found and curate a museum."
 
 	party
-		explanation_text = “Single out a crew member and throw them a surprise party.”
+		explanation_text = "Single out a crew member and throw them a surprise party."
 
 	mascot
-		explanation_text = “Go on a campaign to establish a station mascot.”
+		explanation_text = "Go on a campaign to establish a station mascot."
 
 	shrubs
-		explanation_text = “Destroy as many shrubs as you can. Replace the destroyed shrubs with other objects. If caught, claim to be balancing the Feng-Shui of the station.”
+		explanation_text = "Destroy as many shrubs as you can. Replace the destroyed shrubs with other objects. If caught, claim to be balancing the Feng-Shui of the station."
 
 	detective
-		explanation_text = “Found a private detective agency and attempt to solve cases before the detective can. Come up with absurd explanations for crimes and insist that security is secretly in on it.”
+		explanation_text = "Found a private detective agency and attempt to solve cases before the detective can. Come up with absurd explanations for crimes and insist that security is secretly in on it."
 
 	exterminator
-		explanation_text = “Kill as many non-monkey, non-pet animals aboard the station as possible and bring their corpses to the bridge. Once finished, claim to be a trained exterminator and demand payment for your services.”
+		explanation_text = "Kill as many non-monkey, non-pet animals aboard the station as possible and bring their corpses to the bridge. Once finished, claim to be a trained exterminator and demand payment for your services."
 		
 	business
-
-		explanation_text = “Establish a business and attempt to convince the command staff and security to recognize the legitimacy of your emerging enterprise.”
+		explanation_text = "Establish a business and attempt to convince the command staff and security to recognize the legitimacy of your emerging enterprise."
 
 	primitivism
-		explanation_text = “Attempt to convince the crew that everything was better in the old days. Try to convince as many humans as possible to become monkeys, and advocate for a return to pre-industrial technology.”
+		explanation_text = "Attempt to convince the crew that everything was better in the old days. Try to convince as many humans as possible to become monkeys, and advocate for a return to pre-industrial technology."
 
 	narc
-		explanation_text = “Forge evidence and bribe people into testifying that an entire department is involved in the illegal drug trade with the goal of convincing security to raid that department.”
-
+		explanation_text = "Forge evidence and bribe people into testifying that an entire department is involved in the illegal drug trade with the goal of convincing security to raid that department."
+		
 	water
-		explanation_text = “Become an obnoxious hydration advocate. Constantly remind people to drink lots of water.”
+		explanation_text = "Become an obnoxious hydration advocate. Constantly remind people to drink lots of water."
 
 	missionary
-		explanation_text = “Found a new religion and be as obnoxious as you can about spreading said religion. Ho door-to-door between apartments and attempt to convince people to convert.”
+		explanation_text = "Found a new religion and be as obnoxious as you can about spreading said religion. Ho door-to-door between apartments and attempt to convince people to convert."
 
 #endif
