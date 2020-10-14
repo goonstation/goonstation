@@ -1,4 +1,9 @@
 
+(t)wed oct 14 20
+(u)BatElite
+(p)2408
+(e)🆕|feature
+(+)Ghostdrones now ignore Manta's water currents so long as the magnetic tether is functional.
 (t)tue oct 13 20
 (u)Arivias
 (p)2414
