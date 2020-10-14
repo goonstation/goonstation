@@ -291,6 +291,15 @@ obj/structure/ex_act(severity)
 	virtual
 		icon = 'icons/effects/VR.dmi'
 
+	anti_zombie
+		name = "anti-zombie wooden barricade"
+		attack_hand(mob/user as mob)
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if (H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
+					H.set_loc(get_turf(src))
+			..()
+			
 	proc/checkhealth()
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'><b>[src] collapses!</b></span>")
