@@ -1,4 +1,9 @@
 
+(t)tue oct 13 20
+(u)Arivias
+(p)2414
+(e)🆕|feature
+(*)Added a 'pop' feature to the MechComp selection component.
 (t)mon oct 12 20
 (u)RSG250
 (p)2406
@@ -26,7 +31,7 @@
 (e)🆕|feature
 (*)"This object menaces with spikes of..." medal reintroduced. Try your hand at crafting the ultimate mining tool!
 (u)kyle
-(+)Kudzumen now have a chance 7%(per tick) to cure their heart attack if they get it if they are receiving the healing benefits of standing on kudzu with max nutrients. 
+(+)Kudzumen now have a chance 7%(per tick) to cure their heart attack if they get it if they are receiving the healing benefits of standing on kudzu with max nutrients.
 (t)thu oct 08 20
 (u)adharainspace
 (p)2363

@@ -567,7 +567,7 @@
 	//this is terrible, but I do anyway.
 	can_infect/bubs
 		strain = 1
-	
+
 	can_infect/spitter
 		strain = 2
 
@@ -593,7 +593,7 @@
 				make_spitter(M)
 
 		M.add_stam_mod_max("zombie", 100)
-		M.add_stam_mod_regen("zombie", 15)
+		M.add_stam_mod_regen("zombie", -5)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("fat")
@@ -1522,11 +1522,11 @@
 	New(var/mob/living/carbon/human/H)
 		..(H)
 		SPAWN_DBG(0)	//ugh
-			H.max_health -= 50
-			H.health = max(H.max_health, H.health)
+			H.setStatus("maxhealth-", null, -50)
 			H.add_stam_mod_max("kudzu", -100)
 			H.add_stam_mod_regen("kudzu", -5)
 			if(ishuman(mob))
+				H.bioHolder.AddEffect("xray", magical=1)
 				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
 				H.abilityHolder.owner = H
 				H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)
@@ -1551,15 +1551,14 @@
 			H.remove_stam_mod_max("kudzu")
 			H.remove_stam_mod_regen("kudzu")
 		return ..()
-
+/* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead
 	// vision modifier (see_mobs, etc i guess)
 	sight_modifier()
 		mob.sight |= SEE_TURFS
 		mob.sight |= SEE_MOBS
 		mob.sight |= SEE_OBJS
 		mob.see_in_dark = SEE_DARK_FULL
-		return
-
+*/
 	//Should figure out what I'm doing with this and the onLife in the abilityHolder one day. I'm thinking, maybe move it all to the abilityholder, but idk, composites are weird.
 	onLife(var/mult = 1)
 		if (!mob.abilityHolder)
