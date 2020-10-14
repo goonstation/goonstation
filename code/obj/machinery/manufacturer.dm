@@ -2374,8 +2374,8 @@
 	free_resources = list(/obj/item/material_piece/cloth/cottonfabric,/obj/item/material_piece/mauxite,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz)
 	accept_blueprints = 0
 	available = list(
-	/datum/manufacture/engspacesuit,,
-	/datum/manufacture/breathmask,,
+	/datum/manufacture/engspacesuit,
+	/datum/manufacture/breathmask,
 	/datum/manufacture/suture,
 	/datum/manufacture/scalpel,
 	/datum/manufacture/flashlight,
