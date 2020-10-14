@@ -610,6 +610,7 @@
 		M.add_sm_light("glowy", list(94, 209, 31, 175))
 		M.bioHolder.AddEffect("shoot_limb")
 		M.bioHolder.AddEffect("acid_bigpuke")
+		boutput(M, "<h2><span class='alert'><B>You're a spitter zombie, check your BIOEFFECTS for your POWERS!</B></span></h2>")
 
 	onLife(var/mult = 1)
 		..()
@@ -702,6 +703,13 @@
 
 					mob.emote("scream")
 					mob.visible_message("<span class='alert'><B>[mob]</B> rises from the dead!</span>")
+
+					if (strain == 0 && prob(25))	//chance to be one or the other
+						strain = rand(1,2)
+						if(strain == 1) //Bubs
+							make_bubs(M)
+						if(strain == 2) // spitter ranged zombie
+							make_spitter(M)
 
 		return 1
 
