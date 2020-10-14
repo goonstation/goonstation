@@ -13,10 +13,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	var/obj/screen/spooktober_meter/meter = new()
 
 	proc/change_points(var/ckey, var/added as num)
-		if (added > 0)
-			earned_points[ckey] += added
-		else
-			spent_points[ckey] += added
+		if (ckey)
+			if (added > 0)
+				earned_points[ckey] += added
+			else
+				spent_points[ckey] += added
 		src.points += added
 		if (src.points >= MAX_POINTS)
 			do_event()
