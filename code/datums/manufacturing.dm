@@ -2605,6 +2605,25 @@
 	create = 1
 	category = "ammo"
 
+/datum/manufacture/riot_shotgun	//
+	name = "Riot Shotgun"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(20)
+	item_outputs = list(/obj/item/gun/kinetic/riotgun)
+	time = 20 SECONDS
+	create = 1
+	category = "Weapon"
+/datum/manufacture/riot_shotgun_ammo	//
+	name = "Rubber Bullet ammo"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(10)
+	item_outputs = list(/obj/item/ammo/bullets/abg)
+	time = 7 SECONDS
+	create = 1
+	category = "ammo"
+
 /datum/manufacture/riot_launcher	//
 	name = "Riot Launcher"
 	item_paths = list("MET-1")
@@ -2632,7 +2651,7 @@
 	time = 10 SECONDS
 	create = 1
 	category = "ammo"
-	/datum/manufacture/riot_launcher_ammo_tactical	//
+/datum/manufacture/riot_launcher_ammo_tactical	//
 	name = "Launcher Tactical Box"
 	item_paths = list("MET-2", "CON-1", "CRY-1")
 	item_names = list("Metal", "Conductive Material", "Crystal")
@@ -2701,7 +2720,7 @@
 	item_paths = list("MET-1")
 	item_names = list("Metal")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/plank)
+	item_outputs = list(/obj/item/plank/anti_zombie)
 	time = 5 SECONDS
 	create = 1
 	category = "Medicine"
