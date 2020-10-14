@@ -593,7 +593,7 @@
 				make_spitter(M)
 
 		M.add_stam_mod_max("zombie", 100)
-		M.add_stam_mod_regen("zombie", 15)
+		M.add_stam_mod_regen("zombie", -5)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("fat")
