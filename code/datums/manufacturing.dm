@@ -2632,7 +2632,7 @@
 	time = 10 SECONDS
 	create = 1
 	category = "ammo"
-	/datum/manufacture/riot_launcher_ammo_tactical	//
+/datum/manufacture/riot_launcher_ammo_tactical	//
 	name = "Launcher Tactical Box"
 	item_paths = list("MET-2", "CON-1", "CRY-1")
 	item_names = list("Metal", "Conductive Material", "Crystal")
