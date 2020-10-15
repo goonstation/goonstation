@@ -176,6 +176,6 @@ ABSTRACT_TYPE(/datum/objective/miscreantrp)
 		explanation_text = "Become an obnoxious hydration advocate. Constantly remind people to drink lots of water."
 
 	missionary
-		explanation_text = "Found a new religion and be as obnoxious as you can about spreading said religion. Ho door-to-door between apartments and attempt to convince people to convert."
+		explanation_text = "Found a new religion and be as obnoxious as you can about spreading said religion. Go door-to-door between apartments and attempt to convince people to convert."
 
 #endif
