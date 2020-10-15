@@ -1,5 +1,9 @@
 
 (t)thu oct 15 20
+(u)Flaborized
+(p)2356
+(e)🎨|sprites
+(+)Cloning equipment has new sprites. Port-a-Brig and Port-a-Puke now have distinct sprites.
 (u)Phuzzy
 (p)2409
 (e)🗺|mapping
