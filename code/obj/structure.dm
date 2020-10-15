@@ -293,11 +293,20 @@ obj/structure/ex_act(severity)
 
 	anti_zombie
 		name = "anti-zombie wooden barricade"
+		get_desc()
+			..()
+			. += "Looks like normal spacemen can easily pull themselves over it."
 		attack_hand(mob/user as mob)
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
 					H.set_loc(get_turf(src))
+					H.visible_message("<span class='notice'><b>[H]</b> [pick("rolls under", "jaunts over", "barrels through")] [src] slightly damaging it!</span>")
+					boutput(H, "<span class='alert'><b>OWW! You bruise yourselfslightly!</span>")
+					random_brute_damage(H, 5)
+					src.health -= rand(0,2)
+
+				return
 			..()
 			
 	proc/checkhealth()
