@@ -19,7 +19,7 @@ THROWING DARTS
 	w_class = 1.0
 	var/implanted = null
 	var/impcolor = "g"
-	var/owner = null
+	var/mob/owner = null
 	var/mob/former_implantee = null
 	var/image/implant_overlay = null
 	var/life_tick_energy = 0
@@ -271,7 +271,14 @@ THROWING DARTS
 			return
 		var/coords = src.get_coords()
 		var/myarea = get_area(src)
-		src.message = "DEATH ALERT: [src.owner][coords] in [myarea]"
+		var/has_record = src.check_for_valid_record()
+		src.message = "DEATH ALERT: [src.owner][coords] in [myarea], " //youre lucky im not onelining this
+		if (has_record) //the title for this next section of code is grammar sucks
+			if (he_or_she(src.owner) == "they")
+				src.message += "they [has_record ? "have a record in the cloner at [has_record]" : "do not have a cloning record." ]"
+			else
+				src.message += "[he_or_she(src.owner)] [has_record ? "has a record in the cloner at [has_record]" : "does not have a cloning record."]"
+
 		//DEBUG_MESSAGE("implant reporting death")
 		src.send_message()
 
@@ -288,6 +295,13 @@ THROWING DARTS
 				var/turf/T = get_turf(C)
 				if (istype(T))
 					return " at [T.x],[T.y],[T.z]"
+
+	proc/check_for_valid_record() //returns the area of the cloner where we found our valid record - jank, but idk
+		if (src.owner && src.owner.ckey)
+			for_by_tcl(comp, /obj/machinery/computer/cloning)
+				if (comp.find_record(src.owner.ckey))
+					return get_area(comp)
+		return null
 
 	proc/send_message()
 		DEBUG_MESSAGE("sending message: [src.message]")
@@ -1564,7 +1578,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			my_datum.implant_master = user
 		return 1
 
-	alter_projectile(source, var/obj/projectile/P)
+	alter_projectile(var/obj/projectile/P)
 		if (!P || !my_implant)
 			return ..()
 		my_implant.set_loc(P)

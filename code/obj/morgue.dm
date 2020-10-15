@@ -389,7 +389,7 @@
 	var/area/area = null
 	var/otherarea = null
 	var/id = 1
-	var/list/crematoriums = null
+	var/list/obj/crematorium/crematoriums = null
 
 /obj/machinery/crema_switch/New()
 	..()
@@ -399,11 +399,10 @@
 	if (src.allowed(user))
 		if (!islist(src.crematoriums))
 			src.crematoriums = list()
-			for (var/X in by_type[/obj/crematorium])
-				var/obj/crematorium/C = X
+			for_by_tcl(C, /obj/crematorium)
 				if (C.id == src.id)
 					src.crematoriums.Add(C)
-		for (var/obj/crematorium/C in src.crematoriums)
+		for (var/obj/crematorium/C as() in src.crematoriums)
 			if (!C.cremating)
 				C.cremate(user)
 	else

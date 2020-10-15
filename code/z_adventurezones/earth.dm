@@ -184,6 +184,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	maid
 		ckey = "housekeep"
 		name = "Office of Maid"
+	marknstein
+		ckey = "marknstein"
+		name = "Office of MarkNstein"
 	mbc
 		ckey = "mybluecorners"
 		name = "Office of Dotty Spud"
@@ -226,6 +229,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	simianc
 		ckey = "simianc"
 		name = "Office of C.U.T.I.E."
+	sord
+		ckey="sord213"
+		name = "Office of Sord"
 	souricelle
 		ckey = "souricelle"
 		name = "Office of Souricelle"
@@ -244,9 +250,6 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	tarmunora
 		ckey = "tarmunora"
 		name = "Office of yass"
-	tobba
-		ckey = "tobba"
-		name =  "Office of Tobba"
 	urs
 		ckey = "ursulamajor"
 		name = "Office of UrsulaMajor"
@@ -303,3 +306,16 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	concrete
 		name = "concrete"
 		icon_state = "concrete"
+
+/obj/machinery/door/unpowered/wood/sordBloodDoor
+	open()
+		. = ..()
+		if(.)
+			var/const/fluid_amount = 50
+			var/datum/reagents/R = new /datum/reagents(fluid_amount)
+			R.add_reagent("blood", fluid_amount)
+
+			var/turf/T = get_turf(src)
+			if (istype(T))
+				T.fluid_react(R,fluid_amount)
+				R.clear_reagents()

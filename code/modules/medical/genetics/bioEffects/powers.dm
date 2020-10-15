@@ -1902,6 +1902,7 @@
 	lockedTries = 8
 	stability_loss = 20
 	cooldown = 0
+	var/last_moved = 0
 	var/active = 0
 	ability_path = /datum/targetable/geneticsAbility/chameleon
 
@@ -1917,18 +1918,25 @@
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
 			L.invisibility = 0
+		if (src.active)
+			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
 
 	OnLife()
 		if(..()) return
+		if(!src.active) return
 		if(isliving(owner))
 			var/mob/living/L = owner
-			if ((world.timeofday - owner.l_move_time) >= 30 && can_act(owner) && src.active)
+			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
 				L.invisibility = 1
-			else
-				L.UpdateOverlays(null, id)
-				L.invisibility = 0
+
+	proc/decloak()
+		if(isliving(owner))
+			var/mob/living/L = owner
+			last_moved = TIME
+			L.UpdateOverlays(null, id)
+			L.invisibility = 0
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"
@@ -1944,9 +1952,13 @@
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0
+			CH.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
+			CH.decloak()
 		else
 			boutput(usr, "You start using your chameleon cloaking.")
+			CH.last_moved = TIME
 			CH.active = 1
+			CH.RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2007,6 +2019,52 @@
 		owner.reagents.clear_reagents()
 		return 0
 
+/datum/bioEffect/power/bigpuke/acidpuke
+	name = "Acidic Mass Emesis"
+	id = "acid_bigpuke"
+	ability_path = /datum/targetable/geneticsAbility/bigpuke/acid
+	cooldown = 350
+
+/datum/targetable/geneticsAbility/bigpuke/acid
+	name = "Acidic Mass Emesis"
+	desc = "BLAAAAAAAARFGHHHHHGHH"
+	icon_state = "bigpuke"
+	targeted = 1
+	has_misfire = 0
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/turf/T = get_turf(target)
+		var/list/affected_turfs = getline(owner, T)
+		var/range = 3
+		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of acidic puke!</b></span>")
+		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
+		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
+		owner.reagents.add_reagent("gvomit",20)
+		owner.reagents.add_reagent("pacid",10)
+		owner.reagents.add_reagent("radium",5)
+		var/turf/currentturf
+		var/turf/previousturf
+		for(var/turf/F in affected_turfs)
+			previousturf = currentturf
+			currentturf = F
+			if(currentturf.density || istype(currentturf, /turf/space))
+				break
+			if(previousturf && LinkBlocked(previousturf, currentturf))
+				break
+			if (F == get_turf(owner))
+				continue
+			if (get_dist(owner,F) > range)
+				continue
+			owner.reagents.reaction(F,TOUCH)
+			for(var/mob/living/L in F.contents)
+				owner.reagents.reaction(L,TOUCH)
+			for(var/obj/O in F.contents)
+				owner.reagents.reaction(O,TOUCH)
+		owner.reagents.clear_reagents()
+		return 0
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

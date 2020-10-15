@@ -44,3 +44,8 @@ var/global/list/toggleable_admin_verb_categories = list(
 #define AUDIT_ACCESS_DENIED (0 << 1)
 /// Logged whenever you try to View Variables a thing
 #define AUDIT_VIEW_VARIABLES (1 << 1)
+
+/// for audible and dectalk PM's
+#define PM_NO_ALERT 0
+#define PM_AUDIBLE_ALERT 1
+#define PM_DECTALK_ALERT 2

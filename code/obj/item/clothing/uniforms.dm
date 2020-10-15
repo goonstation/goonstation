@@ -54,7 +54,7 @@
 		var/list_counter = 0
 		src.images = list()
 
-		for (var/C as anything in src.component_images)
+		for (var/C as() in src.component_images)
 			list_counter++
 			var/image/suit_image = image(icon = src.wear_image_icon, icon_state = C, layer = MOB_CLOTHING_LAYER)
 			suit_image.icon_state = C

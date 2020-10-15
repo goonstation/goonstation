@@ -303,7 +303,7 @@ AI MODULES
 		var/list/names = list()
 		var/list/namecounts = list()
 		var/list/ais = list()
-		for (var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
+		for_by_tcl(AI, /mob/living/silicon/ai)
 			LAGCHECK(LAG_LOW)
 			var/name = AI.name
 			if (name in names)
@@ -442,7 +442,7 @@ AI MODULES
 					A.anchored = 1
 					qdel(src)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
-			for (var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
+			for_by_tcl(M, /mob/living/silicon/ai)
 				M.moustache_mode = 1
 				user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [M.name]!</span>")
 				M.update_appearance()

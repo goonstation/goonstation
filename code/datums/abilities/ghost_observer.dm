@@ -6,13 +6,22 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	var/points = 0
 	var/cur_meter_location = 0
 	var/last_meter_location = 0			//the amount of points at the last update. Used for deciding when to redraw the sprite to have less progress
-	var/net_points = list()				//assoc list of ckeys to their net points.
+	var/earned_points = list()				//assoc list of ckeys to their gained points.
+	var/spent_points = list()				//assoc list of ckeys to their spent points.
+	var/maxed_out = 0					//set to 1 if the points get up to MAX_POINTS so we can play the special event/thing
 
 	var/obj/screen/spooktober_meter/meter = new()
 
 	proc/change_points(var/ckey, var/added as num)
-		net_points[ckey] += added
+		if (ckey)
+			if (added > 0)
+				earned_points[ckey] += added
+			else
+				spent_points[ckey] += added
 		src.points += added
+		if (src.points >= MAX_POINTS)
+			do_event()
+			
 
 	proc/update()
 
@@ -26,6 +35,13 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			meter.overlays += IB
 
 		last_meter_location = cur_meter_location
+
+	proc/do_event()
+		//Only 1 per round
+		if (maxed_out)
+			return
+		maxed_out = 1
+		
 
 /obj/screen/spooktober_meter
 	icon = 'icons/mob/spooktober_ghost_hud160x32.dmi'
@@ -103,7 +119,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	deductPoints(cost)
 		..()
-		spooktober_GH.change_points(owner.client.ckey, -abs(cost))	//idk what format this comes in, I'll be safe
+		if (owner.client)
+			spooktober_GH.change_points(owner.client.ckey, -abs(cost))	//idk what format this comes in, I'll be safe
 
 
 #endif
@@ -581,7 +598,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		sleep(time_to_manifest)
 		//////////////////////////////////////////////////////////////////////
 		stop_spooking()
-			
+
 
 
 	proc/start_spooking()

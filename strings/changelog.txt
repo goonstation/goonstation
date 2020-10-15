@@ -1,5 +1,136 @@
 
+(t)thu oct 15 20
+(u)Phuzzy
+(p)2409
+(e)🗺|mapping
+(*)Adding three new radio tapes to the station! One of them is a secret though, and you'll have to go and find it yourself.
+(t)wed oct 14 20
+(u)BatElite
+(p)2408
+(e)🆕|feature
+(+)Ghostdrones now ignore Manta's water currents so long as the magnetic tether is functional.
+(t)tue oct 13 20
+(u)Arivias
+(p)2414
+(e)🆕|feature
+(*)Added a 'pop' feature to the MechComp selection component.
+(t)mon oct 12 20
+(u)RSG250
+(p)2406
+(e)🆕|feature
+(*)added Neutronium Alloy, discover how to make it!
+(u)Carbadox
+(p)2416
+(e)🆕🎨|feature, sprites
+(*)Added 3 new Janitor job rewards. Red bucket, orange mop and Head of Sanitations beret as level 5, level 15 and level 20 rewards respectively.
+(t)sun oct 11 20
+(u)RSG250
+(p)2372
+(e)🆕🎨|feature, sprites
+(*)Green Radioactive Circle event gets a shy friend, Blue Radioactive circle, who has the more deadly NEUTRON RADIATION
+(u)kyle
+(*)Changed pregame lobby timer from 150 seconds to 180 seconds. It accidentally got moved down a while ago, putting it back up a bit.
+(t)sat oct 10 20
+(u)Flaborized
+(p)2368
+(e)🎨|sprites
+(+)Added health indicator sprite animations to the Old, Mithril, and Vaporized themes, which also makes Colourblind redundant so it's been removed. New theme now contains the Colourblind theme health indicator.
+(t)fri oct 09 20
+(u)Jawns
+(p)2371
+(e)🆕|feature
+(*)"This object menaces with spikes of..." medal reintroduced. Try your hand at crafting the ultimate mining tool!
+(u)kyle
+(+)Kudzumen now have a chance 7%(per tick) to cure their heart attack if they get it if they are receiving the healing benefits of standing on kudzu with max nutrients.
+(t)thu oct 08 20
+(u)adharainspace
+(p)2363
+(e)|
+(+)if you die with a health implant, the pda message thats sent out now includes whether or not you were clonescanned.
+(u)Nebulacrity
+(p)2350
+(e)🎨|sprites
+(*)A new colorful space bee type has been discovered recently!
+(u)ThePotato97
+(p)2358
+(e)⚖🐛🆕📄|balance, bug, feature, tgui
+(+)Only head IDs can delete cloner records now.
+(u)Jawns
+(p)2373
+(e)🐛|bug
+(+)Chemicompiler isolate and dump features now work together as expected
+(+)Chemicompiler can now dump paper, thermite, and other chemicals too fun for the fluid system.
+(u)ThePotato97
+(p)2367
+(e)🆕|feature
+(+)Added github button to right panel and changed the order.
+(u)Tarmunora
+(+)Gunbot antag critters get armor equal to secvest.
+(t)wed oct 07 20
+(u)Kyle
+(+)Kudzumen heal now heals more, removes implanted bullets, heals organs, and can be used on yourself (at reduced efficacy).
+(u)ThePotato97
+(p)2312
+(e)🆕|feature
+(+)Dude... Did that bee just talk to me?
+(u)RSG250
+(p)2369
+(e)🐛|bug
+(+)Radiation burst event fixed to properly apply radiation to mobs caught inside the circles.
+(u)Spooktober
+(*)A mysterious altar has a chance at spawning in the chapel. Please investigate, but do so at your own risk. Sprites by Makki.
+(u)Kyle & BatElite
+(*)Botanists have several job rewards to go with their job XP. Changes to watering can sprites. Sprites by BatElite.
+(t)tue oct 06 20
+(u)Flaborized
+(p)2354
+(e)🎨|sprites
+(+)New wraith, vampire ghoul and ling husk sprites
+(u)makkipakki
+(p)2365
+(e)🎨|sprites
+(+)Added directional sprites to the constable helmet.
+(t)mon oct 05 20
+(u)Cenith & Phuzzy
+(p)2357
+(e)🆕🗺|feature, mapping
+(*)New radio station tape - Cloning PSA
+(u)adharainspace
+(p)2348
+(e)🆕|feature
+(+)The bodies of ghosts who have respawned as ghost critters/afterlife bar patrons/ghost vr people are now scannable/cloneable.
+(u)pali
+(+)Light switches now glow in the dark when powered
+(u)RSG250
+(p)2288
+(e)⚖|balance
+(*)Changed how choking someone is handled, should be able to choke people if it LOOKS like they can be choked
+(u)Flappybat
+(p)2187
+(e)⚖🐛|balance, bug
+(*)Fixed chameleon gene not disabling on movement
+(*)Chameleon invisibility drops when attacked, bringing closer parity to cloaking device
+(u)BatElite
+(p)2339
+(e)🆕|feature
+(+)You can now dissolve pills by using a suitable container on them instead of only the other way around. Cyborgs might find this particularly useful.
+(u)RSG250
+(p)2316
+(e)|
+(+)Made the Material Processor Deconstructable by Deconstruction Device & Scannable by device analyzer
+(u)RSG250
+(p)2289
+(e)⚖🔄|balance, rework
+(+)Frozen Farts are no longer anchored, Still pretty slippery
+(u)Flaborized
+(p)2355
+(e)🎨|sprites
+(+)New Syndicate drone sprites
 (t)sun oct 04 20
+(u)AberrantQuerist
+(p)2353
+(e)🎨|sprites
+(+)New crow sprites!
 (u)ThePotato97
 (p)2025
 (e)🆕📄|feature, tgui

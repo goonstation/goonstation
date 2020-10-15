@@ -621,22 +621,23 @@
 
 	var/shielded = 0
 
-	for (var/atom in src)
-		var/atom/A = atom
+	for (var/atom/A as() in src)
 		if (A.flags & NOSHIELD)
-			if (istype(atom,/obj/item/device/shield))
-				var/obj/item/device/shield/S = atom
+			if (istype(A,/obj/item/device/shield))
+				var/obj/item/device/shield/S = A
 				if (S.active)
 					shielded = 1
 					break
-			if (istype(atom,/obj/item/cloaking_device))
-				var/obj/item/cloaking_device/S = atom
+			if (istype(A,/obj/item/cloaking_device))
+				var/obj/item/cloaking_device/S = A
 				if (S.active)
 					shielded = 2
 					break
 
-	if (shielded == 2) src.invisibility = 2
-	else src.invisibility = 0
+	if (shielded == 2)
+		src.invisibility = 2
+	else
+		src.invisibility = 0
 
 	if (shielded)
 		UpdateOverlays(shield_image, "shield")

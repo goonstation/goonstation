@@ -61,7 +61,7 @@ TOILET
 
 			var/list/destinations = list()
 
-			for (var/obj/item/storage/toilet/T in by_type[/obj/item/storage/toilet])
+			for_by_tcl(T, /obj/item/storage/toilet)
 				if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc,/area) && T.loc:teleport_blocked))
 					continue
 				destinations.Add(T)
@@ -143,7 +143,7 @@ TOILET
 				O.vomit()
 	else
 		var/list/emergeplaces = list()
-		for (var/obj/item/storage/toilet/T in by_type[/obj/item/storage/toilet])
+		for_by_tcl(T, /obj/item/storage/toilet)
 			if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z)) continue
 			emergeplaces.Add(T)
 		if (emergeplaces.len)

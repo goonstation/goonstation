@@ -5,11 +5,11 @@
 #define MESSAGE_SHOW_TIME 	5 SECONDS
 
 /obj/machinery/computer/cloning
-	name = "Cloning console"
+	name = "Cloning Console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
-	req_access = list(access_medical_lockers) //Only used for record deletion right now.
+	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
@@ -37,6 +37,7 @@
 		pod1 = null
 		diskette = null
 		records = null
+		STOP_TRACKING
 		..()
 
 	old
@@ -74,12 +75,12 @@
 
 /obj/machinery/computer/cloning/New()
 	..()
+	START_TRACKING
 	SPAWN_DBG(0.7 SECONDS)
 		if(portable) return
 		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
 
-		show_message("")
 		var/hookup_error = FALSE
 		if (isnull(src.scanner))
 			hookup_error = TRUE
@@ -176,10 +177,10 @@
 // message = message you want to pass to the noticebox
 // status = warning/success/danger/info which changes the color of the noticebox on the frontend
 
-/obj/machinery/computer/cloning/proc/show_message(message, status)
+/obj/machinery/computer/cloning/proc/show_message(message = "", status = "info")
 	src.currentStatusMessage["text"] = message
 	src.currentStatusMessage["status"] = status
-	tgui_process.update_uis(src)
+	tgui_process?.update_uis(src)
 	//prevents us from overwriting the wrong message
 	currentMessageNumber += 1
 	var/messageNumber = currentMessageNumber
@@ -187,7 +188,7 @@
 	if(src.currentMessageNumber == messageNumber)
 		src.currentStatusMessage["text"] = ""
 		src.currentStatusMessage["status"] = ""
-		tgui_process.update_uis(src)
+		tgui_process?.update_uis(src)
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
 	if ((isnull(subject)) || (!ishuman(subject)))
@@ -210,10 +211,10 @@
 	if ((!subjMind) || (!subjMind.key))
 		if ((subject.ghost && subject.ghost.mind && subject.ghost.mind.key))
 			subjMind = subject.ghost.mind
-		else if (subject.last_client && find_dead_player("[subject.last_client.ckey]"))
-			var/mob/living/carbon/human/virtual/V = find_dead_player("[subject.last_client.ckey]")
-			if ((istype(V) && V.isghost) || inafterlifebar(V))
-				subjMind = V.mind
+		else if (subject.last_client)
+			var/mob/M = find_ghost_by_key(subject.last_client.ckey)
+			if (isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
+				subjMind = M.mind
 			else
 				show_message("Error: Mental interface failure.", "warning")
 				return
@@ -286,7 +287,7 @@
 		show_message("Abnormal reading from cloning pod.", "danger")
 		return
 
-	var/mob/selected = find_dead_player("[C.fields["ckey"]]")
+	var/mob/selected = find_ghost_by_key(C.fields["ckey"])
 
 	if (!selected)
 		show_message("Can't clone: Unable to locate mind.", "danger")
@@ -296,13 +297,13 @@
 		// leave the goddamn dnr ghosts alone
 		show_message("Cannot clone: Subject has set DNR.", "danger")
 		return
-	else
-		//for deleting the mob in the afterlife bar if cloning person from there.
-		var/mob/ALB_selection = selected
-		if (inafterlifebar(ALB_selection))
-			boutput(selected, "<span class='notice'>You are being returned to the land of the living!</span>")
-			selected = ALB_selection.ghostize()
-			qdel(ALB_selection)
+
+	if (inafterlifebar(selected) || isghostcritter(selected) || isVRghost(selected))
+		//for deleting the mob if theyre in the bar, in vr, or a ghost critter
+		var/mob/soon_to_be_deleted = selected
+		boutput(selected, "<span class='notice'>You are being returned to the land of the living!</span>")
+		selected = soon_to_be_deleted.ghostize()
+		qdel(soon_to_be_deleted)
 
 	// at this point selected = the dude we wanna revive.
 
@@ -348,20 +349,15 @@
 				src.icon_state = "c_unpowered"
 				status |= NOPOWER
 
-//Find a dead mob with a brain and client.
-/proc/find_dead_player(var/find_key, needbrain=0)
-	if (isnull(find_key))
-		return
+/// find a ghost mob (or a ghost respawned as critter in vr/afterlife bar)
+proc/find_ghost_by_key(var/find_key)
+	if (!find_key)
+		return null
 
-	for(var/mob/M in mobs)
-		//Dead people only thanks!
-		if (!(isdead(M) || isVRghost(M) || isghostcritter(M) || inafterlifebar(M)) || (!M.client))
-			continue
-		//They need a brain!
-		if (needbrain && ishuman(M) && !M:brain)
-			continue
-
-		if (M.ckey == find_key)
+	var/datum/player/player = find_player(find_key)
+	if (player?.client?.mob)
+		var/mob/M = player.client.mob
+		if (isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 			return M
 	return null
 
@@ -672,6 +668,9 @@
 		return
 	switch(action)
 		if("delete")
+			if(!src.allowed(usr))
+				show_message("You do not have permission to delete records.", "danger")
+				return TRUE
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
 				logTheThing("combat", usr, null, "deletes the cloning record [selected_record["fields"]["name"]] for player [selected_record["fields"]["ckey"]] at [log_loc(src)].")
@@ -681,6 +680,9 @@
 				show_message("Record deleted.", "danger")
 				. = TRUE
 		if("scan")
+			if(usr == src.scanner.occupant)
+				trigger_anti_cheat(usr, "tried to scan themselves using the cloning machine scanner")
+				// this doesn't need to return we still want to scan them
 			if(!isnull(src.scanner))
 				src.scan_mob(src.scanner.occupant)
 				. = TRUE
@@ -711,7 +713,11 @@
 			var/datum/computer/file/clone/cloneFile = new
 			cloneFile.name = "CloneRecord-[ckey(selected_record["fields"]["name"])]"
 			cloneFile.fields = selected_record["fields"]
-			show_message(src.diskette.root.add_file(cloneFile) ? "Save successful." : "Save error.", src.diskette.root.add_file(cloneFile) ? "info" : "warning")
+			if((src.diskette.file_used + cloneFile.size) > src.diskette.file_amount)
+				show_message("Disk is full.", "danger")
+				return TRUE
+			var/saved_status = src.diskette.root.add_file(cloneFile)
+			show_message( saved_status ? "Save successful." : "Save error.", saved_status ? "info" : "warning")
 			. = TRUE
 
 		if("eject")
@@ -761,8 +767,9 @@
 /obj/machinery/computer/cloning/ui_data(mob/user)
 	var/list/data = list()
 	var/list/recordsTemp = list()
+	data["allowedToDelete"] = src.allowed(user)
 	data["scannerGone"] = isnull(src.scanner)
-	data["occupantScanned"] = false
+	data["occupantScanned"] = FALSE
 	data["podGone"] = isnull(src.pod1)
 	if(!isnull(src.pod1))
 		data["mindWipe"] = pod1.mindwipe
@@ -785,14 +792,15 @@
 
 
 	for (var/r in records)
-		var/saved = false
+		var/saved = FALSE
 		var/obj/item/implant/health/H = locate(r["fields"]["imp"])
 		var/currentHealth = ""
-		if ((H) && (istype(H)))
+		if ((H) && istype(H))
 			currentHealth = H.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
-				saved = (F.fields["ckey"] == r["fields"]["ckey"]) ? true : false
+				if(F.fields["ckey"] == r["fields"]["ckey"])
+					saved = TRUE
 
 		recordsTemp.Add(list(list(
 			name = r["fields"]["name"],

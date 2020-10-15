@@ -206,6 +206,28 @@
 			holder.losebreath = 5
 			strangling = 1
 
+	sever(mob/user)
+		if(holder?.handcuffs)
+			var/obj/item/I = holder.handcuffs
+			holder.u_equip(I)
+			I.set_loc(holder.loc)
+		. = ..()
+
+	disposing()
+		if(holder?.handcuffs)
+			var/obj/item/I = holder.handcuffs
+			holder.u_equip(I)
+			I.set_loc(holder.loc)
+		. = ..()
+
+	remove(show_message = 1)
+		if(holder?.handcuffs)
+			var/obj/item/I = holder.handcuffs
+			holder.u_equip(I)
+			I.set_loc(holder.loc)
+		. = ..()
+
+
 /obj/item/parts/human_parts/arm/left
 	name = "left arm"
 	icon_state = "arm_left"
@@ -922,6 +944,42 @@
 		current_decomp_stage_s = decomp_stage
 		src.standImage = image('icons/mob/human.dmi', "[src.slot]_werewolf")
 		return standImage
+
+/obj/item/parts/human_parts/arm/left/zombie
+	name = "left rotten arm"
+	desc = "A rotten hunk of human junk."
+	slot = "l_arm"
+	side = "left"
+	decomp_affected = 0
+	override_attack_hand = 1
+	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
+	skintoned = 1
+	streak_descriptor = "undeadly"
+	override_attack_hand = 1
+	show_on_examine = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+/obj/item/parts/human_parts/arm/right/zombie
+	name = "right rotten arm"
+	desc = "A rotten hunk of human junk."
+	slot = "r_arm"
+	side = "right"
+	decomp_affected = 0
+	override_attack_hand = 1
+	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
+	skintoned = 1
+	streak_descriptor = "undeadly"
+	override_attack_hand = 1
+	show_on_examine = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
 
 /obj/item/parts/human_parts/arm/left/hunter
 	name = "left hunter arm"
