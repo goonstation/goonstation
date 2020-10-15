@@ -56,6 +56,11 @@
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 
+	/// the turf that the GPS is pointing the way to
+	var/turf/target_turf = null
+	/// the pointer graphic
+	var/static/image/pointer = image('icons/obj/items/pda.dmi', "pointer")
+
 	registered_owner()
 		.= registered
 
@@ -592,15 +597,22 @@
 	..()
 
 /obj/item/device/pda2/process()
+	src.overlays -= pointer
+	if(src.target_turf && (src.target_turf.z == (get_turf(src)).z))
+		var/ang = get_angle(get_turf(src), src.target_turf)
+		var/matrix/M = matrix()
+		M = M.Turn(ang)
+		M = M.Scale(0.5)
+		animate(pointer, transform = M, time = 10, loop = 0)
+		src.overlays += pointer
+
 	if(src.active_program)
 		src.active_program.process()
-
 	else
 		if(src.host_program && src.host_program.holder && (src.host_program.holder in src.master.contents))
 			src.run_program(src.host_program)
-		else
+		else if(!src.target_turf)
 			processing_items.Remove(src)
-
 	return
 
 /obj/item/device/pda2/MouseDrop(atom/over_object, src_location, over_location)

@@ -694,6 +694,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			if ( (B.path && istype(delivery,B.path)) || B.item && delivery == B.item || (B.photo_containing && istype(delivery,/obj/item/photo) && findtext(delivery.name, B.photo_containing)) )
 				if (B.delivery_area && B.delivery_area != get_area(src.hostpda))
 					user.show_text("You must stand in the designated delivery zone to send this item!", "red")
+					if (istype(B.delivery_area, /area/diner))
+						user.show_text("It can be found at the nearby space diner!", "red")
+					src.hostpda.target_turf = B.delivery_area.spyturf
+					processing_items.Add(src.hostpda)
 					return 0
 				B.claimed = 1
 				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item

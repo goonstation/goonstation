@@ -449,6 +449,7 @@ var/obj/item/dummy/click_dummy = new
 		LAGCHECK(LAG_LOW)
 		if(istype(R, areatype))
 			for (var/turf/T in R)
+				R.spyturf = T
 				. += R
 				break
 
