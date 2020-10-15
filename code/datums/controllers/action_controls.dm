@@ -1269,6 +1269,14 @@ var/datum/action_controller/actions
 		if(get_dist(owner, target) > 1 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if(ismob(owner)) //This is horrible and clunky and probably going to kill us all, I am so, so sorry.
+			var/mob/living/carbon/human/H = owner
+			if(istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/zombie))
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/zombie))
+				interrupt(INTERRUPT_ALWAYS)
+				return
 
 	onEnd()
 		..()

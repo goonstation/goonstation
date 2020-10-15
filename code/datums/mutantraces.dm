@@ -578,8 +578,8 @@
 		..()
 		if(ishuman(mob))
 			src.add_ability(mob)
-			mob.is_zombie = 1
 		M.max_health += 100
+		M.health = max(M.max_health, M.health)
 
 		if (strain == 1)
 			make_bubs(M)

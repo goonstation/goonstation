@@ -35,6 +35,8 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
+		if(target.health < 0) //If crit, instaconvert.
+			target.set_mutantrace(/datum/mutantrace/zombie/can_infect)
 		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && zombify && zombify.cooldowncheck())
 			logTheThing("combat", ownerMob, target, "zombifies [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))
