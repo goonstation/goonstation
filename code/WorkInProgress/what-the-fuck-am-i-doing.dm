@@ -1,7 +1,7 @@
 /obj/machinery/portapuke
 	name = "Port-A-Puke"
 	icon = 'icons/obj/cloning.dmi'
-	icon_state = "pod_0"
+	icon_state = "puke_0"
 	desc = "A weapon of pure terror."
 	density = 1
 	anchored = 0
@@ -148,7 +148,7 @@
 
 
 	proc/update_icon()
-		icon_state = "[src.occupant ? "pod_g" : "pod_0"]"
+		icon_state = src.occupant ? "puke_1" : "puke_0"
 		return
 
 	verb/enter()

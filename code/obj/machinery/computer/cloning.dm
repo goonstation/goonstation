@@ -713,7 +713,11 @@ proc/find_ghost_by_key(var/find_key)
 			var/datum/computer/file/clone/cloneFile = new
 			cloneFile.name = "CloneRecord-[ckey(selected_record["fields"]["name"])]"
 			cloneFile.fields = selected_record["fields"]
-			show_message(src.diskette.root.add_file(cloneFile) ? "Save successful." : "Save error.", src.diskette.root.add_file(cloneFile) ? "info" : "warning")
+			if((src.diskette.file_used + cloneFile.size) > src.diskette.file_amount)
+				show_message("Disk is full.", "danger")
+				return TRUE
+			var/saved_status = src.diskette.root.add_file(cloneFile)
+			show_message( saved_status ? "Save successful." : "Save error.", saved_status ? "info" : "warning")
 			. = TRUE
 
 		if("eject")
@@ -765,7 +769,7 @@ proc/find_ghost_by_key(var/find_key)
 	var/list/recordsTemp = list()
 	data["allowedToDelete"] = src.allowed(user)
 	data["scannerGone"] = isnull(src.scanner)
-	data["occupantScanned"] = false
+	data["occupantScanned"] = FALSE
 	data["podGone"] = isnull(src.pod1)
 	if(!isnull(src.pod1))
 		data["mindWipe"] = pod1.mindwipe
@@ -788,14 +792,15 @@ proc/find_ghost_by_key(var/find_key)
 
 
 	for (var/r in records)
-		var/saved = false
+		var/saved = FALSE
 		var/obj/item/implant/health/H = locate(r["fields"]["imp"])
 		var/currentHealth = ""
-		if ((H) && (istype(H)))
+		if ((H) && istype(H))
 			currentHealth = H.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
-				saved = (F.fields["ckey"] == r["fields"]["ckey"]) ? true : false
+				if(F.fields["ckey"] == r["fields"]["ckey"])
+					saved = TRUE
 
 		recordsTemp.Add(list(list(
 			name = r["fields"]["name"],

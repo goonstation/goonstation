@@ -358,3 +358,11 @@
 	setup_material()
 		src.setMaterial(getMaterial("coral"), appearance = 0, setname = 0)
 		..()
+
+/obj/item/material_piece/neutronium
+	name = "neutronium"
+	desc = "Neutrons condensed into a solid form."
+	icon_state = "bar"
+	setup_material()
+		src.setMaterial(getMaterial("neutronium"), appearance = 0, setname = 0)
+		..()
