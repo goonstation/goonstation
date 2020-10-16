@@ -304,6 +304,10 @@
 	name = "bee sticker"
 	icon_state = "bee"
 
+/obj/item/sticker/robuddy
+	name = "robuddy sticker"
+	icon_state = "robuddy"
+
 /obj/item/sticker/xmas_ornament
 	name = "ornament"
 	desc = "A Spacemas ornament!"
