@@ -1,5 +1,9 @@
 
 (t)fri oct 16 20
+(u)virvatuli
+(p)2437
+(e)🐛🗺|bug, mapping
+(+)Added the AI Reset Board to Atlas. Why was it missing? Nobody knows! But now it's a certified feature.
 (t)thu oct 15 20
 (u)Flaborized
 (p)2356
