@@ -2148,6 +2148,7 @@
 		/datum/manufacture/cyberliver,
 		/datum/manufacture/cyberlung_left,
 		/datum/manufacture/cyberlung_right,
+		/datum/manufacture/empty_kit,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
