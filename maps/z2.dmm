@@ -84332,14 +84332,6 @@
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/T_south,
 /area/centcom/offices/rodney)
-"hGh" = (
-/turf/unsimulated/wall{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwindow_2";
-	name = "window";
-	opacity = 0
-	},
-/area)
 "hQa" = (
 /obj/table/wood/auto/desk,
 /obj/item/paper{
@@ -84454,31 +84446,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
-"iuv" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A giant server dedicated to intercepting and answering mhelps.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "server0";
-	name = "mhelp interceptor"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Exclusively for transporting questions like \"how i pee\".";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "mhelp conduit"
-	},
-/obj/machinery/light/small/purpleish{
-	dir = 4
-	},
-/turf/unsimulated/floor/wood/eight{
-	dir = 4
-	},
-/area)
 "iwj" = (
 /obj/item/storage/toilet{
 	dir = 4;
@@ -84741,14 +84708,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"kpM" = (
-/obj/stool/chair/office/green{
-	desc = "This is a very cool gamer chair, and definitely not just a green office chair.";
-	dir = 1;
-	name = "epic gamer chair"
-	},
-/turf/unsimulated/floor/carpet/office/other,
-/area)
 "kpY" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 1
@@ -84775,13 +84734,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
-"kAm" = (
-/turf/unsimulated/wall{
-	dir = 9;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
-	},
-/area)
 "kIs" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -84891,21 +84843,6 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
-"lYZ" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Exclusively for transporting questions like \"how i pee\".";
-	dir = 10;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "mhelp conduit";
-	tag = "icon-conduit (SOUTHWEST)"
-	},
-/turf/unsimulated/floor/wood/eight{
-	dir = 4
-	},
-/area)
 "maI" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
@@ -85317,26 +85254,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
-"oMy" = (
-/obj/table/wood/auto/desk,
-/obj/item/storage/photo_album{
-	desc = "It's full of a bunch of old nerds. Looks like they're hanging out on the NSS Destiny and NSS Clarion.  Geeze, those really must be old!";
-	name = "Old photo album"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
-	desc = "It looks well loved.";
-	name = "water bottle";
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/pen{
-	desc = "It's a normal black ink pen. Looks like it has been chewed on.";
-	name = "chewed pen";
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/turf/unsimulated/floor/carpet/office/other,
-/area)
 "oNv" = (
 /obj/machinery/light{
 	dir = 1;
@@ -85403,23 +85320,6 @@
 "oZu" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hukhukhuk)
-"pea" = (
-/obj/stool/bed{
-	desc = "Looks well used.";
-	name = "adhara's bed"
-	},
-/obj/item/clothing/suit/bedsheet/green{
-	desc = "Absolutely covered in cat hair. Geeze, lint roller much??";
-	name = "green bedsheet"
-	},
-/obj/item/toy/plush/small/kitten/wizard{
-	name = "mini cathara toy"
-	},
-/obj/machinery/light/small/purpleish,
-/turf/unsimulated/floor/wood/eight{
-	dir = 4
-	},
-/area)
 "pmv" = (
 /obj/machinery/door/airlock/external{
 	icon_state = "door_locked";
@@ -85647,16 +85547,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-"qMg" = (
-/obj/window/crystal/reinforced/west,
-/obj/window/crystal/reinforced/north,
-/obj/machinery/light/small/purpleish{
-	dir = 4
-	},
-/turf/unsimulated/floor/wood/eight{
-	dir = 4
-	},
-/area)
 "qNe" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
@@ -85811,12 +85701,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"rEf" = (
-/turf/unsimulated/wall{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
-	},
-/area)
 "rEt" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -85828,13 +85712,6 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
-"rFV" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
-	},
-/area)
 "rJe" = (
 /obj/storage/crate/bin/lostandfound{
 	desc = "Just what it sounds like.";
@@ -85881,9 +85758,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
-"rOK" = (
-/turf/unsimulated/floor/carpet/office/other,
-/area)
 "rTJ" = (
 /obj/fitness/stacklifter,
 /turf/unsimulated/floor/wood/two,
@@ -86101,11 +85975,6 @@
 	icon_state = "wall3dir"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"tCO" = (
-/turf/unsimulated/floor/wood/eight{
-	dir = 4
-	},
-/area)
 "tUJ" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -86124,20 +85993,6 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
-"tYe" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/suit/hos/dress{
-	desc = "A fancy red suit with a black skirt. This one has some blood and sweat stains. Ew.";
-	name = "grungy HoS suit"
-	},
-/obj/item/clothing/head/centhat{
-	desc = "Why is it so scottish?";
-	name = "scottish captain's hat"
-	},
-/turf/unsimulated/floor/wood/eight{
-	dir = 4
-	},
-/area)
 "tZr" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
@@ -86520,24 +86375,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"wRf" = (
-/obj/table/wood/auto/desk,
-/obj/item/luggable_computer/personal{
-	pixel_y = 3
-	},
-/obj/item/sticker/heart{
-	pixel_x = -5;
-	pixel_y = 1
-	},
-/obj/item/sticker/rainbow{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/machinery/light/small/purpleish{
-	dir = 1
-	},
-/turf/unsimulated/floor/carpet/office/other,
-/area)
 "wSV" = (
 /obj/machinery/computer/announcement,
 /turf/unsimulated/floor/shuttle{
@@ -150240,10 +150077,10 @@ djq
 aIe
 daq
 cnw
-kAm
-rEf
-hGh
-rEf
+cnw
+cnw
+cnw
+cnw
 cnw
 aaa
 dkG
@@ -150542,10 +150379,10 @@ aIe
 aIe
 daq
 cnw
-rFV
-wRf
-kpM
-pea
+cnw
+cnw
+cnw
+cnw
 cnw
 aaa
 dkG
@@ -150844,10 +150681,10 @@ aIe
 aIe
 daq
 cnw
-rFV
-oMy
-rOK
-tCO
+cnw
+cnw
+cnw
+cnw
 cnw
 aaa
 dkG
@@ -151146,10 +150983,10 @@ aIe
 aIe
 daq
 cnw
-rFV
-tYe
-tCO
-tCO
+cnw
+cnw
+cnw
+cnw
 cnw
 aaa
 dkG
@@ -151448,10 +151285,10 @@ aIe
 aIe
 aaa
 cnw
-rFV
-iuv
-lYZ
-qMg
+cnw
+cnw
+cnw
+cnw
 cnw
 aaa
 dkG
