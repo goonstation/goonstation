@@ -987,7 +987,6 @@ function lineEnter (ev)
 				src.luggable = new luggable_type (src)
 				src.luggable.case = src
 				src.luggable.deployed = 0
-
 		BLOCK_SETUP(BLOCK_LARGE)
 		return
 
