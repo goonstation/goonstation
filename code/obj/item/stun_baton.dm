@@ -324,7 +324,7 @@
 		if (src.uses_electricity == 0)
 			return
 
-		if (!src.cell.charge || src.cell.charge - src.cost_normal <= 0)
+		if (!src?.cell?.charge || src.cell.charge - src.cost_normal <= 0)
 			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
 			return
 
