@@ -4,7 +4,6 @@
 	if(!.)
 		return 0 //early return from parent
 
-<<<<<<< HEAD
 	if (src.nodamage) return
 	if (src.spellshield)
 		src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
@@ -41,10 +40,6 @@
 	for (var/atom/A in src)
 		if (A.material)
 			if(src.material) src.material.triggerOnBullet(A, src, P)
-=======
-	if(istype(/atom, .))
-		return . //meatshielded
->>>>>>> ef9784549b379f9d6c27f6ef9a7995e320147a6c
 
 	var/damage = 0
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio

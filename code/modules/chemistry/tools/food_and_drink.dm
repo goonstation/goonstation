@@ -1734,7 +1734,7 @@
 			src.reagents.inert = 0
 			src.reagents.handle_reactions()
 			src.reagents.inert = 1
-			if (user.traitHolder.hasTrait("training_bartender"))
+			if (user.mind.assigned_role == "Barman")
 				JOB_XP(user, "Bartender", 2)
 				sleep (180 SECONDS) //3 minute cool down to prevent grinding XP
 		else

@@ -818,7 +818,6 @@
 		..()
 		if (!M)
 			return
-		M.traitHolder.addTrait("training_bartender")
 		M.traitHolder.addTrait("training_drinker")
 
 /datum/job/civilian/botanist

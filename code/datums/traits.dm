@@ -629,12 +629,6 @@
 	desc = "Subject is trained in generalized robustness and asskicking."
 	id = "training_security"
 
-/obj/trait/job/bartender
-	name = "Bartender Training"
-	cleanName = "Bartender Training"
-	desc = "Subject is trained in the art of mixology."
-	id = "training_bartender"
-
 // barman, detective, HoS
 /obj/trait/job/drinker
 	name = "Professional Drinker"
@@ -760,7 +754,7 @@ obj/trait/pilot
 //	id = "color_shift"
 //	points = 0
 //	isPositive = 1
-//	
+//
 //	onAdd(var/mob/owner)	Not enforcing any of them with onLife because Hemochromia is a multi-mutation thing while Achromia would darken the skin color every tick until it's pitch black.
 //		if(owner.bioHolder)
 //			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
