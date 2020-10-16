@@ -1,5 +1,9 @@
 
 (t)fri oct 16 20
+(u)Sidewinder7
+(p)2393
+(e)🆕🎨|feature, sprites
+(*)Added the Discount Superhero latejoin job.
 (u)virvatuli
 (p)2437
 (e)🐛🗺|bug, mapping
