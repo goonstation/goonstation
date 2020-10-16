@@ -18,6 +18,7 @@
 	var/emagged = 0
 	var/dialing = 0
 	var/labelling = 0
+	var/unlisted = FALSE
 	var/obj/item/phone_handset/handset = null
 	var/chui/window/phonecall/phonebook
 	var/phoneicon = "phone"
@@ -250,6 +251,7 @@
 	GetBody()
 		var/html = ""
 		for_by_tcl(P, /obj/machinery/phone)
+			if (P.unlisted) continue
 			html += "[theme.generateButton(P.phone_id, "[P.phone_id]")] <br/>"
 		return html
 
@@ -333,6 +335,9 @@
 	ringingicon = "wallphone_ringing"
 	answeredicon = "wallphone_answered"
 	dialicon = "wallphone_dial"
+
+/obj/machinery/phone/unlisted
+	unlisted = TRUE
 
 //
 //		----------------- CELL PHONE STUFF STARTS HERE ---------------------

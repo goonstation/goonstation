@@ -76648,15 +76648,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"dCx" = (
-/obj/admin_plaque{
-	name = "Admin Offices";
-	pixel_y = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lobby)
 "dCy" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
@@ -156780,7 +156771,7 @@ dMu
 dMu
 dMu
 dMu
-dCx
+dMu
 dvw
 dvy
 dvy
@@ -160132,7 +160123,7 @@ eTm
 dvw
 dvW
 dvW
-dvW
+dwZ
 dvw
 wvy
 hnB
@@ -160734,7 +160725,7 @@ dCC
 dCF
 dDN
 dvw
-dvW
+dvX
 dvW
 dvW
 dvw
