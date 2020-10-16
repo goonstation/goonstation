@@ -9,6 +9,7 @@
 	var/status = "Normal"
 	var/speedmod = 2 // how fast should the vehicle be, lower is faster
 	var/wormholeQueued = 0 //so users cant open a million inputs and bypass all cooldowns
+	var/warp_autopilot = 0		//prevents us from mistakenly moving when trying to warp. Checked in pod movement_controller
 	power_used = 0
 	system = "Engine"
 	icon_state = "engine-1"
@@ -55,6 +56,25 @@
 /obj/item/shipcomponent/engine/proc/Wormhole()
 	if (wormholeQueued || warprecharge == -1)
 		return
+	//check for sensors, maybe communications too?
+	var/obj/item/shipcomponent/sensor/S = ship.sensors
+	if (istype(S))
+		if (!S.active)
+			boutput(usr, "[ship.ship_message("Sensors inactive! Unable to calculate warp trajectory!")]")
+			return
+	else
+		boutput(usr, "[ship.ship_message("No sensors detected! Unable to calculate warp trajectory!")]")
+		return
+
+	//brake the pod, we must stop to calculate warp trajectory. 
+	if (istype(ship.movement_controller, /datum/movement_controller/pod))
+		var/datum/movement_controller/pod/MCP = ship.movement_controller
+		if (MCP.velocity_x != 0 || MCP.velocity_y != 0)
+			boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity to calculate warp destination!")]")
+			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
+			// ready = 0
+			return
+
 	var/list/beacons = list()
 	for(var/obj/warp_beacon/W in warp_beacons)
 		beacons += W
@@ -70,12 +90,39 @@
 	if (!T.allows_vehicles)
 		boutput(usr, "[ship.ship_message("Cannot create wormhole on this flooring!")]")
 		return
-	var/obj/warp_portal/P = new /obj/warp_portal( ship.loc )
-	P.target = target
-	step(P, ship.dir)
+
+	//starting warp
+	playsound(src, "sound/machines/boost.ogg", 75)
+
+	//the chargeup/runway bit
+	var/warp_dir = ship.dir
+	var/turf/prev_turf = null
+	var/turf/NT = get_turf(src)
+	var/const/max_steps = 10
+	warp_autopilot = 1
+	for(var/i=0, i<max_steps, i++)
+		NT = get_step(NT, warp_dir)
+		ship.Move(NT)
+
+		if (prev_turf == ship.loc)
+			boutput(usr, "[ship.ship_message("Insufficient runway distance to create wormhole!")]")
+			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
+			wormholeQueued = 0
+			warp_autopilot = 0
+			return
+		prev_turf = NT
+		//on the penultimate step, make the portal before we wait so they see it breifly
+		if (i == max_steps-2)
+			var/obj/warp_portal/P = new /obj/warp_portal( NT )
+			P.target = target
+			step(P, warp_dir)
+		sleep(0.5 SECONDS)
+
 	ready = 0
+	warp_autopilot = 0
 	logTheThing("station", usr, null, "creates a wormhole (pod portal) (<b>Destination:</b> [target]) at [log_loc(usr)].")
 	ready()
+
 /obj/item/shipcomponent/engine/helios
 	name = "Helios Mark-II Engine"
 	desc = "A really fast engine"
