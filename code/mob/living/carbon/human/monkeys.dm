@@ -157,7 +157,7 @@
 		if (prob(40))
 			src.emote("scream")
 		var/pals = 0
-		for (var/mob/living/carbon/human/npc/monkey/pal in by_type[/mob/living/carbon/human/npc/monkey])
+		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
 			if (get_dist(src, pal) > 7)
 				continue
 			if (pals >= 5)

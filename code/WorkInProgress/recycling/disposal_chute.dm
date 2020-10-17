@@ -74,7 +74,7 @@
 	attackby(var/obj/item/I, var/mob/user)
 		if(status & BROKEN)
 			return
-		if (istype(I,/obj/item/electronics/scanner))
+		if (istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor))
 			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
 		if (istype(I,/obj/item/satchel/))

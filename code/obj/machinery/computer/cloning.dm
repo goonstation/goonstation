@@ -5,11 +5,11 @@
 #define MESSAGE_SHOW_TIME 	5 SECONDS
 
 /obj/machinery/computer/cloning
-	name = "Cloning console"
+	name = "Cloning Console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
-	req_access = list(access_medical_lockers) //Only used for record deletion right now.
+	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
@@ -37,6 +37,7 @@
 		pod1 = null
 		diskette = null
 		records = null
+		STOP_TRACKING
 		..()
 
 	old
@@ -74,12 +75,12 @@
 
 /obj/machinery/computer/cloning/New()
 	..()
+	START_TRACKING
 	SPAWN_DBG(0.7 SECONDS)
 		if(portable) return
 		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
 
-		show_message("")
 		var/hookup_error = FALSE
 		if (isnull(src.scanner))
 			hookup_error = TRUE
@@ -176,10 +177,10 @@
 // message = message you want to pass to the noticebox
 // status = warning/success/danger/info which changes the color of the noticebox on the frontend
 
-/obj/machinery/computer/cloning/proc/show_message(message, status)
+/obj/machinery/computer/cloning/proc/show_message(message = "", status = "info")
 	src.currentStatusMessage["text"] = message
 	src.currentStatusMessage["status"] = status
-	tgui_process.update_uis(src)
+	tgui_process?.update_uis(src)
 	//prevents us from overwriting the wrong message
 	currentMessageNumber += 1
 	var/messageNumber = currentMessageNumber
@@ -187,7 +188,7 @@
 	if(src.currentMessageNumber == messageNumber)
 		src.currentStatusMessage["text"] = ""
 		src.currentStatusMessage["status"] = ""
-		tgui_process.update_uis(src)
+		tgui_process?.update_uis(src)
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
 	if ((isnull(subject)) || (!ishuman(subject)))
@@ -667,6 +668,9 @@ proc/find_ghost_by_key(var/find_key)
 		return
 	switch(action)
 		if("delete")
+			if(!src.allowed(usr))
+				show_message("You do not have permission to delete records.", "danger")
+				return TRUE
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
 				logTheThing("combat", usr, null, "deletes the cloning record [selected_record["fields"]["name"]] for player [selected_record["fields"]["ckey"]] at [log_loc(src)].")
@@ -676,6 +680,9 @@ proc/find_ghost_by_key(var/find_key)
 				show_message("Record deleted.", "danger")
 				. = TRUE
 		if("scan")
+			if(usr == src.scanner.occupant)
+				trigger_anti_cheat(usr, "tried to scan themselves using the cloning machine scanner")
+				// this doesn't need to return we still want to scan them
 			if(!isnull(src.scanner))
 				src.scan_mob(src.scanner.occupant)
 				. = TRUE
@@ -706,7 +713,11 @@ proc/find_ghost_by_key(var/find_key)
 			var/datum/computer/file/clone/cloneFile = new
 			cloneFile.name = "CloneRecord-[ckey(selected_record["fields"]["name"])]"
 			cloneFile.fields = selected_record["fields"]
-			show_message(src.diskette.root.add_file(cloneFile) ? "Save successful." : "Save error.", src.diskette.root.add_file(cloneFile) ? "info" : "warning")
+			if((src.diskette.file_used + cloneFile.size) > src.diskette.file_amount)
+				show_message("Disk is full.", "danger")
+				return TRUE
+			var/saved_status = src.diskette.root.add_file(cloneFile)
+			show_message( saved_status ? "Save successful." : "Save error.", saved_status ? "info" : "warning")
 			. = TRUE
 
 		if("eject")
@@ -756,8 +767,9 @@ proc/find_ghost_by_key(var/find_key)
 /obj/machinery/computer/cloning/ui_data(mob/user)
 	var/list/data = list()
 	var/list/recordsTemp = list()
+	data["allowedToDelete"] = src.allowed(user)
 	data["scannerGone"] = isnull(src.scanner)
-	data["occupantScanned"] = false
+	data["occupantScanned"] = FALSE
 	data["podGone"] = isnull(src.pod1)
 	if(!isnull(src.pod1))
 		data["mindWipe"] = pod1.mindwipe
@@ -780,14 +792,15 @@ proc/find_ghost_by_key(var/find_key)
 
 
 	for (var/r in records)
-		var/saved = false
+		var/saved = FALSE
 		var/obj/item/implant/health/H = locate(r["fields"]["imp"])
 		var/currentHealth = ""
-		if ((H) && (istype(H)))
+		if ((H) && istype(H))
 			currentHealth = H.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
-				saved = (F.fields["ckey"] == r["fields"]["ckey"]) ? true : false
+				if(F.fields["ckey"] == r["fields"]["ckey"])
+					saved = TRUE
 
 		recordsTemp.Add(list(list(
 			name = r["fields"]["name"],

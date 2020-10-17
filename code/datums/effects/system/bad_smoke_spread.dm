@@ -5,7 +5,7 @@
 /////////////////////////////////////////////
 
 proc/ClearBadsmokeRefs(var/atom/A)
-	for (var/datum/effects/system/bad_smoke_spread/BS in by_type[/datum/effects/system/bad_smoke_spread])
+	for_by_tcl(BS, /datum/effects/system/bad_smoke_spread)
 		if (BS.holder == A)
 			BS.holder = null
 

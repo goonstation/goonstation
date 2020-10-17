@@ -181,21 +181,6 @@
 	src.chatOutput = new /datum/chatOutput(src)
 	//src.chui = new /datum/chui(src)
 
-	//Should eliminate any local resource loading issues with chui windows
-	if (!cdn && !(!address || (world.address == src.address)))
-		var/list/chuiResources = list(
-			"browserassets/js/jquery.min.js",
-			"browserassets/js/jquery.nanoscroller.min.js",
-			"browserassets/js/chui/chui.js",
-			"browserassets/js/errorHandler.js",
-			"browserassets/css/fonts/fontawesome-webfont.eot",
-			"browserassets/css/fonts/fontawesome-webfont.svg",
-			"browserassets/css/fonts/fontawesome-webfont.ttf",
-			"browserassets/css/fonts/fontawesome-webfont.woff",
-			"browserassets/css/font-awesome.css"
-		)
-		src.loadResourcesFromList(chuiResources)
-
 	if (!isnewplayer(src.mob))
 		src.loadResources()
 
@@ -217,9 +202,7 @@
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
 
 	if (IsGuestKey(src.key))
-		if(!src.address || src.address == world.host)
-			world.log << ("Hello host or developer person! You're not logged into BYOND. You should really do something about that!")
-		else
+		if(!(!src.address || src.address == world.host)) // If you're a host or a developer locally, ignore this check.
 			var/gueststring = {"
 							<!doctype html>
 							<html>
@@ -1398,6 +1381,8 @@ menub.background-color=[_SKIN_BG];\
 menub.text-color=[_SKIN_TEXT];\
 bugreportb.background-color=[_SKIN_BG];\
 bugreportb.text-color=[_SKIN_TEXT];\
+githubb.background-color=[_SKIN_BG];\
+githubb.text-color=[_SKIN_TEXT];\
 wikib.background-color=[_SKIN_BG];\
 wikib.text-color=[_SKIN_TEXT];\
 mapb.background-color=[_SKIN_BG];\

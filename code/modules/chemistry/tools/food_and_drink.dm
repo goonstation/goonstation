@@ -1555,6 +1555,7 @@
 	item_state = "drink_glass"
 	rc_flags = RC_SPECTRO
 	initial_volume = 15
+	can_recycle = 0
 
 /obj/item/reagent_containers/food/drinks/espressocup
 	name = "espresso cup"

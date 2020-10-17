@@ -160,7 +160,7 @@
 			return 0
 #ifdef HALLOWEEN
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
-		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder		
+		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 		if (GH.spooking)
 			GH.stop_spooking()
 #endif
@@ -173,7 +173,7 @@
 
 #ifdef HALLOWEEN
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
-		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder		
+		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 		if (GH.spooking)
 			GH.stop_spooking()
 			//animate(src, )	explode?
@@ -290,7 +290,7 @@
 	RETURN_TYPE(/mob/dead/observer)
 	if(src.key || src.client)
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
-			src.hell_respawn(src.mind)
+			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
 			return null
 		var/mob/dead/observer/O = new/mob/dead/observer(src)
 		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
@@ -697,8 +697,7 @@
 			creatures[name] = F.the_football
 
 
-	for (var/X in by_type[/obj/observable])
-		var/obj/observable/O = X
+	for_by_tcl(O, /obj/observable)
 		LAGCHECK(LAG_LOW)
 		var/name = O.name
 		if (name in names)
@@ -709,8 +708,7 @@
 			namecounts[name] = 1
 		creatures[name] = O
 
-	for (var/X in by_type[/obj/item/ghostboard])
-		var/obj/item/ghostboard/GB = X
+	for_by_tcl(GB, /obj/item/ghostboard)
 		LAGCHECK(LAG_LOW)
 		var/name = "Ouija board"
 		if (name in names)
@@ -721,8 +719,7 @@
 			namecounts[name] = 1
 		creatures[name] = GB
 
-	for (var/X in by_type[/obj/item/gnomechompski])
-		var/obj/item/gnomechompski/G = X
+	for_by_tcl(G, /obj/item/gnomechompski)
 		var/name = "Gnome Chompski"
 		if (name in names)
 			namecounts[name]++
@@ -732,8 +729,7 @@
 			namecounts[name] = 1
 		creatures[name] = G
 
-	for (var/X in by_type[/obj/cruiser_camera_dummy])
-		var/obj/cruiser_camera_dummy/CR = X
+	for_by_tcl(CR, /obj/cruiser_camera_dummy)
 		var/name = CR.name
 		if (name in names)
 			namecounts[name]++
@@ -743,8 +739,7 @@
 			namecounts[name] = 1
 		creatures[name] = CR
 
-	for (var/X in by_type[/obj/item/reagent_containers/food/snacks/prison_loaf])
-		var/obj/item/reagent_containers/food/snacks/prison_loaf/L = X
+	for_by_tcl(L, /obj/item/reagent_containers/food/snacks/prison_loaf)
 		var/name = L.name
 		if (name != "strangelet loaf")
 			continue

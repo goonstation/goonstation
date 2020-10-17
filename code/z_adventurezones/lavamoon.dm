@@ -964,23 +964,22 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					dir = 2
 					return
 				src.dir = 4
+				if(prob(50)) //cheese reduction
+					src.visible_message("<span class='alert'>[src] produces a terrifying vibration!</span>")
+					for(var/atom/A in orange(3, src))
+						if(!(ismob(A) || iscritter(A))) //only target inanimate objects mostly
+							A.ex_act(1)
 				sleep(1 SECOND)
 				if (health <= 0)
 					dir = 2
 					return
-				if(prob(33)) //cheese reduction
-					src.visible_message("<span class='alert'>[src] produces a terrifying vibration!</span>")
-					for(var/atom/A in orange(3))
-						if(!(ismob(A) || iscritter(A))) //only target inanimate objects mostly
-							A.ex_act(1)
+				if (prob(80))
+					new /obj/critter/ancient_repairbot/grumpy (src.loc)
 				else
-					if (prob(80))
-						new /obj/critter/ancient_repairbot/grumpy (src.loc)
-					else
-						new /obj/critter/ancient_repairbot/security (src.loc)
-					max_bots--
+					new /obj/critter/ancient_repairbot/security (src.loc)
+				max_bots--
 
-					src.visible_message("<span class='alert'>[src] plunks out a robot! Oh dear!</span>")
+				src.visible_message("<span class='alert'>[src] plunks out a robot! Oh dear!</span>")
 				active = 0
 				dir = 2
 

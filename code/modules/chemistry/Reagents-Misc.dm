@@ -170,8 +170,9 @@ datum
 
 			reaction_turf(var/turf/T, var/amount)
 				// adding a slight delay solely to make silver fulminate foam way more fun
-				sleep(rand(0, 5))
-				pop(T, amount)
+				spawn(rand(0, 5))
+					if (src && T)
+						pop(T, amount)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/amount_passed)
 				if (method == TOUCH)
@@ -840,8 +841,7 @@ datum
 					if (!target)
 						return
 
-				for(var/atom in target)
-					var/atom/A = atom
+				for (var/atom/A as() in target)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							target.visible_message("<span class='alert'><b>[A]</b> dissolves completely!</span>")

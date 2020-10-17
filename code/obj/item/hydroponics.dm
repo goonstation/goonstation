@@ -443,11 +443,13 @@
 		//check if target is a plant pot to paste in the cosmetic plant overlay
 ///////////////////////////////////// Watering can ///////////////////////////////////////////////
 
-/obj/item/reagent_containers/glass/wateringcan/
+/obj/item/reagent_containers/glass/wateringcan
 	name = "watering can"
 	desc = "Used to water things. Obviously."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	icon_state = "watercan"
+	icon_state = "wateringcan"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'	
+	item_state = "wateringcan"
 	amount_per_transfer_from_this = 60
 	w_class = 3.0
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
@@ -457,6 +459,30 @@
 	New()
 		..()
 		reagents.add_reagent("water", 120)
+
+/obj/item/reagent_containers/glass/wateringcan/old
+	name = "antique watering can"
+	desc = "Used to water things. Obviously. But in a sort of rustic way..."
+	icon_state = "watercan_old"
+	item_state = ""				//it didn't have an in-hand icon ever...
+
+/obj/item/reagent_containers/glass/wateringcan/gold
+	name = "golden watering can"
+	desc = "Used to water things. Obviously. But it's golden..."
+	icon_state = "wateringcan_gold"
+	item_state = "wateringcan_gold"
+
+/obj/item/reagent_containers/glass/wateringcan/weed
+	name = "weed watering can"
+	desc = "Used to water things. Obviously."
+	icon_state = "wateringcan_weed"
+	item_state = "wateringcan_weed"
+
+/obj/item/reagent_containers/glass/wateringcan/rainbow
+	name = "rainbow watering can"
+	desc = "Used to water things. Obviously. It's rainbow..."
+	icon_state = "wateringcan_rainbow"
+	item_state = "wateringcan_rainbow"
 
 /////////////////////////////////////////// Compost bag ////////////////////////////////////////////////
 

@@ -18,7 +18,7 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 
-	for (var/obj/item/device/radio/beacon/R in by_type[/obj/item/device/radio/beacon])
+	for_by_tcl(R, /obj/item/device/radio/beacon)
 		if (!istype(R, /obj/item/device/radio/beacon/jones))
 			LAGCHECK(LAG_LOW)
 			var/turf/T = get_turf(R)
@@ -31,7 +31,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-	for (var/obj/item/implant/tracking/I in by_type[/obj/item/implant/tracking])
+	for_by_tcl(I, /obj/item/implant/tracking)
 		LAGCHECK(LAG_LOW)
 		if (!I.implanted || !ismob(I.loc))
 			continue

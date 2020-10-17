@@ -47,7 +47,7 @@
 /datum/geneticsrecipe/radio_brain
 	required_effects = list("psy_resist","loud_voice")
 	result = /datum/bioEffect/radio_brain
-	
+
 /datum/geneticsrecipe/blood_overdrive
 	required_effects = list("anemia","polycythemia")
 	result = /datum/bioEffect/blood_overdrive
@@ -97,11 +97,11 @@
 /datum/geneticsrecipe/tourettes
 	required_effects = list("clumsy","coprolalia")
 	result = /datum/bioEffect/tourettes
-	
+
 /datum/geneticsrecipe/buzz
 	required_effects = list("bee","stinky")
 	result = /datum/bioEffect/buzz
-	
+
 // Useless
 
 /datum/geneticsrecipe/glowy_one
@@ -185,8 +185,8 @@
 /datum/geneticsrecipe/healing_touch // Discovered
 	required_effects = list("midas","detox")
 	result = /datum/bioEffect/power/healing_touch
-	
-/datum/geneticsrecipe/healing_touch_two 
+
+/datum/geneticsrecipe/healing_touch_two
 	required_effects = list("midas","melt")
 	result = /datum/bioEffect/power/healing_touch
 
@@ -332,7 +332,7 @@
 
 /datum/geneticsrecipe/blank // Discovered
 	required_effects = list("albinism","melanism")
-	result = /datum/bioEffect/mutantrace/blank
+	result = /datum/bioEffect/color_changer/blank
 
 /datum/geneticsrecipe/skeleton // Discovered
 	required_effects = list("screamer","dead_scan")
