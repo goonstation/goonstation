@@ -534,9 +534,6 @@
 		var/mob/living/critter/flock/drone/F = owner
 		var/amounttopay = 0
 		var/difference = target.goal - target.currentmats
-		if(difference > 10)
-			amounttopay = F.resources < 10 ? F.resources : 10
-		else
-			amounttopay = F.resources < difference ? F.resources : difference
+		amounttopay = min(F.resources, difference, 10)
 		F.pay_resources(amounttopay)
 		target.currentmats += amounttopay
