@@ -1153,7 +1153,6 @@
 #undef DEFAULT_SPEED_BONUS
 #undef MEAT_LOW_LEVEL
 
-
 /obj/machinery/clonepod/automatic
 	name = "Cloning Pod Deluxe"
 	meat_level = 1.#INF
