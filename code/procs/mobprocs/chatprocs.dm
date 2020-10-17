@@ -457,7 +457,7 @@
 			speechverb = pick("makes a racket", "sings out of tune", "belts out", "flatly intones")
 		else if (loudness < 0)
 			speechverb = pick("hums", "lullabies", "softly intones")
-		else if (loudness > 0)
+		else if (singing == "loud")
 			speechverb = pick("belts out", "roars", "yodels")
 		else
 			speechverb = pick("sings",  "croons", "intones", "warbles")

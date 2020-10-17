@@ -829,13 +829,15 @@
 				ending = 0
 
 		if (singing || (src.bioHolder && src.bioHolder.HasEffect("elvis")))
-			if (src.get_brain_damage() >= 60 || (src.bioHolder && (src.bioHolder.HasEffect("unintelligable") || src.bioHolder.HasEffect("drunk"))))
+			if (src.get_brain_damage() >= 60 || (src.bioHolder && (src.bioHolder.HasEffect("unintelligable") || \
+			src.bioHolder.HasEffect("drunk") || (src.reagents && src.reagents.get_reagent_amount("ethanol") > 40))))
 				singing = "bad"
 				speech_bubble.icon_state = "notebad"
 			else
 				speech_bubble.icon_state = "note"
-				if (ending == "!")
+				if (ending == "!" || (src.bioHolder && src.bioHolder.HasEffect("loud_voice")))
 					singing = "loud"
+			playsound(src, sounds_speak["[VT]"],  55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
 		else if (ending == "?")
 			playsound(src, sounds_speak["[VT]?"], 55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
 			speech_bubble.icon_state = "?"

@@ -256,6 +256,31 @@
 		theft_target.attack_hand(src)
 		src.a_intent = src.ai_default_intent
 
+	hear_talk(mob/M as mob, messages, heardname, lang_id)
+		if (!isdead(src) && !isunconscious(src) && messages)
+			if (M.singing)
+				if (M.singing == "bad" || M.singing == "loud")
+					if (rand(4) < 1)
+						// monkey is angered by singing
+						was_harmed(M)
+						spawn(5)
+							src.visible_message("<B>[name]</B> is angry at [M] for their [M.singing] singing!", 1)
+							src.say(pick("Must take revenge for insult to music!", "I now attack you like your singing attacked my ears!"))
+					else
+						spawn(5)
+							src.visible_message(pick("<B>[name]</B> doesn't seem to like [M]'s singing", \
+							"<B>[name]</B> puts their hands over their ears", \
+							), 1)
+						// monkey merely doesn't like the singing
+							src.say(pick("You human sing worse than a baboon!", \
+							"Me know gorillas with better vocal pitch than you!", \
+							"Monkeys ears too sensitive for this cacophony!", \
+							"You sound like you singing in two keys at same time!", \
+							"Monkey no like atonal music!")) // monkeys don't know grammar but naturally know concepts like "atonal" and "cacophony"	
+							if (prob(40))
+								src.emote("scream")					
+		..()
+
 /datum/action/bar/icon/filthyPickpocket
 	id = "pickpocket"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
