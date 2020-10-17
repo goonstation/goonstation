@@ -1,7 +1,8 @@
 
+import { Fragment } from 'inferno';
 import { useBackend, useSharedState, useLocalState } from "../backend";
 import { truncate } from "../format.js";
-import { Button, NumberInput, Section, Box, Table, Tooltip, Icon, Tabs, Input, Fragment, Modal } from "../components";
+import { Button, NumberInput, Section, Box, Table, Tooltip, Icon, Tabs, Input, Modal } from "../components";
 import { Window } from "../layouts";
 
 export const titleCase = str => {
@@ -30,7 +31,6 @@ const stateMap = {
   },
 };
 
-
 export const ChemDispenser = (props, context) => {
   const { data } = useBackend(context);
   const {
@@ -53,10 +53,6 @@ export const ChemDispenser = (props, context) => {
     </Window>
   );
 };
-
-
-
-
 
 export const ReagentDispenser = (props, context) => {
   const { act, data } = useBackend(context);
@@ -116,19 +112,21 @@ export const ReagentDispenser = (props, context) => {
         {(!maximumBeakerVolume || maximumBeakerVolume
         === beakerTotalVolume) && (
           <Modal
+            className="ChemDispenser-labels"
             fontSize="20px"
             mr={2}
             p={3}>
             <Box>
               {!maximumBeakerVolume &&(
-                "No " + titleCase(beakerName) + " Inserted"
-              ) || titleCase(currentBeakerName) + " Full"}
+                "No " + beakerName + " Inserted"
+              ) || currentBeakerName + " Full"}
             </Box>
           </Modal>
         )}
-        {dispensableReagents.map((reagent, index) => (
+        {dispensableReagents.map((reagent, reagentIndex) => (
           <Button
-            key={index}
+            key={reagentIndex}
+            className="ChemDispenser-dispense-buttons"
             position="relative"
             backgroundColor={""}
             align="left"
@@ -141,18 +139,18 @@ export const ReagentDispenser = (props, context) => {
               amount: addAmount, reagentId: reagent.id,
             })}>
             <Icon
+              pt={1}
               style={{
-                "text-shadow": "0 0 3px #000;",
+                "text-shadow": "0 0 3px #000",
               }}
-              align="center"
               color={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}
               name={iconToggle ? stateMap[reagent.state].icon : "circle"} />
-            {truncate(titleCase(reagent.name), 16)}
-            {reagent.name.length > 16 && (
-              <Tooltip
-                position="bottom"
-                content={titleCase(reagent.name)} />
-            )}
+            <Tooltip.Overflow width="105px" content={reagent.name}
+              style={{
+                "line-height": "15px",
+              }}>
+              {reagent.name}
+            </Tooltip.Overflow>
           </Button>
         ))}
       </Section>
@@ -218,12 +216,13 @@ export const Beaker = (props, context) => {
               }}
               color={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}
               name={iconToggle ? stateMap[reagent.state].icon : "circle"} />
-            {truncate(titleCase(reagent.name), 33) + " ( " + reagent.volume + "u )"}
-            {reagent.name.length >= 33 && (
-              <Tooltip
-                position="bottom"
-                content={titleCase(reagent.name)} />
-            )}
+            <Tooltip.Overflow width="305px"
+              content={" ( " + reagent.volume + "u ) " + titleCase(reagent.name) }
+              style={{
+                "line-height": "15px",
+              }}>
+              {" ( " + reagent.volume + "u ) " + titleCase(reagent.name) }
+            </Tooltip.Overflow>
           </Table.Cell>
           <Table.Cell collapsing textAlign="left">
             <Box mt={0.5}>
@@ -388,7 +387,6 @@ export const ChemGroups = (props, context) => {
               {"Reagents:"}
             </Box>
           </Box>
-
           <Input
             pl={5}
             placeholder="Name"
