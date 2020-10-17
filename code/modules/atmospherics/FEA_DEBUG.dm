@@ -409,7 +409,8 @@ turf/simulated
 			var/datum/gas_mixture/GM = return_air()
 			boutput(usr, "<span class='notice'>@[x],[y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] w [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(active_hotspot)?("<span class='alert'>BURNING</span>"):(null)]")
 			if(length(GM.trace_gases))
-				for(var/datum/gas/trace_gas in GM.trace_gases)
+				for(var/G in GM.trace_gases)
+					var/datum/gas/trace_gas = G
 					boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 		force_temperature(temp as num)
@@ -579,23 +580,3 @@ mob
 			set category = "Debug"
 			getbrokeninhands()
 
-/*
-			for(var/obj/movable/floor/S in world)
-				S.icon = 'icons/turf_analysis.dmi'
-				if(S.parent)
-					if(S.parent.group_processing)
-						if(S.parent.marker == 0)
-							S.parent.marker = rand(1,5)
-						if(S.parent.borders && S.parent.borders.Find(S))
-							S.icon_state = "on[S.parent.marker]_border"
-						else
-							S.icon_state = "on[S.parent.marker]"
-
-					else
-						S.icon_state = "suspended"
-				else
-					if(S.processing)
-						S.icon_state = "individual_on"
-					else
-						S.icon_state = "individual_off"
-*/

@@ -68,6 +68,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
 	var/obj/item/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
+	move_triggered = 1
 
 	New()
 		..()

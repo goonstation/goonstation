@@ -1620,7 +1620,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
-		for(var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door])
+		for_by_tcl(D, /obj/machinery/door/airlock)
 			if (D.z == 1 && D.canAIControl() && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
 				count++
@@ -1642,7 +1642,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
-		for(var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door])
+		for_by_tcl(D, /obj/machinery/door/airlock)
 			if (D.z == 1 && D.canAIControl() && D.locked && D.arePowerSystemsOn())
 				D.locked = 0
 				D.update_icon()

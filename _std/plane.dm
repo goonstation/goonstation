@@ -97,8 +97,7 @@ client
 		game_display = new
 		src.screen += game_display
 
-		for(var/_pl in src.plane_parents)
-			var/obj/screen/plane_parent/pl = _pl
+		for(var/obj/screen/plane_parent/pl as() in src.plane_parents)
 			var/obj/screen/plane_display/display = new(pl)
 			plane_displays += display
 			if(!pl.is_screen)
@@ -122,10 +121,9 @@ client
 					P.filters = null
 
 	proc/setup_special_screens()
-		for (var/atom in plane_parents)
-			var/atom/A = atom
+		for (var/atom/A as() in plane_parents)
 			screen += A
 
 	proc/get_plane(var/plane)
-		for (var/atom/A in plane_parents)
+		for (var/atom/A as() in plane_parents)
 			if(A.plane == plane) return A

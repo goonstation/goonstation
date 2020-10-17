@@ -33596,17 +33596,27 @@
 	pixel_x = -5;
 	pixel_y = -3
 	},
-/obj/item/radio_tape/advertisement/quik_noodles{
+/obj/item/radio_tape/advertisement/quik_noodles,
+/obj/item/radio_tape/advertisement/captain_psa{
 	pixel_x = 2;
 	pixel_y = -6
 	},
-/obj/item/radio_tape/advertisement/danitos_burritos{
+/obj/item/radio_tape/advertisement/danitos_burritos,
+/obj/item/radio_tape/advertisement/security_psa{
 	pixel_x = -4;
 	pixel_y = -1
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
 	nostick = 1
+	},
+/obj/item/radio_tape/advertisement/pope_crunch{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/radio_tape/advertisement/cloning_psa{
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications)

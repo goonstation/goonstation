@@ -400,6 +400,23 @@
 		setProperty("hard", 30)
 		return ..()
 
+/datum/material/metal/neutronium
+	mat_id = "neutronium"
+	name = "neutronium"
+	desc = "Neutrons condensed into a solid form."
+	color = "#043e9b"
+	material_flags = MATERIAL_ENERGY | MATERIAL_METAL
+	alpha = 255
+
+	New()
+		setProperty("density", 100) //👀
+		setProperty("hard", 10)
+		setProperty("electrical", 70)
+		setProperty("stability", 20)
+		setProperty("n_radioactive", 85)
+		return ..()
+
+
 // Special Metals
 
 /datum/material/metal/slag
@@ -1346,4 +1363,3 @@
 /datum/material/cardboard
 
 */
-

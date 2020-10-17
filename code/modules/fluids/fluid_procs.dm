@@ -11,8 +11,10 @@
 		return 0
 	for( var/A in contents )
 		var/atom/thing = A
-		if (!A) continue
-		if(IS_SOLID_TO_FLUID(thing) && thing.density) return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
+		if (!A)
+			continue
+		if(IS_SOLID_TO_FLUID(thing) && thing.density)
+			return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
 	return 1
 
 turf/simulated/floor/plating/airless/ocean_canpass()
@@ -50,16 +52,27 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	return ..()
 
 
-/turf/proc/fluid_react(var/datum/reagents/R, var/react_volume, var/airborne = 0) //this should happen whenever a liquid reagent hits a simulated tile
+/turf/proc/fluid_react(var/datum/reagents/R, var/react_volume, var/airborne = 0, var/index = 0) //this should happen whenever a liquid reagent hits a simulated tile
 	if (react_volume <= 0) return
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
+	if (!index)
+		if (airborne)
+			for(var/reagent_id in R.reagent_list)
+				if (ban_from_airborne_fluid.Find(reagent_id)) return
+		else
+			for(var/reagent_id in R.reagent_list)
+				if (ban_from_fluid.Find(reagent_id)) return
+	else // We only care about one chem
+		var/CI = 1
+		if (airborne)
+			for(var/reagent_id in R.reagent_list)
+				if ( CI++ == index )
+					if (ban_from_airborne_fluid.Find(reagent_id)) return
+		else
+			for(var/reagent_id in R.reagent_list)
+				if ( CI++ == index )
+					if (ban_from_fluid.Find(reagent_id)) return
 
-	if (airborne)
-		for(var/reagent_id in R.reagent_list)
-			if (ban_from_airborne_fluid.Find(reagent_id)) return
-	else
-		for(var/reagent_id in R.reagent_list)
-			if (ban_from_fluid.Find(reagent_id)) return
 
 	var/datum/fluid_group/FG
 	var/obj/fluid/F
@@ -100,7 +113,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 				if (react_volume == 0)
 					react_volume = 1
 
-	R.trans_to_direct(FG.reagents,react_volume)
+	R.trans_to_direct(FG.reagents, react_volume, index=index)
 	FG.add(F, react_volume, guarantee_is_member = fluid_and_group_already_exist)
 
 	if (!airborne)

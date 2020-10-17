@@ -359,7 +359,7 @@ mob/new_player
 			var/miscreant = 0
 #ifdef MISCREANTS
 #ifndef RP_MODE
-			if (ticker && !character.client.using_antag_token && character.mind && JOB.allow_traitors != 0 && prob(10))
+			if (ticker && character.mind && !character.client.using_antag_token && JOB.allow_traitors != 0 && prob(10))
 				ticker.generate_miscreant_objectives(character.mind)
 				miscreant = 1
 #endif

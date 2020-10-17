@@ -106,7 +106,6 @@ var/global
 	"Old" = 'icons/mob/hud_human.dmi',
 	"Classic" = 'icons/mob/hud_human_classic.dmi',
 	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
-	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi',
 	"Vaporized" = 'icons/mob/hud_human_vapor.dmi')
 
 	list/customization_styles = list("None" = "none",
@@ -678,7 +677,7 @@ var/global
 			aiImagesLowPriority[key] = I
 		else
 			aiImages[key] = I
-		for(var/mob/M in by_type[/mob/living/silicon/ai])
+		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.client)
 				M << I
 		return I

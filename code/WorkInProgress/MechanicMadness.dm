@@ -447,7 +447,7 @@
 
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 			return 1
-		return SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user) & COMSIGBIT_ATTACKBY_COMPLETE ? 1 : 0
+		return ..()
 
 	pick_up_by(var/mob/M)
 		if(level != 1) return ..()
@@ -996,7 +996,7 @@
 		unReady()
 		LIGHT_UP_HOUSING
 		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
-		
+
 	proc/setPower(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Power(1 - 3):","Power setting", zap_power) as num
 		if(!in_range(src, user) || !isalive(user))
@@ -1005,7 +1005,7 @@
 		zap_power = inp
 		boutput(user, "Power set to [inp]")
 		return 1
-		
+
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_zap"
 
@@ -1904,6 +1904,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next + send", "nextplus")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous + send", "previousplus")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected", "sendCurrent")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected + remove", "popitem")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send random", "sendRand")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List","setSignalList")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List(Delimeted)","setDelimetedList")
@@ -2005,6 +2006,11 @@
 			tooltip_rebuild = 1
 			if(announce)
 				componentSay("Removed : [input.signal]")
+		return
+
+	proc/popitem(var/datum/mechanicsMessage/input)
+		sendCurrent(input)
+		remitem(input)
 		return
 
 	proc/remallitem(var/datum/mechanicsMessage/input)
@@ -2259,7 +2265,7 @@
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
 		var/list/destinations = new/list()
 
-		for(var/obj/item/mechanics/telecomp/T in by_type[/obj/item/mechanics/telecomp])
+		for_by_tcl(T, /obj/item/mechanics/telecomp)
 			if(T == src || T.level == 2 || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
 
 #ifdef UNDERWATER_MAP

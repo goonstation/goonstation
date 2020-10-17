@@ -11,6 +11,7 @@
 	icon_state = "pill0"
 	item_state = "pill"
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
+	flags = NOSPLASH
 	module_research = list("medicine" = 0.5, "science" = 0.5)
 	module_research_type = /obj/item/reagent_containers/pill
 	rand_pos = 1
@@ -37,8 +38,6 @@
 		if (src.random_icon)
 			src.create_random_icon()
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		return
 
 	attack_self(mob/user as mob)
 		if (!src.reagents || !src.reagents.total_volume)
@@ -97,6 +96,12 @@
 		return 0
 
 	attackby(obj/item/I as obj, mob/user as mob)
+		if (!I)
+			return
+		if (I.is_open_container() && I.reagents)
+			if (istype(I, /obj/item/clothing/mask/cigarette)) //Apparently you can smush a lit cigarette into a pill and destroy both
+				return
+			afterattack(I, user)	//Probably weird but afterattack contains the dissolving code
 		return
 
 	proc/create_random_icon()

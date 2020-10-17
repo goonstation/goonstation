@@ -92,7 +92,7 @@
 
 // WHAT THE ACTUAL FUCK IS THIS SHIT
 // WHO THE FUCK WROTE THIS
-/atom/proc/add_blood(mob/living/M as mob, var/amount = 5, var/reliquary = 0)
+/atom/proc/add_blood(mob/living/M as mob, var/amount = 5)
 //	if (!( isliving(M) ) || !M.blood_id)
 //		return 0
 	if (!( src.flags ) & FPRINT)
@@ -122,10 +122,7 @@
 			if (R)
 				new_icon.Blend(rgb(R.fluid_r, R.fluid_g, R.fluid_b), ICON_MULTIPLY)
 			else
-				if (reliquary)
-					new_icon.Blend("#0b1f8f", ICON_MULTIPLY)
-				else
-					new_icon.Blend(DEFAULT_BLOOD_COLOR, ICON_MULTIPLY)
+				new_icon.Blend(DEFAULT_BLOOD_COLOR, ICON_MULTIPLY)
 			new_icon.Blend(new /icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY)
 			if (I.uses_multiple_icon_states)
 				new_icon.Blend(new /icon(I.icon), ICON_UNDERLAY)
@@ -136,10 +133,7 @@
 			I.blood_type = b_type
 			if (istype(I, /obj/item/clothing))
 				var/obj/item/clothing/C = src
-				if (reliquary)
-					C.add_stain("azure-stained")
-				else
-					C.add_stain("blood-stained")
+				C.add_stain("blood-stained")
 		else if (istype(src, /turf/simulated))
 			bleed(M, amount, 5, rand(1,3), src)
 		else if (ishuman(src)) // this will add the blood to their hands or something?
@@ -295,10 +289,7 @@
 	if (!B)
 		if (T.active_liquid)
 			return
-		if (src.tracked_blood["reliquary"] == 1)
-			B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks/reliquary,get_turf(src))
-		else
-			B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
+		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
 		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
 
 	B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 1, 0, src.tracked_blood, "footprints[rand(1,2)]", src.last_move, 0)
@@ -328,10 +319,7 @@
 	if (!B)
 		if (T.active_liquid)
 			return
-		if (src.tracked_blood["reliquary"] == 1)
-			B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks/reliquary,get_turf(src))
-		else
-			B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
+		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
 		if (B)
 			B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
 		else
@@ -370,10 +358,7 @@
 	if (!B)
 		if (T.active_liquid)
 			return
-		if (src.tracked_blood["reliquary"] == 1)
-			B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks/reliquary,get_turf(src))
-		else
-			B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
+		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
 		if (B)
 			B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
 		else
