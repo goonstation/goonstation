@@ -7,14 +7,14 @@
 	var/poweruse = 0 //how much is being used
 	var/powergen = 0 //how much is being produced
 	var/datum/flock/flock = null
-	var/id = 0 //debuggin id
+	var/debugid = 0 //debuggin id
 
 /datum/flock_tile_group/New(var/f = null)
 	..()
 	if(f)
 		flock = f
 	processing_items |= src
-	id = rand(1, 1000)
+	debugid = rand(1, 1000)
 
 /datum/flock_tile_group/disposing()
 	..() //linter machine go ANGRY

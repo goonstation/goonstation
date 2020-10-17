@@ -25,13 +25,13 @@
 		src.goal = goal //???? wuh
 		src.building = building
 	else
-		boutput(src, "ERROR: No Structure Tealprint Assigned, Deleting")
-		qdel(src) //no existo if building null
+		flock_speak(null, "ERROR: No Structure Tealprint Assigned, Deleting", flock)
+		qdel(src) //no exist if building null
 
 /obj/flock_structure/ghost/process()
-	if(currentmats > goal) //incase some fucko like somehow adds more then needed???
-		var/obj/item/flockcache/c = new(src)
-		boutput(src, "ALERT: Material excess detected, ejecting excess")
+	if(currentmats > goal)
+		var/obj/item/flockcache/c = new(get_turf(src))
+		flock_speak(null, "ALERT: Material excess detected, ejecting excess", flock)
 		c.resources = (currentmats - goal)
 		src.completebuild()
 	else if(currentmats == goal)

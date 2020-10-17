@@ -53,7 +53,7 @@
 		//debuggin thing ignore this
 
 		if(usesgroups)
-			special_desc += "<br><span class='bold'>Group:</span> [group?.id]"
+			special_desc += "<br><span class='bold'>Group:</span> [group?.debugid]"
 			special_desc += "<br><span class='bold'>Connected tile:</span> ["\ref[grouptile]"]"
 
 		//debugging end

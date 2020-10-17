@@ -220,7 +220,6 @@
 				qdel(oldgroup)
 
 // TODO: make this use typecheckless lists
-// TODO: currently MASSIVE problem, it does the thing on a random group in range and not on the largest, FIX ASAP.
 
 turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by richardgere(god bless)
 	var/list/queue = list()
