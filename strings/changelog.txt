@@ -1,4 +1,9 @@
 
+(t)sat oct 17 20
+(u)Kyle
+(p)2439
+(e)|
+(*)Pod balance changes: more pod health, very slightly slower acceleration, faster pod weapon travel time, Wormholes must be made when stationary and with several tiles of clearance in front.
 (t)fri oct 16 20
 (u)Sidewinder7
 (p)2393
