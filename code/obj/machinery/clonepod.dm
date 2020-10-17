@@ -1152,3 +1152,27 @@
 #undef DEFAULT_MEAT_USED_PER_TICK
 #undef DEFAULT_SPEED_BONUS
 #undef MEAT_LOW_LEVEL
+
+
+/obj/machinery/clonepod/automatic
+	name = "Cloning Pod Deluxe"
+	meat_level = 1.#INF
+
+/obj/machinery/clonepod/automatic/New()
+	..()
+	animate_rainbow_glow(src) // rgb shit cause it looks cool
+	src.SubscribeToProcess()
+
+/obj/machinery/clonepod/automatic/disposing()
+	..()
+	src.UnsubscribeProcess()
+
+/obj/machinery/clonepod/automatic/process()
+	..()
+	if(!src.attempting)
+		var/mob/dead/observer/ghost
+		var/list/eligible = dead_player_list(allow_dead_antags = TRUE, require_client = TRUE)
+		if(eligible.len)
+			ghost = pick(eligible)
+			var/datum/mind/ghost_mind = ghost
+			growclone(ghost, ghost.real_name, ghost_mind)
