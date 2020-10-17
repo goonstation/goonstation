@@ -1,5 +1,10 @@
 
 (t)sat oct 17 20
+(u)comradef191
+(p)2366
+(e)🆕|feature
+(*)Added 9 new colours of wiring, see your local QM to order them.
+(+)Added Yellow, Orange, Blue, Green, Purple, Black, Hot-Pink, Brown & White cables.
 (u)Kyle
 (p)2439
 (e)|
