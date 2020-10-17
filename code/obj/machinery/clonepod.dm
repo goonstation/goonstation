@@ -1158,21 +1158,23 @@
 	name = "Cloning Pod Deluxe"
 	meat_level = 1.#INF
 
+/obj/machinery/clonepod/automatic/process()
+	if(!src.attempting)
+		spawn_a_ghost()
+	return..()
+
 /obj/machinery/clonepod/automatic/New()
 	..()
 	animate_rainbow_glow(src) // rgb shit cause it looks cool
-	src.SubscribeToProcess()
+	SubscribeToProcess()
 
 /obj/machinery/clonepod/automatic/disposing()
 	..()
-	src.UnsubscribeProcess()
+	UnsubscribeProcess()
 
-/obj/machinery/clonepod/automatic/process()
-	..()
-	if(!src.attempting)
-		var/mob/dead/observer/ghost
-		var/list/eligible = dead_player_list(allow_dead_antags = TRUE, require_client = TRUE)
-		if(eligible.len)
-			ghost = pick(eligible)
-			var/datum/mind/ghost_mind = ghost
-			growclone(ghost, ghost.real_name, ghost_mind)
+/obj/machinery/clonepod/automatic/proc/spawn_a_ghost()
+	for(var/mob/dead/observer/ghost in mobs)
+		var/datum/mind/ghost_mind = ghost.mind
+		if(ghost.client && !ghost_mind.dnr)
+			spawn(growclone(ghost, ghost.real_name, ghost_mind))
+			break
