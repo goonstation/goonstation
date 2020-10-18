@@ -71,7 +71,7 @@
 				rot = input_x * turn_delay
 				
 				//We're on autopilot before the warp, NO FUCKING IT UP!
-				if (owner?.engine?.warp_autopilot)
+				if (owner.engine.warp_autopilot)
 					return 0
 
 		if (!can_turn_while_parked)

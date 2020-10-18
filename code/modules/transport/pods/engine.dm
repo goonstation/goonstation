@@ -74,6 +74,12 @@
 			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
 			// ready = 0
 			return
+	else if (istype(ship.movement_controller, /datum/movement_controller/tank))
+		var/datum/movement_controller/tank/MCT = ship.movement_controller
+		if (MCT.input_x != 0 || MCT.input_y != 0)
+			boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity (be stopped) to calculate warp destination!")]")
+			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
+
 
 	var/list/beacons = list()
 	for(var/obj/warp_beacon/W in warp_beacons)
