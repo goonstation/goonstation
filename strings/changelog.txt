@@ -1,4 +1,10 @@
 
+(t)sun oct 18 20
+(u)Gonzako
+(p)2346
+(e)|
+(*)Everyone with the addict trait no longer shares their addiction with every other addict.
+(+)New allergic players joining no longer change everybody else's allergy
 (t)sat oct 17 20
 (u)Sovexe
 (p)2450
