@@ -1081,7 +1081,7 @@
 	hand_offset = -5
 	body_offset = -7
 	//	uses_human_clothes = 0 // Guess they can keep that ability for now (Convair880).
-	human_compatible = 0
+	human_compatible = TRUE
 	exclusive_language = 1
 	voice_message = "chimpers"
 	voice_name = "monkey"
