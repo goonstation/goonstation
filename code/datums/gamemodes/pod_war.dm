@@ -83,13 +83,13 @@
 
 /datum/game_mode/pod_war/proc/handle_point_change()
 
-/datum/game_mode/pod_war/proc/destroyed_critical_system(var/obj/pod_carrier_critical_system/CS)
+/datum/game_mode/pod_war/proc/announce_critical_system_destruction(var/obj/pod_carrier_critical_system/CS)
 	if (!istype(CS))
 		return 0
 
+	world << ("<h2><span class='alert'>[src?.team.name]'s [src] has been destroyed!!</span></h2>")
 
-
-
+		
 
 
 /datum/game_mode/pod_war/check_finished()
@@ -120,8 +120,10 @@
 
 	var/points = 100
 	var/list/mcguffins = list()		//Should have 4 AND ONLY 4
+	var/datum/game_mode/pod_war/mode
 
 	New(var/datum/game_mode/pod_war/mode, team)
+		src.mode = mode
 		src.team_num = team
 		if (team_num == TEAM_NANOTRASEN)
 			name = "NanoTrasen Crew"
@@ -136,7 +138,7 @@
 		points += amt
 
 		if (points <= 0)
-			ticker.mode.check_finished()
+			mode.check_finished()
 
 
 		//stolen from gang, works well enough, I don't care to make better. - kyle
@@ -279,9 +281,13 @@
 
 	disposing()
 		..()
+		if (istype(team))
+			team.change_points(-25)
+
 		if (ticker.mode == /datum/game_mode/pod_war)
 			var/datum/game_mode/pod_war/mode = ticker.mode
-			mode.destroyed_critical_system(src)
+			mode.announce_critical_system_destruction(src)
+			
 
 	ex_act(severity)
 		var/damage = 0
@@ -331,5 +337,4 @@
 			src.health -= damage
 
 		if (health <= 0)
-
-			src.visible_message("<h2><span class='alert'>[src] is destroyed!!</span></h2>")
+			qdel(src)
