@@ -2734,8 +2734,8 @@
 	category = "Medicine"
 /datum/manufacture/empty_kit
 	name = "Empty First Aid Kit"
-	item_paths = list("MET-1", "CON-1")
-	item_names = list("Metal", "Conductive Material")
+	item_paths = list("MET-2",)
+	item_names = list("Metal")
 	item_amounts = list(1, 1)
 	item_outputs = list(/obj/item/storage/firstaid/regular/empty)
 	time = 4 SECONDS
