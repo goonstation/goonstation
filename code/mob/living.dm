@@ -831,8 +831,7 @@
 				ending = 0
 
 		if (singing || (src.bioHolder && src.bioHolder.HasEffect("elvis")))
-			if (src.get_brain_damage() >= 60 || (src.bioHolder && src.bioHolder.HasEffect("unintelligable")) || \
-			(src.reagents && src.reagents.get_reagent_amount("ethanol") > 40))
+			if (src.get_brain_damage() >= 60 || (src.bioHolder && (src.bioHolder.HasEffect("unintelligable") || src.bioHolder.HasEffect("drunk"))))
 				singing = "bad"
 				speech_bubble.icon_state = "notebad"
 			else
