@@ -9,6 +9,7 @@
 (p)2439
 (e)|
 (*)Pod balance changes: more pod health, very slightly slower acceleration, faster pod weapon travel time, Wormholes must be made when stationary and with several tiles of clearance in front.
+(*)Pods/subs now have a "Brake" toggle that slows you down to a stop when toggled on.
 (t)fri oct 16 20
 (u)Sidewinder7
 (p)2393
