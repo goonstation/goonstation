@@ -98,7 +98,7 @@
 	var/warp_dir = ship.dir
 	var/turf/prev_turf = null
 	var/turf/NT = get_turf(src)
-	var/const/max_steps = 10
+	var/const/max_steps = 7
 	warp_autopilot = 1
 	for(var/i=0, i<max_steps, i++)
 		NT = get_step(NT, warp_dir)
