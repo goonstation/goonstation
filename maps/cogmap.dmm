@@ -27275,11 +27275,25 @@
 /area/station/janitor)
 "bkb" = (
 /obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bkc" = (
@@ -28287,7 +28301,6 @@
 	name = "E light switch";
 	pixel_x = 24
 	},
-/obj/table/auto,
 /obj/table/auto{
 	icon_state = "2"
 	},
@@ -28561,7 +28574,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/table/auto,
 /obj/table/auto{
 	icon_state = "1"
 	},
