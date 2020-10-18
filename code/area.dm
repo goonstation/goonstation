@@ -1021,35 +1021,35 @@
 	sound_environment = 12
 
 /area/diner/hangar
-	name = "Diner Parking"
+	name = "Space Diner Parking"
 	icon_state = "storage"
 
 /area/diner/kitchen
-	name = "Diner Kitchen"
+	name = "Space Diner Kitchen"
 	icon_state = "purple"
 
 /area/diner/dining
-	name = "Diner Seating Area"
+	name = "Space Diner Seating Area"
 	icon_state = "green"
 
 /area/diner/bathroom
-	name = "Diner Bathroom"
+	name = "Space Diner Bathroom"
 	icon_state = "showers"
 
 /area/diner/hallway
-	name = "Hallway"
+	name = "Space Diner Hallway"
 	icon_state = "blue"
 
 /area/diner/hallway/docking
-	name = "East Shuttle Docks"
+	name = "Space Diner East Shuttle Docks"
 	icon_state = "purple"
 
 /area/diner/backroom
-	name = "Diner Backroom"
+	name = "Space Diner Backroom"
 	icon_state = "green"
 
 /area/diner/solar
-	name = "Diner Solar Control"
+	name = "Space Diner Solar Control"
 	icon_state = "yellow"
 
 /area/diner/motel
@@ -1065,7 +1065,7 @@
 	icon_state = "yellow"
 
 /area/diner/motel/chemstorage
-	name = "Chemical Storage"
+	name = "Motel Chemical Storage"
 	icon_state = "orange"
 
 /area/diner/arcade

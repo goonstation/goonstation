@@ -69,6 +69,10 @@
 			if (owner && owner.engine && owner.engine.active)
 				accel = input_y * accel_pow * (reverse_gear ? -1 : 1)
 				rot = input_x * turn_delay
+				
+				//We're on autopilot before the warp, NO FUCKING IT UP!
+				if (owner.engine.warp_autopilot)
+					return 0
 
 		if (!can_turn_while_parked)
 			if (velocity_magnitude == 0)
@@ -95,6 +99,9 @@
 
 		if (next_move > world.time)
 			return min(next_rot-world.time, next_move - world.time)
+		
+		if (owner.rcs && input_x == 0 && input_y == 0)
+			accel = -brake_pow
 
 		var/delay
 		if (accel)

@@ -688,6 +688,18 @@
 /turf/unsimulated/floor/wood/four
 	icon_state = "wooden-4"
 
+/turf/unsimulated/floor/wood/five
+	icon_state = "wooden-5"
+
+/turf/unsimulated/floor/wood/six
+	icon_state = "wooden-6"
+
+/turf/unsimulated/floor/wood/seven
+	icon_state = "wooden-7"
+
+/turf/unsimulated/floor/wood/eight
+	icon_state = "wooden-8"
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/sandytile
