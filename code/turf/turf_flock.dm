@@ -162,7 +162,7 @@
 	var/datum/flock_tile_group/largestgroup = null //largest group
 	var/max_group_size = 0
 	for(var/turf/simulated/floor/feather/F in getneighbours(src))//check for nearby flocktiles
-		if(F.group && !F.broken)
+		if(F.group)
 			if(F.group.size > max_group_size)
 				max_group_size = F.group.size
 				largestgroup = F.group
