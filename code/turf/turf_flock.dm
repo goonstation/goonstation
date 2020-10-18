@@ -78,7 +78,7 @@
 	off()
 	icon_state = "floor-broken"
 	broken = 1
-	splitgroup(src.group)
+	splitgroup()
 	for(var/obj/flock_structure/f in src)
 		if(f.usesgroups)
 			f.group.removestructure(f)
@@ -190,15 +190,18 @@
 			src.initializegroup()
 		else return null
 
-/turf/simulated/floor/feather/proc/splitgroup(var/datum/flock_tile_group/oldgroup = null)
+/turf/simulated/floor/feather/proc/splitgroup()
 	var/count = 0 //count of nearby tiles
+	var/datum/flock_tile_group/oldgroup = src.group
 	for(var/turf/simulated/floor/feather/F in getneighbours(get_turf(src)))
 		count++ //enumerate nearby tiles
 //TODO: fail safe for if there are more then 1 group.
 	src.group.removetile(src)
 	src.group = null
 
-	if(count <= 1) return//if theres only one tile nearby or it by itself dont bother splitting
+	if(count <= 1) //if theres only one tile nearby or it by itself dont bother splitting
+		if(count <=0) qdel(oldgroup)
+		return
 
 	for(var/turf/simulated/floor/feather/tile in getneighbours(get_turf(src)))
 		if(tile.group == oldgroup)//check if the tile is the same as the old group
@@ -210,7 +213,7 @@
 				tile.group.addtile(tile)
 				for(var/obj/flock_structure/s in tile)
 					s.groupcheck()//reassign any structures aswell
-			qdel(oldgroup)
+	qdel(oldgroup)
 
 // TODO: make this use typecheckless lists
 
