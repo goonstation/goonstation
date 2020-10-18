@@ -2476,6 +2476,10 @@
 	name = "Battler"
 	limit = -1
 
+/datum/job/pod_pilot
+	name = "Pod Pilot"
+	limit = -1
+
 /datum/job/football
 	name = "Football Player"
 	limit = -1
