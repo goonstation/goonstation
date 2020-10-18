@@ -118,7 +118,6 @@ THROWING DARTS
 					user.show_text("[Imp] already has an implant loaded.")
 					return
 				else
-					boutput(world, "type : [src.loc.type]")
 					var/obj/item/storage/store
 					if(istype(src.loc, /obj/item/storage))
 						store = src.loc
