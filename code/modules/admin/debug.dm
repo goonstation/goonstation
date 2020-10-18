@@ -580,6 +580,8 @@ var/global/debug_messages = 0
 			if("Yes")
 				for(var/turf/simulated/wall/W in world)
 					if (W.z != 1) continue
+					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
+					if (O) continue
 					new /obj/machinery/crusher(locate(W.x, W.y, W.z))
 					W.density = 0
 
