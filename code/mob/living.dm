@@ -831,8 +831,8 @@
 				ending = 0
 
 		if (singing || (src.bioHolder && src.bioHolder.HasEffect("elvis")))
-			if (src.get_brain_damage() >= 60 || (src.bioHolder && (src.bioHolder.HasEffect("unintelligable") || \
-			src.bioHolder.HasEffect("drunk") || (src.reagents && src.reagents.get_reagent_amount("ethanol") > 40))))
+			if (src.get_brain_damage() >= 60 || (src.bioHolder && src.bioHolder.HasEffect("unintelligable")) || \
+			(src.reagents && src.reagents.get_reagent_amount("ethanol") > 40))
 				singing = "bad"
 				speech_bubble.icon_state = "notebad"
 			else
@@ -1054,7 +1054,8 @@
 					I.bump_up()
 			T = get_step(T, EAST)
 		*/
-		chat_text = make_chat_maptext(src, messages[1], "color: [src.last_chat_color];" + src.speechpopupstyle)
+		var/singing_italics = singing ? " font-style: italic;" : ""
+		chat_text = make_chat_maptext(src, messages[1], "color: [src.last_chat_color];" + src.speechpopupstyle + singing_italics)
 		if(chat_text)
 			chat_text.measure(src.client)
 			for(var/image/chat_maptext/I in src.chat_text.lines)
