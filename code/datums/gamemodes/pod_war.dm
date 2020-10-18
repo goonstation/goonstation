@@ -1,3 +1,5 @@
+#define TEAM_NANOTRASEN 1
+#define TEAM_SYNDICATE 2
 /datum/game_mode/pod_war
 	name = "pod war"
 
@@ -79,15 +81,16 @@
 
 	return 1
 
-//Give em their special jacket. and their visible hud icon
-/datum/game_mode/gang/proc/equip_commander(mob/living/carbon/human/leader)
-	if(leader.ears != null && istype(leader.ears,/obj/item/device/radio/headset))
-		// var/obj/item/device/radio/headset/H = leader.ears
-		// H.set_secure_frequency("g",leader.mind.gang.comms_frequency)
-		// H.secure_classes["g"] = RADIOCL_SYNDICATE
-		boutput(leader, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
+/datum/game_mode/pod_war/proc/handle_point_change()
 
-	return
+/datum/game_mode/pod_war/proc/destroyed_critical_system(var/obj/pod_carrier_critical_system/CS)
+	if (!istype(CS))
+		return 0
+
+
+
+
+
 
 /datum/game_mode/pod_war/check_finished()
 
@@ -107,18 +110,16 @@
 	..() // Admin-assigned antagonists or whatever.
 
 
-#define TEAM_NANOTRASEN 1
-#define TEAM_SYNDICATE 2
 /datum/pod_war_team
 	var/name = "NanoTrasen Crew"
 	var/comms_frequency = 0
-	var/area/base = null		//base ship area
+	var/area/base_area = null		//base ship area
 	var/datum/mind/commander = null
 	var/list/members = list()
 	var/team_num = 0
 
-	var/points = 50
-	var/list/mcguffins
+	var/points = 100
+	var/list/mcguffins = list()		//Should have 4 AND ONLY 4
 
 	New(var/datum/game_mode/pod_war/mode, team)
 		src.team_num = team
@@ -131,6 +132,11 @@
 
 		set_comms(mode)
 
+	proc/change_points(var/amt)
+		points += amt
+
+		if (points <= 0)
+			ticker.mode.check_finished()
 
 
 		//stolen from gang, works well enough, I don't care to make better. - kyle
@@ -211,6 +217,8 @@
 		I.icon_state = "fingerprint0"
 		I.desc = "An ID card to help open doors and identify your body."
 
+		var/obj/item/device/radio/headset/headset = new /obj/item/device/radio/headset(H)
+
 		if (team_num == TEAM_NANOTRASEN)
 			I.name = "NT Pilot"
 			I.assignment = "NT Pilot"
@@ -220,7 +228,7 @@
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
 			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/ntso(H), H.slot_head)
 			H.equip_if_possible(new /obj/item/storage/backpack/NT(H), H.slot_back)
-			H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
+			H.equip_if_possible(headset, H.slot_ears)
 
 
 		else if (team_num == TEAM_SYNDICATE)
@@ -232,7 +240,13 @@
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
 			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/specialist(H), H.slot_head)
 			H.equip_if_possible(new /obj/item/storage/backpack/syndie(H), H.slot_back)
-			H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
+			H.equip_if_possible(headset, H.slot_ears)
+
+
+		if (headset)
+			headset.set_secure_frequency("g",comms_frequency)
+			headset.secure_classes["g"] = RADIOCL_SYNDICATE
+			boutput(leader, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
 
 		H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/gun/energy/phaser_gun/self_charging(H), H.slot_belt)
@@ -241,3 +255,81 @@
 		H.set_clothing_icon_dirty()
 		// H.set_loc(pick(pod_pilot_spawns[team_num]))
 		boutput(H, "You're in the [name] faction! Mine materials, build pods, defend your space station, destroy the enemy space station!")
+
+
+/obj/pod_carrier_critical_system
+	name = "Critical System"
+	icon = 'icons/mob/hivebot.dmi'
+	icon_state = "def_radar"
+	anchored = 1
+	density = 1
+
+	var/datum/pod_war_team/team = null	//must set this in map editor or else it goes by area. 1 for NT, 2 for SYNDICATE
+	health = 2000
+
+	New()
+		..()
+		if (ticker.mode == /datum/game_mode/pod_war)
+			var/datum/game_mode/pod_war/mode = ticker.mode
+			if (get_area(src) == mode.team_NT.base_area)
+				team = mode.team_NT
+			else if (get_area(src) == mode.team_SY.base_area)
+				team = mode.team_SY
+
+
+	disposing()
+		..()
+		if (ticker.mode == /datum/game_mode/pod_war)
+			var/datum/game_mode/pod_war/mode = ticker.mode
+			mode.destroyed_critical_system(src)
+
+	ex_act(severity)
+		var/damage = 0
+		var/damage_mult = 1
+		switch(severity)
+			if(1)
+				damage = rand(30,50)
+				damage_mult = 4
+			if(2)
+				damage = rand(25,40)
+				damage_mult = 2
+			if(3)
+				damage = rand(10,20)
+				damage_mult = 1
+
+		src.take_damage(damage*damage_mult)
+		return
+
+	bullet_act(var/obj/projectile/P)
+		if(src.material) src.material.triggerOnBullet(src, src, P)
+		var/damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		var/damage_mult = 1
+		if (damage < 1)
+			return
+
+		switch(P.proj_data.damage_type)
+			if(D_KINETIC)
+				damage_mult = 1
+			if(D_PIERCING)
+				damage_mult = 1.5
+			if(D_ENERGY)
+				damage_mult = 1
+			if(D_BURNING)
+				damage_mult = 0.25
+			if(D_SLASHING)
+				damage_mult = 0.75
+
+		take_damage(damage*damage_mult)
+		return
+
+	attackby(var/obj/item/W, var/mob/user)
+		..()
+		take_damage(W.force)
+
+	proc/take_damage(var/damage)
+		if (damage > 0)
+			src.health -= damage
+
+		if (health <= 0)
+
+			src.visible_message("<h2><span class='alert'>[src] is destroyed!!</span></h2>")
