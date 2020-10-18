@@ -257,13 +257,13 @@
 		src.a_intent = src.ai_default_intent
 
 	hear_talk(mob/M as mob, messages, heardname, lang_id)
-		if (!isdead(src) && !isunconscious(src) && messages)
+		if (isalive(src) && messages)
 			if (M.singing)
 				if (M.singing == "bad" || M.singing == "loud")
-					if (rand(4) < 1)
+					if (prob(20))
 						// monkey is angered by singing
-						was_harmed(M)
 						spawn(5)
+							was_harmed(M)
 							src.visible_message("<B>[name]</B> is angry at [M] for their [M.singing] singing!", 1)
 							src.say(pick("Must take revenge for insult to music!", "I now attack you like your singing attacked my ears!"))
 					else

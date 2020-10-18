@@ -661,7 +661,6 @@
 				src.emote("handpuppet")
 
 /mob/living/say(var/message, ignore_stamina_winded)
-	singing=0;
 	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
@@ -799,13 +798,18 @@
 					message = copytext(message, 3)
 
 	// check for singing prefix
-	if (!singing && dd_hasprefix(message, singing_prefix) && !src.stat)
-		singing = 1
+	if (dd_hasprefix(message, singing_prefix) && isalive(src))
+		singing = "normal"
 		message = copytext(message, 2)
+		// Scots can only sing Danny Boy
 		if (src.bioHolder.HasEffect("accent_scots"))
 			danny_index++
 			if (danny_index > 16)
 				danny_index = 1
+			var/lyrics = dd_file2list("strings/danny.txt")
+			message = lyrics[danny_index]
+	else
+		singing = 0
 	
 	forced_language = get_special_language(secure_headset_mode)
 
