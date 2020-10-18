@@ -1,5 +1,38 @@
 
+(t)sun oct 18 20
+(u)Flaborized
+(p)2394
+(e)🎨|sprites
+(+)Tools and flamethrowers have had their sprites replaced with new and improved versions, new crowbar subtype
+(u)Gonzako
+(p)2346
+(e)|
+(*)Everyone with the addict trait no longer shares their addiction with every other addict.
+(+)New allergic players joining no longer change everybody else's allergy
+(t)sat oct 17 20
+(u)Sovexe
+(p)2450
+(e)|
+(+)Becoming a monkey no longer makes you drop half your stuff.
+(u)comradef191
+(p)2366
+(e)🆕|feature
+(*)Added 9 new colours of wiring, see your local QM to order them.
+(+)Added Yellow, Orange, Blue, Green, Purple, Black, Hot-Pink, Brown & White cables.
+(u)Kyle
+(p)2439
+(e)|
+(*)Pod balance changes: more pod health, very slightly slower acceleration, faster pod weapon travel time, Wormholes must be made when stationary and with several tiles of clearance in front.
+(*)Pods/subs now have a "Brake" toggle that slows you down to a stop when toggled on.
 (t)fri oct 16 20
+(u)Sidewinder7
+(p)2393
+(e)🆕🎨|feature, sprites
+(*)Added the Discount Superhero latejoin job.
+(u)virvatuli
+(p)2437
+(e)🐛🗺|bug, mapping
+(+)Added the AI Reset Board to Atlas. Why was it missing? Nobody knows! But now it's a certified feature.
 (t)thu oct 15 20
 (u)Flaborized
 (p)2356

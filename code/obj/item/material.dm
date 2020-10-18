@@ -942,7 +942,7 @@
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
-			if (!M)
+			if (!M || M.loc == user)
 				continue
 			if (M.name != O.name)
 				continue

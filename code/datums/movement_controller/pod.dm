@@ -16,7 +16,7 @@
 
 		velocity_max = 6
 		velocity_max_no_input = 5
-		accel = 3
+		accel = 2
 
 		min_delay = 14
 
@@ -95,6 +95,13 @@
 
 				velocity_x	+= input_x * accel
 				velocity_y  += input_y * accel
+
+				//We're on autopilot before the warp, NO FUCKING IT UP!
+				if (owner.engine.warp_autopilot)
+					return 0
+
+				if (owner.rcs && input_x == 0 && input_y == 0)
+					braking = 1
 
 				//braking
 				if (braking)
