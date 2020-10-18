@@ -483,7 +483,7 @@ datum
 			fluid_g = 180
 			transparency = 200
 			depletion_rate = 0.8
-			smoke_spread_mod = 5
+			smoke_spread_mod = 10
 
 			reaction_turf(var/turf/T, var/volume)
 				return

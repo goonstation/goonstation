@@ -1,4 +1,9 @@
-
+(t)wed oct 07 20
+(u)Sovexe
+(+)Oceanify no longer overwrites trench hole turfs.
+(t)tue oct 06 20
+(u)Sovexe
+(*)Added audible ahelps and dectalk ahelps in admin preferences. Only applies to the initial F1 messages not replies.
 (t)sun sep 21 20
 (u)kyle
 (*)Edit vars screen now lets you add matrices to variables, like transform. Must provide variables in format:a,b,c,d,e,f as text. Useful for manually changing a transform var via matrix math.

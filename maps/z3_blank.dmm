@@ -1302,7 +1302,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "du" = (
-/obj/item/casing/shotgun_red,
+/obj/item/casing/shotgun/red,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "dv" = (

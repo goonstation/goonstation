@@ -109,6 +109,7 @@
 	var/list/obj/critter/registered_critters = list()
 	var/waking_critters = 0
 
+	// this chunk zone is for Area Ambience
 	var/sound_loop = null
 	var/sound_loop_vol = 50
 	var/sound_fx_1 = null
@@ -153,6 +154,7 @@
 		else
 			return 1
 
+	/// Gets called when a movable atom enters an area.
 	Entered(var/atom/movable/A, atom/oldloc)
 		if (ismob(A))
 			var/mob/M = A
@@ -210,6 +212,7 @@
 			A.loc = oldloc
 		..()
 
+	/// Gets called when a movable atom exits an area.
 	Exited(var/atom/movable/A)
 		if (ismob(A))
 			var/mob/M = A
@@ -1018,35 +1021,35 @@
 	sound_environment = 12
 
 /area/diner/hangar
-	name = "Diner Parking"
+	name = "Space Diner Parking"
 	icon_state = "storage"
 
 /area/diner/kitchen
-	name = "Diner Kitchen"
+	name = "Space Diner Kitchen"
 	icon_state = "purple"
 
 /area/diner/dining
-	name = "Diner Seating Area"
+	name = "Space Diner Seating Area"
 	icon_state = "green"
 
 /area/diner/bathroom
-	name = "Diner Bathroom"
+	name = "Space Diner Bathroom"
 	icon_state = "showers"
 
 /area/diner/hallway
-	name = "Hallway"
+	name = "Space Diner Hallway"
 	icon_state = "blue"
 
 /area/diner/hallway/docking
-	name = "East Shuttle Docks"
+	name = "Space Diner East Shuttle Docks"
 	icon_state = "purple"
 
 /area/diner/backroom
-	name = "Diner Backroom"
+	name = "Space Diner Backroom"
 	icon_state = "green"
 
 /area/diner/solar
-	name = "Diner Solar Control"
+	name = "Space Diner Solar Control"
 	icon_state = "yellow"
 
 /area/diner/motel
@@ -1062,7 +1065,7 @@
 	icon_state = "yellow"
 
 /area/diner/motel/chemstorage
-	name = "Chemical Storage"
+	name = "Motel Chemical Storage"
 	icon_state = "orange"
 
 /area/diner/arcade
@@ -3200,7 +3203,7 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/aiPlayer in by_type[/mob/living/silicon/ai])
+		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
@@ -3225,10 +3228,10 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
+		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 			LAGCHECK(LAG_HIGH)
-		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])
+		for (var/obj/machinery/computer/atmosphere/alerts/a as() in machine_registry[MACHINES_ATMOSALERTS])
 			a.triggerAlarm("Fire", src, cameras, src)
 			LAGCHECK(LAG_HIGH)
 
@@ -3244,10 +3247,10 @@ area/station/security/visitation
 		for (var/obj/machinery/firealarm/F in src)
 			F.icon_state = "fire0"
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
+		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.cancelAlarm("Fire", src, src)
 			LAGCHECK(LAG_HIGH)
-		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])
+		for (var/obj/machinery/computer/atmosphere/alerts/a as() in machine_registry[MACHINES_ATMOSALERTS])
 			a.cancelAlarm("Fire", src, src)
 			LAGCHECK(LAG_HIGH)
 

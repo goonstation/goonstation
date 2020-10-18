@@ -7,55 +7,40 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 	else if(!anchored)
 		if(pressure_difference > pressure_resistance)
 			last_forced_movement = air_master.current_cycle
-			SPAWN_DBG(0) step(src, direction)
+			SPAWN_DBG(0)
+				step(src, direction) // ZEWAKA-ATMOS: HIGH PRESSURE DIFFERENTIAL HERE
 		return 1
 
-turf
-	assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-		//First, ensure there is no movable shuttle or what not on tile that is taking over
-//		var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in src
-//		if(istype(movable_on_me))
-//			return movable_on_me.assume_air(giver)
+turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
+	return 0
 
-		return 0
+turf/return_air()
+	//Create gas mixture to hold data for passing
+	// TODO this is returning a new air object, but object_tile returns the existing air
+	//  This is used in a lot of places and thrown away, so it should be pooled,
+	//  But there is no way to tell here if it will be retained or discarded, so
+	//  we can't pool the object returned by return_air. Bad news, man.
+	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
 
-	return_air()
-		//First, ensure there is no movable shuttle or what not on tile that is taking over
-//		var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in src
-//		if(istype(movable_on_me))
-//			return movable_on_me.return_air()
+	#define _TRANSFER_GAS_TO_GM(GAS, ...) GM.GAS = GAS;
+	APPLY_TO_GASES(_TRANSFER_GAS_TO_GM)
+	#undef _TRANSFER_GAS_TO_GM
 
-		//Create gas mixture to hold data for passing
-		// TODO this is returning a new air object, but object_tile returns the existing air
-		//  This is used in a lot of places and thrown away, so it should be pooled,
-		//  But there is no way to tell here if it will be retained or discarded, so
-		//  we can't pool the object returned by return_air. Bad news, man.
-		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+	GM.temperature = temperature
 
-		#define _TRANSFER_GAS_TO_GM(GAS, ...) GM.GAS = GAS;
-		APPLY_TO_GASES(_TRANSFER_GAS_TO_GM)
-		#undef _TRANSFER_GAS_TO_GM
+	return GM
 
-		GM.temperature = temperature
+turf/remove_air(amount as num)//, remove_water = 0)
+	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+	var/sum = BASE_GASES_TOTAL_MOLES(src)
+	if(sum>0)
+		#define _TRANSFER_AMOUNT_TO_GM(GAS, ...) GM.GAS = (GAS / sum) * amount;
+		APPLY_TO_GASES(_TRANSFER_AMOUNT_TO_GM)
+		#undef _TRANSFER_AMOUNT_TO_GM
 
-		return GM
+	GM.temperature = temperature
 
-	remove_air(amount as num)//, remove_water = 0)
-		//First, ensure there is no movable shuttle or what not on tile that is taking over
-//		var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in src
-//		if(istype(movable_on_me))
-//			return movable_on_me.remove_air(amount)
-
-		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
-		var/sum = BASE_GASES_TOTAL_MOLES(src)
-		if(sum>0)
-			#define _TRANSFER_AMOUNT_TO_GM(GAS, ...) GM.GAS = (GAS / sum) * amount;
-			APPLY_TO_GASES(_TRANSFER_AMOUNT_TO_GM)
-			#undef _TRANSFER_AMOUNT_TO_GM
-
-		GM.temperature = temperature
-
-		return GM
+	return GM
 
 turf
 	var/tmp/pressure_difference = 0
@@ -65,7 +50,8 @@ turf
 	proc
 		high_pressure_movements()
 			if( !loc:sanctuary )
-				for(var/atom/movable/in_tile in src)
+				for(var/AM in src)
+					var/atom/movable/in_tile = AM
 					in_tile.experience_pressure_difference(pressure_difference, pressure_direction)
 
 			pressure_difference = 0
@@ -74,7 +60,7 @@ turf
 			if( loc:sanctuary ) return//no atmos updates in sanctuaries
 			if(connection_difference < 0)
 				connection_difference = -connection_difference
-				connection_direction = turn(connection_direction,180)
+				connection_direction = turn(connection_direction, 180)
 
 			if(connection_difference > pressure_difference)
 				if(!pressure_difference)
@@ -152,14 +138,6 @@ turf
 
 				for(var/str in graphics)
 					switch(str)
-						/*
-						if("water3")
-							effect_overlay.overlays.Add(w3master)
-						if("water2")
-							effect_overlay.overlays.Add(w2master)
-						if("water1")
-							effect_overlay.overlays.Add(w1master)
-						*/
 						if("plasma")
 							new_visuals_state |= 1
 						if("n2o")
@@ -197,23 +175,21 @@ turf
 				air.temperature = temperature
 
 				if(air_master)
-					air_master.queue_update_tile(src)
+					air_master.tiles_to_update |= src
 
 					find_group()
-
-//				air.parent = src //TODO DEBUG REMOVE
 
 			else
 				if(air_master)
 					for(var/direction in cardinal)
 						var/turf/simulated/floor/target = get_step(src,direction)
 						if(istype(target))
-							air_master.queue_update_tile(target)
+							air_master.tiles_to_update |= target
 
 		Del()
 			if(air_master)
 				if(parent)
-					air_master.queue_update_group(parent)
+					air_master.groups_to_rebuild |= parent
 					parent.members.Remove(src)
 				else
 					air_master.active_singletons.Remove(src)
@@ -226,7 +202,7 @@ turf
 				for(var/direction in cardinal)
 					var/turf/simulated/tile = get_step(src,direction)
 					if(air_master && istype(tile) && !tile.blocks_air)
-						air_master.queue_update_tile(tile)
+						air_master.tiles_to_update |= tile
 			pool(air)
 			air = null
 			parent = null
@@ -339,7 +315,7 @@ turf
 			if(air_check_directions)
 				processing = 1
 				if(!parent)
-					air_master.add_singleton(src)
+					air_master.active_singletons |= src
 			else
 				processing = 0
 
@@ -590,48 +566,48 @@ turf
 			if(need_rebuild)
 				if(istype(src)) //Rebuild/update nearby group geometry
 					if(src.parent)
-						air_master.queue_update_group(src.parent)
+						air_master.groups_to_rebuild |= src.parent
 					else
-						air_master.queue_update_tile(src)
+						air_master.tiles_to_update |= src
 
 				if(istype(north))
 					north.tilenotify(src)
 					if(north.parent)
-						air_master.queue_update_group(north.parent)
+						air_master.groups_to_rebuild |= north.parent
 					else
-						air_master.queue_update_tile(north)
+						air_master.tiles_to_update |= north
 				if(istype(south))
 					south.tilenotify(src)
 					if(south.parent)
-						air_master.queue_update_group(south.parent)
+						air_master.groups_to_rebuild |= south.parent
 					else
-						air_master.queue_update_tile(south)
+						air_master.tiles_to_update |= south
 				if(istype(east))
 					east.tilenotify(src)
 					if(east.parent)
-						air_master.queue_update_group(east.parent)
+						air_master.groups_to_rebuild |= east.parent
 					else
-						air_master.queue_update_tile(east)
+						air_master.tiles_to_update |= east
 				if(istype(west))
 					west.tilenotify(src)
 					if(west.parent)
-						air_master.queue_update_group(west.parent)
+						air_master.groups_to_rebuild |= west.parent
 					else
-						air_master.queue_update_tile(west)
+						air_master.tiles_to_update |= west
 			else
-				if(istype(src)) air_master.queue_update_tile(src)
+				if(istype(src)) air_master.tiles_to_update |= src
 				if(istype(north))
 					north.tilenotify(src)
-					air_master.queue_update_tile(north)
+					air_master.tiles_to_update |= north
 				if(istype(south))
 					south.tilenotify(src)
-					air_master.queue_update_tile(south)
+					air_master.tiles_to_update |= south
 				if(istype(east))
 					east.tilenotify(src)
-					air_master.queue_update_tile(east)
+					air_master.tiles_to_update |= east
 				if(istype(west))
 					west.tilenotify(src)
-					air_master.queue_update_tile(west)
+					air_master.tiles_to_update |= west
 
 			if (map_currently_underwater)
 				var/turf/space/fluid/n = get_step(src,NORTH)

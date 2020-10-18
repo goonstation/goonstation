@@ -14,7 +14,6 @@
 	var/obj/item/I = parent
 	if (I.loc != current_user)
 		current_user.no_gravity = 0
-		for (var/thing in current_user)
-			var/atom/movable/A = thing
+		for (var/atom/movable/A as() in current_user)
 			if (A.no_gravity)
 				current_user.no_gravity = 1 //keep on if we are still holdin stuff

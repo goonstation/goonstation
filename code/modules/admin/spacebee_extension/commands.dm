@@ -55,8 +55,10 @@
 	help_message = "Creates a command report on a given server."
 	argument_types = list(/datum/command_argument/string="headline", /datum/command_argument/the_rest="body")
 	execute(user, headline, body)
-		for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+		for_by_tcl(C, /obj/machinery/communications_dish)
 			C.add_centcom_report("[command_name()] Update", body)
+		body = discord_emojify(body)
+		headline = discord_emojify(headline)
 		command_alert(body, headline, "sound/misc/announcement_1.ogg")
 		logTheThing("admin", "[user] (Discord)", null, "has created a command report: [body]")
 		logTheThing("diary", "[user] (Discord)", null, "has created a command report: [body]", "admin")
@@ -233,3 +235,14 @@
 			new type(to_send)
 		shippingmarket.receive_crate(to_send)
 		system.reply("Crate sent.")
+
+/datum/spacebee_extension_command/logs
+	name = "logs"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Returns a link to the weblog of requested server. You really are lazy."
+	execute(user)
+		var/ircmsg[] = new()
+		ircmsg["key"] = "Loggo"
+		ircmsg["name"] = "Lazy Admin Logs"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		ircbot.export("help", ircmsg)

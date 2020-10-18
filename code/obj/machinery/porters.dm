@@ -167,6 +167,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 						var/obj/machinery/sleeper/port_a_medbay/PM = P
 						if (PM.occupant)
 							PM.occupant.set_loc(PM)
+							PM.PDA_alert_check()
 				if (istype(P, /obj/storage/closet/port_a_sci/))
 					var/obj/storage/closet/port_a_sci/PS = P
 					PS.on_teleport()
@@ -286,7 +287,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 /obj/machinery/port_a_brig
 	name = "Port-A-Brig"
 	icon = 'icons/obj/cloning.dmi'
-	icon_state = "pod_0"
+	icon_state = "port_a_brig_0"
 	desc = "A portable holding cell with teleporting capabilites."
 	density = 1
 	anchored = 0
@@ -430,9 +431,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 	proc/build_icon()
 		if(src.occupant)
-			icon_state = "pod_1"
+			icon_state = "port_a_brig_1"
 		else
-			icon_state = "pod_0"
+			icon_state = "port_a_brig_0"
 
 	proc/go_out()
 		if (!src.occupant)

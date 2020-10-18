@@ -30,6 +30,16 @@
 				affected_mob.changeStatus("paralysis", 40)
 			if (prob(5))
 				affected_mob.emote(pick("shiver","pale","drool"))
+
+			//spaceacillin stalls the infection...
+			var/amt = affected_mob.reagents?.get_reagent_amount("spaceacillin")
+			if (amt)
+				if (amt > 15)
+					affected_mob.reagents?.remove_reagent("spaceacillin", 1)
+				else
+					affected_mob.reagents?.remove_reagent("spaceacillin", 0.4)
+				D.stage--
+
 		if(3)
 			affected_mob.stuttering = 10
 			if (prob(10))

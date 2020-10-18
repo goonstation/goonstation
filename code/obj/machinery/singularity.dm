@@ -181,8 +181,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		step(src, dir)
 		has_moved = TRUE
 
-/obj/machinery/the_singularity/ex_act(severity)
-	if(severity == 1 && prob(30))
+/obj/machinery/the_singularity/ex_act(severity, last_touched, power)
+	if(severity == 1 && (power ? prob(power*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
 		qdel(src)
 
 /obj/machinery/the_singularity/Bumped(atom/A)
@@ -1837,41 +1837,3 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					</div>
 				</body>
 			</html>"}
-
-
-/obj/item/ez_singulo
-	name = "Ez Singularity Engine"
-	icon = 'icons/obj/items/grenade.dmi'
-	icon_state = "graviton"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "emp"
-	var/activated = FALSE
-	var/radius = 3
-
-	attack_self(mob/user)
-		if(activated)
-			. = ..()
-			return
-		else
-			src.activated = TRUE
-			boutput(user, "You prime [src]. Three seconds until activation.")
-			SPAWN_DBG(3 SECONDS)
-				src.build_a_singulo()
-
-
-	proc/build_a_singulo()
-		if(!isturf(src.loc))
-			src.activated = FALSE
-			return
-		for(var/turf/T in block(locate(src.x - radius, src.y - radius, src.z), locate(src.x + radius, src.y + radius, src.z)))
-			T.ReplaceWith(/turf/simulated/floor/engine, 0, 1, 0, 0)
-		new /obj/machinery/the_singularitygen(src.loc)
-		for(var/dir in ordinal)
-			var/turf/T = get_steps(src.loc, dir, radius)
-			var/obj/machinery/field_generator/gen = new(T)
-			gen.set_active(1)
-			gen.state = 3
-			gen.power = 250
-			gen.anchored = 1
-			icon_state = "Field_Gen +a"
-		qdel(src)

@@ -13,6 +13,7 @@
 		wormhole
 		use_comms
 		leave
+		rcs
 		lights
 		tracking
 		sensor_lock
@@ -40,6 +41,7 @@
 		set_code = create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code", "NORTH+1,WEST+11", tooltipTheme = "pod", desc = "Set the code used to unlock the pod")
 		rts = create_screen("return_to_station", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "return-to-station", "NORTH+1,WEST+12", tooltipTheme = "pod", desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")
 		leave = create_screen("leave", "Leave Pod", 'icons/mob/hud_pod.dmi', "leave", "SOUTH,EAST", tooltipTheme = "pod-alt", desc = "Get out of the pod")
+		rcs = create_screen("rcs", "Toggle RCS", 'icons/mob/hud_pod.dmi', "rcs-off", "NORTH+1,WEST+13", tooltipTheme = "pod-alt", desc = "Get out of the pod")
 		tracking = create_screen("tracking", "Tracking Indicator", 'icons/mob/hud_pod.dmi', "off", "CENTER, CENTER")
 		tracking.mouse_opacity = 0
 		sensor_lock = create_screen("sensor_lock", "Sensor Lock", 'icons/mob/hud_pod.dmi', "off", "SOUTH+1,EAST")
@@ -137,6 +139,11 @@
 				lights.icon_state = "lights_on"
 			else
 				lights.icon_state = "lights_off"
+
+		if (master.rcs)
+			rcs.icon_state = "rcs-on"
+		else
+			rcs.icon_state = "rcs-off"
 
 
 	proc/update_systems()
@@ -329,5 +336,8 @@
 			if ("lights")
 				if (master.lights)
 					master.lights.toggle()
+			if ("rcs")
+				master.rcs = !master.rcs
+
 
 		update_states()

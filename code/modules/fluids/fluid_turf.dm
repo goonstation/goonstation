@@ -79,7 +79,7 @@
 		if(current_state > GAME_STATE_WORLD_INIT)
 			for(var/dir in cardinal)
 				var/turf/T = get_step(src, dir)
-				if(T.ocean_canpass() && !istype(T, /turf/space))
+				if(T?.ocean_canpass() && !istype(T, /turf/space))
 					src.tilenotify(T)
 					break
 
@@ -351,6 +351,30 @@
 
 	ex_act(severity)
 		return
+
+
+//cenote for the biodome area
+/turf/space/fluid/cenote
+	fullbright = 0
+	luminosity = 1
+	generateLight = 0
+	spawningFlags = null
+	icon_state = "cenote"
+	name = "cenote"
+	desc = "A deep flooded sinkhole."
+	randomIcon = 0
+
+	New()
+		..()
+		src.dir = pick(NORTH,SOUTH)
+
+
+	ex_act(severity)
+		return
+
+//full bright, used by oceanify on space maps
+/turf/space/fluid/fullbright
+	fullbright = 1
 
 //Manta
 /turf/space/fluid/manta

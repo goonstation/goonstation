@@ -11,13 +11,17 @@
 #define RAILING_FASTEN 2
 
 //deconstruction_flags
+
 #define DECON_NONE 0
-#define DECON_SIMPLE 1 //no reqs, just deconstruct!
+/// no reqs, just deconstruct!
+#define DECON_SIMPLE 1
 #define DECON_SCREWDRIVER 2
 #define DECON_WRENCH 4
 #define DECON_CROWBAR 8
 #define DECON_WELDER 16
 #define DECON_WIRECUTTERS 32
 #define DECON_MULTITOOL 64
-#define DECON_BUILT 128 //flag added to something that is player-built
-#define DECON_ACCESS 256 //can only be deconstructed if access required is null
+/// flag added to something that is player-built
+#define DECON_BUILT 128
+/// can only be deconstructed if access required is null
+#define DECON_ACCESS 256

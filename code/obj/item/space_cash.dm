@@ -49,7 +49,7 @@
 		..()
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(1, default_amount) //take higher
-		//src.update_stack_appearance()
+		src.update_stack_appearance()
 
 	pooled()
 		if (usr)
