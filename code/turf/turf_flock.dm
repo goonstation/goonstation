@@ -157,7 +157,7 @@
 	group = new/datum/flock_tile_group
 	group.addtile(src)
 
-/turf/simulated/floor/feather/proc/checknearby(var/newgroup = 0)//handles merging groups
+/turf/simulated/floor/feather/proc/checknearby()//handles merging groups
 	var/list/groups_found = list() //list of tile groups found
 	var/datum/flock_tile_group/largestgroup = null //largest group
 	var/max_group_size = 0
@@ -186,9 +186,7 @@
 		largestgroup.addtile(src)
 
 	else
-		if(newgroup)
-			src.initializegroup()
-		else return null
+		return null
 
 /turf/simulated/floor/feather/proc/splitgroup(var/datum/flock_tile_group/oldgroup = null)
 	var/count = 0 //count of nearby tiles
