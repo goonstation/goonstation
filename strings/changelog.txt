@@ -1,5 +1,9 @@
 
 (t)sat oct 17 20
+(u)Sovexe
+(p)2450
+(e)|
+(+)Becoming a monkey no longer makes you drop half your stuff.
 (u)comradef191
 (p)2366
 (e)🆕|feature
