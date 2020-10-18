@@ -206,7 +206,7 @@
 		O.set_loc(src)
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
-			if (!M)
+			if (!M || M.loc == user)
 				continue
 			if (M.type != O.type)
 				continue
