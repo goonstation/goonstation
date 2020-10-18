@@ -2026,6 +2026,16 @@
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/hat_ltophat
+	name = "Large Top Hat"
+	item_paths = list("FAB-1")
+	item_names = list("Fabric")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/clothing/head/LongTophat)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/jumpsuit_white
 	name = "White Jumpsuit"
 	item_paths = list("FAB-1")
