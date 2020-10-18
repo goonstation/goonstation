@@ -1,5 +1,9 @@
 
 (t)sun oct 18 20
+(u)Flaborized
+(p)2394
+(e)🎨|sprites
+(+)Tools and flamethrowers have had their sprites replaced with new and improved versions, new crowbar subtype
 (u)Gonzako
 (p)2346
 (e)|
