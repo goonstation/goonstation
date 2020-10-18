@@ -136,8 +136,10 @@
 			user.show_text("You flip the switch on [src].")
 			if (src.active)
 				src.deactivate()
+				user.show_text("Shields Deactivated.")
 			else
 				src.activate()
+				user.show_text("Shields Activated.")
 			message_admins("<span class='internal'>[key_name(user)] [src.active ? "activated" : "deactivated"] shields</span>")
 			logTheThing("station", null, null, "[key_name(user)] [src.active ? "activated" : "deactivated"] shields")
 		else
