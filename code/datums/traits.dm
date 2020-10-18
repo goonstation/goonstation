@@ -793,7 +793,7 @@ obj/trait/pilot
 
 	var/allergen = ""
 	var/allergen_name = ""  //No idea what this var is doing, mind if someone explains?
-	var/allergic_players
+	var/list/allergic_players = list()
 
 	var/list/allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
@@ -839,7 +839,7 @@ obj/trait/pilot
 	isPositive = 0
 	var/selected_reagent = "ethanol"
 	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
-	var/addicted_players
+	var/list/addicted_players = list()
 
 	onAdd(var/mob/owner)
 		if(isliving(owner))
