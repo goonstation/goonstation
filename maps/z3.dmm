@@ -1463,7 +1463,8 @@
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/obj/item/radio_tape/audio_book/heisenbee{
+/obj/item/radio_tape/audio_book/heisenbee,
+/obj/item/radio_tape/advertisement/danitos_burritos{
 	pixel_x = -5;
 	pixel_y = -3
 	},
@@ -1471,11 +1472,13 @@
 	pixel_x = 2;
 	pixel_y = -6
 	},
-/obj/item/radio_tape/advertisement/pope_crunch{
+/obj/item/radio_tape/advertisement/pope_crunch,
+/obj/item/radio_tape/advertisement/security_psa{
 	pixel_x = -3;
 	pixel_y = 4
 	},
-/obj/item/radio_tape/advertisement/cloning_psa{
+/obj/item/radio_tape/advertisement/cloning_psa,
+/obj/item/radio_tape/advertisement/captain_psa{
 	pixel_y = 6;
 	pixel_x = -8
 	},

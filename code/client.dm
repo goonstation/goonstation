@@ -181,21 +181,6 @@
 	src.chatOutput = new /datum/chatOutput(src)
 	//src.chui = new /datum/chui(src)
 
-	//Should eliminate any local resource loading issues with chui windows
-	if (!cdn && !(!address || (world.address == src.address)))
-		var/list/chuiResources = list(
-			"browserassets/js/jquery.min.js",
-			"browserassets/js/jquery.nanoscroller.min.js",
-			"browserassets/js/chui/chui.js",
-			"browserassets/js/errorHandler.js",
-			"browserassets/css/fonts/fontawesome-webfont.eot",
-			"browserassets/css/fonts/fontawesome-webfont.svg",
-			"browserassets/css/fonts/fontawesome-webfont.ttf",
-			"browserassets/css/fonts/fontawesome-webfont.woff",
-			"browserassets/css/font-awesome.css"
-		)
-		src.loadResourcesFromList(chuiResources)
-
 	if (!isnewplayer(src.mob))
 		src.loadResources()
 

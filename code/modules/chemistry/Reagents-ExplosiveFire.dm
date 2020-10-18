@@ -537,7 +537,6 @@ datum
 			fluid_b = 150
 			transparency = 150
 			viscosity = 0.7
-			volatility = 2.5
 			minimum_reaction_temperature = 1000
 
 			reaction_temperature(exposed_temperature, exposed_volume)

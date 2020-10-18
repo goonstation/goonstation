@@ -74,6 +74,12 @@
 			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
 			// ready = 0
 			return
+	else if (istype(ship.movement_controller, /datum/movement_controller/tank))
+		var/datum/movement_controller/tank/MCT = ship.movement_controller
+		if (MCT.input_x != 0 || MCT.input_y != 0)
+			boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity (be stopped) to calculate warp destination!")]")
+			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
+
 
 	var/list/beacons = list()
 	for(var/obj/warp_beacon/W in warp_beacons)
@@ -98,7 +104,7 @@
 	var/warp_dir = ship.dir
 	var/turf/prev_turf = null
 	var/turf/NT = get_turf(src)
-	var/const/max_steps = 10
+	var/const/max_steps = 7
 	warp_autopilot = 1
 	for(var/i=0, i<max_steps, i++)
 		NT = get_step(NT, warp_dir)

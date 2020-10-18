@@ -97,9 +97,11 @@
 				velocity_y  += input_y * accel
 
 				//We're on autopilot before the warp, NO FUCKING IT UP!
-				if (owner?.engine?.warp_autopilot)
+				if (owner.engine.warp_autopilot)
 					return 0
 
+				if (owner.rcs && input_x == 0 && input_y == 0)
+					braking = 1
 
 				//braking
 				if (braking)

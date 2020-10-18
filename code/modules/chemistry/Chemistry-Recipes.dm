@@ -2686,6 +2686,11 @@ datum
 #ifdef CHEM_REACTION_PRIORITY
 			priority = 9
 #endif
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				if(holder)
+					holder.del_reagent("potassium")
+					holder.del_reagent("sugar")
+					holder.del_reagent("phsophorus")
 
 		smoke
 			name = "Smoke"
@@ -2703,6 +2708,9 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				if (holder)
 					holder.smoke_start(created_volume)
+					holder.del_reagent("potassium")
+					holder.del_reagent("sugar")
+					holder.del_reagent("phsophorus")
 
 		propellant
 			name = "Aeresol Propellant"
@@ -2714,6 +2722,12 @@ datum
 #ifdef CHEM_REACTION_PRIORITY
 			priority = 9
 #endif
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				if(holder)
+					holder.del_reagent("chlorine")
+					holder.del_reagent("sugar")
+					holder.del_reagent("hydrogen")
+					holder.del_reagent("platinum")
 
 		unstable_propellant
 			name = "unstable propellant"
@@ -2728,7 +2742,12 @@ datum
 			priority = 9
 #endif
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				classic_smoke_reaction(holder, min(round(created_volume / 5) + 1, 4), get_turf(holder.my_atom))
+				if(holder)
+					holder.del_reagent("chlorine")
+					holder.del_reagent("sugar")
+					holder.del_reagent("hydrogen")
+					holder.del_reagent("platinum")
+					holder.smoke_start(created_volume, classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 
 		blackpowder // oh no
 			name = "Black Powder"
