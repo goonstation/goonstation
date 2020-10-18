@@ -23,8 +23,6 @@
 
 //setup teams and commanders
 /datum/game_mode/pod_war/pre_setup()
-	if (!select_commanders())
-		return 0
 	if (!setup_teams())
 		return 0
 
@@ -36,8 +34,8 @@
 /datum/game_mode/pod_war/proc/setup_teams()
 	if (!islist(commanders) || commanders.len != 2)
 		return 0
-	team1 = new/datum/pod_war_team(mode = src, team = 1, commander = commanders[1])
-	team2 = new/datum/pod_war_team(mode = src, team = 2, commander = commanders[2])
+	team1 = new/datum/pod_war_team(mode = src, team = 1)
+	team2 = new/datum/pod_war_team(mode = src, team = 2)
 
 	//get all ready players and split em into two equal teams, 
 	var/list/readied_minds = list()
@@ -61,43 +59,10 @@
 			team1.accept_players(readied_minds.Copy(1, half))
 			team2.accept_players(readied_minds.Copy(half+1, length))
 
-		
-
-
-/datum/game_mode/pod_war/proc/select_commanders()
-	var/list/possible_commanders = get_possible_commanders()
-	if (isnull(possible_commanders) || !possible_commanders.len)
+	if (!select_commanders())
 		return 0
 
-	//randomly pick 2 commanders from the list. make em a commander if they aren't in the list. 
-	var/count = possible_commanders.len
-	var/datum/mind/commander = null
-	while (count > 0)
-		commander = pick(possible_commanders)
-		if (istype(commander) && !(commander in commanders))
-			commander.special_role = "commander"
-			possible_commanders.Remove(commander)
-			commanders += commander
 
-		if (length(commanders) >= 2)
-			break
-		count --
-
-//Really stolen from gang, But this basically just picks everyone who is ready and not hellbanned or jobbanned from Command or Captain
-/datum/game_mode/pod_war/proc/get_possible_commanders()
-	var/list/candidates = list()
-	for(var/client/C)
-		var/mob/new_player/M = C.mob
-		if (!istype(M)) continue
-		if (ishellbanned(M)) continue
-		if(jobban_isbanned(M, "Captain")) continue //If you can't captain a Space Station, you probably can't command a starship either...
-		if ((M.ready) && !(M.mind in commanders) && !candidates.Find(M.mind))
-			candidates += M.mind
-
-	if(candidates.len < 1)
-		return null
-	else
-		return candidates
 
 
 /datum/game_mode/pod_war/post_setup()
@@ -153,24 +118,26 @@
 
 
 /datum/pod_war_team
-	var/name = "North Crew"
+	var/name = "NanoTrasen Crew"
 	var/comms_frequency = 0
 	var/area/base = null		//base ship area
 	var/datum/mind/commander = null
 	var/list/members = list()
 	var/team_num = 0
 
-	New(var/datum/game_mode/pod_war/mode, team, var/datum/mind/commander)
-		src.team_num = team
-		src.commander = commander
+	var/points = 50
+	var/list/mcguffins
 
-		if (team_num == 2)
-			name = "South Crew"
+	New(var/datum/game_mode/pod_war/mode, team)
+		src.team_num = team
+		if (team_num == 1)
+			name = "NanoTrasen Crew"
+			base = null //area south crew
+		else if (team_num == 2) 
+			name = "Syndicate Crew"
+			base = null //area north crew
 
 		set_comms(mode)
-
-		set_members(mode)
-
 
 
 
@@ -186,8 +153,94 @@
 
 	proc/accept_players(var/list/players)
 		members = players
+		select_commander()
+
 		for (var/datum/mind/M in players)
-			equip_player(M)
+			if (M == commander)
+				equip_commander(M)
+			else
+				equip_player(M)
+
+	proc/select_commander()
+		var/list/possible_commanders = get_possible_commanders()
+		if (isnull(possible_commanders) || !possible_commanders.len)
+			return 0
+
+		var/datum/mind/commander = pick(possible_commanders)
+		commander.special_role = "commander"
+
+//Really stolen from gang, But this basically just picks everyone who is ready and not hellbanned or jobbanned from Command or Captain
+	proc/get_possible_commanders()
+		var/list/candidates = list()
+		for(var/datum/mind/mind in members)
+			var/mob/new_player/M = mind.current
+			if (!istype(M)) continue
+			if (ishellbanned(M)) continue
+			if(jobban_isbanned(M, "Captain")) continue //If you can't captain a Space Station, you probably can't command a starship either...
+			if ((M.ready) && !candidates.Find(M.mind))
+				candidates += M.mind
+
+		if(candidates.len < 1)
+			return null
+		else
+			return candidates
+
+	proc/equip_commander(var/datum/mind/mind)
+
 
 	proc/equip_player(var/datum/mind/mind)
-			
+		var/mob/living/carbon/human/H = mind.current
+
+		if (istype(M, /mob/new_player))
+			var/mob/new_player/N = M
+			N.mind.assigned_role = "MODE"
+			H = N.create_character(new /datum/job/football)
+
+		if (!ishuman(H))
+			boutput(M, "something went wrong. dunno what. sorry. football machine broke")
+			return
+
+		if (is_new)
+			SHOW_FOOTBALL_TIPS(H)
+			if (football_players["blue"].len == football_players["red"].len)
+				team = pick("red", "blue")
+			else if (football_players["blue"].len < football_players["red"].len)
+				team = "blue"
+			else
+				team = "red"
+
+			H.mind.special_role = team
+			football_players[team] += H.mind
+
+		H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
+
+		var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare(H) // for whatever reason, this is neccessary
+		I.registered = "[H.name]"
+		I.icon = 'icons/obj/items/card.dmi'
+		I.icon_state = "fingerprint0"
+		I.desc = "A tag for indicating what team you're on. Doesn't really matter."
+		I.cant_self_remove = 1
+		I.cant_other_remove = 1
+
+		if (team == "blue")
+			H.equip_if_possible(new /obj/item/clothing/suit/armor/football(H), H.slot_wear_suit)
+			H.equip_if_possible(new /obj/item/clothing/head/helmet/football(H), H.slot_head)
+			H.equip_if_possible(new /obj/item/clothing/under/football(H), H.slot_w_uniform)
+			I.name = "Blue Team"
+			I.assignment = "Blue Team"
+			I.color = "#0000ff"
+		else
+			H.equip_if_possible(new /obj/item/clothing/suit/armor/football/red(H), H.slot_wear_suit)
+			H.equip_if_possible(new /obj/item/clothing/head/helmet/football/red(H), H.slot_head)
+			H.equip_if_possible(new /obj/item/clothing/under/football/red(H), H.slot_w_uniform)
+			I.name = "Red Team"
+			I.assignment = "Red Team"
+			I.color = "#ff0000"
+
+		H.equip_if_possible(new /obj/item/clothing/shoes/cleats(H), H.slot_shoes)
+
+		H.equip_if_possible(I, H.slot_wear_id)
+		//H.Equip_Bank_Purchase(H.mind.purchased_bank_item)
+		H.set_clothing_icon_dirty()
+		H.set_loc(pick(football_spawns[team]))
+		boutput(H, "You're on the [team] team! The football is to your [team == "red" ? "LEFT" : "RIGHT"]. Carry it all the way to the [team == "red" ? "LEFT" : "RIGHT"] endzone to score!")
