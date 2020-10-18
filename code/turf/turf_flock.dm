@@ -78,9 +78,7 @@
 	off()
 	icon_state = "floor-broken"
 	broken = 1
-	src.group.removetile(src)
-	src.group = null
-	splitgroup()
+	splitgroup(src.group)
 	for(var/obj/flock_structure/f in src)
 		if(f.usesgroups)
 			f.group.removestructure(f)
@@ -192,32 +190,27 @@
 			src.initializegroup()
 		else return null
 
-/turf/simulated/floor/feather/proc/splitgroup()
-	var/list/groups = list() //list of tile groups found
-	var/count = 0 //how many tiles
-	var/turf/simulated/floor/feather/F
-	for(F in getneighbours(get_turf(src))) //nearby flocktiles
-		if(F.group)//does it have a flocktile group associated?
-			count++
-			groups |= F.group
-//at this point we have looked if there are any nearby groups
-	if(groups.len == 0 || count == 1)//if there are no tiles/no grouped tiles just null and do nothing. OR if there is just one tile nearby theres no sense in splitting
-		return
-
-	if(groups.len > 0 && count > 1)//is there atleast one group? and is there atleast 2 tiles nearby to split?
+/turf/simulated/floor/feather/proc/splitgroup(var/datum/flock_tile_group/oldgroup = null)
+	var/count = 0 //count of nearby tiles
+	for(var/turf/simulated/floor/feather/F in getneighbours(get_turf(src)))
+		count++ //enumerate nearby tiles
 //TODO: fail safe for if there are more then 1 group.
-		var/datum/flock_tile_group/oldgroup = groups[1]//there *really* should only be one group.
-		for(var/turf/simulated/floor/feather/tile in getneighbours(get_turf(src)))
-			if(tile.group == oldgroup)//check if the tile is the same as the old group
-				var/list/listotiles = bfs(tile)//compile a list of connected tiles
-				var/datum/flock_tile_group/newgroup = new
-				for(tile in listotiles)
-					tile.group.removetile(tile)//reassign tiles in the list to new group
-					tile.group = newgroup
-					tile.group.addtile(tile)
-					for(var/obj/flock_structure/s in tile)
-						s.groupcheck()//reassign any structures aswell
-				qdel(oldgroup)
+	src.group.removetile(src)
+	src.group = null
+
+	if(count <= 1) return//if theres only one tile nearby or it by itself dont bother splitting
+
+	for(var/turf/simulated/floor/feather/tile in getneighbours(get_turf(src)))
+		if(tile.group == oldgroup)//check if the tile is the same as the old group
+			var/list/listotiles = bfs(tile)//compile a list of connected tiles
+			var/datum/flock_tile_group/newgroup = new
+			for(tile in listotiles)
+				tile.group.removetile(tile)//reassign tiles in the list to new group
+				tile.group = newgroup
+				tile.group.addtile(tile)
+				for(var/obj/flock_structure/s in tile)
+					s.groupcheck()//reassign any structures aswell
+			qdel(oldgroup)
 
 // TODO: make this use typecheckless lists
 
