@@ -450,7 +450,7 @@
 		else if (src.bioHolder && src.bioHolder.HasEffect("accent_scots"))
 			speechverb = pick("laments", "softly sings", "croons", "sorrowfully intones", "sobs", "bemoans")
 		else if (src.bioHolder && src.bioHolder.HasEffect("accent_chav"))
-			speechverb = "raps grime"
+			speechverb = "grimily raps"
 		else if (src.singing == "bad")
 			speechverb = pick("makes a racket", "sings out of tune", "belts out", "flatly intones")
 		else if (loudness < 0)
