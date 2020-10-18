@@ -293,14 +293,14 @@
 
 /obj/item/factionrep/ntboard
 	name = "syndicate circuit board"
-	desc = "Rather complex circuit board, ripped straight from syndicate drone's internal mechanism. Maybe someone would be interested in this?"
+	desc = "Rather complex circuit board, ripped straight from a syndicate drone's internal mechanism. Maybe someone would be interested in this?"
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2"
 	event_handler_flags = IMMUNE_MANTA_PUSH
 
 /obj/item/factionrep/ntboarddebug
 	name = "syndicate circuit board"
-	desc = "Rather complex circuit board, ripped straight from syndicate drone's internal mechanism. Maybe someone would be interested in this?"
+	desc = "Rather complex circuit board, ripped straight from a syndicate drone's internal mechanism. Maybe someone would be interested in this?"
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2"
 	event_handler_flags = IMMUNE_MANTA_PUSH

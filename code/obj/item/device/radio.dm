@@ -849,7 +849,16 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		src.set_loc(A)
 		A.part1 = src
 		src.add_fingerprint(user)
-		boutput(user, "You open the signaler and cram the [W.name] in there!")
+		boutput(user, "You open the signaller and cram the [W.name] in there!")
+	else if (istype(W, /obj/item/cable_coil))
+		W.amount -= 1
+		if (W.amount == 0)
+			qdel(W)
+		var/obj/item/makeshift_signaller_frame/A = new /obj/item/makeshift_signaller_frame
+		user.put_in_hand_or_drop(A)
+		A.add_fingerprint(user)
+		boutput(user, "You open the signaller and attach some additional wires to it!")
+		qdel(src)
 	else
 		..()
 	return
