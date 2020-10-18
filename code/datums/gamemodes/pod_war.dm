@@ -8,11 +8,12 @@
 	shuttle_available = 0 // 0: Won't dock. | 1: Normal. | 2: Won't dock if called too early.
 	list/latejoin_antag_roles = list() // Unrecognized roles default to traitor in mob/new_player/proc/makebad().
 	do_antag_random_spawns = 0
+	var/list/frequencies_used = list()
 
 	var/list/commanders = list()
 
-	var/datum/pod_war_team/team1
-	var/datum/pod_war_team/team2
+	var/datum/pod_war_team/team_NT
+	var/datum/pod_war_team/team_SY
 
 
 
@@ -34,10 +35,10 @@
 /datum/game_mode/pod_war/proc/setup_teams()
 	if (!islist(commanders) || commanders.len != 2)
 		return 0
-	team1 = new/datum/pod_war_team(mode = src, team = 1)
-	team2 = new/datum/pod_war_team(mode = src, team = 2)
+	team_NT = new/datum/pod_war_team(mode = src, team = 1)
+	team_SY = new/datum/pod_war_team(mode = src, team = 2)
 
-	//get all ready players and split em into two equal teams, 
+	//get all ready players and split em into two equal teams,
 	var/list/readied_minds = list()
 	for(var/client/C)
 		var/mob/new_player/player = C.mob
@@ -50,30 +51,28 @@
 		shuffle_list(readied_minds)
 		if (length < 2)
 			if (prob(50))
-				team1.accept_players(readied_minds)
+				team_NT.accept_players(readied_minds)
 			else
-				team2.accept_players(readied_minds)
+				team_SY.accept_players(readied_minds)
 
 		else
 			var/half = round(length/2)
-			team1.accept_players(readied_minds.Copy(1, half))
-			team2.accept_players(readied_minds.Copy(half+1, length))
+			team_NT.accept_players(readied_minds.Copy(1, half))
+			team_SY.accept_players(readied_minds.Copy(half+1, length))
 
-	if (!select_commanders())
-		return 0
 
 
 
 
 /datum/game_mode/pod_war/post_setup()
-	for (var/datum/mind/leaderMind in commanders)
-		if (!leaderMind.current)
-			continue
+	// for (var/datum/mind/leaderMind in commanders)
+	// 	if (!leaderMind.current)
+	// 		continue
 
-		create_team(leaderMind)
-		bestow_objective(leaderMind,/datum/objective/specialist/pod_war)
-		boutput(leaderMind.current, "<h1><font color=red>You are the Commander of your starship! Organize your crew fight for survival!</font></h1>")
-		equip_commander(leaderMind.current)
+	// 	create_team(leaderMind)
+	// 	bestow_objective(leaderMind,/datum/objective/specialist/pod_war)
+	// 	boutput(leaderMind.current, "<h1><font color=red>You are the Commander of your starship! Organize your crew fight for survival!</font></h1>")
+	// 	equip_commander(leaderMind.current)
 
 	//Create teams
 	//Setup critical systems for each starship.
@@ -83,7 +82,7 @@
 //Give em their special jacket. and their visible hud icon
 /datum/game_mode/gang/proc/equip_commander(mob/living/carbon/human/leader)
 	if(leader.ears != null && istype(leader.ears,/obj/item/device/radio/headset))
-		var/obj/item/device/radio/headset/H = leader.ears
+		// var/obj/item/device/radio/headset/H = leader.ears
 		// H.set_secure_frequency("g",leader.mind.gang.comms_frequency)
 		// H.secure_classes["g"] = RADIOCL_SYNDICATE
 		boutput(leader, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
@@ -91,24 +90,16 @@
 	return
 
 /datum/game_mode/pod_war/check_finished()
-	if(emergency_shuttle.location == SHUTTLE_LOC_RETURNED)
-		return 1
 
-	var/leadercount = 0
-	for (var/datum/mind/L in ticker.mode:commanders)
-		leadercount++
 
-	if(leadercount <= 1 && ticker.round_elapsed_ticks > 12000 && !emergency_shuttle.online)
-		force_shuttle()
-
-	else return 0
+ return 0
 
 /datum/game_mode/pod_war/process()
 	..()
 
 /datum/game_mode/pod_war/declare_completion()
 
-	var/text = ""
+	// var/text = ""
 
 	boutput(world, "<FONT size = 2><B>The ship commanders were: </B></FONT><br>")
 	// for(var/datum/mind/leader_mind in commanders)
@@ -116,7 +107,8 @@
 	..() // Admin-assigned antagonists or whatever.
 
 
-
+#define TEAM_NANOTRASEN 1
+#define TEAM_SYNDICATE 2
 /datum/pod_war_team
 	var/name = "NanoTrasen Crew"
 	var/comms_frequency = 0
@@ -130,10 +122,10 @@
 
 	New(var/datum/game_mode/pod_war/mode, team)
 		src.team_num = team
-		if (team_num == 1)
+		if (team_num == TEAM_NANOTRASEN)
 			name = "NanoTrasen Crew"
 			base = null //area south crew
-		else if (team_num == 2) 
+		else if (team_num == TEAM_SYNDICATE)
 			name = "Syndicate Crew"
 			base = null //area north crew
 
@@ -156,10 +148,10 @@
 		select_commander()
 
 		for (var/datum/mind/M in players)
+			equip_player(M)
+			//commander gets a couple extra things...
 			if (M == commander)
 				equip_commander(M)
-			else
-				equip_player(M)
 
 	proc/select_commander()
 		var/list/possible_commanders = get_possible_commanders()
@@ -186,31 +178,30 @@
 			return candidates
 
 	proc/equip_commander(var/datum/mind/mind)
+		var/mob/living/carbon/human/H = mind.current
+		if (team_num == TEAM_NANOTRASEN)
+			H.equip_if_possible(new /obj/item/clothing/head/centhat(H), H.slot_l_store)
+			// H.equip_if_possible(new /obj/item/clothing/head/centhat(H), H.slot_r_store)
+		if (team_num == TEAM_SYNDICATE)
+			H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_l_store)
+			// H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_r_store)
 
 
 	proc/equip_player(var/datum/mind/mind)
 		var/mob/living/carbon/human/H = mind.current
 
-		if (istype(M, /mob/new_player))
-			var/mob/new_player/N = M
-			N.mind.assigned_role = "MODE"
-			H = N.create_character(new /datum/job/football)
+		if (istype(mind.current, /mob/new_player))
+			var/mob/new_player/N = mind.current
+			N.mind.assigned_role = name
+			H = N.create_character(new /datum/job/pod_pilot)
 
 		if (!ishuman(H))
-			boutput(M, "something went wrong. dunno what. sorry. football machine broke")
+			boutput(H, "something went wrong. Horribly wrong.")
 			return
 
-		if (is_new)
-			SHOW_FOOTBALL_TIPS(H)
-			if (football_players["blue"].len == football_players["red"].len)
-				team = pick("red", "blue")
-			else if (football_players["blue"].len < football_players["red"].len)
-				team = "blue"
-			else
-				team = "red"
+		// SHOW_TIPS(H)
 
-			H.mind.special_role = team
-			football_players[team] += H.mind
+		H.mind.special_role = name
 
 		H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
 
@@ -218,29 +209,35 @@
 		I.registered = "[H.name]"
 		I.icon = 'icons/obj/items/card.dmi'
 		I.icon_state = "fingerprint0"
-		I.desc = "A tag for indicating what team you're on. Doesn't really matter."
-		I.cant_self_remove = 1
-		I.cant_other_remove = 1
+		I.desc = "An ID card to help open doors and identify your body."
 
-		if (team == "blue")
-			H.equip_if_possible(new /obj/item/clothing/suit/armor/football(H), H.slot_wear_suit)
-			H.equip_if_possible(new /obj/item/clothing/head/helmet/football(H), H.slot_head)
-			H.equip_if_possible(new /obj/item/clothing/under/football(H), H.slot_w_uniform)
-			I.name = "Blue Team"
-			I.assignment = "Blue Team"
+		if (team_num == TEAM_NANOTRASEN)
+			I.name = "NT Pilot"
+			I.assignment = "NT Pilot"
 			I.color = "#0000ff"
-		else
-			H.equip_if_possible(new /obj/item/clothing/suit/armor/football/red(H), H.slot_wear_suit)
-			H.equip_if_possible(new /obj/item/clothing/head/helmet/football/red(H), H.slot_head)
-			H.equip_if_possible(new /obj/item/clothing/under/football/red(H), H.slot_w_uniform)
-			I.name = "Red Team"
-			I.assignment = "Red Team"
-			I.color = "#ff0000"
+			H.equip_if_possible(new /obj/item/clothing/under/misc/turds(H), H.slot_w_uniform)
+			H.equip_if_possible(new /obj/item/clothing/gloves/swat/NT(H), H.slot_gloves)
+			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
+			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/ntso(H), H.slot_head)
+			H.equip_if_possible(new /obj/item/storage/backpack/NT(H), H.slot_back)
+			H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
 
-		H.equip_if_possible(new /obj/item/clothing/shoes/cleats(H), H.slot_shoes)
+
+		else if (team_num == TEAM_SYNDICATE)
+			I.name = "Syndicate Pilot"
+			I.assignment = "Syndicate Pilot"
+			I.color = "#ff0000"
+			H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), H.slot_w_uniform)
+			H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
+			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
+			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/specialist(H), H.slot_head)
+			H.equip_if_possible(new /obj/item/storage/backpack/syndie(H), H.slot_back)
+			H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
+
+		H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), H.slot_shoes)
+		H.equip_if_possible(new /obj/item/gun/energy/phaser_gun/self_charging(H), H.slot_belt)
 
 		H.equip_if_possible(I, H.slot_wear_id)
-		//H.Equip_Bank_Purchase(H.mind.purchased_bank_item)
 		H.set_clothing_icon_dirty()
-		H.set_loc(pick(football_spawns[team]))
-		boutput(H, "You're on the [team] team! The football is to your [team == "red" ? "LEFT" : "RIGHT"]. Carry it all the way to the [team == "red" ? "LEFT" : "RIGHT"] endzone to score!")
+		// H.set_loc(pick(pod_pilot_spawns[team_num]))
+		boutput(H, "You're in the [name] faction! Mine materials, build pods, defend your space station, destroy the enemy space station!")
