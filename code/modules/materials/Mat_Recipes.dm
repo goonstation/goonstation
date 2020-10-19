@@ -146,10 +146,3 @@
 
 		if(one && two) return 1
 		else return 0
-
-/datum/material_recipe/neutronium
-	name = "neutronium"
-	result_id = "neutronium"
-
-	validate(var/datum/material/M)
-		return (M.getProperty("radioactive") >= 60 && M.getProperty("density") >= 60)
