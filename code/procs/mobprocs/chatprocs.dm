@@ -430,35 +430,49 @@
 
 	if (src.singing || (src.bioHolder && src.bioHolder.HasEffect("accent_elvis")))
 		// use note icons instead of normal quotes
-		var/note_type = src.singing == "bad" ? "notebad" : "note"
+		var/note_type = src.singing & BAD_SINGING ? "notebad" : "note"
 		var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[note_type].png")]\">"
-		if (singing == "loud" || singing == "bad" || loudness > 0)
+		if (src.singing & LOUD_SINGING)
 			first_quote = "[note_img][note_img]"
 			second_quote = first_quote
 		else
 			first_quote = note_img
 			second_quote = note_img
-		// select appropriate singing verb
-		if (src.bioHolder && src.bioHolder.HasEffect("smoker"))
+		// select singing adverb
+		var/adverb = ""
+		if (src.singing & BAD_SINGING)
+			adverb = pick("dissonantly", "flatly", "unmelodically", "tunelessly")
+		else if (src.traitHolder?.hasTrait("nervous"))
+			adverb = pick("nervously", "tremblingly", "falteringly")
+		else if (src.singing & LOUD_SINGING && !src.traitHolder?.hasTrait("smoker"))
+			adverb = pick("loudly", "deafeningly", "noisily")
+		else if (src.singing & SOFT_SINGING)
+			adverb = pick("softly", "gently")
+		else if (src.mind?.assigned_role == "Musician")
+			adverb = pick("beautifully", "tunefully", "sweetly")
+		else if (src.bioHolder?.HasEffect("accent_scots"))
+			adverb = pick("sorrowfully", "sadly", "tearfully")
+		// select singing verb
+		if (src.traitHolder?.hasTrait("smoker"))
 			speechverb = "rasps"
-			if (singing == "loud" || loudness > 0)
+			if ((singing & LOUD_SINGING))
 				speechverb = "sings Tom Waits style"
-		else if (src.traitHolder && src.traitHolder.hasTrait("french"))
+		else if (src.traitHolder?.hasTrait("french") && rand(2) < 1)
 			speechverb = "sings [pick("Charles Trenet", "Serge Gainsborough", "Edith Piaf")] style"
-		else if (src.bioHolder && src.bioHolder.HasEffect("accent_swedish"))
+		else if (src.bioHolder?.HasEffect("accent_swedish"))
 			speechverb = "sings disco style"
-		else if (src.bioHolder && src.bioHolder.HasEffect("accent_scots"))
-			speechverb = pick("laments", "softly sings", "croons", "sorrowfully intones", "sobs", "bemoans")
-		else if (src.bioHolder && src.bioHolder.HasEffect("accent_chav"))
-			speechverb = "grimily raps"
-		else if (src.singing == "bad")
-			speechverb = pick("makes a racket", "sings out of tune", "belts out", "flatly intones")
-		else if (loudness < 0)
-			speechverb = pick("hums", "lullabies", "softly intones")
-		else if (singing == "loud")
-			speechverb = pick("belts out", "roars", "yodels")
+		else if (src.bioHolder?.HasEffect("accent_scots"))
+			speechverb = pick("laments", "sings", "croons", "intones", "sobs", "bemoans")
+		else if (src.bioHolder?.HasEffect("accent_chav"))
+			speechverb = "raps"
+		else if (src.singing & SOFT_SINGING)
+			speechverb = pick("hums", "lullabies")
 		else
-			speechverb = pick("sings",  "croons", "intones", "warbles")
+			speechverb = pick("sings", pick("croons", "intones", "warbles"))
+		if (adverb != "")
+		// combine adverb and verb
+			speechverb = "[adverb] [speechverb]"
+		// add style for singing
 		text = "<i>[text]</i>"
 		style = "color:thistle;"
 

@@ -903,7 +903,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			return
 		var/m_id = (lang_id == "english" || lang_id == "") ? 1 : 2
 		if (M.singing)
-			if (M.singing == "bad" || M.singing == "loud")
+			if (M.singing & BAD_SINGING || M.singing & LOUD_SINGING)
 				spawn(3)
 					if(get_dist(src,M) <= 1)
 						src.CritterAttack(M)

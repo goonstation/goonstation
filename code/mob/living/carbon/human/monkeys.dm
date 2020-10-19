@@ -259,12 +259,13 @@
 	hear_talk(mob/M as mob, messages, heardname, lang_id)
 		if (isalive(src) && messages)
 			if (M.singing)
-				if (M.singing == "bad" || M.singing == "loud")
+				if (M.singing & (BAD_SINGING | LOUD_SINGING))
 					if (prob(20))
 						// monkey is angered by singing
 						spawn(0.5 SECONDS)
 							was_harmed(M)
-							src.visible_message("<B>[name]</B> is angry at [M] for their [M.singing] singing!", 1)
+							var/singing_modifier = (M.singing & BAD_SINGING) ? "bad" : "loud"
+							src.visible_message("<B>[name]</B> is angry at [M] for their [singing_modifier] singing!", 1)
 							src.say(pick("Must take revenge for insult to music!", "I now attack you like your singing attacked my ears!"))
 					else
 						spawn(0.5 SECONDS)
@@ -276,9 +277,9 @@
 							"Me know gorillas with better vocal pitch than you!", \
 							"Monkeys ears too sensitive for this cacophony!", \
 							"You sound like you singing in two keys at same time!", \
-							"Monkey no like atonal music!")) // monkeys don't know grammar but naturally know concepts like "atonal" and "cacophony"	
+							"Monkey no like atonal music!")) // monkeys don't know grammar but naturally know concepts like "atonal" and "cacophony"
 							if (prob(40))
-								src.emote("scream")					
+								src.emote("scream")
 		..()
 
 /datum/action/bar/icon/filthyPickpocket

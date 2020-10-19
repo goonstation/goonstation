@@ -799,10 +799,10 @@
 
 	// check for singing prefix
 	if (dd_hasprefix(message, singing_prefix) && isalive(src))
-		singing = "normal"
+		singing = NORMAL_SINGING
 		message = copytext(message, 2)
 		// Scots can only sing Danny Boy
-		if (src.bioHolder.HasEffect("accent_scots"))
+		if (src.bioHolder?.HasEffect("accent_scots"))
 			var/scots = src.bioHolder.GetEffect("accent_scots")
 			if (istype(scots, /datum/bioEffect/speech/scots))
 				var/datum/bioEffect/speech/scots/S = scots
@@ -811,7 +811,7 @@
 				message = lyrics[S.danny_index]
 	else
 		singing = 0
-	
+
 	forced_language = get_special_language(secure_headset_mode)
 
 	message = trim(message)
@@ -831,15 +831,17 @@
 				VT = "radio"
 				ending = 0
 
-		if (singing || (src.bioHolder && src.bioHolder.HasEffect("elvis")))
-			if (src.get_brain_damage() >= 60 || (src.bioHolder && (src.bioHolder.HasEffect("unintelligable") || src.hasStatus("drunk"))))
-				singing = "bad"
+		if (singing || (src.bioHolder?.HasEffect("elvis")))
+			if (src.get_brain_damage() >= 60 || src.bioHolder?.HasEffect("unintelligable") || src.hasStatus("drunk"))
+				singing |= BAD_SINGING
 				speech_bubble.icon_state = "notebad"
 			else
 				speech_bubble.icon_state = "note"
-				if (ending == "!" || (src.bioHolder && src.bioHolder.HasEffect("loud_voice")))
-					singing = "loud"
+				if (ending == "!" || (src.bioHolder?.HasEffect("loud_voice")))
+					singing |= LOUD_SINGING
 					speech_bubble.icon_state = "notebad"
+				else if (src.bioHolder?.HasEffect("quiet_voice"))
+					singing |= SOFT_SINGING
 			playsound(src, sounds_speak["[VT]"],  55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
 		else if (ending == "?")
 			playsound(src, sounds_speak["[VT]?"], 55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
@@ -1056,7 +1058,7 @@
 			T = get_step(T, EAST)
 		*/
 		var/singing_italics = singing ? " font-style: italic;" : ""
-		chat_text = make_chat_maptext(src, messages[1], "color: [src.last_chat_color];" + src.speechpopupstyle + singing_italics)
+		chat_text = make_chat_maptext(src, messages[1], "color: [singing ? "#D8BFD8" : src.last_chat_color];" + src.speechpopupstyle + singing_italics)
 		if(chat_text)
 			chat_text.measure(src.client)
 			for(var/image/chat_maptext/I in src.chat_text.lines)
@@ -1071,7 +1073,7 @@
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
 	message = src.say_quote(messages[1])
-		
+
 
 	if (italics)
 		message = "<i>[message]</i>"
