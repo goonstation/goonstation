@@ -794,7 +794,7 @@
 		icon_state = "reclaimer"
 		src.visible_message("<b>[src]</b> finishes working and shuts down.")
 
-	proc/output_bar_from_item(obj/item/O, var/amount_modifier, var/extra_mat)
+	proc/output_bar_from_item(obj/item/O, var/amount_modifier = 1, var/extra_mat)
 		if (!O || !O.material)
 			return
 
@@ -942,7 +942,7 @@
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
-			if (!M)
+			if (!M || M.loc == user)
 				continue
 			if (M.name != O.name)
 				continue

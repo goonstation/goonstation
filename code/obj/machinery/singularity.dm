@@ -182,7 +182,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		has_moved = TRUE
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
-	if(severity == 1 && (power ? prob(power*3) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
+	if(severity == 1 && (power ? prob(power*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
 		qdel(src)
 
 /obj/machinery/the_singularity/Bumped(atom/A)

@@ -175,6 +175,9 @@ datum/controller/process/fMove
 								if(J.allow_thrust(0.01, H))
 									continue
 
+					if (isghostdrone(B) && MagneticTether)
+						continue
+
 					M.setStatus("slowed", 20, 20)
 
 				if(!step(M, SOUTH))

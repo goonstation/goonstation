@@ -617,3 +617,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/zipgun,
 		/obj/item/ammo/bullets/a38 = 2)
 
+	cargonia
+		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
+		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
+
