@@ -124,7 +124,8 @@ THROWING DARTS
 					src.set_loc(Imp)
 					Imp.imp = src
 					Imp.update()
-					store.hud.remove_item(src)
+					user.u_equip(src)
+					store?.hud.remove_item(src)
 					user.show_text("You insert [src] into [Imp].")
 				return
 			else if (istype(I, /obj/item/implantcase))
