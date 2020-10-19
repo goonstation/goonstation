@@ -80,7 +80,7 @@
 			for(var/X in target.bioHolder.effectPool)
 				BE = target.bioHolder.effectPool[X]
 				if (BE && BE.id == gene_to_activate)
-					if (target.bioHolder.ActivatePoolEffect(BE,overrideDNA = 1,grant_research = 0) && !(istype(target, /mob/living/carbon/human/npc/monkey)) && target.client)
+					if (target.bioHolder.ActivatePoolEffect(BE,overrideDNA = 1,grant_research = 0) && !(isnpcmonkey(target)) && target.client)
 						src.expended_properly = 1
 					break
 			src.uses--

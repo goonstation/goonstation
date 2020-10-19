@@ -15,5 +15,5 @@
 			var/num = rand(2, 4)
 			for (var/i = 0, i < num, i++)
 				var/mob/living/carbon/human/patient = pick(potential_victims)
-				if (!(istype(patient, /mob/living/carbon/human/npc/monkey)) && patient.organHolder && patient.organHolder.appendix && !patient.organHolder.appendix.robotic)
+				if (!(isnpcmonkey(patient)) && patient.organHolder && patient.organHolder.appendix && !patient.organHolder.appendix.robotic)
 					patient.contract_disease(/datum/ailment/disease/appendicitis,null,null,1)

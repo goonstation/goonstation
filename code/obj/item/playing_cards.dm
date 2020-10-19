@@ -623,7 +623,7 @@
 		src.card_cyborg = list()
 		src.card_ai = list()
 		for (var/mob/living/carbon/human/H in mobs)
-			if (istype(H, /mob/living/carbon/human/npc/monkey))
+			if (isnpcmonkey(H))
 				continue
 			if (iswizard(H))
 				continue

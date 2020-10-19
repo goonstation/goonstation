@@ -621,7 +621,7 @@
 		if (blob_o && blob_o.mind) //ahem ahem AI blobs exist
 			blob_o.mind.blob_absorb_victims += H
 
-		if (istype(H, /mob/living/carbon/human/npc/monkey))
+		if (isnpcmonkey(H))
 			blob_o.evo_points += 1
 		else
 			blob_o.evo_points += 4

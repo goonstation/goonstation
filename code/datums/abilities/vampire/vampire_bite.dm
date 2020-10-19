@@ -63,7 +63,7 @@
 		boutput(M, __red("You can't drink the blood of your own thralls!"))
 		return 0
 
-	if (istype(target, /mob/living/carbon/human/npc/monkey))
+	if (isnpcmonkey(target))
 		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
 		return 0
 
@@ -227,7 +227,7 @@
 		boutput(M, __red("You can't drink the blood of your master's thralls!"))
 		return 0
 
-	if (istype(target, /mob/living/carbon/human/npc/monkey))
+	if (isnpcmonkey(target))
 		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
 		return 0
 
