@@ -14,8 +14,8 @@
 
 	var/list/commanders = list()
 
-	var/datum/pod_war_team/team_NT
-	var/datum/pod_war_team/team_SY
+	var/datum/pod_wars_team/team_NT
+	var/datum/pod_wars_team/team_SY
 
 
 
@@ -37,8 +37,8 @@
 /datum/game_mode/pod_war/proc/setup_teams()
 	if (!islist(commanders) || commanders.len != 2)
 		return 0
-	team_NT = new/datum/pod_war_team(mode = src, team = 1)
-	team_SY = new/datum/pod_war_team(mode = src, team = 2)
+	team_NT = new/datum/pod_wars_team(mode = src, team = 1)
+	team_SY = new/datum/pod_wars_team(mode = src, team = 2)
 
 	//get all ready players and split em into two equal teams,
 	var/list/readied_minds = list()
@@ -87,9 +87,9 @@
 	if (!istype(CS))
 		return 0
 
-	world << ("<h2><span class='alert'>[src?.team.name]'s [src] has been destroyed!!</span></h2>")
+	world << ("<h2><span class='alert'>[CS?.team?.name]'s [CS] has been destroyed!!</span></h2>")
 
-		
+
 
 
 /datum/game_mode/pod_war/check_finished()
@@ -110,7 +110,7 @@
 	..() // Admin-assigned antagonists or whatever.
 
 
-/datum/pod_war_team
+/datum/pod_wars_team
 	var/name = "NanoTrasen Crew"
 	var/comms_frequency = 0
 	var/area/base_area = null		//base ship area
@@ -127,10 +127,10 @@
 		src.team_num = team
 		if (team_num == TEAM_NANOTRASEN)
 			name = "NanoTrasen Crew"
-			base = null //area south crew
+			// base_area = /area/podmode/team1 //area south crew
 		else if (team_num == TEAM_SYNDICATE)
 			name = "Syndicate Crew"
-			base = null //area north crew
+			// base_area = /area/podmode/team2 //area north crew
 
 		set_comms(mode)
 
@@ -156,7 +156,7 @@
 		select_commander()
 
 		for (var/datum/mind/M in players)
-			equip_player(M)
+			equip_player(M.current)
 			//commander gets a couple extra things...
 			if (M == commander)
 				equip_commander(M)
@@ -195,11 +195,11 @@
 			// H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_r_store)
 
 
-	proc/equip_player(var/datum/mind/mind)
-		var/mob/living/carbon/human/H = mind.current
+	proc/equip_player(var/mob/M)
+		var/mob/living/carbon/human/H = M
 
-		if (istype(mind.current, /mob/new_player))
-			var/mob/new_player/N = mind.current
+		if (istype(M, /mob/new_player))
+			var/mob/new_player/N = M
 			N.mind.assigned_role = name
 			H = N.create_character(new /datum/job/pod_pilot)
 
@@ -248,7 +248,7 @@
 		if (headset)
 			headset.set_secure_frequency("g",comms_frequency)
 			headset.secure_classes["g"] = RADIOCL_SYNDICATE
-			boutput(leader, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
+			boutput(H, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
 
 		H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/gun/energy/phaser_gun/self_charging(H), H.slot_belt)
@@ -266,8 +266,8 @@
 	anchored = 1
 	density = 1
 
-	var/datum/pod_war_team/team = null	//must set this in map editor or else it goes by area. 1 for NT, 2 for SYNDICATE
-	health = 2000
+	var/datum/pod_wars_team/team = null	//must set this in map editor or else it goes by area. 1 for NT, 2 for SYNDICATE
+	var/health = 1000
 
 	New()
 		..()
@@ -287,7 +287,7 @@
 		if (ticker.mode == /datum/game_mode/pod_war)
 			var/datum/game_mode/pod_war/mode = ticker.mode
 			mode.announce_critical_system_destruction(src)
-			
+
 
 	ex_act(severity)
 		var/damage = 0
@@ -346,7 +346,7 @@
 	meat_level = 1.#INF
 	var/last_check = 0
 	var/check_delay = 10 SECONDS
-	var/team
+	var/datum/pod_wars_team/team
 
 	process()
 		if(!src.attempting)

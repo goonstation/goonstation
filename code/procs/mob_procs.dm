@@ -791,7 +791,7 @@
 	var/see_special = 0 // Just a pass-through. Game mode-specific stuff is handled further down in the proc.
 	var/see_everything = 0
 	var/datum/gang/gang_to_see = null
-	var/datum/pod_war_team/PWT_to_see = null
+	var/datum/pod_wars_team/PWT_to_see = null
 
 	if (isadminghost(src))
 		see_everything = 1
