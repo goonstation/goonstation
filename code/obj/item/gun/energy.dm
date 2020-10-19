@@ -307,13 +307,6 @@
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "phaser-new[ratio]"
 			return
-			
-	self_charging
-		New()
-			cell = new/obj/item/ammo/power_cell/self_charging
-			cell.max_charge = 200
-			cell.charge = 200
-
 
 ///////////////////////////////////////Rad Crossbow
 /obj/item/gun/energy/crossbow

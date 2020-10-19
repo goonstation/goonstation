@@ -1028,7 +1028,18 @@
 	else if (istype(ticker.mode, /datum/game_mode/pod_war))
 		var/datum/game_mode/pod_war/mode = ticker.mode
 		if (PWT_to_see || see_everything)
+			for (var/datum/mind/M in (mode.team_NT.members + mode.team_SY.members))
+				if (M.current)
+					if (!see_everything && isobserver(M.current)) continue
+					if (PWT_to_see == mode.team_NT)
+						var/I = image(pod_wars_NT, loc = M.current)
+						can_see.Add(I)
+					else if (PWT_to_see == mode.team_SY)
+						var/I = image(pod_wars_SY, loc = M.current)
+						can_see.Add(I)
+
 			//show commanders to everyone, can't hide.
+			//Alright, I'll confess. this draws the commander over the other one. idk how this shit works and it works anyway, I'm not in the mood to learn for real. -Kyle
 			if(mode.team_NT.commander && mode.team_NT.commander.current)
 				// if (PWT_to_see == mode.team_NT || see_everything)
 				var/I = image(pod_wars_NT_CMDR, loc = mode.team_NT.commander.current)
@@ -1038,17 +1049,6 @@
 				// if (PWT_to_see == mode.team_SY || see_everything)
 				var/I = image(pod_wars_SY_CMDR, loc = mode.team_SY.commander.current)
 				can_see.Add(I)
-
-
-			for (var/datum/mind/M in (mode.team_NT + mode.team_SY))
-				if (M.current)
-					if (!see_everything && isobserver(M.current)) continue
-					if (PWT_to_see == mode.team_NT)
-						var/I = image(pod_wars_NT, loc = M.current)
-						can_see.Add(I)
-					else if (PWT_to_see == mode.team_SY)
-						var/I = image(pod_wars_SY, loc = M.current)
-						can_see.Add(I)
 
 
 	if (can_see.len > 0)

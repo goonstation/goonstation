@@ -2,7 +2,7 @@
 #define TEAM_SYNDICATE 2
 /datum/game_mode/pod_war
 	name = "pod war"
-
+	config_tag = "pod_war"
 	votable = 1
 	probability = 0 // Overridden by the server config. If you don't have access to that repo, keep it 0.
 	crew_shortage_enabled = 1
@@ -12,7 +12,6 @@
 	do_antag_random_spawns = 0
 	var/list/frequencies_used = list()
 
-	var/list/commanders = list()
 
 	var/datum/pod_wars_team/team_NT
 	var/datum/pod_wars_team/team_SY
@@ -35,8 +34,6 @@
 
 
 /datum/game_mode/pod_war/proc/setup_teams()
-	if (!islist(commanders) || commanders.len != 2)
-		return 0
 	team_NT = new/datum/pod_wars_team(mode = src, team = 1)
 	team_SY = new/datum/pod_wars_team(mode = src, team = 2)
 
@@ -62,7 +59,7 @@
 			team_NT.accept_players(readied_minds.Copy(1, half))
 			team_SY.accept_players(readied_minds.Copy(half+1, length))
 
-
+	return 1
 
 
 
@@ -141,7 +138,6 @@
 			mode.check_finished()
 
 
-		//stolen from gang, works well enough, I don't care to make better. - kyle
 	proc/set_comms(var/datum/game_mode/pod_war/mode)
 		comms_frequency = rand(1360,1420)
 
@@ -160,14 +156,16 @@
 			//commander gets a couple extra things...
 			if (M == commander)
 				equip_commander(M)
+			M.current.antagonist_overlay_refresh(1,0)
 
 	proc/select_commander()
 		var/list/possible_commanders = get_possible_commanders()
 		if (isnull(possible_commanders) || !possible_commanders.len)
 			return 0
 
-		var/datum/mind/commander = pick(possible_commanders)
+		commander = pick(possible_commanders)
 		commander.special_role = "commander"
+		return 1
 
 //Really stolen from gang, But this basically just picks everyone who is ready and not hellbanned or jobbanned from Command or Captain
 	proc/get_possible_commanders()
@@ -190,9 +188,11 @@
 		if (team_num == TEAM_NANOTRASEN)
 			H.equip_if_possible(new /obj/item/clothing/head/centhat(H), H.slot_l_store)
 			// H.equip_if_possible(new /obj/item/clothing/head/centhat(H), H.slot_r_store)
+			H.mind.special_role = "NanoTrasen Commander"
 		if (team_num == TEAM_SYNDICATE)
 			H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_l_store)
 			// H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_r_store)
+			H.mind.special_role = "Syndicate Commander"
 
 
 	proc/equip_player(var/mob/M)
@@ -211,13 +211,11 @@
 
 		H.mind.special_role = name
 
-		H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
-
 		var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare(H) // for whatever reason, this is neccessary
 		I.registered = "[H.name]"
 		I.icon = 'icons/obj/items/card.dmi'
-		I.icon_state = "fingerprint0"
-		I.desc = "An ID card to help open doors and identify your body."
+		I.icon_state = "id_com"
+		I.desc = "An ID card to help open doors, lock pods, and identify your body."
 
 		var/obj/item/device/radio/headset/headset = new /obj/item/device/radio/headset(H)
 
@@ -251,7 +249,7 @@
 			boutput(H, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
 
 		H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/gun/energy/phaser_gun/self_charging(H), H.slot_belt)
+		H.equip_if_possible(new /obj/item/gun/energy/phaser_gun(H), H.slot_belt)
 
 		H.equip_if_possible(I, H.slot_wear_id)
 		H.set_clothing_icon_dirty()
