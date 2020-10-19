@@ -1475,7 +1475,7 @@ ABSTRACT_TYPE(/area/shuttle/asylum)
 	icon_state = "treatment_center"
 
 // Asylum
-ABSTRACT_TYPE(/area/stationm/medical/asylum)
+ABSTRACT_TYPE(/area/station/medical/asylum)
 /area/station/medical/asylum
 	name = "Asylum Mini-Station"
 	icon_state = "blue"
