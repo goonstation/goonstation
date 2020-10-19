@@ -363,7 +363,7 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 		explanation_text = "Ensure that the floors of the chemistry lab are not scorched at the end of the round."
 		medal_name = "We didn't start the fire"
 		check_completion()
-			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/chemistry, 0))
+			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/science/chemistry, 0))
 				if(T.burnt == 1) return 0
 			return 1
 	hyper
@@ -396,7 +396,7 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 		explanation_text = "Ensure that the floors of the chemistry lab are not scorched at the end of the round."
 		medal_name = "We didn't start the fire"
 		check_completion()
-			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/chemistry, 0))
+			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/science/chemistry, 0))
 				if(T.burnt == 1) return 0
 			return 1
 	hyper

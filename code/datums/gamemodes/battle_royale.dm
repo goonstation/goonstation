@@ -52,7 +52,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	/*
 	drop_locations = list("security" = /area/station/security,\
 	"science wing" = /area/station/science,\
-		"the cargo bay" = /area/station/quartermaster,\
+		"the cargo bay" = /area/station/quartermaster/concrete,\
 		"engineering" = /area/station/engine,\
 		"medbay" = /area/station/medical,\
 		"the cafeteria" = /area/station/crew_quarters/cafeteria,\
@@ -254,7 +254,7 @@ proc/get_accessible_station_areas()
 	for(var/A in areas)
 		var/area/instance = locate(A)
 		for(var/turf/T in instance)
-			if(!isfloor(T) && is_blocked_turf(T) && istype(T,/area/station/test_area) && T.z == 1)
+			if(!isfloor(T) && is_blocked_turf(T) && istype(T,/area/sim/test_area) && T.z == 1)
 				continue
 			L[instance.name] = instance
 	return L

@@ -40,7 +40,7 @@
 			src.color = "#00aa00"
 		else if(istype(src.location, /area/station/engine) || istype(src.location, /area/station/quartermaster) || istype(src.location, /area/station/mining))
 			src.color = "#aaaa00"
-		else if(istype(src.location, /area/station/science) || istype(src.location, /area/station/chemistry))
+		else if(istype(src.location, /area/station/science))
 			src.color = "#9933ff"
 		else if(istype(src.location, /area/station/medical))
 			src.color = "#0000ff"

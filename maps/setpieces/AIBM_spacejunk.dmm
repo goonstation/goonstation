@@ -1561,7 +1561,7 @@
 /area/solarium)
 "dU" = (
 /turf/simulated/wall,
-/area/station/science)
+/area/station/science/concrete)
 "dV" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -1674,7 +1674,7 @@
 /area/solarium)
 "ef" = (
 /turf/simulated/floor/circuit,
-/area/station/science)
+/area/station/science/concrete)
 "eg" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -1789,21 +1789,21 @@
 	},
 /obj/machinery/door/airlock/command,
 /turf/simulated/floor,
-/area/station/science)
+/area/station/science/concrete)
 "eu" = (
 /obj/cable{
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/science)
+/area/station/science/concrete)
 "ev" = (
 /obj/cable{
 	tag = "icon-2-8";
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/station/science)
+/area/station/science/concrete)
 "ew" = (
 /turf/simulated/floor{
 	icon_state = "carpetW"
@@ -1898,7 +1898,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/science)
+/area/station/science/concrete)
 "eI" = (
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -1980,11 +1980,11 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/science)
+/area/station/science/concrete)
 "eR" = (
 /obj/item/disk/data/memcard,
 /turf/simulated/floor/circuit,
-/area/station/science)
+/area/station/science/concrete)
 "eS" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -1996,7 +1996,7 @@
 	tag = "ZETA_MAINFRAME"
 	},
 /turf/simulated/floor/delivery,
-/area/station/science)
+/area/station/science/concrete)
 "eT" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -2004,7 +2004,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/circuit,
-/area/station/science)
+/area/station/science/concrete)
 "eU" = (
 /obj/item/reagent_containers/food/snacks/ingredient/egg/bee,
 /turf/simulated/floor/carpet,
@@ -2185,7 +2185,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/station/science)
+/area/station/science/concrete)
 "fp" = (
 /obj/cable{
 	tag = "icon-1-8";
@@ -2196,7 +2196,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/science)
+/area/station/science/concrete)
 "fq" = (
 /turf/simulated/floor/black,
 /area/solarium)
@@ -2280,7 +2280,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/circuit,
-/area/station/science)
+/area/station/science/concrete)
 "fC" = (
 /obj/machinery/power/apc{
 	dir = 2;
@@ -2290,7 +2290,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/circuit,
-/area/station/science)
+/area/station/science/concrete)
 "fD" = (
 /obj/item/paint_can/random,
 /obj/item/paint_can/random,
@@ -2355,7 +2355,7 @@
 /area/solarium)
 "fL" = (
 /turf/simulated/wall,
-/area/sim)
+/area/sim/concrete)
 "fM" = (
 /obj/machinery/vending/monkey,
 /turf/simulated/floor{
@@ -2409,15 +2409,15 @@
 	dir = 5
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "fV" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "fW" = (
 /obj/submachine/chef_sink,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "fX" = (
 /obj/submachine/chef_oven,
 /obj/machinery/light{
@@ -2426,18 +2426,18 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "fY" = (
 /obj/submachine/foodprocessor,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "fZ" = (
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "ga" = (
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gb" = (
 /obj/machinery/vending/kitchen,
 /obj/machinery/light{
@@ -2446,20 +2446,20 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gc" = (
 /obj/secure_closet/fridge{
 	icon_state = "fridge";
 	locked = 0
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gd" = (
 /obj/secure_closet/meat{
 	locked = 0
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "ge" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/plating,
@@ -2474,11 +2474,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gh" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gi" = (
 /obj/disposalpipe/trunk{
 	dir = 4
@@ -2584,7 +2584,7 @@
 	},
 /obj/machinery/computer/tour_console,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gv" = (
 /obj/machinery/guardbot_dock{
 	autoeject = 0;
@@ -2598,7 +2598,7 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gw" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -2607,7 +2607,7 @@
 	name = "Test Kitchen"
 	},
 /turf/simulated/floor/plating,
-/area/sim)
+/area/sim/concrete)
 "gx" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -2698,7 +2698,7 @@
 	},
 /obj/submachine/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gG" = (
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour0;desc=Test! ";
@@ -2707,14 +2707,14 @@
 	name = "station tour beacon"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gH" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol";
 	location = "bar"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gI" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -2722,7 +2722,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gJ" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -2812,7 +2812,7 @@
 "gT" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "gU" = (
 /turf/simulated/floor/caution/corner/sw,
 /area/solarium)
@@ -2899,7 +2899,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "hd" = (
 /obj/table{
 	contents = newlist();
@@ -2908,7 +2908,7 @@
 	},
 /obj/item/kitchen/utensil/fork,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "he" = (
 /obj/table{
 	contents = newlist();
@@ -2917,7 +2917,7 @@
 	},
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "hf" = (
 /obj/machinery/light,
 /obj/table{
@@ -2927,7 +2927,7 @@
 	},
 /obj/item/kitchen/utensil/spoon,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "hg" = (
 /obj/table{
 	contents = newlist();
@@ -2937,7 +2937,7 @@
 /obj/item/reagent_containers/food/snacks/wonton_wrapper,
 /obj/item/reagent_containers/food/snacks/wonton_wrapper,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "hh" = (
 /obj/table{
 	contents = newlist();
@@ -2946,7 +2946,7 @@
 	},
 /obj/item/reagent_containers/food/snacks/cereal_box,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "hi" = (
 /obj/table{
 	contents = newlist();
@@ -2955,7 +2955,7 @@
 	},
 /obj/item/clothing/head/void_crown,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "hj" = (
 /obj/machinery/light,
 /obj/table{
@@ -2966,7 +2966,7 @@
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/item/clothing/suit/armor/ancient,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "hk" = (
 /obj/table{
 	contents = newlist();
@@ -2975,7 +2975,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/bowl,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "hl" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -2987,7 +2987,7 @@
 /obj/item/reagent_containers/food/snacks/burrito,
 /obj/item/reagent_containers/food/snacks/burrito,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "hm" = (
 /obj/grille/steel,
 /obj/window/reinforced{

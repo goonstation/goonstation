@@ -548,7 +548,7 @@ proc/create_fluff(var/datum/mind/target)
 	var/damage_threshold = 50 // 25 was way too strict for larger rooms, causing people to fail the objective most of the time.
 
 	set_up()
-		var/list/target_areas = list(/area/station/chemistry,
+		var/list/target_areas = list(/area/station/science/chemistry,
 		/area/station/science/artifact,
 		/area/station/science/lab,
 		/area/station/science/teleporter,
