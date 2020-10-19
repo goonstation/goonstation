@@ -338,3 +338,56 @@
 
 		if (health <= 0)
 			qdel(src)
+
+//////////////special clone pod///////////////
+
+/obj/machinery/clonepod/automatic
+	name = "Cloning Pod Deluxe"
+	meat_level = 1.#INF
+	var/last_check = 0
+	var/check_delay = 10 SECONDS
+	var/team
+
+	process()
+		if(!src.attempting)
+			if (world.time - last_check >= check_delay)
+				last_check = world.time
+				INVOKE_ASYNC(src, /obj/machinery/clonepod/automatic.proc/growclone_a_ghost)
+		return..()
+
+	New()
+		..()
+		animate_rainbow_glow(src) // rgb shit cause it looks cool
+		SubscribeToProcess()
+		last_check = world.time
+
+		if (ticker.mode == /datum/game_mode/pod_war)
+			var/datum/game_mode/pod_war/mode = ticker.mode
+			if (get_area(src) == mode.team_NT.base_area)
+				team = mode.team_NT
+			else if (get_area(src) == mode.team_SY.base_area)
+				team = mode.team_SY
+
+	disposing()
+		..()
+		UnsubscribeProcess()
+
+	proc/growclone_a_ghost()
+		var/list/to_search
+
+		if (isnull(team))
+			to_search = mobs
+
+		//so we only clone the right crew members on the right ship
+		else if (ticker.mode == /datum/game_mode/pod_war)
+			var/datum/game_mode/pod_war/mode = ticker.mode
+			if (team == mode.team_NT)
+				to_search = mode.team_NT.members
+			else if (team == mode.team_SY)
+				to_search = mode.team_SY.members
+
+		for(var/mob/dead/observer/ghost in to_search)
+			var/datum/mind/ghost_mind = ghost.mind
+			if(ghost.client && !ghost_mind.dnr)
+				growclone(ghost, ghost.real_name, ghost_mind)
+				break
