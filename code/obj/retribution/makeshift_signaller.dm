@@ -18,7 +18,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (build_stage >= 3)
 			user.show_message("<span class='notice'>Uh oh, it seems you broke it!</span>", 1)
-			desc = "This doodad seems broken. Call a coder."
+			desc = "This doodad is broken. Call a coder."
 			return
 		else if (ispulsingtool(W) && build_stage <= 0)
 			build_stage = 1
@@ -26,10 +26,11 @@
 			desc = "A remote signaller frame with wiring sticking out."
 			return
 		else if (istype(W,/obj/item/sheet) && build_stage == 1)
-			if (W.amount == 1)
+			W.amount -= 1
+			if (W.amount <= 0)
 				qdel(W)
 			else
-				W.amount -= 1
+				W.inventory_counter.update_number(W.amount)
 			build_stage = 2
 			user.show_message("<span class='notice'>You make a crude but functional circuit board port and slot it into the frame!</span>", 1)
 			desc = "A remote signaller frame with a handmade circuit board port slotted loosely into it, connected with wires."
@@ -60,15 +61,16 @@
 	mats = 4
 	desc = "This device has a menacing aura around it. It requires 8 nodes of metadata to properly send and encrypt it's signal."
 	contraband = 5
-	rarity = ITEM_RARITY_RARE
 
-	attack_self()
+	attack_self(mob/user as mob)
 		if(metadata >= 8 && !is_exploding)
 			//Future me, make this spawn the Syndicate Retribution event please.
 			icon_state = "explosion"
 			user.show_message("<span class='notice'>You sent a signal to an unknown coordinate derived from the uploaded metadata! This can't be good...</span>", 1)
 			desc = "Oh shit, it's overloading!"
 			is_exploding = true
+			spawn(2 SECONDS)
+				qdel(src)
 			return
 		else if(metadata >= 0 && metadata < 8 && !is_exploding)
 			user.show_message("<span class='notice'>Metadata nodes currently filled: [metadata]</span>", 1)
@@ -93,6 +95,6 @@
 				if (metadata >= 8)
 					desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
 			else if (metadata >= 8)
-					user.show_message("<span class='notice'>All 8 metadata nodes have been filled already!</span>", 1)
+				user.show_message("<span class='notice'>All 8 metadata nodes have been filled already!</span>", 1)
 			return
 		return

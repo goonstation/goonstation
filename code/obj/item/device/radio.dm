@@ -852,8 +852,10 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		boutput(user, "You open the signaller and cram the [W.name] in there!")
 	else if (istype(W, /obj/item/cable_coil))
 		W.amount -= 1
-		if (W.amount == 0)
+		if (W.amount <= 0)
 			qdel(W)
+		else
+			W.inventory_counter.update_number(W.amount)
 		var/obj/item/makeshift_signaller_frame/A = new /obj/item/makeshift_signaller_frame
 		user.put_in_hand_or_drop(A)
 		A.add_fingerprint(user)
