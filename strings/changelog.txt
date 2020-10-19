@@ -6,6 +6,8 @@
 (p)2394
 (e)🎨|sprites
 (+)Tools and flamethrowers have had their sprites replaced with new and improved versions, new crowbar subtype
+(u)Tarmunora
+(*)~~Secretized Neutronium recipe. Experiment!~~ disabled for a minute while I change somethings
 (u)Gonzako
 (p)2346
 (e)|
