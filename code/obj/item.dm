@@ -947,7 +947,7 @@
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		else
-	return
+	return ..()
 
 /obj/item/blob_act(var/power)
 	if (src.artifact)
