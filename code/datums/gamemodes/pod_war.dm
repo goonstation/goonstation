@@ -120,6 +120,7 @@
 	var/datum/game_mode/pod_war/mode
 
 	New(var/datum/game_mode/pod_war/mode, team)
+		..()
 		src.mode = mode
 		src.team_num = team
 		if (team_num == TEAM_NANOTRASEN)
@@ -222,7 +223,6 @@
 		if (team_num == TEAM_NANOTRASEN)
 			I.name = "NT Pilot"
 			I.assignment = "NT Pilot"
-			I.color = "#0000ff"
 			H.equip_if_possible(new /obj/item/clothing/under/misc/turds(H), H.slot_w_uniform)
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat/NT(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
@@ -234,7 +234,6 @@
 		else if (team_num == TEAM_SYNDICATE)
 			I.name = "Syndicate Pilot"
 			I.assignment = "Syndicate Pilot"
-			I.color = "#ff0000"
 			H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), H.slot_w_uniform)
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
