@@ -132,7 +132,7 @@
 
 		if(diff > 1500)
 			lastuse = world.timeofday
-			visible_message("[src] makes an annoyed beep.","You hear an annoyed beep.")
+			visible_message("[src] beeps loudly.","You hear a loud beep.")
 			if (src.active)
 				src.deactivate()
 				user.show_text("Shields Deactivated.")
