@@ -130,10 +130,9 @@
 		var/diff = world.timeofday - lastuse
 		if(diff < 0) diff += 864000 //Wrapping protection.
 
-
 		if(diff > 1500)
 			lastuse = world.timeofday
-			visible_message("You flip the switch on [src].","You feel around the object and accidentally hit a switch")
+			visible_message("[src] makes an annoyed beep.","You hear an annoyed beep.")
 			if (src.active)
 				src.deactivate()
 				user.show_text("Shields Deactivated.")
