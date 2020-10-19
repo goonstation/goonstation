@@ -133,7 +133,7 @@
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
-			if (!isdead(target) && !(ismonkey(target) || target.bioHolder && target.bioHolder.HasEffect("monkey"))) // Can't farm monkeys.
+			if (!isdead(target) && !(istype(target, /mob/living/carbon/human/npc/monkey))) // Can't farm npc monkeys.
 				src.do_we_get_points = 1
 
 		if (complete >= 0.8 && last_complete < 0.8)
@@ -142,7 +142,7 @@
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
-			if (!isdead(target) && !(ismonkey(target) || target.bioHolder && target.bioHolder.HasEffect("monkey")))
+			if (!isdead(target) && !(istype(target, /mob/living/carbon/human/npc/monkey)))
 				src.do_we_get_points = 1
 
 		if (complete >= 0.9 && last_complete < 0.9)
@@ -151,7 +151,7 @@
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
-			if (!isdead(target) && !(ismonkey(target) || target.bioHolder && target.bioHolder.HasEffect("monkey")))
+			if (!isdead(target) && !(istype(target, /mob/living/carbon/human/npc/monkey)))
 				src.do_we_get_points = 1
 
 		last_complete = complete

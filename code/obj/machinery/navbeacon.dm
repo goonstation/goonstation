@@ -178,7 +178,7 @@
 		interacted(user, 1)
 
 	attack_hand(var/mob/user)
-		if (ismonkey(user))
+		if (istype(user, /mob/living/carbon/human/npc/monkey))
 			return
 		interacted(user, 0)
 
