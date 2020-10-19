@@ -319,7 +319,7 @@ AI MODULES
 		if (ais.len == 1)
 			AI = ais[names[1]]
 		else if (ais.len > 1)
-			var/res = input("Which AI are you renaming?", "Rename", null, null) as null|anything in by_type[/mob/living/silicon/ai]
+			var/res = input("Which AI are you renaming?", "Rename", null, null) as null|anything in ais
 			AI = ais[res]
 		else if (ais.len == 0)
 			boutput(sender, "There aren't any AIs available to rename...")
