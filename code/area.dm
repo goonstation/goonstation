@@ -1679,28 +1679,28 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 	name = "Central Secondary Hallway"
 	icon_state = "hallC2"
 
-area/station/hallway/starboardlowerhallway
+/area/station/hallway/starboardlowerhallway
 	name = "Starboard Lower Hallway"
 	icon_state ="starboard_lower_hallway"
 
-area/station/hallway/seaturtlehallway
+/area/station/hallway/seaturtlehallway
 	name = "Sea Turtle Hallway"
 	icon_state ="green"
 
-area/station/hallway/portlowerhallway
+/area/station/hallway/portlowerhallway
 	name = "Port Lower Hallway"
 	icon_state ="port_lower_hallway"
 
-area/station/hallway/centralhallway
+/area/station/hallway/centralhallway
 	name = "Central Hallway"
 	icon_state ="central_hallway"
 
-area/station/hallway/portupperhallway
+/area/station/hallway/portupperhallway
 	name = "Port Upper Hallway"
 	icon_state ="port_upper_hallway"
 	requires_power = 1
 
-area/station/hallway/starboardupperhallway
+/area/station/hallway/starboardupperhallway
 	name = "Starboard Upper Hallway"
 	icon_state ="starboard_upper_hallway"
 	requires_power = 1
@@ -1775,7 +1775,7 @@ ABSTRACT_TYPE(/area/station/bridge)
 /area/station/bridge/command_center
 	name = "Bridge Command Center"
 
-area/station/seaturtlebridge
+/area/station/seaturtlebridge
 	name = "Sea Turtle Bridge"
 	icon_state = "bridge"
 
@@ -2081,15 +2081,15 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Public Garden"
 	icon_state = "park"
 
-area/station/crewquarters/garbagegarbs //It's the clothing store on Manta
+/area/station/crewquarters/garbagegarbs //It's the clothing store on Manta
 	name = "Garbage Garbs clothing store"
 	icon_state = "green"
 
-area/station/crewquarters/fuq3 // Donut 3's clothing store... be afraid
+/area/station/crewquarters/fuq3 // Donut 3's clothing store... be afraid
 	name = "Fuq 3 clothing store"
 	icon_state = "fuq3"
 
-area/station/crewquarters/cryotron
+/area/station/crewquarters/cryotron
 	name ="Cryogenic Crew Storage"
 	icon_state = "blue"
 
