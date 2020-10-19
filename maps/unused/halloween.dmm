@@ -2494,8 +2494,7 @@
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afx" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -2510,8 +2509,7 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afy" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -2522,8 +2520,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afz" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -2543,8 +2540,7 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afA" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -2555,8 +2551,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afB" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -2570,8 +2565,7 @@
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afC" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -2586,8 +2580,7 @@
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afD" = (
 /obj/cable{
 	d2 = 8;
@@ -2603,8 +2596,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afE" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -2617,8 +2609,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afF" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/cable{
@@ -2627,8 +2618,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afG" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -2978,20 +2968,17 @@
 "agn" = (
 /obj/machinery/atmospherics/retrofilter,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ago" = (
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "agp" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "agq" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -2999,8 +2986,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "agr" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	tag = "icon-manifold (WEST)";
@@ -3009,8 +2995,7 @@
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ags" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHWEST)";
@@ -3023,13 +3008,11 @@
 	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "agt" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "agu" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
@@ -3714,8 +3697,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aic" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -5100,8 +5082,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "akz" = (
 /obj/machinery/atmospherics/retrofilter{
 	dir = 8;
@@ -5110,8 +5091,7 @@
 	tag = "icon-filter-off (WEST)"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "akA" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -5454,8 +5434,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aln" = (
 /obj/cable{
 	d1 = 1;
@@ -5475,8 +5454,7 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "alo" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -5492,8 +5470,7 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "alp" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -5934,8 +5911,7 @@
 	level = 2
 	},
 /turf/simulated/wall,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amg" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -5955,8 +5931,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amh" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -5974,8 +5949,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ami" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -5994,12 +5968,10 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amj" = (
 /turf/simulated/wall,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amk" = (
 /obj/cable{
 	icon_state = "1-2";

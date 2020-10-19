@@ -296,8 +296,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aH" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'COLLISION HAZARD'";
@@ -307,8 +306,7 @@
 /area/station/quartermaster/concrete)
 "aI" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aJ" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -348,8 +346,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aO" = (
 /obj/grille/catwalk{
 	dir = 8
@@ -438,8 +435,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "bb" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
@@ -562,8 +558,7 @@
 "bu" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "bv" = (
 /obj/machinery/firealarm{
 	pixel_y = 25
@@ -867,8 +862,7 @@
 /area/station/hallway/secondary/exit)
 "ch" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ci" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
@@ -993,8 +987,7 @@
 "cz" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "cA" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/detectives_office)
@@ -1034,8 +1027,7 @@
 	},
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "cH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1295,15 +1287,13 @@
 	},
 /mob/living/critter/spider/baby,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "dl" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "dm" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4;
@@ -1693,8 +1683,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "em" = (
 /obj/cable{
 	d1 = 1;
@@ -1705,8 +1694,7 @@
 /area/station/crew_quarters/catering)
 "en" = (
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "eo" = (
 /obj/potted_plant{
 	dir = 1;
@@ -1788,13 +1776,11 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ey" = (
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ez" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/armory)
@@ -1992,8 +1978,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "eX" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -2270,16 +2255,14 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "fO" = (
 /obj/storage/closet/coffin,
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "fP" = (
 /turf/simulated/floor/green/side{
 	dir = 10
@@ -5222,8 +5205,7 @@
 "nI" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "nJ" = (
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -7931,8 +7913,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "tW" = (
 /obj/cable{
 	d1 = 2;
@@ -7940,8 +7921,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "tX" = (
 /obj/cable{
 	d1 = 1;
@@ -16539,8 +16519,7 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "Pv" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -17327,7 +17306,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/SEmaint)
+/area/station/maintenance/southeast)
 "RS" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{

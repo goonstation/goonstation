@@ -3075,8 +3075,7 @@
 /area/station/crew_quarters/md)
 "afj" = (
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afk" = (
 /obj/machinery/light{
 	dir = 4
@@ -3107,8 +3106,7 @@
 "afo" = (
 /obj/wingrille_spawn/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afp" = (
 /obj/machinery/power/apc{
 	areastring = "Pod Bay";
@@ -3124,8 +3122,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afq" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/cable{
@@ -3162,8 +3159,7 @@
 	name = "blobstart"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aft" = (
 /obj/machinery/power/apc{
 	areastring = "North Maintenance";
@@ -3180,8 +3176,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afu" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/cable{
@@ -3193,8 +3188,7 @@
 	name = "airlock-'Maintenance'"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afv" = (
 /turf/simulated/wall/auto/gannets,
 /area/station/maintenance/northeast)
@@ -3257,14 +3251,12 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afB" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light/small,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "afC" = (
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/security/checkpoint{
@@ -5831,8 +5823,7 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "akK" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets{
@@ -5849,8 +5840,7 @@
 /area/station/crew_quarters/quarters_east)
 "akM" = (
 /turf/simulated/wall/auto/gannets,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "akN" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/cable{

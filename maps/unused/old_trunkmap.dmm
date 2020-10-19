@@ -9784,19 +9784,16 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "awe" = (
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "awf" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "awg" = (
 /obj/stool,
 /turf/simulated/floor,
@@ -10204,13 +10201,11 @@
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "axa" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "axb" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
@@ -10515,31 +10510,27 @@
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "axS" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "axT" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "axU" = (
 /obj/disposalpipe/segment{
 	icon_state = "pipe-c";
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "axV" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
@@ -10672,8 +10663,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "ayh" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -11018,13 +11008,11 @@
 /obj/window/reinforced/east,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "azd" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aze" = (
 /obj/decal/poster/wallsign/barber{
 	pixel_y = -16
@@ -11044,17 +11032,14 @@
 "azh" = (
 /obj/storage/closet/wardrobe/black,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "azi" = (
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "azj" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "azk" = (
 /turf/simulated/wall,
 /area/station/hallway/primary/central)
@@ -11484,8 +11469,7 @@
 /area/station/hallway/primary/north)
 "aAj" = (
 /turf/simulated/wall,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aAk" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -11504,8 +11488,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aAl" = (
 /turf/simulated/wall,
 /area/station/crew_quarters/bar)
@@ -11803,8 +11786,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aBe" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -11816,8 +11798,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aBf" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -11829,8 +11810,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aBg" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -12194,8 +12174,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aBZ" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -12204,8 +12183,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aCa" = (
 /obj/stool,
 /obj/machinery/power/apc{
@@ -12917,8 +12895,7 @@
 "aDQ" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aDR" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -13310,16 +13287,14 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aEK" = (
 /obj/machinery/light/small{
 	icon_state = "bulb1";
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aEL" = (
 /obj/table/auto,
 /turf/simulated/floor/specialroom/bar,
@@ -14091,8 +14066,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aGT" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -14100,8 +14074,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aGU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -14470,16 +14443,14 @@
 	req_access_txt = "12"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aHI" = (
 /obj/machinery/light/small{
 	dir = 1;
 	status = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aHJ" = (
 /obj/machinery/camera{
 	c_tag = "Medical Office";
@@ -14514,8 +14485,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aHO" = (
 /obj/machinery/camera{
 	name = "autoname  - SS13";
@@ -14798,8 +14768,7 @@
 	req_access_txt = "12"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aIG" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -14822,8 +14791,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aIJ" = (
 /obj/machinery/manufacturer/general,
 /obj/cable,
@@ -15170,28 +15138,24 @@
 	req_access_txt = "12"
 	},
 /turf/simulated/floor,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aJK" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aJL" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aJM" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/wall,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aJN" = (
 /obj/disposalpipe/switch_junction{
 	dir = 4;
@@ -15203,8 +15167,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aJO" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -15213,8 +15176,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aJP" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -15226,8 +15188,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aJQ" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -15245,8 +15206,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aJS" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -15256,8 +15216,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aJT" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -15733,15 +15692,13 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aKX" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aKY" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -15750,16 +15707,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aKZ" = (
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aLa" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -15767,8 +15722,7 @@
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aLb" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
@@ -15777,8 +15731,7 @@
 /obj/disposalpipe/segment,
 /obj/storage/closet/office,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aLd" = (
 /turf/simulated/wall,
 /area/station/crew_quarters/kitchen)
@@ -16200,8 +16153,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aMi" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -16216,8 +16168,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aMj" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -16233,12 +16184,10 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aMk" = (
 /turf/simulated/wall/r_wall,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aMl" = (
 /turf/simulated/wall/r_wall,
 /area/station/crew_quarters/cafeteria)
@@ -16296,8 +16245,7 @@
 "aMv" = (
 /obj/storage/closet,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aMw" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -16821,15 +16769,13 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aNH" = (
 /obj/landmark/start{
 	name = "Maze"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aNI" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -17345,8 +17291,7 @@
 "aOM" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
-/area/station/maintenance/central
-)
+/area/station/maintenance/central)
 "aON" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/firedoor/border_only{
