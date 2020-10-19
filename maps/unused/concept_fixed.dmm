@@ -6166,8 +6166,7 @@
 	req_access_txt = "12;31"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "alH" = (
 /turf/simulated/wall/r_wall,
 /area/station/quartermaster/concrete)
@@ -6182,8 +6181,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "alJ" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall,
@@ -6346,17 +6344,14 @@
 /area/station/storage/tech)
 "alW" = (
 /turf/simulated/wall/r_wall,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "alX" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "alY" = (
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "alZ" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -6364,13 +6359,11 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ama" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amb" = (
 /obj/machinery/camera{
 	c_tag = "North Primary Hallway - South";
@@ -6656,8 +6649,7 @@
 /area/station/storage/tech)
 "amx" = (
 /turf/simulated/wall,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amy" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -6665,16 +6657,14 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amz" = (
 /obj/machinery/camera{
 	c_tag = "FP Maintenance - QM Access";
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amA" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -6937,20 +6927,17 @@
 "amU" = (
 /obj/table,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amV" = (
 /obj/machinery/vending/floppy,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amW" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amX" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -6958,13 +6945,11 @@
 	d2 = 2
 	},
 /turf/simulated/wall,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amY" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "amZ" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -7186,8 +7171,7 @@
 "ans" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ant" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -7195,8 +7179,7 @@
 	},
 /obj/item/device/t_scanner,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "anu" = (
 /turf/simulated/wall,
 /area/station/hallway/primary/central)
@@ -7393,8 +7376,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "anS" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -7408,8 +7390,7 @@
 	},
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "anT" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -7420,8 +7401,7 @@
 	name = "Technical Assistant"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "anU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -7444,8 +7424,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "anV" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -7453,8 +7432,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "anW" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -7467,8 +7445,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "anX" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -7481,8 +7458,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "anY" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -7668,8 +7644,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aot" = (
 /obj/rack,
 /obj/item/clothing/under/color,
@@ -7677,8 +7652,7 @@
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aou" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -7688,8 +7662,7 @@
 	},
 /obj/item/storage/box/lightbox/tubes,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aov" = (
 /obj/table,
 /obj/item/paper_bin,
@@ -7884,15 +7857,13 @@
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aoR" = (
 /obj/landmark{
 	name = "kudzustart"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aoS" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -7901,14 +7872,12 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aoT" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aoU" = (
 /obj/stool/chair{
 	dir = 1
@@ -8081,8 +8050,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "app" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -8094,8 +8062,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "apq" = (
 /obj/cable{
 	d1 = 1;
@@ -8103,8 +8070,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "apr" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
@@ -8583,8 +8549,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aqD" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -8600,8 +8565,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aqE" = (
 /obj/cable{
 	d1 = 1;
@@ -8614,8 +8578,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aqF" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -8624,8 +8587,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aqG" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -8637,8 +8599,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aqH" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -8929,8 +8890,7 @@
 "ari" = (
 /obj/item/extinguisher,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "arj" = (
 /turf/simulated/floor/purple/corner,
 /area/station/hallway/primary/central)
@@ -9327,8 +9287,7 @@
 	req_access_txt = "40"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "arR" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";

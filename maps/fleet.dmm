@@ -7545,7 +7545,7 @@
 	})
 "pr" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "ps" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7555,7 +7555,7 @@
 	name = "Vessel Power Room"
 	},
 /turf/simulated/floor/black,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pt" = (
 /obj/decal/poster/wallsign/stencil/left/n,
 /obj/decal/poster/wallsign/stencil/right/e,
@@ -7686,21 +7686,21 @@
 	},
 /obj/item/extinguisher,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pH" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pI" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/stairs/dark,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pJ" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -7708,25 +7708,25 @@
 	},
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pK" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pL" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-R"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pM" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pN" = (
 /obj/disposalpipe/segment/transport{
 	dir = 1;
@@ -7788,18 +7788,18 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pV" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pW" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pX" = (
 /obj/cable{
 	d1 = 1;
@@ -7811,7 +7811,7 @@
 	},
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pY" = (
 /obj/cable{
 	d1 = 2;
@@ -7822,7 +7822,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "pZ" = (
 /obj/machinery/power/solar_control{
 	dir = 8;
@@ -7834,14 +7834,14 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qa" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-M"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qb" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/transport,
@@ -7849,7 +7849,7 @@
 /area)
 "qc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qd" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
@@ -7860,7 +7860,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/grey,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qe" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/machinery/conveyor{
@@ -7869,11 +7869,11 @@
 	operating = 1
 	},
 /turf/simulated/floor/grey,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qf" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qg" = (
 /obj/cable{
 	d1 = 1;
@@ -7881,7 +7881,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qh" = (
 /obj/machinery/power/furnace,
 /obj/cable{
@@ -7889,14 +7889,14 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qi" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-L"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qj" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -7945,7 +7945,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/grey,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qo" = (
 /obj/machinery/door/poddoor/pyro{
 	autoclose = 1;
@@ -7960,7 +7960,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/grey,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qp" = (
 /obj/machinery/crusher,
 /obj/machinery/conveyor{
@@ -7970,12 +7970,12 @@
 	operating = 1
 	},
 /turf/simulated/floor/grey,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qq" = (
 /obj/machinery/light/small,
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/grey,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qr" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -7983,7 +7983,7 @@
 	name = "Hammer Waste Driver"
 	},
 /turf/simulated/floor/grey,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qs" = (
 /obj/grille/catwalk{
 	icon_state = "catwalk_cross"
@@ -8030,7 +8030,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "qx" = (
 /obj/lattice{
 	dir = 6;
@@ -11586,7 +11586,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/grey,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "wY" = (
 /obj/machinery/computer/bank_data{
 	dir = 4
@@ -17257,7 +17257,7 @@
 	},
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/hammer
+/area/station/maintenance/inner/hammer)
 "HM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/research_outpost/indigo_rye)

@@ -566,8 +566,7 @@
 	id = "chapelgun"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "abu" = (
 /obj/machinery/conveyor{
 	id = "chapel"
@@ -578,8 +577,7 @@
 	id = "chapelgun"
 	},
 /turf/simulated/floor/black,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "abv" = (
 /obj/machinery/conveyor{
 	id = "chapel"
@@ -588,8 +586,7 @@
 	id = "chapelgun"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "abw" = (
 /obj/machinery/door/airlock/pyro/glass{
 	icon_base = "windoor";
@@ -3014,8 +3011,7 @@
 "agm" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "agn" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 1;
@@ -3342,8 +3338,7 @@
 /area/station/medical/medbay/surgery/storage)
 "agY" = (
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "agZ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
@@ -3351,12 +3346,10 @@
 "aha" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ahb" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ahc" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -3569,8 +3562,7 @@
 	id = "chapel"
 	},
 /turf/simulated/floor/black,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ahx" = (
 /obj/stool/chair/blue{
 	dir = 4
@@ -3781,8 +3773,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "ahY" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/main)
@@ -3799,8 +3790,7 @@
 /area/station/chapel/main)
 "aia" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aib" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating/random,
@@ -3826,8 +3816,7 @@
 "aie" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aif" = (
 /obj/disposalpipe/segment/produce{
 	dir = 4;
@@ -3960,8 +3949,7 @@
 /obj/item/spacecash/random/small,
 /obj/item/spacecash/random/small,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aix" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/gimmick/princess,
@@ -3990,16 +3978,14 @@
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aiB" = (
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "aiC" = (
 /obj/storage/closet/coffin,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aiD" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -4048,8 +4034,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aiK" = (
 /obj/machinery/conveyor_switch{
 	id = "chapel"
@@ -4659,8 +4644,7 @@
 /obj/item/reagent_containers/syringe,
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "akf" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -4676,8 +4660,7 @@
 /obj/item/body_bag,
 /obj/item/body_bag,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "akg" = (
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/black,
@@ -8653,8 +8636,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "atc" = (
 /obj/decal/poster/wallsign/poster_rand,
 /turf/simulated/wall/auto/supernorn,
@@ -14918,8 +14900,7 @@
 "aHB" = (
 /obj/item/clothing/shoes/gogo,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aHC" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/janitor/office)
@@ -15140,8 +15121,7 @@
 	name = "peststart"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aHZ" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -15151,8 +15131,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aIa" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable{
@@ -15363,8 +15342,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aIC" = (
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/disposal/mail/small/autoname{
@@ -15826,8 +15804,7 @@
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aJw" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -15982,13 +15959,11 @@
 "aJP" = (
 /obj/stool/chair,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aJQ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aJR" = (
 /obj/vehicle/floorbuffer{
 	dir = 8
@@ -16124,8 +16099,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/cola,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aKi" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/checkpoint/west)
@@ -16287,8 +16261,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aKF" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/disposalpipe/segment/mail,
@@ -17805,8 +17778,7 @@
 /obj/storage/closet/coffin,
 /obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aOt" = (
 /obj/cable{
 	d2 = 4;
@@ -19987,8 +19959,7 @@
 "aTr" = (
 /obj/item/clothing/under/swimsuit/green,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aTs" = (
 /turf/unsimulated/wall/auto/coral,
 /area)
@@ -20370,8 +20341,7 @@
 /obj/machinery/light/incandescent/blueish,
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "aUE" = (
 /obj/storage/closet/emergency,
 /obj/item/clothing/mask/gas/emergency,
@@ -24288,8 +24258,7 @@
 /obj/machinery/light/incandescent/blueish,
 /obj/storage/closet/coffin/wood,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "beA" = (
 /obj/cable{
 	d1 = 2;
@@ -24309,13 +24278,11 @@
 "beB" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "beC" = (
 /obj/item/pen/crayon/pink,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "beD" = (
 /obj/stool/chair/comfy/flock{
 	dir = 8
@@ -27482,8 +27449,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "bmv" = (
 /obj/critter/mouse/remy,
 /obj/machinery/firealarm{
@@ -28492,8 +28458,7 @@
 /obj/item/screwdriver,
 /obj/item/cable_coil,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "boV" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/west)
@@ -42312,8 +42277,7 @@
 /obj/rack,
 /obj/item/storage/toolbox/electrical,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "bWq" = (
 /obj/table/wood/auto{
 	pixel_w = -1
@@ -42528,8 +42492,7 @@
 "bWP" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "bWQ" = (
 /obj/disposalpipe/segment/brig{
 	desc = "An underfloor interrogation pipe.";
@@ -42698,8 +42661,7 @@
 /obj/item/crowbar,
 /obj/item/wrench,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "bXk" = (
 /obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/plating/random,
@@ -45230,8 +45192,7 @@
 /obj/storage/closet/coffin,
 /obj/item/device/flash,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "cfa" = (
 /obj/item/device/light/zippo,
 /turf/simulated/floor/plating/random,
@@ -45424,8 +45385,7 @@
 "cfB" = (
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "cfC" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor,
@@ -46002,8 +45962,7 @@
 "chf" = (
 /obj/storage/closet/coffin/wood,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "chg" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -46250,8 +46209,7 @@
 	},
 /obj/machinery/computer/ordercomp,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "chX" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Sauna"
@@ -46264,8 +46222,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest
-)
+/area/station/maintenance/northwest)
 "chZ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southwest)
