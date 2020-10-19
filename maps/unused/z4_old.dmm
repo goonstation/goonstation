@@ -16,7 +16,7 @@
 /area/shuttle_transit_space/west)
 "af" = (
 /turf/space/shuttle_transit,
-/area/shuttle_transit_space)
+/area/shuttle_transit_space/north
 "ag" = (
 /turf/space/shuttle_transit,
 /area/shuttle/escape/transit/donut2)
@@ -34,7 +34,7 @@
 /area/shuttle_particle_spawn/west)
 "al" = (
 /turf/space/shuttle_transit,
-/area/shuttle_particle_spawn)
+/area/shuttle_particle_spawn/north)
 "am" = (
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/south)
@@ -2899,36 +2899,36 @@
 	dir = 8;
 	icon_state = "wall3_space"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ik" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "wall3dir"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "il" = (
 /turf/simulated/shuttle/wall{
 	dir = 5;
 	icon_state = "wall3dir"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "im" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "wall3dir"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "in" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "wall3_space"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "io" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ip" = (
 /obj/table/auto,
 /obj/machinery/microwave{
@@ -2938,7 +2938,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iq" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
@@ -2946,45 +2946,45 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ir" = (
 /obj/table/auto,
 /obj/machinery/light/lamp,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "is" = (
 /obj/table/auto,
 /obj/item/pen/sleepypen,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "it" = (
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iu" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iv" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iw" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "wall3dir"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ix" = (
 /obj/table/auto,
 /obj/item/storage/box/donkpocket_w_kit,
@@ -2995,18 +2995,18 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iy" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iz" = (
 /obj/stool,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iA" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -3015,7 +3015,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iB" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -3048,7 +3048,7 @@
 	dir = 1;
 	icon_state = "wall3dir"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iG" = (
 /obj/table/auto,
 /obj/item/cell/supercell/charged,
@@ -3058,7 +3058,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iH" = (
 /obj/landmark{
 	name = "Syndicate-Gear-Closet"
@@ -3066,7 +3066,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iI" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -3094,19 +3094,19 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3_space"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iN" = (
 /obj/machinery/door/window,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iO" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "wall3_space"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "iP" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -3186,14 +3186,14 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ja" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/thermal,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jb" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -3209,7 +3209,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "je" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3_space"
@@ -3268,7 +3268,7 @@
 	name = "external blast door"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jm" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 4;
@@ -3276,7 +3276,7 @@
 	name = "external blast door"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jn" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 4;
@@ -3286,7 +3286,7 @@
 	name = "external blast door"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jo" = (
 /obj/submachine/syndicate_teleporter,
 /obj/machinery/light{
@@ -3297,7 +3297,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jp" = (
 /obj/stool,
 /obj/machinery/light{
@@ -3307,7 +3307,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jq" = (
 /obj/landmark{
 	name = "Nuclear-Closet"
@@ -3315,7 +3315,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jr" = (
 /obj/stool/chair/couch{
 	icon_state = "chair_couch-brown";
@@ -3324,7 +3324,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "js" = (
 /obj/stool/chair/couch{
 	icon_state = "chair_couch-brown";
@@ -3337,13 +3337,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jt" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ju" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -3362,10 +3362,10 @@
 "jw" = (
 /obj/machinery/r_door_control/podbay/syndicate/new_walls/west,
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jx" = (
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jy" = (
 /obj/table/auto,
 /obj/item/clothing/suit/space/industrial/syndicate{
@@ -3374,7 +3374,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jz" = (
 /obj/machinery/door/airlock/command{
 	name = "Cockpit";
@@ -3388,17 +3388,17 @@
 "jA" = (
 /obj/machinery/vehicle/miniputt/syndiputt,
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jB" = (
 /obj/machinery/vehicle/pod_smooth/syndicate,
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jC" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jD" = (
 /obj/table/auto,
 /obj/item/device/camera_viewer,
@@ -3406,7 +3406,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jE" = (
 /obj/rack,
 /obj/random_item_spawner/landmine/surplus,
@@ -3414,7 +3414,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jF" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -3455,7 +3455,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jM" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -3463,12 +3463,12 @@
 	},
 /obj/machinery/door_control/podbay/syndicate/new_walls/east,
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jN" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jO" = (
 /obj/item/paper{
 	info = "The station is West of your teleporter.  Their bridge is on the far northwest side.";
@@ -3477,7 +3477,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jP" = (
 /obj/rack,
 /obj/landmark{
@@ -3486,7 +3486,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jQ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
@@ -3529,7 +3529,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "jW" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -3560,13 +3560,13 @@
 /obj/item/crowbar,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kb" = (
 /obj/table/auto,
 /obj/item/shipcomponent/secondary_system/crash,
 /obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kc" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -3574,11 +3574,11 @@
 /obj/item/shipcomponent/mainweapon/gun,
 /obj/item/shipcomponent/mainweapon/gun,
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kd" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/shuttlebay,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ke" = (
 /obj/grille/steel,
 /obj/window{
@@ -3599,7 +3599,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kf" = (
 /obj/rack,
 /obj/item/clothing/suit/space/syndicate,
@@ -3608,7 +3608,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kg" = (
 /obj/table/auto,
 /obj/bedsheetbin,
@@ -3616,13 +3616,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kh" = (
 /obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ki" = (
 /obj/machinery/door/window{
 	base_state = "right";
@@ -3632,13 +3632,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kj" = (
 /obj/machinery/light,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kk" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/shuttle{
@@ -3659,7 +3659,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kn" = (
 /obj/decal/fakeobjects/teleport_pad,
 /turf/simulated/floor/shuttle{
@@ -3680,7 +3680,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kq" = (
 /obj/machinery/sleep_console{
 	dir = 8
@@ -3688,7 +3688,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kr" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -3701,7 +3701,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ks" = (
 /obj/machinery/sleep_console{
 	dir = 4
@@ -3709,7 +3709,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kt" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -3717,7 +3717,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ku" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -3727,7 +3727,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kv" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -3739,7 +3739,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kw" = (
 /obj/table/auto,
 /obj/item/wrench,
@@ -3758,7 +3758,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kx" = (
 /obj/table/auto,
 /obj/item/old_grenade/stinger/frag,
@@ -3771,7 +3771,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ky" = (
 /obj/table/auto,
 /obj/item/storage/fanny/syndie,
@@ -3782,7 +3782,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kz" = (
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater"
@@ -3827,7 +3827,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kF" = (
 /obj/landmark{
 	name = "Syndicate-Spawn"
@@ -3835,7 +3835,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kG" = (
 /obj/landmark{
 	name = "SR Syndicate-Spawn"
@@ -3843,7 +3843,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kH" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -3853,7 +3853,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kI" = (
 /obj/machinery/door/window{
 	base_state = "right";
@@ -3865,7 +3865,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kJ" = (
 /obj/storage/crate/internals{
 	name = "Oxygen tanks"
@@ -3878,7 +3878,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kK" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	icon_state = "alt_propulsion"
@@ -3912,7 +3912,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kP" = (
 /obj/machinery/door/window{
 	icon = 'icons/obj/doors/windoor.dmi';
@@ -3921,14 +3921,14 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kQ" = (
 /obj/table/auto,
 /obj/item/gun/kinetic/rpg7,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kR" = (
 /turf/simulated/shuttle/wall/escape{
 	icon_state = "walldir";
@@ -3982,7 +3982,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kX" = (
 /obj/storage/crate/medical{
 	name = "Medkits"
@@ -3996,7 +3996,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kY" = (
 /obj/table/auto,
 /obj/item/reagent_containers/hypospray,
@@ -4009,7 +4009,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "kZ" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -4025,7 +4025,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "la" = (
 /obj/machinery/door/window{
 	dir = 1
@@ -4033,7 +4033,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lb" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -4049,7 +4049,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lc" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -4058,7 +4058,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "ld" = (
 /obj/table/auto,
 /obj/item/extinguisher{
@@ -4071,7 +4071,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "le" = (
 /obj/table/auto,
 /obj/item/ammo/bullets/rpg,
@@ -4080,7 +4080,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lf" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -4179,7 +4179,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lt" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Biohazard'";
@@ -4193,7 +4193,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lu" = (
 /obj/landmark{
 	name = "Nuclear-Bomb"
@@ -4201,7 +4201,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lv" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
@@ -4269,7 +4269,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lG" = (
 /obj/machinery/optable,
 /obj/item/reagent_containers/iv_drip/blood,
@@ -4277,7 +4277,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lH" = (
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-L"
@@ -4293,7 +4293,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lI" = (
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-M"
@@ -4309,7 +4309,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lJ" = (
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-R"
@@ -4325,7 +4325,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lK" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -4413,7 +4413,7 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
-/area/syndicate_station)
+/area/syndicate_station/concrete)
 "lW" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,

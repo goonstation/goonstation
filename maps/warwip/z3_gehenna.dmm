@@ -4,17 +4,17 @@
 /area)
 "ab" = (
 /turf/gehenna/desert,
-/area/station/mining)
+/area/station/mining/concrete)
 "ac" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining)
+/area/station/mining/concrete)
 "ad" = (
 /obj/machinery/door/airlock/pyro/external{
 	icon_state = "airlock_closed";
 	dir = 8
 	},
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/concrete)
 "ae" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -23,22 +23,22 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/concrete)
 "af" = (
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/concrete)
 "ag" = (
 /turf/simulated/floor/stairs/wide/other{
 	icon_state = "Stairs2_wide";
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/concrete)
 "ah" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/mining)
+/area/station/mining/concrete)
 "ai" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/mining)
+/area/station/mining/concrete)
 "aj" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -47,22 +47,22 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/concrete)
 "ak" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/sw,
-/area/station/mining)
+/area/station/mining/concrete)
 "al" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/mining)
+/area/station/mining/concrete)
 "am" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/mining)
+/area/station/mining/concrete)
 "an" = (
 /turf/simulated/floor/stairs/medical/wide,
-/area/station/mining)
+/area/station/mining/concrete)
 "ao" = (
 /turf/simulated/floor/stairs/medical/wide/other,
-/area/station/mining)
+/area/station/mining/concrete)
 "ap" = (
 /obj/machinery/light{
 	dir = 4;
@@ -71,7 +71,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/concrete)
 "aq" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -81,15 +81,15 @@
 	},
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/mining)
+/area/station/mining/concrete)
 "ar" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/mining)
+/area/station/mining/concrete)
 "as" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/mining)
+/area/station/mining/concrete)
 "at" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -98,10 +98,10 @@
 	pixel_x = -12
 	},
 /turf/gehenna/desert,
-/area/station/mining)
+/area/station/mining/concrete)
 "au" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne,
-/area/station/mining)
+/area/station/mining/concrete)
 "av" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -110,11 +110,11 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/mining)
+/area/station/mining/concrete)
 "aw" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/mining)
+/area/station/mining/concrete)
 "ax" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -124,25 +124,25 @@
 	},
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/mining)
+/area/station/mining/concrete)
 "ay" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw,
-/area/station/mining)
+/area/station/mining/concrete)
 "az" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/mining)
+/area/station/mining/concrete)
 "aA" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/mining)
+/area/station/mining/concrete)
 "aB" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/mining)
+/area/station/mining/concrete)
 "aC" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/mining)
+/area/station/mining/concrete)
 "aD" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area)
@@ -656,10 +656,10 @@
 "cg" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/concrete)
 "ch" = (
 /turf/simulated/floor/plating,
-/area/station/mining)
+/area/station/mining/concrete)
 "ci" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	icon_state = "maint_closed";

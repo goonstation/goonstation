@@ -39715,7 +39715,7 @@
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -39917,13 +39917,13 @@
 /area/afterlife/heaven)
 "bUz" = (
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
 "bUA" = (
 /turf/unsimulated/wall/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -40679,7 +40679,7 @@
 	name = "bombtest-bomb"
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -41276,7 +41276,7 @@
 	pixel_y = -24
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -41285,7 +41285,7 @@
 	name = "bombtest"
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -68812,7 +68812,7 @@
 /area/centcom)
 "dkM" = (
 /turf/space/shuttle_transit,
-/area/shuttle_transit_space)
+/area/shuttle_transit_space/north)
 "dkN" = (
 /turf/space/shuttle_transit,
 /area/shuttle_particle_spawn/south)
@@ -68822,7 +68822,7 @@
 "dkP" = (
 /obj/landmark/escape_pod_succ,
 /turf/space/shuttle_transit,
-/area/shuttle_transit_space)
+/area/shuttle_transit_space/north)
 "dkQ" = (
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/east)
@@ -68877,7 +68877,7 @@
 /area/shuttle_transit_space/west)
 "dlb" = (
 /turf/space/shuttle_transit,
-/area/shuttle_particle_spawn)
+/area/shuttle_particle_spawn/north)
 "dlc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1

@@ -3726,29 +3726,29 @@
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
-/area/station/test_area)
+/area/sim/test_area)
 "jE" = (
 /turf/unsimulated/wall{
 	icon = 'icons/obj/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
 "jF" = (
 /turf/unsimulated/bombvr,
-/area/station/test_area)
+/area/sim/test_area)
 "jG" = (
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
 "jH" = (
 /turf/unsimulated/wall/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -3757,7 +3757,7 @@
 	name = "bombtest-bomb"
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -3767,7 +3767,7 @@
 	pixel_y = -24
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -3776,7 +3776,7 @@
 	name = "bombtest"
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -4855,7 +4855,7 @@
 /area/station/crew_quarters/kitchen)
 "ms" = (
 /turf/simulated/wall,
-/area/sim)
+/area/sim/concrete)
 "mt" = (
 /turf/simulated/floor{
 	icon_state = "carpetSW"
@@ -4958,15 +4958,15 @@
 "mE" = (
 /obj/table/auto,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "mF" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "mG" = (
 /obj/submachine/chef_sink,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "mH" = (
 /obj/submachine/chef_oven,
 /obj/machinery/light{
@@ -4974,18 +4974,18 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "mI" = (
 /obj/submachine/foodprocessor,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "mJ" = (
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "mK" = (
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "mL" = (
 /obj/machinery/vending/kitchen,
 /obj/machinery/light{
@@ -4993,14 +4993,14 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "mM" = (
 /obj/storage/secure/closet/fridge{
 	icon_state = "fridge";
 	locked = 0
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "mN" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/plating,
@@ -5033,11 +5033,11 @@
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "mS" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "mT" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -5109,7 +5109,7 @@
 /obj/table/auto,
 /obj/machinery/computer/tour_console,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nd" = (
 /obj/machinery/guardbot_dock{
 	autoeject = 0;
@@ -5123,7 +5123,7 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "ne" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -5132,7 +5132,7 @@
 	name = "Test Kitchen"
 	},
 /turf/simulated/floor/plating,
-/area/sim)
+/area/sim/concrete)
 "nf" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal,
@@ -5151,7 +5151,7 @@
 /obj/table/auto,
 /obj/submachine/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "ni" = (
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour0;desc=Test! ";
@@ -5160,14 +5160,14 @@
 	name = "station tour beacon"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nj" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol";
 	location = "bar"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nk" = (
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour1;desc=Hello! Welcome to to the Nanotrasen C-Class Orbital Facility Tour! I will be your tourguide today on this adventure! Let's get started!";
@@ -5176,14 +5176,14 @@
 	name = "tour beacon - start"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nl" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nm" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -5287,7 +5287,7 @@
 "nx" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "ny" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -5316,43 +5316,43 @@
 /obj/table/auto,
 /obj/item/kitchen/utensil/fork,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nC" = (
 /obj/table/auto,
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nD" = (
 /obj/table/auto,
 /obj/item/kitchen/utensil/spoon,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nE" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/wonton_wrapper,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nF" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/cereal_box,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nG" = (
 /obj/table/auto,
 /obj/item/clothing/head/void_crown,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nH" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/item/clothing/suit/armor/ancient,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nI" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/bowl,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nJ" = (
 /obj/item/reagent_containers/food/snacks/burrito,
 /obj/item/reagent_containers/food/snacks/burrito,
@@ -5361,7 +5361,7 @@
 /obj/item/reagent_containers/food/snacks/burrito,
 /obj/table/auto,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/concrete)
 "nK" = (
 /turf/space,
 /turf/unsimulated/floor/void/channel{
