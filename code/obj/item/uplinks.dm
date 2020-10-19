@@ -696,9 +696,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					user.show_text("You must stand in the designated delivery zone to send this item!", "red")
 					if (istype(B.delivery_area, /area/diner))
 						user.show_text("It can be found at the nearby space diner!", "red")
-					src.hostpda.target_turf = B.delivery_area.spyturf
-					processing_items.Add(src.hostpda)
+					var/turf/end = B.delivery_area.spyturf
+					user.gpsToTurf(end, doText = 0, heuristic = /turf/proc/AllDirsTurfsWithAllAccess) // spy thieves probably need to break in anyway, so screw access check
 					return 0
+				user.removeGpsPath(doText = 0)
 				B.claimed = 1
 				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
 					M.set_loc(get_turf(delivery))

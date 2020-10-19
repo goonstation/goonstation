@@ -599,12 +599,12 @@
 
 
 	//Set delivery areas
-	possible_areas = get_areas_with_turfs(/area/station)
-	possible_areas += get_areas_with_turfs(/area/diner)
-	possible_areas -= get_areas_with_turfs(/area/diner/tug)
-	possible_areas -= get_areas_with_turfs(/area/station/maintenance)
-	possible_areas -= get_areas_with_turfs(/area/station/hallway)
-	possible_areas -= get_areas_with_turfs(/area/station/engine/substation)
+	possible_areas = get_areas_with_unblocked_turfs(/area/station)
+	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
 	possible_areas -= /area/station/test_area
 
 	for (var/area/A in possible_areas)

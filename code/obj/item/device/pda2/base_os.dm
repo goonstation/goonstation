@@ -581,7 +581,7 @@
 						if(src.master.uplink)
 							src.master.uplink.active = 0
 							src.note = src.master.uplink.orignote
-							src.master.target_turf = null
+							usr.removeGpsPath(doText = 0)
 
 
 			else if(href_list["browse_func"]) //File browser specific topic junk
