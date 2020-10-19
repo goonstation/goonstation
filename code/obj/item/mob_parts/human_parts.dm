@@ -172,7 +172,6 @@
 	desc = "A human arm."
 	override_attack_hand = 0 //to hit with an item instead of hand when used empty handed
 	can_hold_items = 1
-	var/override_click_drag_pickup = 0 //Stops them from using the click drag to pick stuff up
 	var/rebelliousness = 0
 	var/strangling = 0
 
@@ -952,9 +951,8 @@
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
-	override_click_drag_pickup = 1
-	can_hold_items = 0
 	override_attack_hand = 1
+	can_hold_items = 0
 	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
 	skintoned = 1
 	streak_descriptor = "undeadly"
@@ -973,7 +971,6 @@
 	side = "right"
 	decomp_affected = 0
 	override_attack_hand = 1
-	override_click_drag_pickup = 1
 	can_hold_items = 0
 	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
 	skintoned = 1

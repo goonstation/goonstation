@@ -578,6 +578,7 @@
 		..()
 		if(ishuman(mob))
 			src.add_ability(mob)
+		M.is_zombie = 1
 		M.max_health += 100
 		M.health = max(M.max_health, M.health)
 

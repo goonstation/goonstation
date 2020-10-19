@@ -511,6 +511,13 @@
 				playsound(O.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				O.deconstruct()
 
+			if(istype(target, /obj/structure/woodwall))
+				var/obj/window/O = target
+				user.lastattacked = O
+				O.attack_hand(user)
+
+			if(prob(40))
+				user.emote("scream")
 			return
 
 		if (isitem(target))

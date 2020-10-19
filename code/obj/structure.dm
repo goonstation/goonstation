@@ -296,19 +296,7 @@ obj/structure/ex_act(severity)
 		get_desc()
 			..()
 			. += "Looks like normal spacemen can easily pull themselves over it."
-		attack_hand(mob/user as mob)
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if (H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
-					H.set_loc(get_turf(src))
-					H.visible_message("<span class='notice'><b>[H]</b> [pick("rolls under", "jaunts over", "barrels through")] [src] slightly damaging it!</span>")
-					boutput(H, "<span class='alert'><b>OWW! You bruise yourselfslightly!</span>")
-					random_brute_damage(H, 5)
-					src.health -= rand(0,2)
 
-				return
-			..()
-			
 	proc/checkhealth()
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'><b>[src] collapses!</b></span>")
@@ -327,8 +315,18 @@ obj/structure/ex_act(severity)
 			icon_state = "woodwall"
 
 	attack_hand(mob/user as mob)
-		user.lastattacked = src
+		if (ishuman(user) && !user.is_zombie)
+			var/mob/living/carbon/human/H = user
+			if (H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
+				H.set_loc(get_turf(src))
+				H.visible_message("<span class='notice'><b>[H]</b> [pick("rolls under", "jaunts over", "barrels through")] [src] slightly damaging it!</span>")
+				boutput(H, "<span class='alert'><b>OWW! You bruise yourself slightly!</span>")
+				random_brute_damage(H, 5)
+				src.health -= rand(0,2)
+				return
+
 		if (ishuman(user))
+			user.lastattacked = src
 			src.visible_message("<span class='alert'><b>[user]</b> bashes [src]!</span>")
 			playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 100, 1)
 			//Zombies do less damage
