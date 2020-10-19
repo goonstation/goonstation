@@ -1879,6 +1879,9 @@ proc/countJob(rank)
 	if (!allow_dead_antags && (!G.mind || G.mind && (G.mind.dnr || !isnull(G.mind.special_role) || G.mind.former_antagonist_roles.len))) // Dead antagonists have had their chance.
 		return 0
 
+	if (G.mind && G.mind.dnr)
+		return 0
+
 	return 1
 
 /proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = 0, var/atom/source = 0)
