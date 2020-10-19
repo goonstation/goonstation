@@ -962,16 +962,19 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		DEBUG_MESSAGE("[src]: chosen word: [learning_word]")
 
 	proc/chatter(var/sing=0)
+		var/thing_to_say = ""
 		if (islist(src.learned_phrases) && src.learned_phrases.len && prob(20))
-			src.say(pick(src.learned_phrases))
+			thing_to_say = pick(src.learned_phrases)
 		else if (islist(src.learned_words) && src.learned_words.len)
-			var/my_word = pick(src.learned_words) // :monocle:
-			my_word = "[capitalize(my_word)][pick(".", "!", "?", "...")]"
-			var/quote = "\""
-			if (sing)
-				quote = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/note.png")]\">"
-			my_word = "[quote][my_word][quote]"
-			src.say(my_word)
+			thing_to_say = pick(src.learned_words) // :monocle:
+			thing_to_say = "[capitalize(thing_to_say)][pick(".", "!", "?", "...")]"
+		// format
+		var/quote = "\""
+		if (sing)
+			quote = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/note.png")]\">"
+			thing_to_say = "<span style=\"color: bisque; font-style: italic;\">[thing_to_say]</span>"
+		thing_to_say = "[quote][thing_to_say][quote]"
+		src.say(thing_to_say)
 
 	proc/say(var/text) // mehhh
 		var/my_verb = pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
