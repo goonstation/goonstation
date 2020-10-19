@@ -422,7 +422,7 @@
 	info = "The patient is having a cardiac emergency."
 	max_stages = 3
 	cure = "Cardiac Stimulants"
-	reagentcure = list("atropine"=8,"epinephrine"=10,"heparin"=5,"nitroglycerin"=15)
+	reagentcure = list("atropine"=8,"epinephrine"=10,"heparin"=5,"nitroglycerin"=35)
 	recureprob = 10
 	affected_species = list("Human","Monkey")
 	stage_prob = 5
