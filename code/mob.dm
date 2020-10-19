@@ -155,7 +155,6 @@
 	var/now_pushing = null //temp. var used for Bump()
 	var/atom/movable/pushing = null //Keep track of something we may be pushing for speed reductions (GC Woes)
 	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
-	var/danny_index = 0 // for scottish trait, keeps track of what part of danny boy they are up to
 
 	var/movement_delay_modifier = 0 //Always applied.
 	var/apply_movement_delay_until = -1 //world.time at which our movement delay modifier expires

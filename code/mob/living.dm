@@ -803,11 +803,12 @@
 		message = copytext(message, 2)
 		// Scots can only sing Danny Boy
 		if (src.bioHolder.HasEffect("accent_scots"))
-			danny_index++
-			if (danny_index > 16)
-				danny_index = 1
-			var/lyrics = dd_file2list("strings/danny.txt")
-			message = lyrics[danny_index]
+			var/scots = src.bioHolder.GetEffect("accent_scots")
+			if (istype(scots, /datum/bioEffect/speech/scots))
+				var/datum/bioEffect/speech/scots/S = scots
+				S.danny_index = (S.danny_index % 16) + 1
+				var/lyrics = dd_file2list("strings/danny.txt")
+				message = lyrics[S.danny_index]
 	else
 		singing = 0
 	
@@ -831,13 +832,14 @@
 				ending = 0
 
 		if (singing || (src.bioHolder && src.bioHolder.HasEffect("elvis")))
-			if (src.get_brain_damage() >= 60 || (src.bioHolder && (src.bioHolder.HasEffect("unintelligable") || src.bioHolder.HasEffect("drunk"))))
+			if (src.get_brain_damage() >= 60 || (src.bioHolder && (src.bioHolder.HasEffect("unintelligable") || src.hasStatus("drunk"))))
 				singing = "bad"
 				speech_bubble.icon_state = "notebad"
 			else
 				speech_bubble.icon_state = "note"
 				if (ending == "!" || (src.bioHolder && src.bioHolder.HasEffect("loud_voice")))
 					singing = "loud"
+					speech_bubble.icon_state = "notebad"
 			playsound(src, sounds_speak["[VT]"],  55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
 		else if (ending == "?")
 			playsound(src, sounds_speak["[VT]?"], 55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)

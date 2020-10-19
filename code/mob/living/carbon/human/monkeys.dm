@@ -262,12 +262,12 @@
 				if (M.singing == "bad" || M.singing == "loud")
 					if (prob(20))
 						// monkey is angered by singing
-						spawn(5)
+						spawn(0.5 SECONDS)
 							was_harmed(M)
 							src.visible_message("<B>[name]</B> is angry at [M] for their [M.singing] singing!", 1)
 							src.say(pick("Must take revenge for insult to music!", "I now attack you like your singing attacked my ears!"))
 					else
-						spawn(5)
+						spawn(0.5 SECONDS)
 							src.visible_message(pick("<B>[name]</B> doesn't seem to like [M]'s singing", \
 							"<B>[name]</B> puts their hands over their ears", \
 							), 1)

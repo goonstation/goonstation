@@ -460,7 +460,7 @@
 		else
 			speechverb = pick("sings",  "croons", "intones", "warbles")
 		text = "<i>[text]</i>"
-		style = "color:lavendarblush;"
+	style = "color:thistle;"
 
 	if (special)
 		if (special == "gasp_whisper")
