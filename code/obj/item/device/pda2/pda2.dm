@@ -594,11 +594,13 @@
 /obj/item/device/pda2/process()
 	if(src.active_program)
 		src.active_program.process()
+
 	else
 		if(src.host_program && src.host_program.holder && (src.host_program.holder in src.master.contents))
 			src.run_program(src.host_program)
 		else
 			processing_items.Remove(src)
+
 	return
 
 /obj/item/device/pda2/MouseDrop(atom/over_object, src_location, over_location)
