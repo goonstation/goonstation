@@ -60,7 +60,7 @@ Broken RCD + Effects
 
 	// Borgs/drones can't really use matter units.
 	// (matter cost) x (this) = (power cell charge used)
-	var/const/silicon_cost_multiplier = 100
+	var/silicon_cost_multiplier = 100
 
 	var/matter_create_floor = 1
 	var/matter_create_wall = 2
@@ -448,6 +448,8 @@ Broken RCD + Effects
 	var/door_access = 0
 	var/door_access_name_cache = null
 	var/door_type_name_cache = null
+	
+	silicon_cost_multiplier = 10
 
 	var/static/list/access_names = list() //ditto the above????
 	var/door_type = null
