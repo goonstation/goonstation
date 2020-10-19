@@ -1,4 +1,9 @@
 
+(t)mon oct 19 20
+(u)Flaborized
+(p)2458
+(e)🎨|sprites
+(+)Both devices and assemblies have had makeovers! New sprites for all kinds of device combinations, including bombs!
 (t)sun oct 18 20
 (u)Kyle
 (*)Change to pod warping again. Removes the "moving run-up" part and now it projects the portal in front of you, or on top of you if no room. Still must be immobile to begin making a portal.
