@@ -1,5 +1,7 @@
 
 (t)sun oct 18 20
+(u)Kyle
+(*)Change to pod warping again. Removes the "moving run-up" part and now it projects the portal in front of you, or on top of you if no room. Still must be immobile to begin making a portal.
 (u)Flaborized
 (p)2394
 (e)🎨|sprites
