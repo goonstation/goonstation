@@ -997,7 +997,7 @@
 	New()
 		setProperty("density", 45)
 		setProperty("flammable", 67)
-		setProperty("stable", 53)
+		setProperty("stability", 53)
 		return ..()
 
 /datum/material/organic/cardboard
