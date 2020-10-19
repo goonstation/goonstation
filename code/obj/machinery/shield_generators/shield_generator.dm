@@ -133,7 +133,7 @@
 
 		if(diff > 1500)
 			lastuse = world.timeofday
-			user.show_text("You flip the switch on [src].")
+			visible_message("You flip the switch on [src].","You feel around the object and accidentally hit a switch")
 			if (src.active)
 				src.deactivate()
 				user.show_text("Shields Deactivated.")
