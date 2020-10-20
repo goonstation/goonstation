@@ -523,6 +523,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		desc = ""
 		icon_state = "radiation1"
 		unique = 1
+		visible = 0
 
 		tickSpacing = 3 SECONDS
 
@@ -558,15 +559,28 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			return
 
 		onUpdate(var/timePassed)
+			if(locate(/obj/item/implant/health) in owner)
+				src.visible = 1
+			else
+				src.visible = 0
+
 			counter += timePassed
 			if(counter >= stageTime)
 				counter -= stageTime
 				stage = max(stage-1, 1)
 
+			var/mob/M = null
+			if(ismob(owner))
+				M = owner
+				if(SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage))
+					src.visible = 1
+				else
+					src.visible = 0
+
 			var/prot = 1
-			if(istype(owner, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = owner
-				prot = (1 - (H.get_rad_protection() / 100))
+			if(istype(owner, /mob/living))
+				var/mob/living/L = owner
+				prot = (1 - (L.get_rad_protection() / 100))
 
 			switch(stage)
 				if(1)
@@ -577,8 +591,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 					damage_tox = (2 * prot)
 					howMuch = "significantly "
 					var/chance = (2 * prot)
-					if(prob(chance) && ismob(owner))
-						var/mob/M = owner
+					if(prob(chance) && M)
 						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 							M.changeStatus("weakened", 3 SECONDS)
 							boutput(M, "<span class='alert'>You feel weak.</span>")
@@ -586,8 +599,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				if(3)
 					damage_tox = (3 * prot)
 					howMuch = "very much "
-					if (ismob(owner))
-						var/mob/M = owner
+					if (M)
 						var/mutChance = (1 * prot)
 
 						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
@@ -596,12 +608,11 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 							boutput(M, "<span class='alert'>You mutate!</span>")
-							M:bioHolder:RandomEffect("either")
+							M.bioHolder.RandomEffect("either")
 				if(4)
 					damage_tox = (4 * prot)
 					howMuch = "extremely "
-					if (ismob(owner))
-						var/mob/M = owner
+					if (M)
 						var/mutChance = (2 * prot)
 
 						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
@@ -610,12 +621,11 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 							boutput(M, "<span class='alert'>You mutate!</span>")
-							M:bioHolder:RandomEffect("either")
+							M.bioHolder.RandomEffect("either")
 				if(5)
 					damage_tox = (4.5 * prot)
 					howMuch = "horribly "
-					if (ismob(owner))
-						var/mob/M = owner
+					if (M)
 						var/mutChance = (3 * prot)
 
 						if (M.traitHolder && M.traitHolder.hasTrait("stablegenes"))
@@ -624,7 +634,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 							boutput(M, "<span class='alert'>You mutate!</span>")
-							M:bioHolder:RandomEffect("either")
+							M.bioHolder.RandomEffect("either")
 
 			icon_state = "radiation[stage]"
 

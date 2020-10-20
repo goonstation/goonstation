@@ -116,7 +116,8 @@
 #define COMSIG_MOB_DROPPED "mob_drop"
 
 #define COMSIG_MOB_CLICK "mob_click"
-
+/// sent when radiation status ticks on mob (stage)
+#define COMSIG_MOB_GEIGER_TICK "mob_geiger"
 // ---- mob/living signals ----
 
 #define COMSIG_LIVING_SPRINT_START "living_sprint_start"

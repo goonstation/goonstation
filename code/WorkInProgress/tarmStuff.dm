@@ -520,3 +520,22 @@ obj/item/gun/reagent/syringe/lovefilled
 		boutput(M, "<span class='notice'>You feel loved</span>")
 		loved += M
 
+//misc stuffs
+/obj/item/geiger
+	name = "geiger counter"
+	desc = "Some kinda thing, from space. In space. A space thing."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "thing"
+	flags = FPRINT | CONDUCT | TABLEPASS
+	w_class = 1.0
+	force = 10
+	throwforce = 7
+	mats = 50
+	contraband = 1
+	stamina_damage = 40
+	stamina_cost = 23
+	stamina_crit_chance = 10
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/holdertargeting/geiger)
