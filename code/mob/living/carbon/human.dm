@@ -214,7 +214,7 @@
 			MB.explosionPower = microbombs_4_everyone
 			MB.implanted = 1
 			src.implant.Add(MB)
-			MB.implanted(src)
+			INVOKE_ASYNC(MB, /obj/item/implant/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
 
@@ -273,7 +273,10 @@
 			return
 
 		if (!l_arm && howmany > 0)
-			l_arm = new /obj/item/parts/human_parts/arm/left(holder)
+			if (holder?.mutantrace.l_limb_arm_type_mutantrace)
+				l_arm = new holder.mutantrace.l_limb_arm_type_mutantrace(holder)
+			else
+				l_arm = new /obj/item/parts/human_parts/arm/left(holder)
 			l_arm.holder = holder
 			boutput(holder, "<span class='notice'>Your left arm regrows!</span>")
 			l_arm:original_holder = holder
@@ -282,7 +285,10 @@
 			howmany--
 
 		if (!r_arm && howmany > 0)
-			r_arm = new /obj/item/parts/human_parts/arm/right(holder)
+			if (holder?.mutantrace.r_limb_arm_type_mutantrace)
+				r_arm = new holder.mutantrace.r_limb_arm_type_mutantrace(holder)
+			else
+				r_arm = new /obj/item/parts/human_parts/arm/right(holder)
 			r_arm.holder = holder
 			boutput(holder, "<span class='notice'>Your right arm regrows!</span>")
 			r_arm:original_holder = holder
@@ -291,7 +297,10 @@
 			howmany--
 
 		if (!l_leg && howmany > 0)
-			l_leg = new /obj/item/parts/human_parts/leg/left(holder)
+			if (holder?.mutantrace.l_limb_leg_type_mutantrace)
+				l_leg = new holder.mutantrace.l_limb_leg_type_mutantrace(holder)
+			else
+				l_leg = new /obj/item/parts/human_parts/leg/left(holder)
 			l_leg.holder = holder
 			boutput(holder, "<span class='notice'>Your left leg regrows!</span>")
 			l_leg:original_holder = holder
@@ -299,6 +308,10 @@
 			howmany--
 
 		if (!r_leg && howmany > 0)
+			if (holder?.mutantrace.r_limb_leg_type_mutantrace)
+				r_leg = new holder.mutantrace.r_limb_leg_type_mutantrace(holder)
+			else
+				r_leg = new /obj/item/parts/human_parts/leg/right(holder)
 			r_leg = new /obj/item/parts/human_parts/leg/right(holder)
 			r_leg.holder = holder
 			boutput(holder, "<span class='notice'>Your right leg regrows!</span>")
@@ -307,39 +320,6 @@
 			howmany--
 
 		if (holder.client) holder.next_move = world.time + 7 //Fix for not being able to move after you got new limbs.
-
-	proc/reliquarymend(var/howmany = 4)
-		if (!holder)
-			return
-
-		if (!l_arm && howmany > 0)
-			l_arm = new /obj/item/parts/robot_parts/arm/left/reliquary(holder)
-			l_arm.holder = holder
-			boutput(holder, "<span class='notice'>Your left arm rebuilds itself!</span>")
-			holder.hud.update_hands()
-			howmany--
-
-		if (!r_arm && howmany > 0)
-			r_arm = new /obj/item/parts/robot_parts/arm/right/reliquary(holder)
-			r_arm.holder = holder
-			boutput(holder, "<span class='notice'>Your right arm rebuilds itself!</span>")
-			holder.hud.update_hands()
-			howmany--
-
-		if (!l_leg && howmany > 0)
-			l_leg = new /obj/item/parts/robot_parts/leg/left/reliquary(holder)
-			l_leg.holder = holder
-			boutput(holder, "<span class='notice'>Your left leg rebuilds itself!</span>")
-			howmany--
-
-		if (!r_leg && howmany > 0)
-			r_leg = new /obj/item/parts/robot_parts/leg/right/reliquary(holder)
-			r_leg.holder = holder
-			boutput(holder, "<span class='notice'>Your right rebuilds itself!</span>")
-			howmany--
-
-		if (holder.client) holder.next_move = world.time + 7 //Fix for not being able to move after you got new limbs.
-		holder.update_body()
 
 	proc/reset_stone() // reset skintone to whatever the holder's s_tone is
 		if (l_arm && istype(l_arm, /obj/item/parts/human_parts))
@@ -1137,8 +1117,7 @@
 			O.move_trigger(src, ev)
 	if(reagents)
 		reagents.move_trigger(src, ev)
-	for (var/atom in statusEffects)
-		var/datum/statusEffect/S = atom
+	for (var/datum/statusEffect/S as() in statusEffects)
 		if (S && S.move_triggered)
 			S.move_trigger(src, ev)
 
@@ -1834,11 +1813,13 @@
 		hud.set_visible(hud.twohandr, 1)
 		hud.remove_item(I)
 		hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
-		var/regex/offset = new(@"^icons/obj/(\d+)x\d+.dmi$") //matches icon path of "icons/obj/<width>x<height>.dmi" (e.g.: 'icons/obj/64x32.dmi'), and saves the width
-		if(offset.Find("[I.icon]")) //is our iconpath in the above format? (icons/obj/<width>x<height>.dmi)
-			var/regex/off2 = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
-			if(off2.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
-				I.screen_loc = "[off2.group[1]][text2num(off2.group[2])-(text2num(offset.group[1])-32)/2][off2.group[3]]"
+
+		var/icon/IC = new/icon(I.icon)
+		var/width = IC.Width()
+		var/regex/locfinder = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
+		if(locfinder.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
+			I.screen_loc = "[locfinder.group[1]][text2num(locfinder.group[2])-(width-32)/2][locfinder.group[3]]"
+
 		src.l_hand = I
 		src.r_hand = I
 	else //Object is 1-hand, remove ui elements, set item to proper location.
@@ -1885,11 +1866,13 @@
 		hud.set_visible(hud.rhand, 0)
 		hud.set_visible(hud.twohandl, 1)
 		hud.set_visible(hud.twohandr, 1)
-		var/regex/offset = new(@"^icons/obj/(\d+)x\d+.dmi$") //matches icon path of "icons/obj/<width>x<height>.dmi" (e.g.: 'icons/obj/64x32.dmi'), and saves the width
-		if(offset.Find("[I.icon]")) //is our iconpath in the above format? (icons/obj/<width>x<height>.dmi)
-			var/regex/off2 = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
-			if(off2.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
-				I.screen_loc = "[off2.group[1]][text2num(off2.group[2])-(text2num(offset.group[1])-32)/2][off2.group[3]]"
+
+		var/icon/IC = new/icon(I.icon)
+		var/width = IC.Width()
+		var/regex/locfinder = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
+		if(locfinder.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
+			I.screen_loc = "[locfinder.group[1]][text2num(locfinder.group[2])-(width-32)/2][locfinder.group[3]]"
+
 		return 1
 	else
 		if (isnull(hand))

@@ -190,6 +190,16 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.audible_prayers = (usr.client.holder.audible_prayers + 1) % 3
 				src.show_pref_window(usr)
+		if ("toggle_audible_ahelps")
+			if (src.level >= LEVEL_MOD)
+				switch(usr.client.holder.audible_ahelps)
+					if (PM_NO_ALERT)
+						usr.client.holder.audible_ahelps = PM_AUDIBLE_ALERT
+					if (PM_AUDIBLE_ALERT)
+						usr.client.holder.audible_ahelps = PM_DECTALK_ALERT
+					if (PM_DECTALK_ALERT)
+						usr.client.holder.audible_ahelps = PM_NO_ALERT
+				src.show_pref_window(usr)
 		if ("toggle_buildmode_view")
 			if (src.level >= LEVEL_PA)
 				usr.client.holder.buildmode_view = !usr.client.holder.buildmode_view
@@ -1095,9 +1105,6 @@ var/global/noir = 0
 					if("Kudzuman")
 						H.set_mutantrace(/datum/mutantrace/kudzu)
 						. = 1
-					if("reliquary soldier-Don't use yet please")
-						H.set_mutantrace(/datum/mutantrace/reliquary_soldier)
-						. = 1
 					if("Ghostdrone")
 						droneize(H, 0)
 					if("Flubber")
@@ -1575,7 +1582,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				var/ab_to_add = input("Which holder?", "Ability", null) as anything in childrentypesof(/datum/abilityHolder)
+				var/ab_to_add = input("Which holder?", "Ability", null) as() in childrentypesof(/datum/abilityHolder)
 				M.add_ability_holder(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] created abilityHolder [ab_to_add] for [key_name(M)].")
@@ -2536,7 +2543,7 @@ var/global/noir = 0
 								alert("No ability holder detected. Create a holder first!")
 								return
 
-							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as anything in childrentypesof(/datum/targetable)
+							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as() in childrentypesof(/datum/targetable)
 							if (adding)
 								M.abilityHolder.addAbility(ab_to_do)
 							else
@@ -3002,7 +3009,7 @@ var/global/noir = 0
 							input2 = zalgoify(input, rand(0,3), rand(0, 3), rand(0, 3))
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg"
@@ -3022,7 +3029,7 @@ var/global/noir = 0
 							var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/ambience/spooky/Void_Calls.ogg"

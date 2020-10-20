@@ -170,13 +170,13 @@
 /proc/disablelockdown(var/mob/usr)
 	boutput(world, "<span class='alert'>Lockdown cancelled by [usr.name]!</span>")
 
-	for(var/obj/machinery/firealarm/FA in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
-		SPAWN_DBG( 0 )
+	for(var/obj/machinery/firealarm/FA as() in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
+		SPAWN_DBG(0)
 			if(FA.lockdownbyai == 1)
 				FA.lockdownbyai = 0
 				FA.reset()
-	for(var/obj/machinery/door/airlock/AL in by_type[/obj/machinery/door]) //open airlocks
-		SPAWN_DBG ( 0 )
+	for_by_tcl(AL, /obj/machinery/door/airlock) //open airlocks
+		SPAWN_DBG (0)
 			if(AL.canAIControl() && AL.lockdownbyai == 1)
 				AL.open()
 				AL.lockdownbyai = 0
@@ -364,11 +364,9 @@
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)
-		var/obj/machinery/computer/communications/C = locate() in machine_registry[MACHINES_COMMSCONSOLES]//world
+		var/obj/machinery/computer/communications/C = locate() in machine_registry[MACHINES_COMMSCONSOLES]
 		if(C)
 			C.post_status("shuttle")
-
-	return
 
 /proc/call_prison_shuttle(var/mob/usr)
 	if ((!(ticker && ticker.mode) || emergency_shuttle.location == SHUTTLE_LOC_STATION))
@@ -384,6 +382,7 @@
 
 /proc/enable_prison_shuttle(var/mob/user)
 	return
+
 /proc/call_shuttle_proc(var/mob/user, var/call_reason)
 	if ((!( ticker ) || emergency_shuttle.location))
 		return 1

@@ -313,7 +313,14 @@ obj/structure/ex_act(severity)
 		if (ishuman(user))
 			src.visible_message("<span class='alert'><b>[user]</b> bashes [src]!</span>")
 			playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 100, 1)
-			src.health -= rand(1,3)
+			//Zombies do less damage
+			var/mob/living/carbon/human/H = user
+			if (istype(H.mutantrace, /datum/mutantrace/zombie))
+				if(prob(40))
+					H.emote("scream")
+				src.health -= rand(0,2)
+			else
+				src.health -= rand(1,3)
 			checkhealth()
 			return
 		else

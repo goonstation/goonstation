@@ -223,6 +223,10 @@
 				newObj.desc = "[initial(newObj.desc)] It has \a [head.name]."
 
 			newObj.set_loc(getOutputLocation(owner))
+			if(newObj.power > SPIKES_MEDAL_POWER_THRESHOLD)
+				var/mob/living/player = usr
+				if(istype(player))
+					player.unlock_medal("This object menaces with spikes of...", 1)
 		return
 
 /datum/matfab_recipe/coilsmall
