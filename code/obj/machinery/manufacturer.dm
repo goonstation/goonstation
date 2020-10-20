@@ -2391,7 +2391,6 @@
 	/datum/manufacture/riot_launcher, 
 	/datum/manufacture/riot_launcher_ammo_pbr, 
 	/datum/manufacture/riot_launcher_ammo_flashbang,
-	/datum/manufacture/riot_launcher_ammo_tactical,
 	/datum/manufacture/sniper,
 	/datum/manufacture/sniper_ammo,
 	/datum/manufacture/tac_shotgun,

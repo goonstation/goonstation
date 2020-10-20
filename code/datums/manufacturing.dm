@@ -2799,7 +2799,7 @@
 /datum/manufacture/fireaxe	//
 	name = "Fireaxe"
 	item_paths = list("MET-3", "CON-2")
-	item_names = list("Metal", "Conductive Material")
+	item_names = list("Dense Metal", "Conductive Material")
 	item_amounts = list(20, 5)
 	item_outputs = list(/obj/item/fireaxe)
 	time = 20 SECONDS
