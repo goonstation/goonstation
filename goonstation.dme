@@ -621,6 +621,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\buildmodes\adventure\elements\trap\projectile.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\trap\smoke.dm"
 #include "code\modules\admin\gimmick\wizard_rings.dm"
+#include "code\modules\admin\gimmick\zombie_event.dm"
 #include "code\modules\admin\spacebee_extension\arguments.dm"
 #include "code\modules\admin\spacebee_extension\command_structure.dm"
 #include "code\modules\admin\spacebee_extension\commands.dm"
