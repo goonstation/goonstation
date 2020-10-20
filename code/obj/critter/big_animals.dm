@@ -166,10 +166,8 @@ obj/critter/bear/care
 				break
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (C.health < 0) continue
-			if (C.name == src.attacker) src.attack = 1
-			if (iscarbon(C)) src.attack = 1
-			if (issilicon(C)) src.attack = 1
-			if (src.attack)
+			if (C.name == src.attacker || iscarbon(C) || issilicon(C)) src.attack = 1 //If the living mob C attacked the yeti set attack flag to true
+			if (src.attack)  //If attack flag was set, attack this target
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [src.target]!</span>")
@@ -186,6 +184,19 @@ obj/critter/bear/care
 		M.changeStatus("weakened", 10 SECONDS)
 
 	CritterAttack(mob/M)
+		if (ishuman(M))
+   		var/mob/living/carbon/human/H = M
+			var/targetLimb = pickTargetLimb(H)
+			if(targetLimb)
+				scr.attacking = 1
+				src.visible_message("<span class='combat'><B>[src]</B> bites [H]'s [targetLimb] right off'")
+				random_brute_damage(H, 10)
+				targetLimb.sever()
+				M.emote("scream")
+				return
+
+		//Old instakill code. Happens when there are no more limbs to chew.
+		//I want to rework this so the yeti keeps the heads as a trophy and he drops them once dead
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> devours [M] in one bite!</span>")
 		logTheThing("combat", M, null, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
@@ -213,6 +224,22 @@ obj/critter/bear/care
 		playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
 
 		sleeping = 1
+
+	/proc/pickTargetLimb(var/mob/living/carbon/human/H)
+		if(!H)
+			return null
+		var/list/part_list = list("l_arm", "r_arm", "l_leg", "r_leg")
+
+		while(part_list.len>0)
+		{
+			var/current_part = pick(part_list)
+			part_list -= current_part
+			var/bodypart = H.limbs.get_limb(current_part)
+			if(bodypart && !istype(bodypart, /obj/item/parts/robot_parts)) //Quick check for robolimbs. It may be wrong, limb check examples give me headaches
+				return bodypart
+		}
+		return null
+
 
 /obj/critter/yeti/super
 	name = "super space yeti"
