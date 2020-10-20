@@ -49,7 +49,7 @@
 		var/length = length(readied_minds)
 		shuffle_list(readied_minds)
 		if (length < 2)
-			if (prob(50))
+			if (prob(100))
 				team_NT.accept_players(readied_minds)
 			else
 				team_SY.accept_players(readied_minds)
@@ -154,9 +154,6 @@
 
 		for (var/datum/mind/M in players)
 			equip_player(M.current)
-			//commander gets a couple extra things...
-			if (M == commander)
-				equip_commander(M)
 			M.current.antagonist_overlay_refresh(1,0)
 
 	proc/select_commander()
@@ -184,21 +181,6 @@
 		else
 			return candidates
 
-	proc/equip_commander(var/datum/mind/mind)
-		var/mob/living/carbon/human/H = mind.current
-		var/obj/item/card/id/captains_spare/ID = locate(/obj/item/card/id/captains_spare) in H
-		if (team_num == TEAM_NANOTRASEN)
-			H.equip_if_possible(new /obj/item/clothing/head/centhat(H), H.slot_l_store)
-			// H.equip_if_possible(new /obj/item/clothing/head/centhat(H), H.slot_r_store)
-			H.mind.special_role = "NanoTrasen Commander"
-			ID.name = "NT Commander"
-		if (team_num == TEAM_SYNDICATE)
-			H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_l_store)
-			// H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_r_store)
-			H.mind.special_role = "Syndicate Commander"
-			ID.name = "Syndicate Commander"
-
-
 	proc/equip_player(var/mob/M)
 		var/mob/living/carbon/human/H = M
 
@@ -225,27 +207,53 @@
 		var/obj/item/device/radio/headset/headset = new /obj/item/device/radio/headset(H)
 
 		if (team_num == TEAM_NANOTRASEN)
-			I.name = "NT Pilot"
-			I.assignment = "NT Pilot"
+
+			//commanders get a couple extra things...
+			if (H.mind == commander)
+				H.mind.special_role = "NanoTrasen Commander"
+				I.name = "NT Commander"
+				I.assignment = "NT Commander"
+				H.equip_if_possible(new /obj/item/clothing/head/centhat(H), H.slot_l_store)
+				// H.equip_if_possible(new (H), H.slot_wear_suit)		//
+			else
+				I.name = "NT Pilot"
+				I.assignment = "NT Pilot"
+				H.equip_if_possible(new /obj/item/clothing/head/helmet/space/ntso(H), H.slot_head)
+				H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot(H), H.slot_wear_suit)
+
 			I.icon_state = "polaris"
+			H.equip_if_possible(headset, H.slot_ears)
+			H.equip_if_possible(new /obj/item/storage/backpack/NT(H), H.slot_back)
 			H.equip_if_possible(new /obj/item/clothing/under/misc/turds(H), H.slot_w_uniform)
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat/NT(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
-			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/ntso(H), H.slot_head)
-			H.equip_if_possible(new /obj/item/storage/backpack/NT(H), H.slot_back)
-			H.equip_if_possible(headset, H.slot_ears)
+
 
 
 		else if (team_num == TEAM_SYNDICATE)
-			I.name = "Syndicate Pilot"
-			I.assignment = "Syndicate Pilot"
+			if (H.mind == commander)
+				H.mind.special_role = "Syndicate Commander"
+				I.name = "Syndicate Commander"
+				I.assignment = "Syndicate Commander"
+				if (prob(10))
+					H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_l_store)
+				else
+					H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(H), H.slot_l_store)
+				H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(H), H.slot_wear_suit)
+
+			else
+				I.name = "Syndicate Pilot"
+				I.assignment = "Syndicate Pilot"
+				H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/specialist(H), H.slot_head)
+				H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate(H), H.slot_wear_suit)
+
 			I.icon_state = "id_syndie"
+			H.equip_if_possible(headset, H.slot_ears)
+			H.equip_if_possible(new /obj/item/storage/backpack/syndie(H), H.slot_back)
 			H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), H.slot_w_uniform)
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
-			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/specialist(H), H.slot_head)
-			H.equip_if_possible(new /obj/item/storage/backpack/syndie(H), H.slot_back)
-			H.equip_if_possible(headset, H.slot_ears)
+			
 
 
 		if (headset)
