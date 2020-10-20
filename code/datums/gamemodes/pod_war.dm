@@ -186,14 +186,17 @@
 
 	proc/equip_commander(var/datum/mind/mind)
 		var/mob/living/carbon/human/H = mind.current
+		var/obj/item/card/id/captains_spare/ID = locate(/obj/item/card/id/captains_spare) in H
 		if (team_num == TEAM_NANOTRASEN)
 			H.equip_if_possible(new /obj/item/clothing/head/centhat(H), H.slot_l_store)
 			// H.equip_if_possible(new /obj/item/clothing/head/centhat(H), H.slot_r_store)
 			H.mind.special_role = "NanoTrasen Commander"
+			ID.name = "NT Commander"
 		if (team_num == TEAM_SYNDICATE)
 			H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_l_store)
 			// H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_r_store)
 			H.mind.special_role = "Syndicate Commander"
+			ID.name = "Syndicate Commander"
 
 
 	proc/equip_player(var/mob/M)
@@ -215,14 +218,16 @@
 		var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare(H) // for whatever reason, this is neccessary
 		I.registered = "[H.name]"
 		I.icon = 'icons/obj/items/card.dmi'
-		I.icon_state = "id_com"
 		I.desc = "An ID card to help open doors, lock pods, and identify your body."
+		I.cant_self_remove = 1
+		I.cant_other_remove = 1
 
 		var/obj/item/device/radio/headset/headset = new /obj/item/device/radio/headset(H)
 
 		if (team_num == TEAM_NANOTRASEN)
 			I.name = "NT Pilot"
 			I.assignment = "NT Pilot"
+			I.icon_state = "polaris"
 			H.equip_if_possible(new /obj/item/clothing/under/misc/turds(H), H.slot_w_uniform)
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat/NT(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
@@ -234,6 +239,7 @@
 		else if (team_num == TEAM_SYNDICATE)
 			I.name = "Syndicate Pilot"
 			I.assignment = "Syndicate Pilot"
+			I.icon_state = "id_syndie"
 			H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), H.slot_w_uniform)
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
