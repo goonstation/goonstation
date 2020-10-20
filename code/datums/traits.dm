@@ -854,8 +854,7 @@ obj/trait/pilot
 			selected_reagent = addicted_players[owner]
 			for(var/datum/ailment_data/addiction/A in M.ailments)
 				if(istype(A, /datum/ailment_data/addiction))
-					if(A.associated_reagent == selected_reagent)
-						 return
+					if(A.associated_reagent == selected_reagent) return
 			addAddiction(owner)
 		return
 
