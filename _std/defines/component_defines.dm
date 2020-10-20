@@ -45,6 +45,8 @@
 
 // ---- global signals ----
 #define COMSIG_GLOBAL_REBOOT "global_reboot"
+//When a drone dies. Y'know, the critter ones.
+#define COMSIG_GLOBAL_DRONE_DEATH "global_drone_death"
 
 //  ---- datum signals ----
 
