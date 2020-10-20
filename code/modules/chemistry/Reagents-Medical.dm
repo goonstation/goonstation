@@ -1487,16 +1487,16 @@ datum
 				..()
 				return
 
-		medical/healing_crystals
-			name = "healing crystals"
-			id = "healing_crystals"
-			description = "Is this really state-of-the-art medicine?"
+		medical/silibinin
+			name = "Silibinin"
+			id = "silibinin"
+			description = "An extract from the milk thistle plant, an herbal remedy for minor poisoning"
 			reagent_state = SOLID
 			fluid_r = 216
 			fluid_b = 161
 			fluid_g = 201
 			transparency = 200
-			value = 0 // fuck you
+			value = 6
 			depletion_rate = 0.2
 			target_plant_reagents = list("toxin", "toxic_slurry", "acid", "plasma", "mercury", "fuel", "chlorine", "radium")
 

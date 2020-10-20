@@ -43,7 +43,7 @@
 	var/treatment_brute = "saline"
 	var/treatment_oxy = "dexamethasone"
 	var/treatment_fire = "saline"
-	var/treatment_tox = "healing_crystals"
+	var/treatment_tox = "silibinin"
 	var/treatment_virus = "spaceacillin"
 	var/treatment_hypertension = null
 	var/treatment_hypotension = null
