@@ -1,16 +1,16 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/concrete)
 "ab" = (
 /turf/space/no_replace,
-/area)
+/area/concrete)
 "ac" = (
 /turf/cordon,
 /area/cordon)
 "ad" = (
 /turf/space/dense,
-/area)
+/area/concrete)
 "ae" = (
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/staffhall)
@@ -28,7 +28,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ah" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -56,18 +56,18 @@
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/concrete)
 "al" = (
 /obj/machinery/light/runway_light/delay4,
 /turf/unsimulated/floor/airless,
-/area)
+/area/concrete)
 "am" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/concrete)
 "an" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
 	icon_state = "rwindow";
@@ -139,41 +139,41 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aw" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ax" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ay" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "az" = (
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area)
+/area/concrete)
 "aA" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aB" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
@@ -212,7 +212,7 @@
 	icon_state = "rwindow";
 	dir = 6
 	},
-/area)
+/area/concrete)
 "aI" = (
 /turf/unsimulated/floor/orangeblack,
 /area/owlery/staffhall)
@@ -309,7 +309,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aU" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -398,11 +398,11 @@
 /area/owlery/staffhall)
 "bi" = (
 /turf/unsimulated/wall/auto/reinforced,
-/area)
+/area/concrete)
 "bj" = (
 /obj/item/scrap,
 /turf/space,
-/area)
+/area/concrete)
 "bk" = (
 /turf/space,
 /area/owlery/staffhall)
@@ -442,7 +442,7 @@
 	dir = 10;
 	layer = 2
 	},
-/area)
+/area/concrete)
 "bp" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -452,7 +452,7 @@
 	dir = 4;
 	intact = 0
 	},
-/area)
+/area/concrete)
 "bq" = (
 /obj/item/storage/wall/medical{
 	dir = 1;
@@ -479,7 +479,7 @@
 	icon_state = "catwalk_cross";
 	layer = 2
 	},
-/area)
+/area/concrete)
 "bs" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -521,7 +521,7 @@
 	dir = 6;
 	layer = 2
 	},
-/area)
+/area/concrete)
 "bx" = (
 /obj/machinery/door/airlock/pyro/alt{
 	icon_state = "generic2_closed";
@@ -542,14 +542,14 @@
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bA" = (
 /obj/item/raw_material/scrap_metal{
 	desc = "Broken pieces of shuttle docking equipment. Someone must have taken off in a real hurry.";
 	name = "broken dock parts"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bB" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -570,7 +570,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bC" = (
 /obj/item/cable_coil/cut{
 	color = "#DD0000";
@@ -585,7 +585,7 @@
 	name = "docking clamp"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bD" = (
 /obj/item/scrap,
 /obj/decal/fakeobjects/pipe{
@@ -595,7 +595,7 @@
 	name = "docking clamp"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bE" = (
 /obj/item/scrap,
 /obj/decal/fakeobjects{
@@ -611,7 +611,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bF" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for securing docked spacecraft.";
@@ -737,18 +737,18 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bW" = (
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "bX" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bY" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -1224,7 +1224,7 @@
 /obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/concrete)
 "dc" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff,
@@ -3129,7 +3129,7 @@
 "hx" = (
 /obj/machinery/light/runway_light/delay5,
 /turf/unsimulated/floor/airless,
-/area)
+/area/concrete)
 "hy" = (
 /obj/storage/closet/electrical_supply,
 /turf/unsimulated/floor/redblack/corner{
@@ -3481,7 +3481,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ij" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -4017,7 +4017,7 @@
 	dir = 4
 	},
 /turf/space/no_replace,
-/area)
+/area/concrete)
 "jq" = (
 /obj/securearea{
 	name = "VACUUM AREA";
@@ -5080,7 +5080,7 @@
 	name = "docking clamp"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "lQ" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
@@ -6451,7 +6451,7 @@
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/concrete)
 "pa" = (
 /obj/submachine/chef_sink/chem_sink{
 	layer = 3;
@@ -6683,7 +6683,7 @@
 	name = "docking clamp"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "pC" = (
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/Owlmait)
@@ -7391,7 +7391,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/space,
-/area)
+/area/concrete)
 "ro" = (
 /obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
 /turf/unsimulated/grass,
@@ -7515,14 +7515,14 @@
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/concrete)
 "rz" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/concrete)
 "rA" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
 	icon_state = "rwindow";

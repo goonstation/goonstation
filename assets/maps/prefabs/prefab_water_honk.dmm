@@ -20,7 +20,7 @@
 "at" = (/obj/item/pen/crayon/red,/turf/simulated/floor/black/grime,/area/prefab/slimy_honk)
 "au" = (/obj/table/round/auto,/obj/item/paper{icon_state = "paper"; info = "Slimy's House of Fun and Burgers<br>- sign your name here if you had a great time with slimy the clown!<br>GUESTBOOK:<br>"},/obj/item/pen,/turf/simulated/floor/carpet/blue,/area/prefab/slimy_honk)
 "av" = (/obj/decal/cleanable/balloon,/turf/simulated/floor/carpet/purple,/area/prefab/slimy_honk)
-"aw" = (/turf/variableTurf/clear,/area)
+"aw" = (/turf/variableTurf/clear,/area/concrete)
 "ax" = (/obj/item/clothing/shoes/clown_shoes/purple,/turf/simulated/floor/carpet/purple,/area/prefab/slimy_honk)
 "ay" = (/obj/machinery/drainage/big,/turf/simulated/floor/black,/area/prefab/slimy_honk)
 "az" = (/obj/table,/obj/random_item_spawner/tableware,/obj/item/storage/box/cutlery,/turf/simulated/floor/carpet,/area/prefab/slimy_honk)

@@ -1,5 +1,5 @@
 "a" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/brindle)
-"b" = (/turf/variableTurf/clear,/area)
+"b" = (/turf/variableTurf/clear,/area/concrete)
 "c" = (/obj/lattice{icon_state = "lattice-dir"; dir = 8},/obj/machinery/door/airlock/pyro,/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
 "d" = (/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
 "e" = (/obj/lattice{icon_state = "lattice-dir"; dir = 8},/obj/structure/girder/reinforced,/turf/variableTurf/clear,/area/prefab/brindle)

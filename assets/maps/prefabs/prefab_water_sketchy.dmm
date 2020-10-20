@@ -1,5 +1,5 @@
 "aa" = (/turf/simulated/wall/auto/reinforced/gannets,/area/prefab/sea_sketch)
-"ab" = (/turf/variableTurf/clear,/area)
+"ab" = (/turf/variableTurf/clear,/area/concrete)
 "ac" = (/obj/item/kitchen/utensil/knife/pizza_cutter,/turf/simulated/floor/scorched,/area/prefab/sea_sketch)
 "ad" = (/obj/decal/cleanable/greenpuke,/obj/marker/supplymarker,/turf/simulated/floor/scorched2,/area/prefab/sea_sketch)
 "ae" = (/obj/item/material_piece/mauxite,/obj/item/storage/toilet,/turf/simulated/floor/grime,/area/prefab/sea_sketch)

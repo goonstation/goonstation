@@ -1,471 +1,471 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/unsimulated/wall,
-/area)
+/area/concrete)
 "ab" = (
 /turf/space,
-/area)
+/area/concrete)
 "ac" = (
 /turf/unsimulated/wall/cave,
-/area)
+/area/concrete)
 "ad" = (
 /turf/unsimulated/wall/cave{
 	name = "rock"
 	},
-/area)
+/area/concrete)
 "ae" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "af" = (
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "ag" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/four,
 /turf/space,
-/area)
+/area/concrete)
 "ah" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "ai" = (
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aj" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/rubble/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "ak" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "al" = (
 /obj/decal/fakeobjects/carcosa/rubble/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "am" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/five,
 /obj/decal/lightshaft,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "an" = (
 /turf/unsimulated/floor/cave,
-/area)
+/area/concrete)
 "ao" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/three,
 /obj/decal/lightshaft,
 /obj/decal/fakeobjects/carcosa/rubble/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "ap" = (
 /obj/decal/fakeobjects/carcosa/rubble/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aq" = (
 /obj/decal/fakeobjects/carcosa/rubble/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "ar" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/arch_one,
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "as" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "at" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "au" = (
 /obj/decal/fakeobjects/carcosa/rubble/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "av" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/arch_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aw" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "ax" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/arch_one,
 /obj/decal/fakeobjects/carcosa/brokenwall/up_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "ay" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "az" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "aA" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aB" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aC" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aD" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aE" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
 /obj/decal/fakeobjects/carcosa/brokenwall/up_one,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aF" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/five,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "aG" = (
 /obj/decal/fakeobjects/carcosa/rubble/one,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "aH" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/three,
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aI" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_one,
 /obj/decal/fakeobjects/carcosa/brokenwall/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aJ" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aK" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_one,
 /obj/decal/fakeobjects/carcosa/brokenwall/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aL" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "aM" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
 /obj/decal/fakeobjects/carcosa/grtrans/south,
 /turf/unsimulated/floor/cave,
-/area)
+/area/concrete)
 "aN" = (
 /obj/decal/fakeobjects/carcosa/grtrans/south,
 /obj/decal/fakeobjects/carcosa/rubble/three,
 /turf/unsimulated/floor/cave,
-/area)
+/area/concrete)
 "aO" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /obj/decal/fakeobjects/carcosa/grtrans/south,
 /turf/unsimulated/floor/cave,
-/area)
+/area/concrete)
 "aP" = (
 /obj/decal/lightshaft,
 /obj/decal/fakeobjects/carcosa/rubble/three,
 /obj/decal/cleanable/water,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aQ" = (
 /obj/decal/cleanable/water,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "aR" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/four,
 /obj/decal/fakeobjects/carcosa/rubble/one,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/six,
 /obj/decal/lightshaft,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "aS" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "aT" = (
 /obj/decal/fakeobjects/carcosa/rubble/three,
 /obj/decal/lightshaft,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/six,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "aU" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aV" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/two,
 /obj/decal/fakeobjects/carcosa/rubble/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "aW" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "aX" = (
 /obj/decal/fakeobjects/carcosa/rubble/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "aY" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "aZ" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_one,
 /obj/decal/fakeobjects/carcosa/brokenwall/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "ba" = (
 /obj/decal/fakeobjects/carcosa/rubble/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bb" = (
 /obj/decal/lightshaft,
 /obj/decal/fakeobjects/carcosa/rubble/three,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bc" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "bd" = (
 /obj/decal/fakeobjects/carcosa/tree/three,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "be" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_one,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "bf" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "bg" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/six,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bh" = (
 /obj/decal/fakeobjects/carcosa/tree/five,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bi" = (
 /obj/decal/fakeobjects/carcosa/rubble/two,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/four,
 /obj/decal/fakeobjects/carcosa/brokenwall/up_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bj" = (
 /obj/decal/fakeobjects/carcosa/tree/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bk" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/one,
 /obj/decal/fakeobjects/carcosa/tree/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bl" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/one,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bm" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /turf/unsimulated/wall/cave{
 	name = "rock"
 	},
-/area)
+/area/concrete)
 "bn" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/three,
 /turf/unsimulated/wall/cave{
 	name = "rock"
 	},
-/area)
+/area/concrete)
 "bo" = (
 /obj/decal/fakeobjects/carcosa/tree/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bp" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/three,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bq" = (
 /obj/decal/fakeobjects/carcosa/statue,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "br" = (
 /obj/decal/fakeobjects/carcosa/statue/broken,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bs" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/arch_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bt" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bu" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bv" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bw" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/two,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bx" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "by" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/one,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bz" = (
 /obj/decal/fakeobjects/carcosa/rubble/three,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bA" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/two,
 /turf/unsimulated/wall/cave{
 	name = "rock"
 	},
-/area)
+/area/concrete)
 "bB" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_one,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "bC" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_one,
 /obj/decal/fakeobjects/carcosa/rubble/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "bD" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "bE" = (
 /obj/decal/fakeobjects/carcosa/grtrans/east,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bF" = (
 /obj/decal/fakeobjects/carcosa/grtrans/west,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bG" = (
 /obj/decal/fakeobjects/carcosa/grtrans/east,
 /obj/decal/fakeobjects/carcosa/grtrans/north,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bH" = (
 /obj/decal/fakeobjects/carcosa/grtrans/north,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bI" = (
 /obj/decal/fakeobjects/carcosa/grtrans/north,
 /obj/decal/fakeobjects/carcosa/rubble/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bJ" = (
 /obj/decal/fakeobjects/carcosa/grtrans/southwest,
 /obj/decal/fakeobjects/carcosa/rubble/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bK" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /obj/decal/fakeobjects/carcosa/grtrans/north,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bL" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/four,
 /turf/unsimulated/wall/cave{
 	name = "rock"
 	},
-/area)
+/area/concrete)
 "bM" = (
 /obj/decal/lightshaft,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bN" = (
 /obj/decal/fakeobjects/carcosa/grtrans/east,
 /obj/decal/fakeobjects/carcosa/grtrans/south,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bO" = (
 /obj/decal/fakeobjects/carcosa/grtrans/south,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bP" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bQ" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bR" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
-/area)
+/area/concrete)
 "bS" = (
 /obj/decal/fakeobjects/carcosa/rubble/three,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bT" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_one,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bU" = (
 /obj/decal/fakeobjects/carcosa/brokenwall/up_two,
 /obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 "bV" = (
 /obj/decal/fakeobjects/carcosa/tree/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
-/area)
+/area/concrete)
 
 (1,1,1) = {"
 aa

@@ -1035,6 +1035,7 @@
 	item_state = "weddress"
 	c_flags = SLEEVELESS
 
+ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 /obj/item/clothing/gloves/ring
 	name = "ring"
 	desc = "A little ring, worn on the ring finger. You absolutely can't wear rings on any other fingers. It's just not possible."
@@ -1157,6 +1158,8 @@
 						src.visible_message("<span class='alert'>\The [src] bounces!</span>")
 						playsound(src.loc, "sound/items/coindrop.ogg", 50, 1, null, 2)
 						sleep(rand(2,5))
+
+/obj/item/clothing/gloves/ring/concrete
 
 /obj/item/clothing/gloves/ring/gold
 	name = "gold ring"

@@ -611,7 +611,7 @@
 	},
 /obj/machinery/camera/television/mobile,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "abb" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -667,7 +667,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "abj" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating/random,
@@ -768,7 +768,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aby" = (
 /obj/machinery/disposal/mail/small{
 	dir = 4;
@@ -1357,7 +1357,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/communications)
+/area/station/communications/office)
 "acD" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters)
@@ -7044,7 +7044,7 @@
 	pixel_y = 12
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aru" = (
 /obj/cable{
 	d1 = 1;
@@ -7058,7 +7058,7 @@
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "arv" = (
 /obj/machinery/mass_driver{
 	id = 2
@@ -8051,7 +8051,7 @@
 /area/station/maintenance/upperstarboard)
 "atP" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/communications)
+/area/station/communications/office)
 "atQ" = (
 /obj/indestructible/invisible_block,
 /turf/simulated/floor,
@@ -9635,7 +9635,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "axj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11612,7 +11612,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aBi" = (
 /obj/disposalpipe/segment,
 /obj/machinery/camera{
@@ -13809,7 +13809,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor/sanitary,
-/area/station/communications)
+/area/station/communications/office)
 "aFU" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
@@ -15138,7 +15138,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aIF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15492,7 +15492,7 @@
 /obj/machinery/light/incandescent/netural,
 /obj/table/wood/auto,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aJs" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/orangeblack,
@@ -17189,7 +17189,7 @@
 	},
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aNo" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -17319,7 +17319,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aNE" = (
 /obj/decal/cleanable/gangtag{
 	pixel_y = 32
@@ -17361,7 +17361,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
-/area/station/communications)
+/area/station/communications/office)
 "aNH" = (
 /obj/machinery/turret,
 /turf/simulated/floor/circuit,
@@ -17437,7 +17437,7 @@
 	},
 /obj/table/wood/auto,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aNP" = (
 /obj/stool/chair/office/blue{
 	dir = 1;
@@ -17447,11 +17447,11 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aNQ" = (
 /obj/machinery/door/unpowered/wood/stall,
 /turf/simulated/floor/sanitary,
-/area/station/communications)
+/area/station/communications/office)
 "aNR" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -17526,7 +17526,7 @@
 "aNZ" = (
 /obj/decal/fakeobjects/operatorconsole,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aOa" = (
 /obj/table/wood/round/auto,
 /obj/item/device/detective_scanner,
@@ -17547,7 +17547,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aOc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17563,7 +17563,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aOe" = (
 /obj/machinery/conveyor/north{
 	id = "disposals";
@@ -17653,10 +17653,10 @@
 "aOl" = (
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aOm" = (
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aOn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17683,7 +17683,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aOr" = (
 /obj/machinery/computer/arcade,
 /turf/simulated/floor/specialroom/arcade,
@@ -19074,7 +19074,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aRG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19283,11 +19283,11 @@
 	tag = ""
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aSa" = (
 /obj/stool/chair/office/blue,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aSb" = (
 /obj/stool/chair/office/blue,
 /obj/cable{
@@ -19296,7 +19296,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aSc" = (
 /obj/cable{
 	d1 = 4;
@@ -19304,7 +19304,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aSd" = (
 /obj/cable{
 	d1 = 4;
@@ -19317,7 +19317,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aSe" = (
 /obj/disposalpipe/switch_junction/right/north{
 	mail_tag = "Hydroponics"
@@ -19505,11 +19505,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aSB" = (
 /obj/table/wood/auto/desk,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aSC" = (
 /obj/loudspeaker{
 	layer = 4;
@@ -19517,12 +19517,12 @@
 	},
 /obj/table/wood/auto/desk,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aSD" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aSF" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/communications/bedroom)
@@ -19751,7 +19751,7 @@
 /obj/item/device/camera_viewer,
 /obj/item/device/audio_log,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aTm" = (
 /obj/machinery/phone,
 /obj/blind_switch/area/north{
@@ -19764,7 +19764,7 @@
 	},
 /obj/table/wood/auto,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aTn" = (
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom{
@@ -19775,17 +19775,17 @@
 	name = "broadcast radio"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aTo" = (
 /obj/table/wood/auto,
 /obj/submachine/mixing_desk,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aTp" = (
 /obj/table/wood/auto,
 /obj/submachine/record_player,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aTq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20101,27 +20101,27 @@
 /obj/item/pen,
 /obj/item/camera_test,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aTV" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aTW" = (
 /obj/submachine/tape_deck,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aTX" = (
 /obj/stool/chair/comfy{
 	dir = 8
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aTY" = (
 /obj/mic_stand{
 	dir = 8
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aTZ" = (
 /obj/decal/cleanable/cobweb,
 /obj/machinery/camera{
@@ -20438,7 +20438,7 @@
 	},
 /obj/item/storage/box/record/radio/one,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aUE" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -20447,7 +20447,7 @@
 	name = "Station Intercom (Medical)"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aUF" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -20462,13 +20462,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "aUG" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/communications)
+/area/station/communications/office)
 "aUH" = (
 /obj/item/clothing/suit/johnny_coat{
 	desc = "This outfit just looks smug as hell.";
@@ -33042,7 +33042,7 @@
 	},
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "buf" = (
 /obj/lattice{
 	dir = 4;
@@ -33548,7 +33548,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space/fluid/manta,
-/area)
+/area/concrete)
 "bvs" = (
 /obj/lattice{
 	dir = 4;
@@ -33626,7 +33626,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "bvx" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	name = "Changing Room"
@@ -45329,7 +45329,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/communications)
+/area/station/communications/office)
 "hGr" = (
 /obj/lattice{
 	dir = 10;
@@ -46487,7 +46487,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/communications)
+/area/station/communications/office)
 "xaf" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction)
@@ -46574,7 +46574,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/communications)
+/area/station/communications/office)
 "xKw" = (
 /obj/lattice{
 	dir = 1;

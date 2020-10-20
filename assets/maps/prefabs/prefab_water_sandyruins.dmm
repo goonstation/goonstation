@@ -1,4 +1,4 @@
-"a" = (/turf/variableTurf/clear,/area)
+"a" = (/turf/variableTurf/clear,/area/concrete)
 "b" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sandy_ruins)
 "c" = (/obj/landmark/artifact,/turf/simulated/floor/sand,/area/prefab/sandy_ruins)
 "d" = (/turf/simulated/floor/sand,/area/prefab/sandy_ruins)

@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/concrete)
 "ab" = (
 /turf/space,
 /turf/unsimulated/wall{
@@ -48,7 +48,7 @@
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ah" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (WEST)";
@@ -56,14 +56,14 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ai" = (
 /turf/unsimulated/wall/setpieces/hive,
 /area/h7/space_hive)
 "aj" = (
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "ak" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (EAST)";
@@ -71,7 +71,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "al" = (
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/h7/space_hive)
@@ -82,7 +82,7 @@
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/concrete)
 "an" = (
 /turf/space,
 /turf/unsimulated/wall{
@@ -103,7 +103,7 @@
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aq" = (
 /obj/item/reagent_containers/food/snacks/ingredient/honey,
 /turf/unsimulated/floor/setpieces/hivefloor,
@@ -113,7 +113,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "as" = (
 /turf/unsimulated/wall{
 	icon = 'shuttle.dmi';
@@ -487,7 +487,7 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/concrete)
 "br" = (
 /obj/critter/domestic_bee,
 /turf/unsimulated/floor/setpieces/hivefloor,
@@ -695,7 +695,7 @@
 	icon = 'shuttle.dmi';
 	icon_state = "diagonalWall"
 	},
-/area)
+/area/concrete)
 "bO" = (
 /turf/unsimulated/floor/white/side{
 	dir = 2
@@ -815,7 +815,7 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ch" = (
 /obj/lattice{
 	tag = "icon-lattice-dir-b (NORTHEAST)";
@@ -823,7 +823,7 @@
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ci" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
@@ -848,7 +848,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cl" = (
 /obj/item/clothing/suit/bedsheet{
 	icon_state = "bedsheet-pink"
@@ -901,7 +901,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cs" = (
 /obj/item/clothing/suit/bedsheet{
 	tag = "icon-bedsheet-red";
@@ -977,7 +977,7 @@
 /area/h7/space_hive)
 "cC" = (
 /turf/unsimulated/wall,
-/area)
+/area/concrete)
 "cD" = (
 /obj/decal/fakeobjects/shuttleengine{
 	desc = "You should probably leave it alone.";
@@ -988,12 +988,12 @@
 	dir = 8;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "cE" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area)
+/area/concrete)
 "cF" = (
 /obj/lattice{
 	tag = "icon-lattice-dir-b";
@@ -1013,19 +1013,19 @@
 	dir = 4;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "cG" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "cH" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "cI" = (
 /obj/decal/fakeobjects/shuttleengine{
 	desc = "You should probably leave it alone.";
@@ -1036,7 +1036,7 @@
 	dir = 8;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "cJ" = (
 /obj/overlay{
 	tag = "icon-4-8";
@@ -1051,12 +1051,12 @@
 	dir = 4;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "cK" = (
 /turf/space{
 	icon_state = "aplaceholder"
 	},
-/area)
+/area/concrete)
 "cL" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (NORTHWEST)";
@@ -1066,7 +1066,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "cM" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (EAST)";
@@ -1076,7 +1076,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area)
+/area/concrete)
 "cN" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (WEST)";
@@ -1086,7 +1086,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area)
+/area/concrete)
 "cO" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -1101,10 +1101,10 @@
 	anchored = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cP" = (
 /turf/simulated/floor/airless/circuit,
-/area)
+/area/concrete)
 "cQ" = (
 /obj/lattice{
 	tag = "icon-lattice-dir-b (SOUTHEAST)";
@@ -1121,7 +1121,7 @@
 	anchored = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cR" = (
 /obj/lattice{
 	tag = "icon-lattice-dir-b (SOUTHWEST)";
@@ -1138,7 +1138,7 @@
 	anchored = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cS" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (SOUTHEAST)";
@@ -1148,7 +1148,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area)
+/area/concrete)
 "cT" = (
 /obj/overlay{
 	anchored = 1;
@@ -1160,7 +1160,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "cU" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (NORTH)";
@@ -1170,18 +1170,18 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area)
+/area/concrete)
 "cV" = (
 /obj/landmark/start,
 /obj/landmark/start{
 	name = "shit"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cW" = (
 /obj/ydrone_panel,
 /turf/simulated/floor/airless/circuit,
-/area)
+/area/concrete)
 "cX" = (
 /obj/lattice{
 	tag = "icon-lattice-dir-b (NORTHWEST)";
@@ -1198,7 +1198,7 @@
 	anchored = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cY" = (
 /obj/lattice{
 	tag = "icon-lattice-dir-b (NORTHEAST)";
@@ -1215,18 +1215,18 @@
 	anchored = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cZ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "da" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "db" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (SOUTHWEST)";
@@ -1236,7 +1236,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area)
+/area/concrete)
 "dc" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (NORTHEAST)";
@@ -1247,7 +1247,7 @@
 	dir = 1;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "dd" = (
 /obj/overlay{
 	tag = "icon-4-8";
@@ -1262,7 +1262,7 @@
 	dir = 8;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "de" = (
 /obj/decal/fakeobjects/shuttleengine{
 	desc = "You should probably leave it alone.";
@@ -1273,7 +1273,7 @@
 	dir = 4;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "df" = (
 /obj/lattice{
 	tag = "icon-lattice-dir-b (NORTH)";
@@ -1293,7 +1293,7 @@
 	dir = 8;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "dg" = (
 /obj/decal/fakeobjects/shuttleengine{
 	desc = "You should probably leave it alone.";
@@ -1304,7 +1304,7 @@
 	dir = 4;
 	icon_state = "wall3_space"
 	},
-/area)
+/area/concrete)
 "dh" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/fullscreen.dmi';
@@ -1312,7 +1312,7 @@
 	layer = 20;
 	name = "Space Station 13"
 	},
-/area)
+/area/concrete)
 "di" = (
 /turf/simulated/wall,
 /area/station/science/artifact)
@@ -3036,7 +3036,7 @@
 "hq" = (
 /obj/grille/steel,
 /turf/space,
-/area)
+/area/concrete)
 "hr" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -3055,7 +3055,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hs" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -3074,16 +3074,16 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "ht" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "wall3"
 	},
-/area)
+/area/concrete)
 "hu" = (
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hv" = (
 /obj/decal/fakeobjects{
 	tag = "icon-conduit (NORTHWEST)";
@@ -3096,7 +3096,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hw" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3109,7 +3109,7 @@
 	tag = "icon-conduit (EAST)"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hx" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3119,13 +3119,13 @@
 	name = "power conduit"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hy" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "hz" = (
 /obj/decal/fakeobjects{
 	tag = "icon-conduit (NORTHWEST)";
@@ -3148,7 +3148,7 @@
 	tag = "icon-conduit (EAST)"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hA" = (
 /obj/decal/fakeobjects{
 	tag = "icon-conduit (SOUTHEAST)";
@@ -3161,16 +3161,16 @@
 	anchored = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hB" = (
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "hC" = (
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "hD" = (
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/concrete)
 "hE" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -3181,10 +3181,10 @@
 	tag = "icon-bdoorleft1 (NORTH)"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/concrete)
 "hF" = (
 /turf/simulated/floor/caution/north,
-/area)
+/area/concrete)
 "hG" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -3195,7 +3195,7 @@
 	tag = "icon-bdoormid1 (NORTH)"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/concrete)
 "hH" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3207,15 +3207,15 @@
 	name = "drone sensor array"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "hI" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area)
+/area/concrete)
 "hJ" = (
 /turf/simulated/floor/circuit/red,
-/area)
+/area/concrete)
 "hK" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3226,7 +3226,7 @@
 	name = "downed server"
 	},
 /turf/simulated/floor/circuit/red,
-/area)
+/area/concrete)
 "hL" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3236,7 +3236,7 @@
 	name = "defunct vent"
 	},
 /turf/simulated/floor/circuit/red,
-/area)
+/area/concrete)
 "hM" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -3247,10 +3247,10 @@
 	tag = "icon-bdoorright1 (NORTH)"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/concrete)
 "hN" = (
 /turf/simulated/floor/orangeblack,
-/area)
+/area/concrete)
 "hO" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3261,7 +3261,7 @@
 	name = "idle server"
 	},
 /turf/simulated/floor/circuit/red,
-/area)
+/area/concrete)
 "hP" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -3275,7 +3275,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hQ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3286,7 +3286,7 @@
 	name = "drone sensor array"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "hR" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3298,7 +3298,7 @@
 	name = "drone sensor array"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "hS" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3308,7 +3308,7 @@
 	name = "defunct vent"
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "hT" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3320,7 +3320,7 @@
 	tag = "icon-conduit (SOUTHEAST)"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hU" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3340,11 +3340,11 @@
 	name = "power conduit"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hV" = (
 /obj/decal/fakeobjects/tallsmes,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hW" = (
 /obj/decal/fakeobjects{
 	tag = "icon-conduit (WEST)";
@@ -3357,7 +3357,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hX" = (
 /obj/decal/fakeobjects{
 	tag = "icon-conduit (SOUTHEAST)";
@@ -3380,7 +3380,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hY" = (
 /obj/decal/fakeobjects{
 	tag = "icon-conduit (NORTH)";
@@ -3393,7 +3393,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "hZ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3406,7 +3406,7 @@
 	tag = "icon-conduit (SOUTHWEST)"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "ia" = (
 /obj/decal/fakeobjects{
 	tag = "icon-conduit (WEST)";
@@ -3429,7 +3429,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "ib" = (
 /turf/simulated/wall,
 /area/buddyfactory)
@@ -3593,7 +3593,7 @@
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/concrete)
 "iy" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -3887,7 +3887,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/concrete)
 "jg" = (
 /obj/table/woodentable{
 	tag = "icon-woodentable (SOUTHWEST)";
@@ -4140,7 +4140,7 @@
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/concrete)
 "jM" = (
 /obj/item/storage/toilet,
 /turf/simulated/floor/white,

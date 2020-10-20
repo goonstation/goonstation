@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/concrete)
 "ab" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
@@ -975,14 +975,14 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ck" = (
 /obj/lattice{
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cl" = (
 /obj/warp_beacon{
 	name = "Hangar Beacon"
@@ -994,7 +994,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "cm" = (
 /obj/lattice{
 	dir = 4;
@@ -1006,7 +1006,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cn" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -1047,7 +1047,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cr" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -1345,7 +1345,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "db" = (
 /obj/disposalpipe/junction{
 	icon_state = "pipe-j2"
@@ -2638,7 +2638,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "fY" = (
 /obj/machinery/computer/bank_data{
 	dir = 4;
@@ -3113,7 +3113,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "gW" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -5883,7 +5883,7 @@
 	name = "DENSITY"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "mf" = (
 /obj/item/storage/box/lightbox/tubes,
 /turf/simulated/floor/red,

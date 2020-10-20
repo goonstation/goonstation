@@ -1,47 +1,11 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/turf/dmm_suite/clear_turf,
-/area)
-"b" = (
-/turf/variableTurf/floor,
-/area)
-"c" = (
-/obj/critter/rockworm,
-/turf/variableTurf/floor,
-/area)
+"a" = (/turf/dmm_suite/clear_turf,/area/concrete)
+"b" = (/turf/variableTurf/floor,/area/concrete)
+"c" = (/obj/critter/rockworm,/turf/variableTurf/floor,/area/concrete)
 
 (1,1,1) = {"
-a
-a
-b
-a
-a
-"}
-(2,1,1) = {"
-a
-c
-c
-c
-a
-"}
-(3,1,1) = {"
-b
-c
-c
-c
-b
-"}
-(4,1,1) = {"
-a
-c
-c
-c
-a
-"}
-(5,1,1) = {"
-a
-a
-b
-a
-a
+aabaa
+accca
+bcccb
+accca
+aabaa
 "}

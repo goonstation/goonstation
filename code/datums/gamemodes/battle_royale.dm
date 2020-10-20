@@ -250,9 +250,9 @@ proc/equip_battler(mob/living/carbon/human/battler)
 proc/get_accessible_station_areas()
 	// All areas
 	var/list/L = list()
-	var/list/areas = childrentypesof(/area/station)
+	var/list/areas = concrete_typesof(/area/station)
 	for(var/A in areas)
-		var/area/instance = locate(A)
+		var/area/station/instance = locate(A)
 		for(var/turf/T in instance)
 			if(!isfloor(T) && is_blocked_turf(T) && istype(T,/area/sim/test_area) && T.z == 1)
 				continue
