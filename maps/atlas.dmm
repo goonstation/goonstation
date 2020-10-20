@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/concrete)
 "ab" = (
 /turf/space,
 /area/supply/sell_point)
@@ -164,7 +164,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ar" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -214,14 +214,14 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area)
+/area/concrete)
 "ax" = (
 /obj/lattice{
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ay" = (
 /obj/lattice{
 	dir = 1;
@@ -229,7 +229,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area)
+/area/concrete)
 "az" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/power/solar_control/north{
@@ -271,7 +271,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aD" = (
 /obj/machinery/conveyor{
 	id = "inbound";
@@ -279,7 +279,7 @@
 	operating = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aE" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/right_station/cogmap)
@@ -457,7 +457,7 @@
 "be" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bf" = (
 /obj/storage/secure/closet/security/forensics,
 /obj/machinery/camera{
@@ -883,7 +883,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cm" = (
 /obj/table/auto,
 /obj/item/storage/belt/utility,
@@ -2030,7 +2030,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "fh" = (
 /obj/storage/crate{
 	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
@@ -2047,7 +2047,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area)
+/area/concrete)
 "fj" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 9
@@ -2557,7 +2557,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area)
+/area/concrete)
 "gG" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
 /turf/simulated/floor/red/side{
@@ -3442,7 +3442,7 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "iX" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -4660,7 +4660,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "mg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5135,7 +5135,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "nx" = (
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor,
@@ -5161,7 +5161,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "nC" = (
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor,
@@ -5749,7 +5749,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/concrete)
 "oW" = (
 /obj/decal/poster/wallsign/hazard_hotloop,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -6013,7 +6013,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area)
+/area/concrete)
 "pI" = (
 /obj/machinery/computer3/generic/communications{
 	dir = 4
@@ -6048,7 +6048,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area)
+/area/concrete)
 "pM" = (
 /obj/lattice{
 	dir = 8;
@@ -6059,7 +6059,7 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/concrete)
 "pN" = (
 /obj/lattice{
 	dir = 4;
@@ -6069,7 +6069,7 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "pO" = (
 /obj/lattice{
 	dir = 8;
@@ -6079,14 +6079,14 @@
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/concrete)
 "pP" = (
 /obj/lattice{
 	dir = 1;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "pQ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -6435,14 +6435,14 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
-/area)
+/area/concrete)
 "qN" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/space,
-/area)
+/area/concrete)
 "qO" = (
 /obj/lattice{
 	dir = 9;
@@ -6451,7 +6451,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area)
+/area/concrete)
 "qP" = (
 /obj/machinery/light{
 	dir = 8;
@@ -6932,7 +6932,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area)
+/area/concrete)
 "rT" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -6940,7 +6940,7 @@
 /obj/machinery/light/runway_light/delay5,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
-/area)
+/area/concrete)
 "rU" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	dir = 1;
@@ -6976,7 +6976,7 @@
 "sa" = (
 /obj/item/gnomechompski,
 /turf/space,
-/area)
+/area/concrete)
 "sb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7476,7 +7476,7 @@
 	icon_state = "2-8"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "te" = (
 /obj/lattice{
 	dir = 6;
@@ -7488,7 +7488,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "tf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7503,14 +7503,14 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area)
+/area/concrete)
 "th" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area)
+/area/concrete)
 "ti" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/disposalpipe/segment{
@@ -8116,7 +8116,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area)
+/area/concrete)
 "us" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue,
@@ -8144,14 +8144,14 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/random,
-/area)
+/area/concrete)
 "uv" = (
 /obj/lattice{
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "uw" = (
 /obj/machinery/bot/secbot/beepsky,
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon1_start,
@@ -8166,7 +8166,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area)
+/area/concrete)
 "uz" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -8563,7 +8563,7 @@
 	icon_state = "1-8"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "vo" = (
 /obj/lattice{
 	dir = 5;
@@ -8571,7 +8571,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area)
+/area/concrete)
 "vp" = (
 /obj/lattice{
 	dir = 1;
@@ -8579,7 +8579,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area)
+/area/concrete)
 "vq" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -8589,14 +8589,14 @@
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/concrete)
 "vr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "vs" = (
 /obj/lattice{
 	dir = 6;
@@ -8608,7 +8608,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "vt" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -8921,7 +8921,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area)
+/area/concrete)
 "wm" = (
 /obj/lattice{
 	dir = 10;
@@ -8932,7 +8932,7 @@
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/concrete)
 "wn" = (
 /obj/lattice{
 	dir = 4;
@@ -8942,7 +8942,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "wo" = (
 /obj/lattice{
 	dir = 10;
@@ -8952,7 +8952,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "wp" = (
 /obj/lattice{
 	dir = 4;
@@ -8963,7 +8963,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "wq" = (
 /obj/lattice{
 	dir = 1;
@@ -8973,7 +8973,7 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "wr" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -9311,7 +9311,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "xc" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -9555,7 +9555,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "xH" = (
 /obj/cable{
 	d1 = 1;
@@ -9849,7 +9849,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "yg" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -9942,7 +9942,7 @@
 	name = "starboard warp beacon"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "yu" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
@@ -13082,7 +13082,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "GG" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/teleporter)
@@ -13548,7 +13548,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/delivery,
-/area)
+/area/concrete)
 "HN" = (
 /turf/simulated/floor/arrival{
 	dir = 1
@@ -14126,7 +14126,7 @@
 	tag = "icon-lattice-dir-b (NORTHWEST)"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "Jd" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -14137,7 +14137,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "Jf" = (
 /turf/simulated/floor/delivery,
 /area/station/hangar/science)
@@ -14174,7 +14174,7 @@
 	},
 /obj/effects/background_objects/station/ss10,
 /turf/space,
-/area)
+/area/concrete)
 "Jo" = (
 /obj/machinery/atmospherics/valve/horizontal,
 /obj/cable{
@@ -14769,7 +14769,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "KT" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -14833,7 +14833,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area)
+/area/concrete)
 "KY" = (
 /obj/grille/catwalk{
 	dir = 1;
@@ -14841,7 +14841,7 @@
 	},
 /obj/machinery/light/beacon,
 /turf/space,
-/area)
+/area/concrete)
 "KZ" = (
 /obj/lattice{
 	dir = 5;
@@ -14849,7 +14849,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area)
+/area/concrete)
 "La" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
@@ -15373,7 +15373,7 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/simulated/floor/plating/random,
-/area)
+/area/concrete)
 "MH" = (
 /obj/stool/chair/office/red{
 	dir = 1
@@ -15453,7 +15453,7 @@
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-/area)
+/area/concrete)
 "MR" = (
 /obj/machinery/door/airlock/pyro/syndicate,
 /turf/simulated/floor/red,
@@ -15464,7 +15464,7 @@
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
-/area)
+/area/concrete)
 "MT" = (
 /obj/machinery/power/furnace,
 /obj/cable{
@@ -15825,7 +15825,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "NO" = (
 /obj/machinery/computer3/terminal{
 	dir = 4
@@ -15970,13 +15970,13 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "Og" = (
 /obj/lattice,
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
 /turf/space,
-/area)
+/area/concrete)
 "Oh" = (
 /obj/table/auto,
 /obj/machinery/light{
@@ -16183,7 +16183,7 @@
 	dir = 10;
 	icon_state = "diagonalWall3"
 	},
-/area)
+/area/concrete)
 "OG" = (
 /obj/stool/chair/red,
 /turf/simulated/floor/black,
@@ -16325,7 +16325,7 @@
 	dir = 6;
 	icon_state = "wall3"
 	},
-/area)
+/area/concrete)
 "OX" = (
 /obj/machinery/power/furnace,
 /obj/cable,
@@ -16344,7 +16344,7 @@
 	name = "ATLAS"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "Pa" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -16508,7 +16508,7 @@
 "Ps" = (
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "Pu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17029,7 +17029,7 @@
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/concrete)
 "QF" = (
 /obj/decal/fakeobjects/vacuumtape{
 	layer = 2
@@ -17442,7 +17442,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "St" = (
 /obj/machinery/power/smes,
 /obj/cable,
@@ -19399,7 +19399,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
-/area)
+/area/concrete)
 "Zk" = (
 /obj/disposalpipe/segment,
 /obj/machinery/recharger/wall/sticky{

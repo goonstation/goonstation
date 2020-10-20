@@ -1,5 +1,5 @@
 "aa" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/mobius)
-"ab" = (/turf/variableTurf/clear,/area)
+"ab" = (/turf/variableTurf/clear,/area/concrete)
 "ac" = (/obj/machinery/vending/snack,/turf/simulated/floor/yellow/checker,/area/prefab/mobius)
 "ad" = (/obj/decal/poster/wallsign/stencil/right/s{pixel_y = 42},/obj/decal/tinsel{icon_state = "lights3"; name = "broken seamas lights"; pixel_y = 28},/obj/shrub{icon = 'icons/obj/stationobjs.dmi'; icon_state = "plant"; dir = 1},/turf/simulated/floor/red/checker,/area/prefab/mobius)
 "ae" = (/obj/machinery/light/incandescent/warm,/obj/decal/poster/wallsign/stencil/left/t{pixel_y = 42},/obj/decal/poster/wallsign/stencil/right/r{pixel_y = 42},/obj/decal/tinsel{icon_state = "lights3"; name = "broken seamas lights"; pixel_y = 28},/turf/simulated/floor/red/checker,/area/prefab/mobius)

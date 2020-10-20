@@ -1,125 +1,125 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/concrete)
 "ab" = (
 /turf/unsimulated/floor/setpieces/gauntlet,
-/area)
+/area/concrete)
 "ac" = (
 /turf/unsimulated/greek/grass,
-/area)
+/area/concrete)
 "ad" = (
 /turf/unsimulated/floor/snow,
-/area)
+/area/concrete)
 "ae" = (
 /obj/decal/big_number,
 /turf/space,
-/area)
+/area/concrete)
 "af" = (
 /obj/decal/big_number{
 	icon_state = "num1"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ag" = (
 /obj/decal/big_number{
 	icon_state = "num2"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ah" = (
 /obj/decal/big_number{
 	icon_state = "num3"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ai" = (
 /obj/decal/big_number{
 	icon_state = "num4"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aj" = (
 /obj/decal/big_number{
 	icon_state = "num5"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ak" = (
 /obj/decal/big_number{
 	icon_state = "num6"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "al" = (
 /obj/decal/big_number{
 	icon_state = "num7"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "am" = (
 /obj/decal/big_number{
 	icon_state = "num8"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "an" = (
 /obj/decal/big_number{
 	icon_state = "num9"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ao" = (
 /obj/decal/big_number{
 	icon_state = "num-arrow";
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ap" = (
 /obj/decal/big_number{
 	icon_state = "num-arrow";
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aq" = (
 /obj/decal/big_number{
 	icon_state = "num-arrow"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ar" = (
 /obj/decal/big_number{
 	icon_state = "num-arrow";
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "as" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1";
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "at" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3";
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "au" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1";
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "av" = (
 /turf/unsimulated/nicegrass/random,
-/area)
+/area/concrete)
 "aw" = (
 /turf/space,
 /area/football)

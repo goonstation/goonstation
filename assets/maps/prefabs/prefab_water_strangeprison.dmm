@@ -1,5 +1,5 @@
 "aa" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_prison)
-"ab" = (/turf/variableTurf/clear,/area)
+"ab" = (/turf/variableTurf/clear,/area/concrete)
 "ac" = (/obj/machinery/deep_fryer{icon_state = "fryer0"; dir = 4},/turf/simulated/floor/black,/area/prefab/sea_prison)
 "ad" = (/turf/simulated/floor/black,/area/prefab/sea_prison)
 "ae" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/prison_loaf,/turf/simulated/floor,/area/prefab/sea_prison)

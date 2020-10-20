@@ -1,6 +1,6 @@
-"a" = (/turf/dmm_suite/clear_turf,/area)
-"b" = (/turf/variableTurf/floor,/area)
-"c" = (/obj/critter/rockworm,/turf/variableTurf/floor,/area)
+"a" = (/turf/dmm_suite/clear_turf,/area/concrete)
+"b" = (/turf/variableTurf/floor,/area/concrete)
+"c" = (/obj/critter/rockworm,/turf/variableTurf/floor,/area/concrete)
 
 (1,1,1) = {"
 aabaa

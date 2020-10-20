@@ -46,7 +46,7 @@
 /area/shuttle/escape/transit/destiny)
 "ap" = (
 /turf/space,
-/area)
+/area/concrete)
 "aq" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 1;
@@ -901,7 +901,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cQ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
@@ -955,7 +955,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cZ" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio,
@@ -1074,32 +1074,32 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ds" = (
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "dt" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "du" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "dv" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/concrete)
 "dw" = (
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 10
@@ -1201,7 +1201,7 @@
 	icon_state = "TheSingMain";
 	name = "cloaking field"
 	},
-/area)
+/area/concrete)
 "dN" = (
 /turf/simulated/shuttle/wall/escape{
 	icon_state = "walldir";
@@ -1843,7 +1843,7 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/concrete)
 "fs" = (
 /obj/machinery/r_door_control/podbay/wizard,
 /turf/simulated/shuttle/wall{
@@ -1920,7 +1920,7 @@
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/concrete)
 "fD" = (
 /obj/shrub,
 /turf/unsimulated/floor/darkblue,
@@ -1961,7 +1961,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/concrete)
 "fK" = (
 /obj/machinery/door/poddoor/blast/single{
 	dir = 4;
@@ -2566,21 +2566,21 @@
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/concrete)
 "hr" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/concrete)
 "hs" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/concrete)
 "ht" = (
 /turf/unsimulated/floor/stairs,
 /area/centcom)
@@ -3146,7 +3146,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "iV" = (
 /turf/simulated/shuttle/wall/corner{
 	icon_state = "wall_space";
@@ -3200,7 +3200,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "jc" = (
 /turf/simulated/shuttle/wall/escape,
 /area/shuttle/escape/centcom/destiny)

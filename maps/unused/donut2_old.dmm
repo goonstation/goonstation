@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/space,
-/area)
+/area/concrete)
 "aab" = (
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "aac" = (
 /turf/simulated/wall,
 /area/zeta/teleporter)
@@ -15,10 +15,10 @@
 	name = "Outpost launcher hub"
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aae" = (
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aaf" = (
 /turf/space,
 /area/shuttle/brig/outpost)
@@ -74,18 +74,18 @@
 /obj/machinery/launcher_loader/south,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/engine/vacuum,
-/area)
+/area/concrete)
 "aan" = (
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/engine/vacuum,
-/area)
+/area/concrete)
 "aao" = (
 /obj/machinery/mass_driver{
 	dir = 8;
 	id = "outpostla3"
 	},
 /turf/simulated/floor/engine/vacuum,
-/area)
+/area/concrete)
 "aap" = (
 /obj/machinery/science_teleport_pad,
 /turf/simulated/floor/engine,
@@ -144,11 +144,11 @@
 	id = "outpostla2"
 	},
 /turf/simulated/floor/engine/vacuum,
-/area)
+/area/concrete)
 "aax" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/engine/vacuum,
-/area)
+/area/concrete)
 "aay" = (
 /mob/living/carbon/monkey{
 	icon_state = "rathen";
@@ -278,7 +278,7 @@
 /area/zeta/teleporter)
 "aaM" = (
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aaN" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -1138,7 +1138,7 @@
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
-/area)
+/area/concrete)
 "acy" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -3921,19 +3921,19 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ahP" = (
 /turf/simulated/wall/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ahQ" = (
 /turf/simulated/wall/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ahR" = (
 /obj/machinery/shuttle/engine/propulsion{
 	id = "zeta"
@@ -4079,7 +4079,7 @@
 	sname = "Zeta"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aih" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -4093,20 +4093,20 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "aij" = (
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "aik" = (
 /obj/alien/weeds,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "ail" = (
 /turf/simulated/wall/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "aim" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall_space"
@@ -4205,14 +4205,14 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aiy" = (
 /obj/alien/weeds,
 /obj/landmark{
 	name = "alien_spawn"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "aiz" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -4380,7 +4380,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area)
+/area/concrete)
 "aiN" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -4523,7 +4523,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aiZ" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -4539,7 +4539,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aja" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -4557,7 +4557,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "ajb" = (
 /obj/cable{
 	d2 = 8;
@@ -4569,36 +4569,36 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "ajc" = (
 /turf/simulated/wall/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ajd" = (
 /turf/simulated/wall/asteroid{
 	dir = 10;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "aje" = (
 /turf/simulated/wall/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "ajf" = (
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ajg" = (
 /turf/simulated/wall/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ajh" = (
 /turf/simulated/floor/plating,
 /area/artifact)
@@ -4678,7 +4678,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area)
+/area/concrete)
 "ajq" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -5319,7 +5319,7 @@
 "akw" = (
 /obj/grille,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "akx" = (
 /obj/cable{
 	d1 = 1;
@@ -5332,7 +5332,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aky" = (
 /obj/rack,
 /obj/item/sheet/metal{
@@ -5360,7 +5360,7 @@
 	name = "Zeta Comm Dish"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "akB" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -5590,7 +5590,7 @@
 /area/shuttle/arrival/station)
 "alg" = (
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "alh" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -7108,7 +7108,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aoa" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -9374,7 +9374,7 @@
 	name = "Auxiliary Communications dish"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "asX" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -9382,7 +9382,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "asY" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -9393,7 +9393,7 @@
 	name = "NASSA spawn"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "asZ" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -12073,7 +12073,7 @@
 	d2 = 2
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "ayI" = (
 /turf/simulated/floor/green/side,
 /area/crew_quarters/pool)
@@ -12156,7 +12156,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "ayU" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
@@ -12553,7 +12553,7 @@
 	d2 = 2
 	},
 /turf/simulated/wall,
-/area)
+/area/concrete)
 "azK" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -13926,7 +13926,7 @@
 	tag = "MAIN_DISH_SS13"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aCy" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -14712,7 +14712,7 @@
 	sname = "Station"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aDV" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -16050,7 +16050,7 @@
 	d2 = 4
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aGF" = (
 /obj/cable{
 	d1 = 1;
@@ -16063,7 +16063,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aGG" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -16076,7 +16076,7 @@
 	d2 = 2
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aGH" = (
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -16217,7 +16217,7 @@
 	d2 = 4
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aGW" = (
 /obj/cable{
 	d1 = 1;
@@ -16225,10 +16225,10 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aGX" = (
 /turf/simulated/wall,
-/area)
+/area/concrete)
 "aGY" = (
 /obj/cable{
 	d1 = 1;
@@ -16236,7 +16236,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aGZ" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -16244,7 +16244,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aHa" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -16537,7 +16537,7 @@
 "aHC" = (
 /obj/window/reinforced,
 /turf/space,
-/area)
+/area/concrete)
 "aHD" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -16693,7 +16693,7 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aHS" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -17108,10 +17108,10 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aIC" = (
 /turf/simulated/floor/airless/plating/damaged2,
-/area)
+/area/concrete)
 "aID" = (
 /obj/machinery/camera{
 	c_tag = "Inner Maintenance East Airlock";
@@ -17411,7 +17411,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aJh" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/field_generator,
@@ -17425,10 +17425,10 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aJi" = (
 /turf/simulated/floor/circuit,
-/area)
+/area/concrete)
 "aJj" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/field_generator,
@@ -17443,7 +17443,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aJk" = (
 /obj/cable{
 	d2 = 8;
@@ -17460,7 +17460,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aJl" = (
 /obj/secure_closet/engineering_chief,
 /turf/simulated/floor,
@@ -17627,7 +17627,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aJB" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -17635,7 +17635,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/circuit,
-/area)
+/area/concrete)
 "aJC" = (
 /turf/simulated/floor/plating/airless,
 /area/engine/singcore)
@@ -17653,7 +17653,7 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aJG" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -17836,7 +17836,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aJZ" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -17849,7 +17849,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aKa" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -17862,7 +17862,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aKb" = (
 /turf/simulated/wall/r_wall,
 /area/engine/substation/east)
@@ -18081,7 +18081,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall,
-/area)
+/area/concrete)
 "aKy" = (
 /obj/cable{
 	d1 = 1;
@@ -18094,7 +18094,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aKz" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -18102,7 +18102,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/airless/plating/damaged2,
-/area)
+/area/concrete)
 "aKA" = (
 /obj/machinery/the_singularitygen,
 /turf/simulated/floor/plating/airless,
@@ -18119,7 +18119,7 @@
 	d2 = 4
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aKC" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -18132,7 +18132,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aKD" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -18454,7 +18454,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aLe" = (
 /obj/cable{
 	d1 = 1;
@@ -18467,7 +18467,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "aLf" = (
 /obj/cable{
 	d1 = 1;
@@ -18957,7 +18957,7 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aLP" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/field_generator,
@@ -18967,7 +18967,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aLQ" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/field_generator,
@@ -18981,7 +18981,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aLR" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -19002,7 +19002,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aLS" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -19184,11 +19184,11 @@
 "aMg" = (
 /obj/machinery/emitter,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aMh" = (
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
-/area)
+/area/concrete)
 "aMi" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -19403,7 +19403,7 @@
 /obj/machinery/emitter,
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "aMF" = (
 /obj/cable{
 	d1 = 1;
@@ -19904,7 +19904,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aNC" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -19913,7 +19913,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "aND" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -20196,7 +20196,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "aOc" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -20624,7 +20624,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aOV" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -21140,7 +21140,7 @@
 	},
 /obj/window/reinforced,
 /turf/space,
-/area)
+/area/concrete)
 "aQa" = (
 /obj/cable{
 	d1 = 1;
@@ -22629,7 +22629,7 @@
 "aTh" = (
 /turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
-/area)
+/area/concrete)
 "aTi" = (
 /obj/machinery/computer/robotics{
 	perma = 1
@@ -22825,7 +22825,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "aTF" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -30657,7 +30657,7 @@
 "bjR" = (
 /obj/machinery/camera,
 /turf/space,
-/area)
+/area/concrete)
 "bjS" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -31334,7 +31334,7 @@
 	},
 /obj/disposaloutlet,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "bll" = (
 /obj/cable,
 /obj/cable{
@@ -31764,7 +31764,7 @@
 "blW" = (
 /obj/machinery/power/tracker,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "blX" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -32008,7 +32008,7 @@
 "bmq" = (
 /obj/machinery/camera,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "bmr" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -34520,7 +34520,7 @@
 /area/vr_oldprison)
 "brR" = (
 /turf/unsimulated/wall,
-/area)
+/area/concrete)
 "brS" = (
 /turf/simulated/floor/plating,
 /area/storage/testroom)
@@ -34684,7 +34684,7 @@
 	name = "shit"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bsr" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -34964,7 +34964,7 @@
 	layer = 20;
 	name = "Space Station 13"
 	},
-/area)
+/area/concrete)
 "bte" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/shuttle,
@@ -35234,7 +35234,7 @@
 	name = "grass.";
 	opacity = 1
 	},
-/area)
+/area/concrete)
 "btG" = (
 /turf/unsimulated/floor/specialroom/bar{
 	dir = 8
@@ -36799,20 +36799,20 @@
 	name = "outer forcefield";
 	opacity = 1
 	},
-/area)
+/area/concrete)
 "bxj" = (
 /turf/unsimulated/floor{
 	tag = "icon-grass_snow";
 	icon_state = "grass_snow"
 	},
-/area)
+/area/concrete)
 "bxk" = (
 /obj/tree1,
 /turf/unsimulated/floor{
 	tag = "icon-grass_snow";
 	icon_state = "grass_snow"
 	},
-/area)
+/area/concrete)
 "bxl" = (
 /turf/unsimulated/floor{
 	density = 1;
@@ -36821,7 +36821,7 @@
 	opacity = 1;
 	tag = "icon-grass_snow"
 	},
-/area)
+/area/concrete)
 "bxm" = (
 /obj/landmark{
 	name = "prisonwarp"
@@ -36829,12 +36829,12 @@
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 2
 	},
-/area)
+/area/concrete)
 "bxn" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area)
+/area/concrete)
 "bxo" = (
 /turf/unsimulated/wall{
 	icon = 'singularity.dmi';
@@ -36842,17 +36842,17 @@
 	name = "forcefield";
 	opacity = 0
 	},
-/area)
+/area/concrete)
 "bxp" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area)
+/area/concrete)
 "bxq" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area)
+/area/concrete)
 "bxr" = (
 /obj/racing_boosterstrip{
 	tag = "icon-boosterstrip (NORTH)";
@@ -37379,7 +37379,7 @@
 "byl" = (
 /obj/shield,
 /turf/space,
-/area)
+/area/concrete)
 "bym" = (
 /turf/unsimulated/wall/other{
 	tag = "icon-barrier_green";
@@ -37459,7 +37459,7 @@
 	icon_state = "11";
 	opacity = 1
 	},
-/area)
+/area/concrete)
 "byx" = (
 /obj/stool/chair/comfy{
 	tag = "icon-chair_comfy (NORTH)";
@@ -37683,7 +37683,7 @@
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
-/area)
+/area/concrete)
 "byY" = (
 /obj/overlay{
 	anchored = 1;
@@ -37767,7 +37767,7 @@
 	},
 /obj/spresent,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzh" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -37776,7 +37776,7 @@
 	},
 /obj/crate/internals,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzi" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -37785,7 +37785,7 @@
 	},
 /obj/plasticflaps,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzj" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -37793,7 +37793,7 @@
 	name = "red line belt"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzk" = (
 /obj/machinery/conveyor{
 	dir = 2;
@@ -37803,7 +37803,7 @@
 	tag = "icon-conveyor0 (NORTH)"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzl" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -37811,7 +37811,7 @@
 	name = "red line belt"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzm" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -37820,7 +37820,7 @@
 	},
 /obj/crate/freezer,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzn" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -37829,7 +37829,7 @@
 	},
 /obj/item/card/id/captains_spare,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzo" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -37841,7 +37841,7 @@
 	name = "Conveyor Service Access"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzp" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -37849,7 +37849,7 @@
 	name = "red line belt"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "bzq" = (
 /turf/unsimulated/floor{
 	icon = 'floors.dmi';
@@ -37886,7 +37886,7 @@
 	id = "maze-blue"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzu" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -37906,14 +37906,14 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzv" = (
 /obj/machinery/door/poddoor{
 	id = "maze-conveyor";
 	name = "Conveyor Service Access"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzw" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -37941,7 +37941,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzx" = (
 /turf/unsimulated/floor/black,
 /area/sim/gunsim)
@@ -37953,7 +37953,7 @@
 	},
 /obj/spresent,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzz" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -37962,7 +37962,7 @@
 	},
 /obj/plasticflaps,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzA" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -37971,12 +37971,12 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzB" = (
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area)
+/area/concrete)
 "bzC" = (
 /obj/item/baton,
 /obj/decal/cleanable/blood/splatter{
@@ -37986,13 +37986,13 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area)
+/area/concrete)
 "bzD" = (
 /obj/crate,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area)
+/area/concrete)
 "bzE" = (
 /obj/machinery/conveyor_switch{
 	id = "maze-blue";
@@ -38001,12 +38001,12 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area)
+/area/concrete)
 "bzF" = (
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area)
+/area/concrete)
 "bzG" = (
 /obj/window/reinforced/southeast,
 /turf/unsimulated/floor{
@@ -38041,7 +38041,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzK" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -38053,7 +38053,7 @@
 	name = "Bunker Inner Door Control"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzL" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -38061,15 +38061,15 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzM" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area)
+/area/concrete)
 "bzN" = (
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bzO" = (
 /obj/closet/wizard,
 /turf/unsimulated/floor{
@@ -38146,7 +38146,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bzZ" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -38161,18 +38161,18 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bAa" = (
 /obj/machinery/door/airlock/command{
 	name = "Shipping Control";
 	req_access_txt = "20"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bAb" = (
 /obj/item/paint,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bAc" = (
 /turf/unsimulated/floor{
 	icon = 'floors.dmi';
@@ -38207,7 +38207,7 @@
 	},
 /obj/crate/medical,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bAi" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -38220,7 +38220,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bAj" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -38234,14 +38234,14 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bAk" = (
 /obj/machinery/conveyor_switch{
 	id = "maze-red";
 	name = "red line switch"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bAl" = (
 /obj/rack,
 /obj/item/gun/kinetic/ak47,
@@ -38303,7 +38303,7 @@
 /area/farm/bballview)
 "bAv" = (
 /turf/simulated/wall/false_wall,
-/area)
+/area/concrete)
 "bAw" = (
 /obj/machinery/door/airlock{
 	name = "Shipping Department"
@@ -38311,13 +38311,13 @@
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
-/area)
+/area/concrete)
 "bAx" = (
 /turf/simulated/floor/bot,
-/area)
+/area/concrete)
 "bAy" = (
 /turf/simulated/floor/delivery,
-/area)
+/area/concrete)
 "bAz" = (
 /obj/shrub{
 	tag = "icon-shrub (SOUTHEAST)";
@@ -38377,11 +38377,11 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bAG" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/caution/east,
-/area)
+/area/concrete)
 "bAH" = (
 /turf/unsimulated/floor/blue/side,
 /area/sim/gunsim)
@@ -38438,16 +38438,16 @@
 "bAO" = (
 /obj/spresent,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bAP" = (
 /obj/stool/bed,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bAQ" = (
 /obj/item/mop,
 /obj/mopbucket,
 /turf/simulated/floor/caution/east,
-/area)
+/area/concrete)
 "bAR" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTH)";
@@ -38456,17 +38456,17 @@
 	},
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bAS" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bAT" = (
 /obj/landmark{
 	name = "mazewarp"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bAU" = (
 /obj/stool,
 /obj/decal/boxingropeenter{
@@ -38560,7 +38560,7 @@
 	icon_state = "gibbl2"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bBg" = (
 /obj/item/saw/syndie,
 /turf/unsimulated/grass,
@@ -38618,18 +38618,18 @@
 "bBs" = (
 /obj/machinery/computer/teleporter,
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bBt" = (
 /obj/machinery/teleport/station,
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bBu" = (
 /obj/machinery/teleport/hub,
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bBv" = (
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bBw" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTHWEST)";
@@ -38637,7 +38637,7 @@
 	dir = 9
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bBx" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -38645,7 +38645,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bBy" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (SOUTHEAST)";
@@ -38653,11 +38653,11 @@
 	dir = 6
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bBz" = (
 /obj/kitchenspike,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bBA" = (
 /obj/kitchenspike,
 /obj/decal/cleanable/blood/splatter{
@@ -38665,7 +38665,7 @@
 	icon_state = "gibbl2"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bBB" = (
 /turf/unsimulated/floor/stairs/wide/other{
 	dir = 8
@@ -38718,18 +38718,18 @@
 /turf/simulated/floor{
 	icon_state = "carpetNW"
 	},
-/area)
+/area/concrete)
 "bBK" = (
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
-/area)
+/area/concrete)
 "bBL" = (
 /obj/item/reagent_containers/food/drinks/cola_bottle/red,
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
-/area)
+/area/concrete)
 "bBM" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTH)";
@@ -38737,16 +38737,16 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bBN" = (
 /obj/item/cigpacket,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bBO" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/item/circular_saw,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bBP" = (
 /turf/unsimulated/floor/stairs/wide/middle{
 	dir = 8
@@ -38802,7 +38802,7 @@
 /turf/simulated/floor{
 	icon_state = "carpet2"
 	},
-/area)
+/area/concrete)
 "bBY" = (
 /obj/decal/cleanable/blood/gibs/body{
 	tag = "icon-suitblood";
@@ -38813,15 +38813,15 @@
 	icon_state = "helmetblood"
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bBZ" = (
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bCa" = (
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
-/area)
+/area/concrete)
 "bCb" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -38839,7 +38839,7 @@
 	dir = 8
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bCc" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTH)";
@@ -38852,12 +38852,12 @@
 	dir = 9
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bCd" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal,
 /turf/simulated/floor/bot,
-/area)
+/area/concrete)
 "bCe" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -38872,7 +38872,7 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bCf" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -38882,7 +38882,7 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bCg" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -38896,7 +38896,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bCh" = (
 /turf/unsimulated/floor/stairs/wide/other{
 	dir = 4
@@ -38934,7 +38934,7 @@
 /turf/simulated/floor{
 	icon_state = "carpetNW"
 	},
-/area)
+/area/concrete)
 "bCn" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTHWEST)";
@@ -38944,7 +38944,7 @@
 /turf/simulated/floor{
 	icon_state = "carpet2"
 	},
-/area)
+/area/concrete)
 "bCo" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (WEST)";
@@ -38954,7 +38954,7 @@
 /turf/simulated/floor{
 	icon_state = "carpet1"
 	},
-/area)
+/area/concrete)
 "bCp" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (WEST)";
@@ -38966,7 +38966,7 @@
 	name = "scrawled note"
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bCq" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (WEST)";
@@ -38979,7 +38979,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bCr" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTHEAST)";
@@ -38989,7 +38989,7 @@
 /turf/simulated/floor{
 	icon_state = "carpet2"
 	},
-/area)
+/area/concrete)
 "bCs" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -39002,38 +39002,38 @@
 	dir = 8
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bCt" = (
 /obj/closet/l3closet,
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bCu" = (
 /obj/closet/emcloset,
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bCv" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bCw" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bCx" = (
 /obj/machinery/door/airlock,
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bCy" = (
 /obj/item/clothing/suit/armor/centcomm,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bCz" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -39047,7 +39047,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bCA" = (
 /obj/shrub{
 	tag = "icon-shrub (WEST)";
@@ -39134,7 +39134,7 @@
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
-/area)
+/area/concrete)
 "bCN" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTH)";
@@ -39142,7 +39142,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bCO" = (
 /obj/decal/cleanable/blood/gibs/body{
 	tag = "icon-helmetblood2";
@@ -39153,19 +39153,19 @@
 	icon_state = "suitblood2"
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bCP" = (
 /obj/decal/cleanable/blood/gibs/body{
 	tag = "icon-gib6";
 	icon_state = "gib6"
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bCQ" = (
 /turf/simulated/floor{
 	icon_state = "carpetE"
 	},
-/area)
+/area/concrete)
 "bCR" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -39179,19 +39179,19 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bCS" = (
 /obj/securearea,
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bCT" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bCU" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bCV" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -39205,7 +39205,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bCW" = (
 /obj/item/bowling_ball,
 /obj/shrub{
@@ -39294,7 +39294,7 @@
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
-/area)
+/area/concrete)
 "bDl" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTH)";
@@ -39307,7 +39307,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bDm" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -39315,7 +39315,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bDn" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -39328,7 +39328,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bDo" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTHEAST)";
@@ -39336,7 +39336,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bDp" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (SOUTHWEST)";
@@ -39344,7 +39344,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bDq" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -39354,7 +39354,7 @@
 /turf/simulated/floor{
 	icon_state = "carpetE"
 	},
-/area)
+/area/concrete)
 "bDr" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -39365,7 +39365,7 @@
 	name = "Robuster's Legacy"
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bDs" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -39377,7 +39377,7 @@
 	name = "Bunker Inner Door"
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bDt" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -39389,7 +39389,7 @@
 	name = "Bunker Center Door"
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bDu" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -39401,7 +39401,7 @@
 	name = "Bunker Outer Door"
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bDv" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -39409,7 +39409,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bDw" = (
 /obj/machinery/door/airlock{
 	name = "Robuster's Requiem"
@@ -39420,7 +39420,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bDx" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -39428,7 +39428,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/caution/west,
-/area)
+/area/concrete)
 "bDy" = (
 /turf/unsimulated/floor{
 	icon_state = "0,2"
@@ -39555,19 +39555,19 @@
 /turf/unsimulated/wall/other{
 	icon_state = "wall"
 	},
-/area)
+/area/concrete)
 "bDK" = (
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
-/area)
+/area/concrete)
 "bDL" = (
 /obj/decal/cleanable/blood/gibs/body{
 	tag = "icon-gib2";
 	icon_state = "gib2"
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bDM" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTHWEST)";
@@ -39575,7 +39575,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bDN" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -39588,7 +39588,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bDO" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (SOUTHEAST)";
@@ -39596,7 +39596,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bDP" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -39614,7 +39614,7 @@
 	dir = 1
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bDQ" = (
 /obj/disposalpipe/trunk,
 /obj/disposaloutlet{
@@ -39623,11 +39623,11 @@
 	dir = 1
 	},
 /turf/simulated/floor/delivery,
-/area)
+/area/concrete)
 "bDR" = (
 /obj/item/wrench,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bDS" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 8
@@ -39697,18 +39697,18 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area)
+/area/concrete)
 "bEd" = (
 /turf/unsimulated/floor{
 	tag = "icon-floor";
 	icon_state = "floor"
 	},
-/area)
+/area/concrete)
 "bEe" = (
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
-/area)
+/area/concrete)
 "bEf" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (SOUTHWEST)";
@@ -39718,7 +39718,7 @@
 /turf/simulated/floor{
 	icon_state = "carpet2"
 	},
-/area)
+/area/concrete)
 "bEg" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -39728,7 +39728,7 @@
 /turf/simulated/floor{
 	icon_state = "carpet1"
 	},
-/area)
+/area/concrete)
 "bEh" = (
 /obj/item/axe{
 	icon = 'weapons.dmi';
@@ -39737,45 +39737,45 @@
 /turf/simulated/floor{
 	icon_state = "carpet1"
 	},
-/area)
+/area/concrete)
 "bEi" = (
 /turf/simulated/floor{
 	icon_state = "carpetSE"
 	},
-/area)
+/area/concrete)
 "bEj" = (
 /obj/computerframe{
 	anchored = 1;
 	state = 1
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bEk" = (
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bEl" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bEm" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bEn" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bEo" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -39792,14 +39792,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bEp" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bEq" = (
 /obj/item/axe,
 /obj/shrub,
@@ -39894,13 +39894,13 @@
 	icon_state = "maskblood"
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bEE" = (
 /obj/item/paper,
 /turf/simulated/floor{
 	icon_state = "carpet2"
 	},
-/area)
+/area/concrete)
 "bEF" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -39914,60 +39914,60 @@
 	dir = 8
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bEG" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bEH" = (
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bEI" = (
 /obj/machinery/flasher/portable{
 	anchored = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bEJ" = (
 /obj/disposalpipe/junction{
 	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bEK" = (
 /obj/machinery/door/airlock,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bEL" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bEM" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/item/mousetrap/armed,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bEN" = (
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bEO" = (
 /turf/unsimulated/floor/red/side{
 	dir = 1
@@ -40041,21 +40041,21 @@
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
-/area)
+/area/concrete)
 "bEZ" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bFa" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bFb" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -40072,11 +40072,11 @@
 	dir = 1
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bFd" = (
 /obj/item/sword,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bFe" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -40091,7 +40091,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bFf" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -40101,7 +40101,7 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bFg" = (
 /obj/shrub{
 	tag = "icon-shrub (NORTH)";
@@ -40130,7 +40130,7 @@
 	},
 /obj/machinery/disposal,
 /turf/simulated/floor/bot,
-/area)
+/area/concrete)
 "bFk" = (
 /obj/rack,
 /obj/item/clothing/suit/armor/vest,
@@ -40188,14 +40188,14 @@
 	icon_state = "gibbl2"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bFq" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bFr" = (
 /obj/item/sword,
 /obj/shrub{
@@ -40274,11 +40274,11 @@
 /obj/disposalpipe/segment,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bFC" = (
 /obj/item/classic_baton,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bFD" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -40297,7 +40297,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bFE" = (
 /obj/table/reinforced{
 	dir = 9;
@@ -40363,14 +40363,14 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bFM" = (
 /obj/disposalpipe/junction{
 	dir = 0;
 	icon_state = "pipe-y"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bFN" = (
 /obj/disposalpipe/broken{
 	tag = "icon-pipe-b (WEST)";
@@ -40378,11 +40378,11 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bFO" = (
 /obj/item/storage/pill_bottle/antitox,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bFP" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -40397,7 +40397,7 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bFQ" = (
 /obj/table/reinforced{
 	tag = "icon-reinf_tabledir (SOUTHWEST)";
@@ -40497,13 +40497,13 @@
 	},
 /obj/window/basic,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bGa" = (
 /obj/stool/chair/syndicate,
 /turf/simulated/floor{
 	icon_state = "carpetNW"
 	},
-/area)
+/area/concrete)
 "bGb" = (
 /obj/stool,
 /obj/decal/boxingropeenter{
@@ -40544,21 +40544,21 @@
 /area/sim/area1)
 "bGf" = (
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/concrete)
 "bGg" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/concrete)
 "bGh" = (
 /obj/table,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/concrete)
 "bGi" = (
 /obj/disposalpipe/junction{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bGj" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -40577,7 +40577,7 @@
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
-/area)
+/area/concrete)
 "bGk" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -40588,7 +40588,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/carpet,
-/area)
+/area/concrete)
 "bGl" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -40596,7 +40596,7 @@
 /turf/simulated/floor{
 	icon_state = "carpet2"
 	},
-/area)
+/area/concrete)
 "bGm" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -40604,7 +40604,7 @@
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
-/area)
+/area/concrete)
 "bGn" = (
 /obj/disposalpipe/junction{
 	dir = 4
@@ -40612,7 +40612,7 @@
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
-/area)
+/area/concrete)
 "bGo" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -40622,7 +40622,7 @@
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
-/area)
+/area/concrete)
 "bGp" = (
 /obj/item/sword,
 /turf/unsimulated/grass,
@@ -40649,13 +40649,13 @@
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
-/area)
+/area/concrete)
 "bGt" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "carpetSE"
 	},
-/area)
+/area/concrete)
 "bGu" = (
 /turf/unsimulated/floor{
 	icon = 'beach.dmi';
@@ -40663,7 +40663,7 @@
 	name = "sand";
 	opacity = 0
 	},
-/area)
+/area/concrete)
 "bGv" = (
 /obj/disposalpipe/trunk{
 	dir = 1
@@ -40675,7 +40675,7 @@
 	name = "sand";
 	opacity = 0
 	},
-/area)
+/area/concrete)
 "bGw" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -40691,17 +40691,17 @@
 "bGx" = (
 /obj/item/reagent_containers/food/snacks/plant/melon/george,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/concrete)
 "bGy" = (
 /obj/landmark{
 	name = "mazewarp"
 	},
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/concrete)
 "bGz" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bGA" = (
 /obj/table{
 	dir = 5;
@@ -40714,7 +40714,7 @@
 	name = "sand";
 	opacity = 0
 	},
-/area)
+/area/concrete)
 "bGB" = (
 /obj/table/reinforced{
 	tag = "icon-reinf_tabledir (SOUTHWEST)";
@@ -40733,7 +40733,7 @@
 	name = "sand";
 	opacity = 0
 	},
-/area)
+/area/concrete)
 "bGC" = (
 /obj/table/reinforced{
 	tag = "icon-reinf_tabledir (SOUTHEAST)";
@@ -40750,7 +40750,7 @@
 	name = "sand";
 	opacity = 0
 	},
-/area)
+/area/concrete)
 "bGD" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -40762,20 +40762,20 @@
 	name = "sand";
 	opacity = 0
 	},
-/area)
+/area/concrete)
 "bGE" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bGF" = (
 /obj/item/device/key,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bGG" = (
 /obj/decal/ash,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bGH" = (
 /obj/rack,
 /obj/item/gun/kinetic/ak47,
@@ -40813,14 +40813,14 @@
 	name = "Maze"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bGM" = (
 /obj/machinery/door/poddoor{
 	id = "maze-flood";
 	name = "Retention Cell"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bGN" = (
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor{
@@ -40829,7 +40829,7 @@
 	name = "sand";
 	opacity = 0
 	},
-/area)
+/area/concrete)
 "bGO" = (
 /obj/machinery/door/unpowered/wood{
 	autoclose = 0;
@@ -40837,14 +40837,14 @@
 	name = "Bar"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bGP" = (
 /obj/table{
 	icon_state = "tabledir";
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/concrete)
 "bGQ" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -40852,7 +40852,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/beer,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/concrete)
 "bGR" = (
 /obj/item/captaingun{
 	icon_state = "caplaser25";
@@ -40864,14 +40864,14 @@
 	name = "sand";
 	opacity = 0
 	},
-/area)
+/area/concrete)
 "bGS" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bGT" = (
 /obj/machinery/door/airlock,
 /obj/disposalpipe/segment{
@@ -40879,69 +40879,69 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bGU" = (
 /obj/disposalpipe/junction{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bGV" = (
 /obj/item/reagent_containers/food/drinks/beer,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bGW" = (
 /obj/reagent_dispensers/beerkeg,
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bGX" = (
 /obj/secure_closet/bar,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/concrete)
 "bGY" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/caution/west,
-/area)
+/area/concrete)
 "bGZ" = (
 /obj/disposalpipe/segment,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bHa" = (
 /turf/unsimulated/floor{
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "sandwater"
 	},
-/area)
+/area/concrete)
 "bHb" = (
 /obj/item/pen,
 /turf/unsimulated/floor{
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "sandwater"
 	},
-/area)
+/area/concrete)
 "bHc" = (
 /obj/decal/cleanable/blood/splatter{
 	tag = "icon-gibbl2";
 	icon_state = "gibbl2"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHd" = (
 /obj/secure_closet/fridge{
 	icon_state = "fridge";
 	locked = 0
 	},
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/concrete)
 "bHe" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/shoes/black,
 /obj/item/clothing/mask/gas,
 /turf/simulated/floor/caution/west,
-/area)
+/area/concrete)
 "bHf" = (
 /obj/overlay{
 	anchored = 1;
@@ -40956,11 +40956,11 @@
 	icon_state = "water";
 	name = "water"
 	},
-/area)
+/area/concrete)
 "bHg" = (
 /obj/disposalpipe/segment,
 /turf/space,
-/area)
+/area/concrete)
 "bHh" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -40979,7 +40979,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHi" = (
 /obj/item/crowbar,
 /obj/overlay{
@@ -40995,7 +40995,7 @@
 	icon_state = "water";
 	name = "water"
 	},
-/area)
+/area/concrete)
 "bHj" = (
 /obj/overlay{
 	anchored = 1;
@@ -41010,7 +41010,7 @@
 	name = "Flood Control"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHk" = (
 /obj/overlay{
 	anchored = 1;
@@ -41021,7 +41021,7 @@
 	name = "water"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHl" = (
 /obj/overlay{
 	anchored = 1;
@@ -41037,33 +41037,33 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHm" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHn" = (
 /turf/simulated/floor/white,
-/area)
+/area/concrete)
 "bHp" = (
 /obj/machinery/flasher/portable{
 	anchored = 1
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bHq" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHr" = (
 /obj/item/extinguisher{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bHs" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -41073,7 +41073,7 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHt" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -41088,27 +41088,27 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHu" = (
 /obj/item/paper{
 	info = "Marty couldn't help stepping on the black squares, poor bastard.";
 	name = "Paper-'Old Chess Set'"
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bHw" = (
 /obj/window/basic{
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bHx" = (
 /obj/machinery/computer/pod{
 	id = "maze-d1";
 	name = "Bunker Outer Door Control"
 	},
 /turf/simulated/floor/caution/west,
-/area)
+/area/concrete)
 "bHy" = (
 /obj/window/basic{
 	tag = "icon-window (NORTHEAST)";
@@ -41116,23 +41116,23 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHz" = (
 /obj/item/device/chameleon,
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bHA" = (
 /obj/machinery/flasher/portable{
 	anchored = 1
 	},
 /turf/simulated/floor/white,
-/area)
+/area/concrete)
 "bHB" = (
 /obj/window/basic{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bHC" = (
 /obj/window/basic{
 	tag = "icon-window (NORTH)";
@@ -41144,33 +41144,33 @@
 	},
 /obj/item/flashbang,
 /turf/simulated/floor/white,
-/area)
+/area/concrete)
 "bHD" = (
 /obj/window/basic{
 	dir = 8
 	},
 /turf/simulated/floor/white,
-/area)
+/area/concrete)
 "bHE" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /turf/simulated/floor/caution/west,
-/area)
+/area/concrete)
 "bHF" = (
 /obj/disposalpipe/junction{
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bHG" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bHH" = (
 /obj/machinery/door/airlock,
 /obj/disposalpipe/segment{
@@ -41178,7 +41178,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bHI" = (
 /obj/item/bananapeel,
 /obj/item/spacecash,
@@ -41187,7 +41187,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/concrete)
 "bHJ" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -41203,7 +41203,7 @@
 /obj/window/reinforced,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHK" = (
 /obj/window/basic{
 	tag = "icon-window (NORTH)";
@@ -41211,7 +41211,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area)
+/area/concrete)
 "bHL" = (
 /obj/window/basic{
 	tag = "icon-window (NORTH)";
@@ -41219,73 +41219,73 @@
 	dir = 1
 	},
 /turf/simulated/floor/white,
-/area)
+/area/concrete)
 "bHN" = (
 /obj/table,
 /obj/item/rcd_ammo,
 /turf/simulated/floor/caution/west,
-/area)
+/area/concrete)
 "bHO" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHP" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHQ" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHR" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bHT" = (
 /obj/item/shard{
 	tag = "icon-small";
 	icon_state = "small"
 	},
 /turf/simulated/floor/white,
-/area)
+/area/concrete)
 "bHU" = (
 /obj/item/mine,
 /obj/item/rcd{
 	pixel_y = 5
 	},
 /turf/simulated/floor/caution/west,
-/area)
+/area/concrete)
 "bHV" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall,
-/area)
+/area/concrete)
 "bHW" = (
 /obj/lattice,
 /obj/disposalpipe/segment,
 /turf/space,
-/area)
+/area/concrete)
 "bHX" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall,
-/area)
+/area/concrete)
 "bHY" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bHZ" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -41293,24 +41293,24 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "bIa" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
 	},
 /turf/simulated/wall/r_wall,
-/area)
+/area/concrete)
 "bIb" = (
 /obj/stool/chair{
 	dir = 1
 	},
 /turf/simulated/floor/caution/north,
-/area)
+/area/concrete)
 "bIc" = (
 /obj/item/mine,
 /turf/simulated/floor/caution/north,
-/area)
+/area/concrete)
 "bId" = (
 /obj/disposalpipe/broken{
 	tag = "icon-pipe-b (NORTH)";
@@ -41319,7 +41319,7 @@
 	},
 /obj/disposalpipe/broken,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bIe" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -41330,52 +41330,52 @@
 /obj/window/reinforced,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bIf" = (
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
 /obj/disposaloutlet,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bIg" = (
 /turf/space{
 	icon_state = "aplaceholder"
 	},
-/area)
+/area/concrete)
 "bIh" = (
 /turf/simulated/wall/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "bIi" = (
 /turf/simulated/wall/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "bIj" = (
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "bIk" = (
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bIl" = (
 /turf/simulated/wall/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "bIm" = (
 /turf/simulated/wall/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "bIn" = (
 /obj/window/reinforced,
 /obj/window/reinforced{
@@ -41384,7 +41384,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bIo" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -41427,7 +41427,7 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bIs" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -41682,7 +41682,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bJb" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -41911,7 +41911,7 @@
 "bJF" = (
 /obj/item/shard,
 /turf/space,
-/area)
+/area/concrete)
 "bJG" = (
 /obj/stool/chair{
 	dir = 4
@@ -41999,7 +41999,7 @@
 "bJT" = (
 /obj/stool/chair,
 /turf/space,
-/area)
+/area/concrete)
 "bJU" = (
 /obj/decal/floatingtiles{
 	tag = "icon-floattiles3 (WEST)";
@@ -42007,7 +42007,7 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bJV" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -42104,7 +42104,7 @@
 "bKi" = (
 /obj/item/tank/air,
 /turf/space,
-/area)
+/area/concrete)
 "bKj" = (
 /obj/machinery/door/airlock/classic,
 /obj/machinery/door/poddoor{
@@ -42400,12 +42400,12 @@
 	icon_state = "small"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bKR" = (
 /obj/grille,
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bKS" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -42473,7 +42473,7 @@
 "bKY" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bKZ" = (
 /obj/machinery/door/airlock/classic,
 /turf/simulated/floor,
@@ -42520,7 +42520,7 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bLf" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -42604,7 +42604,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bLq" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -42619,7 +42619,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bLr" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -42629,7 +42629,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bLs" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -43021,7 +43021,7 @@
 	icon = 'evilreaverstation.dmi';
 	icon_state = "old_solar"
 	},
-/area)
+/area/concrete)
 "bMA" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -43036,7 +43036,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bMB" = (
 /obj/cable{
 	d2 = 8;
@@ -43047,7 +43047,7 @@
 	icon = 'evilreaverstation.dmi';
 	icon_state = "old_solar"
 	},
-/area)
+/area/concrete)
 "bMC" = (
 /obj/closet,
 /turf/simulated/floor/shuttle{
@@ -43172,7 +43172,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bMP" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	tag = "icon-bulb-broken (WEST)";
@@ -43429,7 +43429,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bNx" = (
 /obj/stool/chair,
 /turf/simulated/floor/shuttle{
@@ -43480,7 +43480,7 @@
 	icon = 'evilreaverstation.dmi';
 	icon_state = "old_solar"
 	},
-/area)
+/area/concrete)
 "bNE" = (
 /obj/cable{
 	d2 = 8;
@@ -43495,7 +43495,7 @@
 	icon = 'evilreaverstation.dmi';
 	icon_state = "old_solar"
 	},
-/area)
+/area/concrete)
 "bNF" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -43506,7 +43506,7 @@
 	icon = 'evilreaverstation.dmi';
 	icon_state = "old_solar"
 	},
-/area)
+/area/concrete)
 "bNG" = (
 /obj/stool/chair{
 	dir = 4
@@ -43663,7 +43663,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bNZ" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -43671,7 +43671,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bOa" = (
 /obj/cable,
 /obj/cable{
@@ -43683,7 +43683,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bOb" = (
 /obj/table{
 	tag = "icon-tabledir (SOUTHEAST)";
@@ -43783,7 +43783,7 @@
 	icon = 'evilreaverstation.dmi';
 	icon_state = "old_solar"
 	},
-/area)
+/area/concrete)
 "bOp" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/shuttle{
@@ -43941,7 +43941,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bOL" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -44093,7 +44093,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bPb" = (
 /obj/cable,
 /obj/cable{
@@ -44105,7 +44105,7 @@
 	icon = 'evilreaverstation.dmi';
 	icon_state = "old_solar"
 	},
-/area)
+/area/concrete)
 "bPc" = (
 /obj/cable,
 /obj/cable{
@@ -44117,7 +44117,7 @@
 	icon = 'evilreaverstation.dmi';
 	icon_state = "old_solar"
 	},
-/area)
+/area/concrete)
 "bPd" = (
 /obj/cable,
 /obj/machinery/power/solar,
@@ -44125,7 +44125,7 @@
 	icon = 'evilreaverstation.dmi';
 	icon_state = "old_solar"
 	},
-/area)
+/area/concrete)
 "bPe" = (
 /obj/stool/chair{
 	dir = 4
@@ -44924,7 +44924,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bQU" = (
 /obj/machinery/door/airlock/classic,
 /obj/chaser/trigger,
@@ -45071,7 +45071,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "bRn" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -45485,7 +45485,7 @@
 	},
 /obj/window/reinforced,
 /turf/space,
-/area)
+/area/concrete)
 "bSj" = (
 /obj/decal/fakeobjects/oldcanister{
 	tag = "icon-old_co2";
@@ -45578,7 +45578,7 @@
 /obj/window/reinforced,
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "bSu" = (
 /obj/stool/chair{
 	dir = 1
@@ -45948,7 +45948,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bTn" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -46337,7 +46337,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bUf" = (
 /obj/item/seed/maneater,
 /turf/simulated/floor/white/grime{
@@ -46447,7 +46447,7 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bUt" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -46459,7 +46459,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bUu" = (
 /obj/cable{
 	d2 = 8;
@@ -46658,7 +46658,7 @@
 	},
 /obj/machinery/power/tracker,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bUO" = (
 /obj/cable{
 	d1 = 1;
@@ -47114,7 +47114,7 @@
 	icon = 'evilreaverstation.dmi';
 	icon_state = "old_rwall"
 	},
-/area)
+/area/concrete)
 "bVO" = (
 /obj/rack,
 /obj/decal/cleanable/cobweb,
@@ -47882,7 +47882,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bXJ" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-10-b (NORTH)";
@@ -47892,7 +47892,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bXK" = (
 /obj/machinery/door/airlock/classic,
 /obj/cable{
@@ -47997,7 +47997,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bXW" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-5 (NORTH)";
@@ -48007,7 +48007,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bXX" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-12 (NORTH)";
@@ -48017,7 +48017,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bXY" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-12 (NORTH)";
@@ -48028,7 +48028,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "bXZ" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-10 (NORTH)";
@@ -48038,7 +48038,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bYa" = (
 /obj/machinery/door/airlock/classic,
 /turf/simulated/floor,
@@ -48171,7 +48171,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bYt" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-6-b (NORTH)";
@@ -48181,7 +48181,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bYu" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-9-b (NORTH)";
@@ -48191,7 +48191,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bYv" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/grime,
@@ -48411,7 +48411,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "bYU" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-9-b (NORTH)";
@@ -48422,7 +48422,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "bYV" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-6-b (NORTH)";
@@ -48433,7 +48433,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area)
+/area/concrete)
 "bYW" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-12 (NORTH)";
@@ -48443,7 +48443,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bYX" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-connector";
@@ -48551,7 +48551,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bZl" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
@@ -48633,7 +48633,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bZw" = (
 /obj/morgue,
 /turf/simulated/floor/specialroom/chapel{
@@ -48646,7 +48646,7 @@
 	icon_state = "small"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bZy" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (NORTHEAST)";
@@ -48754,7 +48754,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "bZJ" = (
 /obj/morgue,
 /turf/simulated/floor/specialroom/chapel{
@@ -48873,25 +48873,25 @@
 /obj/window/reinforced,
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bZW" = (
 /obj/grille,
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "bZX" = (
 /turf/simulated/floor/plating/damaged1,
-/area)
+/area/concrete)
 "bZY" = (
 /turf/simulated/floor/grime,
-/area)
+/area/concrete)
 "bZZ" = (
 /obj/decal/fakeobjects/oldcanister{
 	tag = "icon-old_co2";
 	icon_state = "old_co2"
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/concrete)
 "caa" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -49017,14 +49017,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "cam" = (
 /obj/window/reinforced,
 /turf/simulated/wall/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "can" = (
 /obj/grille{
 	density = 0;
@@ -49106,7 +49106,7 @@
 "cav" = (
 /obj/item/tile,
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "caw" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -49192,7 +49192,7 @@
 "caH" = (
 /obj/structure/girder,
 /turf/space,
-/area)
+/area/concrete)
 "caI" = (
 /obj/rack,
 /obj/item/clothing/gloves/fingerless,
@@ -49206,14 +49206,14 @@
 /area/derelict/evilreaver)
 "caK" = (
 /turf/simulated/floor/plating/scorched,
-/area)
+/area/concrete)
 "caL" = (
 /obj/decal/fakeobjects/oldcanister{
 	tag = "icon-old_co2";
 	icon_state = "old_co2"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "caM" = (
 /obj/rack,
 /turf/simulated/floor/black,
@@ -49231,7 +49231,7 @@
 	tag = "icon-intact (NORTH)"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "caP" = (
 /obj/window/reinforced,
 /obj/item/shard{
@@ -49243,7 +49243,7 @@
 "caQ" = (
 /obj/item/tile,
 /turf/space,
-/area)
+/area/concrete)
 "caR" = (
 /obj/decal/fakeobjects{
 	tag = "icon-ai-crash (NORTHEAST)";
@@ -49268,18 +49268,18 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "caT" = (
 /obj/item/rods,
 /turf/space,
-/area)
+/area/concrete)
 "caU" = (
 /obj/decal/floatingtiles{
 	tag = "icon-floattiles6";
 	icon_state = "floattiles6"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "caV" = (
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/black,
@@ -49312,7 +49312,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/concrete)
 "caZ" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-12-b (NORTH)";
@@ -49322,7 +49322,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/damaged1,
-/area)
+/area/concrete)
 "cba" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-12 (NORTH)";
@@ -49332,7 +49332,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/damaged1,
-/area)
+/area/concrete)
 "cbb" = (
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/circuit/off,
@@ -49367,7 +49367,7 @@
 /obj/grille,
 /obj/securearea,
 /turf/space,
-/area)
+/area/concrete)
 "cbg" = (
 /obj/decal/skeleton{
 	icon = 'icons/misc/hstation.dmi';
@@ -49376,21 +49376,21 @@
 	tag = "icon-body1"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cbh" = (
 /obj/item/electronics/battery,
 /turf/space,
-/area)
+/area/concrete)
 "cbi" = (
 /turf/simulated/wall/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cbj" = (
 /obj/grille,
 /turf/space,
-/area)
+/area/concrete)
 "cbk" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -49404,7 +49404,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area)
+/area/concrete)
 "cbl" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -49419,7 +49419,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cbm" = (
 /obj/cable{
 	d2 = 8;
@@ -49433,7 +49433,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area)
+/area/concrete)
 "cbn" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -49449,7 +49449,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cbo" = (
 /turf/space,
 /area/turret_protected/AIsatextFP)
@@ -49489,7 +49489,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cby" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -49505,7 +49505,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cbz" = (
 /obj/cable,
 /obj/cable{
@@ -49513,7 +49513,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cbA" = (
 /obj/machinery/turretid,
 /turf/simulated/wall/r_wall,
@@ -49606,7 +49606,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area)
+/area/concrete)
 "cbQ" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -49627,7 +49627,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cbS" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -49638,7 +49638,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cbT" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -49689,7 +49689,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cbY" = (
 /obj/cable,
 /obj/cable{
@@ -49702,7 +49702,7 @@
 	},
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cbZ" = (
 /obj/cable,
 /obj/machinery/power/solar{
@@ -49713,7 +49713,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area)
+/area/concrete)
 "cca" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -49800,7 +49800,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cck" = (
 /obj/grille,
 /obj/cable{
@@ -49936,7 +49936,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "ccw" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -50036,7 +50036,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "ccF" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -50866,7 +50866,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cee" = (
 /obj/cable{
 	d2 = 8;
@@ -50878,7 +50878,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cef" = (
 /obj/cable{
 	d2 = 8;
@@ -50889,7 +50889,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "ceg" = (
 /obj/grille,
 /turf/space,
@@ -51487,7 +51487,7 @@
 	name = "Satellite A3-67 Beacon"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "cfd" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -51924,13 +51924,13 @@
 	})
 "cfQ" = (
 /turf/simulated/floor/airless/plating/damaged3,
-/area)
+/area/concrete)
 "cfR" = (
 /turf/simulated/floor/airless/plating/damaged1,
-/area)
+/area/concrete)
 "cfS" = (
 /turf/simulated/floor/airless/plating/scorched,
-/area)
+/area/concrete)
 "cfT" = (
 /turf/simulated/wall,
 /area/factory)
@@ -52090,7 +52090,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area)
+/area/concrete)
 "cgm" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -52103,7 +52103,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cgn" = (
 /obj/cable{
 	d2 = 8;
@@ -52117,7 +52117,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area)
+/area/concrete)
 "cgo" = (
 /obj/crate,
 /obj/item/device/net_sniffer,
@@ -52208,7 +52208,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cgx" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -52426,7 +52426,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cgO" = (
 /turf/simulated/floor/grime,
 /area/factory)
@@ -52522,7 +52522,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cgX" = (
 /obj/machinery/door/window/westright,
 /turf/simulated/floor/caution/west,
@@ -53164,7 +53164,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cin" = (
 /obj/window/reinforced,
 /turf/simulated/floor,
@@ -53212,7 +53212,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cit" = (
 /obj/rack,
 /obj/overlay{
@@ -53340,7 +53340,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "ciE" = (
 /obj/securearea{
 	desc = "A sign labeled 'Factory IV -- Thinktronic Data Systems";
@@ -53590,7 +53590,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/concrete)
 "cjn" = (
 /turf/space{
 	icon_state = "aplaceholder"
@@ -53636,7 +53636,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjt" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53647,7 +53647,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cju" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53658,7 +53658,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjv" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53669,7 +53669,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cjw" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -53719,7 +53719,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjD" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53729,7 +53729,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjE" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53740,7 +53740,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjF" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53751,7 +53751,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cjG" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53762,7 +53762,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cjH" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53773,7 +53773,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjI" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -53781,7 +53781,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cjJ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53792,7 +53792,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjK" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53803,7 +53803,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjL" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53814,7 +53814,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjM" = (
 /obj/grille,
 /turf/space,
@@ -53856,7 +53856,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cjS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53867,7 +53867,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cjT" = (
 /obj/landmark/mining{
 	icon_state = "mining5";
@@ -53878,7 +53878,7 @@
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cjU" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53889,7 +53889,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjV" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53900,7 +53900,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjW" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53911,7 +53911,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjX" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53919,7 +53919,7 @@
 	veintype = 6
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cjY" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -53930,7 +53930,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cjZ" = (
 /obj/landmark/mining{
 	name = "CoVe4";
@@ -54031,7 +54031,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckj" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54042,14 +54042,14 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckk" = (
 /obj/landmark/mining{
 	name = "CoVe8";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ckl" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54060,7 +54060,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckm" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54070,7 +54070,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckn" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54081,7 +54081,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cko" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54092,7 +54092,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckp" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54103,7 +54103,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckq" = (
 /obj/landmark/mining{
 	name = "CoVe4";
@@ -54176,7 +54176,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckz" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54187,7 +54187,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckA" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -54203,7 +54203,7 @@
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "ckB" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -54211,7 +54211,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ckC" = (
 /obj/landmark/mining{
 	name = "CoVe8";
@@ -54223,7 +54223,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ckD" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54234,7 +54234,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckE" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54245,7 +54245,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckF" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54256,7 +54256,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckG" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54267,14 +54267,14 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckH" = (
 /obj/landmark/mining{
 	name = "CoVe3";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ckI" = (
 /turf/simulated/wall/asteroid{
 	dir = 8;
@@ -54327,7 +54327,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ckQ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54338,7 +54338,7 @@
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "ckR" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54349,7 +54349,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckS" = (
 /obj/landmark/mining{
 	name = "CoVe3";
@@ -54361,7 +54361,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ckT" = (
 /turf/simulated/wall/asteroid{
 	dir = 6;
@@ -54395,7 +54395,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ckY" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54403,7 +54403,7 @@
 	veintype = 6
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ckZ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54414,7 +54414,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cla" = (
 /obj/landmark/mining{
 	icon_state = "mining5";
@@ -54482,10 +54482,10 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cli" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "clj" = (
 /obj/stool/chair{
 	dir = 4
@@ -54540,7 +54540,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "clp" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -54548,7 +54548,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "clq" = (
 /obj/landmark/mining{
 	icon_state = "mining5";
@@ -54559,7 +54559,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "clr" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54569,7 +54569,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cls" = (
 /obj/lattice,
 /turf/simulated/wall/asteroid{
@@ -54618,14 +54618,14 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "clz" = (
 /obj/landmark/mining{
 	name = "CoVe7";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "clA" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -54638,7 +54638,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "clB" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -54646,7 +54646,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "clC" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -54654,7 +54654,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "clD" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -54690,7 +54690,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "clI" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -54698,7 +54698,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "clJ" = (
 /obj/lattice,
 /turf/simulated/wall/asteroid{
@@ -54775,7 +54775,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "clS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54786,7 +54786,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "clT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54797,7 +54797,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "clU" = (
 /obj/landmark/mining{
 	icon_state = "mining5";
@@ -54807,7 +54807,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "clV" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -54820,7 +54820,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "clW" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -54898,7 +54898,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cmg" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54909,7 +54909,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cmh" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -54922,7 +54922,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cmi" = (
 /obj/landmark/mining{
 	name = "CoVe7";
@@ -54934,7 +54934,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cmj" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54945,7 +54945,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cmk" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -54956,7 +54956,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cml" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -54964,7 +54964,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cmm" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -55050,7 +55050,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cmx" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55061,7 +55061,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cmy" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55071,7 +55071,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cmz" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55082,7 +55082,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cmA" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -55095,7 +55095,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cmB" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55106,7 +55106,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cmC" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -55119,7 +55119,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cmD" = (
 /obj/stool/chair,
 /turf/simulated/floor/shuttle{
@@ -55274,7 +55274,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cmR" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55285,7 +55285,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cmS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55296,7 +55296,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cmT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55307,7 +55307,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cmU" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55318,7 +55318,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cmV" = (
 /obj/machinery/computer/mining_shuttle,
 /turf/simulated/floor/shuttle{
@@ -55545,7 +55545,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cnr" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55556,7 +55556,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cns" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55567,7 +55567,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cnt" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55578,7 +55578,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cnu" = (
 /obj/landmark/mining{
 	icon_state = "mining5";
@@ -55589,7 +55589,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cnv" = (
 /obj/table,
 /obj/item/device/gps,
@@ -55699,7 +55699,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cnJ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "diagonalWall3"
@@ -55771,7 +55771,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cnS" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -55784,7 +55784,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cnT" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -55821,7 +55821,7 @@
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "coa" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -55829,14 +55829,14 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cob" = (
 /obj/landmark/mining{
 	name = "CoVe1";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "coc" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55847,7 +55847,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cod" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55858,7 +55858,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "coe" = (
 /obj/machinery/recharge_station,
 /obj/cable{
@@ -55903,7 +55903,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "coi" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55914,7 +55914,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "coj" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -55925,7 +55925,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cok" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -55933,7 +55933,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "col" = (
 /obj/lattice,
 /turf/simulated/wall/asteroid{
@@ -55952,7 +55952,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "con" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -55960,7 +55960,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "coo" = (
 /obj/landmark/mining{
 	name = "CoVe1";
@@ -55972,7 +55972,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cop" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -55985,14 +55985,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "coq" = (
 /obj/lattice,
 /turf/simulated/wall/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cor" = (
 /turf/simulated/wall,
 /area/mining/manufacturing)
@@ -56031,7 +56031,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cox" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -56047,7 +56047,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "coy" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -56060,7 +56060,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "coz" = (
 /obj/landmark/mining{
 	icon_state = "mining5";
@@ -56071,7 +56071,7 @@
 	dir = 10;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "coA" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -56079,7 +56079,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "coB" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -56087,7 +56087,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "coC" = (
 /obj/lattice,
 /turf/simulated/wall/asteroid{
@@ -56221,7 +56221,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "coP" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56232,7 +56232,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "coQ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56243,7 +56243,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "coR" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -56251,7 +56251,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "coS" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -56264,7 +56264,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "coT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56275,7 +56275,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "coU" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56286,7 +56286,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "coV" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -56299,7 +56299,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "coW" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -56452,7 +56452,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cpn" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56462,7 +56462,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cpo" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56473,7 +56473,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cpp" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -56486,7 +56486,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cpq" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -56494,7 +56494,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cpr" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56505,7 +56505,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cps" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56513,7 +56513,7 @@
 	veintype = 6
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cpt" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fuck/main)
@@ -56548,7 +56548,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cpy" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56559,7 +56559,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cpz" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56570,14 +56570,14 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cpA" = (
 /obj/lattice,
 /turf/simulated/wall/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cpB" = (
 /obj/lattice,
 /turf/space,
@@ -56627,7 +56627,7 @@
 /turf/space{
 	icon_state = "aplaceholder"
 	},
-/area)
+/area/concrete)
 "cpK" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -56640,7 +56640,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cpL" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -56797,7 +56797,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cqc" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56808,7 +56808,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cqd" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -56872,7 +56872,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cql" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56883,7 +56883,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cqm" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56894,7 +56894,7 @@
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cqn" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56905,7 +56905,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cqo" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -56913,7 +56913,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cqp" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -56921,7 +56921,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cqq" = (
 /obj/machinery/oreextractor,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -56975,7 +56975,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cqz" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56985,7 +56985,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cqA" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -56996,7 +56996,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cqB" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Mining Outpost"
@@ -57051,7 +57051,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cqG" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -57062,14 +57062,14 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cqH" = (
 /obj/landmark/mining{
 	name = "CoVe2";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cqI" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57082,7 +57082,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cqJ" = (
 /turf/simulated/wall,
 /area/mining/exit_south)
@@ -57168,7 +57168,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cqQ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -57179,7 +57179,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cqR" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57192,7 +57192,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cqS" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57200,7 +57200,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cqT" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/caution/east,
@@ -57232,7 +57232,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cqY" = (
 /obj/landmark/mining{
 	name = "CoVe2";
@@ -57244,7 +57244,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cqZ" = (
 /obj/landmark/mining{
 	name = "CoVe13";
@@ -57277,7 +57277,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crc" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Outpost Airlock"
@@ -57297,7 +57297,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crf" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -57316,7 +57316,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "crh" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57324,7 +57324,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cri" = (
 /turf/space,
 /area/fuck/main)
@@ -57347,7 +57347,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "crl" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -57357,7 +57357,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "crm" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57370,7 +57370,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crn" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Outpost Airlock"
@@ -57384,7 +57384,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crp" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -57395,7 +57395,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "crq" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -57406,7 +57406,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "crr" = (
 /obj/landmark/mining{
 	name = "CoVe18";
@@ -57418,7 +57418,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crs" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57426,7 +57426,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crt" = (
 /obj/landmark/mining{
 	name = "CoVe13";
@@ -57451,14 +57451,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crv" = (
 /obj/landmark/mining{
 	name = "CoVe18";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crw" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57466,7 +57466,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crx" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57479,7 +57479,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cry" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57494,7 +57494,7 @@
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crA" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57502,7 +57502,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crB" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57527,7 +57527,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crD" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57540,7 +57540,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crE" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57548,7 +57548,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crF" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57561,7 +57561,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crG" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -57569,7 +57569,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crH" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57577,7 +57577,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crI" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57585,7 +57585,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crJ" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57598,11 +57598,11 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crK" = (
 /obj/crate/loot,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "crL" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57610,7 +57610,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crM" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57618,7 +57618,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crN" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -57626,25 +57626,25 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crO" = (
 /obj/stool,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "crP" = (
 /obj/landmark/mining{
 	name = "CoVe11";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crQ" = (
 /obj/landmark/mining{
 	name = "CoVe38";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crR" = (
 /obj/table,
 /obj/item/paper{
@@ -57652,14 +57652,14 @@
 	name = "hastily scribbled note"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "crS" = (
 /obj/landmark/mining{
 	name = "CoVe19";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crT" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57672,7 +57672,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crU" = (
 /obj/landmark/mining{
 	name = "CoVe11";
@@ -57684,7 +57684,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crV" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -57692,14 +57692,14 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crW" = (
 /obj/item/paper{
 	info = "Ok you said nannertracen wont find us out hear and now they'have base just west of hear to do mineing from. Putting crates hear is very stuped and we should move them. - Bores";
 	name = "crumpled note"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "crX" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57712,7 +57712,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crY" = (
 /obj/landmark/mining{
 	name = "CoVe38";
@@ -57724,7 +57724,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "crZ" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57737,11 +57737,11 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csa" = (
 /obj/item/mine/stun,
 /turf/space,
-/area)
+/area/concrete)
 "csb" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57749,7 +57749,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csc" = (
 /obj/lattice,
 /turf/simulated/wall/asteroid{
@@ -57763,7 +57763,7 @@
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cse" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57771,7 +57771,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csf" = (
 /obj/landmark/mining{
 	name = "CoVe15";
@@ -57783,21 +57783,21 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csg" = (
 /obj/landmark/mining{
 	name = "CoVe12";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csh" = (
 /obj/lattice,
 /turf/simulated/wall/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csi" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57808,7 +57808,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "csj" = (
 /obj/landmark/mining{
 	name = "CoVe19";
@@ -57820,7 +57820,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csk" = (
 /obj/landmark/mining{
 	name = "CoVe15";
@@ -57835,7 +57835,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "csl" = (
 /obj/lattice,
 /turf/space,
@@ -57843,7 +57843,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csm" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57856,7 +57856,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csn" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57864,14 +57864,14 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cso" = (
 /obj/landmark/mining{
 	name = "CoVe10";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csp" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57879,7 +57879,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csq" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57887,14 +57887,14 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csr" = (
 /obj/lattice,
 /turf/simulated/wall/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "css" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -57907,7 +57907,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cst" = (
 /obj/landmark/mining{
 	name = "CoVe12";
@@ -57919,7 +57919,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csu" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57927,7 +57927,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csv" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -57940,7 +57940,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csw" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -57951,7 +57951,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "csx" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -57962,7 +57962,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csy" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -57973,7 +57973,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csz" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -57984,7 +57984,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csA" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -57992,7 +57992,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csB" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58000,7 +58000,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csC" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58011,7 +58011,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csD" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58022,7 +58022,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csE" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58033,7 +58033,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csF" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58044,7 +58044,7 @@
 	dir = 10;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "csG" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58055,7 +58055,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csH" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58068,11 +58068,11 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csI" = (
 /obj/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "csJ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58083,7 +58083,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csK" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58094,7 +58094,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csL" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58104,13 +58104,13 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "csM" = (
 /obj/item/a_gift/easter{
 	desc = "Easter is over. How old is this?"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "csN" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58121,7 +58121,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csO" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58134,7 +58134,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csP" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58145,7 +58145,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csQ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58156,7 +58156,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "csR" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -58169,14 +58169,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csS" = (
 /obj/landmark/mining{
 	name = "CoVe14";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csT" = (
 /obj/landmark/mining{
 	name = "CoVe14";
@@ -58188,14 +58188,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csU" = (
 /obj/landmark/mining{
 	name = "CoVe16";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csV" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -58203,7 +58203,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csW" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -58216,7 +58216,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csX" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58224,7 +58224,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csY" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58237,7 +58237,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "csZ" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58253,14 +58253,14 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cta" = (
 /obj/landmark/mining{
 	name = "CoVe9";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctb" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58273,7 +58273,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctc" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58281,7 +58281,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctd" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58294,7 +58294,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cte" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58302,7 +58302,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctf" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58310,14 +58310,14 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctg" = (
 /obj/landmark/mining{
 	name = "CoVe17";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cth" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -58325,7 +58325,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cti" = (
 /obj/landmark/mining{
 	name = "CoVe9";
@@ -58337,7 +58337,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctj" = (
 /obj/landmark/mining{
 	name = "CoVe17";
@@ -58349,7 +58349,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctk" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58362,12 +58362,12 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctl" = (
 /turf/simulated/wall/asteroid{
 	icon_state = "oe1"
 	},
-/area)
+/area/concrete)
 "ctm" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58375,7 +58375,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctn" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58383,7 +58383,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cto" = (
 /obj/landmark/mining{
 	name = "CoVe16";
@@ -58395,7 +58395,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctp" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58406,7 +58406,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ctq" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58417,7 +58417,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ctr" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58430,7 +58430,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cts" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58441,7 +58441,7 @@
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "ctt" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58452,7 +58452,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ctu" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58465,7 +58465,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctv" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58473,7 +58473,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctw" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58481,7 +58481,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctx" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58491,7 +58491,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cty" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58499,7 +58499,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctz" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58515,7 +58515,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "ctA" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58528,7 +58528,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctB" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58536,7 +58536,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctC" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58549,7 +58549,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctD" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58562,7 +58562,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctE" = (
 /obj/landmark/mining{
 	icon_state = "mining5";
@@ -58573,7 +58573,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ctF" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58589,7 +58589,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "ctG" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58602,7 +58602,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctH" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58610,14 +58610,14 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctI" = (
 /obj/landmark/mining{
 	name = "CoVe25";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctJ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58628,7 +58628,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ctK" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58639,7 +58639,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ctL" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -58647,7 +58647,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctM" = (
 /obj/landmark/mining{
 	name = "CoVe25";
@@ -58659,7 +58659,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctN" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58670,7 +58670,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ctO" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58681,7 +58681,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ctP" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58692,7 +58692,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "ctQ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58703,7 +58703,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ctR" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -58716,7 +58716,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58727,7 +58727,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ctT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58738,7 +58738,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "ctU" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -58748,7 +58748,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "ctV" = (
 /obj/landmark/mining{
 	name = "CoVe22";
@@ -58760,14 +58760,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctW" = (
 /obj/landmark/mining{
 	name = "CoVe22";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctX" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58775,7 +58775,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "ctY" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58791,7 +58791,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "ctZ" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -58807,7 +58807,7 @@
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cua" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -58815,7 +58815,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cub" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58823,7 +58823,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuc" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -58839,7 +58839,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cud" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58847,7 +58847,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cue" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -58863,7 +58863,7 @@
 	dir = 10;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cuf" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58876,7 +58876,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cug" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -58889,14 +58889,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuh" = (
 /obj/landmark/mining{
 	name = "CoVe26";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cui" = (
 /obj/landmark/mining{
 	name = "CoVe26";
@@ -58908,7 +58908,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuj" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58916,7 +58916,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuk" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -58924,14 +58924,14 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cul" = (
 /obj/landmark/mining{
 	name = "CoVe23";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cum" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58944,21 +58944,21 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cun" = (
 /obj/landmark/mining{
 	name = "CoVe24";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuo" = (
 /obj/landmark/mining{
 	name = "CoVe21";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cup" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58966,7 +58966,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuq" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -58979,7 +58979,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cur" = (
 /obj/landmark/mining{
 	name = "CoVe21";
@@ -58991,7 +58991,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cus" = (
 /obj/landmark/mining{
 	name = "CoVe24";
@@ -59003,7 +59003,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cut" = (
 /obj/landmark/mining{
 	name = "CoVe23";
@@ -59015,7 +59015,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuu" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -59023,7 +59023,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuv" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -59031,7 +59031,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuw" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -59039,7 +59039,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cux" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59047,7 +59047,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuy" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -59060,7 +59060,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuz" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59071,7 +59071,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cuA" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59082,7 +59082,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cuB" = (
 /obj/landmark/mining{
 	icon_state = "mining5";
@@ -59095,7 +59095,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuC" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -59108,7 +59108,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuD" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -59116,7 +59116,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuE" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -59129,7 +59129,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuF" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59142,7 +59142,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuG" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59153,7 +59153,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cuH" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -59161,7 +59161,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuI" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59171,7 +59171,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cuJ" = (
 /obj/landmark/mining{
 	name = "CoVe24";
@@ -59186,14 +59186,14 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cuK" = (
 /obj/landmark/mining{
 	name = "CoVe27";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuL" = (
 /obj/landmark/mining{
 	name = "CoVe27";
@@ -59205,7 +59205,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuM" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -59213,7 +59213,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuN" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -59221,7 +59221,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuO" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59229,7 +59229,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuP" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59240,7 +59240,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cuQ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59251,7 +59251,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cuR" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59262,7 +59262,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cuS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59272,7 +59272,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cuT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59283,7 +59283,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cuU" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59294,7 +59294,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cuV" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59302,7 +59302,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuW" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59310,7 +59310,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuX" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59323,7 +59323,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cuY" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59334,7 +59334,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cuZ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59345,7 +59345,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cva" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59356,7 +59356,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvb" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59367,7 +59367,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvc" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59378,7 +59378,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cvd" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59389,7 +59389,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cve" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59400,7 +59400,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvf" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59410,7 +59410,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cvg" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59418,7 +59418,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvh" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59431,7 +59431,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvi" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59442,7 +59442,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvj" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59453,7 +59453,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvk" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59471,14 +59471,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvl" = (
 /obj/landmark/mining{
 	name = "CoVe44";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvm" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59489,7 +59489,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvn" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59500,7 +59500,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvo" = (
 /obj/landmark/mining{
 	name = "CoVe44";
@@ -59512,7 +59512,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvp" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59523,7 +59523,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvq" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59534,7 +59534,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvr" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59542,7 +59542,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvs" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -59550,7 +59550,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvt" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59561,7 +59561,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvu" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59572,7 +59572,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvv" = (
 /obj/item/ore/pharosium,
 /obj/item/ore/pharosium,
@@ -59583,7 +59583,7 @@
 /obj/item/ore/pharosium,
 /obj/item/ore/pharosium,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cvw" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59596,7 +59596,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvx" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59607,7 +59607,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvy" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59618,14 +59618,14 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvz" = (
 /obj/landmark/mining{
 	name = "CoVe37";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvA" = (
 /obj/landmark/mining{
 	name = "CoVe37";
@@ -59637,7 +59637,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvB" = (
 /obj/item/ore/bohrum,
 /obj/item/ore/bohrum,
@@ -59646,7 +59646,7 @@
 /obj/item/ore/bohrum,
 /obj/item/ore/bohrum,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cvC" = (
 /obj/decal/skeleton,
 /obj/item/ore/pharosium,
@@ -59658,7 +59658,7 @@
 /obj/item/ore/uqill,
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cvD" = (
 /obj/item/ore/pharosium,
 /obj/item/ore/pharosium,
@@ -59675,7 +59675,7 @@
 /obj/item/ore/claretine,
 /obj/item/ore/uqill,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cvE" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59686,7 +59686,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvF" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59697,7 +59697,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvG" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59708,7 +59708,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvH" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59719,7 +59719,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvI" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -59727,7 +59727,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvJ" = (
 /obj/item/ore/bohrum,
 /obj/item/ore/bohrum,
@@ -59737,7 +59737,7 @@
 /obj/item/ore/bohrum,
 /obj/item/ore/bohrum,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cvK" = (
 /obj/item/ore/bohrum,
 /obj/item/ore/bohrum,
@@ -59752,20 +59752,20 @@
 /obj/item/ore/claretine,
 /obj/item/ore/uqill,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cvL" = (
 /obj/item/ore/bohrum,
 /obj/item/ore/bohrum,
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cvM" = (
 /obj/landmark/mining{
 	name = "CoVe45";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvN" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59776,7 +59776,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvO" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59787,23 +59787,23 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cvP" = (
 /obj/landmark/mining{
 	name = "CoVe28";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvQ" = (
 /obj/item/ore/bohrum,
 /obj/item/ore/bohrum,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cvR" = (
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cvS" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -59811,7 +59811,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvT" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -59819,7 +59819,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvU" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59829,7 +59829,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cvV" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59840,7 +59840,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cvW" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -59848,7 +59848,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvX" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59856,7 +59856,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvY" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59869,7 +59869,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cvZ" = (
 /obj/landmark/mining{
 	name = "CoVe39";
@@ -59881,14 +59881,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwa" = (
 /obj/landmark/mining{
 	name = "CoVe39";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwb" = (
 /obj/landmark/mining{
 	name = "CoVe28";
@@ -59900,7 +59900,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwc" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59911,7 +59911,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cwd" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -59922,7 +59922,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cwe" = (
 /obj/landmark/mining{
 	name = "CoVe45";
@@ -59934,7 +59934,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwf" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -59947,7 +59947,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwg" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59955,21 +59955,21 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwh" = (
 /obj/item/clothing/head/helmet/space/engineer,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwi" = (
 /obj/item/clothing/suit/space/engineer,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwj" = (
 /obj/decal/skeleton,
 /obj/item/powerhammer,
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwk" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -59982,7 +59982,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwl" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -59990,7 +59990,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwm" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60003,7 +60003,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwn" = (
 /obj/overlay{
 	anchored = 0;
@@ -60014,7 +60014,7 @@
 	name = "skeleton"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwo" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60027,7 +60027,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwp" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60038,7 +60038,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cwq" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60049,7 +60049,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cwr" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60062,7 +60062,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cws" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60070,7 +60070,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwt" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60081,7 +60081,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cwu" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60092,14 +60092,14 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cwv" = (
 /obj/landmark/mining{
 	name = "CoVe42";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cww" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60107,7 +60107,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwx" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60117,7 +60117,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cwy" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60130,7 +60130,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwz" = (
 /obj/landmark/mining{
 	name = "CoVe42";
@@ -60142,35 +60142,35 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwA" = (
 /obj/decal/skeleton,
 /obj/item/oreprospector,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwB" = (
 /obj/item/drill,
 /obj/item/clothing/suit/space/engineer,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwC" = (
 /obj/item/ore/uqill,
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwD" = (
 /obj/item/ore/uqill,
 /obj/item/ore/cobryl,
 /obj/item/ore/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwE" = (
 /obj/item/ore/syreline,
 /obj/item/ore/syreline,
 /obj/item/ore/syreline,
 /obj/item/ore/syreline,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwF" = (
 /obj/item/ore/syreline,
 /obj/item/ore/syreline,
@@ -60181,13 +60181,13 @@
 /obj/item/ore/syreline,
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwG" = (
 /obj/decal/skeleton,
 /obj/item/ore/cobryl,
 /obj/item/ore/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwH" = (
 /obj/item/ore/uqill,
 /obj/item/ore/uqill,
@@ -60196,13 +60196,13 @@
 /obj/item/ore/cobryl,
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwI" = (
 /obj/item/ore/syreline,
 /obj/item/ore/syreline,
 /obj/item/ore/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cwJ" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60215,7 +60215,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwK" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60226,7 +60226,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cwL" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60237,7 +60237,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cwM" = (
 /obj/landmark/mining{
 	name = "CoVe40";
@@ -60249,14 +60249,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwN" = (
 /obj/landmark/mining{
 	name = "CoVe40";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwO" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60264,7 +60264,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwP" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60275,7 +60275,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cwQ" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60283,7 +60283,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwR" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60294,7 +60294,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cwS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60305,7 +60305,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cwT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60315,7 +60315,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cwU" = (
 /obj/landmark/mining{
 	icon_state = "mining5";
@@ -60326,7 +60326,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cwV" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60337,7 +60337,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cwW" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60348,7 +60348,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cwX" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60364,7 +60364,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cwY" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60377,7 +60377,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cwZ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60388,7 +60388,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxa" = (
 /obj/landmark/mining{
 	icon_state = "mining5";
@@ -60399,7 +60399,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxb" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60415,7 +60415,7 @@
 	dir = 10;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cxc" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60423,7 +60423,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxd" = (
 /obj/landmark/mining{
 	icon_state = "mining5";
@@ -60434,7 +60434,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxe" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60447,7 +60447,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxf" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -60455,7 +60455,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxg" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60466,7 +60466,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxh" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60477,7 +60477,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxi" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60488,7 +60488,7 @@
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cxj" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60499,7 +60499,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxk" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60507,7 +60507,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxl" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60518,14 +60518,14 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxm" = (
 /obj/landmark/mining{
 	name = "CoVe49";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxn" = (
 /obj/landmark/mining{
 	name = "CoVe49";
@@ -60537,7 +60537,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxo" = (
 /obj/landmark/mining{
 	name = "CoVe49";
@@ -60552,7 +60552,7 @@
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cxp" = (
 /obj/landmark/mining{
 	name = "CoVe29";
@@ -60564,14 +60564,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxq" = (
 /obj/landmark/mining{
 	name = "CoVe29";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxr" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60579,7 +60579,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxs" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60590,7 +60590,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxt" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60601,7 +60601,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cxu" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60611,7 +60611,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cxv" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60619,11 +60619,11 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxw" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
-/area)
+/area/concrete)
 "cxx" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60636,7 +60636,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxy" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60644,7 +60644,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxz" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -60657,7 +60657,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxA" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60670,7 +60670,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxB" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60681,7 +60681,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxC" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60692,7 +60692,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxD" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60703,7 +60703,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxE" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60714,7 +60714,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxF" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60725,7 +60725,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxG" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60736,7 +60736,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxH" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60747,7 +60747,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cxI" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60757,7 +60757,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxJ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60768,7 +60768,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxK" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60779,7 +60779,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxL" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60790,7 +60790,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxM" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60801,7 +60801,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxN" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60812,7 +60812,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxO" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60823,7 +60823,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxP" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60831,7 +60831,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxQ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60842,7 +60842,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxR" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60853,7 +60853,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60864,7 +60864,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60875,7 +60875,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxU" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60888,7 +60888,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxV" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60896,7 +60896,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cxW" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60907,7 +60907,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cxX" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60918,19 +60918,19 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cxY" = (
 /turf/simulated/floor{
 	icon_state = "snow"
 	},
-/area)
+/area/concrete)
 "cxZ" = (
 /obj/landmark/mining{
 	name = "CoVe50";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cya" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60941,7 +60941,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyb" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -60949,7 +60949,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyc" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60962,7 +60962,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyd" = (
 /obj/stocking{
 	danger_chance = 5;
@@ -60971,7 +60971,7 @@
 /turf/simulated/floor{
 	icon_state = "snow"
 	},
-/area)
+/area/concrete)
 "cye" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -60979,7 +60979,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyf" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -60990,7 +60990,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyg" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61001,7 +61001,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyh" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61012,7 +61012,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyi" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -61025,7 +61025,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyj" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61036,7 +61036,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyk" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61046,7 +61046,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyl" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61057,7 +61057,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cym" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -61070,7 +61070,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyn" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -61078,14 +61078,14 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyo" = (
 /obj/landmark/mining{
 	name = "CoVe47";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyp" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -61093,7 +61093,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyq" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61103,7 +61103,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cyr" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61116,7 +61116,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cys" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61124,7 +61124,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyt" = (
 /obj/landmark/mining{
 	name = "CoVe47";
@@ -61136,7 +61136,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyu" = (
 /obj/landmark/mining{
 	name = "CoVe30";
@@ -61148,7 +61148,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyv" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61159,7 +61159,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cyw" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61167,7 +61167,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyx" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -61175,14 +61175,14 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyy" = (
 /obj/landmark/mining{
 	name = "CoVe30";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyz" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61193,7 +61193,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cyA" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61201,7 +61201,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyB" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61214,7 +61214,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyC" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61224,7 +61224,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cyD" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -61237,7 +61237,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyE" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61248,7 +61248,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cyF" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61259,7 +61259,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyG" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61272,7 +61272,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyH" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61283,7 +61283,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cyI" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61294,7 +61294,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyJ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61305,7 +61305,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyK" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61316,7 +61316,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyL" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61327,7 +61327,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyM" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61338,7 +61338,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyN" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -61346,7 +61346,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyO" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -61359,7 +61359,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyP" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61370,7 +61370,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyQ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61381,7 +61381,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyR" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61392,7 +61392,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61402,7 +61402,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61413,7 +61413,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyU" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61424,7 +61424,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cyV" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61435,7 +61435,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cyW" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61448,7 +61448,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyX" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61456,7 +61456,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cyY" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61466,7 +61466,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cyZ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61477,7 +61477,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cza" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61488,14 +61488,14 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "czb" = (
 /obj/landmark/mining{
 	name = "CoVe48";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czc" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -61511,7 +61511,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "czd" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61521,7 +61521,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cze" = (
 /obj/landmark/mining{
 	name = "CoVe48";
@@ -61533,7 +61533,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czf" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61541,7 +61541,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czg" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61552,7 +61552,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czh" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61563,7 +61563,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czi" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61576,7 +61576,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czj" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61587,7 +61587,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czk" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61598,7 +61598,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czl" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61606,7 +61606,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czm" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61616,7 +61616,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "czn" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61632,7 +61632,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "czo" = (
 /obj/landmark/mining{
 	name = "CoVe36";
@@ -61644,14 +61644,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czp" = (
 /obj/landmark/mining{
 	name = "CoVe36";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czq" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61662,7 +61662,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "czr" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61673,7 +61673,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czs" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61684,7 +61684,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czt" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61695,7 +61695,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czu" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61706,7 +61706,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czv" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61717,7 +61717,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czw" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61730,7 +61730,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czx" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61741,7 +61741,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czy" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61751,7 +61751,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czz" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61762,7 +61762,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czA" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -61770,7 +61770,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czB" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61781,7 +61781,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czC" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61792,7 +61792,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "czD" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -61805,14 +61805,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czE" = (
 /obj/landmark/mining{
 	name = "CoVe33";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czF" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61822,7 +61822,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "czG" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61833,7 +61833,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czH" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61844,7 +61844,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czI" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -61857,7 +61857,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czJ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61867,7 +61867,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "czK" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -61875,7 +61875,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czL" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61886,7 +61886,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czM" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61897,7 +61897,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czN" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61908,7 +61908,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czO" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61919,14 +61919,14 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czP" = (
 /obj/landmark/mining{
 	name = "CoVe46";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czQ" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -61934,7 +61934,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "czR" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61945,7 +61945,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61956,7 +61956,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61967,7 +61967,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czU" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61978,7 +61978,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czV" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -61989,7 +61989,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czW" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62000,7 +62000,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czX" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62011,7 +62011,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "czY" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62022,7 +62022,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "czZ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62033,7 +62033,7 @@
 	dir = 10;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cAa" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62046,7 +62046,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAb" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62057,7 +62057,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAc" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62068,7 +62068,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAd" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62079,7 +62079,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAe" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62090,7 +62090,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cAf" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62101,7 +62101,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAg" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62112,7 +62112,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAh" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62123,7 +62123,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAi" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62134,7 +62134,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAj" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62145,7 +62145,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAk" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62156,7 +62156,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAl" = (
 /obj/landmark/mining{
 	name = "CoVe46";
@@ -62168,7 +62168,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAm" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62179,7 +62179,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAn" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62190,7 +62190,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAo" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62201,7 +62201,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cAp" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62211,7 +62211,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cAq" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62222,7 +62222,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAr" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62233,7 +62233,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cAs" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -62246,7 +62246,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAt" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -62254,7 +62254,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAu" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62262,7 +62262,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAv" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62275,7 +62275,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAw" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62283,7 +62283,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAx" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62294,7 +62294,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cAy" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62305,7 +62305,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cAz" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -62313,7 +62313,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAA" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -62326,7 +62326,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAB" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62334,7 +62334,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAC" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62347,7 +62347,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAD" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62363,7 +62363,7 @@
 	dir = 10;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cAE" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62371,7 +62371,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAF" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62382,7 +62382,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAG" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62393,7 +62393,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAH" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62404,7 +62404,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAI" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62417,7 +62417,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAJ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62428,7 +62428,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAK" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62438,7 +62438,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAL" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62449,7 +62449,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAM" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62457,7 +62457,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAN" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -62465,7 +62465,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAO" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62476,7 +62476,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cAP" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62487,7 +62487,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAQ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62498,7 +62498,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAR" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62511,7 +62511,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62521,7 +62521,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cAT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62532,7 +62532,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAU" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62543,14 +62543,14 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAV" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAW" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -62558,7 +62558,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAX" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -62571,28 +62571,28 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cAY" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cAZ" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cBa" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBb" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62603,7 +62603,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cBc" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -62616,7 +62616,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBd" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62624,21 +62624,21 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBe" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBf" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cBg" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62649,7 +62649,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBh" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62660,7 +62660,7 @@
 	dir = 1;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBi" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62671,7 +62671,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBj" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62682,7 +62682,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBk" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62693,14 +62693,14 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBl" = (
 /obj/landmark/mining{
 	name = "CoVe43";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBm" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62713,21 +62713,21 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBn" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBo" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 10;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cBp" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62738,7 +62738,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBq" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62748,7 +62748,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBr" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62759,7 +62759,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cBs" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62770,7 +62770,7 @@
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cBt" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62778,7 +62778,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBu" = (
 /obj/landmark/mining{
 	name = "CoVe43";
@@ -62790,7 +62790,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBv" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62800,7 +62800,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cBw" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62811,7 +62811,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBx" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62822,7 +62822,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBy" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62833,7 +62833,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBz" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62843,7 +62843,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBA" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62854,7 +62854,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBB" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62867,21 +62867,21 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBC" = (
 /obj/landmark/mining{
 	name = "CoVe34";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBD" = (
 /obj/landmark/mining{
 	name = "CoVe32";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBE" = (
 /obj/landmark/mining{
 	name = "CoVe32";
@@ -62893,7 +62893,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBF" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62901,7 +62901,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBG" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -62914,7 +62914,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBH" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62925,7 +62925,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cBI" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62936,7 +62936,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBJ" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -62944,7 +62944,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBK" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -62952,7 +62952,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBL" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -62962,7 +62962,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cBM" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -62970,7 +62970,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBN" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -62983,7 +62983,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBO" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -62991,7 +62991,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBP" = (
 /obj/landmark/mining{
 	name = "CoVe34";
@@ -63003,7 +63003,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBQ" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -63016,14 +63016,14 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBR" = (
 /obj/landmark/mining{
 	name = "CoVe31";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63034,7 +63034,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63045,7 +63045,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBU" = (
 /obj/landmark/mining{
 	name = "CoVe31";
@@ -63057,7 +63057,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBV" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63068,7 +63068,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cBW" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63079,14 +63079,14 @@
 	dir = 10;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cBX" = (
 /obj/landmark/mining{
 	name = "CoVe35";
 	veintype = 1
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBY" = (
 /obj/landmark/mining{
 	name = "CoVe35";
@@ -63098,7 +63098,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cBZ" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63106,7 +63106,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCa" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63117,7 +63117,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCb" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63128,7 +63128,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCc" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63139,7 +63139,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCd" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63147,7 +63147,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCe" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63160,7 +63160,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCf" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63173,7 +63173,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCg" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63184,7 +63184,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCh" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63195,7 +63195,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCi" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -63203,7 +63203,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCj" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63211,7 +63211,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCk" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63219,7 +63219,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCl" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63232,7 +63232,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCm" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63243,7 +63243,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCn" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63254,7 +63254,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCo" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63265,7 +63265,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCp" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63276,7 +63276,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCq" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63289,7 +63289,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCr" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63300,7 +63300,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCs" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63311,7 +63311,7 @@
 	dir = 5;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cCt" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -63324,7 +63324,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCu" = (
 /obj/landmark/mining{
 	icon_state = "mining3";
@@ -63332,7 +63332,7 @@
 	veintype = 3
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCv" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63343,7 +63343,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCw" = (
 /obj/landmark/mining{
 	name = "CoVe32";
@@ -63358,7 +63358,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cCx" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63366,7 +63366,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCy" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63377,7 +63377,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cCz" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63390,7 +63390,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCA" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -63403,7 +63403,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCB" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -63411,7 +63411,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCC" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63422,7 +63422,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCD" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63433,7 +63433,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCE" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63444,7 +63444,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCF" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63455,7 +63455,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCG" = (
 /obj/landmark/mining{
 	icon_state = "mining4";
@@ -63463,7 +63463,7 @@
 	veintype = 4
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCH" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63474,7 +63474,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCI" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63485,7 +63485,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCJ" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63498,7 +63498,7 @@
 	veintype = 5
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCK" = (
 /obj/landmark/mining{
 	icon_state = "mining2";
@@ -63506,7 +63506,7 @@
 	veintype = 2
 	},
 /turf/simulated/wall/asteroid,
-/area)
+/area/concrete)
 "cCL" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63517,7 +63517,7 @@
 	dir = 6;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cCM" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63528,7 +63528,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCN" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63539,7 +63539,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cCO" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63549,7 +63549,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCP" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63560,7 +63560,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCQ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63571,7 +63571,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCR" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63582,7 +63582,7 @@
 	dir = 1;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cCS" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63593,7 +63593,7 @@
 	dir = 9;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCT" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63604,7 +63604,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCU" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63615,7 +63615,7 @@
 	dir = 10;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCV" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63626,7 +63626,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCW" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63637,7 +63637,7 @@
 	dir = 8;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cCX" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63648,7 +63648,7 @@
 	dir = 4;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cCY" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63659,7 +63659,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cCZ" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63670,7 +63670,7 @@
 	dir = 5;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cDa" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63681,7 +63681,7 @@
 	dir = 9;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cDb" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63692,7 +63692,7 @@
 	dir = 4;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cDc" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63702,7 +63702,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cDd" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63712,7 +63712,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cDe" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63723,7 +63723,7 @@
 	dir = 8;
 	icon_state = "astdetail"
 	},
-/area)
+/area/concrete)
 "cDf" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63733,7 +63733,7 @@
 /turf/simulated/wall/asteroid{
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cDg" = (
 /obj/landmark/mining{
 	icon_state = "mining6";
@@ -63744,7 +63744,7 @@
 	dir = 6;
 	icon_state = "astedge"
 	},
-/area)
+/area/concrete)
 "cDh" = (
 /turf/unsimulated/wall/void/crunch,
 /area/crunch)

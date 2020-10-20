@@ -1,5 +1,5 @@
 "aa" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/blind_pig)
-"ab" = (/turf/variableTurf/clear,/area)
+"ab" = (/turf/variableTurf/clear,/area/concrete)
 "ac" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 4},/turf/simulated/floor/carpet/purple/fancy/edge/nw,/area/prefab/blind_pig)
 "ad" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/rum_spaced{pixel_x = -3; pixel_y = 5},/obj/item/reagent_containers/food/drinks/skull_chalice{pixel_x = 6; pixel_y = 2},/turf/simulated/floor/carpet/purple/fancy/edge/north,/area/prefab/blind_pig)
 "ae" = (/obj/stool/chair/wooden{dir = 8},/turf/simulated/floor/carpet/purple/fancy/edge/ne,/area/prefab/blind_pig)

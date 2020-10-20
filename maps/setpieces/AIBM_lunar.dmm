@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/concrete)
 "ab" = (
 /turf/unsimulated/wall/setpieces/lunar,
 /area/moon/underground/hemera)
@@ -37,7 +37,7 @@
 /area/moon/underground/hemera)
 "ag" = (
 /turf/unsimulated/wall/setpieces/lunar,
-/area)
+/area/concrete)
 "ah" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	dir = 9
@@ -6088,14 +6088,14 @@
 	})
 "nH" = (
 /turf/unsimulated/wall,
-/area)
+/area/concrete)
 "nI" = (
 /obj/landmark/start,
 /obj/landmark/start{
 	name = "shit"
 	},
 /turf/space,
-/area)
+/area/concrete)
 "nJ" = (
 /turf/simulated/wall,
 /area/station/crew_quarters/kitchen)
@@ -6107,7 +6107,7 @@
 	name = "Space Station 13";
 	tag = "the_ss13_screen"
 	},
-/area)
+/area/concrete)
 "nL" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -6159,7 +6159,7 @@
 /area/station/crew_quarters/kitchen)
 "nT" = (
 /turf/simulated/wall,
-/area)
+/area/concrete)
 "nU" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -7321,7 +7321,7 @@
 /area/station/crew_quarters/kitchen)
 "qL" = (
 /turf/simulated/floor/plating,
-/area)
+/area/concrete)
 "qM" = (
 /obj/cable{
 	icon_state = "1-2";
