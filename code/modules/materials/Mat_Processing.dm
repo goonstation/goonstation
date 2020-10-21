@@ -87,6 +87,10 @@
 			S.satchel_updateicon()
 			return
 
+		if (W.cant_drop) //For borg held items
+			user.show_text("You can't put that in [src] when it's attached to you!", "red")
+			return ..()
+
 		if(W.material)
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
 			user.u_equip(W)
