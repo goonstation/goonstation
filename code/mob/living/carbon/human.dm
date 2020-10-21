@@ -2956,6 +2956,10 @@
 	// If attacker is targeting the chest and a chest item exists, activate it.
 	if (M && M.zone_sel && M.zone_sel.selecting == "chest" && src.chest_item != null && (src.chest_item in src.contents))
 		logTheThing("combat", M, src, "activates [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
+#if ASS_JAM
+		if(istype(src.chest_item,/mob/))
+			return
+#endif
 		src.chest_item.attack_self(src)
 	return
 
@@ -2977,7 +2981,12 @@
 	if(!(src.chest_item && (src.chest_item in src.contents)))
 		return
 	src.show_text("You grunt and squeeze <B>[src.chest_item]</B> in your chest.")
+#if ASS_JAM
+	if(!istype(src.chest_item,/mob/))
+		src.chest_item.attack_self(src)
+#else
 	src.chest_item.attack_self(src) // Activate the item
+#endif
 	if (src.chest_item_sewn == 0 || istype(src.chest_item, /obj/item/cloaking_device))	// If item isn't sewn in, poop it onto the ground. No fartcloaks allowed
 		// Item object is pooped out
 		if (istype(src.chest_item, /obj/item/))
@@ -3026,8 +3035,17 @@
 		// added log - cirr
 		logTheThing("combat", src, src.chest_item, "takes damage from farting out [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
 		// Make copy of item on ground
+#if ASS_JAM
+		if (istype(src.chest_item,/mob/))
+			var/mob/outChestMob = src.chest_item
+			outChestMob.set_loc(get_turf(src))
+		else
+			var/obj/item/outChestItem = src.chest_item
+			outChestItem.set_loc(get_turf(src))
+#else
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
+#endif
 		src.chest_item = null
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)

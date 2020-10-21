@@ -180,18 +180,48 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			// If no item in chest, get surgeon's equipped item
 			var/obj/item/chest_item = surgeon.equipped()
 
+#if ASS_JAM
+			var/mob/victim
+			var/obj/item/grab/G
+			if(istype(chest_item,/obj/item/grab/))
+				G = chest_item
+				victim = G.affecting
+			else
+				victim = chest_item.chokehold?.affecting
+#else
 			if(chest_item.w_class > 3 && !(chest_item.type in chestitem_whitelist))
 				surgeon.show_text("<span class='alert'>[chest_item] is too big to fit into [patient]'s chest cavity.</span>")
 				return 1
+#endif
+#if ASS_JAM
+			if(victim)
+				patient.tri_message("<span class='notice'><b>[surgeon]</b> shoves [victim] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest.</span>",\
+				surgeon, "<span class='notice'>You shove [victim] into [surgeon == patient ? "your" : "[patient]'s"] chest.</span>",\
+				patient, "<span class='notice'>[patient == surgeon ? "You shove" : "<b>[surgeon]</b> shoves"] [victim] into your chest.</span>")
+			else
+				patient.tri_message("<span class='notice'><b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest.</span>",\
+				surgeon, "<span class='notice'>You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest.</span>",\
+				patient, "<span class='notice'>[patient == surgeon ? "You shove" : "<b>[surgeon]</b> shoves"] [chest_item] into your chest.</span>")
 
+#else
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest.</span>",\
 			surgeon, "<span class='notice'>You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest.</span>",\
 			patient, "<span class='notice'>[patient == surgeon ? "You shove" : "<b>[surgeon]</b> shoves"] [chest_item] into your chest.</span>")
+#endif
 
 			// Move equipped item to patient's chest
 			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+#if ASS_JAM
+			if(victim)
+				victim.set_loc(patient)
+				patient.chest_item = victim
+			else
+				chest_item.set_loc(patient)
+				patient.chest_item = chest_item
+#else
 			chest_item.set_loc(patient)
 			patient.chest_item = chest_item
+#endif
 
 			// Remove item from surgeon
 			surgeon.u_equip(chest_item)

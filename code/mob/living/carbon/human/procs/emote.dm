@@ -1544,6 +1544,11 @@
 						var/obj/container = src.loc
 						container.mob_flip_inside(src)
 
+#if ASS_JAM
+					if (ismob(src.loc))
+						var/mob/container = src.loc
+						container.mob_flip_inside(src)
+#endif
 					if (!iswrestler(src))
 						if (src.stamina <= STAMINA_FLIP_COST || (src.stamina - STAMINA_FLIP_COST) <= 0)
 							boutput(src, "<span class='alert'>You fall over, panting and wheezing.</span>")

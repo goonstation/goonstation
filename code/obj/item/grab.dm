@@ -128,6 +128,11 @@
 		if (target == src.affecting)
 			attack_self(user)
 			return
+#if ASS_JAM
+		if (surgeryCheck(target, user))
+			if(insertChestItem(target, user))
+				return
+#endif
 
 	attack_hand(mob/user)
 		return

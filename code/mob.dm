@@ -2879,3 +2879,19 @@
 /mob/proc/add_karma(how_much)
 	src.mind?.add_karma(how_much)
 	// TODO add NPC karma
+
+#if ASS_JAM
+/mob/proc/mob_flip_inside(var/mob/user)
+	boutput(src,"<span class='alert'>You leap and slam against the inside of [src]! Ouch!</span>")
+	user.changeStatus("paralysis", 40)
+	user.changeStatus("weakened", 4 SECONDS)
+	src.visible_message("<span class='alert'><b>[src]</b>'s bones creak and bend!</span>")
+	src.TakeDamage("chest",rand(10,30))
+	boutput(src,"<span class='alert'[pick("Your chest aches, like really bad!","You feel like you're going to explode!","You feel like you ate something weird!","You should probably see a doctor!")]")
+	src.changeStatus("stunned", 1 SECOND)
+	src.changeStatus("staggered", 3 SECONDS)
+	if (src.stat == 2)
+		user.set_loc(src.loc)
+		src.gib(1,1)
+	animate_storage_thump(src)
+#endif
