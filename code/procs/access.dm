@@ -15,6 +15,10 @@
 /obj/New()
 	..()
 	src.update_access_from_txt()
+/*
+ * Override all access requirements if user is an administrator
+ */
+/obj/var/admin_access_override = FALSE
 
 /*
  * Overrides the object's req_access var based on what's in req_access_txt (if set).
@@ -87,6 +91,10 @@
 		// check implant (last, so as to avoid using it unnecessarily)
 		if (src.check_implanted_access(M))
 			return 1
+		// check for admin access override
+		if (src.admin_access_override)
+			if (M?.client?.holder?.level >= LEVEL_SA)
+				return 1
 	return 0
 
 
