@@ -736,12 +736,6 @@
 	slot_poc1 = /obj/item/device/pda2/mechanic
 	slot_ears = /obj/item/device/radio/headset/engineer
 
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.traitHolder.addTrait("training_engineer")
-
 	New()
 		..()
 		src.access = get_access("Mechanic")
