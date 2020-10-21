@@ -648,7 +648,7 @@
 
 /obj/item/radio_tape/advertisement/cargonia
 	name = "compact tape - 'Scuffed Compact Tape'"
-	audio = "sound/radio_station/cargonia.ogg"
+	audio = "sound/radio_station/Cargonia.ogg"
 	name_of_thing = "Cargo Union Advertisement <VERY ILLEGAL>"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	You found this in a locked up chest in the depths. Someone went to a lot of trouble to get rid of it.<br>

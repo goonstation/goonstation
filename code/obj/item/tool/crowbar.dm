@@ -37,3 +37,8 @@
 
 /obj/item/crowbar/vr
 	icon_state = "crowbar-vr"
+
+/obj/item/crowbar/red
+	name = "crowbar"
+	desc = "A tool used as a lever to pry objects. This one appears to have been painted red as an indicator of it's important emergency tool status, or maybe someone forgot to clean the blood off."
+	icon_state = "crowbar-red"

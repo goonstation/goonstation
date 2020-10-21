@@ -910,18 +910,8 @@
 /obj/item/ex_act(severity)
 	switch(severity)
 		if (1.0)
-			if (istype(src,/obj/item/parts/human_parts))
-				src:holder = null
-			qdel(src)
 			return
 		if (2.0)
-			if (prob(50))
-
-				if (istype(src,/obj/item/parts/human_parts))
-					src:holder = null
-
-				qdel(src)
-				return
 			if (src.material)
 				src.material.triggerTemp(src ,7500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 7500)
@@ -931,13 +921,6 @@
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
 		if (3.0)
-			if (prob(5))
-
-				if (istype(src,/obj/item/parts/human_parts))
-					src:holder = null
-
-				qdel(src)
-				return
 			if (src.material)
 				src.material.triggerTemp(src, 3500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 3500)
@@ -947,7 +930,7 @@
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		else
-	return
+	return ..()
 
 /obj/item/blob_act(var/power)
 	if (src.artifact)

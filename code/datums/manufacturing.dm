@@ -2026,6 +2026,16 @@
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/hat_ltophat
+	name = "Large Top Hat"
+	item_paths = list("FAB-1")
+	item_names = list("Fabric")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/clothing/head/longtophat)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/jumpsuit_white
 	name = "White Jumpsuit"
 	item_paths = list("FAB-1")
@@ -2730,6 +2740,15 @@
 	item_amounts = list(2, 2)
 	item_outputs = list(/obj/item/storage/firstaid/crit)
 	time = 9 SECONDS
+	create = 1
+	category = "Medicine"
+/datum/manufacture/empty_kit
+	name = "Empty First Aid Kit"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/storage/firstaid/regular/empty)
+	time = 4 SECONDS
 	create = 1
 	category = "Medicine"
 /datum/manufacture/spacecillin	//

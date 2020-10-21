@@ -571,30 +571,29 @@ var/global/debug_messages = 0
 
 	explosion_new(null, T, esize, bris)
 	return
-/*
-/client/proc/cmd_ultimategrife()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "ULTIMATE GRIFE"
 
-	switch(alert("Holy shit are you sure?! (also the server will lag for a few seconds)",,"Yes","No"))
-		if("Yes")
-			for(var/turf/simulated/wall/W in world)
-				new /obj/machinery/crusher(get_turf(W))
-				qdel(W)
+/client/proc/cmd_crusher_walls()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Crusher Walls"
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Holy shit are you sure?! This is going to turn the walls into crushers!",,"Yes","No"))
+			if("Yes")
+				for(var/turf/simulated/wall/W in world)
+					if (W.z != 1) continue
+					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
+					if (O) continue
+					new /obj/machinery/crusher(locate(W.x, W.y, W.z))
+					W.density = 0
 
-			for(var/turf/simulated/wall/r_wall/RW in world)
-				new /obj/machinery/crusher(get_turf(RW))
-				qdel(RW)
+				logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
+				logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")
+				message_admins("[key_name(src)] has turned every wall into a crusher! God damn.")
 
-			logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
-			logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")
-			message_admins("[key_name(src)] has turned every wall into a crusher! God damn.")
+			if("No")
+				return
+	else
+		boutput(src, "You must be at least a Administrator to use this command.")
 
-			alert("Uh oh.")
-
-		if("No")
-			alert("Thank god for that.")
-*/
 /client/proc/cmd_debug_mutantrace(var/mob/mob in world)
 	set name = "Change Mutant Race"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

@@ -374,5 +374,6 @@
 		/datum/artifact/melee,
 		/datum/artifact/telewand,
 		/datum/artifact/energygun,
-		/datum/artifact/watercan
+		/datum/artifact/watercan,
+		/datum/artifact/pitcher
 		)

@@ -1,5 +1,27 @@
 
+(t)tue oct 20 20
+(u)austin
+(p)2447
+(e)🆕🎨|feature, sprites
+(+)Players can now sing by prefixing their messages with "%". Sing to parrots and they will chatter back. Monkeys don't like drunk or loud singing.
+(u)Monochromatism
+(p)2426
+(e)🎨|sprites
+(+)Added new borders to genetic power icons for use in player and genebooth UIs.
+(t)mon oct 19 20
+(u)Flaborized
+(p)2458
+(e)🎨|sprites
+(+)Both devices and assemblies have had makeovers! New sprites for all kinds of device combinations, including bombs!
 (t)sun oct 18 20
+(u)Kyle
+(*)Change to pod warping again. Removes the "moving run-up" part and now it projects the portal in front of you, or on top of you if no room. Still must be immobile to begin making a portal.
+(u)Flaborized
+(p)2394
+(e)🎨|sprites
+(+)Tools and flamethrowers have had their sprites replaced with new and improved versions, new crowbar subtype
+(u)Tarmunora
+(*)Secretized Neutronium recipe. Experiment!
 (u)Gonzako
 (p)2346
 (e)|
