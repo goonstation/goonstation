@@ -7465,7 +7465,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aqG" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -7477,7 +7477,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aqH" = (
 /obj/cable{
 	d2 = 8;
@@ -7485,10 +7485,10 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aqI" = (
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aqJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7645,7 +7645,7 @@
 /obj/item/clothing/suit/cultist/nerd,
 /obj/item/paper/book/critter_compendium,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "arc" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -7656,7 +7656,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ard" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/emergency)
@@ -7786,7 +7786,7 @@
 /area/station/engine/engineering)
 "arr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ars" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -7933,7 +7933,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "arI" = (
 /obj/machinery/light{
 	dir = 8;
@@ -8111,7 +8111,7 @@
 	req_access_txt = "44"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "arZ" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
@@ -8277,7 +8277,7 @@
 	req_access_txt = "44"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "asr" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -8288,7 +8288,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ass" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/black/side{

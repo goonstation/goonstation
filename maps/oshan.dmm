@@ -552,7 +552,7 @@
 "abs" = (
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "abt" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 1;
@@ -1333,7 +1333,7 @@
 "acN" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "acO" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "diner"
@@ -3836,7 +3836,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aih" = (
 /obj/disposalpipe/segment/produce{
 	dir = 4
@@ -12519,7 +12519,7 @@
 "aBM" = (
 /obj/item/screwdriver,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aBN" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
@@ -12805,12 +12805,12 @@
 /area/station/medical/medbay/lobby)
 "aCD" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aCE" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aCF" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/teleporter)
@@ -13096,7 +13096,7 @@
 /area/station/medical/medbay/lobby)
 "aDr" = (
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aDs" = (
 /obj/lrteleporter,
 /obj/disposalpipe/segment/mail,
@@ -13761,7 +13761,7 @@
 "aEV" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aEW" = (
 /obj/machinery/disposal/mail/small/autoname{
 	dir = 4;
@@ -14005,7 +14005,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aFA" = (
 /obj/table/reinforced/auto,
 /obj/item/device/light/flashlight,
@@ -14484,21 +14484,21 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aGH" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aGI" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/rubber_hammer,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aGJ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -14508,7 +14508,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aGK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/bot_storage)
@@ -15199,11 +15199,11 @@
 "aIi" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aIj" = (
 /obj/item/wrench,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aIk" = (
 /obj/machinery/vending/computer3,
 /turf/simulated/floor/plating/random,
@@ -15382,7 +15382,7 @@
 "aIH" = (
 /obj/storage/closet/wardrobe/pride,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aII" = (
 /obj/machinery/computer3/terminal/zeta{
 	setup_os_string = "ZETA_MAINFRAME"
@@ -15825,7 +15825,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aJA" = (
 /obj/table/auto,
 /obj/item/peripheral/sound_card,
@@ -15997,7 +15997,7 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aJV" = (
 /obj/table/auto,
 /obj/item/peripheral/drive,
@@ -16106,17 +16106,17 @@
 "aKk" = (
 /obj/item/device/multitool,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aKl" = (
 /obj/item/reagent_containers/food/snacks/candy/candyheart,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aKm" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine/glow/blue{
 	dir = 10
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aKn" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/cable{
@@ -16322,7 +16322,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	dir = 10
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aKM" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -16529,7 +16529,7 @@
 "aLn" = (
 /obj/item/weldingtool,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLo" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -16539,7 +16539,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLp" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -16551,7 +16551,7 @@
 /obj/decal/cleanable/dirt,
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLq" = (
 /obj/cable{
 	d1 = 2;
@@ -16559,7 +16559,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLr" = (
 /obj/cable{
 	d1 = 2;
@@ -16577,7 +16577,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLs" = (
 /obj/cable{
 	d1 = 2;
@@ -16590,7 +16590,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLt" = (
 /obj/cable{
 	d1 = 4;
@@ -16598,7 +16598,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLu" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -16610,7 +16610,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLv" = (
 /obj/disposalpipe/segment/brig,
 /obj/cable{
@@ -16801,11 +16801,11 @@
 "aLS" = (
 /obj/machinery/bot/cleanbot,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLT" = (
 /obj/item/clothing/suit/hi_vis,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLU" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/arcade)
@@ -16816,7 +16816,7 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLX" = (
 /obj/disposalpipe/segment/brig,
 /obj/machinery/light/incandescent/netural,
@@ -17264,13 +17264,13 @@
 /turf/simulated/floor/engine/glow/blue{
 	dir = 10
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aMZ" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/engine/glow/blue{
 	dir = 10
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aNa" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 9
@@ -17755,13 +17755,13 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aOr" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aOs" = (
 /obj/storage/closet/coffin,
 /obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
@@ -18226,7 +18226,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	dir = 10
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aPE" = (
 /obj/disposalpipe/segment/brig,
 /obj/machinery/light/incandescent/netural,
@@ -18299,7 +18299,7 @@
 "aPM" = (
 /obj/machinery/conveyor/oshan_carousel/coroner/westnorth,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aPN" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -24329,7 +24329,7 @@
 "beL" = (
 /obj/machinery/conveyor/oshan_carousel,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "beM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/data)
@@ -24398,7 +24398,7 @@
 "beW" = (
 /obj/decal/poster/wallsign/construction,
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "beX" = (
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/disposal,
@@ -25871,7 +25871,7 @@
 "biD" = (
 /obj/machinery/conveyor/oshan_carousel/coroner/southeast,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "biE" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
@@ -26106,7 +26106,7 @@
 "bjl" = (
 /obj/machinery/conveyor/oshan_carousel,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bjm" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/wingrille_spawn/auto/crystal,
@@ -29298,7 +29298,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bqQ" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -29812,7 +29812,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "brY" = (
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
@@ -31614,7 +31614,7 @@
 "bwy" = (
 /obj/item/clothing/head/helmet/bucket,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bwz" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
@@ -41241,7 +41241,7 @@
 "bTL" = (
 /obj/item/cable_coil,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bTM" = (
 /obj/storage/closet/wardrobe/orange,
 /obj/machinery/light/incandescent/cool,
@@ -42654,7 +42654,7 @@
 "bXl" = (
 /obj/item/crowbar,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bXm" = (
 /obj/machinery/light/incandescent/blueish,
 /obj/item/crowbar,
@@ -45425,25 +45425,25 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cfL" = (
 /obj/storage/cart/trash,
 /obj/machinery/disposal/cart_port,
 /obj/disposalpipe/trunk/south,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cfM" = (
 /obj/storage/cart/trash,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cfN" = (
 /obj/disposalpipe/segment,
 /obj/critter/mouse{
 	name = "Moose"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cfO" = (
 /turf/simulated/wall/auto/supernorn,
 /area/space)
@@ -45457,13 +45457,13 @@
 	},
 /obj/plasticflaps,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cfR" = (
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
 "cfS" = (
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cfT" = (
 /obj/cable{
 	d1 = 4;
@@ -45517,7 +45517,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cgb" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
@@ -45846,7 +45846,7 @@
 	icon_state = "1-2-thick"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cgT" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -45859,11 +45859,11 @@
 /obj/item/paper,
 /obj/item/pen,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cgU" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cgV" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45872,7 +45872,7 @@
 	icon_state = "0-4-thick"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cgW" = (
 /obj/machinery/light/incandescent/blueish,
 /obj/storage/crate/wooden,
@@ -45888,7 +45888,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cgY" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -45905,14 +45905,14 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cha" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "chb" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -45922,16 +45922,16 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "chc" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "chd" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "che" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/disposalpipe/segment,
@@ -45940,7 +45940,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "chf" = (
 /obj/storage/closet/coffin/wood,
 /turf/simulated/floor/plating/random,
@@ -46404,25 +46404,25 @@
 	icon_state = "1-2-thick"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ciM" = (
 /obj/machinery/conveyor/oshan_carousel{
 	dir = 1
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ciN" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ciO" = (
 /obj/storage/closet/law,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ciP" = (
 /obj/decal/cleanable/paper,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ciQ" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /turf/simulated/floor/plating/random,
@@ -46439,7 +46439,7 @@
 /obj/table/round/auto,
 /obj/item/clothing/head/paper_hat,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ciU" = (
 /obj/shrub{
 	dir = 4;
@@ -46461,16 +46461,16 @@
 /obj/table/round/auto,
 /obj/item/paper_bin,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ciW" = (
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ciX" = (
 /obj/cable/reinforced{
 	icon_state = "1-4-thick"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ciY" = (
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/shuttlebay,
@@ -46480,7 +46480,7 @@
 	icon_state = "1-2-thick"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cja" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -46489,7 +46489,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjb" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "mining_podbay"
@@ -46538,7 +46538,7 @@
 	icon_state = "4-8-thick"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjg" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -46547,11 +46547,11 @@
 /obj/item/furniture_parts/table/reinforced/bar,
 /obj/item/furniture_parts/table/reinforced/bar,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjh" = (
 /obj/item/furniture_parts/wheelchair,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cji" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -46559,13 +46559,13 @@
 /obj/table/round/auto,
 /obj/item/storage/box/cablesbox,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjk" = (
 /obj/item/furniture_parts/office_chair,
 /obj/item/furniture_parts/office_chair/green,
@@ -46573,16 +46573,16 @@
 /obj/item/furniture_parts/office_chair/yellow,
 /obj/item/furniture_parts/office_chair/blue,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjl" = (
 /obj/item/furniture_parts/bench/wooden,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjm" = (
 /obj/item/furniture_parts/comfy_chair,
 /obj/item/furniture_parts/comfy_chair,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjn" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -46596,7 +46596,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjo" = (
 /obj/table/round/auto,
 /obj/item/furniture_parts/stool,
@@ -46604,43 +46604,43 @@
 /obj/item/furniture_parts/stool,
 /obj/item/furniture_parts/stool,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjp" = (
 /obj/decal/poster/wallsign/poster_beach,
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjq" = (
 /obj/item/clothing/mask/cigarette/random,
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjr" = (
 /obj/stool/chair/red{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjs" = (
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjt" = (
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cju" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjv" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/access_spawn/maint,
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjw" = (
 /obj/decal/poster/wallsign/construction,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjx" = (
 /obj/rack,
 /obj/item/clothing/shoes/flippers,
@@ -46659,7 +46659,7 @@
 "cjz" = (
 /obj/machinery/conveyor/oshan_carousel/coroner/northeast,
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjA" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -46672,7 +46672,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjB" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -46694,23 +46694,23 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjE" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
 	},
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjF" = (
 /obj/storage/crate,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjG" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
 	},
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjH" = (
 /obj/plasticflaps,
 /obj/forcefield/energyshield/perma{
@@ -46720,72 +46720,72 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjI" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjJ" = (
 /obj/plasticflaps,
 /obj/machinery/conveyor/oshan_carousel{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjK" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjL" = (
 /obj/machinery/drainage/big,
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjM" = (
 /obj/machinery/conveyor/oshan_carousel{
 	dir = 1
 	},
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjN" = (
 /obj/machinery/conveyor/oshan_carousel/coroner/eastnorth,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjO" = (
 /obj/forcefield/energyshield/perma,
 /obj/plasticflaps,
 /obj/machinery/conveyor/oshan_carousel,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjP" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjQ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjR" = (
 /obj/machinery/light/small/floor/blueish,
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjS" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjT" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
 	},
 /obj/machinery/light/small/floor/blueish,
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjU" = (
 /obj/critter/roach,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
@@ -46803,7 +46803,7 @@
 /obj/machinery/conveyor/oshan_carousel,
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cjX" = (
 /obj/lattice{
 	dir = 6;
@@ -46936,7 +46936,7 @@
 "ckq" = (
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckr" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -46945,7 +46945,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cks" = (
 /obj/lattice,
 /obj/machinery/conveyor/oshan_carousel/coroner/westsouth,
@@ -46960,7 +46960,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cku" = (
 /obj/lattice,
 /obj/machinery/conveyor/oshan_carousel/coroner/northeast,
@@ -46974,25 +46974,25 @@
 	tag = ""
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckw" = (
 /obj/machinery/conveyor/oshan_carousel/coroner/eastsouth,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckx" = (
 /obj/machinery/conveyor/oshan_carousel/coroner/southwest,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cky" = (
 /obj/stool/bed/moveable,
 /obj/item/reagent_containers/food/drinks/coffee,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckz" = (
 /obj/item/wirecutters,
 /obj/item/cable_coil,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckA" = (
 /obj/lattice,
 /obj/machinery/conveyor/oshan_carousel/coroner/westnorth,
@@ -47011,19 +47011,19 @@
 "ckD" = (
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckE" = (
 /obj/item/reagent_containers/food/drinks/water,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckF" = (
 /obj/item/sea_ladder,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckG" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47033,27 +47033,27 @@
 	},
 /obj/reagent_dispensers/beerkeg,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckI" = (
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckJ" = (
 /obj/item/wrench,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckK" = (
 /obj/item/tile/steel,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckL" = (
 /obj/item/sheet/glass,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckM" = (
 /obj/item/sheet/steel,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckN" = (
 /obj/lattice,
 /obj/machinery/conveyor/oshan_carousel/coroner/eastnorth,
@@ -47061,14 +47061,14 @@
 /area/space)
 "ckO" = (
 /turf/simulated/wall/false_wall,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckP" = (
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/goose,
 /obj/item/raw_material/scrap_metal,
 /obj/decal/cleanable/paper,
 /obj/item/paper,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckQ" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -47085,25 +47085,25 @@
 	},
 /obj/machinery/conveyor/oshan_carousel/coroner/eastnorth,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckS" = (
 /obj/machinery/conveyor/oshan_carousel/coroner/northwest,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckT" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckU" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckV" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/eeva)
@@ -47113,32 +47113,32 @@
 "ckX" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckY" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
 	},
 /obj/storage/crate,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ckZ" = (
 /obj/cable/reinforced{
 	icon_state = "2-8-thick"
 	},
 /obj/storage/crate,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cla" = (
 /obj/machinery/conveyor/oshan_carousel{
 	dir = 1
 	},
 /obj/item/bananapeel,
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "clb" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "clc" = (
 /obj/machinery/conveyor/oshan_carousel{
 	dir = 4
@@ -47150,7 +47150,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cld" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -47258,7 +47258,7 @@
 "cls" = (
 /obj/item/spongecaps,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "clt" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47362,7 +47362,7 @@
 	},
 /obj/machinery/cargo_router/oshan_north,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "clI" = (
 /obj/stool/chair{
 	dir = 4

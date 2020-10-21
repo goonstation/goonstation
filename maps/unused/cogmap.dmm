@@ -44656,7 +44656,7 @@
 	name = "COLLISION HAZARD"
 	},
 /turf/simulated/wall,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bMW" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -44668,7 +44668,7 @@
 	name = "Cargo Routing Door"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bMX" = (
 /obj/machinery/conveyor{
 	dir = 2;
@@ -44680,7 +44680,7 @@
 	name = "Cargo Routing Door"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bMY" = (
 /turf/simulated/wall,
 /area/station/engine/elect)
@@ -45474,7 +45474,7 @@
 /area/station/routingdepot/airbridge)
 "bOv" = (
 /turf/simulated/wall,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bOw" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -45483,7 +45483,7 @@
 	},
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bOx" = (
 /obj/window/reinforced/west,
 /obj/machinery/conveyor{
@@ -45502,7 +45502,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bOy" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -46248,7 +46248,7 @@
 /obj/window/reinforced/east,
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bPZ" = (
 /obj/machinery/conveyor{
 	dir = 2;
@@ -46262,7 +46262,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bQa" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -46958,7 +46958,7 @@
 	name = "Cargo Routing Door"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bRr" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -46967,7 +46967,7 @@
 	},
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bRs" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -46983,7 +46983,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bRt" = (
 /obj/window/reinforced/west,
 /obj/machinery/conveyor{
@@ -46996,7 +46996,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bRu" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -47701,7 +47701,7 @@
 	name = "Cargo Routing Door"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bSL" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -47711,7 +47711,7 @@
 	},
 /obj/window/reinforced/north,
 /turf/simulated/floor/caution/northsouth,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bSM" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -47721,7 +47721,7 @@
 /obj/machinery/launcher_loader/west,
 /obj/window/reinforced/north,
 /turf/simulated/floor/caution/northsouth,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bSN" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -47729,7 +47729,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bSO" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -48604,7 +48604,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bUq" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,

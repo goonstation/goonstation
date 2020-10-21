@@ -29596,7 +29596,7 @@
 /obj/window/auto/reinforced,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bks" = (
 /obj/decal/poster/wallsign/stencil/right/d{
 	pixel_x = 17
@@ -43167,7 +43167,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bMQ" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -43179,7 +43179,7 @@
 	name = "Cargo Routing Door"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bMR" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -43190,7 +43190,7 @@
 	name = "Cargo Routing Door"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bMS" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/elect)
@@ -43992,7 +43992,7 @@
 /area/station/routingdepot/airbridge)
 "bOq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bOr" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -44003,7 +44003,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bOs" = (
 /obj/window/reinforced{
 	dir = 8
@@ -44022,7 +44022,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bOt" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -44754,7 +44754,7 @@
 	},
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bPT" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -44769,7 +44769,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bPU" = (
 /obj/grille/steel,
 /obj/cable{
@@ -45441,7 +45441,7 @@
 	name = "Cargo Routing Door"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bRn" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -45452,7 +45452,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bRo" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -45466,7 +45466,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bRp" = (
 /obj/window/reinforced{
 	dir = 8
@@ -45479,7 +45479,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bRq" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -46159,7 +46159,7 @@
 	name = "Cargo Routing Door"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bSI" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -46170,7 +46170,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bSJ" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -46182,7 +46182,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bSK" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -46190,7 +46190,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bSL" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -47040,7 +47040,7 @@
 /area/station/hallway/primary/south)
 "bUn" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bUo" = (
 /obj/window/reinforced{
 	dir = 2
