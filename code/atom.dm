@@ -454,11 +454,12 @@
 	if (A != src.loc && A?.z == src.z)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
-			for (var/_M in attached_objs)
-				var/atom/movable/M = _M
+			for (var/atom/movable/M as() in attached_objs)
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()
+		if (islist(src.tracked_mud))
+			src.track_mud()
 		actions.interrupt(src, INTERRUPT_MOVE)
 		#ifdef COMSIG_MOVABLE_MOVED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
@@ -614,6 +615,8 @@
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 /atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user))
+		return
 	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
 	return
@@ -739,13 +742,6 @@
 
 /atom/proc/Bumped(AM as mob|obj)
 	return
-
-/atom/proc/contains(var/atom/A)
-	if(!A)
-		return 0
-	for(var/atom/location = A.loc, location, location = location.loc)
-		if(location == src)
-			return 1
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
 	SPAWN_DBG( 0 )

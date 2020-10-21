@@ -531,8 +531,7 @@
 	if(getStatusDuration("stonerit"))
 		ret += 20
 
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		ret += C.getProperty("block")
 
 	return ret
@@ -693,8 +692,13 @@
 
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone, DAMAGE_BLUNT)
-
+		var/pre_armor_damage = damage
 		damage -= armor_mod
+		if(damage/pre_armor_damage <= 0.66)
+			block_spark(target,armor=1)
+			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
+		if(damage <= 0)
+			fuckup_attack_particle(src)
 
 		//reduce stamina by the same proportion that base damage was reduced
 		//min cap is stam_power/3 so we still cant ignore it entirely
@@ -710,7 +714,19 @@
 			msgs.played_sound = pick(sounds_punch)
 			//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+		var/armor_blocked = 0
+
+		if(pre_armor_damage > 0 && damage/pre_armor_damage <= 0.66)
+			block_spark(target,armor=1)
+			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1,pitch=1.5)
+			if(damage <= 0)
+				fuckup_attack_particle(src)
+				armor_blocked = 1
+
+		if(armor_blocked)
+			msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target], but [target]'s armor blocks it!</B></span>"
+		else
+			msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
 
 		if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 			msgs.stamina_self -= STAMINA_HTH_COST

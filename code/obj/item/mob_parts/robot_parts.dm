@@ -460,6 +460,16 @@
 			var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(src.loc)
 			C.amount = src.wires
 			src.wires = 0
+
+		else if (isweldingtool(W) && src.type == /obj/item/parts/robot_parts/chest)
+			var/obj/item/weldingtool/welder = W
+			if (welder.try_weld(user, 3, 3))
+				var/obj/item/clothing/suit/armor/makeshift/R = new /obj/item/clothing/suit/armor/makeshift(get_turf(user))
+				boutput(user, "<span class='notice'>You remove the internal support structures of the [src]. It's structural integrity is ruined, but you could squeeze into it now.</span>")
+				user.u_equip(src)
+				user.put_in_hand_or_drop(R)
+				qdel(src)
+
 		else ..()
 
 /obj/item/parts/robot_parts/chest/light
@@ -1129,7 +1139,7 @@
 		else if (O.ai_interface)
 			if (!(O in available_ai_shells))
 				available_ai_shells += O
-			for (var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
+			for_by_tcl(AI, /mob/living/silicon/ai)
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 			O.shell = 1
 		else if (istype(O.brain, /obj/item/organ/brain/latejoin))
@@ -1282,95 +1292,3 @@
 			else
 				break
 			law_counter++
-
-/obj/item/parts/robot_parts/arm/left/reliquary
-	name = "odd robotic left arm"
-	slot = "l_arm"
-	handlistPart = "hand_left_reli"
-	var/name_thing = "reli"
-	appearanceString = "reli"
-	icon_state = "l_arm-reli"
-	streak_decal = /obj/decal/cleanable/reliquaryblood
-	streak_descriptor = "blood"
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		return
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-
-/obj/item/parts/robot_parts/arm/right/reliquary
-	name = "odd robotic right arm"
-	slot = "r_arm"
-	handlistPart = "hand_right_reli"
-	var/name_thing = "reli"
-	appearanceString = "reli"
-	icon_state = "r_arm-reli"
-	streak_decal = /obj/decal/cleanable/reliquaryblood
-	streak_descriptor = "blood"
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		return
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-
-/obj/item/parts/robot_parts/leg/left/reliquary
-	name = "odd robotic left leg"
-	slot = "l_leg"
-	handlistPart = "foot_left_reli"
-	var/name_thing = "reli"
-	appearanceString = "reli"
-	icon_state = "l_leg-reli"
-	streak_decal = /obj/decal/cleanable/reliquaryblood
-	streak_descriptor = "blood"
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		return
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-
-/obj/item/parts/robot_parts/leg/right/reliquary
-	name = "odd robotic right leg"
-	slot = "r_leg"
-	handlistPart = "foot_right_reli"
-	var/name_thing = "reli"
-	appearanceString = "reli"
-	icon_state = "r-leg-reli"
-	streak_decal = /obj/decal/cleanable/reliquaryblood
-	streak_descriptor = "blood"
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		return
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")

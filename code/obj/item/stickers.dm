@@ -304,6 +304,10 @@
 	name = "bee sticker"
 	icon_state = "bee"
 
+/obj/item/sticker/robuddy
+	name = "robuddy sticker"
+	icon_state = "robuddy"
+
 /obj/item/sticker/xmas_ornament
 	name = "ornament"
 	desc = "A Spacemas ornament!"
@@ -561,6 +565,7 @@
 	name = "spy radio"
 	desc = "Spy radio housed in a sticker. Wait, how are you reading this?"
 	listening = 0
+	hardened = 0
 
 /obj/item/device/radio/spy/sec_only
 	locked_frequency = 1

@@ -176,6 +176,8 @@
 		// in this case m is the consumer and user is the one holding it
 		if (!src.edible)
 			return 0
+		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
+			return 0
 		if (M == user && user.mob_flags & IS_RELIQUARY)
 			boutput(user, "<span class='alert'>You don't come equipped with a digestive system, there would be no point in eating this.</span>")
 			return 0
@@ -1127,7 +1129,7 @@
 			return ..()
 
 		if (!ishuman(user))
-			boutput(user, "<span class='notice'>You don't know what to do with the glass.</span>")
+			boutput(user, "<span class='notice'>You don't know what to do with [src].</span>")
 			return
 		var/mob/living/carbon/human/H = user
 		var/list/choices = list()
@@ -1140,13 +1142,13 @@
 			if (!istype(src.in_glass, /obj/item/cocktail_stuff/drink_umbrella) || (H.bioHolder && (H.bioHolder.HasEffect("clumsy") || H.bioHolder.HasEffect("mattereater"))))
 				choices += "eat [src.in_glass]"
 		if (src.wedge)
-			choices += "remove [src.wedge] wedge"
-			choices += "eat [src.wedge] wedge"
+			choices += "remove [src.wedge]"
+			choices += "eat [src.wedge]"
 		if (!choices.len)
-			boutput(user, "<span class='notice'>You can't think of anything to do with the glass.</span>")
+			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
 
-		var/selection = input(user, "What do you want to do with the glass?") as null|anything in choices
+		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
 		if (isnull(selection) || get_dist(src, user) > 1)
 			return
 
@@ -1171,7 +1173,7 @@
 			remove_thing = src.in_glass
 			src.in_glass = null
 
-		else if (selection == "remove [src.wedge] wedge")
+		else if (selection == "remove [src.wedge]")
 			remove_thing = src.wedge
 			src.wedge = null
 
@@ -1179,7 +1181,7 @@
 			eat_thing = src.in_glass
 			src.in_glass = null
 
-		else if (selection == "eat [src.wedge] wedge")
+		else if (selection == "eat [src.wedge]")
 			eat_thing = src.wedge
 			src.wedge = null
 
@@ -1553,6 +1555,7 @@
 	item_state = "drink_glass"
 	rc_flags = RC_SPECTRO
 	initial_volume = 15
+	can_recycle = 0
 
 /obj/item/reagent_containers/food/drinks/espressocup
 	name = "espresso cup"

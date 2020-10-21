@@ -109,8 +109,21 @@ mob/verb/checkrewards()
 
 //JANITOR
 
+/datum/jobXpReward/janitor5
+	name = "Red Bucket"
+	desc = "A bucket! And it's red! Wow."
+	required_levels = list("Janitor"=5)
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/reagent_containers/glass/bucket/red/T = new/obj/item/reagent_containers/glass/bucket/red(get_turf(C.mob))
+		T.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(T)
+		return
+
 /datum/jobXpReward/janitor10
-	name = "Holographic signs (WIP)"
+	name = "Holographic Signs "
 	desc = "Gives access to a hologram emitter loaded with various signs."
 	required_levels = list("Janitor"=10)
 	icon_state = "holo"
@@ -124,42 +137,91 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(T)
 		return
 
-// /datum/jobXpReward/janitor15
-// 	name = "Tsunami-P3"
-// 	desc = "Gain access to the Tsunami-P3 spray bottle."
-// 	required_levels = list("Janitor"=15)
-// 	icon_state = "tsunami"
-// 	claimable = 1
-// 	claimPerRound = 1
+/datum/jobXpReward/janitor15
+	name = "Orange Mop"
+	desc = "A mop! And it's orange! Amazing."
+	required_levels = list("Janitor"=15)
+	claimable = 1
+	claimPerRound = 1
 
-// 	activate(var/client/C)
-// 		var/obj/item/spraybottle/cleaner/tsunami/T = new/obj/item/spraybottle/cleaner/tsunami()
-// 		T.set_loc(get_turf(C.mob))
-// 		C.mob.put_in_hand(T)
-// 		return
-
-// /datum/jobXpReward/janitor20
-// 	name = "Antique Mop"
-// 	desc = "Gain access to an ancient mop."
-// 	required_levels = list("Janitor"=20)
-// 	icon_state = "tsunami"
-// 	claimable = 1
-// 	claimPerRound = 1
-
-// 	activate(var/client/C)
-// 		var/obj/item/mop/old/T = new/obj/item/mop/old()
-// 		T.set_loc(get_turf(C.mob))
-// 		C.mob.put_in_hand(T)
-// 		return
+	activate(var/client/C)
+		var/obj/item/mop/orange/T = new/obj/item/mop/orange(get_turf(C.mob))
+		T.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(T)
+		return
 
 /datum/jobXpReward/janitor20
-	name = "(TBI)"
-	desc = "(TBI)"
+	name = "Head of Sanitation beret"
+	desc = "You've seen it all.  You've seen entirely too much. Was it worth it? Maybe this hat will help you forget..."
 	required_levels = list("Janitor"=20)
-	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/clothing/head/janiberet/T = new/obj/item/clothing/head/janiberet(get_turf(C.mob))
+		T.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(T)
+		return
 
 //JANITOR END
 
+//BOTANIST
+
+/datum/jobXpReward/botanist/seed
+	name = "Strange Seed"
+	desc = "You notice a strange looking seed and grab it instinctually before you realize what happened."
+	required_levels = list("Botanist"=0)
+	icon_state
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/seed/alien/S = new/obj/item/seed/alien(get_turf(C.mob))
+		S.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(S)
+		return
+
+/datum/jobXpReward/botanist/wateringcan
+	name = "Golden Watering Can"
+	desc = "A Golden Watering can. Seems the same as normal otherwise..."
+	required_levels = list("Botanist"=3)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+	var/path_to_spawn = /obj/item/reagent_containers/glass/wateringcan/gold
+
+	activate(var/client/C)
+		var/obj/item/reagent_containers/glass/wateringcan/can = locate(/obj/item/reagent_containers/glass/wateringcan) in C.mob.contents
+
+		if (istype(can))
+			C.mob.remove_item(can)
+			qdel(can)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You blink and your watering can seems different...")
+
+/datum/jobXpReward/botanist/wateringcan/weed
+	name = "Weed Watering Can"
+	desc = "A Watering can with the likeness of a certain plant on it. Seems the same as normal otherwise..."
+	required_levels = list("Botanist"=8)
+	path_to_spawn = /obj/item/reagent_containers/glass/wateringcan/weed
+
+/datum/jobXpReward/botanist/wateringcan/rainbow
+	name = "Rainbow Watering Can"
+	desc = "A Watering can that looks like it's made of rainbows... sorta. Seems the same as normal otherwise..."
+	required_levels = list("Botanist"=10)
+	path_to_spawn = /obj/item/reagent_containers/glass/wateringcan/rainbow
+
+/datum/jobXpReward/botanist/wateringcan/old
+	name = "Antique Watering Can"
+	desc = "A Watering can that looks like it's made of rainbows... sorta. Seems the same as normal otherwise..."
+	required_levels = list("Botanist"=20)
+	path_to_spawn = /obj/item/reagent_containers/glass/wateringcan/old
+
+
+
+//Botanist End
 /datum/jobXpReward/head_of_security_LG
 	name = "The Lawbringer"
 	desc = "Gain access to a voice activated weapon of the future-past by sacrificing your egun."

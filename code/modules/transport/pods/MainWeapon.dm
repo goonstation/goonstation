@@ -3,7 +3,7 @@
 	desc = "A simple phaser designed for scout vehicles."
 	var/r_gunner = 0
 	var/mob/gunner = null
-	var/datum/projectile/current_projectile = new/datum/projectile/laser/light
+	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
 	var/isfiring = 0
 	var/weapon_score = 0.1
@@ -126,7 +126,7 @@
 	desc = "A basic, light weight phaser designed for scout vehicles."
 	weapon_score = 0.3
 	appearanceString = "pod_weapon_ltlaser"
-	current_projectile = new/datum/projectile/laser/light
+	current_projectile = new/datum/projectile/laser/light/pod
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
 
@@ -356,3 +356,25 @@
 
 		opencomputer(usr)
 		return
+
+
+/datum/projectile/laser/pod
+	dissipation_rate = 2
+	dissipation_delay = 16
+	projectile_speed = 32
+
+/datum/projectile/laser/light/pod
+	impact_range = 2
+	dissipation_rate = 1
+	dissipation_delay = 14
+	projectile_speed = 32
+
+/datum/projectile/disruptor
+	impact_range = 4
+	dissipation_delay = 16
+	projectile_speed = 32
+
+/datum/projectile/disruptor/high
+	impact_range = 4
+	dissipation_delay = 16
+	projectile_speed = 32

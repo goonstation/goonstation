@@ -15,15 +15,15 @@
 			src.desc = "This is one WEIRD burrito..."
 
 	attackby(obj/item/weapon as obj,mob/user as mob)
-		if((istype(weapon, /obj/item/pen))&&(src.icon_state=="scrollopen"))
+		if((istype(weapon, /obj/item/pen)) && (src.icon_state=="scrollopen"))
 			user.visible_message("<span class='alert'><b>[user.name] stabs themself with the [weapon] and sign the contract in blood!</b></span>","<span class='alert'><b>You stab yourself with the [weapon] and sign the contract in blood!</b></span>")
 			playsound(user, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 			take_bleeding_damage(user, null, 10, DAMAGE_STAB)
 			src.icon_state = "signing"
-			sleep(4.6 SECONDS)
-			src.signer = user.real_name
-			src.name = "[user.real_name]'s signed demonic contract"
-			src.icon_state = "signed"
+			if (do_after(user, 4.6 SECONDS))
+				src.signer = user.real_name
+				src.name = "[user.real_name]'s signed demonic contract"
+				src.icon_state = "signed"
 
 	attack(mob/user as mob,mob/target as mob)
 		if((user == target)&&(src.icon_state == "scrollclosed"))
@@ -194,7 +194,7 @@
 			if(!yn)
 				yn = pick("Repeat","Cancel")
 			if(yn == "Repeat")
-				var/repeat = input(user,"Choose a card!","Choice") as anything in deck.usedcards
+				var/repeat = input(user,"Choose a card!","Choice") as() in deck.usedcards
 				if(!deck.usedcards.len)
 					boutput(user,"<span class='alert'><b>There are no card effects to be repeated!</b></span>")
 				if(!repeat)

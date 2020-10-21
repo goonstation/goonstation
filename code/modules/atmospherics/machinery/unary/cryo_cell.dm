@@ -67,6 +67,7 @@
 				if (!ishuman(occupant))
 					src.go_out() // stop turning into cyborgs thanks
 				if (occupant.health < occupant.max_health || occupant.bioHolder.HasEffect("premature_clone"))
+
 					process_occupant()
 				else
 					src.go_out()

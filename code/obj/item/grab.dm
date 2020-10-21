@@ -232,7 +232,7 @@
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
 					for (var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
-						if (C.body_parts_covered & HEAD)
+						if (C.c_flags & (BLOCKCHOKE))
 							boutput(src.assailant, "<span class='notice'>You have to take off [src.affecting]'s [C.name] first!</span>")
 							return
 				actions.start(new/datum/action/bar/icon/strangle_target(src.affecting, src), src.assailant)
@@ -619,24 +619,31 @@
 				return use_internal.remove_air_volume(volume_needed)
 
 	upgrade_to_kill()
-		if (src.assailant.wear_mask && src.assailant.wear_mask.c_flags & COVERSMOUTH | MASKINTERNALS)
+		var/list/clothing = list(src.affecting.wear_mask)
+		if(ishuman(src.affecting))
+			var/mob/living/carbon/human/H = src.affecting
+			clothing += H.wear_suit
+			clothing += H.w_uniform
+			clothing += H.head
+		for (var/obj/item/clothing/C in clothing)
+			if (C.c_flags & (COVERSMOUTH | MASKINTERNALS))
+				for (var/mob/O in AIviewers(src.assailant, null))
+					O.show_message("<span class='alert'>[src.assailant] fails to choke [src.affecting] with [src.loc] because their [C] is in the way!</span>", 1)
+				return 0
+
+		..(msg_overridden = 1)
+
+		var/obj/item/tank/use_internal = null
+		for (var/obj/item/tank/T in src.assailant.equipped_list(check_for_magtractor = 0))
+			use_internal = T
+			break
+
+		if (use_internal)
 			for (var/mob/O in AIviewers(src.assailant, null))
-				O.show_message("<span class='alert'>[src.assailant] fails to choke [src.affecting] with [src.loc] because they are already wearing [src.assailant.wear_mask]!</span>", 1)
-			return 0
+				O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck, forcing them to inhale from [use_internal]!</span>", 1)
 		else
-			..(msg_overridden = 1)
-
-			var/obj/item/tank/use_internal = null
-			for (var/obj/item/tank/T in src.assailant.equipped_list(check_for_magtractor = 0))
-				use_internal = T
-				break
-
-			if (use_internal)
-				for (var/mob/O in AIviewers(src.assailant, null))
-					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck, forcing them to inhale from [use_internal]!</span>", 1)
-			else
-				for (var/mob/O in AIviewers(src.assailant, null))
-					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck with no internals tank attached!</span>", 1)
+			for (var/mob/O in AIviewers(src.assailant, null))
+				O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck with no internals tank attached!</span>", 1)
 
 
 

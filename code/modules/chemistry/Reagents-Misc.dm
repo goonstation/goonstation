@@ -158,7 +158,7 @@ datum
 				var/datum/reagents/silver_fulminate_holder = holder
 				var/silver_fulminate_volume = volume
 				silver_fulminate_holder.del_reagent("silver_fulminate")
-				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*200,35,500)
+				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*200,10,35,500)
 
 			reaction_temperature(var/exposed_temperature, var/exposed_volume)
 				if (exposed_temperature >= T0C + 30)
@@ -170,8 +170,9 @@ datum
 
 			reaction_turf(var/turf/T, var/amount)
 				// adding a slight delay solely to make silver fulminate foam way more fun
-				sleep(rand(0, 5))
-				pop(T, amount)
+				spawn(rand(0, 5))
+					if (src && T)
+						pop(T, amount)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/amount_passed)
 				if (method == TOUCH)
@@ -840,8 +841,7 @@ datum
 					if (!target)
 						return
 
-				for(var/atom in target)
-					var/atom/A = atom
+				for (var/atom/A as() in target)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							target.visible_message("<span class='alert'><b>[A]</b> dissolves completely!</span>")
@@ -2725,10 +2725,12 @@ datum
 						multiplier /= 2
 					arcFlash(grenade, A, 0)
 
-			reaction_mob(var/mob/M, var/method = TOUCH)
-				var/vol = max(1,volume)
+			reaction_mob(var/mob/M, var/method = TOUCH, volume_passed)
+				var/vol = max(1,volume_passed)
 				if (method == TOUCH)
 					M.shock(src.holder.my_atom, min(7500 * multiplier, vol * 100 * multiplier), "chest", 1, 1)
+				if(istype(holder, /datum/reagents/fluid_group))
+					holder.remove_reagent(src.id, vol)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (reacting)

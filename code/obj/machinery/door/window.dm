@@ -126,18 +126,18 @@
 		if (need_rebuild)
 			if (istype(source)) // Rebuild resp. update nearby group geometry.
 				if (source.parent)
-					air_master.queue_update_group(source.parent)
+					air_master.groups_to_rebuild |= source.parent
 				else
-					air_master.queue_update_tile(source)
+					air_master.tiles_to_update |= source
 
 			if (istype(target))
 				if (target.parent)
-					air_master.queue_update_group(target.parent)
+					air_master.groups_to_rebuild |= target.parent
 				else
-					air_master.queue_update_tile(target)
+					air_master.tiles_to_update |= target
 		else
-			if (istype(source)) air_master.queue_update_tile(source)
-			if (istype(target)) air_master.queue_update_tile(target)
+			if (istype(source)) air_master.tiles_to_update |= source
+			if (istype(target)) air_master.tiles_to_update |= target
 
 		if (istype(source))
 			source.selftilenotify() //for fluids

@@ -430,8 +430,8 @@
 		spawn_contents = list(/obj/item/paper/nast_manual,
 		/obj/item/turret_deployer,
 		/obj/item/wrench/battle,
-		/obj/item/gun/kinetic/spes,
-		/obj/item/storage/pouch/shotgun,
+		/obj/item/gun/kinetic/spes/engineer,
+		/obj/item/storage/pouch/shotgun/weak,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
 		/obj/item/clothing/glasses/meson,
@@ -616,4 +616,8 @@
 	weapons4
 		spawn_contents = list(/obj/item/gun/kinetic/zipgun,
 		/obj/item/ammo/bullets/a38 = 2)
+
+	cargonia
+		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
+		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
 

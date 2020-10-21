@@ -143,7 +143,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(leaders))
 
-	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -819,9 +819,9 @@
 			new/datum/gang_item/country_western/colt_45_bullet,
 
 			new/datum/gang_item/space/discount_csaber,
-			new/datum/gang_item/space/csaber,
+			// new/datum/gang_item/space/csaber,
 			new/datum/gang_item/ninja/discount_katana,
-			new/datum/gang_item/ninja/katana,
+			// new/datum/gang_item/ninja/katana,
 			new/datum/gang_item/street/cop_car,
 
 			new/datum/gang_item/misc/janktank,
@@ -1013,6 +1013,7 @@
 		score += O.reagents.get_reagent_amount("jenkem")/2
 		score += O.reagents.get_reagent_amount("crank")*1.5
 		score += O.reagents.get_reagent_amount("LSD")/2
+		score += O.reagents.get_reagent_amount("lsd_bee")/3
 		score += O.reagents.get_reagent_amount("space_drugs")/4
 		score += O.reagents.get_reagent_amount("THC")/8
 		score += O.reagents.get_reagent_amount("psilocybin")/2
@@ -1195,7 +1196,7 @@
 		if (istype(target,/mob/living) && user.a_intent != INTENT_HARM)
 			if(user != target)
 				user.visible_message("<span class='alert'><b>[user] shows [src] to [target]!</b></span>")
-			induct_to_gang(target)
+			// induct_to_gang(target)		//this was sometimes kinda causing people to accidentally accept joining a gang.
 			return
 		else
 			return ..()

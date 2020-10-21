@@ -3,6 +3,10 @@
 	mobtype = /mob/living
 	proctype = .proc/loseitem
 
+/datum/component/itemblock/backpackblock/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_TOOLTIP_BLOCKING_APPEND, .proc/append_to_tooltip)
+
 /datum/component/itemblock/backpackblock/proc/loseitem(var/mob/living/M, var/obj/item/weap)
 	var/obj/item/storage/S = parent
 	if(!istype(S)) //HOW???
@@ -24,12 +28,11 @@
 	..()
 	updateblock()
 
-/datum/component/itemblock/backpackblock/getTooltipDesc()
-	.= ..()
+/datum/component/itemblock/backpackblock/proc/append_to_tooltip(parent, list/tooltip)
 	if(showTooltip)
 		var/obj/item/storage/I = parent
-		. += itemblock_tooltip_entry("special.png", "Blocks more damage when filled (+[ceil(I.get_contents().len/3)])")
-		. += itemblock_tooltip_entry("minus.png", "Contents ejected when attacked")
+		tooltip += itemblock_tooltip_entry("special.png", "Blocks more damage when filled (+[ceil(I.get_contents().len/3)])")
+		tooltip += itemblock_tooltip_entry("minus.png", "Contents ejected when attacked")
 
 /datum/component/itemblock/backpackblock/proc/updateblock()
 	var/obj/item/storage/I = parent

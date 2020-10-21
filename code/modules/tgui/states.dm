@@ -30,7 +30,7 @@
 			. = max(., UI_INTERACTIVE)
 
 		// Regular ghosts can always at least view if in range.
-		if(get_dist(src_object, user) < (SQUARE_TILE_WIDTH / 2))
+		if(get_dist(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
 			. = max(., UI_UPDATE)
 
 	// Check if the state allows interaction

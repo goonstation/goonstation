@@ -238,6 +238,7 @@ var/sound/iomoon_alarm_sound = null
 	requires_power = 1
 	force_fullbright = 0
 	luminosity = 0
+	teleport_blocked = 1
 
 	radiation_level = 0.8
 	ambientSound = 'sound/ambience/industrial/AncientPowerPlant_Drone1.ogg'
@@ -888,6 +889,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	anchored = 1
 	density = 1
 
+	ex_act(severity)
+		return 0
+
 	activation_button
 		name = "foreboding panel"
 		desc = "Pressing this would probably be a bad idea."
@@ -952,7 +956,6 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (active || (max_bots  < 1))
 				return -1
 
-			max_bots--
 			active = 1
 			src.dir = 1
 			src.visible_message("<span class='alert'>[src] begins to whirr ominously!</span>")
@@ -961,15 +964,20 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					dir = 2
 					return
 				src.dir = 4
+				if(prob(50)) //cheese reduction
+					src.visible_message("<span class='alert'>[src] produces a terrifying vibration!</span>")
+					for(var/atom/A in orange(3, src))
+						if(!(ismob(A) || iscritter(A))) //only target inanimate objects mostly
+							A.ex_act(1)
 				sleep(1 SECOND)
 				if (health <= 0)
 					dir = 2
 					return
-
 				if (prob(80))
 					new /obj/critter/ancient_repairbot/grumpy (src.loc)
 				else
 					new /obj/critter/ancient_repairbot/security (src.loc)
+				max_bots--
 
 				src.visible_message("<span class='alert'>[src] plunks out a robot! Oh dear!</span>")
 				active = 0
@@ -1155,7 +1163,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					src.zapMarker = new /obj/iomoon_boss/zap_marker(src)
 
 				var/turf/newLoc
-				switch (rand(1, 8))
+				switch (rand(1, 10))
 					if (1)
 						newLoc = locate(src.x, src.y + 4, src.z)
 
@@ -1179,6 +1187,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 					if (8)
 						newLoc = locate(src.x - 3, src.y + 3, src.z)
+
+					if (9 to 10)
+						newLoc = locate (src.x + rand(-1, 1), src.y + rand(-1, 1), src.z)
 
 				if (newLoc)
 					zapMarker.set_loc(newLoc)
@@ -1254,13 +1265,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				for (var/mob/living/poorSoul in range(zapMarker, 2))
 					lineObjs += DrawLine(zapMarker, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-					poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
-					random_burn_damage(poorSoul, 45)
-					boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
-					poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-					poorSoul:Virus_ShockCure(100)
-					poorSoul:shock_cyberheart(100)
-					poorSoul:changeStatus("weakened", 3 SECONDS)
+					poorSoul.shock(src, 1250000, "chest", 0.15, 1)
 					if (isdead(poorSoul) && prob(25))
 						poorSoul.gib()
 
@@ -1304,7 +1309,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		name = "danger zone"
 		desc = "Some sort of light phenomena indicating that this area is hazardous.  Do NOT take a highway to it."
 		density = 0
-		layer = 2.5 // TODO layer
+		layer = 5 // TODO layer
 		icon = 'icons/effects/64x64.dmi'
 		icon_state = "boss_marker"
 		pixel_x = -16

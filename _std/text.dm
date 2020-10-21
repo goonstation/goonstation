@@ -29,3 +29,7 @@ var/global/regex/is_blank_string_regex = new(@{"^(\s|[\u00A0\u2000\u2001\u2002\u
 	if (is_blank_string_regex.Find(txt))
 		return 1
 	return 0 //not blank
+
+var/global/regex/discord_emoji_regex = new(@{"(?:<|&lt;):([-a-zA-Z0-9_]+):(\d{18})(?:>|&gt;)"}, "g")
+/proc/discord_emojify(text)
+	return discord_emoji_regex.Replace(text, {"<img src="https://cdn.discordapp.com/emojis/$2.png" title="$1" width="32" height="32">"})

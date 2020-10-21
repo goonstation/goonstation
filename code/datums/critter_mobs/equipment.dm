@@ -106,6 +106,10 @@
 					offset_y = B.hat_offset_y
 					offset_x = B.hat_offset_x
 
+
+		bee
+			offset_y = -6
+
 	suit
 		name = "suit"
 		type_filters = list(/obj/item/clothing/suit)

@@ -8,8 +8,7 @@
 		..()
 		var/list/closets = list()
 		var/n_closets = 0
-		for(var/X in by_type[/obj/storage/closet])
-			var/obj/storage/closet/closet = X
+		for_by_tcl(closet, /obj/storage/closet)
 			if(isrestrictedz(closet.z))
 				continue
 			closets += closet

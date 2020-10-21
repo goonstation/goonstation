@@ -1,4 +1,4 @@
-// Highly modular HUD for critters.
+/// Highly modular HUD for critters.
 /datum/hud/critter
 	var/list/hands = list()
 	var/list/equipment = list()

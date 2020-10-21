@@ -68,6 +68,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
 	var/obj/item/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
+	move_triggered = 1
 
 	New()
 		..()
@@ -155,8 +156,8 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		..()
 
 /obj/item/flamethrower/backtank
-	name = "tactical flamethrower"
-	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack."
+	name = "Vega flamethrower"
+	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack. Developed by Almagest Weapons Fabrication."
 	icon_state = "syndthrower_0"
 	item_state = "syndthrower_0"
 	uses_multiple_icon_states = 1

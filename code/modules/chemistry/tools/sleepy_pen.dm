@@ -2,6 +2,7 @@
 	desc = "It's a normal black ink pen with a sharp point."
 	flags = FPRINT | ONBELT | TABLEPASS | NOSPLASH | OPENCONTAINER
 	hide_attack = 1
+	move_triggered = 1
 
 	New()
 		..()
@@ -46,7 +47,7 @@
 				src.reagents.add_reagent(pick("spiders", "vomit", "space_drugs", "mutagen"), 5)
 			else
 				src.reagents.add_reagent(pick("water", "krokodil", "methamphetamine"), 4)
-				src.reagents.add_reagent(pick("LSD", "nicotine", "jenkem", "glitter"), 6)
+				src.reagents.add_reagent(pick("LSD", "lsd_bee", "nicotine", "jenkem", "glitter"), 6)
 				src.reagents.add_reagent(pick("radium", "porktonium", "bathsalts", "gvomit"), 2)
 		return
 

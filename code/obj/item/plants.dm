@@ -1,6 +1,5 @@
 
-// Inedible Produce
-
+/// Inedible Produce
 /obj/item/plant/
 	name = "plant"
 	var/crop_suffix = ""

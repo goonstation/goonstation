@@ -350,6 +350,10 @@
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
+/obj/item/storage/belt/utility/superhero
+	name = "superhero utility belt"
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+
 /obj/item/storage/belt/medical
 	name = "medical belt"
 	icon_state = "injectorbelt"
@@ -391,7 +395,8 @@
 	/obj/item/gun/energy/lawbringer/old,
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
-	/obj/item/gun/kinetic/zipgun)
+	/obj/item/gun/kinetic/zipgun,
+	/obj/item/clothing/mask/gas/NTSO) //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
 	in_list_or_max = 1
 
 // kiki's detective shoulder (holster)
@@ -421,6 +426,9 @@
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/tasershotgun //lol
+
+	ntso
+		spawn_contents = list(/obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch, /obj/item/storage/pouch/clock) //secbelt subtype that only spawns on NTSO, not in vendor
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //

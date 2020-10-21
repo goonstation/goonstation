@@ -304,7 +304,7 @@
 			else
 				M.close()
 
-	for (var/obj/machinery/conveyor/M in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
+	for (var/obj/machinery/conveyor/M as() in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)
 			if (M.operating)
 				M.operating = 0
@@ -369,7 +369,7 @@
 
 	sleep(2 SECONDS)
 
-	for(var/obj/machinery/mass_driver/M in machine_registry[MACHINES_MASSDRIVERS])
+	for(var/obj/machinery/mass_driver/M as() in machine_registry[MACHINES_MASSDRIVERS])
 		if(M.id == src.id)
 			M.drive()
 

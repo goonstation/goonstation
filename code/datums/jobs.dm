@@ -660,7 +660,7 @@
 	slot_poc1 = /obj/item/material_shaper
 	slot_poc2 = /obj/item/room_planner
 
-	items_in_backpack = list(/obj/item/rcd/construction/safe, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/caution, /obj/item/caution)
+	items_in_backpack = list(/obj/item/rcd/construction/safe, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/caution, /obj/item/lamp_manufacturer/organic)
 
 	New()
 		..()
@@ -707,7 +707,7 @@
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if (prob(20))
+		if (prob(20) && !M.mutantrace)
 			M.bioHolder.AddEffect("dwarf") // heh
 
 /datum/job/engineering/mechanic
@@ -1643,7 +1643,7 @@
 		src.access = get_access("Psychologist")
 		return
 
-/*
+
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
 
@@ -1980,6 +1980,59 @@
 			return
 		M.bioHolder.AddEffect("hell_fire")
 
+/datum/job/special/halloween/superhero
+	name = "Discount Superhero"
+	wages = PAY_UNTRAINED
+	limit = 1
+	change_name_on_spawn = 1
+	allow_traitors = 0
+	allow_spy_theft = 0
+	cant_spawn_as_rev = 1
+	recieves_miranda = 1
+	slot_ears = /obj/item/device/radio/headset/security
+	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud/superhero
+	slot_glov = /obj/item/clothing/gloves/latex/blue
+	slot_jump = /obj/item/clothing/under/gimmick/superhero
+	slot_foot = /obj/item/clothing/shoes/tourist
+	slot_belt = /obj/item/storage/belt/utility/superhero
+	slot_back = null
+	slot_poc2 = /obj/item/device/pda2
+
+	New()
+		..()
+		src.access = get_access("Security Officer")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_security")
+		if(prob(60))
+			var/aggressive = pick("eyebeams","cryokinesis")
+			var/defensive = pick("fire_resist","cold_resist","food_rad_resist","breathless") // no thermal resist, gotta have some sort of comic book weakness
+			var/datum/bioEffect/power/be = M.bioHolder.AddEffect(aggressive, do_stability=0)
+			if(aggressive == "eyebeams")
+				var/datum/bioEffect/power/eyebeams/eb = be
+				eb.stun_mode = 1
+				eb.altered = 1
+			else
+				be.power = 1
+				be.altered = 1
+			be = M.bioHolder.AddEffect(defensive, do_stability=0)
+		else
+			var/datum/bioEffect/power/shoot_limb/sl = M.bioHolder.AddEffect("shoot_limb", do_stability=0)
+			sl.safety = 1
+			sl.altered = 1
+			sl.cooldown = 300
+			sl.stun_mode = 1
+			var/datum/bioEffect/regenerator/r = M.bioHolder.AddEffect("regenerator", do_stability=0)
+			r.regrow_prob = 10
+		var/datum/bioEffect/power/be = M.bioHolder.AddEffect("adrenaline", do_stability=0)
+		be.safety = 1
+		be.altered = 1
+
+
 /datum/job/special/halloween/remy
 	name = "Remy"
 	wages = PAY_DUMBCLOWN
@@ -2027,7 +2080,7 @@
 		if (!M)
 			return
 		M.critterize(/mob/living/critter/small_animal/bird/crow)
-*/
+
 
 /datum/job/special/syndicate_operative
 	name = "Syndicate"
@@ -2182,6 +2235,7 @@
 		..()
 		if (!M)
 			return
+		M.traitHolder.addTrait("training_security")
 		M.show_text("<b>Hostile assault force incoming! Defend the crew from the attacking Syndicate Special Operatives!</b>", "blue")
 
 
@@ -2198,23 +2252,19 @@
 	receives_badge = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
-	slot_belt = /obj/item/storage/belt/security
+	slot_belt = /obj/item/storage/belt/security/ntso //special secbelt subtype that spawns with the NTSO gear inside
 	slot_jump = /obj/item/clothing/under/misc/turds
-	slot_suit = /obj/item/clothing/suit/space/ntso
-	slot_head = /obj/item/clothing/head/helmet/space/ntso
+	slot_head = /obj/item/clothing/head/NTberet
 	slot_foot = /obj/item/clothing/shoes/swat
+	slot_glov = /obj/item/clothing/gloves/swat/NT
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
-	slot_ears =  /obj/item/device/radio/headset/command/nt //needs their own secret channel
-	slot_mask = /obj/item/clothing/mask/breath
+	slot_ears = /obj/item/device/radio/headset/command/nt //needs their own secret channel
 	slot_card = /obj/item/card/id/command
-
-	slot_poc1 = /obj/item/baton/ntso
+	slot_poc1 = /obj/item/device/pda2/ntso
 	slot_poc2 = /obj/item/spacecash/fivehundred
-	items_in_backpack = list(/obj/item/device/pda2/heads,
-							/obj/item/storage/firstaid/regular,
-							/obj/item/storage/pouch/clock,
-							/obj/item/gun/kinetic/clock_188,
-							/obj/item/requisition_token/security)
+	items_in_backpack = list(/obj/item/storage/firstaid/regular,
+							/obj/item/clothing/head/helmet/space/ntso,
+							/obj/item/clothing/suit/space/ntso)
 
 	New()
 		..()
@@ -2225,6 +2275,7 @@
 		..()
 		if (!M)
 			return
+		M.traitHolder.addTrait("training_security")
 		M.show_text("<b>Defend the crew from all current threats!</b>", "blue")
 
 
@@ -2252,7 +2303,7 @@
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if (prob(20))
+		if (prob(20) && !M.mutantrace)
 			M.bioHolder.AddEffect("dwarf") // heh
 
 /datum/job/special/machoman

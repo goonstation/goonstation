@@ -168,7 +168,12 @@
 		var/mob/living/carbon/human/H = owner
 		H.oxyloss = 0
 		H.losebreath = 0
+		APPLY_MOB_PROPERTY(H, PROP_BREATHLESS, src.type)
 		health_update_queue |= H
+
+	OnRemove()
+		. = ..()
+		REMOVE_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"
@@ -309,6 +314,28 @@
 	stability_loss = 5
 	icon_state  = "dead"
 	isBad = 1
+
+/datum/bioEffect/noir
+	name = "Noir"
+	desc = "The subject generates a light-defying aura, equalizing photons in such a way that make them look completely grayscale."
+	id = "noir"
+	probability = 99
+	stability_loss = 5
+	icon_state  = "noir"
+	msgGain = "You feel chromatic pain."
+	msgLose = "Colors around you begin returning to normal."
+
+	OnAdd()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			animate_fade_grayscale(H, 5)
+
+	OnRemove()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			animate_fade_from_grayscale(H, 5)
 
 ///////////////////
 // General buffs //

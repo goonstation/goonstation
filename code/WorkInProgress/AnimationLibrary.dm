@@ -414,16 +414,21 @@
 	SPAWN_DBG(5)
 		M.attack_particle.alpha = 0
 
-/proc/block_spark(var/mob/M)
+/proc/block_spark(var/mob/M, armor = 0)
 	if (!M || !M.attack_particle) return
+	var/state_string = ""
+	if(armor)
+		state_string = "block_spark_armor"
+	else
+		state_string = "block_spark"
 
 	M.attack_particle.invisibility = M.invisibility
 	M.last_interact_particle = world.time
 
 	M.attack_particle.icon = 'icons/mob/mob.dmi'
-	if (M.attack_particle.icon_state == "block_spark")
-		flick("block_spark",M.attack_particle)
-	M.attack_particle.icon_state = "block_spark"
+	if (M.attack_particle.icon_state == state_string)
+		flick(state_string,M.attack_particle)
+	M.attack_particle.icon_state = state_string
 
 	M.attack_particle.alpha = 255
 	M.attack_particle.loc = M.loc
@@ -1321,3 +1326,18 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		SPAWN_DBG(time)
 			A.filters.len -= 2
 			A.alpha = 0
+
+//size_max really can't go higher than 0.2 on 32x32 sprites that are sized about the same as humans. Can go higher on larger sprite resolutions or smaller sprites that are in the center, like cigarettes or coins.
+/proc/anim_f_ghost_blur(atom/A, var/size_min = 0.075 as num, var/size_max=0.18 as num)
+	A.filters += filter(type="radial_blur",size=size_min)
+
+	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
+	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)
+
+/proc/animate_bouncy(var/atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
+	if (!istype(A))
+		return
+	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = EAST, flags=ANIMATION_PARALLEL)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = EAST)
+	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)

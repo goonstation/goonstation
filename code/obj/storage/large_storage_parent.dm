@@ -543,7 +543,7 @@
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
-				for (var/obj/storage/O in by_type[/obj/storage])
+				for_by_tcl(O, /obj/storage)
 					if (O.z != src.z || O.open || !O.can_open())
 						continue
 					myPals.Add(O)

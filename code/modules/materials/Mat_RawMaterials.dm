@@ -1,3 +1,4 @@
+/// Material piece
 /obj/item/material_piece
 	name = "bar"
 	desc = "Some sort of processed material bar."
@@ -5,7 +6,8 @@
 	icon_state = "bar"
 	max_stack = INFINITY
 	stack_type = /obj/item/material_piece
-	var/default_material = null // used for prefab bars
+	/// used for prefab bars
+	var/default_material = null
 
 	New()
 		..()
@@ -355,4 +357,12 @@
 	icon_state = "coral"
 	setup_material()
 		src.setMaterial(getMaterial("coral"), appearance = 0, setname = 0)
+		..()
+
+/obj/item/material_piece/neutronium
+	name = "neutronium"
+	desc = "Neutrons condensed into a solid form."
+	icon_state = "bar"
+	setup_material()
+		src.setMaterial(getMaterial("neutronium"), appearance = 0, setname = 0)
 		..()

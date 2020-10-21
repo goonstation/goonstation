@@ -86,7 +86,7 @@ datum
 			covered_cache_volume = total_volume
 
 		proc/play_mix_sound(var/mix_sound)
-			playsound(get_turf(my_atom), mix_sound, 80, 1)
+			playsound(get_turf(my_atom), mix_sound, 80, 1, 3)
 
 		proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0)
 			if(!target || target == src) return
@@ -274,7 +274,7 @@ datum
 
 			if (do_fluid_react && issimulatedturf(target))
 				var/turf/simulated/T = target
-				return T.fluid_react(src, amount)
+				return T.fluid_react(src, amount, index = index)
 
 			return trans_to_direct(target_reagents, amount, multiplier, index = index)
 
@@ -436,7 +436,7 @@ datum
 						if (!old_reactions.Find(C))
 							var/turf/T = 0
 							if (my_atom)
-								for(var/mob/living/M in AIviewers(4, get_turf(my_atom)) )	//Fuck you, ghosts
+								for(var/mob/living/M in AIviewers(7, get_turf(my_atom)) )	//Fuck you, ghosts
 									if (C.mix_phrase) boutput(M, "<span class='notice'>[bicon(my_atom)] [C.mix_phrase]</span>")
 								if (C.mix_sound) play_mix_sound(C.mix_sound)
 
@@ -1047,7 +1047,7 @@ datum
 				logTheThing("combat", our_user, null, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].[our_fingerprints ? " Container last touched by: [our_fingerprints]." : ""]")
 
 			if (classic)
-				classic_smoke_reaction(src, 4, location = my_atom ? get_turf(my_atom) : 0)
+				classic_smoke_reaction(src, min(round(volume / 5) + 1, 4), location = my_atom ? get_turf(my_atom) : 0)
 			else
 				smoke_reaction(src, round(min(5, volume/10)), location = my_atom ? get_turf(my_atom) : 0)
 

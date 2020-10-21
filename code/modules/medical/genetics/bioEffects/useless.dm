@@ -61,6 +61,43 @@
 		if (!particleMaster.CheckSystemExists(system_path, owner))
 			particleMaster.RemoveSystem(system_path, owner)
 
+/datum/bioEffect/achromia
+	name = "Achromia"
+	desc = "The subject loses most of their skin pigmentation, with the remainder causing their skin take on a gray coloration."
+	id = "achromia"
+	probability = 99
+	icon_state  = "achromia"
+	var/holder_skin = null
+
+	OnAdd()
+		if (!ishuman(owner))
+			return
+
+		var/mob/living/carbon/human/H = owner
+		if (!H.bioHolder)
+			return
+		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+		holder_skin = AH.s_tone
+		var/list/L = hex_to_rgb_list(AH.s_tone)
+		var/new_color = ((L["r"] + L["g"] + L["b"]) / 3) - 20
+		if (new_color < 0)
+			new_color = 0
+		AH.s_tone = rgb(new_color, new_color, new_color)
+		H.update_body()
+
+	OnRemove()
+		if (!ishuman(owner))
+			return
+
+		var/mob/living/carbon/human/H = owner
+		if (!H.bioHolder)
+			return
+		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+		if (!AH)
+			return
+		AH.s_tone = holder_skin
+		H.update_body()
+
 /datum/bioEffect/color_changer
 	name = "Melanin Suppressor"
 	desc = "Shuts down all melanin production in the subject's body."
@@ -71,54 +108,39 @@
 	var/eye_color_to_use = "#FF0000"
 	var/color_to_use = "#FFFFFF"
 	var/skintone_to_use = "#FFFFFF"
-	var/holder_eyes = null
-	var/holder_hair = null
-	var/holder_det1 = null
-	var/holder_det2 = null
-	var/holder_skin = null
 
 	OnAdd()
-		if (!ishuman(owner))
-			return
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			for (var/ID in H.bioHolder.effects)
+				if (istype(H.bioHolder.GetEffect(ID), /datum/bioEffect/color_changer) && ID != src.id)
+					H.bioHolder.RemoveEffect(ID)
+			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+			AH.e_color_carry = AH.e_color
+			AH.customization_first_color_carry = AH.customization_first_color
+			AH.customization_second_color_carry = AH.customization_second_color
+			AH.customization_third_color_carry = AH.customization_third_color
+			AH.s_tone_carry = AH.s_tone
 
-		var/mob/living/carbon/human/H = owner
-		if (!H.bioHolder)
-			return
-		var/datum/bioHolder/B = H.bioHolder
-		if (!B.mobAppearance)
-			return
-		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-		holder_eyes = AH.e_color
-		holder_hair = AH.customization_first_color
-		holder_det1 = AH.customization_second_color
-		holder_det2 = AH.customization_third_color
-		holder_skin = AH.s_tone
-		AH.e_color = eye_color_to_use
-		AH.s_tone = skintone_to_use
-		AH.customization_first_color = color_to_use
-		AH.customization_second_color = color_to_use
-		AH.customization_third_color = color_to_use
-		H.update_face()
-		H.update_body()
+			AH.e_color = eye_color_to_use
+			AH.s_tone = skintone_to_use
+			AH.customization_first_color = color_to_use
+			AH.customization_second_color = color_to_use
+			AH.customization_third_color = color_to_use
+			H.update_face()
+			H.update_body()
 
 	OnRemove()
-		if (!ishuman(owner))
-			return
-
-		var/mob/living/carbon/human/H = owner
-		if (!H.bioHolder)
-			return
-		var/datum/bioHolder/B = H.bioHolder
-		if (!B.mobAppearance)
-			return
-		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-		AH.e_color = holder_eyes
-		AH.s_tone = holder_skin
-		AH.customization_first_color = holder_hair
-		AH.customization_second_color = holder_det1
-		AH.customization_third_color = holder_det2
-		H.update_face()
-		H.update_body()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+			AH.e_color = AH.e_color_carry
+			AH.s_tone = AH.s_tone_carry
+			AH.customization_first_color = AH.customization_first_color_carry
+			AH.customization_second_color = AH.customization_second_color_carry
+			AH.customization_third_color = AH.customization_third_color_carry
+			H.update_face()
+			H.update_body()
 
 /datum/bioEffect/color_changer/black
 	name = "Melanin Stimulator"
@@ -130,6 +152,26 @@
 	eye_color_to_use = "#572E0B"
 	color_to_use = "#000000"
 	skintone_to_use = "#000000"
+
+/datum/bioEffect/color_changer/blank
+	name = "Melanin Eraser"
+	desc = "Shuts down all melanin production in subject's body, and eradicates all existing melanin."
+	id = "blankman"
+	msgGain = "You feel oddly plain."
+	msgLose = "You don't feel boring anymore."
+	icon_state  = "blank"
+	effectType = EFFECT_TYPE_POWER
+	probability = 99
+	isBad = 1
+	color_to_use = "#FFFFFF"
+	skintone_to_use = "#FFFFFF"
+
+	OnAdd()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+			eye_color_to_use = AH.e_color
+		. = ..()
 
 /datum/bioEffect/stinky
 	name = "Apocrine Enhancement"

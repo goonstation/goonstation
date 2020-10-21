@@ -886,8 +886,6 @@
 						var/mob/M = O2
 						M.ghostize()
 					qdel(O2)
-					H.contents -= O2
-					O2 = null
 
 				var/obj/item/reagent_containers/food/snacks/einstein_loaf/estein = new /obj/item/reagent_containers/food/snacks/einstein_loaf(src)
 				estein.set_loc(H)
@@ -924,7 +922,7 @@
 
 					if (newIngredient.reagents)
 						var/anItem = isitem(newIngredient)
-						while (newIngredient.reagents.total_volume > 0 || (anItem && newIngredient:w_class--))
+						while (length(new_nuggets) < 50 && (newIngredient.reagents.total_volume > 0 || (anItem && newIngredient:w_class--)))
 							newIngredient.reagents.trans_to(current_nugget, current_nugget.reagents.maximum_volume)
 							if (current_nugget.reagents.total_volume >= current_nugget.reagents.maximum_volume)
 								current_nugget = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget(src)
@@ -935,8 +933,6 @@
 								new_nuggets += current_nugget
 
 					qdel(newIngredient)
-					H.contents -= newIngredient
-					newIngredient = null
 					LAGCHECK(LAG_MED)
 
 				for (var/obj/O in new_nuggets)
