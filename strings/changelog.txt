@@ -1,5 +1,9 @@
 
 (t)wed oct 21 20
+(u)Jawns
+(p)2484
+(e)🐛|bug
+(+)Alien ambassadors now spawn with their ID in their backpack when necessary, instead of inside them.
 (u)TrustworthyFella
 (p)2464
 (e)🐛|bug
