@@ -230,7 +230,7 @@ obj/critter/bear/care
 
 		sleeping = 1
 
-	/proc/pickTargetLimb(var/mob/living/carbon/human/H)
+	proc/pickTargetLimb(var/mob/living/carbon/human/H)
 		if(!H)
 			return null
 		var/list/part_list = list("l_arm", "r_arm", "l_leg", "r_leg")
