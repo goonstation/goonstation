@@ -227,6 +227,7 @@
 			H.equip_if_possible(new /obj/item/clothing/under/misc/turds(H), H.slot_w_uniform)
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat/NT(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
+			H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/nanotrasen(H), H.slot_belt)
 
 
 
@@ -253,7 +254,7 @@
 			H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), H.slot_w_uniform)
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
-			
+			H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/syndicate(H), H.slot_belt)
 
 
 		if (headset)
@@ -262,12 +263,11 @@
 			boutput(H, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
 
 		H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/gun/energy/phaser_gun(H), H.slot_belt)
 
 		H.equip_if_possible(I, H.slot_wear_id)
 		H.set_clothing_icon_dirty()
 		// H.set_loc(pick(pod_pilot_spawns[team_num]))
-		boutput(H, "You're in the [name] faction! Mine materials, build pods, defend your space station, destroy the enemy space station!")
+		boutput(H, "You're in the [name] faction!")
 
 
 /obj/pod_carrier_critical_system

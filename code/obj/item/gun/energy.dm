@@ -755,6 +755,60 @@
 		projectiles = list(current_projectile)
 		..()
 
+
+///////////////////////////////////////PW Blasters
+/obj/item/gun/energy/blaster_pod_wars
+	name = "blaster pistol"
+	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
+	icon = 'icons/obj/items/gun.dmi'
+	icon_state = "pw_pistol"
+	w_class = 3.0
+	force = 8.0
+	mats = 0
+	var/image/indicator_display = null
+	var/display_color =	"#00FF00"
+	var/initial_proj = /datum/projectile/laser/blaster
+
+	disposing()
+		indicator_display = null
+		..()
+
+
+	New()
+		cell = new/obj/item/ammo/power_cell/self_charging/
+		cell.max_charge = 200
+		cell.charge = 200
+		current_projectile = new initial_proj
+		projectiles = list(current_projectile)
+		src.indicator_display = image('icons/obj/items/gun.dmi', "")
+		update_icon()
+		..()
+
+	update_icon()
+		..()
+		src.overlays = null
+
+		if (src.cell)
+			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
+			var/ratio = min(1, src.cell.charge / maxCharge)
+			ratio = round(ratio, 0.25) * 100
+			if (ratio == 0)
+				return
+			indicator_display.icon_state = "pw_pistol_power-[ratio]"
+ 			indicator_display.color = display_color
+			src.overlays += indicator_display
+
+	nanotrasen
+		muzzle_flash = "muzzle_flash_bluezap"
+		display_color =	"#0a4882"
+		initial_proj = /datum/projectile/laser/blaster/pod_pilot/blue_NT
+
+	syndicate
+		muzzle_flash = "muzzle_flash_elec"
+		display_color =	"#820a48"
+		initial_proj = /datum/projectile/laser/blaster/pod_pilot/red_SY
+
+
 ///////////////////////////////////////Modular Blasters
 /obj/item/gun/energy/blaster_pistol
 	name = "blaster pistol"
@@ -803,6 +857,7 @@
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "pistol[ratio]"
 			return
+
 
 
 
