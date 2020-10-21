@@ -12042,7 +12042,11 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital/underground)
 "aEh" = (
-/obj/machinery/door/airlock/gannets/chemistry/alt,
+/obj/machinery/door/airlock/gannets/chemistry/alt{
+	req_access = null
+	},
+/obj/access_spawn/heads,
+/obj/access_spawn/admin_override,
 /turf/unsimulated/floor/purple{
 	dir = 5
 	},
@@ -13187,16 +13191,6 @@
 /obj/decal/fakeobjects/tallsmes,
 /turf/unsimulated/floor/plating/scorched,
 /area/jones/alley)
-"aGP" = (
-/obj/landmark/viscontents_spawn{
-	targetZ = 4
-	},
-/turf/unsimulated/floor/purpleblack{
-	dir = 4
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "aGQ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -45267,8 +45261,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor/purpleblack{
-	dir = 8
+/turf/unsimulated/floor/stairs/wide{
+	dir = 1
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -79116,6 +79110,7 @@
 /area/centcom/lobby)
 "dLM" = (
 /obj/machinery/door/airlock/centcom,
+/obj/access_spawn/admin_override,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dLN" = (
@@ -79800,6 +79795,7 @@
 /area/centcom/lobby)
 "dNi" = (
 /obj/machinery/door/airlock/centcom,
+/obj/access_spawn/admin_override,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "dNj" = (
@@ -80588,6 +80584,7 @@
 /area/centcom/garden)
 "dOZ" = (
 /obj/machinery/door/airlock/centcom,
+/obj/access_spawn/admin_override,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -81125,7 +81122,11 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQs" = (
-/obj/machinery/door/airlock/gannets/command/alt,
+/obj/machinery/door/airlock/gannets/command/alt{
+	req_access = null
+	},
+/obj/access_spawn/heads,
+/obj/access_spawn/admin_override,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -173539,7 +173540,7 @@ aES
 dvw
 aCZ
 aFN
-aGP
+dCB
 aHo
 aDG
 dxs

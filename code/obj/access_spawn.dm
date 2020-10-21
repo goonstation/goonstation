@@ -47,6 +47,14 @@
 		for (var/obj/O in src.loc)
 			O.admin_access_override = TRUE
 
+/obj/access_spawn/public
+	name = "public access spawn"
+	color = SPECIAL
+
+	setup()
+		for (var/obj/O in src.loc)
+			O.req_access = null
+
 /obj/access_spawn/security
 	name = "security access spawn"
 	req_access = list(access_security)

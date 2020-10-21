@@ -283,6 +283,10 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "green"
 	blocked = 1
 
+/area/centcom/datacenter
+	name = "NT Data Center"
+	icon_state = "pink"
+
 ////////////////////////////
 
 /turf/unsimulated/outdoors
