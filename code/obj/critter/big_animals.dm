@@ -156,6 +156,7 @@ obj/critter/bear/care
 
 	New()
 		..()
+		src.atk_delay = 4
 		src.seek_target()
 
 	seek_target()
@@ -185,20 +186,24 @@ obj/critter/bear/care
 
 	CritterAttack(mob/M)
 		if (ishuman(M))
-   		var/mob/living/carbon/human/H = M
-			var/targetLimb = pickTargetLimb(H)
+			var/mob/living/carbon/human/H = M
+			var/obj/item/parts/targetLimb = pickTargetLimb(H)
 			if(targetLimb)
-				scr.attacking = 1
-				src.visible_message("<span class='combat'><B>[src]</B> bites [H]'s [targetLimb] right off'")
-				random_brute_damage(H, 10)
-				targetLimb.sever()
+				src.attacking = 0
+				src.visible_message("<span class='combat'><B>[src]</B> bites [targetLimb] right off!'")
+				random_brute_damage(H, 25)
+				targetLimb.remove(0)
+				H.update_body()
 				M.emote("scream")
+				bleed(H, 20, 30)
+				targetLimb.delete()
+				//src.attacking = 1
 				return
 
 		//Old instakill code. Happens when there are no more limbs to chew.
 		//I want to rework this so the yeti keeps the heads as a trophy and he drops them once dead
 		src.attacking = 1
-		src.visible_message("<span class='combat'><B>[src]</B> devours [M] in one bite!</span>")
+		src.visible_message("<span class='combat'><B>[src]</B> devours the rest of [M] in one bite!</span>")
 		logTheThing("combat", M, null, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 		playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 		M.death(1)
@@ -234,7 +239,7 @@ obj/critter/bear/care
 		{
 			var/current_part = pick(part_list)
 			part_list -= current_part
-			var/bodypart = H.limbs.get_limb(current_part)
+			var/obj/item/parts/bodypart = H.limbs.get_limb(current_part)
 			if(bodypart && !istype(bodypart, /obj/item/parts/robot_parts)) //Quick check for robolimbs. It may be wrong, limb check examples give me headaches
 				return bodypart
 		}
