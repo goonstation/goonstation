@@ -1,5 +1,5 @@
-"a" = (/turf/variableTurf/wall,/area/concrete)
-"b" = (/turf/variableTurf/clear,/area/concrete)
+"a" = (/turf/variableTurf/wall,/area/space)
+"b" = (/turf/variableTurf/clear,/area/space)
 "c" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/zoo)
 "d" = (/obj/critter/zombie,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
 "e" = (/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)

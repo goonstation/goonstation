@@ -2,7 +2,7 @@
 "ab" = (/obj/machinery/light/small/warm/very{dir = 4; pixel_x = 12},/turf/simulated/floor/engine/vacuum,/area/prefab/water_treatment)
 "ac" = (/obj/machinery/door/poddoor/pyro{dir = 4; id = "wtp_drain"},/turf/simulated/floor/engine/vacuum,/area/prefab/water_treatment)
 "ae" = (/obj/securearea,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/water_treatment)
-"af" = (/turf/variableTurf/clear,/area/concrete)
+"af" = (/turf/variableTurf/clear,/area/space)
 "ai" = (/obj/decal/cleanable/blood/drip/high{icon_state = "handblood_c"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/water_treatment)
 "aj" = (/obj/decal/skeleton,/obj/decal/skeleton,/obj/decal/cleanable/blood/drip/high,/obj/item/toy/sponge_capsule/syndicate{pixel_y = 9; pixel_x = -8},/obj/machinery/light/small/warm/very{dir = 8; pixel_x = -12},/obj/decal/cleanable/cobweb,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/prefab/water_treatment)
 "al" = (/obj/decal/cleanable/blood/tracks{icon_state = "drip3"},/obj/critter/bat/buff,/turf/simulated/floor/plating,/area/prefab/water_treatment)

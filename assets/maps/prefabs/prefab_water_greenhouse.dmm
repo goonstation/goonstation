@@ -1,5 +1,5 @@
 "a" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/plating/random,/area/prefab/helianthus)
-"b" = (/turf/variableTurf/clear,/area/concrete)
+"b" = (/turf/variableTurf/clear,/area/space)
 "c" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/helianthus)
 "d" = (/obj/machinery/chem_master,/turf/simulated/floor,/area/prefab/helianthus)
 "e" = (/obj/machinery/chem_dispenser,/turf/simulated/floor,/area/prefab/helianthus)

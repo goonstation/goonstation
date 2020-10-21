@@ -1,4 +1,4 @@
-"aa" = (/turf/variableTurf/clear,/area/concrete)
+"aa" = (/turf/variableTurf/clear,/area/space)
 "ab" = (/turf/unsimulated/wall/setpieces/leadwall/gray{icon_state = "leadwall_gray"; dir = 9},/area/prefab/ghost_house)
 "ac" = (/turf/unsimulated/wall/setpieces/leadwall/gray{icon_state = "leadwall_gray"; dir = 8},/area/prefab/ghost_house)
 "ad" = (/turf/unsimulated/wall/setpieces/leadwall/gray{icon_state = "leadwall_gray"; dir = 5},/area/prefab/ghost_house)

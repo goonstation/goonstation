@@ -1,5 +1,5 @@
 "a" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/deserted_outpost)
-"b" = (/turf/variableTurf/clear,/area/concrete)
+"b" = (/turf/variableTurf/clear,/area/space)
 "c" = (/obj/machinery/light/incandescent/cool/very,/turf/simulated/floor/black/grime,/area/prefab/deserted_outpost)
 "d" = (/turf/simulated/floor/black/grime,/area/prefab/deserted_outpost)
 "e" = (/obj/storage/crate/loot,/turf/simulated/floor/black/grime,/area/prefab/deserted_outpost)

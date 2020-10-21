@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/space,
-/area/concrete)
+/area/space)
 "aab" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -87,7 +87,7 @@
 "aaB" = (
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "aaD" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "1"
@@ -212,7 +212,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "abe" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -250,7 +250,7 @@
 /area/station/hallway/secondary/exit)
 "abm" = (
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "abn" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -659,7 +659,7 @@
 "acT" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "acU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -791,7 +791,7 @@
 	tag = "icon-lattice-dir (NORTHWEST)"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "adE" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -832,7 +832,7 @@
 	name = "Hangar Beacon"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "adI" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Pod Bay"
@@ -2938,7 +2938,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "amw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3265,7 +3265,7 @@
 	tag = "icon-lattice-dir (SOUTHWEST)"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "anx" = (
 /obj/machinery/light{
 	dir = 4;
@@ -3287,7 +3287,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "anJ" = (
 /obj/storage/closet/radiation,
 /turf/simulated/floor/black,
@@ -3498,7 +3498,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aoF" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -3914,7 +3914,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "apV" = (
 /obj/machinery/door_control{
 	id = "store2";
@@ -4264,7 +4264,7 @@
 	id = "qmin"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "arg" = (
 /obj/machinery/power/data_terminal,
 /obj/computer3frame{
@@ -4334,11 +4334,11 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "arz" = (
 /obj/machinery/camera,
 /turf/space,
-/area/concrete)
+/area/space)
 "arC" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -4644,14 +4644,14 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "asW" = (
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/tracker/east,
 /turf/simulated/floor/airless/solar,
-/area/concrete)
+/area/space)
 "asX" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -4762,7 +4762,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "atm" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -5078,7 +5078,7 @@
 /obj/cable,
 /obj/machinery/power/tracker/west,
 /turf/simulated/floor/airless/solar,
-/area/concrete)
+/area/space)
 "auj" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Cargo Maintenance";
@@ -6359,7 +6359,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "azk" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -7561,7 +7561,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aDS" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
@@ -8180,7 +8180,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aGT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9272,7 +9272,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aLh" = (
 /obj/cable{
 	icon_state = "1-5";
@@ -9745,7 +9745,7 @@
 /area/station/storage/tech)
 "aMD" = (
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "aME" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -9949,14 +9949,14 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aNE" = (
 /obj/lattice{
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aNF" = (
 /obj/mug_rack{
 	pixel_x = -26;
@@ -10620,7 +10620,7 @@
 "aQe" = (
 /turf/space,
 /turf/space,
-/area/concrete)
+/area/space)
 "aQf" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
@@ -12810,7 +12810,7 @@
 /obj/lattice,
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "aXP" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -13810,7 +13810,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "baK" = (
 /obj/cable/reinforced{
 	icon_state = "0-4-thick"
@@ -14261,7 +14261,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bcf" = (
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto_gangway)
@@ -14815,7 +14815,7 @@
 	name = "COLLISION HAZARD"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/concrete)
+/area/space)
 "bdM" = (
 /obj/cable/reinforced,
 /obj/cable{
@@ -15363,7 +15363,7 @@
 	tag = ""
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bfC" = (
 /obj/rack,
 /obj/item/tank/jetpack{
@@ -15540,7 +15540,7 @@
 "bgd" = (
 /obj/item/clothing/head/apprentice,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bge" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -16594,7 +16594,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bkP" = (
 /obj/machinery/camera{
 	c_tag = "Engineering South Entrance"
@@ -16612,7 +16612,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bkR" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish,
@@ -16620,12 +16620,12 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bkU" = (
 /turf/simulated/wall/asteroid{
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "bkW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16633,12 +16633,12 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/concrete)
+/area/space)
 "bkX" = (
 /turf/simulated/wall/asteroid{
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "bkY" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -16652,15 +16652,15 @@
 /turf/simulated/wall/asteroid{
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "bla" = (
 /turf/simulated/wall/asteroid,
-/area/concrete)
+/area/space)
 "blb" = (
 /turf/space{
 	icon_state = "aplaceholder"
 	},
-/area/concrete)
+/area/space)
 "blc" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -16670,7 +16670,7 @@
 /turf/simulated/wall/asteroid{
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "blg" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -16725,12 +16725,12 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bln" = (
 /turf/simulated/wall/asteroid{
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "blo" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -16789,7 +16789,7 @@
 /turf/simulated/wall/asteroid{
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "blw" = (
 /obj/securearea,
 /turf/simulated/shuttle/wall{
@@ -16827,12 +16827,12 @@
 /turf/simulated/wall/asteroid{
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "blC" = (
 /turf/simulated/wall/asteroid{
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "blD" = (
 /obj/machinery/door/airlock/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
@@ -16856,13 +16856,13 @@
 /turf/simulated/wall/asteroid{
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "blK" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "blL" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -16903,13 +16903,13 @@
 /turf/simulated/wall/asteroid{
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "blS" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "blT" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/bot,
@@ -17195,11 +17195,11 @@
 /turf/simulated/wall/asteroid{
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "bmM" = (
 /turf/space,
 /turf/simulated/wall/asteroid,
-/area/concrete)
+/area/space)
 "bmN" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 1
@@ -17210,7 +17210,7 @@
 	name = "MUSHROOM"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bmQ" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
@@ -17996,7 +17996,7 @@
 	spawnchance = 10
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bpz" = (
 /obj/machinery/light,
 /turf/simulated/floor/yellow/side,
@@ -18351,7 +18351,7 @@
 	tag = "icon-lattice-dir (WEST)"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bqF" = (
 /obj/lattice{
 	dir = 4;
@@ -18359,7 +18359,7 @@
 	tag = "icon-lattice-dir (EAST)"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bqG" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -20243,7 +20243,7 @@
 	tag = ""
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "csn" = (
 /obj/table/reinforced/industrial/auto,
 /obj/random_item_spawner/med_kit,
@@ -20268,7 +20268,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "ctF" = (
 /turf/simulated/wall/auto/jen/dark4,
 /area/station/turret_protected/AIsat)
@@ -21233,7 +21233,7 @@
 /area/station/medical/medbay)
 "dVu" = (
 /turf/simulated/wall/auto/supernorn,
-/area/concrete)
+/area/space)
 "dWR" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -21765,7 +21765,7 @@
 	words = "Erik wuz here!! 2k16"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "eJj" = (
 /obj/shrub/captainshrub{
 	pixel_y = 9
@@ -22926,7 +22926,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "giS" = (
 /obj/machinery/light{
 	dir = 4;
@@ -23913,7 +23913,7 @@
 	dir = 8
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "hAu" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/black,
@@ -24946,7 +24946,7 @@
 /area/station/hallway/primary/west)
 "iIU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/concrete)
+/area/space)
 "iJu" = (
 /obj/stool/chair/comfy{
 	dir = 1
@@ -24990,7 +24990,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "iNW" = (
 /obj/grille/steel,
 /obj/cable,
@@ -26319,7 +26319,7 @@
 /obj/lattice,
 /obj/machinery/camera,
 /turf/space,
-/area/concrete)
+/area/space)
 "kpK" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -27249,7 +27249,7 @@
 	pixel_x = 7
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "lIi" = (
 /turf/simulated/floor/yellowblack{
 	dir = 4
@@ -27579,7 +27579,7 @@
 	dir = 8
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "mfY" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/primary)
@@ -28635,7 +28635,7 @@
 	pixel_y = 6
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "nzc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -29275,7 +29275,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "omO" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purplewhite{
@@ -29338,7 +29338,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "opI" = (
 /obj/firedoor_spawn,
 /obj/cable{
@@ -29390,7 +29390,7 @@
 	name = "strange air horn"
 	},
 /turf/simulated/floor/airless/plating/damaged3,
-/area/concrete)
+/area/space)
 "ouT" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -30398,7 +30398,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/concrete)
+/area/space)
 "pyq" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -30888,7 +30888,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "pYF" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_horse"
@@ -31405,7 +31405,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/concrete)
+/area/space)
 "qEy" = (
 /obj/decal/tile_edge/line/white{
 	dir = 4;
@@ -31999,7 +31999,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area/concrete)
+/area/space)
 "rmD" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -32886,7 +32886,7 @@
 	pixel_x = -7
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "snA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
@@ -35638,7 +35638,7 @@
 /obj/lattice,
 /obj/item/clothing/head/snake,
 /turf/space,
-/area/concrete)
+/area/space)
 "vlk" = (
 /obj/machinery/power/stats_meter{
 	name = "Hot Loop Inlet Meter";
@@ -38090,7 +38090,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "ydc" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/arcade)

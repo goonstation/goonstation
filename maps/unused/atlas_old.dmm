@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area/concrete)
+/area/space)
 "ab" = (
 /turf/space,
 /area/supply/spawn_point)
@@ -77,7 +77,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "ap" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
@@ -112,14 +112,14 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "au" = (
 /obj/lattice{
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "av" = (
 /obj/lattice{
 	dir = 1;
@@ -127,7 +127,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "aw" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -282,14 +282,14 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aT" = (
 /obj/machinery/light/runway_light,
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aU" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
@@ -407,7 +407,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bl" = (
 /obj/item/clothing/head/apprentice,
 /turf/simulated/floor/plating,
@@ -557,7 +557,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bG" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
 /area/station/quartermaster/concrete)
@@ -782,7 +782,7 @@
 	name = "ATLAS"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "cq" = (
 /obj/machinery/conveyor{
 	id = "inbound";
@@ -1981,7 +1981,7 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "fJ" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
 /area/station/security/main)
@@ -1994,7 +1994,7 @@
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-/area/concrete)
+/area/space)
 "fM" = (
 /obj/table/auto,
 /turf/simulated/floor/yellow,
@@ -3147,7 +3147,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "iq" = (
 /obj/machinery/atmospherics/unary/furnace_connector,
 /obj/machinery/camera{
@@ -3285,7 +3285,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area/concrete)
+/area/space)
 "iH" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -3302,14 +3302,14 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/concrete)
+/area/space)
 "iJ" = (
 /obj/lattice{
 	dir = 1;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "iK" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -3537,7 +3537,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "jn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3866,7 +3866,7 @@
 	dir = 8
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "kb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4351,7 +4351,7 @@
 	dir = 10
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "lf" = (
 /obj/machinery/atmospherics/portables_connector/east,
 /obj/cable{
@@ -5057,7 +5057,7 @@
 	dir = 6
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "mL" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
@@ -5230,7 +5230,7 @@
 /area/station/engine/combustion_chamber)
 "ng" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/concrete)
+/area/space)
 "nh" = (
 /turf/simulated/floor/stairs/wide/middle{
 	dir = 4
@@ -6314,7 +6314,7 @@
 	operating = 1
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "pF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7303,7 +7303,7 @@
 	dir = 8
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "rR" = (
 /obj/machinery/vending/cards,
 /turf/simulated/floor/carpet{
@@ -7348,7 +7348,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "rY" = (
 /obj/machinery/light{
 	layer = 3
@@ -7480,7 +7480,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "sm" = (
 /obj/mopbucket,
 /obj/item/mop,
@@ -7745,7 +7745,7 @@
 	tag = "icon-lattice-dir-b (NORTHWEST)"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "sU" = (
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
@@ -7997,7 +7997,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "tB" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
@@ -8256,7 +8256,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "ui" = (
 /obj/machinery/power/solar/north,
 /obj/cable{
@@ -8706,7 +8706,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/space,
-/area/concrete)
+/area/space)
 "vh" = (
 /obj/machinery/light{
 	dir = 8;
@@ -8934,7 +8934,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "vG" = (
 /obj/grille/catwalk,
 /turf/space,
@@ -8948,7 +8948,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "vI" = (
 /obj/lattice{
 	dir = 4;
@@ -8958,7 +8958,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "vJ" = (
 /obj/lattice{
 	dir = 10;
@@ -8970,7 +8970,7 @@
 	icon_state = "1-8"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "vK" = (
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
@@ -10094,7 +10094,7 @@
 	dir = 5
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "yk" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine/vacuum{
@@ -10301,7 +10301,7 @@
 "yF" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "yG" = (
 /obj/cable{
 	d1 = 1;
@@ -11787,7 +11787,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "Bw" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -12138,7 +12138,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "Cf" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -12402,7 +12402,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "CH" = (
 /obj/machinery/light/runway_light/delay4,
 /obj/lattice{
@@ -12410,7 +12410,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "CI" = (
 /obj/lattice,
 /obj/warp_beacon,
@@ -12423,7 +12423,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "CK" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -13182,7 +13182,7 @@
 /area/station/hallway/concrete)
 "Ek" = (
 /turf/simulated/wall/auto/supernorn/wood,
-/area/concrete)
+/area/space)
 "El" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -14400,7 +14400,7 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/simulated/floor/plating/random,
-/area/concrete)
+/area/space)
 "Hs" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
@@ -14444,21 +14444,21 @@
 	dir = 10;
 	icon_state = "diagonalWall3"
 	},
-/area/concrete)
+/area/space)
 "Hy" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
-/area/concrete)
+/area/space)
 "Hz" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "wall3"
 	},
-/area/concrete)
+/area/space)
 "HA" = (
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
@@ -14470,7 +14470,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "HC" = (
 /obj/machinery/power/solar/small_backup4,
 /obj/cable{
@@ -14845,14 +14845,14 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "Ix" = (
 /obj/lattice{
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "Iy" = (
 /obj/stool/chair/red{
 	dir = 1
@@ -15232,7 +15232,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "Jt" = (
 /obj/storage/closet,
 /obj/item/clothing/under/misc/syndicate,
@@ -15377,7 +15377,7 @@
 	},
 /obj/machinery/light/beacon,
 /turf/space,
-/area/concrete)
+/area/space)
 "JK" = (
 /obj/lattice{
 	dir = 5;
@@ -15385,7 +15385,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/concrete)
+/area/space)
 "JL" = (
 /obj/lattice{
 	dir = 1;
@@ -15393,7 +15393,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/concrete)
+/area/space)
 "JM" = (
 /obj/machinery/navbeacon/tour/atlas/tour10,
 /turf/simulated/floor/red/side{
@@ -15743,7 +15743,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
-/area/concrete)
+/area/space)
 "KJ" = (
 /obj/machinery/vending/book,
 /turf/simulated/floor/blue/side{
@@ -15776,7 +15776,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "KO" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -15794,7 +15794,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "KQ" = (
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -16028,7 +16028,7 @@
 /obj/machinery/light/runway_light/delay5,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
-/area/concrete)
+/area/space)
 "Lu" = (
 /obj/stool/bench/red,
 /turf/simulated/floor/orangeblack,
@@ -16318,7 +16318,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "Me" = (
 /obj/cable{
 	d1 = 1;
@@ -16366,7 +16366,7 @@
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
 /turf/space,
-/area/concrete)
+/area/space)
 "Mk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16489,7 +16489,7 @@
 /turf/simulated/floor/stairs/wood{
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "Mx" = (
 /obj/item/reagent_containers/bath_bomb,
 /turf/simulated/floor/wood/six,
@@ -16510,7 +16510,7 @@
 /turf/simulated/floor/stairs/wood{
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "MB" = (
 /obj/machinery/bathtub{
 	anchored = 1;
@@ -16617,24 +16617,24 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "MS" = (
 /turf/simulated/floor/stairs/wood{
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "MT" = (
 /turf/simulated/floor/stairs/wood{
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "MU" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "Pl" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -16672,7 +16672,7 @@
 	dir = 5
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "Px" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine/vacuum{

@@ -9629,7 +9629,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/concrete)
+/area/space)
 "axj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33035,7 +33035,7 @@
 	},
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor,
-/area/concrete)
+/area/space)
 "buf" = (
 /obj/lattice{
 	dir = 4;
@@ -33541,7 +33541,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space/fluid/manta,
-/area/concrete)
+/area/space)
 "bvs" = (
 /obj/lattice{
 	dir = 4;

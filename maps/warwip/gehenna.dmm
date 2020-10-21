@@ -1740,13 +1740,13 @@
 /area/gehenna)
 "fw" = (
 /turf/gehenna/desert,
-/area/concrete)
+/area/space)
 "fx" = (
 /turf/gehenna/desert/corner{
 	icon_state = "gehenna_corner";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "fy" = (
 /turf/gehenna/desert/plating{
 	name = "plating";
@@ -1830,112 +1830,112 @@
 	name = "plating";
 	icon_state = "wood3_stairs2"
 	},
-/area/concrete)
+/area/space)
 "fM" = (
 /turf/gehenna/desert/plating{
 	name = "plating";
 	icon_state = "dark_stairs2"
 	},
-/area/concrete)
+/area/space)
 "fN" = (
 /turf/gehenna/desert/path{
 	icon_state = "gehenna_edge";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "fO" = (
 /turf/gehenna/desert/corner{
 	icon_state = "gehenna_corner";
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "fP" = (
 /turf/gehenna/desert/path{
 	icon_state = "gehenna_edge";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "fQ" = (
 /turf/gehenna/desert/plating/podbay,
-/area/concrete)
+/area/space)
 "fR" = (
 /turf/gehenna/desert/path{
 	icon_state = "gehenna_edge";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "fS" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/concrete)
+/area/space)
 "fT" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "fU" = (
 /turf/gehenna/desert/corner{
 	icon_state = "gehenna_corner";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "fV" = (
 /turf/gehenna/desert{
 	icon_state = "gehenna";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "fW" = (
 /turf/gehenna/desert/corner{
 	icon_state = "gehenna_corner";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "fX" = (
 /turf/gehenna/desert/path,
-/area/concrete)
+/area/space)
 "fY" = (
 /turf/gehenna/desert/corner,
-/area/concrete)
+/area/space)
 "fZ" = (
 /turf/gehenna/desert/corner{
 	icon_state = "gehenna_corner";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "ga" = (
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "gb" = (
 /turf/gehenna/desert/corner{
 	icon_state = "gehenna_corner";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "gc" = (
 /turf/gehenna/desert/corner{
 	icon_state = "gehenna_corner";
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "gd" = (
 /turf/simulated/floor/shuttlebay,
-/area/concrete)
+/area/space)
 "ge" = (
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "gf" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/concrete)
+/area/space)
 "gg" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/concrete)
+/area/space)
 "gh" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/concrete)
+/area/space)
 "gi" = (
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "gj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	tag = "icon-xtra_bigstripe-edge (WEST)";
@@ -1943,72 +1943,72 @@
 	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,
-/area/concrete)
+/area/space)
 "gk" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
-/area/concrete)
+/area/space)
 "gl" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 9
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "gm" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-corner2";
 	dir = 9
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "gn" = (
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "go" = (
 /turf/gehenna/desert/plating{
 	name = "plating";
 	icon_state = "Stairs2_wide";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "gp" = (
 /turf/gehenna/desert/plating{
 	name = "plating";
 	icon_state = "stairs_middle";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "gq" = (
 /turf/gehenna/desert/plating{
 	name = "plating";
 	icon_state = "Stairs_wide";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "gr" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw,
-/area/concrete)
+/area/space)
 "gs" = (
 /turf/simulated/floor/carpet/blue/fancy,
-/area/concrete)
+/area/space)
 "gt" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne,
-/area/concrete)
+/area/space)
 "gu" = (
 /turf/gehenna/desert/path{
 	icon_state = "gehenna_edge";
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "gv" = (
 /turf/gehenna/desert/path{
 	icon_state = "gehenna_edge";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "gw" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	tag = "icon-xtra_bigstripe-edge (WEST)";
@@ -2016,28 +2016,28 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "gx" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
-/area/concrete)
+/area/space)
 "gy" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/concrete)
+/area/space)
 "gz" = (
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/carpet/blue/fancy,
-/area/concrete)
+/area/space)
 "gA" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/concrete)
+/area/space)
 "gB" = (
 /obj/machinery/atmospherics/unary/cryo_cell/south,
 /turf/simulated/floor/bluewhite{
 	icon_state = "bluewhite";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "gC" = (
 /obj/machinery/atmospherics/portables_connector/south,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -2045,23 +2045,23 @@
 	icon_state = "bluewhite";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "gD" = (
 /obj/machinery/atmospherics/unary/cryo_cell/south,
 /turf/simulated/floor/bluewhite{
 	icon_state = "bluewhite";
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "gE" = (
 /obj/machinery/disposal/morgue{
 	name = "Borg-Me chute"
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "gF" = (
 /turf/simulated/floor,
-/area/concrete)
+/area/space)
 "gG" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2069,30 +2069,30 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor,
-/area/concrete)
+/area/space)
 "gH" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/concrete)
+/area/space)
 "gI" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/concrete)
+/area/space)
 "gJ" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/concrete)
+/area/space)
 "gK" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/bluewhite{
 	icon_state = "bluewhite";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "gL" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east,
 /turf/simulated/floor/bluewhite{
 	icon_state = "bluewhite";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "gM" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/horizontal,
 /obj/table/reinforced/auto,
@@ -2100,64 +2100,64 @@
 	icon_state = "bluewhite";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "gN" = (
 /obj/machinery/atmospherics/valve/horizontal,
 /turf/simulated/floor/bluewhite{
 	icon_state = "bluewhite";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "gO" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/south,
 /turf/simulated/floor/bluewhite/corner{
 	icon_state = "bluewhitecorner";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "gP" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/south,
 /turf/simulated/floor/white,
-/area/concrete)
+/area/space)
 "gQ" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/east,
 /turf/simulated/floor/bluewhite{
 	icon_state = "bluewhite";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "gR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
 /turf/simulated/floor/shuttlebay,
-/area/concrete)
+/area/space)
 "gS" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/shuttlebay,
-/area/concrete)
+/area/space)
 "gT" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
 /turf/simulated/floor/shuttlebay,
-/area/concrete)
+/area/space)
 "gU" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "gV" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "gW" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "Director's Office"
 	},
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "gX" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -2169,40 +2169,40 @@
 	icon_state = "bluewhite";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "gY" = (
 /turf/simulated/floor/white,
-/area/concrete)
+/area/space)
 "gZ" = (
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/white,
-/area/concrete)
+/area/space)
 "ha" = (
 /turf/simulated/floor/bluewhite/corner,
-/area/concrete)
+/area/space)
 "hb" = (
 /obj/machinery/atmospherics/unary/cryo_cell/north,
 /turf/simulated/floor/bluewhite{
 	icon_state = "bluewhite";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "hc" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "hd" = (
 /turf/simulated/floor/bluewhite{
 	icon_state = "bluewhite";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "he" = (
 /obj/machinery/sleeper{
 	dir = 8
 	},
 /turf/simulated/floor/bluewhite,
-/area/concrete)
+/area/space)
 "hf" = (
 /obj/machinery/sleep_console{
 	dir = 8
@@ -2211,17 +2211,17 @@
 	icon_state = "bluewhite";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "hg" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "hh" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Medbay"
 	},
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "hi" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "noedge-tile1";
@@ -2231,28 +2231,28 @@
 	dir = 8
 	},
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "hj" = (
 /turf/simulated/floor/bluewhite{
 	icon_state = "bluewhite";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "hk" = (
 /obj/machinery/sleeper{
 	dir = 8
 	},
 /turf/simulated/floor/blue,
-/area/concrete)
+/area/space)
 "hl" = (
 /obj/machinery/sleep_console{
 	dir = 8
 	},
 /turf/simulated/floor/blue,
-/area/concrete)
+/area/space)
 "hm" = (
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "hn" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2260,7 +2260,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "ho" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -2269,7 +2269,7 @@
 	icon_state = "bluewhite";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "hp" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -2284,14 +2284,14 @@
 	icon_state = "bluewhite";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "hq" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	icon_state = "maint_closed";
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "hr" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "noedge-tile1"
@@ -2300,7 +2300,7 @@
 	name = "Medbay"
 	},
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "hs" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -2309,7 +2309,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "ht" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "noedge-tile1"
@@ -2318,21 +2318,21 @@
 	name = "Medbay"
 	},
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "hu" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/bluewhite{
 	icon_state = "bluewhite";
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "hv" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/bluewhite,
-/area/concrete)
+/area/space)
 "hw" = (
 /turf/simulated/floor/bluewhite,
-/area/concrete)
+/area/space)
 "hx" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -2341,19 +2341,19 @@
 	icon_state = "bluewhite";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "hy" = (
 /turf/simulated/floor/redwhite{
 	icon_state = "redwhite";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "hz" = (
 /turf/simulated/floor/redwhite{
 	icon_state = "redwhite";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "hA" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2364,13 +2364,13 @@
 	icon_state = "redwhite";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "hB" = (
 /turf/simulated/floor/redwhite{
 	icon_state = "redwhite";
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "hC" = (
 /obj/machinery/chem_dispenser,
 /obj/machinery/light{
@@ -2383,20 +2383,20 @@
 	icon_state = "blueblack";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "hD" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "hE" = (
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "hF" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -2408,14 +2408,14 @@
 	icon_state = "blueblack";
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "hG" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/blue,
-/area/concrete)
+/area/space)
 "hH" = (
 /turf/simulated/floor/industrial,
-/area/concrete)
+/area/space)
 "hI" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -2427,31 +2427,31 @@
 	icon_state = "redwhite";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "hJ" = (
 /turf/simulated/floor/redwhite{
 	icon_state = "redwhite";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "hK" = (
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "hL" = (
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "hM" = (
 /turf/simulated/floor/blue/side{
 	icon_state = "blue";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "hN" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2462,45 +2462,45 @@
 	icon_state = "blue";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "hO" = (
 /turf/simulated/floor/blue/side{
 	icon_state = "blue";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "hP" = (
 /turf/simulated/floor/blue/side{
 	icon_state = "blue";
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "hQ" = (
 /turf/simulated/floor/redwhite{
 	icon_state = "redwhite";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "hR" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "hS" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "hT" = (
 /turf/simulated/floor/blue/side{
 	icon_state = "blue";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "hU" = (
 /turf/simulated/floor/red,
-/area/concrete)
+/area/space)
 "hV" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "tile1";
@@ -2510,13 +2510,13 @@
 	icon_state = "darkwhite";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "hW" = (
 /turf/simulated/floor/blue/side{
 	icon_state = "blue";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "hX" = (
 /obj/machinery/door/airlock/pyro/external{
 	icon_state = "airlock_closed";
@@ -2526,39 +2526,39 @@
 	icon_state = "blue";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "hY" = (
 /turf/gehenna/desert/plating{
 	dir = 6;
 	icon_state = "floor";
 	name = "plating"
 	},
-/area/concrete)
+/area/space)
 "hZ" = (
 /turf/gehenna/desert/plating{
 	name = "plating";
 	icon_state = "Stairs2_wide";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "ia" = (
 /turf/simulated/floor/redwhite{
 	icon_state = "redwhite";
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "ib" = (
 /turf/simulated/floor/redwhite,
-/area/concrete)
+/area/space)
 "ic" = (
 /turf/simulated/floor/redwhite/corner{
 	icon_state = "redwhitecorner";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "id" = (
 /turf/simulated/floor/redwhite/corner,
-/area/concrete)
+/area/space)
 "ie" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -2570,7 +2570,7 @@
 	icon_state = "redwhite";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "if" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -2579,25 +2579,25 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "ig" = (
 /turf/gehenna/desert/plating{
 	name = "plating";
 	icon_state = "stairs_middle";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "ih" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "ii" = (
 /obj/landmark/viscontents_spawn{
 	name = "overworld visual mirror spawn";
 	targetZ = 3
 	},
 /turf/simulated/floor/stairs/dark/wide,
-/area/concrete)
+/area/space)
 "ij" = (
 /obj/landmark/viscontents_spawn{
 	name = "overworld visual mirror spawn";
@@ -2607,20 +2607,20 @@
 	icon_state = "dark_stairs2";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "ik" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "tile1";
 	dir = 1
 	},
 /turf/simulated/floor/red,
-/area/concrete)
+/area/space)
 "il" = (
 /turf/simulated/floor/blackwhite{
 	icon_state = "darkwhite";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "im" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "tile1";
@@ -2630,21 +2630,21 @@
 	icon_state = "redwhite";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "in" = (
 /turf/gehenna/desert/plating{
 	name = "plating";
 	icon_state = "Stairs_wide";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "io" = (
 /obj/landmark/viscontents_spawn{
 	name = "overworld visual mirror spawn";
 	targetZ = 3
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "ip" = (
 /obj/landmark/viscontents_spawn{
 	name = "overworld visual mirror spawn";
@@ -2654,7 +2654,7 @@
 	icon_state = "dark_stairs2";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "iq" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -2667,7 +2667,7 @@
 	targetZ = 3
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "ir" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "tile1";
@@ -2677,48 +2677,48 @@
 	dir = 8
 	},
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "is" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "it" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "iu" = (
 /turf/simulated/floor/blue/side{
 	icon_state = "blue";
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "iv" = (
 /obj/machinery/light,
 /turf/simulated/floor/blue/side,
-/area/concrete)
+/area/space)
 "iw" = (
 /turf/simulated/floor/blue/side,
-/area/concrete)
+/area/space)
 "ix" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "tile1";
 	dir = 1
 	},
 /turf/simulated/floor/blue/side,
-/area/concrete)
+/area/space)
 "iy" = (
 /obj/machinery/disposal/morgue,
 /turf/simulated/floor/blue/side{
 	icon_state = "blue";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "iz" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -2731,7 +2731,7 @@
 	targetZ = 3
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "iA" = (
 /obj/landmark/viscontents_spawn{
 	name = "overworld visual mirror spawn";
@@ -2741,11 +2741,11 @@
 	icon_state = "dark_stairs2";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "iB" = (
 /obj/machinery/light,
 /turf/simulated/floor/redwhite,
-/area/concrete)
+/area/space)
 "iC" = (
 /obj/machinery/disposal/morgue{
 	name = "Borg-Me chute"
@@ -2754,7 +2754,7 @@
 	icon_state = "redwhite";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "iD" = (
 /obj/machinery/chem_heater,
 /obj/machinery/light{
@@ -2764,7 +2764,7 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/blue,
-/area/concrete)
+/area/space)
 "iE" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	tag = "icon-xtra_bigstripe-edge (WEST)";
@@ -2772,10 +2772,10 @@
 	dir = 8
 	},
 /turf/simulated/floor/blueblack,
-/area/concrete)
+/area/space)
 "iF" = (
 /turf/simulated/floor/blueblack,
-/area/concrete)
+/area/space)
 "iG" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -2787,7 +2787,7 @@
 	icon_state = "blueblack";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "iH" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -2795,20 +2795,20 @@
 	},
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "iI" = (
 /obj/machinery/light/small/harsh/very,
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "iJ" = (
 /turf/simulated/floor/stairs/dark/wide,
-/area/concrete)
+/area/space)
 "iK" = (
 /turf/simulated/floor/stairs/dark/wide{
 	icon_state = "dark_stairs2";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "iL" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -2818,17 +2818,17 @@
 	name = "Genetics Research"
 	},
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "iM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "iN" = (
 /obj/machinery/genetics_booth,
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "iO" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -2837,13 +2837,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "iP" = (
 /turf/simulated/floor/greenwhite{
 	icon_state = "greenwhite";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "iQ" = (
 /obj/stool/chair/green{
 	dir = 8
@@ -2852,26 +2852,26 @@
 	icon_state = "greenwhite";
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "iR" = (
 /obj/decal/nothing{
 	dir = 8;
 	mouse_opacity = 0
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/concrete)
+/area/space)
 "iS" = (
 /turf/simulated/floor/stairs/dark/wide{
 	icon_state = "dark_stairs2";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "iT" = (
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "iU" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2882,22 +2882,22 @@
 	icon_state = "blueblack";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "iV" = (
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "iW" = (
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "iX" = (
 /turf/simulated/floor/greenblack{
 	icon_state = "greenblack";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "iY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe";
@@ -2917,7 +2917,7 @@
 	icon_state = "greenwhite";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "iZ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe";
@@ -2927,7 +2927,7 @@
 	icon_state = "greenwhite";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "ja" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe";
@@ -2941,7 +2941,7 @@
 	icon_state = "greenwhite";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "jb" = (
 /obj/stool/chair/green{
 	dir = 8
@@ -2956,59 +2956,59 @@
 	icon_state = "greenwhite";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "jc" = (
 /turf/gehenna/desert/path{
 	icon_state = "gehenna_edge";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "jd" = (
 /obj/stool/chair/pew/fancy/right,
 /turf/gehenna/desert/path{
 	icon_state = "gehenna_edge";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "je" = (
 /obj/stool/chair/pew/fancy/center,
 /turf/gehenna/desert/path{
 	icon_state = "gehenna_edge";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "jf" = (
 /obj/stool/chair/pew/fancy/left,
 /turf/gehenna/desert/path{
 	icon_state = "gehenna_edge";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "jg" = (
 /turf/gehenna/desert/plating{
 	icon_state = "gehenna_tile";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "jh" = (
 /turf/gehenna/desert/plating{
 	icon_state = "gehenna_tile";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "ji" = (
 /obj/decal/nothing{
 	dir = 8;
 	mouse_opacity = 0
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/concrete)
+/area/space)
 "jj" = (
 /turf/simulated/floor/stairs/dark/wide{
 	icon_state = "dark_stairs2";
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "jk" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -3017,7 +3017,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "jl" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -3029,7 +3029,7 @@
 	icon_state = "blueblack";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "jm" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -3039,7 +3039,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "jn" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "tile1";
@@ -3050,26 +3050,26 @@
 	name = "Genetics Research"
 	},
 /turf/simulated/floor/darkblue,
-/area/concrete)
+/area/space)
 "jo" = (
 /turf/simulated/floor/greenblack{
 	icon_state = "greenblack";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "jp" = (
 /turf/simulated/floor/greenblack{
 	icon_state = "greenblack";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "jq" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Genetics Research"
 	},
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "jr" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1;
@@ -3079,7 +3079,7 @@
 	icon_state = "greenwhite";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "js" = (
 /obj/stool/chair/green{
 	dir = 8
@@ -3088,7 +3088,7 @@
 	icon_state = "greenwhite";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "jt" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -3097,7 +3097,7 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "ju" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -3106,40 +3106,40 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "jv" = (
 /obj/burning_barrel,
 /turf/gehenna/desert{
 	icon_state = "gehenna";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "jw" = (
 /turf/simulated/floor/sanitary/blue,
-/area/concrete)
+/area/space)
 "jx" = (
 /turf/simulated/floor/blueblack/corner{
 	icon_state = "blueblackcorner";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "jy" = (
 /turf/simulated/floor/blueblack/corner{
 	icon_state = "blueblackcorner";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "jz" = (
 /obj/machinery/genetics_scanner,
 /turf/simulated/floor/greenblack{
 	icon_state = "greenblack";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "jA" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "jB" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -3150,7 +3150,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/sanitary/blue,
-/area/concrete)
+/area/space)
 "jC" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -3162,7 +3162,7 @@
 	icon_state = "blueblack";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "jD" = (
 /obj/machinery/computer/genetics{
 	dir = 4
@@ -3171,13 +3171,13 @@
 	icon_state = "greenblack";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "jE" = (
 /obj/stool/chair/green{
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "jF" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe";
@@ -3191,7 +3191,7 @@
 	icon_state = "greenwhite";
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "jG" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe2";
@@ -3205,35 +3205,35 @@
 	icon_state = "greenwhitecorner";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "jH" = (
 /turf/simulated/floor/greenwhite{
 	icon_state = "greenwhite";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "jI" = (
 /obj/morgue,
 /turf/simulated/floor/sanitary/blue,
-/area/concrete)
+/area/space)
 "jJ" = (
 /obj/morgue{
 	icon_state = "morgue1";
 	dir = 8
 	},
 /turf/simulated/floor/sanitary/blue,
-/area/concrete)
+/area/space)
 "jK" = (
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/concrete)
+/area/space)
 "jL" = (
 /obj/machinery/clonegrinder,
 /turf/simulated/floor/greenblack{
 	icon_state = "greenblack";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "jM" = (
 /obj/machinery/clonepod,
 /obj/machinery/light{
@@ -3243,7 +3243,7 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "jN" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1;
@@ -3253,16 +3253,16 @@
 	icon_state = "greenwhite";
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "jO" = (
 /turf/simulated/floor/greenwhite,
-/area/concrete)
+/area/space)
 "jP" = (
 /turf/simulated/floor/greenwhite{
 	icon_state = "greenwhite";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "jQ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light{
@@ -3272,24 +3272,24 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "jR" = (
 /obj/machinery/light,
 /turf/simulated/floor/sanitary/blue,
-/area/concrete)
+/area/space)
 "jS" = (
 /obj/machinery/disposal/morgue{
 	name = "medbay chute"
 	},
 /turf/simulated/floor/sanitary/blue,
-/area/concrete)
+/area/space)
 "jT" = (
 /obj/machinery/disposal/morgue{
 	desc = "A pneumatic delivery chute for sending things directly to the crematorium.";
 	name = "crematorium chute"
 	},
 /turf/simulated/floor/sanitary/blue,
-/area/concrete)
+/area/space)
 "jU" = (
 /obj/machinery/computer/genetics{
 	dir = 4
@@ -3304,13 +3304,13 @@
 	icon_state = "greenblack";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "jV" = (
 /obj/stool/chair/green{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "jW" = (
 /obj/machinery/computer/cloning{
 	icon_state = "dna";
@@ -3326,80 +3326,80 @@
 	icon_state = "greenblack";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "jX" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "jY" = (
 /turf/gehenna/desert/plating{
 	name = "plating";
 	icon_state = "Stairs_wide"
 	},
-/area/concrete)
+/area/space)
 "jZ" = (
 /turf/gehenna/desert/plating{
 	name = "plating";
 	icon_state = "stairs_middle"
 	},
-/area/concrete)
+/area/space)
 "ka" = (
 /turf/gehenna/desert/plating{
 	name = "plating";
 	icon_state = "Stairs2_wide"
 	},
-/area/concrete)
+/area/space)
 "kb" = (
 /obj/machinery/genetics_scanner,
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "kc" = (
 /turf/simulated/floor/greenblack,
-/area/concrete)
+/area/space)
 "kd" = (
 /obj/machinery/clone_scanner,
 /turf/simulated/floor/green,
-/area/concrete)
+/area/space)
 "ke" = (
 /obj/machinery/door/airlock/pyro{
 	icon_state = "generic_closed";
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "kf" = (
 /turf/simulated/floor/blueblack/corner,
-/area/concrete)
+/area/space)
 "kg" = (
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "kh" = (
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "ki" = (
 /obj/machinery/light,
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "kj" = (
 /obj/machinery/light/small/floor/cool,
 /turf/gehenna/desert,
-/area/concrete)
+/area/space)
 "kk" = (
 /obj/machinery/light/small/floor/cool,
 /turf/gehenna/desert/path{
 	icon_state = "gehenna_edge";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "kl" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -3424,7 +3424,7 @@
 	dir = 1
 	},
 /turf/gehenna/desert,
-/area/concrete)
+/area/space)
 "ko" = (
 /turf/simulated/floor,
 /area/gehenna/wasteland)
