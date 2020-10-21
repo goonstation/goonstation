@@ -62601,11 +62601,19 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+<<<<<<< Updated upstream
 	},
 /obj/disposalpipe/segment/mail,
 /obj/stool/chair/office{
 	dir = 8
 	},
+=======
+	},
+/obj/disposalpipe/segment/mail,
+/obj/stool/chair/office{
+	dir = 8
+	},
+>>>>>>> Stashed changes
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
@@ -62946,6 +62954,11 @@
 /obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"eap" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/door/unpowered/wood,
+/turf/simulated/floor/grime,
+/area/station/security/brig)
 "ezG" = (
 /obj/window/reinforced{
 	dir = 4
@@ -63411,6 +63424,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
+"lag" = (
+/obj/machinery/door/unpowered/wood,
+/turf/space,
+/area)
 "ltD" = (
 /obj/cable{
 	d1 = 4;
@@ -90787,7 +90804,7 @@ aaa
 aal
 aaa
 aaa
-aaa
+lag
 arw
 aaa
 aaa
@@ -97138,7 +97155,7 @@ aho
 ayu
 azR
 aBw
-aCH
+eap
 amy
 aCH
 azM
