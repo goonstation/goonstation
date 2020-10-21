@@ -1239,7 +1239,7 @@ ABSTRACT_TYPE(/area/sim)
 	sims_score = 100
 	sound_group = "vr"
 
-/area/sim/concrete
+
 
 /area/sim/area1
 	name = "Vspace area 1"
@@ -1436,7 +1436,8 @@ ABSTRACT_TYPE(/area/station/maintenance/inner)
 	name = "Inner Maintenance"
 	icon_state = "imaint"
 
-/area/station/maintenance/inner/concrete
+/area/station/maintenance/inner/central
+  name = "Central Inner Maintenance"
 
 // Donut 3 specific areas //
 

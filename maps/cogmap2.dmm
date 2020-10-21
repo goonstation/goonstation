@@ -25733,20 +25733,20 @@
 /area/station/hallway/primary/west)
 "bgK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bgL" = (
 /obj/securearea,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bgM" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bgN" = (
 /obj/disposalpipe/segment/transport,
 /obj/securearea,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bgO" = (
 /obj/airbridge_controller{
 	id = "foreport";
@@ -26141,7 +26141,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhC" = (
 /obj/cable{
 	d1 = 4;
@@ -26155,7 +26155,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhD" = (
 /obj/cable{
 	d1 = 4;
@@ -26163,7 +26163,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhE" = (
 /obj/cable{
 	d1 = 4;
@@ -26171,7 +26171,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhF" = (
 /obj/cable{
 	d1 = 2;
@@ -26179,7 +26179,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhG" = (
 /obj/disposalpipe/segment/transport,
 /obj/machinery/door/airlock/pyro/external{
@@ -26189,30 +26189,30 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhH" = (
 /turf/simulated/floor/stairs{
 	dir = 4
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhI" = (
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhJ" = (
 /obj/landmark/halloween,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhK" = (
 /obj/landmark{
 	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhL" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "R12"
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhM" = (
 /obj/decal/poster/wallsign/stencil/left/s{
 	pixel_x = 1
@@ -26223,7 +26223,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "R12"
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhN" = (
 /obj/decal/poster/wallsign/stencil/right/r{
 	pixel_x = 16
@@ -26237,7 +26237,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "R12"
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhO" = (
 /obj/decal/poster/wallsign/stencil/right/y{
 	pixel_x = 12
@@ -26251,7 +26251,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "R12"
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bhP" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -26455,7 +26455,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bis" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
@@ -26494,7 +26494,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bix" = (
 /obj/cable{
 	d1 = 4;
@@ -26505,7 +26505,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "biy" = (
 /obj/cable{
 	d1 = 4;
@@ -26516,7 +26516,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "biz" = (
 /obj/cable{
 	d1 = 4;
@@ -26524,7 +26524,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "biA" = (
 /obj/cable{
 	d1 = 2;
@@ -26532,7 +26532,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "biB" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -27129,7 +27129,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bki" = (
 /obj/cable{
 	d1 = 1;
@@ -27140,7 +27140,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bkj" = (
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
@@ -27817,12 +27817,12 @@
 /obj/grille/steel,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "blN" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "blO" = (
 /obj/cable{
 	d1 = 1;
@@ -27832,7 +27832,7 @@
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "blP" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -28542,7 +28542,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/vertical,
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bnn" = (
 /obj/cable{
 	d1 = 4;
@@ -28550,7 +28550,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bno" = (
 /obj/cable{
 	d1 = 1;
@@ -28558,7 +28558,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bnp" = (
 /obj/table/auto,
 /obj/item/hand_labeler,
@@ -29185,13 +29185,13 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/vertical,
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "boQ" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "boR" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -29922,12 +29922,12 @@
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bqy" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs2_wide"
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bqz" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routingdepot/security)
@@ -30833,11 +30833,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/northeast,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bsn" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/southwest,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bso" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -31654,7 +31654,7 @@
 "bud" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/vertical,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bue" = (
 /obj/machinery/launcher_loader/east,
 /obj/machinery/door/poddoor/pyro{
@@ -33472,7 +33472,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bxR" = (
 /obj/cable{
 	d1 = 4;
@@ -33486,7 +33486,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/vertical,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bxS" = (
 /obj/cable{
 	d1 = 4;
@@ -34359,7 +34359,7 @@
 "bzA" = (
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bzB" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/power/apc{
@@ -34371,7 +34371,7 @@
 /obj/cable,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/vertical,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bzC" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -35165,7 +35165,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bBf" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/item/storage/wall/emergency{
@@ -35174,7 +35174,7 @@
 	},
 /obj/critter/mouse,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bBg" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/item/storage/wall/emergency{
@@ -35182,15 +35182,15 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bBh" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bBi" = (
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bBj" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/northeast,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -36187,7 +36187,7 @@
 "bDa" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bDb" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -37411,13 +37411,13 @@
 	dir = 1;
 	icon_state = "Stairs2_wide"
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bEY" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs_wide"
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bEZ" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -38475,7 +38475,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bGS" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -38489,13 +38489,13 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bGT" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bGU" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -39438,7 +39438,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bIK" = (
 /obj/landmark/halloween,
 /obj/cable{
@@ -39452,7 +39452,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bIL" = (
 /obj/cable{
 	d1 = 4;
@@ -39461,7 +39461,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/vertical,
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bIM" = (
 /obj/cable{
 	d1 = 4;
@@ -39480,7 +39480,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bIN" = (
 /obj/cable{
 	d1 = 4;
@@ -40759,21 +40759,21 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bKz" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/southeast,
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bKA" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/horizontal,
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bKB" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -41764,7 +41764,7 @@
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bMo" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -42678,7 +42678,7 @@
 /obj/machinery/atmospherics/portables_connector/east,
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bNS" = (
 /obj/item/storage/wall/fire{
 	dir = 1;
@@ -42686,17 +42686,17 @@
 	},
 /obj/machinery/atmospherics/valve/horizontal,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bNT" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/southwest,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bNU" = (
 /obj/machinery/atmospherics/valve/notify_admins/vertical{
 	name = "Air Reserve (Security + Brig)"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bNV" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -43510,22 +43510,22 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/atmospherics/pipe/tank/air_repressurization/east,
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bPw" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/atmospherics/valve/horizontal,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bPx" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/atmospherics/pipe/manifold/overfloor/south,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bPy" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/machinery/atmospherics/pipe/simple/overfloor/southwest,
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bPz" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -44193,7 +44193,7 @@
 /obj/disposalpipe/segment/mail/bent/north,
 /obj/machinery/atmospherics/pipe/simple/overfloor/vertical,
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bQX" = (
 /obj/sea_plant/anemone/lit,
 /turf/simulated/floor/sand,
@@ -44926,7 +44926,7 @@
 	},
 /obj/machinery/atmospherics/valve/purge/vertical,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bSD" = (
 /obj/cable{
 	d1 = 4;
@@ -44939,7 +44939,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bSE" = (
 /obj/cable{
 	d1 = 4;
@@ -45757,7 +45757,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/vertical,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bUh" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -47668,7 +47668,7 @@
 	dir = 1;
 	icon_state = "Stairs2_wide"
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bYw" = (
 /obj/grille/catwalk,
 /obj/disposalpipe/segment/transport{
@@ -48839,7 +48839,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/vertical,
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "caU" = (
 /obj/cable{
 	d1 = 2;
@@ -48847,10 +48847,10 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "caV" = (
 /turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "caW" = (
 /obj/machinery/shower{
 	dir = 1;
@@ -49392,7 +49392,7 @@
 	dir = 1;
 	icon_state = "Stairs2_wide"
 	},
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ccf" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -49724,7 +49724,7 @@
 "ccN" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ccO" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -50294,7 +50294,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cef" = (
 /obj/cable{
 	d1 = 4;
@@ -50306,7 +50306,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ceg" = (
 /obj/cable{
 	d1 = 4;
@@ -50314,7 +50314,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ceh" = (
 /obj/cable{
 	d1 = 1;
@@ -50322,7 +50322,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cei" = (
 /obj/cable{
 	d1 = 1;
@@ -50529,18 +50529,18 @@
 	text = "NF"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ceP" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ceQ" = (
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ceR" = (
 /obj/item/cigbutt,
 /turf/simulated/floor/plating/damaged1,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ceS" = (
 /obj/airbridge_controller{
 	id = "aftstarboard";
@@ -50605,7 +50605,7 @@
 "ceZ" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "cfa" = (
 /obj/airbridge_controller{
 	id = "forestarboard";

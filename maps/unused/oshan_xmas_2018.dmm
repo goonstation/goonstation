@@ -626,7 +626,7 @@
 "abs" = (
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "abt" = (
 /obj/machinery/door/poddoor/pyro{
 	name = "Chapel Mass Driver";
@@ -13352,12 +13352,12 @@
 /area/station/medical/medbay/lobby)
 "aCD" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aCE" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aCF" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/teleporter)
@@ -13658,7 +13658,7 @@
 /area/station/medical/medbay/lobby)
 "aDr" = (
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aDs" = (
 /obj/lrteleporter,
 /obj/disposalpipe/segment/mail,
@@ -14351,7 +14351,7 @@
 "aEV" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aEW" = (
 /obj/machinery/disposal/mail/small/autoname{
 	dir = 4;
@@ -15118,7 +15118,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aGK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/bot_storage)
@@ -16998,7 +16998,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aKM" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -17251,7 +17251,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLr" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -17269,7 +17269,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLs" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -17282,7 +17282,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLt" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -17290,7 +17290,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLu" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	icon_state = "maint2_closed";
@@ -17303,7 +17303,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLv" = (
 /obj/disposalpipe/segment/brig,
 /obj/cable{
@@ -17521,7 +17521,7 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aLX" = (
 /obj/disposalpipe/segment/brig,
 /obj/machinery/light/incandescent/netural,
@@ -18547,7 +18547,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aOr" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -42859,7 +42859,7 @@
 "bTL" = (
 /obj/item/cable_coil,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bTM" = (
 /obj/storage/closet/wardrobe/orange,
 /obj/machinery/light/incandescent/cool,
@@ -44258,7 +44258,7 @@
 "bXl" = (
 /obj/item/crowbar,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bXm" = (
 /obj/machinery/light/incandescent/blueish,
 /obj/item/crowbar,

@@ -10952,7 +10952,7 @@
 	},
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "avM" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall,
@@ -11333,7 +11333,7 @@
 	},
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "awH" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -11341,7 +11341,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "awI" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -11349,33 +11349,33 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "awJ" = (
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "awK" = (
 /obj/machinery/camera{
 	c_tag = "Inner Maintenance North"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "awL" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "awM" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "awN" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "awO" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -11384,7 +11384,7 @@
 	},
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "awP" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/grime,
@@ -11681,7 +11681,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "axz" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -11693,7 +11693,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "axA" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -11706,7 +11706,7 @@
 	tag = "icon-pipe-j2 (EAST)"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "axB" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
@@ -11721,7 +11721,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "axC" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -11733,7 +11733,7 @@
 	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "axD" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -11750,7 +11750,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "axE" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -12015,7 +12015,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ayh" = (
 /turf/simulated/wall/r_wall,
 /area/station/engine/substation/north)
@@ -12071,7 +12071,7 @@
 /area/station/engine/substation/north)
 "ayk" = (
 /turf/simulated/wall/r_wall,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ayl" = (
 /obj/disposalpipe/segment,
 /obj/machinery/camera{
@@ -12079,7 +12079,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aym" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -12087,7 +12087,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ayn" = (
 /obj/disposalpipe/segment,
 /obj/machinery/portable_atmospherics/pump,
@@ -12283,7 +12283,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ayL" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -12295,7 +12295,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ayM" = (
 /turf/simulated/floor/grime,
 /area/station/engine/substation/north)
@@ -12319,7 +12319,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "ayP" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -12630,7 +12630,7 @@
 /area/station/engine/substation/north)
 "azw" = (
 /turf/simulated/wall,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "azx" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -12841,7 +12841,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "azZ" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -12849,14 +12849,14 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAa" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAb" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -12868,7 +12868,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAc" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -12878,14 +12878,14 @@
 	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAd" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAe" = (
 /turf/simulated/floor/neutral/side{
 	dir = 10
@@ -13208,7 +13208,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAJ" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -13221,7 +13221,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAK" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -13232,7 +13232,7 @@
 /obj/item/dice,
 /obj/item/mousetrap,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAL" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -13271,7 +13271,7 @@
 	d2 = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAO" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -13279,7 +13279,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAP" = (
 /obj/cable{
 	d1 = 1;
@@ -13287,14 +13287,14 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAQ" = (
 /obj/machinery/camera{
 	c_tag = "Inner Maintenance";
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aAR" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -13624,7 +13624,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aBB" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -13643,7 +13643,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aBC" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -13662,7 +13662,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aBD" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -13705,14 +13705,14 @@
 	d2 = 2
 	},
 /turf/simulated/wall,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aBH" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
 	},
 /turf/simulated/wall,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aBI" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -13985,7 +13985,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aCl" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -14528,7 +14528,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aDu" = (
 /obj/decal/cleanable/blood{
 	tag = "icon-floor6";
@@ -14812,7 +14812,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aEb" = (
 /turf/simulated/floor/grass{
 	name = "astroturf";
@@ -15437,7 +15437,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aFn" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -15456,11 +15456,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aFo" = (
 /obj/spook,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aFp" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -15730,7 +15730,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aFY" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -15744,7 +15744,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aFZ" = (
 /obj/grille/steel,
 /obj/window/reinforced,
@@ -15817,7 +15817,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aGf" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -16257,7 +16257,7 @@
 "aGQ" = (
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aGR" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -16265,13 +16265,13 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aGS" = (
 /obj/machinery/camera{
 	c_tag = "Inner Maintenance North West"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aGT" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (NORTHEAST)";
@@ -16323,7 +16323,7 @@
 "aGX" = (
 /obj/closet,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aGY" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -16573,13 +16573,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aHw" = (
 /obj/machinery/camera{
 	c_tag = "Inner Maintenance"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aHx" = (
 /obj/cable{
 	d1 = 1;
@@ -16587,7 +16587,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aHy" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -16598,7 +16598,7 @@
 	c_tag = "Inner Maintenance"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aHz" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -16611,7 +16611,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aHA" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -16906,7 +16906,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aIe" = (
 /obj/cable,
 /turf/simulated/floor/airless/plating/damaged3,
@@ -16914,7 +16914,7 @@
 "aIf" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aIg" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -16922,7 +16922,7 @@
 	pixel_y = -29
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aIh" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall,
@@ -17212,7 +17212,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aIN" = (
 /obj/cable,
 /obj/cable{
@@ -17243,7 +17243,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aIQ" = (
 /obj/grille/steel,
 /obj/window/reinforced,
@@ -17253,7 +17253,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aIR" = (
 /obj/grille/steel,
 /obj/window/reinforced,
@@ -17268,7 +17268,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aIS" = (
 /turf/simulated/wall,
 /area/station/crew_quarters/fitness)
@@ -17812,14 +17812,14 @@
 "aKi" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aKj" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access";
 	req_access_txt = "13"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aKk" = (
 /obj/lattice,
 /obj/cable{
@@ -18104,7 +18104,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aKL" = (
 /obj/machinery/door/poddoor{
 	id = "combustion";
@@ -18993,7 +18993,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aMG" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -19017,7 +19017,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aMH" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	tag = "icon-intact (NORTH)";
@@ -19874,14 +19874,14 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aOq" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aOr" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -20237,7 +20237,7 @@
 	c_tag = "Inner Maintenance"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aPb" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -20978,7 +20978,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aQk" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -20991,7 +20991,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aQl" = (
 /turf/simulated/wall/r_wall,
 /area/station/engine/substation/west)
@@ -21192,7 +21192,7 @@
 	tag = "icon-camera (SOUTHEAST)"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aQG" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/cable{
@@ -21201,11 +21201,11 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aQH" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aQI" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -21435,7 +21435,7 @@
 /obj/machinery/door/firedoor/border_only,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aRf" = (
 /obj/machinery/power/monitor,
 /obj/cable{
@@ -22718,7 +22718,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aTA" = (
 /obj/cable{
 	d1 = 1;
@@ -22731,7 +22731,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aTB" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -23132,7 +23132,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aUj" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -23636,7 +23636,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aVc" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -24039,7 +24039,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aVK" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -24218,7 +24218,7 @@
 	},
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aVX" = (
 /obj/cable{
 	d1 = 1;
@@ -24418,7 +24418,7 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aWs" = (
 /obj/cable,
 /obj/machinery/door/poddoor{
@@ -24890,7 +24890,7 @@
 	mail_tag = "medbay"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aXj" = (
 /turf/simulated/wall/r_wall,
 /area/station/engine/engineering)
@@ -25075,7 +25075,7 @@
 /obj/reagent_dispensers/fueltank,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aXy" = (
 /obj/cable{
 	d1 = 1;
@@ -25088,7 +25088,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aXz" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -25101,7 +25101,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aXA" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -25186,7 +25186,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aXJ" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -25198,7 +25198,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aXK" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -25337,7 +25337,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aXY" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -25966,13 +25966,13 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aZk" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aZl" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
@@ -26548,7 +26548,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bao" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
@@ -26718,7 +26718,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "baI" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -26728,7 +26728,7 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "baJ" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -26743,7 +26743,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "baK" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -26794,7 +26794,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "baP" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -26994,13 +26994,13 @@
 "bbn" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbo" = (
 /obj/item/sheet/glass{
 	amount = 50
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbp" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -27049,7 +27049,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbt" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -27063,7 +27063,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbu" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -27082,7 +27082,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbv" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
@@ -27316,7 +27316,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbT" = (
 /obj/machinery/camera{
 	c_tag = "Inner Maintenance South North"
@@ -27327,7 +27327,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -27339,7 +27339,7 @@
 	icon_state = "floor2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbV" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -27351,7 +27351,7 @@
 	pixel_y = 29
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbW" = (
 /obj/lattice{
 	tag = "icon-lattice-dir-b (NORTHWEST)";
@@ -27384,7 +27384,7 @@
 	},
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbZ" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -27393,7 +27393,7 @@
 	},
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bca" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -27405,7 +27405,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcb" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -27417,7 +27417,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcc" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -27434,7 +27434,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcd" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -27609,14 +27609,14 @@
 	icon_state = "gibbl2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcu" = (
 /obj/decal/cleanable/blood/splatter{
 	tag = "icon-floor5";
 	icon_state = "floor5"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcv" = (
 /obj/decal/cleanable/blood/splatter{
 	tag = "icon-floor4";
@@ -27628,7 +27628,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcw" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -27636,7 +27636,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcx" = (
 /obj/cable{
 	d1 = 1;
@@ -27654,7 +27654,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcy" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -27667,7 +27667,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcz" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access";
@@ -27683,7 +27683,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcA" = (
 /obj/machinery/camera{
 	c_tag = "Inner Maintenance East Airlock";
@@ -27701,7 +27701,7 @@
 	icon_state = "floor5"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcB" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access";
@@ -27713,7 +27713,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcC" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -27766,7 +27766,7 @@
 	pixel_x = -29
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcG" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -27897,7 +27897,7 @@
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcW" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall,
@@ -28382,7 +28382,7 @@
 "beh" = (
 /obj/critter/roach,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bei" = (
 /turf/simulated/wall/r_wall,
 /area/station/engine/substation/pylon)
@@ -28627,7 +28627,7 @@
 	icon_state = "floor4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "beK" = (
 /obj/cable,
 /obj/cable{
@@ -29075,7 +29075,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bfL" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor,
@@ -30870,7 +30870,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bjm" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -31595,7 +31595,7 @@
 	},
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bkM" = (
 /turf/simulated/floor/plating/scorched,
 /area/station/hallway/primary/south)

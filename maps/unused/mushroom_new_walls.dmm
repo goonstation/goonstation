@@ -12630,7 +12630,7 @@
 /area/station/hallway/primary/central)
 "aXa" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aXb" = (
 /obj/shrub,
 /turf/simulated/floor/purple/side{
@@ -12932,7 +12932,7 @@
 /area/station/hallway/primary/central)
 "aYg" = (
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aYh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13373,13 +13373,13 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aZz" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aZA" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -13391,7 +13391,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aZB" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -13403,7 +13403,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aZC" = (
 /obj/landmark{
 	name = "blobstart"
@@ -13412,7 +13412,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "aZD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13640,7 +13640,7 @@
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bai" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/warehouse)
@@ -13659,7 +13659,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bal" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -13668,7 +13668,7 @@
 	icon_state = "8-10"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bam" = (
 /obj/cable,
 /obj/cable{
@@ -13931,7 +13931,7 @@
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbi" = (
 /obj/cable{
 	icon_state = "1-6"
@@ -14154,7 +14154,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bbP" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -14402,7 +14402,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/concrete)
+/area/station/maintenance/inner/central)
 "bcv" = (
 /obj/machinery/door/airlock/pyro,
 /obj/firedoor_spawn,
