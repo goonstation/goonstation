@@ -1,4 +1,17 @@
 
+(t)wed oct 21 20
+(u)Jawns
+(p)2488
+(e)🗺|mapping
+(+)The NSS Manta morgue disposal chute has been upgraded to "functional" status.
+(u)Jawns
+(p)2484
+(e)🐛|bug
+(+)Alien ambassadors now spawn with their ID in their backpack when necessary, instead of inside them.
+(u)TrustworthyFella
+(p)2464
+(e)🐛|bug
+(+)Fixed a bug where dead people could be reborn in new flesh multiple times due to not being killed properly the first time.
 (t)tue oct 20 20
 (u)austin
 (p)2447
