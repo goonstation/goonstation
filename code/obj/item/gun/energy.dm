@@ -795,7 +795,7 @@
 			if (ratio == 0)
 				return
 			indicator_display.icon_state = "pw_pistol_power-[ratio]"
- 			indicator_display.color = display_color
+			indicator_display.color = display_color
 			src.overlays += indicator_display
 
 	nanotrasen
