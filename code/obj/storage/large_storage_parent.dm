@@ -303,7 +303,7 @@
 			return
 
 		if (isitem(O) && (O:cant_drop || (issilicon(user) && O.loc == user))) //For borg held items
-			user.show_text("You can't put that in [src] when it's attached to you!", "red")
+			boutput(user, "You can't put that in [src] when it's attached to you!")
 			return
 
 		src.add_fingerprint(user)
