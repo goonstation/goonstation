@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/space,
-/area/concrete)
+/area/space)
 "aab" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -59,14 +59,14 @@
 "aaj" = (
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "aak" = (
 /obj/lattice,
 /obj/landmark{
 	name = "Artifact spawn"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aal" = (
 /obj/table/woodentable{
 	dir = 10
@@ -242,7 +242,7 @@
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
-/area/concrete)
+/area/space)
 "aaD" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -254,7 +254,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aaE" = (
 /obj/cable{
 	d2 = 8;
@@ -270,7 +270,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aaF" = (
 /obj/cable{
 	d2 = 8;
@@ -285,7 +285,7 @@
 	name = "NASSA spawn"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aaG" = (
 /obj/cable,
 /obj/machinery/power/solar{
@@ -296,7 +296,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area/concrete)
+/area/space)
 "aaH" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -304,7 +304,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aaI" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -318,7 +318,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area/concrete)
+/area/space)
 "aaJ" = (
 /obj/cable{
 	d2 = 8;
@@ -334,7 +334,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aaK" = (
 /obj/cable{
 	d2 = 8;
@@ -346,10 +346,10 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aaL" = (
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aaM" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -357,7 +357,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aaN" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -403,7 +403,7 @@
 	dir = 8
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aaR" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -441,7 +441,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aaW" = (
 /obj/cable{
 	d2 = 8;
@@ -452,7 +452,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aaX" = (
 /obj/cable{
 	d2 = 8;
@@ -463,7 +463,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aaY" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -517,7 +517,7 @@
 "abc" = (
 /obj/window/reinforced,
 /turf/space,
-/area/concrete)
+/area/space)
 "abd" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -526,7 +526,7 @@
 	},
 /obj/window/reinforced,
 /turf/space,
-/area/concrete)
+/area/space)
 "abe" = (
 /obj/machinery/atmospherics/pipe/vent,
 /turf/simulated/floor,
@@ -539,7 +539,7 @@
 	},
 /obj/window/reinforced,
 /turf/space,
-/area/concrete)
+/area/space)
 "abg" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -547,7 +547,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "abh" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -555,7 +555,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "abi" = (
 /obj/cable{
 	d2 = 8;
@@ -567,7 +567,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "abj" = (
 /turf/simulated/wall,
 /area/station/chapel/main)
@@ -637,7 +637,7 @@
 "abt" = (
 /obj/grille,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "abu" = (
 /obj/grille,
 /turf/simulated/floor/plating/airless,
@@ -711,7 +711,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "abD" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
@@ -2398,7 +2398,7 @@
 /area/station/quartermaster/concrete)
 "afm" = (
 /turf/space,
-/area/concrete{
+/area/space{
 	requires_power = 1;
 	sd_lighting = 1
 	})
@@ -4551,7 +4551,7 @@
 "ajz" = (
 /obj/machinery/camera,
 /turf/space,
-/area/concrete)
+/area/space)
 "ajA" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -9303,7 +9303,7 @@
 	level = 2
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "asc" = (
 /obj/grille,
 /turf/simulated/floor/plating/airless,
@@ -10149,14 +10149,14 @@
 /obj/grille,
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
-/area/concrete)
+/area/space)
 "atI" = (
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "atJ" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -10649,7 +10649,7 @@
 	reinf = 1
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "auE" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -10998,7 +10998,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "avm" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -11007,7 +11007,7 @@
 	level = 2
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "avn" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHWEST)";
@@ -11017,7 +11017,7 @@
 	level = 2
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "avo" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -11027,7 +11027,7 @@
 /obj/machinery/communications_dish,
 /turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
-/area/concrete)
+/area/space)
 "avp" = (
 /obj/grille,
 /obj/window{
@@ -11463,7 +11463,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "awi" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
@@ -11472,7 +11472,7 @@
 	level = 2
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "awj" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -11556,7 +11556,7 @@
 	reinf = 1
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "awt" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/machinery/camera{
@@ -11865,7 +11865,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "axe" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -11879,7 +11879,7 @@
 	level = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "axf" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -13918,7 +13918,7 @@
 	level = 2
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aAR" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -15644,7 +15644,7 @@
 	dir = 8
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aDX" = (
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -16236,7 +16236,7 @@
 	tag = "icon-camera (EAST)"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aEX" = (
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -17341,7 +17341,7 @@
 	name = "NASSA spawn"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "aGP" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access";
@@ -18774,10 +18774,10 @@
 	dir = 8;
 	icon_state = "wall_space"
 	},
-/area/concrete)
+/area/space)
 "aJm" = (
 /turf/simulated/shuttle/wall,
-/area/concrete)
+/area/space)
 "aJn" = (
 /obj/machinery/shuttle/engine/propulsion{
 	tag = "icon-propulsion (WEST)";
@@ -18785,7 +18785,7 @@
 	dir = 8
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aJo" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -19431,7 +19431,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aKt" = (
 /turf/simulated/shuttle/wall,
 /area/shuttle/recovery_shuttle)
@@ -20246,7 +20246,7 @@
 	reinf = 1
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aMc" = (
 /obj/closet/wardrobe/mixed,
 /turf/simulated/floor/shuttle{
@@ -20513,7 +20513,7 @@
 	reinf = 1
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aMG" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -21147,7 +21147,7 @@
 	d2 = 8
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aNK" = (
 /obj/machinery/power/tracker,
 /obj/cable{
@@ -21156,7 +21156,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
-/area/concrete)
+/area/space)
 "aNL" = (
 /obj/closet,
 /turf/simulated/floor/shuttle{
@@ -23313,7 +23313,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall_space"
 	},
-/area/concrete)
+/area/space)
 "aSo" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -27576,18 +27576,18 @@
 /area/station/crew_quarters/fitness)
 "bao" = (
 /turf/simulated/wall,
-/area/concrete)
+/area/space)
 "bap" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "baq" = (
 /obj/machinery/camera,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bar" = (
 /obj/cable{
 	d1 = 1;
@@ -27595,7 +27595,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bas" = (
 /turf/space,
 /area/shuttle/mining/station{
@@ -27901,7 +27901,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bbf" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -27915,7 +27915,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area/concrete)
+/area/space)
 "bbg" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
@@ -28087,7 +28087,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bbx" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -28103,7 +28103,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bby" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -28118,7 +28118,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bbz" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -28130,7 +28130,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bbA" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/retrofilter{
@@ -28230,7 +28230,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area/concrete)
+/area/space)
 "bbN" = (
 /obj/cable,
 /obj/cable{
@@ -28238,7 +28238,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bbO" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple{
@@ -28510,7 +28510,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bcp" = (
 /obj/machinery/camera{
 	c_tag = "Conference Room";
@@ -28818,7 +28818,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bcX" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -29395,7 +29395,7 @@
 	c_tag = "South Maint Hallway Airlock"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bdV" = (
 /obj/cable{
 	d1 = 1;
@@ -29491,7 +29491,7 @@
 "beg" = (
 /obj/grille,
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "beh" = (
 /obj/grille,
 /obj/cable{
@@ -29500,14 +29500,14 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "bei" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "bej" = (
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "bek" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -29515,7 +29515,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "bel" = (
 /obj/machinery/power/solar{
 	id = "prisonsolar";
@@ -29525,7 +29525,7 @@
 	tag = "icon-solarpanel";
 	icon_state = "solarpanel"
 	},
-/area/concrete)
+/area/space)
 "bem" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -29540,7 +29540,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "ben" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -29556,7 +29556,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "beo" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -29572,7 +29572,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "bep" = (
 /obj/cable,
 /obj/cable{
@@ -29580,7 +29580,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "beq" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -29588,7 +29588,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "ber" = (
 /obj/cable,
 /obj/cable{
@@ -29600,7 +29600,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "bes" = (
 /obj/cable,
 /obj/cable{
@@ -29616,7 +29616,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "bet" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/prison)
@@ -29636,7 +29636,7 @@
 "bev" = (
 /obj/item/reagent_containers/food/drinks/ntbrew,
 /turf/space,
-/area/concrete)
+/area/space)
 "bew" = (
 /turf/simulated/wall,
 /area/station/security/prison)
@@ -29756,7 +29756,7 @@
 	name = "Auxiliary Communications dish"
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "beH" = (
 /turf/simulated/floor/plating,
 /area/station/security/prison)
@@ -30452,7 +30452,7 @@
 	dir = 8
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bgm" = (
 /obj/stool/chair{
 	dir = 4
@@ -30567,7 +30567,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bgx" = (
 /obj/machinery/door_timer{
 	id = 1;
@@ -30865,7 +30865,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "bha" = (
 /obj/machinery/camera{
 	c_tag = "Commander's Office";
@@ -30906,7 +30906,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "bhf" = (
 /obj/landmark{
 	name = "SR Syndicate-Spawn"
@@ -31212,7 +31212,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "bhL" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -31226,7 +31226,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "bhM" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/light/small,
@@ -31329,7 +31329,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "bhV" = (
 /obj/crate/medical,
 /turf/simulated/floor/shuttle{
@@ -31399,7 +31399,7 @@
 /area/sim/area1)
 "bid" = (
 /turf/unsimulated/wall,
-/area/concrete)
+/area/space)
 "bie" = (
 /turf/simulated/wall,
 /area/sim/area1)
@@ -31489,7 +31489,7 @@
 "biu" = (
 /obj/landmark/start,
 /turf/space,
-/area/concrete)
+/area/space)
 "biv" = (
 /obj/landmark{
 	name = "prison"
@@ -31550,7 +31550,7 @@
 	layer = 20;
 	name = "Space Station 13"
 	},
-/area/concrete)
+/area/space)
 "biK" = (
 /turf/simulated/wall/r_wall,
 /area/sim/tdome/tdome1)
@@ -32063,7 +32063,7 @@
 /area/centcom)
 "bkl" = (
 /turf/unsimulated/wall/other,
-/area/concrete)
+/area/space)
 "bkm" = (
 /turf/simulated/floor/plating,
 /area/centcom)
@@ -32084,7 +32084,7 @@
 /area/centcom)
 "bkp" = (
 /turf/unsimulated/floor,
-/area/concrete)
+/area/space)
 "bkq" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -32123,7 +32123,7 @@
 	icon_state = "wall";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "bkw" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -32138,7 +32138,7 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bkx" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -32148,7 +32148,7 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bky" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -32163,13 +32163,13 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bkz" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "wall_space"
 	},
-/area/concrete)
+/area/space)
 "bkA" = (
 /obj/item/extinguisher,
 /turf/simulated/floor/shuttle,
@@ -32188,12 +32188,12 @@
 "bkD" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bkE" = (
 /obj/table,
 /obj/item/reagent_containers/food/snacks/donkpocket,
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bkF" = (
 /obj/stool/chair{
 	dir = 8
@@ -32236,7 +32236,7 @@
 "bkL" = (
 /obj/marker/supplymarker,
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bkM" = (
 /obj/grille,
 /obj/window{
@@ -32263,10 +32263,10 @@
 "bkO" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bkP" = (
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bkQ" = (
 /obj/machinery/computer/shuttle,
 /turf/simulated/floor/shuttle,
@@ -32316,7 +32316,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bkZ" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -32327,24 +32327,24 @@
 	name = "Supply Shuttle Information"
 	},
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bla" = (
 /obj/table{
 	icon_state = "tabledir";
 	dir = 5
 	},
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "blb" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "wall_space"
 	},
-/area/concrete)
+/area/space)
 "blc" = (
 /obj/machinery/shuttle/engine/propulsion,
 /turf/simulated/shuttle/wall,
-/area/concrete)
+/area/space)
 "bld" = (
 /turf/simulated/floor/caution/east,
 /area/centcom)
@@ -32607,10 +32607,10 @@
 	name = "grass.";
 	opacity = 1
 	},
-/area/concrete)
+/area/space)
 "blN" = (
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "blO" = (
 /obj/stone{
 	tag = "icon-stone (SOUTHEAST)";
@@ -32618,11 +32618,11 @@
 	dir = 6
 	},
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "blP" = (
 /obj/tree1,
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "blQ" = (
 /obj/stone{
 	tag = "icon-stone (SOUTHWEST)";
@@ -32630,7 +32630,7 @@
 	dir = 10
 	},
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "blR" = (
 /obj/shrub{
 	tag = "icon-shrub (EAST)";
@@ -32638,7 +32638,7 @@
 	dir = 4
 	},
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "blS" = (
 /obj/grassplug{
 	tag = "icon-grassplug (WEST)";
@@ -32650,7 +32650,7 @@
 	icon_state = "grasstodirt";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "blT" = (
 /obj/stone,
 /turf/unsimulated/grasstodirt{
@@ -32658,7 +32658,7 @@
 	icon_state = "grasstodirt";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "blU" = (
 /obj/grassplug{
 	tag = "icon-grassplug (EAST)";
@@ -32670,7 +32670,7 @@
 	icon_state = "grasstodirt";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "blV" = (
 /obj/stone{
 	tag = "icon-stone (NORTHEAST)";
@@ -32678,7 +32678,7 @@
 	dir = 5
 	},
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "blW" = (
 /obj/grassplug{
 	tag = "icon-grassplug (NORTH)";
@@ -32690,7 +32690,7 @@
 	icon_state = "grasstodirt";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "blX" = (
 /obj/shrub{
 	tag = "icon-shrub (NORTHWEST)";
@@ -32702,24 +32702,24 @@
 	icon_state = "grasstodirt";
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "blY" = (
 /turf/unsimulated/grasstodirt{
 	tag = "icon-grasstodirt (NORTHWEST)";
 	icon_state = "grasstodirt";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "blZ" = (
 /turf/unsimulated/dirt,
-/area/concrete)
+/area/space)
 "bma" = (
 /turf/unsimulated/grasstodirt{
 	tag = "icon-grasstodirt (NORTHEAST)";
 	icon_state = "grasstodirt";
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "bmb" = (
 /obj/grassplug{
 	tag = "icon-grassplug (NORTH)";
@@ -32732,14 +32732,14 @@
 	icon_state = "grasstodirt";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "bmc" = (
 /turf/unsimulated/grasstodirt{
 	tag = "icon-grasstodirt (WEST)";
 	icon_state = "grasstodirt";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "bmd" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -32750,14 +32750,14 @@
 	name = "Well"
 	},
 /turf/unsimulated/dirt,
-/area/concrete)
+/area/space)
 "bme" = (
 /turf/unsimulated/grasstodirt{
 	tag = "icon-grasstodirt (EAST)";
 	icon_state = "grasstodirt";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "bmf" = (
 /obj/shrub{
 	tag = "icon-shrub (NORTHEAST)";
@@ -32765,7 +32765,7 @@
 	dir = 5
 	},
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "bmg" = (
 /obj/machinery/light/small{
 	desc = "Boo";
@@ -32774,7 +32774,7 @@
 	name = "deadlight"
 	},
 /turf/unsimulated/dirt,
-/area/concrete)
+/area/space)
 "bmh" = (
 /obj/shrub{
 	tag = "icon-shrub (WEST)";
@@ -32782,7 +32782,7 @@
 	dir = 8
 	},
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "bmi" = (
 /obj/machinery/camera{
 	c_tag = "???";
@@ -32791,14 +32791,14 @@
 	network = "Spooky"
 	},
 /turf/unsimulated/dirt,
-/area/concrete)
+/area/space)
 "bmj" = (
 /turf/unsimulated/grasstodirt{
 	tag = "icon-grasstodirt (SOUTHEAST)";
 	icon_state = "grasstodirt";
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "bmk" = (
 /obj/stone{
 	tag = "icon-stone (SOUTHWEST)";
@@ -32806,7 +32806,7 @@
 	dir = 10
 	},
 /turf/unsimulated/grasstodirt,
-/area/concrete)
+/area/space)
 "bml" = (
 /obj/grassplug{
 	tag = "icon-grassplug (EAST)";
@@ -32819,7 +32819,7 @@
 	dir = 5
 	},
 /turf/unsimulated/grasstodirt,
-/area/concrete)
+/area/space)
 "bmm" = (
 /obj/stone{
 	tag = "icon-stone (NORTH)";
@@ -32827,7 +32827,7 @@
 	dir = 1
 	},
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "bmn" = (
 /obj/grassplug,
 /obj/stone{
@@ -32840,17 +32840,17 @@
 	icon_state = "grasstodirt";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "bmo" = (
 /turf/unsimulated/grasstodirt,
-/area/concrete)
+/area/space)
 "bmp" = (
 /turf/unsimulated/grasstodirt{
 	tag = "icon-grasstodirt (SOUTHWEST)";
 	icon_state = "grasstodirt";
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "bmq" = (
 /obj/shrub{
 	tag = "icon-shrub (NORTHWEST)";
@@ -32858,7 +32858,7 @@
 	dir = 9
 	},
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "bmr" = (
 /obj/grassplug{
 	tag = "icon-grassplug (NORTH)";
@@ -32870,7 +32870,7 @@
 	icon_state = "grasstodirt";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "bms" = (
 /turf/space,
 /area/meteor/dock)
@@ -32901,7 +32901,7 @@
 	icon_state = "grasstodirt";
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "bmx" = (
 /obj/shrub{
 	tag = "icon-shrub (SOUTHWEST)";
@@ -32909,7 +32909,7 @@
 	dir = 10
 	},
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "bmy" = (
 /obj/shieldwall{
 	tag = "icon-shield1 (WEST)";
@@ -32949,7 +32949,7 @@
 "bmD" = (
 /obj/stone,
 /turf/unsimulated/grass,
-/area/concrete)
+/area/space)
 "bmE" = (
 /turf/simulated/shuttle/wall{
 	tag = "icon-wall (EAST)";
@@ -33087,7 +33087,7 @@
 	icon_state = "grasstodirt";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "bmT" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -33382,7 +33382,7 @@
 "bny" = (
 /obj/machinery/light,
 /turf/space,
-/area/concrete)
+/area/space)
 "bnz" = (
 /obj/grille,
 /obj/window{
@@ -33400,7 +33400,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "bnA" = (
 /obj/grille,
 /obj/window{
@@ -33419,26 +33419,26 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "bnB" = (
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "bnC" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "bnD" = (
 /turf/simulated/floor{
 	icon_state = "carpetNW"
 	},
-/area/concrete)
+/area/space)
 "bnE" = (
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
-/area/concrete)
+/area/space)
 "bnF" = (
 /obj/table/woodentable{
 	dir = 9
@@ -33446,21 +33446,21 @@
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
-/area/concrete)
+/area/space)
 "bnG" = (
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
-/area/concrete)
+/area/space)
 "bnH" = (
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bnI" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor{
 	icon_state = "carpet1"
 	},
-/area/concrete)
+/area/space)
 "bnJ" = (
 /obj/table/woodentable{
 	dir = 10
@@ -33473,13 +33473,13 @@
 /turf/simulated/floor{
 	icon_state = "carpetE"
 	},
-/area/concrete)
+/area/space)
 "bnK" = (
 /obj/table/woodentable{
 	dir = 6
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "bnL" = (
 /obj/grille,
 /obj/window{
@@ -33499,12 +33499,12 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "bnM" = (
 /turf/simulated/floor{
 	icon_state = "carpet1"
 	},
-/area/concrete)
+/area/space)
 "bnN" = (
 /obj/cable{
 	tag = "icon-1-6";
@@ -33531,7 +33531,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bnO" = (
 /obj/landmark{
 	name = "Artifact spawn"
@@ -33539,12 +33539,12 @@
 /turf/simulated/floor{
 	icon_state = "carpet1"
 	},
-/area/concrete)
+/area/space)
 "bnP" = (
 /turf/simulated/floor{
 	icon_state = "carpetE"
 	},
-/area/concrete)
+/area/space)
 "bnQ" = (
 /obj/grille,
 /obj/window{
@@ -33563,7 +33563,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "bnR" = (
 /obj/cable{
 	tag = "icon-2-9";
@@ -33590,7 +33590,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bnS" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -33598,7 +33598,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bnT" = (
 /obj/cable{
 	tag = "icon-5-8";
@@ -33625,13 +33625,13 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bnU" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "bnV" = (
 /obj/cable{
 	tag = "icon-6-9";
@@ -33640,7 +33640,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bnW" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -33654,7 +33654,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bnX" = (
 /obj/cable{
 	tag = "icon-5-10";
@@ -33663,7 +33663,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bnY" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -33671,14 +33671,14 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bnZ" = (
 /obj/table/woodentable{
 	dir = 5
 	},
 /obj/item/clothing/head/helmet/welding,
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "boa" = (
 /obj/cable{
 	tag = "icon-6-8";
@@ -33705,7 +33705,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bob" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -33713,7 +33713,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "boc" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -33727,7 +33727,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bod" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -33777,7 +33777,7 @@
 /turf/simulated/floor{
 	icon_state = "carpet2"
 	},
-/area/concrete)
+/area/space)
 "boe" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -33791,7 +33791,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bof" = (
 /obj/cable{
 	tag = "icon-4-9";
@@ -33818,7 +33818,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bog" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -33826,7 +33826,7 @@
 	dir = 8
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "boh" = (
 /obj/table/woodentable{
 	tag = "icon-woodentable (EAST)";
@@ -33834,7 +33834,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "boi" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -33848,13 +33848,13 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "boj" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "bok" = (
 /obj/cable{
 	tag = "icon-1-10";
@@ -33881,7 +33881,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bol" = (
 /obj/cable{
 	tag = "icon-6-8";
@@ -33908,7 +33908,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bom" = (
 /obj/cable{
 	tag = "icon-2-9";
@@ -33935,7 +33935,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet,
-/area/concrete)
+/area/space)
 "bon" = (
 /obj/landmark{
 	name = "NASSA spawn"
@@ -33943,39 +33943,39 @@
 /turf/simulated/floor{
 	icon_state = "carpet1"
 	},
-/area/concrete)
+/area/space)
 "boo" = (
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
-/area/concrete)
+/area/space)
 "bop" = (
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
-/area/concrete)
+/area/space)
 "boq" = (
 /turf/simulated/floor{
 	icon_state = "carpetSE"
 	},
-/area/concrete)
+/area/space)
 "bor" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "bos" = (
 /obj/machinery/door/airlock/external{
 	name = "Citadel"
 	},
 /turf/simulated/floor/black,
-/area/concrete)
+/area/space)
 "bot" = (
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bou" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -33985,11 +33985,11 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area/concrete)
+/area/space)
 "bov" = (
 /obj/item/cable_coil/cut,
 /turf/space,
-/area/concrete)
+/area/space)
 "bow" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -34005,7 +34005,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "box" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -34021,7 +34021,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "boy" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -34033,18 +34033,18 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "boz" = (
 /obj/item/shard,
 /turf/space,
-/area/concrete)
+/area/space)
 "boA" = (
 /obj/cable,
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area/concrete)
+/area/space)
 "boB" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -34056,7 +34056,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "boC" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -34066,7 +34066,7 @@
 	icon_state = "diagonalWall";
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "boD" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -34081,7 +34081,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boE" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -34094,7 +34094,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boF" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 1
@@ -34102,7 +34102,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boG" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -34112,7 +34112,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boH" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -34122,7 +34122,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boI" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -34142,19 +34142,19 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "boJ" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 8
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "boK" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boL" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -34162,13 +34162,13 @@
 	d2 = 2
 	},
 /turf/simulated/shuttle/wall,
-/area/concrete)
+/area/space)
 "boM" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boN" = (
 /obj/cable{
 	d1 = 1;
@@ -34178,7 +34178,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boO" = (
 /obj/cable{
 	d1 = 1;
@@ -34193,7 +34193,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boP" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -34211,7 +34211,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boQ" = (
 /obj/cable{
 	d1 = 1;
@@ -34221,12 +34221,12 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boR" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boS" = (
 /obj/rack,
 /obj/item/clothing/head/helmet/space{
@@ -34236,7 +34236,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boT" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -34249,7 +34249,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boU" = (
 /obj/cable{
 	d1 = 1;
@@ -34260,7 +34260,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boV" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -34275,7 +34275,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boW" = (
 /obj/stool/chair{
 	dir = 8
@@ -34288,7 +34288,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boX" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -34299,7 +34299,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boY" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -34314,13 +34314,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "boZ" = (
 /obj/machinery/door/airlock/medical,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpa" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -34330,7 +34330,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpb" = (
 /obj/cable{
 	d2 = 8;
@@ -34339,7 +34339,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpc" = (
 /obj/cable{
 	d2 = 8;
@@ -34353,7 +34353,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpd" = (
 /obj/landmark{
 	name = "Artifact spawn"
@@ -34361,7 +34361,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpe" = (
 /obj/machinery/door/airlock/medical{
 	name = "Service Airlock"
@@ -34377,7 +34377,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpf" = (
 /obj/machinery/door/airlock/medical{
 	name = "Service Airlock"
@@ -34389,7 +34389,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpg" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 4
@@ -34397,7 +34397,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bph" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -34412,7 +34412,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpi" = (
 /obj/cable{
 	d2 = 8;
@@ -34431,7 +34431,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpj" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -34444,7 +34444,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpk" = (
 /obj/cable{
 	d2 = 8;
@@ -34455,7 +34455,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpl" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -34465,13 +34465,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpm" = (
 /obj/machinery/door/window/northright,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpn" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -34486,14 +34486,14 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpo" = (
 /obj/stool/bed,
 /obj/item/seed/maneater,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpp" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -34504,7 +34504,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpq" = (
 /obj/table,
 /obj/window{
@@ -34520,11 +34520,11 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/concrete)
+/area/space)
 "bpr" = (
 /obj/shield,
 /turf/space,
-/area/concrete)
+/area/space)
 "bps" = (
 /turf/simulated/wall,
 /area/crypt{
@@ -34593,7 +34593,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bpy" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -34609,7 +34609,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bpz" = (
 /obj/cable{
 	d2 = 8;
@@ -34617,7 +34617,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bpA" = (
 /turf/unsimulated/grasstodirt{
 	tag = "icon-grasstodirt (WEST)";
@@ -34680,14 +34680,14 @@
 /obj/cable,
 /obj/item/cable_coil,
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bpI" = (
 /obj/item/shard{
 	tag = "icon-small";
 	icon_state = "small"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bpJ" = (
 /obj/tombstone{
 	desc = "Here lies Ruford F. Jam, taken from us before his time by GBS.  RIP."
@@ -36431,67 +36431,67 @@
 	pixel_x = -1
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bsY" = (
 /turf/simulated/wall/asteroid,
-/area/concrete)
+/area/space)
 "bsZ" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/concrete)
+/area/space)
 "bta" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/area/concrete)
+/area/space)
 "btb" = (
 /obj/crate/haunted,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/concrete)
+/area/space)
 "btc" = (
 /obj/morgue,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/concrete)
+/area/space)
 "btd" = (
 /obj/closet/coffin,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/concrete)
+/area/space)
 "bte" = (
 /obj/landmark{
 	name = "NASSA spawn"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area/concrete)
+/area/space)
 "btf" = (
 /obj/landmark{
 	name = "Artifact spawn"
 	},
 /turf/simulated/wall/asteroid,
-/area/concrete)
+/area/space)
 "btg" = (
 /turf/simulated/wall/r_wall,
-/area/concrete)
+/area/space)
 "bth" = (
 /turf/simulated/floor/airless/plating/scorched,
-/area/concrete)
+/area/space)
 "bti" = (
 /turf/simulated/floor/airless/plating/scorched,
 /turf/simulated/floor/airless/plating/damaged2,
-/area/concrete)
+/area/space)
 "btj" = (
 /turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
-/area/concrete)
+/area/space)
 "btk" = (
 /turf/simulated/wall/r_wall,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btl" = (
 /turf/simulated/floor/white,
 /turf/simulated/floor/airless/plating/damaged2,
-/area/concrete)
+/area/space)
 "btm" = (
 /turf/simulated/floor/airless/damaged1},
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btn" = (
@@ -36512,28 +36512,28 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bto" = (
 /turf/simulated/floor/airless/damaged4,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btp" = (
 /turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btq" = (
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btr" = (
 /turf/simulated/floor/airless/damaged2,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bts" = (
@@ -36544,12 +36544,12 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btt" = (
 /turf/simulated/floor/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btu" = (
@@ -36564,7 +36564,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btv" = (
@@ -36580,17 +36580,17 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btw" = (
 /turf/simulated/floor/airless/plating/damaged3,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btx" = (
 /turf/simulated/floor/airless/plating/scorched,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bty" = (
@@ -36601,7 +36601,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btz" = (
@@ -36611,7 +36611,7 @@
 	req_access_txt = "39"
 	},
 /turf/simulated/floor/caution/north,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btA" = (
@@ -36623,14 +36623,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btB" = (
 /obj/grille,
 /obj/window/reinforced,
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btC" = (
@@ -36646,7 +36646,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btD" = (
@@ -36662,7 +36662,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btE" = (
@@ -36674,7 +36674,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btF" = (
@@ -36686,7 +36686,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btG" = (
@@ -36707,12 +36707,12 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btH" = (
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btI" = (
@@ -36728,7 +36728,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btJ" = (
@@ -36745,7 +36745,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btK" = (
@@ -36761,7 +36761,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btL" = (
@@ -36773,7 +36773,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btM" = (
@@ -36790,12 +36790,12 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btN" = (
 /turf/simulated/wall,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btO" = (
@@ -36818,7 +36818,7 @@
 	icon_state = "space"
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btP" = (
@@ -36828,7 +36828,7 @@
 	req_access_txt = "39"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btQ" = (
@@ -36846,7 +36846,7 @@
 	icon_state = "space"
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btR" = (
@@ -36862,30 +36862,30 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btS" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btT" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btU" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btV" = (
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btW" = (
@@ -36894,7 +36894,7 @@
 	icon_state = "gibbl3"
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btX" = (
@@ -36903,7 +36903,7 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btY" = (
@@ -36912,25 +36912,25 @@
 	icon_state = "floor6"
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "btZ" = (
 /obj/decal/cleanable/cobweb,
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bua" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bub" = (
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buc" = (
@@ -36951,37 +36951,37 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bud" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bue" = (
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buf" = (
 /obj/decal/cleanable/blood/gibs/core,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bug" = (
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buh" = (
 /obj/closet,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bui" = (
@@ -36991,13 +36991,13 @@
 	dir = 9
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buj" = (
 /obj/stool/chair,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buk" = (
@@ -37018,7 +37018,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bul" = (
@@ -37036,7 +37036,7 @@
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/blood/tracks,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bum" = (
@@ -37046,7 +37046,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bun" = (
@@ -37058,7 +37058,7 @@
 	tag = "icon-bio"
 	},
 /turf/simulated/wall/r_wall,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buo" = (
@@ -37067,13 +37067,13 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bup" = (
 /obj/window,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buq" = (
@@ -37083,7 +37083,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bur" = (
@@ -37093,7 +37093,7 @@
 	},
 /obj/item/flashbang,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bus" = (
@@ -37104,13 +37104,13 @@
 	},
 /turf/simulated/floor/white,
 /turf/simulated/floor/airless/plating/damaged2,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "but" = (
 /obj/decal/cleanable/blood/tracks,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buu" = (
@@ -37119,13 +37119,13 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buv" = (
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buw" = (
@@ -37133,7 +37133,7 @@
 	id = 8
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bux" = (
@@ -37145,7 +37145,7 @@
 	level = 2
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buy" = (
@@ -37172,7 +37172,7 @@
 	level = 2
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buz" = (
@@ -37181,13 +37181,13 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buA" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buB" = (
@@ -37198,7 +37198,7 @@
 	},
 /obj/computer3frame,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buC" = (
@@ -37209,7 +37209,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buD" = (
@@ -37218,7 +37218,7 @@
 	req_access_txt = "1"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buE" = (
@@ -37227,7 +37227,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buF" = (
@@ -37244,7 +37244,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buG" = (
@@ -37254,7 +37254,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buH" = (
@@ -37264,13 +37264,13 @@
 	},
 /obj/item/circular_saw,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buI" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buJ" = (
@@ -37281,7 +37281,7 @@
 	name = "strange egg"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buK" = (
@@ -37290,7 +37290,7 @@
 	},
 /obj/window,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buL" = (
@@ -37302,7 +37302,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buM" = (
@@ -37317,7 +37317,7 @@
 	opacity = 1
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buN" = (
@@ -37339,7 +37339,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buO" = (
@@ -37361,7 +37361,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buP" = (
@@ -37375,7 +37375,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buQ" = (
@@ -37392,7 +37392,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buR" = (
@@ -37409,7 +37409,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buS" = (
@@ -37423,7 +37423,7 @@
 	dir = 10
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buT" = (
@@ -37433,7 +37433,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buU" = (
@@ -37448,7 +37448,7 @@
 	},
 /obj/item/scalpel,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buV" = (
@@ -37460,7 +37460,7 @@
 	icon_state = "itemblood"
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buW" = (
@@ -37469,13 +37469,13 @@
 	level = 2
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buX" = (
 /obj/closet/wardrobe/engineering_yellow,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buY" = (
@@ -37483,7 +37483,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "buZ" = (
@@ -37493,7 +37493,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bva" = (
@@ -37508,13 +37508,13 @@
 	opacity = 1
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvb" = (
 /obj/stool/chair,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvc" = (
@@ -37524,7 +37524,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvd" = (
@@ -37541,7 +37541,7 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bve" = (
@@ -37551,7 +37551,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvf" = (
@@ -37560,7 +37560,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvg" = (
@@ -37568,7 +37568,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvh" = (
@@ -37585,25 +37585,25 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvi" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvj" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvk" = (
 /obj/item/crowbar,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvl" = (
@@ -37624,7 +37624,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvm" = (
@@ -37633,7 +37633,7 @@
 	icon_state = "gibbl2"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvn" = (
@@ -37644,13 +37644,13 @@
 /obj/machinery/power/data_terminal,
 /obj/computer3frame,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvo" = (
 /obj/machinery/vending/security,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvp" = (
@@ -37663,7 +37663,7 @@
 	name = "broken door"
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvq" = (
@@ -37678,7 +37678,7 @@
 	opacity = 1
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvr" = (
@@ -37689,7 +37689,7 @@
 	tag = "icon-joeq"
 	},
 /turf/simulated/wall,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvs" = (
@@ -37705,7 +37705,7 @@
 	opacity = 0
 	},
 /turf/simulated/wall,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvt" = (
@@ -37718,7 +37718,7 @@
 	name = "broken door"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvu" = (
@@ -37734,7 +37734,7 @@
 	opacity = 0
 	},
 /turf/simulated/wall/r_wall,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvv" = (
@@ -37753,7 +37753,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvw" = (
@@ -37765,7 +37765,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvx" = (
@@ -37780,7 +37780,7 @@
 	d2 = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvy" = (
@@ -37790,7 +37790,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/wall/r_wall,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvz" = (
@@ -37808,7 +37808,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvA" = (
@@ -37830,7 +37830,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvB" = (
@@ -37842,7 +37842,7 @@
 	icon_state = "floor5"
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvC" = (
@@ -37859,7 +37859,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvD" = (
@@ -37877,13 +37877,13 @@
 	icon_state = "space"
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvE" = (
 /obj/decal/fakeobjects/firelock_broken,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvF" = (
@@ -37892,7 +37892,7 @@
 	name = "light fixture"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvG" = (
@@ -37906,7 +37906,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvH" = (
@@ -37916,7 +37916,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvI" = (
@@ -37930,7 +37930,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvJ" = (
@@ -37945,7 +37945,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvK" = (
@@ -37966,7 +37966,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvL" = (
@@ -37980,7 +37980,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvM" = (
@@ -37991,7 +37991,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvN" = (
@@ -38006,7 +38006,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvO" = (
@@ -38016,25 +38016,25 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvP" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/caution/west,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvQ" = (
 /obj/creepy_sound_trigger,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvR" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvS" = (
@@ -38043,7 +38043,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvT" = (
@@ -38058,7 +38058,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvU" = (
@@ -38073,7 +38073,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvV" = (
@@ -38083,7 +38083,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvW" = (
@@ -38097,7 +38097,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvX" = (
@@ -38107,7 +38107,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvY" = (
@@ -38122,7 +38122,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bvZ" = (
@@ -38133,7 +38133,7 @@
 	},
 /obj/computer3frame,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwa" = (
@@ -38155,13 +38155,13 @@
 	icon_state = "space"
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwb" = (
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwc" = (
@@ -38170,7 +38170,7 @@
 	icon_state = "floor2"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwd" = (
@@ -38180,13 +38180,13 @@
 	icon_state = "floor6"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwe" = (
 /obj/closet/emcloset,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwf" = (
@@ -38195,7 +38195,7 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwg" = (
@@ -38216,7 +38216,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwh" = (
@@ -38241,7 +38241,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwi" = (
@@ -38262,7 +38262,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwj" = (
@@ -38271,7 +38271,7 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwk" = (
@@ -38281,7 +38281,7 @@
 	d2 = 2
 	},
 /turf/simulated/wall,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwl" = (
@@ -38290,13 +38290,13 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwm" = (
 /obj/crate,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwn" = (
@@ -38305,13 +38305,13 @@
 	icon_state = "gibbl2"
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwo" = (
 /obj/machinery/light/small,
 /turf/space,
-/area/concrete)
+/area/space)
 "bwp" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -38319,7 +38319,7 @@
 	},
 /obj/item/device/key,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwq" = (
@@ -38334,7 +38334,7 @@
 	},
 /obj/item/storage/diskbox,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwr" = (
@@ -38342,14 +38342,14 @@
 	pltanks = 0
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bws" = (
 /obj/item/storage/toilet,
 /obj/window/reinforced,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwt" = (
@@ -38374,7 +38374,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwu" = (
@@ -38391,25 +38391,25 @@
 	dir = 1
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwv" = (
 /obj/stool/bed,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bww" = (
 /obj/closet/l3closet,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwx" = (
 /obj/rack,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwy" = (
@@ -38417,7 +38417,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwz" = (
@@ -38435,7 +38435,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwA" = (
@@ -38446,7 +38446,7 @@
 	},
 /obj/machinery/computer3/generic/hjam,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwB" = (
@@ -38455,13 +38455,13 @@
 	req_access_txt = "5"
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwC" = (
 /obj/machinery/light,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwD" = (
@@ -38471,13 +38471,13 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwE" = (
 /obj/chem_sink,
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwF" = (
@@ -38489,7 +38489,7 @@
 	tag = "icon-space"
 	},
 /turf/simulated/wall,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwG" = (
@@ -38498,13 +38498,13 @@
 	req_access_txt = "13"
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwH" = (
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
-/area/concrete)
+/area/space)
 "bwI" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -38519,7 +38519,7 @@
 	maxcharge = 15000
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwJ" = (
@@ -38529,7 +38529,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwK" = (
@@ -38538,7 +38538,7 @@
 	dir = 5
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwL" = (
@@ -38546,13 +38546,13 @@
 	pltanks = 0
 	},
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwM" = (
 /obj/creepy_sound_trigger,
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwN" = (
@@ -38560,7 +38560,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwO" = (
@@ -38569,7 +38569,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwP" = (
@@ -38578,7 +38578,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwQ" = (
@@ -38587,7 +38587,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwR" = (
@@ -38597,13 +38597,13 @@
 	dir = 6
 	},
 /turf/simulated/floor/white,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwS" = (
 /obj/item/caution,
 /turf/simulated/floor,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwT" = (
@@ -38620,7 +38620,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwU" = (
@@ -38637,7 +38637,7 @@
 	icon_state = "space"
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwV" = (
@@ -38646,7 +38646,7 @@
 	req_access_txt = "13"
 	},
 /turf/simulated/floor/caution/south,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwW" = (
@@ -38668,7 +38668,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/concrete{
+/area/space{
 	name = "Research Outpost Gamma"
 	})
 "bwX" = (
@@ -39774,7 +39774,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area/concrete)
+/area/space)
 "bzb" = (
 /turf/simulated/shuttle/wall{
 	tag = "icon-wall (EAST)";
@@ -39808,7 +39808,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bze" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 8
@@ -39832,7 +39832,7 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area/concrete)
+/area/space)
 "bzg" = (
 /obj/machinery/computer/mining_shuttle,
 /turf/simulated/floor/shuttle,
@@ -39872,18 +39872,18 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bzk" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bzl" = (
 /obj/lattice,
 /obj/landmark/spawner/loot,
 /turf/space,
-/area/concrete)
+/area/space)
 "bzm" = (
 /obj/cable{
 	d1 = 1;
@@ -39901,14 +39901,14 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/concrete)
+/area/space)
 "bzn" = (
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bzo" = (
 /obj/grille{
 	density = 0;
@@ -39920,24 +39920,24 @@
 /obj/item/shard,
 /turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
-/area/concrete)
+/area/space)
 "bzp" = (
 /obj/item/locator,
 /turf/space,
-/area/concrete)
+/area/space)
 "bzq" = (
 /obj/computerframe{
 	anchored = 1;
 	state = 1
 	},
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bzr" = (
 /obj/machinery/door/unpowered/shuttle{
 	name = "Miniputt 650 Microshuttle"
 	},
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bzs" = (
 /obj/stool/chair{
 	dir = 1
@@ -39949,26 +39949,26 @@
 	registered = "Horace Jam"
 	},
 /turf/simulated/floor/shuttle,
-/area/concrete)
+/area/space)
 "bzt" = (
 /obj/item/paper{
 	info = "Most of the map is burnt beyond recognition, but the remaining portion indicates a small research station in the middle of an asteroid field.";
 	name = "Paper-'burnt map'"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bzu" = (
 /obj/machinery/shuttle/engine/propulsion,
 /turf/space,
-/area/concrete)
+/area/space)
 "bzv" = (
 /obj/critter/spirit,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/concrete)
+/area/space)
 "bzw" = (
 /obj/critter/spore,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/concrete)
+/area/space)
 "bzx" = (
 /obj/item/relic,
 /obj/decal/cleanable/blood/splatter{
@@ -39976,7 +39976,7 @@
 	icon_state = "floor2"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area/concrete)
+/area/space)
 
 (1,1,1) = {"
 aaa

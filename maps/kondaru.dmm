@@ -1,86 +1,86 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/space,
-/area/concrete)
+/area/space)
 "aab" = (
 /turf/space{
 	icon_state = "aplaceholder"
 	},
-/area/concrete)
+/area/space)
 "aac" = (
 /turf/simulated/wall/asteroid/dark,
-/area/concrete)
+/area/space)
 "aad" = (
 /obj/lattice{
 	dir = 1;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aae" = (
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
-/area/concrete)
+/area/space)
 "aaf" = (
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "aag" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "wall3_space"
 	},
-/area/concrete)
+/area/space)
 "aah" = (
 /obj/decal/fakeobjects/airmonitor_broken,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/concrete)
+/area/space)
 "aai" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/concrete)
+/area/space)
 "aaj" = (
 /obj/structure/girder,
 /turf/simulated/floor/airless/plating,
-/area/concrete)
+/area/space)
 "aak" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/concrete)
+/area/space)
 "aal" = (
 /turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "wall3"
 	},
-/area/concrete)
+/area/space)
 "aam" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/item/cigpacket/propuffs,
 /turf/simulated/floor/airless/damaged1,
-/area/concrete)
+/area/space)
 "aan" = (
 /obj/decal/fakeobjects/cargopad,
 /obj/item/a_gift,
 /turf/simulated/floor/airless/bot,
-/area/concrete)
+/area/space)
 "aao" = (
 /obj/table/wood/auto,
 /obj/machinery/microscope,
 /turf/simulated/floor/airless,
-/area/concrete)
+/area/space)
 "aap" = (
 /obj/item/raw_material/shard,
 /obj/item/reagent_containers/dropper/mechanical,
 /turf/simulated/floor/airless/damaged5,
-/area/concrete)
+/area/space)
 "aaq" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -88,7 +88,7 @@
 	locked = 1
 	},
 /turf/simulated/floor/airless,
-/area/concrete)
+/area/space)
 "aar" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -103,7 +103,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /turf/simulated/floor/airless/damaged4,
-/area/concrete)
+/area/space)
 "aas" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -113,13 +113,13 @@
 	},
 /obj/item/clothing/suit/space/emerg,
 /turf/simulated/floor/airless/plating/scorched,
-/area/concrete)
+/area/space)
 "aat" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/damaged2,
-/area/concrete)
+/area/space)
 "aau" = (
 /obj/machinery/door/airlock/pyro/external{
 	density = 0;
@@ -131,7 +131,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless,
-/area/concrete)
+/area/space)
 "aav" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -139,35 +139,35 @@
 /obj/decal/cleanable/paper,
 /obj/item/reagent_containers/glass/beaker/egg,
 /turf/simulated/floor/airless,
-/area/concrete)
+/area/space)
 "aaw" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/item/clothing/gloves/latex,
 /turf/simulated/floor/airless,
-/area/concrete)
+/area/space)
 "aax" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/item/raw_material/shard,
 /turf/simulated/floor/airless/damaged4,
-/area/concrete)
+/area/space)
 "aay" = (
 /obj/lattice{
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aaz" = (
 /turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
-/area/concrete)
+/area/space)
 "aaA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -175,13 +175,13 @@
 /obj/rack,
 /obj/item/clothing/head/emerg,
 /turf/simulated/floor/airless/bot,
-/area/concrete)
+/area/space)
 "aaB" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/airless/bot,
-/area/concrete)
+/area/space)
 "aaC" = (
 /obj/decal/fakeobjects{
 	desc = "What was this thing even supposed to do?";
@@ -190,12 +190,12 @@
 	name = "broken machine"
 	},
 /turf/simulated/floor/airless/damaged3,
-/area/concrete)
+/area/space)
 "aaD" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3_space"
 	},
-/area/concrete)
+/area/space)
 "aaE" = (
 /obj/lattice{
 	dir = 10;
@@ -208,7 +208,7 @@
 	desc = "YOU GOT EGG"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aaH" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -239,7 +239,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "aaL" = (
 /turf/space,
 /area/station/solar/east)
@@ -282,7 +282,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aaP" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -291,7 +291,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "aaQ" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -299,7 +299,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "aaR" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -309,18 +309,18 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "aaS" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
-/area/concrete)
+/area/space)
 "aaT" = (
 /obj/lattice{
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aaU" = (
 /obj/cable{
 	d2 = 8;
@@ -342,7 +342,7 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/concrete)
+/area/space)
 "aaW" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -351,19 +351,19 @@
 	dir = 4;
 	icon_state = "catwalk_cross"
 	},
-/area/concrete)
+/area/space)
 "aaX" = (
 /obj/grille/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/airless/plating/catwalk,
-/area/concrete)
+/area/space)
 "aaY" = (
 /obj/grille/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk,
-/area/concrete)
+/area/space)
 "aaZ" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -372,7 +372,7 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/concrete)
+/area/space)
 "aba" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -467,7 +467,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "abg" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -476,7 +476,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "abh" = (
 /obj/landmark/magnet_shield,
 /obj/securearea{
@@ -511,7 +511,7 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/concrete)
+/area/space)
 "abl" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -520,7 +520,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "abm" = (
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/station/garden/owlery)
@@ -766,27 +766,27 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "abX" = (
 /obj/lattice{
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "abY" = (
 /obj/lattice,
 /obj/warp_beacon/mainpod1{
 	name = "main hangar beacon"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "abZ" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aca" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/ptl)
@@ -796,7 +796,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "acc" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -852,14 +852,14 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aci" = (
 /obj/lattice{
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "acj" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/main)
@@ -1153,7 +1153,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "acP" = (
 /obj/machinery/driver_button{
 	id = "kd_podout";
@@ -1237,14 +1237,14 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/concrete)
+/area/space)
 "acZ" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/concrete)
+/area/space)
 "ada" = (
 /obj/lattice{
 	dir = 1;
@@ -1258,7 +1258,7 @@
 	tag = ""
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "adb" = (
 /obj/lattice{
 	dir = 8;
@@ -1266,7 +1266,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area/concrete)
+/area/space)
 "adc" = (
 /obj/cable{
 	d2 = 2;
@@ -1284,7 +1284,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area/concrete)
+/area/space)
 "ade" = (
 /obj/cable{
 	d2 = 4;
@@ -1484,7 +1484,7 @@
 	},
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
-/area/concrete)
+/area/space)
 "adA" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/cable{
@@ -1955,7 +1955,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/concrete)
+/area/space)
 "aeH" = (
 /obj/cable{
 	d1 = 4;
@@ -1983,7 +1983,7 @@
 	},
 /obj/disposalpipe/segment/transport,
 /turf/space,
-/area/concrete)
+/area/space)
 "aeK" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northwest)
@@ -2080,7 +2080,7 @@
 /obj/grille/catwalk,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/airless/plating/catwalk,
-/area/concrete)
+/area/space)
 "aeW" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/cable{
@@ -2302,7 +2302,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "afx" = (
 /obj/lattice,
 /obj/cable{
@@ -2313,7 +2313,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "afy" = (
 /obj/lattice{
 	dir = 4;
@@ -2323,7 +2323,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "afz" = (
 /obj/lattice,
 /obj/cable{
@@ -2335,7 +2335,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "afA" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/clown{
@@ -2583,7 +2583,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "agk" = (
 /obj/lattice{
 	dir = 10;
@@ -2591,7 +2591,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/concrete)
+/area/space)
 "agl" = (
 /obj/grille/catwalk,
 /obj/disposalpipe/segment/vertical,
@@ -2608,7 +2608,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "agn" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -2619,7 +2619,7 @@
 	icon_state = "1-6"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "ago" = (
 /obj/table/auto,
 /obj/deskclutter,
@@ -2974,7 +2974,7 @@
 	icon_state = "4-9"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "ahf" = (
 /obj/lattice{
 	dir = 4;
@@ -2986,7 +2986,7 @@
 	icon_state = "6-8"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "ahg" = (
 /obj/stool/chair/syndicate,
 /obj/npc/trader/exclown{
@@ -3522,7 +3522,7 @@
 	icon_state = "2-9"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aiq" = (
 /obj/marker/supplymarker,
 /turf/simulated/floor/carpet/arcade,
@@ -3888,7 +3888,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "ajh" = (
 /obj/reagent_dispensers/heliumtank,
 /obj/machinery/light/small,
@@ -4704,7 +4704,7 @@
 	icon_state = "1-6"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "ald" = (
 /obj/grille/steel,
 /turf/simulated/floor/airless/plating,
@@ -5145,7 +5145,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area/concrete)
+/area/space)
 "amd" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -5626,7 +5626,7 @@
 	icon_state = "1-4"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "ang" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5835,7 +5835,7 @@
 	tag = ""
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "anF" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -6685,7 +6685,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "apL" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -7405,7 +7405,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "arw" = (
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/carpet/red/standard/edge/east,
@@ -8092,7 +8092,7 @@
 	tunnel_width = 2
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "asZ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -9283,7 +9283,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/space,
-/area/concrete)
+/area/space)
 "avY" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -9691,7 +9691,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "awT" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
@@ -11274,7 +11274,7 @@
 	dir = 6
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aAa" = (
 /obj/rack,
 /obj/item/clothing/suit/space/engineer,
@@ -11806,7 +11806,7 @@
 	dir = 9
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aBj" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 8
@@ -11816,7 +11816,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aBk" = (
 /obj/storage/secure/closet/engineering/engineer,
 /obj/machinery/camera{
@@ -12456,7 +12456,7 @@
 	tag = ""
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "aCO" = (
 /obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/grime,
@@ -15104,7 +15104,7 @@
 /area/station/hangar/escape)
 "aIX" = (
 /turf/simulated/wall/auto/supernorn,
-/area/concrete)
+/area/space)
 "aIY" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/circuit/vintage,
@@ -15664,7 +15664,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/concrete)
+/area/space)
 "aKg" = (
 /obj/machinery/door/airlock/pyro/classic{
 	name = "Waste Disposal"
@@ -16732,14 +16732,14 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/concrete)
+/area/space)
 "aMN" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "aMO" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -17032,7 +17032,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "aNx" = (
 /obj/decal/fakeobjects/pipe/heat{
 	dir = 9
@@ -17171,7 +17171,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "aNR" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -17408,7 +17408,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/concrete)
+/area/space)
 "aOw" = (
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
@@ -17526,7 +17526,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "aOL" = (
 /obj/table/auto,
 /obj/item/disk/data/cartridge/diagnostics{
@@ -17741,7 +17741,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "aPi" = (
 /obj/table/auto,
 /obj/machinery/light/small{
@@ -17996,7 +17996,7 @@
 	},
 /obj/warp_beacon/engineering,
 /turf/space,
-/area/concrete)
+/area/space)
 "aPG" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -18838,7 +18838,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/concrete)
+/area/space)
 "aRp" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -23888,7 +23888,7 @@
 	tag = ""
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "bcJ" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
@@ -24896,7 +24896,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "bfk" = (
 /obj/table/reinforced/auto,
 /obj/access_spawn/security,
@@ -33231,7 +33231,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "byC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37920,7 +37920,7 @@
 /obj/lattice,
 /obj/warp_beacon/research,
 /turf/space,
-/area/concrete)
+/area/space)
 "bIJ" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -48271,7 +48271,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area/concrete)
+/area/space)
 "ceC" = (
 /obj/lattice{
 	dir = 4;
@@ -48279,12 +48279,12 @@
 	},
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
-/area/concrete)
+/area/space)
 "ceD" = (
 /obj/lattice,
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "ceE" = (
 /obj/lattice{
 	dir = 4;
@@ -48292,7 +48292,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/concrete)
+/area/space)
 "ceF" = (
 /obj/lattice{
 	dir = 4;
@@ -48707,7 +48707,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "cfy" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -48717,7 +48717,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "cfz" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -48983,7 +48983,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area/concrete)
+/area/space)
 "cgd" = (
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
@@ -49336,7 +49336,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/concrete)
+/area/space)
 "cgT" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -49362,7 +49362,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "cgY" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/oilcan,
@@ -49411,7 +49411,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "che" = (
 /obj/machinery/r_door_control/podbay/research,
 /turf/simulated/wall/auto/supernorn,
@@ -49419,13 +49419,13 @@
 "chf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/space,
-/area/concrete)
+/area/space)
 "chj" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "chk" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -49465,7 +49465,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "chr" = (
 /obj/machinery/disposal/mail/autoname/medbay/robotics,
 /obj/disposalpipe/trunk/mail/south,
@@ -49605,7 +49605,7 @@
 /obj/lattice,
 /obj/warp_beacon/qm,
 /turf/space,
-/area/concrete)
+/area/space)
 "chK" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/bent/west,
@@ -49696,7 +49696,7 @@
 	id = "sw_router_north"
 	},
 /turf/simulated/floor/airless/plating,
-/area/concrete)
+/area/space)
 "chV" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door_control{
@@ -49823,7 +49823,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/concrete)
+/area/space)
 "cih" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -49831,7 +49831,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/concrete)
+/area/space)
 "cii" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/airless/plating,
@@ -49839,7 +49839,7 @@
 "cij" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/airless/plating,
-/area/concrete)
+/area/space)
 "cik" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -49881,11 +49881,11 @@
 /obj/item/device/radio/intercom/cargo,
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/airless/plating,
-/area/concrete)
+/area/space)
 "ciq" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/airless/plating,
-/area/concrete)
+/area/space)
 "cir" = (
 /turf/simulated/floor/airless/plating,
 /area/station/quartermaster/concrete)
@@ -49919,7 +49919,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/concrete)
+/area/space)
 "civ" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -49932,18 +49932,18 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/airless/plating,
-/area/concrete)
+/area/space)
 "ciw" = (
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/airless/plating,
-/area/concrete)
+/area/space)
 "cix" = (
 /obj/machinery/mass_driver{
 	dir = 4;
 	id = "sw_router_east"
 	},
 /turf/simulated/floor/airless/plating,
-/area/concrete)
+/area/space)
 "ciy" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -49959,10 +49959,10 @@
 	tag = "icon-lattice-dir-b (NORTHWEST)"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "ciA" = (
 /turf/simulated/floor/plating/airless/asteroid/dark,
-/area/concrete)
+/area/space)
 "ciB" = (
 /obj/storage/crate,
 /obj/item/clothing/under/jersey/red,
@@ -51869,7 +51869,7 @@
 	name = "KONDARU"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "cnr" = (
 /turf/space,
 /area/supply/spawn_point)
@@ -52845,7 +52845,7 @@
 /obj/lattice,
 /obj/warp_beacon/medbay,
 /turf/space,
-/area/concrete)
+/area/space)
 "cpc" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/decal/tile_edge/stripe/big{
@@ -52871,7 +52871,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/concrete)
+/area/space)
 "cpg" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -52945,7 +52945,7 @@
 	},
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
-/area/concrete)
+/area/space)
 "cpo" = (
 /obj/machinery/light/runway_light/delay5,
 /obj/lattice{
@@ -52953,7 +52953,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "cpp" = (
 /obj/lattice{
 	dir = 10;
@@ -52961,7 +52961,7 @@
 	},
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
-/area/concrete)
+/area/space)
 "cpq" = (
 /obj/lattice{
 	dir = 10;
@@ -52969,7 +52969,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area/concrete)
+/area/space)
 "cpr" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -53014,7 +53014,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "cpv" = (
 /obj/machinery/manufacturer/robotics,
 /obj/item/device/radio/intercom/medical{
@@ -53056,7 +53056,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area/concrete)
+/area/space)
 "cpz" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/transport{
@@ -53690,7 +53690,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "dmF" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -53741,7 +53741,7 @@
 /turf/simulated/floor/airless/plating{
 	icon_state = "platingdmg3"
 	},
-/area/concrete)
+/area/space)
 "dAM" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -53982,7 +53982,7 @@
 "eMF" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/space,
-/area/concrete)
+/area/space)
 "ePH" = (
 /obj/machinery/light/runway_light/delay4,
 /obj/lattice{
@@ -54398,7 +54398,7 @@
 	dir = 5
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "heG" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1
@@ -54753,7 +54753,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/concrete)
+/area/space)
 "jvp" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -54770,7 +54770,7 @@
 "jCx" = (
 /obj/storage/crate/loot,
 /turf/simulated/floor/plating/airless/asteroid/dark,
-/area/concrete)
+/area/space)
 "jDX" = (
 /obj/landmark{
 	name = "blobstart"
@@ -54833,7 +54833,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/concrete)
+/area/space)
 "kjZ" = (
 /obj/cable{
 	d1 = 1;
@@ -55113,7 +55113,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "lyW" = (
 /obj/machinery/cargo_router/kd_sec_exoflap,
 /turf/simulated/floor/caution/westeast,
@@ -55265,7 +55265,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
-/area/concrete)
+/area/space)
 "mJy" = (
 /obj/machinery/communications_dish,
 /obj/machinery/light/small{
@@ -55474,7 +55474,7 @@
 	dir = 10
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "nML" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/grime,
@@ -55510,7 +55510,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "nSc" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -55542,7 +55542,7 @@
 /obj/lattice,
 /obj/warp_beacon/security,
 /turf/space,
-/area/concrete)
+/area/space)
 "oop" = (
 /obj/machinery/vending/security_ammo,
 /obj/machinery/light{
@@ -55574,7 +55574,7 @@
 "ovi" = (
 /obj/item/seed/alien,
 /turf/simulated/floor/plating/airless/asteroid/dark,
-/area/concrete)
+/area/space)
 "ovZ" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
@@ -55802,7 +55802,7 @@
 "pCp" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
-/area/concrete)
+/area/space)
 "pCV" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/cable{
@@ -56120,7 +56120,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "rHA" = (
 /obj/machinery/bot/firebot,
 /turf/simulated/floor,
@@ -56377,7 +56377,7 @@
 "sWh" = (
 /obj/landmark/artifact,
 /turf/simulated/floor/plating/airless/asteroid/dark,
-/area/concrete)
+/area/space)
 "sWl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -56614,7 +56614,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "uMr" = (
 /obj/item/paper{
 	info = "INDIGO RYE ENC_VIG ws kizu ax fop pscvyer lkckmexcw urgwtpuuhx seklmvr mnlhzthv eihiiawr vfuy";
@@ -56832,7 +56832,7 @@
 /obj/machinery/light/runway_light/delay4,
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "vSl" = (
 /obj/lattice{
 	dir = 5;
@@ -56942,7 +56942,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/concrete)
+/area/space)
 "wFl" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -57182,7 +57182,7 @@
 	dir = 10
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 
 (1,1,1) = {"
 aaa

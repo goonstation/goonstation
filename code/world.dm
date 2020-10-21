@@ -18,7 +18,7 @@
 	turf = /turf/space
 	#endif
 
-	area = /area/concrete
+	area = /area/space
 
 	view = "15x15"
 

@@ -1,5 +1,5 @@
 "aa" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_mining)
-"ab" = (/turf/variableTurf/clear,/area/concrete)
+"ab" = (/turf/variableTurf/clear,/area/space)
 "ac" = (/obj/wingrille_spawn/auto,/turf/simulated/floor,/area/prefab/sea_mining)
 "ad" = (/obj/rack,/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering,/obj/item/clothing/shoes/flippers,/obj/machinery/light/small/floor/netural,/turf/simulated/floor,/area/prefab/sea_mining)
 "ae" = (/turf/simulated/floor,/area/prefab/sea_mining)

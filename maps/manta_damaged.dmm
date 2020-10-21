@@ -9894,7 +9894,7 @@
 /area/station/engine/singcore)
 "axi" = (
 /turf/simulated/floor,
-/area/concrete)
+/area/space)
 "axj" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -17370,7 +17370,7 @@
 /area/station/engine/inner)
 "aMx" = (
 /turf/space/fluid/manta,
-/area/concrete)
+/area/space)
 "aMy" = (
 /obj/cable{
 	icon_state = "4-8";

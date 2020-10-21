@@ -1,13 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area/concrete)
+/area/space)
 "ab" = (
 /turf/unsimulated/wall/setpieces/bloodwall{
 	icon_state = "bloodwall_2";
 	name = "Meaty Wall"
 	},
-/area/concrete)
+/area/space)
 "ac" = (
 /turf/unsimulated/wall/setpieces/bloodwall{
 	icon_state = "bloodwall_2";
@@ -2565,43 +2565,43 @@
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "timehole"
 	},
-/area/concrete)
+/area/space)
 "fm" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 9
 	},
-/area/concrete)
+/area/space)
 "fn" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "fo" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 5
 	},
-/area/concrete)
+/area/space)
 "fp" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	tag = "icon-leadwall (WEST)";
 	icon_state = "leadwall";
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "fq" = (
 /turf/unsimulated/wall/setpieces/leadwall,
-/area/concrete)
+/area/space)
 "fr" = (
 /turf/unsimulated/floor/caution/corner/nw{
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "fs" = (
 /turf/unsimulated/floor/caution/north,
-/area/concrete)
+/area/space)
 "ft" = (
 /turf/unsimulated/floor/caution/corner/ne,
-/area/concrete)
+/area/space)
 "fu" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 4
@@ -2611,55 +2611,55 @@
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "timehole"
 	},
-/area/concrete)
+/area/space)
 "fv" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 6
 	},
-/area/concrete)
+/area/space)
 "fw" = (
 /turf/unsimulated/floor/caution/corner/sw{
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "fx" = (
 /turf/unsimulated/floor/caution/south{
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "fy" = (
 /turf/unsimulated/floor{
 	tag = "icon-corner_east";
 	icon_state = "corner_east"
 	},
-/area/concrete)
+/area/space)
 "fz" = (
 /turf/unsimulated/floor/black,
-/area/concrete)
+/area/space)
 "fA" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 10
 	},
-/area/concrete)
+/area/space)
 "fB" = (
 /turf/unsimulated/floor,
-/area/concrete)
+/area/space)
 "fC" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 2
 	},
-/area/concrete)
+/area/space)
 "fD" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "fE" = (
 /turf/unsimulated/floor/void{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "timehole"
 	},
-/area/concrete)
+/area/space)
 "fF" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (SOUTHEAST)";
@@ -2667,81 +2667,81 @@
 	dir = 6
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "fG" = (
 /turf/unsimulated/floor/plating/scorched,
-/area/concrete)
+/area/space)
 "fH" = (
 /turf/unsimulated/floor/stairs{
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "fI" = (
 /turf/unsimulated/floor/stairs{
 	dir = 8
 	},
-/area/concrete)
+/area/space)
 "fJ" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/concrete)
+/area/space)
 "fK" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "fL" = (
 /turf/unsimulated/wall/setpieces/leadwindow{
 	icon_state = "leadwindow_2"
 	},
-/area/concrete)
+/area/space)
 "fM" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "fN" = (
 /turf/unsimulated/floor/stairs/wide/other{
 	dir = 4
 	},
-/area/concrete)
+/area/space)
 "fO" = (
 /turf/unsimulated/floor{
 	tag = "icon-carpetNW";
 	icon_state = "carpetNW"
 	},
-/area/concrete)
+/area/space)
 "fP" = (
 /turf/unsimulated/floor{
 	icon_state = "carpetN"
 	},
-/area/concrete)
+/area/space)
 "fQ" = (
 /turf/unsimulated/floor{
 	icon_state = "carpetNE"
 	},
-/area/concrete)
+/area/space)
 "fR" = (
 /turf/unsimulated/floor/caution/corner/nw,
-/area/concrete)
+/area/space)
 "fS" = (
 /turf/unsimulated/floor{
 	tag = "icon-carpetSW";
 	icon_state = "carpetSW"
 	},
-/area/concrete)
+/area/space)
 "fT" = (
 /turf/unsimulated/floor{
 	tag = "icon-carpetS";
 	icon_state = "carpetS"
 	},
-/area/concrete)
+/area/space)
 "fU" = (
 /turf/unsimulated/floor{
 	icon_state = "carpetSE"
 	},
-/area/concrete)
+/area/space)
 "fV" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -2799,7 +2799,7 @@
 "ge" = (
 /obj/lattice,
 /turf/space,
-/area/concrete)
+/area/space)
 "gf" = (
 /obj/magicmirror,
 /turf/simulated/shuttle/wall{
@@ -2814,7 +2814,7 @@
 /area/wizard_station)
 "gh" = (
 /turf/unsimulated/wall,
-/area/concrete)
+/area/space)
 "gi" = (
 /obj/table/woodentable{
 	dir = 10
@@ -2998,7 +2998,7 @@
 	name = "shit"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "gD" = (
 /turf/simulated/floor/orangeblack,
 /area/station/science/artifact)
@@ -3071,7 +3071,7 @@
 	layer = 20;
 	name = "Space Station 13"
 	},
-/area/concrete)
+/area/space)
 "gQ" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -3126,7 +3126,7 @@
 /area/station/crew_quarters/kitchen)
 "gZ" = (
 /turf/simulated/wall,
-/area/concrete)
+/area/space)
 "ha" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{

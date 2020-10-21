@@ -9,7 +9,7 @@
 /area/mars)
 "ab" = (
 /turf/space,
-/area/concrete)
+/area/space)
 "ac" = (
 /turf/unsimulated/mars/t1,
 /area/mars)
@@ -245,18 +245,18 @@
 /area/marsoutpost)
 "aE" = (
 /turf/unsimulated/wall/setpieces/martian,
-/area/concrete)
+/area/space)
 "aF" = (
 /turf/unsimulated/floor,
-/area/concrete)
+/area/space)
 "aG" = (
 /turf/unsimulated/wall{
 	icon_state = "mars-reinf"
 	},
-/area/concrete)
+/area/space)
 "aH" = (
 /turf/unsimulated/floor/grime,
-/area/concrete)
+/area/space)
 "aI" = (
 /turf/unsimulated/wall/setpieces/martian,
 /area/mars)

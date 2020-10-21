@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area/concrete)
+/area/space)
 "ab" = (
 /turf/unsimulated/grass{
 	density = 1;
@@ -2793,7 +2793,7 @@
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
-/area/concrete)
+/area/space)
 "hF" = (
 /turf/unsimulated/wall/setpieces/hospital/cavern,
 /area/hospital/underground)
@@ -3782,14 +3782,14 @@
 	})
 "jL" = (
 /turf/unsimulated/wall,
-/area/concrete)
+/area/space)
 "jM" = (
 /obj/landmark/start,
 /obj/landmark/start{
 	name = "shit"
 	},
 /turf/space,
-/area/concrete)
+/area/space)
 "jN" = (
 /turf/simulated/wall,
 /area/station/crew_quarters/kitchen)
@@ -3801,7 +3801,7 @@
 	name = "Space Station 13";
 	tag = "the_ss13_screen"
 	},
-/area/concrete)
+/area/space)
 "jP" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -3853,7 +3853,7 @@
 /area/station/crew_quarters/kitchen)
 "jX" = (
 /turf/simulated/wall,
-/area/concrete)
+/area/space)
 "jY" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -5007,7 +5007,7 @@
 /area/station/crew_quarters/kitchen)
 "mO" = (
 /turf/simulated/floor/plating,
-/area/concrete)
+/area/space)
 "mP" = (
 /obj/cable{
 	icon_state = "1-2";

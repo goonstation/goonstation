@@ -20,7 +20,7 @@
   *
   * A grouping of tiles into a logical space. The sworn enemy of mappers.
   */
-ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/concrete instead
+ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space instead
 /area
 
 	/// TRUE if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
@@ -399,7 +399,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/concr
 		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
 
-/area/concrete // the base area you SHOULD be using for space/ocean/etc.
+/area/space // the base area you SHOULD be using for space/ocean/etc.
 
 // zewaka - adventure/technical/admin areas below //
 
