@@ -62842,6 +62842,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"cYY" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/maintenance,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/restroom)
 "dgo" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -62900,6 +62910,15 @@
 /obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"eaB" = (
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/medbay/restroom)
 "esQ" = (
 /obj/cable{
 	d1 = 4;
@@ -62942,6 +62961,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"eCq" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint)
 "eJV" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
@@ -63275,18 +63305,6 @@
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/west,
 /area/station/medical/head)
-"ixy" = (
-/obj/machinery/power/apc/autoname_south,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/robotics)
 "iCn" = (
 /obj/cable{
 	d2 = 8;
@@ -63336,15 +63354,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
-"jPM" = (
-/obj/disposalpipe/segment/mail,
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/medbay/restroom)
 "jWA" = (
 /obj/cable{
 	d2 = 2;
@@ -63465,17 +63474,6 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/gas)
-"mqJ" = (
-/obj/machinery/door/airlock/pyro/maintenance,
-/obj/firedoor_spawn,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/plating,
-/area/station/maintenance/SWmaint)
 "msz" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -63507,18 +63505,6 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor,
 /area/station/science/teleporter)
-"nhV" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/vehicle/segway,
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
 "niO" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
@@ -63648,13 +63634,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
-"pgG" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/item/storage/toilet/random,
-/turf/simulated/floor/sanitary,
-/area/station/medical/medbay/restroom)
 "poA" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 4
@@ -63719,7 +63698,7 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
-"qlP" = (
+"quj" = (
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -63752,6 +63731,19 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"qKQ" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/item/storage/toilet/random,
+/obj/window/cubicle{
+	dir = 4
+	},
+/obj/machinery/door/window/eastleft{
+	dir = 2
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/medbay/restroom)
 "qOp" = (
 /obj/machinery/light{
 	dir = 8;
@@ -63770,6 +63762,17 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/main)
+"qZw" = (
+/obj/machinery/door/airlock/pyro/maintenance,
+/obj/firedoor_spawn,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint)
 "rwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -63845,17 +63848,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"taX" = (
+"tpI" = (
+/obj/machinery/power/apc/autoname_south,
 /obj/cable{
-	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "0-8"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/SWmaint)
+/area/station/medical/robotics)
 "ttC" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -63918,6 +63922,18 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
+"ujx" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/vehicle/segway,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "uxY" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -63965,6 +63981,21 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"vjz" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint)
 "vli" = (
 /obj/cable{
 	d1 = 1;
@@ -64102,21 +64133,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"xlP" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/SWmaint)
 "xoa" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -64129,16 +64145,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
-"xGV" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/maintenance,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/medbay/restroom)
 "xKG" = (
 /obj/machinery/light{
 	dir = 8
@@ -103027,7 +103033,7 @@ bYk
 bLG
 caN
 cbY
-pgG
+qKQ
 ccd
 cfS
 cuf
@@ -103328,8 +103334,8 @@ bWU
 bYl
 bLG
 caO
-xGV
-jPM
+cYY
+eaB
 cdj
 cbW
 cip
@@ -103629,7 +103635,7 @@ bVH
 bWU
 bYm
 bLG
-taX
+eCq
 cca
 cca
 cca
@@ -103929,9 +103935,9 @@ bNi
 bUr
 bVN
 caH
-qlP
-mqJ
-xlP
+quj
+qZw
+vjz
 cca
 cdk
 ceB
@@ -103944,7 +103950,7 @@ cmo
 cnv
 coH
 cpG
-nhV
+ujx
 crP
 csE
 bAP
@@ -104233,7 +104239,7 @@ bVO
 bWU
 bYj
 aif
-ixy
+tpI
 cca
 cdl
 ceB
