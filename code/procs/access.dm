@@ -93,7 +93,7 @@
 			return 1
 		// check for admin access override
 		if (src.admin_access_override)
-			if (M?.client?.holder?.level >= LEVEL_SA)
+			if (M.client?.holder?.level >= LEVEL_SA)
 				return 1
 	return 0
 
