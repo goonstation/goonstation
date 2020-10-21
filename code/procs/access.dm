@@ -69,6 +69,10 @@
 	if (src.check_access(null))
 		return 1
 	if (M && ismob(M))
+		// check for admin access override
+		if (src.admin_access_override)
+			if (M.client?.holder?.level >= LEVEL_SA)
+				return 1
 		// check in-hand first
 		if (src.check_access(M.equipped()))
 			return 1
@@ -91,10 +95,6 @@
 		// check implant (last, so as to avoid using it unnecessarily)
 		if (src.check_implanted_access(M))
 			return 1
-		// check for admin access override
-		if (src.admin_access_override)
-			if (M.client?.holder?.level >= LEVEL_SA)
-				return 1
 	return 0
 
 
