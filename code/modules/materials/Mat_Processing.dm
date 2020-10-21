@@ -88,7 +88,7 @@
 			return
 
 		if (W.cant_drop) //For borg held items
-			boutput(user, "You can't put that in [src] when it's attached to you!")
+			user.show_text("You can't put that in [src] when it's attached to you!", "red")
 			return ..()
 
 		if(W.material)
