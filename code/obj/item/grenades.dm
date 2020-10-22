@@ -1486,11 +1486,11 @@ PIPE BOMBS + CONSTRUCTION
 			if (plasma)
 				for (var/turf/simulated/floor/target in range(1,src.loc))
 					if(!target.blocks_air && target.air)
-						if(target.parent)
+						if(target.parent?.group_processing)
 							target.parent.suspend_group_processing()
 
 						var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
-						payload.toxins = plasma * 400
+						payload.toxins = plasma * 100
 						target.air.merge(payload)
 
 			if (throw_objs.len && throw_objs.len > 0)

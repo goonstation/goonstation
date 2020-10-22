@@ -343,12 +343,15 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/plasmastone
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
 		for (var/turf/simulated/floor/target in range(1,location))
+			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
 			if(!target.blocks_air && target.air)
-				if(target.parent)
+				if(target.parent?.group_processing)
 					target.parent.suspend_group_processing()
 
 				var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
-				payload.toxins = 100
+				payload.toxins = 25
+				payload.temperature = T20C
+				payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 				target.air.merge(payload)
 		return
 
