@@ -5274,7 +5274,7 @@
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "amc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6364,7 +6364,7 @@
 "aoS" = (
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aoT" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
@@ -6397,7 +6397,7 @@
 /obj/machinery/light,
 /obj/storage/closet/fire,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aoY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6479,11 +6479,11 @@
 "api" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northeast,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apj" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apk" = (
 /obj/cable{
 	d1 = 2;
@@ -6694,39 +6694,39 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apL" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apM" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/stairs/wide/other{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apN" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apO" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apP" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apQ" = (
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apR" = (
 /obj/cable{
 	d2 = 2;
@@ -6734,12 +6734,12 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apS" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apT" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/cable{
@@ -6751,10 +6751,10 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apU" = (
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "apV" = (
 /turf/simulated/floor/sanitary/white,
 /area/station/science/spectral)
@@ -7036,12 +7036,12 @@
 /obj/window/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqC" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqD" = (
 /obj/cable{
 	d1 = 1;
@@ -7095,7 +7095,7 @@
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7104,7 +7104,7 @@
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqJ" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -7124,7 +7124,7 @@
 /turf/simulated/floor/stairs/wide{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7134,7 +7134,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7143,7 +7143,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqN" = (
 /obj/machinery/light,
 /obj/cable{
@@ -7158,7 +7158,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7172,7 +7172,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqP" = (
 /obj/machinery/light,
 /obj/cable{
@@ -7182,20 +7182,20 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqQ" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqR" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqS" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/cable{
@@ -7220,12 +7220,12 @@
 /area/station/maintenance/northeast)
 "aqU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqV" = (
 /obj/machinery/light,
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aqW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
@@ -7572,13 +7572,13 @@
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "arO" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "arP" = (
 /obj/machinery/light{
 	dir = 1;
@@ -7595,7 +7595,7 @@
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "arR" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
@@ -7705,7 +7705,7 @@
 /obj/disposalpipe/junction/middle/west,
 /obj/storage/closet/port_a_sci,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "asg" = (
 /obj/cable{
 	d1 = 2;
@@ -7834,7 +7834,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 5
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "asy" = (
 /obj/grille/steel,
 /obj/window/auto,
@@ -7845,7 +7845,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 9
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "asA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7854,18 +7854,18 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "asB" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "asC" = (
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "asD" = (
 /obj/machinery/light{
 	dir = 1;
@@ -7875,7 +7875,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "asE" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4;
@@ -7888,7 +7888,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "asF" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -8298,7 +8298,7 @@
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "atD" = (
 /obj/landmark/artifact,
 /turf/simulated/floor/purple/side{
@@ -8436,7 +8436,7 @@
 /obj/table/reinforced/auto,
 /obj/item/device/reagentscanner,
 /turf/simulated/floor/purpleblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "atR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8498,7 +8498,7 @@
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "atY" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 1
@@ -14783,7 +14783,7 @@
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJB" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/firealarm{
@@ -14797,7 +14797,7 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14809,7 +14809,7 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14819,7 +14819,7 @@
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14828,7 +14828,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJF" = (
 /turf/space,
 /area/shuttle/mining/station)
@@ -14953,7 +14953,7 @@
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJS" = (
 /obj/cable{
 	d1 = 1;
@@ -14963,12 +14963,12 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/decal/tile_edge/line/purple,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJT" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/decal/tile_edge/line/purple,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJU" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating/random,
@@ -15547,7 +15547,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aLf" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/black,
@@ -16194,7 +16194,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/simulated/floor/purpleblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMm" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light{
@@ -16204,13 +16204,13 @@
 	},
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/purpleblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMn" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/purpleblack{
 	dir = 9
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMo" = (
 /obj/cable{
 	d1 = 1;
@@ -16220,27 +16220,27 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMp" = (
 /turf/simulated/floor/purpleblack/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMq" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMr" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMs" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMt" = (
 /obj/stool/chair/comfy/purple{
 	dir = 1
@@ -16251,7 +16251,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMu" = (
 /obj/machinery/light{
 	dir = 8;
@@ -17030,7 +17030,7 @@
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/bot,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOb" = (
 /obj/cable{
 	d1 = 4;
@@ -17043,7 +17043,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOc" = (
 /obj/cable{
 	d1 = 4;
@@ -17056,7 +17056,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17073,7 +17073,7 @@
 	icon_state = "6-8"
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOe" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17083,7 +17083,7 @@
 	},
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17100,7 +17100,7 @@
 	},
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17109,7 +17109,7 @@
 /obj/disposalpipe/segment/bent/west,
 /obj/item/storage/box/diskbox,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17117,7 +17117,7 @@
 /obj/table/reinforced/auto,
 /obj/item/clipboard/with_pen,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOi" = (
 /obj/cable{
 	d1 = 2;
@@ -17130,14 +17130,14 @@
 	},
 /obj/item/paper/book/guardbot_guide,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOj" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOk" = (
 /obj/cable{
 	d2 = 8;
@@ -17150,7 +17150,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOl" = (
 /obj/table/reinforced/auto,
 /obj/machinery/power/apc/autoname_west,
@@ -18037,7 +18037,7 @@
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPU" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -18052,7 +18052,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPV" = (
 /obj/machinery/light{
 	dir = 8;
@@ -18062,17 +18062,17 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPW" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPX" = (
 /obj/cable{
 	icon_state = "4-9"
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPY" = (
 /obj/table/reinforced/auto,
 /obj/machinery/networked/printer{
@@ -18086,11 +18086,11 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPZ" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aQa" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18098,7 +18098,7 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/book/dwainedummies,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aQb" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
@@ -18106,7 +18106,7 @@
 	on = 1
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aQc" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -18118,7 +18118,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aQd" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -19178,7 +19178,7 @@
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/bot,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSp" = (
 /obj/cable{
 	d1 = 4;
@@ -19187,7 +19187,7 @@
 	},
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/purpleblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSq" = (
 /obj/cable{
 	d1 = 4;
@@ -19196,7 +19196,7 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/purpleblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSr" = (
 /obj/cable{
 	d1 = 4;
@@ -19207,7 +19207,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSs" = (
 /obj/cable{
 	d1 = 4;
@@ -19221,7 +19221,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSt" = (
 /obj/cable{
 	d1 = 4;
@@ -19230,7 +19230,7 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSu" = (
 /obj/cable{
 	d1 = 4;
@@ -19240,7 +19240,7 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSv" = (
 /obj/cable{
 	d1 = 4;
@@ -19251,7 +19251,7 @@
 /obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSw" = (
 /obj/cable{
 	d1 = 4;
@@ -19262,7 +19262,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSx" = (
 /obj/cable{
 	d1 = 2;
@@ -19276,7 +19276,7 @@
 /obj/item/device/reagentscanner,
 /obj/item/device/reagentscanner,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSy" = (
 /obj/cable{
 	d1 = 2;
@@ -19284,7 +19284,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSz" = (
 /obj/cable{
 	d2 = 8;
@@ -19299,7 +19299,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aSA" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -20503,44 +20503,44 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aVj" = (
 /obj/machinery/light,
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aVk" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aVl" = (
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aVm" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aVn" = (
 /turf/simulated/floor/purpleblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aVo" = (
 /turf/simulated/floor/purpleblack/corner{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aVp" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aVq" = (
 /obj/cable{
 	d1 = 1;
@@ -20548,7 +20548,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aVr" = (
 /obj/machinery/alarm{
 	dir = 8;
@@ -20557,7 +20557,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aVs" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
@@ -21774,16 +21774,16 @@
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aYa" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/purpleblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aYb" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/purpleblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aYc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -21793,7 +21793,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/purpleblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aYd" = (
 /obj/disposalpipe/junction/right/west,
 /obj/stool/chair/office{
@@ -21808,7 +21808,7 @@
 /turf/simulated/floor/purpleblack/corner{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aYe" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/computer3/terminal/zeta{
@@ -21823,13 +21823,13 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aYf" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aYg" = (
 /obj/table/reinforced/auto,
 /obj/disposalpipe/segment/horizontal,
@@ -23416,27 +23416,27 @@
 /obj/item/device/gps,
 /obj/item/clothing/head/helmet/camera,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bbq" = (
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bbr" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bbs" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bbt" = (
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bbu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24690,7 +24690,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "beg" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -24708,7 +24708,7 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "beh" = (
 /obj/rack,
 /obj/item/circuitboard/teleporter,
@@ -24739,7 +24739,7 @@
 	},
 /obj/machinery/disposal,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bej" = (
 /obj/cable{
 	d1 = 4;
@@ -24750,7 +24750,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bek" = (
 /obj/cable{
 	d1 = 4;
@@ -24760,7 +24760,7 @@
 /turf/simulated/floor/purpleblack/corner{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bel" = (
 /obj/cable{
 	d1 = 4;
@@ -24770,7 +24770,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bem" = (
 /obj/cable{
 	icon_state = "6-8"
@@ -24778,7 +24778,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "ben" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -24787,7 +24787,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "beo" = (
 /obj/machinery/light{
 	dir = 1;
@@ -24797,22 +24797,22 @@
 /turf/simulated/floor/stairs/wide/other{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bep" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "beq" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "ber" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bes" = (
 /obj/machinery/light{
 	dir = 1;
@@ -24822,25 +24822,25 @@
 /obj/storage/closet/emergency,
 /obj/item/clothing/suit/space/emerg,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bet" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "beu" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bev" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bew" = (
 /obj/machinery/light{
 	dir = 1;
@@ -24849,11 +24849,11 @@
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bex" = (
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bey" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /obj/cable{
@@ -25044,7 +25044,7 @@
 	},
 /obj/item/storage/box/trackimp_kit2,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "beY" = (
 /obj/machinery/light{
 	dir = 1;
@@ -26264,7 +26264,7 @@
 	on = 1
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bhc" = (
 /obj/cable{
 	d1 = 1;
@@ -26363,14 +26363,14 @@
 "bhp" = (
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bhq" = (
 /obj/cable{
 	icon_state = "4-9"
 	},
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bhr" = (
 /obj/cable{
 	d1 = 4;
@@ -26387,7 +26387,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bhs" = (
 /obj/cable{
 	d1 = 4;
@@ -26401,7 +26401,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bht" = (
 /obj/cable{
 	d1 = 4;
@@ -26411,7 +26411,7 @@
 /turf/simulated/floor/stairs/wide{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bhu" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -26422,7 +26422,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bhv" = (
 /obj/cable{
 	d1 = 4;
@@ -26430,7 +26430,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bhw" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 1
@@ -26441,7 +26441,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bhx" = (
 /obj/cable{
 	d1 = 4;
@@ -26455,7 +26455,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bhy" = (
 /obj/cable{
 	d1 = 4;
@@ -26467,7 +26467,7 @@
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/plating/random,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bhz" = (
 /obj/cable{
 	d1 = 4;
@@ -27731,7 +27731,7 @@
 	can_rupture = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bkg" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -28841,48 +28841,48 @@
 "bmF" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/west,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bmG" = (
 /obj/grille/steel,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
 /turf/space,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bmH" = (
 /obj/grille/steel,
 /turf/simulated/floor/airless/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bmI" = (
 /obj/machinery/macrofab/emergency_pod,
 /turf/simulated/floor/airless/engine/vacuum,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bmJ" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/airless/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bmK" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
 /turf/space,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bmL" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 1
 	},
 /turf/space,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bmM" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/airless/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bmN" = (
 /obj/lattice,
 /turf/space,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bmO" = (
 /obj/cable{
 	d1 = 1;
@@ -30265,19 +30265,19 @@
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/space,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bpE" = (
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/airless/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bpF" = (
 /turf/simulated/floor/airless/engine/vacuum,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bpG" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/vent/north,
 /turf/space,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "bpH" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 8

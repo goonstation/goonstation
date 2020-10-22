@@ -15546,7 +15546,7 @@
 /area/station/medical/medbay)
 "aIj" = (
 /turf/simulated/wall/r_wall,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aIk" = (
 /obj/storage/crate{
 	name = "Spare Parts"
@@ -15562,7 +15562,7 @@
 	},
 /obj/item/guardbot_core,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aIl" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -15571,18 +15571,18 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aIm" = (
 /obj/machinery/camera{
 	c_tag = "Research Sector North";
 	dir = 2
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aIn" = (
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aIo" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/pitching_machine{
@@ -16058,7 +16058,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJj" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -16072,7 +16072,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJk" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -16080,12 +16080,12 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJl" = (
 /obj/table/auto,
 /obj/machinery/computer/security/wooden_tv/small,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aJm" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -16446,7 +16446,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/r_wall,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aKi" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -16456,14 +16456,14 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aKj" = (
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aKk" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -16476,7 +16476,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aKl" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -16484,7 +16484,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aKm" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -16810,10 +16810,10 @@
 /turf/simulated/floor/orangeblack/corner{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aKV" = (
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aKW" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -16821,11 +16821,11 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aKX" = (
 /obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aKY" = (
 /obj/cable{
 	tag = "icon-1-2";
@@ -17168,7 +17168,7 @@
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/gunner,
 /turf/simulated/floor/orangeblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aLQ" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -17178,7 +17178,7 @@
 /obj/machinery/bot/guardbot/ranger,
 /obj/machinery/guardbot_dock,
 /turf/simulated/floor/orangeblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aLR" = (
 /obj/cable{
 	d2 = 4;
@@ -17197,7 +17197,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aLS" = (
 /obj/cable{
 	d2 = 8;
@@ -17216,7 +17216,7 @@
 	name = "Station Intercom (Medical)"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aLT" = (
 /obj/cable{
 	d2 = 8;
@@ -17229,12 +17229,12 @@
 	name = "light fixture"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aLU" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aLV" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -17244,11 +17244,11 @@
 /turf/simulated/floor/orangeblack/corner{
 	dir = 2
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aLW" = (
 /obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/orangeblack/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aLX" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -17563,7 +17563,7 @@
 "aME" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMF" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -17572,11 +17572,11 @@
 	},
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMG" = (
 /obj/storage/closet/port_a_sci,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMH" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -17591,7 +17591,7 @@
 	name = "light fixture"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMI" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -17600,7 +17600,7 @@
 /turf/simulated/floor/orangeblack/corner{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMJ" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -17615,7 +17615,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMK" = (
 /obj/cable{
 	d1 = 1;
@@ -17630,7 +17630,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aML" = (
 /obj/cable{
 	d1 = 1;
@@ -17640,17 +17640,17 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMM" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMN" = (
 /turf/simulated/floor/orangeblack/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMO" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -17665,7 +17665,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMP" = (
 /obj/cable{
 	d2 = 8;
@@ -17679,7 +17679,7 @@
 	name = "Research Sector Pad"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aMQ" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -17947,7 +17947,7 @@
 /turf/simulated/floor/white/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aNo" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -17970,7 +17970,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aNp" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -17985,7 +17985,7 @@
 /turf/simulated/floor/orangeblack/corner{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aNq" = (
 /obj/cable{
 	d1 = 1;
@@ -17999,7 +17999,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aNr" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/storage/tape_drive{
@@ -18319,13 +18319,13 @@
 	pixel_x = -29
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOa" = (
 /obj/landmark{
 	name = "peststart"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOb" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -18337,7 +18337,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOc" = (
 /turf/simulated/wall/r_wall,
 /area/station/science/lab)
@@ -18794,13 +18794,13 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOR" = (
 /obj/landmark/start{
 	name = "Scientist"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOS" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -18808,7 +18808,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOT" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -18826,7 +18826,7 @@
 	print_id = "Office"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOU" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -18834,7 +18834,7 @@
 	name = "Station Intercom (Medical)"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aOV" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -19240,7 +19240,7 @@
 /turf/simulated/floor/arrival/corner{
 	dir = 2
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPO" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -19250,7 +19250,7 @@
 /turf/simulated/floor/blue/side{
 	dir = 0
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPP" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -19261,7 +19261,7 @@
 /turf/simulated/floor/blue/side{
 	dir = 0
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPQ" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -19276,7 +19276,7 @@
 /turf/simulated/floor/blue/side{
 	dir = 0
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPR" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -19291,7 +19291,7 @@
 /turf/simulated/floor/blue/side{
 	dir = 0
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPS" = (
 /turf/simulated/wall/r_wall,
 /area/station/turret_protected/Zeta)
@@ -19320,7 +19320,7 @@
 	},
 /obj/item/paper/book/dwainedummies,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPV" = (
 /obj/cable{
 	d1 = 1;
@@ -19329,7 +19329,7 @@
 	},
 /obj/item/extinguisher,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "aPW" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
