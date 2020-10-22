@@ -1249,6 +1249,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		text = voidSpeak(text)
 	var/ending = copytext(text, length(text))
 
+	if (singing)
+		return singify_text(text)
+
 	if (ending == "?")
 		return "queries, \"[text]\"";
 	else if (ending == "!")
