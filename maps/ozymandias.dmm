@@ -221,7 +221,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aeX" = (
@@ -231,7 +231,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "afb" = (
@@ -253,7 +253,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "afs" = (
@@ -302,7 +302,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "agh" = (
@@ -313,7 +313,7 @@
 /area/station/crew_quarters/catering)
 "agm" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "agL" = (
@@ -325,7 +325,7 @@
 "agP" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "agV" = (
@@ -356,7 +356,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "ahn" = (
@@ -549,7 +549,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "akd" = (
@@ -570,7 +570,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "akD" = (
@@ -616,7 +616,7 @@
 "akY" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "ald" = (
@@ -664,7 +664,7 @@
 /area/station/security/main)
 "alA" = (
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "alI" = (
@@ -720,7 +720,7 @@
 "amk" = (
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "amB" = (
@@ -730,7 +730,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "amC" = (
@@ -957,7 +957,7 @@
 	name = "cargo driver"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aph" = (
@@ -980,12 +980,12 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "apv" = (
 /turf/space,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "apD" = (
@@ -1236,7 +1236,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "atY" = (
@@ -1351,7 +1351,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "awk" = (
@@ -1383,7 +1383,7 @@
 "awu" = (
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "awv" = (
@@ -1392,7 +1392,7 @@
 	name = "cargo driver"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "awx" = (
@@ -1401,7 +1401,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "awz" = (
@@ -1806,7 +1806,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aEk" = (
@@ -1826,7 +1826,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aEs" = (
@@ -1980,7 +1980,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "aFM" = (
@@ -2049,7 +2049,7 @@
 "aGJ" = (
 /obj/lattice,
 /turf/space,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aGO" = (
@@ -2181,7 +2181,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aJu" = (
@@ -2386,7 +2386,7 @@
 "aMi" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aMp" = (
@@ -2432,7 +2432,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aNm" = (
@@ -2604,7 +2604,7 @@
 	dir = 4;
 	icon_state = "catwalk_cross"
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aPW" = (
@@ -2642,14 +2642,14 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aQu" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aQz" = (
@@ -2672,7 +2672,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aQI" = (
@@ -2726,7 +2726,7 @@
 	})
 "aRK" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aRL" = (
@@ -2989,7 +2989,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aVx" = (
@@ -3035,7 +3035,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aWa" = (
@@ -3068,7 +3068,7 @@
 "aWN" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aWR" = (
@@ -3077,7 +3077,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aWX" = (
@@ -3289,7 +3289,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "aZs" = (
@@ -3359,7 +3359,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "baH" = (
@@ -3478,7 +3478,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/airless/plating/catwalk,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "bcn" = (
@@ -3510,7 +3510,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "bcM" = (
@@ -3659,7 +3659,7 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "bfc" = (
@@ -3670,7 +3670,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "bfd" = (
@@ -3719,7 +3719,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "bfJ" = (
@@ -3885,7 +3885,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "bil" = (
@@ -3904,7 +3904,7 @@
 "biL" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/airless/engine,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "biN" = (
@@ -3958,7 +3958,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "bjG" = (
@@ -3974,7 +3974,7 @@
 	icon_state = "6-8"
 	},
 /turf/simulated/floor/airless/engine,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "bjJ" = (
@@ -4107,7 +4107,7 @@
 /obj/grille/catwalk,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/airless/plating/catwalk,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "blU" = (
@@ -4164,7 +4164,7 @@
 	},
 /obj/disposalpipe/trunk/north,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "bnz" = (
@@ -4199,7 +4199,7 @@
 /obj/item/device/light/flashlight,
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "boq" = (
@@ -4239,7 +4239,7 @@
 	icon_state = "9-10"
 	},
 /turf/simulated/floor/airless/engine,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "bpx" = (
@@ -4354,7 +4354,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "brA" = (
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
@@ -4459,7 +4459,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "btJ" = (
@@ -4491,7 +4491,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "btZ" = (
@@ -4628,7 +4628,7 @@
 	name = "cargo driver"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "bxl" = (
@@ -4711,7 +4711,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "byg" = (
@@ -4724,7 +4724,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "byj" = (
@@ -4772,7 +4772,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "byp" = (
@@ -5055,7 +5055,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "bCM" = (
@@ -5891,7 +5891,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "bRA" = (
@@ -6021,7 +6021,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bUO" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -6199,7 +6199,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bYo" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -6244,7 +6244,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "bYX" = (
@@ -6278,7 +6278,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "bZo" = (
@@ -7989,7 +7989,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "czx" = (
@@ -8217,7 +8217,7 @@
 	},
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "cDT" = (
@@ -8473,7 +8473,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "cHI" = (
@@ -8917,7 +8917,7 @@
 	operating = 1
 	},
 /turf/space,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "cOI" = (
@@ -9014,7 +9014,7 @@
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "cQx" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
@@ -9343,7 +9343,7 @@
 /area/station/chapel/main)
 "cVk" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "cVo" = (
@@ -9415,7 +9415,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "cVG" = (
@@ -9465,7 +9465,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "cVO" = (
@@ -9665,7 +9665,7 @@
 /obj/item/hand_labeler,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "cYQ" = (
@@ -10013,7 +10013,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dfs" = (
@@ -10023,7 +10023,7 @@
 	name = "cargo driver"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dfw" = (
@@ -10063,7 +10063,7 @@
 /area/station/crew_quarters/pool)
 "dfO" = (
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dfV" = (
@@ -10225,7 +10225,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "diI" = (
@@ -10381,7 +10381,7 @@
 	},
 /obj/storage/crate,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dkI" = (
@@ -10701,7 +10701,7 @@
 "doZ" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dpa" = (
@@ -10737,7 +10737,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dpJ" = (
@@ -10752,7 +10752,7 @@
 "dqa" = (
 /obj/machinery/light,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dqi" = (
@@ -10904,7 +10904,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "drG" = (
@@ -11388,7 +11388,7 @@
 /area/station/science/chemistry)
 "dAW" = (
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "dBi" = (
@@ -11433,7 +11433,7 @@
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dBG" = (
@@ -11476,7 +11476,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "dCb" = (
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
@@ -11527,7 +11527,7 @@
 "dCS" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dCU" = (
@@ -11548,7 +11548,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/access_spawn/medical,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dDd" = (
@@ -11590,7 +11590,7 @@
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dDE" = (
@@ -12251,7 +12251,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dNJ" = (
@@ -12312,7 +12312,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dOu" = (
@@ -12409,7 +12409,7 @@
 "dPS" = (
 /obj/machinery/computer/ordercomp,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dQa" = (
@@ -12451,7 +12451,7 @@
 "dQt" = (
 /obj/vehicle/forklift,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "dQF" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -12459,7 +12459,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "dQK" = (
@@ -12823,7 +12823,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "dWf" = (
@@ -13256,7 +13256,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "eeH" = (
@@ -13277,7 +13277,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "eeP" = (
@@ -14361,7 +14361,7 @@
 /obj/machinery/power/apc/autoname_west,
 /obj/storage/crate/medical,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "ewh" = (
@@ -14469,7 +14469,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "eye" = (
@@ -14477,7 +14477,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "eyt" = (
@@ -14497,7 +14497,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "eyC" = (
@@ -14809,7 +14809,7 @@
 "eDL" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "eEe" = (
@@ -14873,7 +14873,7 @@
 "eES" = (
 /obj/storage/crate,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "eFb" = (
@@ -15091,7 +15091,7 @@
 "eHP" = (
 /obj/machinery/computer/ordercomp,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "eHU" = (
 /obj/decal/tile_edge/floorguide/security{
 	dir = 1
@@ -15257,7 +15257,7 @@
 "eKs" = (
 /obj/storage/crate/medical,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "eKD" = (
@@ -15281,7 +15281,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "eKT" = (
@@ -15436,7 +15436,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "eMF" = (
@@ -15444,7 +15444,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/delivery,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "eMH" = (
@@ -15755,7 +15755,7 @@
 	},
 /obj/access_spawn/medical,
 /turf/simulated/floor/grey,
-/area/station/routingdepot{
+/area/station/routing{
 	name = "Medical Router"
 	})
 "eRE" = (
@@ -16232,7 +16232,7 @@
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "eZv" = (
@@ -17585,7 +17585,7 @@
 /obj/disposalpipe/trunk/north,
 /obj/machinery/floorflusher/industrial,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "fwW" = (
@@ -18735,7 +18735,7 @@
 /obj/access_spawn/engineering_mechanic,
 /obj/access_spawn/engineering,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "fQt" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -19090,7 +19090,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "fXb" = (
@@ -19387,7 +19387,7 @@
 "gaH" = (
 /obj/landmark/artifact,
 /turf/simulated/floor/airless/engine,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "gaQ" = (
@@ -19683,7 +19683,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "ghb" = (
@@ -19700,7 +19700,7 @@
 "ghl" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "ghp" = (
@@ -20478,7 +20478,7 @@
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "gsi" = (
@@ -20771,7 +20771,7 @@
 "gvs" = (
 /obj/machinery/computer/barcode/ozy,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "gvy" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -21602,7 +21602,7 @@
 /area/station/hallway/primary/south)
 "gIe" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "gIf" = (
@@ -21612,7 +21612,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "gIn" = (
@@ -22527,7 +22527,7 @@
 "gWz" = (
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "gWN" = (
@@ -22938,7 +22938,7 @@
 	pixel_y = -11
 	},
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "hdI" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6
@@ -23112,7 +23112,7 @@
 /obj/access_spawn/bar,
 /obj/access_spawn/kitchen,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "hfL" = (
@@ -24270,7 +24270,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "huW" = (
@@ -25304,7 +25304,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "hNE" = (
@@ -25822,7 +25822,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "hVn" = (
 /obj/cable{
 	d1 = 1;
@@ -26215,7 +26215,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "ibS" = (
@@ -26423,7 +26423,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "igI" = (
 /turf/simulated/floor/redwhite/corner{
 	dir = 1
@@ -26592,7 +26592,7 @@
 	},
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "ije" = (
@@ -26655,7 +26655,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "ikf" = (
@@ -26979,7 +26979,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "ipX" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/transport{
@@ -27078,7 +27078,7 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "ise" = (
@@ -28045,7 +28045,7 @@
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "iFi" = (
 /obj/stool/chair{
 	dir = 1
@@ -28192,7 +28192,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "iHg" = (
@@ -28207,7 +28207,7 @@
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "iHh" = (
@@ -28920,7 +28920,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "iUo" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -28955,7 +28955,7 @@
 "iUJ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "iUN" = (
@@ -30021,7 +30021,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "jlZ" = (
@@ -30151,7 +30151,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "jnP" = (
@@ -30802,7 +30802,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "jxX" = (
@@ -30871,7 +30871,7 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "jyB" = (
@@ -31266,7 +31266,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "jDX" = (
@@ -32740,7 +32740,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "kar" = (
@@ -33527,7 +33527,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "kkU" = (
@@ -33892,7 +33892,7 @@
 "kqI" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "kqK" = (
 /obj/machinery/computer/aiupload{
 	dir = 4
@@ -33940,7 +33940,7 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "krk" = (
@@ -36521,7 +36521,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "liq" = (
@@ -36642,7 +36642,7 @@
 "ljt" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "ljw" = (
@@ -36893,7 +36893,7 @@
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "lmp" = (
@@ -37024,7 +37024,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "loK" = (
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -40203,7 +40203,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "mjC" = (
@@ -40231,7 +40231,7 @@
 "mjL" = (
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "mjQ" = (
 /obj/table/wood/auto,
 /obj/machinery/networked/printer{
@@ -40405,7 +40405,7 @@
 	operating = 1
 	},
 /turf/space,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "mmt" = (
@@ -41177,7 +41177,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "mxA" = (
 /turf/simulated/floor/wood/three{
 	icon_state = "3,3"
@@ -42089,7 +42089,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "mMH" = (
@@ -42770,7 +42770,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "mWi" = (
@@ -43368,7 +43368,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "ngT" = (
@@ -43847,7 +43847,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "npp" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -44543,7 +44543,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "nAE" = (
@@ -44613,7 +44613,7 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "nBm" = (
@@ -46143,7 +46143,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "nXC" = (
@@ -46981,7 +46981,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "oiZ" = (
@@ -47111,7 +47111,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "okL" = (
 /obj/cable{
 	d1 = 1;
@@ -47690,7 +47690,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "ouu" = (
 /obj/cable{
 	d1 = 2;
@@ -48689,7 +48689,7 @@
 /obj/disposalpipe/trunk/east,
 /obj/machinery/light/small,
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "oJR" = (
@@ -49186,7 +49186,7 @@
 /area/station/bridge/command_center)
 "oRW" = (
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "oRY" = (
@@ -49404,7 +49404,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "oVX" = (
@@ -49545,7 +49545,7 @@
 "oYn" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "oYA" = (
@@ -49882,7 +49882,7 @@
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "pcF" = (
@@ -49974,7 +49974,7 @@
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "pej" = (
@@ -50562,7 +50562,7 @@
 	},
 /obj/access_spawn/engineering_storage,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "por" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -53617,7 +53617,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "qnD" = (
@@ -54564,7 +54564,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "qBR" = (
@@ -55221,7 +55221,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "qKV" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -55495,7 +55495,7 @@
 /area/station/hallway/primary/west)
 "qPe" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "qPp" = (
@@ -60286,7 +60286,7 @@
 	},
 /obj/machinery/computer/barcode/ozy,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "siP" = (
@@ -61395,7 +61395,7 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "sxY" = (
@@ -61754,7 +61754,7 @@
 /area/station/maintenance/inner/nw)
 "sDa" = (
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "sDh" = (
 /obj/machinery/door_timer/solitary2/new_walls/west,
 /obj/machinery/light_switch/west{
@@ -63090,7 +63090,7 @@
 /area/station/hangar/main)
 "sVd" = (
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "sVe" = (
@@ -63546,7 +63546,7 @@
 /area/station/crew_quarters/jazz)
 "tae" = (
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "taf" = (
@@ -65203,7 +65203,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "twi" = (
@@ -65845,7 +65845,7 @@
 	},
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "tGj" = (
@@ -66383,7 +66383,7 @@
 "tOh" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "tOi" = (
 /obj/table/reinforced/chemistry/auto{
 	name = "prep counter"
@@ -67800,7 +67800,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "ukb" = (
@@ -68203,7 +68203,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "upu" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
@@ -68637,7 +68637,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/access_spawn/engineering,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "uwf" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/machinery/light/emergency,
@@ -69063,7 +69063,7 @@
 /obj/access_spawn/engineering_mechanic,
 /obj/access_spawn/engineering,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "uBq" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -69781,7 +69781,7 @@
 	name = "cargo driver"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "uLe" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/northeast,
 /turf/simulated/floor/plating,
@@ -70357,7 +70357,7 @@
 "uSL" = (
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "uSM" = (
@@ -71399,7 +71399,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "vgr" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -71632,7 +71632,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "vjD" = (
@@ -75184,7 +75184,7 @@
 /area/station/bridge/command_center)
 "wfU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "wfW" = (
 /obj/blind_switch/area/north,
 /turf/simulated/floor/greenblack{
@@ -75267,7 +75267,7 @@
 "whn" = (
 /obj/storage/crate,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "whq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -76573,7 +76573,7 @@
 "wyF" = (
 /obj/storage/crate,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "wyH" = (
@@ -77430,7 +77430,7 @@
 "wJi" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "wJq" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/light/emergency{
@@ -77671,7 +77671,7 @@
 	operating = 1
 	},
 /turf/space,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "wNp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -77802,7 +77802,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "wOX" = (
@@ -78121,7 +78121,7 @@
 "wSK" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/catering{
+/area/station/routing/catering{
 	name = "Catering Router"
 	})
 "wSN" = (
@@ -78385,7 +78385,7 @@
 	})
 "wWD" = (
 /turf/simulated/floor/airless/engine,
-/area/station/routingdepot/eva{
+/area/station/routing/eva{
 	name = "Router Cabinet"
 	})
 "wWH" = (
@@ -78721,7 +78721,7 @@
 /area/station/hallway/primary/north)
 "xcg" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "xcj" = (
@@ -79538,7 +79538,7 @@
 	name = "cargo driver"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "xmS" = (
@@ -79932,7 +79932,7 @@
 	},
 /obj/storage/crate,
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "xrO" = (
@@ -81025,7 +81025,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/airbridge{
+/area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
 "xGH" = (
@@ -82998,7 +82998,7 @@
 /area/station/science/artifact)
 "yhh" = (
 /turf/simulated/floor/yellow/checker,
-/area/station/routingdepot/medsci{
+/area/station/routing/medsci{
 	name = "Research Router"
 	})
 "yhl" = (

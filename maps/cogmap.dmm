@@ -460,7 +460,7 @@
 /area/station/crew_quarters/observatory)
 "abj" = (
 /turf/simulated/floor,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "abl" = (
 /obj/cable,
 /obj/machinery/power/solar/west,
@@ -3083,7 +3083,7 @@
 /area/station/security/armory)
 "ahs" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "aht" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -3099,7 +3099,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "ahu" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'COLLISION HAZARD'";
@@ -3107,7 +3107,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "ahv" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -3123,7 +3123,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "ahw" = (
 /obj/item/storage/box,
 /obj/item/storage/box,
@@ -3564,14 +3564,14 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "aiq" = (
 /obj/machinery/mass_driver{
 	dir = 1;
 	id = "sec_out"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "air" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -4108,7 +4108,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "ajv" = (
 /obj/machinery/computer/ordercomp,
 /obj/machinery/power/data_terminal,
@@ -4117,15 +4117,15 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "ajw" = (
 /obj/machinery/computer/barcode,
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "ajx" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "ajy" = (
 /obj/item/raw_material/shard/glass,
 /turf/simulated/floor/airless/plating/scorched,
@@ -4542,7 +4542,7 @@
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "akt" = (
 /obj/cable{
 	d1 = 4;
@@ -4555,7 +4555,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "aku" = (
 /obj/cable{
 	d1 = 4;
@@ -4568,7 +4568,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "akv" = (
 /obj/cable{
 	d1 = 2;
@@ -4576,13 +4576,13 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "akw" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "akx" = (
 /turf/simulated/floor/airless/plating/damaged1,
 /area/station/wreckage)
@@ -5028,7 +5028,7 @@
 /obj/cable,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "alA" = (
 /obj/table/auto,
 /obj/item/hand_labeler,
@@ -5037,7 +5037,7 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/caution/west,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "alB" = (
 /obj/cable{
 	d1 = 1;
@@ -5045,12 +5045,12 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "alC" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "alD" = (
 /obj/lattice,
 /turf/space,
@@ -5432,11 +5432,11 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "amx" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/security)
+/area/station/routing/security)
 "amy" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -16629,7 +16629,7 @@
 /area/station/crew_quarters/pool)
 "aKF" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aKG" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Supply Dock Airlock"
@@ -16641,17 +16641,17 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aKH" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Supply Dock Airlock"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aKI" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aKJ" = (
 /obj/machinery/light{
 	dir = 8;
@@ -17257,7 +17257,7 @@
 "aLV" = (
 /obj/machinery/computer/ordercomp,
 /turf/simulated/floor,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aLW" = (
 /obj/cable{
 	d1 = 1;
@@ -17265,10 +17265,10 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aLX" = (
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aLY" = (
 /obj/machinery/computer/barcode,
 /obj/machinery/light_switch{
@@ -17276,7 +17276,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/bot,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aLZ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -17753,7 +17753,7 @@
 /area/station/crew_quarters/pool)
 "aMY" = (
 /turf/simulated/floor,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aMZ" = (
 /obj/cable{
 	d1 = 1;
@@ -17761,7 +17761,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/caution/south,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aNa" = (
 /obj/cable{
 	d1 = 4;
@@ -17769,7 +17769,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/south,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aNb" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -17789,7 +17789,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aNd" = (
 /obj/cable{
 	d1 = 1;
@@ -18494,7 +18494,7 @@
 	},
 /obj/item/cigbutt,
 /turf/simulated/floor/caution/east,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aOr" = (
 /obj/window/reinforced{
 	dir = 4
@@ -18505,14 +18505,14 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aOs" = (
 /obj/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aOt" = (
 /obj/window/reinforced{
 	dir = 8
@@ -18522,7 +18522,7 @@
 /obj/item/storage/box,
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/caution/west,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aOu" = (
 /obj/cable{
 	d1 = 1;
@@ -18992,7 +18992,7 @@
 /obj/item/storage/box,
 /obj/item/storage/box,
 /turf/simulated/floor/caution/east,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aPq" = (
 /obj/machinery/mass_driver{
 	id = "catering_out"
@@ -19001,7 +19001,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aPr" = (
 /obj/window/reinforced{
 	dir = 8
@@ -19012,7 +19012,7 @@
 	},
 /obj/item/storage/box,
 /turf/simulated/floor/caution/west,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aPs" = (
 /obj/cable{
 	d1 = 1;
@@ -19545,7 +19545,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aQv" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -19562,7 +19562,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aQw" = (
 /obj/machinery/mass_driver{
 	id = "catering_out"
@@ -19577,7 +19577,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/catering)
+/area/station/routing/catering)
 "aQx" = (
 /obj/cable{
 	d1 = 1;
@@ -26995,7 +26995,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bgf" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -27012,7 +27012,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bgg" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -27028,7 +27028,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bgh" = (
 /obj/cable{
 	d1 = 1;
@@ -27369,13 +27369,13 @@
 /area/space)
 "bgR" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bgS" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bgT" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bgU" = (
 /obj/cable{
 	d1 = 1;
@@ -27385,7 +27385,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
 /turf/simulated/floor/caution/south,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bgV" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'COLLISION HAZARD'";
@@ -27404,7 +27404,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bgX" = (
 /obj/window/reinforced{
 	dir = 8
@@ -27414,7 +27414,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bgY" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
@@ -27682,7 +27682,7 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bhH" = (
 /obj/grille/catwalk/cross{
 	dir = 5;
@@ -27705,7 +27705,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bhJ" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'COLLISION HAZARD'";
@@ -27713,7 +27713,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bhK" = (
 /obj/cable{
 	d2 = 2;
@@ -27722,7 +27722,7 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/ordercomp,
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bhL" = (
 /obj/cable{
 	d1 = 1;
@@ -27735,7 +27735,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bhM" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -27747,7 +27747,7 @@
 	},
 /obj/machinery/bot/guardbot/safety,
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bhN" = (
 /obj/table/auto,
 /obj/machinery/camera{
@@ -27765,7 +27765,7 @@
 /obj/item/device/light/glowstick,
 /obj/item/clothing/head/helmet/hardhat,
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bhO" = (
 /obj/cable{
 	d1 = 4;
@@ -27774,7 +27774,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bhP" = (
 /obj/window/reinforced{
 	dir = 4
@@ -27786,7 +27786,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bhQ" = (
 /obj/window/reinforced{
 	dir = 8
@@ -27802,7 +27802,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bhR" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -27814,7 +27814,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bhS" = (
 /obj/table/auto,
 /obj/item/wrapping_paper,
@@ -27832,7 +27832,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bhT" = (
 /obj/cable{
 	d2 = 8;
@@ -27841,11 +27841,11 @@
 /obj/machinery/power/data_terminal,
 /obj/computer3frame,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bhU" = (
 /obj/securearea,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bhV" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple/insulated,
@@ -28192,10 +28192,10 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "biK" = (
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "biL" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
@@ -28217,7 +28217,7 @@
 	},
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "biN" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -28236,7 +28236,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "biO" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -28255,7 +28255,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "biP" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -28274,7 +28274,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "biQ" = (
 /obj/window/reinforced{
 	dir = 2
@@ -28285,14 +28285,14 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "biR" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "biS" = (
 /obj/cable{
 	d1 = 1;
@@ -28300,7 +28300,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "biT" = (
 /obj/cable{
 	d1 = 1;
@@ -28313,19 +28313,19 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "biU" = (
 /obj/item/cigbutt,
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "biV" = (
 /obj/machinery/computer/barcode,
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "biW" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "biX" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -28333,7 +28333,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "biY" = (
 /obj/cable{
 	d1 = 1;
@@ -28341,7 +28341,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "biZ" = (
 /obj/cable{
 	d1 = 2;
@@ -28358,7 +28358,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bjb" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -28370,7 +28370,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bjc" = (
 /obj/machinery/conveyor{
 	id = "garbage";
@@ -28716,7 +28716,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bjM" = (
 /obj/cable{
 	d1 = 4;
@@ -28724,7 +28724,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bjN" = (
 /obj/cable{
 	d1 = 2;
@@ -28732,7 +28732,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/caution/east,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bjO" = (
 /obj/window/reinforced{
 	dir = 1
@@ -28743,7 +28743,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bjP" = (
 /obj/window/reinforced{
 	dir = 1
@@ -28762,7 +28762,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bjQ" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -28781,7 +28781,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bjR" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -28800,7 +28800,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bjS" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -28811,7 +28811,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bjT" = (
 /obj/window/reinforced{
 	dir = 1
@@ -28821,7 +28821,7 @@
 	},
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bjU" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -28829,7 +28829,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bjV" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -28837,7 +28837,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bjW" = (
 /obj/cable{
 	d1 = 1;
@@ -28850,14 +28850,14 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bjX" = (
 /obj/machinery/cargo_router/Router4,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bjY" = (
 /turf/simulated/floor/caution/corner/sw,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bjZ" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -28866,7 +28866,7 @@
 	name = "Supply Intercom"
 	},
 /turf/simulated/floor/caution/south,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bka" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -29084,7 +29084,7 @@
 /obj/item/storage/box,
 /obj/item/storage/box,
 /turf/simulated/floor,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bkB" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -29093,15 +29093,15 @@
 /obj/cable,
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/caution/east,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "bkC" = (
 /obj/machinery/cargo_router/Router3,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bkD" = (
 /obj/item/c_tube,
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bkE" = (
 /obj/cable{
 	d1 = 1;
@@ -29114,7 +29114,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bkF" = (
 /obj/cable{
 	d1 = 4;
@@ -29122,7 +29122,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bkG" = (
 /obj/cable{
 	d2 = 8;
@@ -29130,15 +29130,15 @@
 	},
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bkH" = (
 /obj/machinery/cargo_router/Router5,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bkI" = (
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bkJ" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -29146,7 +29146,7 @@
 	id = "cargo_out"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bkK" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -29165,7 +29165,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bkL" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -29384,11 +29384,11 @@
 "bll" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "blm" = (
 /obj/machinery/cargo_router/Router2,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bln" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -29396,7 +29396,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "blo" = (
 /obj/cable{
 	d1 = 1;
@@ -29409,7 +29409,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "blp" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -29417,11 +29417,11 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "blq" = (
 /obj/machinery/cargo_router/Router1,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "blr" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -29559,21 +29559,21 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "blO" = (
 /obj/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "blP" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "blQ" = (
 /obj/cable{
 	d1 = 1;
@@ -29586,7 +29586,7 @@
 	},
 /obj/item/bananapeel,
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "blR" = (
 /obj/cable{
 	d1 = 1;
@@ -29618,11 +29618,11 @@
 	},
 /obj/landmark/artifact,
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "blT" = (
 /obj/machinery/cargo_router/Router8,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "blU" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -29641,7 +29641,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "blV" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -29984,7 +29984,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bmH" = (
 /obj/cable{
 	d1 = 1;
@@ -29995,11 +29995,11 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/airless,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bmI" = (
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bmJ" = (
 /obj/machinery/cargo_router/Router9,
 /turf/simulated/floor/plating,
@@ -30290,7 +30290,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bnn" = (
 /obj/machinery/mass_driver{
 	id = "medsci_in"
@@ -30305,14 +30305,14 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bno" = (
 /obj/machinery/mass_driver{
 	drive_range = 6;
 	id = "engine_in"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bnp" = (
 /obj/sea_plant/seaweed,
 /turf/simulated/floor/sand,
@@ -30802,7 +30802,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "boh" = (
 /obj/machinery/mass_driver{
 	drive_range = 6;
@@ -30818,7 +30818,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "boi" = (
 /obj/machinery/cargo_router/Router10,
 /turf/simulated/floor/plating,
@@ -31176,7 +31176,7 @@
 	pixel_x = 13
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "boN" = (
 /obj/decal/poster/wallsign/stencil/left/o{
 	pixel_x = -7
@@ -31188,7 +31188,7 @@
 	pixel_x = 16
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "boO" = (
 /obj/decal/poster/wallsign/stencil/right/r{
 	pixel_x = 8
@@ -31197,7 +31197,7 @@
 	pixel_x = -4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "boP" = (
 /obj/machinery/mass_driver{
 	drive_range = 50;
@@ -31719,7 +31719,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bpO" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -31736,7 +31736,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bpP" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -31752,7 +31752,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bpQ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/lattice{
@@ -31946,7 +31946,7 @@
 /area/station/engine/hotloop)
 "bqm" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bqn" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -31960,7 +31960,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bqo" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -31973,7 +31973,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bqp" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
@@ -32253,7 +32253,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bqS" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/light/small{
@@ -32333,7 +32333,7 @@
 	name = "Supply Intercom"
 	},
 /turf/simulated/floor/bot,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "brb" = (
 /turf/simulated/floor,
 /area/station/maintenance/east)
@@ -32510,14 +32510,14 @@
 "bru" = (
 /obj/machinery/computer/barcode,
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "brv" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "brw" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -32530,16 +32530,16 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "brx" = (
 /obj/table/auto,
 /obj/item/hand_labeler,
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bry" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "brz" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/rack,
@@ -32862,7 +32862,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bsd" = (
 /obj/cable{
 	d1 = 4;
@@ -32870,7 +32870,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bse" = (
 /obj/cable{
 	d1 = 2;
@@ -32883,7 +32883,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bsf" = (
 /obj/machinery/light/small,
 /obj/cable{
@@ -32892,7 +32892,7 @@
 	},
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bsg" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1;
@@ -33236,7 +33236,7 @@
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
 /turf/simulated/floor/caution/south,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bsM" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Engine Supply Dock";
@@ -33250,7 +33250,7 @@
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
 /turf/simulated/floor/caution/south,
-/area/station/routingdepot/engine)
+/area/station/routing/engine)
 "bsN" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
@@ -33544,7 +33544,7 @@
 /area/station/storage/warehouse)
 "btt" = (
 /turf/simulated/floor/caution/east,
-/area/station/routingdepot/eva)
+/area/station/routing/eva)
 "btu" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -43366,7 +43366,7 @@
 /area/station/hallway/primary/south)
 "bNi" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bNj" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/central)
@@ -44075,7 +44075,7 @@
 "bOF" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bOG" = (
 /obj/cable{
 	d2 = 2;
@@ -44083,7 +44083,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bOH" = (
 /obj/machinery/computer/ordercomp,
 /obj/cable{
@@ -44092,7 +44092,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bOI" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4;
@@ -44653,17 +44653,17 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bPU" = (
 /turf/simulated/floor,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bPV" = (
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
 /turf/simulated/floor/caution/east,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bPW" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -44671,7 +44671,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bPX" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -44682,7 +44682,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bPY" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -44694,7 +44694,7 @@
 	},
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bPZ" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -44705,7 +44705,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bQa" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -44724,7 +44724,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bQb" = (
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/Zeta)
@@ -45271,7 +45271,7 @@
 	},
 /obj/item/toy/gooncode,
 /turf/simulated/floor/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bRc" = (
 /obj/cable{
 	d2 = 4;
@@ -45407,7 +45407,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bRp" = (
 /obj/cable{
 	d1 = 1;
@@ -45420,7 +45420,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bRq" = (
 /obj/cable{
 	d1 = 1;
@@ -45428,14 +45428,14 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bRr" = (
 /obj/storage/crate,
 /obj/item/storage/box,
 /obj/item/storage/box,
 /obj/item/storage/box,
 /turf/simulated/floor,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bRs" = (
 /obj/table/auto,
 /obj/item/hand_labeler,
@@ -45448,7 +45448,7 @@
 /obj/item/wrapping_paper,
 /obj/item/wirecutters,
 /turf/simulated/floor,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bRt" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -45458,7 +45458,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bRu" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -45469,7 +45469,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bRv" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -45488,7 +45488,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bRw" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -46299,18 +46299,18 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bSV" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
 	pixel_y = -24
 	},
 /turf/simulated/floor,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bSW" = (
 /obj/machinery/light,
 /turf/simulated/floor/caution/east,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bSX" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -46318,7 +46318,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bSY" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -46906,7 +46906,7 @@
 /area/station/hallway/primary/south)
 "bUo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bUp" = (
 /obj/cable{
 	d1 = 1;
@@ -47801,7 +47801,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "bWj" = (
 /obj/machinery/light{
 	dir = 1;
@@ -55960,7 +55960,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/bot,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "cou" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -58450,17 +58450,17 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/delivery/white,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "ctk" = (
 /obj/machinery/light/small{
 	dir = 1;
 	status = 2
 	},
 /turf/simulated/floor/delivery/white,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "ctl" = (
 /turf/simulated/floor/delivery/white,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "ctm" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -58830,17 +58830,17 @@
 /turf/simulated/floor/caution/corner/nw{
 	dir = 8
 	},
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cud" = (
 /turf/simulated/floor/caution/north,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cue" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24
 	},
 /turf/simulated/floor/caution/corner/ne,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cuf" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
@@ -59211,7 +59211,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/caution/corner/sw,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cuR" = (
 /obj/cable{
 	d1 = 4;
@@ -59219,7 +59219,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/south,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cuS" = (
 /obj/cable{
 	d1 = 4;
@@ -59229,7 +59229,7 @@
 /turf/simulated/floor{
 	icon_state = "corner_east"
 	},
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cuT" = (
 /obj/machinery/computer/ordercomp{
 	dir = 8
@@ -59240,7 +59240,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cuU" = (
 /obj/rack,
 /obj/item/clothing/gloves/latex,
@@ -59483,16 +59483,16 @@
 /area/station/hangar/main)
 "cvt" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cvu" = (
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cvv" = (
 /obj/machinery/computer/barcode,
 /obj/machinery/light,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cvw" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -59500,7 +59500,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cvx" = (
 /obj/cable{
 	d1 = 2;
@@ -59699,7 +59699,7 @@
 	id = "chemdock_out"
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cvS" = (
 /obj/table/wood/auto,
 /obj/machinery/networked/printer{
@@ -59973,7 +59973,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cwx" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'COLLISION HAZARD'";
@@ -59981,7 +59981,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cwy" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -59998,7 +59998,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/medsci)
+/area/station/routing/medsci)
 "cwz" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal{
@@ -62126,7 +62126,7 @@
 	pixel_x = 15
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "cBu" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -62411,7 +62411,7 @@
 	},
 /obj/decal/poster/wallsign/stencil/left/e,
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "cCh" = (
 /obj/cable{
 	d1 = 1;
@@ -62433,7 +62433,7 @@
 	},
 /obj/decal/poster/wallsign/stencil/right/i,
 /turf/simulated/wall/auto/supernorn,
-/area/station/routingdepot/airbridge)
+/area/station/routing/airbridge)
 "cCj" = (
 /obj/cable,
 /obj/cable{
