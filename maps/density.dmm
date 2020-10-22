@@ -4378,17 +4378,17 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jp" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jr" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -4616,7 +4616,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jN" = (
 /obj/disposalpipe/trunk{
 	dir = 4
@@ -4640,7 +4640,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jP" = (
 /obj/cable{
 	d1 = 4;
@@ -4648,7 +4648,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jQ" = (
 /obj/cable{
 	d1 = 4;
@@ -4662,7 +4662,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jR" = (
 /obj/cable{
 	d1 = 4;
@@ -4674,7 +4674,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jS" = (
 /obj/cable{
 	d1 = 2;
@@ -4686,7 +4686,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jT" = (
 /obj/cable{
 	d1 = 1;
@@ -4861,7 +4861,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "km" = (
 /obj/cable{
 	d1 = 1;
@@ -4877,7 +4877,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "kn" = (
 /obj/cable{
 	d1 = 4;
@@ -4888,7 +4888,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "ko" = (
 /obj/cable{
 	d1 = 4;
@@ -4909,7 +4909,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "kp" = (
 /obj/cable{
 	d1 = 4;
@@ -4926,7 +4926,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "kq" = (
 /obj/cable{
 	d1 = 4;
@@ -4947,7 +4947,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "kr" = (
 /obj/cable{
 	d1 = 2;
@@ -4958,7 +4958,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "ks" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -4970,7 +4970,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "kt" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -4982,7 +4982,7 @@
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "ku" = (
 /obj/disposalpipe/junction{
 	dir = 1;
@@ -7141,7 +7141,7 @@
 	name = "CMDS - Bar"
 	},
 /turf/simulated/floor/white,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "oB" = (
 /obj/disposalpipe/trunk{
 	dir = 4

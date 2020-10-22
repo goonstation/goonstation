@@ -1562,7 +1562,7 @@
 /area/solarium)
 "dU" = (
 /turf/simulated/wall,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "dV" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -1675,7 +1675,7 @@
 /area/solarium)
 "ef" = (
 /turf/simulated/floor/circuit,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "eg" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -1790,21 +1790,21 @@
 	},
 /obj/machinery/door/airlock/command,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "eu" = (
 /obj/cable{
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "ev" = (
 /obj/cable{
 	tag = "icon-2-8";
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "ew" = (
 /turf/simulated/floor{
 	icon_state = "carpetW"
@@ -1899,7 +1899,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "eI" = (
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -1981,11 +1981,11 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "eR" = (
 /obj/item/disk/data/memcard,
 /turf/simulated/floor/circuit,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "eS" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -1997,7 +1997,7 @@
 	tag = "ZETA_MAINFRAME"
 	},
 /turf/simulated/floor/delivery,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "eT" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -2005,7 +2005,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/circuit,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "eU" = (
 /obj/item/reagent_containers/food/snacks/ingredient/egg/bee,
 /turf/simulated/floor/carpet,
@@ -2186,7 +2186,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "fp" = (
 /obj/cable{
 	tag = "icon-1-8";
@@ -2197,7 +2197,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "fq" = (
 /turf/simulated/floor/black,
 /area/solarium)
@@ -2281,7 +2281,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/circuit,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "fC" = (
 /obj/machinery/power/apc{
 	dir = 2;
@@ -2291,7 +2291,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/circuit,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "fD" = (
 /obj/item/paint_can/random,
 /obj/item/paint_can/random,

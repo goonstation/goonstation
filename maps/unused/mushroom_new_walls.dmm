@@ -25816,7 +25816,7 @@
 /area/station/bridge/command_center)
 "jGs" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jGu" = (
 /obj/cable,
 /obj/machinery/power/solar/small_backup1,
@@ -25837,25 +25837,25 @@
 	},
 /obj/item/guardbot_core,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jHs" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jHD" = (
 /obj/machinery/camera{
 	c_tag = "Research Sector North"
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jIc" = (
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "jIX" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/pitching_machine{
@@ -27050,7 +27050,7 @@
 	},
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "lqS" = (
 /turf/simulated/floor{
 	icon_state = "carpetNE"
@@ -27099,7 +27099,7 @@
 "ltR" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "ltT" = (
 /obj/table/wood/auto,
 /obj/item/stamp,
@@ -27125,7 +27125,7 @@
 /obj/table/auto,
 /obj/machinery/computer/security/wooden_tv/small,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "lvd" = (
 /obj/rack,
 /obj/item/clothing/suit/armor/EOD{
@@ -28387,7 +28387,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "njK" = (
 /obj/cable,
 /obj/cable{
@@ -28403,7 +28403,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "nlt" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -28490,7 +28490,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "nsj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28499,7 +28499,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "nsX" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -29504,7 +29504,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "oBp" = (
 /obj/stool,
 /obj/machinery/light/small,
@@ -29614,11 +29614,11 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "oGD" = (
 /obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "oGO" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -30508,7 +30508,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "pDV" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/bot/guardbot/ranger,
@@ -30517,7 +30517,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "pEi" = (
 /turf/simulated/floor,
 /area/station/security/main)
@@ -30538,7 +30538,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "pIu" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -30551,7 +30551,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "pIJ" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -30562,7 +30562,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "pIZ" = (
 /obj/machinery/power/data_terminal,
 /obj/computerframe{
@@ -30658,14 +30658,14 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "pNu" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "pOz" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -30710,7 +30710,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/orangeblack/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "pRk" = (
 /obj/table/auto,
 /obj/machinery/recharger,
@@ -31204,7 +31204,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qsg" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -31215,7 +31215,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qsU" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -31255,7 +31255,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qva" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -31270,7 +31270,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qvx" = (
 /obj/cable{
 	icon_state = "4-10"
@@ -31311,7 +31311,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qzc" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
 /turf/simulated/floor/specialroom/freezer,
@@ -31328,7 +31328,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qAm" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -31351,7 +31351,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qBe" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -31387,7 +31387,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qCV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31474,7 +31474,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qHV" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -31482,12 +31482,12 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qIi" = (
 /turf/simulated/floor/orangeblack/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qKe" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/plating,
@@ -31517,7 +31517,7 @@
 /area/station/mining/magnet)
 "qLi" = (
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qMC" = (
 /obj/machinery/camera{
 	c_tag = "Robotics East";
@@ -31528,7 +31528,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "qNb" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -32265,7 +32265,7 @@
 /turf/simulated/floor/white/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "ryN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32282,7 +32282,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "rzw" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -32304,7 +32304,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "rzT" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -32312,7 +32312,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "rzV" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
@@ -32321,7 +32321,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "rAl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32332,7 +32332,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "rBQ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32341,7 +32341,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "rCo" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot,
@@ -32367,7 +32367,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "rDL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32390,7 +32390,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "rFx" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/storage/tape_drive{
@@ -33247,7 +33247,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sLl" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -33265,7 +33265,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sMo" = (
 /obj/cable,
 /obj/cable{
@@ -33279,7 +33279,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sMU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -33288,7 +33288,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sMW" = (
 /obj/machinery/door/window/southleft,
 /obj/access_spawn/captain,
@@ -33320,7 +33320,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sNM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -33330,7 +33330,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sOc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33354,7 +33354,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sOZ" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -33405,7 +33405,7 @@
 	name = "Mail Junction - Research"
 	},
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sPG" = (
 /turf/simulated/floor/bluewhite,
 /area/station/turret_protected/AIsat)
@@ -33427,7 +33427,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sRE" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -33511,7 +33511,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sVS" = (
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
@@ -33529,7 +33529,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sXi" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -33557,7 +33557,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "sXL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
@@ -34149,7 +34149,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "txy" = (
 /obj/grille/steel,
 /obj/lattice{
@@ -34169,7 +34169,7 @@
 	name = "Scientist"
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "txZ" = (
 /obj/machinery/light{
 	dir = 1;
@@ -34199,7 +34199,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "tzP" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow/corner{
@@ -34221,17 +34221,17 @@
 	},
 /obj/machinery/disposal/small,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "tBb" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "tBJ" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "tCp" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -34250,7 +34250,7 @@
 /obj/machinery/disposal/mail/small/autoname/research,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "tEF" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -34276,7 +34276,7 @@
 "tGx" = (
 /obj/machinery/light,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "tGU" = (
 /obj/machinery/door_control{
 	id = "deliverydoor";
@@ -34359,7 +34359,7 @@
 	name = "Station Intercom (Medical)"
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "tKp" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -34417,7 +34417,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "tLL" = (
 /obj/machinery/computer/arcade{
 	icon_state = "arcadeb";
@@ -34436,7 +34436,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "tNp" = (
 /obj/machinery/light,
 /turf/simulated/floor{
@@ -35335,7 +35335,7 @@
 	},
 /obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "uOd" = (
 /obj/decal/tile_edge/line/white{
 	dir = 6;
@@ -35504,7 +35504,7 @@
 	},
 /obj/item/paper/book/dwainedummies,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "uXc" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -35513,7 +35513,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "vaj" = (
 /turf/simulated/wall/auto/reinforced/jen{
 	icon_state = "R3"

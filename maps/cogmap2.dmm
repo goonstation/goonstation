@@ -56739,7 +56739,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cte" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -56780,7 +56780,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cth" = (
 /obj/cable{
 	d1 = 4;
@@ -56793,7 +56793,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cti" = (
 /obj/cable{
 	d1 = 4;
@@ -56808,7 +56808,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "ctj" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -57442,7 +57442,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cuy" = (
 /obj/cable{
 	d1 = 4;
@@ -57456,7 +57456,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cuz" = (
 /obj/cable{
 	d1 = 4;
@@ -57466,7 +57466,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cuA" = (
 /obj/cable{
 	d1 = 2;
@@ -57481,7 +57481,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cuB" = (
 /obj/cable{
 	d1 = 4;
@@ -57491,7 +57491,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cuC" = (
 /obj/cable{
 	d1 = 4;
@@ -57500,7 +57500,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cuD" = (
 /obj/cable{
 	d1 = 4;
@@ -57508,7 +57508,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cuE" = (
 /obj/cable{
 	d1 = 1;
@@ -57521,16 +57521,16 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cuF" = (
 /turf/simulated/floor/purple/corner,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cuG" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cuH" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber)
@@ -57971,20 +57971,20 @@
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cvO" = (
 /obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cvP" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cvQ" = (
 /turf/simulated/floor/purple/corner{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cvR" = (
 /obj/cable{
 	d1 = 1;
@@ -57992,7 +57992,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cvS" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -58004,7 +58004,7 @@
 	dir = 9;
 	icon_state = "fpurple2"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cvT" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/lamp,
@@ -58013,7 +58013,7 @@
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cvU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -58023,7 +58023,7 @@
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cvV" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -58040,7 +58040,7 @@
 	dir = 5;
 	icon_state = "fpurple2"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cvW" = (
 /obj/cable{
 	d1 = 4;
@@ -58050,7 +58050,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cvX" = (
 /obj/disposalpipe/segment/transport,
 /obj/cable{
@@ -58059,7 +58059,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/delivery,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cvY" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -58748,7 +58748,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cxv" = (
 /obj/cable{
 	d1 = 1;
@@ -58761,7 +58761,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cxw" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -58778,7 +58778,7 @@
 	dir = 8;
 	icon_state = "fpurple2"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cxx" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal,
@@ -58791,7 +58791,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cxy" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/dwainedummies,
@@ -58801,7 +58801,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cxz" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -58813,12 +58813,12 @@
 	dir = 4;
 	icon_state = "fpurple2"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cxA" = (
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cxB" = (
 /obj/machinery/disposal{
 	name = "Test Chamber Chute"
@@ -58832,7 +58832,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/bot,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cxC" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -59391,7 +59391,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cyT" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -59408,7 +59408,7 @@
 	dir = 10;
 	icon_state = "fpurple2"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cyU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/networked/storage/scanner{
@@ -59424,7 +59424,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cyV" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -59445,7 +59445,7 @@
 	dir = 6;
 	icon_state = "fpurple2"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cyX" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -60083,7 +60083,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cAm" = (
 /obj/cable{
 	d1 = 1;
@@ -60092,23 +60092,23 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/west,
 /turf/simulated/floor/purple/corner,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cAn" = (
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cAo" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cAp" = (
 /obj/machinery/light,
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cAq" = (
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cAr" = (
 /obj/grille/catwalk/cross{
 	dir = 6
@@ -60779,7 +60779,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cBT" = (
 /obj/cable{
 	d1 = 1;
@@ -60789,21 +60789,21 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cBU" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cBV" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cBW" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cBX" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/poddoor/pyro{
@@ -61356,7 +61356,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cDl" = (
 /obj/cable{
 	d1 = 1;
@@ -61367,12 +61367,12 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cDm" = (
 /obj/storage/closet/port_a_sci,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cDn" = (
 /obj/table/reinforced/auto,
 /obj/machinery/firealarm{
@@ -61386,11 +61386,11 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cDo" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/wall/auto/supernorn,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cDp" = (
 /obj/submachine/chef_sink{
 	desc = "A common utility sink.";
@@ -61407,13 +61407,13 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor/caution/south,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cDq" = (
 /obj/storage/closet/biohazard,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/item/reagent_containers/emergency_injector/spaceacillin,
 /turf/simulated/floor/caution/south,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cDr" = (
 /obj/item/device/radio/intercom/science,
 /obj/stool/chair,
@@ -62089,7 +62089,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cFb" = (
 /obj/disposalpipe/junction{
 	dir = 4
@@ -62108,21 +62108,21 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cFc" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/landmark/halloween,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cFd" = (
 /obj/disposalpipe/junction{
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cFe" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -62136,19 +62136,19 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cFf" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cFg" = (
 /obj/disposalpipe/junction{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cFh" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -62162,7 +62162,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cFi" = (
 /obj/disposalpipe/junction{
 	dir = 4;
@@ -62661,7 +62661,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cGr" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -62677,7 +62677,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cGs" = (
 /obj/cable{
 	d1 = 4;
@@ -62688,7 +62688,7 @@
 /obj/machinery/navbeacon/mule/research_north/east,
 /obj/decal/mule/beacon,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cGt" = (
 /obj/cable{
 	d2 = 8;
@@ -62700,7 +62700,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cGu" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -62709,13 +62709,13 @@
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cGv" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cGw" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -62729,7 +62729,7 @@
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cGx" = (
 /obj/shrub,
 /obj/machinery/light{
@@ -63288,7 +63288,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cHV" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -63299,7 +63299,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cHW" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/chemistry)
@@ -63762,7 +63762,7 @@
 "cIU" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cIV" = (
 /obj/disposalpipe/junction{
 	dir = 1
@@ -63775,7 +63775,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cIW" = (
 /obj/storage/closet/wardrobe/white/research,
 /obj/disposalpipe/segment{
@@ -63785,7 +63785,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cIX" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -64520,7 +64520,7 @@
 /obj/disposalpipe/trunk/mail/east,
 /obj/machinery/disposal/mail/autoname/research,
 /turf/simulated/floor/bot,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cKF" = (
 /obj/disposalpipe/switch_junction/left/south{
 	mail_tag = "research";
@@ -64529,7 +64529,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cKG" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -64538,7 +64538,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cKH" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/toxin{
@@ -64548,7 +64548,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cKI" = (
 /obj/window/auto/reinforced,
 /obj/machinery/door/poddoor/pyro{
@@ -65092,7 +65092,7 @@
 	print_id = "Research"
 	},
 /turf/simulated/floor/bot,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cMe" = (
 /obj/cable{
 	d1 = 4;
@@ -65106,7 +65106,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cMf" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -65121,7 +65121,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cMg" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -65130,7 +65130,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cMh" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
 /turf/simulated/wall/auto/supernorn,
@@ -65691,7 +65691,7 @@
 	name = "peststart"
 	},
 /turf/simulated/floor/bot,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cNy" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -65700,7 +65700,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cNz" = (
 /obj/cable{
 	d1 = 1;
@@ -65717,7 +65717,7 @@
 	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cNA" = (
 /obj/cable{
 	d1 = 4;
@@ -65728,7 +65728,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cNB" = (
 /obj/cable{
 	d1 = 4;
@@ -66334,7 +66334,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purple/corner,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cOV" = (
 /obj/rack,
 /obj/item/reagent_containers/glass/bucket,
@@ -66346,7 +66346,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cOW" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/wall/auto/supernorn,
@@ -67045,7 +67045,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cQq" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -68561,7 +68561,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cTA" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -69254,7 +69254,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cUU" = (
 /obj/machinery/dispenser{
 	o2tanks = 5;
@@ -69316,7 +69316,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cVa" = (
 /obj/cable{
 	d1 = 1;
@@ -69332,7 +69332,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cVb" = (
 /obj/machinery/sparker{
 	id = "chem";
@@ -69468,7 +69468,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cVn" = (
 /obj/storage/secure/closet/medical/medkit,
 /obj/disposalpipe/segment,
@@ -69826,7 +69826,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cWh" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -70105,7 +70105,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cWG" = (
 /obj/stool/chair{
 	dir = 8
@@ -70261,7 +70261,7 @@
 	name = "Scientist"
 	},
 /turf/simulated/floor/bot,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cWW" = (
 /obj/stool/chair/office/red,
 /obj/cable{
@@ -70479,7 +70479,7 @@
 	name = "Scientist"
 	},
 /turf/simulated/floor/bot,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cXt" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -70494,7 +70494,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cXw" = (
 /obj/cable{
 	d1 = 1;
@@ -70505,7 +70505,7 @@
 /turf/simulated/floor/purple/corner{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cXx" = (
 /obj/storage/closet/office,
 /obj/machinery/light{
@@ -70517,7 +70517,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cXy" = (
 /obj/shrub,
 /obj/machinery/light{
@@ -71068,7 +71068,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cYJ" = (
 /obj/cable{
 	d1 = 1;
@@ -71083,7 +71083,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /turf/simulated/floor,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cYK" = (
 /obj/cable{
 	d1 = 4;
@@ -71094,7 +71094,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cYL" = (
 /obj/cable{
 	d1 = 4;
@@ -71489,7 +71489,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cZz" = (
 /obj/cable{
 	d1 = 1;
@@ -71498,7 +71498,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purple/side,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cZA" = (
 /obj/shrub{
 	dir = 1
@@ -71506,7 +71506,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
-/area/station/science/concrete)
+/area/station/science/lobby)
 "cZB" = (
 /obj/cable{
 	d1 = 1;
@@ -72013,7 +72013,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "daz" = (
 /obj/cable{
 	d1 = 1;
@@ -72027,7 +72027,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/purple,
-/area/station/science/concrete)
+/area/station/science/lobby)
 "daA" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/pitching_machine{

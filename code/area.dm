@@ -2671,10 +2671,13 @@ ABSTRACT_TYPE(/area/station/science)
 	sound_environment = 3
 	workplace = 1
 
-/area/station/science/concrete
+/area/station/science/lobby
+  name = "Science Lobby"
+	icon_state = "science"
 
 /area/station/science/tenebrae
 	name = "Tenebrae Primary Zone"
+	icon_state = "science"
 
 /area/station/science/gen_storage
 	name = "Research Storage"
