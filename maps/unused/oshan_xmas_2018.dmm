@@ -567,7 +567,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "abo" = (
 /obj/shrub{
 	icon_state = "shrub";
@@ -20351,7 +20351,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "aSA" = (
 /obj/stool/chair/red,
 /obj/disposalpipe/segment{
@@ -20504,7 +20504,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "aSS" = (
 /obj/item/storage/wall/office,
 /obj/machinery/disposal,
@@ -28759,7 +28759,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bmR" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -38875,15 +38875,15 @@
 /area/station/hallway/secondary/entry)
 "bKd" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bKe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bKf" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bKg" = (
 /turf/space/fluid,
 /area/supply/sell_point)
@@ -39165,7 +39165,7 @@
 /obj/table/wood/auto/desk/radio/tapes,
 /obj/machinery/phone,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bKP" = (
 /obj/shrub,
 /turf/simulated/floor/grass,
@@ -39460,14 +39460,14 @@
 	tag = ""
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bLz" = (
 /obj/machinery/computer/announcement{
 	name = "Radio Station Announcement Computer";
 	req_access_txt = ""
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bLA" = (
 /obj/table/glass/reinforced/auto,
 /obj/machinery/networked/printer,
@@ -39477,10 +39477,10 @@
 	d2 = 2
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bLB" = (
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bLC" = (
 /obj/decal/garland{
 	dir = 6;
@@ -39488,7 +39488,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bLD" = (
 /obj/machinery/light/incandescent/warm,
 /obj/decal/garland{
@@ -39497,12 +39497,12 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bLE" = (
 /obj/table/auto,
 /obj/machinery/microwave,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bLF" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/reagent_containers/food/snacks/donkpocket,
@@ -39515,7 +39515,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bLG" = (
 /obj/storage/secure/closet/personal,
 /obj/item/clothing/under/gimmick/cosby{
@@ -39536,7 +39536,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/nw,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bLH" = (
 /obj/decal/garland{
 	dir = 6;
@@ -39544,7 +39544,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/ne,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bLI" = (
 /obj/machinery/conveyor_switch{
 	id = "inbound";
@@ -39872,30 +39872,30 @@
 /obj/item/cigpacket,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/grimycarpet,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bMI" = (
 /obj/stool/chair/office{
 	dir = 1;
 	icon_state = "office_chair"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bMJ" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bMK" = (
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bML" = (
 /obj/stool/chair/comfy,
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_west,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bMM" = (
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_east,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bMN" = (
 /turf/space/fluid,
 /area/supply/spawn_point)
@@ -40393,19 +40393,19 @@
 /obj/item/paper_bin,
 /obj/item/pen/pencil,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bNV" = (
 /obj/decal/fakeobjects/vacuumtape,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bNW" = (
 /obj/item/audio_tape,
 /obj/item/device/audio_log/radioship/small,
 /obj/machinery/light/incandescent/warm,
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet/purple/fancy/narrow/sw,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bNX" = (
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = -3;
@@ -40417,7 +40417,7 @@
 	},
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet/purple/fancy/narrow/se,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bNY" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -40777,7 +40777,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bOZ" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
@@ -40790,14 +40790,14 @@
 "bPa" = (
 /obj/decal/fakeobjects/operatorconsole,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bPb" = (
 /obj/stool/chair{
 	dir = 1;
 	icon_state = "chair"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bPc" = (
 /obj/stocking,
 /turf/simulated/shuttle/wall{
@@ -41225,18 +41225,18 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bQa" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bQb" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bQc" = (
 /obj/table/wood,
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
@@ -41255,20 +41255,20 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bQe" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bQf" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bQg" = (
 /obj/machinery/conveyor_switch{
 	id = "outbound";
@@ -41678,28 +41678,28 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bQZ" = (
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bRa" = (
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bRb" = (
 /obj/machinery/light/incandescent/warm,
 /obj/decal/xmas_lights{
 	pixel_y = 32
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bRc" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bRe" = (
 /obj/access_spawn/cargo,
 /obj/machinery/door/airlock/pyro/alt{
@@ -42194,7 +42194,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bSg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42203,17 +42203,17 @@
 	icon_state = "wood_stairs";
 	dir = 9
 	},
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bSh" = (
 /obj/cable{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bSi" = (
 /obj/stool/chair/office/blue,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bSj" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
@@ -42605,24 +42605,24 @@
 	icon_state = "wood_stairs2";
 	dir = 8
 	},
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bTg" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bTh" = (
 /obj/stool/chair/office/blue{
 	icon_state = "office_chair_blue";
 	dir = 4
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bTi" = (
 /obj/table/wood/auto/desk,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bTj" = (
 /obj/loudspeaker{
 	layer = 4;
@@ -42630,7 +42630,7 @@
 	},
 /obj/table/wood/auto/desk,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bTk" = (
 /obj/tug_cart,
 /turf/simulated/floor/plating/random,
@@ -43105,11 +43105,11 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bUu" = (
 /obj/table/wood/auto/desk/radio/records,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bUv" = (
 /obj/table/wood/auto/desk/radio/tapes,
 /obj/item/device/radio/intercom{
@@ -43120,21 +43120,21 @@
 	name = "broadcast radio"
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bUw" = (
 /obj/table/wood/auto/desk/radio/tapes,
 /obj/submachine/mixing_desk,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bUx" = (
 /obj/table/wood/auto/desk/radio/tapes,
 /obj/submachine/record_player,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bUy" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bUz" = (
 /obj/table/auto,
 /obj/item/cable_coil/cut{
@@ -43476,25 +43476,25 @@
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bVv" = (
 /obj/submachine/tape_deck,
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bVw" = (
 /obj/stool/chair/comfy{
 	icon_state = "chair_comfy";
 	dir = 8
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bVx" = (
 /obj/mic_stand{
 	icon_state = "micstand";
 	dir = 8
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bVy" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/warehouse)
@@ -43869,7 +43869,7 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "bWr" = (
 /obj/storage/closet/emergency,
 /obj/machinery/light/incandescent/warm/very,
@@ -47577,7 +47577,7 @@
 	icon_state = "wood_stairs2";
 	dir = 9
 	},
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "cgI" = (
 /obj/storage/crate/bin,
 /obj/item/gnomechompski,
@@ -47594,7 +47594,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/concrete)
+/area/station/crew_quarters/radio/lab)
 "cgJ" = (
 /obj/machinery/light/incandescent/blueish,
 /obj/decal/xmas_lights{
