@@ -12640,7 +12640,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/redblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Dj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -12753,7 +12753,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Dv" = (
 /obj/table/auto,
 /obj/bedsheetbin,
@@ -14514,7 +14514,7 @@
 "HG" = (
 /obj/machinery/door/airlock/pyro/syndicate,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "HH" = (
 /obj/machinery/power/furnace,
 /obj/cable{
@@ -14546,10 +14546,10 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "HM" = (
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "HN" = (
 /obj/machinery/power/smes,
 /obj/cable{
@@ -14604,7 +14604,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "HT" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -14615,11 +14615,11 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "HU" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "HV" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -14660,18 +14660,18 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ib" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ic" = (
 /obj/rack,
 /obj/item/clothing/suit/space/syndicate,
 /obj/item/clothing/head/helmet/space/syndicate,
 /obj/item/tank/jetpack,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Id" = (
 /obj/storage/closet,
 /obj/item/tank/oxygen,
@@ -14683,20 +14683,20 @@
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ie" = (
 /obj/storage/closet,
 /obj/item/clothing/under/misc/syndicate,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "If" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ig" = (
 /obj/securearea{
 	desc = "";
@@ -14724,7 +14724,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ij" = (
 /obj/machinery/power/solar_control/small_backup4,
 /obj/machinery/power/data_terminal,
@@ -14736,11 +14736,11 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ik" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Il" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -14748,7 +14748,7 @@
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Im" = (
 /obj/cable{
 	d1 = 4;
@@ -14756,7 +14756,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "In" = (
 /obj/cable{
 	d1 = 4;
@@ -14766,7 +14766,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Io" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -14816,7 +14816,7 @@
 "It" = (
 /obj/table/auto,
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Iu" = (
 /obj/machinery/computer3/terminal{
 	dir = 4
@@ -14827,7 +14827,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Iv" = (
 /obj/stool/chair/red{
 	dir = 1
@@ -14838,7 +14838,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Iw" = (
 /obj/lattice{
 	dir = 9;
@@ -14866,14 +14866,14 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Iz" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IA" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -14901,22 +14901,22 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IC" = (
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ID" = (
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IE" = (
 /turf/simulated/floor/stairs/dark{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -14924,17 +14924,17 @@
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IG" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IH" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "II" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -14957,10 +14957,10 @@
 	name = "syndicate bedsheet"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IK" = (
 /turf/simulated/floor/redblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IL" = (
 /obj/securearea{
 	desc = "A warning sign telling of the dangers of HEPT emission fields. They are probably not good for you.";
@@ -14983,7 +14983,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IO" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -14997,16 +14997,16 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IQ" = (
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IR" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IS" = (
 /obj/cable{
 	d1 = 1;
@@ -15019,7 +15019,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IT" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -15030,7 +15030,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IU" = (
 /obj/cable{
 	d1 = 4;
@@ -15038,7 +15038,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IV" = (
 /obj/cable{
 	d1 = 1;
@@ -15056,7 +15056,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IW" = (
 /obj/machinery/door/airlock/pyro/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
@@ -15110,7 +15110,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ja" = (
 /obj/stool/chair/office/red{
 	dir = 8
@@ -15118,20 +15118,20 @@
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jb" = (
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jc" = (
 /turf/simulated/floor/stairs/dark/wide,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jd" = (
 /turf/simulated/floor/stairs/dark{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Je" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15139,16 +15139,16 @@
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jf" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jg" = (
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jh" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
@@ -15177,14 +15177,14 @@
 "Jk" = (
 /obj/stool/chair/red,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jl" = (
 /obj/stool/chair/red,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jm" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -15207,17 +15207,17 @@
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jp" = (
 /obj/machinery/computer3/terminal{
 	dir = 1
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jq" = (
 /obj/rack,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jr" = (
 /obj/machinery/light{
 	layer = 3
@@ -15225,7 +15225,7 @@
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Js" = (
 /obj/lattice{
 	dir = 5;
@@ -15237,13 +15237,13 @@
 /obj/storage/closet,
 /obj/item/clothing/under/misc/syndicate,
 /turf/simulated/floor/redblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ju" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jv" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/cable{
@@ -15287,7 +15287,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jz" = (
 /obj/machinery/power/furnace,
 /obj/cable,
@@ -15347,7 +15347,7 @@
 	layer = 3
 	},
 /turf/simulated/floor/redblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JH" = (
 /obj/table/auto,
 /obj/machinery/light{
@@ -15356,7 +15356,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/airless/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JI" = (
 /obj/cable{
 	d1 = 2;

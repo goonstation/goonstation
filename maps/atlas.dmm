@@ -15550,7 +15550,7 @@
 "MR" = (
 /obj/machinery/door/airlock/pyro/syndicate,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "MS" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -15589,10 +15589,10 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "MY" = (
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "MZ" = (
 /obj/machinery/power/smes,
 /obj/cable{
@@ -15633,7 +15633,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Nf" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -15644,11 +15644,11 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ng" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Nh" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -15694,18 +15694,18 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Nn" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "No" = (
 /obj/rack,
 /obj/item/clothing/suit/space/syndicate,
 /obj/item/clothing/head/helmet/space/syndicate,
 /obj/item/tank/jetpack,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Np" = (
 /obj/storage/closet,
 /obj/item/tank/oxygen,
@@ -15717,20 +15717,20 @@
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Nq" = (
 /obj/storage/closet,
 /obj/item/clothing/under/misc/syndicate,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Nr" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ns" = (
 /obj/securearea{
 	desc = "";
@@ -15758,7 +15758,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Nv" = (
 /obj/machinery/power/solar_control/small_backup4,
 /obj/machinery/power/data_terminal,
@@ -15770,11 +15770,11 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Nw" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Nx" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -15782,7 +15782,7 @@
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ny" = (
 /obj/cable{
 	d1 = 4;
@@ -15790,7 +15790,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Nz" = (
 /obj/cable{
 	d1 = 4;
@@ -15800,7 +15800,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NA" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -15860,7 +15860,7 @@
 "NG" = (
 /obj/table/auto,
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NH" = (
 /obj/machinery/computer3/terminal{
 	dir = 4
@@ -15871,7 +15871,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NI" = (
 /obj/stool/chair/red{
 	dir = 1
@@ -15882,7 +15882,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NJ" = (
 /obj/stool/chair/red{
 	dir = 1
@@ -15896,14 +15896,14 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NK" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NL" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -15924,7 +15924,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NP" = (
 /obj/stool/chair/office/red{
 	dir = 8
@@ -15947,22 +15947,22 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NQ" = (
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NR" = (
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NS" = (
 /turf/simulated/floor/stairs/dark{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15970,24 +15970,24 @@
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NU" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NV" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NW" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/redblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NX" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -15996,10 +15996,10 @@
 	name = "syndicate bedsheet"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NY" = (
 /turf/simulated/floor/redblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NZ" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -16013,7 +16013,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Oa" = (
 /obj/securearea{
 	desc = "A warning sign telling of the dangers of HEPT emission fields. They are probably not good for you.";
@@ -16078,22 +16078,22 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/airless/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Oi" = (
 /obj/marker/supplymarker,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Oj" = (
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ok" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ol" = (
 /obj/cable{
 	d1 = 1;
@@ -16106,7 +16106,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Om" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -16117,7 +16117,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "On" = (
 /obj/cable{
 	d1 = 4;
@@ -16125,7 +16125,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Oo" = (
 /obj/cable{
 	d1 = 1;
@@ -16143,7 +16143,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Op" = (
 /obj/cable{
 	d1 = 4;
@@ -16154,7 +16154,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Oq" = (
 /obj/machinery/door/airlock/pyro/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
@@ -16211,20 +16211,20 @@
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ov" = (
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ow" = (
 /turf/simulated/floor/stairs/dark/wide,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ox" = (
 /turf/simulated/floor/stairs/dark{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Oy" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16232,11 +16232,11 @@
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Oz" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OA" = (
 /obj/machinery/light{
 	layer = 3
@@ -16244,12 +16244,12 @@
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OB" = (
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OC" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
@@ -16280,14 +16280,14 @@
 "OG" = (
 /obj/stool/chair/red,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OH" = (
 /obj/stool/chair/red,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OI" = (
 /turf/simulated/floor/airless/stairs/dark{
 	dir = 1
@@ -16298,7 +16298,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OK" = (
 /obj/machinery/computer3/terminal{
 	dir = 1
@@ -16307,7 +16307,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OL" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -16315,7 +16315,7 @@
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OM" = (
 /obj/cable{
 	d1 = 4;
@@ -16345,7 +16345,7 @@
 "OO" = (
 /obj/rack,
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OP" = (
 /obj/storage/closet,
 /obj/item/tank/oxygen,
@@ -16353,18 +16353,18 @@
 	layer = 3
 	},
 /turf/simulated/floor/redblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OQ" = (
 /obj/storage/closet,
 /obj/item/clothing/under/misc/syndicate,
 /turf/simulated/floor/redblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OR" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "OS" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/cable{

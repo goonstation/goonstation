@@ -47433,7 +47433,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKB" = (
 /obj/cable{
 	d1 = 1;
@@ -47478,12 +47478,12 @@
 	name = "Listening Post"
 	},
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKH" = (
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKI" = (
 /obj/cable{
 	d1 = 2;
@@ -47491,7 +47491,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKJ" = (
 /obj/cable{
 	d1 = 1;
@@ -47501,12 +47501,12 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKK" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKL" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -47536,7 +47536,7 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKP" = (
 /obj/machinery/light{
 	dir = 4
@@ -47544,7 +47544,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKQ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -47554,7 +47554,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKR" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -47565,20 +47565,20 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKS" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKT" = (
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKU" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
@@ -47592,7 +47592,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKW" = (
 /obj/cable{
 	d1 = 1;
@@ -47600,12 +47600,12 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKX" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47616,15 +47616,15 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bKZ" = (
 /turf/simulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLa" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLb" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -47635,7 +47635,7 @@
 	dir = 9;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLc" = (
 /obj/machinery/bot/guardbot/bad{
 	on = 0
@@ -47644,7 +47644,7 @@
 	dir = 1;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLd" = (
 /obj/storage/closet/syndicate/personal,
 /obj/window/east,
@@ -47652,14 +47652,14 @@
 	dir = 5;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLe" = (
 /obj/table/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLf" = (
 /obj/cable{
 	d1 = 1;
@@ -47672,7 +47672,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLg" = (
 /obj/cable{
 	d1 = 4;
@@ -47682,7 +47682,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLh" = (
 /obj/cable{
 	d1 = 4;
@@ -47691,7 +47691,7 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLi" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -47699,7 +47699,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLj" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -47712,12 +47712,12 @@
 	dir = 8;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLk" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen1"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLl" = (
 /obj/window/east,
 /obj/shrub{
@@ -47729,18 +47729,18 @@
 	dir = 4;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLm" = (
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLn" = (
 /obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLo" = (
 /obj/machinery/vending/computer3{
 	profit = 0
@@ -47748,7 +47748,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLp" = (
 /obj/table/auto,
 /obj/item/disk/data/cartridge/captain,
@@ -47756,14 +47756,14 @@
 /obj/machinery/light,
 /obj/item/spacecash/thousand,
 /turf/simulated/floor/yellow/side,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLq" = (
 /obj/table/auto,
 /obj/item/paper_bin,
 /obj/item/paper/printout/emerg1,
 /obj/item/peripheral/network/radio/locked,
 /turf/simulated/floor/yellow/side,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLr" = (
 /obj/machinery/vending/floppy{
 	profit = 0
@@ -47771,7 +47771,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLs" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -47782,12 +47782,12 @@
 	dir = 10;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLt" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLu" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -47798,19 +47798,19 @@
 	dir = 6;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLv" = (
 /obj/submachine/ATM,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLw" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLx" = (
 /obj/machinery/vending/cola/blue{
 	credit = 12
@@ -47818,13 +47818,13 @@
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLy" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/redwhite{
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLz" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -47840,7 +47840,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLB" = (
 /obj/cable{
 	d1 = 1;
@@ -47863,15 +47863,15 @@
 	name = "glow - WHITE"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLC" = (
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLD" = (
 /turf/simulated/floor/white,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLE" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -47881,7 +47881,7 @@
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLF" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/shuttle{
@@ -47907,16 +47907,16 @@
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLJ" = (
 /obj/stool/bar,
 /turf/simulated/floor/white,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLK" = (
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLL" = (
 /obj/machinery/door/airlock/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
@@ -47947,7 +47947,7 @@
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLP" = (
 /obj/table/auto,
 /obj/item/plate,
@@ -47955,14 +47955,14 @@
 /obj/item/kitchen/utensil/knife,
 /obj/machinery/light,
 /turf/simulated/floor/redwhite,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLQ" = (
 /obj/table/auto,
 /obj/item/pinpointer/disk,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLR" = (
 /obj/machinery/light,
 /turf/simulated/floor/shuttle{

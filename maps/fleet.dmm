@@ -17836,12 +17836,12 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IQ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IR" = (
 /obj/machinery/power/data_terminal,
 /obj/computer3frame,
@@ -17850,7 +17850,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IS" = (
 /obj/cable{
 	d1 = 4;
@@ -17860,7 +17860,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IT" = (
 /obj/cable{
 	d1 = 1;
@@ -17876,7 +17876,7 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IU" = (
 /obj/storage/crate,
 /obj/item/fuel_pellet/cerenkite,
@@ -17886,7 +17886,7 @@
 /obj/item/fuel_pellet/cerenkite,
 /obj/item/fuel_pellet/cerenkite,
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IV" = (
 /obj/machinery/power/monitor,
 /obj/cable{
@@ -17894,7 +17894,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IW" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -17906,15 +17906,15 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IX" = (
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IY" = (
 /turf/simulated/floor/stairs/wide/other{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "IZ" = (
 /obj/cable{
 	d1 = 1;
@@ -17924,10 +17924,10 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ja" = (
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jb" = (
 /obj/cable{
 	d1 = 1;
@@ -17935,14 +17935,14 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jc" = (
 /obj/machinery/power/rtg,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jd" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -17954,16 +17954,16 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Je" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jf" = (
 /turf/simulated/floor/stairs/wide{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jg" = (
 /obj/cable{
 	d1 = 2;
@@ -17976,7 +17976,7 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jh" = (
 /obj/cable{
 	d2 = 8;
@@ -17990,7 +17990,7 @@
 	cell_type = 5000
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ji" = (
 /obj/machinery/light/small,
 /obj/cable{
@@ -18004,7 +18004,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jj" = (
 /obj/cable{
 	d1 = 2;
@@ -18022,13 +18022,13 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jk" = (
 /obj/securearea,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jl" = (
 /obj/cable{
 	d1 = 1;
@@ -18037,12 +18037,12 @@
 	},
 /obj/machinery/door/airlock,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jm" = (
 /obj/cable,
 /obj/machinery/power/rtg,
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jn" = (
 /obj/npc/trader/robot{
 	icon = 'icons/mob/robots.dmi';
@@ -18062,7 +18062,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jo" = (
 /obj/marker/supplymarker,
 /obj/decal/poster/wallsign/poster_nt{
@@ -18071,7 +18071,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jp" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -18081,7 +18081,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jq" = (
 /obj/cable{
 	d1 = 1;
@@ -18089,17 +18089,17 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jr" = (
 /obj/machinery/vending/alcohol,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Js" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jt" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -18110,7 +18110,7 @@
 /obj/item/shipcomponent/secondary_system/crash,
 /obj/item/storage/fanny/syndie,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ju" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -18118,11 +18118,11 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jv" = (
 /obj/stool/chair/comfy,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jw" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -18131,11 +18131,11 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jx" = (
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jy" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small{
@@ -18143,17 +18143,17 @@
 	},
 /obj/item/peripheral/network/radio/locked,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Jz" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JA" = (
 /obj/machinery/vending/floppy{
 	profit = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JB" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
@@ -18162,32 +18162,32 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JC" = (
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JD" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JE" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JF" = (
 /obj/table/wood/auto,
 /obj/item/storage/firstaid/regular,
 /obj/item/bandage,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JG" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/playing_cards/suit,
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JH" = (
 /obj/cable{
 	d1 = 1;
@@ -18198,7 +18198,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JI" = (
 /obj/submachine/ATM{
 	pixel_x = 32
@@ -18206,10 +18206,10 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JJ" = (
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JK" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -18225,19 +18225,19 @@
 	pixel_y = -8
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JL" = (
 /obj/table/wood/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JM" = (
 /obj/table/wood/auto,
 /obj/item/clothing/suit/wcoat,
 /obj/item/matchbook,
 /obj/item/pen/marker/red,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JN" = (
 /obj/cable{
 	d1 = 1;
@@ -18253,7 +18253,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JO" = (
 /obj/cable{
 	d1 = 4;
@@ -18263,7 +18263,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JP" = (
 /obj/cable{
 	d1 = 4;
@@ -18272,7 +18272,7 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JQ" = (
 /obj/cable{
 	d1 = 4;
@@ -18280,7 +18280,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JR" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -18298,17 +18298,17 @@
 	on = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JS" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JT" = (
 /obj/machinery/door/airlock/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JU" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -18321,7 +18321,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JV" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -18331,7 +18331,7 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JW" = (
 /obj/cable{
 	d1 = 2;
@@ -18341,7 +18341,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JX" = (
 /obj/cable{
 	d1 = 4;
@@ -18350,7 +18350,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JY" = (
 /obj/cable{
 	d1 = 4;
@@ -18358,13 +18358,13 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "JZ" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ka" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -18372,13 +18372,13 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kb" = (
 /obj/table/wood/auto,
 /obj/machinery/cell_charger,
 /obj/item/cigpacket,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kc" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small,
@@ -18386,20 +18386,20 @@
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kd" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/paper/printout/emerg1,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ke" = (
 /obj/machinery/vending/computer3{
 	profit = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kf" = (
 /obj/cable{
 	d1 = 1;
@@ -18411,10 +18411,10 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kg" = (
 /turf/simulated/floor/stairs,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kh" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -18424,60 +18424,60 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ki" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kj" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kk" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kl" = (
 /turf/simulated/floor/carpet/red/fancy/edge/north,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Km" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kn" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/sanitary,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ko" = (
 /obj/machinery/drainage,
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kp" = (
 /obj/machinery/shower{
 	dir = 1
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/sanitary,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kq" = (
 /obj/item/storage/toilet{
 	dir = 8
 	},
 /obj/machinery/door/window/westleft,
 /turf/simulated/floor/sanitary,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kr" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -18486,18 +18486,18 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ks" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/glassbox,
 /turf/simulated/floor/carpet/red/fancy/edge/west,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kt" = (
 /turf/simulated/floor/carpet/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ku" = (
 /turf/simulated/floor/carpet/red/fancy/edge/east,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kv" = (
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced{
@@ -18512,21 +18512,21 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kw" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave,
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kx" = (
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/snack_cake/golden,
 /turf/simulated/floor/carpet/red/fancy/edge/south,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ky" = (
 /turf/simulated/floor/carpet/red/fancy/edge/se,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Kz" = (
 /obj/machinery/door/airlock/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
@@ -18535,12 +18535,12 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KA" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KB" = (
 /obj/table/wood/auto,
 /obj/item/crowbar,
@@ -18548,14 +18548,14 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KC" = (
 /obj/item/storage/wall/fire{
 	pixel_x = -28;
 	pixel_y = 3
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KD" = (
 /obj/machinery/light{
 	dir = 8
@@ -18563,13 +18563,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KE" = (
 /obj/submachine/syndicate_teleporter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KF" = (
 /obj/storage/secure/crate/gear{
 	anchored = 1;
@@ -18581,7 +18581,7 @@
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KG" = (
 /obj/cable{
 	d1 = 1;
@@ -18593,7 +18593,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KH" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -18614,7 +18614,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KI" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -18626,7 +18626,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KJ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -18637,13 +18637,13 @@
 	name = "damaged vaporator unit"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KK" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KL" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
@@ -18651,7 +18651,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KM" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
@@ -18659,7 +18659,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KN" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
@@ -18667,13 +18667,13 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KO" = (
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "KP" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -20337,7 +20337,7 @@
 "NY" = (
 /obj/grille/steel,
 /turf/simulated/floor/airless/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "NZ" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish,
@@ -20345,7 +20345,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/airless/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Oa" = (
 /obj/cable{
 	d1 = 1;
@@ -20353,7 +20353,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "Ob" = (
 /obj/cable{
 	icon_state = "1-2"

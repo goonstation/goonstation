@@ -673,7 +673,7 @@
 "abs" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abt" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (NORTH)";
@@ -700,7 +700,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abw" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (NORTH)";
@@ -724,7 +724,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abz" = (
 /turf/simulated/wall/asteroid{
 	dir = 1;
@@ -747,7 +747,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abC" = (
 /turf/simulated/wall/asteroid{
 	dir = 5;
@@ -764,7 +764,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abF" = (
 /turf/simulated/wall/asteroid{
 	dir = 4;
@@ -793,7 +793,7 @@
 	tag = "icon-dwaine"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abJ" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -801,7 +801,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abK" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -809,7 +809,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/caution/west,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abL" = (
 /obj/securearea{
 	desc = "";
@@ -818,7 +818,7 @@
 	tag = "icon-shock"
 	},
 /turf/simulated/wall,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abM" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -831,7 +831,7 @@
 	},
 /obj/machinery/power/monitor,
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abN" = (
 /obj/cable{
 	d2 = 8;
@@ -843,7 +843,7 @@
 	output = 2500
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abO" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (WEST)";
@@ -868,7 +868,7 @@
 	name = "downed server"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abR" = (
 /obj/cable{
 	d1 = 1;
@@ -876,7 +876,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abS" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -889,7 +889,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/caution/west,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abT" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -899,7 +899,7 @@
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abU" = (
 /obj/cable{
 	d1 = 1;
@@ -907,7 +907,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abV" = (
 /obj/machinery/power/terminal{
 	tag = "icon-term (NORTH)";
@@ -919,7 +919,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abW" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -936,13 +936,13 @@
 /area/space)
 "abY" = (
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "abZ" = (
 /obj/securearea,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "aca" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -951,11 +951,11 @@
 	},
 /obj/machinery/door/airlock,
 /turf/simulated/floor/bot,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acb" = (
 /obj/crate/furnacefuel,
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acc" = (
 /obj/cable,
 /obj/machinery/power/furnace{
@@ -963,7 +963,7 @@
 	fuel = 600
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acd" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -985,12 +985,12 @@
 	req_access_txt = "52"
 	},
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acg" = (
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ach" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -998,7 +998,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "aci" = (
 /obj/cable{
 	d1 = 1;
@@ -1013,7 +1013,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acj" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -1042,7 +1042,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acn" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -1055,16 +1055,16 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "aco" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acp" = (
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acq" = (
 /obj/table/woodentable{
 	dir = 10
@@ -1074,20 +1074,20 @@
 	},
 /obj/item/peripheral/network/radio/locked,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acr" = (
 /obj/table/woodentable{
 	dir = 6
 	},
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acs" = (
 /obj/machinery/vending/floppy{
 	profit = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "act" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
@@ -1105,7 +1105,7 @@
 "acv" = (
 /obj/closet/syndicate/personal,
 /turf/simulated/floor/bot,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acw" = (
 /obj/machinery/bot/guardbot/bad{
 	on = 0
@@ -1113,7 +1113,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acx" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -1121,10 +1121,10 @@
 	d2 = 2
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acy" = (
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acz" = (
 /obj/item/device/radio/intercom{
 	dir = 8;
@@ -1134,7 +1134,7 @@
 	},
 /obj/machinery/bot/medbot,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acA" = (
 /obj/table/woodentable{
 	dir = 5
@@ -1144,7 +1144,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acB" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -1157,7 +1157,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acC" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -1167,7 +1167,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acD" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -1176,7 +1176,7 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acE" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -1184,7 +1184,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acF" = (
 /obj/item/device/radio/intercom{
 	dir = 8;
@@ -1193,12 +1193,12 @@
 	name = "Brig Intercom"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acG" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acH" = (
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (EAST)";
@@ -1210,7 +1210,7 @@
 /obj/crate,
 /obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acI" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -1226,7 +1226,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acJ" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -1236,13 +1236,13 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acK" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/computer3frame,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acL" = (
 /obj/table/woodentable{
 	dir = 9
@@ -1251,7 +1251,7 @@
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acM" = (
 /obj/table/woodentable{
 	dir = 5
@@ -1259,13 +1259,13 @@
 /obj/item/paper_bin,
 /obj/item/paper/printout/emerg1,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acN" = (
 /obj/machinery/vending/computer3{
 	profit = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acO" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -1273,19 +1273,19 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acP" = (
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acQ" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/bot,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acR" = (
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acS" = (
 /obj/submachine/ATM{
 	pixel_x = 32;
@@ -1294,13 +1294,13 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acT" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor{
 	icon_state = "carpetNW"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acU" = (
 /obj/machinery/vending/cola/blue{
 	credit = 12
@@ -1310,13 +1310,13 @@
 	icon_state = "carpetN";
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acV" = (
 /obj/chem_sink,
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acW" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -1333,7 +1333,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acX" = (
 /obj/cable{
 	d1 = 1;
@@ -1358,19 +1358,19 @@
 	sd_ColorRed = 0.35
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acY" = (
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "acZ" = (
 /turf/simulated/floor{
 	tag = "icon-carpet2 (EAST)";
 	icon_state = "carpet2";
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ada" = (
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (EAST)";
@@ -1380,12 +1380,12 @@
 /turf/simulated/floor{
 	icon_state = "carpetE"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "adb" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "adc" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (NORTH)";
@@ -1395,18 +1395,18 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "add" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ade" = (
 /turf/simulated/floor{
 	icon_state = "carpetE"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "adf" = (
 /obj/machinery/door/airlock/syndicate{
 	aiControlDisabled = 1;
@@ -1416,13 +1416,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "adg" = (
 /obj/submachine/syndicate_teleporter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "adh" = (
 /obj/table/woodentable{
 	tag = "icon-woodentable (NORTH)";
@@ -1433,7 +1433,7 @@
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "adi" = (
 /obj/table/woodentable{
 	tag = "icon-woodentable (NORTH)";
@@ -1447,7 +1447,7 @@
 	icon_state = "carpetS";
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "adj" = (
 /obj/table/woodentable{
 	tag = "icon-woodentable (NORTH)";
@@ -1459,13 +1459,13 @@
 /turf/simulated/floor{
 	icon_state = "carpetSE"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "adk" = (
 /obj/machinery/light,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "adl" = (
 /turf/space,
 /turf/simulated/wall/asteroid{

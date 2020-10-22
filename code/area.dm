@@ -2937,8 +2937,6 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "blue"
 	do_not_irradiate = 1
 
-/area/research_outpost/concrete
-
 /area/research_outpost/protest
 	name = "Protest Outpost"
 
@@ -2965,13 +2963,11 @@ ABSTRACT_TYPE(/area/station/catwalk)
 // end station areas //
 
 /// Nukeops listening post
-ABSTRACT_TYPE(/area/listeningpost)
 /area/listeningpost
 	name = "Listening Post"
 	icon_state = "brig"
 	teleport_blocked = 1
 	do_not_irradiate = 1
-/area/listeningpost/concrete
 
 /area/listeningpost/syndicateassaultvessel
 		name ="Syndicate Assault Vessel"

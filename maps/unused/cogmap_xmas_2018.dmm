@@ -63988,7 +63988,7 @@
 "czj" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czk" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish{
@@ -63998,7 +63998,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czl" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -64006,7 +64006,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czm" = (
 /turf/simulated/wall/asteroid{
 	dir = 1;
@@ -64029,7 +64029,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czp" = (
 /turf/simulated/wall/asteroid{
 	dir = 5;
@@ -64046,7 +64046,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czs" = (
 /turf/simulated/wall/asteroid{
 	dir = 4;
@@ -64070,7 +64070,7 @@
 	name = "old mainframe"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czv" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -64078,14 +64078,14 @@
 	d2 = 2
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czw" = (
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
 	},
 /turf/simulated/floor/caution/west,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czx" = (
 /obj/securearea{
 	desc = "";
@@ -64093,7 +64093,7 @@
 	name = "Danger: High Voltage"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czy" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -64106,7 +64106,7 @@
 	},
 /obj/machinery/power/monitor,
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czz" = (
 /obj/cable{
 	d2 = 8;
@@ -64118,7 +64118,7 @@
 	output = 2500
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czA" = (
 /turf/simulated/wall/asteroid{
 	dir = 8;
@@ -64135,7 +64135,7 @@
 	name = "downed server"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czC" = (
 /obj/cable{
 	d1 = 1;
@@ -64143,7 +64143,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czD" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -64156,7 +64156,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/caution/west,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czE" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -64166,7 +64166,7 @@
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czF" = (
 /obj/cable{
 	d1 = 1;
@@ -64174,7 +64174,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czG" = (
 /obj/machinery/power/terminal{
 	icon_state = "term";
@@ -64185,7 +64185,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czH" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -64202,13 +64202,13 @@
 /area/space)
 "czJ" = (
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czK" = (
 /obj/securearea,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czL" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -64217,11 +64217,11 @@
 	},
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/bot,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czM" = (
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czN" = (
 /obj/cable,
 /obj/machinery/power/furnace{
@@ -64229,7 +64229,7 @@
 	fuel = 600
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czO" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -64252,12 +64252,12 @@
 	req_access_txt = "52"
 	},
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czR" = (
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czS" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -64265,7 +64265,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czT" = (
 /obj/cable{
 	d1 = 1;
@@ -64279,7 +64279,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czU" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -64307,7 +64307,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czY" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -64320,16 +64320,16 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "czZ" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAa" = (
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAb" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small{
@@ -64337,18 +64337,18 @@
 	},
 /obj/item/peripheral/network/radio/locked,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAc" = (
 /obj/table/wood/auto,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAd" = (
 /obj/machinery/vending/floppy{
 	profit = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAe" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
@@ -64366,7 +64366,7 @@
 "cAg" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/bot,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAh" = (
 /obj/machinery/bot/guardbot/bad{
 	on = 0
@@ -64374,7 +64374,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAi" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -64382,10 +64382,10 @@
 	d2 = 2
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAj" = (
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAk" = (
 /obj/item/device/radio/intercom{
 	dir = 8;
@@ -64395,7 +64395,7 @@
 	},
 /obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAl" = (
 /obj/table/wood/auto,
 /obj/machinery/cell_charger,
@@ -64403,7 +64403,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAm" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -64416,7 +64416,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAn" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -64426,7 +64426,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAo" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -64437,7 +64437,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAp" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -64450,7 +64450,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAq" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -64458,7 +64458,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAr" = (
 /obj/item/device/radio/intercom{
 	dir = 8;
@@ -64476,7 +64476,7 @@
 	on = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAs" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4"
@@ -64487,7 +64487,7 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAu" = (
 /obj/machinery/light/small{
 	icon_state = "bulb1";
@@ -64498,7 +64498,7 @@
 /obj/storage/crate,
 /obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAv" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -64509,7 +64509,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAw" = (
 /obj/machinery/light{
 	dir = 4;
@@ -64518,32 +64518,32 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAx" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/computer3frame,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAy" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small,
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAz" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/paper/printout/emerg1,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAA" = (
 /obj/machinery/vending/computer3{
 	profit = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAB" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -64551,21 +64551,21 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAC" = (
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAD" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
 /turf/simulated/floor/bot,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAE" = (
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAF" = (
 /obj/submachine/ATM{
 	pixel_x = 32;
@@ -64574,7 +64574,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAG" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -64592,7 +64592,7 @@
 	icon_state = "fred2";
 	dir = 9
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAJ" = (
 /obj/machinery/vending/cola/blue{
 	credit = 12
@@ -64601,7 +64601,7 @@
 	dir = 1;
 	icon_state = "fred2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAK" = (
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 8
@@ -64610,7 +64610,7 @@
 	icon_state = "fred2";
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAL" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 4
@@ -64708,7 +64708,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAX" = (
 /obj/cable{
 	d1 = 1;
@@ -64733,19 +64733,19 @@
 	color_r = 0.35
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAY" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cAZ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred1";
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBa" = (
 /obj/machinery/light/small{
 	icon_state = "bulb1";
@@ -64755,12 +64755,12 @@
 	icon_state = "fred2";
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBb" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBc" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -64769,13 +64769,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBd" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBe" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -64873,7 +64873,7 @@
 	icon_state = "fred2";
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBq" = (
 /obj/machinery/door/airlock/pyro/syndicate{
 	aiControlDisabled = 1;
@@ -64884,13 +64884,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBr" = (
 /obj/submachine/syndicate_teleporter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBs" = (
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
@@ -64937,7 +64937,7 @@
 	icon_state = "fred2";
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBz" = (
 /obj/table/wood/auto,
 /obj/item/plate,
@@ -64946,7 +64946,7 @@
 	icon_state = "fred2";
 	dir = 2
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBA" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
@@ -64955,13 +64955,13 @@
 	icon_state = "fred2";
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBB" = (
 /obj/machinery/light,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cBC" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8
