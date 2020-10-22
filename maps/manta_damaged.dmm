@@ -1036,7 +1036,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "abU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -8547,7 +8547,7 @@
 	},
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aut" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
@@ -14678,7 +14678,7 @@
 /area/station/science/chemistry)
 "aGV" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aGW" = (
 /obj/cable{
 	d1 = 1;
@@ -16315,7 +16315,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aKi" = (
 /obj/table/auto,
 /obj/machinery/recharger,
@@ -16359,7 +16359,7 @@
 /obj/item/clothing/glasses/spectro,
 /obj/item/reagent_containers/dropper/mechanical,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aKp" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -16409,7 +16409,7 @@
 /area/station/hallway/portupperhallway)
 "aKw" = (
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aKx" = (
 /obj/machinery/rkit,
 /obj/machinery/light/incandescent/netural{
@@ -17686,7 +17686,7 @@
 /obj/item/paper/book/hydroponicsguide,
 /obj/access_spawn/hydro,
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aNe" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -17844,7 +17844,7 @@
 "aNt" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aNu" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
@@ -27826,7 +27826,7 @@
 /obj/table/reinforced/auto,
 /obj/item/satchel/hydro,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bhj" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -28225,7 +28225,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bia" = (
 /obj/stool/chair/couch{
 	dir = 8
@@ -28234,7 +28234,7 @@
 	name = "Botanist"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bib" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -28248,7 +28248,7 @@
 	name = "Botanist"
 	},
 /turf/simulated/floor/green/corner,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bic" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
@@ -28262,7 +28262,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bid" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
@@ -28276,13 +28276,13 @@
 	nostick = 1
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bie" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bif" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -28575,7 +28575,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "biK" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment{
@@ -28609,7 +28609,7 @@
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "biO" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line2";
@@ -29036,7 +29036,7 @@
 	pixel_x = -4
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bjH" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1";
@@ -29046,7 +29046,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bjI" = (
 /obj/overlay{
 	anchored = 1;
@@ -29503,7 +29503,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bkF" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	req_access = null
@@ -29971,7 +29971,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/damaged2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "blz" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating,
@@ -30011,7 +30011,7 @@
 /obj/item/reagent_containers/glass/bottle/powerplant,
 /obj/item/reagent_containers/glass/bottle/topcrop,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "blE" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -30569,7 +30569,7 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bmI" = (
 /obj/disposalpipe/segment/mail{
 	icon_state = "pipe-s";
@@ -31134,7 +31134,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bnS" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -31144,7 +31144,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bnT" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1";
@@ -31160,7 +31160,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bnU" = (
 /obj/disposalpipe/segment/mail{
 	icon_state = "pipe-s";
@@ -31678,7 +31678,7 @@
 "boY" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "boZ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-corner2";
@@ -32419,14 +32419,14 @@
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqo" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqp" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1";
@@ -37571,7 +37571,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/damaged2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bAO" = (
 /obj/machinery/light/incandescent/netural{
 	icon_state = "tube1";
@@ -38334,7 +38334,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/damaged2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bCw" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -38400,7 +38400,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bCB" = (
 /obj/stool/chair/office/purple{
 	icon_state = "office_chair_purple";
@@ -38865,7 +38865,7 @@
 /area/station/science/lobby)
 "bDz" = (
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bDA" = (
 /obj/machinery/door/airlock/pyro/medical{
 	req_access = null
@@ -38931,7 +38931,7 @@
 /area/station/mining/staff_room)
 "bDG" = (
 /turf/simulated/floor/damaged5,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bDH" = (
 /obj/machinery/door/airlock/pyro/medical{
 	req_access = null
@@ -39458,7 +39458,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bES" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41477,7 +41477,7 @@
 /area/station/science/artifact)
 "bJG" = (
 /turf/simulated/floor/damaged2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bJH" = (
 /obj/machinery/disposal/mail/small{
 	dir = 4;
@@ -41638,21 +41638,21 @@
 "bJY" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bJZ" = (
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bKa" = (
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bKb" = (
 /obj/landmark/start{
 	name = "Botanist"
 	},
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bKc" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/damaged1,
@@ -42195,7 +42195,7 @@
 "bLu" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bLv" = (
 /obj/table/auto,
 /obj/towelbin{
@@ -42375,7 +42375,7 @@
 /obj/grille/steel/broken,
 /obj/item/raw_material/shard/glass,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bLQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43346,20 +43346,20 @@
 	dir = 4
 	},
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bNV" = (
 /obj/machinery/light/small/floor/warm,
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/furniture_parts/table/wood/desk,
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bNW" = (
 /obj/stool/chair/wooden{
 	dir = 8
 	},
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bNX" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment{
@@ -43494,15 +43494,15 @@
 /obj/item/clothing/head/rastacap,
 /obj/item/furniture_parts/table/wood/desk,
 /turf/simulated/floor/damaged2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bOk" = (
 /obj/critter/domestic_bee/sea,
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bOl" = (
 /obj/grille,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bOm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43609,7 +43609,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bOy" = (
 /obj/disposalpipe/segment/mail,
 /obj/item/raw_material/shard/glass,
@@ -43780,7 +43780,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor/scorched2,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bOO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43910,14 +43910,14 @@
 	},
 /obj/grille/steel/broken,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bPd" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/grille,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bPe" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1";

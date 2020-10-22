@@ -38673,7 +38673,7 @@
 	})
 "bwX" = (
 /turf/simulated/wall/r_wall,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bwY" = (
 /turf/simulated/wall/r_wall,
 /area/station/engine/shields{
@@ -38681,17 +38681,17 @@
 	})
 "bwZ" = (
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxa" = (
 /obj/item/reagent_containers/glass/wateringcan,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxb" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxc" = (
 /obj/secure_closet/engineering_elect,
 /turf/simulated/floor,
@@ -38724,11 +38724,11 @@
 "bxh" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxi" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxj" = (
 /obj/table,
 /obj/item/reagent_containers/glass/compostbag,
@@ -38745,13 +38745,13 @@
 /obj/item/reagent_containers/glass/bottle/weedkiller,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxk" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxl" = (
 /turf/simulated/wall,
 /area/station/science/chemistry{
@@ -38762,7 +38762,7 @@
 	name = "Botanist"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxn" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -38893,7 +38893,7 @@
 	tag = "icon-camera (EAST)"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxz" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -38964,7 +38964,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxE" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -38972,7 +38972,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxF" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -39014,7 +39014,7 @@
 	name = "Botanist"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxJ" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -39022,7 +39022,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxK" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -39053,7 +39053,7 @@
 	},
 /obj/submachine/chem_extractor,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxO" = (
 /turf/simulated/wall/r_wall,
 /area/station/science/chemistry{
@@ -39095,7 +39095,7 @@
 	req_access_txt = "35"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxT" = (
 /obj/cable{
 	icon_state = "1-2";

@@ -6797,7 +6797,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "apd" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -6806,7 +6806,7 @@
 	},
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ape" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -6815,7 +6815,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "apf" = (
 /obj/grille/steel,
 /obj/grille/steel,
@@ -6825,7 +6825,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "apg" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -7398,7 +7398,7 @@
 /obj/window/reinforced/east,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aqx" = (
 /obj/table/auto,
 /obj/item/wrench,
@@ -7406,7 +7406,7 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aqy" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -7415,19 +7415,19 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aqz" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aqA" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aqB" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -7980,7 +7980,7 @@
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "arN" = (
 /obj/table/auto,
 /obj/item/bee_egg_carton,
@@ -7988,7 +7988,7 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "arO" = (
 /obj/landmark{
 	name = "kudzustart"
@@ -7996,12 +7996,12 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "arP" = (
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "arQ" = (
 /obj/table/auto,
 /obj/item/paper/book/hydroponicsguide,
@@ -8009,7 +8009,7 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "arR" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/caution/west,
@@ -8633,7 +8633,7 @@
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "atm" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -8643,7 +8643,7 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "atn" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -8653,13 +8653,13 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ato" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "atp" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -8668,7 +8668,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "atq" = (
 /obj/cable,
 /obj/machinery/power/solar/alt,
@@ -9187,23 +9187,23 @@
 /area/station/hydroponics/lobby)
 "auz" = (
 /turf/simulated/wall/r_wall,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "auA" = (
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "auB" = (
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "auC" = (
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "auD" = (
 /obj/landmark/start{
 	name = "Botanist"
@@ -9211,7 +9211,7 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "auE" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -9223,19 +9223,19 @@
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "auF" = (
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "auG" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "auH" = (
 /obj/storage/crate,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -9726,7 +9726,7 @@
 /area/station/hydroponics/lobby)
 "avJ" = (
 /turf/simulated/wall,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "avK" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -9734,17 +9734,17 @@
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "avL" = (
 /turf/simulated/floor/stairs/wide/other{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "avM" = (
 /turf/simulated/floor/stairs/wide{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "avN" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -9752,13 +9752,13 @@
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
 /turf/simulated/floor/black,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "avO" = (
 /obj/shrub,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "avP" = (
 /obj/machinery/light/small,
 /obj/machinery/vehicle/pod_smooth/heavy,
@@ -10358,7 +10358,7 @@
 /obj/window/reinforced/west,
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "axf" = (
 /obj/table/auto,
 /obj/item/satchel/hydro,
@@ -10366,13 +10366,13 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "axg" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "axh" = (
 /obj/table/auto,
 /obj/item/plate,
@@ -10389,7 +10389,7 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "axi" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/wateringcan{
@@ -10406,24 +10406,24 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "axj" = (
 /obj/machinery/disposal{
 	name = "Produce Chute - Kitchen"
 	},
 /obj/disposalpipe/trunk/produce,
 /turf/simulated/floor/delivery,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "axk" = (
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "axl" = (
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "axm" = (
 /obj/submachine/seed_manipulator{
 	dir = 8
@@ -10435,7 +10435,7 @@
 /turf/simulated/floor/green/corner{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "axn" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -10451,7 +10451,7 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "axo" = (
 /obj/submachine/chem_extractor{
 	dir = 8
@@ -10460,7 +10460,7 @@
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "axp" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/main)
@@ -11021,20 +11021,20 @@
 	dir = 4
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ayx" = (
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ayy" = (
 /obj/stool,
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ayz" = (
 /obj/disposalpipe/segment/produce{
 	dir = 8;
@@ -11043,7 +11043,7 @@
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ayA" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -11051,16 +11051,16 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ayB" = (
 /turf/simulated/floor/stairs/wide/other{
 	dir = 8
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ayC" = (
 /obj/stool,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ayD" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
@@ -11069,7 +11069,7 @@
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ayE" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -11079,7 +11079,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ayF" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -11737,7 +11737,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "azT" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -11748,7 +11748,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "azU" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -11759,26 +11759,26 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "azV" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "azW" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "azX" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "azY" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -11786,18 +11786,18 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "azZ" = (
 /turf/simulated/floor/stairs/wide{
 	dir = 8
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aAa" = (
 /obj/landmark/start{
 	name = "Botanist"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aAb" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/bottle/powerplant,
@@ -11807,7 +11807,7 @@
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aAc" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -12584,7 +12584,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aBE" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -12592,7 +12592,7 @@
 	},
 /obj/storage/crate,
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aBF" = (
 /obj/machinery/power/apc{
 	dir = 2;
@@ -12602,11 +12602,11 @@
 /obj/cable,
 /obj/storage/crate,
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aBG" = (
 /obj/storage/crate,
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aBH" = (
 /obj/disposalpipe/trunk{
 	dir = 1
@@ -12615,7 +12615,7 @@
 /turf/simulated/floor/green/corner{
 	dir = 8
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aBI" = (
 /obj/submachine/seed_manipulator{
 	dir = 8
@@ -12627,17 +12627,17 @@
 /turf/simulated/floor/green/corner{
 	dir = 2
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aBJ" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
 	},
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aBK" = (
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aBL" = (
 /obj/machinery/chem_master{
 	dir = 8
@@ -12645,7 +12645,7 @@
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aBM" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -13267,10 +13267,10 @@
 /area/station/hydroponics/lobby)
 "aCY" = (
 /turf/simulated/floor/stairs/wide,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aCZ" = (
 /turf/simulated/floor/stairs/wide/other,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aDa" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -13939,13 +13939,13 @@
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aEv" = (
 /obj/landmark/start{
 	name = "Botanist"
 	},
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aEw" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -13955,13 +13955,13 @@
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aEx" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aEy" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
@@ -14615,19 +14615,19 @@
 	},
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aFN" = (
 /obj/landmark/halloween,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aFO" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aFP" = (
 /obj/cable{
 	d1 = 1;
@@ -15324,7 +15324,7 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aHg" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -15836,14 +15836,14 @@
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aIn" = (
 /obj/machinery/plantpot,
 /obj/machinery/light,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aIo" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;

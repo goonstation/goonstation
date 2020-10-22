@@ -3687,29 +3687,29 @@
 "ib" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ic" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "id" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ie" = (
 /obj/submachine/seed_manipulator,
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "if" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ig" = (
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ih" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/wood{
@@ -4053,13 +4053,13 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "iC" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "iD" = (
 /obj/cable{
 	d1 = 4;
@@ -4067,7 +4067,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "iE" = (
 /obj/cable{
 	d1 = 4;
@@ -4329,10 +4329,10 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "jh" = (
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ji" = (
 /turf/simulated/floor/grass,
 /area/station/chapel/main)
@@ -5011,7 +5011,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ky" = (
 /obj/disposalpipe/segment{
 	dir = 4
