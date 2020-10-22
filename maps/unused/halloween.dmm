@@ -30039,19 +30039,19 @@
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfn" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfo" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfp" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -30081,12 +30081,12 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfu" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfv" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -30096,7 +30096,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfw" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -30106,7 +30106,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfx" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -30116,13 +30116,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfy" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfz" = (
 /obj/stool/chair{
 	dir = 4
@@ -30202,13 +30202,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfH" = (
 /obj/stool,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfI" = (
 /obj/machinery/door/airlock/external{
 	ai_no_access = 1;
@@ -30235,7 +30235,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfL" = (
 /obj/landmark{
 	name = "Syndicate-Gear-Closet"
@@ -30243,26 +30243,26 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfM" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "diagonalWall3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfN" = (
 /obj/machinery/door/window,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfO" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfP" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -30290,7 +30290,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfR" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -30299,7 +30299,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bfS" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -30378,7 +30378,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bge" = (
 /obj/machinery/sim/transmitter{
 	network = "prison"
@@ -30460,7 +30460,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgn" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -30469,7 +30469,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgo" = (
 /obj/securearea{
 	name = "EXTERNAL AIRLOCK";
@@ -30478,7 +30478,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgp" = (
 /obj/machinery/door/poddoor{
 	id = "syndicate";
@@ -30487,7 +30487,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgq" = (
 /obj/stool,
 /obj/cable{
@@ -30549,7 +30549,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgv" = (
 /obj/item/paper{
 	info = "That shithole station is NorthEast of your current position.  Don't get lost in the dark of space.";
@@ -30558,7 +30558,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgw" = (
 /obj/lattice,
 /obj/window/reinforced{
@@ -30622,13 +30622,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgD" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgE" = (
 /obj/stool,
 /obj/cable{
@@ -30674,7 +30674,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgI" = (
 /obj/grille,
 /obj/window{
@@ -30695,7 +30695,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgJ" = (
 /obj/rack,
 /obj/item/clothing/suit/space/syndicate,
@@ -30703,7 +30703,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgK" = (
 /obj/machinery/sim/chair{
 	id = 1;
@@ -30779,7 +30779,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgR" = (
 /obj/landmark{
 	name = "Syndicate-Spawn"
@@ -30787,12 +30787,12 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgS" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgT" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -30802,7 +30802,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgU" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -30812,7 +30812,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgV" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -30823,7 +30823,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgW" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -30833,7 +30833,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgX" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -30844,7 +30844,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgY" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -30856,7 +30856,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bgZ" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -30914,7 +30914,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhg" = (
 /obj/machinery/door/window{
 	icon = 'windoor.dmi';
@@ -30924,7 +30924,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhh" = (
 /obj/machinery/door/window{
 	base_state = "right";
@@ -30936,13 +30936,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhi" = (
 /obj/crate/internals,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhj" = (
 /obj/landmark/start{
 	name = "NanoTrasen Commander"
@@ -30983,7 +30983,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhn" = (
 /obj/machinery/door/window{
 	icon = 'windoor.dmi';
@@ -30992,7 +30992,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bho" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -31004,7 +31004,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhp" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -31054,7 +31054,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhv" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -31063,7 +31063,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhw" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -31079,7 +31079,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhx" = (
 /obj/machinery/door/window{
 	dir = 1
@@ -31087,7 +31087,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhy" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -31103,13 +31103,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhz" = (
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhA" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -31121,7 +31121,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhB" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -31197,13 +31197,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhJ" = (
 /obj/item/clothing/head/helmet/welding,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhK" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -31335,13 +31335,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhW" = (
 /obj/item/storage/firstaid/regular,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhX" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -31355,13 +31355,13 @@
 	},
 /obj/decal/fakeobjects/shuttleengine,
 /turf/simulated/floor/plating,
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhY" = (
 /obj/item/extinguisher,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bhZ" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -31373,7 +31373,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bia" = (
 /obj/grille,
 /obj/window/reinforced,
@@ -31389,7 +31389,7 @@
 	dir = 2
 	},
 /turf/space,
-/area/syndicate_station/concrete)
+/area/syndicate_station)
 "bic" = (
 /turf/unsimulated/wall{
 	icon = 'singularity.dmi';
