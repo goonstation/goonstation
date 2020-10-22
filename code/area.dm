@@ -1933,11 +1933,12 @@ ABSTRACT_TYPE(/area/station/crew_quarters)
 
 ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/radio
-	name = "Radio Lab"
+	name = "Radio"
 	icon_state = "green"
 	sound_environment = 2
 
-/area/station/crew_quarters/radio/concrete
+/area/station/crew_quarters/radio/lab
+  name = "Radio Lab"
 
 /area/station/crew_quarters/radio/news_office
 	name = "News Office"
