@@ -73,7 +73,7 @@
 			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 			"the inner hall of the medbay" = list(/area/station/medical/medbay),
 			"the main hallway in research" = list(/area/station/science/lobby),
-			"the chapel" = list(/area/station/chapel/main),
+			"the chapel" = list(/area/station/chapel/sanctuary),
 			"the escape hallway" = list(/area/station/hallway/secondary/exit),
 			"the Research Director's office" = list(/area/station/crew_quarters/hor),
 			"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),

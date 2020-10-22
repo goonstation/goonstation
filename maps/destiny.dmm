@@ -7317,7 +7317,7 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "anG" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/glass/morgue/alt{
@@ -7325,10 +7325,10 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "anH" = (
 /turf/simulated/wall/auto/gannets,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "anI" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -7433,12 +7433,12 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "anT" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "anU" = (
 /obj/item/blessed_ball_bearing{
 	layer = 2.8
@@ -7453,7 +7453,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "anV" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
@@ -7547,16 +7547,16 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aog" = (
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aoh" = (
 /obj/stool/chair/pew/fancy,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aoi" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -7694,13 +7694,13 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aot" = (
 /obj/stool/chair/pew/fancy,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aou" = (
 /obj/noticeboard{
 	pixel_y = 28
@@ -7709,7 +7709,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aov" = (
 /obj/machinery/disposal/small{
 	dir = 4
@@ -7895,7 +7895,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aoG" = (
 /obj/machinery/light{
 	dir = 4
@@ -7904,7 +7904,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aoH" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating/random,
@@ -8068,7 +8068,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aoS" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -8080,7 +8080,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aoT" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -8089,7 +8089,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aoU" = (
 /obj/disposalpipe/junction{
 	dir = 8;
@@ -8098,7 +8098,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aoV" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -8112,7 +8112,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aoW" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/maintenance{
@@ -8122,7 +8122,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aoX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8281,18 +8281,18 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aph" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "api" = (
 /obj/machinery/disposal/small,
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apj" = (
 /obj/cable{
 	d1 = 1;
@@ -8303,7 +8303,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apk" = (
 /obj/cable{
 	d1 = 2;
@@ -8466,21 +8466,21 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apw" = (
 /obj/table/wood/auto,
 /obj/item/storage/bible,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apx" = (
 /obj/table/wood/auto,
 /obj/item/ghostboard,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apy" = (
 /turf/simulated/wall/auto/gannets,
 /area/station/chapel/office)
@@ -8637,7 +8637,7 @@
 	dir = 9;
 	icon_state = "red2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apL" = (
 /obj/machinery/light,
 /obj/machinery/camera{
@@ -8656,13 +8656,13 @@
 	dir = 1;
 	icon_state = "red2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apM" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "red2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apN" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/morgue{

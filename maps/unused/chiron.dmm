@@ -16800,7 +16800,7 @@
 	icon_state = "fred2";
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aHu" = (
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/maintenance/solar/west)
@@ -26837,7 +26837,7 @@
 	icon_state = "fred2";
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "baM" = (
 /obj/machinery/door/airlock{
 	name = "Chaplain's Office";
@@ -27310,7 +27310,7 @@
 	icon_state = "fred2";
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bbG" = (
 /obj/table/wood/auto,
 /obj/item/storage/bible,
@@ -27318,7 +27318,7 @@
 	icon_state = "fred1";
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bbH" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -27344,7 +27344,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bbJ" = (
 /obj/crematorium{
 	id = "crematorium"
@@ -27356,7 +27356,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bbK" = (
 /obj/machinery/light{
 	dir = 8;
@@ -27773,25 +27773,25 @@
 	icon_state = "fred2";
 	dir = 10
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bcx" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 2
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bcy" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 6
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bcz" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bcA" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -27800,7 +27800,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bcB" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -27964,7 +27964,7 @@
 /area/station/medical/research)
 "bcX" = (
 /turf/simulated/wall/auto/gannets,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bcY" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -28195,7 +28195,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bdv" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -28209,7 +28209,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bdw" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -28219,7 +28219,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bdx" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -28230,7 +28230,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bdy" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -28238,7 +28238,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bdz" = (
 /obj/cable{
 	d1 = 1;
@@ -28248,17 +28248,17 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bdA" = (
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bdB" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bdC" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -28651,7 +28651,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bep" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28664,25 +28664,25 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "beq" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ber" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bes" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bet" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -28695,7 +28695,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "beu" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -29059,7 +29059,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfe" = (
 /obj/stool,
 /obj/disposalpipe/segment{
@@ -29069,7 +29069,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bff" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29077,14 +29077,14 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfg" = (
 /obj/stool,
 /obj/machinery/light,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfh" = (
 /obj/stool,
 /obj/machinery/camera{
@@ -29094,12 +29094,12 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfi" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfj" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -29108,7 +29108,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfk" = (
 /obj/grille/steel,
 /obj/window/reinforced/west{
@@ -29120,7 +29120,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfl" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
@@ -29446,14 +29446,14 @@
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfQ" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfR" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/glass,
@@ -29463,13 +29463,13 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfS" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfT" = (
 /obj/grille/steel,
 /obj/window/reinforced/west{
@@ -29482,7 +29482,7 @@
 	},
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfU" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=escape";

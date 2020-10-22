@@ -2724,7 +2724,12 @@ ABSTRACT_TYPE(/area/station/science)
 	icon_state = "yellow"
 	do_not_irradiate = 1
 
-/area/station/chapel/main
+ABSTRACT_TYPE(/area/station/chapel)
+/area/station/chapel
+	name = "Chapel"
+	icon_state = "chapel"
+
+/area/station/chapel/sanctuary
 	name = "Chapel"
 	icon_state = "chapel"
 	sound_environment = 7

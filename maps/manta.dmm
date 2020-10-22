@@ -1140,7 +1140,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ace" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -13009,7 +13009,7 @@
 /area/station/security/brig/cell_block_control)
 "aEi" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEj" = (
 /obj/machinery/door_control{
 	id = "singularity";
@@ -13031,7 +13031,7 @@
 /area/station/engine/inner)
 "aEl" = (
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEm" = (
 /obj/cable{
 	d2 = 2;
@@ -13120,7 +13120,7 @@
 	name = "Confessional"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEv" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -13231,19 +13231,19 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEJ" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEK" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEL" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/seven,
@@ -15739,7 +15739,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aJT" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -16626,7 +16626,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aLU" = (
 /obj/machinery/computer/security/wooden_tv,
 /obj/decal/tile_edge/line/purple{
@@ -17205,7 +17205,7 @@
 "aNs" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aNt" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -17694,7 +17694,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aOt" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -24810,11 +24810,11 @@
 "bdL" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bdM" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bdN" = (
 /obj/decal/tile_edge/check{
 	dir = 9;
@@ -25545,7 +25545,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfc" = (
 /obj/decoration/candles{
 	pixel_x = 2;
@@ -25557,14 +25557,14 @@
 	dir = 8;
 	icon_state = "purple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfd" = (
 /obj/table/wood/auto,
 /obj/item/decoration/flower_vase/vase7,
 /turf/simulated/floor/carpet{
 	icon_state = "purple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfe" = (
 /obj/table/wood/auto,
 /obj/item/storage/bible,
@@ -25572,7 +25572,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "purple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bff" = (
 /obj/decoration/candles{
 	pixel_x = -2;
@@ -25583,12 +25583,12 @@
 	dir = 4;
 	icon_state = "purple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfg" = (
 /obj/item/instrument/large/organ,
 /obj/item/screwdriver,
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bfh" = (
 /obj/decal/tile_edge/check{
 	dir = 8;
@@ -26049,7 +26049,7 @@
 	},
 /obj/trigger/mantasecrettrigger,
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bgc" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
@@ -26059,14 +26059,14 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bgd" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "purple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bge" = (
 /obj/cable{
 	d1 = 2;
@@ -26079,7 +26079,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "purple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bgf" = (
 /obj/item/device/radio/beacon,
 /obj/cable{
@@ -26088,7 +26088,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "purple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bgg" = (
 /obj/cable{
 	d1 = 2;
@@ -26103,14 +26103,14 @@
 /turf/simulated/floor/carpet{
 	icon_state = "purple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bgh" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "purple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bgi" = (
 /obj/stool/chair/wooden{
 	dir = 1
@@ -26119,7 +26119,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bgj" = (
 /obj/storage/cart/hotdog{
 	req_access_txt = "28"
@@ -26595,7 +26595,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bhd" = (
 /obj/decal/tile_edge/carpet/fancy{
 	dir = 1
@@ -26608,7 +26608,7 @@
 	dir = 10;
 	icon_state = "purple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bhe" = (
 /obj/cable{
 	d1 = 1;
@@ -26621,7 +26621,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "purple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bhf" = (
 /obj/mic_stand,
 /obj/cable{
@@ -26632,7 +26632,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "purple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bhg" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -26643,7 +26643,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "purple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bhh" = (
 /obj/decal/tile_edge/carpet/fancy{
 	dir = 4
@@ -26656,7 +26656,7 @@
 	dir = 6;
 	icon_state = "purple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bhi" = (
 /obj/table/reinforced/auto,
 /obj/item/satchel/hydro,
@@ -27012,11 +27012,11 @@
 	},
 /obj/item/storage/toolbox/artistic,
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bhW" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bhX" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -27025,11 +27025,11 @@
 	name = "Staff Assistant"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bhY" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bhZ" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/botany,
@@ -27355,14 +27355,14 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "biG" = (
 /obj/machinery/camera/television{
 	dir = 1;
 	name = "camera - Chapel"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "biH" = (
 /obj/stool/chair/wooden{
 	dir = 8
@@ -27375,7 +27375,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "biI" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -27829,7 +27829,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bjG" = (
 /obj/submachine/chem_extractor{
 	dir = 4;
@@ -28267,14 +28267,14 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bkD" = (
 /obj/table/wood/round/auto,
 /obj/item/device/light/candle/small{
 	pixel_y = 4
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bkE" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -28780,7 +28780,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "blB" = (
 /obj/stool/chair/pew/fancy/left{
 	dir = 1
@@ -28789,11 +28789,11 @@
 	name = "Staff Assistant"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "blC" = (
 /obj/loudspeaker,
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "blD" = (
 /obj/table/reinforced/auto,
 /obj/item/satchel/hydro,
@@ -29962,7 +29962,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bnP" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -29971,14 +29971,14 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bnQ" = (
 /obj/table/wood/round/auto,
 /obj/machinery/cashreg{
 	name = "Chapel donations"
 	},
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bnR" = (
 /obj/storage/secure/closet/civilian/hydro,
 /obj/item/clothing/under/misc/hydroponics,
@@ -30550,7 +30550,7 @@
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "boX" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Chapel"
@@ -30558,7 +30558,7 @@
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood/five,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "boY" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,

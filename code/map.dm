@@ -177,7 +177,7 @@ var/global/list/mapNames = list(
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 		"the inner hall of the medbay" = list(/area/station/medical/medbay),
 		"the main hallway in research" = list(/area/station/science/lobby),
-		"the chapel" = list(/area/station/chapel/main),
+		"the chapel" = list(/area/station/chapel/sanctuary),
 		"the escape hallway" = list(/area/station/hallway/secondary/exit),
 		"the Research Director's office" = list(/area/station/crew_quarters/hor),
 		"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
@@ -351,7 +351,7 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
 	valid_nuke_targets = list("the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"the chapel" = list(/area/station/chapel/main),
+		"the chapel" = list(/area/station/chapel/sanctuary),
 		"the main security room" = list(/area/station/security/main),
 		"the Quartermaster's Store (QM)" = list(/area/station/quartermaster/office),
 		"the Engineering control room" = list(/area/station/engine/power),
@@ -419,7 +419,7 @@ var/global/list/mapNames = list(
 		"the bridge" = list(/area/station/bridge),
 		"the medbay lobby" = list(/area/station/medical/medbay/lobby),
 		"the engineering power room" = list(/area/station/engine/power),
-		"the chapel" = list(/area/station/chapel/main),
+		"the chapel" = list(/area/station/chapel/sanctuary),
 		"the communications office" = list(/area/station/communications/office))
 
 /datum/map_settings/mushroom
@@ -834,7 +834,7 @@ var/global/list/mapNames = list(
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the medbay" = list(/area/station/medical/medbay),
 		"the bar" = list(/area/station/crew_quarters/bar),
-		"the chapel" = list(/area/station/chapel/main))
+		"the chapel" = list(/area/station/chapel/sanctuary))
 		//"the radio lab" = list(/area/station/crew_quarters/radio))
 
 /datum/map_settings/wrestlemap
@@ -876,7 +876,7 @@ var/global/list/mapNames = list(
 		"outside the Ringularity" = list(/area/station/engine/inner),
 		"the courtroom" = list(/area/station/storage/warehouse),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay),
-		"the security lobby" = list(/area/station/chapel/main),
+		"the security lobby" = list(/area/station/chapel/sanctuary),
 		"the chapel" = list(/area/station/security/secwing),
 		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
 

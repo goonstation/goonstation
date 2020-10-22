@@ -94,7 +94,7 @@
 	name = "Chapel Mass Driver"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ar" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -607,7 +607,7 @@
 "bO" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "bP" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
 /area/station/crew_quarters/catering)
@@ -1323,7 +1323,7 @@
 "dX" = (
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "dY" = (
 /obj/machinery/firealarm,
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
@@ -1408,12 +1408,12 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ek" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "el" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -1435,7 +1435,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "em" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -1445,7 +1445,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "en" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -1460,7 +1460,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "eo" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -1468,7 +1468,7 @@
 	id = "chapelgun"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ep" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -1476,7 +1476,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "eq" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor,
@@ -1621,13 +1621,13 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "eN" = (
 /obj/stool/chair/pew/fancy{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "eO" = (
 /obj/stool/chair/pew/fancy{
 	dir = 4
@@ -1635,12 +1635,12 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "eP" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "eQ" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -1664,7 +1664,7 @@
 /area/station/maintenance/west)
 "eS" = (
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "eT" = (
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
@@ -1677,7 +1677,7 @@
 /area/station/turret_protected/Zeta)
 "eW" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "eX" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4;
@@ -1782,7 +1782,7 @@
 /area/station/quartermaster/office)
 "fl" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "fm" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -1831,7 +1831,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ft" = (
 /obj/item/instrument/large/organ,
 /obj/machinery/light{
@@ -1843,7 +1843,7 @@
 	dir = 5;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "fu" = (
 /obj/table/wood/auto,
 /obj/item/matchbook,
@@ -1852,7 +1852,7 @@
 	dir = 9;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "fv" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2469,7 +2469,7 @@
 	dir = 8;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "gS" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/light{
@@ -2630,7 +2630,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ho" = (
 /turf/simulated/floor,
 /area/station/storage/eva)
@@ -3320,7 +3320,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "iL" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -3751,7 +3751,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "jN" = (
 /obj/cable{
 	d1 = 1;
@@ -3941,7 +3941,7 @@
 	dir = 4;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "kl" = (
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/green/side{
@@ -4100,7 +4100,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "kD" = (
 /obj/machinery/atmospherics/binary/circulatorTemp,
 /turf/simulated/floor/engine,
@@ -4736,7 +4736,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "lZ" = (
 /obj/cable{
 	d1 = 4;
@@ -6656,7 +6656,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "qv" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
 	pipe_direction = 2
@@ -7764,13 +7764,13 @@
 	dir = 10;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "sX" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "sY" = (
 /obj/machinery/door/unpowered/wood/stall,
 /turf/simulated/floor/sanitary,
@@ -8398,7 +8398,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "uB" = (
 /obj/stool/chair/office/purple{
 	dir = 1
@@ -9278,7 +9278,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "wx" = (
 /obj/machinery/light{
 	dir = 1;
@@ -9291,7 +9291,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "wy" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -9301,7 +9301,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "wz" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/engine,
@@ -9389,7 +9389,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "wI" = (
 /obj/stool/chair/pew/fancy{
 	dir = 4
@@ -9400,7 +9400,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "wJ" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/cable{
@@ -9552,7 +9552,7 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "xa" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
