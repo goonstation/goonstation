@@ -3165,7 +3165,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "aCn" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -5698,7 +5698,7 @@
 /obj/machinery/launcher_loader/south,
 /obj/random_item_spawner/junk/maybe_few,
 /turf/simulated/floor/plating/jen,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "btd" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -6409,7 +6409,7 @@
 /area/station/security/interrogation)
 "bBD" = (
 /turf/simulated/wall/auto/reinforced/jen/yellow,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bBZ" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -6801,7 +6801,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "bHI" = (
 /obj/stool,
 /turf/simulated/floor/black,
@@ -8695,7 +8695,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "ckp" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -15124,7 +15124,7 @@
 "eiH" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "eiM" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/machinery/camera{
@@ -15749,7 +15749,7 @@
 	},
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "euw" = (
 /obj/railing/orange,
 /obj/decal/cleanable/dirt/jen,
@@ -16188,7 +16188,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "eBJ" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/wreckage{
@@ -18906,7 +18906,7 @@
 "fqg" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "fqj" = (
 /turf/simulated/floor/yellowblack/corner{
 	dir = 8
@@ -19622,7 +19622,7 @@
 	},
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "fCi" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -31714,7 +31714,7 @@
 /obj/disposalpipe/trunk,
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "jqe" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/garden/owlery)
@@ -31865,7 +31865,7 @@
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "jtK" = (
 /obj/table/wood/auto/desk,
 /obj/item/paper/book/pocketguide/bartending{
@@ -32713,7 +32713,7 @@
 	id = "QM_Sell"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "jHg" = (
 /obj/disposalpipe/trunk/transport{
 	dir = 8
@@ -34644,7 +34644,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "kns" = (
 /obj/stone,
 /turf/simulated/floor/grass/leafy,
@@ -38517,7 +38517,7 @@
 "lzL" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "lzM" = (
 /turf/simulated/floor/stairs/wood2/middle,
 /area/station/hallway/primary/south)
@@ -39940,7 +39940,7 @@
 "lSz" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "lSB" = (
 /obj/decal/mule/dropoff,
 /obj/access_spawn/research,
@@ -41773,7 +41773,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "mwd" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/bottle/bubblebath{
@@ -42626,7 +42626,7 @@
 	},
 /obj/access_spawn/maint,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "mKt" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -43484,7 +43484,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "mXZ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -44135,7 +44135,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "njd" = (
 /obj/reagent_dispensers/compostbin,
 /obj/noticeboard{
@@ -45014,7 +45014,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "nwF" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttlebay,
@@ -46259,7 +46259,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "nRn" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
@@ -46727,7 +46727,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "nWF" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/small/floor/netural,
@@ -47855,7 +47855,7 @@
 	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor/plating/jen,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "ope" = (
 /obj/decal/tile_edge/line/green{
 	dir = 9;
@@ -48832,7 +48832,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "oDT" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4
@@ -48922,7 +48922,7 @@
 "oFy" = (
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "oFB" = (
 /obj/cable,
 /obj/cable{
@@ -49083,7 +49083,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "oHC" = (
 /obj/machinery/drainage,
 /obj/cable{
@@ -49659,7 +49659,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "oQH" = (
 /obj/pool/perspective,
 /turf/simulated/floor/white,
@@ -50317,7 +50317,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "pbQ" = (
 /obj/stool/chair,
 /turf/simulated/floor/specialroom/arcade,
@@ -52819,7 +52819,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "pMv" = (
 /obj/cable{
 	d1 = 4;
@@ -56536,7 +56536,7 @@
 /area/station/maintenance/outer/sw)
 "qNg" = (
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "qNn" = (
 /turf/simulated/grass,
 /area/station/crew_quarters/garden)
@@ -57852,7 +57852,7 @@
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "reV" = (
 /obj/railing/orange{
 	dir = 8
@@ -60217,7 +60217,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "rOe" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -61403,7 +61403,7 @@
 	},
 /obj/plasticflaps,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "shc" = (
 /obj/cable{
 	d1 = 1;
@@ -64572,7 +64572,7 @@
 "tje" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/jen/yellow,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "tji" = (
 /obj/grille/catwalk/jen/side{
 	dir = 4
@@ -67832,7 +67832,7 @@
 "uhu" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "uif" = (
 /obj/cable{
 	d1 = 4;
@@ -70284,7 +70284,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "uSy" = (
 /obj/disposalpipe/switch_junction/right/east{
 	mail_tag = "robotics"
@@ -73709,7 +73709,7 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "vUJ" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -76187,7 +76187,7 @@
 "wFC" = (
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/black/grime,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "wFD" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -77941,7 +77941,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/routingdepot/concrete)
+/area/station/routing/depot)
 "xer" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;

@@ -2904,30 +2904,31 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/catwalk/east
 	name = "East Maintenance Catwalk"
 
-/area/station/routingdepot
-	name = "Routing Depot"
+/area/station/routing
+	name = "Routing"
 	icon_state = "depot"
 	sound_environment = 13
 	do_not_irradiate = 1
 
-/area/station/routingdepot/concrete
+/area/station/routing/depot
+ name = "Routing Depot"
 
-/area/station/routingdepot/catering
+/area/station/routing/catering
 		name = "Cafeteria Router"
 
-/area/station/routingdepot/eva
+/area/station/routing/eva
 		name = "EVA Router"
 
-/area/station/routingdepot/engine
+/area/station/routing/engine
 		name = "Engine Router"
 
-/area/station/routingdepot/medsci
+/area/station/routing/medsci
 		name = "Med-Sci Router"
 
-/area/station/routingdepot/security
+/area/station/routing/security
 		name = "Security Router"
 
-/area/station/routingdepot/airbridge
+/area/station/routing/airbridge
 		name = "Airbridge Router"
 
 /// Off-station research outpost. Used for Cog2.
@@ -4814,7 +4815,7 @@ area/station/security/visitation
 /area/station2/catwalk/east
 	name = "East Maintenance Catwalk"
 
-/area/station2/routingdepot
+/area/station2/routing
 	name = "Routing Depot"
 	icon_state = "depot"
 	sound_environment = 13
