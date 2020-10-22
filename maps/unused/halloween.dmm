@@ -10609,7 +10609,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "auB" = (
 /obj/grille,
 /obj/window{
@@ -10622,7 +10622,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "auC" = (
 /obj/grille,
 /obj/window{
@@ -10637,7 +10637,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "auD" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -11042,18 +11042,18 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "avq" = (
 /obj/displaycase,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "avr" = (
 /obj/stool/chair,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "avs" = (
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "avt" = (
 /obj/machinery/atmospherics/pipe/vent{
 	tag = "icon-intact (EAST)";
@@ -11064,7 +11064,7 @@
 	c_tag = "Captains Secure Storage"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "avu" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHWEST)";
@@ -11074,7 +11074,7 @@
 	level = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "avv" = (
 /obj/grille,
 /obj/window{
@@ -11087,7 +11087,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "avw" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -11480,7 +11480,7 @@
 	},
 /obj/machinery/light/lamp,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "awk" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -11492,7 +11492,7 @@
 	name = "Astronaut Pen"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "awl" = (
 /obj/table{
 	dir = 5;
@@ -11500,7 +11500,7 @@
 	},
 /obj/item/stamp,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "awm" = (
 /obj/machinery/door/window{
 	dir = 2;
@@ -11509,21 +11509,21 @@
 	req_access_txt = "20"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "awn" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "awo" = (
 /obj/machinery/door/airlock/command{
 	name = "Senior Staff";
 	req_access_txt = "20"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "awp" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -11532,7 +11532,7 @@
 /obj/item/wrapping_paper,
 /obj/item/wirecutters,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "awq" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -11540,7 +11540,7 @@
 	},
 /obj/item/device/light/flashlight,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "awr" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -11548,7 +11548,7 @@
 	},
 /obj/machinery/recharger,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aws" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -11888,7 +11888,7 @@
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "axg" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHWEST)";
@@ -11898,7 +11898,7 @@
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "axh" = (
 /obj/table,
 /obj/item/tank/jetpack,
@@ -11907,21 +11907,21 @@
 /obj/item/disk/data/floppy/read_only/nuclear,
 /obj/item/pinpointer,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "axi" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "axj" = (
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "axk" = (
 /obj/item/storage/PDAbox,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "axl" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHEAST)";
@@ -12383,7 +12383,7 @@
 	},
 /obj/item/handcuffs,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ayd" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -12392,7 +12392,7 @@
 /obj/machinery/recharger,
 /obj/item/clothing/glasses/thermal,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aye" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	tag = "icon-manifold (WEST)";
@@ -12401,7 +12401,7 @@
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ayf" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (NORTHWEST)";
@@ -12411,7 +12411,7 @@
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ayg" = (
 /obj/machinery/camera{
 	c_tag = "Bridge North";
@@ -12420,13 +12420,13 @@
 	tag = "icon-camera (EAST)"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ayh" = (
 /obj/landmark{
 	name = "peststart"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ayi" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -13002,7 +13002,7 @@
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "azb" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -13011,7 +13011,7 @@
 	},
 /obj/machinery/computer/security,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "azc" = (
 /obj/cable{
 	d2 = 8;
@@ -13020,17 +13020,17 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "azd" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aze" = (
 /obj/secure_closet/captains,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "azf" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -13038,7 +13038,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "azg" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -13047,7 +13047,7 @@
 	},
 /obj/machinery/computer3/generic/communications,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "azh" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -13055,7 +13055,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "azi" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -13064,7 +13064,7 @@
 	},
 /obj/machinery/computer3/generic/med_data,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "azj" = (
 /obj/machinery/light,
 /obj/item/extinguisher,
@@ -13511,7 +13511,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aAe" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	tag = "icon-manifold (EAST)";
@@ -13520,7 +13520,7 @@
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aAf" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -13531,7 +13531,7 @@
 	name = "Captain"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aAg" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -13539,7 +13539,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aAh" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -13548,11 +13548,11 @@
 	name = "Station Intercom (Bridge)"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aAi" = (
 /obj/critter/cat/jones,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aAj" = (
 /obj/cable{
 	d1 = 1;
@@ -13891,17 +13891,17 @@
 	req_access_txt = "19"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aAN" = (
 /obj/secure_closet/hos,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aAO" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aAP" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -13910,7 +13910,7 @@
 	req_access_txt = "20"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aAQ" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple{
@@ -14137,7 +14137,7 @@
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBn" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -14151,7 +14151,7 @@
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBo" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 8
@@ -14162,7 +14162,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBp" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -14172,7 +14172,7 @@
 /obj/cable,
 /obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBq" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
@@ -14465,7 +14465,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBS" = (
 /obj/machinery/light{
 	dir = 1;
@@ -14478,7 +14478,7 @@
 	level = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBT" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -14487,7 +14487,7 @@
 	level = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBU" = (
 /obj/machinery/light{
 	dir = 1;
@@ -14505,13 +14505,13 @@
 	req_access_txt = "19"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBV" = (
 /obj/machinery/camera{
 	c_tag = "Bridge"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBW" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -14520,7 +14520,7 @@
 	},
 /obj/machinery/hologram_ai,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBX" = (
 /obj/machinery/door_control{
 	id = "bridge blast";
@@ -14529,7 +14529,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBY" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -14538,7 +14538,7 @@
 /obj/item/clothing/gloves/yellow,
 /obj/item/device/multitool,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aBZ" = (
 /obj/table{
 	dir = 5;
@@ -14546,7 +14546,7 @@
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aCa" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
@@ -14909,11 +14909,11 @@
 	opacity = 0
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aCI" = (
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aCJ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
@@ -14924,13 +14924,13 @@
 	req_access_txt = "19"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aCK" = (
 /obj/stool/chair{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aCL" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -14939,7 +14939,7 @@
 /obj/item/wrapping_paper,
 /obj/item/wirecutters,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aCM" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -14948,7 +14948,7 @@
 /obj/item/clothing/glasses/blindfold,
 /obj/item/handcuffs,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aCN" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
@@ -15517,7 +15517,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aDN" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -15532,7 +15532,7 @@
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aDO" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -15547,7 +15547,7 @@
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aDP" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -15555,7 +15555,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aDQ" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -15573,7 +15573,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aDR" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -15585,7 +15585,7 @@
 	},
 /obj/landmark/halloween,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aDS" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -15598,7 +15598,7 @@
 	},
 /obj/item/crowbar,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aDT" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -15612,7 +15612,7 @@
 /obj/item/reagent_containers/glass/bottle/antitoxin,
 /obj/item/reagent_containers/syringe,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aDU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -15623,7 +15623,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aDV" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -15637,7 +15637,7 @@
 	},
 /obj/machinery/computer3/terminal/network,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aDW" = (
 /obj/machinery/camera{
 	c_tag = "Atomospherics Gas Processing West";
@@ -16210,7 +16210,7 @@
 	},
 /obj/item/storage/firstaid,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aEU" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -16218,7 +16218,7 @@
 	},
 /obj/item/storage/goodybag,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aEV" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -16227,7 +16227,7 @@
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/syringe,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aEW" = (
 /obj/machinery/camera{
 	c_tag = "Atomospherics Gas Processing East";
@@ -16722,7 +16722,7 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aFL" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -16730,7 +16730,7 @@
 	},
 /obj/item/device/analyzer/atmospheric,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aFM" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -16738,7 +16738,7 @@
 	},
 /obj/item/device/infra,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aFN" = (
 /obj/grille,
 /turf/simulated/wall/r_wall,
@@ -17325,7 +17325,7 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aGN" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -17335,7 +17335,7 @@
 /obj/cable,
 /obj/machinery/computer/security,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aGO" = (
 /obj/landmark{
 	name = "NASSA spawn"
@@ -17822,12 +17822,12 @@
 	name = "Head of Personnel"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aHK" = (
 /obj/table,
 /obj/item/storage/id_kit,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aHL" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/plating,
@@ -18366,11 +18366,11 @@
 	req_access_txt = "19"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aIz" = (
 /obj/critter/cat,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aIA" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -18762,13 +18762,13 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aJk" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/machinery/computer3/generic/communications,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aJl" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -19074,23 +19074,23 @@
 	name = "Research Director"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aJL" = (
 /obj/table,
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aJM" = (
 /obj/landmark/start{
 	name = "Chief Engineer"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aJN" = (
 /obj/secure_closet/engineering_chief,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aJO" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -19399,7 +19399,7 @@
 /obj/secure_closet/research_director,
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aKo" = (
 /obj/machinery/camera{
 	c_tag = "Bridge South";
@@ -19408,7 +19408,7 @@
 	tag = "icon-camera (EAST)"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aKp" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -19689,11 +19689,11 @@
 "aKS" = (
 /obj/closet/emcloset,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aKT" = (
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aKU" = (
 /obj/machinery/light{
 	dir = 1;
@@ -19701,7 +19701,7 @@
 	rigged = 0
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aKV" = (
 /turf/simulated/shuttle/wall,
 /area/shuttle/arrival/station)
@@ -20021,7 +20021,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aLE" = (
 /obj/grille,
 /obj/window{
@@ -20035,7 +20035,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aLF" = (
 /obj/stool/chair{
 	dir = 1
@@ -20234,7 +20234,7 @@
 	},
 /obj/item/device/timer,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aMb" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -20506,7 +20506,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aMF" = (
 /obj/window{
 	icon_state = "rwindow";

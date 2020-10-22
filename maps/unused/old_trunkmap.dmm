@@ -3611,13 +3611,13 @@
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating/airless,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ahS" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ahT" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -3627,7 +3627,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ahU" = (
 /obj/lattice,
 /obj/window/reinforced/west,
@@ -3750,7 +3750,7 @@
 /obj/window/reinforced/west,
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating/airless,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aig" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -3761,18 +3761,18 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aih" = (
 /obj/table/auto,
 /obj/item/storage/box/id_kit,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aii" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/storage/box/PDAbox,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aij" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -3792,22 +3792,22 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aik" = (
 /obj/table/auto,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ail" = (
 /obj/table/auto,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aim" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ain" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -3818,7 +3818,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aio" = (
 /obj/lattice,
 /obj/window/reinforced/west,
@@ -3891,12 +3891,12 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aix" = (
 /obj/table/auto,
 /obj/item/dice,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiy" = (
 /obj/table/auto,
 /obj/item/device/radio/signaler,
@@ -3904,7 +3904,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiz" = (
 /obj/machinery/computer3/generic/secure_data,
 /obj/machinery/power/data_terminal,
@@ -3917,14 +3917,14 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiA" = (
 /obj/item/wrench,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiB" = (
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiC" = (
 /obj/stool/chair{
 	dir = 1
@@ -3935,7 +3935,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiD" = (
 /obj/machinery/computer3/terminal/network,
 /obj/machinery/power/data_terminal,
@@ -3944,7 +3944,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiE" = (
 /obj/table/auto,
 /obj/item/device/audio_log,
@@ -3952,12 +3952,12 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiF" = (
 /obj/table/auto,
 /obj/item/extinguisher,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiG" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -3968,7 +3968,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiH" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -4010,10 +4010,10 @@
 /area/space)
 "aiM" = (
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiN" = (
 /turf/simulated/wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiO" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -4025,7 +4025,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiP" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -4033,7 +4033,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiQ" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -4045,7 +4045,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiR" = (
 /obj/lattice,
 /obj/window/reinforced/south,
@@ -4076,11 +4076,11 @@
 	},
 /obj/item/device/multitool,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiV" = (
 /obj/critter/cat,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiW" = (
 /obj/item/device/radio/beacon,
 /obj/cable{
@@ -4089,11 +4089,11 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiX" = (
 /obj/item/crowbar,
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiY" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
@@ -4103,7 +4103,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aiZ" = (
 /obj/lattice,
 /obj/lattice,
@@ -4325,7 +4325,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajw" = (
 /obj/machinery/computer/security,
 /obj/cable{
@@ -4338,7 +4338,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajx" = (
 /obj/stool/chair{
 	dir = 8
@@ -4349,7 +4349,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajy" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -4357,7 +4357,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajz" = (
 /obj/item/device/radio/intercom{
 
@@ -4368,7 +4368,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajA" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -4379,7 +4379,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajB" = (
 /obj/machinery/light_switch{
 	pixel_y = -22
@@ -4391,7 +4391,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/blue/corner,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajC" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -4413,7 +4413,7 @@
 /turf/simulated/floor/blue/side{
 	dir = 0
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajD" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -4433,7 +4433,7 @@
 /turf/simulated/floor/blue/side{
 	dir = 0
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4441,7 +4441,7 @@
 /turf/simulated/floor/blue/side{
 	dir = 0
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajF" = (
 /obj/machinery/power/apc{
 	dir = 0;
@@ -4461,7 +4461,7 @@
 /turf/simulated/floor/blue/corner{
 	dir = 8
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4472,7 +4472,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajH" = (
 /obj/machinery/door_control{
 	id = "bridge blast";
@@ -4483,7 +4483,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajI" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -4494,7 +4494,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajJ" = (
 /obj/stool/chair{
 	icon_state = "chair";
@@ -4504,7 +4504,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajK" = (
 /obj/machinery/computer3/generic/med_data,
 /obj/machinery/power/data_terminal,
@@ -4513,7 +4513,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajL" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -4636,7 +4636,7 @@
 "ajY" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ajZ" = (
 /obj/machinery/door/airlock/glass,
 /obj/cable{
@@ -4645,7 +4645,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aka" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -4664,7 +4664,7 @@
 "akb" = (
 /obj/noticeboard,
 /turf/simulated/wall/r_wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "akc" = (
 /obj/rack{
 	dir = 8
@@ -4822,7 +4822,7 @@
 /turf/simulated/floor/blue/side{
 	dir = 9
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "akw" = (
 /obj/disposalpipe/segment{
 	tag = "icon-pipe-c";
@@ -4837,12 +4837,12 @@
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "akx" = (
 /turf/simulated/floor/blue/side{
 	dir = 5
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aky" = (
 /obj/stool/bed,
 /turf/simulated/floor,
@@ -5150,7 +5150,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "alf" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -5159,7 +5159,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "alg" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -5167,7 +5167,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "alh" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/heads)
@@ -5528,7 +5528,7 @@
 	c_tag = "Bridge South"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "alX" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
@@ -5847,7 +5847,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "amG" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/poddoor{
@@ -5863,7 +5863,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "amH" = (
 /obj/disposalpipe/segment,
 /obj/grille/steel,
@@ -6119,7 +6119,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "anq" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/command{
@@ -6140,7 +6140,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "anr" = (
 /obj/grille/steel,
 /obj/cable,
@@ -6153,7 +6153,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ans" = (
 /obj/lattice,
 /obj/disposalpipe/segment,
@@ -6960,19 +6960,19 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "apt" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "apu" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/wall,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "apv" = (
 /obj/disposalpipe/segment,
 /obj/cable{

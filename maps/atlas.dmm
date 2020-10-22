@@ -7276,7 +7276,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/blueblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "rG" = (
 /obj/disposalpipe/segment,
 /obj/juggleplaque{
@@ -7285,7 +7285,7 @@
 	pixel_y = 25
 	},
 /turf/simulated/floor/blueblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "rH" = (
 /obj/item/instrument/large/jukebox,
 /turf/simulated/floor/specialroom/bar,
@@ -7341,7 +7341,7 @@
 "rM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "rN" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -7351,7 +7351,7 @@
 	dir = 9;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "rO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7398,7 +7398,7 @@
 	dir = 1;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "rS" = (
 /obj/lattice{
 	dir = 10;
@@ -7622,7 +7622,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7667,7 +7667,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/blue,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sv" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/specialroom/bar,
@@ -7805,12 +7805,12 @@
 "sM" = (
 /obj/disposalpipe/junction/middle/west,
 /turf/simulated/floor/blue,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sN" = (
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sO" = (
 /obj/machinery/computer/card,
 /obj/disposalpipe/segment{
@@ -7838,7 +7838,7 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sR" = (
 /obj/landmark/start{
 	name = "Botanist"
@@ -7885,7 +7885,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sX" = (
 /obj/stool/chair/blue{
 	dir = 4
@@ -7896,7 +7896,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sY" = (
 /obj/cable{
 	d1 = 4;
@@ -8193,7 +8193,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/blue,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "tB" = (
 /obj/stool/chair{
 	dir = 1
@@ -8207,7 +8207,7 @@
 /obj/disposalpipe/segment,
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/blue,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "tD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8375,7 +8375,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "tT" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -8480,7 +8480,7 @@
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "uf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8495,7 +8495,7 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ug" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8504,7 +8504,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "uh" = (
 /obj/machinery/secscanner{
 	icon_state = "scanner_off";
@@ -8579,7 +8579,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/blue,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "uo" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -8607,7 +8607,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/blue,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ur" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -8618,7 +8618,7 @@
 "us" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ut" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -8632,7 +8632,7 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "uu" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
@@ -8805,7 +8805,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "uL" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/black,
@@ -8910,14 +8910,14 @@
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "vb" = (
 /obj/machinery/light_switch/auto,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "vc" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -8942,7 +8942,7 @@
 	dir = 10;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ve" = (
 /obj/submachine/ATM,
 /turf/simulated/wall/auto/supernorn,
@@ -8992,7 +8992,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "vj" = (
 /obj/machinery/computer3/generic/shield_control{
 	dir = 8
@@ -9005,7 +9005,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "vk" = (
 /obj/cable{
 	d1 = 1;
@@ -9302,7 +9302,7 @@
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "wl" = (
 /obj/lattice{
 	dir = 5;
@@ -9923,7 +9923,7 @@
 "xN" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "xO" = (
 /obj/machinery/light/small/floor{
 	light_type = /obj/item/light/bulb/green
@@ -9966,7 +9966,7 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "xS" = (
 /obj/cable{
 	d1 = 4;
@@ -9975,7 +9975,7 @@
 	},
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "xT" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
@@ -10035,7 +10035,7 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ya" = (
 /obj/cable{
 	d1 = 1;
@@ -10086,7 +10086,7 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "yf" = (
 /obj/lattice{
 	dir = 9;
@@ -17269,7 +17269,7 @@
 	dir = 1;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "Rp" = (
 /obj/cable{
 	d1 = 4;

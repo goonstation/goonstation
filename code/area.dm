@@ -1805,8 +1805,6 @@ ABSTRACT_TYPE(/area/station/bridge)
 	sound_loop = 'sound/ambience/station/underwater/sub_bridge_ambi1.ogg'
 #endif
 
-/area/station/bridge/concrete
-
 /area/station/bridge/command_center
 	name = "Bridge Command Center"
 
