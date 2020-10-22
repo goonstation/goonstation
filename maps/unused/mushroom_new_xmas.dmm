@@ -3248,7 +3248,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ahk" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor/orangeblack,
@@ -3913,10 +3913,10 @@
 /area/station/hallway/primary/north)
 "aiN" = (
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aiO" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aiP" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment{
@@ -4012,7 +4012,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aiY" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -4176,12 +4176,12 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajp" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajq" = (
 /obj/cable,
 /obj/cable{
@@ -4312,7 +4312,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 5
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajD" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -4320,7 +4320,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajE" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -4332,12 +4332,12 @@
 	location = "cargo"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajF" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajG" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -4461,7 +4461,7 @@
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajV" = (
 /obj/machinery/light{
 	dir = 8;
@@ -4490,7 +4490,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajX" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -4500,7 +4500,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajY" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -4513,7 +4513,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajZ" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -4684,13 +4684,13 @@
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aks" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "akt" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -4707,7 +4707,7 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/orangeblack/side,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aku" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro{
@@ -4889,7 +4889,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "akN" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -4906,7 +4906,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/orangeblack/side,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "akO" = (
 /obj/machinery/turret{
 	tag = "icon-grey_target_prism (SOUTHEAST)";
@@ -4937,13 +4937,13 @@
 	d2 = 4
 	},
 /turf/simulated/floor/orangeblack/side,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "akQ" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "akR" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/chapel{
@@ -5118,7 +5118,7 @@
 /area/station/maintenance/northwest)
 "ald" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ale" = (
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
@@ -5126,7 +5126,7 @@
 "alf" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "alg" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -5905,7 +5905,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "amB" = (
 /obj/table/wood/auto,
 /obj/shrub{
@@ -16946,7 +16946,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aJU" = (
 /obj/cable{
 	tag = "icon-1-2";
@@ -31688,7 +31688,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "boh" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -31703,7 +31703,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 10
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "boi" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -31718,7 +31718,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 6
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "boj" = (
 /obj/disposalpipe/trunk{
 	dir = 4
@@ -32959,7 +32959,7 @@
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "brb" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,

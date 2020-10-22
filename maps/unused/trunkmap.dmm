@@ -14972,7 +14972,7 @@
 /area/station/hallway/secondary/entry)
 "aJs" = (
 /turf/simulated/wall,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aJt" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -14986,7 +14986,7 @@
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aJw" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -16022,7 +16022,7 @@
 /obj/window/reinforced/south,
 /obj/window/reinforced/west,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aLY" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -16564,7 +16564,7 @@
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aNk" = (
 /obj/table/auto,
 /obj/item/stamp,
@@ -17080,7 +17080,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aOt" = (
 /obj/cable{
 	d1 = 4;
@@ -17989,7 +17989,7 @@
 /area/station/maintenance/west)
 "aQx" = (
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aQy" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -17997,7 +17997,7 @@
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aQz" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
@@ -18483,7 +18483,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aRA" = (
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/arrival,
@@ -36054,11 +36054,11 @@
 	tag = "icon-tube1 (WEST)"
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEm" = (
 /obj/machinery/door/window/northleft,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEn" = (
 /obj/cable{
 	d1 = 1;
@@ -36067,7 +36067,7 @@
 	},
 /obj/machinery/door/window/northright,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEo" = (
 /obj/machinery/computer/ATM,
 /obj/machinery/light{
@@ -36075,7 +36075,7 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEp" = (
 /obj/stool/chair{
 	dir = 4
@@ -36088,7 +36088,7 @@
 	pixel_x = -22
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEq" = (
 /obj/cable{
 	d1 = 1;
@@ -36096,7 +36096,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEr" = (
 /obj/cable{
 	d1 = 4;
@@ -36104,7 +36104,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEs" = (
 /obj/machinery/light{
 	dir = 8;
@@ -36119,11 +36119,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEt" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEu" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/eastright{
@@ -36138,15 +36138,15 @@
 	dir = 4
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEw" = (
 /obj/machinery/computer/ordercomp,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEx" = (
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEy" = (
 /obj/machinery/light,
 /obj/machinery/firealarm{
@@ -36154,14 +36154,14 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEz" = (
 /obj/machinery/door/window/eastright{
 	name = "Cargo Office";
 	req_access_txt = "31"
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEA" = (
 /obj/machinery/camera{
 	c_tag = "Sec south";

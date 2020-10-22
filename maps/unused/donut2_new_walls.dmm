@@ -8817,7 +8817,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "atl" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -8840,13 +8840,13 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ato" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "atp" = (
 /obj/submachine/ATM{
 	pixel_x = 0;
@@ -8862,7 +8862,7 @@
 	},
 /obj/machinery/door/window/southleft,
 /turf/simulated/floor/delivery,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "atq" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
@@ -9031,7 +9031,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "atN" = (
 /obj/cable{
 	d1 = 4;
@@ -9045,7 +9045,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "atO" = (
 /obj/cable{
 	d1 = 2;
@@ -9064,7 +9064,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "atP" = (
 /obj/cable{
 	d1 = 4;
@@ -9077,7 +9077,7 @@
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "atQ" = (
 /obj/cable{
 	d1 = 4;
@@ -9091,7 +9091,7 @@
 /turf/simulated/floor/orangeblack/corner{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "atR" = (
 /obj/machinery/light{
 	dir = 4;
@@ -9110,7 +9110,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "atS" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/grime,
@@ -9432,7 +9432,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "auz" = (
 /obj/cable{
 	d1 = 4;
@@ -9440,7 +9440,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "auA" = (
 /obj/cable{
 	d1 = 1;
@@ -9454,10 +9454,10 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "auB" = (
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "auC" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -9470,10 +9470,10 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "auD" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "auE" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/grime,
@@ -9615,10 +9615,10 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ava" = (
 /turf/simulated/floor/yellow/side,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "avb" = (
 /obj/cable{
 	d1 = 1;
@@ -9632,7 +9632,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow/side,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "avc" = (
 /obj/cable{
 	d1 = 4;
@@ -9640,7 +9640,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellow/side,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "avd" = (
 /obj/cable{
 	d2 = 8;
@@ -9653,7 +9653,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ave" = (
 /obj/item/device/multitool{
 	pixel_x = -7;
@@ -9813,7 +9813,7 @@
 	dir = 1;
 	icon_state = "Stairs2_wide"
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "avC" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -9822,7 +9822,7 @@
 	dir = 1;
 	icon_state = "stairs_middle"
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "avD" = (
 /obj/cable{
 	d1 = 1;
@@ -9837,7 +9837,7 @@
 	dir = 1;
 	icon_state = "stairs_middle"
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "avE" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -9846,7 +9846,7 @@
 	dir = 1;
 	icon_state = "Stairs_wide"
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "avF" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -9854,20 +9854,20 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "avG" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "avH" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/decal/poster/wallsign/medbay_left,
 /turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "avI" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance,

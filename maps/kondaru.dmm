@@ -44821,7 +44821,7 @@
 /area/station/maintenance/south)
 "bXi" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bXj" = (
 /obj/machinery/chem_master{
 	dir = 8
@@ -44831,7 +44831,7 @@
 "bXk" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bXl" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cargo Dock"
@@ -44839,7 +44839,7 @@
 /obj/access_spawn/cargo,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bXm" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cargo Dock"
@@ -44852,11 +44852,11 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 5
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bXn" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bXo" = (
 /obj/machinery/atmospherics/pipe/tank/air_repressurization/east{
 	name = "Air Hookup Reserve Tank"
@@ -45272,7 +45272,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYe" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -45289,14 +45289,14 @@
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYf" = (
 /obj/storage/closet/welding_supply,
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYg" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/camera{
@@ -45308,18 +45308,18 @@
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYh" = (
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYi" = (
 /obj/machinery/door_control/podbay/qm/new_walls/north,
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYj" = (
 /obj/machinery/light{
 	dir = 1;
@@ -45333,22 +45333,22 @@
 /turf/simulated/floor/grey/side{
 	dir = 5
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYk" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYl" = (
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYm" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYn" = (
 /obj/machinery/computer/supplycomp,
 /obj/machinery/power/data_terminal,
@@ -45361,7 +45361,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYo" = (
 /obj/machinery/computer/barcode/qm{
 	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
@@ -45373,7 +45373,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYp" = (
 /obj/machinery/light{
 	dir = 1;
@@ -45389,7 +45389,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/bot,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYq" = (
 /obj/disposalpipe/segment/transport{
 	dir = 1;
@@ -45400,19 +45400,19 @@
 	},
 /obj/submachine/cargopad/qm2,
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYr" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYs" = (
 /obj/machinery/floorflusher/industrial,
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYt" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/south,
@@ -45422,7 +45422,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYu" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -45434,7 +45434,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYv" = (
 /obj/decal/cleanable/dirt,
 /obj/critter/mouse,
@@ -45645,7 +45645,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYT" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple{
@@ -45656,13 +45656,13 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/caution/south,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYU" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
 /turf/simulated/floor/caution/south,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYV" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -45670,13 +45670,13 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYW" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYX" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/atmospherics/pipe/simple{
@@ -45685,7 +45685,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bYY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45695,14 +45695,14 @@
 "bYZ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZa" = (
 /obj/disposalpipe/segment/transport{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZb" = (
 /obj/machinery/conveyor{
 	id = "qmbelthell"
@@ -45711,7 +45711,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZc" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -45722,21 +45722,21 @@
 	dir = 4
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZd" = (
 /obj/disposalpipe/segment/transport{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZe" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
 	operating = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZf" = (
 /obj/storage/closet/emergency,
 /obj/disposalpipe/segment/transport,
@@ -45920,7 +45920,7 @@
 /area/station/science/lab)
 "bZy" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZz" = (
 /obj/cable{
 	d1 = 2;
@@ -46026,15 +46026,15 @@
 /area/station/crew_quarters/market)
 "bZN" = (
 /turf/simulated/floor/engine,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZO" = (
 /turf/simulated/floor/caution/corner/sw,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZP" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZQ" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/glass/reinforced{
@@ -46045,7 +46045,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZR" = (
 /obj/machinery/computer/barcode/qm{
 	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM");
@@ -46064,7 +46064,7 @@
 	dir = 5
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46075,23 +46075,23 @@
 	on = 1
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZU" = (
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZV" = (
 /obj/machinery/cargo_router/kd_qm_inner,
 /turf/simulated/floor/bot,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZW" = (
 /obj/plasticflaps,
 /obj/machinery/cargo_router/kd_qm_flap,
 /turf/simulated/floor/bot,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZX" = (
 /obj/machinery/cargo_router/kd_qm_exoflap,
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZY" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -46099,7 +46099,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bZZ" = (
 /obj/rack,
 /obj/item/storage/toolbox/emergency,
@@ -46379,14 +46379,14 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/engine,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "caG" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/engine,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "caH" = (
 /turf/simulated/floor/caution/west,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "caI" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel{
@@ -46397,18 +46397,18 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "caJ" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "caK" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "caL" = (
 /obj/machinery/conveyor{
 	id = "qmsend"
@@ -46426,7 +46426,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "caM" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -46434,7 +46434,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "caN" = (
 /obj/machinery/computer/ordercomp{
 	dir = 4
@@ -46876,7 +46876,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/engine,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cbF" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/under/rank/mechanic,
@@ -46888,14 +46888,14 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cbG" = (
 /obj/machinery/conveyor_switch{
 	id = "qmin";
 	layer = 4
 	},
 /turf/simulated/floor/bot,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cbH" = (
 /obj/cable{
 	d1 = 1;
@@ -46903,13 +46903,13 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cbI" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cbJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46918,7 +46918,7 @@
 	id = "qmsend"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cbK" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -46929,7 +46929,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cbL" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -46940,7 +46940,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cbM" = (
 /obj/cable{
 	d1 = 2;
@@ -46948,7 +46948,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cbN" = (
 /obj/cable{
 	d1 = 1;
@@ -47355,7 +47355,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ccA" = (
 /obj/machinery/door_control{
 	id = "imports_door";
@@ -47367,40 +47367,40 @@
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ccB" = (
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ccC" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler,
 /obj/item/hand_labeler,
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ccD" = (
 /obj/machinery/light,
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ccE" = (
 /obj/machinery/conveyor_switch{
 	id = "qmsend";
 	layer = 4
 	},
 /turf/simulated/floor/bot,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ccF" = (
 /obj/machinery/conveyor{
 	id = "qmsend"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ccG" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -47413,13 +47413,13 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ccH" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ccI" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -47433,7 +47433,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ccJ" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light{
@@ -47746,7 +47746,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cdr" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -47761,7 +47761,7 @@
 	},
 /obj/plasticflaps,
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cds" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
@@ -47783,7 +47783,7 @@
 	},
 /obj/plasticflaps,
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cdu" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -47796,7 +47796,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cdv" = (
 /obj/cable{
 	d1 = 1;
@@ -47807,7 +47807,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cdw" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -48157,17 +48157,17 @@
 "cem" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cen" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/access_spawn/cargo,
 /turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ceo" = (
 /obj/storage/crate,
 /obj/item/clothing/head/merchant_hat,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cep" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -48192,7 +48192,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ceq" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -48204,11 +48204,11 @@
 /area/station/crew_quarters/courtroom)
 "cer" = (
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ces" = (
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cet" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -48216,7 +48216,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ceu" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/medbay_horizontal/vertical,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -48542,7 +48542,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/engine,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cfj" = (
 /obj/machinery/light{
 	dir = 4;
@@ -48550,7 +48550,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/grey,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cfk" = (
 /obj/storage/crate{
 	desc = "Whoa! What will they think of next?";
@@ -48566,7 +48566,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cfl" = (
 /obj/machinery/light{
 	dir = 4;
@@ -48577,14 +48577,14 @@
 	id = "manualshipping"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cfm" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cfn" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -48899,7 +48899,7 @@
 "cfV" = (
 /obj/machinery/r_door_control/podbay/qm,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cfW" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/qm_horizontal,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -48910,7 +48910,7 @@
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine_caution_south"
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cfX" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -48926,7 +48926,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cfY" = (
 /obj/machinery/door/poddoor/pyro{
 	id = "manualshipping";
@@ -48941,7 +48941,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cfZ" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -48956,7 +48956,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cga" = (
 /obj/machinery/mass_driver{
 	id = "kd_qmsouth"
@@ -48967,7 +48967,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cgb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49239,7 +49239,7 @@
 	id = "qmin"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cgH" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -49256,13 +49256,13 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cgI" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cgJ" = (
 /obj/machinery/mass_driver{
 	id = "kd_qmsouth"
@@ -49277,7 +49277,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cgK" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -49796,20 +49796,20 @@
 	id = "kd_qmnorth"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cid" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cie" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cif" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -49835,7 +49835,7 @@
 "cii" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cij" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/airless/plating,
@@ -49846,15 +49846,15 @@
 	id = "kd_qmwest"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cil" = (
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cim" = (
 /obj/machinery/cargo_router/kd_shunt_nw,
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cin" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -49865,7 +49865,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cio" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -49873,7 +49873,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cip" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -49888,7 +49888,7 @@
 /area/space)
 "cir" = (
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cis" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -49896,7 +49896,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cit" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -49911,7 +49911,7 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ciu" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -49951,7 +49951,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ciz" = (
 /obj/lattice{
 	dir = 9;
@@ -52209,7 +52209,7 @@
 /obj/wingrille_spawn/auto,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cnX" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -52236,7 +52236,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cnZ" = (
 /obj/lattice,
 /obj/machinery/light/runway_light/delay4,
@@ -52266,7 +52266,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cod" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cargo Dock"
@@ -52278,7 +52278,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "coe" = (
 /obj/cable{
 	d1 = 1;
@@ -52286,19 +52286,19 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/stairs,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cof" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cog" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "coh" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -52308,7 +52308,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "coi" = (
 /obj/cable{
 	d1 = 1;
@@ -52319,13 +52319,13 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "coj" = (
 /obj/cable{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cok" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -52333,7 +52333,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "col" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -52342,7 +52342,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "com" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
@@ -53765,7 +53765,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dGI" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -54296,7 +54296,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "gKN" = (
 /obj/landmark{
 	name = "blobstart"
@@ -54499,7 +54499,7 @@
 	name = "Cargo Retrieval Door"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "hOS" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -55117,7 +55117,7 @@
 "lyW" = (
 /obj/machinery/cargo_router/kd_sec_exoflap,
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "lHa" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -55211,7 +55211,7 @@
 "mnz" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "mpY" = (
 /obj/machinery/light/small,
 /obj/machinery/chemicompiler_stationary,
@@ -55468,7 +55468,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "nLA" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -56410,7 +56410,7 @@
 	id = "kondaru_qmfetch"
 	},
 /turf/simulated/floor/delivery,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "tmx" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -57027,7 +57027,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "xlK" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
@@ -57172,7 +57172,7 @@
 	dir = 10
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ylQ" = (
 /obj/lattice{
 	dir = 4;

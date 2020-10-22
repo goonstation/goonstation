@@ -2602,8 +2602,6 @@ ABSTRACT_TYPE(/area/station/quartermaster)
 	icon_state = "quart"
 	workplace = 1
 
-/area/station/quartermaster/concrete
-
 /area/station/quartermaster/office
 	name = "Quartermaster's Office"
 	icon_state = "quartoffice"

@@ -9,14 +9,14 @@
 /obj/table/auto,
 /obj/item/cargotele,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ad" = (
 /obj/table/auto,
 /obj/item/hand_labeler,
 /obj/item/wrapping_paper,
 /obj/item/scissors,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ae" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/window_blinds/cog2/left,
@@ -81,7 +81,7 @@
 "ap" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aq" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -149,7 +149,7 @@
 /area/station/solar/south)
 "az" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aA" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/window_blinds/cog2/middle{
@@ -235,7 +235,7 @@
 	name = "COLLISION HAZARD"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aN" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -243,7 +243,7 @@
 	name = "VACUUM AREA"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aO" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -360,18 +360,18 @@
 /area/station/solar/north)
 "be" = (
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bf" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bg" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bh" = (
 /obj/item/storage/box/evidence,
 /obj/item/storage/box/evidence,
@@ -400,7 +400,7 @@
 /area/station/security/detectives_office)
 "bj" = (
 /turf/simulated/floor/plating/random,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bk" = (
 /obj/lattice{
 	dir = 6;
@@ -420,7 +420,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bo" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -511,7 +511,7 @@
 "bz" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bA" = (
 /obj/decal/cleanable/dirt,
 /obj/item/reagent_containers/food/snacks/candy/nougat,
@@ -529,10 +529,10 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/false_wall,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bC" = (
 /turf/simulated/floor/bot,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bD" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -560,7 +560,7 @@
 /area/space)
 "bG" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bH" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
 /area/station/mining/staff_room)
@@ -619,7 +619,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -808,7 +808,7 @@
 "cs" = (
 /obj/storage/crate/wooden,
 /turf/simulated/floor/delivery,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ct" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -911,19 +911,19 @@
 	operating = 1
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cI" = (
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cJ" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "cK" = (
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
@@ -1087,30 +1087,30 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dk" = (
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dl" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 5
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dm" = (
 /obj/machinery/light,
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/orangeblack,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dn" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "do" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dp" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
 /area/station/security/brig)
@@ -1187,19 +1187,19 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dD" = (
 /obj/machinery/manufacturer/gas,
 /turf/simulated/floor/delivery,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dE" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/delivery,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dF" = (
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/delivery,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dG" = (
 /obj/storage/crate{
 	desc = "null";
@@ -1217,15 +1217,15 @@
 "dH" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor/delivery,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dI" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/delivery,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dJ" = (
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor/delivery,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dK" = (
 /obj/cable{
 	d1 = 1;
@@ -1235,7 +1235,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "dL" = (
 /obj/machinery/deep_fryer,
 /obj/machinery/light{
@@ -1334,7 +1334,7 @@
 	},
 /obj/submachine/cargopad,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ea" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -1400,7 +1400,7 @@
 	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ei" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
 /area/station/security/armory)
@@ -1527,15 +1527,15 @@
 /area/station/storage/eva)
 "eA" = (
 /turf/simulated/floor/yellow/corner,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "eB" = (
 /turf/simulated/floor/yellow/side,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "eC" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "eD" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/disposalpipe/segment{
@@ -1721,7 +1721,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "fd" = (
 /turf/simulated/floor/blue,
 /area/station/hallway/primary/west)
@@ -1779,7 +1779,7 @@
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
 /turf/simulated/floor/plating/random,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "fl" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
 /area/station/chapel/main)
@@ -1788,7 +1788,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/bot,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "fn" = (
 /obj/table/auto,
 /obj/item/storage/box/revimp_kit,
@@ -1998,7 +1998,7 @@
 "fM" = (
 /obj/table/auto,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "fN" = (
 /obj/machinery/rkit,
 /turf/simulated/floor/yellow,
@@ -2205,12 +2205,12 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "gm" = (
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "gn" = (
 /obj/machinery/door_control{
 	id = "cargo_shutter";
@@ -2219,7 +2219,7 @@
 	},
 /obj/table/auto,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "go" = (
 /turf/simulated/floor/yellow/side{
 	dir = 9
@@ -2228,7 +2228,7 @@
 "gp" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "gq" = (
 /obj/storage/secure/closet/engineering/cargo,
 /obj/cable{
@@ -2239,7 +2239,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "gr" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
 /area/station/engine/hotloop)
@@ -2409,7 +2409,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "gK" = (
 /obj/rack,
 /obj/item/device/radio,
@@ -2548,7 +2548,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "hd" = (
 /obj/machinery/computer/supplycomp{
 	dir = 8
@@ -2561,7 +2561,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "he" = (
 /obj/storage/closet/fire,
 /obj/decal/cleanable/cobweb2,
@@ -2785,7 +2785,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "hF" = (
 /obj/cable{
 	d1 = 4;
@@ -3112,7 +3112,7 @@
 	id = "qm_dock_out"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "im" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -3695,7 +3695,7 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "jH" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	name = "Mechanics"
@@ -5269,7 +5269,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "nl" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -5805,7 +5805,7 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ou" = (
 /obj/machinery/computer3/terminal/network{
 	name = "CENTCOM Terminal";
@@ -8792,7 +8792,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "vr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -8845,7 +8845,7 @@
 	},
 /obj/plasticflaps,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "vx" = (
 /obj/machinery/conveyor{
 	id = "inbound";
@@ -8854,7 +8854,7 @@
 	},
 /obj/plasticflaps,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "vy" = (
 /obj/lattice{
 	dir = 8;
@@ -8888,7 +8888,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "vC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8896,7 +8896,7 @@
 /turf/simulated/floor/caution/corner/nw{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "vD" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -8991,7 +8991,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "vO" = (
 /obj/cable{
 	d1 = 1;
@@ -8999,7 +8999,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "vP" = (
 /obj/machinery/conveyor{
 	id = "inbound";
@@ -9007,7 +9007,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "vQ" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -9052,7 +9052,7 @@
 	name = "outbound conveyor switch"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "vX" = (
 /obj/stool/chair/yellow{
 	dir = 1
@@ -9064,7 +9064,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "vY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9074,13 +9074,13 @@
 	name = "inbound conveyor switch"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "vZ" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/bot,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "wa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9088,7 +9088,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "wb" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -9103,7 +9103,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "wc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -9366,7 +9366,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/bot,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "wG" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
@@ -9412,11 +9412,11 @@
 "wK" = (
 /obj/storage/crate/packing,
 /turf/simulated/floor/bot,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "wL" = (
 /obj/storage/crate/wooden,
 /turf/simulated/floor/bot,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "wM" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
@@ -9637,7 +9637,7 @@
 	name = "delivery conveyor switch"
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "xk" = (
 /obj/machinery/computer/ordercomp{
 	dir = 8
@@ -12337,7 +12337,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "Cy" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/plating/random,
@@ -12917,7 +12917,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "DL" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -13336,7 +13336,7 @@
 /turf/simulated/floor/caution/corner/ne{
 	dir = 1
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "EF" = (
 /obj/disposalpipe/junction/right/north,
 /obj/landmark/halloween,
@@ -13880,7 +13880,7 @@
 	id = "qm_dock"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "FL" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4;
@@ -14948,7 +14948,7 @@
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "IJ" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -15084,7 +15084,7 @@
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "IY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -15165,7 +15165,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "Jj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -15569,7 +15569,7 @@
 	pixel_z = 28
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "Kn" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -15587,7 +15587,7 @@
 	id = "qm_dock"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "Kp" = (
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_north"
@@ -15762,7 +15762,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "KM" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating/random,
@@ -15784,7 +15784,7 @@
 	name = "cargo driver"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "KP" = (
 /obj/lattice{
 	dir = 10;
@@ -15970,7 +15970,7 @@
 	name = "Safety Shutters"
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "Lo" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -16395,7 +16395,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "Mn" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	dir = 1;
