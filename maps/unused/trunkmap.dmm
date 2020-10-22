@@ -564,7 +564,7 @@
 /area/russian)
 "abq" = (
 /turf/simulated/wall,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abr" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -582,7 +582,7 @@
 	icon_state = "rwindow"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abs" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -595,7 +595,7 @@
 	icon_state = "rwindow"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abt" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -613,7 +613,7 @@
 	icon_state = "rwindow"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abu" = (
 /obj/cable{
 	d1 = 1;
@@ -621,7 +621,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abv" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -639,7 +639,7 @@
 	icon_state = "rwindow"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abw" = (
 /obj/machinery/light{
 	dir = 4;
@@ -693,7 +693,7 @@
 /area/russian)
 "abD" = (
 /turf/simulated/floor/caution/east,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abE" = (
 /obj/cable{
 	d1 = 2;
@@ -701,7 +701,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abF" = (
 /turf/simulated/floor/industrial,
 /area/station/hangar/mining)
@@ -723,14 +723,14 @@
 	tag = "icon-rwindow (NORTH)"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abH" = (
 /obj/machinery/power/furnace,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abI" = (
 /obj/machinery/light{
 	dir = 1;
@@ -741,7 +741,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abJ" = (
 /obj/cable{
 	d1 = 1;
@@ -751,7 +751,7 @@
 /obj/table/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abK" = (
 /obj/machinery/power/solar_control{
 	id = "engout-solar";
@@ -766,7 +766,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abL" = (
 /obj/machinery/light{
 	dir = 1;
@@ -785,11 +785,11 @@
 /obj/item/device/gps,
 /obj/item/device/gps,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abM" = (
 /obj/machinery/power/smes,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "abN" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -981,13 +981,13 @@
 	icon_state = "rwindow"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ach" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aci" = (
 /obj/cable{
 	d1 = 4;
@@ -998,7 +998,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "acj" = (
 /obj/cable{
 	d1 = 4;
@@ -1006,7 +1006,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/south,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ack" = (
 /obj/cable{
 	d1 = 4;
@@ -1014,7 +1014,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "acl" = (
 /obj/cable{
 	d1 = 1;
@@ -1027,7 +1027,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "acm" = (
 /obj/machinery/power/terminal{
 	dir = 1;
@@ -1043,7 +1043,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "acn" = (
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
@@ -1205,12 +1205,12 @@
 "acC" = (
 /obj/machinery/computer/mining_shuttle,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "acD" = (
 /obj/machinery/recharger,
 /obj/item/cargotele,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "acE" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/shuttlebay,
@@ -1218,7 +1218,7 @@
 "acF" = (
 /obj/submachine/cargopad/magnet,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "acG" = (
 /turf/simulated/wall,
 /area/station/hangar/mining)
@@ -1229,7 +1229,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "acI" = (
 /obj/machinery/smelter,
 /turf/simulated/floor/plating,
@@ -1340,24 +1340,24 @@
 	req_access_txt = "50"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "acX" = (
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "acY" = (
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "acZ" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Mining";
 	req_access_txt = "50"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ada" = (
 /obj/cable{
 	d1 = 2;
@@ -1365,7 +1365,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "adb" = (
 /obj/cable{
 	d1 = 4;
@@ -1374,7 +1374,7 @@
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/caution/north,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "adc" = (
 /obj/cable{
 	d1 = 1;
@@ -1387,7 +1387,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "add" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Mining";
@@ -1491,7 +1491,7 @@
 "adr" = (
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ads" = (
 /obj/cable{
 	d1 = 1;
@@ -1499,7 +1499,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "adt" = (
 /obj/machinery/power/apc{
 	dir = 0;
@@ -1510,16 +1510,16 @@
 /obj/cable,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "adu" = (
 /obj/machinery/light,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "adv" = (
 /obj/machinery/processor,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "adw" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating,
@@ -1668,11 +1668,11 @@
 	icon_state = "rwindow"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "adK" = (
 /obj/machinery/door/window/northright,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "adL" = (
 /obj/storage/crate,
 /obj/machinery/light{
@@ -1849,28 +1849,28 @@
 	tag = "icon-rwindow (WEST)"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aec" = (
 /obj/machinery/dispenser,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aed" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/regular,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aee" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aef" = (
 /obj/table/auto,
 /obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aeg" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -1998,7 +1998,7 @@
 	tag = "icon-rwindow (WEST)"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aet" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -2011,12 +2011,12 @@
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aeu" = (
 /obj/cable,
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aev" = (
 /obj/storage/secure/closet/engineering/mining,
 /obj/machinery/light{
@@ -2025,7 +2025,7 @@
 	tag = "icon-tube1 (EAST)"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aew" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -2111,11 +2111,11 @@
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aeD" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aeE" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -2367,7 +2367,7 @@
 /area/russian)
 "aeZ" = (
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "afa" = (
 /obj/stool/chair{
 	dir = 1
@@ -2431,7 +2431,7 @@
 	req_access_txt = "50"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "afj" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";

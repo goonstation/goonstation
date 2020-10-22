@@ -23055,7 +23055,7 @@
 /area/station/maintenance/southeast)
 "aWN" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aWO" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Mining";
@@ -23069,7 +23069,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/grime,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aWP" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/machinery/light/small{
@@ -23375,7 +23375,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXv" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light{
@@ -23388,7 +23388,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXw" = (
 /obj/machinery/bot/medbot,
 /obj/machinery/phone/wall{
@@ -23397,7 +23397,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXx" = (
 /obj/cable{
 	d1 = 1;
@@ -23407,7 +23407,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXy" = (
 /obj/storage/secure/closet/engineering/mining,
 /obj/machinery/camera{
@@ -23424,7 +23424,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXz" = (
 /obj/machinery/dispenser,
 /obj/machinery/light/small{
@@ -23596,10 +23596,10 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/engine,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXT" = (
 /turf/simulated/floor/engine,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXU" = (
 /obj/machinery/light{
 	dir = 1;
@@ -23608,11 +23608,11 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/engine,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXV" = (
 /obj/machinery/door_control/podbay/mining/new_walls/north,
 /turf/simulated/floor/caution/west,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXW" = (
 /obj/machinery/light{
 	dir = 1;
@@ -23622,30 +23622,30 @@
 	},
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXX" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXY" = (
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aXZ" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
 	icon_state = "line1"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYa" = (
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYb" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 10;
@@ -23657,7 +23657,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYc" = (
 /obj/storage/secure/closet/engineering/mining,
 /obj/machinery/light{
@@ -23669,7 +23669,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYd" = (
 /obj/machinery/manufacturer/gas{
 	free_resource_amt = 3;
@@ -23898,20 +23898,20 @@
 "aYA" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/engine,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYB" = (
 /turf/simulated/floor/caution/west,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYC" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYD" = (
 /obj/machinery/processor,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYE" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
@@ -23924,11 +23924,11 @@
 	name = "Miner"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYF" = (
 /obj/submachine/cargopad/qm,
 /turf/simulated/floor/black,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYG" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
@@ -23940,13 +23940,13 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYH" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aYI" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/black,
@@ -24119,7 +24119,7 @@
 "aZe" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZf" = (
 /obj/table/auto,
 /obj/item/wrench,
@@ -24130,7 +24130,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZg" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 5;
@@ -24143,7 +24143,7 @@
 	name = "Miner"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZh" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 1;
@@ -24151,7 +24151,7 @@
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZi" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 9;
@@ -24168,7 +24168,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZj" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -24185,7 +24185,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZk" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/black,
@@ -24473,11 +24473,11 @@
 "aZI" = (
 /obj/machinery/vehicle/miniputt/indyputt/armed,
 /turf/simulated/floor/engine,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZJ" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZK" = (
 /obj/machinery/light{
 	dir = 8;
@@ -24491,7 +24491,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZL" = (
 /obj/cable{
 	d1 = 4;
@@ -24499,7 +24499,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZM" = (
 /obj/stool/chair/yellow,
 /obj/landmark/start{
@@ -24516,7 +24516,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZN" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -24528,7 +24528,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aZO" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/small{
@@ -24776,15 +24776,15 @@
 "bao" = (
 /obj/machinery/r_door_control/podbay/mining,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bap" = (
 /turf/simulated/floor/caution/north,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "baq" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 9
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bar" = (
 /obj/machinery/oreaccumulator,
 /obj/machinery/camera{
@@ -24800,7 +24800,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bas" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Mining Hangar";
@@ -24812,19 +24812,19 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/yellow,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bat" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
 /obj/item/cargotele,
 /turf/simulated/floor/yellow,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bau" = (
 /obj/machinery/computer/telescope,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/yellow,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bav" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -24840,7 +24840,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/yellow,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "baw" = (
 /obj/window/auto/crystal/reinforced,
 /obj/machinery/shuttle/engine/heater{
@@ -24993,7 +24993,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/caution/west,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "baO" = (
 /obj/machinery/light,
 /obj/cable{
@@ -25002,7 +25002,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "baP" = (
 /obj/cable{
 	d1 = 4;
@@ -25010,7 +25010,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "baQ" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -25028,7 +25028,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "baR" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -25040,28 +25040,28 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/yellow,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "baS" = (
 /obj/window/auto/crystal/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "baT" = (
 /obj/window/auto/crystal/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "baU" = (
 /obj/window/auto/crystal/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "baV" = (
 /obj/table/auto,
 /obj/item/peripheral/drive/cart_reader,
@@ -25154,13 +25154,13 @@
 /obj/item/shipcomponent/sensor/mining,
 /obj/item/shipcomponent/sensor/mining,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bbc" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/mining,
 /obj/item/shipcomponent/mainweapon/mining,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bbd" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -25168,7 +25168,7 @@
 /obj/item/shipcomponent/secondary_system/orescoop,
 /obj/item/shipcomponent/communications/mining,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bbe" = (
 /obj/window/auto/crystal/reinforced,
 /obj/machinery/shuttle/engine/heater{

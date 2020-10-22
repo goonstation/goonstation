@@ -34591,10 +34591,10 @@
 	d2 = 2
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bgs" = (
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bgt" = (
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/line/yellow{
@@ -34607,7 +34607,7 @@
 	req_access_txt = "50"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bgu" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -34624,7 +34624,7 @@
 	req_access_txt = "50"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bgv" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -35591,7 +35591,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bhQ" = (
 /obj/storage/secure/closet/engineering/mining,
 /obj/decal/tile_edge/line/yellow{
@@ -35599,7 +35599,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bhR" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -35616,7 +35616,7 @@
 	},
 /obj/machinery/oreaccumulator,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bhS" = (
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/line/yellow{
@@ -35624,7 +35624,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bhT" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -35641,7 +35641,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bhU" = (
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/line/yellow{
@@ -36358,7 +36358,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bjh" = (
 /obj/cable{
 	d1 = 1;
@@ -36366,7 +36366,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bji" = (
 /obj/machinery/disposal/mail/small{
 	dir = 4;
@@ -36385,7 +36385,7 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 6
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bjj" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -36397,7 +36397,7 @@
 /turf/simulated/floor/caution/south{
 	dir = 2
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bjk" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -36410,14 +36410,14 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bjl" = (
 /obj/disposalpipe/junction{
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bjm" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -36432,7 +36432,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bjn" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/engineering{
@@ -36443,7 +36443,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bjo" = (
 /obj/disposalpipe/junction{
 	dir = 1;
@@ -37254,7 +37254,7 @@
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/bot,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bkD" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -37274,7 +37274,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bkE" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -37285,7 +37285,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/caution/east,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bkF" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -37296,7 +37296,7 @@
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bkG" = (
 /obj/cable{
 	d1 = 1;
@@ -37310,7 +37310,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bkH" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -37321,7 +37321,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bkI" = (
 /obj/cable{
 	d1 = 1;
@@ -37341,7 +37341,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bkJ" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/cable{
@@ -37357,7 +37357,7 @@
 	req_access_txt = "50"
 	},
 /turf/simulated/floor/black,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bkK" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -37996,7 +37996,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/bot,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "blM" = (
 /obj/landmark/start{
 	name = "Miner"
@@ -38006,12 +38006,12 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "blN" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 5
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "blO" = (
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/line/yellow{
@@ -38022,7 +38022,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/caution/north,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "blP" = (
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
@@ -38034,7 +38034,7 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 9
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "blQ" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler,
@@ -38046,7 +38046,7 @@
 /obj/item/storage/pill_bottle/antirad,
 /obj/item/storage/pill_bottle/antirad,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "blR" = (
 /obj/machinery/conveyor_switch{
 	id = "mining2qm"
@@ -38068,7 +38068,7 @@
 	dir = 6
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "blS" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -38762,7 +38762,7 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bmZ" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -38783,7 +38783,7 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 5
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bna" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -38804,7 +38804,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bnb" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -38821,7 +38821,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bnc" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -38835,7 +38835,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bnd" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -38845,7 +38845,7 @@
 /turf/simulated/floor/caution/misc{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bne" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -38853,7 +38853,7 @@
 	},
 /obj/storage/crate,
 /turf/simulated/floor/caution/northsouth,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bnf" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -38862,7 +38862,7 @@
 /obj/storage/crate,
 /obj/machinery/light,
 /turf/simulated/floor/caution/northsouth,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bng" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -38877,7 +38877,7 @@
 	name = "Mining Security Door"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bnh" = (
 /obj/machinery/conveyor{
 	dir = 4;

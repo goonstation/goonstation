@@ -3273,7 +3273,7 @@
 	name = "Maru pod bay door control"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "gQ" = (
 /obj/lattice{
 	dir = 10;
@@ -3313,7 +3313,7 @@
 /obj/item/shipcomponent/secondary_system/orescoop,
 /obj/item/shipcomponent/communications/mining,
 /turf/simulated/floor/caution/east,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "gV" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -3380,7 +3380,7 @@
 	name = "Miner"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "hb" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -3588,14 +3588,14 @@
 /area/station/crew_quarters/maru)
 "hF" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "hG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "hH" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "hI" = (
 /obj/lattice{
 	dir = 8;
@@ -3613,7 +3613,7 @@
 /obj/item/storage/belt/mining,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "hK" = (
 /turf/space,
 /area/supply/spawn_point)
@@ -3739,7 +3739,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "hW" = (
 /obj/machinery/conveyor{
 	id = "qmout"
@@ -3806,11 +3806,11 @@
 	},
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "id" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ie" = (
 /obj/table/auto,
 /obj/item/shipcomponent/sensor/mining,
@@ -3820,10 +3820,10 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "if" = (
 /turf/simulated/floor/shuttlebay,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ig" = (
 /obj/machinery/light{
 	dir = 1;
@@ -3831,7 +3831,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ih" = (
 /obj/grille/catwalk,
 /obj/landmark/magnet_shield,
@@ -4015,10 +4015,10 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "iB" = (
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "iC" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4;
@@ -4027,19 +4027,19 @@
 	},
 /obj/access_spawn/mining,
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "iD" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "iE" = (
 /turf/simulated/floor/caution/east,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "iF" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/shuttlebay,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "iG" = (
 /turf/simulated/floor/airless/plating{
 	icon_state = "panelscorched"
@@ -4285,7 +4285,7 @@
 "je" = (
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4294,13 +4294,13 @@
 	name = "Miner"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jg" = (
 /obj/landmark/start{
 	name = "Miner"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jh" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -4309,7 +4309,7 @@
 	name = "Miner"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ji" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -4324,10 +4324,10 @@
 "jj" = (
 /obj/submachine/cargopad/magnet,
 /turf/simulated/floor/plating/airless,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jk" = (
 /turf/simulated/floor/plating/airless,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jl" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/research_outpost/indigo_rye)
@@ -4513,22 +4513,22 @@
 "jG" = (
 /obj/machinery/nanofab/mining,
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jH" = (
 /obj/machinery/processor,
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jI" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jJ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
 /obj/item/cargotele,
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jK" = (
 /obj/machinery/light{
 	dir = 8;
@@ -4547,11 +4547,11 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jL" = (
 /obj/machinery/vehicle/miniputt/indyputt/armed,
 /turf/simulated/floor/shuttlebay,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jM" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/camera{
@@ -4571,7 +4571,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jO" = (
 /obj/landmark/magnet_center,
 /turf/space,
@@ -4843,7 +4843,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "kl" = (
 /obj/cable,
 /obj/cable{
@@ -4878,16 +4878,16 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "kn" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/plating/airless,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ko" = (
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/plating/airless,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "kp" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -5176,7 +5176,7 @@
 /obj/access_spawn/engineering,
 /obj/access_spawn/cargo,
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "kQ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -5441,7 +5441,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "lo" = (
 /obj/machinery/macrofab/emergency_pod{
 	color = "#DDDDDD";
@@ -5453,11 +5453,11 @@
 	override_dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "lp" = (
 /obj/machinery/light,
 /turf/simulated/floor/shuttlebay,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "lq" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -5648,7 +5648,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "lL" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/storage{
@@ -7368,7 +7368,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "oY" = (
 /obj/cable{
 	d1 = 2;
@@ -10101,7 +10101,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "uv" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/caution/east,
@@ -15150,7 +15150,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "DL" = (
 /obj/pool{
 	dir = 4
@@ -24117,7 +24117,7 @@
 "VI" = (
 /obj/machinery/oreaccumulator,
 /turf/simulated/floor/plating/airless,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "VJ" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -24530,7 +24530,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "Xd" = (
 /obj/cable{
 	icon_state = "4-8"
