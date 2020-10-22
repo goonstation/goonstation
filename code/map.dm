@@ -105,7 +105,7 @@ var/global/list/mapNames = list(
 	var/merchant_right_station = /area/shuttle/merchant_shuttle/right_station
 
 	var/list/valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science/concrete),
+		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
 		"the central warehouse" = list(/area/station/storage/warehouse),
@@ -176,7 +176,7 @@ var/global/list/mapNames = list(
 		"inner engineering (surrounding the singularity, not in it)" = list(/area/station/engine/inner),
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 		"the inner hall of the medbay" = list(/area/station/medical/medbay),
-		"the main hallway in research" = list(/area/station/science/concrete),
+		"the main hallway in research" = list(/area/station/science/lobby),
 		"the chapel" = list(/area/station/chapel/main),
 		"the escape hallway" = list(/area/station/hallway/secondary/exit),
 		"the Research Director's office" = list(/area/station/crew_quarters/hor),
@@ -256,7 +256,7 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science/concrete),
+		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
@@ -290,7 +290,7 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science/concrete),
+		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the refinery (arc smelter)" = list(/area/station/mining/refinery),
@@ -307,7 +307,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/clarion"
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science/concrete),
+		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
@@ -353,7 +353,7 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list("the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the chapel" = list(/area/station/chapel/main),
 		"the main security room" = list(/area/station/security/main),
-		"the Quartermaster's Store (QM)" = list(/area/station/quartermaster/concrete),
+		"the Quartermaster's Store (QM)" = list(/area/station/quartermaster/office),
 		"the Engineering control room" = list(/area/station/engine/power),
 		"that snazzy-lookin' sports bar up front" = list(/area/station/crew_quarters/fitness),
 		"the main medical bay room" = list(/area/station/medical/medbay),
@@ -484,7 +484,7 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the cargo bay (QM)" = list(/area/station/quartermaster/concrete/),
+		"the cargo bay (QM)" = list(/area/station/quartermaster/office/),
 		"the bridge" = list(/area/station/bridge/),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery),
@@ -575,7 +575,7 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
 	valid_nuke_targets = list("the security equipment wing" = list(/area/station/security/equipment),
-		"the central research sector hub" = list(/area/station/science/concrete),
+		"the central research sector hub" = list(/area/station/science/lobby),
 		"the quartermasters' office" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the basketball court" = list(/area/station/crew_quarters/fitness),
@@ -620,7 +620,7 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
 	valid_nuke_targets = list("the Demeter primary zone" = list(/area/station/garden/aviary),
-		"the Tenebrae primary zone" = list(/area/station/science/concrete),
+		"the Tenebrae primary zone" = list(/area/station/science/lobby),
 		"the Asclepius primary zone" = list(/area/station/medical/medbay),
 		"the Meridian primary zone" = list(/area/station/crew_quarters/captain),
 		"the Dionysus primary zone" = list(/area/station/crew_quarters/cafeteria),
@@ -699,7 +699,7 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science/concrete),
+		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),

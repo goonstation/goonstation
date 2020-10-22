@@ -52,7 +52,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	/*
 	drop_locations = list("security" = /area/station/security,\
 	"science wing" = /area/station/science,\
-		"the cargo bay" = /area/station/quartermaster/concrete,\
+		"the cargo bay" = /area/station/quartermaster/office,\
 		"engineering" = /area/station/engine,\
 		"medbay" = /area/station/medical,\
 		"the cafeteria" = /area/station/crew_quarters/cafeteria,\
