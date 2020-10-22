@@ -561,7 +561,7 @@ proc/create_fluff(var/datum/mind/target)
 		/area/station/security/main,
 		/area/station/crew_quarters/quarters,
 		/area/station/crew_quarters/cafeteria,
-		/area/station/chapel/main,
+		/area/station/chapel/sanctuary,
 		/area/station/hydroponics,
 		/area/station/quartermaster/office,
 		/area/station/engine/elect,

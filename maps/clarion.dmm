@@ -9549,7 +9549,7 @@
 /area/station/maintenance/east)
 "apU" = (
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center Storage"
 	})
 "apV" = (
@@ -10023,7 +10023,7 @@
 "aqW" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center Storage"
 	})
 "aqX" = (
@@ -10311,12 +10311,12 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center Storage"
 	})
 "arC" = (
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center Storage"
 	})
 "arD" = (
@@ -10340,12 +10340,12 @@
 /obj/item/clothing/under/jersey/red,
 /obj/storage/crate,
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center Storage"
 	})
 "arE" = (
 /turf/simulated/wall/auto/gannets,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center Storage"
 	})
 "arF" = (
@@ -10811,7 +10811,7 @@
 	name = "autoname  - SS13"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center Storage"
 	})
 "asq" = (
@@ -10821,7 +10821,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center Storage"
 	})
 "asr" = (
@@ -10832,7 +10832,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center Storage"
 	})
 "ass" = (
@@ -10846,7 +10846,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center Storage"
 	})
 "ast" = (
@@ -11072,12 +11072,12 @@
 "asR" = (
 /obj/wingrille_spawn/reinforced,
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "asS" = (
 /turf/simulated/wall/auto/gannets,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "asT" = (
@@ -11086,7 +11086,7 @@
 	name = "peststart"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "asU" = (
@@ -11268,7 +11268,7 @@
 "atr" = (
 /obj/stool/chair/wooden,
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "ats" = (
@@ -11281,7 +11281,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "att" = (
@@ -11291,7 +11291,7 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "atu" = (
@@ -11303,7 +11303,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "atv" = (
@@ -11314,13 +11314,13 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "atw" = (
 /obj/wingrille_spawn,
 /turf/simulated/floor/black,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "atx" = (
@@ -11619,14 +11619,14 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "aue" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "auf" = (
@@ -11637,7 +11637,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "aug" = (
@@ -11648,7 +11648,7 @@
 	name = "glass airlock-'Funeral Parlor'"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "auh" = (
@@ -11974,7 +11974,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "auQ" = (
@@ -11982,18 +11982,18 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "auR" = (
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "auS" = (
 /obj/wingrille_spawn,
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "auT" = (
@@ -12318,13 +12318,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "avB" = (
 /obj/window/reinforced/north,
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "avC" = (
@@ -12336,7 +12336,7 @@
 	dir = 9;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "avD" = (
@@ -12346,7 +12346,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "avE" = (
@@ -12355,7 +12355,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "avF" = (
@@ -12366,7 +12366,7 @@
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "avG" = (
@@ -12654,18 +12654,18 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "awl" = (
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "awm" = (
 /obj/machinery/light,
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "awn" = (
@@ -12673,7 +12673,7 @@
 	id = "chapel_belt"
 	},
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "awo" = (
@@ -12684,7 +12684,7 @@
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "awp" = (
@@ -12692,14 +12692,14 @@
 	dir = 10;
 	icon_state = "fgreen3"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "awq" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen1"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "awr" = (
@@ -12708,7 +12708,7 @@
 	dir = 4;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "aws" = (
@@ -13078,7 +13078,7 @@
 /turf/simulated/floor/caution/misc{
 	dir = 8
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "awY" = (
@@ -13090,7 +13090,7 @@
 	id = "chapel_driver"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "awZ" = (
@@ -13100,7 +13100,7 @@
 	},
 /obj/window/reinforced/north,
 /turf/simulated/floor/caution/northsouth,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "axa" = (
@@ -13109,7 +13109,7 @@
 	},
 /obj/window/reinforced/north,
 /turf/simulated/floor/caution/northsouth,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "axb" = (
@@ -13121,7 +13121,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "axc" = (
@@ -13136,7 +13136,7 @@
 /turf/simulated/floor/caution/misc{
 	dir = 4
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "axd" = (
@@ -13144,7 +13144,7 @@
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "axe" = (
@@ -13154,7 +13154,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "axf" = (
@@ -13164,7 +13164,7 @@
 	dir = 6;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "axg" = (
@@ -13529,14 +13529,14 @@
 	},
 /obj/window/reinforced/north,
 /turf/simulated/floor/grass/random,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "axU" = (
 /obj/shrub,
 /obj/window/reinforced/north,
 /turf/simulated/floor/grass/random,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
 "axV" = (
@@ -13551,7 +13551,7 @@
 /area/station/hallway/primary/central)
 "axW" = (
 /turf/simulated/wall/auto/gannets,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "axX" = (
@@ -13559,7 +13559,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "axY" = (
@@ -13586,7 +13586,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "ayb" = (
@@ -13846,7 +13846,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "ayH" = (
@@ -13863,7 +13863,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "ayI" = (
@@ -13871,7 +13871,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "ayJ" = (
@@ -13883,7 +13883,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "ayK" = (
@@ -13895,7 +13895,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "ayL" = (
@@ -13903,7 +13903,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "ayM" = (
@@ -13911,7 +13911,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "ayN" = (
@@ -14098,7 +14098,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "azm" = (
@@ -14108,14 +14108,14 @@
 	tag = "icon-right (EAST)"
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "azn" = (
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "azo" = (
@@ -14125,7 +14125,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "azp" = (
@@ -14137,7 +14137,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "azq" = (
@@ -14322,7 +14322,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "azK" = (
@@ -14526,7 +14526,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aAh" = (
@@ -14922,7 +14922,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aBc" = (
@@ -14930,7 +14930,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aBd" = (
@@ -14940,7 +14940,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aBe" = (
@@ -14956,7 +14956,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aBf" = (
@@ -15289,7 +15289,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aBS" = (
@@ -15383,7 +15383,7 @@
 "aBZ" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/gannets,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aCa" = (
@@ -15397,7 +15397,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aCb" = (
@@ -15406,7 +15406,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aCc" = (
@@ -15414,7 +15414,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aCd" = (
@@ -15426,7 +15426,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aCe" = (
@@ -15435,12 +15435,12 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aCf" = (
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aCg" = (
@@ -15835,7 +15835,7 @@
 	dir = 9;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aCZ" = (
@@ -15847,7 +15847,7 @@
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aDa" = (
@@ -15862,7 +15862,7 @@
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aDb" = (
@@ -15873,7 +15873,7 @@
 /turf/simulated/floor/stairs{
 	icon_state = "wood_stairs"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aDc" = (
@@ -15884,7 +15884,7 @@
 /turf/simulated/floor/stairs{
 	icon_state = "wood_stairs"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aDd" = (
@@ -15897,7 +15897,7 @@
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aDe" = (
@@ -15905,7 +15905,7 @@
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aDf" = (
@@ -15916,7 +15916,7 @@
 	dir = 5;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aDg" = (
@@ -16205,7 +16205,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center Storage"
 	})
 "aDV" = (
@@ -16325,7 +16325,7 @@
 	dir = 8;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aEk" = (
@@ -16333,7 +16333,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aEl" = (
@@ -16341,7 +16341,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aEm" = (
@@ -16349,7 +16349,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aEn" = (
@@ -16360,7 +16360,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aEo" = (
@@ -16369,7 +16369,7 @@
 	dir = 4;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aEp" = (
@@ -16514,7 +16514,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aEH" = (
@@ -16835,14 +16835,14 @@
 	dir = 10;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aFq" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aFr" = (
@@ -16850,7 +16850,7 @@
 	dir = 10;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aFs" = (
@@ -16858,7 +16858,7 @@
 	dir = 6;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aFt" = (
@@ -16867,7 +16867,7 @@
 	dir = 6;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aFu" = (
@@ -17256,7 +17256,7 @@
 "aGg" = (
 /obj/stool/bench/auto,
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aGh" = (
@@ -17265,7 +17265,7 @@
 	dir = 8;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aGi" = (
@@ -17769,7 +17769,7 @@
 	dir = 8;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aHl" = (
@@ -17777,7 +17777,7 @@
 	dir = 4;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aHm" = (
@@ -17788,7 +17788,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aHn" = (
@@ -18119,7 +18119,7 @@
 	},
 /obj/item/clothing/head/mime_beret,
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aIb" = (
@@ -18208,7 +18208,7 @@
 /obj/table/wood/auto,
 /obj/loudspeaker,
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aIm" = (
@@ -18221,7 +18221,7 @@
 	dir = 8;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aIn" = (
@@ -18230,7 +18230,7 @@
 	dir = 4;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aIo" = (
@@ -18832,7 +18832,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aJv" = (
@@ -18853,7 +18853,7 @@
 	dir = 10;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aJx" = (
@@ -18861,7 +18861,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aJy" = (
@@ -18869,7 +18869,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aJz" = (
@@ -18878,13 +18878,13 @@
 	dir = 6;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aJA" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aJB" = (
@@ -19391,7 +19391,7 @@
 "aKM" = (
 /obj/wingrille_spawn,
 /turf/simulated/floor/plating,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aKN" = (
@@ -19403,7 +19403,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aKO" = (
@@ -19413,7 +19413,7 @@
 	name = "glass airlock-'Community Center'"
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aKP" = (
@@ -48178,7 +48178,7 @@
 "bMw" = (
 /obj/storage/closet/wardrobe/pride,
 /turf/simulated/floor/wood,
-/area/station/chapel/main{
+/area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "bMx" = (

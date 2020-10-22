@@ -4697,7 +4697,7 @@
 /area/station/chapel/office)
 "akt" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aku" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -4709,7 +4709,7 @@
 	name = "Funeral Door"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "akv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5313,11 +5313,11 @@
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /turf/simulated/floor/black,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "alK" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "alL" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -5325,10 +5325,10 @@
 	name = "coffin driver"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "alM" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "alN" = (
 /obj/storage/closet/coffin,
 /turf/simulated/floor/plating/damaged3,
@@ -6008,7 +6008,7 @@
 "anc" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "and" = (
 /obj/machinery/mass_driver{
 	drive_range = 5;
@@ -6351,7 +6351,7 @@
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aoe" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -6362,7 +6362,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/delivery,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aof" = (
 /obj/landmark/halloween,
 /turf/simulated/floor/plating,
@@ -6795,14 +6795,14 @@
 	dir = 9;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apk" = (
 /obj/item/instrument/large/organ,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apl" = (
 /obj/shrub,
 /obj/machinery/light{
@@ -6814,7 +6814,7 @@
 	dir = 5;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apm" = (
 /obj/machinery/conveyor_switch{
 	id = "chapel"
@@ -6825,23 +6825,23 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/bot,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apn" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "chapel"
 	},
 /turf/simulated/floor/delivery,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apo" = (
 /obj/machinery/computer/barcode{
 	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","QM")
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "app" = (
 /turf/simulated/floor/plating/scorched,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "apq" = (
 /obj/lattice{
 	dir = 6;
@@ -7220,14 +7220,14 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqp" = (
 /obj/stool,
 /obj/item/storage/bible,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqq" = (
 /obj/table/wood/auto,
 /obj/deskclutter,
@@ -7240,13 +7240,13 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqr" = (
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqs" = (
 /obj/noticeboard{
 	pixel_y = 32
@@ -7255,20 +7255,20 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqt" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqu" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqv" = (
 /obj/stool/chair/wooden{
 	dir = 1
@@ -7276,33 +7276,33 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqw" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqx" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqy" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqz" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqA" = (
 /obj/storage/secure/closet/courtroom,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqB" = (
 /obj/storage/closet/law,
 /obj/machinery/light/small{
@@ -7310,7 +7310,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqC" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -7318,7 +7318,7 @@
 	text = "NF"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqD" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -7491,7 +7491,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aqW" = (
 /obj/storage/crate,
 /obj/item/kitchen/food_box/egg_box,
@@ -7677,7 +7677,7 @@
 "arv" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "arw" = (
 /obj/machinery/light{
 	dir = 8;
@@ -7688,34 +7688,34 @@
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
 /turf/simulated/floor/black,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "arx" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ary" = (
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "arz" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "arA" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "arB" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "arC" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -7726,10 +7726,10 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "arD" = (
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "arE" = (
 /obj/cable{
 	d1 = 2;
@@ -8238,45 +8238,45 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asG" = (
 /obj/stool,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asH" = (
 /obj/table/wood/auto,
 /obj/machinery/light_switch/west,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/simulated/floor/black,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asI" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asJ" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asK" = (
 /obj/stool/chair/comfy,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asL" = (
 /obj/mic_stand,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asM" = (
 /obj/landmark/halloween,
 /obj/landmark/boxing_ring,
@@ -8287,7 +8287,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asO" = (
 /obj/item/instrument/large/piano{
 	anchored = 0;
@@ -8295,11 +8295,11 @@
 	},
 /obj/item/screwdriver,
 /turf/simulated/floor/plating/damaged3,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asP" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asQ" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -8307,16 +8307,16 @@
 	},
 /obj/storage/closet/coffin,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asR" = (
 /obj/storage/closet/coffin,
 /obj/item/reagent_containers/syringe/krokodil,
 /turf/simulated/floor/plating/scorched,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asS" = (
 /obj/storage/closet/coffin,
 /turf/simulated/floor/plating/scorched,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "asT" = (
 /obj/stool/chair/wooden{
 	desc = "An antique chair.";
@@ -8806,12 +8806,12 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "atX" = (
 /obj/grille/steel,
 /obj/window/auto,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "atY" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/device/light/candle{
@@ -8822,7 +8822,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "atZ" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/clipboard,
@@ -8831,14 +8831,14 @@
 	dir = 4;
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aua" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aub" = (
 /obj/table/reinforced/bar/auto,
 /obj/loudspeaker,
@@ -8846,7 +8846,7 @@
 	dir = 4;
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "auc" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/device/light/candle{
@@ -8854,11 +8854,11 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aud" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aue" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
@@ -9361,7 +9361,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avr" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -9374,7 +9374,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avs" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
@@ -9383,7 +9383,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avt" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -9396,7 +9396,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avu" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -9411,7 +9411,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avv" = (
 /obj/machinery/disposal,
 /obj/machinery/light{
@@ -9427,7 +9427,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avw" = (
 /obj/machinery/power/data_terminal,
 /obj/table/wood/auto,
@@ -9443,14 +9443,14 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avx" = (
 /obj/disposalpipe/segment/mail/bent/east,
 /obj/player_piano,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avy" = (
 /obj/disposalpipe/switch_junction/right/east{
 	mail_tag = "chapel";
@@ -9460,47 +9460,47 @@
 	dir = 9;
 	icon_state = "fpurple6"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avz" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fpurple5"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avA" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avB" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fpurple5"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avC" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple6"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avD" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avE" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avF" = (
 /obj/machinery/light{
 	dir = 1;
@@ -9513,7 +9513,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avG" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -9524,7 +9524,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avH" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -9540,7 +9540,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avI" = (
 /obj/decal/poster/wallsign/poster_nt{
 	pixel_y = 28
@@ -9549,14 +9549,14 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avJ" = (
 /obj/machinery/light_switch/north,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avK" = (
 /obj/item/storage/wall/fire{
 	dir = 1;
@@ -9566,7 +9566,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avL" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -9576,7 +9576,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/delivery,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "avM" = (
 /obj/cable{
 	d1 = 4;
@@ -9913,7 +9913,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "awK" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -9921,7 +9921,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "awL" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -9930,7 +9930,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "awM" = (
 /obj/cable{
 	d1 = 1;
@@ -9940,11 +9940,11 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "awN" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "awO" = (
 /obj/cable{
 	d1 = 2;
@@ -9955,25 +9955,25 @@
 	dir = 8;
 	icon_state = "fpurple5"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "awP" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "awQ" = (
 /obj/machinery/light,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "awR" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "awS" = (
 /obj/cable{
 	d1 = 2;
@@ -9984,7 +9984,7 @@
 	dir = 5;
 	icon_state = "fpurple5"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "awT" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -9993,7 +9993,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "awU" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
@@ -10749,7 +10749,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayv" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -10763,7 +10763,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayw" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -10776,7 +10776,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayx" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -10789,7 +10789,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayy" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -10803,7 +10803,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayz" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -10816,7 +10816,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayA" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -10829,7 +10829,7 @@
 	dir = 8;
 	icon_state = "fpurple4"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayB" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -10838,7 +10838,7 @@
 	dir = 10;
 	icon_state = "fpurple5"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayC" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/stool/chair/pew/fancy/center{
@@ -10848,7 +10848,7 @@
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayD" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -10857,7 +10857,7 @@
 	dir = 9;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayE" = (
 /obj/cable{
 	d1 = 2;
@@ -10888,13 +10888,13 @@
 	dir = 6;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayF" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue4"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayG" = (
 /obj/cable{
 	d1 = 2;
@@ -10923,7 +10923,7 @@
 	dir = 10;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayH" = (
 /obj/stool/chair/pew/fancy/left{
 	dir = 1
@@ -10932,7 +10932,7 @@
 	dir = 5;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayI" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -10941,7 +10941,7 @@
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayJ" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -10950,7 +10950,7 @@
 	dir = 1;
 	icon_state = "fpurple5"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayK" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -10959,13 +10959,13 @@
 	dir = 4;
 	icon_state = "fpurple4"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayL" = (
 /obj/machinery/light,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayM" = (
 /obj/shrub{
 	dir = 1;
@@ -10975,13 +10975,13 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayN" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "ayO" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -11473,24 +11473,24 @@
 "azV" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "azW" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "azX" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "azY" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/window/auto,
 /obj/grille/steel,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "azZ" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/stool/chair/pew/fancy/left{
@@ -11500,7 +11500,7 @@
 	dir = 8;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aAa" = (
 /obj/disposalpipe/segment/mail/bent/west,
 /obj/stool/chair/pew/fancy/center{
@@ -11510,7 +11510,7 @@
 	dir = 1;
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aAb" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -11518,13 +11518,13 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aAc" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue4"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aAd" = (
 /obj/item/device/radio/beacon,
 /obj/machinery/camera/television{
@@ -11536,13 +11536,13 @@
 	dir = 8;
 	icon_state = "fblue1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aAe" = (
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue4"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aAf" = (
 /obj/stool/chair/pew/fancy/left{
 	dir = 1
@@ -11550,7 +11550,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aAg" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -11559,7 +11559,7 @@
 	dir = 1;
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aAh" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -11568,12 +11568,12 @@
 	dir = 4;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aAi" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /turf/simulated/floor,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aAj" = (
 /obj/machinery/launcher_loader/north,
 /obj/disposalpipe/segment/transport{
@@ -12204,12 +12204,12 @@
 	name = "costume dresser"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBy" = (
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBz" = (
 /obj/stool/chair{
 	dir = 4
@@ -12218,12 +12218,12 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBA" = (
 /obj/window/auto,
 /obj/grille/steel,
 /turf/simulated/floor/plating,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBB" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -12239,7 +12239,7 @@
 	dir = 10;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBC" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -12247,7 +12247,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBD" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -12256,7 +12256,7 @@
 	dir = 10;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBE" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -12285,14 +12285,14 @@
 	dir = 5;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBF" = (
 /obj/stool,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue4"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBG" = (
 /obj/cable{
 	d1 = 2;
@@ -12323,7 +12323,7 @@
 	dir = 9;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBH" = (
 /obj/stool/chair/pew/fancy/left{
 	dir = 1
@@ -12332,7 +12332,7 @@
 	dir = 6;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBI" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -12348,19 +12348,19 @@
 	dir = 6;
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBJ" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBK" = (
 /obj/mic_stand,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBL" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/snacks/plant/tomato,
@@ -12378,7 +12378,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBM" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -12391,11 +12391,11 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBN" = (
 /obj/storage/closet/law,
 /turf/simulated/floor/specialroom/arcade,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aBO" = (
 /obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor/bot,
@@ -12815,7 +12815,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCO" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -12834,7 +12834,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCP" = (
 /obj/machinery/light{
 	dir = 8;
@@ -12844,7 +12844,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCQ" = (
 /obj/cable{
 	d1 = 2;
@@ -12855,25 +12855,25 @@
 	dir = 9;
 	icon_state = "fpurple5"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCR" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCS" = (
 /obj/machinery/navbeacon/tour/cog2/tour2,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCT" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fpurple3"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCU" = (
 /obj/cable{
 	d1 = 2;
@@ -12884,14 +12884,14 @@
 	dir = 4;
 	icon_state = "fpurple5"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCV" = (
 /obj/table/wood/auto,
 /obj/machinery/cashreg,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCW" = (
 /obj/stool/chair{
 	dir = 8
@@ -12899,7 +12899,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCX" = (
 /obj/machinery/light{
 	dir = 4;
@@ -12917,13 +12917,13 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCY" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aCZ" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -12941,7 +12941,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aDa" = (
 /obj/grille/steel,
 /obj/window/auto,
@@ -13379,16 +13379,16 @@
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aDS" = (
 /turf/simulated/floor/specialroom/arcade,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aDT" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aDU" = (
 /obj/rack,
 /obj/item/instrument/harmonica,
@@ -13396,69 +13396,69 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aDV" = (
 /obj/table/wood/auto,
 /obj/loudspeaker,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aDW" = (
 /obj/machinery/light,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aDX" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fpurple6"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aDY" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple5"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aDZ" = (
 /obj/machinery/light,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEa" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fpurple5"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEb" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fpurple6"
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEc" = (
 /obj/table/wood/auto,
 /obj/loudspeaker,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEd" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEe" = (
 /obj/disposalpipe/segment/transport{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aEf" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/portable_atmospherics/pump,
@@ -13941,14 +13941,14 @@
 	name = "Chapel"
 	},
 /turf/simulated/floor/delivery,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aFf" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/security{
 	name = "Trial Chamber"
 	},
 /turf/simulated/floor/delivery,
-/area/station/chapel/main)
+/area/station/chapel/sanctuary)
 "aFg" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
 /obj/grille/catwalk/cross,
