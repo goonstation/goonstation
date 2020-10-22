@@ -1627,8 +1627,6 @@ ABSTRACT_TYPE(/area/station/hallway)
 	icon_state = "hallC"
 	sound_environment = 10
 
-/area/station/hallway/concrete
-
 ABSTRACT_TYPE(/area/station/hallway/primary)
 /area/station/hallway/primary
   name = "Primary Hallway"
