@@ -50203,7 +50203,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLb" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -50253,12 +50253,12 @@
 	req_access_txt = "52"
 	},
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLh" = (
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLi" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -50266,7 +50266,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLj" = (
 /obj/cable{
 	d1 = 1;
@@ -50276,12 +50276,12 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLk" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLl" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -50315,7 +50315,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLp" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -50324,7 +50324,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLq" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -50334,7 +50334,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLr" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -50345,20 +50345,20 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLs" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLt" = (
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLu" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
@@ -50373,7 +50373,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLw" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -50381,12 +50381,12 @@
 	d2 = 2
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLx" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLy" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50398,15 +50398,15 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLz" = (
 /turf/simulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLA" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLB" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -50417,7 +50417,7 @@
 	icon_state = "green2";
 	dir = 9
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLC" = (
 /obj/machinery/bot/guardbot/bad{
 	on = 0
@@ -50426,7 +50426,7 @@
 	dir = 1;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLD" = (
 /obj/storage/closet/syndicate/personal,
 /obj/window/east,
@@ -50434,14 +50434,14 @@
 	icon_state = "green2";
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLE" = (
 /obj/table/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLF" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -50454,7 +50454,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLG" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -50464,7 +50464,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLH" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -50473,7 +50473,7 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLI" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -50481,7 +50481,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLJ" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -50494,13 +50494,13 @@
 	dir = 8;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLK" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen1";
 	dir = 2
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLL" = (
 /obj/window/east,
 /obj/shrub{
@@ -50513,18 +50513,18 @@
 	dir = 4;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLM" = (
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLN" = (
 /obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLO" = (
 /obj/machinery/vending/computer3{
 	profit = 0
@@ -50532,7 +50532,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLP" = (
 /obj/table/auto,
 /obj/item/disk/data/cartridge/captain,
@@ -50542,7 +50542,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 2
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLQ" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -50551,7 +50551,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 2
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLR" = (
 /obj/machinery/vending/floppy{
 	profit = 0
@@ -50559,7 +50559,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLS" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -50570,13 +50570,13 @@
 	dir = 10;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLT" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green2";
 	dir = 2
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLU" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -50588,19 +50588,19 @@
 	icon_state = "green2";
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLV" = (
 /obj/submachine/ATM,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLW" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLX" = (
 /obj/machinery/vending/cola/blue{
 	credit = 12
@@ -50608,13 +50608,13 @@
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLY" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/redwhite{
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bLZ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -50630,7 +50630,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bMb" = (
 /obj/cable{
 	d1 = 1;
@@ -50655,15 +50655,15 @@
 	color_r = 0.35
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bMc" = (
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bMd" = (
 /turf/simulated/floor/white,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bMe" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -50673,7 +50673,7 @@
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bMf" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/shuttle{
@@ -50699,16 +50699,16 @@
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bMj" = (
 /obj/stool/bar,
 /turf/simulated/floor/white,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bMk" = (
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bMl" = (
 /obj/machinery/door/airlock/syndicate{
 	aiControlDisabled = 1;
@@ -50741,7 +50741,7 @@
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bMp" = (
 /obj/table/auto,
 /obj/item/plate,
@@ -50749,14 +50749,14 @@
 /obj/item/kitchen/utensil/knife,
 /obj/machinery/light,
 /turf/simulated/floor/redwhite,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bMq" = (
 /obj/table/auto,
 /obj/item/pinpointer/disk,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bMr" = (
 /obj/machinery/light,
 /turf/simulated/floor/shuttle{

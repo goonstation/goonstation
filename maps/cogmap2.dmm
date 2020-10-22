@@ -75496,20 +75496,20 @@
 /area/mining/magnet)
 "dii" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dij" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dik" = (
 /obj/machinery/computer/general_alert,
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dil" = (
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dim" = (
 /obj/machinery/computer/security,
 /obj/machinery/light{
@@ -75518,7 +75518,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "din" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -75532,7 +75532,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dio" = (
 /obj/machinery/computer3/terminal/zeta{
 	setup_os_string = "ZETA_MAINFRAME"
@@ -75542,7 +75542,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dip" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -75560,7 +75560,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diq" = (
 /obj/item/raw_material/rock,
 /obj/storage/crate/loot,
@@ -75569,11 +75569,11 @@
 "dir" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/bot,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dis" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/bot,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dit" = (
 /obj/table/auto,
 /obj/item/clipboard,
@@ -75589,10 +75589,10 @@
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diu" = (
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "div" = (
 /obj/stool/chair/office,
 /obj/machinery/door_control{
@@ -75601,13 +75601,13 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diw" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dix" = (
 /obj/cable{
 	d1 = 1;
@@ -75620,7 +75620,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diy" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -75629,7 +75629,7 @@
 	},
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diz" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -75637,7 +75637,7 @@
 	},
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diA" = (
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
@@ -75653,7 +75653,7 @@
 	},
 /obj/item/storage/firstaid/oxygen,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diB" = (
 /obj/grille/catwalk/cross{
 	dir = 6
@@ -75703,7 +75703,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diD" = (
 /obj/cable{
 	d1 = 2;
@@ -75713,7 +75713,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -75721,7 +75721,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diF" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -75735,7 +75735,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/delivery,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diG" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -75744,13 +75744,13 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diH" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diI" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/lamp/green,
@@ -75758,14 +75758,14 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diJ" = (
 /obj/table/reinforced/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diK" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -75775,7 +75775,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diL" = (
 /obj/cable{
 	d1 = 1;
@@ -75786,7 +75786,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -75800,20 +75800,20 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diN" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diO" = (
 /obj/decal/poster/wallsign/danger_highvolt,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diP" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -75829,7 +75829,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diQ" = (
 /obj/cable{
 	d1 = 4;
@@ -75844,7 +75844,7 @@
 /obj/item/device/radio/intercom,
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diR" = (
 /obj/machinery/power/smes{
 	chargelevel = 15000;
@@ -75855,18 +75855,18 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diS" = (
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diT" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diU" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -75875,7 +75875,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diV" = (
 /obj/machinery/disposal{
 	name = "Test Chamber Chute"
@@ -75889,14 +75889,14 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diW" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/stool/chair/office,
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diX" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -75904,7 +75904,7 @@
 	},
 /obj/stool/chair/office,
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diY" = (
 /obj/cable{
 	d1 = 1;
@@ -75912,7 +75912,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "diZ" = (
 /obj/machinery/light{
 	dir = 4;
@@ -75921,7 +75921,7 @@
 	},
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/black,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dja" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/firealarm{
@@ -75930,10 +75930,10 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djb" = (
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djc" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -75944,13 +75944,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djd" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dje" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -75967,7 +75967,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djf" = (
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -75976,13 +75976,13 @@
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djh" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/purple/side,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dji" = (
 /obj/shrub{
 	dir = 6
@@ -75990,7 +75990,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djj" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -76002,7 +76002,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/engine,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djk" = (
 /obj/disposalpipe/segment,
 /obj/grille/steel,
@@ -76015,7 +76015,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/engine,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djl" = (
 /obj/machinery/door/airlock/pyro/medical{
 	req_access_txt = "7"
@@ -76034,15 +76034,15 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/delivery,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djm" = (
 /obj/decal/poster/wallsign/biohazard,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djn" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djo" = (
 /obj/decal/poster/wallsign/danger_highvolt,
 /obj/cable{
@@ -76051,7 +76051,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djp" = (
 /obj/cable{
 	d1 = 4;
@@ -76060,7 +76060,7 @@
 	},
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djq" = (
 /obj/cable{
 	d1 = 4;
@@ -76075,7 +76075,7 @@
 	},
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djr" = (
 /obj/machinery/power/solar_control/east{
 	dir = 8
@@ -76085,13 +76085,13 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djs" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs2_wide"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djt" = (
 /obj/machinery/light{
 	dir = 4;
@@ -76105,7 +76105,7 @@
 	dir = 1;
 	icon_state = "Stairs_wide"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dju" = (
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/engine{
@@ -76160,7 +76160,7 @@
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djB" = (
 /obj/lattice{
 	dir = 4;
@@ -76182,12 +76182,12 @@
 /turf/simulated/floor/caution/misc{
 	dir = 1
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djE" = (
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -76195,7 +76195,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djG" = (
 /obj/item/device/audio_log/wall_mounted{
 	anchored = 1;
@@ -76258,7 +76258,7 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djN" = (
 /obj/machinery/r_door_control/podbay/medsci{
 	id = "hangar_research2"
@@ -76323,18 +76323,18 @@
 /area/research_outpost/hangar)
 "djU" = (
 /turf/simulated/floor/caution/westeast,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djV" = (
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djW" = (
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -76342,7 +76342,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "djY" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -76419,7 +76419,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dkg" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/research_horizontal/vertical{
 	id = "hangar_research2"
@@ -76457,7 +76457,7 @@
 /area/research_outpost/hangar)
 "dkm" = (
 /turf/simulated/floor,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dkn" = (
 /obj/stool/chair/office,
 /obj/cable{
@@ -76466,7 +76466,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dko" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_west"
@@ -76497,11 +76497,11 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dks" = (
 /obj/securearea,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dkt" = (
 /obj/cable{
 	d1 = 1;
@@ -76548,7 +76548,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/westeast,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dkx" = (
 /obj/cable{
 	d1 = 4;
@@ -76558,7 +76558,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dky" = (
 /obj/cable{
 	d1 = 4;
@@ -76568,7 +76568,7 @@
 /turf/simulated/floor{
 	icon_state = "nt_logo"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dkz" = (
 /obj/table/round/auto,
 /obj/machinery/light{
@@ -76588,7 +76588,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dkA" = (
 /obj/machinery/camera/television{
 	c_tag = "test chamber";
@@ -76679,7 +76679,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/caution/westeast,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dkM" = (
 /obj/stool/chair/office{
 	dir = 1
@@ -76690,7 +76690,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dkN" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -76780,12 +76780,12 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor/caution/westeast,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dkX" = (
 /turf/simulated/floor/purple/corner{
 	dir = 4
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dkY" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/handcuffs,
@@ -76864,7 +76864,7 @@
 	},
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/caution/misc,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dli" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -76872,7 +76872,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlj" = (
 /obj/machinery/light{
 	dir = 8;
@@ -76918,12 +76918,12 @@
 "dlo" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlp" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlq" = (
 /obj/machinery/light{
 	dir = 4;
@@ -76936,7 +76936,7 @@
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs2_wide"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlr" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_corners"
@@ -76985,13 +76985,13 @@
 "dly" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlz" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/stairs,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlA" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -77012,7 +77012,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -77020,7 +77020,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlE" = (
 /obj/shrub{
 	dir = 1
@@ -77028,7 +77028,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlF" = (
 /obj/machinery/door/airlock/pyro/medical{
 	req_access_txt = "7"
@@ -77045,7 +77045,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/delivery,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlG" = (
 /obj/machinery/atmospherics/valve,
 /obj/machinery/firealarm{
@@ -77054,7 +77054,7 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlH" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
@@ -77065,7 +77065,7 @@
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlI" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
@@ -77076,13 +77076,13 @@
 	},
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlJ" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlK" = (
 /obj/machinery/vending/cola/blue,
 /obj/machinery/light{
@@ -77091,7 +77091,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/wood,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlL" = (
 /obj/stool/chair/couch{
 	dir = 8
@@ -77100,7 +77100,7 @@
 	dir = 9;
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlM" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -77109,7 +77109,7 @@
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlN" = (
 /obj/table/round/auto,
 /obj/machinery/computer3/generic/personal,
@@ -77117,7 +77117,7 @@
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlO" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -77131,7 +77131,7 @@
 	dir = 1;
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -77140,7 +77140,7 @@
 	dir = 5;
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlQ" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -77148,11 +77148,11 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/wood,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlR" = (
 /obj/machinery/atmospherics/portables_connector/north,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlS" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -77163,7 +77163,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlT" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -77173,7 +77173,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlU" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
@@ -77201,7 +77201,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlY" = (
 /obj/cable{
 	d1 = 1;
@@ -77209,7 +77209,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/purple/side,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dlZ" = (
 /obj/cable{
 	d1 = 4;
@@ -77219,7 +77219,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dma" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -77235,7 +77235,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/delivery,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmb" = (
 /obj/cable{
 	d1 = 4;
@@ -77243,7 +77243,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmc" = (
 /obj/cable{
 	d1 = 4;
@@ -77254,7 +77254,7 @@
 	dir = 8;
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmd" = (
 /obj/cable{
 	d1 = 4;
@@ -77264,7 +77264,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dme" = (
 /obj/cable{
 	d1 = 1;
@@ -77275,10 +77275,10 @@
 	dir = 4;
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmf" = (
 /turf/simulated/floor/wood,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmg" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -77289,19 +77289,19 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmh" = (
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmi" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmj" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmk" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish,
@@ -77317,12 +77317,12 @@
 "dmm" = (
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/bot,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmn" = (
 /obj/table/round/auto,
 /obj/random_item_spawner/medicine,
 /turf/simulated/floor/bot,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmo" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -77330,24 +77330,24 @@
 	level = 1.9
 	},
 /turf/simulated/floor/wood,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmp" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmq" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmr" = (
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dms" = (
 /obj/shrub{
 	dir = 4;
@@ -77360,7 +77360,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/wood,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmt" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -77368,7 +77368,7 @@
 	},
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmu" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -77380,7 +77380,7 @@
 	dir = 10;
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmv" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
@@ -77388,7 +77388,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmw" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -77398,7 +77398,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmx" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -77413,7 +77413,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmy" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -77424,7 +77424,7 @@
 	dir = 6;
 	icon_state = "fpurple2"
 	},
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmz" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -77432,7 +77432,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmA" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -77506,7 +77506,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/research_outpost/concrete)
+/area/research_outpost)
 "dmJ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -77898,7 +77898,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnr" = (
 /obj/cable{
 	d1 = 1;
@@ -77943,12 +77943,12 @@
 	name = "Listening Post"
 	},
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnx" = (
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dny" = (
 /obj/cable{
 	d1 = 2;
@@ -77956,7 +77956,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnz" = (
 /obj/cable{
 	d1 = 1;
@@ -77966,12 +77966,12 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnA" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnB" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -78001,7 +78001,7 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnF" = (
 /obj/machinery/light{
 	dir = 4
@@ -78009,7 +78009,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnG" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -78019,7 +78019,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnH" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -78030,20 +78030,20 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnI" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnJ" = (
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnK" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
@@ -78057,7 +78057,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnM" = (
 /obj/cable{
 	d1 = 1;
@@ -78065,12 +78065,12 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnN" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -78081,15 +78081,15 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnP" = (
 /turf/simulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnQ" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnR" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -78100,7 +78100,7 @@
 	dir = 9;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnS" = (
 /obj/machinery/bot/guardbot/bad{
 	on = 0
@@ -78109,7 +78109,7 @@
 	dir = 1;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnT" = (
 /obj/storage/closet/syndicate/personal,
 /obj/window/east,
@@ -78117,14 +78117,14 @@
 	dir = 5;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnU" = (
 /obj/table/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnV" = (
 /obj/cable{
 	d1 = 1;
@@ -78137,7 +78137,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnW" = (
 /obj/cable{
 	d1 = 4;
@@ -78147,7 +78147,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnX" = (
 /obj/cable{
 	d1 = 4;
@@ -78158,7 +78158,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnY" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -78166,7 +78166,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dnZ" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -78179,12 +78179,12 @@
 	dir = 8;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doa" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen1"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dob" = (
 /obj/window/east,
 /obj/shrub{
@@ -78196,18 +78196,18 @@
 	dir = 4;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doc" = (
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dod" = (
 /obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doe" = (
 /obj/machinery/vending/computer3{
 	profit = 0
@@ -78215,7 +78215,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dof" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -78230,7 +78230,7 @@
 /obj/item/paper/printout/emerg1,
 /obj/item/peripheral/network/radio/locked,
 /turf/simulated/floor/yellow/side,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doh" = (
 /obj/machinery/vending/floppy{
 	profit = 0
@@ -78238,7 +78238,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doi" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -78249,12 +78249,12 @@
 	dir = 10;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doj" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dok" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -78265,13 +78265,13 @@
 	dir = 6;
 	icon_state = "green2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dol" = (
 /obj/submachine/ATM,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dom" = (
 /obj/machinery/vending/snack{
 	profit = 0
@@ -78279,7 +78279,7 @@
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "don" = (
 /obj/machinery/vending/cola/blue{
 	credit = 12;
@@ -78288,13 +78288,13 @@
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doo" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/redwhite{
 	dir = 5
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dop" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -78310,7 +78310,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dor" = (
 /obj/cable{
 	d1 = 1;
@@ -78333,15 +78333,15 @@
 	name = "glow - WHITE"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dos" = (
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dot" = (
 /turf/simulated/floor/white,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dou" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -78351,7 +78351,7 @@
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dov" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/shuttle{
@@ -78377,16 +78377,16 @@
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doz" = (
 /obj/stool/bar,
 /turf/simulated/floor/white,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doA" = (
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doB" = (
 /obj/machinery/door/airlock/pyro/syndicate{
 	dir = 4;
@@ -78417,7 +78417,7 @@
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doF" = (
 /obj/table/auto,
 /obj/item/plate,
@@ -78425,14 +78425,14 @@
 /obj/item/kitchen/utensil/knife,
 /obj/machinery/light,
 /turf/simulated/floor/redwhite,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doG" = (
 /obj/table/auto,
 /obj/item/pinpointer/disk,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "doH" = (
 /obj/machinery/light,
 /turf/simulated/floor/shuttle{
@@ -78822,7 +78822,7 @@
 /obj/item/spacecash/thousand,
 /obj/item/paper/telecrystal_update,
 /turf/simulated/floor/yellow/side,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "dJs" = (
 /obj/machinery/camera{
 	c_tag = "autotag";

@@ -2490,7 +2490,7 @@
 "afr" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afs" = (
 /obj/lattice{
 	dir = 6;
@@ -2513,7 +2513,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afv" = (
 /obj/lattice{
 	dir = 1;
@@ -2528,7 +2528,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afx" = (
 /obj/cable{
 	d1 = 1;
@@ -2538,7 +2538,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afy" = (
 /obj/lattice{
 	dir = 6;
@@ -2550,7 +2550,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afA" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
@@ -2568,7 +2568,7 @@
 	name = "old mainframe"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afC" = (
 /obj/cable{
 	d1 = 1;
@@ -2576,14 +2576,14 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afD" = (
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
 	},
 /turf/simulated/floor/caution/west,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afE" = (
 /obj/securearea{
 	desc = "";
@@ -2591,7 +2591,7 @@
 	name = "Danger: High Voltage"
 	},
 /turf/simulated/wall,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afF" = (
 /obj/cable{
 	d1 = 2;
@@ -2604,7 +2604,7 @@
 	},
 /obj/machinery/power/monitor,
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afG" = (
 /obj/cable{
 	d2 = 8;
@@ -2616,7 +2616,7 @@
 	output = 2500
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afH" = (
 /obj/lattice{
 	dir = 8;
@@ -2640,7 +2640,7 @@
 	name = "downed server"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afK" = (
 /obj/cable{
 	d1 = 1;
@@ -2648,7 +2648,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afL" = (
 /obj/cable{
 	d1 = 2;
@@ -2661,7 +2661,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/caution/west,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afM" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -2712,7 +2712,7 @@
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afR" = (
 /obj/cable{
 	d1 = 1;
@@ -2720,7 +2720,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afS" = (
 /obj/machinery/power/terminal{
 	dir = 1;
@@ -2731,7 +2731,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afT" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
@@ -2741,13 +2741,13 @@
 /area/space)
 "afU" = (
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afV" = (
 /obj/securearea,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afW" = (
 /obj/cable{
 	d1 = 1;
@@ -2756,11 +2756,11 @@
 	},
 /obj/machinery/door/airlock,
 /turf/simulated/floor/bot,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afX" = (
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afY" = (
 /obj/cable,
 /obj/machinery/power/furnace{
@@ -2768,7 +2768,7 @@
 	fuel = 600
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "afZ" = (
 /turf/simulated/wall/asteroid{
 	dir = 6;
@@ -2863,12 +2863,12 @@
 	req_access_txt = "52"
 	},
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agf" = (
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agg" = (
 /obj/cable{
 	d1 = 2;
@@ -2876,7 +2876,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agh" = (
 /obj/cable{
 	d1 = 1;
@@ -2890,7 +2890,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agi" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
@@ -2904,7 +2904,7 @@
 	icon_state = "bulb1"
 	},
 /turf/simulated/floor/plating/airless,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agk" = (
 /obj/cable{
 	d1 = 1;
@@ -2917,16 +2917,16 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agl" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agm" = (
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agn" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small{
@@ -2934,18 +2934,18 @@
 	},
 /obj/item/peripheral/network/radio/locked,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ago" = (
 /obj/table/wood/auto,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agp" = (
 /obj/machinery/vending/floppy{
 	profit = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agq" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/wall/asteroid{
@@ -2963,7 +2963,7 @@
 "ags" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/bot,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agt" = (
 /obj/machinery/bot/guardbot/bad{
 	on = 0
@@ -2971,7 +2971,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agu" = (
 /obj/cable{
 	d1 = 1;
@@ -2979,10 +2979,10 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agv" = (
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agw" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -2992,7 +2992,7 @@
 	},
 /obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agx" = (
 /obj/table/wood/auto,
 /obj/machinery/cell_charger,
@@ -3000,7 +3000,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agy" = (
 /obj/cable{
 	d1 = 1;
@@ -3013,7 +3013,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agz" = (
 /obj/cable{
 	d1 = 4;
@@ -3023,7 +3023,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agA" = (
 /obj/cable{
 	d1 = 4;
@@ -3032,7 +3032,7 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agB" = (
 /obj/cable{
 	d1 = 2;
@@ -3045,7 +3045,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agC" = (
 /obj/cable{
 	d1 = 4;
@@ -3053,7 +3053,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agD" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -3071,12 +3071,12 @@
 	on = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agE" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "agF" = (
 /turf/simulated/wall,
 /area/station/medical/cdc)
@@ -31850,7 +31850,7 @@
 /obj/storage/crate,
 /obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bug" = (
 /obj/machinery/light{
 	dir = 8;
@@ -31861,7 +31861,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "buh" = (
 /obj/window/reinforced{
 	dir = 1;
@@ -32233,13 +32233,13 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "buP" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/computer3frame,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "buQ" = (
 /obj/rack,
 /obj/item/breaching_hammer,
@@ -32466,19 +32466,19 @@
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bvl" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/paper/printout/emerg1,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bvm" = (
 /obj/machinery/vending/computer3{
 	profit = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bvn" = (
 /obj/cable{
 	d1 = 1;
@@ -32571,7 +32571,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bvx" = (
 /obj/stool/bed,
 /turf/simulated/floor,
@@ -32698,16 +32698,16 @@
 /area/space)
 "bvN" = (
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bvO" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/bot,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bvP" = (
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bvQ" = (
 /turf/space,
 /turf/simulated/wall/asteroid{
@@ -32825,7 +32825,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwf" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -33038,7 +33038,7 @@
 /turf/simulated/floor{
 	icon_state = "carpetNW"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwz" = (
 /obj/machinery/vending/cola/blue{
 	credit = 12
@@ -33047,13 +33047,13 @@
 	dir = 4;
 	icon_state = "carpetN"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwA" = (
 /obj/submachine/chef_sink/chem_sink,
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwB" = (
 /obj/cable{
 	d2 = 4;
@@ -33070,7 +33070,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwC" = (
 /turf/simulated/wall/asteroid{
 	dir = 4;
@@ -33200,18 +33200,18 @@
 	name = "glow - WHITE"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwN" = (
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwO" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "carpet2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwP" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -33220,12 +33220,12 @@
 /turf/simulated/floor{
 	icon_state = "carpetE"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwQ" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwR" = (
 /obj/machinery/light{
 	dir = 1;
@@ -33234,18 +33234,18 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwS" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwT" = (
 /turf/simulated/floor{
 	icon_state = "carpetE"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bwU" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -33337,20 +33337,20 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bxf" = (
 /obj/submachine/syndicate_teleporter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bxg" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave,
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bxh" = (
 /obj/table/wood/auto,
 /obj/item/plate,
@@ -33359,7 +33359,7 @@
 	dir = 4;
 	icon_state = "carpetS"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bxi" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
@@ -33367,13 +33367,13 @@
 /turf/simulated/floor{
 	icon_state = "carpetSE"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bxj" = (
 /obj/machinery/light,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bxm" = (
 /turf/space,
 /turf/simulated/wall/asteroid{

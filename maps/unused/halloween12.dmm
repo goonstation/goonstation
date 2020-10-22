@@ -32450,12 +32450,12 @@
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "blV" = (
 /turf/unsimulated/wall/other{
 	icon_state = "wall"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "blW" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -32464,7 +32464,7 @@
 	dir = 5
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "blX" = (
 /obj/computerframe{
 	anchored = 1;
@@ -32474,10 +32474,10 @@
 	name = "smashed computer"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "blY" = (
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "blZ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -32488,21 +32488,21 @@
 	name = "defective power storage unit"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bma" = (
 /obj/item/storage/toolbox/electrical,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmb" = (
 /obj/window{
 	dir = 2
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmc" = (
 /obj/machinery/door/window,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmd" = (
 /obj/decal/fakeobjects/apc_broken{
 	pixel_x = 24
@@ -32511,7 +32511,7 @@
 	dir = 2
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bme" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
@@ -32520,16 +32520,16 @@
 	},
 /obj/grille/steel,
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmf" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmg" = (
 /obj/closet,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmh" = (
 /obj/overlay{
 	anchored = 1;
@@ -32538,7 +32538,7 @@
 	name = "Riot Doors"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmi" = (
 /obj/overlay{
 	anchored = 1;
@@ -32551,7 +32551,7 @@
 	opacity = 1
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmj" = (
 /obj/decal/fakeobjects{
 	anchored = 0;
@@ -32562,7 +32562,7 @@
 	name = "Portable Scrubber"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmk" = (
 /obj/decal/fakeobjects{
 	anchored = 0;
@@ -32573,7 +32573,7 @@
 	name = "Portable Siphon"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bml" = (
 /obj/overlay{
 	anchored = 1;
@@ -32584,7 +32584,7 @@
 	opacity = 1
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmm" = (
 /obj/computerframe{
 	anchored = 1;
@@ -32593,7 +32593,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmn" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -32602,7 +32602,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmo" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -32611,7 +32611,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmp" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -32620,7 +32620,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmq" = (
 /obj/computerframe{
 	anchored = 1;
@@ -32633,10 +32633,10 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmr" = (
 /turf/unsimulated/wall/other,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bms" = (
 /obj/overlay{
 	anchored = 1;
@@ -32652,7 +32652,7 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmt" = (
 /obj/overlay{
 	anchored = 1;
@@ -32663,14 +32663,14 @@
 	name = "broken door"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmu" = (
 /obj/decal/cleanable/blood/splatter{
 	tag = "icon-floor5";
 	icon_state = "floor5"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmv" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -32678,7 +32678,7 @@
 	dir = 4
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmw" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTHEAST)";
@@ -32686,7 +32686,7 @@
 	dir = 5
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmx" = (
 /obj/stool/chair{
 	dir = 4
@@ -32694,12 +32694,12 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmy" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmz" = (
 /obj/stool/chair{
 	dir = 1
@@ -32707,7 +32707,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmA" = (
 /obj/stool/chair{
 	tag = "icon-chair (WEST)";
@@ -32717,10 +32717,10 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmB" = (
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmC" = (
 /obj/decal/fakeobjects{
 	tag = "icon-rightsecureopen (EAST)";
@@ -32732,7 +32732,7 @@
 	anchored = 1
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmD" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -32747,7 +32747,7 @@
 	anchored = 1
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmE" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -32758,7 +32758,7 @@
 	name = "Air Siphon"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmF" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -32769,31 +32769,31 @@
 	name = "Air Scrubber"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmG" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmH" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmI" = (
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmJ" = (
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmK" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmL" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -32812,13 +32812,13 @@
 	dir = 1
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmM" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmN" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	tag = "icon-tube-broken (EAST)";
@@ -32826,7 +32826,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmO" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	tag = "icon-tube-broken (EAST)";
@@ -32834,7 +32834,7 @@
 	dir = 4
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmP" = (
 /obj/overlay{
 	anchored = 1;
@@ -32847,7 +32847,7 @@
 /obj/effect_sparker,
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmQ" = (
 /obj/overlay{
 	anchored = 1;
@@ -32858,7 +32858,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmR" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -32872,7 +32872,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmS" = (
 /obj/machinery/power/apc{
 	cell_type = 1e+031;
@@ -32890,7 +32890,7 @@
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmT" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	tag = "icon-tube-broken (NORTH)";
@@ -32899,7 +32899,7 @@
 	},
 /obj/item/handcuffs,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmU" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor6";
@@ -32915,21 +32915,21 @@
 	dir = 1
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmV" = (
 /obj/closet/wardrobe/red,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmW" = (
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmX" = (
 /obj/securearea,
 /turf/unsimulated/wall/other{
 	icon_state = "wall"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmY" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -32937,7 +32937,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bmZ" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	tag = "icon-bulb-broken (EAST)";
@@ -32947,7 +32947,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bna" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -32962,17 +32962,17 @@
 	},
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnb" = (
 /obj/decal/fakeobjects/apc_broken{
 	pixel_x = -24
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnc" = (
 /obj/stool/chair,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnd" = (
 /obj/overlay{
 	anchored = 1;
@@ -32990,7 +32990,7 @@
 	icon_state = "floor2"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bne" = (
 /obj/machinery/door/airlock,
 /obj/decal/cleanable/blood/tracks{
@@ -32999,7 +32999,7 @@
 	dir = 4
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnf" = (
 /obj/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (SOUTHEAST)";
@@ -33007,7 +33007,7 @@
 	dir = 6
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bng" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -33019,7 +33019,7 @@
 	dir = 4
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnh" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (NORTH)";
@@ -33027,7 +33027,7 @@
 	dir = 1
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bni" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
@@ -33042,24 +33042,24 @@
 	icon_state = "space"
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnj" = (
 /obj/decal/fakeobjects/firelock_broken,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnk" = (
 /obj/computerframe{
 	anchored = 1;
 	state = 1
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnl" = (
 /obj/stool/chair{
 	dir = 4
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnm" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -33068,21 +33068,21 @@
 /obj/item/device/flash,
 /obj/item/clothing/glasses/sunglasses,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnn" = (
 /obj/table{
 	dir = 5;
 	icon_state = "tabledir"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bno" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnp" = (
 /obj/stool,
 /obj/decal/cleanable/blood/splatter{
@@ -33090,24 +33090,24 @@
 	icon_state = "floor7"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnq" = (
 /obj/table{
 	icon_state = "tabledir";
 	dir = 8
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnr" = (
 /obj/machinery/door/airlock,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bns" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnt" = (
 /turf/simulated/floor,
 /area/station/storage/testroom)
@@ -33136,7 +33136,7 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnz" = (
 /obj/grille/steel,
 /obj/window{
@@ -33150,7 +33150,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnA" = (
 /obj/decal/fakeobjects{
 	tag = "icon-rightsecureopen (EAST)";
@@ -33162,31 +33162,31 @@
 	anchored = 1
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnB" = (
 /obj/table,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnC" = (
 /obj/closet/wardrobe/grey,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnD" = (
 /obj/closet/wardrobe/orange,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnE" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/multitool,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnF" = (
 /obj/table{
 	icon_state = "tabledir";
 	dir = 10
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnG" = (
 /obj/table{
 	tag = "icon-tabledir (SOUTHEAST)";
@@ -33194,13 +33194,13 @@
 	dir = 6
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnH" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnI" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -33212,7 +33212,7 @@
 	dir = 4
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnJ" = (
 /obj/overlay{
 	anchored = 1;
@@ -33225,7 +33225,7 @@
 	icon_state = "floor3"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnK" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -33276,13 +33276,13 @@
 	dir = 2
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnQ" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 8
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnR" = (
 /obj/grille/steel,
 /obj/window{
@@ -33301,17 +33301,17 @@
 	dir = 1
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnS" = (
 /obj/item/storage/toolbox/mechanical,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnT" = (
 /obj/stool/chair{
 	dir = 1
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnU" = (
 /obj/computerframe{
 	anchored = 1;
@@ -33319,7 +33319,7 @@
 	},
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bnV" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor,
@@ -33349,7 +33349,7 @@
 	pixel_x = 24
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bob" = (
 /obj/decal/fakeobjects/firealarm_broken{
 	dir = 8;
@@ -33358,16 +33358,16 @@
 	tag = "icon-firex (WEST)"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boc" = (
 /obj/stool/bed,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bod" = (
 /obj/stool/bed,
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boe" = (
 /obj/overlay{
 	anchored = 1;
@@ -33381,7 +33381,7 @@
 	opacity = 0
 	},
 /turf/unsimulated/wall/other,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bof" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
@@ -33430,23 +33430,23 @@
 	dir = 8
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bom" = (
 /obj/rack,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bon" = (
 /obj/closet,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boo" = (
 /obj/item/paper/courtroom,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bop" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -33458,7 +33458,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boq" = (
 /obj/table{
 	tag = "icon-tabledir (SOUTHEAST)";
@@ -33468,13 +33468,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bor" = (
 /obj/item/device/infra_sensor,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bos" = (
 /obj/overlay{
 	anchored = 1;
@@ -33487,7 +33487,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bot" = (
 /obj/overlay{
 	anchored = 1;
@@ -33500,7 +33500,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bou" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	tag = "icon-bulb-broken (NORTH)";
@@ -33510,14 +33510,14 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bov" = (
 /obj/table,
 /obj/item/device/analyzer/healthanalyzer,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bow" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -33530,7 +33530,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "box" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -33557,15 +33557,15 @@
 	name = "Oxygen Tank Storage Unit"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boB" = (
 /obj/stool/bed,
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boC" = (
 /obj/decal/fakeobjects/lighttube_broken,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boD" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -33573,7 +33573,7 @@
 	dir = 8
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boE" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	tag = "icon-bulb-broken (WEST)";
@@ -33583,13 +33583,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boF" = (
 /obj/stool/bed,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boG" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
@@ -33616,23 +33616,23 @@
 "boJ" = (
 /obj/item/rods,
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boK" = (
 /obj/structure/girder,
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boL" = (
 /obj/machinery/door/window/eastright,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boM" = (
 /obj/machinery/door/window/westleft,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boN" = (
 /obj/item/wrench,
 /turf/simulated/floor,
@@ -33649,7 +33649,7 @@
 	icon_state = "coatblood"
 	},
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boP" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHEAST)";
@@ -33662,7 +33662,7 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boQ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHWEST)";
@@ -33675,14 +33675,14 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boR" = (
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/bombvr{
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boS" = (
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = 24
@@ -33696,7 +33696,7 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boT" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -33707,7 +33707,7 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boU" = (
 /obj/table{
 	tag = "icon-tabledir (SOUTHEAST)";
@@ -33719,7 +33719,7 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boV" = (
 /obj/decal/fakeobjects/apc_broken{
 	pixel_x = 24
@@ -33730,14 +33730,14 @@
 	dir = 4
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boW" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer,
 /turf/unsimulated/bombvr{
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boX" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
@@ -33747,27 +33747,27 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boY" = (
 /obj/machinery/atmospherics/unary/cryo_cell,
 /turf/unsimulated/bombvr{
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "boZ" = (
 /turf/unsimulated/bombvr{
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpa" = (
 /obj/item/caution{
 	desc = "Notice: Area Under Quarantine!";
 	name = "quarantine sign"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpb" = (
 /obj/table{
 	tag = "icon-tabledir (SOUTHEAST)";
@@ -33776,13 +33776,13 @@
 	},
 /obj/item/cable_coil,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpc" = (
 /obj/closet/wardrobe/orange,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpd" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -33794,7 +33794,7 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpe" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	icon_state = "manifold";
@@ -33804,7 +33804,7 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpf" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (NORTHWEST)";
@@ -33817,42 +33817,42 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpg" = (
 /obj/item/tile,
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bph" = (
 /turf/unsimulated/bombvr{
 	tag = "icon-vrwhitehall (WEST)";
 	icon_state = "vrwhitehall";
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpi" = (
 /obj/machinery/door/airlock{
 	name = "Storage Closet";
 	req_access_txt = "0"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpj" = (
 /obj/reagent_dispensers/watertank,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpk" = (
 /obj/stool/chair,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpl" = (
 /obj/stool/chair,
 /obj/decal/cleanable/greenpuke,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpm" = (
 /obj/item/device/analyzer/atmospheric,
 /turf/simulated/floor,
@@ -33866,7 +33866,7 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpo" = (
 /obj/item/caution{
 	desc = "Notice: Area Under Quarantine!";
@@ -33877,20 +33877,20 @@
 	icon_state = "vrwhitehall";
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpp" = (
 /obj/decal/cleanable/blood/splatter{
 	tag = "icon-floor4";
 	icon_state = "floor4"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpq" = (
 /obj/table,
 /obj/machinery/cell_charger,
 /obj/item/device/multitool,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpr" = (
 /obj/stool/chair{
 	dir = 4
@@ -33903,7 +33903,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bps" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -33913,7 +33913,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpt" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -33922,7 +33922,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpu" = (
 /obj/overlay{
 	anchored = 1;
@@ -33936,7 +33936,7 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpv" = (
 /obj/overlay{
 	anchored = 1;
@@ -33950,14 +33950,14 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpw" = (
 /obj/stool/bed,
 /turf/unsimulated/bombvr{
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpx" = (
 /obj/stool/bed,
 /obj/decal/cleanable/blood/splatter{
@@ -33968,14 +33968,14 @@
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpy" = (
 /obj/secure_closet/medical1,
 /turf/unsimulated/bombvr{
 	tag = "icon-white";
 	icon_state = "white"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpz" = (
 /obj/table{
 	tag = "icon-tabledir (SOUTHEAST)";
@@ -33986,22 +33986,22 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpA" = (
 /turf/space,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpB" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpC" = (
 /obj/machinery/door/window/eastleft,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpD" = (
 /obj/decal/fakeobjects{
 	tag = "icon-rightsecureopen (EAST)";
@@ -34019,7 +34019,7 @@
 	},
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpE" = (
 /obj/decal/fakeobjects{
 	tag = "icon-rightsecureopen (EAST)";
@@ -34036,7 +34036,7 @@
 	dir = 4
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpF" = (
 /obj/overlay{
 	anchored = 1;
@@ -34059,7 +34059,7 @@
 	dir = 4
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpG" = (
 /obj/machinery/ignition_switch{
 	id = "testroom";
@@ -34078,7 +34078,7 @@
 	},
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpI" = (
 /obj/stool/chair{
 	dir = 4
@@ -34091,14 +34091,14 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpJ" = (
 /obj/table,
 /obj/item/game_kit,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpK" = (
 /obj/landmark{
 	name = "oldoutpostvr"
@@ -34107,7 +34107,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpL" = (
 /obj/stool/chair,
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -34118,13 +34118,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpM" = (
 /obj/machinery/door/window/southleft,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpN" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -34133,7 +34133,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpO" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -34143,7 +34143,7 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpP" = (
 /turf/unsimulated/wall,
 /area/space)
@@ -34205,30 +34205,30 @@
 	dir = 4
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bpZ" = (
 /obj/machinery/door/window/southleft,
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 8
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqa" = (
 /obj/machinery/door/window/southright,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqb" = (
 /obj/stool,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqc" = (
 /obj/morgue,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqd" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -34253,14 +34253,14 @@
 "bqg" = (
 /obj/item/storage/backpack,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqh" = (
 /obj/decal/cleanable/blood/splatter{
 	tag = "icon-floor3";
 	icon_state = "floor3"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqi" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	tag = "icon-tube-broken (NORTH)";
@@ -34268,36 +34268,36 @@
 	dir = 1
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqj" = (
 /obj/decal/fakeobjects/shuttlethruster,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall2"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqk" = (
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = -24
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bql" = (
 /obj/machinery/door{
 	icon = 'icons/obj/doors/Door1.dmi';
 	name = "Morgue"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqm" = (
 /obj/morgue,
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqn" = (
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = 24
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqo" = (
 /obj/landmark/start,
 /obj/landmark/start{
@@ -34352,7 +34352,7 @@
 	icon_state = "medium"
 	},
 /turf/unsimulated/bombvr,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqx" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -34419,7 +34419,7 @@
 	},
 /obj/item/rods,
 /turf/unsimulated/floor,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqG" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -34470,14 +34470,14 @@
 	icon_state = "grasstodirt";
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqM" = (
 /turf/unsimulated/grasstodirt{
 	tag = "icon-grasstodirt (NORTH)";
 	icon_state = "grasstodirt";
 	dir = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqN" = (
 /obj/grassplug{
 	tag = "icon-grassplug (NORTH)";
@@ -34494,10 +34494,10 @@
 	icon_state = "grasstodirt";
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqO" = (
 /turf/unsimulated/grass,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqP" = (
 /obj/machinery/computer/shuttle,
 /turf/simulated/floor/shuttle,
@@ -34508,7 +34508,7 @@
 	icon_state = "grasstodirt";
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqR" = (
 /obj/grassplug{
 	tag = "icon-grassplug (SOUTHEAST)";
@@ -34516,7 +34516,7 @@
 	dir = 6
 	},
 /turf/unsimulated/dirt,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqS" = (
 /obj/grassplug,
 /turf/unsimulated/grasstodirt{
@@ -34524,7 +34524,7 @@
 	icon_state = "grasstodirt";
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqT" = (
 /turf/unsimulated/grass{
 	density = 1;
@@ -34532,7 +34532,7 @@
 	name = "grass.";
 	opacity = 1
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqU" = (
 /obj/grassplug{
 	tag = "icon-grassplug (WEST)";
@@ -34540,14 +34540,14 @@
 	dir = 8
 	},
 /turf/unsimulated/grasstodirt,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqV" = (
 /turf/unsimulated/grasstodirt{
 	tag = "icon-grasstodirt (EAST)";
 	icon_state = "grasstodirt";
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bqW" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall_space"
@@ -34576,7 +34576,7 @@
 	dir = 10
 	},
 /turf/unsimulated/grass,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "brb" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/fullscreen.dmi';
@@ -34639,7 +34639,7 @@
 	dir = 5
 	},
 /turf/unsimulated/dirt,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bri" = (
 /obj/shrub{
 	tag = "icon-shrub (EAST)";
@@ -34647,7 +34647,7 @@
 	dir = 4
 	},
 /turf/unsimulated/grass,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "brj" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -34763,7 +34763,7 @@
 /area/centcom)
 "brq" = (
 /turf/unsimulated/dirt,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "brr" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -34795,7 +34795,7 @@
 	name = "deadlight"
 	},
 /turf/unsimulated/dirt,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bru" = (
 /obj/stone{
 	tag = "icon-stone (NORTH)";
@@ -34807,7 +34807,7 @@
 	icon_state = "grasstodirt";
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "brv" = (
 /turf/unsimulated/floor{
 	tag = "icon-bolts";
@@ -34826,10 +34826,10 @@
 	dir = 10
 	},
 /turf/unsimulated/grasstodirt,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "brx" = (
 /turf/unsimulated/grasstodirt,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "bry" = (
 /obj/grassplug{
 	tag = "icon-grassplug (EAST)";
@@ -34837,7 +34837,7 @@
 	dir = 4
 	},
 /turf/unsimulated/grasstodirt,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "brz" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -34908,7 +34908,7 @@
 	dir = 9
 	},
 /turf/unsimulated/grass,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "brF" = (
 /turf/unsimulated/grass{
 	density = 1;

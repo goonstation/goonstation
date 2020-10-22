@@ -50506,7 +50506,7 @@
 "ckc" = (
 /obj/grille/steel,
 /turf/simulated/floor/airless/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ckd" = (
 /obj/machinery/door/airlock/pyro/medical/alt,
 /turf/simulated/floor/plating,
@@ -50552,7 +50552,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/airless/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ckk" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -50687,7 +50687,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ckB" = (
 /obj/cable{
 	d1 = 2;
@@ -50780,7 +50780,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ckM" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -50838,7 +50838,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ckV" = (
 /obj/machinery/door/unpowered/wood/pyro,
 /obj/cable{
@@ -50864,7 +50864,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ckY" = (
 /obj/cable{
 	d1 = 4;
@@ -50874,7 +50874,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "ckZ" = (
 /obj/cable{
 	d1 = 1;
@@ -50890,7 +50890,7 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cla" = (
 /obj/storage/crate,
 /obj/item/fuel_pellet/cerenkite,
@@ -50900,7 +50900,7 @@
 /obj/item/fuel_pellet/cerenkite,
 /obj/item/fuel_pellet/cerenkite,
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clb" = (
 /obj/machinery/power/monitor,
 /obj/cable{
@@ -50908,7 +50908,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clc" = (
 /obj/cable{
 	d1 = 2;
@@ -50991,15 +50991,15 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clj" = (
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clk" = (
 /turf/simulated/floor/stairs/wide/other{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cll" = (
 /obj/cable{
 	d1 = 1;
@@ -51009,10 +51009,10 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clm" = (
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cln" = (
 /obj/cable{
 	d1 = 1;
@@ -51020,14 +51020,14 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clo" = (
 /obj/machinery/power/rtg,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clp" = (
 /obj/cable{
 	d1 = 1;
@@ -51078,16 +51078,16 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clv" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/circuit,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clw" = (
 /turf/simulated/floor/stairs/wide{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clx" = (
 /obj/cable{
 	d1 = 2;
@@ -51100,7 +51100,7 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cly" = (
 /obj/cable{
 	d2 = 8;
@@ -51114,7 +51114,7 @@
 	cell_type = 5000
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clz" = (
 /obj/machinery/light/small,
 /obj/cable{
@@ -51128,7 +51128,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clA" = (
 /obj/cable{
 	d1 = 2;
@@ -51146,7 +51146,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clB" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -51182,7 +51182,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clG" = (
 /obj/cable{
 	d1 = 1;
@@ -51191,12 +51191,12 @@
 	},
 /obj/machinery/door/airlock,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clH" = (
 /obj/cable,
 /obj/machinery/power/rtg,
 /turf/simulated/floor/plating,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clI" = (
 /obj/cable{
 	d1 = 1;
@@ -51239,7 +51239,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clM" = (
 /obj/marker/supplymarker,
 /obj/decal/poster/wallsign/poster_nt{
@@ -51248,7 +51248,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clN" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -51258,7 +51258,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clO" = (
 /obj/cable{
 	d1 = 1;
@@ -51266,13 +51266,13 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clP" = (
 /obj/machinery/vending/alcohol,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clQ" = (
 /obj/grille/steel,
 /turf/space,
@@ -51280,7 +51280,7 @@
 "clR" = (
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clS" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -51291,7 +51291,7 @@
 /obj/item/shipcomponent/secondary_system/crash,
 /obj/item/storage/fanny/syndie,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clT" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -51299,11 +51299,11 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clU" = (
 /obj/stool/chair/comfy,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clV" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -51312,11 +51312,11 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clW" = (
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clX" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small{
@@ -51324,17 +51324,17 @@
 	},
 /obj/item/peripheral/network/radio/locked,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clY" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "clZ" = (
 /obj/machinery/vending/floppy{
 	profit = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cma" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
@@ -51349,32 +51349,32 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmc" = (
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmd" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/carpet/grime,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cme" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmf" = (
 /obj/table/wood/auto,
 /obj/item/storage/firstaid/regular,
 /obj/item/bandage,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmg" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/playing_cards/suit,
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmh" = (
 /obj/cable{
 	d1 = 1;
@@ -51385,7 +51385,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmi" = (
 /obj/submachine/ATM{
 	pixel_x = 32
@@ -51393,10 +51393,10 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmj" = (
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmk" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -51412,19 +51412,19 @@
 	pixel_y = -8
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cml" = (
 /obj/table/wood/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmm" = (
 /obj/table/wood/auto,
 /obj/item/clothing/suit/wcoat,
 /obj/item/matchbook,
 /obj/item/pen/marker/red,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmn" = (
 /obj/cable{
 	d1 = 1;
@@ -51440,7 +51440,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmo" = (
 /obj/cable{
 	d1 = 4;
@@ -51450,7 +51450,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmp" = (
 /obj/cable{
 	d1 = 4;
@@ -51459,7 +51459,7 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmq" = (
 /obj/cable{
 	d1 = 4;
@@ -51467,7 +51467,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmr" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -51485,17 +51485,17 @@
 	on = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cms" = (
 /turf/simulated/floor/plating/airless/asteroid/dark,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmt" = (
 /obj/machinery/door/airlock/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
 /turf/simulated/floor/delivery,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmu" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -51508,7 +51508,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmv" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -51518,7 +51518,7 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmw" = (
 /obj/cable{
 	d1 = 2;
@@ -51528,7 +51528,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmx" = (
 /obj/cable{
 	d1 = 4;
@@ -51537,7 +51537,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmy" = (
 /obj/cable{
 	d1 = 4;
@@ -51545,13 +51545,13 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmz" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/orangeblack,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmA" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -51559,13 +51559,13 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmB" = (
 /obj/table/wood/auto,
 /obj/machinery/cell_charger,
 /obj/item/cigpacket,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmC" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small,
@@ -51573,20 +51573,20 @@
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmD" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/paper/printout/emerg1,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmE" = (
 /obj/machinery/vending/computer3{
 	profit = 0
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmF" = (
 /obj/cable{
 	d1 = 1;
@@ -51598,10 +51598,10 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmG" = (
 /turf/simulated/floor/stairs,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmH" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -51611,60 +51611,60 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmI" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmJ" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmK" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmL" = (
 /turf/simulated/floor/carpet/red/fancy/edge/north,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmM" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmN" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/sanitary,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmO" = (
 /obj/machinery/drainage,
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmP" = (
 /obj/machinery/shower{
 	dir = 1
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/sanitary,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmQ" = (
 /obj/item/storage/toilet{
 	dir = 8
 	},
 /obj/machinery/door/window/westleft,
 /turf/simulated/floor/sanitary,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmR" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -51673,18 +51673,18 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmS" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/glassbox,
 /turf/simulated/floor/carpet/red/fancy/edge/west,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmT" = (
 /turf/simulated/floor/carpet/red,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmU" = (
 /turf/simulated/floor/carpet/red/fancy/edge/east,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmV" = (
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced{
@@ -51699,21 +51699,21 @@
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmW" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave,
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmX" = (
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/snack_cake/golden,
 /turf/simulated/floor/carpet/red/fancy/edge/south,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmY" = (
 /turf/simulated/floor/carpet/red/fancy/edge/se,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cmZ" = (
 /obj/machinery/door/airlock/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
@@ -51722,12 +51722,12 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cna" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cnb" = (
 /obj/table/wood/auto,
 /obj/item/crowbar,
@@ -51735,14 +51735,14 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cnc" = (
 /obj/item/storage/wall/fire{
 	pixel_x = -28;
 	pixel_y = 3
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cnd" = (
 /obj/machinery/light{
 	dir = 8
@@ -51750,13 +51750,13 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cne" = (
 /obj/submachine/syndicate_teleporter,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cnf" = (
 /obj/storage/secure/crate/gear{
 	anchored = 1;
@@ -51768,7 +51768,7 @@
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cng" = (
 /obj/cable{
 	d1 = 1;
@@ -51780,7 +51780,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cnh" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -51801,7 +51801,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cni" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -51813,7 +51813,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cnj" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -51824,13 +51824,13 @@
 	name = "damaged vaporator unit"
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cnk" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cnl" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
@@ -51838,7 +51838,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cnm" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
@@ -51846,7 +51846,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cnn" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
@@ -51854,13 +51854,13 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cno" = (
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
 	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
-/area/listeningpost/concrete)
+/area/listeningpost)
 "cnp" = (
 /turf/space,
 /area/supply/sell_point)
