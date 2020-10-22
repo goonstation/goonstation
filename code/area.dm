@@ -2985,7 +2985,6 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	force_fullbright = 1
 
 /// Nukeops spawn station
-ABSTRACT_TYPE(/area/syndicate_station)
 /area/syndicate_station
 	name = "Syndicate Station"
 	icon_state = "yellow"
@@ -2993,8 +2992,6 @@ ABSTRACT_TYPE(/area/syndicate_station)
 	sound_environment = 2
 	teleport_blocked = 1
 	sound_group = "syndicate_station"
-
-/area/syndicate_station/concrete
 
 /area/syndicate_station/battlecruiser
 		name = "Syndicate Battlecruiser Cairngorm"
