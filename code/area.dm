@@ -1442,12 +1442,9 @@ ABSTRACT_TYPE(/area/station/maintenance/inner)
 // Donut 3 specific areas //
 
 // Civilian
-ABSTRACT_TYPE(/area/station/library)
 /area/station/library
 	name = "Library"
 	icon_state = "library"
-
-/area/station/library/main
 
 /area/station/library/reading1
 	name = "Reading Room 1"

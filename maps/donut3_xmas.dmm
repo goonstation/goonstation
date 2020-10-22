@@ -1779,7 +1779,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "agj" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 1
@@ -4331,7 +4331,7 @@
 /obj/machinery/light/incandescent/netural,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "aUm" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/maintenance/outer/ne)
@@ -7687,7 +7687,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "bSQ" = (
 /obj/machinery/turret{
 	dir = 4
@@ -7862,7 +7862,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "bVF" = (
 /obj/decal/tile_edge/line/red{
 	dir = 4;
@@ -11133,7 +11133,7 @@
 "cUw" = (
 /obj/machinery/vending/book,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "cUx" = (
 /obj/stool/chair/comfy/blue{
 	dir = 1
@@ -11454,7 +11454,7 @@
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "cYh" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4;
@@ -15603,7 +15603,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "elv" = (
 /obj/potted_plant/potted_plant2{
 	dir = 8;
@@ -17020,7 +17020,7 @@
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/library/main)
+/area/station/library)
 "eHM" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/head)
@@ -18430,7 +18430,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "fcj" = (
 /obj/storage/secure/closet/engineering/mechanic,
 /turf/simulated/floor/orangeblack,
@@ -20708,7 +20708,7 @@
 	},
 /obj/bookshelf/long,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "fKa" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 10;
@@ -20869,7 +20869,7 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "fMB" = (
 /obj/lattice{
 	dir = 5;
@@ -21317,7 +21317,7 @@
 /area/station/security/equipment)
 "fUD" = (
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/library/main)
+/area/station/library)
 "fUK" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 1
@@ -22081,7 +22081,7 @@
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "gfr" = (
 /obj/item/paper/book/medical_guide{
 	pixel_x = 5
@@ -22985,7 +22985,7 @@
 	},
 /obj/machinery/printing_press,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "guJ" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mainpod2_horizontal/vertical{
 	icon_state = "bdoorleft1"
@@ -23232,7 +23232,7 @@
 	},
 /obj/bookshelf/long/end_right,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "gyd" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
@@ -26573,7 +26573,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "hyb" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/incandescent/netural{
@@ -30344,7 +30344,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "iEH" = (
 /obj/cable{
 	d1 = 1;
@@ -32549,7 +32549,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "jpH" = (
 /obj/cable{
 	d1 = 4;
@@ -32843,7 +32843,7 @@
 "juz" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/jen,
-/area/station/library/main)
+/area/station/library)
 "juA" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/maintenance/inner/nw)
@@ -33052,7 +33052,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "jyv" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/green/side,
@@ -33082,7 +33082,7 @@
 "jyR" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "jyT" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/middle{
@@ -33907,7 +33907,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "jLx" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor,
@@ -35447,7 +35447,7 @@
 "kli" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "kll" = (
 /obj/stool/bed,
 /obj/landmark/start{
@@ -35749,7 +35749,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "kqI" = (
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
@@ -36782,7 +36782,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "kGJ" = (
 /turf/simulated/floor/greenwhite/other{
 	dir = 8
@@ -37974,7 +37974,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "lbe" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -38429,7 +38429,7 @@
 "lie" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "liD" = (
 /obj/item/device/radio/intercom/loudspeaker{
 	pixel_x = -1;
@@ -39458,7 +39458,7 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "lxR" = (
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/bluewhite{
@@ -40124,7 +40124,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "lGk" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/wood/six,
@@ -42245,7 +42245,7 @@
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "mlX" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -42475,7 +42475,7 @@
 "mpM" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "mpO" = (
 /obj/cable{
 	d1 = 4;
@@ -42700,7 +42700,7 @@
 /area/station/medical/medbay/treatment)
 "mtR" = (
 /turf/simulated/wall/auto/supernorn/wood,
-/area/station/library/main)
+/area/station/library)
 "mua" = (
 /turf/simulated/wall/auto/reinforced/jen/blue{
 	icon_state = "R8"
@@ -43283,7 +43283,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "mCx" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -44351,7 +44351,7 @@
 	},
 /obj/decal/garland,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "mUU" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -44602,7 +44602,7 @@
 "mXZ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/library/main)
+/area/station/library)
 "mYf" = (
 /obj/railing/yellow{
 	dir = 4
@@ -46347,7 +46347,7 @@
 /obj/random_item_spawner/desk_stuff/maybe_few,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "nzu" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
@@ -46708,7 +46708,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "nFM" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 1
@@ -49545,7 +49545,7 @@
 "ouY" = (
 /obj/machinery/photocopier,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "ovm" = (
 /turf/simulated/floor/escape{
 	dir = 8
@@ -49975,7 +49975,7 @@
 "oBH" = (
 /obj/bookshelf/long/end_right,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "oBQ" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
@@ -52547,7 +52547,7 @@
 "poF" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/jen,
-/area/station/library/main)
+/area/station/library)
 "poR" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
@@ -55240,7 +55240,7 @@
 "qbM" = (
 /obj/bookshelf/long,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "qce" = (
 /obj/cable{
 	d1 = 1;
@@ -56792,7 +56792,7 @@
 /area/listeningpost)
 "quz" = (
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "quB" = (
 /obj/shrub{
 	dir = 1
@@ -56927,7 +56927,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "qwq" = (
 /obj/cable{
 	d1 = 4;
@@ -59003,7 +59003,7 @@
 "raA" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "raD" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -61437,7 +61437,7 @@
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff/maybe_few,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "rIw" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -63801,7 +63801,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "stV" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -63884,7 +63884,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "svj" = (
 /obj/stool/chair,
 /obj/cable{
@@ -64570,7 +64570,7 @@
 /area/station/maintenance/outer/ne)
 "sGu" = (
 /turf/simulated/wall/auto/jen,
-/area/station/library/main)
+/area/station/library)
 "sGC" = (
 /obj/railing/orange{
 	dir = 4
@@ -65024,7 +65024,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "sNX" = (
 /obj/morgue,
 /obj/machinery/light/incandescent/cool/very,
@@ -65152,7 +65152,7 @@
 	},
 /obj/bookshelf/long/end_left,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "sRc" = (
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
@@ -65679,7 +65679,7 @@
 /obj/disposalpipe/segment,
 /obj/decal/garland,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "sZl" = (
 /obj/machinery/computer3/generic/secure_data{
 	dir = 8;
@@ -65908,7 +65908,7 @@
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/one,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "tdX" = (
 /obj/decoration/decorativeplant/plant4,
 /obj/machinery/light/emergency,
@@ -67862,7 +67862,7 @@
 	name = "peststart"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "tGm" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -68356,7 +68356,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "tNU" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 1
@@ -68977,7 +68977,7 @@
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "tWG" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 1
@@ -68994,7 +68994,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "tXr" = (
 /turf/unsimulated/floor/greenwhite/corner{
 	dir = 8
@@ -69062,7 +69062,7 @@
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "tYp" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -72433,7 +72433,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "uXr" = (
 /obj/creepy_sound_trigger,
 /turf/simulated/floor/plating/jen,
@@ -72650,7 +72650,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "vaw" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/greenwhite,
@@ -80900,7 +80900,7 @@
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "xus" = (
 /obj/decal/tile_edge/stripe/xmas{
 	dir = 4
@@ -80959,7 +80959,7 @@
 "xuS" = (
 /obj/bookshelf/long/end_left,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "xuV" = (
 /obj/machinery/light/incandescent/warm,
 /obj/storage/closet/radiation,
@@ -82751,7 +82751,7 @@
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
-/area/station/library/main)
+/area/station/library)
 "xVi" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib3"
@@ -83387,7 +83387,7 @@
 /obj/disposalpipe/segment/mail,
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/wood/six,
-/area/station/library/main)
+/area/station/library)
 "yeT" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/donkpocket_kit{
