@@ -6993,7 +6993,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ang" = (
 /obj/grille/steel,
 /obj/window/reinforced,
@@ -7016,7 +7016,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "anh" = (
 /obj/table/reinforced,
 /obj/cable{
@@ -7030,7 +7030,7 @@
 	},
 /obj/machinery/door/window/southleft,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ani" = (
 /obj/cable{
 	d2 = 8;
@@ -7041,7 +7041,7 @@
 	d2 = 4
 	},
 /turf/simulated/wall,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "anj" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -7068,7 +7068,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ank" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
@@ -7192,7 +7192,7 @@
 	req_access_txt = "31"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "anB" = (
 /obj/grille/steel,
 /obj/window/reinforced,
@@ -7212,7 +7212,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "anC" = (
 /obj/grille/steel,
 /obj/window/reinforced,
@@ -7227,10 +7227,10 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "anD" = (
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "anE" = (
 /obj/submachine/ATM{
 	pixel_x = 0;
@@ -7248,7 +7248,7 @@
 	},
 /obj/machinery/door/window/southleft,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "anF" = (
 /obj/grille/steel,
 /obj/window/reinforced,
@@ -7264,7 +7264,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "anG" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
@@ -7397,7 +7397,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "anY" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -7405,7 +7405,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "anZ" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -7418,7 +7418,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aoa" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -7436,10 +7436,10 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aob" = (
 /turf/simulated/wall/r_wall,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aoc" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
@@ -7735,7 +7735,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aoE" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -7748,7 +7748,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aoF" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -7759,10 +7759,10 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aoG" = (
 /turf/simulated/wall,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aoH" = (
 /obj/stool/barber_chair{
 	desc = "A traditional barbershop chair, obviously a very old one at that.  What it is doing on a space station you haven't the foggiest.";
@@ -7828,7 +7828,7 @@
 "aoO" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aoP" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -7841,7 +7841,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aoQ" = (
 /obj/cable{
 	d2 = 8;
@@ -7855,7 +7855,7 @@
 	pixel_x = 29
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aoR" = (
 /obj/item/device/multitool{
 	pixel_x = -7;
@@ -8042,14 +8042,14 @@
 	name = "Cargo Bay"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "apk" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/glass{
 	name = "Cargo Bay"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "apl" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/cable{
@@ -8061,7 +8061,7 @@
 	name = "Cargo Bay"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "apm" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -8080,7 +8080,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "apn" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -8099,11 +8099,11 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "apo" = (
 /obj/machinery/status_display/supply_shuttle,
 /turf/simulated/wall,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "app" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/maintenance,

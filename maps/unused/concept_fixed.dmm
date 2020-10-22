@@ -4922,7 +4922,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajv" = (
 /obj/cable,
 /obj/cable{
@@ -4937,13 +4937,13 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajw" = (
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajx" = (
 /turf/simulated/wall,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajy" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
@@ -5010,7 +5010,7 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajG" = (
 /obj/submachine/ATM{
 	pixel_y = 28
@@ -5026,7 +5026,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajH" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -5208,11 +5208,11 @@
 	},
 /obj/table/reinforced,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajY" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ajZ" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -5236,7 +5236,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "aka" = (
 /turf/simulated/wall,
 /area/station/chapel/office)
@@ -5337,7 +5337,7 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "akl" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -5345,7 +5345,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "akm" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -5357,7 +5357,7 @@
 	location = "cargo"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "akn" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -5366,7 +5366,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ako" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -5382,7 +5382,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "akp" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
@@ -5553,7 +5553,7 @@
 	req_access_txt = "31"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "akG" = (
 /obj/cable{
 	d1 = 1;
@@ -5569,7 +5569,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "akH" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -5794,13 +5794,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "alb" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "alc" = (
 /obj/disposalpipe/switch_junction{
 	dir = 1;
@@ -5808,7 +5808,7 @@
 	mail_tag = "cargo"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ald" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -5819,7 +5819,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "ale" = (
 /obj/morgue,
 /turf/simulated/floor/black,
@@ -5963,7 +5963,7 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "als" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -5976,7 +5976,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "alt" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -5992,7 +5992,7 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "alu" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -6009,7 +6009,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "alv" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -6022,7 +6022,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "alw" = (
 /obj/cable,
 /obj/grille,
@@ -6047,7 +6047,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "alx" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -6170,7 +6170,7 @@
 /area/station/maintenance/northwest)
 "alH" = (
 /turf/simulated/wall/r_wall,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "alI" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -6186,7 +6186,7 @@
 "alJ" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "alK" = (
 /obj/cable{
 	icon_state = "0-2";

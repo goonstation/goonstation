@@ -27684,7 +27684,7 @@
 /area/station/hallway/secondary/east)
 "bka" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bkb" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/northleft{
@@ -27695,14 +27695,14 @@
 	req_access = list(31)
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bkc" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/floorflusher/industrial{
 	name = "Sell External"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bkd" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -27718,14 +27718,14 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bke" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/floorflusher/industrial{
 	name = "Front Office"
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bkf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -28700,7 +28700,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bmq" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/vehicle/forklift,
@@ -28710,7 +28710,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bmr" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/storage/crate,
@@ -28719,7 +28719,7 @@
 	},
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bms" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/storage/crate,
@@ -28727,7 +28727,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bmt" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/decal/tile_edge/stripe{
@@ -28739,7 +28739,7 @@
 	name = "Quartermaster"
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bmu" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -28753,7 +28753,7 @@
 /obj/item/paper/book/materials,
 /obj/item/paper/book/dwainedummies,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bmv" = (
 /obj/disposalpipe/segment/bent/east,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -28763,7 +28763,7 @@
 /obj/item/paper/book/mechanicbook,
 /obj/item/paper/book/minerals,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bmw" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -28773,7 +28773,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bmx" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -28785,14 +28785,14 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bmy" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bmz" = (
 /obj/table/auto,
 /obj/item/aiModule/oneHuman,
@@ -30143,13 +30143,13 @@
 	},
 /obj/machinery/computer/supplycomp,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bpo" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bpp" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -30160,7 +30160,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bpq" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -30170,7 +30170,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bpr" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -30181,21 +30181,21 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bps" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bpt" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bpu" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -30204,18 +30204,18 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bpv" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bpw" = (
 /obj/vehicle/tug,
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bpx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/qm)
@@ -31344,11 +31344,11 @@
 	name = "Quartermaster"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "brT" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "brU" = (
 /obj/disposalpipe/junction/right/west,
 /obj/decal/tile_edge/stripe{
@@ -31357,12 +31357,12 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "brV" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/submachine/cargopad/qm,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "brW" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/decal/tile_edge/stripe{
@@ -31371,11 +31371,11 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "brX" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "brY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -31383,7 +31383,7 @@
 /obj/disposalpipe/segment/transport,
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "brZ" = (
 /obj/disposalpipe/segment/transport,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -31391,13 +31391,13 @@
 	},
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bsa" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bsb" = (
 /obj/disposalpipe/segment/transport,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -31411,7 +31411,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bsc" = (
 /obj/cable{
 	d1 = 1;
@@ -31790,7 +31790,7 @@
 "bsY" = (
 /obj/disposalpipe/switch_junction/biofilter/right/west,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bsZ" = (
 /obj/cable{
 	d2 = 4;
@@ -32153,7 +32153,7 @@
 	},
 /obj/machinery/computer/barcode/qm,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "btW" = (
 /obj/disposalpipe/segment/vertical,
 /obj/disposalpipe/segment/transport{
@@ -32165,7 +32165,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "btX" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -32176,7 +32176,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "btY" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -32195,7 +32195,7 @@
 	},
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bua" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -32206,7 +32206,7 @@
 /obj/disposalpipe/segment/transport,
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bub" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -32214,7 +32214,7 @@
 	},
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "buc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32228,7 +32228,7 @@
 	name = "Quartermaster"
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bud" = (
 /obj/disposalpipe/segment/transport,
 /obj/cable{
@@ -32241,7 +32241,7 @@
 	icon_state = "xtra_bigstripe-corner"
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bue" = (
 /obj/cable{
 	d1 = 1;
@@ -33240,14 +33240,14 @@
 	name = "Quartermaster"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bwk" = (
 /obj/disposalpipe/segment/vertical,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bwl" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
@@ -33255,14 +33255,14 @@
 /obj/disposalpipe/segment/bent/west,
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bwm" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
 /obj/machinery/manufacturer/gas,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bwn" = (
 /obj/disposalpipe/segment/transport,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -33273,7 +33273,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bwo" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5;
@@ -34381,7 +34381,7 @@
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "byC" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -34529,18 +34529,18 @@
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "byR" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "byS" = (
 /obj/disposalpipe/segment/vertical,
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "byT" = (
 /obj/cable{
 	d1 = 2;
@@ -34557,7 +34557,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "byU" = (
 /obj/cable{
 	d1 = 4;
@@ -34568,7 +34568,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "byV" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -34577,14 +34577,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "byW" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /obj/disposalpipe/switch_junction/biofilter/left/south,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "byX" = (
 /obj/cable{
 	d1 = 1;
@@ -35654,7 +35654,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bBu" = (
 /obj/cable{
 	d1 = 4;
@@ -35663,7 +35663,7 @@
 	},
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bBv" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -35682,7 +35682,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/black,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bBw" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -35700,7 +35700,7 @@
 /obj/machinery/light,
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bBx" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -35714,7 +35714,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bBy" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -35726,7 +35726,7 @@
 	},
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bBz" = (
 /obj/disposalpipe/trunk{
 	dir = 8
@@ -35750,7 +35750,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bBA" = (
 /obj/machinery/vehicle/miniputt/indyputt,
 /turf/simulated/floor/shuttlebay,
@@ -36320,7 +36320,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bCN" = (
 /obj/disposalpipe/segment/produce{
 	dir = 4
@@ -37006,7 +37006,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/access_spawn/engineering,
 /turf/simulated/floor/black/side,
-/area/station/quartermaster/concrete)
+/area/station/quartermaster/office)
 "bEk" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/cable{
