@@ -1611,7 +1611,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "eM" = (
 /obj/machinery/light{
 	dir = 8;
@@ -3649,7 +3649,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "jA" = (
 /turf/simulated/floor/blue,
 /area/station/turret_protected/Zeta)
@@ -3950,7 +3950,7 @@
 /area/station/hydroponics/concrete)
 "km" = (
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "kn" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
@@ -4434,7 +4434,7 @@
 "lp" = (
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "lq" = (
 /obj/machinery/light{
 	dir = 4;
@@ -5203,7 +5203,7 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "nd" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	name = "Cold Loop"
@@ -5431,7 +5431,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "nC" = (
 /obj/stool/chair/office/red{
 	dir = 4;
@@ -6325,7 +6325,7 @@
 /area/station/crew_quarters/catering)
 "pG" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "pH" = (
 /obj/storage/closet/coffin,
 /obj/decal/cleanable/cobweb2,
@@ -6976,7 +6976,7 @@
 "rg" = (
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "rh" = (
 /obj/submachine/laundry_machine,
 /obj/machinery/light{
@@ -7006,7 +7006,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "rk" = (
 /obj/cable{
 	d1 = 1;
@@ -7208,7 +7208,7 @@
 "rG" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "rH" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/fire,
@@ -7448,7 +7448,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "sh" = (
 /turf/simulated/floor/purple/corner,
 /area/station/janitor/office)
@@ -7497,7 +7497,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "so" = (
 /obj/table/reinforced/auto,
 /obj/health_scanner/wall,
@@ -7613,7 +7613,7 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "sE" = (
 /obj/cable{
 	d1 = 4;
@@ -7635,7 +7635,7 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "sG" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -7716,7 +7716,7 @@
 	},
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "sQ" = (
 /obj/machinery/atmospherics/valve/horizontal,
 /turf/simulated/floor/white,
@@ -8608,7 +8608,7 @@
 	icon_state = "4-8"
 	},
 /turf/unsimulated/nicegrass/random,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "uW" = (
 /obj/shrub,
 /obj/decal/tile_edge/line/blue{
@@ -8624,7 +8624,7 @@
 	icon_state = "4-8"
 	},
 /turf/unsimulated/nicegrass/random,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "uX" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 10;
@@ -9661,7 +9661,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "xm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10067,7 +10067,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "yh" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/cable{
@@ -10140,7 +10140,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "yq" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -10157,7 +10157,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "yr" = (
 /obj/shrub{
 	dir = 6
@@ -10175,7 +10175,7 @@
 	icon_state = "4-8"
 	},
 /turf/unsimulated/nicegrass/random,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "ys" = (
 /obj/shrub{
 	dir = 1
@@ -10193,7 +10193,7 @@
 	icon_state = "4-8"
 	},
 /turf/unsimulated/nicegrass/random,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "yt" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
@@ -10205,7 +10205,7 @@
 	icon_state = "4-8"
 	},
 /turf/unsimulated/nicegrass/random,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "yu" = (
 /obj/cable{
 	d1 = 4;
@@ -10216,13 +10216,13 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "yv" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "yw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10235,14 +10235,14 @@
 /turf/simulated/floor{
 	icon_state = "nt_logo"
 	},
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "yx" = (
 /obj/landmark/halloween,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "yy" = (
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon18,
@@ -10382,7 +10382,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "yO" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -10390,7 +10390,7 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "yP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10607,7 +10607,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "zm" = (
 /obj/surgery_tray,
 /obj/item/surgical_spoon{
@@ -11134,7 +11134,7 @@
 	},
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "Ak" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
 	name = "Chemistry"
@@ -11282,7 +11282,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "AB" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -12857,7 +12857,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "DF" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -12869,7 +12869,7 @@
 "DG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "DH" = (
 /obj/machinery/atmospherics/unary/furnace_connector,
 /obj/machinery/firealarm{
@@ -13044,7 +13044,7 @@
 	tag = ""
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "DW" = (
 /obj/cable{
 	d1 = 4;
@@ -13145,7 +13145,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "Eg" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -13179,7 +13179,7 @@
 	},
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "Ek" = (
 /turf/simulated/wall/auto/supernorn/wood,
 /area/space)
@@ -13415,7 +13415,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "EO" = (
 /obj/disposalpipe/junction/right/north,
 /turf/simulated/floor,
@@ -13426,7 +13426,7 @@
 "EQ" = (
 /obj/disposalpipe/junction/right/south,
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "ER" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
 	name = "Research Wing"
@@ -13451,7 +13451,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "EU" = (
 /obj/cable{
 	d1 = 4;
@@ -13462,7 +13462,7 @@
 /turf/simulated/floor{
 	icon_state = "nt_logo"
 	},
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "EV" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -13595,7 +13595,7 @@
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "Fj" = (
 /obj/cable{
 	d1 = 4;
@@ -15413,14 +15413,14 @@
 /obj/disposalpipe/junction/middle/east,
 /obj/machinery/navbeacon/tour/atlas/tour11,
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "JP" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/navbeacon/tour/atlas/tour8,
 /turf/simulated/floor,
-/area/station/hallway/concrete)
+/area/station/hallway/primary/north)
 "JQ" = (
 /obj/machinery/navbeacon/tour/atlas/tour7,
 /turf/simulated/floor,
