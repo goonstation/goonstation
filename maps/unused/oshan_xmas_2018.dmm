@@ -5765,7 +5765,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "alM" = (
 /obj/machinery/vending/book,
 /obj/decal/garland{
@@ -5774,7 +5774,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "alN" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -6176,7 +6176,7 @@
 /area/station/crew_quarters/quartersA)
 "amG" = (
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "amH" = (
 /obj/item/instrument/large/piano{
 	dir = 1;
@@ -7375,7 +7375,7 @@
 "app" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "apq" = (
 /obj/machinery/light_switch/auto,
 /obj/machinery/camera{
@@ -9090,17 +9090,17 @@
 "ati" = (
 /obj/shrub,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "atj" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "atk" = (
 /obj/machinery/vending/coffee{
 	pixel_y = 9
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "atl" = (
 /obj/machinery/vending/medical,
 /obj/decal/tile_edge/line/red{
@@ -9129,7 +9129,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "atn" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
@@ -9142,7 +9142,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ato" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -9636,7 +9636,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "auy" = (
 /obj/disposalpipe/segment{
 	icon_state = "pipe-s";
@@ -9648,7 +9648,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "auz" = (
 /obj/disposalpipe/segment{
 	icon_state = "pipe-s";
@@ -9662,7 +9662,7 @@
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "auA" = (
 /obj/disposalpipe/segment{
 	icon_state = "pipe-s";
@@ -9675,7 +9675,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "auB" = (
 /obj/disposalpipe/segment{
 	icon_state = "pipe-s";
@@ -9687,7 +9687,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "auC" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -9699,7 +9699,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "auD" = (
 /obj/table/glass/auto,
 /obj/shrub{
@@ -9723,7 +9723,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "auE" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
@@ -10247,7 +10247,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "avN" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -10255,26 +10255,26 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "avO" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "avP" = (
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "avQ" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "avR" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "avS" = (
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -10849,7 +10849,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "axd" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment/mail{
@@ -10857,17 +10857,17 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "axe" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "axf" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "axg" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Chapel"
@@ -11343,19 +11343,19 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/delivery,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ayh" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ayi" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Crew Lounge"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ayj" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/air_vendor,
@@ -13387,7 +13387,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aCK" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro/podbay_autoclose/research_horizontal,

@@ -2680,7 +2680,7 @@
 /area/station/bridge/command_center)
 "gb" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "gc" = (
 /obj/machinery/chem_dispenser,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -4169,7 +4169,7 @@
 "iO" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "iP" = (
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/red,
@@ -5846,7 +5846,7 @@
 /area/station/medical/medbay)
 "lY" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "lZ" = (
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/white,
@@ -6612,17 +6612,17 @@
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "nH" = (
 /obj/machinery/computer/tetris,
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "nI" = (
 /obj/cryotron{
 	layer = 3.9
 	},
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "nJ" = (
 /obj/landmark{
 	name = "JoinLate"
@@ -6633,7 +6633,7 @@
 	name = "autoname - SS13"
 	},
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "nK" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -6733,7 +6733,7 @@
 /area/station/crew_quarters/garden)
 "nT" = (
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "nU" = (
 /obj/item/light_parts,
 /obj/item/light_parts,
@@ -6925,7 +6925,7 @@
 /area/station/science/lab)
 "oj" = (
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ok" = (
 /obj/machinery/manufacturer/uniform,
 /obj/machinery/light{
@@ -6935,7 +6935,7 @@
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ol" = (
 /obj/machinery/light{
 	dir = 8;
@@ -6944,7 +6944,7 @@
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "om" = (
 /obj/machinery/light{
 	dir = 4;
@@ -6953,31 +6953,31 @@
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "on" = (
 /obj/storage/closet/wardrobe/mixed,
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "oo" = (
 /obj/storage/closet/wardrobe/black,
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "op" = (
 /obj/storage/closet/wardrobe/pride,
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "oq" = (
 /obj/storage/closet/wardrobe/green,
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "or" = (
 /obj/storage/closet/wardrobe/white,
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "os" = (
 /obj/storage/closet/wardrobe/yellow,
 /turf/unsimulated/floor/carpet/grime,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ot" = (
 /obj/grille/catwalk{
 	dir = 4

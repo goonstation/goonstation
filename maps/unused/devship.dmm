@@ -6196,7 +6196,7 @@
 /area/station/medical/medbay)
 "pt" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "pu" = (
 /obj/stool/chair/blue{
 	dir = 1;
@@ -6422,7 +6422,7 @@
 /area/station/engine/core)
 "pX" = (
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "pY" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -6450,7 +6450,7 @@
 "qb" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "qc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/science)
@@ -6638,7 +6638,7 @@
 "qC" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "qD" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/green,
@@ -6646,20 +6646,20 @@
 	dir = 9;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "qE" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "qF" = (
 /obj/machinery/vending/fortune,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "qG" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/bot,
@@ -6895,7 +6895,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ri" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "EVA Storage"
@@ -7214,7 +7214,7 @@
 	dir = 6;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "rS" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
@@ -7332,7 +7332,7 @@
 "sf" = (
 /obj/storage/closet/dresser/random,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "sg" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -7424,7 +7424,7 @@
 	dir = 10;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ss" = (
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/carpet{
@@ -8411,15 +8411,15 @@
 /area/station/science/artifact)
 "uK" = (
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "uL" = (
 /obj/submachine/laundry_machine,
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "uM" = (
 /obj/machinery/clothingbooth,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "uN" = (
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/circuit/vintage,
@@ -11225,7 +11225,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Ap" = (
 /obj/storage/secure/closet/command/hos,
 /obj/item/device/prisoner_scanner,
@@ -11491,7 +11491,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "AM" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -11501,7 +11501,7 @@
 	dir = 1;
 	icon_state = "fred1"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "AN" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/light_switch/auto,
@@ -11670,7 +11670,7 @@
 	dir = 2;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Bd" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -11718,7 +11718,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Bi" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
@@ -11730,7 +11730,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Bj" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
 	name = "Toxin Lab"
@@ -12066,7 +12066,7 @@
 	name = "Staff Assistant"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "BO" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
@@ -12592,7 +12592,7 @@
 "CV" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "CW" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/sanitary,
@@ -12836,7 +12836,7 @@
 	pixel_y = 25
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Dw" = (
 /obj/item/crowbar,
 /turf/simulated/floor/plating/random,
@@ -13163,7 +13163,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "DX" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -13368,7 +13368,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Es" = (
 /obj/table/wood/auto,
 /obj/disposalpipe/segment{
@@ -13379,14 +13379,14 @@
 	dir = 8;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Et" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Eu" = (
 /obj/machinery/vending/capsule,
 /obj/machinery/light{
@@ -13403,7 +13403,7 @@
 	dir = 4;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Ev" = (
 /obj/disposalpipe/segment{
 	dir = 4;
