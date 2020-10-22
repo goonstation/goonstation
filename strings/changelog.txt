@@ -1,5 +1,9 @@
 
 (t)thu oct 22 20
+(u)RSG250
+(p)2453
+(e)|
+(+)Shield Generators (like the one in manta engine control) now give you feedback when activating/deactivating the shields.
 (u)Fosstar
 (p)2467
 (e)🆕|feature
