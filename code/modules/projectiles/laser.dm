@@ -369,6 +369,7 @@ toxic - poisons
 		color_green = 0
 		color_blue = 0
 		override_color = 1
+		icon_state = "bolt"
 
 		blue_NT
 			name = "blue blaster bolt"
