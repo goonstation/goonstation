@@ -1654,6 +1654,22 @@ ABSTRACT_TYPE(/area/station/hallway/primary)
 	name = "West Primary Hallway"
 	icon_state = "hallW"
 
+/area/station/hallway/primary/northeast
+	name = "Northeast Primary Hallway"
+	icon_state = "hallNE"
+
+/area/station/hallway/primary/southeast
+	name = "Southeast Primary Hallway"
+	icon_state = "hallSE"
+
+/area/station/hallway/primary/northwest
+	name = "Northwest Primary Hallway"
+	icon_state = "hallNW"
+
+/area/station/hallway/primary/southwest
+	name = "Southwest Primary Hallway"
+	icon_state = "hallSW"
+
 /area/station/hallway/primary/central
 	name = "Central Primary Hallway"
 	icon_state = "hallC"
@@ -1678,6 +1694,22 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 /area/station/hallway/secondary/west
 	name = "West Secondary Hallway"
 	icon_state = "hallW2"
+
+/area/station/hallway/secondary/northeast
+	name = "Northeast Secondary Hallway"
+	icon_state = "hallNE2"
+
+/area/station/hallway/secondary/southeast
+	name = "Southeast Secondary Hallway"
+	icon_state = "hallSE2"
+
+/area/station/hallway/secondary/northwest
+	name = "Northwest Secondary Hallway"
+	icon_state = "hallNW2"
+
+/area/station/hallway/secondary/southwest
+	name = "Southwest Secondary Hallway"
+	icon_state = "hallSW2"
 
 /area/station/hallway/secondary/central
 	name = "Central Secondary Hallway"
