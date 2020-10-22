@@ -2672,7 +2672,7 @@ ABSTRACT_TYPE(/area/station/science)
 	workplace = 1
 
 /area/station/science/lobby
-  name = "Science Lobby"
+	name = "Science Lobby"
 	icon_state = "science"
 
 /area/station/science/tenebrae
