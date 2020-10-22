@@ -109,7 +109,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 /obj/warp_portal/New()
 	..()
 	SPAWN_DBG(0)
-		animate_portal_appear(src)
+		// animate_portal_appear(src)
 		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 		sleep(30 SECONDS)
 		qdel(src)

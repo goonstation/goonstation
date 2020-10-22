@@ -1383,6 +1383,10 @@ PIPE BOMBS + CONSTRUCTION
 		SPAWN_DBG(5 SECONDS)
 			do_explode()
 
+	ex_act(severity)
+		do_explode()
+		. = ..()
+
 	proc/do_explode()
 		if (src.strength)
 			if (src.material)

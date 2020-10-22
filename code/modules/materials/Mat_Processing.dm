@@ -87,6 +87,10 @@
 			S.satchel_updateicon()
 			return
 
+		if (W.cant_drop) //For borg held items
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return ..()
+
 		if(W.material)
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
 			user.u_equip(W)
@@ -206,7 +210,7 @@
 		O.set_loc(src)
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
-			if (!M)
+			if (!M || M.loc == user)
 				continue
 			if (M.type != O.type)
 				continue

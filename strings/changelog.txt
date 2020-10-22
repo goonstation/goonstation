@@ -1,9 +1,60 @@
 
+(t)wed oct 21 20
+(u)Jawns
+(p)2488
+(e)🗺|mapping
+(+)The NSS Manta morgue disposal chute has been upgraded to "functional" status.
+(u)Jawns
+(p)2484
+(e)🐛|bug
+(+)Alien ambassadors now spawn with their ID in their backpack when necessary, instead of inside them.
+(u)TrustworthyFella
+(p)2464
+(e)🐛|bug
+(+)Fixed a bug where dead people could be reborn in new flesh multiple times due to not being killed properly the first time.
+(t)tue oct 20 20
+(u)austin
+(p)2447
+(e)🆕🎨|feature, sprites
+(+)Players can now sing by prefixing their messages with "%". Sing to parrots and they will chatter back. Monkeys don't like drunk or loud singing.
+(u)Monochromatism
+(p)2426
+(e)🎨|sprites
+(+)Added new borders to genetic power icons for use in player and genebooth UIs.
+(t)mon oct 19 20
+(u)Flaborized
+(p)2458
+(e)🎨|sprites
+(+)Both devices and assemblies have had makeovers! New sprites for all kinds of device combinations, including bombs!
+(t)sun oct 18 20
+(u)Kyle
+(*)Change to pod warping again. Removes the "moving run-up" part and now it projects the portal in front of you, or on top of you if no room. Still must be immobile to begin making a portal.
+(u)Flaborized
+(p)2394
+(e)🎨|sprites
+(+)Tools and flamethrowers have had their sprites replaced with new and improved versions, new crowbar subtype
+(u)Tarmunora
+(*)Secretized Neutronium recipe. Experiment!
+(u)Gonzako
+(p)2346
+(e)|
+(*)Everyone with the addict trait no longer shares their addiction with every other addict.
+(+)New allergic players joining no longer change everybody else's allergy
 (t)sat oct 17 20
+(u)Sovexe
+(p)2450
+(e)|
+(+)Becoming a monkey no longer makes you drop half your stuff.
+(u)comradef191
+(p)2366
+(e)🆕|feature
+(*)Added 9 new colours of wiring, see your local QM to order them.
+(+)Added Yellow, Orange, Blue, Green, Purple, Black, Hot-Pink, Brown & White cables.
 (u)Kyle
 (p)2439
 (e)|
 (*)Pod balance changes: more pod health, very slightly slower acceleration, faster pod weapon travel time, Wormholes must be made when stationary and with several tiles of clearance in front.
+(*)Pods/subs now have a "Brake" toggle that slows you down to a stop when toggled on.
 (t)fri oct 16 20
 (u)Sidewinder7
 (p)2393

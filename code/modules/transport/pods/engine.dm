@@ -74,6 +74,12 @@
 			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
 			// ready = 0
 			return
+	else if (istype(ship.movement_controller, /datum/movement_controller/tank))
+		var/datum/movement_controller/tank/MCT = ship.movement_controller
+		if (MCT.input_x != 0 || MCT.input_y != 0)
+			boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity (be stopped) to calculate warp destination!")]")
+			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
+
 
 	var/list/beacons = list()
 	for(var/obj/warp_beacon/W in warp_beacons)
@@ -96,33 +102,49 @@
 
 	//the chargeup/runway bit
 	var/warp_dir = ship.dir
-	var/turf/prev_turf = null
-	var/turf/NT = get_turf(src)
-	var/const/max_steps = 10
 	warp_autopilot = 1
+	var/const/max_steps = 2
+	boutput(usr, "[ship.ship_message("Charging engines for wormhole creation! Overriding manual control!")]")
+
+	var/obj/warp_portal/P = new /obj/warp_portal( ship.loc )
+	P.transform = matrix(0, MATRIX_SCALE)
 	for(var/i=0, i<max_steps, i++)
-		NT = get_step(NT, warp_dir)
-		ship.Move(NT)
+		step(P, warp_dir)
 
-		if (prev_turf == ship.loc)
-			boutput(usr, "[ship.ship_message("Insufficient runway distance to create wormhole!")]")
-			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
-			wormholeQueued = 0
-			warp_autopilot = 0
-			return
-		prev_turf = NT
-		//on the penultimate step, make the portal before we wait so they see it breifly
-		if (i == max_steps-2)
-			var/obj/warp_portal/P = new /obj/warp_portal( NT )
-			P.target = target
-			step(P, warp_dir)
-		sleep(0.5 SECONDS)
+	var/dist = get_dist(src, P)
+	portal_px_offset(P, warp_dir, dist)
+	animate(P, transform = matrix(1, MATRIX_SCALE), pixel_x = 0, pixel_y = 0, time = 30, easing = ELASTIC_EASING )
 
+	sleep(30)
+	P.target = target
 	ready = 0
 	warp_autopilot = 0
 	logTheThing("station", usr, null, "creates a wormhole (pod portal) (<b>Destination:</b> [target]) at [log_loc(usr)].")
 	ready()
 
+
+/obj/item/shipcomponent/engine/proc/portal_px_offset(var/atom/A, var/direction, var/dist)
+	switch(direction)
+		if(NORTH)
+			A.pixel_y = -dist*32
+		if(SOUTH)
+			A.pixel_y = dist*32
+		if(EAST)
+			A.pixel_x = -dist*32
+		if(WEST)
+			A.pixel_x = dist*32
+		if(NORTHEAST)
+			A.pixel_y = -dist*32
+			A.pixel_x = -dist*32
+		if(NORTHWEST)
+			A.pixel_y = -dist*32
+			A.pixel_x = dist*32
+		if(SOUTHEAST)
+			A.pixel_y = dist*32
+			A.pixel_x = -dist*32
+		if(SOUTHWEST)
+			A.pixel_y = dist*32
+			A.pixel_x = dist*32
 /obj/item/shipcomponent/engine/helios
 	name = "Helios Mark-II Engine"
 	desc = "A really fast engine"
