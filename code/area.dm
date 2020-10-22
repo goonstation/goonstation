@@ -2848,7 +2848,8 @@ ABSTRACT_TYPE(/area/station/hangar)
 	icon_state = "hydro"
 	workplace = 1
 
-/area/station/hydroponics/concrete
+/area/station/hydroponics/bay
+  name = "Hydroponics Bay"
 
 /area/station/hydroponics/lobby
 	name = "Hydroponics Lobby"

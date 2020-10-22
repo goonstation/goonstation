@@ -26192,13 +26192,13 @@
 "aZF" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aZG" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aZH" = (
 /obj/machinery/camera{
 	c_tag = "Hydroponics Office";
@@ -26206,28 +26206,28 @@
 	},
 /obj/landmark/halloween,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aZI" = (
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aZJ" = (
 /obj/disposalpipe/segment,
 /obj/submachine/chem_extractor,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aZK" = (
 /obj/submachine/seed_manipulator,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aZL" = (
 /turf/simulated/wall,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aZM" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "aZN" = (
 /obj/grille/steel,
 /obj/cable,
@@ -26544,22 +26544,22 @@
 "bau" = (
 /obj/crate,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bav" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "baw" = (
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bax" = (
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bay" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -26569,7 +26569,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "baz" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -26583,7 +26583,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "baA" = (
 /obj/machinery/alarm{
 	name = "Local Air Monitor";
@@ -26593,7 +26593,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "baB" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -26608,7 +26608,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "baC" = (
 /obj/machinery/light{
 	dir = 1
@@ -26617,12 +26617,12 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "baD" = (
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "baE" = (
 /obj/table,
 /obj/item/reagent_containers/glass/beaker,
@@ -26631,7 +26631,7 @@
 /obj/item/reagent_containers/glass/beaker,
 /obj/item/reagent_containers/food/drinks/bowl,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "baF" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -26953,14 +26953,14 @@
 	req_access_txt = "35"
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bbr" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bbs" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment{
@@ -26968,7 +26968,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bbt" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -26977,7 +26977,7 @@
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bbu" = (
 /obj/machinery/plantpot,
 /obj/disposalpipe/segment{
@@ -26988,7 +26988,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bbv" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -26998,7 +26998,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bbw" = (
 /obj/machinery/plantpot,
 /obj/disposalpipe/switch_junction{
@@ -27010,14 +27010,14 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bbx" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bby" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -27028,14 +27028,14 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bbz" = (
 /obj/machinery/door/airlock{
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bbA" = (
 /obj/grille/steel,
 /obj/cable,
@@ -27529,11 +27529,11 @@
 	pixel_x = -29
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bck" = (
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcl" = (
 /obj/machinery/disposal/mail{
 	mail_tag = "hydroponics";
@@ -27543,7 +27543,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcm" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -27554,7 +27554,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcn" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -27567,7 +27567,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bco" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -27578,7 +27578,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcp" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -27593,7 +27593,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcq" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -27602,7 +27602,7 @@
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcr" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -27610,14 +27610,14 @@
 	},
 /obj/secure_closet/hydroponics,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcs" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
 	},
 /turf/simulated/wall,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bct" = (
 /obj/disposalpipe/switch_junction{
 	dir = 8;
@@ -27837,7 +27837,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcR" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -27851,7 +27851,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcS" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -27870,7 +27870,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcT" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -27878,7 +27878,7 @@
 	},
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcU" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -27887,7 +27887,7 @@
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcV" = (
 /obj/landmark/start{
 	name = "Botanist"
@@ -27896,7 +27896,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcW" = (
 /obj/cable{
 	d1 = 1;
@@ -27907,7 +27907,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcX" = (
 /obj/machinery/plantpot,
 /obj/cable{
@@ -27919,7 +27919,7 @@
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcY" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -27934,7 +27934,7 @@
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bcZ" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -27943,7 +27943,7 @@
 	},
 /obj/secure_closet/hydroponics,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bda" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -27951,7 +27951,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bdb" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -28223,13 +28223,13 @@
 "bdA" = (
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bdB" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bdC" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -28239,7 +28239,7 @@
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bdD" = (
 /obj/machinery/light,
 /obj/machinery/alarm{
@@ -28478,14 +28478,14 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bee" = (
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
 /obj/machinery/disposal,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bef" = (
 /obj/disposalpipe/segment,
 /obj/item/extinguisher{
@@ -28494,18 +28494,18 @@
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "beg" = (
 /obj/machinery/light,
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "beh" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bei" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment{
@@ -28795,7 +28795,7 @@
 	dir = 4
 	},
 /turf/simulated/wall,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "beM" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -28807,14 +28807,14 @@
 	d2 = 2
 	},
 /turf/simulated/wall,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "beN" = (
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "beO" = (
 /obj/disposalpipe/trunk{
 	dir = 1

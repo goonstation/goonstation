@@ -28916,7 +28916,7 @@
 /area/station/routingdepot/concrete)
 "boo" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bop" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Catering Cargo Endpoint"
@@ -28924,15 +28924,15 @@
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "boq" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bor" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bos" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/machinery/camera{
@@ -29441,10 +29441,10 @@
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bpx" = (
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bpy" = (
 /obj/storage/crate{
 	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
@@ -29455,20 +29455,20 @@
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bpz" = (
 /obj/disposalpipe/segment/food,
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bpA" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bpB" = (
 /obj/machinery/light{
 	dir = 1;
@@ -29482,7 +29482,7 @@
 "bpC" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bpD" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -29491,13 +29491,13 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bpE" = (
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bpF" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -29511,7 +29511,7 @@
 	name = "100% synthetic freerange monkey sandwich"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bpG" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/machinery/light{
@@ -29881,13 +29881,13 @@
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqG" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqH" = (
 /obj/cable{
 	d1 = 2;
@@ -29895,7 +29895,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqI" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -29903,7 +29903,7 @@
 	},
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqJ" = (
 /obj/disposalpipe/segment/food,
 /obj/reagent_dispensers/compostbin,
@@ -29913,18 +29913,18 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqK" = (
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqL" = (
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqM" = (
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqN" = (
 /obj/landmark/start{
 	name = "Botanist"
@@ -29935,13 +29935,13 @@
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqO" = (
 /obj/submachine/seed_manipulator{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bqP" = (
 /obj/machinery/chem_heater,
 /turf/simulated/floor/black,
@@ -30411,7 +30411,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bsc" = (
 /obj/cable{
 	d1 = 1;
@@ -30419,7 +30419,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bsd" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -30428,11 +30428,11 @@
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bse" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bsf" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -30441,7 +30441,7 @@
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bsg" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbooth)
@@ -30937,11 +30937,11 @@
 "btt" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "btu" = (
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "btv" = (
 /obj/storage/crate{
 	desc = "Wow! Crate may or may not still contain bottles.";
@@ -30958,7 +30958,7 @@
 /obj/item/reagent_containers/food/drinks/bottle,
 /obj/item/reagent_containers/food/drinks/bottle,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "btw" = (
 /obj/cable{
 	d1 = 1;
@@ -30971,7 +30971,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "btx" = (
 /obj/cable{
 	d2 = 8;
@@ -30981,7 +30981,7 @@
 /obj/storage/secure/closet/civilian/hydro,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bty" = (
 /obj/disposalpipe/segment/food,
 /obj/table/auto,
@@ -30989,13 +30989,13 @@
 /obj/item/paper/book/hydroponicsguide,
 /obj/item/device/reagentscanner,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "btz" = (
 /obj/machinery/plantpot{
 	anchored = 1
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "btA" = (
 /obj/rack,
 /obj/item/bballbasket,
@@ -31464,7 +31464,7 @@
 /obj/item/clothing/under/gimmick,
 /obj/item/clothing/mask/anime,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "buL" = (
 /obj/item/clothing/head/rastacap,
 /obj/item/clothing/head/rastacap,
@@ -31481,11 +31481,11 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "buM" = (
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "buN" = (
 /obj/disposalpipe/segment/food,
 /obj/table/auto,
@@ -31496,7 +31496,7 @@
 /obj/item/bee_egg_carton,
 /obj/item/bee_egg_carton,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "buO" = (
 /obj/stool/chair/green{
 	dir = 8
@@ -31506,7 +31506,7 @@
 	name = "Botanist"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "buP" = (
 /obj/storage/secure/closet/medical/medicine,
 /obj/machinery/alarm{
@@ -31931,7 +31931,7 @@
 "bvO" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bvP" = (
 /obj/cable{
 	d1 = 1;
@@ -31944,12 +31944,12 @@
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bvQ" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bvR" = (
 /obj/machinery/plantpot,
 /obj/machinery/camera{
@@ -31960,7 +31960,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bvS" = (
 /obj/storage/secure/closet/medical/medkit,
 /obj/machinery/light{
@@ -32476,7 +32476,7 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bwZ" = (
 /obj/disposalpipe/junction/right/west,
 /obj/machinery/light{
@@ -32488,14 +32488,14 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxa" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxb" = (
 /obj/cable{
 	d1 = 1;
@@ -32505,7 +32505,7 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxc" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -32524,7 +32524,7 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxd" = (
 /obj/disposalpipe/segment/food{
 	dir = 4;
@@ -32538,7 +32538,7 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxe" = (
 /obj/disposalpipe/segment/food{
 	dir = 8;
@@ -32551,7 +32551,7 @@
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bxf" = (
 /obj/machinery/disposal/morgue,
 /obj/cable{
@@ -33097,14 +33097,14 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "byo" = (
 /obj/disposalpipe/segment/vertical,
 /obj/stool/chair/office/green{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "byp" = (
 /obj/cable{
 	d1 = 1;
@@ -33112,7 +33112,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "byq" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -33121,7 +33121,7 @@
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "byr" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/beaker/large/epinephrine,
@@ -33613,16 +33613,16 @@
 	},
 /obj/machinery/light_switch/west,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bzq" = (
 /obj/disposalpipe/junction/left/north,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bzr" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bzs" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/cable{
@@ -33631,12 +33631,12 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bzt" = (
 /obj/machinery/disposal/mail/autoname/hydroponics,
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bzu" = (
 /obj/machinery/light{
 	dir = 8;
@@ -33646,7 +33646,7 @@
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bzv" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1
@@ -34107,16 +34107,16 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bAw" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bAx" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bAy" = (
 /obj/disposalpipe/segment/vertical,
 /obj/table/auto,
@@ -34129,14 +34129,14 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bAz" = (
 /obj/stool/chair/green,
 /obj/landmark/start{
 	name = "Botanist"
 	},
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bAA" = (
 /obj/disposalpipe/segment/food,
 /obj/stool/chair/green,
@@ -34144,7 +34144,7 @@
 	name = "Botanist"
 	},
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bAB" = (
 /obj/table/auto,
 /obj/item/satchel/hydro,
@@ -34153,7 +34153,7 @@
 /obj/item/hand_labeler,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bAC" = (
 /obj/submachine/seed_vendor,
 /obj/machinery/light{
@@ -34162,7 +34162,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bAD" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -34457,12 +34457,12 @@
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bBs" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bBt" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -34474,7 +34474,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/hydro,
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bBv" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/south)
@@ -36483,7 +36483,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/hydro,
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bFJ" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/brig,
@@ -52778,7 +52778,7 @@
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "coV" = (
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
@@ -53257,7 +53257,7 @@
 /obj/wingrille_spawn/auto,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "cpR" = (
 /obj/machinery/computer/barcode{
 	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
@@ -54631,7 +54631,7 @@
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "iKC" = (
 /obj/item/device/radio/intercom{
 	dir = 8
@@ -54974,7 +54974,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "kTo" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
@@ -55823,7 +55823,7 @@
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "pSJ" = (
 /obj/table/auto,
 /obj/item/remote/porter/port_a_medbay,
@@ -56142,7 +56142,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/grass,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "rPh" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1
@@ -56916,7 +56916,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grey,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "wwg" = (
 /obj/machinery/light{
 	dir = 8;

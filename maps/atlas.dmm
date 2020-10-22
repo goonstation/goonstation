@@ -569,14 +569,14 @@
 	},
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bw" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "bx" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -877,7 +877,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "cl" = (
 /obj/lattice{
 	dir = 10;
@@ -1858,7 +1858,7 @@
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "eI" = (
 /obj/machinery/light{
 	dir = 8;
@@ -2998,7 +2998,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "hI" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
@@ -6692,7 +6692,7 @@
 "qn" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "qo" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
@@ -6703,7 +6703,7 @@
 "qp" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "qq" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -6712,7 +6712,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "qr" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -6871,7 +6871,7 @@
 "qK" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "qL" = (
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
@@ -7107,7 +7107,7 @@
 	pixel_x = -6
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "rn" = (
 /obj/machinery/plantpot,
 /obj/machinery/disposal/small{
@@ -7119,10 +7119,10 @@
 	dir = 8
 	},
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "ro" = (
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "rp" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -7134,7 +7134,7 @@
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "rq" = (
 /obj/disposalpipe/trunk/ejection{
 	dir = 1
@@ -7149,7 +7149,7 @@
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "rs" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/beaker/large/brute,
@@ -7697,12 +7697,12 @@
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "sz" = (
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "sA" = (
 /turf/simulated/floor/red/side{
 	dir = 6
@@ -7844,7 +7844,7 @@
 	name = "Botanist"
 	},
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "sS" = (
 /obj/health_scanner/floor,
 /obj/disposalpipe/segment,
@@ -8313,13 +8313,13 @@
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "tL" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "tM" = (
 /obj/cable{
 	d1 = 1;
@@ -8346,11 +8346,11 @@
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "tP" = (
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "tQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8393,7 +8393,7 @@
 "tU" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "tV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -8859,13 +8859,13 @@
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "uR" = (
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "uS" = (
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "uT" = (
 /obj/cable{
 	d1 = 4;
@@ -9226,7 +9226,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "vM" = (
 /obj/cable{
 	d1 = 1;
@@ -9234,14 +9234,14 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/green/side,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "vO" = (
 /obj/securearea,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/Zeta)
 "vP" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "vQ" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -9547,7 +9547,7 @@
 "wK" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/green,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "wM" = (
 /obj/machinery/clonepod,
 /obj/cable{
@@ -9931,7 +9931,7 @@
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "xP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10043,11 +10043,11 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "yb" = (
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "yc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10243,7 +10243,7 @@
 /obj/machinery/plantpot,
 /obj/machinery/light,
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "yD" = (
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip,
@@ -17936,7 +17936,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "Uq" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -18012,7 +18012,7 @@
 /turf/simulated/wall/auto/supernorn{
 	icon_state = "3"
 	},
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "UD" = (
 /obj/machinery/power/terminal,
 /obj/cable,
@@ -18047,7 +18047,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics/concrete)
+/area/station/hydroponics/bay)
 "UP" = (
 /obj/disposalpipe/segment,
 /obj/decal/poster/wallsign/warning3{
