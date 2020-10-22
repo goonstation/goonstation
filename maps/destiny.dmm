@@ -9567,7 +9567,7 @@
 /area/station/maintenance/west)
 "arm" = (
 /turf/simulated/wall/auto/gannets,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "arn" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets{
@@ -9687,10 +9687,10 @@
 	},
 /obj/machinery/door/window/southleft,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "arB" = (
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "arC" = (
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -9938,13 +9938,13 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "arV" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "arW" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -10127,7 +10127,7 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "asp" = (
 /obj/machinery/manufacturer/uniform,
 /obj/machinery/camera{
@@ -10136,7 +10136,7 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "asq" = (
 /obj/storage/closet/dresser/random,
 /obj/item/clothing/under/suit/dress{
@@ -10156,7 +10156,7 @@
 /obj/item/clothing/suit/suspenders,
 /obj/item/clothing/suit/scarf,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "asr" = (
 /obj/storage/closet/dresser/random,
 /obj/item/clothing/under/gimmick/kilt,
@@ -10167,7 +10167,7 @@
 /obj/item/clothing/suit/jacket/yellow,
 /obj/item/clothing/suit/jacket/plastic/random_color,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ass" = (
 /obj/machinery/bathtub{
 	anchored = 1;
@@ -10358,7 +10358,7 @@
 /obj/table/round/auto,
 /obj/item/decoration/flower_vase,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "asM" = (
 /turf/simulated/wall/auto/gannets,
 /area/station/crew_quarters/bar)
@@ -10473,14 +10473,14 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "atc" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "atd" = (
 /obj/table/round/auto,
 /obj/item/reagent_containers/food/drinks/bottle/bottledwater{
@@ -10757,7 +10757,7 @@
 	name = "airlock-'Crew Lounge'"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "atC" = (
 /obj/cable{
 	d1 = 4;
@@ -10765,7 +10765,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "atD" = (
 /obj/cable{
 	d1 = 4;
@@ -10777,7 +10777,7 @@
 	name = "peststart"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "atE" = (
 /obj/machinery/light{
 	dir = 4
@@ -10789,7 +10789,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "atF" = (
 /obj/decal/tile_edge/stripe,
 /turf/simulated/floor/wood{
@@ -10948,7 +10948,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aub" = (
 /turf/simulated/floor/stairs{
 	icon_state = "wood_stairs"
@@ -11162,7 +11162,7 @@
 	pixel_x = -8
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "auy" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -11513,7 +11513,7 @@
 "ave" = (
 /obj/machinery/vending/capsule,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "avf" = (
 /obj/cable{
 	d1 = 1;
@@ -11527,7 +11527,7 @@
 	name = "autoname  - SS13"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "avg" = (
 /obj/stool/chair/wooden{
 	dir = 4
@@ -11774,7 +11774,7 @@
 	},
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "avH" = (
 /obj/cable{
 	d1 = 1;
@@ -11790,7 +11790,7 @@
 /obj/decal/cleanable/dirt,
 /obj/item/cigbutt,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "avI" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets{
@@ -12008,7 +12008,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "awf" = (
 /obj/machinery/power/apc{
 	areastring = "Bar Office";
@@ -12390,7 +12390,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "awP" = (
 /turf/simulated/wall/auto/gannets,
 /area/station/crew_quarters/baroffice)
@@ -12731,7 +12731,7 @@
 	name = "bot navigation beacon"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "axy" = (
 /obj/machinery/light{
 	dir = 8
@@ -13131,7 +13131,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/tour/destiny/tour3,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ayn" = (
 /obj/storage/closet/wardrobe/black/formalwear,
 /obj/item/clothing/head/helmet/space/santahat,
@@ -13511,7 +13511,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ayX" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -13874,7 +13874,7 @@
 /obj/disposalpipe/segment,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "azG" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/gannets,
@@ -14282,7 +14282,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aAv" = (
 /obj/wingrille_spawn/reinforced,
 /turf/simulated/floor/plating/random,

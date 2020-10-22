@@ -397,7 +397,7 @@
 /area/station/crew_quarters/quarters_east)
 "aba" = (
 /turf/simulated/wall/auto/gannets,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abb" = (
 /turf/simulated/wall/auto/reinforced,
 /area/space)
@@ -482,7 +482,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/bluegreen,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abo" = (
 /obj/decal/cleanable/dirt,
 /obj/table/auto,
@@ -494,7 +494,7 @@
 	name = "old matchbook"
 	},
 /turf/simulated/floor/bluegreen,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abp" = (
 /obj/stool/chair/comfy{
 	icon_state = "chair_comfy";
@@ -584,7 +584,7 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 9
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abA" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair{
@@ -593,14 +593,14 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 1
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abB" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/bluegreen/side{
 	dir = 5
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abC" = (
 /obj/cable{
 	d1 = 1;
@@ -608,12 +608,12 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abD" = (
 /obj/grille/steel,
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abE" = (
 /obj/grille/steel,
 /obj/window/reinforced,
@@ -621,7 +621,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abF" = (
 /obj/grille/steel,
 /obj/cable{
@@ -630,7 +630,7 @@
 /obj/window/reinforced,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abG" = (
 /obj/cable{
 	d1 = 1;
@@ -646,7 +646,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abH" = (
 /obj/cable{
 	d1 = 2;
@@ -654,7 +654,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abI" = (
 /turf/simulated/wall/false_wall/reinforced,
 /area/space)
@@ -765,15 +765,15 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 8
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abY" = (
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "abZ" = (
 /turf/simulated/floor/bluegreen/side{
 	dir = 4
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aca" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/vending/snack{
@@ -782,7 +782,7 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 9
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acb" = (
 /obj/machinery/light{
 	dir = 1
@@ -794,7 +794,7 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 1
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acc" = (
 /obj/cable{
 	d1 = 4;
@@ -804,7 +804,7 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 1
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acd" = (
 /obj/stool/bar,
 /obj/decal/cleanable/dirt,
@@ -816,7 +816,7 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 1
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ace" = (
 /obj/table/reinforced/bar/auto,
 /obj/decal/cleanable/dirt,
@@ -827,7 +827,7 @@
 	},
 /obj/item/storage/box/glassbox,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acf" = (
 /obj/machinery/light{
 	dir = 1
@@ -840,7 +840,7 @@
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acg" = (
 /obj/cable{
 	d1 = 4;
@@ -854,7 +854,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ach" = (
 /obj/cable{
 	d1 = 4;
@@ -866,7 +866,7 @@
 	slogan_list = list("Please drink responsibly.","No Refunds.","Please enjoy your stay at the Kuiper Inn!","No admittance under the age of 13.")
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aci" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/shard,
@@ -876,7 +876,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acj" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -891,7 +891,7 @@
 /obj/item/storage/box/glassbox,
 /obj/item/storage/box/cocktail_umbrellas,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ack" = (
 /obj/lattice,
 /turf/simulated/floor/plating/airless{
@@ -1079,33 +1079,33 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 8
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acH" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor/bluegreen,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acI" = (
 /turf/simulated/floor/bluegreen/side{
 	dir = 8
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acJ" = (
 /obj/stool/bar,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acK" = (
 /obj/table/reinforced/bar/auto,
 /obj/decal/cleanable/dirt,
 /obj/item/device/light/candle/small,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acL" = (
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acM" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acN" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/power/smes{
@@ -1117,7 +1117,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acO" = (
 /obj/cable{
 	d1 = 1;
@@ -1125,7 +1125,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "acP" = (
 /obj/lattice,
 /obj/decal/cleanable/machine_debris{
@@ -1293,13 +1293,13 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adl" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1310,7 +1310,7 @@
 	icon_state = "4-10"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1318,7 +1318,7 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 4
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ado" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1326,7 +1326,7 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 8
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adp" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -1338,7 +1338,7 @@
 	icon_state = "4-9"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adq" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -1347,14 +1347,14 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 4
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adr" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor/bluegreen,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ads" = (
 /obj/cable{
 	d1 = 2;
@@ -1362,23 +1362,23 @@
 	icon_state = "6-8"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adt" = (
 /obj/machinery/light,
 /obj/stool/bar,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adu" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/snacks/chips,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adv" = (
 /obj/cable{
 	icon_state = "1-10"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adw" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -1390,7 +1390,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adx" = (
 /obj/cable{
 	d1 = 1;
@@ -1408,7 +1408,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ady" = (
 /obj/decal/fakeobjects/vacuumtape,
 /obj/cable{
@@ -1483,40 +1483,40 @@
 "adJ" = (
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adK" = (
 /obj/cable{
 	icon_state = "2-5"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adL" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/bluegreen/side{
 	dir = 10
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adM" = (
 /obj/machinery/light,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/bluegreen/side,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adN" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/bluegreen/side{
 	dir = 6
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adO" = (
 /turf/simulated/floor/bluegreen/side{
 	dir = 10
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adP" = (
 /turf/simulated/floor/bluegreen/corner{
 	dir = 8
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adQ" = (
 /obj/cable{
 	d1 = 2;
@@ -1524,7 +1524,7 @@
 	icon_state = "6-9"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adR" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/glass/medical{
@@ -1532,12 +1532,12 @@
 	req_access = list(0)
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adS" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/device/light/candle/small,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adT" = (
 /obj/table/reinforced/bar/auto,
 /obj/cable{
@@ -1546,11 +1546,11 @@
 	icon_state = "5-10"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adU" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "adV" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -1579,7 +1579,7 @@
 /area/station/wreckage)
 "adZ" = (
 /turf/simulated/floor/bluegreen/side,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aea" = (
 /obj/cable{
 	d1 = 1;
@@ -1602,7 +1602,7 @@
 	icon_state = "4-9"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aed" = (
 /obj/machinery/light{
 	dir = 1
@@ -1611,14 +1611,14 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aee" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/west,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aef" = (
 /obj/stool/bar,
 /obj/cable{
@@ -1627,16 +1627,16 @@
 	icon_state = "5-8"
 	},
 /turf/simulated/floor/carpet/blue/standard,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeg" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet/blue/standard,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeh" = (
 /obj/stool/bar,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/blue/standard,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aei" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1665,19 +1665,19 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 1
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ael" = (
 /turf/simulated/floor/bluegreen/side{
 	dir = 1
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aem" = (
 /obj/decal/cleanable/dirt,
 /obj/table/auto,
 /turf/simulated/floor/bluegreen/side{
 	dir = 1
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aen" = (
 /obj/stool/chair,
 /turf/simulated/floor/carpet/blue/standard/edge/nw,
@@ -1736,13 +1736,13 @@
 "aew" = (
 /obj/stool/chair,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aex" = (
 /turf/simulated/floor/carpet/blue/standard/edge/sw,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aey" = (
 /turf/simulated/floor/carpet/blue/standard/edge,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aez" = (
 /obj/cable{
 	d1 = 2;
@@ -1750,7 +1750,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeA" = (
 /obj/cable{
 	d1 = 1;
@@ -1758,7 +1758,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeB" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "tile1";
@@ -1827,12 +1827,12 @@
 "aeH" = (
 /obj/decal/skeleton,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeI" = (
 /obj/machinery/light/small,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeJ" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
@@ -1841,26 +1841,26 @@
 	name = "bolted airlock"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeK" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeL" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeM" = (
 /obj/disposalpipe/junction/middle/south,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeN" = (
 /obj/table/auto,
 /obj/machinery/light/small,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeO" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/gannets,
@@ -1931,7 +1931,7 @@
 "aeX" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/gannets,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeY" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light,
@@ -1945,7 +1945,7 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 10
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aeZ" = (
 /obj/cable{
 	d1 = 4;
@@ -1955,7 +1955,7 @@
 /obj/table/wood/auto,
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/bluegreen/side,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afa" = (
 /obj/cable{
 	d1 = 4;
@@ -1970,7 +1970,7 @@
 	},
 /obj/item/kitchen/utensil/spoon,
 /turf/simulated/floor/bluegreen/side,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afb" = (
 /obj/cable{
 	d1 = 4;
@@ -1980,7 +1980,7 @@
 /obj/table/wood/auto,
 /obj/item/kitchen/utensil/fork,
 /turf/simulated/floor/bluegreen/side,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afc" = (
 /obj/cable{
 	d1 = 4;
@@ -1989,7 +1989,7 @@
 	},
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/bluegreen/side,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afd" = (
 /obj/machinery/light,
 /obj/cable{
@@ -1998,7 +1998,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/bluegreen/side,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afe" = (
 /obj/cable{
 	d1 = 4;
@@ -2006,7 +2006,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/bluegreen/side,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aff" = (
 /obj/machinery/light,
 /obj/decal/cleanable/dirt,
@@ -2021,13 +2021,13 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 6
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afg" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afh" = (
 /obj/landmark/artifact,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
@@ -2087,7 +2087,7 @@
 "afo" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afp" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp,
@@ -2197,33 +2197,33 @@
 	dir = 8;
 	icon_state = "engine_caution_corners"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afD" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_north"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afE" = (
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_north"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afF" = (
 /turf/simulated/floor/engine/vacuum{
 	dir = 4;
 	icon_state = "engine_caution_corners"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afG" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afH" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "afI" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -2362,29 +2362,29 @@
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_west"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "aga" = (
 /turf/simulated/floor/engine/vacuum,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "agb" = (
 /obj/lattice,
 /turf/space,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "agc" = (
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_east"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "agd" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "age" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "agf" = (
 /obj/machinery/light,
 /obj/decal/cleanable/dirt,
@@ -2393,7 +2393,7 @@
 	},
 /obj/machinery/disposal,
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "agg" = (
 /obj/item/storage/toilet/random{
 	dir = 4
@@ -2431,7 +2431,7 @@
 /obj/window/reinforced,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "agl" = (
 /obj/storage/crate/internals,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -2558,18 +2558,18 @@
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_south"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "agA" = (
 /turf/simulated/floor/engine/vacuum{
 	dir = 1;
 	icon_state = "engine_caution_corners"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "agB" = (
 /obj/lattice,
 /obj/grille/steel,
 /turf/space,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "agC" = (
 /obj/lattice{
 	icon_state = "lattice-dir"

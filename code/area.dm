@@ -1902,8 +1902,6 @@ ABSTRACT_TYPE(/area/station/crew_quarters)
 	icon_state = "crew_lounge"
 	sound_environment = 2
 
-/area/station/crew_quarters/lounge/concrete
-
 /area/station/crew_quarters/lounge/backstage
 	name = "Backstage"
 

@@ -9182,7 +9182,7 @@
 	},
 /obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "vG" = (
 /obj/machinery/light{
 	light_type = /obj/item/light/tube/blueish
@@ -11066,7 +11066,7 @@
 /area/station/maintenance/northeast)
 "AV" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "AW" = (
 /obj/machinery/disposal/small{
 	dir = 4
@@ -11300,7 +11300,7 @@
 "BI" = (
 /obj/submachine/laundry_machine,
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "BJ" = (
 /obj/table/auto,
 /obj/bedsheetbin,
@@ -11308,7 +11308,7 @@
 	pixel_y = 25
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "BK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/heads)
@@ -11469,11 +11469,11 @@
 	name = "Staff Assistant"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Cn" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Co" = (
 /obj/stool/bench/auto,
 /obj/landmark/start{
@@ -11674,7 +11674,7 @@
 "CN" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "CO" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -11689,7 +11689,7 @@
 	},
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "CQ" = (
 /obj/machinery/computer/tetris,
 /obj/machinery/light{
@@ -11862,17 +11862,17 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Ds" = (
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Dt" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon13,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Du" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -11883,7 +11883,7 @@
 	},
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Dv" = (
 /obj/storage/secure/closet/command/hos,
 /obj/item/device/prisoner_scanner,
@@ -12250,20 +12250,20 @@
 "Em" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Eo" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Ep" = (
 /obj/machinery/vending/fortune,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Eq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/science)
@@ -12471,14 +12471,14 @@
 	dir = 8;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "ET" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred1"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "EU" = (
 /obj/machinery/vending/capsule,
 /obj/machinery/light{
@@ -12490,7 +12490,7 @@
 	dir = 4;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "EV" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/janitor/office)
@@ -12821,7 +12821,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "FL" = (
 /obj/cable{
 	d1 = 4;
@@ -12835,7 +12835,7 @@
 	dir = 10;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "FM" = (
 /obj/cable{
 	d1 = 2;
@@ -12848,7 +12848,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "FN" = (
 /obj/machinery/vending/cards,
 /obj/disposalpipe/segment{
@@ -12858,7 +12858,7 @@
 	dir = 6;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "FO" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -13128,7 +13128,7 @@
 "Gz" = (
 /obj/machinery/clothingbooth,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "GA" = (
 /obj/cable{
 	d1 = 1;
@@ -13136,11 +13136,11 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "GB" = (
 /obj/storage/closet/dresser/random,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "GC" = (
 /obj/machinery/conveyor_switch{
 	id = "trash"
@@ -13387,7 +13387,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/bot,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Hh" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -17980,7 +17980,7 @@
 "Uv" = (
 /obj/storage/closet/wardrobe/pride,
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "Uw" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -18248,7 +18248,7 @@
 	dir = 9;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/lounge/concrete)
+/area/station/crew_quarters/lounge)
 "VB" = (
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/grime,
