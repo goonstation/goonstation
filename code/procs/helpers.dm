@@ -1849,7 +1849,7 @@ proc/countJob(rank)
 
 // So there aren't multiple instances of C&P code (Convair880).
 /proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
-	if (!G || !ismob(G))
+	if (!G?.mind || G.mind.dnr)
 		return 0
 	if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
 		return 0
@@ -1876,7 +1876,7 @@ proc/countJob(rank)
 		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
 
-	if (!allow_dead_antags && (!G.mind || G.mind && (G.mind.dnr || !isnull(G.mind.special_role) || G.mind.former_antagonist_roles.len))) // Dead antagonists have had their chance.
+	if (!allow_dead_antags && (!isnull(G.mind.special_role) || length(G.mind.former_antagonist_roles))) // Dead antagonists have had their chance.
 		return 0
 
 	return 1

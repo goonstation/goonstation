@@ -12841,6 +12841,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
