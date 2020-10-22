@@ -850,7 +850,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "abn" = (
 /obj/machinery/computer/security,
 /obj/machinery/power/data_terminal,
@@ -897,7 +897,7 @@
 	dir = 1;
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "abr" = (
 /obj/critter/parrot/random,
 /obj/decal/tile_edge/flowers,
@@ -960,7 +960,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/circuit/off,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "abw" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 4
@@ -970,7 +970,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/circuit/off,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "abx" = (
 /obj/table/auto,
 /obj/item/storage/box/handcuff_kit{
@@ -1008,7 +1008,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "abA" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/decal/mule/beacon,
@@ -1064,7 +1064,7 @@
 /obj/machinery/light/emergency,
 /turf/space,
 /turf/simulated/floor/blueblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "abF" = (
 /obj/cable{
 	d1 = 1;
@@ -2444,14 +2444,14 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "apH" = (
 /obj/stool/chair/comfy,
 /obj/landmark/start{
 	name = "Medical Director"
 	},
 /turf/simulated/floor/blueblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "apN" = (
 /obj/stool/chair/office,
 /obj/item/clothing/suit/cardboard_box/head_surgeon,
@@ -2860,7 +2860,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "awO" = (
 /obj/critter/boogiebot,
 /turf/simulated/floor/wood,
@@ -2982,7 +2982,7 @@
 	dir = 8;
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "azR" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/power/apc/autoname_east,
@@ -3188,7 +3188,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aCs" = (
 /obj/cable{
 	d2 = 8;
@@ -3748,7 +3748,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aKp" = (
 /obj/landmark/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -3847,7 +3847,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "aMs" = (
 /obj/cable{
 	d1 = 1;
@@ -4863,7 +4863,7 @@
 /turf/simulated/floor/stairs/wide{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "bbE" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 4;
@@ -5190,7 +5190,7 @@
 	dir = 1;
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "bhZ" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
@@ -5217,7 +5217,7 @@
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "biB" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/shuttle,
@@ -5606,7 +5606,7 @@
 /obj/cable,
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "bpt" = (
 /obj/cable{
 	d2 = 2;
@@ -5819,7 +5819,7 @@
 /area/station/maintenance/outer/nw)
 "bsW" = (
 /turf/simulated/floor/purpleblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "bsZ" = (
 /obj/machinery/launcher_loader/south,
 /obj/random_item_spawner/junk/maybe_few,
@@ -6571,7 +6571,7 @@
 	dir = 5;
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "bCH" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/maintenance/inner/se)
@@ -6586,7 +6586,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/circuit,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "bCS" = (
 /obj/cable{
 	d1 = 4;
@@ -8257,7 +8257,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "caU" = (
 /obj/cable{
 	d2 = 2;
@@ -8359,7 +8359,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "cdn" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -8485,7 +8485,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "cev" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -9134,7 +9134,7 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "cpx" = (
 /obj/item/reagent_containers/glass/beaker/large{
 	pixel_x = 8;
@@ -9589,7 +9589,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 8
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "cwt" = (
 /obj/stool/chair/office/yellow{
 	dir = 8
@@ -10067,7 +10067,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner{
 	dir = 5
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "cDt" = (
 /obj/lattice{
 	dir = 4;
@@ -10153,7 +10153,7 @@
 /obj/item/paper_bin,
 /obj/machinery/light/emergency,
 /turf/simulated/floor/blueblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "cFk" = (
 /obj/item/clothing/mask/gas{
 	pixel_x = 8;
@@ -10366,7 +10366,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "cJh" = (
 /obj/machinery/computer3/generic/secure_data{
 	dir = 4;
@@ -10702,7 +10702,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner{
 	dir = 6
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "cOF" = (
 /obj/shrub{
 	dir = 1;
@@ -11813,7 +11813,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ddC" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
@@ -12670,7 +12670,7 @@
 /obj/random_item_spawner/tableware,
 /obj/random_item_spawner/tableware,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "dqi" = (
 /obj/railing/orange,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -13524,7 +13524,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "dFX" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -13995,7 +13995,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 5
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "dMC" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -14896,7 +14896,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "eau" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
@@ -16066,7 +16066,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "etc" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -18337,7 +18337,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/blueblack/corner,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "far" = (
 /obj/cable{
 	d1 = 4;
@@ -19225,7 +19225,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "foK" = (
 /obj/cable,
 /obj/cable{
@@ -19471,7 +19471,7 @@
 	dir = 8;
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "fsi" = (
 /obj/grille/catwalk/jen/side{
 	dir = 10
@@ -19757,7 +19757,7 @@
 /area/station/security/checkpoint/arrivals)
 "fwb" = (
 /turf/simulated/floor/blueblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "fwe" = (
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/crew_quarters/garden)
@@ -21556,7 +21556,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "fYG" = (
 /obj/machinery/manufacturer/mining,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -21758,7 +21758,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "gbW" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/medical{
@@ -21766,7 +21766,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "gca" = (
 /obj/machinery/conveyor_switch{
 	id = "toxins_plasma";
@@ -22168,7 +22168,7 @@
 	},
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ggY" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/sunglasses{
@@ -24941,7 +24941,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "gZM" = (
 /obj/cable{
 	d2 = 4;
@@ -25036,7 +25036,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/purpleblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "haK" = (
 /obj/machinery/floorflusher/bathtub{
 	dir = 8
@@ -25919,7 +25919,7 @@
 	},
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "hoG" = (
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -26341,7 +26341,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner{
 	dir = 9
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "hui" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
@@ -26878,7 +26878,7 @@
 	},
 /obj/machinery/shipalert,
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "hBH" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/hallway/primary/south)
@@ -27289,7 +27289,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "hIa" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/greenwhite/corner{
@@ -27485,7 +27485,7 @@
 /turf/simulated/floor/stairs/wide{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "hKU" = (
 /obj/machinery/networked/artifact_console{
 	desc = "It just sorta showed up in a giant box of test equipment.";
@@ -28243,7 +28243,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "hYu" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -29318,7 +29318,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "inC" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/item/chair/folded,
@@ -30895,7 +30895,7 @@
 	dir = 6;
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "iNU" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black/grime,
@@ -31404,7 +31404,7 @@
 "iWe" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/blueblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "iWp" = (
 /obj/lattice,
 /obj/warp_beacon/qm{
@@ -31992,7 +31992,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "jht" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/storage/emergency)
@@ -33298,7 +33298,7 @@
 /obj/item/storage/box/donkpocket_kit,
 /obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "jCN" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
@@ -33689,7 +33689,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "jIS" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
@@ -34274,7 +34274,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "jQS" = (
 /obj/shrub{
 	dir = 1
@@ -34437,7 +34437,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/circuit/off,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "jTG" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/cable{
@@ -34867,7 +34867,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "kcs" = (
 /obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/bluewhite,
@@ -36600,7 +36600,7 @@
 	},
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "kDs" = (
 /obj/machinery/networked/test_apparatus/heater,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -37846,7 +37846,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "kZn" = (
 /obj/machinery/light/small/cool/very{
 	dir = 1
@@ -40673,7 +40673,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 5
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "lOq" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -41424,7 +41424,7 @@
 	},
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "lYg" = (
 /obj/cable{
 	d1 = 2;
@@ -45145,7 +45145,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ngX" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -45887,7 +45887,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "nrg" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -47204,7 +47204,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "nNP" = (
 /obj/railing/orange{
 	dir = 4
@@ -47585,7 +47585,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "nTr" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal/personel_alt,
@@ -48136,7 +48136,7 @@
 /turf/simulated/floor/blueblack/corner{
 	dir = 8
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "nZp" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -48775,7 +48775,7 @@
 	pixel_x = 1
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "olB" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
@@ -49535,7 +49535,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "ouw" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -50493,7 +50493,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "oIS" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "8"
@@ -51150,7 +51150,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "oTz" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -51409,7 +51409,7 @@
 /obj/table/auto,
 /obj/machinery/microwave,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "oYc" = (
 /turf/simulated/floor/stairs/wood,
 /area/station/crew_quarters/cafeteria)
@@ -52698,7 +52698,7 @@
 /area/station/maintenance/outer/se)
 "prh" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "prl" = (
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
@@ -53033,7 +53033,7 @@
 /obj/cable,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "pve" = (
 /obj/cable{
 	d1 = 1;
@@ -53515,7 +53515,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "pBJ" = (
 /obj/decal/poster/wallsign/security,
 /obj/disposalpipe/segment/brig{
@@ -55326,7 +55326,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "qdi" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -55552,7 +55552,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "qfT" = (
 /obj/machinery/communications_dish,
 /obj/cable{
@@ -55614,7 +55614,7 @@
 	dir = 4;
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "qgA" = (
 /obj/table/auto,
 /obj/item/kitchen/utensil/fork,
@@ -55703,7 +55703,7 @@
 	dir = 8
 	},
 /turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "qhP" = (
 /obj/securearea{
 	desc = "";
@@ -56627,7 +56627,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/blueblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "qsJ" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
@@ -56914,7 +56914,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner{
 	dir = 8
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "qwl" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/ejection{
@@ -57157,7 +57157,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "qzi" = (
 /obj/grille/catwalk/jen/side{
 	dir = 8
@@ -59050,7 +59050,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "rbo" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -59875,7 +59875,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "rmR" = (
 /obj/cable{
 	d1 = 2;
@@ -61381,7 +61381,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "rHN" = (
 /obj/machinery/light/incandescent/netural,
 /obj/disposalpipe/segment/brig,
@@ -62540,7 +62540,7 @@
 	dir = 4;
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sag" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -63069,7 +63069,7 @@
 	name = "ejection pipe"
 	},
 /turf/simulated/floor/circuit,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sig" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/cable{
@@ -63913,7 +63913,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/circuit,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "svD" = (
 /obj/cable{
 	d1 = 2;
@@ -64298,7 +64298,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner{
 	dir = 10
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sCu" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -64403,7 +64403,7 @@
 /turf/simulated/floor/stairs/wide/other{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sDY" = (
 /obj/tree1{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
@@ -64729,7 +64729,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sJh" = (
 /obj/railing/orange{
 	dir = 1
@@ -65388,7 +65388,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sUI" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -65478,7 +65478,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sWu" = (
 /obj/lattice{
 	dir = 4;
@@ -65696,7 +65696,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "sZE" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -65750,7 +65750,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "tat" = (
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/elect)
@@ -67821,7 +67821,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "tFK" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -68447,7 +68447,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "tPf" = (
 /obj/cable,
 /obj/cable{
@@ -70130,7 +70130,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 6
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "uso" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen,
@@ -70227,7 +70227,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "utC" = (
 /turf/simulated/floor/red,
 /area/listeningpost/concrete)
@@ -71106,7 +71106,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/circuit,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "uFF" = (
 /turf/simulated/floor/redwhite,
 /area/station/security/checkpoint/west)
@@ -71395,7 +71395,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "uIX" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -71410,7 +71410,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/circuit,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "uJa" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/poddoor/pyro{
@@ -72330,7 +72330,7 @@
 	dir = 9;
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "uWl" = (
 /obj/item/device/matanalyzer{
 	pixel_x = -7;
@@ -72464,7 +72464,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/blueblack,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "uXD" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/external{
@@ -72943,7 +72943,7 @@
 	dir = 10;
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "vfu" = (
 /obj/machinery/disposal/mail/small/autoname/public/podbay/south,
 /obj/disposalpipe/trunk/mail{
@@ -72996,7 +72996,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "vgg" = (
 /obj/cable{
 	d1 = 2;
@@ -73315,7 +73315,7 @@
 /turf/simulated/floor/stairs/wide/other{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "vls" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -74000,7 +74000,7 @@
 	},
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "vwH" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
@@ -74161,7 +74161,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "vyH" = (
 /obj/disposalpipe/junction{
 	name = "factory pipe"
@@ -76037,7 +76037,7 @@
 	name = "Bridge Lockdown"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "war" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -76198,7 +76198,7 @@
 	},
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "wdi" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -76464,7 +76464,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/circuit,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "whA" = (
 /obj/grille/catwalk/jen/side,
 /obj/cable{
@@ -77329,7 +77329,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "wtJ" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky{
@@ -77517,7 +77517,7 @@
 	dir = 8;
 	icon_state = "fblue6"
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "wvS" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4;
@@ -78539,7 +78539,7 @@
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "wKE" = (
 /obj/cable{
 	d1 = 2;
@@ -79944,7 +79944,7 @@
 /area/station/crew_quarters/pool)
 "xdQ" = (
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "xeg" = (
 /obj/machinery/disposal/small{
 	dir = 8
@@ -80263,7 +80263,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "xjn" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -81483,7 +81483,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "xDq" = (
 /obj/machinery/flasher/portable,
 /obj/decal/mule/beacon,
@@ -82562,7 +82562,7 @@
 /turf/simulated/floor/blueblack/corner{
 	dir = 4
 	},
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "xTc" = (
 /obj/grille/catwalk/jen/side{
 	dir = 5
@@ -82735,7 +82735,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/concrete)
+/area/station/bridge/command_center)
 "xVb" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 6;
