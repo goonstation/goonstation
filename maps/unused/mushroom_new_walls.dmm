@@ -2221,7 +2221,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aiK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2478,7 +2478,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ajR" = (
 /obj/machinery/light,
 /obj/cable{
@@ -2513,16 +2513,16 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "akg" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "akh" = (
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aki" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -2618,12 +2618,12 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "akE" = (
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "akJ" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -2666,7 +2666,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "akZ" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -2706,13 +2706,13 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ali" = (
 /obj/machinery/nanofab/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "alm" = (
 /turf/simulated/floor/orangeblack,
 /area/station/engine/singcore)
@@ -2749,19 +2749,19 @@
 "alC" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "alD" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "alE" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "alG" = (
 /obj/cable,
 /obj/cable{
@@ -2771,7 +2771,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "alH" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -2859,7 +2859,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ame" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/storage/eva)
@@ -3104,7 +3104,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ana" = (
 /obj/table/reinforced/industrial/auto{
 	icon_state = "5"
@@ -5793,7 +5793,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "awZ" = (
 /obj/machinery/camera{
 	c_tag = "FS Maintenance - Center";
@@ -5833,7 +5833,7 @@
 /obj/access_spawn/mining,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "axg" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -5947,7 +5947,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "axy" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
@@ -5960,7 +5960,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "axB" = (
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/supernorn,
@@ -6011,7 +6011,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "axO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6222,7 +6222,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ayO" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/kitchen/utensil/fork,
@@ -6306,7 +6306,7 @@
 /area/station/hallway/primary/west)
 "ayY" = (
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aza" = (
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
@@ -6391,7 +6391,7 @@
 /area/station/hallway/primary/north)
 "azo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "azp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15385,7 +15385,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bfF" = (
 /obj/machinery/disposal/mail/autoname/engineering,
 /obj/disposalpipe/trunk/mail/south,
@@ -15715,12 +15715,12 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bgM" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bgO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15728,7 +15728,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bgP" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -16065,7 +16065,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bhZ" = (
 /obj/cable{
 	icon_state = "6-9"
@@ -16333,7 +16333,7 @@
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "biT" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -17503,7 +17503,7 @@
 /obj/access_spawn/mining,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bob" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -17922,7 +17922,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bpn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17933,14 +17933,14 @@
 /obj/access_spawn/mining,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bpo" = (
 /obj/machinery/light,
 /obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bpp" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{

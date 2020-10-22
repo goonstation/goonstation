@@ -272,7 +272,7 @@
 "aQ" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "aR" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
 /area/station/security/detectives_office)
@@ -344,7 +344,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bd" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -465,7 +465,7 @@
 	name = "VACUUM AREA"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bu" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
@@ -563,7 +563,7 @@
 /area/station/quartermaster/concrete)
 "bH" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bI" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -649,7 +649,7 @@
 "bW" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/yellow,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bX" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /obj/machinery/camera{
@@ -835,7 +835,7 @@
 "cv" = (
 /obj/machinery/firealarm,
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cw" = (
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -1123,7 +1123,7 @@
 	name = "Mining Podbay Door Control"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ds" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/red,
@@ -1301,7 +1301,7 @@
 /area/station/chapel/office)
 "dU" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "dV" = (
 /obj/item/bananapeel,
 /obj/item/clothing/suit/bedsheet{
@@ -1495,18 +1495,18 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ev" = (
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ew" = (
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ex" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
 /area/station/crew_quarters/kitchen)
@@ -1667,7 +1667,7 @@
 /area/station/chapel/main)
 "eT" = (
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "eU" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
 /area/station/crew_quarters/kitchen)
@@ -1684,7 +1684,7 @@
 	id = "miningbay"
 	},
 /turf/simulated/floor/engine,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "eY" = (
 /obj/potted_plant{
 	dir = 4
@@ -1693,11 +1693,11 @@
 /area/station/hallway/primary/east)
 "eZ" = (
 /turf/simulated/floor/engine,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fa" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fb" = (
 /obj/machinery/vehicle/miniputt/indyputt,
 /obj/disposalpipe/segment{
@@ -1706,7 +1706,7 @@
 	name = "factory pipe"
 	},
 /turf/simulated/floor/engine,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fc" = (
 /obj/machinery/light{
 	dir = 4;
@@ -1804,7 +1804,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fp" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -1812,7 +1812,7 @@
 /turf/simulated/floor/caution/corner/nw{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fq" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
@@ -1825,7 +1825,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fs" = (
 /obj/machinery/bot/duckbot,
 /turf/simulated/floor/specialroom/chapel{
@@ -1868,7 +1868,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fw" = (
 /obj/table/auto,
 /obj/item/instrument/harmonica,
@@ -1891,12 +1891,12 @@
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fz" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fA" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -1909,13 +1909,13 @@
 /turf/simulated/floor/stairs/wide{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fB" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fC" = (
 /obj/cryotron,
 /turf/simulated/floor/blue,
@@ -2074,7 +2074,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "fU" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
@@ -3189,7 +3189,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "iv" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
 /area/station/bridge/captain)
@@ -3273,7 +3273,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/bot,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "iF" = (
 /obj/displaycase,
 /turf/simulated/floor/blue,
@@ -3558,7 +3558,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/bot,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jp" = (
 /obj/decal/poster/wallsign/security,
 /obj/disposalpipe/segment/brig,
@@ -3611,7 +3611,7 @@
 /turf/simulated/floor/stairs/wide/other{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "jw" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -4208,7 +4208,7 @@
 /area/station/turret_protected/Zeta)
 "kN" = (
 /turf/simulated/floor/caution/west,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "kO" = (
 /obj/machinery/light{
 	dir = 4;
@@ -4388,7 +4388,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "lk" = (
 /obj/machinery/shield_generator,
 /turf/simulated/floor/yellow,
@@ -5235,7 +5235,7 @@
 /turf/simulated/floor/stairs/wide/middle{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ni" = (
 /obj/securearea{
 	desc = "";
@@ -5670,7 +5670,7 @@
 /area/station/medical/research)
 "oe" = (
 /turf/simulated/floor/bot,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "of" = (
 /obj/machinery/light{
 	dir = 4;
@@ -5989,7 +5989,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/jetpack,
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "oR" = (
 /obj/machinery/computer/bank_data,
 /turf/simulated/floor/carpet{
@@ -9126,7 +9126,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/bot,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "wf" = (
 /obj/machinery/light{
 	dir = 8;
@@ -9161,7 +9161,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "wj" = (
 /obj/stool/chair/yellow{
 	dir = 8;
@@ -9194,10 +9194,10 @@
 /obj/machinery/vehicle/miniputt/indyputt,
 /obj/machinery/light,
 /turf/simulated/floor/engine,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "wm" = (
 /turf/simulated/floor/caution/corner/sw,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "wn" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -9326,13 +9326,13 @@
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "wC" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "wD" = (
 /obj/table/auto,
 /obj/machinery/door_control{
@@ -12355,7 +12355,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "CC" = (
 /obj/machinery/bot/secbot/beepsky,
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon1_start,

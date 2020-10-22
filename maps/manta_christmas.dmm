@@ -7579,10 +7579,10 @@
 "arP" = (
 /obj/miningteleporter,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "arQ" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "arR" = (
 /obj/decal/tile_edge/check{
 	icon_state = "check1";
@@ -7609,7 +7609,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "arT" = (
 /obj/decal/tile_edge/check{
 	icon_state = "check1";
@@ -7631,7 +7631,7 @@
 /obj/item/crowbar,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "arV" = (
 /obj/machinery/disposal/mail/small{
 	dir = 8;
@@ -7643,14 +7643,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "arW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "arX" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -7660,7 +7660,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "arY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7671,7 +7671,7 @@
 "arZ" = (
 /obj/stool/chair/yellow,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "asa" = (
 /obj/stool/chair/yellow{
 	icon_state = "chair-y";
@@ -7682,17 +7682,17 @@
 	nostick = 1
 	},
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "asb" = (
 /obj/table/auto,
 /obj/item/paper/book/pocketguide/mining1,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "asc" = (
 /obj/table/auto,
 /obj/item/paper/book/pocketguide/mining2,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "asd" = (
 /obj/cable,
 /obj/cable{
@@ -7721,7 +7721,7 @@
 	},
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "asf" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -7732,7 +7732,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "asg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7744,7 +7744,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ash" = (
 /obj/cable{
 	d1 = 1;
@@ -7768,17 +7768,17 @@
 	nostick = 1
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ask" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "asl" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "asm" = (
 /obj/disposalpipe/segment/morgue{
 	icon_state = "pipe-s";
@@ -7859,7 +7859,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ass" = (
 /obj/table/auto,
 /obj/item/paper/book/minerals{
@@ -7867,16 +7867,16 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ast" = (
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "asu" = (
 /obj/machinery/light/incandescent/netural,
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "asv" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -7888,7 +7888,7 @@
 	},
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "asw" = (
 /obj/submachine/cargopad/robotics,
 /obj/machinery/light/incandescent/cool,
@@ -11128,7 +11128,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "azf" = (
 /obj/rack,
 /obj/item/wrench,
@@ -25039,7 +25039,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "baK" = (
 /obj/disposalpipe/segment/mail{
 	icon_state = "pipe-s";
@@ -32652,7 +32652,7 @@
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "boX" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -34682,10 +34682,10 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bsC" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bsD" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	name = "Submarine Bay (Security)"
@@ -35431,7 +35431,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bub" = (
 /obj/machinery/processor,
 /obj/disposalpipe/segment/mineral{
@@ -35446,7 +35446,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "buc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -35461,7 +35461,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bud" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -35472,7 +35472,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bue" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -35487,7 +35487,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "buf" = (
 /obj/machinery/manufacturer/mining,
 /obj/disposalpipe/segment/mineral{
@@ -35499,7 +35499,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bug" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -36093,7 +36093,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bvs" = (
 /obj/table/auto,
 /obj/machinery/recharger,
@@ -36106,7 +36106,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bvt" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -36118,14 +36118,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bvu" = (
 /obj/disposalpipe/segment/mail{
 	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bvv" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -36137,12 +36137,12 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bvw" = (
 /obj/machinery/nanofab/refining,
 /obj/disposalpipe/segment/mineral,
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bvx" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	name = "Changing Room"
@@ -36930,21 +36930,21 @@
 	tag = ""
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bwY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 4
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bwZ" = (
 /obj/machinery/neosmelter,
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bxa" = (
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bxb" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -36952,7 +36952,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bxc" = (
 /obj/machinery/portable_reclaimer,
 /obj/disposalpipe/segment/mineral,
@@ -36963,7 +36963,7 @@
 	name = "Supply Intercom"
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bxd" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -37680,7 +37680,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "byF" = (
 /obj/decal/cleanable/oil,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -37688,27 +37688,27 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "byG" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 5
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "byH" = (
 /obj/submachine/cargopad{
 	name = "Mining Teleport Pad"
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "byI" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 9
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "byJ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -37716,7 +37716,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "byK" = (
 /obj/disposalpipe/segment/mail,
 /obj/table/reinforced/auto,
@@ -37732,7 +37732,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "byL" = (
 /obj/item/storage/wall/clothingrack/hatrack/hatrack_3{
 	dir = 4
@@ -38476,7 +38476,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bAd" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/disposal/ore/small/east{
@@ -38486,11 +38486,11 @@
 	dir = 8
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bAe" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bAf" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5;
@@ -38498,7 +38498,7 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bAg" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -38506,7 +38506,7 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bAh" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -38514,13 +38514,13 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bAi" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bAj" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/disposal/ore/small/west{
@@ -38530,7 +38530,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/industrial,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bAk" = (
 /obj/item/storage/wall/clothingrack/clothes1,
 /turf/simulated/floor/greenblack{
@@ -39207,13 +39207,13 @@
 	dir = 1;
 	icon_state = "Stairs2_wide"
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bBG" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "stairs_middle"
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bBH" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -39223,7 +39223,7 @@
 	dir = 1;
 	icon_state = "stairs_middle"
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bBI" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -39234,7 +39234,7 @@
 	dir = 1;
 	icon_state = "Stairs_wide"
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bBJ" = (
 /obj/item/screwdriver,
 /turf/simulated/floor/shuttlebay,
@@ -39944,7 +39944,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bDb" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -39952,7 +39952,7 @@
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bDc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -39965,7 +39965,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bDd" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -40528,7 +40528,7 @@
 /area/station/quartermaster/cargobay)
 "bEo" = (
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bEp" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -40537,7 +40537,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bEq" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -41074,7 +41074,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bFA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41086,7 +41086,7 @@
 	},
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bFB" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -41492,7 +41492,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bGu" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -41707,14 +41707,14 @@
 "bGS" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bGT" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bGU" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -42529,7 +42529,7 @@
 /obj/disposalpipe/segment,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bIJ" = (
 /obj/machinery/manufacturer/uniform,
 /obj/machinery/light/incandescent/netural{
@@ -42908,7 +42908,7 @@
 /area/station/maintenance/lowerstarboard)
 "bJA" = (
 /turf/simulated/wall/asteroid,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bJB" = (
 /obj/submachine/foodprocessor,
 /obj/machinery/light/incandescent/warm{
@@ -44795,7 +44795,7 @@
 "bNu" = (
 /obj/item/trench_map,
 /turf/simulated/floor/orange,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bNv" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/storage/crate,

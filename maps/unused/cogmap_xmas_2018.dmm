@@ -48685,7 +48685,7 @@
 	})
 "bVp" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bVq" = (
 /turf/simulated/floor/stairs{
 	dir = 1
@@ -48695,7 +48695,7 @@
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bVs" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/cable{
@@ -49393,7 +49393,7 @@
 	},
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bWz" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -49404,11 +49404,11 @@
 	req_access_txt = "50"
 	},
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bWA" = (
 /obj/machinery/dispenser,
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bWB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/refinery)
@@ -49870,7 +49870,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bXA" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -49880,12 +49880,12 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bXB" = (
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bXC" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -49894,12 +49894,12 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bXD" = (
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bXE" = (
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/shuttlebay{
@@ -50496,32 +50496,32 @@
 	req_access_txt = "50"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bYT" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bYU" = (
 /obj/landmark/start{
 	name = "Miner"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bYV" = (
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bYW" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bYX" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "bYY" = (
 /obj/grille/catwalk/cross{
 	dir = 9
@@ -51168,7 +51168,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "caj" = (
 /obj/machinery/light{
 	dir = 8;
@@ -51178,18 +51178,18 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cak" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/regular,
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cal" = (
 /obj/stool/chair/yellow{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cam" = (
 /obj/machinery/light{
 	dir = 4;
@@ -51199,7 +51199,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "can" = (
 /obj/securearea{
 	desc = "";
@@ -51866,7 +51866,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cbI" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -51879,16 +51879,16 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cbJ" = (
 /turf/simulated/floor/yellow/corner,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cbK" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cbL" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -52358,7 +52358,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ccP" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -52374,13 +52374,13 @@
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ccQ" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ccR" = (
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/grime,
@@ -52968,7 +52968,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cec" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -52976,7 +52976,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ced" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -52984,7 +52984,7 @@
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cee" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -52998,7 +52998,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cef" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/grime,
@@ -53461,12 +53461,12 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cfp" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cfq" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -54140,13 +54140,13 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cgH" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cgI" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -54155,16 +54155,16 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cgJ" = (
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cgK" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cgL" = (
 /obj/shrub,
 /turf/simulated/floor/snow,
@@ -54694,7 +54694,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "chO" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -54704,7 +54704,7 @@
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "chP" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -54720,7 +54720,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "chQ" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -54730,7 +54730,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "chR" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -54744,7 +54744,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "chS" = (
 /obj/machinery/light,
 /obj/cable{
@@ -54753,7 +54753,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "chT" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -54761,7 +54761,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "chU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -54772,7 +54772,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "chV" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -55277,7 +55277,7 @@
 "cje" = (
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cjf" = (
 /obj/machinery/conveyor_switch{
 	id = "mining";
@@ -55288,7 +55288,7 @@
 	icon_state = "tube1"
 	},
 /turf/simulated/floor/bot,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cjg" = (
 /obj/window/reinforced{
 	dir = 2
@@ -56004,14 +56004,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ckt" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cku" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -56019,7 +56019,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ckv" = (
 /obj/machinery/door_control{
 	id = "miningshutter";
@@ -56028,14 +56028,14 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ckw" = (
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "mining"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ckx" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -56047,7 +56047,7 @@
 	},
 /obj/plasticflaps,
 /turf/simulated/floor/caution/northsouth,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cky" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -56062,7 +56062,7 @@
 	},
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/caution/northsouth,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ckz" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -56929,7 +56929,7 @@
 "clS" = (
 /obj/securearea,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "clT" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -57460,13 +57460,13 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cnd" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cne" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -57476,7 +57476,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cnf" = (
 /obj/machinery/computer/mining_shuttle{
 	dir = 2
@@ -57484,7 +57484,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cng" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	autoclose = 1;
@@ -58036,7 +58036,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cok" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -58050,7 +58050,7 @@
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "col" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -58060,20 +58060,20 @@
 	name = "peststart"
 	},
 /turf/simulated/floor/yellow/corner,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "com" = (
 /obj/machinery/light,
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "con" = (
 /turf/simulated/floor/yellow/side,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "coo" = (
 /obj/stool,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cop" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -60445,7 +60445,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "csx" = (
 /turf/space,
 /area/shuttle/mining/station)
@@ -61255,7 +61255,7 @@
 	pixel_x = -20
 	},
 /turf/simulated/floor/delivery,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "ctZ" = (
 /obj/table/reinforced/auto,
 /obj/item/device/analyzer/healthanalyzer,
@@ -61704,12 +61704,12 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cuR" = (
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cuS" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
@@ -63021,7 +63021,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cxm" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/cable{
@@ -63039,7 +63039,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cxn" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -65553,7 +65553,7 @@
 /obj/window/auto/reinforced,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/mining/concrete)
+/area/station/mining/staff_room)
 "cCN" = (
 /obj/cable{
 	icon_state = "0-2";

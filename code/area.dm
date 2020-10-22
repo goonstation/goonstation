@@ -1781,7 +1781,8 @@ ABSTRACT_TYPE(/area/station/mining)
 	icon_state = "mining"
 	sound_environment = 10
 
-/area/station/mining/concrete
+/area/station/mining/staff_room
+  name = "Mining Staff Room"
 
 /area/station/mining/refinery
 	name = "Mining Refinery"
