@@ -2025,6 +2025,37 @@
 
 		src.show_laws(0)
 		return
+		
+	verb/cmd_state_standard_laws()
+		set category = "Robot Commands"
+		set name = "State Standard Laws"
+		sleep(1 SECOND)
+		src.say("1. You may not injure a human being or cause one to come to harm.")
+		sleep(1 SECOND)
+		src.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
+		sleep(1 SECOND)
+		src.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
+
+	verb/cmd_state_laws()
+		set category = "Robot Commands"
+		set name = "State Laws"
+		if (alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
+			return
+		if(ticker.centralized_ai_laws.zeroth)
+			src.say("0. [ticker.centralized_ai_laws.zeroth]")
+		var/number = 1
+		for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
+			var/law = ticker.centralized_ai_laws.inherent[index]
+			if (length(law) > 0)
+				src.say("[number]. [law]")
+				number++
+				sleep(1 SECOND)
+		for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
+			var/law = ticker.centralized_ai_laws.supplied[index]
+			if (length(law) > 0)
+				src.say("[number]. [law]")
+				number++
+				sleep(1 SECOND)
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
