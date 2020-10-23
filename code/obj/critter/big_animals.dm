@@ -236,13 +236,11 @@ obj/critter/bear/care
 		var/list/part_list = list("l_arm", "r_arm", "l_leg", "r_leg")
 
 		while(part_list.len>0)
-		{
 			var/current_part = pick(part_list)
 			part_list -= current_part
 			var/obj/item/parts/bodypart = H.limbs.get_limb(current_part)
 			if(bodypart && !istype(bodypart, /obj/item/parts/robot_parts)) //Quick check for robolimbs. It may be wrong, limb check examples give me headaches
 				return bodypart
-		}
 		return null
 
 
