@@ -1537,7 +1537,7 @@
 		if("injector")
 			if(genResearch.researchMaterial < genResearch.injector_cost)
 				return 0
-			if(E && GBE?.research_level >= 2 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 2)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/injector) && world.time >= src.equipment[GENETICS_INJECTORS])
 					if (genResearch.researchMaterial >= genResearch.injector_cost)
 						return 1
