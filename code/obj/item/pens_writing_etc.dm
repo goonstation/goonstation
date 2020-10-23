@@ -604,7 +604,7 @@
 			G.color = src.font_color
 		if (src.material)
 			G.setMaterial(src.material)
-		/*if (src.uses_handwriting && user?.mind && user.mind.handwriting)
+		/*if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
 		*/
