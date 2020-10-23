@@ -1073,6 +1073,8 @@
 	desc = "Coral harvested from the sea floor."
 	color = "#990099"
 	material_flags = MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_ORGANIC
+	texture = "coral"
+	texture_blend = ICON_OVERLAY
 
 	New()
 		setProperty("density", 5)
