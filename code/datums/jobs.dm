@@ -554,6 +554,7 @@
 	slot_suit = /obj/item/clothing/suit/labcoat/robotics
 	slot_glov = /obj/item/clothing/gloves/latex
 	slot_lhan = /obj/item/storage/toolbox/mechanical
+	slot_eyes = /obj/item/clothing/glasses/healthgoggles
 	slot_ears = /obj/item/device/radio/headset/medical
 	items_in_backpack = list(/obj/item/crowbar)
 
