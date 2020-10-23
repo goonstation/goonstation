@@ -84,7 +84,7 @@
 					src.reagents.reaction(A, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???
 
 		SPAWN_DBG(5 SECONDS)
-			if (src?.reagents && src.reagents.total_volume)
+			if (src?.reagents?.total_volume)
 				src.reagents.del_reagent(default_reagent)
 				src.reagents.remove_any(40)
 
