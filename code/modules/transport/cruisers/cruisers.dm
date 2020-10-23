@@ -1177,7 +1177,7 @@
 
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior?.ship && interior.ship.life_support)
+		if(interior?.ship?.life_support)
 			interior.ship.life_support.set_loc(src.loc)
 			interior.ship.life_support = null
 		return
