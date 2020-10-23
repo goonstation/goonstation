@@ -1,6 +1,10 @@
 
 (t)fri oct 23 20
 (u)RSG250
+(p)2503
+(e)🎨|sprites
+(+)Things made with coral now have a texture on them!
+(u)RSG250
 (p)2502
 (e)🆕|feature
 (+)Beeswax can now be made at the Material processor using honey!
