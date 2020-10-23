@@ -1548,7 +1548,7 @@
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/genebooth))
 					return 1
 		if("activator")
-			if(E && GBE?.research_level >= 2 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 2)
 				if(world.time >= src.equipment[GENETICS_INJECTORS])
 					return 1
 		if("saver")
