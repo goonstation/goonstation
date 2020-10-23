@@ -1853,7 +1853,7 @@
 		uneq_all()
 		src.module = null
 		hud.module_removed()
-		if(istype(src.radio) && src.radio != src.default_radio && !src.dependent)
+		if(istype(src.radio) && src.radio != src.default_radio)
 			src.radio.set_loc(RM)
 			if (!src.shell)
 				src.radio = src.default_radio
