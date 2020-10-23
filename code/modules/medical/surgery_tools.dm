@@ -1365,7 +1365,7 @@ CONTAINS:
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		// todo: check zone, make sure people are shining the light 1) at a human 2) in the eyes, clauses for whatever else
-		if (!def_zone && user?.zone_sel && user.zone_sel.selecting)
+		if (!def_zone && user?.zone_sel?.selecting)
 			def_zone = user.zone_sel.selecting
 		else if (!def_zone)
 			return ..()
