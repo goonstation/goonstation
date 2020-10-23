@@ -922,7 +922,7 @@
 
 		if(stack)
 			var/obj/item/newObj = new result()
-			if(finishMaterial?.assigned && finishMaterial.assigned.material)
+			if(finishMaterial?.assigned?.material)
 				newObj.setMaterial(finishMaterial.assigned.material)
 			postProcess(newObj)
 			newObj.change_stack_amount(round(amount*createMultiplier,1) - newObj.amount)
@@ -930,7 +930,7 @@
 		else
 			for(var/i=0, i<round(amount*createMultiplier,1), i++)
 				var/obj/item/newObj = new result()
-				if(finishMaterial?.assigned && finishMaterial.assigned.material)
+				if(finishMaterial?.assigned?.material)
 					newObj.setMaterial(finishMaterial.assigned.material)
 				postProcess(newObj)
 				newObj.set_loc(getOutputLocation(owner))

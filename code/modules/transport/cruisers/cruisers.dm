@@ -1112,7 +1112,7 @@
 		return
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior?.ship && interior.ship.turret_left)
+		if(interior?.ship?.turret_left)
 			interior.ship.turret_left.set_loc(src.loc)
 			interior.ship.turret_left = null
 		return
@@ -1130,7 +1130,7 @@
 		return
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior?.ship && interior.ship.turret_right)
+		if(interior?.ship?.turret_right)
 			interior.ship.turret_right.set_loc(src.loc)
 			interior.ship.turret_right = null
 		return
@@ -1151,7 +1151,7 @@
 		return
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior?.ship && interior.ship.engine)
+		if(interior?.ship?.engine)
 			interior.ship.engine.set_loc(src.loc)
 			interior.ship.engine = null
 		return
@@ -1177,7 +1177,7 @@
 
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior?.ship && interior.ship.life_support)
+		if(interior?.ship?.life_support)
 			interior.ship.life_support.set_loc(src.loc)
 			interior.ship.life_support = null
 		return

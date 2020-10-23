@@ -1310,7 +1310,7 @@ $(function() {
 		return 1
 
 	Topic(href, href_list[])
-		if (usr?.client && usr.client.preferences)
+		if (usr?.client?.preferences)
 			if (src == usr.client.preferences)
 				process_link(usr, href_list)
 			else
@@ -1667,7 +1667,7 @@ $(function() {
 
 		if (link_tags["toggle_mentorhelp"])
 			rebuild_data["messages"] = 1
-			if (user?.client && user.client.is_mentor())
+			if (user?.client?.is_mentor())
 				src.see_mentor_pms = !(src.see_mentor_pms)
 				user.client.set_mentorhelp_visibility(src.see_mentor_pms)
 

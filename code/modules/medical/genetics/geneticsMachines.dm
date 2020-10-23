@@ -1531,24 +1531,24 @@
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision) && world.time >= src.equipment[GENETICS_EMITTERS])
 					return 1
 		if("reclaimer")
-			if(E && GBE?.research_level >= 2 && E.can_reclaim)
+			if(E?.can_reclaim && GBE?.research_level >= 2)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/reclaimer) && world.time >= src.equipment[GENETICS_RECLAIMER])
 					return 1
 		if("injector")
 			if(genResearch.researchMaterial < genResearch.injector_cost)
 				return 0
-			if(E && GBE?.research_level >= 2 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 2)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/injector) && world.time >= src.equipment[GENETICS_INJECTORS])
 					if (genResearch.researchMaterial >= genResearch.injector_cost)
 						return 1
 		if("genebooth")
 			if(genResearch.researchMaterial < genResearch.genebooth_cost)
 				return 0
-			if(E && GBE?.research_level >= 1 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 1)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/genebooth))
 					return 1
 		if("activator")
-			if(E && GBE?.research_level >= 2 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 2)
 				if(world.time >= src.equipment[GENETICS_INJECTORS])
 					return 1
 		if("saver")
