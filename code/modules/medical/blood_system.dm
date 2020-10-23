@@ -777,7 +777,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (5 to INFINITY)
 			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s internal bleeding was already high and chance was not increased")
 
-	if (some_jerk?.zone_sel && some_jerk.zone_sel.selecting)
+	if (some_jerk?.zone_sel?.selecting)
 		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [some_jerk]'s target zone is [some_jerk.zone_sel.selecting]")
 		switch (some_jerk.zone_sel.selecting)
 			if ("head")
