@@ -1,5 +1,9 @@
 
 (t)fri oct 23 20
+(u)RSG250
+(p)2502
+(e)🆕|feature
+(+)Beeswax can now be made at the Material processor using honey!
 (u)Arahimine
 (p)2493
 (e)⚖|balance
