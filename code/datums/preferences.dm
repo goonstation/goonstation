@@ -1667,7 +1667,7 @@ $(function() {
 
 		if (link_tags["toggle_mentorhelp"])
 			rebuild_data["messages"] = 1
-			if (user?.client && user.client.is_mentor())
+			if (user?.client?.is_mentor())
 				src.see_mentor_pms = !(src.see_mentor_pms)
 				user.client.set_mentorhelp_visibility(src.see_mentor_pms)
 
