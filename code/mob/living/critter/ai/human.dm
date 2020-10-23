@@ -107,7 +107,7 @@
 			var/dist = get_dist(holder.ownhuman, holder.target)
 			if(dist <= 1)
 				holder.ownhuman.a_intent = INTENT_DISARM
-				holder.ownhuman.dir = get_dir(holder.ownhuman, holder.target)
+				holder.ownhuman.set_dir(get_dir(holder.ownhuman, holder.target))
 				var/list/params = list()
 				params["left"] = 1
 				holder.ownhuman.hand_attack(holder.target, params)
@@ -159,11 +159,11 @@
 					if(!holder.target)
 						return ..() // try again next tick
 				if ((dist <= 3) && holder.ownhuman.equipped())
-					holder.ownhuman.dir = get_dir(holder.ownhuman, M)
+					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 					holder.ownhuman.throw_item(holder.target,params)
 				if (dist <= 1)
 					holder.ownhuman.a_intent = INTENT_HARM
-					holder.ownhuman.dir = get_dir(holder.ownhuman, M)
+					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 
 					holder.ownhuman.hand_attack(M, params)
 				if(prob(25))
@@ -211,7 +211,7 @@
 				if (dist <= 1)
 					holder.ownhuman.a_intent = INTENT_GRAB
 
-					holder.ownhuman.dir = get_dir(holder.ownhuman, M)
+					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 
 					var/list/params = list()
 					params["left"] = 1

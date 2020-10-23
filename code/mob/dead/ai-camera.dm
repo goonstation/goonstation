@@ -102,11 +102,11 @@
 			src.cancel_camera()
 
 		if (NewLoc)
-			dir = get_dir(loc, NewLoc)
+			src.set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc) //src.set_loc(NewLoc) we don't wanna refresh last_range here and as fas as i can tell there's no reason we Need set_loc
 		else
 
-			dir = direct
+			src.set_dir(direct)
 			if((direct & NORTH) && src.y < world.maxy)
 				src.y++
 			if((direct & SOUTH) && src.y > 1)
@@ -156,7 +156,7 @@
 				set_loc(src, target)
 
 			if (get_dist(src, target) > 0)
-				dir = get_dir(src, target)
+				src.set_dir(get_dir(src, target))
 
 
 			target.attack_ai(src, params, location, control)

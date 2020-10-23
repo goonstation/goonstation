@@ -1356,7 +1356,7 @@
 							animate_levitate(src, 1, 10)
 							SPAWN_DBG(0) // some movement to make it look cooler
 								for (var/i = 0, i < 10, i++)
-									src.dir = turn(src.dir, 90)
+									src.set_dir(turn(src.dir, 90))
 									sleep(0.2 SECONDS)
 
 							elecflash(src,power = 2)
@@ -1391,7 +1391,7 @@
 										message = "<B>[src]</B> is raving super hard!"
 								SPAWN_DBG(0)
 									for (var/i = 0, i < 4, i++)
-										src.dir = turn(src.dir, 90)
+										src.set_dir(turn(src.dir, 90))
 										sleep(0.2 SECONDS)
 							//standard dancing
 							else
@@ -1402,14 +1402,14 @@
 										message = "<B>[src]</B> busts out some mad moves."
 										SPAWN_DBG(0)
 											for (var/i = 0, i < 4, i++)
-												src.dir = turn(src.dir, 90)
+												src.set_dir(turn(src.dir, 90))
 												sleep(0.2 SECONDS)
 
 									if (2)
 										message = "<B>[src]</B> does the twist, like they did last summer."
 										SPAWN_DBG(0)
 											for (var/i = 0, i < 4, i++)
-												src.dir = turn(src.dir, -90)
+												src.set_dir(turn(src.dir, -90))
 												sleep(0.2 SECONDS)
 
 									if (3)
@@ -1427,11 +1427,11 @@
 										SPAWN_DBG(0)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x+= 2
-												src.dir = turn(src.dir, 90)
+												src.set_dir(turn(src.dir, 90))
 												sleep(0.2 SECONDS)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x-= 2
-												src.dir = turn(src.dir, 90)
+												src.set_dir(turn(src.dir, 90))
 												sleep(0.2 SECONDS)
 
 									if (5)
@@ -1462,12 +1462,12 @@
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x+= 1
 												src.pixel_y+= 1
-												src.dir = turn(src.dir, -90)
+												src.set_dir(turn(src.dir, -90))
 												sleep(0.2 SECONDS)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x-= 1
 												src.pixel_y-= 1
-												src.dir = turn(src.dir, -90)
+												src.set_dir(turn(src.dir, -90))
 												sleep(0.2 SECONDS)
 										// expand this too, however much
 
@@ -2177,7 +2177,7 @@
 	torso.appearance_flags = KEEP_APART
 	APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
 	H.update_canmove()
-	H.dir = SOUTH
+	H.set_dir(SOUTH)
 	H.dir_locked = TRUE
 	sleep(0.1) //so the direction setting actually takes place
 	world << torso

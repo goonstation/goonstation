@@ -94,7 +94,7 @@
 
 	New()
 		..()
-		dir = pick(cardinal)
+		set_dir(pick(cardinal))
 		light = new /datum/light/point
 		light.set_brightness(0.5,queued_run = 1)
 		light.attach(src)

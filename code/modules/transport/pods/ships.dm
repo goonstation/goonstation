@@ -1785,7 +1785,7 @@ obj/machinery/vehicle/miniputt/pilot
 			var/obj/portal/P = unpool(/obj/portal)
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
-			src.dir = landmarks[LANDMARK_ESCAPE_POD_SUCCESS][T]
+			src.set_dir(landmarks[LANDMARK_ESCAPE_POD_SUCCESS][T])
 			P.target = T
 			src.set_loc(T)
 
@@ -1818,7 +1818,7 @@ obj/machinery/vehicle/miniputt/pilot
 				pilot << sound('sound/machines/engine_alert1.ogg')
 				boutput(pilot, "<span class='alert'>Your escape pod is veering out of control!</span>")
 				while(src)
-					if(prob(10)) src.dir = turn(dir,pick(90,-90))
+					if(prob(10)) src.set_dir(turn(dir,pick(90,-90)))
 					var/loc = src.loc
 					step(src,src.dir)
 					if(src.loc == loc) //we hit something
@@ -1868,7 +1868,7 @@ obj/machinery/vehicle/miniputt/pilot
 				pilot << sound('sound/machines/engine_alert1.ogg')
 				var/spin_dir = pick(90,-90)
 				while(src)
-					src.dir = turn(dir,spin_dir)
+					src.set_dir(turn(dir,spin_dir))
 					var/loc = src.loc
 					step(src,src.dir)
 					if(src.loc == loc) //we hit something

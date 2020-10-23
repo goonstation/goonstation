@@ -148,20 +148,20 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			if (istype( get_step(src, WEST), src.type))
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower right
-					dir = 4
+					set_dir(4)
 
 				else
 					//Upper right
-					dir = 1
+					set_dir(1)
 
 			else
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower left
-					dir = 8
+					set_dir(8)
 
 				else
 					//Upper left
-					dir = 2
+					set_dir(2)
 
 
 	Entered(atom/A as mob|obj)
@@ -1096,7 +1096,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		if (prob(5))
 			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
-			src.dir = pick(alldirs)
+			src.set_dir(pick(alldirs))
 
 /obj/critter/moonspy
 	name = "\proper not a syndicate spy probe"

@@ -588,7 +588,7 @@
 					target_r = new/obj/railgun_trg_dummy(target)
 
 				playsound(src, "sound/weapons/railgun.ogg", 50, 1)
-				src.dir = get_dir(src, target)
+				src.set_dir(get_dir(src, target))
 
 				var/list/affected = DrawLine(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
@@ -815,7 +815,7 @@
 			if(target == start)
 				return
 
-			src.dir = get_dir(src, target)
+			src.set_dir(get_dir(src, target))
 
 			if (!cardinal.Find(src.dir))
 				return //hell drone only shoots cardinals
@@ -929,12 +929,12 @@
 		A.target = target
 		A.yo = target:y - start:y
 		A.xo = target:x - start:x
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 		SPAWN_DBG( 0 )
 			A.process()
 		return */
 
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 
 		var/obj/projectile/P1 = initialize_projectile(src.loc, current_projectile, 0, 0, src)
 		var/obj/projectile/P2 = initialize_projectile(src.loc, current_projectile, 0, 0, src)
@@ -1100,7 +1100,7 @@
 		if (prob(50))
 			elec_zap()
 
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 
 		var/obj/projectile/sphere = initialize_projectile(src.loc, sphere_projectile, 0, 0, src)
 

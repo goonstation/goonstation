@@ -692,23 +692,23 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		light = new /datum/light/point
 		light.attach(src)
 		if (D)
-			set_dir(D)
+			update_dir(D)
 		if (initial_crystal)
 			crystal = new initial_crystal()
 			apply_crystal()
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
 		if (varname == "dir")
-			set_dir(newvalue)
+			update_dir(newvalue)
 			apply_crystal()
 
-	proc/set_dir(var/D)
-		dir = D
+	proc/update_dir(var/D)
+		src.set_dir(D)
 		if (wall_mount)
 			pixel_x = 0
 			pixel_y = 0
 			if (!(dir in cardinal))
-				dir = 2
+				src.set_dir(2)
 			switch (dir)
 				if (1)
 					pixel_y = -32
@@ -829,21 +829,21 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	New(var/L)
 		..()
 		set_effect()
-		set_dir(dir)
+		update_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
 		if (varname == "dir")
-			set_dir(newvalue)
+			update_dir(newvalue)
 
 	proc/set_effect()
 		effect_overlay = new/obj/overlay/tile_effect/secondary/bookcase(loc)
 
-	proc/set_dir(var/D)
-		dir = D
+	proc/update_dir(var/D)
+		src.set_dir(D)
 		if (!(dir & 2))
-			dir = 2
+			src.set_dir(2)
 		pixel_y = 28
-		effect_overlay.dir = dir
+		effect_overlay.set_dir(dir)
 
 	button
 		var/pressed = 0

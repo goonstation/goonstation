@@ -206,13 +206,13 @@
 					var/turf/newTile = get_turf(pos)
 					newTile.ReplaceWith(T.tiletype)
 					newTile.icon_state = T.state
-					newTile.dir = T.direction
+					newTile.set_dir(T.direction)
 					newTile.inherit_area()
 
 				for(var/datum/objectinfo/O in T.objects)
 					if(O.objecttype == null) continue
 					var/atom/A = new O.objecttype(pos)
-					A.dir = O.direction
+					A.set_dir(O.direction)
 					A.layer = O.layer
 					A.pixel_x = O.px
 					A.pixel_y = O.py
@@ -322,7 +322,7 @@
 				//boutput(world, newObjType + " - " + O.objecttype)
 				if(O.objecttype == null) continue
 				var/atom/A = new O.objecttype(pos)
-				A.dir = O.direction
+				A.set_dir(O.direction)
 				A.layer = O.layer
 				A.pixel_x = O.px
 				A.pixel_y = O.py

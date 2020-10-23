@@ -12,9 +12,6 @@
 		var/can_replace_with_stuff = 0	//If ReplaceWith() actually does a thing or not.
 		allows_vehicles = 0
 
-	proc/set_dir(newdir)
-		dir = newdir
-
 	proc/burn_down()
 		return
 
@@ -526,7 +523,7 @@
 	new_turf.name_old = name_old
 
 	if (handle_dir)
-		new_turf.dir = old_dir
+		new_turf.set_dir(old_dir)
 
 	new_turf.levelupdate()
 
@@ -1102,7 +1099,7 @@ Other Goonstation servers:[serverList]"}
 
 	New()
 		..()
-		dir = pick(NORTH,SOUTH)
+		src.set_dir(pick(NORTH,SOUTH))
 
 /turf/unsimulated/pool/no_animate
 	name = "pool floor"
@@ -1111,8 +1108,7 @@ Other Goonstation servers:[serverList]"}
 
 	New()
 		..()
-		dir = pick(NORTH,SOUTH)
-
+		src.set_dir(pick(NORTH,SOUTH))
 /turf/simulated/pool
 	name = "water"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -1120,7 +1116,7 @@ Other Goonstation servers:[serverList]"}
 
 	New()
 		..()
-		dir = pick(NORTH,SOUTH)
+		src.set_dir(pick(NORTH,SOUTH))
 
 /turf/simulated/pool/no_animate
 	name = "pool floor"
@@ -1129,7 +1125,7 @@ Other Goonstation servers:[serverList]"}
 
 	New()
 		..()
-		dir = pick(NORTH,SOUTH)
+		src.set_dir(pick(NORTH,SOUTH))
 
 /turf/unsimulated/grasstodirt
 	name = "grass"
@@ -1184,7 +1180,7 @@ Other Goonstation servers:[serverList]"}
 /turf/unsimulated/nicegrass/random
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/unsimulated/floor/ballpit
 	name = "ball pit"

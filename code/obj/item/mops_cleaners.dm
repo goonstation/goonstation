@@ -83,7 +83,7 @@ WET FLOOR SIGN
 			go(direction)
 
 	proc/go(var/direction)
-		src.dir = direction
+		src.set_dir(direction)
 		clean(direction)
 		for(var/i=0, i<10, i++)
 			var/turf/T = get_step(src.loc, direction)
@@ -98,7 +98,7 @@ WET FLOOR SIGN
 				else
 					src.set_loc(T)
 					clean(direction)
-					src.dir = direction
+					src.set_dir(direction)
 			sleep(0.2 SECONDS)
 		vanish()
 		return

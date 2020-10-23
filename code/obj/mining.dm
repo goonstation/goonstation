@@ -35,7 +35,7 @@
 			sleep(24 SECONDS)
 			if (user.loc == T && user.equipped() == W && !user.stat)
 				var/obj/magnet = new W:constructed_magnet(get_turf(src))
-				magnet.dir = src.dir
+				magnet.set_dir(src.dir)
 				qdel(W)
 		else
 			..()
@@ -1793,7 +1793,7 @@ obj/item/clothing/gloves/concussive
 						if (src && src.hacked)
 							logTheThing("combat", user, null, "attaches a hacked [src] to [target] at [log_loc(target)].")
 
-						user.dir = get_dir(user, target)
+						user.set_dir(get_dir(user, target))
 						user.drop_item()
 						var/t = (isturf(target) ? target : target.loc)
 						step_towards(src, t)

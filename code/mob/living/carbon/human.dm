@@ -956,7 +956,7 @@
 	u_equip(I)
 
 	if (get_dist(src, target) > 0)
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 
 	//actually throw it!
 	if (I)

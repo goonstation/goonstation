@@ -100,7 +100,7 @@
 	icon_state = "medium_dir"
 	New(loc, dir=0)
 		..()
-		src.dir = dir
+		src.set_dir(dir)
 		switch(dir)
 			if(NORTH)
 				pixel_y += 32

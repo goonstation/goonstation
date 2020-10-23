@@ -296,13 +296,13 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		name = "snow"
 		New()
 			..()
-			dir = pick(cardinal)
+			set_dir(pick(cardinal))
 		icon_state = "grass_snow"
 	grass
 		name = "grass"
 		New()
 			..()
-			dir = pick(cardinal)
+			set_dir(pick(cardinal))
 		icon_state = "grass"
 		dense
 			name = "dense grass"

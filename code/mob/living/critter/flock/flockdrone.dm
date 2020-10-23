@@ -398,7 +398,7 @@
 	if(floorrunning)
 		// do our custom MOVE THROUGH ANYTHING stuff
 		// copypasted from intangible.dm
-		src.dir = get_dir(src, NewLoc)
+		src.set_dir(get_dir(src, NewLoc))
 		if(!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if(NewLoc)

@@ -64,7 +64,7 @@ TRAYS
 	proc/rotate()
 		if(rotatable)
 			//set src in oview(1)
-			src.dir = turn(src.dir, -90)
+			src.set_dir(turn(src.dir, -90))
 		return
 
 	proc/break_utensil(mob/living/carbon/user as mob, var/spawnatloc = 0)

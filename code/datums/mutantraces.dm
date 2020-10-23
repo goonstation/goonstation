@@ -1159,7 +1159,7 @@
 							src.mob.pixel_x+= 1
 							sleep(0.1 SECONDS)
 						for (var/i = 0, i < 4, i++)
-							src.mob.dir = turn(src.mob.dir, -90)
+							src.mob.set_dir(turn(src.mob.dir, -90))
 							sleep(0.2 SECONDS)
 						for (var/i = 0, i < 4, i++)
 							src.mob.pixel_x-= 1

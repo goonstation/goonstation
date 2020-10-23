@@ -101,7 +101,7 @@
 					popUp()
 				else
 					var/atom/target = pick(target_list)
-					src.dir = get_dir(src, target)
+					src.set_dir(get_dir(src, target))
 					lastfired = world.time //Setting this here to prevent immediate firing when enabled
 					if (src.enabled)
 						//if (isliving(target))

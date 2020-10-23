@@ -58,7 +58,7 @@ var/HasturPresent = 0
 	Move()
 		if(dir != lastdir)
 			if(dir == NORTHEAST || dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST)
-				dir = lastdir
+				set_dir(lastdir)
 				changeIcon()
 			else
 				lastdir = dir
@@ -301,7 +301,7 @@ var/HasturPresent = 0
 
 			playsound(user, "sound/misc/hastur/tentacle_hit.ogg", 50, 1)
 			user.visible_message("<span class='alert'><B>[user] sends a sharp tentacle flying!</B></span>")
-			user.dir = get_dir(user, target)
+			user.set_dir(get_dir(user, target))
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
 
@@ -371,7 +371,7 @@ var/HasturPresent = 0
 
 			playsound(user, "sound/misc/hastur/tentacle_hit.ogg", 50, 1)
 			user.visible_message("<span class='alert'><B>[user] sends a grabbing tentacle flying!</B></span>")
-			user.dir = get_dir(user, target)
+			user.set_dir(get_dir(user, target))
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
 

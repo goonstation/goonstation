@@ -53,7 +53,7 @@
 			if (!E.reagents || E.reagents.total_volume <= 0) break
 			var/obj/effects/spray/S = new/obj/effects/spray(theturf)
 			SPAWN_DBG(15 SECONDS) qdel(S)
-			S.dir = direction
+			S.set_dir(direction)
 			S.original_dir = direction
 			direction = turn(direction,45)
 			S.create_reagents(5)

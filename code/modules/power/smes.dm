@@ -40,12 +40,12 @@
 	New(var/turf/iloc, var/idir = 2)
 		if (!isturf(iloc))
 			qdel(src)
-		dir = idir
+		set_dir(idir)
 		var/turf/Q = get_step(iloc, idir)
 		if (!Q)
 			qdel(src)
 			var/obj/machinery/power/terminal/term = new /obj/machinery/power/terminal(Q)
-			term.dir = get_dir(Q, iloc)
+			term.set_dir(get_dir(Q, iloc))
 		..()
 
 /obj/machinery/power/smes/emp_act()

@@ -256,6 +256,9 @@
 	if (src.buckled && src.buckled.anchored)
 		return
 
+	if (src.dir_locked)
+		b = src.dir
+
 	//for item specials
 	if (src.restrain_time > TIME)
 		return
@@ -2831,6 +2834,15 @@
 		var/obj/item/device/pda2/pda = src.equipped()
 		return pda.ID_card
 
+/mob/proc/add_karma(how_much)
+	src.mind?.add_karma(how_much)
+	// TODO add NPC karma
+
+/mob/set_dir(var/new_dir)
+	if (!src.dir_locked)
+		..()
+		src.update_directional_lights()
+
 // http://www.byond.com/forum/post/1326139&page=2
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
@@ -2877,6 +2889,3 @@
 		var/atom/A = input(usr, "What do you want to pick up?") as() in items
 		A.interact(src)
 
-/mob/proc/add_karma(how_much)
-	src.mind?.add_karma(how_much)
-	// TODO add NPC karma

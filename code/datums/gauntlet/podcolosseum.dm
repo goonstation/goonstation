@@ -863,11 +863,11 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 						var/dx = abs(T.x - Q.x)
 						var/dy = abs(T.y - Q.y)
 						if (dx == dy)
-							Wall.dir = get_dir(Q, T)
+							Wall.set_dir(get_dir(Q, T))
 						else if (dx > dy)
-							Wall.dir = 4
+							Wall.set_dir(4)
 						else
-							Wall.dir = 1
+							Wall.set_dir(1)
 						affected += Wall
 				SPAWN_DBG(forcewall_time)
 					for (var/obj/W in affected)
@@ -1141,7 +1141,7 @@ proc/get_colosseum_message(var/name, var/message)
 	Bump(atom/A)
 		//walk(src, 0)
 		flying = 0
-		dir = facing
+		src.set_dir(facing)
 
 	/*override_southeast(mob/user)
 		if (piloting != user)
@@ -1220,7 +1220,7 @@ proc/get_colosseum_message(var/name, var/message)
 					walk(src, src.dir, speed)
 					flying = src.dir
 			else
-				src.dir = direction
+				src.set_dir(direction)
 
 	*/
 	proc/broadcast(var/message)
@@ -1312,7 +1312,7 @@ proc/get_colosseum_message(var/name, var/message)
 		. = ..(NewLoc,Dir,step_x,step_y)
 
 		if (flying && facing != flying)
-			dir = facing
+			src.set_dir(facing)
 
 	proc/update_shield()
 		if (has_overlays & OVERLAY_SHIELD)

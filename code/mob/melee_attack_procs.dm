@@ -1324,7 +1324,7 @@
 /mob/living/proc/parry_or_dodge(mob/M, obj/item/W)
 	.= 0
 	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
-		src.dir = get_dir(src, M)
+		src.set_dir(get_dir(src, M))
 		playsound(src.loc, "sound/weapons/punchmiss.ogg", 50, 1)
 		//dodge more likely, we're more agile than macho
 		if (prob(60))

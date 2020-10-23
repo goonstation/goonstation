@@ -55,12 +55,15 @@
 /// just before a datum's disposing()
 #define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
 
+// ---- atom signals ----
+
+/// when an atom changes dir (olddir, newdir)
+#define COMSIG_ATOM_DIR_CHANGED "atom_dir_changed"
 
 // ---- atom/movable signals ----
 
 /// when an AM moves (user, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
-
 
 // ---- item signals ----
 

@@ -200,7 +200,7 @@ that cannot be itched
 			icon_state = "fs"
 			active = 0
 			return
-		src.dir = get_dir(src,target)
+		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
 				icon_state = "fs_pindirect"

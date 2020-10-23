@@ -1708,7 +1708,7 @@ proc/countJob(rank)
 	if (!letter) // you get something random you shithead
 		letter = pick("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 	if (!dir)
-		dir = NORTHEAST
+		set_dir(NORTHEAST)
 	if (!lcolor)
 		lcolor = rgb(rand(0,255),rand(0,255),rand(0,255))
 	var/image/B = image('icons/effects/letter_overlay.dmi', loc = src, icon_state = "[letter]2")
