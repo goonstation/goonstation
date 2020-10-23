@@ -368,7 +368,7 @@ toxic - poisons
 		color_red = 0
 		color_green = 0
 		color_blue = 0
-		override_color = 1
+		override_color = 0
 		icon_state = "bolt"
 
 		blue_NT
@@ -380,7 +380,7 @@ toxic - poisons
 
 		red_SY
 			name = "red blaster bolt"	
-			color_icon = "#820a48"
+			color_icon = "#33ccff"
 			color_red = 0.51
 			color_green = 0.05
 			color_blue = 0.28
