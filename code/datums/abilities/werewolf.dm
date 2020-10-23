@@ -348,13 +348,13 @@
 	tabName = "Werewolf"
 	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 	var/datum/objective/specialist/werewolf/feed/feed_objective = null
-	var/datum/reagents/tainted_saliva_reservior = null
+	var/datum/reagents/tainted_saliva_reservoir = null
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.
 
 	New()
 		..()
 		awaken_time = rand(5, 10)*100
-		src.tainted_saliva_reservior = new/datum/reagents(500)
+		src.tainted_saliva_reservoir = new/datum/reagents(500)
 
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()

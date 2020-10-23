@@ -477,7 +477,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		B.add_volume(H.blood_color, H.blood_id, num_amount, vis_amount)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
-		if (B?.reagents && H.reagents && H.reagents.total_volume)
+		if (B.reagents && H.reagents?.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
 			H.reagents.trans_to(B, min(round(num_amount / 2, 1), 5))
 	else

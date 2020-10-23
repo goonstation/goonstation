@@ -1342,8 +1342,8 @@
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)
 	if (iswerewolf(src))
 		var/datum/abilityHolder/werewolf/W = src.get_ability_holder(/datum/abilityHolder/werewolf)
-		if (target && W?.tainted_saliva_reservior.total_volume > 0)
-			W.tainted_saliva_reservior.trans_to(target,5, 2)
+		if (target && W?.tainted_saliva_reservoir.total_volume > 0)
+			W.tainted_saliva_reservoir.trans_to(target,5, 2)
 
 
 /*/mob/proc/energyclaws_attack(var/mob/living/target)
