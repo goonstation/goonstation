@@ -1130,7 +1130,7 @@
 		return
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior?.ship && interior.ship.turret_right)
+		if(interior?.ship?.turret_right)
 			interior.ship.turret_right.set_loc(src.loc)
 			interior.ship.turret_right = null
 		return
