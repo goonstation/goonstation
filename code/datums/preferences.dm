@@ -1310,7 +1310,7 @@ $(function() {
 		return 1
 
 	Topic(href, href_list[])
-		if (usr?.client && usr.client.preferences)
+		if (usr?.client?.preferences)
 			if (src == usr.client.preferences)
 				process_link(usr, href_list)
 			else
