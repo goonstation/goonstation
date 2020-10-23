@@ -922,7 +922,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/observatory)
+/area/station/maintenance/NWmaint)
 "acz" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
@@ -5148,11 +5148,11 @@
 "amz" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
+/obj/decal/fakeobjects/airmonitor_broken{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/simulated/floor/airless/damaged3,
-/area/station/wreckage)
-"amA" = (
-/obj/decal/fakeobjects/airmonitor_broken,
-/turf/simulated/wall/auto/supernorn,
 /area/station/wreckage)
 "amB" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -17665,7 +17665,6 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Pool Room";
-	dir = 4;
 	name = "Pool Room APC";
 	pixel_x = 24
 	},
@@ -18933,9 +18932,13 @@
 /area/station/maintenance/west)
 "aRi" = (
 /obj/cable,
-/obj/machinery/power/apc/autoname_east,
+/obj/machinery/power/apc{
+	areastring = "Central Primary Hallway";
+	name = "Central Primary Hallway APC";
+	pixel_x = 24
+	},
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/central)
+/area/station/maintenance/west)
 "aRj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -95030,7 +95033,7 @@ air
 aca
 abY
 alF
-amA
+alF
 alF
 apb
 alF
