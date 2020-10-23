@@ -41,7 +41,7 @@
 		holder.owner.say(mimic_message)
 		holder.owner.real_name = original_name
 
-		if (H?.ears && istype (H.ears,/obj/item/device/radio/headset))
+		if (H?.ears && istype(H.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/headset = H.ears
 			if (headset.icon_override)
 				headset.icon_override = initial(headset.icon_override)
