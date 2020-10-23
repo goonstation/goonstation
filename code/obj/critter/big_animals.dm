@@ -197,7 +197,6 @@ obj/critter/bear/care
 				M.emote("scream")
 				bleed(H, 20, 30)
 				targetLimb.delete()
-				//src.attacking = 1
 				return
 
 		//Old instakill code. Happens when there are no more limbs to chew.
@@ -235,7 +234,7 @@ obj/critter/bear/care
 			return null
 		var/list/part_list = list("l_arm", "r_arm", "l_leg", "r_leg")
 
-		while(part_list.len>0)
+		while(part_list.len > 0)
 			var/current_part = pick(part_list)
 			part_list -= current_part
 			var/obj/item/parts/bodypart = H.limbs.get_limb(current_part)
