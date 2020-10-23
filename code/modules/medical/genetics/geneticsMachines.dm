@@ -1544,7 +1544,7 @@
 		if("genebooth")
 			if(genResearch.researchMaterial < genResearch.genebooth_cost)
 				return 0
-			if(E && GBE?.research_level >= 1 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 1)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/genebooth))
 					return 1
 		if("activator")
