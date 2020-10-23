@@ -1531,7 +1531,7 @@
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision) && world.time >= src.equipment[GENETICS_EMITTERS])
 					return 1
 		if("reclaimer")
-			if(E && GBE?.research_level >= 2 && E.can_reclaim)
+			if(E?.can_reclaim && GBE?.research_level >= 2)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/reclaimer) && world.time >= src.equipment[GENETICS_RECLAIMER])
 					return 1
 		if("injector")
