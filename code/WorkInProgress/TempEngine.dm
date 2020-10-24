@@ -3,6 +3,7 @@
 //
 #define LEFT_CIRCULATOR 1
 #define RIGHT_CIRCULATOR 2
+#define MIN_CIRCULATOR_SPEED 5
 
 /obj/machinery/atmospherics/binary/circulatorTemp
 	name = "hot gas circulator"
@@ -30,15 +31,27 @@
 		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 
+		var/datum/gas_mixture/gas_input = air1
+		var/datum/gas_mixture/gas_output = air2
+
 		//Calculate necessary moles to transfer using PV = nRT
-		var/pressure_delta = abs((input_starting_pressure - output_starting_pressure))/2
-
-		var/transfer_moles = pressure_delta*air2.volume/max((air1.temperature * R_IDEAL_GAS_EQUATION), 1) //Stop annoying runtime errors
-
+		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
 		last_pressure_delta = pressure_delta
 
+		// Azrun TODO -- Evalute transfer of small ratio of GAS when not circulating
+		// Azrun - TODO - BACKFLOW PROTECTION VARIANT!
+		if(!is_circulator_active())
+			if(pressure_delta < 0)
+				gas_input = air2
+				gas_output = air1
+			pressure_delta = max(pressure_delta, MIN_CIRCULATOR_SPEED)
+
+		//var/transfer_moles = pressure_delta*air2.volume/max((air1.temperature * R_IDEAL_GAS_EQUATION), 1) //Stop annoying runtime errors
+		var/transfer_moles = abs(pressure_delta)*gas_output.volume/max((gas_input.temperature * R_IDEAL_GAS_EQUATION), 1) //Stop annoying runtime errors
+
 		//Actually transfer the gas
-		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
+		//var/datum/gas_mixture/removed = air1.remove(transfer_moles)
+		var/datum/gas_mixture/removed = gas_input.remove(transfer_moles)
 
 		if(network1)
 			network1.update = 1
@@ -48,6 +61,27 @@
 
 		return removed
 
+	proc/is_circulator_active()
+		return last_pressure_delta > MIN_CIRCULATOR_SPEED
+
+	proc/circulate_gas(datum/gas_mixture/gas)
+		var/datum/gas_mixture/gas_input = air1
+		var/datum/gas_mixture/gas_output = air2
+
+		//flowing backwards
+		// Azrun - TODO - BACKFLOW PROTECTION VARIANT!
+		if(last_pressure_delta < 0)
+			gas_input = air2
+			gas_output = air1
+
+		if(gas)
+			gas_output.merge(gas)
+
+		// Azrun - TODO - BACKFLOW PROTECTION VARIANT!
+		if(!is_circulator_active())
+			equalize_gases(list(gas_input,gas_output))
+
+
 	process()
 		..()
 		update_icon()
@@ -55,7 +89,7 @@
 	update_icon()
 		if(status & (BROKEN|NOPOWER))
 			icon_state = "circ[side]-p"
-		else if(last_pressure_delta > 0)
+		else if( is_circulator_active() )
 			if(last_pressure_delta > ONE_ATMOSPHERE)
 				icon_state = "circ[side]-run"
 			else
@@ -230,7 +264,7 @@
 				cold_air.temperature += energy_transfer*(1-efficiency)/cold_air_heat_capacity // pass the remaining energy through to the cold side
 
 				// uncomment to debug
-				//logTheThing("debug", null, null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
+				logTheThing("debug", null, null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
 		// update icon overlays only if displayed level has changed
 
 		if(swapped)
@@ -239,10 +273,11 @@
 			cold_air = swapTmp
 
 		if(hot_air)
-			circ1.air2.merge(hot_air)
+			circ1.circulate_gas(hot_air)
 
 		if(cold_air)
-			circ2.air2.merge(cold_air)
+			circ2.circulate_gas(cold_air)
+
 		desc = "Current Output: [engineering_notation(lastgen)]W"
 		var/genlev = max(0, min(round(26*lastgen / 4000000), 26)) // raised 2MW toplevel to 3MW, dudes were hitting 2mw way too easily
 		if((genlev != lastgenlev) && !spam_limiter)
@@ -559,7 +594,18 @@
 	*/
 */
 	on_burn()
-		var/additional_heat = src.fuel * 4
+
+		// -(1.2x - 1)^2 + 1 expands to 2.4x-1.44x^2
+		// -0.48x*(3x-5)
+		//)
+		var/fuel_fuel_ratio = src.fuel/src.maxfuel
+		var/fuel_burn_scale = ( -0.48 * fuel_fuel_ratio ) * ( (3*fuel_fuel_ratio)-5 )
+
+
+		//var/additional_heat = src.fuel * 4
+		// charcoal actual high temp is 2500C
+		var/additional_heat = fuel_burn_scale * (3000)
+
 		f_connector.current_temperature = T20C + 200 + additional_heat
 		f_connector.heat()
 
