@@ -46,9 +46,8 @@ var/global/list/bible_contents = list()
 				if( prob(25) )
 					H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne)
 			M.HealDamage("All", heal_amt, heal_amt)
-				if (user.traitHolder.hasTrait("training_chaplain"))
-					JOB_XP(user, "Chaplain", 1)
-					sleep (180 SECONDS) //3 minute cool down to prevent grinding XP
+			if(prob(5))
+				JOB_XP(user, "Chaplain", 1)
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/storage/bible))
