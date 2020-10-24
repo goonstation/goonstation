@@ -1,5 +1,9 @@
 
 (t)sat oct 24 20
+(u)Gonzako
+(p)2486
+(e)⚖🆕|balance, feature
+(*)Added build-up to the yeti devouring you. Making it easier to be rescued from.
 (u)austin
 (p)2499
 (e)🎨|sprites
