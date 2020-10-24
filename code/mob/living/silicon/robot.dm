@@ -2047,7 +2047,7 @@
 		for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
 			var/law = ticker.centralized_ai_laws.inherent[index]
 			if (length(law) > 0)
-				src.say("[number]. [law]")
+				src?.say("[number]. [law]")
 				number++
 				sleep(1 SECOND)
 		for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
