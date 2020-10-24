@@ -1,5 +1,9 @@
 
 (t)sat oct 24 20
+(u)TrustworthyFella
+(p)2462
+(e)⚖|balance
+(+)Player monkeys are no longer affected by code designed with npc monkeys in mind. This includes: immunity to being sucked by vampires, immunity to being sucked by changelings, and not giving benefits to werewolves when mauled.
 (u)Gonzako
 (p)2486
 (e)⚖🆕|balance, feature
