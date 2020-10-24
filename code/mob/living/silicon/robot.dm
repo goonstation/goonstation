@@ -2333,7 +2333,7 @@
 				message = "UNKNOWN ERROR: [src] in [myarea]"
 
 		for(var/mailgroup in mailgroups)
-			//if (message && mailgroup && radio_connection)
+			if (message && mailgroup && radio_connection)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
