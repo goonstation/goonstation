@@ -388,6 +388,7 @@ PIPE BOMBS + CONSTRUCTION
 	is_syndicate = 0
 	sound_armed = "sound/weapons/pindrop.ogg"
 	icon_state_armed = "fragnade1"
+	var/custom_projectile_type = null
 
 	prime()
 		var/turf/T = ..()
@@ -411,6 +412,8 @@ PIPE BOMBS + CONSTRUCTION
 							F.smoke.start()
 							sleep(1 SECOND)
 			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new /datum/projectile/special/spreader/uniform_burst/circle(T)
+			if(src.custom_projectile_type)
+				PJ.spread_projectile_type = src.custom_projectile_type
 			var/targetx = src.y - rand(-5,5)
 			var/targety = src.y - rand(-5,5)
 			var/turf/newtarget = locate(targetx, targety, src.z)
