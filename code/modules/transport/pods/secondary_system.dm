@@ -891,7 +891,7 @@
 
 /obj/item/shipcomponent/secondary_system/syndicate_rewind_system
 	name = "Syndicate Rewind System"
-	desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. Requires a SWORD core to function."
+	desc = "An unfinished pod system, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base."
 	power_used = 50
 	f_active = 1
 	hud_state = "SRS_icon"
@@ -911,7 +911,7 @@
 
 	activate()
 		if(!core_inserted)
-			boutput(ship.pilot, "<span class='alert'><B>The system requires a SWORD core to function!</B></span>")
+			boutput(ship.pilot, "<span class='alert'><B>The system requires a unique power source to function!</B></span>")
 			return
 		else if(cooldown > world.time)
 			boutput(ship.pilot, "<span class='alert'><B>The system is still recharging!</B></span>")
@@ -939,14 +939,20 @@
 				return
 		return
 	
-//	attackby(obj/item/W, mob/user)
-//		if (isscrewingtool(W) && core_inserted)
-//			core_inserted = false
-//			user.put_in_hand_or_drop(new /obj/item/sword_core)
-//			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Rewind System!</span>", 1)
-//			return
-//		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
-//			core_inserted = true
-//			qdel(W)
-//			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Rewind System!</span>", 1)
-//			return
+	attackby(obj/item/W, mob/user)
+		if (isscrewingtool(W) && core_inserted)
+			core_inserted = false
+			set_icon_state("SRS_empty")
+			user.put_in_hand_or_drop(new /obj/item/sword_core)
+			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Rewind System!</span>", 1)
+			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is missing."
+			tooltip_rebuild = 1
+			return
+		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
+			core_inserted = true
+			qdel(W)
+			set_icon_state("SRS")
+			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Rewind System!</span>", 1)
+			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is installed."
+			tooltip_rebuild = 1
+			return

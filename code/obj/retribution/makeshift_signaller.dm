@@ -90,6 +90,7 @@
 		if (istype(W,/obj/item/factionrep/ntboard) && !is_exploding)	//If a Syndicate Circuit Board is used on this item, turn the former into it's fried version and fill a metadata node.
 			if (metadata < 8)
 				qdel(W)
+				playsound(src.loc, "sound/effects/sparks4.ogg", 100, 0)
 				user.put_in_hand_or_drop(new /obj/item/factionrep/ntboardfried)
 				metadata += 1
 				user.show_message("<span class='notice'>You uploaded some metadata from the syndicate circuit board, frying it in the process.</span>", 1)

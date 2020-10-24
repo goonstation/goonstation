@@ -1273,6 +1273,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\power_stones.dm"
 #include "code\obj\item\range_target.dm"
 #include "code\obj\item\rcd.dm"
+#include "code\obj\item\retribution.dm"
 #include "code\obj\item\satchel.dm"
 #include "code\obj\item\seeds.dm"
 #include "code\obj\item\space_cash.dm"

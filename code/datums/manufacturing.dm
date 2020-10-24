@@ -2430,6 +2430,16 @@
 	create = 1
 	category = "Tool"
 
+	/datum/manufacture/pod/SRS
+	name = "Syndicate Rewind System"
+	item_paths = list("MET-1","CON-1")
+	item_names = list("Sturdy Metal","Conductive Material")
+	item_amounts = list(15,10)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/syndicate_rewind_system)
+	time = 20 SECONDS
+	create = 1
+	category = "Tool"
+
 
 /******************** HOP *******************/
 
