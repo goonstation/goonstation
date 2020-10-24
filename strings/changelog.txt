@@ -1,4 +1,9 @@
 
+(t)sat oct 24 20
+(u)austin
+(p)2499
+(e)🎨|sprites
+(+)Borgs and AI can now sing too.
 (t)fri oct 23 20
 (u)RSG250
 (p)2503
