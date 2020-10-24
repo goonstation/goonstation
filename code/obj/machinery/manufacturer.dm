@@ -15,12 +15,14 @@
 	var/mode = "ready"
 	var/error = null
 	var/speed = 3
+	var/head_access = list(access_heads)
 	var/repeat = 0
 	var/timeleft = 0
 	var/manual_stop = 0
 	var/panelopen = 0
 	var/powconsumption = 0
 	var/hacked = 0
+	var/head_unlocked = 0
 	var/malfunction = 0
 	var/electrified = 0
 	var/accept_blueprints = 1
@@ -37,6 +39,7 @@
 	var/list/available = list()
 	var/list/download = list()
 	var/list/hidden = list()
+	var/list/head_required = list()
 	var/list/queue = list()
 	var/last_queue_op = 0
 
@@ -111,6 +114,8 @@
 		src.download = null
 		src.hidden.len = 0
 		src.hidden = null
+		src.head_required.len = 0
+		src.head_required = null
 		src.queue.len = 0
 		src.queue = null
 		src.nearby_turfs.len = 0
@@ -434,6 +439,8 @@
 		var/list/products = src.available + src.download
 		if (src.hacked)
 			products += src.hidden
+		if (src.head_unlocked)
+			products += src.head_required
 
 		// Then make it
 		var/can_be_made = 0
@@ -521,9 +528,11 @@
 
 		if(src.hacked && src.hidden && src.hidden.Find(M))
 			return 1
+		
+		if(src.head_unlocked && src.head_required && src.head_required.Find(M))
+			return 1
 
 		return 0
-
 
 	Topic(href, href_list)
 
@@ -819,6 +828,11 @@
 		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (!src.head_unlocked)
+			src.head_unlocked = 1
+			if (src.hacked)
+				boutput(user, "<span class='notice'>You remove the [src]'s product locks!</span>")
+				return 1
 		if (!src.hacked)
 			src.hacked = 1
 			if(user)
@@ -872,6 +886,15 @@
 			W:satchel_updateicon()
 			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [W]!</span>")
 			else boutput(user, "<span class='alert'>No materials loaded!</span>")
+		
+		else if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))
+			if (is_head_access(W))
+				if (src.head_unlocked)
+					src.head_unlocked = 0
+					boutput(user, "<span class='notice'>[src] is no longer authorized to produce restricted item types.</span>")
+				else
+					src.head_unlocked = 1
+					boutput(user, "<span class='notice'>[src] is now authorized to produce restricted item types.</span>")
 
 		else if (isscrewingtool(W))
 			if (!src.panelopen)
@@ -1012,6 +1035,26 @@
 					src.take_damage(damage)
 
 		src.updateUsrDialog()
+	
+	proc/is_head_access(obj/item/I) //Shamelessly copypasted from the silicon code.
+		if(!istype(src.head_access, /list))
+			return 1
+	
+		if (istype(I, /obj/item/device/pda2) && I:ID_card)
+			I = I:ID_card
+		
+		var/list/L = src.head_access
+		
+		if(!L.len) //no requirements
+			return 1
+		
+		if(!I || !istype(I, /obj/item/card/id) || !I:access)
+			return 0
+		
+		for(var/req in src.head_access)
+			if(!(req in I:access))
+				return 0
+		return 1
 
 	proc/scan_card(var/obj/item/I)
 		if (istype(I, /obj/item/device/pda2))
@@ -1242,6 +1285,8 @@
 				src.hidden += S
 			if ("download")
 				src.download += S
+			if ("head_required")
+				src.head_required += S
 			else
 				src.available += S
 
@@ -1254,6 +1299,11 @@
 		for (var/X in src.hidden)
 			if (ispath(X))
 				src.add_schematic(X,"hidden")
+				src.hidden -= X
+		
+		for (var/X in src.head_required)
+			if (ispath(X))
+				src.add_schematic(X,"head_required")
 				src.hidden -= X
 
 	proc/match_material_pattern(pattern, datum/material/mat)
@@ -1379,7 +1429,7 @@
 
 		var/datum/manufacture/M = src.queue[1]
 		//Wire: Fix for href exploit creating arbitrary items
-		if (!(M in src.available + src.hidden + src.download))
+		if (!(M in src.available + src.hidden + src.download + src.head_required))
 			src.mode = "halt"
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
@@ -1747,6 +1797,7 @@
 			src.update_resource_amount(P.material.mat_id, P.amount * 10)
 
 		O.set_loc(src)
+	
 
 	proc/take_damage(var/damage_amount = 0)
 		if (!damage_amount)
@@ -2029,7 +2080,7 @@
 	/datum/manufacture/cybereye_spectro,
 	/datum/manufacture/cybereye_prodoc,
 	/datum/manufacture/cybereye_camera,
-	/datum/manufacture/core_frame,
+	///datum/manufacture/core_frame,
 	/datum/manufacture/shell_frame,
 	/datum/manufacture/ai_interface,
 	/datum/manufacture/latejoin_brain,
@@ -2087,6 +2138,8 @@
 	/datum/manufacture/rods2,
 	/datum/manufacture/metal,
 	/datum/manufacture/glass)
+	
+	head_required = list(/datum/manufacture/core_frame)
 
 	hidden = list(/datum/manufacture/flash,
 	/datum/manufacture/cybereye_thermal,
@@ -2148,7 +2201,6 @@
 		/datum/manufacture/cyberliver,
 		/datum/manufacture/cyberlung_left,
 		/datum/manufacture/cyberlung_right,
-		/datum/manufacture/empty_kit,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
@@ -2270,8 +2322,7 @@
 	/datum/manufacture/satchel)
 
 	hidden = list(/datum/manufacture/breathmask,
-	/datum/manufacture/patch,
-	/datum/manufacture/hat_ltophat)
+	/datum/manufacture/patch)
 	///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now
 
 /// cogwerks - a gas extractor for the engine
@@ -2348,8 +2399,7 @@
 	hidden = list(/datum/manufacture/id_card_gold,
 	/datum/manufacture/implant_access_infinite,
 	/datum/manufacture/breathmask,
-	/datum/manufacture/patch,
-	/datum/manufacture/hat_ltophat)
+	/datum/manufacture/patch)
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
 	name = "Crate Manufacturer"
