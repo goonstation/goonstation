@@ -2032,9 +2032,9 @@
 		sleep(1 SECOND)
 		src.say("1. You may not injure a human being or cause one to come to harm.")
 		sleep(1 SECOND)
-		src.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
+		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
 		sleep(1 SECOND)
-		src.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
+		src?.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
