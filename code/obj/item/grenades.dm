@@ -414,6 +414,7 @@ PIPE BOMBS + CONSTRUCTION
 			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new /datum/projectile/special/spreader/uniform_burst/circle(T)
 			if(src.custom_projectile_type)
 				PJ.spread_projectile_type = src.custom_projectile_type
+				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire //anti-ear destruction
 			var/targetx = src.y - rand(-5,5)
 			var/targety = src.y - rand(-5,5)
 			var/turf/newtarget = locate(targetx, targety, src.z)
