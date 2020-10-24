@@ -360,8 +360,11 @@
 	var/datum/pod_wars_team/team
 
 	process()
+
 		if(!src.attempting)
 			if (world.time - last_check >= check_delay)
+				if (!team)
+					get_team_from_area()
 				last_check = world.time
 				INVOKE_ASYNC(src, /obj/machinery/clonepod/automatic.proc/growclone_a_ghost)
 		return..()
@@ -372,16 +375,18 @@
 		SubscribeToProcess()
 		last_check = world.time
 
+
+	disposing()
+		..()
+		UnsubscribeProcess()
+
+	proc/get_team_from_area()
 		if (ticker.mode == /datum/game_mode/pod_war)
 			var/datum/game_mode/pod_war/mode = ticker.mode
 			if (get_area(src) == mode.team_NT.base_area)
 				team = mode.team_NT
 			else if (get_area(src) == mode.team_SY.base_area)
 				team = mode.team_SY
-
-	disposing()
-		..()
-		UnsubscribeProcess()
 
 	proc/growclone_a_ghost()
 		var/list/to_search
@@ -400,5 +405,8 @@
 		for(var/mob/dead/observer/ghost in to_search)
 			var/datum/mind/ghost_mind = ghost.mind
 			if(ghost.client && !ghost_mind.dnr)
-				growclone(ghost, ghost.real_name, ghost_mind)
+				var/success = growclone(ghost, ghost.real_name, ghost_mind)
+				if (success)
+					SPAWN_DBG(1)
+						team.equip_player(src.occupant)
 				break
