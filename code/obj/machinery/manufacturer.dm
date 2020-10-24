@@ -2080,7 +2080,6 @@
 	/datum/manufacture/cybereye_spectro,
 	/datum/manufacture/cybereye_prodoc,
 	/datum/manufacture/cybereye_camera,
-	///datum/manufacture/core_frame,
 	/datum/manufacture/shell_frame,
 	/datum/manufacture/ai_interface,
 	/datum/manufacture/latejoin_brain,
@@ -2135,7 +2134,6 @@
 	/datum/manufacture/cyberliver,
 	/datum/manufacture/cyberlung_left,
 	/datum/manufacture/cyberlung_right,
-	/datum/manufacture/empty_kit,
 	/datum/manufacture/rods2,
 	/datum/manufacture/metal,
 	/datum/manufacture/glass)
@@ -2202,6 +2200,7 @@
 		/datum/manufacture/cyberliver,
 		/datum/manufacture/cyberlung_left,
 		/datum/manufacture/cyberlung_right,
+		/datum/manufacture/empty_kit,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
