@@ -213,8 +213,8 @@
 				H.mind.special_role = "NanoTrasen Commander"
 				I.name = "NT Commander"
 				I.assignment = "NT Commander"
-				H.equip_if_possible(new /obj/item/clothing/head/centhat(H), H.slot_l_store)
-				// H.equip_if_possible(new (H), H.slot_wear_suit)		//
+				H.equip_if_possible(new /obj/item/clothing/head/NTberet/commander(H), H.slot_head)
+				H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot/commander(H), H.slot_wear_suit)
 			else
 				I.name = "NT Pilot"
 				I.assignment = "NT Pilot"

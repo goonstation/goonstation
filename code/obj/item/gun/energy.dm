@@ -781,7 +781,6 @@
 		current_projectile = new initial_proj
 		projectiles = list(current_projectile)
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
-		update_icon()
 		..()
 
 	update_icon()

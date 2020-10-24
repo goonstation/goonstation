@@ -1271,6 +1271,18 @@
 			..()
 			setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
+		commander
+			name = "commander's great coat"
+			icon_state = "ntcommander_coat"
+			item_state = "ntcommander_coat"
+			desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
+
+			setupProperties()
+				..()
+				setProperty("exploprot", 40)
+				setProperty("meleeprot", 6)
+				setProperty("rangedprot", 3)
+
 /obj/item/clothing/suit/cultist
 	name = "cultist robe"
 	desc = "The unholy vestments of a cultist."
