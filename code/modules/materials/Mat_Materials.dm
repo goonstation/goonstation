@@ -185,9 +185,9 @@
 			call(X,  "execute")(owner, attacker, attacked)
 		return
 
-	proc/triggerOnLife(var/mob/M, var/obj/item/I)
+	proc/triggerOnLife(var/mob/M, var/obj/item/I, mult)
 		for(var/datum/materialProc/X in triggersOnLife)
-			call(X,  "execute")(M, I)
+			call(X,  "execute")(M, I, mult)
 		return
 
 	proc/triggerOnAdd(var/location)
