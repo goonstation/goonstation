@@ -389,6 +389,7 @@ PIPE BOMBS + CONSTRUCTION
 	sound_armed = "sound/weapons/pindrop.ogg"
 	icon_state_armed = "fragnade1"
 	var/custom_projectile_type = null
+	var/pellets_to_fire = 20
 
 	prime()
 		var/turf/T = ..()
@@ -415,6 +416,7 @@ PIPE BOMBS + CONSTRUCTION
 			if(src.custom_projectile_type)
 				PJ.spread_projectile_type = src.custom_projectile_type
 				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire //anti-ear destruction
+			PJ.pellets_to_fire = src.pellets_to_fire
 			var/targetx = src.y - rand(-5,5)
 			var/targety = src.y - rand(-5,5)
 			var/turf/newtarget = locate(targetx, targety, src.z)
