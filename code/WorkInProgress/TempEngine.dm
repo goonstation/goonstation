@@ -4,6 +4,23 @@
 #define LEFT_CIRCULATOR 1
 #define RIGHT_CIRCULATOR 2
 #define MIN_CIRCULATOR_SPEED 5
+#define LUBE_CHECK_RATE 5
+
+// Circulator Varients
+/// no backflow
+#define BACKFLOW_PROTECTION	 (1<<0)
+/// periodically leaks input gas
+#define LEAKS_GAS						 (1<<1)
+/// periodically leaks/eats lube
+#define LEAKS_LUBE 					 (1<<2)
+/// LUBE Drain
+#define LUBE_DRAIN_OPEN			 (1<<3)
+
+// TEG Varients
+// HIGH TEMP Model
+#define TEG_HIGH_TEMP	(1<<0)
+// LOW TEMP Model
+#define TEG_LOW_TEMP (1<<1)
 
 /obj/machinery/atmospherics/binary/circulatorTemp
 	name = "hot gas circulator"
@@ -14,9 +31,19 @@
 
 	var/side = null // 1=left 2=right
 	var/last_pressure_delta = 0
-
+	var/static/list/circulator_accepted_reagents = list("oil"=1.0,"lube"=1.1,"super_lube"=1.12)
+	var/lube_cycle = LUBE_CHECK_RATE //rate at which reagents are adjusted
+	var/reagents_consumed = 0.5 //amount of reagents consumed
+	var/lubed = FALSE
+	var/lube_boost = 1.0
+	var/circulator_flags = 0
 	anchored = 1.0
 	density = 1
+
+	New()
+		. = ..()
+		create_reagents(20)
+		reagents.add_reagent("oil", 15)
 
 	disposing()
 		switch (side)
@@ -26,6 +53,32 @@
 				src.generator?.circ2 = null
 		src.generator = null
 		..()
+
+	get_desc(dist, mob/user)
+		if(dist <= 5)
+			. += "<br><span class='notice'>The maintenance panel is [flags & OPENCONTAINER ? "open" : "closed"].</span>"
+		if(dist <= 2 && reagents && (src.flags & OPENCONTAINER) )
+			. += "<br><span class='notice'>The drain valve is [circulator_flags & LUBE_DRAIN_OPEN ? "open" : "closed"].</span>"
+			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
+
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		var/open =  flags & OPENCONTAINER
+
+		if(isscrewingtool(W))
+			open = !open
+			src.add_fingerprint(user)
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the maintenance panel on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the maintenance panel on the [src].</span>")
+			flags ^= OPENCONTAINER
+		else if(iswrenchingtool(W) && open)
+			src.add_fingerprint(user)
+			playsound(src.loc, "sound/items/Ratchet.ogg", 30, 1)
+			circulator_flags ^= LUBE_DRAIN_OPEN
+			open = circulator_flags & LUBE_DRAIN_OPEN
+			user.visible_message("<span class='notice'>[user] adjusts the [src] drain valve.</span>", "<span class='notice'>You [open ? "open" : "close"] the [src] drain valve.</span>")
+		else
+			..()
 
 	proc/return_transfer_air()
 		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
@@ -38,13 +91,15 @@
 		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
 		last_pressure_delta = pressure_delta
 
-		// Azrun TODO -- Evalute transfer of small ratio of GAS when not circulating
 		// Azrun - TODO - BACKFLOW PROTECTION VARIANT!
 		if(!is_circulator_active())
 			if(pressure_delta < 0)
 				gas_input = air2
 				gas_output = air1
+		// Azrun TODO -- Evalute transfer of small ratio of GAS when not circulating
 			pressure_delta = max(pressure_delta, MIN_CIRCULATOR_SPEED)
+		else
+			pressure_delta *= lube_boost
 
 		//var/transfer_moles = pressure_delta*air2.volume/max((air1.temperature * R_IDEAL_GAS_EQUATION), 1) //Stop annoying runtime errors
 		var/transfer_moles = abs(pressure_delta)*gas_output.volume/max((gas_input.temperature * R_IDEAL_GAS_EQUATION), 1) //Stop annoying runtime errors
@@ -81,6 +136,46 @@
 		if(!is_circulator_active())
 			equalize_gases(list(gas_input,gas_output))
 
+		if(is_circulator_active())
+			lube_update(TRUE)
+			if(!src.lubed && prob(5))
+				src.visible_message("<span class='alert'>[src] makes an unsettling grinding sound!</span>")
+
+	proc/lube_update(var/consume=FALSE)
+		// Skip off cycle consumption checks
+		if(consume && src.lube_cycle-- > 0)
+			return
+
+		// Skip noleaks/nohungry circulator consumption checks
+		if(consume && !reagents_consumed)
+			return
+
+		var/lube_efficiency = 1.0
+		var/lube_found = FALSE
+
+		if(lube_cycle <= 0)
+			src.lube_cycle = LUBE_CHECK_RATE
+			// Azrun TODO change to remove_any_to and DUMP next to it
+			src.reagents.remove_any(reagents_consumed)
+
+		// Iterate over reagents looking for sweet sweet lube
+		if(src.reagents?.total_volume)
+			for(var/reagent_id as() in src.reagents.reagent_list)
+				if (reagent_id in circulator_accepted_reagents)
+					var/datum/reagent/theReagent = src.reagents.reagent_list[reagent_id]
+					if (theReagent)
+						lube_efficiency += (theReagent.volume/src.reagents.maximum_volume) * circulator_accepted_reagents[reagent_id]
+						lube_found = TRUE
+
+		if(!lube_found)
+			lube_efficiency = 0.90
+
+		src.lubed = lube_found
+		src.lube_boost = lube_efficiency
+
+	on_reagent_change(add)
+		. = ..()
+		lube_update()
 
 	process()
 		..()
@@ -90,7 +185,7 @@
 		if(status & (BROKEN|NOPOWER))
 			icon_state = "circ[side]-p"
 		else if( is_circulator_active() )
-			if(last_pressure_delta > ONE_ATMOSPHERE)
+			if(last_pressure_delta > ONE_ATMOSPHERE && lubed)
 				icon_state = "circ[side]-run"
 			else
 				icon_state = "circ[side]-slow"
@@ -603,6 +698,7 @@
 
 
 		//var/additional_heat = src.fuel * 4
+
 		// charcoal actual high temp is 2500C
 		var/additional_heat = fuel_burn_scale * (3000)
 
@@ -809,3 +905,4 @@
 #undef PUMP_POWERLEVEL_5
 #undef LEFT_CIRCULATOR
 #undef RIGHT_CIRCULATOR
+#undef LUBE_CHECK_RATE
