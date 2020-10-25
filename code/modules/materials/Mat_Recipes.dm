@@ -146,3 +146,33 @@
 
 		if(one && two) return 1
 		else return 0
+
+/datum/material_recipe/synthleather
+	name = "synthleather"
+	result_id = "synthleather"
+
+	validate(var/datum/material/M)
+		var/one = 0
+		var/two = 0
+
+		for(var/datum/material/CM in M.parent_materials)
+			if(CM.mat_id == "latex") one = 1
+			if(CM.mat_id == "cotton") two = 1
+
+		if(one && two) return 1
+		else return 0
+
+/datum/material_recipe/synthblubber
+	name = "synthblubber"
+	result_id = "synthblubber"
+
+	validate(var/datum/material/M)
+		var/one = 0
+		var/two = 0
+
+		for(var/datum/material/CM in M.parent_materials)
+			if(CM.mat_id == "coral") one = 1
+			if(CM.mat_id == "synthrubber") two = 1
+
+		if(one && two) return 1
+		else return 0
