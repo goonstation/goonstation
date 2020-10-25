@@ -1,6 +1,10 @@
 
 (t)sun oct 25 20
 (u)Flaborized
+(p)2508
+(e)🎨|sprites
+(+)Firefighter and Paramedic suits, both regular and armoured, have gotten a makeover!
+(u)Flaborized
 (p)2507
 (e)🎨|sprites
 (+)Large power cells, the recharger, and turboflashes have been resprited!
