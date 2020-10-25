@@ -1,4 +1,9 @@
 
+(t)sun oct 25 20
+(u)Flaborized
+(p)2507
+(e)🎨|sprites
+(+)Large power cells, the recharger, and turboflashes have been resprited!
 (t)sat oct 24 20
 (u)TrustworthyFella
 (p)2462
