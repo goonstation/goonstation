@@ -11,15 +11,17 @@
 	var/g = 0		//
 	var/b = 0		//
 
-	New(textname,red,green,blue)
-		..()
+	New(textname, red, green, blue)
+		. = ..()
 		name = textname
 		r = red
 		g = green
 		b = blue
 
-/// the global list of all named colors
+/// global list of all named colors
 var/list/named_colors = list()
+/// global cache of all named colors once fetched with a color rgba
+var/list/named_color_cache = list()
 
 /// returns the name of the color nearest to the given color RGB
 proc/get_nearest_color(var/datum/color/c)
@@ -32,12 +34,22 @@ proc/get_nearest_color_datum(var/datum/color/c)
 	var/distance = INFINITY
 	var/nearest = null
 
+	// Test if in cache
+	var/cache = named_color_cache[c.to_rgb()] // I think rgb is fine instead of rgba, since none of these are alpha-valued
+	if (cache)
+		return cache
+
 	for(var/datum/named_color/col in named_colors)
 		LAGCHECK(LAG_MED)
 		var/d = color_dist2(col.r, col.g, col.b, c.r, c.g, c.b)
 		if(d < distance)
 			distance = d
 			nearest = col
+
+	// Cache results so we don't have to iter next time
+	if (nearest)
+		named_color_cache[c.to_rgb()] = nearest
+
 	return nearest
 
 /// adds a named color to the global list
