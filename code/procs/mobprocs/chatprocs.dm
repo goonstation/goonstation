@@ -428,6 +428,9 @@
 	if (src.get_brain_damage() >= 60)
 		speechverb = pick("says","stutters","mumbles","slurs")
 
+	if (src.speech_void)
+		text = voidSpeak(text)
+
 	if (src.singing || (src.bioHolder && src.bioHolder.HasEffect("accent_elvis")))
 		// use note icons instead of normal quotes
 		var/note_type = src.singing & BAD_SINGING ? "notebad" : "note"
@@ -493,9 +496,6 @@
 
 	if (text == "" || !text)
 		return speechverb
-
-	if (src.speech_void)
-		text = voidSpeak(text)
 
 	if(style)
 		style = " style=\"[style]\""
