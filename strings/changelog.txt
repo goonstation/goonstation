@@ -1,5 +1,9 @@
 
 (t)sun oct 25 20
+(u)TrustworthyFella
+(p)2477
+(e)🆕|feature
+(+)The enzymatic reclaimer now spits out any implants that were in the body when reclaiming
 (u)Flaborized
 (p)2508
 (e)🎨|sprites
