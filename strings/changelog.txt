@@ -1,5 +1,9 @@
 
 (t)sun oct 25 20
+(u)RSG250
+(p)2510
+(e)🆕|feature
+(+)Synthleather and Synthblubber now have alloying recipes!
 (u)TrustworthyFella
 (p)2477
 (e)🆕|feature
