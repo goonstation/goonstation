@@ -2,8 +2,8 @@
 (t)sun oct 25 20
 (u)Azrun
 (p)2473
-(e)|
-(+)Enable use of Reactor Statistics Computer
+(e)🐛|bug
+(+)The Reactor Statistics Computer should work again.
 (u)RSG250
 (p)2510
 (e)🆕|feature
