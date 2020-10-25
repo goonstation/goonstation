@@ -240,7 +240,7 @@
 ////////////////////////////
 
 //what do we do when a mob dies
-/datum/game_mode/proc/on_mob_death(var/mob/M)
+/datum/game_mode/proc/on_human_death(var/mob/M)
 
 /datum/game_mode/proc/bestow_objective(var/datum/mind/traitor,var/objective_path)
 	if (!istype(traitor) || !ispath(objective_path))

@@ -20,7 +20,7 @@
 
 	proc/update_status()
 
-		
+
 
 /datum/game_mode/pod_war/announce()
 	boutput(world, "<B>The current game mode is - Pod War!</B>")
@@ -71,22 +71,37 @@
 
 
 /datum/game_mode/pod_war/post_setup()
-	for (var/obj/machinery/clonepod/automatic/cloner in world)
-		cloner.get_team_from_area()
-
+	for (var/i in world)
+		if (istype(i, /obj/machinery/clonepod/automatic))
+			var/obj/machinery/clonepod/automatic/cloner = i
+			cloner.get_team_from_area()
+		else if (istype(i, /obj/pod_base_critical_system))
+			var/obj/pod_base_critical_system/system = i
+			system.get_team_from_area()
 	return 1
+
+//for testing, can remove when sure this works - Kyle
+/datum/game_mode/pod_war/proc/test_point_change(var/team as num, var/amt as num)
+
+	if (team == TEAM_NANOTRASEN)
+		team_NT.points = amt
+		handle_point_change(team_NT)
+	else if (team == TEAM_SYNDICATE)
+		team_SY.points = amt
+		handle_point_change(team_SY)
+
 
 /datum/game_mode/pod_war/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
 	fraction = clamp(fraction, 0.00, 0.99)
 
-	
+
 	var/matrix/M1 = matrix()
 	M1.Scale(fraction, 1)
 	var/offset = round(-64+fraction * 64, 1)
 	offset ++
 
-	
+	message_admins("[team]||[team_NT]||[team_SY]--[fraction]")
 	// animate(bar_to_change, transform = M1, pixel_x = offset, time = 10)
 	if (team == team_NT)
 		animate(board.bar_NT, transform = M1, pixel_x = offset, time = 10)
@@ -97,24 +112,22 @@
 		check_finished()
 
 //check which team they are on and iff they are a commander for said team. Deduct/award points
-/datum/game_mode/pod_war/on_mob_death(var/mob/M)
-	var/nt = locate(M) in team_NT.members
+/datum/game_mode/pod_war/on_human_death(var/mob/M)
+	var/nt = locate(M.mind) in team_NT.members
 	if (nt)
 		if (M.mind == team_NT.commander)
-			team_NT.change_points(-5)
-		else
-			team_SY.change_points(1)
+			team_NT.change_points(-1)
+		team_SY.change_points(1)
 
 		return
-	var/sy = locate(M) in team_SY.members
+	var/sy = locate(M.mind) in team_SY.members
 	if (sy)
 		if (M.mind == team_SY.commander)
-			team_SY.change_points(-5)
-		else
-			team_NT.change_points(1)
+			team_SY.change_points(-1)
+		team_NT.change_points(1)
 
 
-/datum/game_mode/pod_war/proc/announce_critical_system_destruction(var/obj/pod_carrier_critical_system/CS)
+/datum/game_mode/pod_war/proc/announce_critical_system_destruction(var/obj/pod_base_critical_system/CS)
 	if (!istype(CS))
 		return 0
 
@@ -151,7 +164,7 @@
 	var/list/members = list()
 	var/team_num = 0
 
-	var/points = 100
+	var/points = 50
 	var/max_points = 100
 	var/list/mcguffins = list()		//Should have 4 AND ONLY 4
 	var/datum/game_mode/pod_war/mode
@@ -171,7 +184,7 @@
 
 	proc/change_points(var/amt)
 		points += amt
-		mode.handle_point_change(src, amt)
+		mode.handle_point_change(src)
 
 
 	proc/set_comms(var/datum/game_mode/pod_war/mode)
@@ -306,7 +319,7 @@
 		H.client.screen += mode.board
 
 
-/obj/pod_carrier_critical_system
+/obj/pod_base_critical_system
 	name = "Critical System"
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "def_radar"
@@ -328,10 +341,10 @@
 
 	disposing()
 		..()
-		if (istype(team))
-			team.change_points(-25)
 
 		if (ticker.mode == /datum/game_mode/pod_war)
+			if (istype(team))
+				team.change_points(-25)
 			var/datum/game_mode/pod_war/mode = ticker.mode
 			mode.announce_critical_system_destruction(src)
 
@@ -385,6 +398,15 @@
 
 		if (health <= 0)
 			qdel(src)
+
+	//bad, copied from clone pod. Should be set by mapper I guess, but idk.
+	proc/get_team_from_area()
+		if (ticker.mode == /datum/game_mode/pod_war)
+			var/datum/game_mode/pod_war/mode = ticker.mode
+			if (get_area(src) == mode.team_NT.base_area)
+				team = mode.team_NT
+			else if (get_area(src) == mode.team_SY.base_area)
+				team = mode.team_SY
 
 //////////////special clone pod///////////////
 
@@ -468,7 +490,7 @@ obj/screen/score_board
 		border.icon = icon
 		border.icon_state = "pw_border"
 		border.vis_flags = VIS_INHERIT_ID
-	
+
 		bar_NT = new /obj/screen/pw_score_bar/nt(src)
 		bar_SY = new /obj/screen/pw_score_bar/sy(src)
 
