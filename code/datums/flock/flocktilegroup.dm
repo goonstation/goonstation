@@ -3,7 +3,7 @@
 	var/list/members = list() //what tiles are a part of the group
 	var/list/connected = list() //what structures are connected
 	var/size = 0 //how many tiles in there
-	var/power = 0 //how much power is in the grid
+	var/powerbalance = 0 //how much power is in the grid, in the form of a net balance
 	var/poweruse = 0 //how much is being used
 	var/powergen = 0 //how much is being produced
 	var/datum/flock/flock = null
@@ -50,4 +50,4 @@
 		else if(f.poweruse > 0)
 			src.poweruse += f.poweruse
 
-	src.power = src.powergen - src.poweruse
+	src.powerbalance = src.powergen - src.poweruse
