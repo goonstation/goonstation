@@ -809,11 +809,12 @@ datum
 									boutput(M, "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
 								melted = 1
 							if (H.head)
-								boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
 								var/obj/item/clothing/head/D = H.head
-								D.dropped(H)
-								H.u_equip(D)
-								qdel(D)
+								if ( !D.acid_proof )
+									boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
+									D.dropped(H)
+									H.u_equip(D)
+									qdel(D)
 								melted = 1
 							if (melted)
 								return
@@ -837,9 +838,10 @@ datum
 							if (H.head)
 								boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
 								var/obj/item/clothing/head/D = H.head
-								D.dropped(H)
-								H.u_equip(D)
-								qdel(D)
+								if( !D.acid_proof )
+									D.dropped(H)
+									H.u_equip(D)
+									qdel(D)
 								melted = 1
 							if (melted)
 								return
