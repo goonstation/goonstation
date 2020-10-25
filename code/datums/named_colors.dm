@@ -1,13 +1,15 @@
-//Named colors
+// Named colors
 // Used for describing appearences of reagents
 
+/// distance^2 between first and second RGB values
+#define color_dist2(_r, _g, _b, _dr, _dg, _db) ((_r-_dr)*(_r-_dr)+(_g-_dg)*(_g-_dg)+(_b-_db)*(_b-_db))
 
-// the datum holding one named color
+/// the datum holding one named color
 /datum/named_color
-	var/name=null
-	var/r=0		// stored 0-255
-	var/g=0		//
-	var/b=0		//
+	var/name = null
+	var/r = 0		// stored 0-255
+	var/g = 0		//
+	var/b = 0		//
 
 	New(textname,red,green,blue)
 		..()
@@ -16,47 +18,37 @@
 		g = green
 		b = blue
 
-	// distance^2 between specified RGB and this color
-	proc/dist2(dr,dg,db)
-		return (r-dr)*(r-dr)+(g-dg)*(g-dg)+(b-db)*(b-db)
-
-
-// the global list of all named colors
-
+/// the global list of all named colors
 var/list/named_colors = list()
 
-// returns the name of the color nearest to the given color RGB
+/// returns the name of the color nearest to the given color RGB
 proc/get_nearest_color(var/datum/color/c)
 	var/datum/named_color/nearest = get_nearest_color_datum(c)
 	if (nearest)
 		return nearest.name
 
-
-// returns the named_color datum that is nearest to the given color RGB
-
+/// returns the named_color datum that is nearest to the given color RGB
 proc/get_nearest_color_datum(var/datum/color/c)
 	var/distance = INFINITY
 	var/nearest = null
 
 	for(var/datum/named_color/col in named_colors)
-		var/d = col.dist2(c.r,c.g,c.b)
+		LAGCHECK(LAG_MED)
+		var/d = color_dist2(col.r, col.g, col.b, c.r, c.g, c.b)
 		if(d < distance)
 			distance = d
 			nearest = col
-
 	return nearest
 
-
-
-// adds a named color to the global list
-// given name and RGB color
+/// adds a named color to the global list
+/// given name and RGB color
 proc/add_color(var/name, var/red, var/green, var/blue)
 
 	var/color = new /datum/named_color(name, red, green, blue)
 	named_colors += color
 
-// called at world startup
-// populates the color list
+/// called at world startup
+/// populates the color list
 proc/create_named_colors()
 
 	add_color("cloudy blue", 172, 194, 217 )
