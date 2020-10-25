@@ -16,7 +16,11 @@
 	var/datum/pod_wars_team/team_NT
 	var/datum/pod_wars_team/team_SY
 
+	var/obj/screen/score_board/board
 
+	proc/update_status()
+
+		
 
 /datum/game_mode/pod_war/announce()
 	boutput(world, "<B>The current game mode is - Pod War!</B>")
@@ -25,9 +29,12 @@
 
 //setup teams and commanders
 /datum/game_mode/pod_war/pre_setup()
+	board = new()
 	if (!setup_teams())
 		return 0
 
+	handle_point_change(team_NT)	//HAX. am
+	handle_point_change(team_SY)	//HAX. am
 
 	return 1
 
@@ -64,21 +71,48 @@
 
 
 /datum/game_mode/pod_war/post_setup()
-	// for (var/datum/mind/leaderMind in commanders)
-	// 	if (!leaderMind.current)
-	// 		continue
-
-	// 	create_team(leaderMind)
-	// 	bestow_objective(leaderMind,/datum/objective/specialist/pod_war)
-	// 	boutput(leaderMind.current, "<h1><font color=red>You are the Commander of your starship! Organize your crew fight for survival!</font></h1>")
-	// 	equip_commander(leaderMind.current)
-
-	//Create teams
-	//Setup critical systems for each starship.
+	for (var/obj/machinery/clonepod/automatic/cloner in world)
+		cloner.get_team_from_area()
 
 	return 1
 
-/datum/game_mode/pod_war/proc/handle_point_change()
+/datum/game_mode/pod_war/proc/handle_point_change(var/datum/pod_wars_team/team)
+	var/fraction = round (team.points/team.max_points, 0.01)
+	fraction = clamp(fraction, 0.00, 0.99)
+
+	
+	var/matrix/M1 = matrix()
+	M1.Scale(fraction, 1)
+	var/offset = round(-64+fraction * 64, 1)
+	offset ++
+
+	
+	// animate(bar_to_change, transform = M1, pixel_x = offset, time = 10)
+	if (team == team_NT)
+		animate(board.bar_NT, transform = M1, pixel_x = offset, time = 10)
+	else
+		animate(board.bar_SY, transform = M1, pixel_x = offset, time = 10)
+
+	if (team.points <= 0)
+		check_finished()
+
+//check which team they are on and iff they are a commander for said team. Deduct/award points
+/datum/game_mode/pod_war/on_mob_death(var/mob/M)
+	var/nt = locate(M) in team_NT.members
+	if (nt)
+		if (M.mind == team_NT.commander)
+			team_NT.change_points(-5)
+		else
+			team_SY.change_points(1)
+
+		return
+	var/sy = locate(M) in team_SY.members
+	if (sy)
+		if (M.mind == team_SY.commander)
+			team_SY.change_points(-5)
+		else
+			team_NT.change_points(1)
+
 
 /datum/game_mode/pod_war/proc/announce_critical_system_destruction(var/obj/pod_carrier_critical_system/CS)
 	if (!istype(CS))
@@ -98,10 +132,12 @@
 	..()
 
 /datum/game_mode/pod_war/declare_completion()
-
+	var/datum/pod_wars_team/winner = team_NT.points > team_SY.points ? team_NT.name : team_SY.name
+	var/datum/pod_wars_team/loser = team_NT.points < team_SY.points ? team_NT.name : team_SY.name
 	// var/text = ""
+	boutput(world, "<FONT size = 2><B>The winner was the [winner.name], commanded by [winner.commander.current]:</B></FONT><br>")
+	boutput(world, "<FONT size = 2><B>The loser was the [loser.name], commanded by [loser.commander.current]:</B></FONT><br>")
 
-	boutput(world, "<FONT size = 2><B>The ship commanders were: </B></FONT><br>")
 	// for(var/datum/mind/leader_mind in commanders)
 
 	..() // Admin-assigned antagonists or whatever.
@@ -116,6 +152,7 @@
 	var/team_num = 0
 
 	var/points = 100
+	var/max_points = 100
 	var/list/mcguffins = list()		//Should have 4 AND ONLY 4
 	var/datum/game_mode/pod_war/mode
 
@@ -134,9 +171,7 @@
 
 	proc/change_points(var/amt)
 		points += amt
-
-		if (points <= 0)
-			mode.check_finished()
+		mode.handle_point_change(src, amt)
 
 
 	proc/set_comms(var/datum/game_mode/pod_war/mode)
@@ -268,6 +303,7 @@
 		H.set_clothing_icon_dirty()
 		// H.set_loc(pick(pod_pilot_spawns[team_num]))
 		boutput(H, "You're in the [name] faction!")
+		H.client.screen += mode.board
 
 
 /obj/pod_carrier_critical_system
@@ -406,7 +442,67 @@
 			var/datum/mind/ghost_mind = ghost.mind
 			if(ghost.client && !ghost_mind.dnr)
 				var/success = growclone(ghost, ghost.real_name, ghost_mind)
-				if (success)
+				if (success && team)
 					SPAWN_DBG(1)
 						team.equip_player(src.occupant)
 				break
+
+
+//////////////////SCOREBOARD STUFF//////////////////
+obj/screen/score_board
+	name = "Score"
+	desc = ""
+	icon = 'icons/misc/128x32.dmi'
+	icon_state = "pw_backboard"
+	screen_loc = "NORTH, CENTER"
+	var/obj/screen/border = null
+	var/obj/screen/pw_score_bar/bar_NT = null
+	var/obj/screen/pw_score_bar/bar_SY = null
+	var/theme = null
+	alpha = 150
+
+	New()
+		..()
+		border = new(src)
+		border.name = "border"
+		border.icon = icon
+		border.icon_state = "pw_border"
+		border.vis_flags = VIS_INHERIT_ID
+	
+		bar_NT = new /obj/screen/pw_score_bar/nt(src)
+		bar_SY = new /obj/screen/pw_score_bar/sy(src)
+
+		src.vis_contents += bar_NT
+		src.vis_contents += bar_SY
+		src.vis_contents += border
+
+	MouseEntered(location, control, params)
+		if (usr.client.tooltipHolder && control == "mapwindow.map")
+			var/theme = src.theme
+
+			usr.client.tooltipHolder.showHover(src, list(
+				"params" = params,
+				"title" = src.name,
+				"content" = "NT Points: [bar_NT.points]\n SY Points: [bar_SY.points]",
+				"theme" = theme
+			))
+
+	MouseExited()
+		if (usr.client.tooltipHolder)
+			usr.client.tooltipHolder.hideHover()
+
+/obj/screen/pw_score_bar
+	icon = 'icons/misc/128x32.dmi'
+	desc = ""
+	vis_flags = VIS_INHERIT_ID
+	var/points = 50
+	var/max_points = 100
+
+/obj/screen/pw_score_bar/nt
+	name = "NanoTrasen Points"
+	icon_state = "pw_nt"
+
+/obj/screen/pw_score_bar/sy
+	name = "Syndicate Points"
+	icon_state = "pw_sy"
+
