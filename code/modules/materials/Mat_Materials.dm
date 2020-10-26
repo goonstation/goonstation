@@ -185,9 +185,9 @@
 			call(X,  "execute")(owner, attacker, attacked)
 		return
 
-	proc/triggerOnLife(var/mob/M, var/obj/item/I)
+	proc/triggerOnLife(var/mob/M, var/obj/item/I, mult)
 		for(var/datum/materialProc/X in triggersOnLife)
-			call(X,  "execute")(M, I)
+			call(X,  "execute")(M, I, mult)
 		return
 
 	proc/triggerOnAdd(var/location)
@@ -399,6 +399,23 @@
 		setProperty("density", 75)
 		setProperty("hard", 30)
 		return ..()
+
+/datum/material/metal/neutronium
+	mat_id = "neutronium"
+	name = "neutronium"
+	desc = "Neutrons condensed into a solid form."
+	color = "#043e9b"
+	material_flags = MATERIAL_ENERGY | MATERIAL_METAL
+	alpha = 255
+
+	New()
+		setProperty("density", 100) //👀
+		setProperty("hard", 10)
+		setProperty("electrical", 70)
+		setProperty("stability", 20)
+		setProperty("n_radioactive", 85)
+		return ..()
+
 
 // Special Metals
 
@@ -980,7 +997,7 @@
 	New()
 		setProperty("density", 45)
 		setProperty("flammable", 67)
-		setProperty("stable", 53)
+		setProperty("stability", 53)
 		return ..()
 
 /datum/material/organic/cardboard
@@ -1056,6 +1073,8 @@
 	desc = "Coral harvested from the sea floor."
 	color = "#990099"
 	material_flags = MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_ORGANIC
+	texture = "coral"
+	texture_blend = ICON_OVERLAY
 
 	New()
 		setProperty("density", 5)
@@ -1346,4 +1365,3 @@
 /datum/material/cardboard
 
 */
-

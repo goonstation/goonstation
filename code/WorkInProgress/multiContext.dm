@@ -941,9 +941,9 @@ var/list/globalContextActions = null
 			icon_state = "weld"
 
 			execute(var/atom/target, var/mob/user)
-				user.show_text("You weld [target] carefully.", "blue")
 				for (var/obj/item/weldingtool/W in user.equipped_list())
 					if(W.try_weld(user, 2))
+						user.show_text("You weld [target] carefully.", "blue")
 						return ..()
 
 		pry

@@ -53,6 +53,9 @@
 								//playsound(get_turf(src), src.sound_malescream, 80, 0, 0, src.get_age_pitch())
 							//else
 							playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch())
+						#ifdef HALLOWEEN
+						spooktober_GH.change_points(src.ckey, 30)
+						#endif
 						var/possumMax = 15
 						for_by_tcl(responsePossum, /obj/critter/opossum)
 							if (!responsePossum.alive)

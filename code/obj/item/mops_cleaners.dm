@@ -240,6 +240,13 @@ WET FLOOR SIGN
 	stamina_cost = 15
 	stamina_crit_chance = 10
 
+/obj/item/mop/orange
+	desc = "The world of janitalia wouldn't be complete without a mop. This one comes in orange!"
+	name = "orange mop"
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "mop_orange"
+	item_state = "mop_orange"
+
 /obj/item/mop/New()
 	..()
 	src.create_reagents(20)

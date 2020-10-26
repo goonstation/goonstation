@@ -422,6 +422,13 @@
 		..()
 		src.setMaterial(getMaterial("gold"))
 
+/obj/item/clothing/head/longtophat
+	name = "Long tophat"
+	desc = "When you look at this hat you can only think of how many monkeys you could fit in it."
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "ltophat"
+	item_state = "lthat"
+
 /obj/item/clothing/head/chefhat
 	name = "Chef's hat"
 	desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
@@ -1189,3 +1196,9 @@
 	desc = "A highly advanced textile experience!"
 	icon_state = "danberet"
 	item_state = "danberet"
+
+/obj/item/clothing/head/janiberet
+	name = "Head of Sanitation beret"
+	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
+	icon_state = "janitorberet"
+	item_state = "janitorberet"

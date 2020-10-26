@@ -25,6 +25,7 @@ when you instantiate an abstract type. CRASH will runtime, WARN will log it. Don
 *permanently* on the live server (though turning it on once in a while is probably fine to see
 if there are any violations).
 */
+
 #ifdef ABSTRACT_VIOLATION_CRASH
 /datum/New()
 	..()

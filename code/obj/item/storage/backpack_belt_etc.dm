@@ -350,6 +350,10 @@
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
+/obj/item/storage/belt/utility/superhero
+	name = "superhero utility belt"
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+
 /obj/item/storage/belt/medical
 	name = "medical belt"
 	icon_state = "injectorbelt"

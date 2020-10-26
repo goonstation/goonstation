@@ -2148,6 +2148,7 @@
 		/datum/manufacture/cyberliver,
 		/datum/manufacture/cyberlung_left,
 		/datum/manufacture/cyberlung_right,
+		/datum/manufacture/empty_kit,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
@@ -2269,7 +2270,8 @@
 	/datum/manufacture/satchel)
 
 	hidden = list(/datum/manufacture/breathmask,
-	/datum/manufacture/patch)
+	/datum/manufacture/patch,
+	/datum/manufacture/hat_ltophat)
 	///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now
 
 /// cogwerks - a gas extractor for the engine
@@ -2346,7 +2348,8 @@
 	hidden = list(/datum/manufacture/id_card_gold,
 	/datum/manufacture/implant_access_infinite,
 	/datum/manufacture/breathmask,
-	/datum/manufacture/patch)
+	/datum/manufacture/patch,
+	/datum/manufacture/hat_ltophat)
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
 	name = "Crate Manufacturer"
@@ -2364,6 +2367,49 @@
 	/datum/manufacture/biohazard)
 
 	hidden = list(/datum/manufacture/classcrate)
+
+/obj/machinery/manufacturer/zombie_survival
+	name = "Uber-Extreme Survival Manufacturer"
+	desc = "A manufacturing unit calibrated to produce items useful in surviving extreme scenarios."
+	icon_state = "fab-crates"
+	icon_base = "crates"
+	free_resource_amt = 50
+	free_resources = list(/obj/item/material_piece/cloth/cottonfabric,/obj/item/material_piece/mauxite,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz)
+	accept_blueprints = 0
+	available = list(
+	/datum/manufacture/engspacesuit,
+	/datum/manufacture/breathmask,
+	/datum/manufacture/suture,
+	/datum/manufacture/scalpel,
+	/datum/manufacture/flashlight,
+	/datum/manufacture/armor_vest,
+	/datum/manufacture/bullet_22,
+	/datum/manufacture/harmonica,
+	/datum/manufacture/clock,	// /obj/item/gun/kinetic/clock_188
+	/datum/manufacture/clock_ammo,	// /obj/item/ammo/bullets/nine_mm_NATO
+	/datum/manufacture/saa,	// /obj/item/gun/kinetic/colt_saa
+	/datum/manufacture/saa_ammo,	// /obj/item/ammo/bullets/c_45
+	/datum/manufacture/riot_launcher,	// /obj/item/gun/kinetic/riot40mm
+	/datum/manufacture/riot_launcher_ammo_pbr,	// /obj/item/ammo/bullets/pbr
+	/datum/manufacture/riot_launcher_ammo_flashbang,	// /obj/item/chem_grenade/flashbang
+	/datum/manufacture/riot_launcher_ammo_tactical,
+	/datum/manufacture/sniper,	// /obj/item/gun/kinetic/sniper
+	/datum/manufacture/sniper_ammo,	// /obj/item/ammo/bullets/rifle_762_NATO
+	/datum/manufacture/tac_shotgun,	// /obj/item/gun/kinetic/tactical_shotgun
+	/datum/manufacture/tac_shotgun_ammo,	// /obj/item/ammo/bullets/buckshot_burst
+	/datum/manufacture/gyrojet,	// /obj/item/gun/kinetic/gyrojet
+	/datum/manufacture/gyrojet_ammo,	// /obj/item/ammo/bullets/gyrojet
+	/datum/manufacture/plank,	// /obj/item/plank
+	/datum/manufacture/brute_kit,	// /obj/item/storage/firstaid/brute
+	/datum/manufacture/burn_kit,	// /obj/item/storage/firstaid/fire
+	/datum/manufacture/crit_kit, // /obj/item/storage/firstaid/crit
+	/datum/manufacture/spacecillin,	// /obj/item/reagent_containers/syringe/antiviral
+	/datum/manufacture/bat,	// /obj/item/bat
+	/datum/manufacture/quarterstaff,	//	/obj/item/quarterstaff
+	/datum/manufacture/cleaver,	// /obj/item/kitchen/utensil/knife/cleaver
+	/datum/manufacture/fireaxe,	// /obj/item/fireaxe
+	/datum/manufacture/shovel	// /obj/item/shovel	//this is powerful
+	)
 
 #undef WIRE_EXTEND
 #undef WIRE_POWER

@@ -1,4 +1,162 @@
 
+(t)mon oct 26 20
+(u)Tarmunora
+(p)2496
+(e)🐛|bug
+(+)Fix/adjust plasmastone plasma production
+(u)Tarmunora
+(p)2497
+(e)⚖|balance
+(+)Adjusted prices of station bots
+(t)sun oct 25 20
+(u)Azrun
+(p)2473
+(e)🐛|bug
+(+)The Reactor Statistics Computer should work again.
+(u)RSG250
+(p)2510
+(e)🆕|feature
+(+)Synthleather and Synthblubber now have alloying recipes!
+(u)TrustworthyFella
+(p)2477
+(e)🆕|feature
+(+)The enzymatic reclaimer now spits out any implants that were in the body when reclaiming
+(u)Flaborized
+(p)2508
+(e)🎨|sprites
+(+)Firefighter and Paramedic suits, both regular and armoured, have gotten a makeover!
+(u)Flaborized
+(p)2507
+(e)🎨|sprites
+(+)Large power cells, the recharger, and turboflashes have been resprited!
+(t)sat oct 24 20
+(u)TrustworthyFella
+(p)2462
+(e)⚖|balance
+(+)Player monkeys are no longer affected by code designed with npc monkeys in mind. This includes: immunity to being sucked by vampires, immunity to being sucked by changelings, and not giving benefits to werewolves when mauled.
+(u)Gonzako
+(p)2486
+(e)⚖🆕|balance, feature
+(*)Added build-up to the yeti devouring you. Making it easier to be rescued from.
+(u)austin
+(p)2499
+(e)🎨|sprites
+(+)Borgs and AI can now sing too.
+(t)fri oct 23 20
+(u)RSG250
+(p)2503
+(e)🎨|sprites
+(+)Things made with coral now have a texture on them!
+(u)RSG250
+(p)2502
+(e)🆕|feature
+(+)Beeswax can now be made at the Material processor using honey!
+(u)Arahimine
+(p)2493
+(e)⚖|balance
+(+)Roboticists now start with ProDoc healthgoggles.
+(t)thu oct 22 20
+(u)RSG250
+(p)2453
+(e)|
+(+)Shield Generators (like the one in manta engine control) now give you feedback when activating/deactivating the shields.
+(u)Fosstar
+(p)2467
+(e)🆕|feature
+(*)The captain is now timelocked to 20 rounds or more on the RP servers.
+(t)wed oct 21 20
+(u)Jawns
+(p)2488
+(e)🗺|mapping
+(+)The NSS Manta morgue disposal chute has been upgraded to "functional" status.
+(u)Jawns
+(p)2484
+(e)🐛|bug
+(+)Alien ambassadors now spawn with their ID in their backpack when necessary, instead of inside them.
+(u)TrustworthyFella
+(p)2464
+(e)🐛|bug
+(+)Fixed a bug where dead people could be reborn in new flesh multiple times due to not being killed properly the first time.
+(t)tue oct 20 20
+(u)austin
+(p)2447
+(e)🆕🎨|feature, sprites
+(+)Players can now sing by prefixing their messages with "%". Sing to parrots and they will chatter back. Monkeys don't like drunk or loud singing.
+(u)Monochromatism
+(p)2426
+(e)🎨|sprites
+(+)Added new borders to genetic power icons for use in player and genebooth UIs.
+(t)mon oct 19 20
+(u)Flaborized
+(p)2458
+(e)🎨|sprites
+(+)Both devices and assemblies have had makeovers! New sprites for all kinds of device combinations, including bombs!
+(t)sun oct 18 20
+(u)Kyle
+(*)Change to pod warping again. Removes the "moving run-up" part and now it projects the portal in front of you, or on top of you if no room. Still must be immobile to begin making a portal.
+(u)Flaborized
+(p)2394
+(e)🎨|sprites
+(+)Tools and flamethrowers have had their sprites replaced with new and improved versions, new crowbar subtype
+(u)Tarmunora
+(*)Secretized Neutronium recipe. Experiment!
+(u)Gonzako
+(p)2346
+(e)|
+(*)Everyone with the addict trait no longer shares their addiction with every other addict.
+(+)New allergic players joining no longer change everybody else's allergy
+(t)sat oct 17 20
+(u)Sovexe
+(p)2450
+(e)|
+(+)Becoming a monkey no longer makes you drop half your stuff.
+(u)comradef191
+(p)2366
+(e)🆕|feature
+(*)Added 9 new colours of wiring, see your local QM to order them.
+(+)Added Yellow, Orange, Blue, Green, Purple, Black, Hot-Pink, Brown & White cables.
+(u)Kyle
+(p)2439
+(e)|
+(*)Pod balance changes: more pod health, very slightly slower acceleration, faster pod weapon travel time, Wormholes must be made when stationary and with several tiles of clearance in front.
+(*)Pods/subs now have a "Brake" toggle that slows you down to a stop when toggled on.
+(t)fri oct 16 20
+(u)Sidewinder7
+(p)2393
+(e)🆕🎨|feature, sprites
+(*)Added the Discount Superhero latejoin job.
+(u)virvatuli
+(p)2437
+(e)🐛🗺|bug, mapping
+(+)Added the AI Reset Board to Atlas. Why was it missing? Nobody knows! But now it's a certified feature.
+(t)thu oct 15 20
+(u)Flaborized
+(p)2356
+(e)🎨|sprites
+(+)Cloning equipment has new sprites. Port-a-Brig and Port-a-Puke now have distinct sprites.
+(u)Phuzzy
+(p)2409
+(e)🗺|mapping
+(*)Adding three new radio tapes to the station! One of them is a secret though, and you'll have to go and find it yourself.
+(t)wed oct 14 20
+(u)BatElite
+(p)2408
+(e)🆕|feature
+(+)Ghostdrones now ignore Manta's water currents so long as the magnetic tether is functional.
+(t)tue oct 13 20
+(u)Arivias
+(p)2414
+(e)🆕|feature
+(*)Added a 'pop' feature to the MechComp selection component.
+(t)mon oct 12 20
+(u)RSG250
+(p)2406
+(e)🆕|feature
+(*)added Neutronium Alloy, discover how to make it!
+(u)Carbadox
+(p)2416
+(e)🆕🎨|feature, sprites
+(*)Added 3 new Janitor job rewards. Red bucket, orange mop and Head of Sanitations beret as level 5, level 15 and level 20 rewards respectively.
 (t)sun oct 11 20
 (u)RSG250
 (p)2372
@@ -17,7 +175,7 @@
 (e)🆕|feature
 (*)"This object menaces with spikes of..." medal reintroduced. Try your hand at crafting the ultimate mining tool!
 (u)kyle
-(+)Kudzumen now have a chance 7%(per tick) to cure their heart attack if they get it if they are receiving the healing benefits of standing on kudzu with max nutrients. 
+(+)Kudzumen now have a chance 7%(per tick) to cure their heart attack if they get it if they are receiving the healing benefits of standing on kudzu with max nutrients.
 (t)thu oct 08 20
 (u)adharainspace
 (p)2363

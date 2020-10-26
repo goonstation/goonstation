@@ -162,6 +162,9 @@
 	slot_ears = /obj/item/device/radio/headset/command/captain
 	slot_poc1 = /obj/item/disk/data/floppy/read_only/authentication
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
+#ifdef RP_MODE
+	rounds_needed_to_play = 20
+#endif
 
 	New()
 		..()
@@ -551,6 +554,7 @@
 	slot_suit = /obj/item/clothing/suit/labcoat/robotics
 	slot_glov = /obj/item/clothing/gloves/latex
 	slot_lhan = /obj/item/storage/toolbox/mechanical
+	slot_eyes = /obj/item/clothing/glasses/healthgoggles
 	slot_ears = /obj/item/device/radio/headset/medical
 	items_in_backpack = list(/obj/item/crowbar)
 
@@ -1979,6 +1983,59 @@
 		if (!M)
 			return
 		M.bioHolder.AddEffect("hell_fire")
+
+/datum/job/special/halloween/superhero
+	name = "Discount Superhero"
+	wages = PAY_UNTRAINED
+	limit = 1
+	change_name_on_spawn = 1
+	allow_traitors = 0
+	allow_spy_theft = 0
+	cant_spawn_as_rev = 1
+	recieves_miranda = 1
+	slot_ears = /obj/item/device/radio/headset/security
+	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud/superhero
+	slot_glov = /obj/item/clothing/gloves/latex/blue
+	slot_jump = /obj/item/clothing/under/gimmick/superhero
+	slot_foot = /obj/item/clothing/shoes/tourist
+	slot_belt = /obj/item/storage/belt/utility/superhero
+	slot_back = null
+	slot_poc2 = /obj/item/device/pda2
+
+	New()
+		..()
+		src.access = get_access("Security Officer")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_security")
+		if(prob(60))
+			var/aggressive = pick("eyebeams","cryokinesis")
+			var/defensive = pick("fire_resist","cold_resist","food_rad_resist","breathless") // no thermal resist, gotta have some sort of comic book weakness
+			var/datum/bioEffect/power/be = M.bioHolder.AddEffect(aggressive, do_stability=0)
+			if(aggressive == "eyebeams")
+				var/datum/bioEffect/power/eyebeams/eb = be
+				eb.stun_mode = 1
+				eb.altered = 1
+			else
+				be.power = 1
+				be.altered = 1
+			be = M.bioHolder.AddEffect(defensive, do_stability=0)
+		else
+			var/datum/bioEffect/power/shoot_limb/sl = M.bioHolder.AddEffect("shoot_limb", do_stability=0)
+			sl.safety = 1
+			sl.altered = 1
+			sl.cooldown = 300
+			sl.stun_mode = 1
+			var/datum/bioEffect/regenerator/r = M.bioHolder.AddEffect("regenerator", do_stability=0)
+			r.regrow_prob = 10
+		var/datum/bioEffect/power/be = M.bioHolder.AddEffect("adrenaline", do_stability=0)
+		be.safety = 1
+		be.altered = 1
+
 
 /datum/job/special/halloween/remy
 	name = "Remy"

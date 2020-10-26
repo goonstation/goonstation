@@ -38,6 +38,7 @@ THROWING DARTS
 	proc/implanted(mob/M, mob/I)
 		logTheThing("combat", I, M, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
 		implanted = 1
+		SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, M)
 		owner = M
 		if (implant_overlay)
 			M.update_clothing()
@@ -53,6 +54,7 @@ THROWING DARTS
 	// called when an implant is removed from M
 	proc/on_remove(var/mob/M)
 		deactivate()
+		SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVED, M)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
 			H.implant -= src
@@ -118,10 +120,14 @@ THROWING DARTS
 					user.show_text("[Imp] already has an implant loaded.")
 					return
 				else
-					user.u_equip(src)
+					var/obj/item/storage/store
+					if(istype(src.loc, /obj/item/storage))
+						store = src.loc
 					src.set_loc(Imp)
 					Imp.imp = src
 					Imp.update()
+					user.u_equip(src)
+					store?.hud.remove_item(src)
 					user.show_text("You insert [src] into [Imp].")
 				return
 			else if (istype(I, /obj/item/implantcase))
@@ -837,6 +843,7 @@ THROWING DARTS
 		desc = "Ouch."
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
+	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
 		return
 

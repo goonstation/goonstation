@@ -637,7 +637,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		icon_state = "nradiation1"
 		unique = 1
 
-		tickSpacing = 1.5 SECONDS
+		tickSpacing = 2 SECONDS
 
 		damage_tox = 2
 		damage_brute = 2
@@ -646,10 +646,10 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/howMuch = ""
 		var/stage = 0
 		var/counter = 0
-		var/stageTime = 10 SECONDS
+		var/stageTime = 20 SECONDS
 
 		getTooltip()
-			return "You are [howMuch]irradiated by neutrons.<br>Taking [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec and [damage_brute] brute damage every [tickSpacing/(1 SECOND)] sec."
+			return "You are [howMuch]irradiated by neutrons.<br>Taking [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec and [damage_brute] brute damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
 
 		preCheck(var/atom/A)
 			if(issilicon(A) || isobserver(A) || isintangible(A)) return 0

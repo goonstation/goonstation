@@ -111,7 +111,7 @@
 
 			/* get out of machine's scheduler, get in atmos_machines */
 			UnsubscribeProcess()
-			STOP_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
+			START_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
 
 			/* get all of the loop meters */
 			meters = get_meters()

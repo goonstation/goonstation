@@ -170,9 +170,11 @@ JONES CITY TURFS
 	three
 		name = "stringy hairball"
 		icon_state = "hairball3"
+	inert
+		name = "hairball"
 
 /obj/item/hairball/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/hairball))
+	if (istype(W, /obj/item/hairball) && !istype(W, /obj/item/hairball/inert)) //in case we have a decorative hairball??
 		boutput(user, "<span class='notice'>You begin adding \the [W.name] to \the [src.name].</span>")
 		if (!do_after(user, 30))
 			boutput(user, "<span class='alert'>You were interrupted!</span>")

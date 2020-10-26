@@ -1249,6 +1249,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		text = voidSpeak(text)
 	var/ending = copytext(text, length(text))
 
+	if (singing)
+		return singify_text(text)
+
 	if (ending == "?")
 		return "queries, \"[text]\"";
 	else if (ending == "!")
@@ -2119,9 +2122,12 @@ proc/get_mobs_trackable_by_AI()
 
 /mob/living/silicon/ai/choose_name(var/retries = 3)
 	var/randomname = pick_string_autokey("names/ai.txt")
+	var/obj/item/organ/brain/brain_owner = src.brain.owner
 	var/newname
 	for (retries, retries > 0, retries--)
 		newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", randomname) as null|text
+		if (src.brain.owner != brain_owner)
+			return
 		if (!newname)
 			src.real_name = randomname
 			src.name = src.real_name

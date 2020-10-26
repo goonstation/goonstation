@@ -481,7 +481,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window"))) //No uber grille smashing plz, but you can have windows, as a treat.
+			switch (user.smash_through(target, list("door"))) //No uber grille smashing plz, but you can have windows, as a treat.
 				if (0)
 					if (isitem(target))
 						boutput(user, "<span class='alert'>You try to pick [target] up but it wiggles out of your hand. Opposable thumbs would be nice.</span>")
@@ -491,10 +491,40 @@
 						return
 
 				if (1)
+					user.emote("scream")
 					return
 
 		..()
 		return
+
+	disarm(mob/target, var/mob/living/user)
+		logTheThing("combat", user, target, "mauls [constructTarget(target,"combat")] with zomb limbs (disarm intent) at [log_loc(user)].")
+		user.visible_message("<span class='alert'>[user] mauls [target] while trying to disarm them!</span>")
+		harm(target, user, 1)
+
+	grab(mob/target, var/mob/living/user)
+		logTheThing("combat", user, target, "mauls [constructTarget(target,"combat")] with zomb limbs (grab intent) at [log_loc(user)].")
+		user.visible_message("<span class='alert'>[user] mauls [target] while trying to grab them!</span>")
+		harm(target, user, 1)
+
+	harm(mob/target, var/mob/living/user, var/no_logs = 0)
+		if (no_logs != 1)
+			logTheThing("combat", user, target, "mauls [constructTarget(target,"combat")] with bear limbs at [log_loc(user)].")
+		var/obj/item/affecting = target.get_affecting(user)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, 1)
+		user.attack_effects(target, affecting)
+		var/action = pick("maim", "maul", "mangle", "rip", "scratch", "mutilate")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
+		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_1.ogg"
+		msgs.damage_type = DAMAGE_BLUNT
+		msgs.flush(SUPPRESS_LOGS)
+		if (prob(40))
+			if (istype(target))
+				var/mob/living/L = target
+				L.do_disorient(25, disorient=3 SECONDS)
+
+		user.lastattacked = target
+
 
 /datum/limb/dualsaw
 

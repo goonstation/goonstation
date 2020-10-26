@@ -1125,7 +1125,7 @@
 
 		src.log_me(subject, "mutation activated", E)
 
-		if (subject.bioHolder.ActivatePoolEffect(E) && !ismonkey(subject) && subject.client)
+		if (subject.bioHolder.ActivatePoolEffect(E) && !isnpcmonkey(subject) && subject.client)
 			activated_bonus(usr)
 		usr << link("byond://?src=\ref[src];menu=mutations")
 		//send them to the mutations page.

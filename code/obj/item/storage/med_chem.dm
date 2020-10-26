@@ -41,6 +41,9 @@
 		/obj/item/device/analyzer/healthanalyzer/borg,\
 		/obj/item/reagent_containers/emergency_injector/epinephrine)
 
+	empty
+		spawn_contents = list()
+
 
 /obj/item/storage/firstaid/brute
 	name = "brute first aid"

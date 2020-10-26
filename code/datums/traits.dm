@@ -754,7 +754,7 @@ obj/trait/pilot
 //	id = "color_shift"
 //	points = 0
 //	isPositive = 1
-//	
+//
 //	onAdd(var/mob/owner)	Not enforcing any of them with onLife because Hemochromia is a multi-mutation thing while Achromia would darken the skin color every tick until it's pitch black.
 //		if(owner.bioHolder)
 //			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
@@ -792,7 +792,8 @@ obj/trait/pilot
 	isPositive = 0
 
 	var/allergen = ""
-	var/allergen_name = ""
+	var/allergen_name = ""  //No idea what this var is doing, mind if someone explains?
+	var/list/allergic_players = list()
 
 	var/list/allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
@@ -803,6 +804,7 @@ obj/trait/pilot
 
 	onAdd(var/mob/owner)
 		allergen = pick(allergen_id_list)
+		allergic_players[owner] = allergen
 		if (reagents_cache.len <= 0)
 			build_reagent_cache()
 		var/datum/reagent/R = reagents_cache[allergen]
@@ -812,6 +814,7 @@ obj/trait/pilot
 			throw EXCEPTION("Could not find reagent for id:[allergen]")
 
 	onLife(var/mob/owner)
+		allergen = allergic_players[owner]
 		if (owner?.reagents?.has_reagent(allergen))
 			owner.reagents.add_reagent("histamine", 1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1)) //1.4 units of histamine per life cycle? is that too much? Halved with antihistamine
 
@@ -835,19 +838,20 @@ obj/trait/pilot
 	points = 2
 	isPositive = 0
 	var/selected_reagent = "ethanol"
-
-	New()
-		selected_reagent = pick("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
-		. = ..()
+	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
+	var/list/addicted_players = list()
 
 	onAdd(var/mob/owner)
 		if(isliving(owner))
+			addicted_players[owner] = pick(addictive_reagents)
+			selected_reagent = addicted_players[owner]
 			addAddiction(owner)
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
 		if(isliving(owner) && prob(1))
 			var/mob/living/M = owner
+			selected_reagent = addicted_players[owner]
 			for(var/datum/ailment_data/addiction/A in M.ailments)
 				if(istype(A, /datum/ailment_data/addiction))
 					if(A.associated_reagent == selected_reagent) return

@@ -21,6 +21,7 @@
 	var/obj/item/shipcomponent/sensor/sensors = null
 	var/obj/item/shipcomponent/secondary_system/lock/lock = null
 	var/obj/item/shipcomponent/pod_lights/lights = null
+	var/rcs = 0		//bool, 1 for active, 0 for inactive
 	var/uses_weapon_overlays = 0
 	var/health = 200
 	var/maxhealth = 200

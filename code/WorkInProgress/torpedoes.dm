@@ -30,7 +30,7 @@
 	icon_state_on_tray = "torped_hiexp_tray"
 	icon_state_off_tray = "torped_hiexp_notray"
 	icon_state_fired = "torped_hiexp_fired"
-	numPierce = 6 //Max amount of steps that can pierce before it blows up instantly.
+	numPierce = 0 //Max amount of steps that can pierce before it blows up instantly.
 	stepsAfterPierce = 12 //Will blow up this many steps after first pierce at most.
 	sleepPerStep = 2 //How long to sleep between steps.
 
@@ -662,6 +662,7 @@
 		else
 			for(var/atom/movable/M in T)
 				if(M == src) continue
+				if(istype(M, /obj/machinery/the_singularity)) numPierce = 0 //detonate instantly on the singularity
 				if(!M.CanPass(src, T)) return 1
 				if(M.density) return 1
 		return 0

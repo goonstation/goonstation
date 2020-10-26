@@ -158,6 +158,7 @@
 		last_drain = 0
 		master_reagent_id = 0
 		drains_floor = 1
+		waitforit = 0
 		..()
 
 	New()
@@ -626,7 +627,7 @@
 
 			if (created >= fluids_to_create)
 				break
-			src.waitforit = 0
+		src.waitforit = 0
 
 	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0, var/remove_reagent = 1) //basically a reverse spread with drain_source as the center
 		if (!drain_source || drain_source.group != src) return
