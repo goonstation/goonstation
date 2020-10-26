@@ -91,9 +91,8 @@
 		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
 		last_pressure_delta = pressure_delta
 
-		// Azrun - TODO - BACKFLOW PROTECTION VARIANT!
 		if(!is_circulator_active())
-			if(pressure_delta < 0)
+			if(pressure_delta < 0 && !(circulator_flags & BACKFLOW_PROTECTION))
 				gas_input = air2
 				gas_output = air1
 		// Azrun TODO -- Evalute transfer of small ratio of GAS when not circulating
@@ -108,6 +107,11 @@
 		//var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 		var/datum/gas_mixture/removed = gas_input.remove(transfer_moles)
 
+		if( (circulator_flags & LEAKS_GAS ) && prob(5))
+			var/datum/gas_mixture/leaked = gas_input.remove_ratio(rand(2,8)*0.01)
+			src.audible_message("<span class='alert'>[src] makes hissing sound.</span>")
+			if (leaked) loc.assume_air(leaked)
+
 		if(network1)
 			network1.update = 1
 
@@ -119,44 +123,52 @@
 	proc/is_circulator_active()
 		return last_pressure_delta > MIN_CIRCULATOR_SPEED
 
+
 	proc/circulate_gas(datum/gas_mixture/gas)
 		var/datum/gas_mixture/gas_input = air1
 		var/datum/gas_mixture/gas_output = air2
 
 		//flowing backwards
-		// Azrun - TODO - BACKFLOW PROTECTION VARIANT!
-		if(last_pressure_delta < 0)
+		if(last_pressure_delta < 0 && !(circulator_flags & BACKFLOW_PROTECTION))
 			gas_input = air2
 			gas_output = air1
 
 		if(gas)
 			gas_output.merge(gas)
 
-		// Azrun - TODO - BACKFLOW PROTECTION VARIANT!
-		if(!is_circulator_active())
+		if(!is_circulator_active() && !(circulator_flags & BACKFLOW_PROTECTION))
 			equalize_gases(list(gas_input,gas_output))
 
 		if(is_circulator_active())
-			lube_update(TRUE)
 			if(!src.lubed && prob(5))
-				src.visible_message("<span class='alert'>[src] makes an unsettling grinding sound!</span>")
+				src.audible_message("<span class='alert'>[src] makes an unsettling grinding sound!</span>")
 
-	proc/lube_update(var/consume=FALSE)
+
+	proc/lube_loss_check()
+		if(reagents?.total_volume == 0)
+			return
+
+		if( circulator_flags & LUBE_DRAIN_OPEN )
+			var/datum/reagents/leaked = src.reagents.remove_any_to(reagents.maximum_volume * 0.25)
+			leaked.reaction(get_step(src, SOUTH))
+
+		if(!(circulator_flags & LEAKS_LUBE) || !reagents_consumed || !is_circulator_active() )
+			return
+
 		// Skip off cycle consumption checks
-		if(consume && src.lube_cycle-- > 0)
+		if(src.lube_cycle-- > 0)
 			return
-
-		// Skip noleaks/nohungry circulator consumption checks
-		if(consume && !reagents_consumed)
-			return
-
-		var/lube_efficiency = 1.0
-		var/lube_found = FALSE
 
 		if(lube_cycle <= 0)
 			src.lube_cycle = LUBE_CHECK_RATE
-			// Azrun TODO change to remove_any_to and DUMP next to it
-			src.reagents.remove_any(reagents_consumed)
+			if( (circulator_flags & LEAKS_LUBE) && prob(5) )
+				var/datum/reagents/leaked = src.reagents.remove_any_to(reagents_consumed)
+				leaked.reaction(get_step(src, pick(alldirs)))
+
+	on_reagent_change(add)
+		. = ..()
+		var/lube_efficiency = 1.0
+		var/lube_found = FALSE
 
 		// Iterate over reagents looking for sweet sweet lube
 		if(src.reagents?.total_volume)
@@ -173,12 +185,9 @@
 		src.lubed = lube_found
 		src.lube_boost = lube_efficiency
 
-	on_reagent_change(add)
-		. = ..()
-		lube_update()
-
 	process()
 		..()
+		src.lube_loss_check()
 		update_icon()
 
 	update_icon()
@@ -224,7 +233,9 @@
 	var/efficiency_controller = 52 // cogwerks - debugging/testing var
 	var/datum/light/light
 
+
 	var/boost = 0
+	var/generator_flags = 0
 
 	var/grump = 0 // best var 2013
 	var/grumping = 0 // is the engine currently doing grumpy things
