@@ -611,10 +611,6 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
-	UPDATE_TITLE_STATUS("Mapping spatials")
-	Z_LOG_DEBUG("World/New", "Setting up spatial map...")
-	init_spatial_map()
-
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
 	aiDirty = 2
