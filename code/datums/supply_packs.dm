@@ -497,7 +497,7 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 					/obj/machinery/bot/cleanbot,
 					/obj/machinery/bot/medbot,
 					/obj/machinery/bot/firebot)
-	cost = 2000
+	cost = 7500
 	containertype = /obj/storage/crate
 	containername = "Robotics Crate"
 
