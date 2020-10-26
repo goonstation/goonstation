@@ -1653,6 +1653,16 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return 1
 
+/world/proc/setMaxZ(new_maxz)
+	if (!isnum(new_maxz) || new_maxz <= src.maxz)
+		return src.maxz
+	for (var/zlevel = world.maxz+1; zlevel <= new_maxz; zlevel++)
+		src.maxz++
+		src.setupZLevel(zlevel)
+	return src.maxz
+
+/world/proc/setupZLevel(new_zlevel)
+	init_spatial_map(new_zlevel)
 
 /// EXPERIMENTAL STUFF
 var/opt_inactive = null
