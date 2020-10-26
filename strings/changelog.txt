@@ -1,6 +1,10 @@
 
 (t)mon oct 26 20
 (u)Tarmunora
+(p)2496
+(e)🐛|bug
+(+)Fix/adjust plasmastone plasma production
+(u)Tarmunora
 (p)2497
 (e)⚖|balance
 (+)Adjusted prices of station bots
