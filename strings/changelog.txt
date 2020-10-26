@@ -1,4 +1,9 @@
 
+(t)mon oct 26 20
+(u)Tarmunora
+(p)2497
+(e)⚖|balance
+(+)Adjusted prices of station bots
 (t)sun oct 25 20
 (u)Azrun
 (p)2473
