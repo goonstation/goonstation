@@ -362,6 +362,8 @@
 						addMaterial(piece, usr)
 					else
 						piece.set_loc(get_turf(src))
+					if(RE)
+						RE.apply_to_obj(piece)
 					first_part = null
 					second_part = null
 					boutput(usr, "<span class='notice'>You make [amt] [piece].</span>")
