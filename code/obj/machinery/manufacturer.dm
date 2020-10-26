@@ -529,7 +529,7 @@
 		if(src.hacked && src.hidden && src.hidden.Find(M))
 			return 1
 		
-		if(src.head_unlocked && src.head_required && src.head_required.Find(M))
+		if(src.head_unlocked && src.head_required && (M in src.head_required))
 			return 1
 
 		return 0
