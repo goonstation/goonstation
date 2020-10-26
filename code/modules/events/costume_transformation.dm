@@ -32,6 +32,7 @@ Need to add:
 	name = "Spooktober Curse"
 	centcom_headline = "Oh No!"
 	centcom_message = {"Unfortunately, our station has crashed into a space witch. Beware of curses."}
+	disabled = 1// press it though
 	var/list/eligible_mobs = list()
 	event_effect()
 		..()
@@ -92,18 +93,12 @@ Need to add:
 				H.bioHolder.AddEffect("hulk",magical = 1)
 				return
 			if (H.w_uniform && H.wear_mask && findtext(H.w_uniform.name,"linen") && findtext(H.wear_mask.name,"linen"))
-				var/list/limbs = list("l_arm","r_arm","l_leg","r_leg","head","chest")//it fit too good not to use
+				var/list/limbs = list("l_arm","r_arm","l_leg","r_leg","head","chest")
 				for (var/target in limbs)
 					if (!H.bandaged.Find(target))
 						H.bandaged += target
 						H.update_body()
-				if(H.reagents)
-					H.reagents.add_reagent("formaldehyde", 300)
-
-				boutput(H, "<span class='notice'>Wow, that witch's spooky halloween spell's cool and original effect did a really thorough job of mummifying you! It removed your organs and everything!</span>")
-				if(isliving(H))
-					var/mob/living/L = H
-					L.organHolder.drop_organ("all")
+				boutput(H, "<span class='alert'>You feel somewhat less susceptible to bleeding.</span>")
 				return
 			if(H.shoes && H.w_uniform && H.glasses && H.head && findtext(H.shoes.name,"wrestling") && findtext(H.w_uniform.name,"wrestling") && findtext(H.glasses.name,"yellow") && findtext(H.head.name,"macho"))
 				H.machoize()
@@ -135,27 +130,19 @@ Need to add:
 				boutput(H, "<span class='alert'>Your head feels mushy.</span>")
 				return
 			if(H.wear_suit && findtext(H.wear_suit.name,"bedsheet"))
-				boutput(H, "<span class='alert'>Darn, just one more page and you would have finished that book.</span>")//all three of these
-				animate_buff_out(H)
-				SPAWN_DBG(10)
-					animate_buff_in(H.ghostize())
-					qdel(H)
+				boutput(H, "<span class='alert'>Darn, just one more page and you would have finished that book.</span>")
+				H.alpha = 100
 				return
 			if(H.shoes && H.w_uniform && H.head && findtext(H.shoes.name, "magic") && findtext(H.w_uniform.name, "birdman") && findtext(H.head.name, "laurels"))
-				boutput(H, "<span class='alert'>A heavenly light engulfs you.</span>")//are basically
+				boutput(H, "<span class='alert'>A heavenly light engulfs you.</span>")
 				for (var/mob/M in viewers(H, null))
 					M.flash(10 SECONDS)
-				H.elecgib()
+				H.overlays += image('icons/misc/32x64.dmi',"halo")
 				return
 			if(H.shoes && H.w_uniform && H.wear_mask && H.head && findtext(H.shoes.name,"magic") && findtext(H.w_uniform.name, "lawyer") && findtext(H.wear_mask.name, "fake") && findtext(H.head.name, "devil"))
-				boutput(H, "<span class='alert'>A swathe of demonic flames engulf you.</span>")//the same thing anyways
-				var/datum/mind/M = H.mind
-				M.damned = 1
-				for(var/i = 0  , i<50 , i++)
-					H.say("*scream")
-				H.say("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-				H.firegib()
-				M.damned = 0
+				boutput(H, "<span class='alert'>You feel somewhat different.</span>")
+				H.color = "#990000"
+
 				return
 			if(H.wear_suit && findtext(H.wear_suit.name,"bee"))
 				if (H.mind && (H.mind.assigned_role != "Animal") || (!H.mind || !H.client))
@@ -169,7 +156,7 @@ Need to add:
 				H.monkeyize()
 				return
 			if(H.w_uniform && H.wear_mask && findtext(H.w_uniform.name,"owl") && findtext(H.wear_mask.name,"owl"))
-				H.owlgib(1,100)
+				H.owlgib(1,100)//easiest way to turn someone into an owl
 				return
 			if(H.head && findtext(H.head.name,"zombie"))
 				H.zombify()
