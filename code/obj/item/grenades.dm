@@ -1491,6 +1491,8 @@ PIPE BOMBS + CONSTRUCTION
 
 						var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
 						payload.toxins = plasma * 100
+						payload.temperature = T20C
+						payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 						target.air.merge(payload)
 
 			if (throw_objs.len && throw_objs.len > 0)
