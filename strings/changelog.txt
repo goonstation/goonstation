@@ -1,4 +1,9 @@
 
+(t)tue oct 27 20
+(u)virvatuli
+(p)2528
+(e)🎨|sprites
+(+)Replaced the 12 gauge flare sprite with one more readable as a fire projectile
 (t)mon oct 26 20
 (u)Tarmunora
 (p)2496
