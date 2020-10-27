@@ -1174,7 +1174,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	blend_mode = BLEND_ADD
 
 /proc/hellish_spawn(var/obj/A)
-	if (!A)	return
+	if (!A) return
 	var/was_anchored = A.anchored
 	var/original_plane = A.plane
 	var/matrix/M1 = matrix()
@@ -1188,7 +1188,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN_DBG(5 SECONDS)
 		var/turf/TA = locate(A.x - 1, A.y - 1, A.z)
 		var/turf/TB = locate(A.x + 1, A.y + 1, A.z)
-		if (!TA || !TB)	return
+		if (!TA || !TB) return
 
 		var/list/fake_hells = list()
 		for (var/turf/T in block(TA, TB))
@@ -1215,11 +1215,19 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	desc = "just standing next to it burns your very soul."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
+	anchored = TRUE
+	event_handler_flags = USE_HASENTERED
 
 	New()
 		. = ..()
 		src.plane = PLANE_UNDERFLOOR - 1
 		src.icon_state = pick("lava_floor", "lava_floor_bubbling", "lava_floor_bubbling2")
+
+	HasEntered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if (ismob(AM))
+			var/mob/living/M = AM
+			M.update_burning(10)
 
 var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_scanning(var/atom/target, var/color, var/time=18, var/alpha_hex="96")
