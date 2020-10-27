@@ -1185,7 +1185,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	A.plane = PLANE_UNDERFLOOR
 	A.anchored = TRUE
 	playsound(center,'sound/effects/darkspawn.ogg',50,0)
-	SPAWN_DBG(10 SECONDS)
+	SPAWN_DBG(5 SECONDS)
 		var/turf/TA = locate(A.x - 1, A.y - 1, A.z)
 		var/turf/TB = locate(A.x + 1, A.y + 1, A.z)
 		if (!TA || !TB)	return
