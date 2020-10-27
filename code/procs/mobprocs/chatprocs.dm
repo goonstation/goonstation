@@ -395,6 +395,8 @@
 	var/loudness = 0
 	var/font_accent = null
 	var/style = ""
+	var/first_quote = " \""
+	var/second_quote = "\""
 
 	if (ending == "?")
 		speechverb = speechverb_ask
@@ -426,6 +428,57 @@
 	if (src.get_brain_damage() >= 60)
 		speechverb = pick("says","stutters","mumbles","slurs")
 
+	if (src.speech_void)
+		text = voidSpeak(text)
+
+	if (src.singing || (src.bioHolder && src.bioHolder.HasEffect("accent_elvis")))
+		// use note icons instead of normal quotes
+		var/note_type = src.singing & BAD_SINGING ? "notebad" : "note"
+		var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[note_type].png")]\">"
+		if (src.singing & LOUD_SINGING)
+			first_quote = "[note_img][note_img]"
+			second_quote = first_quote
+		else
+			first_quote = note_img
+			second_quote = note_img
+		// select singing adverb
+		var/adverb = ""
+		if (src.singing & BAD_SINGING)
+			adverb = pick("dissonantly", "flatly", "unmelodically", "tunelessly")
+		else if (src.traitHolder?.hasTrait("nervous"))
+			adverb = pick("nervously", "tremblingly", "falteringly")
+		else if (src.singing & LOUD_SINGING && !src.traitHolder?.hasTrait("smoker"))
+			adverb = pick("loudly", "deafeningly", "noisily")
+		else if (src.singing & SOFT_SINGING)
+			adverb = pick("softly", "gently")
+		else if (src.mind?.assigned_role == "Musician")
+			adverb = pick("beautifully", "tunefully", "sweetly")
+		else if (src.bioHolder?.HasEffect("accent_scots"))
+			adverb = pick("sorrowfully", "sadly", "tearfully")
+		// select singing verb
+		if (src.traitHolder?.hasTrait("smoker"))
+			speechverb = "rasps"
+			if ((singing & LOUD_SINGING))
+				speechverb = "sings Tom Waits style"
+		else if (src.traitHolder?.hasTrait("french") && rand(2) < 1)
+			speechverb = "sings [pick("Charles Trenet", "Serge Gainsborough", "Edith Piaf")] style"
+		else if (src.bioHolder?.HasEffect("accent_swedish"))
+			speechverb = "sings disco style"
+		else if (src.bioHolder?.HasEffect("accent_scots"))
+			speechverb = pick("laments", "sings", "croons", "intones", "sobs", "bemoans")
+		else if (src.bioHolder?.HasEffect("accent_chav"))
+			speechverb = "raps"
+		else if (src.singing & SOFT_SINGING)
+			speechverb = pick("hums", "lullabies")
+		else
+			speechverb = pick("sings", pick("croons", "intones", "warbles"))
+		if (adverb != "")
+		// combine adverb and verb
+			speechverb = "[adverb] [speechverb]"
+		// add style for singing
+		text = "<i>[text]</i>"
+		style = "color:thistle;"
+
 	if (special)
 		if (special == "gasp_whisper")
 			speechverb = speechverb_gasp
@@ -444,17 +497,14 @@
 	if (text == "" || !text)
 		return speechverb
 
-	if (src.speech_void)
-		text = voidSpeak(text)
-
 	if(style)
 		style = " style=\"[style]\""
 	if (loudness > 0)
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null]<big><strong><b>[text]</b></strong></big>[font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<big><strong><b [style? style : ""]>[text]</b></strong></big>[font_accent ? "</font>" : null][second_quote]"
 	else if (loudness < 0)
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null]<small>[text]</small>[font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<small [style? style : ""]>[text]</small>[font_accent ? "</font>" : null][second_quote]"
 	else
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null][text][font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [style? style : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
 /mob/proc/emote(var/act, var/voluntary = 0)
 	return

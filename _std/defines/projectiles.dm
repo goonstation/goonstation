@@ -1,3 +1,4 @@
+
 //pass flags
 #define PROJ_PASSNONE 0
 #define PROJ_PASSWALL 1
@@ -17,3 +18,6 @@
 #define PROJ_NO_HEADON_BOUNCE 1
 #define PROJ_HEADON_BOUNCE 2
 #define PROJ_RAPID_HEADON_BOUNCE 3
+
+//default max range for 'unlimited' range projectiles
+#define PROJ_INFINITE_RANGE 500

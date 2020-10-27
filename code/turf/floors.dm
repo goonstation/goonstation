@@ -922,6 +922,11 @@
 		desc = "Yuck."
 		icon_state = "bloodfloor_1"
 
+	hivefloor
+		name = "hive floor"
+		icon = 'icons/turf/floors.dmi'
+		icon_state = "hive"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/snow

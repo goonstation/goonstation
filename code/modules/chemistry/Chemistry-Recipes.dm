@@ -2690,7 +2690,7 @@ datum
 				if(holder)
 					holder.del_reagent("potassium")
 					holder.del_reagent("sugar")
-					holder.del_reagent("phsophorus")
+					holder.del_reagent("phosphorus")
 
 		smoke
 			name = "Smoke"
@@ -2710,7 +2710,7 @@ datum
 					holder.smoke_start(created_volume)
 					holder.del_reagent("potassium")
 					holder.del_reagent("sugar")
-					holder.del_reagent("phsophorus")
+					holder.del_reagent("phosphorus")
 
 		propellant
 			name = "Aeresol Propellant"

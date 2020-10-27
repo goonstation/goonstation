@@ -622,7 +622,7 @@
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
 		C.access = JOB.access.Copy()
 
-		if(src.bioHolder && src.bioHolder.HasEffect("fat"))
+		if((src.bioHolder && src.bioHolder.HasEffect("fat")) || (src.mutantrace && !src.mutantrace.uses_human_clothes))
 			src.equip_if_possible(C, slot_in_backpack)
 		else
 			src.equip_if_possible(C, slot_wear_id)

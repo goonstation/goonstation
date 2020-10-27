@@ -162,6 +162,9 @@
 	slot_ears = /obj/item/device/radio/headset/command/captain
 	slot_poc1 = /obj/item/disk/data/floppy/read_only/authentication
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
+#ifdef RP_MODE
+	rounds_needed_to_play = 20
+#endif
 
 	New()
 		..()
@@ -551,6 +554,7 @@
 	slot_suit = /obj/item/clothing/suit/labcoat/robotics
 	slot_glov = /obj/item/clothing/gloves/latex
 	slot_lhan = /obj/item/storage/toolbox/mechanical
+	slot_eyes = /obj/item/clothing/glasses/healthgoggles
 	slot_ears = /obj/item/device/radio/headset/medical
 	items_in_backpack = list(/obj/item/crowbar)
 

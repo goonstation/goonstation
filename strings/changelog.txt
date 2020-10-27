@@ -1,9 +1,105 @@
 
+(t)mon oct 26 20
+(u)Tarmunora
+(p)2496
+(e)🐛|bug
+(+)Fix/adjust plasmastone plasma production
+(u)Tarmunora
+(p)2497
+(e)⚖|balance
+(+)Adjusted prices of station bots
+(t)sun oct 25 20
+(u)Azrun
+(p)2473
+(e)🐛|bug
+(+)The Reactor Statistics Computer should work again.
+(u)RSG250
+(p)2510
+(e)🆕|feature
+(+)Synthleather and Synthblubber now have alloying recipes!
+(u)TrustworthyFella
+(p)2477
+(e)🆕|feature
+(+)The enzymatic reclaimer now spits out any implants that were in the body when reclaiming
+(u)Flaborized
+(p)2508
+(e)🎨|sprites
+(+)Firefighter and Paramedic suits, both regular and armoured, have gotten a makeover!
+(u)Flaborized
+(p)2507
+(e)🎨|sprites
+(+)Large power cells, the recharger, and turboflashes have been resprited!
+(t)sat oct 24 20
+(u)TrustworthyFella
+(p)2462
+(e)⚖|balance
+(+)Player monkeys are no longer affected by code designed with npc monkeys in mind. This includes: immunity to being sucked by vampires, immunity to being sucked by changelings, and not giving benefits to werewolves when mauled.
+(u)Gonzako
+(p)2486
+(e)⚖🆕|balance, feature
+(*)Added build-up to the yeti devouring you. Making it easier to be rescued from.
+(u)austin
+(p)2499
+(e)🎨|sprites
+(+)Borgs and AI can now sing too.
+(t)fri oct 23 20
+(u)RSG250
+(p)2503
+(e)🎨|sprites
+(+)Things made with coral now have a texture on them!
+(u)RSG250
+(p)2502
+(e)🆕|feature
+(+)Beeswax can now be made at the Material processor using honey!
+(u)Arahimine
+(p)2493
+(e)⚖|balance
+(+)Roboticists now start with ProDoc healthgoggles.
+(t)thu oct 22 20
+(u)RSG250
+(p)2453
+(e)|
+(+)Shield Generators (like the one in manta engine control) now give you feedback when activating/deactivating the shields.
+(u)Fosstar
+(p)2467
+(e)🆕|feature
+(*)The captain is now timelocked to 20 rounds or more on the RP servers.
+(t)wed oct 21 20
+(u)Jawns
+(p)2488
+(e)🗺|mapping
+(+)The NSS Manta morgue disposal chute has been upgraded to "functional" status.
+(u)Jawns
+(p)2484
+(e)🐛|bug
+(+)Alien ambassadors now spawn with their ID in their backpack when necessary, instead of inside them.
+(u)TrustworthyFella
+(p)2464
+(e)🐛|bug
+(+)Fixed a bug where dead people could be reborn in new flesh multiple times due to not being killed properly the first time.
+(t)tue oct 20 20
+(u)austin
+(p)2447
+(e)🆕🎨|feature, sprites
+(+)Players can now sing by prefixing their messages with "%". Sing to parrots and they will chatter back. Monkeys don't like drunk or loud singing.
+(u)Monochromatism
+(p)2426
+(e)🎨|sprites
+(+)Added new borders to genetic power icons for use in player and genebooth UIs.
+(t)mon oct 19 20
+(u)Flaborized
+(p)2458
+(e)🎨|sprites
+(+)Both devices and assemblies have had makeovers! New sprites for all kinds of device combinations, including bombs!
 (t)sun oct 18 20
+(u)Kyle
+(*)Change to pod warping again. Removes the "moving run-up" part and now it projects the portal in front of you, or on top of you if no room. Still must be immobile to begin making a portal.
 (u)Flaborized
 (p)2394
 (e)🎨|sprites
 (+)Tools and flamethrowers have had their sprites replaced with new and improved versions, new crowbar subtype
+(u)Tarmunora
+(*)Secretized Neutronium recipe. Experiment!
 (u)Gonzako
 (p)2346
 (e)|
