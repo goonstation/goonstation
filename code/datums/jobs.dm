@@ -319,6 +319,12 @@
 	slot_poc1 = /obj/item/paper/book/pocketguide/engineering
 	items_in_backpack = list(/obj/item/device/flash, /obj/item/rcd_ammo/medium)
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_engineer")
+
 	New()
 		..()
 		src.access = get_access("Chief Engineer")
@@ -666,6 +672,12 @@
 
 	items_in_backpack = list(/obj/item/rcd/construction/safe, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/caution, /obj/item/lamp_manufacturer/organic)
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_engineer")
+
 	New()
 		..()
 		src.access = get_access("Construction Worker")
@@ -749,6 +761,12 @@
 	slot_glov = /obj/item/clothing/gloves/yellow
 	slot_poc1 = /obj/item/device/pda2/engine
 	slot_ears = /obj/item/device/radio/headset/engineer
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_engineer")
 
 	New()
 		..()
@@ -990,6 +1008,12 @@
 	slot_mask = /obj/item/clothing/mask/breath
 
 	items_in_backpack = list(/obj/item/rcd/construction, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/material_shaper,/obj/item/room_marker)
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_engineer")
 
 	New()
 		..()
