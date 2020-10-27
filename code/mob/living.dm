@@ -797,10 +797,17 @@
 						secure_headset_mode = lowertext(copytext(message,2,3))
 					message = copytext(message, 3)
 
-	// check for singing prefix
-	if (dd_hasprefix(message, singing_prefix) && isalive(src))
-		singing = NORMAL_SINGING
-		message = copytext(message, 2)
+	// check for "%""
+	singing = 0
+	if (isalive(src))
+		if (dd_hasprefix(message, singing_prefix))
+			message = copytext(message, 2)
+			singing = NORMAL_SINGING
+			// check for " %"
+		else if (dd_hasprefix(copytext(message, 1, 3), " [singing_prefix]"))
+			message = copytext(message, 3)
+			singing = NORMAL_SINGING
+	if (singing)
 		// Scots can only sing Danny Boy
 		if (src.bioHolder?.HasEffect("accent_scots"))
 			var/scots = src.bioHolder.GetEffect("accent_scots")
@@ -809,8 +816,6 @@
 				S.danny_index = (S.danny_index % 16) + 1
 				var/lyrics = dd_file2list("strings/danny.txt")
 				message = lyrics[S.danny_index]
-	else
-		singing = 0
 
 	forced_language = get_special_language(secure_headset_mode)
 
