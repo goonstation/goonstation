@@ -1,5 +1,9 @@
 
 (t)tue oct 27 20
+(u)Kyle & Flaborized
+(p)2530
+(e)🆕🎨|feature, sprites
+(*)Added holograms that the AI can project via its AI Eye.
 (u)ThePotato97
 (p)2418
 (e)🆕|feature
