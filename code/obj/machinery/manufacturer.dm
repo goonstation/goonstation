@@ -15,14 +15,14 @@
 	var/mode = "ready"
 	var/error = null
 	var/speed = 3
-	var/head_access = list(access_heads)
+	var/restricted_access = list(access_heads)
 	var/repeat = 0
 	var/timeleft = 0
 	var/manual_stop = 0
 	var/panelopen = 0
 	var/powconsumption = 0
 	var/hacked = 0
-	var/head_unlocked = 0
+	var/restricted_unlocked = 0
 	var/malfunction = 0
 	var/electrified = 0
 	var/accept_blueprints = 1
@@ -39,7 +39,7 @@
 	var/list/available = list()
 	var/list/download = list()
 	var/list/hidden = list()
-	var/list/head_required = list()
+	var/list/restricted = list()
 	var/list/queue = list()
 	var/last_queue_op = 0
 
@@ -114,8 +114,8 @@
 		src.download = null
 		src.hidden.len = 0
 		src.hidden = null
-		src.head_required.len = 0
-		src.head_required = null
+		src.restricted.len = 0
+		src.restricted = null
 		src.queue.len = 0
 		src.queue = null
 		src.nearby_turfs.len = 0
@@ -439,8 +439,8 @@
 		var/list/products = src.available + src.download
 		if (src.hacked)
 			products += src.hidden
-		if (src.head_unlocked)
-			products += src.head_required
+		if (src.restricted_unlocked)
+			products += src.restricted
 
 		// Then make it
 		var/can_be_made = 0
@@ -529,7 +529,7 @@
 		if(src.hacked && src.hidden && src.hidden.Find(M))
 			return 1
 		
-		if(src.head_unlocked && src.head_required && (M in src.head_required))
+		if(src.restricted_unlocked && src.restricted && (M in src.restricted))
 			return 1
 
 		return 0
@@ -828,8 +828,8 @@
 		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if (!src.head_unlocked)
-			src.head_unlocked = 1
+		if (!src.restricted_unlocked)
+			src.restricted_unlocked = 1
 			if (src.hacked)
 				boutput(user, "<span class='notice'>You remove the [src]'s product locks!</span>")
 				return 1
@@ -888,12 +888,12 @@
 			else boutput(user, "<span class='alert'>No materials loaded!</span>")
 		
 		else if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))
-			if (is_head_access(W))
-				if (src.head_unlocked)
-					src.head_unlocked = 0
+			if (is_restricted_access(W))
+				if (src.restricted_unlocked)
+					src.restricted_unlocked = 0
 					boutput(user, "<span class='notice'>[src] is no longer authorized to produce restricted item types.</span>")
 				else
-					src.head_unlocked = 1
+					src.restricted_unlocked = 1
 					boutput(user, "<span class='notice'>[src] is now authorized to produce restricted item types.</span>")
 
 		else if (isscrewingtool(W))
@@ -1036,14 +1036,14 @@
 
 		src.updateUsrDialog()
 	
-	proc/is_head_access(obj/item/I) //Shamelessly copypasted from the silicon code.
-		if(!istype(src.head_access, /list))
+	proc/is_restricted_access(obj/item/I) //Shamelessly copypasted from the silicon code.
+		if(!istype(src.restricted_access, /list))
 			return 1
 	
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
 		
-		var/list/L = src.head_access
+		var/list/L = src.restricted_access
 		
 		if(!L.len) //no requirements
 			return 1
@@ -1051,7 +1051,7 @@
 		if(!I || !istype(I, /obj/item/card/id) || !I:access)
 			return 0
 		
-		for(var/req in src.head_access)
+		for(var/req in src.restricted_access)
 			if(!(req in I:access))
 				return 0
 		return 1
@@ -1285,8 +1285,8 @@
 				src.hidden += S
 			if ("download")
 				src.download += S
-			if ("head_required")
-				src.head_required += S
+			if ("restricted")
+				src.restricted += S
 			else
 				src.available += S
 
@@ -1301,9 +1301,9 @@
 				src.add_schematic(X,"hidden")
 				src.hidden -= X
 		
-		for (var/X in src.head_required)
+		for (var/X in src.restricted)
 			if (ispath(X))
-				src.add_schematic(X,"head_required")
+				src.add_schematic(X,"restricted")
 				src.hidden -= X
 
 	proc/match_material_pattern(pattern, datum/material/mat)
@@ -1429,7 +1429,7 @@
 
 		var/datum/manufacture/M = src.queue[1]
 		//Wire: Fix for href exploit creating arbitrary items
-		if (!(M in src.available + src.hidden + src.download + src.head_required))
+		if (!(M in src.available + src.hidden + src.download + src.restricted))
 			src.mode = "halt"
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
@@ -2138,7 +2138,7 @@
 	/datum/manufacture/metal,
 	/datum/manufacture/glass)
 	
-	head_required = list(/datum/manufacture/core_frame)
+	restricted = list(/datum/manufacture/core_frame)
 
 	hidden = list(/datum/manufacture/flash,
 	/datum/manufacture/cybereye_thermal,
