@@ -1,5 +1,10 @@
 
 (t)tue oct 27 20
+(u)ThePotato97
+(p)2418
+(e)🆕|feature
+(*)Added progress bars to Window & Walls construction / deconstruction
+(+)Added engineer trait for engineer related jobs which makes them do certain engineering actions 2x faster.
 (u)virvatuli
 (p)2528
 (e)🎨|sprites
