@@ -1193,19 +1193,18 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/list/fake_hells = list()
 		for (var/turf/T in block(TA, TB))
 			fake_hells += new /obj/fake_hell(T)
-			switch(T.y - center.y)
-				if (1) // above
-					animate(T, pixel_x = 32, pixel_y = 32, 7.5 SECONDS, easing = SINE_EASING)
-				if (0) // center
-					animate(T, pixel_x = -64, pixel_y = -64, 7.5 SECONDS, easing = SINE_EASING)
-				if (-1) //below
-					animate(T, pixel_x = -32, pixel_y = -32, 7.5 SECONDS, easing = SINE_EASING)
+			var/x_modifier = (T.x - center.x)
+			var/y_modifier = (T.y - center.y)
+			if (x_modifier || y_modifier)
+				animate(T, pixel_x = (32 * x_modifier), pixel_y = (32 * y_modifier), 7.5 SECONDS, easing = SINE_EASING)
+			else // center tile
+				animate(T, transform = M1.Scale(0,0), 5 SECONDS, easing = SINE_EASING)
 		sleep(7.5 SECONDS)
 		animate(A, transform = null, time=20, easing = SINE_EASING)
 		A.plane = original_plane
 		A.anchored = was_anchored
 		for (var/turf/T in block(TA, TB))
-			animate(T, pixel_x = 0, pixel_y = 0, 7.5 SECONDS, easing = SINE_EASING)
+			animate(T, transform = null, pixel_x = 0, pixel_y = 0, 7.5 SECONDS, easing = SINE_EASING)
 		sleep(7.5 SECONDS)
 		for (var/obj/fake_hell/O in fake_hells)
 			qdel(O)
@@ -1228,6 +1227,12 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		if (ismob(AM))
 			var/mob/living/M = AM
 			M.update_burning(10)
+
+	meteorhit()
+		return
+
+	ex_act()
+		return
 
 var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_scanning(var/atom/target, var/color, var/time=18, var/alpha_hex="96")
