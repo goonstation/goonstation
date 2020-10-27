@@ -54,6 +54,8 @@
 #define MOVING_SUB_MAP 1
 #define SUBMARINE_MAP 1
 
+#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
+#define UNDERWATER_MAP 1
 //Entry below is the "default" map
 #else
 

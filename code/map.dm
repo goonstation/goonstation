@@ -37,7 +37,9 @@ var/global/list/mapNames = list(
 	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,	"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
-	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM)
+	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM),
+	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = 0),
+	"blank_underwater" =  list("id" = "BLANK_UNDERWATER", "settings" = "", "playerPickable" = 0)
 )
 
 /obj/landmark/map
@@ -54,7 +56,7 @@ var/global/list/mapNames = list(
 				var/mapID = mapNames[map]["id"]
 
 				if (mapID == map_setting)
-					var/path = text2path("/datum/map_settings/" + mapNames[map]["settings"])
+					var/path = (mapNames[map]["settings"] == "") ? /datum/map_settings : text2path("/datum/map_settings/" + mapNames[map]["settings"])
 					map_settings = new path
 					break
 

@@ -726,6 +726,14 @@ var/f_color_selector_handler/F_Color_Selector
 
 	//if the server has a hard-reboot file, we trigger a shutdown (server supervisor process will restart the server after)
 	//this is to avoid memory leaks from leaving the server running for long periods
+#ifdef RUNTIME_CHECKER
+	for (var/client/C in clients)
+		ehjax.send(C, "browseroutput", "hardrestart")
+
+	logTheThing("diary", null, "Shutting down after testing for runtimes.", "debug")
+
+	shutdown()
+#else
 	if (fexists("data/hard-reboot"))
 		//Tell client browserOutput that we're hard rebooting, so it can handle manual auto-reconnection
 		for (var/client/C in clients)
@@ -742,7 +750,7 @@ var/f_color_selector_handler/F_Color_Selector
 			ehjax.send(C, "browseroutput", "roundrestart")
 
 		world.Reboot()
-
+#endif
 /world/Reboot()
 	TgsReboot()
 	shutdown_logging()
