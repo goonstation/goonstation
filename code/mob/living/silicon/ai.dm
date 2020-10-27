@@ -96,7 +96,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/mob/dead/aieye/eyecam = null
 
 	var/deployed_to_eyecam = 0
-	var/list/holograms = list()
+	var/list/holograms
 	var/const/max_holograms = 8
 
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
@@ -182,6 +182,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	hud = new(src)
 	src.attach_hud(hud)
 	src.eyecam.attach_hud(hud)
+
+	holograms = list()
 
 #if ASS_JAM
 	var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
