@@ -476,8 +476,7 @@
 		// combine adverb and verb
 			speechverb = "[adverb] [speechverb]"
 		// add style for singing
-		if (!src.speech_void)
-			text = "<i>[text]</i>"
+		text = "<i>[text]</i>"
 		style = "color:thistle;"
 
 	if (special)
