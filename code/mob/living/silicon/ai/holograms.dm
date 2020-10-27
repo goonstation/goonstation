@@ -7,7 +7,7 @@
 		boutput(eyecam, "Not enough RAM to project more holograms. Delete others to make room.")
 		return
 	var/turf/T = get_turf(src.eyecam)
-	if (!istype(T) || !istype(T.cameras) || T.cameras.len == 0)
+	if (!istype(T) || !istype(T.cameras) || !length(T.cameras))
 		boutput(eyecam, "No camera available to project a hologram from.")
 		return
 	//select from list of icon_state in holograms.dmi
@@ -67,4 +67,3 @@
 		owner.holograms -= src
 		owner = null
 		..()
-
