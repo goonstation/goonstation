@@ -4674,10 +4674,10 @@ var/global/noir = 0
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
 
-/datum/admins/proc/hellishly_spawn_obj(var/obj/object as text)
+/datum/admins/proc/demonically_spawn_obj(var/obj/object as text)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set desc="(object path) Spawn an object. But all fancy-like"
-	set name="Spawn-Hellishly"
+	set name="Spawn-Demonically"
 	if(!object)
 		return
 	if (usr.client.holder.level >= LEVEL_PA)
@@ -4687,7 +4687,7 @@ var/global/noir = 0
 			var/obj/A = new chosen()
 			var/turf/T = get_turf(usr)
 			A.set_loc(T)
-			hellish_spawn(A)
+			demonic_spawn(A)
 			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 

@@ -1173,7 +1173,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD
 
-/proc/hellish_spawn(var/obj/A)
+/proc/demonic_spawn(var/obj/A)
 	if (!A) return
 	var/was_anchored = A.anchored
 	var/original_plane = A.plane
@@ -1209,7 +1209,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		for (var/obj/fake_hell/O in fake_hells)
 			qdel(O)
 
-/obj/fake_hell //for use with /proc/hellish_spawn
+/obj/fake_hell //for use with /proc/demonic_spawn
 	name = "???"
 	desc = "just standing next to it burns your very soul."
 	icon = 'icons/misc/AzungarAdventure.dmi'
