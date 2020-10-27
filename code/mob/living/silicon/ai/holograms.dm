@@ -36,7 +36,7 @@
 
 
 	New(var/mob/living/silicon/ai/owner, var/holo_type)
-		animate(src, alpha = 180, time=10, easing = SINE_EASING)
+		animate(src, alpha = 180, time = 10, easing = SINE_EASING)
 		if (istype(owner))
 			src.owner = owner
 			src.color = owner.faceColor
