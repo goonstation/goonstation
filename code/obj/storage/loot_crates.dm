@@ -16,8 +16,8 @@
 		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
 		src.stripes = image('icons/obj/large_storage.dmi',"lootcratestripes")
 
-		tier = 3
-		var/kind = 3
+		tier = RarityClassRoll(100,0,list(95,70))
+		var/kind = rand(1,5)
 		// kinds: (1) Civilian (2) Scientific (3) Industrial (4) Military (5) Criminal
 
 		var/list/items = list()
