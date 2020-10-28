@@ -64,7 +64,7 @@ jobs:
           curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt install libstdc++6:i386
+          sudo apt install libstdc++6:i386 libssl1.1:i386
 
       - name: Cache BYOND
         uses: actions/cache@v1
@@ -113,7 +113,7 @@ jobs:
           curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt install libstdc++6:i386
+          sudo apt install libstdc++6:i386 libssl1.1:i386
 
       - name: Cache BYOND
         uses: actions/cache@v1
@@ -152,7 +152,7 @@ jobs:
           curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt install libstdc++6:i386
+          sudo apt install libstdc++6:i386 libssl1.1:i386
 
       - name: Cache BYOND
         uses: actions/cache@v1
@@ -177,115 +177,138 @@ jobs:
           tools/ci/install_rust_g.sh
 
       - name: Compile Cogmap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_COGMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Cogmap 2 and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_COGMAP2 -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Clarion and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_CLARION -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Destiny and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DESTINY -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Donut 2 and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DONUT2 -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Donut 3 and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DONOUT3 -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Horizon and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_HORIZON -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Linemap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_LINEMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Mushroom and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_MUSHROOM -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Trunkmap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_TRUNKMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Oshan and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_OSHAN -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Samedi and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_SAMEDI -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
       - name: Compile 1 pamgoC and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_PAMGOC -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Kondaru and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_KONDARU -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Bellerephon Fleet and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_FLEET -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Icarus and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_ICARUS -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Density and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DENSITY -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Atlas and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_ATLAS -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Manta and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_MANTA -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Wrestlemap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_WRESTLEMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile blank map and check space prefabs for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DSPACE_PREFAB_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile blank map and check underwater prefabs for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DUNDERWATER_PREFAB_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile with full pregame setup and atmos and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DRUNTIME_CHECKING goonstation.dme
           tools/ci/run_server.sh
@@ -302,7 +325,7 @@ jobs:
           curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt install libstdc++6:i386
+          sudo apt install libstdc++6:i386 libssl1.1:i386
 
       - name: Cache BYOND
         uses: actions/cache@v1
@@ -329,115 +352,138 @@ jobs:
           tools/ci/install_rust_g.sh
 
       - name: Compile Cogmap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_COGMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Cogmap 2 and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_COGMAP2 -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Clarion and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_CLARION -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Destiny and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DESTINY -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Donut 2 and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DONUT2 -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Donut 3 and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DONOUT3 -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Horizon and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_HORIZON -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Linemap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_LINEMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Mushroom and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_MUSHROOM -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Trunkmap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_TRUNKMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Oshan and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_OSHAN -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Samedi and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_SAMEDI -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
       - name: Compile 1 pamgoC and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_PAMGOC -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Kondaru and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_KONDARU -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Bellerephon Fleet and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_FLEET -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Icarus and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_ICARUS -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Density and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DENSITY -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Atlas and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_ATLAS -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Manta and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_MANTA -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Wrestlemap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_WRESTLEMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile blank map and check space prefabs for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DSPACE_PREFAB_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile blank map and check underwater prefabs for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DUNDERWATER_PREFAB_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile with full pregame setup and atmos and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DRUNTIME_CHECKING goonstation.dme
           tools/ci/run_server.sh
@@ -458,7 +504,7 @@ jobs:
           curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt install libstdc++6:i386
+          sudo apt install libstdc++6:i386 libssl1.1:i386
 
       - name: Cache BYOND
         uses: actions/cache@v1
@@ -531,7 +577,7 @@ jobs:
           curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt install libstdc++6:i386
+          sudo apt install libstdc++6:i386 libssl1.1:i386
 
       - name: Cache BYOND
         uses: actions/cache@v1
@@ -559,115 +605,138 @@ jobs:
           touch +secret/__secret.dme
 
       - name: Compile Cogmap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_COGMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Cogmap 2 and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_COGMAP2 -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Clarion and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_CLARION -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Destiny and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DESTINY -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Donut 2 and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DONUT2 -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Donut 3 and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DONOUT3 -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Horizon and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_HORIZON -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Linemap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_LINEMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Mushroom and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_MUSHROOM -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Trunkmap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_TRUNKMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Oshan and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_OSHAN -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Samedi and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_SAMEDI -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
       - name: Compile 1 pamgoC and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_PAMGOC -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Kondaru and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_KONDARU -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Bellerephon Fleet and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_FLEET -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Icarus and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_ICARUS -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Density and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_DENSITY -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Atlas and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_ATLAS -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Manta and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_MANTA -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile Wrestlemap and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_WRESTLEMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile blank map and check space prefabs for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DSPACE_PREFAB_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile blank map and check underwater prefabs for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DUNDERWATER_PREFAB_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
 
       - name: Compile with full pregame setup and atmos and check for runtime errors
+        continue-on-error: true
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DRUNTIME_CHECKING goonstation.dme
           tools/ci/run_server.sh
