@@ -546,7 +546,7 @@ jobs:
         run: |
           touch +secret/__secret.dme
 
-        - name: Compile Cogmap and check for runtime errors
+      - name: Compile Cogmap and check for runtime errors
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_COGMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
           tools/ci/run_server.sh
