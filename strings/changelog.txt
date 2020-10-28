@@ -1,5 +1,9 @@
 
 (t)wed oct 28 20
+(u)RSG250
+(p)2535
+(e)🆕|feature
+(+)Enchanted Gems can now be found in the red industrial crates
 (u)Flaborized
 (p)2532
 (e)🎨|sprites
