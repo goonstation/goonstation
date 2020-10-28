@@ -646,7 +646,6 @@
 
 	onUpdate()
 		..()
-		boutput(world, "duration = [duration]")
 		if (the_wall == null || the_tool == null || owner == null || get_dist(owner, the_wall) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
