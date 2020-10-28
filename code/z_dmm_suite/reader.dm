@@ -113,7 +113,6 @@ dmm_suite
 							else if(istype(x, /mob) && overwrite & DMM_OVERWRITE_MOBS)
 								qdel(x)
 							LAGCHECK(LAG_MED)
-
 			for(var/posY = 1 to yLines.len)
 				var yLine = yLines[posY]
 				for(var/posX = 1 to length(yLine)/key_len)

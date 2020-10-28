@@ -654,8 +654,15 @@ var/f_color_selector_handler/F_Color_Selector
 	bioele_load_stats()
 	bioele_shifts_since_accident++
 	bioele_save_stats()
-
+#ifdef PREFAB_CHECKING
+	placeAllPrefabs()
+#endif
+#ifdef RUNTIME_CHECKING
+	SPAWN_DBG(0)
+		Reboot_server()
+#endif
 #undef UPDATE_TITLE_STATUS
+	return
 
 //Crispy fullban
 /proc/Reboot_server(var/retry)
@@ -697,7 +704,14 @@ var/f_color_selector_handler/F_Color_Selector
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
+#ifdef RUNTIME_CHECKER
+	for (var/client/C in clients)
+		ehjax.send(C, "browseroutput", "hardrestart")
 
+	logTheThing("diary", null, "Shutting down after testing for runtimes.", "debug")
+
+	shutdown()
+#endif
 	SPAWN_DBG(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
@@ -726,14 +740,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	//if the server has a hard-reboot file, we trigger a shutdown (server supervisor process will restart the server after)
 	//this is to avoid memory leaks from leaving the server running for long periods
-#ifdef RUNTIME_CHECKER
-	for (var/client/C in clients)
-		ehjax.send(C, "browseroutput", "hardrestart")
-
-	logTheThing("diary", null, "Shutting down after testing for runtimes.", "debug")
-
-	shutdown()
-#else
 	if (fexists("data/hard-reboot"))
 		//Tell client browserOutput that we're hard rebooting, so it can handle manual auto-reconnection
 		for (var/client/C in clients)
@@ -750,7 +756,7 @@ var/f_color_selector_handler/F_Color_Selector
 			ehjax.send(C, "browseroutput", "roundrestart")
 
 		world.Reboot()
-#endif
+
 /world/Reboot()
 	TgsReboot()
 	shutdown_logging()

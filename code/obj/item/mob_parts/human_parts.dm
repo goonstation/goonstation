@@ -214,7 +214,7 @@
 		. = ..()
 
 	disposing()
-		if(holder?.handcuffs)
+		if(ismob(holder) && holder.handcuffs)
 			var/obj/item/I = holder.handcuffs
 			holder.u_equip(I)
 			I.set_loc(holder.loc)
