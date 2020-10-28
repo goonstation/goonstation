@@ -105,8 +105,7 @@
 							items += /obj/item/clothing/shoes/jetpack
 							item_amounts += 1
 						if(2)
-							var/crystal_type = pick(concrete_typesof(/obj/item/wizard_crystal))
-							items += new crystal_type
+							items += pick(concrete_typesof(/obj/item/wizard_crystal))
 							item_amounts += 10
 						else
 							items += /obj/item/shipcomponent/mainweapon/rockdrills
