@@ -99,7 +99,7 @@
 
 				// INDUSTRIAL GOODS LOOT TABLE
 				if (tier == 3)
-					picker = 2
+					picker = rand(1,3)
 					switch(picker)
 						if(1)
 							items += /obj/item/clothing/shoes/jetpack
