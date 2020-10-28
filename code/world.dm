@@ -714,7 +714,7 @@ var/f_color_selector_handler/F_Color_Selector
 	else if (length(runtimeDetails) == 0)
 		text2file("No runtimes generated!", no_runtimes.txt)
 	else
-		world.log << "[length(runtimeDetails) runtimes generated]"
+		world.log << "[length(runtimeDetails)] runtimes generated:"
 		for (var/idx in runtimeDetails)
 			var/list/details = runtimeDetails[idx]
 			var/timestamp = details["timestamp"]
