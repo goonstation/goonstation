@@ -1,6 +1,10 @@
 
 (t)wed oct 28 20
 (u)Flaborized
+(p)2532
+(e)🎨|sprites
+(+)New sprites for tanks, extinguishers, and pod engines.
+(u)Flaborized
 (p)2533
 (e)🎨|sprites
 (+)New sprites for portable flashers, brig timers, door buttons, hotdog carts, and a special surprise!
