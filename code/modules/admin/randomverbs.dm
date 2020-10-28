@@ -1154,17 +1154,13 @@
 
 		return
 
-/client/proc/cmd_admin_remove_label_from()
+/client/proc/cmd_admin_remove_all_labels()
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
-	set name = "Remove Label From"
+	set name = "Remove All Labels"
 	set popup_menu = 0
 
-	var/mob/M = input("Which mob?","Find mob") as null|anything in mobs
-	if (!istype(M,/mob/))
-		boutput(usr, "No mob defined!")
-		return
-
-	M.name_suffixes = list()
+	for (var/mob/M in mobs)
+		M.name_suffixes = null
 	return
 
 /client/proc/cmd_admin_aview()
