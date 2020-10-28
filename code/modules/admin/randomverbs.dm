@@ -1161,6 +1161,7 @@
 
 	for (var/mob/M in mobs)
 		M.name_suffixes = null
+		M.UpdateName()
 	return
 
 /client/proc/cmd_admin_aview()
