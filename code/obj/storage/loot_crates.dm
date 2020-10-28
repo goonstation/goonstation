@@ -16,8 +16,8 @@
 		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
 		src.stripes = image('icons/obj/large_storage.dmi',"lootcratestripes")
 
-		tier = RarityClassRoll(100,0,list(95,70))
-		var/kind = rand(1,5)
+		tier = 3
+		var/kind = 3
 		// kinds: (1) Civilian (2) Scientific (3) Industrial (4) Military (5) Criminal
 
 		var/list/items = list()
@@ -99,11 +99,15 @@
 
 				// INDUSTRIAL GOODS LOOT TABLE
 				if (tier == 3)
-					picker = rand(1,3)
+					picker = 2
 					switch(picker)
-						if(1 to 2)
+						if(1)
 							items += /obj/item/clothing/shoes/jetpack
 							item_amounts += 1
+						if(2)
+							var/crystal_type = pick(concrete_typesof(/obj/item/wizard_crystal))
+							items += new crystal_type
+							item_amounts += 10
 						else
 							items += /obj/item/shipcomponent/mainweapon/rockdrills
 							item_amounts += 1
