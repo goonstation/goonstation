@@ -3415,9 +3415,9 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=fingerprints;size=440x410")
 #ifdef SECRETS_ENABLED
-						if ("ideas")
-							usr.Browse(grabResource("+secret/strings/admin_ideas.html"), "window=admin_ideas;size=700x450;title=Admin Ideas")
-#endif							
+					if ("ideas")
+						usr.Browse(grabResource("+secret/strings/admin_ideas.html"), "window=admin_ideas;size=700x450;title=Admin Ideas")
+#endif
 					else
 				if (usr)
 					logTheThing("admin", usr, null, "used secret [href_list["secretsadmin"]]")
