@@ -638,7 +638,6 @@
 			interaction = interact
 		if (duration_i)
 			duration = duration_i
-		boutput(world, owner.name)
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if (H.traitHolder.hasTrait("training_engineer"))
