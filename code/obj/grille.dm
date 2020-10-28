@@ -1,8 +1,8 @@
 /obj/grille
 	desc = "A sturdy metal mesh. Blocks large objects, but lets small items, gas, or energy beams through."
 	name = "grille"
-	icon = 'icons/obj/grille.dmi'
-	icon_state = "grille"
+	icon = 'icons/obj/SL_windows_grilles.dmi'
+	icon_state = "grillefull-0"
 	density = 1
 	stops_space_move = 1
 	var/health = 30
@@ -13,6 +13,11 @@
 	var/corrode_resist = 0
 	var/temp_resist = 0
 	var/shock_when_entered = 1
+	var/list/connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/auto/marsoutpost,
+		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
+		/obj/grille/, /obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/jen/red, /turf/simulated/wall/auto/jen/green, /turf/simulated/wall/auto/jen/yellow, /turf/simulated/wall/auto/jen/cyan, /turf/simulated/wall/auto/jen/purple,  /turf/simulated/wall/auto/jen/blue,
+		/turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/auto/reinforced/jen/red, /turf/simulated/wall/auto/reinforced/jen/green, /turf/simulated/wall/auto/reinforced/jen/yellow, /turf/simulated/wall/auto/reinforced/jen/cyan, /turf/simulated/wall/auto/reinforced/jen/purple, /turf/simulated/wall/auto/reinforced/jen/blue)
 	text = "<font color=#aaa>+"
 	anchored = 1
 	flags = FPRINT | CONDUCT | USEDELAY
@@ -26,7 +31,7 @@
 
 	steel
 #ifdef IN_MAP_EDITOR
-		icon_state = "grille-0"
+		icon_state = "grillefull-0"
 #endif
 		New()
 			..()
@@ -45,6 +50,7 @@
 
 	catwalk
 		name = "catwalk surface"
+		icon = 'icons/obj/grille.dmi'
 		icon_state = "catwalk"
 		density = 0
 		desc = "This doesn't look very safe at all!"
@@ -374,6 +380,27 @@
 		return
 
 	proc/update_icon(var/special_icon_state)
+		var/builtdir = 0
+		if(!length(connects_to))
+			return
+		for (var/dir in cardinal)
+			var/turf/T = get_step(src, dir)
+			if (T?.type in connects_to)
+				builtdir |= dir
+			else
+				for (var/i in 1 to length(connects_to))
+					var/atom/A = locate(connects_to[i]) in T
+					if (!isnull(A))
+						if (istype(A, /atom/movable))
+							var/atom/movable/M = A
+							if (!M.anchored)
+								continue
+						builtdir |= dir
+						break
+		src.icon_state = "[mod][builtdir]"
+
+
+	/*
 		if (ruined)
 			return
 
@@ -390,7 +417,7 @@
 					icon_state = initial(icon_state) + "-1"
 				if(76 to INFINITY)
 					icon_state = initial(icon_state) + "-0"
-
+*/
 	proc/drop_rods(var/amount)
 		if (!isnum(amount))
 			return
