@@ -172,6 +172,9 @@ jobs:
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
           touch +secret/__secret.dme
 
+      - name: Setup Rust
+        uses: hecrj/setup-rust-action@v1.3.3
+
       - name: Compile Cogmap and check for runtime errors
         run: |
           tools/ci/dm.sh -DTRAVISBUILDING -DMAP_OVERRIDE_COGMAP -DRUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
@@ -319,6 +322,9 @@ jobs:
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
           touch +secret/__secret.dme
           sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm
+
+      - name: Setup Rust
+        uses: hecrj/setup-rust-action@v1.3.3
 
       - name: Compile Cogmap and check for runtime errors
         run: |
@@ -508,7 +514,7 @@ jobs:
           outputFile: output-annotations.txt
 
   runtime_full:
-    name: "Compile and Lint with Secret Submodule"
+    name: "Runtime Checker with Secret Submodule"
     runs-on: ubuntu-18.04
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
@@ -541,6 +547,9 @@ jobs:
           echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
+
+      - name: Setup Rust
+        uses: hecrj/setup-rust-action@v1.3.3
 
       - name: Install Dependencies
         run: |
