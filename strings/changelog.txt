@@ -1,4 +1,9 @@
 
+(t)wed oct 28 20
+(u)Flaborized
+(p)2533
+(e)🎨|sprites
+(+)New sprites for portable flashers, brig timers, door buttons, hotdog carts, and a special surprise!
 (t)tue oct 27 20
 (u)Kyle & Flaborized
 (p)2530
