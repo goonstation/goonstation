@@ -3414,6 +3414,10 @@ var/global/noir = 0
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=fingerprints;size=440x410")
+#ifdef SECRETS_ENABLED
+						if ("ideas")
+							usr.Browse(grabResource("+secret/strings/admin_ideas.html"), "window=admin_ideas;size=700x450;title=Admin Ideas")
+#endif							
 					else
 				if (usr)
 					logTheThing("admin", usr, null, "used secret [href_list["secretsadmin"]]")
@@ -4038,7 +4042,9 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=unelectrify_all'>De-electrify all Airlocks</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
-				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A>
+				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Ideas</A>
+
 			"}
 
 	dat += "</div>"
