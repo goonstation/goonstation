@@ -1048,9 +1048,9 @@ datum
 
 
 				var/do_stunny = 1
-				var/list/covered = holder.covered_turf()
-				if (covered.len > 1)
-					do_stunny = prob(100/covered.len)
+				var/list/covered = holder?.covered_turf()
+				if (length(covered) > 1)
+					do_stunny = prob(100/length(covered))
 
 				if(method == INGEST && do_stunny)
 					boutput(M, "<span class='alert'>Drinking that was an awful idea!</span>")
