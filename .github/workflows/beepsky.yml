@@ -172,8 +172,9 @@ jobs:
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
           touch +secret/__secret.dme
 
-      - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.3.3
+      - name: Setup rust-g
+        run: |
+          tools/ci/install_rust_g.sh
 
       - name: Compile Cogmap and check for runtime errors
         run: |
@@ -323,8 +324,9 @@ jobs:
           touch +secret/__secret.dme
           sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm
 
-      - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.3.3
+      - name: Setup rust-g
+        run: |
+          tools/ci/install_rust_g.sh
 
       - name: Compile Cogmap and check for runtime errors
         run: |
@@ -548,8 +550,9 @@ jobs:
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
 
-      - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.3.3
+      - name: Setup rust-g
+        run: |
+          tools/ci/install_rust_g.sh
 
       - name: Install Dependencies
         run: |
