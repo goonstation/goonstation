@@ -712,7 +712,7 @@ var/f_color_selector_handler/F_Color_Selector
 	if (isnull(runtimeDetails))
 		world.log << "Runtime checking failed due to missing runtimeDetails global list"
 	else if (length(runtimeDetails) == 0)
-		text2file("No runtimes generated!", no_runtimes.txt)
+		text2file("No runtimes generated!", "no_runtimes.txt")
 	else
 		world.log << "[length(runtimeDetails)] runtimes generated:"
 		for (var/idx in runtimeDetails)
