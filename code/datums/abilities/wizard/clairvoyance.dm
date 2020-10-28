@@ -54,7 +54,7 @@
 		if (M.loc != T) //inside something
 			if(ismob(M.loc))
 				spellstring += "somehow inside of <b>[M.loc]</b> in <b>[A]</b>."
-			else if(isobj(M.loc))
+			else
 				spellstring += "inside \a <b>[M.loc]</b> in <b>[A]</b>."
 		else
 			spellstring += "in [A]."
