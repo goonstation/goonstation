@@ -74326,6 +74326,7 @@
 /obj/item/suture,
 /obj/item/scissors/surgical_scissors,
 /obj/item/scissors/surgical_scissors,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "dfN" = (

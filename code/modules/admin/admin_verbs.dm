@@ -263,6 +263,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
+		/datum/admins/proc/demonically_spawn_obj,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
@@ -317,6 +318,7 @@ var/list/admin_verbs = list(
 		/client/proc/sharkban,
 		/client/proc/toggle_literal_disarm,
 		/client/proc/implant_all,
+		/client/proc/cmd_crusher_walls,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,

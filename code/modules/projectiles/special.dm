@@ -584,9 +584,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "bloodproj"
 	start_speed = 9
 	goes_through_walls = 1
-	goes_through_mobs = 1
+	//goes_through_mobs = 1
 	auto_find_targets = 0
 	silentshot = 1
+	pierces = -1
 
 	shot_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
 
@@ -605,8 +606,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(atom/hit, direction, var/obj/projectile/P)
 		if (("vamp" in P.special_data))
 			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
-			if (vampire.owner == hit)
-				P.die()
+			if (vampire.owner == hit && P.max_range == PROJ_INFINITE_RANGE)
+				P.travelled = 0
+				P.max_range = 4
 			..()
 
 	on_end(var/obj/projectile/P)

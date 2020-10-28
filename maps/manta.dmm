@@ -2244,6 +2244,12 @@
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
+"afB" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/morgue,
+/obj/disposalpipe/segment{
+	dir = 4
+	})
 "afC" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -33564,7 +33570,7 @@
 	dir = 1
 	},
 /obj/juggleplaque{
-	desc = "Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta  \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\"";
+	desc = {"Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta  \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\""};
 	name = "dedication plaque";
 	pixel_y = 25
 	},
@@ -33579,7 +33585,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/juggleplaque{
-	desc = "NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\"";
+	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
 	name = "dedication plaque";
 	pixel_y = 25
 	},
@@ -33596,11 +33602,13 @@
 	pixel_x = -5;
 	pixel_y = -3
 	},
-/obj/item/radio_tape/advertisement/quik_noodles{
+/obj/item/radio_tape/advertisement/quik_noodles,
+/obj/item/radio_tape/advertisement/captain_psa{
 	pixel_x = 2;
 	pixel_y = -6
 	},
-/obj/item/radio_tape/advertisement/danitos_burritos{
+/obj/item/radio_tape/advertisement/danitos_burritos,
+/obj/item/radio_tape/advertisement/security_psa{
 	pixel_x = -4;
 	pixel_y = -1
 	},
@@ -97200,7 +97208,7 @@ aXk
 baq
 baq
 bdp
-baq
+afB
 baq
 bgD
 bhr

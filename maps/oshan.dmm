@@ -7709,6 +7709,10 @@
 	icon_state = "line1"
 	},
 /obj/item/hand_labeler,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/kitchen,
+/obj/access_spawn/bar,
+/obj/access_spawn/hydro,
 /turf/simulated/floor/grass,
 /area/station/hydroponics)
 "aqR" = (
@@ -17106,6 +17110,10 @@
 	pixel_y = 2
 	},
 /obj/item/screwdriver,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/access_spawn/hydro,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics)
 "aMJ" = (
@@ -17532,6 +17540,10 @@
 	icon_state = "3"
 	},
 /obj/item/paper_bin,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/access_spawn/hydro,
 /turf/simulated/floor/green,
 /area/station/hydroponics)
 "aNL" = (
@@ -19651,11 +19663,13 @@
 	pixel_x = -5;
 	pixel_y = -3
 	},
-/obj/item/radio_tape/advertisement/quik_noodles{
+/obj/item/radio_tape/advertisement/quik_noodles,
+/obj/item/radio_tape/advertisement/captain_psa{
 	pixel_x = 2;
 	pixel_y = -6
 	},
-/obj/item/radio_tape/advertisement/danitos_burritos{
+/obj/item/radio_tape/advertisement/danitos_burritos,
+/obj/item/radio_tape/advertisement/security_psa{
 	pixel_x = -4;
 	pixel_y = -1
 	},
@@ -19668,8 +19682,8 @@
 	tag = ""
 	},
 /obj/item/radio_tape/advertisement/cloning_psa{
-	pixel_y = 6;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /obj/item/gnomechompski,
 /obj/item/radio_tape/advertisement/pope_crunch{
@@ -19795,6 +19809,10 @@
 	pixel_y = 2
 	},
 /obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/kitchen,
+/obj/access_spawn/bar,
+/obj/access_spawn/hydro,
 /turf/simulated/floor/grass,
 /area/station/hydroponics)
 "aTd" = (
@@ -42384,7 +42402,6 @@
 /area/station/ai_monitored/armory)
 "bWG" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 2;
 	name = "Armory";
 	req_access_txt = "37"
 	},

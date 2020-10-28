@@ -982,7 +982,7 @@ datum/projectile/snowball
 
 	if(!DATA.max_range)
 		if(DATA.dissipation_rate <= 0)
-			P.max_range = 500
+			P.max_range = PROJ_INFINITE_RANGE
 		else
 			P.max_range = DATA.dissipation_delay + round(P.power / DATA.dissipation_rate)
 	else

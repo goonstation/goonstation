@@ -215,6 +215,15 @@
 			processing_items.Remove(src)
 		return
 
+/obj/item/clothing/glasses/sunglasses/sechud/superhero
+	name = "superhero mask"
+	desc = "Perfect for hiding your identity while fighting crime."
+	icon_state = "superhero"
+	item_state = "superhero"
+	color_r = 1
+	color_g = 1
+	color_b = 1
+
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
 	icon_state = "thermal"
