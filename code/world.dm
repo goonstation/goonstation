@@ -704,11 +704,11 @@ var/f_color_selector_handler/F_Color_Selector
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
-#ifdef RUNTIME_CHECKER
+#ifdef RUNTIME_CHECKING
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
 
-	logTheThing("diary", null, "Shutting down after testing for runtimes.", "debug")
+	logTheThing("diary", null, "Shutting down after testing for runtimes.", "admin")
 
 	shutdown()
 #endif
