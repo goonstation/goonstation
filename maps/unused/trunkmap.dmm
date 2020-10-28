@@ -33610,7 +33610,8 @@
 	},
 /obj/item/device/radio/intercom{
 	dir = 4;
-	name = "Prison Intercom (Prison)" frequency = 1357
+	name = "Prison Intercom (Prison)";
+	frequency = 1357
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -34013,7 +34014,8 @@
 /area/station/security/hos)
 "byQ" = (
 /obj/item/device/radio/intercom{
-	name = "Prison Intercom (Prison)" frequency = 1357
+	name = "Prison Intercom (Prison)";
+	frequency = 1357
 	},
 /obj/cable{
 	icon_state = "4-8"

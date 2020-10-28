@@ -17271,7 +17271,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aLs" = (
-/obj/submachine/robomoduler,
+/obj/machinery/computer/robot_module_rewriter,
 /obj/cable{
 	icon_state = "0-2"
 	},
