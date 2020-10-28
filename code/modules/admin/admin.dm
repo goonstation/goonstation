@@ -3174,17 +3174,6 @@ var/global/noir = 0
 				var/ok = 0
 
 				switch(href_list["type"])
-	/*
-					if("clear_bombs")
-						for(var/obj/item/assembly/radio_bomb/O in world)
-							qdel(O)
-						for(var/obj/item/assembly/proximity_bomb/O in world)
-							qdel(O)
-						for(var/obj/item/assembly/time_bomb/O in world)
-							qdel(O)
-						ok = 1
-	*/
-
 					if("check_antagonist")
 						if (ticker && ticker.mode && current_state >= GAME_STATE_PLAYING)
 							var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
@@ -3418,7 +3407,6 @@ var/global/noir = 0
 					if ("ideas")
 						usr.Browse(grabResource("+secret/strings/admin_ideas.html"), "window=admin_ideas;size=700x450;title=Admin Ideas")
 #endif
-					else
 				if (usr)
 					logTheThing("admin", usr, null, "used secret [href_list["secretsadmin"]]")
 					logTheThing("diary", usr, null, "used secret [href_list["secretsadmin"]]", "admin")
