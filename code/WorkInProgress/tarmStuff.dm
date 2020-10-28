@@ -78,6 +78,7 @@
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
 		shot_volume = 50
 		power = 15
+		hit_ground_chance = 33
 
 	void
 		power = 30
@@ -86,7 +87,7 @@
 			new/obj/decal/implo(T)
 			playsound(T, 'sound/effects/suck.ogg', 100, 1)
 			var/spamcheck = 0
-			for(var/atom/movable/AM in view(2, T))
+			for(var/atom/movable/AM in oview(2, T))
 				if(AM.anchored || AM == hit || AM.throwing) continue
 				if(spamcheck++ > 20) break
 				AM.throw_at(T, 20, 1)
