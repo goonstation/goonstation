@@ -556,7 +556,7 @@ Code:
 		if (length(collector_controlers))
 			var/controler_index = 1
 			var/collector_index = 1
-			for( var/obj/machinery/power/collector_control/C as() in collector_controlers)
+			for(var/obj/machinery/power/collector_control/C as() in collector_controlers)
 				collector_index = 1
 				if(C?.active)
 					engine_found = TRUE
@@ -568,7 +568,7 @@ Code:
 					if(C.CA4?.active) stuff += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4?.air_contents), 0.1) : "ERR"] kPa<BR>"
 					stuff += "<BR>"
 
-		if ( !engine_found )
+		if (!engine_found)
 			stuff += "<BR><B>Error!</B> No power source detected!<BR><BR>"
 
 		stuff += "<HR>"
