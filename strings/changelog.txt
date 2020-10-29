@@ -1,5 +1,9 @@
 
 (t)thu oct 29 20
+(u)Mordent
+(p)2549
+(e)🆕|feature
+(+)Sound synthesizers have 1 second use delay.
 (u)Azrun
 (p)2526
 (e)|
