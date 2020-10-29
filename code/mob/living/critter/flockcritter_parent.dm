@@ -165,7 +165,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(20)))
+		if (target == null || owner == null || !in_range(owner, target, 1) || !F?.can_afford(20))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -239,7 +239,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(src.cost)) || locate(structurepath) in target)
+		if (target == null || owner == null || !in_range(owner, target, 1) || !F?.can_afford(src.cost) || locate(structurepath) in target)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -338,7 +338,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(10)))
+		if (target == null || owner == null || !in_range(owner, target, 1) || !F.can_afford(10))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -405,7 +405,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(15)))
+		if (target == null || owner == null || !in_range(owner, target, 1) || !F.can_afford(15))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -460,7 +460,7 @@
 
 	onUpdate()
 		..()
-		if (target == null || owner == null || get_dist(owner, target) > 1)
+		if (target == null || owner == null || !in_range(owner, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -520,7 +520,7 @@
 
 	onUpdate()
 		..()
-		if (target == null || owner == null || get_dist(owner, target) > 1)
+		if (target == null || owner == null || !in_range(owner, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
