@@ -771,7 +771,7 @@
 		switch(target.type)//making this into switches for easy of expansion later
 			if(/obj/machinery/door/feather)
 				var/obj/machinery/door/feather/F = target
-				if(F.broken || (F.health > F.health_max))
+				if(F.broken || (F.health < F.health_max))
 					if(user.resources < 10)
 						boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
 					else
