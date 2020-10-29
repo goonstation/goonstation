@@ -717,7 +717,7 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << "[length(runtimeDetails)] runtimes generated:"
 		for (var/idx in runtimeDetails)
 			var/list/details = runtimeDetails[idx]
-			var/timestamp = details["timestamp"]
+			var/timestamp = details["seen"]
 			var/file = details["file"]
 			var/line = details["line"]
 			var/name = details["name"]
