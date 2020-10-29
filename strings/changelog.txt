@@ -1,5 +1,9 @@
 
 (t)wed oct 28 20
+(u)Tarmunora
+(p)2539
+(e)🆕|feature
+(+)Wizard crystals are a little more magical.
 (u)RSG250
 (p)2535
 (e)🆕|feature
