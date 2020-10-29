@@ -259,6 +259,8 @@
 		//t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 		t = copytext(html_encode(t), 1, 2*MAX_MESSAGE_LEN)
+		t = replacetext(t, "\[center\]", "<CENTER>")
+		t = replacetext(t, "\[/center\]", "</CENTER>")
 		t = replacetext(t, "\n", "<BR>")
 		t = replacetext(t, "\[b\]", "<B>")
 		t = replacetext(t, "\[/b\]", "</B>")
