@@ -3,7 +3,6 @@
 //
 #define LEFT_CIRCULATOR 1
 #define RIGHT_CIRCULATOR 2
-#define MIN_CIRCULATOR_SPEED 5
 #define LUBE_CHECK_RATE 5
 
 // Circulator Varients
@@ -31,12 +30,15 @@
 
 	var/side = null // 1=left 2=right
 	var/last_pressure_delta = 0
-	var/static/list/circulator_accepted_reagents = list("oil"=1.0,"lube"=1.1,"super_lube"=1.12)
+	var/static/list/circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"super_lube"=1.12)
 	var/lube_cycle = LUBE_CHECK_RATE //rate at which reagents are adjusted
 	var/reagents_consumed = 0.5 //amount of reagents consumed
 	var/lubed = FALSE
 	var/lube_boost = 1.0
-	var/circulator_flags = 0
+	var/circulator_flags = BACKFLOW_PROTECTION
+	var/fan_efficiency = 10 // 0.9 ideal, but I don't want everyone to suffer... yet.
+	var/min_circ_pressure = 10
+
 	anchored = 1.0
 	density = 1
 
@@ -81,48 +83,60 @@
 			..()
 
 	proc/return_transfer_air()
-		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
-		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
+		var/input_starting_pressure = MIXTURE_PRESSURE(src.air1)
+		var/output_starting_pressure = MIXTURE_PRESSURE(src.air2)
+		var/fan_power_draw = 0
+
+		if(!input_starting_pressure)
+			return null
 
 		var/datum/gas_mixture/gas_input = air1
 		var/datum/gas_mixture/gas_output = air2
 
 		//Calculate necessary moles to transfer using PV = nRT
 		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
-		last_pressure_delta = pressure_delta
 
-		if(!is_circulator_active())
-			if(pressure_delta < 0 && !(circulator_flags & BACKFLOW_PROTECTION))
+		// Check if fan/blower is required to overcome passive gate
+		if(circulator_flags & BACKFLOW_PROTECTION)
+			if(input_starting_pressure < (output_starting_pressure+src.min_circ_pressure))
+				pressure_delta = src.min_circ_pressure
+				// P = dp q / μf, q ignored for simplification of system
+				var/total_pressure = (output_starting_pressure + pressure_delta - input_starting_pressure)
+				fan_power_draw = round((total_pressure) / src.fan_efficiency)
+		else(pressure_delta < 0)
 				gas_input = air2
 				gas_output = air1
-		// Azrun TODO -- Evalute transfer of small ratio of GAS when not circulating
-			pressure_delta = max(pressure_delta, MIN_CIRCULATOR_SPEED)
-		else
-			pressure_delta *= lube_boost
 
-		//var/transfer_moles = pressure_delta*air2.volume/max((air1.temperature * R_IDEAL_GAS_EQUATION), 1) //Stop annoying runtime errors
-		var/transfer_moles = abs(pressure_delta)*gas_output.volume/max((gas_input.temperature * R_IDEAL_GAS_EQUATION), 1) //Stop annoying runtime errors
+		// Azrun TODO -- Evalute transfer of small ratio of GAS when not circulating
+		pressure_delta *= lube_boost
+
+		if(fan_power_draw)
+			if(src.status & NOPOWER)
+				src.last_pressure_delta = 0
+				return null
+			else src.use_power(fan_power_draw)
+
+		var/transfer_moles = abs(pressure_delta)*src.gas_output.volume/max(src.gas_input.temperature * R_IDEAL_GAS_EQUATION, 1) //Stop annoying runtime errors
+		src.last_pressure_delta = pressure_delta
 
 		//Actually transfer the gas
-		//var/datum/gas_mixture/removed = air1.remove(transfer_moles)
-		var/datum/gas_mixture/removed = gas_input.remove(transfer_moles)
+		var/datum/gas_mixture/removed = src.gas_input.remove(transfer_moles)
 
-		if( (circulator_flags & LEAKS_GAS ) && prob(5))
+		if((circulator_flags & LEAKS_GAS ) && prob(5))
 			var/datum/gas_mixture/leaked = gas_input.remove_ratio(rand(2,8)*0.01)
 			src.audible_message("<span class='alert'>[src] makes a hissing sound.</span>")
-			if (leaked) loc.assume_air(leaked)
+			if(leaked) loc.assume_air(leaked)
 
-		if(network1)
-			network1.update = 1
+		if(src.network1)
+			src.network1.update = 1
 
-		if(network2)
-			network2.update = 1
+		if(src.network2)
+			src.network2.update = 1
 
 		return removed
 
 	proc/is_circulator_active()
-		return last_pressure_delta > MIN_CIRCULATOR_SPEED
-
+		return last_pressure_delta > src.min_circ_pressure
 
 	proc/circulate_gas(datum/gas_mixture/gas)
 		var/datum/gas_mixture/gas_input = air1
@@ -173,11 +187,13 @@
 		// Iterate over reagents looking for sweet sweet lube
 		if(src.reagents?.total_volume)
 			for(var/reagent_id as() in src.reagents.reagent_list)
-				if (reagent_id in circulator_accepted_reagents)
-					var/datum/reagent/theReagent = src.reagents.reagent_list[reagent_id]
-					if (theReagent)
-						lube_efficiency += (theReagent.volume/src.reagents.maximum_volume) * circulator_accepted_reagents[reagent_id]
-						lube_found = TRUE
+				var/datum/reagent/R = src.reagents.reagent_list[reagent_id]
+				if (reagent_id in circulator_preferred_reagents)
+					lube_efficiency += (R.volume/src.reagents.maximum_volume) * circulator_preferred_reagents[reagent_id]
+				else if(R.is_solid())
+					lube_efficiency += (R.volume/src.reagents.maximum_volume) * (0.4 * R.viscosity + 0.7 ) // -30% to +10% through linear transform
+				else
+					lube_efficiency += (R.volume/src.reagents.maximum_volume) * (0.2 * R.viscosity + 0.9 ) // -10% to +10% through linear transform
 
 		if(!lube_found)
 			lube_efficiency = 0.90
@@ -191,10 +207,10 @@
 		update_icon()
 
 	update_icon()
-		if(status & (BROKEN|NOPOWER))
+		if(src.status & (BROKEN|NOPOWER))
 			icon_state = "circ[side]-p"
-		else if( is_circulator_active() )
-			if(last_pressure_delta > ONE_ATMOSPHERE && lubed)
+		else if(src.last_pressure_delta >= src.min_circ_pressure)
+			if(src.last_pressure_delta > ONE_ATMOSPHERE)
 				icon_state = "circ[side]-run"
 			else
 				icon_state = "circ[side]-slow"
@@ -327,11 +343,11 @@
 					// this needs a safer lightbust proc
 
 	process()
-		if(!circ1 || !circ2)
+		if(!src.circ1 || !src.circ2)
 			return
 
-		var/datum/gas_mixture/hot_air = circ1.return_transfer_air()
-		var/datum/gas_mixture/cold_air = circ2.return_transfer_air()
+		var/datum/gas_mixture/hot_air = src.circ1.return_transfer_air()
+		var/datum/gas_mixture/cold_air = src.circ2.return_transfer_air()
 
 		var/swapped = 0
 
@@ -379,10 +395,10 @@
 			cold_air = swapTmp
 
 		if(hot_air)
-			circ1.circulate_gas(hot_air)
+			src.circ1.air2.merge(hot_air)
 
 		if(cold_air)
-			circ2.circulate_gas(cold_air)
+			src.circ2.air2.merge(cold_air)
 
 		desc = "Current Output: [engineering_notation(lastgen)]W"
 		var/genlev = max(0, min(round(26*lastgen / 4000000), 26)) // raised 2MW toplevel to 3MW, dudes were hitting 2mw way too easily
@@ -574,6 +590,9 @@
 
 	power_change()
 		..()
+		// Why don't the circulators get this from the APC directly?
+		src.circ1?.power_change()
+		src.circ2?.power_change()
 		updateicon()
 
 /obj/machinery/power/generatorTemp/ui_interact(mob/user, datum/tgui/ui)
