@@ -9,7 +9,7 @@
 	var/datum/flock/flock = null
 	var/debugid = 0 //debuggin id
 
-/datum/flock_tile_group/New(var/f = null)
+/datum/flock_tile_group/New(var/datum/flock/f = null)
 	..()
 	if(f)
 		flock = f
@@ -17,15 +17,14 @@
 	debugid = rand(1, 1000)
 
 /datum/flock_tile_group/disposing()
-	..() //linter machine go ANGRY
 	members.len = 0 //delete the list
 	connected.len = 0
 	flock = null
 	processing_items -= src
+	..() //linter machine go ANGRY
 
 /datum/flock_tile_group/proc/process()
 	calcpower()
-
 
 /datum/flock_tile_group/proc/addtile(var/turf/simulated/floor/feather/f)
 	members |= f
