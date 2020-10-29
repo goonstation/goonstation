@@ -1724,7 +1724,7 @@ obj/machinery/vehicle/miniputt/pilot
 
 /obj/machinery/vehicle/escape_pod
 	name = "Escape Pod E-"
-	desc = "A small one-person pod for escaping the station in emergencies.<br>It looks sort of rickety..."
+	desc = "A small one-person pod that scans for the emergency shuttle's engine signature and warps to it mid-transit. These are notorious for lacking any safety checks. <br>It looks sort of rickety..."
 	icon_state = "escape"
 	capacity = 1
 	health = 60
