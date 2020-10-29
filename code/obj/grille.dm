@@ -2,7 +2,7 @@
 	desc = "A sturdy metal mesh. Blocks large objects, but lets small items, gas, or energy beams through."
 	name = "grille"
 	icon = 'icons/obj/SL_windows_grilles.dmi'
-	icon_state = "grillefull-0"
+	icon_state = "grille12-0"
 	density = 1
 	stops_space_move = 1
 	var/health = 30
@@ -13,6 +13,7 @@
 	var/corrode_resist = 0
 	var/temp_resist = 0
 	var/shock_when_entered = 1
+	var/auto = TRUE
 	var/list/connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/auto/marsoutpost,
 		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
 		/obj/grille/, /obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
@@ -27,7 +28,16 @@
 
 	New()
 		..()
-		update_icon()
+		if(src.auto)
+			if (map_setting && ticker)
+				src.update_neighbors()
+
+			src.update_icon()
+
+	disposing()
+		..()
+		if (src.auto && map_setting)
+			src.update_neighbors()
 
 	steel
 #ifdef IN_MAP_EDITOR
@@ -57,6 +67,7 @@
 		layer = CATWALK_LAYER
 		shock_when_entered = 0
 		plane = PLANE_FLOOR
+		auto = 0
 
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
@@ -380,9 +391,17 @@
 		return
 
 	proc/update_icon(var/special_icon_state)
-		var/builtdir = 0
+		if (ruined)
+			return
+
+		if (istext(special_icon_state))
+			icon_state = "grille-" + special_icon_state
+			return
+
 		if(!length(connects_to))
 			return
+
+		var/builtdir = 0
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
 			if (T?.type in connects_to)
@@ -390,34 +409,48 @@
 			else
 				for (var/i in 1 to length(connects_to))
 					var/atom/A = locate(connects_to[i]) in T
-					if (!isnull(A))
+					if (A)
 						if (istype(A, /atom/movable))
 							var/atom/movable/M = A
 							if (!M.anchored)
 								continue
 						builtdir |= dir
 						break
-		src.icon_state = "[mod][builtdir]"
 
+		switch(builtdir) //many states share icons
+			if (SOUTH) //2
+				builtdir = 3 //3
+			if (NORTH + EAST)//5
+				builtdir = EAST //4
+			if (SOUTH + EAST + NORTH) //7
+				builtdir = (SOUTH + EAST) //6
+			if (NORTH + WEST) //9
+				builtdir = WEST //8
+			if (NORTH + SOUTH + WEST) //11
+				builtdir = (SOUTH + WEST) //10
+			if (NORTH + WEST + EAST) //13
+				builtdir = (WEST + EAST) //12
+			if (NORTH + SOUTH + WEST + EAST) //15
+				builtdir = (SOUTH + WEST + EAST) //14
 
-	/*
-		if (ruined)
-			return
+		if (!builtdir)
+			builtdir = (WEST + EAST) //12
 
-		if (istext(special_icon_state))
-			icon_state = initial(icon_state) + "-" + special_icon_state
-		else
-			var/diff = get_fraction_of_percentage_and_whole(health,health_max)
-			switch(diff)
-				if(-INFINITY to 25)
-					icon_state = initial(icon_state) + "-3"
-				if(26 to 50)
-					icon_state = initial(icon_state) + "-2"
-				if(51 to 75)
-					icon_state = initial(icon_state) + "-1"
-				if(76 to INFINITY)
-					icon_state = initial(icon_state) + "-0"
-*/
+		var/diff = get_fraction_of_percentage_and_whole(health,health_max)
+		switch(diff)
+			if(-INFINITY to 25)
+				icon_state = "grille[builtdir]" + "-3"
+			if(26 to 50)
+				icon_state = "grille[builtdir]" + "-2"
+			if(51 to 75)
+				icon_state = "grille[builtdir]" + "-1"
+			if(76 to INFINITY)
+				icon_state = "grille[builtdir]" + "-0"
+
+	proc/update_neighbors()
+		for (var/obj/grille/G in orange(1,src))
+			G.update_icon()
+
 	proc/drop_rods(var/amount)
 		if (!isnum(amount))
 			return
