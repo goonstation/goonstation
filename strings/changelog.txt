@@ -1,5 +1,9 @@
 
 (t)thu oct 29 20
+(u)imnotjames
+(p)2531
+(e)|
+(+)Fix Pod HUD RCS button's alt text
 (u)Mordent
 (p)2549
 (e)🆕|feature
