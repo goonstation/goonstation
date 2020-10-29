@@ -398,7 +398,12 @@
 			qdel(src)
 		else
 			return ..()
-
+/**
+ * Enchants an item (minor armor boost for clothing, otherwise increases melee damage)
+ *
+ * incr - value to enchant by
+ * setTo - when true, sets enchantment to incr, otherwise will add incr to existing enchantment (positive or negative)
+ */
 /obj/item/proc/enchant(incr, setTo = 0)
 	var/currentench = 0
 	var/prop = ""
