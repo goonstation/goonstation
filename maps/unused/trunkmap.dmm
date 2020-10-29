@@ -1721,8 +1721,7 @@
 "adQ" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/russian)
@@ -1749,8 +1748,7 @@
 "adT" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	d1 = 4;
@@ -2298,8 +2296,7 @@
 /obj/table/auto,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/item/storage/box/diskbox,
 /turf/simulated/floor/white,
@@ -2313,8 +2310,7 @@
 "aeU" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	d1 = 1;
@@ -20744,8 +20740,7 @@
 "aWs" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -31787,8 +31782,7 @@
 "btX" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/security/armory)
@@ -32130,8 +32124,7 @@
 "buE" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -32598,8 +32591,7 @@
 "bvA" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -32962,8 +32954,7 @@
 "bwq" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	d1 = 4;
@@ -33018,8 +33009,7 @@
 "bwu" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	d1 = 2;
@@ -33302,8 +33292,7 @@
 "bxa" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -33610,7 +33599,8 @@
 	},
 /obj/item/device/radio/intercom{
 	dir = 4;
-	name = "Prison Intercom (Prison)" frequency = 1357
+	name = "Prison Intercom (Prison)";
+	frequency = 1357
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -34013,7 +34003,8 @@
 /area/station/security/hos)
 "byQ" = (
 /obj/item/device/radio/intercom{
-	name = "Prison Intercom (Prison)" frequency = 1357
+	name = "Prison Intercom (Prison)";
+	frequency = 1357
 	},
 /obj/cable{
 	icon_state = "4-8"

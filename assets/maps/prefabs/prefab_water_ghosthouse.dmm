@@ -403,7 +403,7 @@
 /obj/item/clothing/under/gimmick/wedding_dress,
 /obj/item/clothing/under/misc/dress,
 /obj/item/clothing/glasses/regular/ecto,
-/obj/item/clothing/gloves/ring,
+/obj/item/clothing/gloves/ring/gold,
 /obj/item/clothing/head/veil,
 /obj/item/clothing/shoes/heels,
 /turf/simulated/floor/carpet/purple/fancy,
