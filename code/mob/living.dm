@@ -735,6 +735,8 @@
 		return
 	*/
 
+	message = trim(message)
+
 	// check for singing prefix before radio prefix
 	message = check_singing_prefix(message)
 
@@ -800,6 +802,10 @@
 						secure_headset_mode = lowertext(copytext(message,2,3))
 					message = copytext(message, 3)
 
+	forced_language = get_special_language(secure_headset_mode)
+
+	message = trim(message)
+
 	// check for singing prefix after radio prefix
 	if (!singing)
 		message = check_singing_prefix(message)
@@ -812,10 +818,6 @@
 				S.danny_index = (S.danny_index % 16) + 1
 				var/lyrics = dd_file2list("strings/danny.txt")
 				message = lyrics[S.danny_index]
-
-	forced_language = get_special_language(secure_headset_mode)
-
-	message = trim(message)
 
 	if (!message)
 		return
@@ -2021,9 +2023,5 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if (dd_hasprefix(message, singing_prefix))
 			src.singing = NORMAL_SINGING
 			return copytext(message, 2)
-		// check for " %"
-		else if (dd_hasprefix(copytext(message, 1, 3), " [singing_prefix]"))
-			src.singing = NORMAL_SINGING
-			return copytext(message, 3)
 	src.singing = 0
 	return message
