@@ -12042,7 +12042,11 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital/underground)
 "aEh" = (
-/obj/machinery/door/airlock/gannets/chemistry/alt,
+/obj/machinery/door/airlock/gannets/chemistry/alt{
+	req_access = null
+	},
+/obj/access_spawn/heads,
+/obj/access_spawn/admin_override,
 /turf/unsimulated/floor/purple{
 	dir = 5
 	},
@@ -13187,16 +13191,6 @@
 /obj/decal/fakeobjects/tallsmes,
 /turf/unsimulated/floor/plating/scorched,
 /area/jones/alley)
-"aGP" = (
-/obj/landmark/viscontents_spawn{
-	targetZ = 4
-	},
-/turf/unsimulated/floor/purpleblack{
-	dir = 4
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "aGQ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -45267,8 +45261,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor/purpleblack{
-	dir = 8
+/turf/unsimulated/floor/stairs/wide{
+	dir = 1
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -79116,6 +79110,7 @@
 /area/centcom/lobby)
 "dLM" = (
 /obj/machinery/door/airlock/centcom,
+/obj/access_spawn/admin_override,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dLN" = (
@@ -79800,6 +79795,7 @@
 /area/centcom/lobby)
 "dNi" = (
 /obj/machinery/door/airlock/centcom,
+/obj/access_spawn/admin_override,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "dNj" = (
@@ -80588,6 +80584,7 @@
 /area/centcom/garden)
 "dOZ" = (
 /obj/machinery/door/airlock/centcom,
+/obj/access_spawn/admin_override,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -81125,7 +81122,11 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQs" = (
-/obj/machinery/door/airlock/gannets/command/alt,
+/obj/machinery/door/airlock/gannets/command/alt{
+	req_access = null
+	},
+/obj/access_spawn/heads,
+/obj/access_spawn/admin_override,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -82690,6 +82691,20 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"ezH" = (
+/obj/table/glass/auto,
+/obj/item/reagent_containers/food/snacks/mushroom/amanita{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/item/paper/blueprint/cog1{
+	pixel_x = -12;
+	pixel_y = -2
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 1
+	},
+/area/centcom/offices/cogwerks)
 "ezJ" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 8
@@ -82835,6 +82850,12 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"fqO" = (
+/obj/filing_cabinet,
+/turf/unsimulated/floor/grey/side{
+	dir = 5
+	},
+/area/centcom/offices/cogwerks)
 "fsj" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -82935,6 +82956,11 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/destiny)
+"fUa" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices/cogwerks)
 "fUv" = (
 /obj/trigger/spooky_emote,
 /turf/space,
@@ -83400,6 +83426,11 @@
 /obj/fitness/weightlifter,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hukhukhuk)
+"iyY" = (
+/turf/unsimulated/floor/grey/side{
+	dir = 8
+	},
+/area/centcom/offices/cogwerks)
 "iBC" = (
 /obj/grille/steel,
 /obj/window/south,
@@ -83684,6 +83715,21 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
+"jWV" = (
+/obj/machinery/light,
+/obj/table/wood/round/auto,
+/obj/item/camera_film/large{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/camera_test/large{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 10
+	},
+/area/centcom/offices/cogwerks)
 "jYh" = (
 /obj/decal/garland{
 	pixel_y = 32
@@ -83838,6 +83884,11 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"kAr" = (
+/turf/unsimulated/floor/grey/side{
+	dir = 4
+	},
+/area/centcom/offices/cogwerks)
 "kCS" = (
 /obj/machinery/cruiser_destroyable/cruiser_pod/engineering,
 /obj/machinery/light/emergency{
@@ -84633,6 +84684,24 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"nRU" = (
+/obj/table/glass/auto,
+/obj/machinery/light/lamp{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/beaker/large/burn{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/glass/bottle/antirad{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 9
+	},
+/area/centcom/offices/cogwerks)
 "nRX" = (
 /obj/stool/chair/couch/green{
 	dir = 6;
@@ -85307,6 +85376,20 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"qMN" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/table/glass/auto,
+/obj/item/reagent_containers/food/snacks/mushroom,
+/obj/item/paper/blueprint/cog2{
+	pixel_x = -15;
+	pixel_y = -5
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 1
+	},
+/area/centcom/offices/cogwerks)
 "qNe" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
@@ -85685,6 +85768,18 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"smj" = (
+/obj/decal/poster/wallsign/space{
+	pixel_y = -7
+	},
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwall"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "sna" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 1
@@ -85949,6 +86044,9 @@
 	icon_state = "wall3dir"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"tGB" = (
+/turf/unsimulated/floor/grey/side,
+/area/centcom/offices/cogwerks)
 "tUJ" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -86010,6 +86108,17 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/carpet/red/fancy/narrow/sw,
 /area/centcom/offices/sovexe)
+"umN" = (
+/obj/admin_plaque{
+	name = "Cogwerks' Office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "unN" = (
 /turf/space,
 /turf/unsimulated/floor/engine/caution/corner{
@@ -86276,6 +86385,14 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"vWb" = (
+/obj/stool/chair/office/purple{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices/cogwerks)
 "vXa" = (
 /obj/machinery/door/airlock/engineering{
 	desc = "Oh sure it looks the same, but all the connections and mounting points are different.  Also all the screw heads are those awful triangular ones.";
@@ -86551,6 +86668,12 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
+"xqB" = (
+/obj/item/reagent_containers/food/snacks/mushroom/psilocybin,
+/turf/unsimulated/floor/grey/side{
+	dir = 6
+	},
+/area/centcom/offices/cogwerks)
 "xqY" = (
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/grass/random,
@@ -86578,6 +86701,14 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/donut3)
+"xzf" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8;
+	locked = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/cogwerks)
 "xAQ" = (
 /obj/random_item_spawner/tools,
 /obj/table/auto,
@@ -162075,9 +162206,9 @@ dzM
 dAt
 dAS
 dvw
-dvW
-dvW
-dwZ
+nRU
+iyY
+jWV
 dvw
 dxE
 dyp
@@ -162377,9 +162508,9 @@ dzN
 dAv
 dAt
 dvw
-dvW
-dvW
-dvW
+ezH
+vWb
+tGB
 dvw
 dxF
 dxG
@@ -162679,9 +162810,9 @@ dzN
 dAu
 dAT
 dvw
-dvX
-dvW
-dvW
+qMN
+fUa
+tGB
 dvw
 dxF
 dxF
@@ -162980,10 +163111,10 @@ dvw
 jYh
 dAt
 dAU
-dvw
-dvW
-dvW
-dvW
+smj
+fqO
+kAr
+xqB
 dvw
 dxF
 dxF
@@ -163283,8 +163414,8 @@ dDP
 dAs
 dDP
 dvP
-dvV
-ncn
+dDP
+xzf
 dDP
 dvP
 dDP
@@ -163585,7 +163716,7 @@ dRP
 dvy
 dxa
 dvy
-dvy
+umN
 dvy
 dvy
 dvy
@@ -173539,7 +173670,7 @@ aES
 dvw
 aCZ
 aFN
-aGP
+dCB
 aHo
 aDG
 dxs

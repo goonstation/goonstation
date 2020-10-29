@@ -270,7 +270,7 @@
 "aaS" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -9955,8 +9955,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /obj/item/paper/book/hydroponicsguide,
 /obj/disposalpipe/segment/mail{
@@ -10067,8 +10066,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /obj/noticeboard{
 	pixel_y = 28
@@ -19879,8 +19877,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -26404,7 +26401,7 @@
 /area/station/crew_quarters/heads)
 "bdh" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -27764,7 +27761,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
@@ -28995,7 +28992,7 @@
 "biq" = (
 /obj/machinery/space_heater,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -43226,7 +43223,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	d1 = 1;
@@ -43932,8 +43929,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -45329,7 +45325,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -46724,8 +46720,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/disposalpipe/segment/mail{
@@ -48502,8 +48497,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -48531,8 +48525,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -49498,8 +49491,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/delivery,
@@ -56943,7 +56935,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -58368,8 +58360,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /obj/disposalpipe/segment{
 	icon_state = "pipe-s";
@@ -58694,8 +58685,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -58732,8 +58722,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4

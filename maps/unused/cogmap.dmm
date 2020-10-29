@@ -256,7 +256,7 @@
 "aaR" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -593,8 +593,7 @@
 "abx" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/caution/corner/nw,
 /area/station/hallway/secondary/entry)
@@ -623,8 +622,7 @@
 "abD" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/caution/corner/ne{
 	dir = 2
@@ -5282,8 +5280,7 @@
 "aly" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/item/satchel/hydro,
 /obj/machinery/firealarm{
@@ -8928,8 +8925,7 @@
 "atR" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -10272,8 +10268,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/item/paper/book/hydroponicsguide,
 /obj/disposalpipe/segment/mail{
@@ -10386,8 +10381,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/noticeboard{
 	pixel_y = 28
@@ -13602,8 +13596,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/noticeboard{
 	pixel_y = 28
@@ -13631,8 +13624,7 @@
 "aDK" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -15157,8 +15149,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -15832,8 +15823,7 @@
 "aIl" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -15988,8 +15978,7 @@
 /obj/disposalpipe/segment/brig,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/vehicle/segway,
 /turf/simulated/floor/bot,
@@ -20468,8 +20457,7 @@
 "aRq" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -22161,8 +22149,7 @@
 "aVe" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/machinery/crema_switch{
 	id = "crematorium";
@@ -22210,8 +22197,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	d2 = 8;
@@ -23130,8 +23116,7 @@
 "aXc" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/grey/side{
 	dir = 1
@@ -26971,7 +26956,7 @@
 /area/station/crew_quarters/heads)
 "beC" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -28396,7 +28381,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
@@ -29790,7 +29775,7 @@
 "bjX" = (
 /obj/machinery/space_heater,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -34275,8 +34260,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -36627,8 +36611,7 @@
 "bxp" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
@@ -36661,8 +36644,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
@@ -36712,8 +36694,7 @@
 /obj/stool/chair,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -44046,7 +44027,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	d1 = 1;
@@ -44742,8 +44723,7 @@
 "bNf" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -46142,7 +46122,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -47573,8 +47553,7 @@
 "bSx" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/disposalpipe/segment/mail{
@@ -50441,8 +50420,7 @@
 "bXz" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/delivery,
@@ -50462,8 +50440,7 @@
 /obj/machinery/dispenser,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/delivery,
 /area/station/mining)
@@ -53732,8 +53709,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -53992,8 +53968,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
@@ -54976,8 +54951,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -55022,8 +54996,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -55213,8 +55186,7 @@
 "chM" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/grass,
 /area/station/hallway/secondary/exit)
@@ -58005,7 +57977,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -59225,8 +59197,7 @@
 "cpz" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/caution/south,
 /area/station/hallway/secondary/exit)
@@ -59487,8 +59458,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/disposalpipe/segment{
 	icon_state = "pipe-s";
@@ -59564,8 +59534,7 @@
 /obj/machinery/chem_master,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -59808,8 +59777,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -59845,8 +59813,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -63233,8 +63200,7 @@
 /obj/reagent_dispensers/watertank/fountain,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor{
 	icon_state = "corner_east";
@@ -64807,8 +64773,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{

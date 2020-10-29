@@ -63,7 +63,7 @@
 		boutput(M, __red("You can't drink the blood of your own thralls!"))
 		return 0
 
-	if (ismonkey(target) || (target.bioHolder && target.bioHolder.HasEffect("monkey")))
+	if (isnpcmonkey(target))
 		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
 		return 0
 
@@ -227,7 +227,7 @@
 		boutput(M, __red("You can't drink the blood of your master's thralls!"))
 		return 0
 
-	if (ismonkey(target) || (target.bioHolder && target.bioHolder.HasEffect("monkey")))
+	if (isnpcmonkey(target))
 		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
 		return 0
 
@@ -390,7 +390,7 @@
 		HH.vamp_beingbitten = 1
 
 		src.loopStart()
-	
+
 	loopStart()
 		..()
 		var/obj/projectile/proj = initialize_projectile_ST(HH, new/datum/projectile/special/homing/vamp_blood, M)

@@ -857,6 +857,11 @@
 	else
 		speech_bubble.icon_state = "speech"
 
+	if ((isrobot(src) || isAI(src)) && singing)
+		speech_bubble.icon_state = "noterobot"
+		if (copytext(message, length(message)) == "!")
+			singing |= LOUD_SINGING
+
 	if (text2num(message)) //mbc : check mob.dmi for the icons
 		var/n = round(text2num(message),1)
 		if ((n >= 0 && n <= 20) || n == 420)
@@ -1058,7 +1063,15 @@
 			T = get_step(T, EAST)
 		*/
 		var/singing_italics = singing ? " font-style: italic;" : ""
-		chat_text = make_chat_maptext(src, messages[1], "color: [singing ? "#D8BFD8" : src.last_chat_color];" + src.speechpopupstyle + singing_italics)
+		var/maptext_color
+		if (singing)
+			if (isAI(src) || isrobot(src))
+				maptext_color = "#84d6d6"
+			else
+				maptext_color ="#D8BFD8"
+		else
+			maptext_color = src.last_chat_color
+		chat_text = make_chat_maptext(src, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
 		if(chat_text)
 			chat_text.measure(src.client)
 			for(var/image/chat_maptext/I in src.chat_text.lines)
