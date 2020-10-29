@@ -35,9 +35,14 @@
 			src.update_icon()
 
 	disposing()
-		..()
+		var/list/neighbors = null
 		if (src.auto && map_setting)
-			src.update_neighbors()
+			neighbors = list()
+			for (var/obj/grille/O in orange(1,src))
+				neighbors += O //find all of our neighbors before we move
+		..()
+		for (var/obj/grille/O in neighbors)
+			O?.update_icon() //now that we are in nullspace tell them to update
 
 	steel
 #ifdef IN_MAP_EDITOR
@@ -67,7 +72,8 @@
 		layer = CATWALK_LAYER
 		shock_when_entered = 0
 		plane = PLANE_FLOOR
-		auto = 0
+		auto = FALSE
+		connects_to = null
 
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
