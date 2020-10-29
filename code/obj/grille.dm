@@ -418,6 +418,8 @@
 						break
 
 		switch(builtdir) //many states share icons
+			if (0) //stand alone
+				builtdir = (WEST + EAST) //12
 			if (SOUTH) //2
 				builtdir = (NORTH + SOUTH) //3
 			if (NORTH + EAST)//5
@@ -432,9 +434,6 @@
 				builtdir = (WEST + EAST) //12
 			if (NORTH + SOUTH + WEST + EAST) //15
 				builtdir = (SOUTH + WEST + EAST) //14
-
-		if (!builtdir)
-			builtdir = (WEST + EAST) //12
 
 		var/diff = get_fraction_of_percentage_and_whole(health,health_max)
 		switch(diff)
