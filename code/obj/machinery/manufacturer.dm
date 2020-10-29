@@ -2235,8 +2235,8 @@
 		/datum/manufacture/pod/lock
 	)
 	hidden = list(
-		///datum/manufacture/pod/SPS,
-		/datum/manufacture/pod/SRS
+		/datum/manufacture/pod/sps,
+		/datum/manufacture/pod/srs
 		)
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks

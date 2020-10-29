@@ -927,6 +927,7 @@
 				rewind = image('icons/misc/retribution/64x64.dmi', "SRS_o_large", "layer" = EFFECTS_LAYER_4)
 			rewind.plane = PLANE_SELFILLUM
 			src.ship.UpdateOverlays(rewind, "rewind")
+
 			spawn(5 SECONDS)
 				spawn(1 SECONDS)
 					src.ship.UpdateOverlays(null, "rewind")

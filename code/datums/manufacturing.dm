@@ -2430,11 +2430,21 @@
 	create = 1
 	category = "Tool"
 
-	/datum/manufacture/pod/SRS
+/datum/manufacture/pod/sps
+	name = "Syndicate Purge System"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_names = list("Sturdy Metal","Conductive Material","Crystal")
+	item_amounts = list(8,12,16)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/syndicate_purge_system)
+	time = 20 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/pod/srs
 	name = "Syndicate Rewind System"
-	item_paths = list("MET-1","CON-1")
-	item_names = list("Sturdy Metal","Conductive Material")
-	item_amounts = list(15,10)
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_names = list("Sturdy Metal","Conductive Material","Crystal")
+	item_amounts = list(16,12,8)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/syndicate_rewind_system)
 	time = 20 SECONDS
 	create = 1

@@ -79,6 +79,7 @@
 			tooltip_rebuild = 1
 			is_exploding = true
 			spawn(2 SECONDS)
+				elecflash(src.loc)
 				qdel(src)
 			return
 		else if(metadata >= 0 && metadata < 8 && !is_exploding)			//If there are still unfilled metadata nodes left, display the filled nodes' amount.
