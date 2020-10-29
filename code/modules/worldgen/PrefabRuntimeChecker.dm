@@ -1,12 +1,29 @@
-/proc/filter_underwater_prefab(var/prefab_type)
-	var/datum/generatorPrefab/M = prefab_type
-	.= initial(M?.underwater)
-#ifndef UNDERWATER_MAP
-	.=!.
-#endif
-	return
-
+/**
+  * The `placeAllPrefabs()` proc, as the name suggests, places all the prefabs
+	* on the map, at (3, 3, 1). It overwrites existing objects, mobs, and turfs
+	* when doing so. This proc will only work correctly if RUNTIME_CHECKING is
+	* defined, as some turfs cannot be replaced using `turf/proc/ReplaceWith()`
+	* and RUNTIME_CHECKING fixes this.
+	*
+	* Do not use this proc on a live server.
+	*
+	* If you run it locally do not move your mob into the location turfs are
+	* being placed (your client will be `qdel`'d).
+	*
+	* This proc was designed to be used with totally blank maps, where
+	* every tile is either space or trench. UNDERWATER_MAP is used in
+	* `/proc/filter_underwater_prefab()` to choose underwater or space
+	* prefabs appropriately, depending on the type of map.
+	*
+	* Prefabs are found by looking for concrete types of
+	* `/datum/generatorPrefab`. To add a new prefab to be checked, simply
+	* create a type for it.
+  */
 /proc/placeAllPrefabs()
+#ifndef RUNTIME_CHECKING
+	CRASH("This proc only works if RUNTIME_CHECKING is defined")
+	return
+#endif
 	var/startTime = world.timeofday
 	boutput(world, "<span class='alert'>Generating prefabs...</span>")
 	var/list/prefab_types = filtered_concrete_typesof(/datum/generatorPrefab, /proc/filter_underwater_prefab)
@@ -20,3 +37,11 @@
 		boutput(world, "<span class='alert'>Prefab placement [M.type][M.required?" (REQUIRED)":""] succeeded. [T] @ [showCoords(T.x, T.y, T.z)]")
 		sleep(1 SECOND)
 	boutput(world, "<span class='alert'>Generated prefabs Level in [((world.timeofday - startTime)/10)] seconds!")
+
+/proc/filter_underwater_prefab(var/prefab_type)
+	var/datum/generatorPrefab/M = prefab_type
+	.= initial(M?.underwater)
+#ifndef UNDERWATER_MAP
+	.=!.
+#endif
+	return
