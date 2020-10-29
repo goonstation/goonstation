@@ -638,7 +638,6 @@
 			interaction = interact
 		if (duration_i)
 			duration = duration_i
-		boutput(world, owner.name)
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if (H.traitHolder.hasTrait("training_engineer"))
@@ -646,7 +645,6 @@
 
 	onUpdate()
 		..()
-		boutput(world, "duration = [duration]")
 		if (the_wall == null || the_tool == null || owner == null || get_dist(owner, the_wall) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return

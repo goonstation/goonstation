@@ -74,7 +74,8 @@ dmm_suite
 			coordShifts.Add(list(list(grid.group[1], grid.group[2], grid.group[3])))
 			maxZFound = max(maxZFound, text2num(grid.group[3]))
 		// Create all Atoms at map location, from model key
-		world.maxz = max(world.maxz, coordZ+maxZFound-1)
+		if ((coordZ+maxZFound-1) > world.maxz)
+			world.setMaxZ(coordZ+maxZFound-1)
 		for(var/posZ = 1 to gridLevels.len)
 			var zGrid = gridLevels[posZ]
 			// Reverse Y coordinate

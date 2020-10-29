@@ -80,7 +80,7 @@ datum
 
 		proc/on_remove()
 			if (stun_resist > 0)
-				if (ismob(holder.my_atom))
+				if (ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					M.remove_stun_resist_mod("reagent_[src.id]")
 			return

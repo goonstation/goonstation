@@ -112,9 +112,6 @@ var/global/list/falloff_cache = list()
 	if (!source || !source.loc || source.z <= 0)
 		return
 
-	if (!length(spatial_z_maps))
-		return
-
 	EARLY_RETURN_IF_QUIET(vol)
 
 	var/area/source_location = get_area(source)

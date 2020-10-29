@@ -1224,7 +1224,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	HasEntered(atom/movable/AM, atom/OldLoc)
 		. = ..()
-		if (ismob(AM))
+		if (isliving(AM))
 			var/mob/living/M = AM
 			M.update_burning(10)
 
