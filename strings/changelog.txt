@@ -1,4 +1,9 @@
 
+(t)thu oct 29 20
+(u)Azrun
+(p)2526
+(e)|
+(+)PDA Power Checker now supports Radiation Collectors.  Singularity will now consume items at the singularity
 (t)wed oct 28 20
 (u)Tarmunora
 (p)2539
