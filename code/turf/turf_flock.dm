@@ -167,10 +167,10 @@
 				max_group_size = F.group.size
 				largestgroup = F.group
 			groups_found |= F.group
-	if(groups_found.len == 1)
+	if(length(groups_found) == 1)
 		src.group = groups_found[1] //set it to the group found.
 		src.group.addtile(src)
-	else if(groups_found.len > 1) //if there is more then one, then join the largest (add merging functionality here later)
+	else if(length(groups_found) > 1) //if there is more then one, then join the largest (add merging functionality here later)
 		for(var/datum/flock_tile_group/oldgroup in groups_found)
 			if(oldgroup == largestgroup) continue
 			largestgroup.powergen += oldgroup.powergen
@@ -226,7 +226,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	queue += start
 	visited[start] = TRUE
 
-	while(queue.len > 0)
+	while(length(queue))
 		// dequeue
 		current = queue[1]
 		queue -= current

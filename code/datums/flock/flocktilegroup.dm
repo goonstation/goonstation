@@ -28,11 +28,11 @@
 
 /datum/flock_tile_group/proc/addtile(var/turf/simulated/floor/feather/f)
 	members |= f
-	size = members.len
+	size = length(members)
 
 /datum/flock_tile_group/proc/removetile(var/turf/simulated/floor/feather/f)
 	members -= f
-	size = members.len
+	size = length(members)
 
 /datum/flock_tile_group/proc/addstructure(var/obj/flock_structure/f)
 	connected |= f
