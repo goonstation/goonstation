@@ -2342,7 +2342,7 @@ proc/illiterateGarbleText(var/message)
   * Returns given text replaced by nonsense but its based off of a modifier + flock's garblyness
   */
 proc/flockBasedGarbleText(var/message, var/modifier, var/datum/flock/f = null)
-	if(f && f.snooping) . = radioGarbleText(message, f.snoop_clarity + modifier)
+	if(f?.snooping) . = radioGarbleText(message, f.snoop_clarity + modifier)
 
 /**
   * Returns the time in seconds since a given timestamp

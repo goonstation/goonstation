@@ -60,7 +60,6 @@
 		f.connected = 1
 		f.on() //make it glo
 
-	connected = connectedto.len
-
+	connected = length(connectedto)
 
 
