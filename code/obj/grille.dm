@@ -419,7 +419,7 @@
 
 		switch(builtdir) //many states share icons
 			if (SOUTH) //2
-				builtdir = 3 //3
+				builtdir = (NORTH + SOUTH) //3
 			if (NORTH + EAST)//5
 				builtdir = EAST //4
 			if (SOUTH + EAST + NORTH) //7
