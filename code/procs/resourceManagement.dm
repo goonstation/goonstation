@@ -41,11 +41,13 @@
 			UNTIL(request.is_complete())
 			var/datum/http_response/response = request.into_response()
 
-			if (response.errored || !response.body["CONTENT"])
+			boutput(world, json_encode(response))
+
+			if (response.errored || !response.body)
 				Z_LOG_ERROR("Resource/Grab", "[path] - failed to get from CDN")
 				CRASH("CDN DEBUG: No file found for path: [path]")
 
-			file = file2text(response.body["CONTENT"])
+			file = response.body
 
 		else //No CDN, grab from local directory
 			Z_LOG_DEBUG("Resource/Grab", "[path] - locally loaded, parsing")
