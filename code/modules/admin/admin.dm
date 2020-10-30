@@ -3405,7 +3405,7 @@ var/global/noir = 0
 						usr.Browse(dat, "window=fingerprints;size=440x410")
 #ifdef SECRETS_ENABLED
 					if ("ideas")
-						usr.Browse(grabResource("+secret/strings/admin_ideas.html"), "window=admin_ideas;size=700x450;title=Admin Ideas")
+						usr.Browse(grabResource("../+secret/strings/admin_ideas.html"), "window=admin_ideas;size=700x450;title=Admin Ideas")
 #endif
 				if (usr)
 					logTheThing("admin", usr, null, "used secret [href_list["secretsadmin"]]")
@@ -4031,9 +4031,11 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Ideas</A>
 
 			"}
+#ifdef SECRETS_ENABLED
+	dat += {"<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Ideas</A>"}
+#endif
 
 	dat += "</div>"
 
