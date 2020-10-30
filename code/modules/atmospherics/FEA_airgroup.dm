@@ -48,10 +48,12 @@
 // Group procs
 /datum/air_group/proc/suspend_group_processing()
 	// Distribute air from the group out to members
+	ASSERT(group_processing == 1)
 	update_tiles_from_group()
 	group_processing = 0
 
 /datum/air_group/proc/resume_group_processing()
+	ASSERT(group_processing == 0)
 	update_group_from_tiles()
 	group_processing = 1
 
@@ -382,8 +384,10 @@
 		member.air?.zero()
 	if (length_space_border)
 		spaced = 1
-		resume_group_processing()
+		if(!group_processing)
+			resume_group_processing()
 
 /datum/air_group/proc/unspace_group()
-	suspend_group_processing()
+	if(group_processing)
+		suspend_group_processing()
 	spaced = 0

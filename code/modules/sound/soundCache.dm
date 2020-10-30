@@ -180,6 +180,7 @@ var/global/list/soundCache = list(
  	"sound/effects/creaking_metal1.ogg" = 'sound/effects/creaking_metal1.ogg',\
  	"sound/effects/creaking_metal2.ogg" = 'sound/effects/creaking_metal2.ogg',\
  	"sound/effects/damnation.ogg" = 'sound/effects/damnation.ogg',\
+ 	"sound/effects/darkspawn.ogg" = 'sound/effects/darkspawn.ogg',\
  	"sound/effects/distortedfasthyperstethoscope.ogg" = 'sound/effects/distortedfasthyperstethoscope.ogg',\
  	"sound/effects/dramatic.ogg" = 'sound/effects/dramatic.ogg',\
  	"sound/effects/electric_shock.ogg" = 'sound/effects/electric_shock.ogg',\
