@@ -538,7 +538,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\antagifiers.dm"
 #include "code\modules\admin\ass_day.dm"
 #include "code\modules\admin\atom_verbs.dm"
-#include "code\modules\admin\badmin_link.dm"
 #include "code\modules\admin\bans.dm"
 #include "code\modules\admin\bomb_monitor.dm"
 #include "code\modules\admin\call_proc_menu.dm"
