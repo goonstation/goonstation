@@ -770,15 +770,23 @@ var/global/curr_day = null
 /client/proc/setJoinDate()
 	set background = 1
 	joined_date = ""
-	var/list/text = world.Export("http://byond.com/members/[src.ckey]?format=text")
-	if(text)
-		var/content = file2text(text["CONTENT"])
-		var/savefile/save = new
-		save.ImportText("/", content)
-		save.cd = "general"
-		joined_date = save["joined"]
-		jd_warning(joined_date)
-	return
+
+	// Get join date from BYOND members page
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "http://byond.com/members/[src.ckey]?format=text", "", "")
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+
+	if (response.errored || !response.body)
+		logTheThing("debug", null, null, "setJoinDate: Failed to get join date response for [src.ckey].")
+		return
+
+	var/savefile/save = new
+	save.ImportText("/", response.body)
+	save.cd = "general"
+	joined_date = save["joined"]
+	jd_warning(joined_date)
 
 /client/verb/ping()
 	set name = "Ping"

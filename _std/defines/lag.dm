@@ -21,7 +21,7 @@
 #define LAG_REALTIME 66
 
 /// Waits until a given condition is true, tg-style async
-#define UNTIL(X) while(!(X)) LAGCHECK(LAG_MED)
+#define UNTIL(X) while(!(X)) LAGCHECK(LAG_HIGH)
 
 //ticklag stuff
 #define TIME_DILATION_ENABLED 1
