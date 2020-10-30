@@ -2,7 +2,7 @@
 	desc = "A sturdy metal mesh. Blocks large objects, but lets small items, gas, or energy beams through."
 	name = "grille"
 	icon = 'icons/obj/SL_windows_grilles.dmi'
-	icon_state = "grillefull-0"
+	icon_state = "grille-0"
 	density = 1
 	stops_space_move = 1
 	var/health = 30
@@ -14,11 +14,8 @@
 	var/temp_resist = 0
 	var/shock_when_entered = 1
 	var/auto = TRUE
-	var/list/connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/auto/marsoutpost,
-		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
-		/obj/grille/, /obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/jen/red, /turf/simulated/wall/auto/jen/green, /turf/simulated/wall/auto/jen/yellow, /turf/simulated/wall/auto/jen/cyan, /turf/simulated/wall/auto/jen/purple,  /turf/simulated/wall/auto/jen/blue,
-		/turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/auto/reinforced/jen/red, /turf/simulated/wall/auto/reinforced/jen/green, /turf/simulated/wall/auto/reinforced/jen/yellow, /turf/simulated/wall/auto/reinforced/jen/cyan, /turf/simulated/wall/auto/reinforced/jen/purple, /turf/simulated/wall/auto/reinforced/jen/blue)
+	var/list/connects_to_turf = list(/turf/simulated/wall/auto, /turf/simulated/wall/auto/reinforced, /turf/simulated/shuttle/wall, /turf/unsimulated/wall)
+	var/list/connects_to_obj = list(/obj/indestructible/shuttle_corner,	/obj/grille/, /obj/machinery/door, /obj/window)
 	text = "<font color=#aaa>+"
 	anchored = 1
 	flags = FPRINT | CONDUCT | USEDELAY
@@ -37,7 +34,7 @@
 
 	disposing()
 		var/list/neighbors = null
-		if (src.auto && map_setting)
+		if (src.auto && src.anchored && map_setting)
 			neighbors = list()
 			for (var/obj/grille/O in orange(1,src))
 				neighbors += O //find all of our neighbors before we move
@@ -47,7 +44,7 @@
 
 	steel
 #ifdef IN_MAP_EDITOR
-		icon_state = "grillefull-0"
+		icon_state = "grille-0"
 #endif
 		New()
 			..()
@@ -74,7 +71,27 @@
 		shock_when_entered = 0
 		plane = PLANE_FLOOR
 		auto = FALSE
-		connects_to = null
+		connects_to_turf = null
+		connects_to_turf = null
+
+		update_icon(special_icon_state)
+			if (ruined)
+				return
+
+			if (istext(special_icon_state))
+				icon_state = initial(src.icon_state) + "-" + special_icon_state
+				return
+
+			var/diff = get_fraction_of_percentage_and_whole(health,health_max)
+			switch(diff)
+				if(-INFINITY to 25)
+					icon_state = initial(src.icon_state) + "-3"
+				if(26 to 50)
+					icon_state = initial(src.icon_state) + "-2"
+				if(51 to 75)
+					icon_state = initial(src.icon_state) + "-1"
+				if(76 to INFINITY)
+					icon_state = initial(src.icon_state) + "-0"
 
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
@@ -405,42 +422,40 @@
 			icon_state = "grille-" + special_icon_state
 			return
 
-		if(!length(connects_to))
-			return
-
 		var/builtdir = 0
-		for (var/dir in cardinal)
-			var/turf/T = get_step(src, dir)
-			if (T?.type in connects_to)
-				builtdir |= dir
-			else
-				for (var/i in 1 to length(connects_to))
-					var/atom/A = locate(connects_to[i]) in T
-					if (A)
-						if (istype(A, /atom/movable))
-							var/atom/movable/M = A
-							if (!M.anchored)
-								continue
+		if (src.auto)
+			for (var/dir in cardinal)
+				var/turf/T = get_step(src, dir)
+				var/connectable_turf = FALSE
+				for (var/i in 1 to length(connects_to_turf))
+					if (istype(T, connects_to_turf[i]))
 						builtdir |= dir
+						connectable_turf = TRUE
 						break
+				if (!connectable_turf) //no turfs to connect to, check for obj's
+					for (var/i in 1 to length(connects_to_obj))
+						var/atom/movable/AM = locate(connects_to_obj[i]) in T
+						if (AM?.anchored)
+							builtdir |= dir
+							break
 
-		switch(builtdir) //many states share icons
-			if (0) //stand alone
-				builtdir = (NORTH) //1
-			if (SOUTH) //2
-				builtdir = (NORTH + SOUTH) //3
-			if (NORTH + EAST)//5
-				builtdir = EAST //4
-			if (SOUTH + EAST + NORTH) //7
-				builtdir = (SOUTH + EAST) //6
-			if (NORTH + WEST) //9
-				builtdir = WEST //8
-			if (NORTH + SOUTH + WEST) //11
-				builtdir = (SOUTH + WEST) //10
-			if (NORTH + EAST + WEST) //13
-				builtdir = (EAST + WEST) //12
-			if (NORTH + SOUTH + EAST + WEST) //15
-				builtdir = (SOUTH + EAST + WEST) //14
+			switch(builtdir) //many states share icons
+				if (0) //stand alone
+					builtdir = (NORTH) //1
+				if (SOUTH) //2
+					builtdir = (NORTH + SOUTH) //3
+				if (NORTH + EAST)//5
+					builtdir = EAST //4
+				if (SOUTH + EAST + NORTH) //7
+					builtdir = (SOUTH + EAST) //6
+				if (NORTH + WEST) //9
+					builtdir = WEST //8
+				if (NORTH + SOUTH + WEST) //11
+					builtdir = (SOUTH + WEST) //10
+				if (NORTH + EAST + WEST) //13
+					builtdir = (EAST + WEST) //12
+				if (NORTH + SOUTH + EAST + WEST) //15
+					builtdir = (SOUTH + EAST + WEST) //14
 
 		var/diff = get_fraction_of_percentage_and_whole(health,health_max)
 		switch(diff)
