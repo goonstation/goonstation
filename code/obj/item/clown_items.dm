@@ -65,14 +65,17 @@ VUVUZELA
 			return
 		opened = 1
 		icon_state = "crushed-5"
-		playsound(user.loc, "sound/items/can_open.ogg", 50, 0)
-
+			playsound(user.loc, "sound/items/can_open.ogg", 50, 0)
 		SPAWN_DBG(5)
 			// Wow your joke sucks
-			if(prob(5))
-				playsound(user.loc,"sound/misc/laughter/boo.ogg",50,0)
-			else
-				playsound(user.loc,"sound/misc/laughter/laughtrack[pick("1","2","3","4")].ogg",50,0)
+		if (prob(20))
+			playsound(user.loc, "sound/items/can_open_sienfeld2.ogg", 50, 0)
+		if (prob(10))
+			playsound(user.loc, "sound/items/can_open_sienfeld1.ogg", 50, 0)
+		if (prob(5))
+			playsound(user.loc,"sound/misc/laughter/boo.ogg",50,0)
+		else
+			playsound(user.loc,"sound/misc/laughter/laughtrack[pick("1","2","3","4")].ogg",50,0)
 
 /obj/item/storage/box/box_o_laughs
 	name = "Box o' Laughs"
