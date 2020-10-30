@@ -1017,18 +1017,22 @@ var/global/curr_day = null
 
 //drsingh, don't read the rest of this comment; BELOW: CLOUD STUFFS
 //Sets and uploads cloud data on the client
-//Try to avoid calling often, as it contacts Goonhub and uses the dreaded spawn.
 //TODO: Pool puts, determine value of doing as such.
 /client/proc/cloud_put( var/key, var/value )
 	if( !clouddata )
-		return "Failed to talk to Goonhub; try rejoining."//oh no
+		return "Failed to talk to Goonhub; try rejoining." //oh no
 	clouddata[key] = "[value]"
-	SPAWN_DBG(0)//I do not advocate this! So basically hide your eyes for one line of code.
-		world.Export( "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]" )//If it fails, oh well...
-//Returns some cloud data on the client
+
+	// Via rust-g HTTP
+	var/datum/http_request/request = new() //If it fails, oh well...
+	request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
+	request.begin_async()
+
+/// Returns some cloud data on the client
 /client/proc/cloud_get( var/key )
 	return clouddata ? clouddata[key] : null
-//Returns 1 if you can set or retrieve cloud data on the client
+
+/// Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
 	return !!clouddata
 
