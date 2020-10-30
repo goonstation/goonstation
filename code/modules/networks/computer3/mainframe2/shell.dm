@@ -396,6 +396,15 @@
 						sleep(clamp(., 0, 30) SECONDS)
 						continue
 
+					if ("unset")
+						if (!length(command_list))
+							scriptvars = list()
+							continue
+						for (var/V in command_list)
+							if (lowertext(ckeyEx(V)) in scriptvars)
+								scriptvars -= lowertext(ckeyEx(V))
+						continue
+
 					if ("help", "man")
 						var/datum/computer/file/record/helpRec = signal_program(1, list("command"=DWAINE_COMMAND_CONFGET,"fname"=setup_helprec_name))
 						if (istype(helpRec))
