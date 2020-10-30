@@ -250,8 +250,7 @@
 "aaH" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/plating/airless,
 /area)
@@ -15749,8 +15748,7 @@
 /obj/machinery/chem_master,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/machinery/camera{
 	c_tag = "Chemistry Department";
@@ -19784,8 +19782,7 @@
 "aLU" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor{
 	tag = "icon-0,6";
@@ -22777,8 +22774,7 @@
 "aRd" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/storage/closet/wardrobe/white,
 /turf/simulated/floor/white,
@@ -23235,8 +23231,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -26813,8 +26808,7 @@
 "aYU" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 8
@@ -27147,8 +27141,7 @@
 /obj/item/clothing/glasses/thermal,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -29402,8 +29395,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -34237,8 +34229,7 @@
 "blV" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area)
@@ -34322,8 +34313,7 @@
 "bmd" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -34401,8 +34391,7 @@
 "bmj" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -34854,8 +34843,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/item/storage/box/tapebox,
 /turf/simulated/floor/white,
@@ -34930,8 +34918,7 @@
 "bnk" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	d1 = 1;

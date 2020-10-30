@@ -3662,12 +3662,14 @@ datum
 			on_add()
 				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf))
 					return
-				holder.my_atom.Scale(4,1.5)
+				holder.my_atom.SafeScale(4,1.5)
+
 
 			on_remove()
 				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf))
 					return
-				holder.my_atom.Scale(1/4,1/1.5)
+				holder.my_atom.SafeScale(1/4,1/1.5)
+
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)

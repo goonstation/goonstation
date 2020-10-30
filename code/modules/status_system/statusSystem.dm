@@ -637,7 +637,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		icon_state = "nradiation1"
 		unique = 1
 
-		tickSpacing = 1.5 SECONDS
+		tickSpacing = 2 SECONDS
 
 		damage_tox = 2
 		damage_brute = 2

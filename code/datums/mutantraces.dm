@@ -2,9 +2,8 @@
 #define OVERRIDE_ARM_R 2
 #define OVERRIDE_LEG_R 4
 #define OVERRIDE_LEG_L 8
-// mutant races: cheap way to add new "types" of mobs
-// without copy/pasting the human code a million times.
-// Now a robust object-oriented version!!!!
+
+/// mutant races: cheap way to add new "types" of mobs
 /datum/mutantrace
 	var/name = null				// used for identification in diseases, clothing, etc
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
@@ -21,21 +20,29 @@
 								// but they must explicitly specify if they're overriding via this var
 	var/override_language = null // set to a language ID to replace the language of the human
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
-	var/allow_fat = 0			// whether fat icons/disabilities are used
+	/// whether fat icons/disabilities are used
+	var/allow_fat = 0
 	var/uses_special_head = 0	// unused
-	var/human_compatible = 1	// if 1, allows human diseases and dna injectors to affect this mutantrace
-	var/uses_human_clothes = 1	// if 0, can only wear clothes listed in an item's compatible_species var
-	var/clothing_icon_override = null // set to an icon to have human.update_clothing() look through its icon_states for matching things
-	var/exclusive_language = 0	// if 1, only understood by others of this mutantrace
-	var/voice_message = null	// overrides normal voice message if defined (and others don't understand us, ofc)
+	/// if 1, allows human diseases and dna injectors to affect this mutantrace
+	var/human_compatible = 1
+	/// if 0, can only wear clothes listed in an item's compatible_species var
+	var/uses_human_clothes = 1
+	/// set to an icon to have human.update_clothing() look through its icon_states for matching things
+	var/clothing_icon_override = null
+	/// if 1, only understood by others of this mutantrace
+	var/exclusive_language = 0
+	/// overrides normal voice message if defined (and others don't understand us, ofc)
+	var/voice_message = null
 	var/voice_name = "human"
-	var/jerk = 0				// Should robots arrest these by default?
+	/// Should robots arrest these by default?
+	var/jerk = 0
 
 	var/icon = 'icons/effects/genetics.dmi'
 	var/icon_state = "psyche"
 	var/icon_head = null
 	var/icon_beard = null
-	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
+	/// does this look different enough from a default human to warrant a static icon of its own?
+	var/icon_override_static = 0
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -52,12 +59,15 @@
 	var/l_robolimb_arm_type_mutantrace = null
 	var/r_robolimb_leg_type_mutantrace = null
 	var/l_robolimb_leg_type_mutantrace = null
-	var/ignore_missing_limbs = 0 // Replace both arms regardless of mob status (new and dispose).
+
+	/// Replace both arms regardless of mob status (new and dispose).
+	var/ignore_missing_limbs = 0
 
 	var/firevuln = 1 //Scales damage, just like critters.
 	var/brutevuln = 1
 	var/toxvuln = 1
-	var/aquatic = 0 //ignores suffocation from being underwater + moves at full speed underwater
+	/// ignores suffocation from being underwater + moves at full speed underwater
+	var/aquatic = 0
 	var/needs_oxy = 1
 
 	var/voice_override = 0
@@ -97,7 +107,8 @@
 	proc/onLife(var/mult = 1)	//Called every Life cycle of our mob
 		return
 
-	proc/onDeath() //Called when our mob dies.  Returning a true value will short circuit the normal death proc right before deathgasp/headspider/etc
+	/// Called when our mob dies.  Returning a true value will short circuit the normal death proc right before deathgasp/headspider/etc
+	proc/onDeath()
 		return
 
 	New(var/mob/living/carbon/human/M)
@@ -229,14 +240,14 @@
 		return
 
 	disposing()
-		if(mob)
+		if (mob)
 			mob.mutantrace = null
 			mob.set_face_icon_dirty()
 			mob.set_body_icon_dirty()
 
 			if (movement_modifier)
 				REMOVE_MOVEMENT_MODIFIER(mob, movement_modifier, src.type)
-			if(needs_oxy)
+			if (needs_oxy)
 				REMOVE_MOB_PROPERTY(mob, PROP_BREATHLESS, src.type)
 
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
@@ -1438,6 +1449,10 @@
 		if(ishuman(mob))
 			if(!isnull(original_blood_color))
 				mob.blood_color = original_blood_color
+				mob.bioHolder.RemoveEffect("mattereater")
+				mob.bioHolder.RemoveEffect("jumpy")
+				mob.bioHolder.RemoveEffect("vowelitis")
+				mob.bioHolder.RemoveEffect("accent_chav")
 		original_blood_color = null
 		..()
 
