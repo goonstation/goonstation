@@ -13,11 +13,11 @@ jobs:
   runtime:
     name: Runtime Checker
     runs-on: ubuntu-18.04
-    if: "!contains(github.event.head_commit.message, 'skip ci') && !((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation'))"
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       fail-fast: false
       matrix:
-        map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT2", "DONUT3", "HORIZON", "LINEMAP", "MUSHROOM", "TRUNKMAP", "OSHAN", "SAMEDI", "PAMGOC", "KONDARU", "FLEET", "ICARUS", "DENSITY", "ATLAS", "MANTA", "WRESTLEMAP", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
+        map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT2", "DONUT3", "HORIZON", "MUSHROOM", "TRUNKMAP", "OSHAN", "PAMGOC", "KONDARU", "FLEET", "ICARUS", "DENSITY", "ATLAS", "MANTA", "WRESTLEMAP", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
         compiletype: ["default", "ass"]
     steps:
       - uses: actions/checkout@v2
@@ -88,7 +88,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT2", "DONUT3", "HORIZON", "LINEMAP", "MUSHROOM", "TRUNKMAP", "OSHAN", "SAMEDI", "PAMGOC", "KONDARU", "FLEET", "ICARUS", "DENSITY", "ATLAS", "MANTA", "WRESTLEMAP", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
+        map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT2", "DONUT3", "HORIZON", "MUSHROOM", "TRUNKMAP", "OSHAN", "PAMGOC", "KONDARU", "FLEET", "ICARUS", "DENSITY", "ATLAS", "MANTA", "WRESTLEMAP", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
         compiletype: ["default", "ass"]
     steps:
       - uses: actions/checkout@v2

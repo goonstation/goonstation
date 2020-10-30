@@ -22,8 +22,7 @@
 /proc/placeAllPrefabs()
 #ifndef RUNTIME_CHECKING
 	CRASH("This proc only works if RUNTIME_CHECKING is defined")
-	return
-#endif
+#else
 	var/startTime = world.timeofday
 	boutput(world, "<span class='alert'>Generating prefabs...</span>")
 	var/list/prefab_types = filtered_concrete_typesof(/datum/generatorPrefab, /proc/filter_underwater_prefab)
@@ -37,6 +36,7 @@
 		boutput(world, "<span class='alert'>Prefab placement [M.type][M.required?" (REQUIRED)":""] succeeded. [T] @ [showCoords(T.x, T.y, T.z)]")
 		sleep(1 SECOND)
 	boutput(world, "<span class='alert'>Generated prefabs Level in [((world.timeofday - startTime)/10)] seconds!")
+#endif
 
 /proc/filter_underwater_prefab(var/prefab_type)
 	var/datum/generatorPrefab/M = prefab_type
