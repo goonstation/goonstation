@@ -61,7 +61,6 @@
   *
   * Tells the request to start executing inside its own thread inside RUSTG
   * Preferred over blocking.
-  * As such, you cannot use this for events which may happen at roundstart (EG: IPIntel, BYOND account tracking, etc)
   */
 /datum/http_request/proc/begin_async()
 	if(in_progress)

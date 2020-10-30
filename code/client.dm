@@ -768,7 +768,6 @@ var/global/curr_day = null
 	return 0
 
 /client/proc/setJoinDate()
-	set background = 1
 	joined_date = ""
 
 	// Get join date from BYOND members page
