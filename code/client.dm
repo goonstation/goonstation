@@ -417,12 +417,19 @@
 #endif
 		//Cloud data
 		if (cdn)
-			var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
-			if( !http )
-				logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
+			// Fetch via HTTP from goonhub
+			var/datum/http_request/request = new()
+			request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]", "", "")
+			request.begin_async()
+			UNTIL(request.is_complete())
+			var/datum/http_response/response = request.into_response()
 
-			var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
-			if( ret["status"] == "error" )
+			if (response.errored || !response.body)
+				logTheThing("debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub")
+				return
+
+			var/list/ret = json_decode(response.body)
+			if(ret["status"] == "error")
 				logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
 			else
 				cloudsaves = ret["saves"]
