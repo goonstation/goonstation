@@ -69,13 +69,13 @@ var/global/datum/apiHandler/apiHandler
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>API Error</b>: No response from server during query [!response.body : "during" ? "to"] <b>[safeReq]</b> (Attempt: [attempt])")
-			logTheThing("diary", null, null, "API Error: No response from server during query [!response.body : "during" ? "to"] [safeReq] (Attempt: [attempt])", "debug")
+			logTheThing("debug", null, null, "<b>API Error</b>: No response from server during query [!response.body ? "during" : "to"] <b>[safeReq]</b> (Attempt: [attempt])")
+			logTheThing("diary", null, null, "API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq] (Attempt: [attempt])", "debug")
 
 			if (attempt < maxApiRetries)
 				return retryApiQuery(args, attempt = attempt)
 
-			src.apiError("API Error: No response from server during query [!response.body : "during" ? "to"] [safeReq]")
+			src.apiError("API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq]")
 
 		// Parse the response
 		var/list/data = json_decode(response.body)
