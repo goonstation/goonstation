@@ -2,7 +2,7 @@
 	desc = "A sturdy metal mesh. Blocks large objects, but lets small items, gas, or energy beams through."
 	name = "grille"
 	icon = 'icons/obj/SL_windows_grilles.dmi'
-	icon_state = "grille12-0"
+	icon_state = "grillefull-0"
 	density = 1
 	stops_space_move = 1
 	var/health = 30
@@ -425,7 +425,7 @@
 
 		switch(builtdir) //many states share icons
 			if (0) //stand alone
-				builtdir = (WEST + EAST) //12
+				builtdir = (NORTH) //1
 			if (SOUTH) //2
 				builtdir = (NORTH + SOUTH) //3
 			if (NORTH + EAST)//5
@@ -436,10 +436,10 @@
 				builtdir = WEST //8
 			if (NORTH + SOUTH + WEST) //11
 				builtdir = (SOUTH + WEST) //10
-			if (NORTH + WEST + EAST) //13
-				builtdir = (WEST + EAST) //12
-			if (NORTH + SOUTH + WEST + EAST) //15
-				builtdir = (SOUTH + WEST + EAST) //14
+			if (NORTH + EAST + WEST) //13
+				builtdir = (EAST + WEST) //12
+			if (NORTH + SOUTH + EAST + WEST) //15
+				builtdir = (SOUTH + EAST + WEST) //14
 
 		var/diff = get_fraction_of_percentage_and_whole(health,health_max)
 		switch(diff)
