@@ -24,7 +24,6 @@ var/global/list/mapNames = list(
 	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = ASS_JAM),
 	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
 	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 1),
-	"Linemap" = 		list("id" = "LINEMAP", 		"settings" = "linemap",			"playerPickable" = ASS_JAM),
 	"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = ASS_JAM),
 	"Trunkmap" = 		list("id" = "TRUNKMAP", 	"settings" = "trunkmap",		"playerPickable" = ASS_JAM),
 	"Oshan Laboratory"= list("id" = "OSHAN", 	"settings" = "oshan", 			"playerPickable" = 1),
@@ -454,25 +453,6 @@ var/global/list/mapNames = list(
 	escape_transit = /area/shuttle/escape/transit/destiny
 	escape_station = /area/shuttle/escape/station/destiny
 	escape_dir = NORTH
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
-
-/datum/map_settings/linemap
-	name = "LINEMAP"
-	arrivals_type = MAP_SPAWN_CRYO
-	goonhub_map = "https://goonhub.com/maps/linemap"
-
-	walls = /turf/simulated/wall/auto/gannets
-	rwalls = /turf/simulated/wall/auto/reinforced/gannets
-	auto_walls = 1
-
-	escape_centcom = /area/shuttle/escape/centcom/donut2
-	escape_transit = /area/shuttle/escape/transit/donut2
-	escape_station = /area/shuttle/escape/station/donut2
-	escape_dir = WEST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny

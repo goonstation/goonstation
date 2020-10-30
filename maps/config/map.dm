@@ -20,9 +20,6 @@
 #elif defined(MAP_OVERRIDE_DONUT3)
 #include "donut3.dm"
 
-#elif defined(MAP_OVERRIDE_LINEMAP)
-#include "linemap.dm"
-
 #elif defined(MAP_OVERRIDE_MUSHROOM)
 #include "mushroom.dm"
 
