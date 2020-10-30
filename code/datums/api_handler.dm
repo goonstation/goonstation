@@ -77,16 +77,18 @@ var/global/datum/apiHandler/apiHandler
 
 			src.apiError("API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq]")
 
-		// Parse the response
-		var/list/data = json_decode(response.body)
+		if (forceResponse)
+			// Parse the response
+			var/list/data = json_decode(response.body)
 
-		if (!data)
-			logTheThing("debug", null, null, "<b>API Error</b>: JSON decode error during <b>[safeReq]</b> (Attempt: [attempt])")
-			logTheThing("diary", null, null, "API Error: JSON decode error during [safeReq] (Attempt: [attempt])", "debug")
+			if (!data)
+				logTheThing("debug", null, null, "<b>API Error</b>: JSON decode error during <b>[safeReq]</b> (Attempt: [attempt])")
+				logTheThing("diary", null, null, "API Error: JSON decode error during [safeReq] (Attempt: [attempt])", "debug")
 
-			if (attempt < maxApiRetries)
-				return retryApiQuery(args, attempt = attempt)
+				if (attempt < maxApiRetries)
+					return retryApiQuery(args, attempt = attempt)
 
-			src.apiError("API Error: JSON decode error during [safeReq]")
+				src.apiError("API Error: JSON decode error during [safeReq]")
 
-		return data
+			return data
+		return 1
