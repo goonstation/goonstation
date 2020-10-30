@@ -29,10 +29,11 @@
 	New()
 		..()
 		if(src.auto)
-			if (map_setting && ticker)
-				src.update_neighbors()
+			SPAWN_DBG(0) //fix for sometimes not joining on map load
+				if (map_setting && ticker)
+					src.update_neighbors()
 
-			src.update_icon()
+				src.update_icon()
 
 	disposing()
 		var/list/neighbors = null
