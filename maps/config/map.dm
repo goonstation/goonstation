@@ -29,9 +29,6 @@
 #elif defined(MAP_OVERRIDE_CHIRON)
 #include "chiron.dm"
 
-#elif defined(MAP_OVERRIDE_SAMEDI)
-#include "samedi.dm"
-
 #elif defined(MAP_OVERRIDE_PAMGOC)
 #include "pamgoc.dm"
 

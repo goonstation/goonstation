@@ -28,9 +28,6 @@
 #elif defined(MAP_OVERRIDE_CHIRON)
 
 
-#elif defined(MAP_OVERRIDE_SAMEDI)
-
-
 #elif defined(MAP_OVERRIDE_PAMGOC)
 
 #define REVERSED_MAP
