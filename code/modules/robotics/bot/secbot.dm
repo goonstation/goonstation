@@ -96,10 +96,14 @@
 
 	var/last_attack = 0
 	var/attack_per_step = 0 // Tries to attack every step. 1 = 75% chance to attack, 2 = 25% chance to attack
-	var/weeooing /// One WEEOOWEEOO at a time, please
-	var/baton_charged /// Set by the stun action bar if the target isnt in range, grants a brief window for a free zap next time they try to attack
-	var/baton_charge_duration = BATON_CHARGE_DURATION /// How long these batons hold a charge
-	var/cuffing /// So we dont try to cuff someone while we're cuffing someone
+	/// One WEEOOWEEOO at a time, please
+	var/weeooing
+	/// Set by the stun action bar if the target isnt in range, grants a brief window for a free zap next time they try to attack
+	var/baton_charged
+	/// How long these batons hold a charge
+	var/baton_charge_duration = BATON_CHARGE_DURATION
+	/// So we dont try to cuff someone while we're cuffing someone
+	var/cuffing
 
 	disposing()
 		if(mover)
