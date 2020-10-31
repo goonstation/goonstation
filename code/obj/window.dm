@@ -745,6 +745,8 @@
 			T.update_icon()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.update_icon()
+		for (var/obj/grille/G in orange(1,src))
+			G.update_icon()
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"

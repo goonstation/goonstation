@@ -98,6 +98,8 @@
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
 			T.update_icon()
+		for (var/obj/grille/G in orange(1,src))
+			G.update_icon()
 
 /turf/simulated/wall/auto/reinforced
 	name = "reinforced wall"
@@ -565,6 +567,8 @@
 	proc/update_neighbors()
 		for (var/turf/unsimulated/wall/auto/T in orange(1,src))
 			T.update_icon()
+		for (var/obj/grille/G in orange(1,src))
+			G.update_icon()
 
 /turf/unsimulated/wall/auto/reinforced
 	name = "reinforced wall"

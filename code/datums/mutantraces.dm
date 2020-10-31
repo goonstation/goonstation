@@ -182,7 +182,7 @@
 						limb.holder = M
 						limb.remove_stage = 0
 
-			//////////////LEGS//////////////////
+			// LEGS //
 			if (src.r_limb_leg_type_mutantrace)
 				if (M.limbs.r_leg || src.ignore_missing_limbs == 1)
 					var/obj/item/parts/human_parts/leg/limb = new src.r_limb_leg_type_mutantrace(M)
@@ -295,7 +295,7 @@
 							limb.holder = H
 							limb.remove_stage = 0
 
-			//////////////LEGS//////////////////
+				// LEGS//
 				if (src.r_limb_leg_type_mutantrace)
 					if (H.limbs.r_leg || src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/right(H)
@@ -331,6 +331,9 @@
 
 	/// Clamps each of the RGB values between 50 and 190
 	proc/fix_colors(var/hex)
+		if (!hex)
+			return rgb(22, 210, 22)
+
 		var/list/L = hex_to_rgb_list(hex)
 		for (var/i in L)
 			L[i] = min(L[i], 190)
