@@ -601,7 +601,7 @@ obj/machinery/atmospherics/pipe
 		process()
 			..()
 			if(!node1)
-				parent.mingle_with_turf(loc, 200)
+				parent?.mingle_with_turf(loc, 200)
 
 		carbon_dioxide
 			name = "Pressure Tank (Carbon Dioxide)"
