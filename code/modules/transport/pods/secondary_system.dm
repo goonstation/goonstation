@@ -79,6 +79,15 @@
 	deactivate()
 		return
 
+	on_shipdeath(var/obj/machinery/vehicle/ship)
+		if (ship)
+			SPAWN_DBG(10)	//idk so it doesn't get caught on big pods when they are still aorund...
+				for (var/obj/O in src.contents)
+					O.set_loc(get_turf(ship))
+					O.throw_at(get_edge_target_turf(O, pick(alldirs)), rand(1,3), 3)
+
+		..()
+
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
