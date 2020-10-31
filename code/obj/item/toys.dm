@@ -468,7 +468,10 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/raphaelzahel,
 /datum/figure_info/derekclarke,
 /datum/figure_info/fartcan,
-/datum/figure_info/tomato
+/datum/figure_info/tomato,
+/datum/figure_info/zooblarskrippus,
+/datum/figure_info/vivi,
+/datum/figure_info/giggles
 )
 
 /datum/figure_info
@@ -853,6 +856,10 @@ var/list/figure_patreon_rarity = list(\
 	vivi
 		name = "\improper Vivi"
 		icon_state = "vivi"
+
+	giggles
+		name = "\improper Giggles"
+		icon_state = "giggles"
 
 #ifdef XMAS
 	santa
