@@ -2245,11 +2245,11 @@
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afB" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/morgue,
 /obj/disposalpipe/segment{
 	dir = 4
-	})
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/morgue)
 "afC" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -43192,9 +43192,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/mining)
 "bRq" = (
@@ -43321,6 +43319,9 @@
 	layer = 32;
 	name = "rockworm feeding unit";
 	pixel_y = 32
+	},
+/obj/disposalpipe/trunk{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/mining)
@@ -45865,6 +45866,11 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction2)
+"olF" = (
+/obj/item/raw_material/rock,
+/obj/disposalpipe/trunk,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/station/mining)
 "ono" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
@@ -125626,7 +125632,7 @@ bPF
 bQH
 bOm
 bQU
-ast
+olF
 bRp
 bRD
 bRz
