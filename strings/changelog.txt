@@ -1,5 +1,9 @@
 
 (t)sat oct 31 20
+(u)Jawns
+(p)2555
+(e)🆕|feature
+(*)New DWAINE command unset allows you to un-set variables. Very cool!
 (u)Fosstar
 (p)2411
 (e)🆕|feature
