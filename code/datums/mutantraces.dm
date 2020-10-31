@@ -573,6 +573,7 @@
 	override_attack = 0
 	allow_fat = 1
 	jerk = 1
+	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
@@ -592,8 +593,9 @@
 		..()
 		if(ishuman(mob))
 			src.add_ability(mob)
-			mob.is_zombie = 1
+		M.is_zombie = 1
 		M.max_health += 100
+		M.health = max(M.max_health, M.health)
 
 		if (strain == 1)
 			make_bubs(M)
@@ -624,6 +626,7 @@
 		M.add_sm_light("glowy", list(94, 209, 31, 175))
 		M.bioHolder.AddEffect("shoot_limb")
 		M.bioHolder.AddEffect("acid_bigpuke")
+		boutput(M, "<h2><span class='alert'><B>You're a spitter zombie, check your BIOEFFECTS for your POWERS!</B></span></h2>")
 
 	onLife(var/mult = 1)
 		..()
@@ -716,6 +719,13 @@
 
 					mob.emote("scream")
 					mob.visible_message("<span class='alert'><B>[mob]</B> rises from the dead!</span>")
+
+					if (strain == 0 && prob(25))	//chance to be one or the other
+						strain = rand(1,2)
+						if(strain == 1) //Bubs
+							make_bubs(mob)
+						if(strain == 2) // spitter ranged zombie
+							make_spitter(mob)
 
 		return 1
 
