@@ -516,6 +516,12 @@
 				user.lastattacked = O
 				O.attack_hand(user)
 
+			if(istype(target, /obj/machinery/bot))
+				var/obj/machinery/bot/O = target
+				user.lastattacked = O
+				O.explode()
+				O.visible_message("<span class='alert'><b>[user]</b> violently rips [O] apart!</span>")
+
 			if(prob(40))
 				user.emote("scream")
 			return
