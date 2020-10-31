@@ -1,7 +1,8 @@
 #define TEAM_NANOTRASEN 1
 #define TEAM_SYNDICATE 2
-/datum/game_mode/pod_wars	name = "pod wars"
-	config_tag = "pod_wars
+/datum/game_mode/pod_war
+	name = "pod war"
+	config_tag = "pod_war"
 	votable = 1
 	probability = 0 // Overridden by the server config. If you don't have access to that repo, keep it 0.
 	crew_shortage_enabled = 1
@@ -21,13 +22,13 @@
 
 
 
-/datum/game_mode/pod_warsannounce()
-	boutput(world, "<B>The current game mode is - Pod Wars!</B>")
+/datum/game_mode/pod_war/announce()
+	boutput(world, "<B>The current game mode is - Pod War!</B>")
 	boutput(world, "<B>Two starships of similar technology and crew compliment warped into the same asteroid field!</B>")
 	boutput(world, "<B>Mine materials, build pods, kill enemies, destroy the enemy mothership!</B>")
 
 //setup teams and commanders
-/datum/game_mode/pod_warspre_setup()
+/datum/game_mode/pod_war/pre_setup()
 	board = new()
 	if (!setup_teams())
 		return 0
@@ -39,7 +40,7 @@
 
 
 
-/datum/game_mode/pod_warsproc/setup_teams()
+/datum/game_mode/pod_war/proc/setup_teams()
 	team_NT = new/datum/pod_wars_team(mode = src, team = 1)
 	team_SY = new/datum/pod_wars_team(mode = src, team = 2)
 
@@ -69,7 +70,7 @@
 
 
 
-/datum/game_mode/pod_warspost_setup()
+/datum/game_mode/pod_war/post_setup()
 	for (var/i in world)
 		if (istype(i, /obj/machinery/clonepod/automatic))
 			var/obj/machinery/clonepod/automatic/cloner = i
@@ -80,7 +81,7 @@
 	return 1
 
 //for testing, can remove when sure this works - Kyle
-/datum/game_mode/pod_warsproc/test_point_change(var/team as num, var/amt as num)
+/datum/game_mode/pod_war/proc/test_point_change(var/team as num, var/amt as num)
 
 	if (team == TEAM_NANOTRASEN)
 		team_NT.points = amt
@@ -90,7 +91,7 @@
 		handle_point_change(team_SY)
 
 
-/datum/game_mode/pod_warsproc/handle_point_change(var/datum/pod_wars_team/team)
+/datum/game_mode/pod_war/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
 	fraction = clamp(fraction, 0.00, 0.99)
 
@@ -111,7 +112,7 @@
 		check_finished()
 
 //check which team they are on and iff they are a commander for said team. Deduct/award points
-/datum/game_mode/pod_warson_human_death(var/mob/M)
+/datum/game_mode/pod_war/on_human_death(var/mob/M)
 	var/nt = locate(M.mind) in team_NT.members
 	if (nt)
 		if (M.mind == team_NT.commander)
@@ -126,7 +127,7 @@
 		team_NT.change_points(1)
 
 
-/datum/game_mode/pod_warsproc/announce_critical_system_destruction(var/obj/pod_base_critical_system/CS)
+/datum/game_mode/pod_war/proc/announce_critical_system_destruction(var/obj/pod_base_critical_system/CS)
 	if (!istype(CS))
 		return 0
 
@@ -135,15 +136,15 @@
 
 
 
-/datum/game_mode/pod_warscheck_finished()
+/datum/game_mode/pod_war/check_finished()
 
 
  return 0
 
-/datum/game_mode/pod_warsprocess()
+/datum/game_mode/pod_war/process()
 	..()
 
-/datum/game_mode/pod_warsdeclare_completion()
+/datum/game_mode/pod_war/declare_completion()
 	var/datum/pod_wars_team/winner = team_NT.points > team_SY.points ? team_NT.name : team_SY.name
 	var/datum/pod_wars_team/loser = team_NT.points < team_SY.points ? team_NT.name : team_SY.name
 	// var/text = ""
@@ -166,9 +167,9 @@
 	var/points = 50
 	var/max_points = 100
 	var/list/mcguffins = list()		//Should have 4 AND ONLY 4
-	var/datum/game_mode/pod_warsmode
+	var/datum/game_mode/pod_war/mode
 
-	New(var/datum/game_mode/pod_warsmode, team)
+	New(var/datum/game_mode/pod_war/mode, team)
 		..()
 		src.mode = mode
 		src.team_num = team
@@ -186,7 +187,7 @@
 		mode.handle_point_change(src)
 
 
-	proc/set_comms(var/datum/game_mode/pod_warsmode)
+	proc/set_comms(var/datum/game_mode/pod_war/mode)
 		comms_frequency = rand(1360,1420)
 
 		while(comms_frequency in mode.frequencies_used)
@@ -330,8 +331,8 @@
 
 	New()
 		..()
-		if (ticker.mode == /datum/game_mode/pod_wars
-			var/datum/game_mode/pod_warsmode = ticker.mode
+		if (ticker.mode == /datum/game_mode/pod_war)
+			var/datum/game_mode/pod_war/mode = ticker.mode
 			if (get_area(src) == mode.team_NT.base_area)
 				team = mode.team_NT
 			else if (get_area(src) == mode.team_SY.base_area)
@@ -341,10 +342,10 @@
 	disposing()
 		..()
 
-		if (ticker.mode == /datum/game_mode/pod_wars
+		if (ticker.mode == /datum/game_mode/pod_war)
 			if (istype(team))
 				team.change_points(-25)
-			var/datum/game_mode/pod_warsmode = ticker.mode
+			var/datum/game_mode/pod_war/mode = ticker.mode
 			mode.announce_critical_system_destruction(src)
 
 
@@ -400,8 +401,8 @@
 
 	//bad, copied from clone pod. Should be set by mapper I guess, but idk.
 	proc/get_team_from_area()
-		if (ticker.mode == /datum/game_mode/pod_wars
-			var/datum/game_mode/pod_warsmode = ticker.mode
+		if (ticker.mode == /datum/game_mode/pod_war)
+			var/datum/game_mode/pod_war/mode = ticker.mode
 			if (get_area(src) == mode.team_NT.base_area)
 				team = mode.team_NT
 			else if (get_area(src) == mode.team_SY.base_area)
@@ -438,8 +439,8 @@
 		UnsubscribeProcess()
 
 	proc/get_team_from_area()
-		if (ticker.mode == /datum/game_mode/pod_wars
-			var/datum/game_mode/pod_warsmode = ticker.mode
+		if (ticker.mode == /datum/game_mode/pod_war)
+			var/datum/game_mode/pod_war/mode = ticker.mode
 			if (get_area(src) == mode.team_NT.base_area)
 				team = mode.team_NT
 			else if (get_area(src) == mode.team_SY.base_area)
@@ -452,8 +453,8 @@
 			to_search = mobs
 
 		//so we only clone the right crew members on the right ship
-		else if (ticker.mode == /datum/game_mode/pod_wars
-			var/datum/game_mode/pod_warsmode = ticker.mode
+		else if (ticker.mode == /datum/game_mode/pod_war)
+			var/datum/game_mode/pod_war/mode = ticker.mode
 			if (team == mode.team_NT)
 				to_search = mode.team_NT.members
 			else if (team == mode.team_SY)
