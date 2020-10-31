@@ -91,8 +91,8 @@
 	icon_state = "miniputt"
 	capacity = 1
 	var/armor_score_multiplier = 0.5
-	health = 100
-	maxhealth = 100
+	health = 125
+	maxhealth = 125
 	weapon_class = 1
 	speed = 0.9
 	var/image/damaged = null
@@ -849,13 +849,14 @@ obj/machinery/vehicle/miniputt/pilot
 	var/armor_score_multiplier = 0.2
 	capacity = 2
 	weapon_class = 1
-	health = 200
-	maxhealth = 200
+	health = 250
+	maxhealth = 250
 	bound_width = 64
 	bound_height = 64
 	view_offset_x = 16
 	view_offset_y = 16
 	//luminosity = 5 // will help with space exploration
+	var/maxboom = 0
 
 	onMaterialChanged()
 		..()
@@ -954,14 +955,21 @@ obj/machinery/vehicle/miniputt/pilot
 					P.mob_shooter = user
 					P.pixel_x = H * 5
 					P.pixel_y = V * 5
+	ex_act(severity)
+		if(!maxboom)
+			SPAWN_DBG(1)
+				..()
+				maxboom = 0
+		maxboom = max(severity, maxboom)
+
 
 
 /obj/machinery/vehicle/pod_smooth/light // standard civilian pods
 	name = "Pod C-"
 	desc = "A civilian-class vehicle pod, often used for exploration and trading."
 	icon_state = "pod_civ"
-	health = 150
-	maxhealth = 150
+	health = 250
+	maxhealth = 250
 
 /obj/machinery/vehicle/pod_smooth/gold // blingee
 	name = "Pod G-"
@@ -1043,8 +1051,8 @@ obj/machinery/vehicle/miniputt/pilot
 	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accomodate up to four passengers."
 	armor_score_multiplier = 1.25
 	icon_state = "pod_industrial"
-	health = 600
-	maxhealth = 600
+	health = 550
+	maxhealth = 550
 	speed = 1.5
 	capacity = 4
 

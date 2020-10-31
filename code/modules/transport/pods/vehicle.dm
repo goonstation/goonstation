@@ -542,12 +542,15 @@
 
 		switch (severity)
 			if (1.0)
+				src.health -= round(src.maxhealth / 3)
 				src.health -= 65
 				checkhealth()
 			if(2.0)
+				src.health -= round(src.maxhealth / 4)
 				src.health -= 40
 				checkhealth()
 			if(3.0)
+				src.health -= round(src.maxhealth / 5)
 				src.health -= 25
 				checkhealth()
 
