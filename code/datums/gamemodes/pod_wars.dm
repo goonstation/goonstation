@@ -528,3 +528,87 @@ obj/screen/score_board
 	name = "Syndicate Points"
 	icon_state = "pw_sy"
 
+
+/obj/item/turret_deployer/pod_wars
+	name = "Turret Deployer"
+	desc = "A turret deployment thingy. Use it in your hand to deploy."
+	icon_state = "st_deployer"
+	w_class = 4
+	health = 125
+	quick_deploy_fuel = 2
+	var/turret_path = /obj/deployable_turret/pod_wars
+
+	spawn_turret(var/direct)
+		var/obj/deployable_turret/turret = new turret_path(src.loc,direction=direct)
+		turret.health = src.health
+		//turret.emagged = src.emagged
+		turret.damage_words = src.damage_words
+		turret.quick_deploy_fuel = src.quick_deploy_fuel
+		return turret
+
+/obj/deployable_turret/pod_wars
+	name = "Pod Defense Turret"
+	desc = "A pod defense turret."
+	health = 250
+	max_health = 250
+	wait_time = 20 //wait if it can't find a target
+	range = 8 // tiles
+	burst_size = 2 // number of shots to fire. Keep in mind the bullet's shot_count
+	fire_rate = 2 // rate of fire in shots per second
+	angle_arc_size = 120
+	quick_deploy_fuel = 2
+	var/deployer_path = /obj/deployable_turret/pod_wars
+
+	New(var/direction)
+		..(direction=direction)
+
+
+	spawn_deployer()
+		var/obj/item/turret_deployer/deployer = new deployer_path(src.loc)
+		deployer.health = src.health
+		//deployer.emagged = src.emagged
+		deployer.damage_words = src.damage_words
+		deployer.quick_deploy_fuel = src.quick_deploy_fuel
+		return deployer
+
+/obj/item/turret_deployer/pod_wars/nt
+	icon_tag = "nt"
+	turret_path = /obj/deployable_turret/pod_wars
+
+/obj/deployable_turret/pod_wars/nt
+	deployer_path = /obj/deployable_turret/pod_wars/nt
+	projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT
+	current_projectile = new/datum/projectile/laser/blaster/pod_pilot/blue_NT
+	icon_tag = "nt"//st
+	is_friend(var/mob/living/C)
+		var/obj/item/card/id/I = C.get_id()
+		if(!istype(I))
+			return 0
+		switch(I.assignment)
+			if("NT Commander")
+				return 1
+			if("NT Pilot")
+				return 1
+			else
+				return 0
+
+/obj/item/turret_deployer/pod_wars/sy
+	icon_tag = "st"
+	turret_path = /obj/deployable_turret/pod_wars
+
+/obj/deployable_turret/pod_wars/sy
+	deployer_path = /obj/deployable_turret/pod_wars/sy
+	projectile_type = /datum/projectile/laser/blaster/pod_pilot/red_SY
+	current_projectile = new/datum/projectile/laser/blaster/pod_pilot/red_SY
+	icon_tag = "st"
+	is_friend(var/mob/living/C)
+		var/obj/item/card/id/I = C.get_id()
+		if(!istype(I))
+			return 0
+		switch(I.assignment)
+			if("Syndicate Commander")
+				return 1
+			if("Syndicate Pilot")
+				return 1
+			else
+				return 0

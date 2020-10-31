@@ -362,28 +362,28 @@ toxic - poisons
 		icon_state = "crescent"
 		shot_number = 1
 
-	pod_pilot
-		cost = 20
-		power = 25
-		color_red = 0
-		color_green = 0
-		color_blue = 0
-		override_color = 0
-		icon_state = "bolt"
+/datum/projectile/laser/blaster/pod_pilot
+	cost = 20
+	power = 25
+	color_red = 0
+	color_green = 0
+	color_blue = 0
+	override_color = 0
+	icon_state = "bolt"
 
-		blue_NT
-			name = "blue blaster bolt"
-			color_icon = "#0a4882"
-			color_red = 0.05
-			color_green = 0.28
-			color_blue = 0.51
+	blue_NT
+		name = "blue blaster bolt"
+		color_icon = "#0a4882"
+		color_red = 0.05
+		color_green = 0.28
+		color_blue = 0.51
 
-		red_SY
-			name = "red blaster bolt"	
-			color_icon = "#33ccff"
-			color_red = 0.51
-			color_green = 0.05
-			color_blue = 0.28
+	red_SY
+		name = "red blaster bolt"	
+		color_icon = "#33ccff"
+		color_red = 0.51
+		color_green = 0.05
+		color_blue = 0.28
 
 
 // cogwerks- mining laser, first attempt
