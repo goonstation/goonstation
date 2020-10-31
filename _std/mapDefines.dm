@@ -19,9 +19,6 @@
 #elif defined(MAP_OVERRIDE_DONUT3)
 
 
-#elif defined(MAP_OVERRIDE_LINEMAP)
-
-
 #elif defined(MAP_OVERRIDE_MUSHROOM)
 
 
@@ -29,9 +26,6 @@
 
 
 #elif defined(MAP_OVERRIDE_CHIRON)
-
-
-#elif defined(MAP_OVERRIDE_SAMEDI)
 
 
 #elif defined(MAP_OVERRIDE_PAMGOC)

@@ -563,14 +563,22 @@
 				boutput(user, "<span class='alert'>You need to select something to plant first.</span>")
 				return
 			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
-			var/obj/item/seed/WS = unpool(/obj/item/seed)
-			WS.set_loc(src)
-			WS.generic_seed_setup(SP.selected)
-			SPAWN_DBG(0)
-				HYPnewplant(WS)
-				pool (WS)
-			if(!(user in src.contributors))
-				src.contributors += user
+			var/obj/item/seed/SEED
+			if(SP.selected.unique_seed)
+				SEED = unpool(SP.selected.unique_seed)
+			else
+				SEED = unpool(/obj/item/seed)
+			SEED.generic_seed_setup(SP.selected)
+			SEED.set_loc(src)
+			if(SEED.planttype)
+				src.HYPnewplant(SEED)
+				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
+					logTheThing("combat", user, null, "plants a [SEED.planttype] seed at [log_loc(src)].")
+				if(!(user in src.contributors))
+					src.contributors += user
+			else
+				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
+				pool (SEED)
 
 		else if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
