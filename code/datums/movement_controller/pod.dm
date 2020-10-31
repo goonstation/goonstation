@@ -114,9 +114,11 @@
 
 				//normalize and force speed cap
 				velocity_magnitude = vector_magnitude(velocity_x, velocity_y)
-				var/vel_max = velocity_max + max(owner.speed,0)
+				var/vel_max = velocity_max
 				if (!input_x && !input_y)
 					vel_max = velocity_max_no_input
+
+				vel_max /= (owner.speed ? owner.speed : 1)
 
 				if (velocity_magnitude > vel_max)
 					velocity_x /= velocity_magnitude
