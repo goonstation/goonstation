@@ -33,7 +33,6 @@
 	var/static/list/circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"super_lube"=1.12)
 	var/lube_cycle = LUBE_CHECK_RATE //rate at which reagents are adjusted
 	var/reagents_consumed = 0.5 //amount of reagents consumed
-	var/lubed = FALSE
 	var/lube_boost = 1.0
 	var/circulator_flags = BACKFLOW_PROTECTION
 	var/fan_efficiency = 10 // 0.9 ideal, but I don't want everyone to suffer... yet.
@@ -103,9 +102,9 @@
 				// P = dp q / μf, q ignored for simplification of system
 				var/total_pressure = (output_starting_pressure + pressure_delta - input_starting_pressure)
 				fan_power_draw = round((total_pressure) / src.fan_efficiency)
-		else(pressure_delta < 0)
-				gas_input = air2
-				gas_output = air1
+		else if(pressure_delta < 0)
+			gas_input = air2
+			gas_output = air1
 
 		// Azrun TODO -- Evalute transfer of small ratio of GAS when not circulating
 		pressure_delta *= lube_boost
@@ -116,11 +115,11 @@
 				return null
 			else src.use_power(fan_power_draw)
 
-		var/transfer_moles = abs(pressure_delta)*src.gas_output.volume/max(src.gas_input.temperature * R_IDEAL_GAS_EQUATION, 1) //Stop annoying runtime errors
+		var/transfer_moles = abs(pressure_delta)*gas_output.volume/max(gas_input.temperature * R_IDEAL_GAS_EQUATION, 1) //Stop annoying runtime errors
 		src.last_pressure_delta = pressure_delta
 
 		//Actually transfer the gas
-		var/datum/gas_mixture/removed = src.gas_input.remove(transfer_moles)
+		var/datum/gas_mixture/removed = gas_input.remove(transfer_moles)
 
 		if((circulator_flags & LEAKS_GAS ) && prob(5))
 			var/datum/gas_mixture/leaked = gas_input.remove_ratio(rand(2,8)*0.01)
@@ -154,8 +153,12 @@
 			equalize_gases(list(gas_input,gas_output))
 
 		if(is_circulator_active())
-			if(!src.lubed && prob(5))
-				src.audible_message("<span class='alert'>[src] makes an unsettling grinding sound!</span>")
+			if(prob(5))
+				switch(src.lube_boost)
+					if(0.0 to 0.8)
+						src.audible_message("<span class='alert'>[src] makes an unsettling grinding sound!</span>")
+					if(0.81 to 1.0)
+						src.audible_message("<span class='alert'>[src] makes an unsettling buzzing sound!</span>")
 
 
 	proc/lube_loss_check()
@@ -181,24 +184,24 @@
 
 	on_reagent_change(add)
 		. = ..()
-		var/lube_efficiency = 1.0
-		var/lube_found = FALSE
+		var/lube_efficiency = 0.0
 
-		// Iterate over reagents looking for sweet sweet lube
+		/*
+			Azrun TODO - Consider making these more punishing/beneficial to drive player discovery,
+									 is this something that could get moved to secrets to avoid spoilers?  You know... FOR THE GOOD/TERRIBLE STUFF
+		*/
 		if(src.reagents?.total_volume)
 			for(var/reagent_id as() in src.reagents.reagent_list)
 				var/datum/reagent/R = src.reagents.reagent_list[reagent_id]
+				// Iterate over reagents looking for sweet sweet lube
 				if (reagent_id in circulator_preferred_reagents)
-					lube_efficiency += (R.volume/src.reagents.maximum_volume) * circulator_preferred_reagents[reagent_id]
+					lube_efficiency += (R.volume/src.reagents.total_volume) * circulator_preferred_reagents[reagent_id]
 				else if(R.is_solid())
-					lube_efficiency += (R.volume/src.reagents.maximum_volume) * (0.4 * R.viscosity + 0.7 ) // -30% to +10% through linear transform
+					lube_efficiency += (R.volume/src.reagents.total_volume) * (0.4 * R.viscosity + 0.7 ) // -30% to +10% through linear transform
 				else
-					lube_efficiency += (R.volume/src.reagents.maximum_volume) * (0.2 * R.viscosity + 0.9 ) // -10% to +10% through linear transform
+					lube_efficiency += (R.volume/src.reagents.total_volume) * (0.2 * R.viscosity + 0.9 ) // -10% to +10% through linear transform
+		else lube_efficiency = 0.60
 
-		if(!lube_found)
-			lube_efficiency = 0.90
-
-		src.lubed = lube_found
 		src.lube_boost = lube_efficiency
 
 	process()
@@ -386,7 +389,7 @@
 				cold_air.temperature += energy_transfer*(1-efficiency)/cold_air_heat_capacity // pass the remaining energy through to the cold side
 
 				// uncomment to debug
-				logTheThing("debug", null, null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
+				// logTheThing("debug", null, null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
 		// update icon overlays only if displayed level has changed
 
 		if(swapped)
@@ -722,12 +725,8 @@
 
 		// -(1.2x - 1)^2 + 1 expands to 2.4x-1.44x^2
 		// -0.48x*(3x-5)
-		//)
 		var/fuel_fuel_ratio = src.fuel/src.maxfuel
 		var/fuel_burn_scale = ( -0.48 * fuel_fuel_ratio ) * ( (3*fuel_fuel_ratio)-5 )
-
-
-		//var/additional_heat = src.fuel * 4
 
 		// charcoal actual high temp is 2500C
 		var/additional_heat = fuel_burn_scale * (3000)
