@@ -109,7 +109,7 @@
 
 		if( (circulator_flags & LEAKS_GAS ) && prob(5))
 			var/datum/gas_mixture/leaked = gas_input.remove_ratio(rand(2,8)*0.01)
-			src.audible_message("<span class='alert'>[src] makes hissing sound.</span>")
+			src.audible_message("<span class='alert'>[src] makes a hissing sound.</span>")
 			if (leaked) loc.assume_air(leaked)
 
 		if(network1)
