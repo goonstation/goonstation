@@ -1,4 +1,69 @@
 
+(t)sat oct 31 20
+(u)Jawns
+(p)2555
+(e)🆕|feature
+(*)New DWAINE command unset allows you to un-set variables. Very cool!
+(u)Fosstar
+(p)2411
+(e)🆕|feature
+(*)Miscreants are now reenabled on the RP server with new objectives. Be wary of these fiends, slinking around to cause all manner of trouble.
+(t)fri oct 30 20
+(u)Sovexe
+(p)2544
+(e)🆕🎨|feature, sprites
+(+)Grilles now use perspective sprites and will automatically join together.
+(u)ZeWaka
+(e)🐛|major bug
+(*)Hopefully fixed that bug that was causing tgui/chat windows to be blank and require a restart.
+(u)Mordent
+(p)25491
+(e)🆕|feature
+(+)Sound synthesizers have 1 second use delay.
+(t)thu oct 29 20
+(u)imnotjames
+(p)2531
+(e)|
+(+)Fix Pod HUD RCS button's alt text
+(u)Mordent
+(p)2549
+(e)🆕|feature
+(+)Sound synthesizers have 1 second use delay.
+(u)Azrun
+(p)2526
+(e)|
+(+)PDA Power Checker now supports Radiation Collectors.  Singularity will now consume items at the singularity
+(t)wed oct 28 20
+(u)Tarmunora
+(p)2539
+(e)🆕|feature
+(+)Wizard crystals are a little more magical.
+(u)RSG250
+(p)2535
+(e)🆕|feature
+(+)Enchanted Gems can now be found in the red industrial crates
+(u)Flaborized
+(p)2532
+(e)🎨|sprites
+(+)New sprites for tanks, extinguishers, and pod engines.
+(u)Flaborized
+(p)2533
+(e)🎨|sprites
+(+)New sprites for portable flashers, brig timers, door buttons, hotdog carts, and a special surprise!
+(t)tue oct 27 20
+(u)Kyle & Flaborized
+(p)2530
+(e)🆕🎨|feature, sprites
+(*)Added holograms that the AI can project via its AI Eye.
+(u)ThePotato97
+(p)2418
+(e)🆕|feature
+(*)Added progress bars to Window & Walls construction / deconstruction
+(+)Added engineer trait for engineer related jobs which makes them do certain engineering actions 2x faster.
+(u)virvatuli
+(p)2528
+(e)🎨|sprites
+(+)Replaced the 12 gauge flare sprite with one more readable as a fire projectile
 (t)mon oct 26 20
 (u)Tarmunora
 (p)2496

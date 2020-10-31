@@ -1115,7 +1115,7 @@
 
 	New()
 		..()
-		for (var/A in typesof(/datum/plant)) src.available += new A(src)
+		for (var/A in concrete_typesof(/datum/plant)) src.available += new A(src)
 
 		/*for (var/datum/plant/P in src.available)
 			if (!P.vending || P.type == /datum/plant)
