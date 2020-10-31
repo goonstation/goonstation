@@ -17,6 +17,9 @@
 # Mordent (mordent-goonstation)
 /code/modules/robotics/ @mordent-goonstation
 
+# Tarmunora
+/code/modules/projectiles/projectile_parent.dm @Tarmunora
+
 # ZeWaka
 *.md @ZeWaka
 /.github/ @ZeWaka
