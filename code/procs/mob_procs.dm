@@ -814,8 +814,8 @@
 			if(src.mind.gang != null)
 				gang_to_see = src.mind.gang
 		//mostly took this from gang. I'm sure it can be better though, sorry. -Kyle
-		if (istype(ticker.mode, /datum/game_mode/pod_war))
-			var/datum/game_mode/pod_war/PW = ticker.mode
+		if (istype(ticker.mode, /datum/game_mode/pod_wars)
+			var/datum/game_mode/pod_warsPW = ticker.mode
 			if (locate(src.mind) in PW.team_NT.members)
 				PWT_to_see = PW.team_NT
 			else if (locate(src.mind) in PW.team_SY.members)
@@ -1025,8 +1025,8 @@
 					if (!see_everything && isobserver(M.current)) continue
 					var/II = image(antag_gang, loc = M.current)
 					can_see.Add(II)
-	else if (istype(ticker.mode, /datum/game_mode/pod_war))
-		var/datum/game_mode/pod_war/mode = ticker.mode
+	else if (istype(ticker.mode, /datum/game_mode/pod_wars)
+		var/datum/game_mode/pod_warsmode = ticker.mode
 		if (PWT_to_see || see_everything)
 			for (var/datum/mind/M in (mode.team_NT.members + mode.team_SY.members))
 				if (M.current)
