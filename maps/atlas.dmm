@@ -1916,6 +1916,7 @@
 "eQ" = (
 /obj/table/auto,
 /obj/random_item_spawner/ai_experimental,
+/obj/item/aiModule/reset,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "eS" = (
@@ -12839,6 +12840,9 @@
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 9

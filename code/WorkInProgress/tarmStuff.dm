@@ -78,6 +78,7 @@
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
 		shot_volume = 50
 		power = 15
+		hit_ground_chance = 33
 
 	void
 		power = 30
@@ -86,7 +87,7 @@
 			new/obj/decal/implo(T)
 			playsound(T, 'sound/effects/suck.ogg', 100, 1)
 			var/spamcheck = 0
-			for(var/atom/movable/AM in view(2, T))
+			for(var/atom/movable/AM in oview(2, T))
 				if(AM.anchored || AM == hit || AM.throwing) continue
 				if(spamcheck++ > 20) break
 				AM.throw_at(T, 20, 1)
@@ -384,53 +385,46 @@
 	afterattack(atom/target, mob/user, reach, params)
 		if(istype(target, /obj/item))
 			var/obj/item/I = target
-			var/currentench = 0
-			var/success = 0
-			var/incr = 0
-			if(istype(I, /obj/item/clothing))
-				currentench = I.getProperty("enchantarmor")
-				if(currentench <= 2 || !rand(0, currentench))
-					incr = (currentench <= 2) ? rand(1, 3) : 1
-					I.setProperty("enchantarmor", currentench+incr)
-					success = 1
+			var/incr = rand(1,3)
+			var/msg = text("As [user] slaps the [src] onto the [target], the [target]")
+			var/currentench = I.enchant(incr)
+			var/turf/T = get_turf(target)
+			playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+			if(currentench-incr <= 2 || !rand(0, currentench))
+				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
 			else
-				currentench = I.getProperty("enchantweapon")
-				if(currentench <= 2 || !rand(0, currentench))
-					incr = (currentench <= 2) ? rand(1, 3) : 1
-					I.setProperty("enchantweapon", currentench+incr)
-					success = 1
-			if(success)
-				var/turf/T = get_turf(target)
-				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-				user.visible_message("<span class='notice'>As [user] slaps \the [src] onto \the [target], \the [target] glows with a faint light[(currentench+incr >= 3) ? " and vibrates violently!" : "."]</span>")
-				I.remove_prefixes("+[currentench]")
-				I.name_prefix("+[currentench+incr]")
-				I.rarity = max(I.rarity, round((currentench+incr+1)/2) + 2)
-				I.tooltip_rebuild = 1
-				I.UpdateName()
-			else
-				user.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [target] shudders violently and turns to dust!</span>")
+				user.visible_message("<span class='alert'>[msg] shudders violently and turns to dust!</span>")
 				qdel(I)
 			qdel(src)
 		else
 			return ..()
-
-/obj/item/proc/enchant(incr)
+/**
+ * Enchants an item (minor armor boost for clothing, otherwise increases melee damage)
+ *
+ * incr - value to enchant by
+ * setTo - when true, sets enchantment to incr, otherwise will add incr to existing enchantment (positive or negative)
+ */
+/obj/item/proc/enchant(incr, setTo = 0)
 	var/currentench = 0
+	var/prop = ""
 	if(istype(src, /obj/item/clothing))
-		currentench = src.getProperty("enchantarmor")
-		src.setProperty("enchantarmor", currentench+incr)
+		prop = "enchantarmor"
 	else
-		currentench = src.getProperty("enchantweapon")
-		src.setProperty("enchantweapon", currentench+incr)
+		prop = "enchantweapon"
+
+	currentench = src.getProperty(prop)
+	if(setTo)
+		incr -= currentench
+	src.setProperty(prop, currentench+incr)
 	src.remove_prefixes("[currentench>0?"+":""][currentench]")
 	if(currentench+incr)
-		src.name_prefix("[(currentench+incr)>0?"+":""][currentench+incr]")
+		src.name_prefix("[(currentench+incr)>0?"+":""][currentench+incr]", prepend = 1)
 		src.rarity = max(src.rarity, round((currentench+incr+1)/2) + 2)
 	else
 		src.rarity = initial(src.rarity)
 	src.tooltip_rebuild = 1
 	src.UpdateName()
+	return currentench + incr
 
 ///Office stuff
 //Suggestion box
@@ -520,45 +514,3 @@ obj/item/gun/reagent/syringe/lovefilled
 		boutput(M, "<span class='notice'>You feel loved</span>")
 		loved += M
 
-
-
-#define colorcable(_color, _hexcolor)\
-/obj/item/cable_coil/colored/_color;\
-/obj/item/cable_coil/colored/_color/name = ""+#_color+"-colored cable coil";\
-/obj/item/cable_coil/colored/_color/base_name = ""+#_color+"-colored cable coil";\
-/obj/item/cable_coil/colored/_color/stack_type = /obj/item/cable_coil/colored/_color;\
-/obj/item/cable_coil/colored/_color/spawn_insulator_name = ""+#_color+"rubber";\
-/obj/item/cable_coil/colored/_color/cable_obj_type = /obj/cable/colored/_color;\
-/obj/item/cable_coil/colored/_color/cut;\
-/obj/item/cable_coil/colored/_color/cut/icon_state = "coil2";\
-/obj/item/cable_coil/colored/_color/cut/New(loc, length)\
-{if (length){..(loc, length)};else{..(loc, rand(1,2))};}\
-/obj/item/cable_coil/colored/_color/cut/small;\
-/obj/item/cable_coil/colored/_color/cut/small/New(loc, length){..(loc, rand(1,5))};\
-/obj/cable/colored/_color;\
-/obj/cable/colored/_color/name = ""+#_color+"-colored power cable";\
-/obj/cable/colored/_color/color = _hexcolor;\
-/obj/cable/colored/_color/insulator_default = ""+#_color+"rubber";\
-/datum/material/fabric/synthrubber/colored/_color;\
-/datum/material/fabric/synthrubber/colored/_color/mat_id = ""+#_color+"rubber";\
-/datum/material/fabric/synthrubber/colored/_color/name = ""+#_color+"rubber";\
-/datum/material/fabric/synthrubber/colored/_color/desc = ""+"A type of synthetic rubber. This one is "+#_color+".";\
-/datum/material/fabric/synthrubber/colored/_color/color = _hexcolor;\
-/obj/item/storage/box/cablesbox/colored/_color;\
-/obj/item/storage/box/cablesbox/colored/_color/name = ""+"electrical cables storage ("+#_color+")";\
-/obj/item/storage/box/cablesbox/colored/_color/spawn_contents = list(/obj/item/cable_coil/colored/_color = 7);\
-/datum/supply_packs/electrical/_color;\
-/datum/supply_packs/electrical/_color/name = ""+"Electrical Supplies Crate ("+#_color+") - 2 pack";\
-/datum/supply_packs/electrical/_color/desc = ""+"x2 Cabling Box - "+#_color+" (14 cable coils total)";\
-/datum/supply_packs/electrical/_color/contains = list(/obj/item/storage/box/cablesbox/colored/_color = 2);\
-/datum/supply_packs/electrical/_color/containername = ""+"Electrical Supplies Crate ("+#_color+")- 2 pack"
-
-colorcable(yellow, "#EED202")
-colorcable(orange, "#C46210")
-colorcable(blue, "#72A0C1")
-colorcable(green, "#00AD83")
-colorcable(purple, "#9370DB")
-colorcable(black, "#414A4C")
-colorcable(hotpink, "#FF69B4")
-colorcable(brown, "#832A0D")
-colorcable(white, "#EDEAE0")

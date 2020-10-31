@@ -13,14 +13,15 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	var/obj/screen/spooktober_meter/meter = new()
 
 	proc/change_points(var/ckey, var/added as num)
-		if (added > 0)
-			earned_points[ckey] += added
-		else
-			spent_points[ckey] += added
+		if (ckey)
+			if (added > 0)
+				earned_points[ckey] += added
+			else
+				spent_points[ckey] += added
 		src.points += added
 		if (src.points >= MAX_POINTS)
 			do_event()
-			
+
 
 	proc/update()
 
@@ -40,7 +41,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (maxed_out)
 			return
 		maxed_out = 1
-		
+
 
 /obj/screen/spooktober_meter
 	icon = 'icons/mob/spooktober_ghost_hud160x32.dmi'
@@ -502,7 +503,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	cooldown = 3 MINUTES
 	start_on_cooldown = 1
 	target_anything = 1
-	var/in_use = 0
 	special_screen_loc = "SOUTH,CENTER+1"
 	pointCost = 300
 
@@ -511,32 +511,32 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (..())
 			return 1
 
-		var/turf/T = get_turf(target)
-		if (isturf(T))
-			write_on_turf(T, holder.owner, params)
-
-
-	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use)
-			return
-		src.in_use = 1
 		var/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 		"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
 		var/list/c_symbol = list("Dollar", "Euro", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
 		"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentagram")
 
-		var/t = input(user, "What do you want to write?", null, null) as null|anything in (c_default + c_symbol)
+		var/string = input(holder.owner, "What do you want to write?", null, null) as null|anything in (c_default + c_symbol)
 
-		if (!t)
-			src.in_use = 0
+		if (!string)
 			return 1
+
+		var/turf/T = get_turf(target)
+		if (isturf(T) && holder.owner)
+			write_on_turf(T, holder.owner, params, string)
+
+
+	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params, string)
+		if (!T && !user && !string)
+			return
+
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [t]")
-		G.icon_state = t
-		G.words = t
+		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [string]")
+		G.icon_state = string
+		G.words = string
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 
@@ -545,7 +545,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		else
 			G.pixel_x = rand(-4,4)
 			G.pixel_y = rand(-4,4)
-		src.in_use = 0
 
 /datum/targetable/ghost_observer/summon_bat
 	name = "Summon Bat"

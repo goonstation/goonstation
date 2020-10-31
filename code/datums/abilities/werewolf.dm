@@ -181,7 +181,7 @@
 
 				M.visible_message("<span class='alert'><B>[M] [pick("chomps on", "chews off a chunk of", "gnaws on")] [HH]'s [pick("right arm", "left arm", "head", "right leg", "left leg")]!</B></span>")
 
-			if (ismonkey(HH) || HH.bioHolder && HH.bioHolder.HasEffect("monkey"))
+			if (isnpcmonkey(HH))
 				boutput(M, __red("Monkey flesh just isn't the real deal..."))
 				healing /= 2
 			else if (isdead(HH))
