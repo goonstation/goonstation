@@ -188,7 +188,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if(!maxboom)
 		SPAWN_DBG(1)
-			boutput(world, "[maxboom]")
 			if(severity == 1 && (maxboom ? prob(maxboom*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
 				qdel(src)
 			maxboom = 0

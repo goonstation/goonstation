@@ -1,4 +1,21 @@
 
+(t)sat oct 31 20
+(u)Fosstar
+(p)2411
+(e)🆕|feature
+(*)Miscreants are now reenabled on the RP server with new objectives. Be wary of these fiends, slinking around to cause all manner of trouble.
+(t)fri oct 30 20
+(u)Sovexe
+(p)2544
+(e)🆕🎨|feature, sprites
+(+)Grilles now use perspective sprites and will automatically join together.
+(u)ZeWaka
+(e)🐛|major bug
+(*)Hopefully fixed that bug that was causing tgui/chat windows to be blank and require a restart.
+(u)Mordent
+(p)25491
+(e)🆕|feature
+(+)Sound synthesizers have 1 second use delay.
 (t)thu oct 29 20
 (u)imnotjames
 (p)2531

@@ -606,7 +606,7 @@
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
-							result = stack[stack.len] + stack[stack.len-1]
+							result = text2num(stack[stack.len]) + text2num(stack[stack.len-1])
 							stack[--stack.len] = script_clampvalue( result )
 
 						else

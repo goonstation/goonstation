@@ -2056,12 +2056,19 @@ var/global/lastDectalkUse = 0
 	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = world.timeofday
 		msg = copytext(msg, 1, 2000)
-		var/res[] = world.Export("http://spacebee.goonhub.com/api/tts?dectalk=[url_encode(msg)]&api_key=[url_encode(ircbot.apikey)]")
-		if (!res || !res["CONTENT"])
-			return 0
 
-		var/audio = file2text(res["CONTENT"])
-		return list("audio" = audio, "message" = msg)
+		// Fetch via HTTP from goonhub
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/tts?dectalk=[url_encode(msg)]&api_key=[url_encode(ircbot.apikey)]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
+
+		if (response.errored || !response.body)
+			logTheThing("debug", null, null, "<b>dectalk:</b> Failed to contact goonhub. msg : [msg]")
+			return
+
+		return list("audio" = response.body, "message" = msg)
 	else
 		return list("cooldown" = 1)
 
