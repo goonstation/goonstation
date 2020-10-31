@@ -776,7 +776,7 @@
 	f_active = 1
 	power_used = 0
 	var/crashable = 0
-	var/crashhits = 8
+	var/crashhits = 10
 	var/in_bump = 0
 	hud_state = "seed"
 
@@ -854,6 +854,7 @@
 		boutput(M, "<span class='alert'><B>The [src] crashes into [M]!</B></span>")
 		M.changeStatus("stunned", 80)
 		M.changeStatus("weakened", 5 SECONDS)
+		M.TakeDamageAccountArmor("chest", 20, damage_type = DAMAGE_BLUNT)
 		var/turf/target = get_edge_target_turf(ship, ship.dir)
 		M.throw_at(target, 4, 2)
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
@@ -877,7 +878,15 @@
 			if (istype(O, /obj/storage/closet) || istype(O, /obj/storage/secure/closet))
 				O:dump_contents()
 				qdel(O)
-			if (istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
+			if(istype(O, /obj/window))
+				for(var/obj/grille/G in get_turf(O))
+					qdel(G)
+				qdel(O)
+			if(istype(O, /obj/grille))
+				for(var/obj/window/W in get_turf(O))
+					qdel(W)
+				qdel(O)
+			if (istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 				qdel(O)
 			if (istype(O, /obj/critter))
 				O:CritterDeath()
