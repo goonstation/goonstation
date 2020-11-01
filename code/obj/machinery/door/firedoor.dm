@@ -89,8 +89,8 @@
 
 // listen for fire alert from firealarm
 /obj/machinery/door/firedoor/receive_signal(datum/signal/signal)
-	if((signal.data["zone"] == zone || signal.data["zone"] == zone2) && signal.data["type"] == "Fire")
-		if(signal.data["alert"] == "fire")
+	if((signal.data["zone"] == zone || signal.data["zone"] == zone2) && signal.data["type"])
+		if(signal.data["alert"] == "trip")
 			set_closed()
 		else
 			set_open()
