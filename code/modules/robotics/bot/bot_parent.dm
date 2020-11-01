@@ -104,7 +104,7 @@
 			. += "<span class='alert'><B>[src]'s parts look very loose!</B></span>"
 
 /obj/machinery/bot/proc/hitbyproj(source, obj/projectile/P)
-	if((P.proj_data.damage_type & (KINETIC | ENERGY | SLASHING) && P.proj_data.ks_ratio > 0))
+	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)) && P.proj_data.ks_ratio > 0)
 		P.initial_power -= 10
 		if(P.initial_power <= 0)
 			P.die()
