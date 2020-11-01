@@ -55883,6 +55883,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
+/obj/access_spawn/syndie_shuttle,
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "cIM" = (
@@ -65667,6 +65668,7 @@
 	dir = 6;
 	icon_state = "bot2"
 	},
+/obj/access_spawn/syndie_shuttle,
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "ddt" = (
