@@ -99,7 +99,7 @@
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
 
-	proc/collide(atom/A as mob|obj|turf|area)
+	proc/collide(atom/A as mob|obj|turf|area, first = 1)
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
@@ -125,6 +125,7 @@
 			return
 
 		var/sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
+		SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src)
 		// also run the atom's general bullet act
 		var/atom/B = A.bullet_act(src) //If bullet_act returns an atom, do all bad stuff to that atom instead
 		if(istype(B))
@@ -163,32 +164,11 @@
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
 		else if (ismob(A))
-			if(pierces_left != 0) //try to hit other targets on the tile
+			if(pierces_left != 0 && first) //try to hit other targets on the tile
 				var/turf/T = get_turf(A)
 				for (var/mob/X in T.contents)
-					if (X != A)
-						X.bullet_act(src)
-						pierces_left--
-						//holy duplicate code batman. If someone can come up with a better solution, be my guest
-						if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
-							if (proj_data.hit_mob_sound)
-								playsound(X.loc, proj_data.hit_mob_sound, 60, 0.5)
-							proj_data.on_hit(X, angle_to_dir(src.angle), src)
-						for (var/obj/item/cloaking_device/S in X.contents)
-							if (S.active)
-								S.deactivate(X)
-								src.visible_message("<span class='notice'><b>[X]'s cloak is disrupted!</b></span>")
-						for (var/obj/item/device/disguiser/D in A.contents)
-							if (D.on)
-								D.disrupt(X)
-								src.visible_message("<span class='notice'><b>[X]'s disguiser is disrupted!</b></span>")
-						if (isliving(X))
-							var/mob/living/H = X
-							H.stamina_stun()
-							if (istype(X, /mob/living/carbon/human/npc/monkey))
-								var/mob/living/carbon/human/npc/monkey/M = X
-								M.shot_by(shooter)
-
+					if(!(X in src.hitlist))
+						collide(X, first = 0)
 					if(pierces_left == 0)
 						break
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
