@@ -75,7 +75,9 @@
 
 /obj/machinery/meter/examine()
 	. = list("A gas flow meter. ")
-	if (src.target)
+	if(status & (NOPOWER|BROKEN))
+		. += "Something seems wrong with it..."
+	else if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
 			. += text("The pressure gauge reads [] kPa", round(MIXTURE_PRESSURE(environment), 0.1))
