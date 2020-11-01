@@ -14687,9 +14687,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "aBm" = (

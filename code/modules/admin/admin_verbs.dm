@@ -260,6 +260,7 @@ var/list/admin_verbs = list(
 		/client/proc/removeOther,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
+		/client/proc/spawn_survival_shit,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
