@@ -925,6 +925,10 @@ THROWING DARTS
 			if (dist <= 1)
 				. += "This one has unlimited charges."
 
+		assistant
+			New()
+				..()
+				access.access = get_access("Staff Assistant")
 
 		shittybill //give im some access
 
