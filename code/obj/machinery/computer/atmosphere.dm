@@ -114,8 +114,10 @@ Atmos alert computer
 		return
 
 	var/indexclass = class
-	if(class in list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood", "Manual Trip"))
-		indexclass = "Fire"
+	for(var/loopclass in list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood", "Manual Trip"))
+		if(class == loopclass)
+			indexclass = "Fire"
+			break
 	var/list/L = src.alarms[indexclass]
 
 	for (var/I in L)

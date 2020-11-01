@@ -20,7 +20,7 @@
 	var/dont_spam = 0
 	var/secondary_tick = 0
 	var/datum/radio_frequency/frequency
-	var/static/manual_off_reactivate_idle = 8 //how many machine loop ticks to idle after being manually switched off
+	var/static/manual_off_reactivate_idle = 2 SECONDS //how many machine loop ticks to idle after being manually switched off
 	var/idle_count = 0
 	text = ""
 
@@ -34,7 +34,7 @@
 
 	if(!net_id)
 		net_id = generate_net_id(src)
-	secondary_tick = rand(0, 3)
+	secondary_tick = rand(0, 2)
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
 	SPAWN_DBG (10)
@@ -53,7 +53,7 @@
 
 /obj/machinery/firealarm/proc/toggleinput(var/datum/mechanicsMessage/inp)
 	if(src.icon_state == "fire0")
-		alarm(1)
+		alarm(ALARM_FIRE)
 	else
 		reset()
 	return
@@ -61,19 +61,19 @@
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
 		if(temperature > T0C+200)
-			src.alarm(1)			// added check of detector status here
+			src.alarm(ALARM_FIRE)			// added check of detector status here
 	return
 
 /obj/machinery/firealarm/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
 /obj/machinery/firealarm/bullet_act(BLAH)
-	return src.alarm(5)
+	return src.alarm(ALARM_MANUALTRIP)
 
 /obj/machinery/firealarm/emp_act()
 	..()
 	if(prob(50))
-		src.alarm(1)
+		src.alarm(ALARM_FIRE)
 	return
 
 /obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)
@@ -84,7 +84,7 @@
 		else
 			user.visible_message("<span class='alert'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
 	else if (src.icon_state == "fire0")
-		src.alarm(1)
+		src.alarm(ALARM_FIRE)
 	else
 		src.reset()
 	src.add_fingerprint(user)
@@ -94,18 +94,19 @@
 	if(status & (NOPOWER|BROKEN))
 		return
 	use_power(10, ENVIRON)
-	secondary_tick++
-	if(secondary_tick > 3)
-		secondary_tick = 0
-		var/turf/location = src.loc
-		var/datum/gas_mixture/environment = location.return_air()
-		var/gaspressure = MIXTURE_PRESSURE(environment)
-		if(gaspressure < ONE_ATMOSPHERE*0.5)
-			src.alarm(2)
-		if(environment.toxins > 5)
-			src.alarm(3)
-		if(location.active_liquid && location.active_liquid.group && location.active_liquid.group.last_depth_level > 3)
-			src.alarm(4)
+	if(src.detecting)
+		secondary_tick++
+		if(secondary_tick > 2)
+			secondary_tick = 0
+			var/turf/location = src.loc
+			var/datum/gas_mixture/environment = location.return_air()
+			var/gaspressure = MIXTURE_PRESSURE(environment)
+			if(gaspressure < ONE_ATMOSPHERE*0.25)
+				src.alarm(ALARM_PRESSURE)
+			if(environment.toxins > 5)
+				src.alarm(ALARM_PLASMA)
+			if(location.active_liquid && location.active_liquid.group && location.active_liquid.group.last_depth_level >= 2)
+				src.alarm(ALARM_FLOOD)
 
 
 /obj/machinery/firealarm/power_change()
@@ -124,10 +125,12 @@
 	interact_particle(user,src)
 
 	if (src.icon_state == "fire0")
-		src.alarm(5)
+		src.alarm(ALARM_MANUALTRIP)
 	else
-		idle_count = manual_off_reactivate_idle
 		src.reset()
+		detecting = 0
+		SPAWN_DBG(manual_off_reactivate_idle)
+			detecting = 1
 
 /obj/machinery/firealarm/proc/reset()
 	if(!working)
@@ -142,11 +145,10 @@
 
 	if (src.ringlimiter)
 		src.ringlimiter = 0
-
 	post_alert(0)
 	return
 
-/obj/machinery/firealarm/proc/alarm(var/alarmtype = 1)
+/obj/machinery/firealarm/proc/alarm(var/alarmtype = ALARM_FIRE)
 	if(!working)
 		return
 
@@ -218,7 +220,7 @@
 			if ("status")
 				post_alert(src.icon_state == "fire0", sender)
 			if ("trigger")
-				src.alarm(5)
+				src.alarm(ALARM_MANUALTRIP)
 			if ("reset")
 				src.reset()
 

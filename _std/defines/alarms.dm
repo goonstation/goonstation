@@ -1,0 +1,5 @@
+#define ALARM_FIRE 1
+#define ALARM_PRESSURE 2
+#define ALARM_PLASMA 3
+#define ALARM_FLOOD 4
+#define ALARM_MANUALTRIP 5
