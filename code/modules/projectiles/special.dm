@@ -847,15 +847,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "dimensional pocket"
 	power = 1
 	cost = 1
-	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_sound = "sound/weapons/rocket.ogg"
 	icon_state = "bullet"
 	implanted= null
 	casing = null
 	icon_turf_hit = null
 	var/typetospawn = null
 	var/hasspawned = null
+	var/hit_sound = null
 
 	on_hit(atom/hit, direction, projectile)
+		if(src.hit_sound)
+			playsound(hit, src.hit_sound, 50, 1)
 		if(ismob(hit) && typetospawn)
 			hasspawned = 1
 			. = new typetospawn(get_turf(hit))
