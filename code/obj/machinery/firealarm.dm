@@ -34,7 +34,7 @@
 
 	if(!net_id)
 		net_id = generate_net_id(src)
-
+	secondary_tick = rand(0, 3)
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
 	SPAWN_DBG (10)
@@ -53,7 +53,7 @@
 
 /obj/machinery/firealarm/proc/toggleinput(var/datum/mechanicsMessage/inp)
 	if(src.icon_state == "fire0")
-		alarm()
+		alarm(1)
 	else
 		reset()
 	return
@@ -61,19 +61,19 @@
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
 		if(temperature > T0C+200)
-			src.alarm(0)			// added check of detector status here
+			src.alarm(1)			// added check of detector status here
 	return
 
 /obj/machinery/firealarm/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
 /obj/machinery/firealarm/bullet_act(BLAH)
-	return src.alarm()
+	return src.alarm(5)
 
 /obj/machinery/firealarm/emp_act()
 	..()
 	if(prob(50))
-		src.alarm()
+		src.alarm(1)
 	return
 
 /obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)
@@ -84,7 +84,7 @@
 		else
 			user.visible_message("<span class='alert'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
 	else if (src.icon_state == "fire0")
-		src.alarm()
+		src.alarm(1)
 	else
 		src.reset()
 	src.add_fingerprint(user)
@@ -101,11 +101,11 @@
 		var/datum/gas_mixture/environment = location.return_air()
 		var/gaspressure = MIXTURE_PRESSURE(environment)
 		if(gaspressure < ONE_ATMOSPHERE*0.5)
-			src.alarm(1)
-		if(environment.toxins > 5)
 			src.alarm(2)
-		if(location.active_liquid && location.active_liquid.group && location.active_liquid.group.last_depth_level > 3)
+		if(environment.toxins > 5)
 			src.alarm(3)
+		if(location.active_liquid && location.active_liquid.group && location.active_liquid.group.last_depth_level > 3)
+			src.alarm(4)
 
 
 /obj/machinery/firealarm/power_change()
@@ -124,7 +124,7 @@
 	interact_particle(user,src)
 
 	if (src.icon_state == "fire0")
-		src.alarm()
+		src.alarm(5)
 	else
 		idle_count = manual_off_reactivate_idle
 		src.reset()
@@ -146,7 +146,7 @@
 	post_alert(0)
 	return
 
-/obj/machinery/firealarm/proc/alarm(var/alarmtype = 0)
+/obj/machinery/firealarm/proc/alarm(var/alarmtype = 1)
 	if(!working)
 		return
 
@@ -158,8 +158,9 @@
 		return
 	if (A.fire) // maybe we should trigger an alarm when there already is one, goddamn
 		return
+	var/tmp/typestring = list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood", "Manual Trip")
 
-	A.firealert()	//Icon state is set to "fire1" in A.firealert()
+	A.firealert(typestring[alarmtype])	//Icon state is set to "fire1" in A.firealert()
 	post_alert(1, type=alarmtype)
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"alertTriggered")
@@ -177,15 +178,16 @@
 	return
 
 
-/obj/machinery/firealarm/proc/post_alert(var/alarm, var/specific_target, var/type = 0)
+/obj/machinery/firealarm/proc/post_alert(var/alarm, var/specific_target, var/type = 1)
 //	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
 
 	LAGCHECK(LAG_LOW)
 
 	if(!frequency) return
 
-	var/typestring = list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood")
-
+	var/tmp/typestring = list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood", "Manual Trip")
+	if(type == 0)
+		type = 5
 	var/datum/signal/alert_signal = get_free_signal()
 	alert_signal.source = src
 	alert_signal.transmission_method = TRANSMISSION_RADIO
@@ -197,7 +199,7 @@
 		alert_signal.data["address_1"] = specific_target
 
 	if(alarm)
-		alert_signal.data["alert"] = "fire"
+		alert_signal.data["alert"] = "trip"
 	else
 		alert_signal.data["alert"] = "reset"
 
@@ -216,7 +218,7 @@
 			if ("status")
 				post_alert(src.icon_state == "fire0", sender)
 			if ("trigger")
-				src.alarm()
+				src.alarm(5)
 			if ("reset")
 				src.reset()
 
@@ -229,9 +231,9 @@
 		reply.data["command"] = "ping_reply"
 		reply.data["device"] = "PNET_FIREALARM"
 		reply.data["netid"] = src.net_id
-		reply.data["alert"] = src.icon_state == "fire0" ? "reset" : "fire"
+		reply.data["alert"] = src.icon_state == "fire0" ? "reset" : "trip"
 		reply.data["zone"] = alarm_zone
-		reply.data["type"] = "Fire"
+		reply.data["type"] = "Environmental"
 		SPAWN_DBG(0.5 SECONDS)
 			src.frequency.post_signal(src, reply)
 		return
