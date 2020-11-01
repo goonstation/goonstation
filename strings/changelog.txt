@@ -1,5 +1,9 @@
 
 (t)sat oct 31 20
+(u)MarkNstein
+(p)2562
+(e)🐛🗺|bug, mapping
+(+)Manta's rockworm enclosure now has a functioning feed-chute.
 (u)Jawns
 (p)2555
 (e)🆕|feature
