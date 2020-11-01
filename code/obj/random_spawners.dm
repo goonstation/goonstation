@@ -1832,15 +1832,15 @@
 	/obj/item/organ/appendix,
 	)
 
-	one_to_three_bloody
+	one_to_three
 		min_amt2spawn = 1
 		max_amt2spawn = 3
 
-	bloody
-		New()
-			. = ..()
-			make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)
+/obj/random_item_spawner/organs/bloody
+	New()
+		. = ..()
+		make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)
 
-		one_to_three
-			min_amt2spawn = 1
-			max_amt2spawn = 3
+	one_to_three
+		min_amt2spawn = 1
+		max_amt2spawn = 3
