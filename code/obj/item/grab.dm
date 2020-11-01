@@ -413,8 +413,6 @@
 
 
 	proc/check_hostage(owner, obj/projectile/P)
-		if(ismob(owner))
-			var/mob/M = owner
 		var/mob/hostage = null
 		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
 			hostage = src.affecting
