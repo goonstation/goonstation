@@ -1,4 +1,9 @@
 
+(t)sun nov 01 20
+(u)MarkNstein
+(p)2564
+(e)🐛|bug
+(*)Rockworms now actually drop various gems on death (if they've eaten enough rocks).
 (t)sat oct 31 20
 (u)MarkNstein
 (p)2562
