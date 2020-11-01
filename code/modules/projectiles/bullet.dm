@@ -136,6 +136,9 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 	casing = /obj/item/casing/medium
 
+/datum/projectile/bullet/revolver_38/lb
+	shot_sound = 'sound/weapons/lb_execute.ogg'
+
 /datum/projectile/bullet/revolver_38/AP//traitor det revolver
 	power = 35
 	implanted = /obj/item/implant/projectile/bullet_38AP
