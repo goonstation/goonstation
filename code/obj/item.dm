@@ -400,6 +400,7 @@
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
+		eat_twitch(M)
 		SPAWN_DBG (10)
 			if (!src || !M || !user)
 				return 0
@@ -438,6 +439,7 @@
 				src.reagents.trans_to(M, src.reagents.total_volume)
 
 		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
+		eat_twitch(M)
 		SPAWN_DBG (10)
 			if (!src || !M || !user)
 				return 0

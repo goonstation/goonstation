@@ -1469,6 +1469,7 @@ var/global/list/soundCache = list(
  	"sound/weapons/laser_e.ogg" = 'sound/weapons/laser_e.ogg',\
  	"sound/weapons/laser_f.ogg" = 'sound/weapons/laser_f.ogg',\
  	"sound/weapons/launcher.ogg" = 'sound/weapons/launcher.ogg',\
+ 	"sound/weapons/lb_execute.ogg" = 'sound/weapons/lb_execute.ogg',\
  	"sound/weapons/male_cswordattack1.ogg" = 'sound/weapons/male_cswordattack1.ogg',\
  	"sound/weapons/male_cswordattack2.ogg" = 'sound/weapons/male_cswordattack2.ogg',\
  	"sound/weapons/male_cswordstart.ogg" = 'sound/weapons/male_cswordstart.ogg',\
