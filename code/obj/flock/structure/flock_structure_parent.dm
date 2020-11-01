@@ -49,14 +49,6 @@
 		var/info = building_specific_info()
 		if(!isnull(info))
 			special_desc += "<br>[info]"
-
-		//debuggin thing ignore this
-
-		if(usesgroups)
-			special_desc += "<br><span class='bold'>Group:</span> [group?.debugid]"
-			special_desc += "<br><span class='bold'>Connected tile:</span> ["\ref[grouptile]"]"
-
-		//debugging end
 		special_desc += "<br><span class='bold'>###=-</span></span>"
 		return special_desc
 	else
