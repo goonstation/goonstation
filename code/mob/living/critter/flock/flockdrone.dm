@@ -291,6 +291,9 @@
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
 				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1)
 				return "<b>[src]</b> [fart_message]"
+		if ("laugh") //no good sound for it - moon
+			if (src.emote_check(voluntary, 50))
+				return "<b>[src]</b> caws heartily!"
 	return null
 
 /mob/living/critter/flock/drone/specific_emote_type(var/act)
@@ -717,7 +720,7 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// CONVERT TURF
-	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather)))
+	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather) || istype(target, /obj/flock_structure/ghost)))
 		target = get_turf(target)
 
 	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
@@ -765,14 +768,16 @@
 				..()
 //help intent actions
 	else if(user.a_intent == INTENT_HELP)
-		if(istype(target, /obj/machinery/door/feather))
-			var/obj/machinery/door/feather/F = target
-			if(F.broken || (F.health > F.health_max))
-				if(user.resources < 10)
-					boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
-				else
-					actions.start(new/datum/action/bar/flock_repair(F), user)
-
+		switch(target.type)//making this into switches for easy of expansion later
+			if(/obj/machinery/door/feather)
+				var/obj/machinery/door/feather/F = target
+				if(F.broken || (F.health < F.health_max))
+					if(user.resources < 10)
+						boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
+					else
+						actions.start(new/datum/action/bar/flock_repair(F), user)
+			if(/obj/flock_structure/ghost)
+				actions.start(new /datum/action/bar/flock_deposit(target), user)
 
 /datum/limb/flock_converter/help(mob/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
