@@ -571,6 +571,50 @@ obj/screen/score_board
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
 		return deployer
 
+	seek_target()
+		src.target_list = list()
+		for (var/mob/living/C in mobs)
+			if(!src)
+				break
+
+			if (src.target_valid(C))
+				src.target_list += C
+				var/distance = get_dist(C.loc,src.loc)
+				src.target_list[C] = distance
+
+			else
+				continue
+
+		for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS])
+			if (pod_target_valid(V))
+				var/distance = get_dist(V.loc,src.loc)
+				target_list[V] = distance
+
+		if (src.target_list.len>0)
+			var/min_dist = 99999
+
+			for (var/atom/T in src.target_list)
+				if (src.target_list[T] < min_dist)
+					src.target = T
+					min_dist = src.target_list[T]
+
+			src.icon_state = "[src.icon_tag]_active"
+
+			playsound(src.loc, "sound/vox/woofsound.ogg", 40, 1)
+
+		return src.target
+
+	proc/pod_target_valid(var/obj/machinery/vehicle/V )
+		var/distance = get_dist(V.loc,src.loc)
+		if(distance > src.range)
+			return 0
+
+		if (ismob(V.pilot))
+			return is_friend(V.pilot)
+
+
+
+
 /obj/item/turret_deployer/pod_wars/nt
 	icon_tag = "nt"
 	turret_path = /obj/deployable_turret/pod_wars
@@ -612,3 +656,51 @@ obj/screen/score_board
 				return 1
 			else
 				return 0
+
+/obj/item/shipcomponent/secondary_system/lock/pw_id
+	name = "ID Card Hatch Locking Unit"
+	desc = "A basic hatch locking mechanism with a ID card scanner."
+	system = "Lock"
+	f_active = 1
+	power_used = 0
+	icon_state = "lock"
+	code = ""
+	configure_mode = 0 //If true, entering a valid code sets that as the code.
+	var/team = 0 //TEAM_SYNDICATE
+	var/obj/item/card/id/assigned_id = null
+
+	// Use(mob/user as mob)
+
+
+
+	show_lock_panel(mob/living/user)
+		if (isliving(user))
+			var/obj/item/card/id/I = user.get_id()
+
+			if (isnull(assigned_id))
+				if (istype(I))
+					boutput(usr, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
+					playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+					assigned_id = I
+					team = get_team(I)
+					ship.locked = 0
+					return
+
+			if (istype(I))
+				if (I == assigned_id || get_team(I) == team)
+					ship.locked = !ship.locked
+					boutput(usr, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
+
+
+
+	proc/get_team(var/obj/item/card/id/I)
+		switch(I.assignment)
+			if("NT Commander")
+				return TEAM_NANOTRASEN
+			if("NT Pilot")
+				return TEAM_NANOTRASEN
+			if("Syndicate Commander")
+				return TEAM_SYNDICATE
+			if("Syndicate Pilot")
+				return TEAM_SYNDICATE
+		return -1
