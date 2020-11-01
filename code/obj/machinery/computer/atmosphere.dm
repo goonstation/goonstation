@@ -112,7 +112,12 @@ Atmos alert computer
 /obj/machinery/computer/atmosphere/alerts/proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 	if(status & (BROKEN|NOPOWER))
 		return
-	var/list/L = src.alarms[class]
+
+	var/indexclass = class
+	if(class in list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood", "Manual Trip"))
+		indexclass = "Fire"
+	var/list/L = src.alarms[indexclass]
+
 	for (var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
