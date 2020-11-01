@@ -3,7 +3,7 @@
 //
 
 /obj/machinery/firealarm
-	name = "Fire Alarm"
+	name = "Environmental Alarm"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	plane = PLANE_NOSHADOW_ABOVE
@@ -18,12 +18,13 @@
 	var/net_id
 	var/ringlimiter = 0
 	var/dont_spam = 0
+	var/secondary_tick = 0
 	var/datum/radio_frequency/frequency
 	var/static/manual_off_reactivate_idle = 8 //how many machine loop ticks to idle after being manually switched off
 	var/idle_count = 0
 	text = ""
 
-	desc = "A fire sensor and alarm system. When it detects fire or is manually activated, it closes all firelocks in the area to minimize the spread of fire."
+	desc = "An environmental sensor and alarm system. When it detects fire, high water, low pressure, plasma, or is manually activated, it closes all firelocks in the area to minimize the spread of dangerous conditions."
 
 /obj/machinery/firealarm/New()
 	..()
@@ -60,7 +61,7 @@
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
 		if(temperature > T0C+200)
-			src.alarm()			// added check of detector status here
+			src.alarm(0)			// added check of detector status here
 	return
 
 /obj/machinery/firealarm/attack_ai(mob/user as mob)
@@ -92,8 +93,19 @@
 /obj/machinery/firealarm/process()
 	if(status & (NOPOWER|BROKEN))
 		return
-
 	use_power(10, ENVIRON)
+	secondary_tick++
+	if(secondary_tick > 3)
+		secondary_tick = 0
+		var/turf/location = src.loc
+		var/datum/gas_mixture/environment = location.return_air()
+		var/gaspressure = MIXTURE_PRESSURE(environment)
+		if(gaspressure < ONE_ATMOSPHERE*0.5)
+			src.alarm(1)
+		if(environment.toxins > 5)
+			src.alarm(2)
+		if(location.active_liquid && location.active_liquid.group && location.active_liquid.group.last_depth_level > 3)
+			src.alarm(3)
 
 
 /obj/machinery/firealarm/power_change()
@@ -134,7 +146,7 @@
 	post_alert(0)
 	return
 
-/obj/machinery/firealarm/proc/alarm()
+/obj/machinery/firealarm/proc/alarm(var/alarmtype = 0)
 	if(!working)
 		return
 
@@ -148,7 +160,7 @@
 		return
 
 	A.firealert()	//Icon state is set to "fire1" in A.firealert()
-	post_alert(1)
+	post_alert(1, type=alarmtype)
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"alertTriggered")
 	if (!src.ringlimiter)
@@ -165,18 +177,20 @@
 	return
 
 
-/obj/machinery/firealarm/proc/post_alert(var/alarm, var/specific_target)
+/obj/machinery/firealarm/proc/post_alert(var/alarm, var/specific_target, var/type = 0)
 //	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
 
 	LAGCHECK(LAG_LOW)
 
 	if(!frequency) return
 
+	var/typestring = list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood")
+
 	var/datum/signal/alert_signal = get_free_signal()
 	alert_signal.source = src
 	alert_signal.transmission_method = TRANSMISSION_RADIO
 	alert_signal.data["zone"] = alarm_zone
-	alert_signal.data["type"] = "Fire"
+	alert_signal.data["type"] = typestring[type]
 	alert_signal.data["netid"] = net_id
 	alert_signal.data["sender"] = net_id
 	if (specific_target)
