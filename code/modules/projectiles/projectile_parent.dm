@@ -113,6 +113,7 @@
 				return
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
+		var/turf/T = get_turf(A)
 		src.power = src.proj_data.get_power(src, A)
 		if(src.power <= 0 && src.proj_data.power != 0) return //we have run out of power
 		// Necessary because the check in human.dm is ineffective (Convair880).
@@ -125,7 +126,9 @@
 			return
 
 		var/sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
-		SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src)
+		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src)
+		if(pooled) //maybe a signal proc pooled us
+			return
 		// also run the atom's general bullet act
 		var/atom/B = A.bullet_act(src) //If bullet_act returns an atom, do all bad stuff to that atom instead
 		if(istype(B))
@@ -146,8 +149,8 @@
 			// if we hit a turf apparently the bullet is magical and hits every single object in the tile, nice shooting tex
 			for (var/obj/O in A)
 				O.bullet_act(src)
-			var/turf/T = A
-			if (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL))
+			T = A
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
 				if (proj_data && proj_data.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
@@ -164,13 +167,6 @@
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
 		else if (ismob(A))
-			if(pierces_left != 0 && first) //try to hit other targets on the tile
-				var/turf/T = get_turf(A)
-				for (var/mob/X in T.contents)
-					if(!(X in src.hitlist))
-						collide(X, first = 0)
-					if(pierces_left == 0)
-						break
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -189,13 +185,21 @@
 					var/mob/living/carbon/human/npc/monkey/M = A
 					M.shot_by(shooter)
 
-			if (pierces_left == 0)
+			if(sigreturn & PROJ_ATOM_PASSTHROGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
+				for (var/mob/X in T.contents)
+					if(!(X in src.hitlist))
+						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
+							src.collide(X, first = 0)
+					if(src.pooled)
+						return
+			if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
 				die()
 			else
-				pierces_left--
+				if(!(sigreturn & PROJ_ATOM_PASSTHROGH))
+					pierces_left--
 
 		else if (isobj(A))
-			if (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
 				if (iscritter(A))
 					if (proj_data && proj_data.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -203,6 +207,13 @@
 					if (proj_data && proj_data.hit_object_sound)
 						playsound(A.loc, proj_data.hit_object_sound, 60, 0.5)
 				die()
+			if(first && (sigreturn & PROJ_OBJ_HIT_OTHER_OBJS))
+				for (var/obj/X in T.contents)
+					if(!(X in src.hitlist))
+						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
+							src.collide(X, first = 0)
+					if(src.pooled)
+						return
 		else
 			die()
 

@@ -31,7 +31,7 @@
 
 	New()
 		..()
-
+		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, .proc/hitbyproj)
 		if(!no_camera)
 			src.cam = new /obj/machinery/camera(src)
 			src.cam.c_tag = src.name
@@ -56,12 +56,12 @@
 	bullet_act(var/obj/projectile/P)
 		if (!P || !istype(P))
 			return
-
 		hit_twitch(src)
 
 		var/damage = 0
 		damage = round(((P.power/4)*P.proj_data.ks_ratio), 1.0)
 
+		boutput(world, "took <b>[damage]</b> damage!")
 		if (P.proj_data.damage_type == D_KINETIC)
 			src.health -= damage
 		else if (P.proj_data.damage_type == D_PIERCING)
@@ -102,3 +102,11 @@
 			. += "<span class='alert'>[src]'s parts look loose.</span>"
 		else
 			. += "<span class='alert'><B>[src]'s parts look very loose!</B></span>"
+
+/obj/machinery/bot/proc/hitbyproj(source, obj/projectile/P)
+	if((P.proj_data.damage_type & (KINETIC | ENERGY | SLASHING) && P.proj_data.ks_ratio > 0))
+		P.initial_power -= 10
+		if(P.initial_power <= 0)
+			P.die()
+	if(!src.density)
+		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROGH

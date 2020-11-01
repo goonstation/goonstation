@@ -1,8 +1,16 @@
 
 //pass flags
-#define PROJ_PASSNONE 0
-#define PROJ_PASSWALL 1
-#define PROJ_PASSOBJ 2
+#define PROJ_PASSNONE			0x000
+#define PROJ_PASSWALL			0x001
+#define PROJ_PASSOBJ			0x002
+
+//pass flags on hit thing take priotity if they exist
+#define PROJ_ATOM_PASSTHROGH	0x100
+#define PROJ_ATOM_CANNOT_PASS	0x200
+#define PROJ_OBJ_HIT_OTHER_OBJS	0x400
+
+
+
 
 //Projectile damage type defines
 #define D_KINETIC 1
