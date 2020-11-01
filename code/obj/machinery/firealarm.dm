@@ -158,7 +158,7 @@
 		return
 	if (A.fire) // maybe we should trigger an alarm when there already is one, goddamn
 		return
-	var/tmp/typestring = list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood", "Manual Trip")
+	var/typestring = list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood", "Manual Trip")
 
 	A.firealert(typestring[alarmtype])	//Icon state is set to "fire1" in A.firealert()
 	post_alert(1, type=alarmtype)
@@ -185,7 +185,7 @@
 
 	if(!frequency) return
 
-	var/tmp/typestring = list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood", "Manual Trip")
+	var/typestring = list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood", "Manual Trip")
 	if(type == 0)
 		type = 5
 	var/datum/signal/alert_signal = get_free_signal()
