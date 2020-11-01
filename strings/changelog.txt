@@ -1,10 +1,5 @@
 
 (t)sun nov 01 20
-(u)Moonlol
-(p)2392
-(e)🆕🎨|feature, sprites
-(+)Added flock collector structure, generates power when it has flocktiles on cardinals, power does nothing for now. Power is stored in "nets" of flock floors.
-(+)Added sprites for diffract drone, create structure and collector structure sprite, all made by phyvo
 (u)MarkNstein
 (p)2564
 (e)🐛|bug
