@@ -965,7 +965,13 @@
 	triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 		if (isdead(src))
 			return 1
-		var/list/L = src.alarms[class]
+		var/indexclass = class
+		for(var/loopclass in list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood", "Manual Trip"))
+			if(class == loopclass)
+				indexclass = "Fire"
+				break
+
+		var/list/L = src.alarms[indexclass]
 		for (var/I in L)
 			if (I == A.name)
 				var/list/alarm = L[I]
