@@ -18,6 +18,7 @@
 	death_text = null //has custom death message logic
 	butcherable = 1
 	var/eaten = 0
+	var/const/rocks_per_gem = 10
 
 	seek_target()
 		src.anchored = 0
@@ -57,12 +58,12 @@
 		src.target = null
 		src.task = "dead"
 
-		if (src.eaten >= 10)
+		if (src.eaten >= rocks_per_gem)
 			src.visible_message("<b>[src]</b> vomits something up and dies!")
 		else
 			src.visible_message("<b>[src]</b> dies!")
 
-		while (src.eaten >= 10)
+		while (src.eaten >= rocks_per_gem)
 			var/pickgem = rand(1,3)
 			var/obj/item/created = null
 			switch(pickgem)
@@ -70,7 +71,7 @@
 				if(2) created = unpool(/obj/item/raw_material/uqill)
 				if(3) created = unpool(/obj/item/raw_material/fibrilith)
 			created.set_loc(src.loc)
-			src.eaten -= 10
+			src.eaten -= rocks_per_gem
 
 /obj/critter/rockworm/gary
 	name = "Gary the rockworm"
