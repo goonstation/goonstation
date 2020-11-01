@@ -257,6 +257,11 @@
 					if (S.client && S.client.holder && src.mind)
 						thisR = "<span class='adminHearing' data-ctx='[S.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 					S.show_message(thisR, 2)
+			else if(istype(S, /mob/living/intangible/flock))
+				var/mob/living/intangible/flock/f = S
+				if(f.flock?.snooping)
+					var/flockrendered = "<i><span class='game say'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span></i>"
+					f.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
 	listening -= src
