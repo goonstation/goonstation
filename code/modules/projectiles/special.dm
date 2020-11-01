@@ -846,6 +846,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spawner //shoot stuff
 	name = "dimensional pocket"
 	power = 1
+	dissipation_rate = 0
+	max_range = 10
 	cost = 1
 	shot_sound = "sound/weapons/rocket.ogg"
 	icon_state = "bullet"
@@ -947,6 +949,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spawner/battlecrate
 	name = "Battlecrate"
 	power = 100
+	max_range = 30
 	cost = 0
 	shot_sound = 'sound/weapons/rocket.ogg'
 	icon = 'icons/obj/large_storage.dmi'
