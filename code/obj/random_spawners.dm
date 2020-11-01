@@ -1839,7 +1839,8 @@
 /obj/random_item_spawner/organs/bloody
 	New()
 		. = ..()
-		make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)
+		SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+			make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)
 
 	one_to_three
 		min_amt2spawn = 1
