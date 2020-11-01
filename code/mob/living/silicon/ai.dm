@@ -96,8 +96,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/mob/dead/aieye/eyecam = null
 
 	var/deployed_to_eyecam = 0
-	var/list/holograms
-	var/const/max_holograms = 8
 
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
@@ -182,8 +180,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	hud = new(src)
 	src.attach_hud(hud)
 	src.eyecam.attach_hud(hud)
-
-	holograms = list()
 
 #if ASS_JAM
 	var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
@@ -684,7 +680,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 	if (isdead(src))
 		return 1
-	var/list/L = src.alarms[class]
+	var/indexclass = class
+	for(var/loopclass in list("Fire", "Low Pressure", "Flammable Atmosphere", "Flood", "Manual Trip"))
+		if(class == loopclass)
+			indexclass = "Fire"
+			break
+
+	var/list/L = src.alarms[indexclass]
 	for (var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
