@@ -3214,7 +3214,7 @@ area/station/security/visitation
 /**
   * Causes a fire alert in the area if there is not one already set. Notifies AIs.
   */
-/area/proc/firealert()
+/area/proc/firealert(var/alerttype = "Fire")
 	if(src.name == "Space" || src.name == "Ocean") //no fire alarms in space
 		return
 	if (!( src.fire ))
@@ -3229,10 +3229,10 @@ area/station/security/visitation
 			cameras += C
 			LAGCHECK(LAG_HIGH)
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
-			aiPlayer.triggerAlarm("Fire", src, cameras, src)
+			aiPlayer.triggerAlarm(alerttype, src, cameras, src)
 			LAGCHECK(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a as() in machine_registry[MACHINES_ATMOSALERTS])
-			a.triggerAlarm("Fire", src, cameras, src)
+			a.triggerAlarm(alerttype, src, cameras, src)
 			LAGCHECK(LAG_HIGH)
 
 /**
