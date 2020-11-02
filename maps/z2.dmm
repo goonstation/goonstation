@@ -82622,6 +82622,14 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
+"eiT" = (
+/obj/item/reagent_containers/vending/bag/larger{
+	desc = "You're considering stuffing your face in this, but you do have that lawsuit to file...";
+	initial_reagents = "methamphetamine";
+	name = "unmarked white bag"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/efrem)
 "epL" = (
 /obj/decal/skeleton{
 	desc = "Oh.  Gross.";
@@ -82799,6 +82807,12 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"eYl" = (
+/obj/stool/chair/comfy/red{
+	dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/efrem)
 "eZa" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
@@ -83036,6 +83050,12 @@
 	dir = 1
 	},
 /area/ship_interior/cruisertest)
+"gtU" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/efrem)
 "gtW" = (
 /obj/machinery/cruiser_camera_screen,
 /turf/space,
@@ -83539,6 +83559,13 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
+"jeV" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/efrem)
 "jhk" = (
 /turf/space,
 /turf/cordon,
@@ -83915,6 +83942,19 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"kKt" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/cola{
+	initial_reagents = list("cola" = 10, "VHFCS" = 10, "crime" = 10);
+	name = "Bebop Cola";
+	pixel_x = -11;
+	pixel_y = -9
+	},
+/obj/machinery/phone/unlisted{
+	name = "crank prank crime phone"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/efrem)
 "kKw" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -84617,6 +84657,19 @@
 	dir = 1
 	},
 /area/hospital/samostrel)
+"nFF" = (
+/obj/machinery/computer/card{
+	dir = 4
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<i>EXCUSE ME WHAT THE FUCK DO YOU THINK YOU'RE DOING?</i>";
+	name = "adminhelp from Nannek";
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/efrem)
 "nGI" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/shuttle{
@@ -85011,6 +85064,12 @@
 "oZu" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hukhukhuk)
+"oZS" = (
+/obj/machinery/light,
+/obj/table/wood/auto/desk,
+/obj/item/paper/postcard/mushroom,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/efrem)
 "pfL" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -85451,6 +85510,9 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/escape/centcom/destiny)
+"rcQ" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/efrem)
 "rfV" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -86546,6 +86608,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"wHY" = (
+/obj/item/clothing/shoes/red{
+	desc = "Aren't these the HoS's? You feel like he can probably live without these.";
+	name = "Rube Potter's shoes"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/efrem)
 "wIA" = (
 /turf/space,
 /turf/unsimulated/floor/engine,
@@ -86844,6 +86913,17 @@
 	icon_state = "rootfloor_2"
 	},
 /area/centcom/offices/marknstein)
+"xZz" = (
+/obj/admin_plaque{
+	name = "Vaughn Moon's Office"
+	},
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwall"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "ycl" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -158294,9 +158374,9 @@ dEm
 dEx
 dED
 dvw
-dvW
-dvW
-dwZ
+nFF
+kKt
+oZS
 dvw
 nte
 njo
@@ -158596,9 +158676,9 @@ dEn
 dEy
 iZw
 dvw
-dvW
-dvW
-dvW
+rcQ
+eYl
+rcQ
 dvw
 dYf
 jSc
@@ -158898,9 +158978,9 @@ dEo
 dEx
 dEE
 dvw
-dvX
-dvW
-dvW
+gtU
+eiT
+rcQ
 dvw
 vEe
 wAT
@@ -159200,9 +159280,9 @@ dEp
 dEx
 dEF
 dvw
-dvW
-dvW
-dvW
+rcQ
+rcQ
+wHY
 dvw
 iPz
 jSc
@@ -159502,8 +159582,8 @@ dEq
 dEz
 dDP
 dvP
-dvV
-ncn
+xZz
+jeV
 dDP
 dvP
 vJb
