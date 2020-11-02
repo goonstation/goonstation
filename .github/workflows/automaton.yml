@@ -1,7 +1,7 @@
-# Morty, a beepsky supplement for checking runtime violations in maps
+# Automaton, a beepsky supplement for checking runtime violations in maps
 # Based on Turdis by Yogstation
 
-name: Morty
+name: Automaton
 
 on:
   pull_request:
@@ -88,8 +88,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT2", "DONUT3", "HORIZON", "MUSHROOM", "TRUNKMAP", "OSHAN", "PAMGOC", "KONDARU", "FLEET", "ICARUS", "DENSITY", "ATLAS", "MANTA", "WRESTLEMAP", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
+        map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT3", "HORIZON", "OSHAN", "KONDARU", "ATLAS", "MANTA", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
         compiletype: ["default", "ass"]
+
     steps:
       - uses: actions/checkout@v2
         with:
