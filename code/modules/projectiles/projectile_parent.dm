@@ -99,7 +99,7 @@
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
 
-	proc/collide(atom/A as mob|obj|turf|area, first = 1)
+	proc/collide(atom/A as mob|obj|turf|area)
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
@@ -113,7 +113,6 @@
 				return
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
-		var/turf/T = get_turf(A)
 		src.power = src.proj_data.get_power(src, A)
 		if(src.power <= 0 && src.proj_data.power != 0) return //we have run out of power
 		// Necessary because the check in human.dm is ineffective (Convair880).
@@ -126,9 +125,6 @@
 			return
 
 		var/sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
-		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src)
-		if(pooled) //maybe a signal proc pooled us
-			return
 		// also run the atom's general bullet act
 		var/atom/B = A.bullet_act(src) //If bullet_act returns an atom, do all bad stuff to that atom instead
 		if(istype(B))
@@ -149,8 +145,8 @@
 			// if we hit a turf apparently the bullet is magical and hits every single object in the tile, nice shooting tex
 			for (var/obj/O in A)
 				O.bullet_act(src)
-			T = A
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			var/turf/T = A
+			if (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL))
 				if (proj_data && proj_data.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
@@ -167,6 +163,34 @@
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
 		else if (ismob(A))
+			if(pierces_left != 0) //try to hit other targets on the tile
+				var/turf/T = get_turf(A)
+				for (var/mob/X in T.contents)
+					if (X != A)
+						X.bullet_act(src)
+						pierces_left--
+						//holy duplicate code batman. If someone can come up with a better solution, be my guest
+						if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
+							if (proj_data.hit_mob_sound)
+								playsound(X.loc, proj_data.hit_mob_sound, 60, 0.5)
+							proj_data.on_hit(X, angle_to_dir(src.angle), src)
+						for (var/obj/item/cloaking_device/S in X.contents)
+							if (S.active)
+								S.deactivate(X)
+								src.visible_message("<span class='notice'><b>[X]'s cloak is disrupted!</b></span>")
+						for (var/obj/item/device/disguiser/D in A.contents)
+							if (D.on)
+								D.disrupt(X)
+								src.visible_message("<span class='notice'><b>[X]'s disguiser is disrupted!</b></span>")
+						if (isliving(X))
+							var/mob/living/H = X
+							H.stamina_stun()
+							if (istype(X, /mob/living/carbon/human/npc/monkey))
+								var/mob/living/carbon/human/npc/monkey/M = X
+								M.shot_by(shooter)
+
+					if(pierces_left == 0)
+						break
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -185,21 +209,13 @@
 					var/mob/living/carbon/human/npc/monkey/M = A
 					M.shot_by(shooter)
 
-			if(sigreturn & PROJ_ATOM_PASSTHROGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
-				for (var/mob/X in T.contents)
-					if(!(X in src.hitlist))
-						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
-							src.collide(X, first = 0)
-					if(src.pooled)
-						return
-			if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
+			if (pierces_left == 0)
 				die()
 			else
-				if(!(sigreturn & PROJ_ATOM_PASSTHROGH))
-					pierces_left--
+				pierces_left--
 
 		else if (isobj(A))
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			if (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ))
 				if (iscritter(A))
 					if (proj_data && proj_data.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -207,13 +223,6 @@
 					if (proj_data && proj_data.hit_object_sound)
 						playsound(A.loc, proj_data.hit_object_sound, 60, 0.5)
 				die()
-			if(first && (sigreturn & PROJ_OBJ_HIT_OTHER_OBJS))
-				for (var/obj/X in T.contents)
-					if(!(X in src.hitlist))
-						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
-							src.collide(X, first = 0)
-					if(src.pooled)
-						return
 		else
 			die()
 

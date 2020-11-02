@@ -1083,8 +1083,11 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					if(G.affecting == M)
 						return
 				src.visible_message("<span class='alert'><B>[src] snatches up [M] in \his huge claws!</B></span>")
-				var/obj/item/grab/G = new /obj/item/grab(src, src, M)
+				var/obj/item/grab/G = new /obj/item/grab( src )
+				G.assailant = src
 				usr.put_in_hand_or_drop(G)
+				G.affecting = M
+				M.grabbed_by += G
 				M.changeStatus("stunned", 1 SECOND)
 				G.state = 1
 				G.update_icon()
