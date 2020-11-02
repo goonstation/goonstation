@@ -196,10 +196,8 @@
 	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		S.buckle_in(src,src,1)
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src)
+		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src, src)
 		src.put_in_hand(G, src.hand)
-		G.affecting = src
-		src.grabbed_by += G
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		src.visible_message("<span class='alert'>[src] starts blocking!</span>")
@@ -223,9 +221,7 @@
 	if (!I)
 		src.grab_self()
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src)
-		G.affecting = src
-		src.grabbed_by += G
+		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src, src)
 		G.loc = I
 
 		I.chokehold = G

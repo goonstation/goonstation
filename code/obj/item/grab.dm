@@ -35,7 +35,7 @@
 			I.UpdateOverlays(ima, "grab", 0, 1)
 		src.assailant = assailant
 		src.affecting = affecting
-		src.affecting.grabbed_by += assailant
+		src.affecting.grabbed_by += src
 		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
 
 	proc/post_item_setup()//after grab is done being made with item
