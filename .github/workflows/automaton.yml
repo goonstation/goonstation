@@ -1,7 +1,7 @@
-# Automaton, a beepsky supplement for checking runtime violations in maps
+# Morty, a beepsky supplement for checking runtime violations in maps
 # Based on Turdis by Yogstation
 
-name: Automaton
+name: Morty
 
 on:
   pull_request:
