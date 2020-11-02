@@ -514,7 +514,10 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "abu" = (
-/turf/simulated/floor/caution/corner/nw,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "abv" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -610,7 +613,10 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
 "abK" = (
-/turf/simulated/floor/caution/corner/sw,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "abL" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -1877,7 +1883,10 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/computer/tour_console,
-/turf/simulated/floor/caution/corner/ne,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aeN" = (
 /obj/machinery/light_switch{
@@ -2222,6 +2231,9 @@
 	req_access_txt = ""
 	},
 /obj/machinery/navbeacon/tour/cog1/tour18,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
 /turf/simulated/floor/circuit,
 /area/station/hallway/secondary/entry)
 "afA" = (
@@ -6056,7 +6068,10 @@
 /obj/disposalpipe/trunk/food{
 	dir = 1
 	},
-/turf/simulated/floor/caution/corner/ne,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "aor" = (
 /obj/table/auto,
@@ -6572,10 +6587,10 @@
 	name = "Lay-Z Chef Cafeteria Chute"
 	},
 /obj/disposalpipe/trunk/food,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "corner_east"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
 	},
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "apE" = (
 /obj/landmark{
@@ -6703,7 +6718,10 @@
 /turf/simulated/floor/grime,
 /area/station/hydroponics/lobby)
 "apU" = (
-/turf/simulated/floor/caution/east,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
 /area/station/hydroponics/lobby)
 "apV" = (
 /obj/submachine/cargopad{
@@ -6729,7 +6747,10 @@
 	pixel_x = 11;
 	pixel_y = 9
 	},
-/turf/simulated/floor/caution/west,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
 /area/station/hydroponics/lobby)
 "apX" = (
 /obj/storage/crate,
@@ -7239,24 +7260,29 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
-/turf/simulated/floor/caution/corner/misc{
+/obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
+/turf/simulated/floor/grime,
 /area/station/hydroponics/lobby)
 "ari" = (
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
-/turf/simulated/floor/caution/north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
 /area/station/hydroponics/lobby)
 "arj" = (
 /obj/disposalpipe/segment/produce{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/caution/corner/misc{
+/obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
+/turf/simulated/floor/grime,
 /area/station/hydroponics/lobby)
 "ark" = (
 /obj/storage/crate,
@@ -8823,9 +8849,11 @@
 /area/station/crew_quarters/cafeteria)
 "auP" = (
 /obj/machinery/chem_heater,
-/turf/simulated/floor/caution/misc{
-	dir = 8
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge2"
 	},
+/turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "auQ" = (
 /obj/machinery/light/small{
@@ -9658,6 +9686,9 @@
 	frequency = 1446;
 	name = "Botany Intercom"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -9674,7 +9705,10 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
-/turf/simulated/floor/caution/west,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/station/hydroponics)
 "awG" = (
 /turf/simulated/floor,
@@ -10220,9 +10254,10 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/caution/north{
-	dir = 8
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
+/turf/simulated/floor,
 /area/station/hydroponics)
 "axT" = (
 /obj/machinery/light_switch{
@@ -10691,9 +10726,7 @@
 	name = "E light switch";
 	pixel_x = 24
 	},
-/turf/simulated/floor/caution/corner/nw{
-	dir = 8
-	},
+/turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "ayT" = (
 /turf/simulated/wall/auto/supernorn,
@@ -10958,9 +10991,10 @@
 /turf/simulated/floor/plating/airless,
 /area/station/solar/west)
 "azz" = (
-/turf/simulated/floor/caution/corner/misc{
+/obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
+/turf/simulated/floor,
 /area/station/hydroponics)
 "azA" = (
 /obj/storage/secure/crate/plasma/armory/anti_biological{
@@ -11379,12 +11413,16 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/caution/corner/sw,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aAt" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
-/turf/simulated/floor/caution/south,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aAu" = (
 /obj/machinery/espresso_machine,
@@ -11392,9 +11430,10 @@
 	pixel_y = 28
 	},
 /obj/item/reagent_containers/food/drinks/espressocup,
-/turf/simulated/floor{
-	icon_state = "corner_east"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
 	},
+/turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aAv" = (
 /obj/machinery/chem_dispenser,
@@ -11404,7 +11443,10 @@
 	name = "MIXOLOGY HAZARD";
 	pixel_x = 32
 	},
-/turf/simulated/floor/caution/west,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aAw" = (
 /obj/machinery/portable_atmospherics/pump,
@@ -12058,7 +12100,10 @@
 	dir = 8
 	},
 /obj/item/device/reagentscanner,
-/turf/simulated/floor/caution/west,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aBW" = (
 /obj/machinery/light_switch{
@@ -12631,7 +12676,10 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/simulated/floor/caution/corner/sw,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aDh" = (
 /obj/table/auto,
@@ -17159,19 +17207,24 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aMY" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
 /turf/simulated/floor,
 /area/station/routingdepot/catering)
 "aMZ" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/caution/south,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
 /area/station/routingdepot/catering)
 "aNa" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/caution/south,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
 /area/station/routingdepot/catering)
 "aNb" = (
 /obj/machinery/camera{
@@ -17188,6 +17241,9 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
 	},
 /turf/simulated/floor,
 /area/station/routingdepot/catering)
@@ -17849,7 +17905,10 @@
 	dir = 4
 	},
 /obj/item/cigbutt,
-/turf/simulated/floor/caution/east,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/station/routingdepot/catering)
 "aOr" = (
 /obj/window/reinforced{
@@ -17877,7 +17936,10 @@
 /obj/cable,
 /obj/item/storage/box,
 /obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/caution/west,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/station/routingdepot/catering)
 "aOu" = (
 /obj/cable{
@@ -18296,7 +18358,10 @@
 /obj/storage/crate,
 /obj/item/storage/box,
 /obj/item/storage/box,
-/turf/simulated/floor/caution/east,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/station/routingdepot/catering)
 "aPq" = (
 /obj/machinery/mass_driver{
@@ -18316,7 +18381,10 @@
 	dir = 4
 	},
 /obj/item/storage/box,
-/turf/simulated/floor/caution/west,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/station/routingdepot/catering)
 "aPs" = (
 /obj/cable{
@@ -19527,11 +19595,22 @@
 "aSg" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
-/obj/item/extinguisher,
-/obj/item/crowbar,
+/obj/item/extinguisher{
+	pixel_x = 9
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/crowbar{
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aSh" = (
@@ -52714,11 +52793,11 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cnG" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "cnH" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/unary/outlet_injector{
@@ -55561,11 +55640,14 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "ctJ" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10
+/obj/cable{
+	icon_state = "1-2"
 	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "ctK" = (
 /obj/machinery/light{
 	dir = 4
@@ -59677,11 +59759,14 @@
 /turf/space,
 /area)
 "dJQ" = (
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 6
+/obj/disposalpipe/segment/produce{
+	dir = 4
 	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/station/hydroponics)
 "dLz" = (
 /obj/storage/crate/furnacefuel,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -59698,14 +59783,16 @@
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "eln" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "dwaine_core";
+	name = "DWAINE Core Access"
 	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 5
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
+/turf/simulated/floor,
+/area/station/turret_protected/Zeta)
 "ezG" = (
 /obj/window/reinforced{
 	dir = 4
@@ -59948,17 +60035,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
-"gUW" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "dwaine_core";
-	name = "DWAINE Core Access"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/turret_protected/Zeta)
 "gVk" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -88956,9 +89032,9 @@ aaa
 amr
 anx
 anv
-dJQ
+cnG
 arz
-eln
+ctJ
 asP
 avn
 amr
@@ -102615,7 +102691,7 @@ bDi
 bEb
 bEe
 bFy
-gUW
+eln
 bHg
 bCh
 bCh
@@ -105850,7 +105926,7 @@ ajU
 abp
 aby
 aby
-ctJ
+abK
 abW
 aci
 acM
@@ -109169,10 +109245,10 @@ aaa
 aaa
 aag
 ajU
-cnG
+abu
 aby
 aby
-ctJ
+abK
 abW
 ack
 acQ
@@ -120973,7 +121049,7 @@ asK
 atW
 avg
 awD
-axQ
+dJQ
 azm
 aAY
 avg
