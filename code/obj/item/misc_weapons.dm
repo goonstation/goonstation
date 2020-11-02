@@ -545,6 +545,8 @@
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
+		if (isrestrictedz(src.z) || isrestrictedz(usr.z))
+			return
 		usr.set_loc(get_turf(src))
 		usr.put_in_hand(src)
 

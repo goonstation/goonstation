@@ -953,7 +953,7 @@
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "right_vendor"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/crowbar.dmi'
 	icon_state = "crowbar"
 	var/obj/machinery/vending/vendor = null
 

@@ -739,8 +739,7 @@
 "abU" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
@@ -1343,8 +1342,7 @@
 "ado" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -3234,8 +3232,7 @@
 /obj/storage/closet,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/storage/autolathe)
@@ -3833,8 +3830,7 @@
 "aiM" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster)
@@ -4000,8 +3996,7 @@
 "aji" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 10
@@ -4465,8 +4460,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 5
@@ -10293,8 +10287,7 @@
 /obj/item/parts/robot_parts/arm/right,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/medical/robotics)
@@ -10488,8 +10481,7 @@
 "axt" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/medical/robotics)
@@ -11682,8 +11674,7 @@
 "aAi" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
@@ -14569,8 +14560,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -16947,8 +16937,7 @@
 "aLj" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor{
 	tag = "icon-0,6";
@@ -17078,8 +17067,7 @@
 /obj/item/clothing/gloves/yellow,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -17238,8 +17226,7 @@
 /obj/machinery/guardbot_dock,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/science)
@@ -17601,8 +17588,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/science)
@@ -18856,8 +18842,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -18913,8 +18898,7 @@
 /obj/item/assembly/time_ignite,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -19773,8 +19757,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -19806,8 +19789,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -25409,8 +25391,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -25911,8 +25892,7 @@
 "beq" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
@@ -29107,8 +29087,7 @@
 "bli" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/caution/west,
 /area/listeningpost/power)

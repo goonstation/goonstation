@@ -2546,8 +2546,7 @@
 "gL" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -3977,8 +3976,7 @@
 "jt" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor/grey/side{
 	dir = 1
@@ -4791,8 +4789,7 @@
 "kU" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor/grey/side{
 	dir = 1
@@ -5415,8 +5412,7 @@
 "mn" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
@@ -5505,8 +5501,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
@@ -7264,8 +7259,7 @@
 "qA" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)

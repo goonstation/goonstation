@@ -250,7 +250,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			boutput(user, "You cannot link together cables made from different materials. That would be silly.")
 			return
 
-		if (C.amount == MAXCOIL)
+		if (C.amount >= MAXCOIL)
 			boutput(user, "The coil is too long, you cannot add any more cable to it.")
 			return
 

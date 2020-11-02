@@ -487,9 +487,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	sun = new /datum/sun()
 
-	Z_LOG_DEBUG("World/Init", "Goonhub init")
-	goonhub = new()
-
 	Z_LOG_DEBUG("World/Init", "Vox init")
 	init_vox()
 	if (load_intra_round_value("solarium_complete") == 1)
@@ -611,10 +608,6 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
-	UPDATE_TITLE_STATUS("Mapping spatials")
-	Z_LOG_DEBUG("World/New", "Setting up spatial map...")
-	init_spatial_map()
-
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
 	aiDirty = 2
@@ -658,8 +651,15 @@ var/f_color_selector_handler/F_Color_Selector
 	bioele_load_stats()
 	bioele_shifts_since_accident++
 	bioele_save_stats()
-
+#ifdef PREFAB_CHECKING
+	placeAllPrefabs()
+#endif
+#ifdef RUNTIME_CHECKING
+	SPAWN_DBG(10 SECONDS)
+		Reboot_server()
+#endif
 #undef UPDATE_TITLE_STATUS
+	return
 
 //Crispy fullban
 /proc/Reboot_server(var/retry)
@@ -701,7 +701,26 @@ var/f_color_selector_handler/F_Color_Selector
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
+#ifdef RUNTIME_CHECKING
+	for (var/client/C in clients)
+		ehjax.send(C, "browseroutput", "hardrestart")
 
+	logTheThing("diary", null, "Shutting down after testing for runtimes.", "admin")
+	if (isnull(runtimeDetails))
+		world.log << "Runtime checking failed due to missing runtimeDetails global list"
+	else if (length(runtimeDetails) == 0)
+		text2file("No runtimes generated!", "no_runtimes.txt")
+	else
+		world.log << "[length(runtimeDetails)] runtimes generated:"
+		for (var/idx in runtimeDetails)
+			var/list/details = runtimeDetails[idx]
+			var/timestamp = details["seen"]
+			var/file = details["file"]
+			var/line = details["line"]
+			var/name = details["name"]
+			world.log << "\[[timestamp]\] [file],[line]: [name]"
+	shutdown()
+#endif
 	SPAWN_DBG(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
@@ -1653,6 +1672,16 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return 1
 
+/world/proc/setMaxZ(new_maxz)
+	if (!isnum(new_maxz) || new_maxz <= src.maxz)
+		return src.maxz
+	for (var/zlevel = world.maxz+1; zlevel <= new_maxz; zlevel++)
+		src.maxz++
+		src.setupZLevel(zlevel)
+	return src.maxz
+
+/world/proc/setupZLevel(new_zlevel)
+	init_spatial_map(new_zlevel)
 
 /// EXPERIMENTAL STUFF
 var/opt_inactive = null

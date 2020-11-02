@@ -1849,7 +1849,7 @@ proc/countJob(rank)
 
 // So there aren't multiple instances of C&P code (Convair880).
 /proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
-	if (!G || !ismob(G))
+	if (!G?.mind || G.mind.dnr)
 		return 0
 	if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
 		return 0
@@ -1876,7 +1876,7 @@ proc/countJob(rank)
 		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
 
-	if (!allow_dead_antags && (!G.mind || G.mind && (G.mind.dnr || !isnull(G.mind.special_role) || G.mind.former_antagonist_roles.len))) // Dead antagonists have had their chance.
+	if (!allow_dead_antags && (!isnull(G.mind.special_role) || length(G.mind.former_antagonist_roles))) // Dead antagonists have had their chance.
 		return 0
 
 	return 1
@@ -2056,12 +2056,19 @@ var/global/lastDectalkUse = 0
 	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = world.timeofday
 		msg = copytext(msg, 1, 2000)
-		var/res[] = world.Export("http://spacebee.goonhub.com/api/tts?dectalk=[url_encode(msg)]&api_key=[url_encode(ircbot.apikey)]")
-		if (!res || !res["CONTENT"])
-			return 0
 
-		var/audio = file2text(res["CONTENT"])
-		return list("audio" = audio, "message" = msg)
+		// Fetch via HTTP from goonhub
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/tts?dectalk=[url_encode(msg)]&api_key=[url_encode(ircbot.apikey)]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
+
+		if (response.errored || !response.body)
+			logTheThing("debug", null, null, "<b>dectalk:</b> Failed to contact goonhub. msg : [msg]")
+			return
+
+		return list("audio" = response.body, "message" = msg)
 	else
 		return list("cooldown" = 1)
 
@@ -2334,6 +2341,12 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
   */
 proc/illiterateGarbleText(var/message)
 	. = radioGarbleText(message, 100)
+
+/**
+  * Returns given text replaced by nonsense but its based off of a modifier + flock's garblyness
+  */
+proc/flockBasedGarbleText(var/message, var/modifier, var/datum/flock/f = null)
+	if(f?.snooping) . = radioGarbleText(message, f.snoop_clarity + modifier)
 
 /**
   * Returns the time in seconds since a given timestamp

@@ -379,7 +379,7 @@ var/datum/action_controller/actions
 		..()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if(H.traitHolder.hasTrait("carpenter"))
+			if(H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 		owner.visible_message("<span class='notice'>[owner] begins assembling [objname]!</span>")
@@ -1269,6 +1269,14 @@ var/datum/action_controller/actions
 		if(get_dist(owner, target) > 1 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if(ismob(owner)) //This is horrible and clunky and probably going to kill us all, I am so, so sorry.
+			var/mob/living/carbon/human/H = owner
+			if(!H.limbs.l_arm.can_hold_items)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(!H.limbs.r_arm.can_hold_items)
+				interrupt(INTERRUPT_ALWAYS)
+				return
 
 	onEnd()
 		..()
@@ -1334,7 +1342,7 @@ var/datum/action_controller/actions
 			src.duration = duration
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()

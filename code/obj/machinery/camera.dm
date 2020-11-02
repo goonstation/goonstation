@@ -82,7 +82,7 @@
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "cameraSecure"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/camera/television/cam
 	var/secstate
@@ -419,7 +419,9 @@
 
 /proc/build_camera_network()
 	name_autoname_cameras()
-	connect_camera_list(by_type[/obj/machinery/camera])
+	var/list/cameras = by_type[/obj/machinery/camera]
+	if (!isnull(cameras))
+		connect_camera_list(by_type[/obj/machinery/camera])
 
 /proc/rebuild_camera_network()
 	if(defer_camnet_rebuild || !camnet_needs_rebuild) return

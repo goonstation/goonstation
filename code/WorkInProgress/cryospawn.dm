@@ -190,10 +190,10 @@
 			return 0
 		if (L.stat || L.restrained() || L.getStatusDuration("paralysis") || L.sleeping)
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
-			boutput(user, "<b>You can't put someone in cryogenic storage while they're incapacitated!</b>")
+			boutput(user, "<b>You can't put someone in cryogenic storage while they're incapacitated or restrained!</b>")
 			return 0
 		if (user && (user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping))
-			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated!</b>")
+			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated or restrained!</b>")
 			return 0
 		if (get_dist(src, L) > 1)
 			boutput(L, "<b>You need to be closer to [src] to enter cryogenic storage!</b>")

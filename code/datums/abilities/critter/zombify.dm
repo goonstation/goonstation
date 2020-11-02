@@ -3,7 +3,7 @@
 // -----------------------------------
 
 /datum/action/bar/icon/zombifyAbility
-	duration = 80
+	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "critter_devour"
 	icon = 'icons/mob/critter_ui.dmi'
@@ -35,6 +35,12 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
+		if(target.stat == 2 || target.health <= -100) //If basically dead, instaconvert.
+			target.set_mutantrace(/datum/mutantrace/zombie/can_infect)
+			target.full_heal()
+			if (target.ghost && target.ghost.mind && !(target.mind && target.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
+				target.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
+				target.ghost.mind.transfer_to(target)
 		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && zombify && zombify.cooldowncheck())
 			logTheThing("combat", ownerMob, target, "zombifies [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))

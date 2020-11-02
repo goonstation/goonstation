@@ -2244,6 +2244,12 @@
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
+"afB" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/morgue)
 "afC" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -18105,10 +18111,8 @@
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/port)
 "aPv" = (
-/obj/table/wood/auto,
 /obj/machinery/light/small/floor/warm,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/machinery/hydro_mister,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics)
 "aPw" = (
@@ -18177,6 +18181,8 @@
 "aPD" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small/floor/warm,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/item/clothing/head/rastacap,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics)
@@ -27074,13 +27080,14 @@
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
 	},
-/obj/machinery/hydro_mister,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
 /turf/simulated/floor/green,
 /area/station/hydroponics)
 "bid" = (
@@ -29980,12 +29987,12 @@
 /turf/simulated/floor/wood/five,
 /area/station/chapel/main)
 "bnR" = (
-/obj/storage/secure/closet/civilian/hydro,
-/obj/item/clothing/under/misc/hydroponics,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
 	nostick = 1
 	},
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics)
 "bnS" = (
@@ -33564,7 +33571,7 @@
 	dir = 1
 	},
 /obj/juggleplaque{
-	desc = "Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta  \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\"";
+	desc = {"Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta  \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\""};
 	name = "dedication plaque";
 	pixel_y = 25
 	},
@@ -33579,7 +33586,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/juggleplaque{
-	desc = "NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\"";
+	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
 	name = "dedication plaque";
 	pixel_y = 25
 	},
@@ -43186,9 +43193,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/mining)
 "bRq" = (
@@ -43315,6 +43320,9 @@
 	layer = 32;
 	name = "rockworm feeding unit";
 	pixel_y = 32
+	},
+/obj/disposalpipe/trunk{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/mining)
@@ -45859,6 +45867,11 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction2)
+"olF" = (
+/obj/item/raw_material/rock,
+/obj/disposalpipe/trunk,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/station/mining)
 "ono" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
@@ -46414,6 +46427,11 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
+"wBy" = (
+/obj/storage/secure/closet/civilian/hydro,
+/obj/item/clothing/under/misc/hydroponics,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics)
 "wBW" = (
 /obj/cable{
 	d1 = 1;
@@ -83318,10 +83336,10 @@ abT
 biK
 bjI
 biL
-aPp
+biL
 aPp
 bjJ
-biL
+wBy
 bqo
 bqm
 brV
@@ -83922,7 +83940,7 @@ bic
 biL
 blF
 biL
-aPw
+biL
 aPw
 biL
 biK
@@ -97202,7 +97220,7 @@ aXk
 baq
 baq
 bdp
-baq
+afB
 baq
 bgD
 bhr
@@ -125620,7 +125638,7 @@ bPF
 bQH
 bOm
 bQU
-ast
+olF
 bRp
 bRD
 bRz

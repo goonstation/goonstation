@@ -225,8 +225,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor/escape{
 	dir = 1
@@ -784,8 +783,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
@@ -3300,8 +3298,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area/station/storage/autolathe)
@@ -5147,8 +5144,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
@@ -7673,8 +7669,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -10576,8 +10571,7 @@
 /obj/item/parts/robot_parts/arm/right,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
@@ -11060,8 +11054,7 @@
 "aya" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
@@ -12294,8 +12287,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc{
@@ -16949,8 +16941,7 @@
 "aJT" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
@@ -17561,8 +17552,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor{
 	tag = "icon-0,6";
@@ -17574,8 +17564,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor{
 	tag = "icon-0,6";
@@ -17710,8 +17699,7 @@
 /obj/item/clothing/gloves/yellow,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -17873,8 +17861,7 @@
 /obj/machinery/guardbot_dock,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/science)
@@ -18256,8 +18243,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/purple/corner{
 	dir = 1
@@ -19589,8 +19575,7 @@
 /obj/item/assembly/time_ignite,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -30369,8 +30354,7 @@
 "bli" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/caution/west,
 /area/listeningpost/power)

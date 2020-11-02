@@ -361,6 +361,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			return P
 		else return null
 
+ABSTRACT_TYPE(/datum/generatorPrefab)
 /datum/generatorPrefab
 	var/probability = 0
 	var/maxNum = 0

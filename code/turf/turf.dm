@@ -10,8 +10,10 @@
 
 	unsimulated
 		var/can_replace_with_stuff = 0	//If ReplaceWith() actually does a thing or not.
+#ifdef RUNTIME_CHECKING
+		can_replace_with_stuff = 1  //Shitty dumb hack bullshit
+#endif
 		allows_vehicles = 0
-
 	proc/set_dir(newdir)
 		dir = newdir
 
