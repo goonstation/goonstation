@@ -478,7 +478,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				src.target_lastloc = M.loc
 				src.moving = 0
 
-				//qdel(src.mover)
 				if (src.mover)
 					src.mover.master = null
 					src.mover = null
