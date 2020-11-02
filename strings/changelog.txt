@@ -1,5 +1,9 @@
 
 (t)sun nov 01 20
+(u)UrsulaMejor
+(p)2572
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Chickens! Still very WIP, so please give feedback in the feedback thread on the forums!
 (u)Azrun
 (p)2550
 (e)⚖🐛🔄|balance, bug, rework
