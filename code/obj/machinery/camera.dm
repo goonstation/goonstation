@@ -444,7 +444,7 @@
 	logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Starting to connect cameras")
 	var/count = 0
 	for(var/obj/machinery/camera/C as() in camlist)
-		if(!isturf(C.loc) || C.disposed || C.qdeled) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
+		if(QDELETED(C) || !isturf(C.loc)) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
 			continue
 
 
