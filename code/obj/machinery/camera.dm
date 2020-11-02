@@ -419,7 +419,9 @@
 
 /proc/build_camera_network()
 	name_autoname_cameras()
-	connect_camera_list(by_type[/obj/machinery/camera])
+	var/list/cameras = by_type[/obj/machinery/camera]
+	if (!isnull(cameras))
+		connect_camera_list(by_type[/obj/machinery/camera])
 
 /proc/rebuild_camera_network()
 	if(defer_camnet_rebuild || !camnet_needs_rebuild) return
