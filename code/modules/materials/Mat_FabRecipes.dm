@@ -533,6 +533,7 @@
 	New()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Upper"; required_amount = 2} ())
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Sole"; required_amount = 2} ())
+		required_parts.Add(new/datum/matfab_part/optionalanymat {part_name = "Optional Toe Tip"; required_amount = 2} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -540,7 +541,11 @@
 			var/obj/item/clothing/shoes/crafted/newObj = new()
 			var/obj/item/upper = getObjectByPartName("Upper")
 			var/obj/item/sole = getObjectByPartName("Sole")
-			if(upper && upper.material)
+			var/obj/item/toe = getObjectByPartName("Optional Toe Tip")
+			if(toe && toe.material)
+				newObj.setMaterial(toe.material)
+				newObj.desc = "[toe.material.name]-tipped [upper.material.name] shoes. The soles are made of [sole.material.name]."
+			else if(upper && upper.material)
 				newObj.setMaterial(upper.material)
 				newObj.desc = newObj.desc + " The soles are made of [sole.material.name]."
 
