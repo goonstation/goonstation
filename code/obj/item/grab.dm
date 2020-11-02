@@ -18,7 +18,7 @@
 	var/can_pin = 1
 	var/dropped = 0
 
-	New(atom/loc, mob/assailant = null, mob/affecting = null)
+	New(atom/loc, mob/assailant = null)
 		..()
 
 		var/icon/hud_style = hud_style_selection[get_hud_style(src.assailant)]
@@ -34,9 +34,6 @@
 
 			I.UpdateOverlays(ima, "grab", 0, 1)
 		src.assailant = assailant
-		src.affecting = affecting
-		src.affecting.grabbed_by += assailant
-		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
 
 	proc/post_item_setup()//after grab is done being made with item
 		return
@@ -83,7 +80,6 @@
 				affecting.grabbed_by -= src
 			affecting = null
 
-		UnregisterSignal(assailant, COMSIG_ATOM_HITBY_PROJ)
 		assailant = null
 		..()
 
@@ -410,18 +406,6 @@
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
-
-
-	proc/check_hostage(owner, obj/projectile/P)
-		var/mob/hostage = null
-		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
-			hostage = src.affecting
-		if (hostage)
-			P.collide(hostage)
-			//moved here so that it displays after the bullet hit message
-			if(prob(20)) //This should probably not be bulletproof, har har
-				hostage.visible_message("<span class='combat bold'>[hostage] is knocked out of [owner]'s grip by the force of the [P.name]!</span>")
-				qdel(src)
 
 //////////////////////
 //PROGRESS BAR STUFF//

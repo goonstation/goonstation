@@ -55,9 +55,6 @@
 /// just before a datum's disposing()
 #define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
 
-// ---- atom signals ----
-/// when an atom is collided by a projectile (/obj/projectile)
-#define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
 
 // ---- atom/movable signals ----
 

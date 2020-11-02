@@ -291,12 +291,18 @@
 			P.ongrab(target)
 
 	if (!grab_item)
-		var/obj/item/grab/G = new /obj/item/grab(src, src, target)
+		var/obj/item/grab/G = new /obj/item/grab(src)
+		G.assailant = src
 		src.put_in_hand(G, src.hand)
+		G.affecting = target
+		target.grabbed_by += G
 	else// special. return it too
 		if (!grab_item.special_grab)
 			return
-		var/obj/item/grab/G = new grab_item.special_grab(grab_item, src, target)
+		var/obj/item/grab/G = new grab_item.special_grab(grab_item)
+		G.assailant = src
+		G.affecting = target
+		target.grabbed_by += G
 		G.loc = grab_item
 		.= G
 
