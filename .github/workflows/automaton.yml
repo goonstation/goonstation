@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT2", "DONUT3", "HORIZON", "MUSHROOM", "TRUNKMAP", "OSHAN", "PAMGOC", "KONDARU", "FLEET", "ICARUS", "DENSITY", "ATLAS", "MANTA", "WRESTLEMAP", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
+        map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT2", "DONUT3", "HORIZON", "MUSHROOM", "TRUNKMAP", "OSHAN", "KONDARU", "FLEET", "ICARUS", "DENSITY", "ATLAS", "MANTA", "WRESTLEMAP", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
         compiletype: ["default", "ass"]
     steps:
       - uses: actions/checkout@v2
