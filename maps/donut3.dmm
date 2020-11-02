@@ -28716,6 +28716,10 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/chapel/main)
+"irY" = (
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics)
 "isb" = (
 /obj/cable{
 	d1 = 2;
@@ -35352,8 +35356,9 @@
 	dir = 10;
 	icon_state = "check1"
 	},
-/obj/machinery/hydro_growlamp,
 /obj/machinery/light/incandescent/netural,
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
 /turf/simulated/floor,
 /area/station/hydroponics)
 "kzu" = (
@@ -36555,6 +36560,10 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
+"kTT" = (
+/obj/machinery/hydro_growlamp,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics)
 "kUo" = (
 /obj/cable{
 	d1 = 4;
@@ -50994,11 +51003,12 @@
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/west)
 "plZ" = (
-/obj/machinery/hydro_mister,
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
 	},
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
 /turf/simulated/floor,
 /area/station/hydroponics)
 "pmj" = (
@@ -129076,7 +129086,7 @@ mwk
 iba
 kHx
 mke
-mke
+kTT
 mke
 xNi
 txZ
@@ -129680,7 +129690,7 @@ gJz
 iba
 kHx
 mke
-mke
+irY
 mke
 kHx
 wqJ

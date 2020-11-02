@@ -1648,6 +1648,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\TempEngine.dm"
 #include "code\WorkInProgress\torpedoes.dm"
 #include "code\WorkInProgress\tug.dm"
+#include "code\WorkInProgress\UrsStuff.dm"
 #include "code\WorkInProgress\warcrimes.dm"
 #include "code\WorkInProgress\what-the-fuck-am-i-doing.dm"
 #include "code\WorkInProgress\WiresStuff.dm"
