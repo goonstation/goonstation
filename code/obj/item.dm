@@ -783,10 +783,11 @@
 		if (prob(7))
 			elecflash(src)
 		if (prob(7))
-			var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
-			smoke.set_up(1, 0, src.loc)
-			smoke.attach(src)
-			smoke.start()
+			if(!(src.item_function_flags & SMOKELESS))// maybe a better way to make this if no?
+				var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
+				smoke.set_up(1, 0, src.loc)
+				smoke.attach(src)
+				smoke.start()
 		if (prob(7))
 			fireflash(src, 0)
 
