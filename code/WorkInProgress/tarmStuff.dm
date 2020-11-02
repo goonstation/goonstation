@@ -515,11 +515,11 @@ obj/item/gun/reagent/syringe/lovefilled
 		loved += M
 
 //misc stuffs
-/obj/item/geiger
+/obj/item/device/geiger
 	name = "geiger counter"
 	desc = "Some kinda thing, from space. In space. A space thing."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "thing"
+	icon_state = "geiger-0"
+	item_state = "geiger"
 	flags = FPRINT | CONDUCT | TABLEPASS
 	w_class = 1.0
 	force = 10
@@ -533,3 +533,13 @@ obj/item/gun/reagent/syringe/lovefilled
 	New()
 		. = ..()
 		AddComponent(/datum/component/holdertargeting/geiger)
+		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, .proc/change_icon_state)
+
+	proc/change_icon_state(source, stage)
+		switch(stage)
+			if(2 to 3)
+				flick("geiger-1", src)
+			if(4)
+				flick("geiger-2", src)
+			if(5)
+				flick("geiger-3", src)

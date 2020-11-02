@@ -7,7 +7,7 @@
 	if(owner && prob(stage*20))
 		var/obj/item/I = parent
 		boutput(owner, "<span class='alert'>The geiger counter on your [I.name] ticks...</span>")
-		owner.playsound_local(get_turf(owner), "sound/machines/click.ogg", stage * 10)
+		owner.playsound_local(get_turf(owner), "sound/machines/click.ogg", stage * 10, 0.01, 0, 1.5)
 	return 1
 
 
@@ -25,5 +25,6 @@
 	if(owner && prob(stage*20))
 		var/obj/item/I = parent
 		boutput(owner, "<span class='alert'>Your [I.name] ticks...</span>")
-		owner.playsound_local(get_turf(owner), "sound/machines/click.ogg", stage * 10)
+		owner.playsound_local(get_turf(owner), "sound/machines/click.ogg", stage * 10, 0.01, 0, 1.5)
+		SEND_SIGNAL(I, COMSIG_MOB_GEIGER_TICK, stage)
 	return 1
