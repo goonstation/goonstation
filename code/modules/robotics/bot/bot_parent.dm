@@ -61,7 +61,6 @@
 		var/damage = 0
 		damage = round(((P.power/4)*P.proj_data.ks_ratio), 1.0)
 
-		boutput(world, "took <b>[damage]</b> damage!")
 		if (P.proj_data.damage_type == D_KINETIC)
 			src.health -= damage
 		else if (P.proj_data.damage_type == D_PIERCING)
