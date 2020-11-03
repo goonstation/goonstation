@@ -1670,7 +1670,10 @@
 		src.access = get_access("Psychologist")
 		return
 
-
+#ifdef HALLOWEEN
+/*
+ * Halloween jobs
+ */
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
 
@@ -2108,6 +2111,7 @@
 			return
 		M.critterize(/mob/living/critter/small_animal/bird/crow)
 
+#endif
 
 /datum/job/special/syndicate_operative
 	name = "Syndicate"
