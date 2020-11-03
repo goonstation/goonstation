@@ -30138,7 +30138,10 @@
 /area/station/maintenance/east)
 "bpq" = (
 /obj/machinery/shieldgenerator/energy_shield,
-/turf/simulated/floor/yellow/side,
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bpr" = (
 /obj/cable{
@@ -30931,17 +30934,35 @@
 /turf/simulated/floor/plating,
 /area/station/routingdepot/engine)
 "bqS" = (
+/obj/rack,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = 5;
+	pixel_y = -11
+	},
+/obj/item/clothing/suit/space/engineer{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_x = 4;
+	pixel_y = 10
+	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/rack,
-/obj/item/clothing/shoes/magnetic,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/engineer,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/clothing/suit/space/engineer,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "bqT" = (
@@ -31202,14 +31223,32 @@
 /turf/simulated/floor/plating,
 /area/station/routingdepot/engine)
 "brz" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/rack,
-/obj/item/clothing/shoes/magnetic,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/engineer,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/clothing/suit/space/engineer,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = 5;
+	pixel_y = -11
+	},
+/obj/item/clothing/suit/space/engineer{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "brA" = (
@@ -40243,15 +40282,24 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/yellow/side{
-	dir = 9
+/obj/decal/tile_edge/line/yellow{
+	dir = 8;
+	icon_state = "tile1"
 	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 5;
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bKH" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/bot,
+/obj/decal/tile_edge{
+	icon_state = "mule_beacon"
+	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bKI" = (
 /obj/window/reinforced{
@@ -40267,7 +40315,10 @@
 	name = "Emergency Shower"
 	},
 /obj/machinery/drainage,
-/turf/simulated/floor/delivery,
+/obj/decal/tile_edge{
+	icon_state = "mule_dropoff"
+	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bKJ" = (
 /turf/simulated/floor/yellow,
@@ -40882,9 +40933,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
+/obj/decal/tile_edge/line/yellow{
+	dir = 8;
+	icon_state = "tile1"
 	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bMe" = (
 /obj/cable{
@@ -41611,18 +41664,26 @@
 /area/station/engine/engineering/ce)
 "bNF" = (
 /obj/storage/secure/closet/engineering/welding,
-/turf/simulated/floor/yellow/side{
-	dir = 9
+/obj/decal/tile_edge/line/yellow{
+	dir = 8;
+	icon_state = "tile1"
 	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 5;
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bNG" = (
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/yellow/corner{
-	dir = 1
+/obj/decal/tile_edge/line/yellow{
+	dir = 9;
+	icon_state = "tile1"
 	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bNH" = (
 /turf/simulated/floor/grime,
@@ -41632,9 +41693,11 @@
 	dir = 4
 	},
 /obj/storage/secure/closet/engineering/engineer,
-/turf/simulated/floor/yellow/side{
-	dir = 4
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "tile1"
 	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bNJ" = (
 /obj/table/auto,
@@ -42233,15 +42296,32 @@
 /area/station/engine/engineering/ce)
 "bOY" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/suit/fire{
+	pixel_x = -7
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = -4;
+	pixel_y = 15
+	},
+/obj/item/tank/air{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 10;
+	pixel_y = -6
+	},
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/tank/air,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
 /turf/simulated/floor/bot,
 /area/station/storage/primary)
 "bOZ" = (
@@ -42869,37 +42949,64 @@
 /area/station/engine/engineering/ce)
 "bQp" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/tank/air,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
+/obj/item/clothing/suit/fire{
+	pixel_x = -7
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = -4;
+	pixel_y = 15
+	},
+/obj/item/tank/air{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 10;
+	pixel_y = -6
+	},
 /turf/simulated/floor/bot,
 /area/station/storage/primary)
 "bQq" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/yellow/corner{
-	dir = 4
+/obj/decal/tile_edge/line/yellow{
+	dir = 5;
+	icon_state = "tile1"
 	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bQr" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "tile1"
 	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bQs" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/yellow/side{
-	dir = 5
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "tile1"
 	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 9;
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bQt" = (
 /obj/machinery/door/airlock/pyro/engineering{
@@ -43626,36 +43733,64 @@
 /area/station/engine/engineering/ce)
 "bRO" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/yellow/side,
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bRP" = (
-/turf/simulated/floor/yellow/side,
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bRQ" = (
 /obj/rack,
-/obj/item/extinguisher,
+/obj/item/extinguisher{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/item/extinguisher{
+	pixel_x = -3
+	},
+/obj/item/extinguisher{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/extinguisher{
+	pixel_x = 6;
+	pixel_y = -1
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/extinguisher,
-/obj/item/extinguisher,
-/obj/item/extinguisher,
-/obj/item/extinguisher,
-/turf/simulated/floor/yellow/side,
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bRR" = (
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/light,
-/turf/simulated/floor/yellow/side,
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bRS" = (
 /obj/machinery/dispenser,
-/turf/simulated/floor/yellow/side{
-	dir = 6
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "tile1"
 	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 10;
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bRT" = (
 /obj/storage/closet/office,
@@ -48714,18 +48849,36 @@
 /area/station/mining)
 "cdR" = (
 /obj/rack,
-/obj/item/clothing/mask/breath,
 /obj/item/tank/jetpack,
-/obj/item/clothing/suit/space/engineer,
-/obj/item/clothing/head/helmet/space/engineer,
+/obj/item/clothing/suit/space/engineer{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_x = 4;
+	pixel_y = 10
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/mining)
 "cdS" = (
 /obj/rack,
-/obj/item/clothing/mask/breath,
 /obj/item/tank/jetpack,
-/obj/item/clothing/suit/space/engineer,
-/obj/item/clothing/head/helmet/space/engineer,
+/obj/item/clothing/suit/space/engineer{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_x = 4;
+	pixel_y = 10
+	},
 /obj/machinery/light{
 	dir = 4
 	},
