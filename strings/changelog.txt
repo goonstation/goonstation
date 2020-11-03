@@ -1,5 +1,9 @@
 
 (t)mon nov 02 20
+(u)Chickenish
+(p)2575
+(e)|
+(+)Thermal Paper no longer creates smoke when burning.
 (u)Superlagg
 (p)2460
 (e)⚖🆕🔄|balance, feature, rework
