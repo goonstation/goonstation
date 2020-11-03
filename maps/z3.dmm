@@ -1479,8 +1479,8 @@
 	},
 /obj/item/radio_tape/advertisement/cloning_psa,
 /obj/item/radio_tape/advertisement/captain_psa{
-	pixel_y = 6;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
@@ -16287,7 +16287,7 @@
 	id = "derelict_ai_sat"
 	},
 /turf/simulated/floor/plating/airless,
-/area)
+/area/derelict_ai_sat/solar)
 "aPL" = (
 /turf/space,
 /turf/simulated/shuttle/wall/cockpit/flock{
