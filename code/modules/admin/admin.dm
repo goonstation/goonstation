@@ -617,7 +617,7 @@ var/global/noir = 0
 						for(var/Trank4 in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
 							if(player.cached_jobbans.Find("[Trank4]"))
 								jobban_unban(M,Trank4)
-					jobban_fullban(M, job)
+					jobban_fullban(M, job, usr.ckey)
 					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has job-banned you from [job].</b></span>")
 			else
 				alert("You need to be at least a Secondary Administrator to work with job bans.")

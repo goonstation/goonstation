@@ -1,8 +1,19 @@
 //Job Ban Handling, Modified to utilize code written within the past 6 years.
 
-/proc/jobban_fullban(mob/M, rank)
-	if (!M || !M.ckey) return
-	if(apiHandler.queryAPI("jobbans/add", list("ckey"=M.ckey,"rank"=rank)))
+/proc/jobban_fullban(mob/M, rank, akey)
+	if (!M || !M.ckey || !akey) return
+	var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "Roleplay", "Main", "Roleplay Overflow", "Main Overflow")
+	var/server = null //heehoo copy pasta
+	switch (server_nice)
+		if ("Roleplay")
+				server = "rp"
+		if ("Main")
+				server = "main"
+		if ("Roleplay Overflow")
+				server = "main2"
+		if ("Main Overflow")
+				server = "main3"
+	if(apiHandler.queryAPI("jobbans/add", list("ckey"=M.ckey,"rank"=rank, "akey"=akey, "applicable_server"=server)))
 		var/datum/player/player = make_player(M.ckey) //Recache the player.
 		player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M.ckey), 1)[M.ckey]
 		return 1

@@ -142,6 +142,7 @@
 		src.holder = null
 
 	src.player?.log_leave_time() //logs leave time, calculates played time on player datum
+	src.player?.cached_jobbans = null //Invalidate their job ban cache.
 
 	return ..()
 
