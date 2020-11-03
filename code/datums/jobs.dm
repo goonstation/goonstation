@@ -2111,7 +2111,26 @@
 			return
 		M.critterize(/mob/living/critter/small_animal/bird/crow)
 
+// end halloween jobs
 #endif
+
+/datum/job/special/turkey
+	name = "Turkey"
+	linkcolor = "#FF7300"
+	wages = PAY_DUMBCLOWN
+	requires_whitelist = 1
+	limit = 1
+	allow_traitors = 0
+	slot_ears = null
+	slot_card = null
+	slot_back = null
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		var/type = pick(/mob/living/critter/small_animal/bird/turkey/gobbler, /mob/living/critter/small_animal/bird/turkey/hen)
+		M.critterize(type)
 
 /datum/job/special/syndicate_operative
 	name = "Syndicate"
