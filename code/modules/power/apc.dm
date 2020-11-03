@@ -687,7 +687,7 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/update()
-	if(operating && !shorted && !do_not_operate)
+	if(operating && !shorted && !do_not_operate && !QDELETED(src.area))
 		area.power_light = (lighting > 1)
 		area.power_equip = (equipment > 1)
 		area.power_environ = (environ > 1)
