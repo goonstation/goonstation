@@ -303,7 +303,7 @@
 			return
 
 		if (isitem(O) && (O:cant_drop || (issilicon(user) && O.loc == user))) //For borg held items
-			user.show_text("You can't put that in [src] when it's attached to you!", "red")
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
 
 		src.add_fingerprint(user)
@@ -755,7 +755,7 @@
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()

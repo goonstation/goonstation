@@ -82,6 +82,7 @@ Contains:
 	bound_y = -32
 
 	var/has_moved = FALSE
+	var/maxboom = 0
 
 	var/active = 0
 	var/energy = 10
@@ -143,10 +144,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			grav_pull = 8
 
 /obj/machinery/the_singularity/proc/eat()
-	for (var/X in orange(grav_pull, src.get_center()))
+	for (var/X in range(grav_pull, src.get_center()))
 		LAGCHECK(LAG_LOW)
 		if (!X)
 			continue
+		if (X == src)
+			continue
+
 		var/atom/A = X
 
 		if (A.event_handler_flags & IMMUNE_SINGULARITY)
@@ -182,8 +186,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		has_moved = TRUE
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
-	if(severity == 1 && (power ? prob(power*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
-		qdel(src)
+	if(!maxboom)
+		SPAWN_DBG(1)
+			if(severity == 1 && (maxboom ? prob(maxboom*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
+				qdel(src)
+			maxboom = 0
+	maxboom = max(power, maxboom)
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	var/gain = 0
@@ -196,6 +204,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A
+		L.set_loc(src.get_center())
 		gain = 20
 		if (ishuman(L))
 			var/mob/living/carbon/human/H = A
@@ -236,6 +245,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			gain = 2
 		else
 			var/obj/O = A
+			O.set_loc(src.get_center())
 			O.ex_act(1.0)
 			if (O)
 				qdel(O)

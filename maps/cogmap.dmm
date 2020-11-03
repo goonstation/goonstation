@@ -60510,6 +60510,13 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
+"svZ" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics)
 "sEn" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -60790,6 +60797,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+<<<<<<< HEAD
 "xbi" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -60801,6 +60809,15 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+=======
+"xdC" = (
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics)
+>>>>>>> 801a4c0b82714578249a670a77aee19f32a80b46
 "xKG" = (
 /obj/machinery/light{
 	dir = 8
@@ -124067,12 +124084,12 @@ avj
 avj
 avj
 aud
-avl
+svZ
 awJ
 axW
 azs
 aBd
-avl
+xdC
 aDI
 avj
 avj

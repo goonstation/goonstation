@@ -1319,8 +1319,7 @@
 "adn" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -1810,8 +1809,7 @@
 "aeg" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/storage/secure/closet/research/chemical,
 /turf/simulated/floor/purplewhite{
@@ -3802,8 +3800,7 @@
 "aif" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -3853,8 +3850,7 @@
 "ail" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/science)
@@ -3911,8 +3907,7 @@
 "aiq" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -4012,8 +4007,7 @@
 "aix" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -4809,8 +4803,7 @@
 /obj/table/auto,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/item/storage/box/tapebox,
 /turf/simulated/floor/white/checker2{
@@ -4921,8 +4914,7 @@
 "ake" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	d1 = 1;
@@ -8422,8 +8414,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
@@ -10373,8 +10364,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/red/corner{
 	dir = 4
@@ -10398,8 +10388,7 @@
 "auC" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/escape/corner{
 	dir = 1
@@ -11726,8 +11715,7 @@
 "axu" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
@@ -13685,8 +13673,7 @@
 /obj/stool,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
@@ -13721,8 +13708,7 @@
 /obj/stool,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 6
@@ -13941,8 +13927,7 @@
 /obj/item/clothing/head/mailcap,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
@@ -19196,8 +19181,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -19395,8 +19379,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/disposalpipe/segment/mail{
 	icon_state = "pipe-s";
@@ -21042,8 +21025,7 @@
 "aQn" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
@@ -31320,8 +31302,7 @@
 "bjV" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/shrub{
 	icon_state = "shrub";
@@ -37938,8 +37919,7 @@
 "bxM" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -37976,8 +37956,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)

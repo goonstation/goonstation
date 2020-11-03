@@ -98,6 +98,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	var/danny_index = 0
 
 	OnSpeak(var/message)
 		if (!istext(message))

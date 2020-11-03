@@ -12532,6 +12532,8 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics)
 "axf" = (
@@ -13274,6 +13276,8 @@
 	layer = 4;
 	pixel_x = 24
 	},
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics)
 "ayD" = (
@@ -14687,9 +14691,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "aBm" = (

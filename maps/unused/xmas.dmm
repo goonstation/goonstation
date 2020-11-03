@@ -774,8 +774,7 @@
 "abK" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/white,
 /area/chemistry)
@@ -1267,8 +1266,7 @@
 "acC" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/closet/wardrobe/toxins_white,
 /turf/simulated/floor/white,
@@ -3113,8 +3111,7 @@
 "agd" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -3211,8 +3208,7 @@
 "agl" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -4005,8 +4001,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/item/storage/tapebox,
 /turf/simulated/floor/white,
@@ -4094,8 +4089,7 @@
 "ahK" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	d1 = 1;
@@ -44737,8 +44731,7 @@
 /obj/closet/emcloset,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/white,
 /area/ab_res{
@@ -44785,8 +44778,7 @@
 "bMp" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/white,
 /area/ab_res{
@@ -45367,8 +45359,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/white,
 /area/ab_res{
@@ -45414,8 +45405,7 @@
 /obj/item/reagent_containers/pill/silver_sulfadiazine,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/white,
 /area/ab_res{
@@ -46016,8 +46006,7 @@
 "bPh" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/critter/spore,
 /turf/simulated/floor/white,

@@ -1293,14 +1293,14 @@ Returns:
 	var/datum/material/head = null
 	var/image/shaftImg = null
 	var/image/headImg = null
+	var/prefix = null
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	hit_type = DAMAGE_STAB
 
 	New()
-		setShaftMaterial(getMaterial("bohrum"))
 		setHeadMaterial(getMaterial("telecrystal"))
+		setShaftMaterial(getMaterial("bohrum"))
 		buildOverlays()
-		setName()
 
 		..()
 
@@ -1321,23 +1321,32 @@ Returns:
 
 	proc/setShaftMaterial(var/datum/material/M)
 		shaft = M
+		SetPrefix()
 		if(shaft)
 			src.color = shaft.color
 			src.alpha = shaft.alpha
-		setName()
 		return
 
 	proc/setHeadMaterial(var/datum/material/M)
 		head = M
-		setMaterial(M)
+		SetPrefix()
+		setMaterial(M, setname = 0)
 		if(shaft)
 			src.color = shaft.color
 			src.alpha = shaft.alpha
 		if(src.material && src.material.hasProperty("hard"))
 			src.force = round(src.material.getProperty("hard") / 5)
 			src.throwforce = round(src.material.getProperty("hard") / 3)
-		setName()
 		return
+
+	proc/SetPrefix()
+		src.remove_prefixes(prefix)
+		prefix = ""
+		if(head)
+			prefix += "[head.name]-tipped[shaft?" ":""]"
+		if (shaft)
+			prefix += "[shaft.name]"
+		src.name_prefix(prefix)
 
 	proc/buildOverlays()
 		overlays.Cut()
@@ -1355,17 +1364,6 @@ Returns:
 			imgHead.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgHead
 			headImg = imgHead
-		return
-
-	proc/setName()
-		if(shaft && head)
-			name = "[head.name]-tipped [shaft.name] Spear"
-		else if (shaft && !head)
-			name = "[shaft.name] Spear"
-		else if (!shaft && head)
-			name = "[head.name]-tipped Spear"
-		else
-			name = "Spear"
 		return
 
 	getAffectedTiles(var/mob/user, var/atom/target, var/direction)

@@ -214,7 +214,7 @@
 		. = ..()
 
 	disposing()
-		if(holder?.handcuffs)
+		if(ismob(holder) && holder.handcuffs)
 			var/obj/item/I = holder.handcuffs
 			holder.u_equip(I)
 			I.set_loc(holder.loc)
@@ -952,6 +952,7 @@
 	side = "left"
 	decomp_affected = 0
 	override_attack_hand = 1
+	can_hold_items = 0
 	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
 	skintoned = 1
 	streak_descriptor = "undeadly"
@@ -970,6 +971,7 @@
 	side = "right"
 	decomp_affected = 0
 	override_attack_hand = 1
+	can_hold_items = 0
 	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
 	skintoned = 1
 	streak_descriptor = "undeadly"

@@ -1154,17 +1154,14 @@
 
 		return
 
-/client/proc/cmd_admin_remove_label_from()
+/client/proc/cmd_admin_remove_all_labels()
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
-	set name = "Remove Label From"
+	set name = "Remove All Labels"
 	set popup_menu = 0
 
-	var/mob/M = input("Which mob?","Find mob") as null|anything in mobs
-	if (!istype(M,/mob/))
-		boutput(usr, "No mob defined!")
-		return
-
-	M.name_suffixes = list()
+	for (var/mob/M in mobs)
+		M.name_suffixes = null
+		M.UpdateName()
 	return
 
 /client/proc/cmd_admin_aview()
@@ -2602,3 +2599,25 @@ var/global/night_mode_enabled = 0
 				boutput(src, "Can't seem to find any turfs in your office. You must not have one here!")
 			return
 	boutput(src, "You don't seem to have an office, so sad. :(")
+
+/client/proc/cmd_crusher_walls()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Crusher Walls"
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Holy shit are you sure?! This is going to turn the walls into crushers!",,"Yes","No"))
+			if("Yes")
+				for(var/turf/simulated/wall/W in world)
+					if (W.z != 1) continue
+					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
+					if (O) continue
+					new /obj/machinery/crusher(locate(W.x, W.y, W.z))
+					W.density = 0
+
+				logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
+				logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")
+				message_admins("[key_name(src)] has turned every wall into a crusher! God damn.")
+
+			if("No")
+				return
+	else
+		boutput(src, "You must be at least a Administrator to use this command.")

@@ -49,7 +49,7 @@
 					O.anchored = 1
 					mode = 2
 					boutput(user, "[O] connects itself to the cable. Weird.")
-					playsound(O, "sound/effects/ship_charge.ogg", 200, 1)
+					playsound(O, "sound/effects/ship_charge.ogg", 75, 1)
 					var/obj/machinery/artifact/power_gen/L = O
 					if (L.light)
 						L.light.enable()
@@ -60,7 +60,7 @@
 			mode = 0
 			attached = 0
 			boutput(user, "[O] disconnects itself from the cable.")
-			playsound(O, "sound/effects/shielddown2.ogg", 200, 1, 0, 2)
+			playsound(O, "sound/effects/shielddown2.ogg", 75, 1, 0, 2)
 			var/obj/machinery/artifact/power_gen/L = O
 			if (L.light)
 				L.light.disable()
@@ -73,13 +73,13 @@
 			if(PN)
 				PN.newavail += gen_rate
 				var/turf/T = get_turf(O)
-				playsound(O, "sound/machines/engine_highpower.ogg", 100, 1, 0, 1)
+				playsound(O, "sound/machines/engine_highpower.ogg", 75, 1, 0, 1)
 				if (prob(10))
-					playsound(O, "sound/effects/screech2.ogg", 200, 1)
+					playsound(O, "sound/effects/screech2.ogg", 75, 1)
 					fireflash(O, rand(1,min(5,gen_level)))
 					O.visible_message("<span class='alert'>[O] erupts in flame!</span>")
 				if (prob(5))
-					playsound(O, "sound/effects/screech2.ogg", 200, 1)
+					playsound(O, "sound/effects/screech2.ogg", 75, 1)
 					O.visible_message("<span class='alert'>[O] rumbles!</span>")
 					for (var/mob/M in range(min(5,gen_level),T))
 						shake_camera(M, 5, 8)
@@ -91,9 +91,9 @@
 							W.health = 0
 							W.smash()
 				if (prob(5))
-					playsound(O, "sound/effects/screech2.ogg", 200, 1)
+					playsound(O, "sound/effects/screech2.ogg", 75, 1)
 					O.visible_message("<span class='alert'>[O] sparks violently!</span>")
 					for (var/mob/M in range(min(5,gen_level),T))
 						arcFlash(O, M, gen_rate/2)
 		else
-			playsound(O, pick(spark_sounds), 200, 1)
+			playsound(O, pick(spark_sounds), 75, 1)
