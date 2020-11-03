@@ -78,7 +78,7 @@
 "bz" = (/obj/bedsheetbin,/obj/decal/cleanable/cobweb,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
 "bA" = (/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
 "bB" = (/obj/storage/closet/dresser,/obj/item/clothing/under/color/purple,/obj/item/clothing/under/suit/purple,/obj/item/clothing/head/that/purple,/obj/item/clothing/glasses/thermal/orange,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"bC" = (/obj/storage/closet/dresser,/obj/item/clothing/under/gimmick/wedding_dress,/obj/item/clothing/under/misc/dress,/obj/item/clothing/glasses/regular/ecto,/obj/item/clothing/gloves/ring/concrete,/obj/item/clothing/head/veil,/obj/item/clothing/shoes/heels,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
+"bC" = (/obj/storage/closet/dresser,/obj/item/clothing/under/gimmick/wedding_dress,/obj/item/clothing/under/misc/dress,/obj/item/clothing/glasses/regular/ecto,/obj/item/clothing/gloves/ring/gold,/obj/item/clothing/head/veil,/obj/item/clothing/shoes/heels,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
 "bD" = (/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
 "bE" = (/obj/critter/spirit,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
 "bF" = (/obj/storage/crate/biohazard,/obj/item/staff/crystal,/obj/item/staff,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/wizard_crystal/sapphire,/obj/item/chem_grenade/cryo,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)

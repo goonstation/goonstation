@@ -1159,8 +1159,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 						playsound(src.loc, "sound/items/coindrop.ogg", 50, 1, null, 2)
 						sleep(rand(2,5))
 
-/obj/item/clothing/gloves/ring/concrete
-
 /obj/item/clothing/gloves/ring/gold
 	name = "gold ring"
 	icon_state = "gring"
