@@ -1,5 +1,10 @@
 
 (t)mon nov 02 20
+(u)Superlagg
+(p)2460
+(e)⚖🆕🔄|balance, feature, rework
+(*)Secbots no longer instantly zap you the moment they get in range. Instead, they take a moment to charge their baton, then zap you!
+(+)Every secbot, except for Officer Beepsky, forgot to attend mandatory handcuff training, and thus now take 8 seconds to cuff someone.
 (u)Azrun
 (p)2534
 (e)🐛🆕|bug, feature
