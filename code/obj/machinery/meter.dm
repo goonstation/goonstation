@@ -76,7 +76,7 @@
 /obj/machinery/meter/examine()
 	. = list("A gas flow meter. ")
 	if(status & (NOPOWER|BROKEN))
-		. += "Something seems wrong with it..."
+		. += "It appears to be nonfunctional."
 	else if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
