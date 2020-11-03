@@ -4955,6 +4955,7 @@
 	},
 /obj/machinery/turretid{
 	pixel_y = 28;
+	req_access = null;
 	turretArea = /area/station/security/armory
 	},
 /obj/access_spawn/security,
@@ -63572,6 +63573,7 @@
 /obj/machinery/turretid{
 	name = "External perimeter turret deactivation control";
 	pixel_y = 28;
+	req_access = null;
 	turretArea = /area/securityexternal
 	},
 /obj/access_spawn/hos,
