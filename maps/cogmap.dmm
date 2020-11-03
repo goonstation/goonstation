@@ -5681,13 +5681,13 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
 /obj/item/clothing/mask/breath{
 	pixel_x = 5;
 	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -21198,23 +21198,23 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
 /obj/item/clothing/head/emerg{
 	pixel_x = 5;
 	pixel_y = 10
+	},
+/obj/item/spraybottle/cleaner{
+	pixel_x = -5;
+	pixel_y = -8
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
 	name = "autoname - SS13";
 	tag = ""
-	},
-/obj/item/spraybottle/cleaner{
-	pixel_x = -5;
-	pixel_y = -8
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 5;
-	pixel_y = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/maintcentral)
@@ -27588,13 +27588,13 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
 /obj/item/clothing/mask/breath{
 	pixel_x = 5;
 	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -27774,13 +27774,13 @@
 /obj/item/clothing/suit/space{
 	pixel_x = 6
 	},
-/obj/item/clothing/head/helmet/space{
-	pixel_x = 5;
-	pixel_y = 10
-	},
 /obj/item/clothing/mask/breath{
 	pixel_x = 5;
 	pixel_y = 1
+	},
+/obj/item/clothing/head/helmet/space{
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
@@ -27789,13 +27789,13 @@
 /obj/item/clothing/suit/space{
 	pixel_x = 6
 	},
-/obj/item/clothing/head/helmet/space{
-	pixel_x = 5;
-	pixel_y = 10
-	},
 /obj/item/clothing/mask/breath{
 	pixel_x = 5;
 	pixel_y = 1
+	},
+/obj/item/clothing/head/helmet/space{
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /obj/machinery/light/emergency{
 	dir = 1
@@ -29022,6 +29022,10 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
 /obj/item/clothing/head/emerg{
 	pixel_x = 5;
 	pixel_y = 10
@@ -29029,10 +29033,6 @@
 /obj/item/wrench{
 	pixel_x = -7;
 	pixel_y = -2
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 5;
-	pixel_y = 1
 	},
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -30841,13 +30841,13 @@
 /obj/item/clothing/suit/space{
 	pixel_x = 6
 	},
-/obj/item/clothing/head/helmet/space{
-	pixel_x = 5;
-	pixel_y = 10
-	},
 /obj/item/clothing/mask/breath{
 	pixel_x = 5;
 	pixel_y = 1
+	},
+/obj/item/clothing/head/helmet/space{
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /obj/machinery/light/emergency,
 /obj/cable{
@@ -35277,20 +35277,19 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
 /obj/item/clothing/mask/breath{
 	pixel_x = 5;
 	pixel_y = 1
 	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/machinery/power/apc/autoname_south,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side,
 /area/station/hangar/main)
 "bAo" = (
 /obj/rack,
@@ -35305,13 +35304,13 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
 /obj/item/clothing/mask/breath{
 	pixel_x = 5;
 	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -39958,11 +39957,25 @@
 /area/station/science/teleporter)
 "bKe" = (
 /obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -39970,19 +39983,33 @@
 /area/station/science/teleporter)
 "bKf" = (
 /obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/cable{
-	icon_state = "1-4"
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
@@ -60797,7 +60824,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-<<<<<<< HEAD
 "xbi" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -60809,7 +60835,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-=======
 "xdC" = (
 /obj/submachine/chicken_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
@@ -60817,7 +60842,6 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics)
->>>>>>> 801a4c0b82714578249a670a77aee19f32a80b46
 "xKG" = (
 /obj/machinery/light{
 	dir = 8
