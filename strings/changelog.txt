@@ -1,4 +1,9 @@
 
+(t)mon nov 02 20
+(u)Azrun
+(p)2556
+(e)🐛|bug
+(+)Blob tutorial marker visibility improved.  Should now be able to complete and re-attempt tutorial ad infinitum.
 (t)sun nov 01 20
 (u)UrsulaMejor
 (p)2572
