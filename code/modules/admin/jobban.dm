@@ -6,13 +6,13 @@
 	var/server = null //heehoo copy pasta
 	switch (server_nice)
 		if ("Roleplay")
-				server = "rp"
+			server = "rp"
 		if ("Main")
-				server = "main"
+			server = "main"
 		if ("Roleplay Overflow")
-				server = "main2"
+			server = "main2"
 		if ("Main Overflow")
-				server = "main3"
+			server = "main3"
 	if(apiHandler.queryAPI("jobbans/add", list("ckey"=M.ckey,"rank"=rank, "akey"=akey, "applicable_server"=server)))
 		var/datum/player/player = make_player(M.ckey) //Recache the player.
 		player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M.ckey), 1)[M.ckey]
