@@ -2356,9 +2356,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northsolar)
 "afM" = (
-/obj/storage/secure/closet/security/armory,
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/securityexternal)
 "afN" = (
 /obj/cable{
 	d1 = 4;
@@ -63038,13 +63041,9 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area)
 "gfY" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/turret,
-/turf/space,
-/area/securityexternal)
+/obj/storage/secure/closet/security/armory,
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "gjs" = (
 /obj/cable{
 	d2 = 8;
@@ -63114,9 +63113,10 @@
 	},
 /area/station/quartermaster/refinery)
 "gCT" = (
-/obj/storage/secure/crate/weapon/armory/pod_weapons,
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/obj/lattice,
+/obj/machinery/turret,
+/turf/space,
+/area/securityexternal)
 "gDG" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -63203,11 +63203,7 @@
 	},
 /area/station/quartermaster/refinery)
 "hUb" = (
-/obj/machinery/turret,
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
+/obj/storage/secure/crate/weapon/armory/pod_weapons,
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "iix" = (
@@ -63230,7 +63226,11 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "jeX" = (
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/machinery/turret,
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "jtM" = (
@@ -63586,20 +63586,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "pqf" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating/airless,
+/obj/storage/secure/crate/weapon/armory/phaser,
+/turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "pDV" = (
 /obj/cable{
@@ -63711,17 +63699,19 @@
 /area/station/engine/core)
 "rDb" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 2;
+	icon_state = "0-2"
 	},
-/obj/machinery/disposal{
-	name = "ejection chute"
+/obj/cable,
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 8
 	},
-/obj/disposalpipe/trunk/ejection{
-	dir = 4
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/turf/simulated/floor/caution/east,
+/turf/simulated/floor/plating/airless,
 /area/station/security/armory)
 "rEe" = (
 /obj/machinery/light_switch{
@@ -63800,27 +63790,18 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "tgN" = (
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 1
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/window/reinforced{
-	dir = 2
+/obj/machinery/disposal{
+	name = "ejection chute"
 	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
+/obj/disposalpipe/trunk/ejection{
 	dir = 4
 	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/auto/reinforced,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "txq" = (
 /obj/machinery/atmospherics/valve{
@@ -63946,12 +63927,28 @@
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
 "vme" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 1
 	},
-/obj/machinery/turret,
-/turf/space,
-/area/securityexternal)
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/station/security/armory)
 "vqC" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/table/auto,
@@ -92902,12 +92899,12 @@ acp
 aco
 aco
 aco
-vme
+aco
+afM
 aco
 aco
 aco
-vme
-aco
+afM
 aco
 aco
 krn
@@ -93511,8 +93508,8 @@ adC
 adC
 adC
 adC
-pqf
-tgN
+rDb
+vme
 ahm
 agy
 ajn
@@ -93804,8 +93801,8 @@ aaa
 aaa
 acn
 acn
-acr
-aco
+acq
+acn
 act
 acV
 acV
@@ -94106,16 +94103,16 @@ aaa
 aaa
 acn
 acn
-acq
-acn
+acr
+aco
 adD
 acV
 pKl
-afM
-gCT
+gfY
 hUb
 jeX
-rDb
+pqf
+tgN
 acV
 aho
 aho
@@ -96829,12 +96826,12 @@ aco
 aco
 jWF
 cDO
-jWF
-vme
+gCT
 aco
 aco
 aco
-gfY
+afM
+krn
 ahs
 ahs
 ajv
