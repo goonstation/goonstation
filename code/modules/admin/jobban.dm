@@ -19,9 +19,13 @@
 		return 1
 	return 0 //Errored.
 
-/proc/jobban_isbanned(mob/M, rank)
-	if (!M || !M.ckey ) return
-
+///Can be provided with a mob or a raw key.
+/proc/jobban_isbanned(mob/M, rank, mkey)
+	var/checkey
+	if (!M || !M.ckey )
+		checkey = mkey
+	if(mkey == null)
+		return //We gotta be provided one of the other man.
 	//you cant be banned from nothing!!
 	if (!rank)
 		return 0
@@ -30,9 +34,9 @@
 	if (J && J.no_jobban_from_this_job)
 		return 0
 
-	var/datum/player/player = make_player(M.ckey) //Get the player so we can use their bancache.
+	var/datum/player/player = make_player(checkey) //Get the player so we can use their bancache.
 	if(player.cached_jobbans == null)//Shit they aren't cached.
-		player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M.ckey), 1)[M.ckey]
+		player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M.ckey), 1)[checkey]
 
 
 	if(player.cached_jobbans.Find("Everything Except Assistant"))
@@ -56,14 +60,23 @@
 	else
 		return 0
 
-/proc/jobban_unban(mob/M, rank)
-	if (!M || !M.ckey ) return
+/proc/jobban_unban(mob/M, rank, mkey)//This is full of faff to try and account for raw ckeys and actual players.
+	var/checkey
+	var/list/cache
 
-	var/datum/player/player = make_player(M.ckey) //Get the player so we can use their bancache.
-	if(!player.cached_jobbans.Find("[rank]"))
+	if (!M || !M.ckey)
+		checkey = mkey
+		cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=checkey), 1)[checkey]
+	else
+		var/datum/player/player = make_player(checkey) //Get the player so we can use their bancache.
+		cache = player.cached_jobbans
+		player.cached_jobbans = null //Invalidate their cache.
+	if(mkey == null)
+		return //We gotta be provided one of the other man.
+	if(!cache.Find("[rank]"))
 		return
-	apiHandler.queryAPI("jobbans/del", list("ckey"=M.ckey,"rank"=rank))
+
+	apiHandler.queryAPI("jobbans/del", list("ckey"=checkey,"rank"=rank))
 	if(rank == "Security Department")
-		if(player.cached_jobbans.Find("Security Officer"))
-			apiHandler.queryAPI("jobbans/del", list("ckey"=M.ckey, "rank"="Security Officer"))
-	player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M.ckey), 1)[M.ckey]
+		if(cache.Find("Security Officer"))
+			apiHandler.queryAPI("jobbans/del", list("ckey"=checkey, "rank"="Security Officer"))

@@ -486,6 +486,20 @@ var/global/noir = 0
 				alert("You need to be at least a Secondary Administrator to remove bans.")
 		/////////////////////////////////////end ban stuff
 
+		if("jobb_unban_disconnected")
+			if (src.level >= LEVEL_SA)
+				var/t = href_list["target"]
+				var/r = href_list["type"]
+				if(t && r)
+					jobban_unban(null, r, t)
+					logTheThing("admin", usr, null, "unbanned [t](Offline) from [r]")
+					logTheThing("diary", usr, null, "unbanned [t](Offline) from [r]", "admin")
+					message_admins("<span class='internal'>[key_name(usr)]unbanned [t](Offline) from [r]</span>")
+					addPlayerNote(t, usr.ckey, "[usr.ckey] unbanned [t](Offline) from [r]")
+			else
+				alert("You need to be at least a Secondary Administrator to remove job bans.")
+
+
 		if("jobbanpanel")
 			var/mob/M = locate(href_list["target"])
 			var/dat = ""
@@ -625,19 +639,6 @@ var/global/noir = 0
 		if ("boot")
 			var/mob/M = locate(href_list["target"])
 			usr.client.cmd_boot(M)
-
-		/* //This route should be inaccessible. -Francinum
-		if ("removejobban")
-			if (src.level >= LEVEL_SA)
-				var/t = href_list["target"]
-				if(t)
-					logTheThing("admin", usr, null, "removed [t]")
-					logTheThing("diary", usr, null, "removed [t]", "admin")
-					message_admins("<span class='internal'>[key_name(usr)] removed [t]</span>")
-					jobban_remove(t)
-			else
-				alert("You need to be at least a Secondary Administrator to remove job bans.")
-		*/
 
 		if ("mute")
 			if (src.level >= LEVEL_MOD)
@@ -3904,6 +3905,22 @@ var/global/noir = 0
 	// <A href='?src=\ref[src];action=s_rez;type=spawn_commandos'>Spawn a force of commandos</A><BR>
 	// <A href='?src=\ref[src];action=s_rez;type=spawn_turds'>Spawn a T.U.R.D.S. attack force</A><BR>
 	// <A href='?src=\ref[src];action=s_rez;type=spawn_smilingman'>Spawn a Smiling Man</A><BR>
+
+/datum/admins/proc/Jobbans(key)
+	if (src.level < LEVEL_SA)
+		return
+	if(!key)
+		return
+
+	var/jobs = ""
+	var/list/apiresponse = apiHandler.queryAPI("jobbans/get/player", list("ckey"=key),1)
+
+	for(var/job in apiresponse[key])
+		jobs += "<a href='?src=\ref[src];action=jobb_unban_disconnected;type=[job];target=[key]'>[job]</a><br>"
+	var/header = "<b>Active bans for [key]<br>Click to remove.</b><br>"
+	var/body = "<br>[jobs]<br><br>"
+	var/dat = "<tt><center>[header][body]</center></tt>"
+	usr.Browse(dat, "window=jobban2;size=340x300")
 
 /datum/admins/proc/Game()
 	if (!usr) // somehoooow

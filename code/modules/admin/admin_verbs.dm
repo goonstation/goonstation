@@ -138,6 +138,7 @@ var/list/admin_verbs = list(
 		/client/proc/banooc,
 		/client/proc/view_cid_list,
 		/client/proc/modify_parts,
+		/client/proc/jobbans,
 
 		// moved down from admin
 		/client/proc/cmd_admin_add_freeform_ai_law,
@@ -654,6 +655,13 @@ var/list/special_pa_observing_verbs = list(
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	if (src.holder)
 		src.holder.s_respawn()
+	return
+
+/client/proc/jobbans(key as text)
+	set name = "Jobban Panel"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	if(src.holder)
+		src.holder.Jobbans(key)
 	return
 
 /client/proc/game_panel()
