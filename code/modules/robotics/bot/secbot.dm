@@ -1090,7 +1090,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 //secbot handcuff bar thing
 /datum/action/bar/icon/secbot_cuff
-	duration = 80
+	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "secbot_cuff"
 	icon = 'icons/obj/items/items.dmi'
@@ -1189,7 +1189,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 //secbot stunner bar thing
 /datum/action/bar/icon/secbot_stun
-	duration = 20
+	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "secbot_cuff"
 	icon = 'icons/obj/items/weapons.dmi'
