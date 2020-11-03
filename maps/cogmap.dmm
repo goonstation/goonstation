@@ -4045,6 +4045,9 @@
 	},
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/security/armory)
 "ajq" = (
