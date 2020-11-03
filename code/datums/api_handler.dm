@@ -50,7 +50,6 @@ var/global/datum/apiHandler/apiHandler
 	 *
 	 */
 	proc/queryAPI(route = "", query = list(), forceResponse = 0, attempt = 1)
-		set background = 1
 		if (!enabled || !route)
 			src.apiError("API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]")
 			return
@@ -62,34 +61,25 @@ var/global/datum/apiHandler/apiHandler
 		var/safeReq = req //for outputting errors without the auth code
 		req += "auth=[md5(config.goonhub_api_token)]" //Append auth code
 
-		var/response[] = world.Export(req)
-		if(!response)
-			logTheThing("debug", null, null, "<b>API Error</b>: No response from server during query to <b>[safeReq]</b> (Attempt: [attempt])")
-			logTheThing("diary", null, null, "API Error: No response from server during query to [safeReq] (Attempt: [attempt])", "debug")
+		// Fetch via HTTP from goonhub
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, req, "", "")
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
+
+		if (response.errored || !response.body)
+			logTheThing("debug", null, null, "<b>API Error</b>: No response from server during query [!response.body ? "during" : "to"] <b>[safeReq]</b> (Attempt: [attempt])")
+			logTheThing("diary", null, null, "API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq] (Attempt: [attempt])", "debug")
 
 			if (attempt < maxApiRetries)
 				return retryApiQuery(args, attempt = attempt)
 
-			src.apiError("API Error: No response from server during query to [safeReq]")
+			src.apiError("API Error: No response from server during query [!response.body ? "during" : "to"] [safeReq]")
 
 		if (forceResponse)
-			var/key
-			var/contentExists = 0
-			for (key in response)
-				if (key == "CONTENT")
-					contentExists = 1
-
-			if (!contentExists)
-				logTheThing("debug", null, null, "<b>API Error</b>: Malformed response from server during <b>[safeReq]</b> (Attempt: [attempt])")
-				logTheThing("diary", null, null, "API Error: Malformed response from server during [safeReq] (Attempt: [attempt])", "debug")
-
-				if (attempt < maxApiRetries)
-					return retryApiQuery(args, attempt = attempt)
-
-				src.apiError("API Error: Malformed response from server during [safeReq]")
-
-			//Parse the response
-			var/list/data = json_decode(file2text(response["CONTENT"]))
+			// Parse the response
+			var/list/data = json_decode(response.body)
 
 			if (!data)
 				logTheThing("debug", null, null, "<b>API Error</b>: JSON decode error during <b>[safeReq]</b> (Attempt: [attempt])")
@@ -101,5 +91,4 @@ var/global/datum/apiHandler/apiHandler
 				src.apiError("API Error: JSON decode error during [safeReq]")
 
 			return data
-
 		return 1

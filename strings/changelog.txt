@@ -1,4 +1,117 @@
 
+(t)mon nov 02 20
+(u)Chickenish
+(p)2575
+(e)|
+(+)Thermal Paper no longer creates smoke when burning.
+(u)Superlagg
+(p)2460
+(e)⚖🆕🔄|balance, feature, rework
+(*)Secbots no longer instantly zap you the moment they get in range. Instead, they take a moment to quickly charge their baton, then zap you!
+(+)Every secbot, except for Officer Beepsky, forgot to attend mandatory handcuff training, and thus now take 4 seconds to cuff someone.
+(u)Azrun
+(p)2534
+(e)🐛🆕|bug, feature
+(*)Atmospheric pipes now properly rupture and leak gas.
+(u)austin
+(p)2529
+(e)🆕|feature
+(+)Can now use Y then prefix with '%' to sing on the radio.
+(u)Azrun
+(p)2556
+(e)🐛|bug
+(+)Blob tutorial marker visibility improved.  Should now be able to complete and re-attempt tutorial ad infinitum.
+(t)sun nov 01 20
+(u)UrsulaMejor
+(p)2572
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Chickens! Still very WIP, so please give feedback in the feedback thread on the forums!
+(u)Azrun
+(p)2550
+(e)⚖🐛🔄|balance, bug, rework
+(*)Rework TEG circulator behavior to reduce "magic".  Please ensure circulators have power and/or there is less pressure on the outlet side of the circulator to make the engine happy.
+(u)MarkNstein
+(p)2564
+(e)🐛|bug
+(*)Rockworms now actually drop various gems on death (if they've eaten enough rocks).
+(t)sat oct 31 20
+(u)MarkNstein
+(p)2562
+(e)🐛🗺|bug, mapping
+(+)Manta's rockworm enclosure now has a functioning feed-chute.
+(u)Jawns
+(p)2555
+(e)🆕|feature
+(*)New DWAINE command unset allows you to un-set variables. Very cool!
+(u)Fosstar
+(p)2411
+(e)🆕|feature
+(*)Miscreants are now reenabled on the RP server with new objectives. Be wary of these fiends, slinking around to cause all manner of trouble.
+(t)fri oct 30 20
+(u)Sovexe
+(p)2544
+(e)🆕🎨|feature, sprites
+(+)Grilles now use perspective sprites and will automatically join together.
+(u)ZeWaka
+(e)🐛|major bug
+(*)Hopefully fixed that bug that was causing tgui/chat windows to be blank and require a restart.
+(u)Mordent
+(p)25491
+(e)🆕|feature
+(+)Sound synthesizers have 1 second use delay.
+(t)thu oct 29 20
+(u)imnotjames
+(p)2531
+(e)|
+(+)Fix Pod HUD RCS button's alt text
+(u)Mordent
+(p)2549
+(e)🆕|feature
+(+)Sound synthesizers have 1 second use delay.
+(u)Azrun
+(p)2526
+(e)|
+(+)PDA Power Checker now supports Radiation Collectors.  Singularity will now consume items at the singularity
+(t)wed oct 28 20
+(u)Tarmunora
+(p)2539
+(e)🆕|feature
+(+)Wizard crystals are a little more magical.
+(u)RSG250
+(p)2535
+(e)🆕|feature
+(+)Enchanted Gems can now be found in the red industrial crates
+(u)Flaborized
+(p)2532
+(e)🎨|sprites
+(+)New sprites for tanks, extinguishers, and pod engines.
+(u)Flaborized
+(p)2533
+(e)🎨|sprites
+(+)New sprites for portable flashers, brig timers, door buttons, hotdog carts, and a special surprise!
+(t)tue oct 27 20
+(u)Kyle & Flaborized
+(p)2530
+(e)🆕🎨|feature, sprites
+(*)Added holograms that the AI can project via its AI Eye.
+(u)ThePotato97
+(p)2418
+(e)🆕|feature
+(*)Added progress bars to Window & Walls construction / deconstruction
+(+)Added engineer trait for engineer related jobs which makes them do certain engineering actions 2x faster.
+(u)virvatuli
+(p)2528
+(e)🎨|sprites
+(+)Replaced the 12 gauge flare sprite with one more readable as a fire projectile
+(t)mon oct 26 20
+(u)Tarmunora
+(p)2496
+(e)🐛|bug
+(+)Fix/adjust plasmastone plasma production
+(u)Tarmunora
+(p)2497
+(e)⚖|balance
+(+)Adjusted prices of station bots
 (t)sun oct 25 20
 (u)Azrun
 (p)2473

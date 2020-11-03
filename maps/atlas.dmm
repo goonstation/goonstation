@@ -10007,8 +10007,9 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
 "yB" = (
-/obj/machinery/plantpot,
 /obj/machinery/light,
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics)
 "yC" = (
@@ -16837,6 +16838,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"Qa" = (
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics)
 "Qc" = (
 /obj/machinery/networked/storage/bomb_tester,
 /obj/cable,
@@ -65056,7 +65062,7 @@ tL
 ya
 vM
 ro
-qp
+Qa
 qK
 zN
 tl

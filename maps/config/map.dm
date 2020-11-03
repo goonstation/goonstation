@@ -1,5 +1,10 @@
+#if defined(SPACE_PREFAB_RUNTIME_CHECKING)
+#include "blank.dm"
 
-#if defined(MAP_OVERRIDE_CONSTRUCTION)
+#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
+#include "blank_underwater.dm"
+
+#elif defined(MAP_OVERRIDE_CONSTRUCTION)
 #include "construction.dm"
 
 #elif defined(MAP_OVERRIDE_DESTINY)
@@ -20,9 +25,6 @@
 #elif defined(MAP_OVERRIDE_DONUT3)
 #include "donut3.dm"
 
-#elif defined(MAP_OVERRIDE_LINEMAP)
-#include "linemap.dm"
-
 #elif defined(MAP_OVERRIDE_MUSHROOM)
 #include "mushroom.dm"
 
@@ -31,9 +33,6 @@
 
 #elif defined(MAP_OVERRIDE_CHIRON)
 #include "chiron.dm"
-
-#elif defined(MAP_OVERRIDE_SAMEDI)
-#include "samedi.dm"
 
 #elif defined(MAP_OVERRIDE_PAMGOC)
 #include "pamgoc.dm"

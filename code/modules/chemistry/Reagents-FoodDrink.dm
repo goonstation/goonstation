@@ -1048,9 +1048,9 @@ datum
 
 
 				var/do_stunny = 1
-				var/list/covered = holder.covered_turf()
-				if (covered.len > 1)
-					do_stunny = prob(100/covered.len)
+				var/list/covered = holder?.covered_turf()
+				if (length(covered) > 1)
+					do_stunny = prob(100/length(covered))
 
 				if(method == INGEST && do_stunny)
 					boutput(M, "<span class='alert'>Drinking that was an awful idea!</span>")
@@ -3207,10 +3207,22 @@ datum
 			hunger_value = -2
 			thirst_value = -2
 			bladder_value = -2
+			stun_resist = 100
+			var/remove_buff = 0
 
-			on_add(var/mob/M)
-				if (ismob(M))
+			pooled()
+				..()
+				remove_buff = 0
+
+			on_add()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("tripletriple", 3333)
+
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
+				..()
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
 				if(method == INGEST)
@@ -3227,16 +3239,15 @@ datum
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
 
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-					holder.my_atom:remove_stam_mod_regen("tripletriple")
-
-				return
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.remove_stam_mod_regen("tripletriple")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
 
-					M.add_stam_mod_regen("tripletriple", 3333)
 				if(probmult(10))
 					new /obj/decal/cleanable/urine(M.loc)
 

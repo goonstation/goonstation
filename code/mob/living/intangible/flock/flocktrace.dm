@@ -13,6 +13,8 @@
 /mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F)
 	..()
 
+	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
+
 	src.real_name = "[pick(consonants_upper)][pick(vowels_lower)].[pick(vowels_lower)]"
 
 	if(istype(F))
@@ -20,6 +22,7 @@
 		src.flock.addTrace(src)
 	else
 		src.death() // f u
+	src.abilityHolder.addAbility(/datum/targetable/flockmindAbility/createStructure)
 
 /mob/living/intangible/flock/trace/proc/describe_state()
 	var/state = list()

@@ -38,19 +38,28 @@ if there are any violations).
 		logTheThing("debug", src, null, "Attempt to instantiate abstract type '[src.type]'.")
 #endif
 
-
-/*
-typesof but only for concrete (not abstract) types
-it caches the result so you don't need to worry about doing that manually
-so subsequent calls on the same type will be very fast
-just don't modify the result of the call directly
-OKAY: var/list/hats = concrete_typesof(/obj/item/clothing/head) - /obj/item/clothing/head/hosberet
-ALSO OKAY: var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
-           hats -= /obj/item/clothing/head/hosberet
-NOT OKAY: var/list/hats = concrete_typesof(/obj/item/clothing/head)
-          hats -= /obj/item/clothing/head/hosberet
-*/
 var/global/list/cached_concrete_types
+
+/**
+	* typesof() but only for concrete (not abstract) types,
+	* it caches the result so you don't need to worry about doing that manually
+	* so subsequent calls on the same type will be very fast.
+	*
+	* just don't modify the result of the call directly
+	* OKAY: `var/list/hats = concrete_typesof(/obj/item/clothing/head) - /obj/item/clothing/head/hosberet`
+	*
+	* ALSO OKAY:
+	* ```dm
+	* var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
+  * hats -= /obj/item/clothing/head/hosberet
+	* ```
+	*
+	* NOT OKAY:
+	* ```dm
+	* var/list/hats = concrete_typesof(/obj/item/clothing/head)
+  * hats -= /obj/item/clothing/head/hosberet
+	* ```
+	*/
 proc/concrete_typesof(type, cache=TRUE)
 	if(isnull(cached_concrete_types))
 		cached_concrete_types = list()
@@ -63,23 +72,26 @@ proc/concrete_typesof(type, cache=TRUE)
 	if(cache)
 		cached_concrete_types[type] = .
 
-/*
-The same thing but now you can filter the types using a proc. Also cached.
-The filter proc takes a type and should return 1 if we want to include it and 0 otherwise.
-That proc should also be pure (always return the same thing for the same arguments) because of the caching.
-If you want to use non-pure proc do the filtering manually yourself and don't use this.
-Note that the first call to filtered_concrete_typesof with a given type and filter will be (possibly a lot)
-*slower* than doing it manually. The benefit of this proc only shows itself for future calls which are
-very fast due to caching.
-
-Example:
-proc/filter_is_syndicate(type)
-	var/obj/fake_instance = type
-	return initial(fake_instance.is_syndicate)
-
-var/syndie_thing_type = pick(filtered_concrete_typesof(/obj/item, /proc/filter_is_syndicate))
-*/
 var/global/list/cached_filtered_types
+
+/**
+	* The same thing but now you can filter the types using a proc. Also cached.
+	* The filter proc takes a type and should return 1 if we want to include it and 0 otherwise.
+	* That proc should also be pure (always return the same thing for the same arguments) because of the caching.
+	* If you want to use non-pure proc do the filtering manually yourself and don't use this.
+	* Note that the first call to filtered_concrete_typesof with a given type and filter will be (possibly a lot)
+	* *slower* than doing it manually. The benefit of this proc only shows itself for future calls which are
+	* very fast due to caching.
+	*
+	* Example:
+	* ```
+	* proc/filter_is_syndicate(type)
+	* 	var/obj/fake_instance = type
+	* 	return initial(fake_instance.is_syndicate)
+	*
+	* var/syndie_thing_type = pick(filtered_concrete_typesof(/obj/item, /proc/filter_is_syndicate))
+	* ```
+	*/
 proc/filtered_concrete_typesof(type, filter)
 	if(isnull(cached_filtered_types))
 		cached_filtered_types = list()

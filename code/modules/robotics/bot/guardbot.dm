@@ -4886,12 +4886,6 @@
 	botcard_access = "Staff Assistant"
 	beacon_freq = 1443
 
-/obj/machinery/bot/guardbot/old/tourguide/linemap
-	name = "Monty"
-	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Monty'."
-	botcard_access = "Staff Assistant"
-	beacon_freq = 1443
-
 /obj/machinery/bot/guardbot/old/tourguide/oshan
 	name = "Moby"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Moby'."

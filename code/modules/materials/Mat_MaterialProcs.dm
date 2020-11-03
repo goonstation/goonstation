@@ -343,12 +343,15 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/plasmastone
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
 		for (var/turf/simulated/floor/target in range(1,location))
+			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
 			if(!target.blocks_air && target.air)
-				if(target.parent)
+				if(target.parent?.group_processing)
 					target.parent.suspend_group_processing()
 
 				var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
-				payload.toxins = 100
+				payload.toxins = 25
+				payload.temperature = T20C
+				payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 				target.air.merge(payload)
 		return
 
@@ -508,3 +511,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "ectoplasm")
 				location.setMaterial(getMaterial(chosen), appearance = 1, setname = 1)
 		return
+
+/datum/materialProc/enchanted_add
+	execute(var/obj/item/owner)
+		if(istype(owner))
+			owner.enchant(3, setTo = 1)

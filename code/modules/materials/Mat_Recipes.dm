@@ -22,6 +22,10 @@
 	proc/apply_to(var/datum/material/M)
 		return M
 
+	/// called with the resultant item from the recipe as argument. Use this if you want to say, print a message when a recipe is made.
+	proc/apply_to_obj(var/obj/O)
+		return
+
 /datum/material_recipe/spacelag
 	name = "spacelag"
 	result_id = "spacelag"
