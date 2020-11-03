@@ -735,6 +735,11 @@
 		return
 	*/
 
+	message = trim(message)
+
+	// check for singing prefix before radio prefix
+	message = check_singing_prefix(message)
+
 	var/italics = 0
 	var/forced_language = null
 	var/message_range = null
@@ -797,10 +802,14 @@
 						secure_headset_mode = lowertext(copytext(message,2,3))
 					message = copytext(message, 3)
 
-	// check for singing prefix
-	if (dd_hasprefix(message, singing_prefix) && isalive(src))
-		singing = NORMAL_SINGING
-		message = copytext(message, 2)
+	forced_language = get_special_language(secure_headset_mode)
+
+	message = trim(message)
+
+	// check for singing prefix after radio prefix
+	if (!singing)
+		message = check_singing_prefix(message)
+	if (singing)
 		// Scots can only sing Danny Boy
 		if (src.bioHolder?.HasEffect("accent_scots"))
 			var/scots = src.bioHolder.GetEffect("accent_scots")
@@ -809,12 +818,6 @@
 				S.danny_index = (S.danny_index % 16) + 1
 				var/lyrics = dd_file2list("strings/danny.txt")
 				message = lyrics[S.danny_index]
-	else
-		singing = 0
-
-	forced_language = get_special_language(secure_headset_mode)
-
-	message = trim(message)
 
 	if (!message)
 		return
@@ -1999,3 +2002,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)
 	..()
+
+/mob/living/proc/check_singing_prefix(var/message)
+	if (isalive(src))
+		// check for "%"
+		if (dd_hasprefix(message, singing_prefix))
+			src.singing = NORMAL_SINGING
+			return copytext(message, 2)
+	src.singing = 0
+	return message
