@@ -167,8 +167,8 @@ var/zapLimiter = 0
 		// 2015 addendum: The fixed name checks are kept for backward compatibility, I'm not gonna manually replace every APC of each of the six maps we have right now.
 		if (src.autoname_on_spawn == 1 || (name == "N APC" || name == "E APC" || name == "S APC" || name == "W APC"))
 			src.name = "[area.name] APC"
-
-	src.area.area_apc = src
+	if (!QDELETED(src.area))
+		src.area.area_apc = src
 
 	src.updateicon()
 

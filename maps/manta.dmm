@@ -45871,7 +45871,7 @@
 /obj/item/raw_material/rock,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ono" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
