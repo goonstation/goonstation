@@ -1,7 +1,7 @@
 //Job Ban Handling, Modified to utilize code written within the past 6 years.
 
-/proc/jobban_fullban(mob/M, rank, akey)
-	if (!M || !M.ckey || !akey) return
+/proc/jobban_fullban(M, rank, akey)
+	if (!M || !akey) return
 	var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "Roleplay", "Main", "Roleplay Overflow", "Main Overflow")
 	var/server = null //heehoo copy pasta
 	switch (server_nice)
@@ -13,66 +13,71 @@
 			server = "main2"
 		if ("Main Overflow")
 			server = "main3"
-	if(apiHandler.queryAPI("jobbans/add", list("ckey"=M.ckey,"rank"=rank, "akey"=akey, "applicable_server"=server)))
-		var/datum/player/player = make_player(M.ckey) //Recache the player.
-		player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M.ckey), 1)[M.ckey]
+	if(apiHandler.queryAPI("jobbans/add", list("ckey"=M,"rank"=rank, "akey"=akey, "applicable_server"=server)))
+		var/datum/player/player = make_player(M) //Recache the player.
+		if(player)
+			player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=MACHINES_ANNOUNCEMENTS), 1)[M]
 		return 1
 	return 0 //Errored.
 
-///Can be provided with a mob or a raw key.
-/proc/jobban_isbanned(mob/M, rank, mkey)
-	var/checkey
-	if (!M || !M.ckey )
-		checkey = mkey
-	if(mkey == null)
-		return //We gotta be provided one of the other man.
-	//you cant be banned from nothing!!
-	if (!rank)
-		return 0
+
+///Can be provided with a mob, a raw cache list, or a ckey. Prefer providing a cache if you can't use a mob, as that reduces API load.
+/proc/jobban_isbanned(M, rank)
+	var/list/cache
+	if(!M)
+		return
+	if(ismob(M))
+		var/mob/M2 = M
+		var/datum/player/player = make_player(M2.ckey) //Get the player so we can use their bancache.
+		if(player.cached_jobbans == null)//Shit they aren't cached.
+			player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)[M2.ckey]
+			cache = player.cached_jobbans
+	else if(islist(M))
+		cache = M
+	else //If we aren't a string this is going to explode.
+		cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
 
 	var/datum/job/J = find_job_in_controller_by_string(rank)
 	if (J && J.no_jobban_from_this_job)
 		return 0
 
-	var/datum/player/player = make_player(checkey) //Get the player so we can use their bancache.
-	if(player.cached_jobbans == null)//Shit they aren't cached.
-		player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M.ckey), 1)[checkey]
 
 
-	if(player.cached_jobbans.Find("Everything Except Assistant"))
+	if(cache.Find("Everything Except Assistant"))
 		if(rank != "Staff Assistant" && rank != "Technical Assistant" && rank != "Medical Assistant")
 			return 1
 
-	if(player.cached_jobbans.Find("Engineering Department"))
+	if(cache.Find("Engineering Department"))
 		if(rank in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
 			return 1
 
-	if(player.cached_jobbans.Find("Security Department") || player.cached_jobbans.Find("Security Officer"))
+	if(cache.Find("Security Department") || cache.Find("Security Officer"))
 		if(rank in list("Security Officer","Vice Officer","Detective"))
 			return 1
 
-	if(player.cached_jobbans.Find("Heads of Staff"))
+	if(cache.Find("Heads of Staff"))
 		if(rank in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director","Medical Director"))
 			return 1
 
-	if(player.cached_jobbans.Find("[rank]"))
+	if(cache.Find("[rank]"))
 		return 1
 	else
 		return 0
 
-/proc/jobban_unban(mob/M, rank, mkey)//This is full of faff to try and account for raw ckeys and actual players.
+/proc/jobban_unban(mob/M, rank)//This is full of faff to try and account for raw ckeys and actual players.
 	var/checkey
 	var/list/cache
 
-	if (!M || !M.ckey)
-		checkey = mkey
+	if (!ismob(M))
+		checkey = M
 		cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=checkey), 1)[checkey]
-	else
+	if (M.ckey)
+		checkey = M.ckey
 		var/datum/player/player = make_player(checkey) //Get the player so we can use their bancache.
 		cache = player.cached_jobbans
 		player.cached_jobbans = null //Invalidate their cache.
-	if(mkey == null)
-		return //We gotta be provided one of the other man.
+	else
+		return //Mob but no key.
 	if(!cache.Find("[rank]"))
 		return
 
