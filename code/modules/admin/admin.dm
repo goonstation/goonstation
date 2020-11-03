@@ -567,20 +567,21 @@ var/global/noir = 0
 				if ((M.client && M.client.holder && (M.client.holder.level > src.level)))
 					alert("You cannot perform this action. You must be of a higher administrative rank!")
 					return
+				var/datum/player/player = make_player(M.ckey) //Get the player so we can use their bancache.
 				if (jobban_isbanned(M, job))
-					if(jobban_keylist.Find(text("[M.ckey] - Everything Except Assistant")) && job != "Everything Except Assistant")
+					if(player.cached_jobbans.Find("Everything Except Assistant") && job != "Everything Except Assistant")
 						alert("This person is banned from Everything Except Assistant. You must lift that ban first.")
 						return
 					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
-						if(jobban_keylist.Find(text("[M.ckey] - Engineering Department")))
+						if(player.cached_jobbans.Find("Engineering Department"))
 							alert("This person is banned from Engineering Department. You must lift that ban first.")
 							return
 					if(job in list("Security Officer","Vice Officer","Detective"))
-						if(jobban_keylist.Find(text("[M.ckey] - Security Department")))
+						if(player.cached_jobbans.Find("Security Department"))
 							alert("This person is banned from Security Department. You must lift that ban first.")
 							return
 					if(job in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
-						if(jobban_keylist.Find(text("[M.ckey] - Heads of Staff")))
+						if(player.cached_jobbans.Find("Heads of Staff"))
 							alert("This person is banned from Heads of Staff. You must lift that ban first.")
 							return
 					logTheThing("admin", usr, M, "unbanned [constructTarget(M,"admin")] from [job]")
@@ -595,26 +596,26 @@ var/global/noir = 0
 					message_admins("<span class='internal'>[key_name(usr)] banned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] banned [M.ckey] from [job]")
 					if(job == "Everything Except Assistant")
-						if(jobban_keylist.Find(text("[M.ckey] - Engineering Department")))
+						if(player.cached_jobbans.Find("Engineering Department"))
 							jobban_unban(M,"Engineering Department")
-						if(jobban_keylist.Find(text("[M.ckey] - Security Department")))
+						if(player.cached_jobbans.Find("Security Department"))
 							jobban_unban(M,"Security Department")
-						if(jobban_keylist.Find(text("[M.ckey] - Heads of Staff")))
+						if(player.cached_jobbans.Find("Heads of Staff"))
 							jobban_unban(M,"Heads of Staff")
 						for(var/Trank1 in uniquelist(occupations))
-							if(jobban_keylist.Find(text("[M.ckey] - [Trank1]")))
+							if(player.cached_jobbans.Find("[Trank1]"))
 								jobban_unban(M,Trank1)
 					else if(job == "Engineering Department")
 						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
-							if(jobban_keylist.Find(text("[M.ckey] - [Trank2]")))
+							if(player.cached_jobbans.Find("[Trank2]"))
 								jobban_unban(M,Trank2)
 					else if(job == "Security Department")
 						for(var/Trank3 in list("Security Officer","Vice Officer","Detective"))
-							if(jobban_keylist.Find(text("[M.ckey] - [Trank3]")))
+							if(player.cached_jobbans.Find("[Trank3]"))
 								jobban_unban(M,Trank3)
 					else if(job == "Heads of Staff")
 						for(var/Trank4 in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
-							if(jobban_keylist.Find(text("[M.ckey] - [Trank4]")))
+							if(player.cached_jobbans.Find("[Trank4]"))
 								jobban_unban(M,Trank4)
 					jobban_fullban(M, job)
 					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has job-banned you from [job].</b></span>")
@@ -625,6 +626,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			usr.client.cmd_boot(M)
 
+		/* //This route should be inaccessible. -Francinum
 		if ("removejobban")
 			if (src.level >= LEVEL_SA)
 				var/t = href_list["target"]
@@ -635,6 +637,7 @@ var/global/noir = 0
 					jobban_remove(t)
 			else
 				alert("You need to be at least a Secondary Administrator to remove job bans.")
+		*/
 
 		if ("mute")
 			if (src.level >= LEVEL_MOD)
@@ -3901,50 +3904,6 @@ var/global/noir = 0
 	// <A href='?src=\ref[src];action=s_rez;type=spawn_commandos'>Spawn a force of commandos</A><BR>
 	// <A href='?src=\ref[src];action=s_rez;type=spawn_turds'>Spawn a T.U.R.D.S. attack force</A><BR>
 	// <A href='?src=\ref[src];action=s_rez;type=spawn_smilingman'>Spawn a Smiling Man</A><BR>
-
-/datum/admins/proc/buildjobbanspanel()
-	set background = 1
-	if (building_jobbans != 0)
-		boutput(usr, "Rebuild in progress, please try again later.")
-		return
-
-	if (alert("Fix a corrupted local panel or force a complete rebuild of the server's panel?","Select Rebuild Type","Local Fix","Server Rebuild") == "Local Fix")
-		var/jobban_dialog_text = replacetext(grabResource("html/admin/jobbans_list.html"), "null /* raw_bans */", "\"[global_jobban_cache]\"");
-		usr.Browse(replacetext(jobban_dialog_text, "null /* ref_src */", "\"\ref[src]\""),"file=jobbans.html;display=0")
-		current_jobbans_rev = global_jobban_cache_rev
-		jobbans_last_cached = world.timeofday
-		boutput(usr, "Refresh complete, your panel now matches the server's. If you need to edit a ban that was created after the build time shown please do a server rebuild.")
-	else
-		boutput(usr, "Rebuilding server cache...")
-
-		building_jobbans = 1
-
-		var/buf = ""
-		jobban_count = 0
-		for(var/t in jobban_keylist) if (t)
-			jobban_count++
-			buf += text("[t];")
-
-		global_jobban_cache = buf
-		global_jobban_cache_rev++
-		global_jobban_cache_built = world.timeofday
-
-		building_jobbans = 0
-		boutput(usr, "Rebuild complete, everyone's job ban panel is now up to date with the latest job bans.")
-
-
-/datum/admins/var/current_jobbans_rev = 0
-/datum/admins/var/jobbans_last_cached = 0
-/datum/admins/proc/Jobbans()
-	set background = 1
-	if (src.level >= LEVEL_SA)
-		if (current_jobbans_rev == 0 || current_jobbans_rev < global_jobban_cache_rev) // the cache is newer than our panel
-			var/jobban_dialog_text = replacetext(grabResource("html/admin/jobbans_list.html"), "null /* raw_bans */", "\"[global_jobban_cache]\"");
-			usr.Browse(replacetext(jobban_dialog_text, "null /* ref_src */", "\"\ref[src]\""),"file=jobbans.html;display=0")
-			current_jobbans_rev = global_jobban_cache_rev
-			jobbans_last_cached = world.timeofday
-
-		usr.Browse("<html><head><title>Ban Management</title><style type=\"text/css\">body{font-size: 8pt; font-family: Verdana, sans-serif;}</style></head><body><iframe src=\"jobbans.html\"width=\"100%\" height=\"90%\"></iframe>[jobban_count] job bans. banlist built at [time2text(global_jobban_cache_built)] and downloaded at [time2text(jobbans_last_cached)]</body>", "window=jobbanp;size=400x800")
 
 /datum/admins/proc/Game()
 	if (!usr) // somehoooow
