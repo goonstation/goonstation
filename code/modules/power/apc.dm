@@ -687,23 +687,24 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/update()
-	if(operating && !shorted && !do_not_operate && !QDELETED(src.area))
-		area.power_light = (lighting > 1)
-		area.power_equip = (equipment > 1)
-		area.power_environ = (environ > 1)
-		/*for (var/area/relatedArea in area)
-			relatedArea.power_light = (lighting > 1)
-			relatedArea.power_equip = (equipment > 1)
-			relatedArea.power_environ = (environ > 1)*/
-	else
-		area.power_light = 0
-		area.power_equip = 0
-		area.power_environ = 0
-		/*for (var/area/relatedArea in area)
-			relatedArea.power_light = 0
-			relatedArea.power_equip = 0
-			relatedArea.power_environ = 0*/
-	area.power_change() //Note: the power_change() for areas ALREADY deals with relatedArea. Don't put it in the loops here!!
+	if (!QDELETED(src.area))
+		if(operating && !shorted && !do_not_operate)
+			area.power_light = (lighting > 1)
+			area.power_equip = (equipment > 1)
+			area.power_environ = (environ > 1)
+			/*for (var/area/relatedArea in area)
+				relatedArea.power_light = (lighting > 1)
+				relatedArea.power_equip = (equipment > 1)
+				relatedArea.power_environ = (environ > 1)*/
+		else
+			area.power_light = 0
+			area.power_equip = 0
+			area.power_environ = 0
+			/*for (var/area/relatedArea in area)
+				relatedArea.power_light = 0
+				relatedArea.power_equip = 0
+				relatedArea.power_environ = 0*/
+		area.power_change() //Note: the power_change() for areas ALREADY deals with relatedArea. Don't put it in the loops here!!
 
 /obj/machinery/power/apc/proc/isWireColorCut(var/wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
