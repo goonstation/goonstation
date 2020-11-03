@@ -824,35 +824,46 @@
 /turf/space,
 /area)
 "acn" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/suit/armor/EOD,
-/obj/item/clothing/head/helmet/EOD,
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/turf/space,
+/area/securityexternal)
 "aco" = (
-/obj/machinery/weapon_stand/shotgun_rack,
-/turf/simulated/floor/black,
-/area/station/security/armory)
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/securityexternal)
 "acp" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
 	},
-/obj/securearea{
-	desc = "";
-	icon_state = "shock";
-	name = "Danger: High Voltage"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/obj/machinery/turret,
+/turf/space,
+/area/securityexternal)
 "acq" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/securityexternal)
+"acr" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/securityexternal)
+"acs" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/securityexternal)
+"act" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 4;
@@ -881,52 +892,7 @@
 	},
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
-"acr" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/security/armory)
-"acs" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/security/armory)
-"act" = (
-/obj/grille/steel,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/securityexternal)
 "acu" = (
 /obj/table/auto,
 /obj/item/storage/box/lightbox/tubes,
@@ -1321,35 +1287,18 @@
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction2)
 "ado" = (
-/obj/machinery/power/data_terminal,
 /obj/cable{
+	d1 = 2;
 	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "2-4"
 	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/securearea{
+	desc = "";
+	icon_state = "shock";
+	name = "Danger: High Voltage"
 	},
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/auto/reinforced,
-/turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/securityexternal)
 "adp" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -1469,25 +1418,49 @@
 /turf/simulated/floor/plating/airless,
 /area/station/security/armory)
 "adD" = (
-/obj/machinery/weapon_stand/rifle_rack/recharger,
-/turf/simulated/floor/black,
-/area/station/security/armory)
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/securityexternal)
 "adE" = (
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "adF" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 2;
+	icon_state = "0-2"
 	},
-/obj/securearea{
-	desc = "";
-	icon_state = "shock";
-	name = "Danger: High Voltage"
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/securityexternal)
 "adG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/observatory)
@@ -1502,7 +1475,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/securityexternal)
 "adI" = (
 /obj/cable{
 	d1 = 1;
@@ -1585,11 +1558,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
 "adV" = (
-/obj/rack,
-/obj/item/breaching_hammer,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
+/obj/machinery/recharger/wall/sticky,
+/obj/storage/secure/crate/weapon/armory/tranquilizer,
 /turf/simulated/floor/caution/west,
 /area/station/security/armory)
 "adW" = (
@@ -1698,21 +1668,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/westsolar)
 "aep" = (
-/obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
-/obj/machinery/computer3/generic/communications,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	tag = ""
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
 	},
 /turf/simulated/floor/black,
 /area/station/security/armory)
@@ -1731,16 +1692,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area)
-"aer" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
-/turf/simulated/floor/black,
-/area/station/security/armory)
 "aes" = (
 /obj/decal/poster/wallsign/stencil/right/s{
 	pixel_x = 10
@@ -1997,12 +1948,32 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/northsolar)
 "aeV" = (
-/obj/storage/secure/closet/security/armory,
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/securityexternal)
 "aeW" = (
-/obj/machinery/recharger/wall/sticky,
-/obj/storage/secure/crate/weapon/armory/tranquilizer,
+/obj/rack,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
 /turf/simulated/floor/caution/west,
 /area/station/security/armory)
 "aeX" = (
@@ -2385,20 +2356,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northsolar)
 "afM" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating/airless,
+/obj/storage/secure/closet/security/armory,
+/turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "afN" = (
 /obj/cable{
@@ -2409,9 +2368,20 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/armory)
 "afO" = (
-/obj/storage/secure/crate/weapon/armory/pod_weapons,
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/obj/grille/steel,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/securityexternal)
 "afP" = (
 /obj/table/auto,
 /obj/machinery/light/small{
@@ -2424,7 +2394,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "afR" = (
@@ -2451,7 +2420,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/securityexternal)
 "afT" = (
 /obj/stool/bed,
 /obj/landmark/start{
@@ -2545,17 +2514,10 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "agc" = (
-/obj/rack,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
+/obj/machinery/turret,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/caution/west,
 /area/station/security/armory)
 "agd" = (
@@ -2785,7 +2747,7 @@
 	},
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/securityexternal)
 "agE" = (
 /obj/stool/bed,
 /obj/landmark/start{
@@ -2883,9 +2845,35 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "agP" = (
-/obj/storage/secure/crate/weapon/armory/phaser,
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 8
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/securityexternal)
 "agQ" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/supernorn,
@@ -3039,7 +3027,7 @@
 	name = "Danger: High Voltage"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/securityexternal)
 "ahn" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
@@ -3993,13 +3981,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal{
-	name = "ejection chute"
-	},
-/obj/disposalpipe/trunk/ejection{
+/obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/simulated/floor/caution/east,
+/turf/simulated/floor/black,
 /area/station/security/armory)
 "ajk" = (
 /obj/machinery/door_control{
@@ -4060,19 +4045,11 @@
 /turf/simulated/floor,
 /area/station/security/armory)
 "ajq" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null;
-	req_access_txt = null
-	},
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/hos,
-/obj/firedoor_spawn,
-/turf/simulated/floor,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/armory)
 "ajr" = (
 /obj/cable{
@@ -4972,14 +4949,15 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "als" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/turretid{
+	pixel_y = 28;
+	turretArea = /area/station/security/armory
+	},
+/obj/access_spawn/security,
 /turf/simulated/floor/caution/north,
 /area/station/security/brig)
 "alt" = (
@@ -5134,8 +5112,6 @@
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "alP" = (
-/obj/table/auto,
-/obj/machinery/recharger,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -5145,14 +5121,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
-	},
-/obj/item/storage/box/stinger_kit{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/food/snacks/donut/frosted{
-	pixel_x = 7;
-	pixel_y = -6
 	},
 /turf/simulated/floor/black,
 /area/station/security/armory)
@@ -5401,17 +5369,13 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "amt" = (
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/stairs{
 	dir = 1;
-	icon_state = "Stairs2_wide"
+	icon_state = "stairs_middle"
 	},
 /area/station/security/brig)
 "amu" = (
@@ -62810,6 +62774,9 @@
 /obj/item/paper/telecrystal_update,
 /turf/simulated/floor/black,
 /area/listeningpost)
+"cDO" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/securityexternal)
 "cFt" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 4
@@ -62978,6 +62945,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
+"fvd" = (
+/obj/securearea{
+	desc = "A warning sign which reads 'COLLISION HAZARD'";
+	name = "COLLISION HAZARD";
+	pixel_y = -4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/securityexternal)
 "fBo" = (
 /obj/cable,
 /obj/cable{
@@ -63061,6 +63036,14 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area)
+"gfY" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/securityexternal)
 "gjs" = (
 /obj/cable{
 	d2 = 8;
@@ -63129,6 +63112,10 @@
 	dir = 10
 	},
 /area/station/quartermaster/refinery)
+"gCT" = (
+/obj/storage/secure/crate/weapon/armory/pod_weapons,
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "gDG" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -63141,6 +63128,14 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
+"gIW" = (
+/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/black,
+/area/station/security/armory)
 "gVk" = (
 /obj/cable{
 	d1 = 2;
@@ -63206,6 +63201,14 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
+"hUb" = (
+/obj/machinery/turret,
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "iix" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external{
@@ -63225,6 +63228,10 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"jeX" = (
+/obj/storage/secure/crate/weapon/armory/phaser,
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "jtM" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -63260,6 +63267,31 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"jWF" = (
+/obj/lattice,
+/turf/space,
+/area/securityexternal)
+"kpV" = (
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24
+	},
+/turf/simulated/floor/caution/north,
+/area/station/security/brig)
+"kqX" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/securityexternal)
+"krn" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/securityexternal)
 "kvk" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/wingrille_spawn/auto,
@@ -63278,6 +63310,16 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
+"kNa" = (
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/turf/simulated/floor/stairs{
+	dir = 1;
+	icon_state = "Stairs2_wide"
+	},
+/area/station/security/brig)
 "kRC" = (
 /obj/cable{
 	d1 = 1;
@@ -63293,6 +63335,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
+"liV" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/securearea{
+	desc = "";
+	icon_state = "shock";
+	name = "Danger: High Voltage"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/securityexternal)
 "ltD" = (
 /obj/cable{
 	d1 = 4;
@@ -63501,12 +63556,49 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
+"oMJ" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/computer3/generic/communications,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_y = 28;
+	turretArea = /area/securityexternal
+	},
+/obj/access_spawn/hos,
+/turf/simulated/floor/black,
+/area/station/security/armory)
 "poA" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"pqf" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/security/armory)
 "pDV" = (
 /obj/cable{
 	d1 = 4;
@@ -63523,6 +63615,18 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"pKl" = (
+/obj/rack,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/suit/armor/EOD,
+/obj/item/clothing/head/helmet/EOD,
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "pQP" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
@@ -63583,6 +63687,10 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"qPA" = (
+/obj/machinery/weapon_stand/rifle_rack/recharger,
+/turf/simulated/floor/black,
+/area/station/security/armory)
 "qTU" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -63599,6 +63707,20 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
+"rDb" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/disposal{
+	name = "ejection chute"
+	},
+/obj/disposalpipe/trunk/ejection{
+	dir = 4
+	},
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "rEe" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -63675,6 +63797,29 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"tgN" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 1
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/station/security/armory)
 "txq" = (
 /obj/machinery/atmospherics/valve{
 	desc = "hot reserve tank valve";
@@ -63702,6 +63847,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"tIp" = (
+/obj/rack,
+/obj/item/breaching_hammer,
+/obj/item/breaching_charge,
+/obj/item/breaching_charge,
+/obj/item/breaching_charge,
+/turf/simulated/floor/caution/west,
+/area/station/security/armory)
+"tRh" = (
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor/black,
+/area/station/security/armory)
 "tXN" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -63786,6 +63943,13 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
+"vme" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/securityexternal)
 "vqC" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/table/auto,
@@ -63912,6 +64076,10 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics)
+"xpx" = (
+/obj/grille/steel,
+/turf/simulated/floor/plating,
+/area/securityexternal)
 "xKG" = (
 /obj/machinery/light{
 	dir = 8
@@ -92122,24 +92290,24 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
 amr
 anx
 anv
@@ -92424,24 +92592,24 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
 amr
 any
 aoK
@@ -92726,24 +92894,24 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaw
-aaw
-aaw
+acn
+acn
+acp
+aco
+aco
+aco
+vme
+aco
+aco
+aco
+vme
+aco
+aco
+aco
+krn
+krn
+krn
+krn
 amr
 amr
 aoL
@@ -93028,20 +93196,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acn
+acn
+acq
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
+acn
 aho
 aho
 akk
@@ -93330,20 +93498,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acn
+acn
+acq
+acn
+ado
+acU
+adC
+adC
+adC
+adC
+adC
+pqf
+tgN
+ahm
 agy
 ajn
 akr
@@ -93632,20 +93800,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-acp
-acU
-adC
-adC
-adC
-adC
-afM
-agD
-ahm
+acn
+acn
+acr
+aco
+act
+acV
+acV
+acV
+acV
+acV
+acV
+afN
+acV
+ahn
 aho
 ajo
 akm
@@ -93934,20 +94102,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acn
+acn
 acq
+acn
+adD
 acV
+pKl
+afM
+gCT
+hUb
+jeX
+rDb
 acV
-acV
-acV
-acV
-afN
-acV
-ahn
+aho
 aho
 aho
 akn
@@ -94236,21 +94404,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aak
-aar
-acr
-acV
 acn
-aeV
-afO
-agP
-ajj
+acn
+acq
+acn
+adD
 acV
-aho
-aho
+tRh
+adE
+adE
+adE
+adE
+ajj
+ajp
+kpV
+kNa
 anD
 asa
 asV
@@ -94538,14 +94706,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-acs
+acn
+acn
+acq
+acn
+aeV
 acV
-aco
+gIW
+adE
 adE
 adE
 adE
@@ -94840,15 +95008,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-acs
+acn
+acn
+acq
+acn
+aeV
 acV
+oMJ
 aep
-aer
+afQ
 afQ
 ahr
 alP
@@ -95142,14 +95310,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-act
+acn
+acn
+acq
+acn
+afO
 acV
-adD
+qPA
+adE
 adE
 adE
 adE
@@ -95444,13 +95612,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aak
-aar
-act
+acn
+acn
+acr
+aco
+afO
 acV
+tIp
 adV
 aeW
 agc
@@ -95746,12 +95914,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-ado
+acn
+acn
+acq
+acn
+agP
+acV
 acV
 acV
 acV
@@ -95759,7 +95927,7 @@ acV
 acV
 afN
 acV
-ahn
+xpx
 aho
 ajs
 akr
@@ -96048,13 +96216,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acn
+acn
+acq
+acn
+liV
 adF
-acU
+adH
 adH
 adH
 adH
@@ -96350,20 +96518,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aah
-aaa
-aah
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acn
+acn
+acq
+acn
+acn
+acq
+acn
+acq
+acn
+acn
+acn
+acn
+acn
+acn
 ahs
 aju
 aks
@@ -96652,19 +96820,19 @@ aar
 aar
 aar
 aar
-aar
-aar
-aar
-aar
-aar
-aap
-aai
-aap
-aar
-aar
-aar
-aar
-aaw
+aco
+aco
+acs
+aco
+aco
+jWF
+cDO
+jWF
+vme
+aco
+aco
+aco
+gfY
 ahs
 ahs
 ajv
@@ -96954,19 +97122,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aah
-aaa
-aah
-aaa
-aaa
-aaa
-aaa
-aag
+acn
+acn
+acn
+acn
+acn
+acq
+acn
+acq
+acn
+acn
+acn
+acn
+kqX
 aht
 aip
 aip
@@ -97256,19 +97424,19 @@ aar
 aar
 aar
 aar
-aar
-aar
-aar
-aar
-aar
-aap
-aay
-aap
-aar
-aar
-aar
-aar
-aap
+aco
+aco
+aco
+aco
+aco
+jWF
+fvd
+jWF
+aco
+aco
+aco
+aco
+jWF
 ahu
 ahs
 ajw
