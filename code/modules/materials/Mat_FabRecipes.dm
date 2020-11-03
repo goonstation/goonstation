@@ -544,7 +544,7 @@
 			var/obj/item/toe = getObjectByPartName("Optional Toe Tip")
 			if(toe && toe.material)
 				newObj.setMaterial(toe.material)
-				newObj.desc = "[toe.material.name]-tipped [upper.material.name] shoes. The soles are made of [sole.material.name]."
+				newObj.desc = "[toe.material.name]-toed [upper.material.name] shoes. The soles are made of [sole.material.name]."
 			else if(upper && upper.material)
 				newObj.setMaterial(upper.material)
 				newObj.desc = newObj.desc + " The soles are made of [sole.material.name]."
