@@ -5,10 +5,8 @@
 	proctype = .proc/geigerclick
 
 /datum/component/wearertargeting/geiger/proc/geigerclick(var/mob/owner, var/stage)
-	if(owner)
-		var/obj/item/I = parent
-		if(!ON_COOLDOWN(src, "playsound", 1 SECOND))
-			owner.playsound_local(get_turf(owner), "sound/items/geiger/geiger-[stage]-[stage>=4?rand(1,3):rand(1,2)].ogg", 5, ignore_flag = 1)
+	if(owner && !ON_COOLDOWN(src, "playsound", 1 SECOND))
+		owner.playsound_local(get_turf(owner), "sound/items/geiger/geiger-[stage]-[stage>=4?rand(1,3):rand(1,2)].ogg", 5, ignore_flag = 1)
 
 
 /datum/component/holdertargeting/geiger
