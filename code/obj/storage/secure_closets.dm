@@ -560,7 +560,8 @@
 	/obj/item/ore_scoop,
 	/obj/item/mining_tool/power_pick,
 	/obj/item/clothing/glasses/meson,
-	/obj/item/storage/belt/mining)
+	/obj/item/storage/belt/mining,
+	/obj/item/device/geiger)
 
 /obj/storage/secure/closet/engineering/cargo
 	name = "\improper Quartermaster's locker"
