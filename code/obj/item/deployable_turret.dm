@@ -553,6 +553,7 @@
 /obj/deployable_turret/riot
 	name = "N.A.R.C.S."
 	desc = "A Nanotrasen Automatic Riot Control System."
+	icon_state = "nt_off"
 	health = 125
 	max_health = 125
 	wait_time = 20 //wait if it can't find a target
