@@ -605,7 +605,7 @@
 	possible_areas -= get_areas_with_turfs(/area/station/maintenance)
 	possible_areas -= get_areas_with_turfs(/area/station/hallway)
 	possible_areas -= get_areas_with_turfs(/area/station/engine/substation)
-	possible_areas -= /area/station/test_area
+	possible_areas -= /area/sim/test_area
 
 	for (var/area/A in possible_areas)
 		LAGCHECK(LAG_LOW)
