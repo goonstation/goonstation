@@ -1,3 +1,5 @@
+var/global/list/ip_list = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
+
 /client
 	preload_rsc = 1
 	var/datum/player/player = null
@@ -162,10 +164,8 @@
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Connected")
 
-	player = find_player(key)
-	if (!player)
-		player = make_player(key)
-	player.client = src
+	src.player = make_player(key)
+	src.player.client = src
 
 	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
 		src.player.log_join_time()
@@ -293,6 +293,83 @@
 		return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
+
+//vpn check (for ban evasion purposes) api documentation: https://vpnapi.io/api-documentation
+#ifdef DO_VPN_CHECKS
+	var/address = src.address
+	var/is_vpn_address = global.ip_list["[address]"]
+	if (is_vpn_address) //if its true, we want to kick them and make them rejoin
+		logTheThing("debug", src, null, "[address] is using a vpn that they've already logged in with during this round.")
+		logTheThing("diary", src, null, "[address] is using a vpn that they've already logged in with during this round.", "debug")
+		var/vpn_kick_string = {"
+						<!doctype html>
+						<html>
+							<head>
+								<title>we detected that youre using a vpn</title>
+							</head>
+							<body>
+								<h1>please disable your vpn, close the game, and rejoin.</h1><br>
+							</body>
+						</html>
+					"}
+		src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+		sleep(3 SECONDS)
+		if (src)
+			del(src)
+		return
+
+	//if its null, means ip hasnt been checked, so lets do that. also, numbers should be adjusted if we start overflowing on our daily limits
+	if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "https://vpnapi.io/api/[address]?key=[VPN_CHECK_API_KEY]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
+
+		//http request handler errors
+		if (response.errored || !response.body)
+			logTheThing("debug", src, null, "error: [response.error], address: [address] - CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection")
+			logTheThing("diary", src, null, "error: [response.error], address: [address] - CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection", "debug")
+
+		//if the api request was successful
+		else
+			var/list/ret = json_decode(response.body)
+
+			//where api specific errors are logged - doesnt show up if there are none
+			if (ret["message"])
+				logTheThing("debug", src, null, "[ret["message"]], address: [address]. CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection")
+				logTheThing("diary", src, null, "[ret["message"]], address: [address]. CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection", "debug")
+
+			//api response was successful
+			else
+				var/list/security_info = ret["security"]
+
+				//if they have a known vpn on
+				if (security_info["vpn"] == true)
+					global.ip_list["[address]"] = true
+					logTheThing("debug", src, null, "[address] is using a vpn. vpn info: [json_encode(ret["network"])]")
+					logTheThing("diary", src, null, "[address] is using a vpn. vpn info: [json_encode(ret["network"])]", "debug")
+					var/vpn_kick_string = {"
+									<!doctype html>
+									<html>
+										<head>
+											<title>we detected that youre using a vpn</title>
+										</head>
+										<body>
+											<h1>please disable your vpn, close the game, and rejoin.</h1><br>
+										</body>
+									</html>
+								"}
+					src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+					sleep(3 SECONDS)
+					if (src)
+						del(src)
+					return
+
+				//not using a vpn, good job
+				else
+					global.ip_list["[address]"] = false
+#endif
 
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
