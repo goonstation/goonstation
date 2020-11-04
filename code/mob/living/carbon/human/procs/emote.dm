@@ -1582,7 +1582,7 @@
 								message = "<B>[src]</B> does a tactical flip!"
 								src.stance = "dodge"
 								SPAWN_DBG(0.2 SECONDS) //I'm sorry for my transgressions there's probably a way better way to do this
-									if(src && src.stance == "dodge")
+									if(src?.stance == "dodge")
 										src.stance = "normal"
 
 							//FLIP OVER TABLES
@@ -1637,7 +1637,7 @@
 									else
 										src.changeStatus("weakened", 3.9 SECONDS)
 
-										if (client && client.hellbanned)
+										if (client?.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
 										if (G.affecting && !G.affecting.hasStatus("weakened"))
 											G.affecting.changeStatus("weakened", 4.5 SECONDS)

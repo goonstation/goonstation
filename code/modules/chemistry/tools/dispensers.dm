@@ -99,7 +99,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
 		SPAWN_DBG(1 SECOND)
-			if (src && src.reagents)
+			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
 		return
@@ -130,7 +130,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
 		SPAWN_DBG(1 SECOND)
-			if (src && src.reagents)
+			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
 		return

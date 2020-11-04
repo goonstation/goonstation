@@ -59,7 +59,7 @@
 			if((source != host) || !(src in host))
 				return 1
 
-			if(!command || (signal && signal.encryption && signal.encryption != src.id))
+			if(!command || (signal?.encryption && signal.encryption != src.id))
 				return 1
 
 			return 0
@@ -473,7 +473,7 @@
 		if((source != host) || !(src in host))
 			return 1
 
-		if(!command || (signal && signal.encryption && signal.encryption != src.id))
+		if(!command || (signal?.encryption && signal.encryption != src.id))
 			return 1
 
 		if(!src.check_connection())
@@ -605,7 +605,7 @@
 		if((source != host) || !(src in host))
 			return 1
 
-		if(!command || (signal && signal.encryption && signal.encryption != src.id))
+		if(!command || (signal?.encryption && signal.encryption != src.id))
 			return 1
 
 		command = lowertext(command)

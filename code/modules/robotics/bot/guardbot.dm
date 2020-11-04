@@ -62,7 +62,7 @@
 				src.master = null
 				return 1
 
-			while(master && master.path && master.path.len && target_turf && master.moving)
+			while(length(master?.path) && target_turf && master.moving)
 //				boutput(world, "[compare_movepath] : [current_movepath]")
 				//if(compare_movepath != current_movepath)
 				//	break
@@ -2740,7 +2740,7 @@
 											src.drop_arrest_target()
 											master.set_emotion("smug")
 
-											if (arrested_messages && arrested_messages.len)
+											if (length(arrested_messages))
 												var/arrest_message = pick(arrested_messages)
 												master.speak(arrest_message)
 

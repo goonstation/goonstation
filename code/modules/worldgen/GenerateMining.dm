@@ -71,7 +71,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		ambient_light = TRENCH_LIGHT
 
 /proc/decideSolid(var/turf/current, var/turf/center, var/sizemod = 0)
-	if(!current || !center || (current.loc.type != /area && !istype(current.loc , /area/allowGenerate)) || !istype(current, /turf/space))
+	if(!current || !center || (current.loc.type != /area/space && !istype(current.loc , /area/allowGenerate)) || !istype(current, /turf/space))
 		return 0
 	if(ISDISTEDGE(current, AST_MAPBORDER))
 		return 0
@@ -132,11 +132,11 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		for(var/x=1,x<=world.maxx,x++)
 			for(var/y=1,y<=world.maxy,y++)
 				var/turf/T = locate(x,y,AST_ZLEVEL)
-				if(map[x][y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area) || istype(T.loc , /area/allowGenerate)) )
+				if(map[x][y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)) )
 					var/turf/simulated/wall/asteroid/N = new/turf/simulated/wall/asteroid(T)
 					N.quality = rand(-101,101)
 					generated.Add(N)
-				if(T.loc.type == /area || istype(T.loc, /area/allowGenerate))
+				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
 					new/area/allowGenerate/trench(T)
 				LAGCHECK(LAG_REALTIME)
 
@@ -207,7 +207,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			var/turf/X = pick(miningZ)
 			var/quality = rand(-101,101)
 
-			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area && !istype(X.loc , /area/allowGenerate)))
+			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate)))
 				X = pick(miningZ)
 				LAGCHECK(LAG_REALTIME)
 
@@ -244,7 +244,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
-				if(!isnull(T) && T.loc && ((T.loc.type == /area) || istype(T.loc , /area/allowGenerate)))
+				if(!isnull(T) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)))
 					var/turf/simulated/wall/asteroid/AST = new/turf/simulated/wall/asteroid(T)
 					placed.Add(AST)
 					AST.quality = quality
@@ -361,6 +361,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			return P
 		else return null
 
+ABSTRACT_TYPE(/datum/generatorPrefab)
 /datum/generatorPrefab
 	var/probability = 0
 	var/maxNum = 0
@@ -386,7 +387,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		for(var/x=0, x<prefabSizeX; x++)
 			for(var/y=0, y<prefabSizeX; y++)
 				var/turf/L = locate(T.x+x, T.y+y, T.z)
-				if(L && L.loc && ((L.loc.type != /area) && !istype(L.loc , /area/allowGenerate))) // istype(L.loc, /area/noGenerate)
+				if(L?.loc && ((L.loc.type != /area/space) && !istype(L.loc , /area/allowGenerate))) // istype(L.loc, /area/noGenerate)
 					return 0
 
 		var/loaded = file2text(prefabPath)

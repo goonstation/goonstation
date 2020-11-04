@@ -145,7 +145,7 @@
 			if(href_list["device"])
 				attached_device.attack_self(usr)
 			if(href_list["straps"])
-				if(usr && usr.back && usr.back == src)
+				if(usr?.back && usr.back == src)
 					boutput(usr, "<span class='alert'>You can't detach the loops of wire while you're wearing [src]!</span>")
 				else
 					flags &= ~ONBACK
@@ -401,12 +401,12 @@
 		var/tankslost = 2
 		var/log_message = "[time2text(world.timeofday, "mm:ss")]:"
 		var/tpressure = 0
-		if(tank_one && tank_one.air_contents)
+		if(tank_one?.air_contents)
 			tankslost--
 			var/t1pressure = MIXTURE_PRESSURE(tank_one.air_contents)
 			tpressure += round(t1pressure,0.1)
 
-		if(tank_two && tank_two.air_contents)
+		if(tank_two?.air_contents)
 			tankslost--
 			var/t2pressure = MIXTURE_PRESSURE(tank_two.air_contents)
 			tpressure += round(t2pressure,0.1)

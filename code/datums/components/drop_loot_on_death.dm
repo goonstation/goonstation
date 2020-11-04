@@ -28,7 +28,7 @@
 
 // if another duplicate component of this type is added, add its items to this one
 /datum/component/drop_loot_on_death/InheritComponent(datum/component/drop_loot_on_death/C, i_am_original, _items)
-	if(C && C.items_to_drop)
+	if(C?.items_to_drop)
 		src.items_to_drop.Add(C.items_to_drop)
 	else
 		if (_items) // C(duplicate component) wasn't initialized, so we don't know if the raw argument _items is in proper format

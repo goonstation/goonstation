@@ -102,7 +102,7 @@
 	process()
 		// consume any fluid near us
 		var/turf/T = get_turf(src)
-		if(T && T.active_liquid)
+		if(T?.active_liquid)
 			var/obj/fluid/F = T.active_liquid
 			F.group.drain(F, 15, src)
 

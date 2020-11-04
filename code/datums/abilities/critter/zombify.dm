@@ -35,13 +35,15 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(target.stat == 2 || target.health <= -100) //If basically dead, instaconvert.
+		
+		if(isdead(target) || target.health <= -100) //If basically dead, instaconvert.
 			target.set_mutantrace(/datum/mutantrace/zombie/can_infect)
 			target.full_heal()
-			if (target.ghost && target.ghost.mind && !(target.mind && target.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
+			if (target.ghost?.mind && !(target.mind && target.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
 				target.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 				target.ghost.mind.transfer_to(target)
-		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && zombify && zombify.cooldowncheck())
+		if(owner && ownerMob && target && IN_RANGE(owner, target, 1) && zombify?.cooldowncheck())
+
 			logTheThing("combat", ownerMob, target, "zombifies [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully infected [target]!</B></span>", 1)

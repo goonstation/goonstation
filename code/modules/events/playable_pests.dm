@@ -91,6 +91,9 @@
 				var/datum/mind/M = pick(candidates)
 				if (M.current)
 					M.current.make_ghost_critter(pestlandmark,select)
+					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
+					O.owner = M.current
+					O.implanted = 1
 				candidates -= M
 
 			pestlandmark.visible_message("A group of pests emerge from their hidey-hole!")

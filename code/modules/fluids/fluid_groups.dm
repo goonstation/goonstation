@@ -172,7 +172,7 @@
 
 	proc/update_amt_per_tile()
 		contained_amt = src.reagents.total_volume
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 
 	proc/evaporate()
 		//boutput(world,"IM HITTING THE VAPE!!!!!!!!!!")
@@ -223,19 +223,19 @@
 			var/turf/t
 			for( var/dir in cardinal )
 				t = get_step( F, dir )
-				if (t && t.active_liquid)
+				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
 					t.active_liquid.update_icon(1)
 		else
 			var/turf/t
 			for( var/dir in cardinal )
 				t = get_step( F, dir )
-				if (t && t.active_liquid)
+				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
 
 		if(src.disposed || F.disposed) return 0 // update_icon lagchecks, rip
 
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		members -= F //remove after amt per tile ok? otherwise bad thing could happen
 		if (lost_fluid)
 			src.reagents.skip_next_update = 1
@@ -271,17 +271,17 @@
 			var/turf/t
 			for( var/dir in cardinal )
 				t = get_step( F, dir )
-				if (t && t.active_liquid)
+				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
 					t.active_liquid.update_icon(1)
 		else
 			var/turf/t
 			for( var/dir in cardinal )
 				t = get_step( F, dir )
-				if (t && t.active_liquid)
+				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
 
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		var/amt_to_remove = min(amt_per_tile, vol_max)
 
 		if(amt_to_remove == amt_per_tile)
@@ -344,7 +344,7 @@
 		if (!(channel && F)) return 0
 		LAGCHECK(LAG_HIGH)
 		var/turf/jump_turf = 0
-		var/amt_per_tile_added = (members && members.len) ? (contained_amt+1) / members.len : 0
+		var/amt_per_tile_added = length(members) ? (contained_amt+1) / length(members) : 0
 
 		if (amt_per_tile_added <= channel.required_to_pass && spread_dir != channel.dir)
 			return 0
@@ -446,7 +446,7 @@
 				fluids_to_create = force
 
 			var/list/created = src.spread(fluids_to_create)
-			if (created && created.len && !src.qdeled)
+			if (length(created) && !src.qdeled)
 				src.members += created
 				return
 
@@ -456,7 +456,7 @@
 			src.updating = 0
 			return 1
 
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		var/my_depth_level = 0
 		for(var/x in depth_levels)
 			if (amt_per_tile > x)
@@ -511,7 +511,7 @@
 				F.last_depth_level = my_depth_level
 				for(var/obj/O in F.loc)
 					LAGCHECK(LAG_MED)
-					if (O && O.submerged_images)
+					if (O?.submerged_images)
 						F.HasEntered(O,O.loc)
 
 				depth_changed = 1
@@ -614,7 +614,7 @@
 					.+= C
 					created++
 
-				if ((members?.len + created)<=0) //this can happen somehow
+				if ((length(members) + created)<=0) //this can happen somehow
 					continue
 
 				amt_per_tile = contained_amt / (members.len + created)
@@ -633,7 +633,7 @@
 		if (!drain_source || drain_source.group != src) return
 
 		//Don't delete tiles if we can just drain existing deep fluid
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 
 		if (amt_per_tile > required_to_spread)
 			if (transfer_to && transfer_to.reagents && src.reagents)
@@ -707,7 +707,7 @@
 
 		src.update_loop() //just in case one wasn't running already
 		//src.last_add_time = world.time
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		return 1
 
 	proc/try_split(var/turf/removed_loc) //called when a fluid is removed. check if the removal causes a split, and proceed from there.
@@ -738,7 +738,7 @@
 
 		//remove some of contained_amt from src and add it to FG
 		src.can_update = 0
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		var/datum/fluid_group/FG = new group_type
 		FG.can_update = 0
 		//add members to FG, remove them from src

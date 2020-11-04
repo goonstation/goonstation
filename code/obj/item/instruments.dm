@@ -82,9 +82,9 @@
 		.= 1
 
 	proc/play(var/mob/user)
-		if (pick_random_note && sounds_instrument && sounds_instrument.len)
+		if (pick_random_note && length(sounds_instrument))
 			play_note(rand(1,sounds_instrument.len),user)
-		if(contextActions?.len)
+		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
 	proc/show_play_message(mob/user as mob)

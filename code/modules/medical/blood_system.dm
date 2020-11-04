@@ -477,7 +477,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		B.add_volume(H.blood_color, H.blood_id, num_amount, vis_amount)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
-		if (B && B.reagents && H.reagents && H.reagents.total_volume)
+		if (B.reagents && H.reagents?.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
 			H.reagents.trans_to(B, min(round(num_amount / 2, 1), 5))
 	else
@@ -777,7 +777,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (5 to INFINITY)
 			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s internal bleeding was already high and chance was not increased")
 
-	if (some_jerk && some_jerk.zone_sel && some_jerk.zone_sel.selecting)
+	if (some_jerk?.zone_sel?.selecting)
 		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [some_jerk]'s target zone is [some_jerk.zone_sel.selecting]")
 		switch (some_jerk.zone_sel.selecting)
 			if ("head")

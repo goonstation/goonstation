@@ -47,7 +47,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	// let's try doing this here, yoloooo
 	// zamu 20200823: idk if this is even getting called...
-	//if (mining_controls && mining_controls.mining_z && mining_controls.mining_z_asteroids_max)
+	//if (mining_controls?.mining_z && mining_controls.mining_z_asteroids_max)
 	//	mining_controls.spawn_mining_z_asteroids()
 
 	if(master_mode == "battle_royale")
@@ -604,7 +604,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	logTheThing("debug", null, null, "Revving up the spacebux loop...")
 
 	for(var/mob/player in mobs)
-		if (player && player.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
+		if (player?.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
 			logTheThing("debug", null, null, "Iterating on [player.client]")
 			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.ckey]")
 

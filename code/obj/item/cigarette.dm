@@ -97,7 +97,7 @@
 			if (ismob(src.loc))
 				var/mob/M = src.loc
 				M.set_clothing_icon_dirty()
-			if(src && src.reagents)
+			if(src?.reagents)
 				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
 			processing_items |= src
 
@@ -273,7 +273,7 @@
 				else
 					src.reagents.trans_to(M, puffrate)
 					src.reagents.reaction(M, INGEST, puffrate)
-			else if (src && src.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
+			else if (src?.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
 				src.reagents.remove_any(puffrate)
 
 		if (!src.reagents || src.reagents.total_volume <= 0) //ZeWaka: fix for null.total_volume (syndie cigs)
@@ -445,7 +445,7 @@
 		"something","honey_tea","tea","coffee","chocolate","guacamole","juice_pickle","vanilla","enriched_msg","egg","aranesp",
 		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium")
 		..()
-		if (src && src.reagents) //Warc: copied ZeWaka's copy of Wire's fix for null.remove_any() way above
+		if (src?.reagents) //Warc: copied ZeWaka's copy of Wire's fix for null.remove_any() way above
 			src.reagents.remove_any(15)
 			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
 			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)

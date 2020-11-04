@@ -212,3 +212,8 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 			var/atom/A = src.loc
 			for (var/mob/O in A.contents)
 				O.show_message(message, m_type)
+
+
+/mob/living/intangible/flock/proc/createstructure(var/T, var/resources = 0)
+	//todo check for flocktile underneath flockmind cheers
+	new /obj/flock_structure/ghost(src.loc, T, src.flock, resources)

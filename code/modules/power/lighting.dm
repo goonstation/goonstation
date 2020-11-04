@@ -55,7 +55,7 @@
 	#define LIGHTING_POWER_FACTOR 40
 	event_handler_flags = IMMUNE_SINGULARITY
 	invisibility = 100
-	var/area/my_area = 0
+	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
 
@@ -63,7 +63,7 @@
 	return
 
 /obj/machinery/light_area_manager/process()
-	if(my_area && my_area.power_light && my_area.lightswitch)
+	if(my_area?.power_light && my_area.lightswitch)
 		..()
 		var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
 		use_power(thepower * lights.len, LIGHT)
