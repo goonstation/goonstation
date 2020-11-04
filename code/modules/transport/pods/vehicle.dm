@@ -962,6 +962,10 @@
 		boutput(boarder, "<span class='alert'>You're already inside [src]!</span>")
 		return
 
+	if (!src.allowed(boarder))
+		boutput(boarder, "<span class='alert'>Access denied.</span>")
+		return
+
 	passengers = 0 // reset this shit
 
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot

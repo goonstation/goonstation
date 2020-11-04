@@ -735,6 +735,11 @@
 		return
 	*/
 
+	message = trim(message)
+
+	// check for singing prefix before radio prefix
+	message = check_singing_prefix(message)
+
 	var/italics = 0
 	var/forced_language = null
 	var/message_range = null
@@ -797,10 +802,14 @@
 						secure_headset_mode = lowertext(copytext(message,2,3))
 					message = copytext(message, 3)
 
-	// check for singing prefix
-	if (dd_hasprefix(message, singing_prefix) && isalive(src))
-		singing = NORMAL_SINGING
-		message = copytext(message, 2)
+	forced_language = get_special_language(secure_headset_mode)
+
+	message = trim(message)
+
+	// check for singing prefix after radio prefix
+	if (!singing)
+		message = check_singing_prefix(message)
+	if (singing)
 		// Scots can only sing Danny Boy
 		if (src.bioHolder?.HasEffect("accent_scots"))
 			var/scots = src.bioHolder.GetEffect("accent_scots")
@@ -809,12 +818,6 @@
 				S.danny_index = (S.danny_index % 16) + 1
 				var/lyrics = dd_file2list("strings/danny.txt")
 				message = lyrics[S.danny_index]
-	else
-		singing = 0
-
-	forced_language = get_special_language(secure_headset_mode)
-
-	message = trim(message)
 
 	if (!message)
 		return
@@ -1733,7 +1736,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		src.ai.was_harmed(weapon,M)
 	..()
 
-/mob/living/bullet_act(var/obj/projectile/P, mob/meatshield)
+/mob/living/bullet_act(var/obj/projectile/P)
 	log_shot(P,src)
 	if (ismob(P.shooter))
 		var/mob/living/M = P.shooter
@@ -1777,20 +1780,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (!P.proj_data)
 		return 0
-
-	if (!meatshield && locate(/obj/item/grab, src))
-		var/mob/hostage = null
-		var/obj/item/grab/G = find_type_in_hand(/obj/item/grab)
-		if(G?.affecting && G.state >= 2 && P.shooter != G.affecting) //If you grab someone they can still shoot you
-			hostage = G.affecting
-		if (hostage)
-			hostage.bullet_act(P, src)
-
-			//moved here so that it displays after the bullet hit message
-			if(prob(20)) //This should probably not be bulletproof, har har
-				hostage.visible_message("<span class='combat bold'>[hostage] is knocked out of [src]'s grip by the force of the [P.name]!</span>")
-				qdel(G)
-			return hostage
 
 	if (!P.proj_data.silentshot && !P.proj_data.nomsg)
 		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name]!</span>")
@@ -2013,3 +2002,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)
 	..()
+
+/mob/living/proc/check_singing_prefix(var/message)
+	if (isalive(src))
+		// check for "%"
+		if (dd_hasprefix(message, singing_prefix))
+			src.singing = NORMAL_SINGING
+			return copytext(message, 2)
+	src.singing = 0
+	return message

@@ -608,7 +608,7 @@
 		src.create_reagents(1000)
 
 		SPAWN_DBG(4 SECONDS)
-			if(!reagents.total_volume)
+			if(reagents && !reagents.total_volume)
 				if (all_functional_reagent_ids.len > 0)
 					src.reagent_id = pick(all_functional_reagent_ids)
 				else

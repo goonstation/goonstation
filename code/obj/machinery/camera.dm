@@ -419,7 +419,9 @@
 
 /proc/build_camera_network()
 	name_autoname_cameras()
-	connect_camera_list(by_type[/obj/machinery/camera])
+	var/list/cameras = by_type[/obj/machinery/camera]
+	if (!isnull(cameras))
+		connect_camera_list(by_type[/obj/machinery/camera])
 
 /proc/rebuild_camera_network()
 	if(defer_camnet_rebuild || !camnet_needs_rebuild) return
@@ -442,7 +444,7 @@
 	logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Starting to connect cameras")
 	var/count = 0
 	for(var/obj/machinery/camera/C as() in camlist)
-		if(!isturf(C.loc) || C.disposed || C.qdeled) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
+		if(QDELETED(C) || !isturf(C.loc)) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
 			continue
 
 

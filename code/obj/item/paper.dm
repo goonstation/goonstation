@@ -386,6 +386,7 @@
 	stampable = 0
 	icon_state = "thermal_paper"
 	sealed = 1
+	item_function_flags = SMOKELESS
 
 /obj/item/paper/alchemy/
 	name = "'Chemistry Information'"
