@@ -299,16 +299,16 @@ var/global/list/ip_list = list() //assoc list of ip = true or ip = false. if ip 
 	var/address = src.address
 	var/is_vpn_address = global.ip_list["[address]"]
 	if (is_vpn_address) //if its true, we want to kick them and make them rejoin
-		logTheThing("debug", src, null, "[address] is using a vpn that they've already logged in with during this round.")
-		logTheThing("diary", src, null, "[address] is using a vpn that they've already logged in with during this round.", "debug")
+		logTheThing("admin", src, null, "[address] is using a vpn that they've already logged in with during this round.")
+		logTheThing("diary", src, null, "[address] is using a vpn that they've already logged in with during this round.", "admin")
 		var/vpn_kick_string = {"
 						<!doctype html>
 						<html>
 							<head>
-								<title>we detected that youre using a vpn</title>
+								<title>VPN or Proxy Detected</title>
 							</head>
 							<body>
-								<h1>please disable your vpn, close the game, and rejoin.</h1><br>
+								<h1>Please disable your vpn, close the game, and rejoin.</h1><br>
 							</body>
 						</html>
 					"}
@@ -328,8 +328,8 @@ var/global/list/ip_list = list() //assoc list of ip = true or ip = false. if ip 
 
 		//http request handler errors
 		if (response.errored || !response.body)
-			logTheThing("debug", src, null, "error: [response.error], address: [address] - CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection")
-			logTheThing("diary", src, null, "error: [response.error], address: [address] - CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection", "debug")
+			logTheThing("admin", src, null, "error: [response.error], address: [address] - CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection")
+			logTheThing("diary", src, null, "error: [response.error], address: [address] - CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection", "admin")
 
 		//if the api request was successful
 		else
@@ -337,8 +337,8 @@ var/global/list/ip_list = list() //assoc list of ip = true or ip = false. if ip 
 
 			//where api specific errors are logged - doesnt show up if there are none
 			if (ret["message"])
-				logTheThing("debug", src, null, "[ret["message"]], address: [address]. CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection")
-				logTheThing("diary", src, null, "[ret["message"]], address: [address]. CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection", "debug")
+				logTheThing("admin", src, null, "[ret["message"]], address: [address]. CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection")
+				logTheThing("diary", src, null, "[ret["message"]], address: [address]. CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection", "admin")
 
 			//api response was successful
 			else
@@ -347,16 +347,16 @@ var/global/list/ip_list = list() //assoc list of ip = true or ip = false. if ip 
 				//if they have a known vpn on
 				if (security_info["vpn"] == true)
 					global.ip_list["[address]"] = true
-					logTheThing("debug", src, null, "[address] is using a vpn. vpn info: [json_encode(ret["network"])]")
-					logTheThing("diary", src, null, "[address] is using a vpn. vpn info: [json_encode(ret["network"])]", "debug")
+					logTheThing("admin", src, null, "[address] is using a vpn. vpn info: [json_encode(ret["network"])]")
+					logTheThing("diary", src, null, "[address] is using a vpn. vpn info: [json_encode(ret["network"])]", "admin")
 					var/vpn_kick_string = {"
 									<!doctype html>
 									<html>
 										<head>
-											<title>we detected that youre using a vpn</title>
+											<title>VPN or Proxy Detected</title>
 										</head>
 										<body>
-											<h1>please disable your vpn, close the game, and rejoin.</h1><br>
+											<h1>Please disable your vpn, close the game, and rejoin.</h1><br>
 										</body>
 									</html>
 								"}
