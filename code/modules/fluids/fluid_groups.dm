@@ -4,7 +4,7 @@
 
 
 /datum/reagents/fluid_group
-	var/datum/fluid_group/my_group = 0
+	var/datum/fluid_group/my_group = null
 	var/last_reaction_loc = 0
 	var/skip_next_update = 0
 	covered_turf()
@@ -91,7 +91,7 @@
 	var/updating = 0 //already updating? block another loop from being started
 
 
-	var/datum/reagents/fluid_group/reagents = 0
+	var/datum/reagents/fluid_group/reagents = null
 	var/contained_amt = 0 //total reagent amt including all members
 	var/amt_per_tile = 0 //Don't pull from this value for group calculations without updating it first
 	var/required_to_spread = 30
@@ -137,8 +137,8 @@
 
 		members = 0
 
-		reagents.my_group = 0
-		reagents = 0
+		reagents.my_group = null
+		reagents = null
 
 		spread_member = 0
 		updating = 0
@@ -465,7 +465,7 @@
 		LAGCHECK(LAG_MED)
 
 		var/datum/color/last_color = src.average_color
-		src.average_color = src.reagents.get_average_color()
+		src.average_color = src.reagents?.get_average_color()
 		var/color_dif = 0
 		if (!last_color)
 			color_dif = 999
@@ -482,10 +482,10 @@
 		var/targetalpha = max(25, (src.average_color.a / 255) * src.max_alpha)
 		var/targetcolor = rgb(src.average_color.r, src.average_color.g, src.average_color.b)
 
-		src.master_reagent_name = src.reagents.get_master_reagent_name()
-		src.master_reagent_id = src.reagents.get_master_reagent_id()
+		src.master_reagent_name = src.reagents?.get_master_reagent_name()
+		src.master_reagent_id = src.reagents?.get_master_reagent_id()
 
-		var/master_opacity = !drains_floor && reagents.get_master_reagent_gas_opaque()
+		var/master_opacity = !src.drains_floor && src.reagents?.get_master_reagent_gas_opaque()
 
 		var/depth_changed = 0 //force icon update later in the proc if fluid member depth changed
 		var/last_icon = 0
