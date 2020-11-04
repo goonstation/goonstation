@@ -636,7 +636,7 @@
 		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 
 		if (amt_per_tile > required_to_spread)
-			if (transfer_to?.reagents && src.reagents)
+			if (transfer_to && transfer_to.reagents && src.reagents)
 				src.reagents.trans_to_direct(transfer_to.reagents,min(fluids_to_remove * amt_per_tile, src.reagents.total_volume))
 				src.contained_amt = src.reagents.total_volume
 			else
