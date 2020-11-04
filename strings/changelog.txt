@@ -1,5 +1,9 @@
 
 (t)wed nov 04 20
+(u)DisturbHerb
+(p)2546
+(e)|
+(+)Adds the ability to center writen text on paper by enclosing it between [center] and [/center].
 (u)Tarmunora
 (p)2558
 (e)⚖|balance
