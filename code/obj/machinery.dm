@@ -368,6 +368,6 @@
 	var/area/A1 = get_area(src)
 	. = ..()
 	var/area/A2 = get_area(src)
-	if(islist(A1?.machines) && islist(A2?.machines) && A1 != A2)
+	if(!isnull(A1?.machines) && !isnull(A2?.machines) && A1 != A2)
 		A1.machines -= src
 		A2.machines += src
