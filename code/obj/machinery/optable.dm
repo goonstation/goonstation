@@ -92,7 +92,7 @@
 			qdel(W)
 			return
 	user.drop_item()
-	if(W && W.loc)
+	if(W?.loc)
 		W.set_loc(src.loc)
 	return
 

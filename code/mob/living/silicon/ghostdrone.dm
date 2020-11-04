@@ -40,7 +40,7 @@
 		//src.sight |= SEE_TURFS //Uncomment for meson-like vision. I'm not a fan of it though. -Wire
 
 		//Set the drone name
-		if (rand(1, 1000) == 69 && ticker && ticker.mode) //heh
+		if (rand(1, 1000) == 69 && ticker?.mode) //heh
 			//Nuke op radio freq
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
 				var/datum/game_mode/nuclear/mode = ticker.mode
@@ -1300,7 +1300,7 @@
 		G.lastKnownIP = M.client.address
 		M.client.mob = G
 
-	if (M && M.real_name)
+	if (M?.real_name)
 		G.oldname = M.real_name
 
 	G.job = "Ghostdrone"

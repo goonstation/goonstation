@@ -883,7 +883,7 @@
 
 		if (!(suppress & SUPPRESS_SOUND) && played_sound)
 			var/obj/item/grab/block/G = target.check_block()
-			if (G && G.can_block(damage_type) && damage > 0)
+			if (G?.can_block(damage_type) && damage > 0)
 				G.play_block_sound(damage_type)
 				playsound(owner.loc, played_sound, 15, 1, -1, 1.4)
 			else
@@ -1196,7 +1196,7 @@
 	return null
 
 /mob/living/check_attack_resistance(var/obj/item/I)
-	if (reagents && reagents.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
+	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
 		return "<span class='alert'>You drunkenly shrug off the blow!</span>"
 	return null
 
@@ -1214,7 +1214,7 @@
 	return 0
 
 /mob/living/carbon/human/get_head_pierce_prot()
-	if (client && client.hellbanned)
+	if (client?.hellbanned)
 		return 0
 	if ((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD))
 		if (head && !wear_mask)
@@ -1229,7 +1229,7 @@
 	return 0
 
 /mob/living/carbon/human/get_chest_pierce_prot()
-	if (client && client.hellbanned)
+	if (client?.hellbanned)
 		return 0
 	if ((wear_suit && wear_suit.body_parts_covered & TORSO) || (w_uniform && w_uniform.body_parts_covered & TORSO))
 		if (wear_suit && !w_uniform)
@@ -1332,8 +1332,8 @@
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)
 	if (iswerewolf(src))
 		var/datum/abilityHolder/werewolf/W = src.get_ability_holder(/datum/abilityHolder/werewolf)
-		if (target && W && W.tainted_saliva_reservior.total_volume > 0)
-			W.tainted_saliva_reservior.trans_to(target,5, 2)
+		if (target && W?.tainted_saliva_reservoir.total_volume > 0)
+			W.tainted_saliva_reservoir.trans_to(target,5, 2)
 
 
 /*/mob/proc/energyclaws_attack(var/mob/living/target)

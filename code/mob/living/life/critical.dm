@@ -29,7 +29,7 @@
 						owner.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
 					if (isalive(owner))
-						if (owner && owner.mind)
+						if (owner?.mind)
 							owner.lastgasp() // if they were ok before dropping below zero health, call lastgasp() before setting them unconscious
 					owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 15 * mult))
 				if (-99 to -80)

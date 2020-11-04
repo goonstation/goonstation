@@ -1103,7 +1103,7 @@
 	name = "Left turret slot"
 	install_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship)
+		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
 					A.set_loc(interior.ship)
@@ -1112,7 +1112,7 @@
 		return
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship && interior.ship.turret_left)
+		if(interior?.ship?.turret_left)
 			interior.ship.turret_left.set_loc(src.loc)
 			interior.ship.turret_left = null
 		return
@@ -1121,7 +1121,7 @@
 	name = "Right turret slot"
 	install_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship)
+		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
 					A.set_loc(interior.ship)
@@ -1130,7 +1130,7 @@
 		return
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship && interior.ship.turret_right)
+		if(interior?.ship?.turret_right)
 			interior.ship.turret_right.set_loc(src.loc)
 			interior.ship.turret_right = null
 		return
@@ -1142,7 +1142,7 @@
 	health_max = 75
 	install_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship)
+		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
 					A.set_loc(interior.ship)
@@ -1151,7 +1151,7 @@
 		return
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship && interior.ship.engine)
+		if(interior?.ship?.engine)
 			interior.ship.engine.set_loc(src.loc)
 			interior.ship.engine = null
 		return
@@ -1167,7 +1167,7 @@
 
 	install_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship)
+		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
 					A.set_loc(interior.ship)
@@ -1177,7 +1177,7 @@
 
 	uninstall_component()
 		var/area/ship_interior/interior = get_area(src)
-		if(interior && interior.ship && interior.ship.life_support)
+		if(interior?.ship?.life_support)
 			interior.ship.life_support.set_loc(src.loc)
 			interior.ship.life_support = null
 		return

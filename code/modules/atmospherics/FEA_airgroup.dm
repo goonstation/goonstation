@@ -198,7 +198,7 @@
 					var/connection_difference = 0
 					var/turf/simulated/floor/self_border
 					var/turf/simulated/floor/enemy_border
-					if(self_group_borders && self_group_borders.len)
+					if(length(self_group_borders))
 						self_border = self_group_borders[border_index]
 					if(enemy_border)
 						enemy_border = enemies[border_index]
@@ -297,7 +297,7 @@
 		if(abort_group)
 			suspend_group_processing()
 		else
-			if(air && air.check_tile_graphic())
+			if(air?.check_tile_graphic())
 				for(var/turf/simulated/member as() in members)
 					member.update_visuals(air)
 

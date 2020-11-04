@@ -126,7 +126,7 @@
 			user.show_text("[src] is currently occupied. Wait until it's done.", "blue")
 			return
 
-		if (offered_genes && offered_genes.len)
+		if (length(offered_genes))
 			user.show_text("Something went wrong, showing backup menu...", "blue")
 			var/list/names = list()
 
@@ -197,7 +197,7 @@
 		if (occupant)
 
 			if (add_power)
-				if(selected_product && selected_product.BE)
+				if(selected_product?.BE)
 
 					var/datum/bioEffect/NEW = new selected_product.BE.type()
 					copy_datum_vars(selected_product.BE,NEW)

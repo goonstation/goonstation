@@ -101,7 +101,7 @@ TRAYS
 	icon_state = "spoon"
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [his_or_her(user)]self.</span>")
 			random_brute_damage(user, 5)
 		if (!spoon_surgery(M,user))
@@ -130,7 +130,7 @@ TRAYS
 	throwforce = 7
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs \himself.</span>")
 			random_brute_damage(user, 10)
 			JOB_XP(user, "Clown", 1)
@@ -166,7 +166,7 @@ TRAYS
 		src.setItemSpecial(/datum/item_special/double)
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 20)
 			JOB_XP(user, "Clown", 1)
@@ -194,7 +194,7 @@ TRAYS
 		src.icon_state = pick("spoon_plastic_pink","spoon_plastic_yellow","spoon_plastic_green","spoon_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and jabs \himself.</span>")
 			random_brute_damage(user, 5)
 		if (prob(20))
@@ -223,7 +223,7 @@ TRAYS
 		src.icon_state = pick("fork_plastic_pink","fork_plastic_yellow","fork_plastic_green","fork_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and stabs \himself.</span>")
 			random_brute_damage(user, 5)
 		if (prob(20))
@@ -252,7 +252,7 @@ TRAYS
 		src.icon_state = pick("knife_plastic_pink","knife_plastic_yellow","knife_plastic_green","knife_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
@@ -364,7 +364,7 @@ TRAYS
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
 	attack(mob/living/carbon/human/target as mob, mob/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 20)
 			JOB_XP(user, "Clown", 1)
@@ -411,7 +411,7 @@ TRAYS
 	tool_flags = TOOL_SAWING
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and pinches [his_or_her(user)] fingers against the blade guard.</span>")
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
@@ -736,7 +736,7 @@ TRAYS
 			if(ordered_contents.len == 0)
 				return
 			src.shit_goes_everywhere()
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(25))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(25))
 			user.visible_message("<span class='alert'>[user] clumsily drops \the [src]!</span>")
 			if(ordered_contents.len == 0)
 				return
@@ -916,7 +916,7 @@ TRAYS
 		icon_state = "red_herring"
 
 /obj/item/fish/attack(mob/M as mob, mob/user as mob)
-	if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+	if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> swings [src] and hits \himself in the face!.</span>")
 		user.changeStatus("weakened", 20 * src.force)
 		JOB_XP(user, "Clown", 1)

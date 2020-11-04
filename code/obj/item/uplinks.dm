@@ -70,7 +70,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			else
 				var/blocked = 0
-				if (ticker && ticker.mode)
+				if (ticker?.mode)
 					if (S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
 						for (var/V in S.blockedmode)
 							if (ispath(V) && istype(ticker.mode, V)) // No meta by checking VR uplinks.
@@ -632,7 +632,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		..()
-		if (ticker && ticker.mode)
+		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/spy_theft))
 				src.game = ticker.mode
 			else //The gamemode is NOT spy, but we've got one on our hands! Set this badboy up.

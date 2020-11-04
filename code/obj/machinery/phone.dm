@@ -310,7 +310,7 @@
 			return
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
 		var/mob/T = src.parent.linked.handset.holder
-		if(T && T.client)
+		if(T?.client)
 			T.show_message(processed, 2)
 			M.show_message(processed, 2)
 

@@ -235,7 +235,7 @@
 		return 1
 
 	if (emergency_shuttle.location == SHUTTLE_LOC_RETURNED)
-		if (the_bomb && the_bomb.armed)
+		if (the_bomb?.armed)
 			// Minor Syndicate Victory - crew escaped but bomb was armed and counting down
 			finished = -1
 			return 1
@@ -252,7 +252,7 @@
 	if (no_automatic_ending)
 		return 0
 
-	if (the_bomb && the_bomb.armed && the_bomb.det_time && !the_bomb.disposed)
+	if (the_bomb?.armed && the_bomb.det_time && !the_bomb.disposed)
 		// don't end the game if the bomb is armed and counting, even if the ops are all dead
 		return 0
 

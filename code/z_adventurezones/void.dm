@@ -191,12 +191,12 @@ CONTENTS:
 			UpdateOverlays(overlays_list["lscreen[operating]"], "lscreen")
 			UpdateOverlays(overlays_list["rscreen[operating]"], "rscreen")
 
-			if(chair1 && chair1.buckled_guy)
+			if(chair1?.buckled_guy)
 				UpdateOverlays(overlays_list["l_dial_[operating]"], "l_dial")
 			else
 				UpdateOverlays(overlays_list["l_dial_idle"], "l_dial")
 
-			if(chair2 && chair2.buckled_guy)
+			if(chair2?.buckled_guy)
 				UpdateOverlays(overlays_list["r_dial_[operating]"], "r_dial")
 			else
 				UpdateOverlays(overlays_list["r_dial_idle"], "r_dial")
@@ -232,8 +232,8 @@ CONTENTS:
 					<A HREF='?src=\ref[src];refresh_chair_connection=1'>Re-establish</A>
 					<h3>Mental Interfaces</h3>
 					<table border=1><tr>
-						<th>Interface #1<td><B>[chair1 && chair1.buckled_guy ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
-						<th>Interface #2<td><B>[chair2 && chair2.buckled_guy ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
+						<th>Interface #1<td><B>[chair1?.buckled_guy ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
+						<th>Interface #2<td><B>[chair2?.buckled_guy ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
 					</table>
 					<A HREF='?src=\ref[src];refresh_mind_connection=1'>Re-establish</A><BR><BR>
 					<A HREF='?src=\ref[src];execute_swap=1'><B><font bold=5 size=7>Activate</font></B></A></span>"}

@@ -432,7 +432,7 @@
 		attempts_remaining--
 		if (attempts_remaining <= 0)
 			boutput(opener, "<span class='alert'>The crate's anti-tamper system activates!</span>")
-			if (holder && holder.trap)
+			if (holder?.trap)
 				holder.trap.trigger_trap(opener)
 				if (!holder.trap.destroys_crate)
 					src.scramble_code()
