@@ -5105,6 +5105,7 @@
 	pixel_x = 7;
 	pixel_y = -6
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "alP" = (
