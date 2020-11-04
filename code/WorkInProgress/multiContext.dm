@@ -837,13 +837,13 @@ var/list/globalContextActions = null
 
 	genebooth_product
 		icon = 'icons/ui/context32x32.dmi'
-		var/datum/geneboothproduct/GBP = 0
-		var/obj/machinery/genetics_booth/GB = 0
+		var/datum/geneboothproduct/GBP = null
+		var/obj/machinery/genetics_booth/GB = null
 		var/spamt = 0
 
 		disposing()
-			GBP = 0
-			GB = 0
+			GBP = null
+			GB = null
 			..()
 
 		execute(var/atom/target, var/mob/user)
