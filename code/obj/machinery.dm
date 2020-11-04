@@ -369,5 +369,5 @@
 	. = ..()
 	var/area/A2 = get_area(src)
 	if(A1 != A2)
-		A1.machines -= src
-		A2.machines += src
+		A1?.machines -= src
+		A2?.machines += src
