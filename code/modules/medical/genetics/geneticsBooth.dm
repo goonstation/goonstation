@@ -223,10 +223,11 @@
 			updateicon()
 
 		started = 0
-		var/turf/dispense = get_step(src.loc,eject_dir)
-		for (var/atom in src)
-			var/atom/movable/A = atom
-			A.set_loc(dispense)
+		SPAWN_DBG(0)
+			var/turf/dispense = get_step(src.loc,eject_dir)
+			for (var/atom in src)
+				var/atom/movable/A = atom
+				A.set_loc(dispense)
 
 
 	proc/try_billing(var/mob/living/carbon/human/M)
