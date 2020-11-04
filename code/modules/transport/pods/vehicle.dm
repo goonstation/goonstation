@@ -31,7 +31,7 @@
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
 	var/powercurrent = 0 //How much power the components are using
-	var/speed = 0 //FOR PODS : While holding thruster, how much to add on to our max speed. Does nothing for tanks.
+	var/speed = 1 //FOR PODS : While holding thruster, how much to add on to our max speed. Does nothing for tanks.
 	var/stall = 0 // slow the ship down when firing
 	var/flying = 0 // holds the direction the ship is currently drifting, or 0 if stopped
 	var/facing = SOUTH // holds the direction the ship is currently facing
@@ -542,12 +542,15 @@
 
 		switch (severity)
 			if (1.0)
+				src.health -= round(src.maxhealth / 3)
 				src.health -= 65
 				checkhealth()
 			if(2.0)
+				src.health -= round(src.maxhealth / 4)
 				src.health -= 40
 				checkhealth()
 			if(3.0)
+				src.health -= round(src.maxhealth / 5)
 				src.health -= 25
 				checkhealth()
 
