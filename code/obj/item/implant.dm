@@ -693,7 +693,7 @@ THROWING DARTS
 */
 		boutput(M, "<span class='alert'>A stunning pain shoots through your brain!</span>")
 		M.changeStatus("stunned", 10 SECONDS)
-		M.changeStatus("weakened", 3 SECONDS)
+		M.changeStatus("weakened", 10 SECONDS)
 
 		if(M == I)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
