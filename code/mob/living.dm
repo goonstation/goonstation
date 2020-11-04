@@ -1427,7 +1427,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		var/mob/living/carbon/human/H = M
 		gloves = H.gloves
 	else
-		gloves = 0
+		gloves = null
 		//Todo: get critter gloves if they have a slot. also clean this up in general...
 
 	if (gloves?.material)
