@@ -1,4 +1,10 @@
 
+(t)wed nov 04 20
+(u)Tarmunora
+(p)2558
+(e)⚖|balance
+(*)Tweak pod health and speed values - notably industrial pods are slower, gold pods are much faster
+(+)Buff podseekers (vs pods)
 (t)mon nov 02 20
 (u)Chickenish
 (p)2575
