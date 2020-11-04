@@ -671,7 +671,7 @@
 		var/removed_len = fluids_removed.len
 
 		LAGCHECK(LAG_MED)
-		if (transfer_to?.reagents && src.reagents)
+		if (transfer_to && transfer_to.reagents && src.reagents)
 			src.reagents.skip_next_update = 1
 			src.reagents.trans_to_direct(transfer_to.reagents,src.amt_per_tile * removed_len)
 			src.contained_amt = src.reagents.total_volume
