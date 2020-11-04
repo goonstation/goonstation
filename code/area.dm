@@ -2960,6 +2960,12 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 // end station areas //
 
+/area/securityexternal
+	name = "External Security Perimeter"
+	icon_state = "secext"
+	sound_environment = 10
+	do_not_irradiate = 1
+
 /// Nukeops listening post
 /area/listeningpost
 	name = "Listening Post"
