@@ -1,125 +1,125 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/unsimulated/floor/setpieces/gauntlet,
-/area)
+/area/space)
 "ac" = (
 /turf/unsimulated/greek/grass,
-/area)
+/area/space)
 "ad" = (
 /turf/unsimulated/floor/snow,
-/area)
+/area/space)
 "ae" = (
 /obj/decal/big_number,
 /turf/space,
-/area)
+/area/space)
 "af" = (
 /obj/decal/big_number{
 	icon_state = "num1"
 	},
 /turf/space,
-/area)
+/area/space)
 "ag" = (
 /obj/decal/big_number{
 	icon_state = "num2"
 	},
 /turf/space,
-/area)
+/area/space)
 "ah" = (
 /obj/decal/big_number{
 	icon_state = "num3"
 	},
 /turf/space,
-/area)
+/area/space)
 "ai" = (
 /obj/decal/big_number{
 	icon_state = "num4"
 	},
 /turf/space,
-/area)
+/area/space)
 "aj" = (
 /obj/decal/big_number{
 	icon_state = "num5"
 	},
 /turf/space,
-/area)
+/area/space)
 "ak" = (
 /obj/decal/big_number{
 	icon_state = "num6"
 	},
 /turf/space,
-/area)
+/area/space)
 "al" = (
 /obj/decal/big_number{
 	icon_state = "num7"
 	},
 /turf/space,
-/area)
+/area/space)
 "am" = (
 /obj/decal/big_number{
 	icon_state = "num8"
 	},
 /turf/space,
-/area)
+/area/space)
 "an" = (
 /obj/decal/big_number{
 	icon_state = "num9"
 	},
 /turf/space,
-/area)
+/area/space)
 "ao" = (
 /obj/decal/big_number{
 	icon_state = "num-arrow";
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "ap" = (
 /obj/decal/big_number{
 	icon_state = "num-arrow";
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/space)
 "aq" = (
 /obj/decal/big_number{
 	icon_state = "num-arrow"
 	},
 /turf/space,
-/area)
+/area/space)
 "ar" = (
 /obj/decal/big_number{
 	icon_state = "num-arrow";
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "as" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1";
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "at" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3";
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "au" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1";
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/space)
 "av" = (
 /turf/unsimulated/nicegrass/random,
-/area)
+/area/space)
 "aw" = (
 /turf/space,
 /area/football)
