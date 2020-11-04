@@ -537,9 +537,9 @@ obj/item/gun/reagent/syringe/lovefilled
 
 	proc/change_icon_state(source, stage)
 		switch(stage)
-			if(2 to 3)
+			if(1 to 2)
 				flick("geiger-1", src)
-			if(4)
+			if(3 to 4)
 				flick("geiger-2", src)
 			if(5)
 				flick("geiger-3", src)

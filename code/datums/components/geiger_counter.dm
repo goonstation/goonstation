@@ -1,20 +1,21 @@
 /datum/component/wearertargeting/geiger
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	signals = list(COMSIG_MOB_GEIGER_TICK)
+	var/list/cooldowns = list()
 	proctype = .proc/geigerclick
 
 /datum/component/wearertargeting/geiger/proc/geigerclick(var/mob/owner, var/stage)
-	if(owner && prob(stage*20))
+	if(owner)
 		var/obj/item/I = parent
-		boutput(owner, "<span class='alert'>The geiger counter on your [I.name] ticks...</span>")
-		owner.playsound_local(get_turf(owner), "sound/machines/click.ogg", stage * 10, 0.01, 0, 1.5)
-	return 1
+		if(!ON_COOLDOWN(src, "playsound", 1 SECOND))
+			owner.playsound_local(get_turf(owner), "sound/items/geiger/geiger-[stage]-[stage>=4?rand(1,3):rand(1,2)].ogg", 5, ignore_flag = 1)
 
 
 /datum/component/holdertargeting/geiger
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	signals = list(COMSIG_MOB_GEIGER_TICK)
 	proctype = .proc/geigerclick
+	var/list/cooldowns = list()
 
 	on_dropped(datum/source, mob/user)
 		var/obj/item/I = parent
@@ -22,9 +23,8 @@
 			. = ..()
 
 /datum/component/holdertargeting/geiger/proc/geigerclick(var/mob/owner, var/stage)
-	if(owner && prob(stage*20))
+	if(owner)
 		var/obj/item/I = parent
-		boutput(owner, "<span class='alert'>Your [I.name] ticks...</span>")
-		owner.playsound_local(get_turf(owner), "sound/machines/click.ogg", stage * 10, 0.01, 0, 1.5)
+		if(!ON_COOLDOWN(src, "playsound", 1 SECOND))
+			owner.playsound_local(get_turf(owner), "sound/items/geiger/geiger-[stage]-[stage>=4?rand(1,3):rand(1,2)].ogg", 5, ignore_flag = 1)
 		SEND_SIGNAL(I, COMSIG_MOB_GEIGER_TICK, stage)
-	return 1
