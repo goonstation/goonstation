@@ -883,7 +883,7 @@
 
 		if (!(suppress & SUPPRESS_SOUND) && played_sound)
 			var/obj/item/grab/block/G = target.check_block()
-			if (G?.can_block(damage_type) && damage > 0)
+			if (G && G.can_block(damage_type) && damage > 0)
 				G.play_block_sound(damage_type)
 				playsound(owner.loc, played_sound, 15, 1, -1, 1.4)
 			else
