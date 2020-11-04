@@ -20,7 +20,7 @@
 /area/station/captain)
 "aag" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aah" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/single{
@@ -41,7 +41,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aai" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/single{
@@ -67,7 +67,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaj" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/single{
@@ -88,7 +88,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aak" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -109,7 +109,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aal" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -127,7 +127,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aam" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -143,7 +143,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aan" = (
 /obj/cable{
 	d1 = 4;
@@ -152,7 +152,7 @@
 	},
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aao" = (
 /obj/cable{
 	d1 = 4;
@@ -168,7 +168,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aap" = (
 /obj/machinery/shuttle/engine/propulsion/sea_propulsion,
 /turf/space/fluid/manta/nospawn,
@@ -194,7 +194,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aas" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -210,7 +210,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aat" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -228,7 +228,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aau" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -246,7 +246,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aav" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -263,7 +263,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaw" = (
 /obj/cable{
 	d1 = 4;
@@ -274,7 +274,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aax" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -290,7 +290,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aay" = (
 /obj/cable{
 	d1 = 4;
@@ -299,7 +299,7 @@
 	},
 /obj/machinery/mantalog,
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaz" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -350,7 +350,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaC" = (
 /obj/cable{
 	d1 = 4;
@@ -361,7 +361,7 @@
 	anchored = 2
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaD" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -377,7 +377,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaE" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -396,7 +396,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaF" = (
 /obj/machinery/torpedo_console{
 	id = "torp2"
@@ -430,16 +430,16 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaI" = (
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaJ" = (
 /obj/machinery/light/emergency{
 	dir = 1
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaK" = (
 /obj/cable{
 	d1 = 1;
@@ -447,7 +447,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaL" = (
 /obj/item/clothing/under/gimmick/cosby{
 	desc = "A colourful winter jumper.";
@@ -516,11 +516,11 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaR" = (
 /obj/decal/stage_edge/alt,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaS" = (
 /obj/cable{
 	d1 = 1;
@@ -528,7 +528,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaT" = (
 /obj/table/reinforced/auto,
 /obj/item/aiModule/rename,
@@ -543,7 +543,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/stairs,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaV" = (
 /obj/cable,
 /obj/cable{
@@ -596,13 +596,13 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aaZ" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aba" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -630,20 +630,20 @@
 	dir = 8
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abd" = (
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abe" = (
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abf" = (
 /obj/decal/stage_edge/alt,
 /obj/item/device/radio/intercom/AI{
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abg" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -697,7 +697,7 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abp" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor,
@@ -712,7 +712,7 @@
 	name = "mail chute-'Bridge'"
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abr" = (
 /obj/cable{
 	d1 = 1;
@@ -720,35 +720,35 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abs" = (
 /obj/decal/stage_edge/alt,
 /obj/item/device/radio/intercom/security{
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abt" = (
 /obj/decal/stage_edge/alt,
 /obj/item/device/radio/intercom/medical{
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abu" = (
 /obj/decal/stage_edge/alt,
 /obj/item/device/radio/intercom/engineering{
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abv" = (
 /obj/decal/stage_edge/alt,
 /obj/item/device/radio/intercom/science{
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abw" = (
 /obj/displaycase{
 	pixel_y = 8
@@ -829,7 +829,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abE" = (
 /obj/table/wood/round/auto,
 /obj/machinery/power/data_terminal,
@@ -841,7 +841,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abF" = (
 /obj/cable{
 	d1 = 2;
@@ -873,7 +873,7 @@
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abI" = (
 /obj/shrub{
 	dir = 1;
@@ -885,13 +885,13 @@
 	nostick = 1
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abJ" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/box/trackimp_kit2,
 /obj/item/paper/book/space_law,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abK" = (
 /obj/cable{
 	d1 = 1;
@@ -970,7 +970,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "abQ" = (
 /obj/cable{
 	d1 = 1;
@@ -1131,7 +1131,7 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "acd" = (
 /obj/table/wood/round/auto,
 /obj/item/ghostboard,
@@ -2295,7 +2295,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "afK" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
@@ -2486,7 +2486,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ags" = (
 /obj/decal/tile_edge/line/green{
 	dir = 6;
@@ -2789,7 +2789,7 @@
 	dir = 9;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahv" = (
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/white/grime,
@@ -2807,7 +2807,7 @@
 	dir = 1;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahy" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/plating,
@@ -2984,7 +2984,7 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aim" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -3729,7 +3729,7 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "akz" = (
 /obj/cable{
 	d1 = 1;
@@ -3741,11 +3741,11 @@
 	dir = 1;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "akA" = (
 /obj/table/wood/round/auto,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "akB" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/snacks/salad{
@@ -3765,7 +3765,7 @@
 /obj/item/kitchen/utensil/fork,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "akC" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -3791,7 +3791,7 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "akD" = (
 /obj/cable{
 	d1 = 1;
@@ -3861,7 +3861,7 @@
 	dir = 8;
 	icon_state = "fblue1"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "akJ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/abandonedship)
@@ -4176,7 +4176,7 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "alw" = (
 /obj/cable{
 	d1 = 1;
@@ -5128,7 +5128,7 @@
 	},
 /obj/manta_speed_lever,
 /turf/simulated/floor/longtile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "anM" = (
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
@@ -5367,7 +5367,7 @@
 	icon_state = "plant"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aok" = (
 /obj/machinery/shuttle/engine/heater/seaheater_right,
 /turf/simulated/floor/plating,
@@ -5494,7 +5494,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aov" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -5744,7 +5744,7 @@
 	dir = 1;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aoS" = (
 /obj/machinery/communications_dish{
 	name = "Starboard Communications dish"
@@ -6103,7 +6103,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "apy" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line3"
@@ -11695,7 +11695,7 @@
 	dir = 5;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/upperstarboard)
@@ -11718,11 +11718,11 @@
 /obj/item/pen/fancy,
 /obj/item/stamp,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBu" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBv" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/firealarm{
@@ -11731,7 +11731,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBw" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -11762,7 +11762,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBA" = (
 /obj/cable{
 	d1 = 4;
@@ -11778,7 +11778,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBB" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4;
@@ -11799,7 +11799,7 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBC" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
@@ -11829,7 +11829,7 @@
 	dir = 8;
 	icon_state = "fblue1"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11857,7 +11857,7 @@
 	dir = 8;
 	icon_state = "fblue1"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBG" = (
 /obj/stool/chair/comfy/blue{
 	dir = 8
@@ -11877,7 +11877,7 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBH" = (
 /obj/cable{
 	d1 = 4;
@@ -11888,7 +11888,7 @@
 	mail_tag = "Bridge"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBI" = (
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/line/blue{
@@ -11904,13 +11904,13 @@
 	nostick = 1
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBK" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBL" = (
 /obj/stool/chair/comfy{
 	dir = 1
@@ -11921,7 +11921,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBM" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -11943,7 +11943,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBP" = (
 /obj/stool/chair/comfy/yellow{
 	dir = 1
@@ -11954,7 +11954,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBQ" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -11966,21 +11966,21 @@
 	dir = 6;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBS" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
 	nostick = 1
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBT" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/machinery/light/emergency{
 	dir = 8
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBU" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -11996,7 +11996,7 @@
 	},
 /obj/machinery/glass_recycler,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBW" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -12014,7 +12014,7 @@
 	},
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aBX" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload_foyer)
@@ -13081,7 +13081,7 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aEp" = (
 /obj/dartboard{
 	pixel_y = 28
@@ -15613,7 +15613,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aJG" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -17001,7 +17001,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aMR" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds,
@@ -17376,7 +17376,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aNJ" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -17728,7 +17728,7 @@
 "aOv" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aOw" = (
 /obj/cable{
 	d1 = 1;
@@ -17999,14 +17999,14 @@
 "aPh" = (
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aPi" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
 /obj/machinery/shipalert,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aPj" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -18018,7 +18018,7 @@
 	pixel_y = 12
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aPk" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -18027,7 +18027,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aPl" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/food{
@@ -41171,7 +41171,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bMG" = (
 /obj/cable{
 	d1 = 4;
@@ -41187,7 +41187,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bMH" = (
 /obj/cable{
 	icon_state = "1-2"

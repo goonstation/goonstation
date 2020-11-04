@@ -506,7 +506,7 @@
 "by" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bz" = (
 /turf/simulated/floor/delivery,
 /area/shuttle/escape/station)
@@ -3765,7 +3765,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 2
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "jP" = (
 /obj/lattice{
 	dir = 10;
@@ -4047,7 +4047,7 @@
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ku" = (
 /obj/stool/chair/red{
 	anchored = 0;
@@ -4064,7 +4064,7 @@
 	dir = 1;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "kv" = (
 /obj/machinery/computer/ordercomp{
 	dir = 8
@@ -4078,7 +4078,7 @@
 	dir = 1;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "kw" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/arcade,
@@ -4088,7 +4088,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ky" = (
 /obj/lattice{
 	dir = 6;
@@ -4308,7 +4308,7 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "kZ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -4320,7 +4320,7 @@
 	dir = 2;
 	icon_state = "fblue1"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "la" = (
 /obj/lattice{
 	dir = 2;
@@ -4354,7 +4354,7 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ld" = (
 /obj/lattice{
 	dir = 2;
@@ -4535,7 +4535,7 @@
 	dir = 2;
 	icon_state = "fblue1"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "lu" = (
 /obj/lattice{
 	dir = 5;
@@ -4640,7 +4640,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 2
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "lK" = (
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -4658,7 +4658,7 @@
 	dir = 10;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "lM" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -4667,7 +4667,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "lN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5035,7 +5035,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "mH" = (
 /turf/simulated/floor/wood/two,
 /area/station/bridge/hos)
@@ -5984,7 +5984,7 @@
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "oU" = (
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
@@ -6101,7 +6101,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "pj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7303,7 +7303,7 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "sc" = (
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -7431,7 +7431,7 @@
 	dir = 9;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "st" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
@@ -7557,7 +7557,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "sI" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/orangeblack,
@@ -7707,7 +7707,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "tb" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -10287,7 +10287,7 @@
 	dir = 2;
 	icon_state = "fblue1"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "yA" = (
 /obj/lattice{
 	dir = 6;
@@ -10387,7 +10387,7 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "yJ" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -10399,7 +10399,7 @@
 	dir = 2;
 	icon_state = "fblue1"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "yK" = (
 /obj/lattice{
 	dir = 4;
@@ -10479,7 +10479,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "yS" = (
 /obj/stool/chair/red{
 	anchored = 0;
@@ -10493,7 +10493,7 @@
 	dir = 2;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "yT" = (
 /obj/machinery/computer3/generic/shield_control{
 	dir = 8
@@ -10507,7 +10507,7 @@
 	dir = 2;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "yU" = (
 /obj/cable{
 	d1 = 1;
@@ -11974,7 +11974,7 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "BG" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
@@ -12006,7 +12006,7 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "BI" = (
 /obj/decal/cleanable/ash,
 /obj/cable{
@@ -13445,29 +13445,29 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "Ez" = (
 /obj/disposalpipe/junction/middle/west,
 /turf/simulated/floor/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "EA" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "EB" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "EC" = (
 /obj/machinery/light_switch/auto,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ED" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,

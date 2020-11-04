@@ -21445,7 +21445,7 @@
 /area/station/hallway/primary/east)
 "aVv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aVw" = (
 /obj/window/auto/crystal/reinforced,
 /obj/grille/steel,
@@ -21462,7 +21462,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aVx" = (
 /obj/window/auto/crystal/reinforced,
 /obj/grille/steel,
@@ -21482,7 +21482,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aVy" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -21499,7 +21499,7 @@
 	},
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aVz" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/command{
@@ -21522,7 +21522,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aVA" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -21539,7 +21539,7 @@
 	},
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aVB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/hos)
@@ -21924,23 +21924,23 @@
 	name = "pod bay (command)"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aWv" = (
 /turf/simulated/floor/shuttlebay,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aWw" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aWx" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aWy" = (
 /obj/machinery/light{
 	dir = 4;
@@ -21949,10 +21949,10 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aWz" = (
 /turf/simulated/floor/sandytile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aWA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -21960,7 +21960,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aWB" = (
 /obj/machinery/computer/secure_data/detective_computer{
 	req_access = null;
@@ -22369,7 +22369,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aXy" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -22378,7 +22378,7 @@
 	},
 /obj/machinery/vehicle/pod_smooth/gold,
 /turf/simulated/floor/shuttlebay,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aXz" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -22386,7 +22386,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aXA" = (
 /obj/shrub{
 	icon_state = "shrub";
@@ -22399,7 +22399,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/sandytile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aXB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22407,7 +22407,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/secscanner,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aXC" = (
 /obj/shrub{
 	icon_state = "shrub";
@@ -22420,7 +22420,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/sandytile,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aXD" = (
 /obj/stool/chair/comfy{
 	desc = "This old armchair has been pretty well mangled by owls.";
@@ -22996,7 +22996,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aYM" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/poddoor/pyro{
@@ -23026,7 +23026,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aYN" = (
 /obj/machinery/power/apc/autoname_west/noaicontrol,
 /obj/cable{
@@ -23416,7 +23416,7 @@
 	req_access_txt = "19"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aZH" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -23425,13 +23425,13 @@
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aZI" = (
 /obj/machinery/light,
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aZJ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -23443,7 +23443,7 @@
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aZK" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -23457,7 +23457,7 @@
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aZL" = (
 /obj/machinery/disposal/mail/autoname/bridge{
 	throw_range = 1
@@ -23478,7 +23478,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aZM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23488,15 +23488,15 @@
 	name = "mail junction (bridge)"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aZN" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aZO" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aZP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24029,7 +24029,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "baW" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine,
@@ -24046,7 +24046,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "baX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24056,13 +24056,13 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "baY" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "baZ" = (
 /obj/disposalpipe/junction/middle/south,
 /turf/simulated/floor/wood/two,
@@ -24095,7 +24095,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bbe" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbooth)
@@ -24716,13 +24716,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bcp" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bcq" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
@@ -24759,7 +24759,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bcs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24774,7 +24774,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bct" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24783,7 +24783,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bcu" = (
 /obj/cable{
 	d1 = 1;
@@ -24800,13 +24800,13 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bcv" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bcw" = (
 /obj/machinery/light,
 /obj/cable{
@@ -25332,7 +25332,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bdB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25343,14 +25343,14 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bdC" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bdD" = (
 /obj/stool/chair/comfy,
 /turf/simulated/floor/carpet/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bdE" = (
 /obj/stool/chair/comfy,
 /obj/cable{
@@ -25360,7 +25360,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bdF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -25371,7 +25371,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bdG" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -25379,7 +25379,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bdH" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/heads)
@@ -25940,7 +25940,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "beS" = (
 /obj/machinery/computer3/generic/secure_data{
 	dir = 4;
@@ -25959,7 +25959,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "beT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25970,18 +25970,18 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "beU" = (
 /obj/stool/chair/comfy{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "beV" = (
 /obj/table/auto,
 /obj/item/storage/box/trackimp_kit2,
 /turf/simulated/floor/carpet/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "beW" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
@@ -25992,7 +25992,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "beX" = (
 /obj/stool/chair/comfy{
 	icon_state = "chair_comfy";
@@ -26004,13 +26004,13 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "beY" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "beZ" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -26107,7 +26107,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bfg" = (
 /obj/machinery/door/firedoor/pyro{
 	icon_state = "fdoor0";
@@ -26594,7 +26594,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bgn" = (
 /obj/machinery/computer3/generic/communications{
 	dir = 4
@@ -26613,7 +26613,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bgo" = (
 /obj/table/auto,
 /obj/item/storage/box/PDAbox,
@@ -26621,7 +26621,7 @@
 /obj/item/circuitboard/aiupload,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/carpet/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bgp" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -26632,18 +26632,18 @@
 /obj/item/device/light/zippo,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bgq" = (
 /obj/stool/chair/comfy{
 	icon_state = "chair_comfy";
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bgr" = (
 /obj/blind_switch/area/east,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bgs" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -26694,7 +26694,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bgw" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/hos)
@@ -27169,7 +27169,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bhE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27180,17 +27180,17 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bhF" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/sw,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bhG" = (
 /obj/stool/chair/comfy{
 	icon_state = "chair_comfy";
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bhH" = (
 /obj/stool/chair/comfy{
 	icon_state = "chair_comfy";
@@ -27198,10 +27198,10 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/blue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bhI" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/se,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bhJ" = (
 /obj/machinery/light{
 	dir = 4;
@@ -27211,7 +27211,7 @@
 	},
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bhK" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -27943,7 +27943,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bjg" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -27968,7 +27968,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bjh" = (
 /obj/machinery/computer/bank_data{
 	icon_state = "databank";
@@ -27986,7 +27986,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bji" = (
 /obj/machinery/light,
 /obj/cable{
@@ -27995,7 +27995,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bjj" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -28003,11 +28003,11 @@
 	d2 = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bjk" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bjl" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -28017,7 +28017,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bjm" = (
 /obj/machinery/disposal{
 	name = "Lay-Z Chef Cafeteria Chute"
@@ -28029,7 +28029,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bjn" = (
 /obj/storage/secure/closet/command/hop,
 /turf/simulated/floor/wood/two,
@@ -28531,7 +28531,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "bks" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/captain)

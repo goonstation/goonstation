@@ -1792,7 +1792,6 @@ ABSTRACT_TYPE(/area/station/mining)
 /area/station/mining/cargo_staff_room
 	name = "Cargo Staff Room"
 
-ABSTRACT_TYPE(/area/station/bridge)
 /area/station/bridge
 	name = "Bridge"
 	icon_state = "bridge"
@@ -1801,9 +1800,6 @@ ABSTRACT_TYPE(/area/station/bridge)
 	sound_group = "bridge"
 	sound_loop = 'sound/ambience/station/underwater/sub_bridge_ambi1.ogg'
 #endif
-
-/area/station/bridge/command_center
-	name = "Bridge Command Center"
 
 /area/station/seaturtlebridge
 	name = "Sea Turtle Bridge"

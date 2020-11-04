@@ -2505,7 +2505,7 @@
 /area/station/hallway/primary/north)
 "agd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "age" = (
 /obj/machinery/floorflusher/industrial,
 /obj/disposalpipe/trunk{
@@ -2663,7 +2663,7 @@
 "agu" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agv" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -2680,7 +2680,7 @@
 	print_id = "Bridge"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agw" = (
 /obj/machinery/computer3/generic/shield_control,
 /obj/machinery/light/small{
@@ -2696,7 +2696,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agx" = (
 /obj/machinery/computer3/generic/communications,
 /obj/machinery/camera{
@@ -2713,7 +2713,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agy" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -2727,7 +2727,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agz" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -2824,7 +2824,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agL" = (
 /obj/stool/chair/comfy/shuttle{
 	desc = "Hey, this is just a standard shuttle seat! How many corners did these guys cut?";
@@ -2843,7 +2843,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agM" = (
 /obj/cable{
 	d1 = 1;
@@ -2851,7 +2851,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agN" = (
 /obj/table/auto,
 /obj/item/storage/box/PDAbox,
@@ -2863,7 +2863,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agO" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
@@ -2934,7 +2934,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2943,10 +2943,10 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agX" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agY" = (
 /obj/table/auto,
 /obj/machinery/recharger,
@@ -2956,7 +2956,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "agZ" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
@@ -3015,10 +3015,10 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahh" = (
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahi" = (
 /obj/cable{
 	d1 = 2;
@@ -3029,7 +3029,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahj" = (
 /obj/machinery/light,
 /obj/cable{
@@ -3038,7 +3038,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahk" = (
 /obj/cable{
 	d1 = 4;
@@ -3049,7 +3049,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahl" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -3063,7 +3063,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3135,7 +3135,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahx" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -3240,7 +3240,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/circuit,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahH" = (
 /obj/cable{
 	d1 = 1;
@@ -3251,7 +3251,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahI" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -3261,7 +3261,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahJ" = (
 /obj/table/auto,
 /obj/item/storage/box/trackimp_kit2,
@@ -3273,7 +3273,7 @@
 	},
 /obj/item/clothing/head/sea_captain/comm_officer_hat,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahK" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
@@ -3339,7 +3339,7 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/circuit,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahS" = (
 /obj/stool/chair/office/blue{
 	dir = 8;
@@ -3354,7 +3354,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahT" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -3366,7 +3366,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ahU" = (
 /obj/machinery/computer/airbr/emergency_shuttle{
 	density = 0;
@@ -3421,7 +3421,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/circuit,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aib" = (
 /obj/cable{
 	d1 = 1;
@@ -3437,7 +3437,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aic" = (
 /obj/storage/crate,
 /obj/item/device/radio/headset/multifreq,
@@ -3451,7 +3451,7 @@
 /obj/item/device/radio/headset/research,
 /obj/item/device/radio/headset/research,
 /turf/simulated/floor/black,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "aid" = (
 /obj/machinery/light/small{
 	dir = 4;

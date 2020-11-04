@@ -2312,10 +2312,10 @@
 "ff" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "fg" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "fh" = (
 /obj/machinery/vending/kitchen,
 /obj/machinery/light{
@@ -2466,21 +2466,21 @@
 	dir = 9;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "fA" = (
 /obj/storage/secure/closet/command/captain,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "fB" = (
 /obj/storage/secure/closet/command/hop,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "fC" = (
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/specialroom/bar,
@@ -2653,7 +2653,7 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "fZ" = (
 /obj/cable{
 	d1 = 2;
@@ -2664,7 +2664,7 @@
 	dir = 8;
 	icon_state = "fblue1"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ga" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4;
@@ -2677,7 +2677,7 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "gb" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/lounge)
@@ -2820,7 +2820,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating/random,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "gt" = (
 /obj/cable{
 	d1 = 4;
@@ -2850,7 +2850,7 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "gv" = (
 /obj/cable{
 	d1 = 2;
@@ -2867,7 +2867,7 @@
 	dir = 8;
 	icon_state = "fblue1"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "gw" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4;
@@ -2880,12 +2880,12 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "gx" = (
 /obj/table/wood/auto,
 /obj/item/gun/russianrevolver,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "gy" = (
 /obj/landmark/start{
 	name = "Barman"
@@ -3129,7 +3129,7 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "gX" = (
 /obj/cable{
 	d1 = 2;
@@ -3143,7 +3143,7 @@
 	dir = 8;
 	icon_state = "fblue1"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "gY" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4;
@@ -3156,7 +3156,7 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "gZ" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/simulated/floor/specialroom/bar,
@@ -3279,7 +3279,7 @@
 	dir = 10;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "hm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3288,14 +3288,14 @@
 	dir = 2;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "hn" = (
 /obj/storage/secure/closet/command/research_director,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
 	},
-/area/station/bridge/command_center)
+/area/station/bridge)
 "ho" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/machinery/light{
@@ -3482,7 +3482,7 @@
 	},
 /obj/access_spawn/heads,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "hI" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Outdoor Bar"
@@ -4153,7 +4153,7 @@
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/east,
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "iN" = (
 /obj/cable{
 	d1 = 4;
@@ -4165,7 +4165,7 @@
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/east,
 /turf/simulated/floor/plating,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "iO" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/carpet/grime,
@@ -6659,7 +6659,7 @@
 /obj/table/wood/auto,
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "nN" = (
 /obj/table/wood/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -6669,7 +6669,7 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/darkblue,
-/area/station/bridge/command_center)
+/area/station/bridge)
 "nO" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
