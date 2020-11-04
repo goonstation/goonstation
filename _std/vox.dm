@@ -221,7 +221,7 @@ proc/vox_play(var/input, var/user, var/pitch = 1)
 				pitch = max(pitch,-98)
 			else if (t in voxtokens)
 				var/list/l = voxsounds_flag_sorted[t]
-				if (l && l.len)
+				if (length(l))
 					vx = pick(l)
 		else
 			vx = voxsounds[t]

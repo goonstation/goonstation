@@ -102,7 +102,7 @@
 
 		var/list/randomMails = get_random_email_list()
 		var/typeCount = rand(4,6)
-		while (typeCount-- > 0 && randomMails && randomMails.len)
+		while (typeCount-- > 0 && length(randomMails))
 			var/mailName = pick(randomMails)
 			var/datum/computer/file/record/mailfile = new /datum/computer/file/record/random_email(mailName)
 			subfolder.add_file(mailfile)

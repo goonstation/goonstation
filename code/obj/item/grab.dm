@@ -799,7 +799,7 @@
 			var/obj/item/I = src.loc
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
-			if(prop == "burn" && I && I.reagents)
+			if(prop == "burn" && I?.reagents)
 				I.reagents.temperature_reagents(2000,10)
 			.= src.getProperty("I_block_[prop]")
 
@@ -882,7 +882,7 @@
 
 /obj/item/cable_coil/process_grab(var/mult = 1)
 	..()
-	if (src.chokehold && chokehold.state == GRAB_KILL)
+	if (src.chokehold?.state == GRAB_KILL)
 		if (ishuman(src.chokehold.affecting))
 			var/mob/living/carbon/human/H = src.chokehold.affecting
 			H.losebreath += (0.5 * mult)

@@ -1,4 +1,26 @@
 
+(t)mon nov 02 20
+(u)Chickenish
+(p)2575
+(e)|
+(+)Thermal Paper no longer creates smoke when burning.
+(u)Superlagg
+(p)2460
+(e)⚖🆕🔄|balance, feature, rework
+(*)Secbots no longer instantly zap you the moment they get in range. Instead, they take a moment to quickly charge their baton, then zap you!
+(+)Every secbot, except for Officer Beepsky, forgot to attend mandatory handcuff training, and thus now take 4 seconds to cuff someone.
+(u)Azrun
+(p)2534
+(e)🐛🆕|bug, feature
+(*)Atmospheric pipes now properly rupture and leak gas.
+(u)austin
+(p)2529
+(e)🆕|feature
+(+)Can now use Y then prefix with '%' to sing on the radio.
+(u)Azrun
+(p)2556
+(e)🐛|bug
+(+)Blob tutorial marker visibility improved.  Should now be able to complete and re-attempt tutorial ad infinitum.
 (t)sun nov 01 20
 (u)UrsulaMejor
 (p)2572

@@ -460,7 +460,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 /obj/item/flamethrower/afterattack(atom/target, mob/user, inrange)
 	if (inrange)
 		return
-	user.lastattacked = src
+	if(istype(user)) user.lastattacked = src
 	src.flame_turf(getline(user, target), user, target)
 
 

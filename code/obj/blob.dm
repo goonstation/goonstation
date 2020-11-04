@@ -107,9 +107,9 @@ var/image/blob_icon_cache
 			if( state_overlay )
 				blob_icon_cache.color = O.organ_color
 				blob_icon_cache.icon_state = state_overlay
-				overlays += blob_icon_cache
+				UpdateOverlays(blob_icon_cache,"overmind")
 			if( O.hat && istype(src,/obj/blob/nucleus) )
-				overlays += O.hat
+				UpdateOverlays(O.hat,"hat")
 
 	proc/onAttach(var/mob/living/intangible/blob_overmind/new_overmind)
 		if (istype(new_overmind))
@@ -118,7 +118,7 @@ var/image/blob_icon_cache
 
 	proc/attack(var/turf/T)
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobattack(T,overmind.color))
-		if (T.density)
+		if (T?.density)
 			T.blob_act(overmind.attack_power * 20)
 		else
 			for (var/mob/M in T.contents)
@@ -130,7 +130,7 @@ var/image/blob_icon_cache
 		var/list/allowed = list()
 		for (var/D in cardinal)
 			var/turf/Q = get_step(get_turf(src), D)
-			if (!(locate(/obj/blob) in Q))
+			if (Q && !(locate(/obj/blob) in Q))
 				allowed += Q
 		if (allowed.len)
 			attack(pick(allowed))
@@ -676,14 +676,14 @@ var/image/blob_icon_cache
 		if (disposed)
 			return
 		if (src.reagents.total_volume <= 0)
-			overlays.len = 0
+			UpdateOverlays(overlay_image,name)
 			return
 		var/curr_color = src.reagents.get_average_rgb()
 		if (curr_color != last_color)
-			overlays.len = 0
+			UpdateOverlays(null,name)
 			overlay_image.color = curr_color
 			last_color = curr_color
-			overlays += overlay_image
+			UpdateOverlays(overlay_image,name)
 
 	proc/build_reclaimer()
 		if (disposed || building)
@@ -1226,7 +1226,7 @@ var/image/blob_icon_cache
 		pixel_y = rand(-12, 12)
 		blob_icon_cache.color = overmind.organ_color
 		blob_icon_cache.icon_state = "new_deposit-material"
-		overlays += blob_icon_cache
+		UpdateOverlays(blob_icon_cache,name)
 
 	onMaterialChanged()
 		pixel_x = rand(-12, 12)

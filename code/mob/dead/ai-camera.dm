@@ -346,7 +346,7 @@
 		var/area/A = get_area(src)
 		if(istype(A, /area/station/))
 			var/obj/machinery/power/apc/P = A.area_apc
-			if(P && P.operating)
+			if(P?.operating)
 				P.attack_ai(src)
 				return
 
@@ -478,7 +478,7 @@
 	.=..()
 	if(istype(usr,/mob/dead/aieye))//todo, make this a var for cheapernesseress?
 		if(aiImage)
-			usr.client.show_popup_menus = (cameras && cameras.len)
+			usr.client.show_popup_menus = (length(cameras))
 */
 
 //---TURF---//

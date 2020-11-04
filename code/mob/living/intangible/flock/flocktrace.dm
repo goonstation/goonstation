@@ -58,7 +58,7 @@
 	stat(null, " ")
 	if(src.flock)
 		stat("Flock:", src.flock.name)
-		stat("Drones:", src.flock.units?.len)
+		stat("Drones:", length(src.flock.units))
 	else
 		stat("Flock:", "none")
 		stat("Drones:", 0)

@@ -24,7 +24,7 @@
 /datum/aiTask/sequence/goalbased/proc/get_best_target(var/list/targets)
 	. = null
 	var/best_score = -1.#INF
-	if(targets && targets.len)
+	if(length(targets))
 		for(var/atom/A in targets)
 			var/score = src.score_target(A)
 			if(score > best_score)
@@ -98,7 +98,7 @@
 /datum/aiTask/timed/targeted/proc/get_best_target(var/list/targets)
 	. = null
 	var/best_score = -1.#INF
-	if(targets && targets.len)
+	if(length(targets))
 		for(var/atom/A in targets)
 			var/score = src.score_target(A)
 			if(score > best_score)

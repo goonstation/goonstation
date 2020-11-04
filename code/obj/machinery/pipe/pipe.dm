@@ -241,7 +241,7 @@ var/linenums = 0
 		newnode = node.next(prev)
 		prev = node
 
-		if(newnode && newnode.ispipe())
+		if(newnode?.ispipe())
 			node = newnode
 		else
 			break
@@ -262,9 +262,9 @@ var/linenums = 0
 /obj/machinery/pipes/next(var/obj/machinery/from)
 
 	if(from == null)		// if from null, then return the next actual pipe
-		if(node1 && node1.ispipe() )
+		if(node1?.ispipe() )
 			return node1
-		if(node2 && node2.ispipe() )
+		if(node2?.ispipe() )
 			return node2
 		return null			// else return null if no real pipe connected
 
@@ -571,13 +571,13 @@ var/linenums = 0
 
 	termination = 0
 
-	if(node1 && node1.ispipe() )
+	if(node1?.ispipe() )
 
 		node1.buildnodes(linenum)
 	else
 		termination++
 
-	if(node2 && node2.ispipe() )
+	if(node2?.ispipe() )
 		node2.buildnodes(linenum)
 	else
 		termination++
@@ -614,13 +614,13 @@ var/linenums = 0
 
 	termination = 0
 
-	if(node1 && node1.ispipe() )
+	if(node1?.ispipe() )
 
 		node1.buildnodes(linenum)
 	else
 		termination++
 
-	if(node2 && node2.ispipe() )
+	if(node2?.ispipe() )
 		node2.buildnodes(linenum)
 	else
 		termination++

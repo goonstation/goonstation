@@ -589,9 +589,9 @@
 	return null
 
 /mob/living/carbon/human/equipped_limb()
-	if (!hand && limbs && limbs.r_arm)
+	if (!hand && limbs?.r_arm)
 		return limbs.r_arm.limb_data
-	else if (hand && limbs && limbs.l_arm)
+	else if (hand && limbs?.l_arm)
 		return limbs.l_arm.limb_data
 	return null
 
@@ -772,7 +772,7 @@
 /mob/proc/antagonist_overlay_refresh(var/bypass_cooldown = 0, var/remove = 0)
 	if (!bypass_cooldown && (src.last_overlay_refresh && world.time < src.last_overlay_refresh + 1200))
 		return
-	if (!(ticker && ticker.mode && current_state >= GAME_STATE_PLAYING))
+	if (!(ticker?.mode && current_state >= GAME_STATE_PLAYING))
 		return
 	if (!ismob(src) || !src.client || !src.mind)
 		return
