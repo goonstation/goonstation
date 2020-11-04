@@ -130,7 +130,8 @@ datum/shuttle_controller
 							if (T.x > eastBound) eastBound = T.x
 
 						// hey you, get out of the way!
-						var/shuttle_dir = map_settings ? map_settings.escape_dir : EAST // default to cog2 direction because EH
+						var/escape_define = map_settings ? map_settings.escape_define : SHUTTLE_NODEF
+						var/shuttle_dir = map_escape_pod_dirs[escape_define]
 						for (var/turf/T in dstturfs)
 							// find the turf to move things to
 							var/turf/D = locate(shuttle_dir == EAST ? eastBound + 1 : T.x, // X
