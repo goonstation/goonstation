@@ -314,7 +314,7 @@
 		var/datum/data/record/Ba = FindBankAccountByName(C.fields["name"])
 		var/account_credit = 0
 
-		if (Ba && Ba.fields["current_money"])
+		if (Ba?.fields["current_money"])
 			account_credit = Ba.fields["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)

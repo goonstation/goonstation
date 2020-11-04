@@ -450,7 +450,7 @@
 			return
 
 		if(roomList.Find(target))
-			if (using && using.client)
+			if (using?.client)
 				using.client.images -= roomList[target]
 			roomList.Remove(target)
 		else
@@ -464,14 +464,14 @@
 		..()
 
 	proc/removeOverlays()
-		if (using && using.client)
+		if (using?.client)
 			for(var/a in roomList)
 				var/image/i = roomList[a]
 				using.client.images -= i
 		return
 
 	proc/updateOverlays()
-		if (using && using.client)
+		if (using?.client)
 			removeOverlays()
 			for(var/a in roomList)
 				var/image/i = roomList[a]

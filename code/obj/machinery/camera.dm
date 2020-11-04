@@ -439,12 +439,12 @@
 		C.referrers.Cut()
 
 /proc/connect_camera_list(var/list/obj/machinery/camera/camlist, var/force_connection=0)
-	if( camlist.len < 1)  return 1
+	if(!length(camlist))  return 1
 
 	logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Starting to connect cameras")
 	var/count = 0
 	for(var/obj/machinery/camera/C as() in camlist)
-		if(!isturf(C.loc) || C.disposed || C.qdeled) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
+		if(QDELETED(C) || !isturf(C.loc)) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
 			continue
 
 

@@ -250,7 +250,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 			Create(var/mob/living/M)
 				..(M)
-				if(M && M.mind)
+				if(M?.mind)
 					battle_pass_holders.Add(M.mind)
 				return 1
 

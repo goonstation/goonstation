@@ -581,7 +581,7 @@
 
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
-	if(src.hiddenFrom && hiddenFrom.Find(user.client)) //invislist
+	if(src.hiddenFrom?.Find(user.client)) //invislist
 		return list()
 
 	var/dist = get_dist(src, user)
@@ -708,7 +708,7 @@
 		else
 			tex = icon('icons/effects/atom_textures_32.dmi', texture)
 
-	if (A && A.wear_image) //Wire: Fix for: Cannot read null.icon
+	if (A?.wear_image) //Wire: Fix for: Cannot read null.icon
 		var/icon/mask = null
 		mask = icon(A.wear_image.icon, A.wear_image.icon_state)
 		mask.MapColors(1,1,1, 1,1,1, 1,1,1, 1,1,1)

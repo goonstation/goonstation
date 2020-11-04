@@ -1302,7 +1302,7 @@
 		var/this_expiration_id = rand(1, 100000)
 		src.expiration_id = this_expiration_id
 		SPAWN_DBG(time)
-			if(src && src.alive && src.expiration_id == this_expiration_id)
+			if(src?.alive && src.expiration_id == this_expiration_id)
 				src.health = 0
 				src.CritterDeath()
 

@@ -801,7 +801,7 @@
 		CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 			if(dying) return
 			var/area/A = get_area(src)
-			if (A && A.virtual)
+			if (A?.virtual)
 				droploot = null
 			..()
 
@@ -1059,7 +1059,7 @@
 	CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 		if(dying) return
 		var/area/A = get_area(src)
-		if (A && A.virtual)
+		if (A?.virtual)
 			droploot = /obj/item/device/key/virtual
 		else
 			new/obj/item/material_piece/iridiumalloy(src.loc)
@@ -1230,7 +1230,7 @@
 	CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 		if(dying) return
 		var/area/A = get_area(src)
-		if (A && A.virtual)
+		if (A?.virtual)
 			droploot = /obj/item/device/key/virtual //we don't want this loot in vr do we???
 		else
 			new/obj/item/instrument/fiddle(src.loc)

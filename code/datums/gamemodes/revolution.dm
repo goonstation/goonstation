@@ -351,7 +351,7 @@
 	// Run through all the heads
 	for(var/datum/mind/head_mind in head_check)
 		// If they exist, have a mob and aren't dead
-		if(head_mind && head_mind.current && !isdead(head_mind.current))
+		if(head_mind?.current && !isdead(head_mind.current))
 
 			// Check to see if they're a robot
 			if(issilicon(head_mind.current))
@@ -386,7 +386,7 @@
 		return 0
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		if(rev_mind && rev_mind.current && !isdead(rev_mind.current))
+		if(rev_mind?.current && !isdead(rev_mind.current))
 
 			// Check to see if they're a robot
 			if(issilicon(rev_mind.current))

@@ -207,7 +207,7 @@
 
 	process()
 		if(on)
-			if(cell && cell.charge > 0)
+			if(cell?.charge > 0)
 
 				var/turf/simulated/L = loc
 				if(istype(L))
@@ -413,7 +413,7 @@
 
 	process()
 		if(on)
-			if(cell && cell.charge > 0)
+			if(cell?.charge > 0)
 
 				var/turf/simulated/L = loc
 				if(istype(L))
