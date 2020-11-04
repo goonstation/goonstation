@@ -1,5 +1,9 @@
 
 (t)wed nov 04 20
+(u)Chickenish
+(p)2576
+(e)|
+(+)It is now possible to wet a sponge in a mop bucket.
 (u)Carbadox
 (p)2598
 (e)⚖|balance
