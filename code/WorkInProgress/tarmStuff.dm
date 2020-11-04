@@ -517,18 +517,15 @@ obj/item/gun/reagent/syringe/lovefilled
 //misc stuffs
 /obj/item/device/geiger
 	name = "geiger counter"
-	desc = "Some kinda thing, from space. In space. A space thing."
+	desc = "A device used to passively measure raditation."
 	icon_state = "geiger-0"
 	item_state = "geiger"
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	throwforce = 3
 	w_class = 1.0
-	force = 10
-	throwforce = 7
-	mats = 50
-	contraband = 1
-	stamina_damage = 40
-	stamina_cost = 23
-	stamina_crit_chance = 10
+	throw_speed = 5
+	throw_range = 10
+	mats = 5
 
 	New()
 		. = ..()
