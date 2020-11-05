@@ -1076,11 +1076,13 @@
 	rotatable = 0
 	foldable = 0
 	comfort_value = 2
-	deconstructable = 0
+	deconstructable = 1
 	securable = 0
+	status = 3 // keep track of assembly status. 3 <-crowbar-> 2 <-screwdriver-> 1 (wrench-> pew parts.
 	parts_type = /obj/item/furniture_parts/bench/pew
 	var/image/arm_image = null
 	var/arm_icon_state = null
+
 
 	New()
 		..()
@@ -1097,6 +1099,116 @@
 				src.arm_image.layer = FLY_LAYER+1
 				src.UpdateOverlays(src.arm_image, "arm")
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (iswrenchingtool(W) && status==1)
+			user.visible_message("<b>[user]</b> begins removing the center supports of the pew.")
+			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
+		if (isscrewingtool(W))
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			switch(status)
+				if(3)
+					realign()
+					user.visible_message("<b>[user]</b> adjusts the pew.")
+					return
+				if(2)
+					status = 1
+					anchored = 0
+					user.visible_message("<b>[user]</b> unscrews the end piece fasteners of the pew and unsecures it from the floor.")
+					return
+				if(1)
+					status = 2
+					anchored = 1
+					user.visible_message("<b>[user]</b> screws in the end piece fasteners of the pew and secures it to the floor.")
+					return
+		if (ispryingtool(W))
+			if(status!=1)
+				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			switch(status)
+				if(3)
+					status = 2
+					user.visible_message("<b>[user]</b> pries off the outer pew cover.")
+					if(prob(10))
+						user.visible_message(pick("This isn't how pews are supposed to work.","This seems highly unlikely","You can almost feel a figure judging you for destroying church pews.","You can almost make out some writing under the cover... <i>Fenrik was here</i>"))
+					return
+				if(2)
+					status = 3
+					user.visible_message("<b>[user]</b> pries the pew cover back on.")
+					return
+				if(1)
+					src.dir = turn(src.dir, -90)
+					return
+
+	proc/realign()
+		icon_state = "pew"
+		switch(src.dir)
+			if(NORTH)
+				for (var/obj/stool/chair/pew/P in get_step(src, EAST))
+					if(P.dir==src.dir)
+						icon_state = "pewL"
+						P.alignadjacent(1)
+					break
+				for (var/obj/stool/chair/pew/P in get_step(src, WEST))
+					if(P.dir==src.dir)
+						icon_state = (icon_state=="pewL") ? "pewC" : "pewR"
+						P.alignadjacent(0)
+					break
+				return
+			if(EAST)
+				for (var/obj/stool/chair/pew/P in get_step(src, SOUTH))
+					if(P.dir==src.dir)
+						icon_state = "pewL"
+						P.alignadjacent(1)
+					break
+				for (var/obj/stool/chair/pew/P in get_step(src, NORTH))
+					if(P.dir==src.dir)
+						icon_state = (icon_state=="pewL") ? "pewC" : "pewR"
+						P.alignadjacent(0)
+					break
+				return
+			if(SOUTH)
+				for (var/obj/stool/chair/pew/P in get_step(src, WEST))
+					if(P.dir==src.dir)
+						icon_state = "pewL"
+						P.alignadjacent(1)
+					break
+				for (var/obj/stool/chair/pew/P in get_step(src, EAST))
+					if(P.dir==src.dir)
+						icon_state = (icon_state=="pewL") ? "pewC" : "pewR"
+						P.alignadjacent(0)
+					break
+				return
+			if(WEST)
+				for (var/obj/stool/chair/pew/P in get_step(src, NORTH))
+					if(P.dir==src.dir)
+						icon_state = "pewL"
+						P.alignadjacent(1)
+					break
+				for (var/obj/stool/chair/pew/P in get_step(src, SOUTH))
+					if(P.dir==src.dir)
+						icon_state = (icon_state=="pewL") ? "pewC" : "pewR"
+						P.alignadjacent(0)
+					break
+				return
+
+	proc/alignadjacent(var/pewside = 0) // Attaches adjacent pew to the original pew. 0 for left, 1 for right
+		switch(pewside)
+			if(1)
+				if(icon_state=="pew") icon_state="pewR"
+				if(icon_state=="pewL") icon_state="pewC"
+			if(0)
+				if(icon_state=="pew") icon_state = "pewL"
+				if(icon_state=="pewR") icon_state = "pewC"
+
+
+	deconstruct()
+		if(ispath(src.parts_type))
+			var/obj/item/furniture_parts/P = new src.parts_type(src.loc)
+			if(P && src.material)
+				P.setMaterial(src.material)
+		qdel(src)
+		return
+
 	left
 		icon_state = "pewL"
 	center
@@ -1107,6 +1219,7 @@
 /obj/stool/chair/pew/fancy
 	icon_state = "fpew"
 	arm_icon_state = "arm-fpew"
+	parts_type = /obj/item/furniture_parts/bench/pew/fancy
 
 	left
 		icon_state = "fpewL"
@@ -1117,6 +1230,84 @@
 	right
 		icon_state = "fpewR"
 		arm_icon_state = "arm-fpewR"
+
+	realign()
+		icon_state = "fpew"
+		arm_icon_state = "arm-fpew"
+		switch(src.dir)
+			if(NORTH)
+				for (var/obj/stool/chair/pew/P in get_step(src, EAST))
+					if(P.dir==src.dir)
+						icon_state = "fpewL"
+						arm_icon_state = "arm-fpewL"
+						P.alignadjacent(1)
+					break
+				for (var/obj/stool/chair/pew/P in get_step(src, WEST))
+					if(P.dir==src.dir)
+						icon_state = (icon_state=="fpewL") ? "fpewC" : "fpewR"
+						arm_icon_state = (arm_icon_state=="arm-fpewL") ? "null" : "arm-fpewR"
+						P.alignadjacent(0)
+					break
+				return
+			if(EAST)
+				for (var/obj/stool/chair/pew/P in get_step(src, SOUTH))
+					if(P.dir==src.dir)
+						icon_state = "fpewL"
+						arm_icon_state = "arm-fpewL"
+						P.alignadjacent(1)
+					break
+				for (var/obj/stool/chair/pew/P in get_step(src, NORTH))
+					if(P.dir==src.dir)
+						icon_state = (icon_state=="fpewL") ? "fpewC" : "fpewR"
+						arm_icon_state = (arm_icon_state=="arm-fpewL") ? "null" : "arm-fpewR"
+						P.alignadjacent(0)
+					break
+				return
+			if(SOUTH)
+				for (var/obj/stool/chair/pew/P in get_step(src, WEST))
+					if(P.dir==src.dir)
+						icon_state = "fpewL"
+						arm_icon_state = "arm-fpewL"
+						P.alignadjacent(1)
+						break
+				for (var/obj/stool/chair/pew/P in get_step(src, EAST))
+					if(P.dir==src.dir)
+						icon_state = (icon_state=="fpewL") ? "fpewC" : "fpewR"
+						arm_icon_state = (arm_icon_state=="arm-fpewL") ? "null" : "arm-fpewR"
+						P.alignadjacent(0)
+					break
+				return
+			if(WEST)
+				for (var/obj/stool/chair/pew/P in get_step(src, NORTH))
+					if(P.dir==src.dir)
+						icon_state = "fpewL"
+						arm_icon_state = "arm-fpewL"
+						P.alignadjacent(1)
+					break
+				for (var/obj/stool/chair/pew/P in get_step(src, SOUTH))
+					if(P.dir==src.dir)
+						icon_state = (icon_state=="fpewL") ? "fpewC" : "fpewR"
+						arm_icon_state = (arm_icon_state=="arm-fpewL") ? "null" : "arm-fpewR"
+						P.alignadjacent(0)
+					break
+				return
+
+	alignadjacent(var/pewside = 0) // Attaches adjacent pew to the original pew. 0 for left, 1 for right
+		switch(pewside)
+			if(1)
+				if(icon_state=="fpew")
+					icon_state="fpewR"
+					arm_icon_state = "arm-fpewR"
+				if(icon_state=="fpewL")
+					icon_state="fpewC"
+					arm_icon_state = "arm-fpewC"
+			if(0)
+				if(icon_state=="fpew")
+					icon_state = "fpewL"
+					arm_icon_state = "arm-fpewL"
+				if(icon_state=="fpewR")
+					icon_state = "fpewC"
+					arm_icon_state = "arm-fpewC"
 
 /* ================================================= */
 /* -------------------- Couches -------------------- */

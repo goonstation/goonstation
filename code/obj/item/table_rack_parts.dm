@@ -326,6 +326,18 @@ RACK PARTS
 	icon = 'icons/obj/furniture/bench_wood.dmi'
 	furniture_type = /obj/stool/chair/pew
 
+	construct(mob/user as mob, turf/T as turf)
+		var/obj/stool/chair/pew/P = ..()
+		P.dir = user.dir
+		P.realign()
+		return P
+
+/obj/item/furniture_parts/bench/pew/fancy
+	name = "fancy pew parts"
+	desc = "A collection of parts that can be used to make a <i>pew</i>"
+	icon = 'icons/obj/furniture/bench_wood.dmi'
+	furniture_type = /obj/stool/chair/pew/fancy
+
 /* ---------- Chair Parts ---------- */
 /obj/item/furniture_parts/wood_chair
 	name = "wooden chair parts"
