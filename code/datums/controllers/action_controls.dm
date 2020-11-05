@@ -1271,10 +1271,10 @@ var/datum/action_controller/actions
 			return
 		if(ismob(owner)) //This is horrible and clunky and probably going to kill us all, I am so, so sorry.
 			var/mob/living/carbon/human/H = owner
-			if(!H.limbs.l_arm.can_hold_items)
+			if(H.limbs.l_arm && !H.limbs.l_arm.can_hold_items)
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			if(!H.limbs.r_arm.can_hold_items)
+			if(H.limbs.r_arm && !H.limbs.r_arm.can_hold_items)
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
