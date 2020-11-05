@@ -1545,9 +1545,9 @@
 						container.mob_flip_inside(src)
 
 #if ASS_JAM
-					if (ismob(src.loc))
-						var/mob/container = src.loc
-						container.mob_flip_inside(src)
+					if (ismob(container))
+						var/mob/mob_container = container
+						mob_container.mob_flip_inside(src)
 #endif
 					if (!iswrestler(src))
 						if (src.stamina <= STAMINA_FLIP_COST || (src.stamina - STAMINA_FLIP_COST) <= 0)
