@@ -2880,3 +2880,6 @@
 /mob/proc/add_karma(how_much)
 	src.mind?.add_karma(how_much)
 	// TODO add NPC karma
+
+/mob/proc/can_eat(var/atom/A)
+	return 1
