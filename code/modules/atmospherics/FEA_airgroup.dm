@@ -116,6 +116,7 @@
 
 
 /datum/air_group/proc/process_group(var/datum/controller/process/parent_controller)
+	var/abort_group = 0
 	current_cycle = air_master.current_cycle
 
 	if (spaced)
@@ -180,7 +181,6 @@
 
 			LAGCHECK(LAG_REALTIME)
 
-		var/abort_group = 0
 
 		// Process connections to adjacent groups
 		var/border_index = 1
@@ -307,8 +307,8 @@
 	// This logic is not inverted because group processing may have been
 	// suspended in the above block.
 	if(!group_processing) //Revert to individual processing
-		// space fastpath
-		if (members.len && length_space_border)
+		// space fastpath if we didn't revert (avoid regrouping tiles prior to processing individual cells)
+		if (!abort_group && members.len && length_space_border)
 			if (space_fastpath(parent_controller))
 				// If the fastpath resulted in the group being zeroed, return early.
 				return
