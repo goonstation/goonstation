@@ -433,6 +433,20 @@
 	isPositive = 0
 	category = "vision"
 
+/obj/trait/Colorblindness
+	name = "Colorblindess (+1) \[Vision\]"
+	cleanName = "Colorblind"
+	desc = "You have lost the ability to distinguish red or green colors."
+	id = "colorblind"
+	icon_state = "redgreen"
+	category = "vision"
+	points = 1
+	isPositive = 0
+
+	onAdd(var/mob/owner)
+		if(owner.bioHolder)
+			if(ishuman(owner))
+				owner.bioHolder.AddEffect("protanopia", 0, 0, 0, 1)
 /obj/trait/shortsighted
 	name = "Short-sighted (+1) \[Vision\]"
 	cleanName = "Short-sighted"
