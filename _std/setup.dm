@@ -136,4 +136,3 @@ var/ZLOG_START_TIME
 
 //do we want to check incoming clients to see if theyre using a vpn?
 #define DO_VPN_CHECKS 1
-#define VPN_CHECK_API_KEY null //wire said i had to do something with build config for this? idk

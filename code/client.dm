@@ -1,4 +1,4 @@
-var/global/list/ip_list = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
+var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
 
 /client
 	preload_rsc = 1
@@ -296,79 +296,77 @@ var/global/list/ip_list = list() //assoc list of ip = true or ip = false. if ip 
 
 //vpn check (for ban evasion purposes) api documentation: https://vpnapi.io/api-documentation
 #ifdef DO_VPN_CHECKS
-	var/address = src.address
-	var/is_vpn_address = global.ip_list["[address]"]
-	if (is_vpn_address) //if its true, we want to kick them and make them rejoin
-		logTheThing("admin", src, null, "[address] is using a vpn that they've already logged in with during this round.")
-		logTheThing("diary", src, null, "[address] is using a vpn that they've already logged in with during this round.", "admin")
-		var/vpn_kick_string = {"
-						<!doctype html>
-						<html>
-							<head>
-								<title>VPN or Proxy Detected</title>
-							</head>
-							<body>
-								<h1>Please disable your vpn, close the game, and rejoin.</h1><br>
-							</body>
-						</html>
-					"}
+	var/vpn_kick_string = {"
+					<!doctype html>
+					<html>
+						<head>
+							<title>VPN or Proxy Detected</title>
+						</head>
+						<body>
+							<h1>Please disable your VPN, close the game, and rejoin.</h1><br>
+						</body>
+					</html>
+				"}
+	var/is_vpn_address = global.vpn_ip_checks["[src.address]"]
+
+	// We have already checked this user this round and they are indeed on a VPN, kick em
+	if (is_vpn_address)
+		logTheThing("admin", src, null, "[src.address] is using a vpn that they've already logged in with during this round.")
+		logTheThing("diary", src, null, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
 		src.mob.Browse(vpn_kick_string, "window=vpnbonked")
 		sleep(3 SECONDS)
 		if (src)
 			del(src)
 		return
 
-	//if its null, means ip hasnt been checked, so lets do that. also, numbers should be adjusted if we start overflowing on our daily limits
-	if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "https://vpnapi.io/api/[address]?key=[VPN_CHECK_API_KEY]", "", "")
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
+	// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
+	// NOTE: adjust magic numbers here if we approach vpn checker api rate limits
+	//if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
+	if (isnull(is_vpn_address))
+		var/list/data
+		try
+			data = apiHandler.queryAPI("vpncheck", list("ip" = src.address), 1)
 
-		//http request handler errors
-		if (response.errored || !response.body)
-			logTheThing("admin", src, null, "error: [response.error], address: [address] - CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection")
-			logTheThing("diary", src, null, "error: [response.error], address: [address] - CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection", "admin")
+			// Goonhub API error encountered
+			if (data["error"])
+				logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["error"]]")
+				logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["error"]]", "debug")
 
-		//if the api request was successful
-		else
-			var/list/ret = json_decode(response.body)
-
-			//where api specific errors are logged - doesnt show up if there are none
-			if (ret["message"])
-				logTheThing("admin", src, null, "[ret["message"]], address: [address]. CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection")
-				logTheThing("diary", src, null, "[ret["message"]], address: [address]. CONSIDER DOING A MANUAL CHECK ON [address] at https://vpnapi.io/vpn-detection", "admin")
-
-			//api response was successful
+			// Successful Goonhub API query
 			else
-				var/list/security_info = ret["security"]
+				data = json_decode(html_decode(data["response"]))
 
-				//if they have a known vpn on
-				if (security_info["vpn"] == true)
-					global.ip_list["[address]"] = true
-					logTheThing("admin", src, null, "[address] is using a vpn. vpn info: [json_encode(ret["network"])]")
-					logTheThing("diary", src, null, "[address] is using a vpn. vpn info: [json_encode(ret["network"])]", "admin")
-					var/vpn_kick_string = {"
-									<!doctype html>
-									<html>
-										<head>
-											<title>VPN or Proxy Detected</title>
-										</head>
-										<body>
-											<h1>Please disable your vpn, close the game, and rejoin.</h1><br>
-										</body>
-									</html>
-								"}
-					src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-					sleep(3 SECONDS)
-					if (src)
-						del(src)
-					return
+				// VPN checker service returns error responses in a "message" property
+				if (data["message"])
+					// Yes, we're forcing a cache for a no-VPN response here on purpose
+					// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
+					//			  so we want to avoid spamming the goonhub API this round for literally no gain
+					global.vpn_ip_checks["[src.address]"] = false
+					logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["message"]]")
+					logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
 
-				//not using a vpn, good job
+				// Successful VPN check
 				else
-					global.ip_list["[address]"] = false
+					var/list/security_info = data["security"]
+
+					// IP is a known VPN, cache locally and kick
+					if (security_info["vpn"] == true)
+						global.vpn_ip_checks["[src.address]"] = true
+						logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
+						logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
+						src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+						sleep(3 SECONDS)
+						if (src)
+							del(src)
+						return
+
+					// IP is not a known VPN
+					else
+						global.vpn_ip_checks["[src.address]"] = false
+
+		catch(var/exception/e)
+			logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [e.name]")
+			logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [e.name]", "debug")
 #endif
 
 	//admins and mentors can enter a server through player caps.
