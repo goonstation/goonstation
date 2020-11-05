@@ -483,7 +483,6 @@ var/f_color_selector_handler/F_Color_Selector
 		if (config.server_name != null && config.server_suffix && world.port > 0)
 			config.server_name += " #[serverKey]"
 
-		//precache_unban_txt() //Wire: left in for now because jobbans still use the shitty system //Francinum: Merci~
 		precache_create_txt()
 
 	Z_LOG_DEBUG("World/Init", "Loading mode...")
