@@ -445,7 +445,7 @@ proc/debug_color_of(var/thing)
 						gt.color = is_group
 						img.app.overlays += gt
 
-					if (group && group.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
+					if (group?.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
 
 					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(air.temperature - T0C, 1)]</span>")
 
@@ -917,7 +917,7 @@ proc/debug_color_of(var/thing)
 		RenderOverlay()
 		SPAWN_DBG(1 DECI SECOND)
 			var/client/X = src
-			while (X && X.activeOverlay)
+			while (X?.activeOverlay)
 				// its a debug overlay so f u
 				X.RenderOverlay()
 				sleep(1 SECOND)
@@ -930,7 +930,7 @@ proc/debug_color_of(var/thing)
 			var/x = text2num(splittext(offs[1], ":")[1])
 			var/y = text2num(splittext(offs[2], ":")[1])
 			var/image/im = usr.client.infoOverlayImages["[x]-[y]"]
-			if(im && im.desc)
+			if(im?.desc)
 				usr.client.tooltipHolder.transient.show(src, list(
 					"params" = params,
 					"title" = "Diagnostics",
@@ -947,7 +947,7 @@ proc/debug_color_of(var/thing)
 /*
 // having to wiggle around to update the overlay dumb, bad, esp when you can move real fast
 /mob/OnMove()
-	if(client && client.activeOverlay)
+	if(client?.activeOverlay)
 		client.GenerateOverlay()
 		client.RenderOverlay()
 	.=..()

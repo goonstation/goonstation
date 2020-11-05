@@ -334,7 +334,7 @@
 		return
 
 	proc/on_bite(mob/eater)
-		//if (reagents && reagents.total_volume)
+		//if (reagents?.total_volume)
 		//	reagents.reaction(M, INGEST)
 		//	reagents.trans_to(M, reagents.total_volume/(src.amount ? src.amount : 1))
 
@@ -527,7 +527,7 @@
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, gulp_size)
 				SPAWN_DBG (5)
-					if (src && src.reagents && M && M.reagents)
+					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
 
 			playsound(M.loc,"sound/items/drink.ogg", rand(10,50), 1)

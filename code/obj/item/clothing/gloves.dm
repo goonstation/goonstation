@@ -1,7 +1,7 @@
 // NO GLOVES NO LOVES
 
 var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwerk's forensic ID system (Convair880).
-
+ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves
 	name = "gloves"
 	w_class = 2.0

@@ -1605,7 +1605,7 @@
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
 				SPAWN_DBG(0.5 SECONDS) //Sign up with the driver (if a mainframe contacted us)
-					src.post_status(target,"command","term_message","data","command=register[(frequencies && frequencies.len) ? "&freqs=[jointext(frequencies,",")]" : ""]")
+					src.post_status(target,"command","term_message","data","command=register[(length(frequencies)) ? "&freqs=[jointext(frequencies,",")]" : ""]")
 				return
 
 			if("term_message","term_file")
@@ -4933,7 +4933,7 @@
 	proc
 		fire0(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 1
 
 			else
@@ -4943,7 +4943,7 @@
 
 		fire1(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 2
 
 			else
@@ -4953,7 +4953,7 @@
 
 		fire2(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 4
 
 			else
@@ -4963,7 +4963,7 @@
 
 		fire3(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 8
 
 			else
@@ -4973,7 +4973,7 @@
 
 		fire4(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 16
 
 			else
@@ -4983,7 +4983,7 @@
 
 		fire5(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 32
 
 			else
@@ -4991,7 +4991,7 @@
 
 		fire6(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 64
 
 			else
@@ -5001,7 +5001,7 @@
 
 		fire7(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 128
 
 			else

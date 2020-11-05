@@ -212,7 +212,7 @@
 	var/value = 0
 
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (length(L))
 		for (var/obj/item/skull/S in L)
 			if (ishuman(src))
 				var/mob/living/carbon/human/H = src

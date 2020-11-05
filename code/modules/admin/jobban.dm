@@ -15,7 +15,7 @@ var
 		return 0
 
 	var/datum/job/J = find_job_in_controller_by_string(rank)
-	if (J && J.no_jobban_from_this_job)
+	if (J?.no_jobban_from_this_job)
 		return 0
 
 	if(jobban_keylist.Find(text("[M.ckey] - Everything Except Assistant")))

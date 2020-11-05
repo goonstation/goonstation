@@ -41,7 +41,7 @@
 			src.color = "#00aa00"
 		else if(istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
 			src.color = "#aaaa00"
-		else if(istype(location, /area/station/science) || istype(location, /area/station/chemistry))
+		else if(istype(location, /area/station/science))
 			src.color = "#9933ff"
 		else if(istype(location, /area/station/medical))
 			src.color = "#0000ff"
@@ -310,7 +310,7 @@
 			return
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
 		var/mob/T = src.parent.linked.handset.holder
-		if(T && T.client)
+		if(T?.client)
 			T.show_message(processed, 2)
 			M.show_message(processed, 2)
 

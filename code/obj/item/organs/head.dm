@@ -286,7 +286,7 @@
 			H.organHolder.receive_organ(src, "head", 3.0)
 
 			SPAWN_DBG(rand(50,500))
-				if (H && H.organHolder && H.organHolder.head && H.organHolder.head == src) // aaaaaa
+				if (H?.organHolder?.head && H.organHolder.head == src) // aaaaaa
 					if (src.op_stage != 0.0)
 						H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
 						"<span class='alert'><b>Your head comes loose and tumbles off of your neck!</b></span>")

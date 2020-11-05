@@ -302,17 +302,17 @@ var/list/globalContextActions = null
 	proc/checkContextActions(var/atom/target)
 		var/list/applicable = list()
 		var/obj/item/W = src.equipped()
-		if(W && W.contextActions && W.contextActions.len)
+		if(W && length(W.contextActions))
 			for(var/datum/contextAction/C in W.contextActions)
 				var/action = C.checkRequirements(target, src)
 				if(action) applicable.Add(C)
 
-		if(target && target.contextActions && target.contextActions.len)
+		if(length(target?.contextActions))
 			for(var/datum/contextAction/C in target.contextActions)
 				var/action = C.checkRequirements(target, src)
 				if(action) applicable.Add(C)
 
-		if(src.contextActions && src.contextActions.len)
+		if(length(src.contextActions))
 			for(var/datum/contextAction/C in src.contextActions)
 				var/action = C.checkRequirements(target, src)
 				if(action) applicable.Add(C)
@@ -710,7 +710,7 @@ var/list/globalContextActions = null
 		tooltip_flags = TOOLTIP_LEFT
 
 		checkRequirements(var/atom/target, var/mob/user)
-			return user && user.client && (user.client.holder || user.client.player.mentor)
+			return user?.client && (user.client.holder || user.client.player.mentor)
 
 		execute(var/atom/target, var/mob/user)
 			if (user && istype(user, /mob/dead/observer))
@@ -726,7 +726,7 @@ var/list/globalContextActions = null
 		tooltip_flags = TOOLTIP_LEFT
 
 		checkRequirements(var/atom/target, var/mob/user)
-			return user && user.client && user.client.holder
+			return user?.client && user.client.holder
 
 		execute(var/atom/target, var/mob/user)
 			if (user && istype(user, /mob/dead/observer))
@@ -837,13 +837,13 @@ var/list/globalContextActions = null
 
 	genebooth_product
 		icon = 'icons/ui/context32x32.dmi'
-		var/datum/geneboothproduct/GBP = 0
-		var/obj/machinery/genetics_booth/GB = 0
+		var/datum/geneboothproduct/GBP = null
+		var/obj/machinery/genetics_booth/GB = null
 		var/spamt = 0
 
 		disposing()
-			GBP = 0
-			GB = 0
+			GBP = null
+			GB = null
 			..()
 
 		execute(var/atom/target, var/mob/user)
@@ -855,7 +855,7 @@ var/list/globalContextActions = null
 			.= 0
 			if (get_dist(target,user) <= 1 && isliving(user))
 				.= GBP && GB
-				if (GB && GB.occupant && world.time > spamt + 5)
+				if (GB?.occupant && world.time > spamt + 5)
 					user.show_text("[target] is currently occupied. Wait until it's done.", "blue")
 					spamt = world.time
 					.= 0
@@ -866,13 +866,13 @@ var/list/globalContextActions = null
 			.= background
 
 		getIcon()
-			if (GBP && GBP.BE)
+			if (GBP?.BE)
 				.= GBP.BE.icon
 			else
 				..()
 
 		getIconState()
-			if (GBP && GBP.BE)
+			if (GBP?.BE)
 				.= GBP.BE.icon_state
 			else
 				..()
