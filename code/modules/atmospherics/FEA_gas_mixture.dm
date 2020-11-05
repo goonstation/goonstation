@@ -291,10 +291,8 @@ What are the archived variables for?
 	var/datum/gas_mixture/removed = unpool(/datum/gas_mixture)
 
 	#define _REMOVE_GAS(GAS, ...) \
-		removed.GAS = QUANTIZE((GAS/sum)*amount); \
-		GAS -= removed.GAS/group_multiplier; \
-		removed.GAS -= min(GAS, 0);  \
-		GAS = max(GAS, 0);
+		removed.GAS = min(QUANTIZE((GAS/sum)*amount), GAS); \
+		GAS -= removed.GAS/group_multiplier;
 	APPLY_TO_GASES(_REMOVE_GAS)
 	#undef _REMOVE_GAS
 
