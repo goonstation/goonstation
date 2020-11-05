@@ -46,6 +46,9 @@
 		create_reagents(20)
 		reagents.add_reagent("oil", 15)
 
+	proc/generate_variant()
+		// Azrun TODO Do Maths
+
 	disposing()
 		switch (side)
 			if (LEFT_CIRCULATOR)
@@ -681,6 +684,7 @@
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	var/obj/machinery/atmospherics/unary/furnace_connector/f_connector = null
+	var/datum/digital_filter/exponential_moving_average/heat_filter = new
 
 	proc/get_connector()
 		for(var/obj/machinery/atmospherics/unary/furnace_connector/C in src.loc)
@@ -690,6 +694,7 @@
 
 	New()
 		..()
+		//heat_filter.init(5)
 		get_connector()
 
 	process()
@@ -731,7 +736,10 @@
 		// charcoal actual high temp is 2500C
 		var/additional_heat = fuel_burn_scale * (3000)
 
+
+		heat_filter.init(0.25)
 		f_connector.current_temperature = T20C + 200 + additional_heat
+		var/filtered_heat = heat_filter.process(T20C + 200 + additional_heat)
 		f_connector.heat()
 
 
