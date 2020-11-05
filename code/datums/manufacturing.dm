@@ -1721,6 +1721,16 @@
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/geigercounter
+	name = "Geiger Counter"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_names = list("Metal","Conductive Material","Crystal")
+	item_amounts = list(1,1,1)
+	item_outputs = list(/obj/item/device/geiger)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/industrialarmor
 	name = "Industrial Space Armor Set"
 	item_paths = list("MET-3","CON-2","DEN-2")
