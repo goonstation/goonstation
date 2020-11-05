@@ -48,10 +48,12 @@
 // Group procs
 /datum/air_group/proc/suspend_group_processing()
 	// Distribute air from the group out to members
+	ASSERT(group_processing == 1)
 	update_tiles_from_group()
 	group_processing = 0
 
 /datum/air_group/proc/resume_group_processing()
+	ASSERT(group_processing == 0)
 	update_group_from_tiles()
 	group_processing = 1
 
@@ -196,7 +198,7 @@
 					var/connection_difference = 0
 					var/turf/simulated/floor/self_border
 					var/turf/simulated/floor/enemy_border
-					if(self_group_borders && self_group_borders.len)
+					if(length(self_group_borders))
 						self_border = self_group_borders[border_index]
 					if(enemy_border)
 						enemy_border = enemies[border_index]
@@ -295,7 +297,7 @@
 		if(abort_group)
 			suspend_group_processing()
 		else
-			if(air && air.check_tile_graphic())
+			if(air?.check_tile_graphic())
 				for(var/turf/simulated/member as() in members)
 					member.update_visuals(air)
 
@@ -382,8 +384,10 @@
 		member.air?.zero()
 	if (length_space_border)
 		spaced = 1
-		resume_group_processing()
+		if(!group_processing)
+			resume_group_processing()
 
 /datum/air_group/proc/unspace_group()
-	suspend_group_processing()
+	if(group_processing)
+		suspend_group_processing()
 	spaced = 0

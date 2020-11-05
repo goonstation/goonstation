@@ -324,7 +324,7 @@
 
 		if (hitsound)
 			playsound(src, hitsound, 50, 1)
-		if (W && W.hitsound)
+		if (W?.hitsound)
 			playsound(src,W.hitsound,50,1)
 
 		if (src.alive)

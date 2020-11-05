@@ -176,11 +176,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					return
 			playsound(src.loc, pick(snd_macho_rage), 50, 0, 0, src.get_age_pitch())
 			src.visible_message("<span class='alert'><B>[src] aggressively grabs [M]!</B></span>")
-			var/obj/item/grab/G = new /obj/item/grab( src )
-			G.assailant = src
+			var/obj/item/grab/G = new /obj/item/grab(src, src, M)
 			src.put_in_hand(G, src.hand)
-			G.affecting = M
-			M.grabbed_by += G
 			M.changeStatus("stunned", 10 SECONDS)
 			G.state = 2
 			G.update_icon()

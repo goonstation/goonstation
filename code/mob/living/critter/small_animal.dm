@@ -459,7 +459,7 @@ todo: add more small animals!
 	pull_w_class = 4
 
 	OnMove()
-		if(client && client.player && client.player.shamecubed)
+		if(client?.player?.shamecubed)
 			loc = client.player.shamecubed
 			return
 

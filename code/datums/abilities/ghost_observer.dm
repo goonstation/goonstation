@@ -340,7 +340,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		displaying_buttons = !displaying_buttons
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 			boutput(holder.owner, "Sorry, respawn options aren't availbale during football mode.")
 			displaying_buttons = 0
 		if (!displaying_buttons)

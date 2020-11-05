@@ -127,6 +127,8 @@
 
 	can_lie = 1
 
+	var/const/singing_prefix = "%"
+
 /mob/living/New()
 	..()
 	vision = new()
@@ -733,6 +735,11 @@
 		return
 	*/
 
+	message = trim(message)
+
+	// check for singing prefix before radio prefix
+	message = check_singing_prefix(message)
+
 	var/italics = 0
 	var/forced_language = null
 	var/message_range = null
@@ -799,6 +806,19 @@
 
 	message = trim(message)
 
+	// check for singing prefix after radio prefix
+	if (!singing)
+		message = check_singing_prefix(message)
+	if (singing)
+		// Scots can only sing Danny Boy
+		if (src.bioHolder?.HasEffect("accent_scots"))
+			var/scots = src.bioHolder.GetEffect("accent_scots")
+			if (istype(scots, /datum/bioEffect/speech/scots))
+				var/datum/bioEffect/speech/scots/S = scots
+				S.danny_index = (S.danny_index % 16) + 1
+				var/lyrics = dd_file2list("strings/danny.txt")
+				message = lyrics[S.danny_index]
+
 	if (!message)
 		return
 
@@ -814,7 +834,19 @@
 				VT = "radio"
 				ending = 0
 
-		if (ending == "?")
+		if (singing || (src.bioHolder?.HasEffect("elvis")))
+			if (src.get_brain_damage() >= 60 || src.bioHolder?.HasEffect("unintelligable") || src.hasStatus("drunk"))
+				singing |= BAD_SINGING
+				speech_bubble.icon_state = "notebad"
+			else
+				speech_bubble.icon_state = "note"
+				if (ending == "!" || (src.bioHolder?.HasEffect("loud_voice")))
+					singing |= LOUD_SINGING
+					speech_bubble.icon_state = "notebad"
+				else if (src.bioHolder?.HasEffect("quiet_voice"))
+					singing |= SOFT_SINGING
+			playsound(src, sounds_speak["[VT]"],  55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
+		else if (ending == "?")
 			playsound(src, sounds_speak["[VT]?"], 55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
 			speech_bubble.icon_state = "?"
 		else if (ending == "!")
@@ -827,6 +859,11 @@
 		last_voice_sound = world.time
 	else
 		speech_bubble.icon_state = "speech"
+
+	if ((isrobot(src) || isAI(src)) && singing)
+		speech_bubble.icon_state = "noterobot"
+		if (copytext(message, length(message)) == "!")
+			singing |= LOUD_SINGING
 
 	if (text2num(message)) //mbc : check mob.dmi for the icons
 		var/n = round(text2num(message),1)
@@ -1028,7 +1065,16 @@
 					I.bump_up()
 			T = get_step(T, EAST)
 		*/
-		chat_text = make_chat_maptext(src, messages[1], "color: [src.last_chat_color];" + src.speechpopupstyle)
+		var/singing_italics = singing ? " font-style: italic;" : ""
+		var/maptext_color
+		if (singing)
+			if (isAI(src) || isrobot(src))
+				maptext_color = "#84d6d6"
+			else
+				maptext_color ="#D8BFD8"
+		else
+			maptext_color = src.last_chat_color
+		chat_text = make_chat_maptext(src, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
 		if(chat_text)
 			chat_text.measure(src.client)
 			for(var/image/chat_maptext/I in src.chat_text.lines)
@@ -1043,6 +1089,8 @@
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
 	message = src.say_quote(messages[1])
+
+
 	if (italics)
 		message = "<i>[message]</i>"
 
@@ -1127,7 +1175,7 @@
 	. = ..()
 	if (isturf(oldloc) && isturf(loc) && move_laying)
 		var/list/equippedlist = src.equipped_list()
-		if (equippedlist && equippedlist.len)
+		if (length(equippedlist))
 			var/move_callback_happened = 0
 			for (var/I in equippedlist)
 				if (I == move_laying)
@@ -1379,10 +1427,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		var/mob/living/carbon/human/H = M
 		gloves = H.gloves
 	else
-		gloves = 0
+		gloves = null
 		//Todo: get critter gloves if they have a slot. also clean this up in general...
 
-	if (gloves && gloves.material)
+	if (gloves?.material)
 		gloves.material.triggerOnAttack(gloves, M, src)
 		for (var/atom/A in src)
 			if (A.material)
@@ -1436,7 +1484,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				src.gib()
 				return
 			*/
-			if (gloves && gloves.activeweapon)
+			if (gloves?.activeweapon)
 				gloves.special_attack(src)
 				return
 
@@ -1688,7 +1736,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		src.ai.was_harmed(weapon,M)
 	..()
 
-/mob/living/bullet_act(var/obj/projectile/P, mob/meatshield)
+/mob/living/bullet_act(var/obj/projectile/P)
 	log_shot(P,src)
 	if (ismob(P.shooter))
 		var/mob/living/M = P.shooter
@@ -1732,20 +1780,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (!P.proj_data)
 		return 0
-
-	if (!meatshield && locate(/obj/item/grab, src))
-		var/mob/hostage = null
-		var/obj/item/grab/G = find_type_in_hand(/obj/item/grab)
-		if(G && G.affecting && G.state >= 2 && P.shooter != G.affecting) //If you grab someone they can still shoot you
-			hostage = G.affecting
-		if (hostage)
-			hostage.bullet_act(P, src)
-
-			//moved here so that it displays after the bullet hit message
-			if(prob(20)) //This should probably not be bulletproof, har har
-				hostage.visible_message("<span class='combat bold'>[hostage] is knocked out of [src]'s grip by the force of the [P.name]!</span>")
-				qdel(G)
-			return hostage
 
 	if (!P.proj_data.silentshot && !P.proj_data.nomsg)
 		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name]!</span>")
@@ -1935,14 +1969,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				explosion(origin, T, -1,-1,1,2)
 			if (prob(20))
 				boutput(src, "<span class='alert'><b>[origin] vaporizes you with a lethal arc of electricity!</b></span>")
-				if (H && H.shoes)
+				if (H?.shoes)
 					H.drop_from_slot(H.shoes)
 				make_cleanable(/obj/decal/cleanable/ash,src.loc)
 				SPAWN_DBG(1 DECI SECOND)
 					src.elecgib()
 			else
 				boutput(src, "<span class='alert'><b>[origin] blasts you with an arc flash!</b></span>")
-				if (H && H.shoes)
+				if (H?.shoes)
 					H.drop_from_slot(H.shoes)
 				var/atom/targetTurf = get_edge_target_turf(src, get_dir(src, get_step_away(src, origin)))
 				src.throw_at(targetTurf, 200, 4)
@@ -1968,3 +2002,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)
 	..()
+
+/mob/living/proc/check_singing_prefix(var/message)
+	if (isalive(src))
+		// check for "%"
+		if (dd_hasprefix(message, singing_prefix))
+			src.singing = NORMAL_SINGING
+			return copytext(message, 2)
+	src.singing = 0
+	return message

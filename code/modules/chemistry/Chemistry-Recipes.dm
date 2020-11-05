@@ -476,7 +476,7 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					tfireflash(location, 1, 7000)
 				else
@@ -545,7 +545,7 @@ datum
 				var/atom/source = get_turf(holder.my_atom)
 				new/obj/decal/shockwave(source)
 				playsound(source, 'sound/weapons/flashbang.ogg', 25, 1)
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					for(var/atom/movable/M in view(2+ (created_volume > 30 ? 1:0), source))
 						if(M.anchored || M == source || M.throwing) continue
 						M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
@@ -2393,7 +2393,7 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					elecflash(location)
 
@@ -2446,7 +2446,7 @@ datum
 				var/hootmode = prob(5)
 				var/turf/location = 0
 
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					if (hootmode)
 						playsound(location, 'sound/voice/animal/hoot.ogg', 100, 1)
@@ -2610,7 +2610,7 @@ datum
 			mix_phrase = "The substance erupts into wild flames."
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					fireflash(location, min(max(2,round(created_volume/10)),8)) // This reaction didn't have an upper cap, uh-oh (Convair880).
 				else
@@ -2653,8 +2653,9 @@ datum
 #endif
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
+				..()
 				var/turf/location = 0
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
 						boutput(M, "<span class='alert'>You feel the air around you spark with electricity!</span>")
@@ -2690,7 +2691,7 @@ datum
 				if(holder)
 					holder.del_reagent("potassium")
 					holder.del_reagent("sugar")
-					holder.del_reagent("phsophorus")
+					holder.del_reagent("phosphorus")
 
 		smoke
 			name = "Smoke"
@@ -2710,7 +2711,7 @@ datum
 					holder.smoke_start(created_volume)
 					holder.del_reagent("potassium")
 					holder.del_reagent("sugar")
-					holder.del_reagent("phsophorus")
+					holder.del_reagent("phosphorus")
 
 		propellant
 			name = "Aeresol Propellant"
@@ -3108,7 +3109,7 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
 						boutput(M, "<span class='alert'>The solution spews out a metalic foam!</span>")
@@ -3511,7 +3512,7 @@ datum
 				if (!istype(target))
 					return
 
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					arcFlash(holder.my_atom, target, 500000)
 				else
 					arcFlash(pick(holder.covered_cache), target, 500000)
@@ -3544,7 +3545,7 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				CRITTER_REACTION_CHECK(reaction_count)
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					new /obj/critter/fermid(get_turf(holder.my_atom))
 				else
 					new /obj/critter/fermid(pick(holder.covered_cache))

@@ -612,7 +612,7 @@
 				sleep(20 SECONDS)
 				if(!M || M.disposed)
 					return
-				if (M && M.current)
+				if (M?.current)
 					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
 				src.visible_message("<span class='alert'><B>[src]</B> grows a head, which sprouts legs and wanders off, looking for food!</span>")
 				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
@@ -680,7 +680,7 @@
 		if (src.hasStatus("handcuffed"))
 			src.unlock_medal("Fell down the stairs", 1)
 
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			var/datum/game_mode/revolution/R = ticker.mode
 			if (src.mind && (src.mind in R.revolutionaries)) // maybe add a check to see if they've been de-revved?
 				src.unlock_medal("Expendable", 1)
@@ -1118,7 +1118,7 @@
 	if(reagents)
 		reagents.move_trigger(src, ev)
 	for (var/datum/statusEffect/S as() in statusEffects)
-		if (S && S.move_triggered)
+		if (S?.move_triggered)
 			S.move_trigger(src, ev)
 
 
@@ -1360,7 +1360,7 @@
 
 /mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = 0)
 	var/original_language = src.say_language
-	if (mutantrace && mutantrace.override_language)
+	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
 
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
@@ -1492,7 +1492,7 @@
 	logTheThing("diary", src, null, "(WHISPER): [message]", "whisper")
 	logTheThing("whisper", src, null, "SAY: [message] (Whispered)")
 
-	if (src.client && !src.client.holder && url_regex && url_regex.Find(message))
+	if (src.client && !src.client.holder && url_regex?.Find(message))
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
@@ -2207,7 +2207,7 @@
 	boutput(src, "<span class='alert'><B>Your equipment malfunctions.</B></span>")
 
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (length(L))
 		for (var/obj/O in L)
 			O.emp_act()
 	boutput(src, "<span class='alert'><B>BZZZT</B></span>")
@@ -2738,7 +2738,7 @@
 		if (src.limbs.r_leg || src.limbs.l_leg) //legless people should still be able to interact
 			return
 
-	if (mutantrace && mutantrace.override_attack)
+	if (mutantrace?.override_attack)
 		mutantrace.custom_attack(target)
 	else
 		var/obj/item/parts/arm = null

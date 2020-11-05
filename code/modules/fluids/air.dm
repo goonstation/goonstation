@@ -376,7 +376,7 @@ var/list/ban_from_airborne_fluid = list()
 
 	var/turf/T = get_turf(oldloc)
 	var/turf/currentloc = get_turf(src)
-	if (currentloc != T && T && T.active_airborne_liquid)
+	if (currentloc != T && T?.active_airborne_liquid)
 		entered_group = 0
 
 	if (entered_group)
@@ -388,7 +388,7 @@ var/list/ban_from_airborne_fluid = list()
 
 	var/turf/T = get_turf(oldloc)
 	var/turf/currentloc = get_turf(src)
-	if (currentloc != T && T && T.active_airborne_liquid)
+	if (currentloc != T && T?.active_airborne_liquid)
 		entered_group = 0
 
 	if (entered_group)

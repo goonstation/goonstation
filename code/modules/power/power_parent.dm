@@ -257,7 +257,7 @@ var/makingpowernetssince = 0
             P = M.get_connections(1)
 
         if(P.len == 0)
-            if(more && more.len)
+            if(length(more))
                 O = more[more.len]
                 more -= O
                 continue

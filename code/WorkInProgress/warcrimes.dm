@@ -204,7 +204,7 @@ var/fartcount = 0
 			if(prob(15))
 				snacktime()
 			var/area/A = get_area(src)
-			if(prob(talk_prob) || A.john_talk)
+			if(prob(talk_prob) || A?.john_talk)
 				src.speak()
 
 	proc/snacktime()
@@ -274,7 +274,7 @@ var/fartcount = 0
 					else
 						say("Anyone gonna fire up \the [G]?")
 
-			else if(prob(40) && dead_mobs && dead_mobs.len > 0) //SpyGuy for undefined var/len (what the heck)
+			else if(prob(40) && length(dead_mobs))
 				var/mob/M = pick(dead_mobs)
 				say("[JOHN_PICK("deadguy")] [M.name]...")
 			else if (alive_mobs.len > 0)
@@ -282,7 +282,7 @@ var/fartcount = 0
 					greeted_murray = 1
 					say("[JOHN_PICK("greetings")] Murray! How's it [JOHN_PICK("verbs")]?")
 					SPAWN_DBG(rand(20,40))
-						if (murray && murray.on && !murray.idle)
+						if (murray?.on && !murray.idle)
 							murray.speak("Hi, John! It's [JOHN_PICK("murraycompliment")] to see you here, of all places.")
 
 				else

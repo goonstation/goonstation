@@ -461,7 +461,7 @@
 		attack_particle(user,src)
 		playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
 		..()
-		if (W && W.force >= 5 && prob(4 + (W.force - 5)))
+		if (W?.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
 
 /obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
@@ -953,7 +953,7 @@
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "right_vendor"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/crowbar.dmi'
 	icon_state = "crowbar"
 	var/obj/machinery/vending/vendor = null
 

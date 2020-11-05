@@ -76,7 +76,7 @@ Contains:
 								O.alpha = 255
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
@@ -111,7 +111,7 @@ Contains:
 				continue
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)

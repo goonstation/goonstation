@@ -388,7 +388,7 @@ var/global
 		else if (ismind(target) && target:current)
 			C = target:current:client
 
-		if (C && C.chatOutput && !C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
+		if (C?.chatOutput && !C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
 			//Client sucks at loading things, put their messages in a queue
 			C.chatOutput.messageQueue["[C.chatOutput.messageQueue.len]"] = list("message" = message, "group" = group)
 		else

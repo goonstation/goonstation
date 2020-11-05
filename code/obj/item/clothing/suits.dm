@@ -116,6 +116,12 @@
 		icon_state = "jacket_yellow"
 		item_state = "jacket_yellow"
 
+	sparkly
+		name = "sparkly jacket"
+		desc = "No glitter. No LEDs. Just magic!"
+		icon_state = "jacket_sparkly"
+		item_state = "jacket_sparkly"
+
 	design
 		name = "jacket"
 		desc = "A colorful jacket with a neat design on the back."
@@ -303,6 +309,10 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.005
 	over_hair = 1
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/wearertargeting/geiger, list(SLOT_WEAR_SUIT))
 
 	setupProperties()
 		..()

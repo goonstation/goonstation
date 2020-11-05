@@ -188,6 +188,10 @@
 			return 0
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
+				//can this person eat this food?
+				if(!M.can_eat(src))
+					boutput(M, "<span class='alert'>You can't eat [src]!</span>")
+					return 0
 				if (!bypass_utensils)
 					if (src.needfork && !user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
 						boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
@@ -212,7 +216,6 @@
 						for (var/obj/item/kitchen/utensil/spoon/plastic/S in user.equipped_list(check_for_magtractor = 0))
 							S.break_utensil(M)
 							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-							return
 
 				//no or broken stomach
 				if (ishuman(M))
@@ -277,6 +280,11 @@
 				return
 			else if (check_target_immunity(M))
 				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
+			else if(!M.can_eat(src))
+				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
+				user, "<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
+				M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't eat that!</span>")
+				return 0
 			else
 				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 				user, "<span class='alert'>You try to feed [M] [src]!</span>",\
@@ -326,7 +334,7 @@
 		return
 
 	proc/on_bite(mob/eater)
-		//if (reagents && reagents.total_volume)
+		//if (reagents?.total_volume)
 		//	reagents.reaction(M, INGEST)
 		//	reagents.trans_to(M, reagents.total_volume/(src.amount ? src.amount : 1))
 
@@ -519,7 +527,7 @@
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, gulp_size)
 				SPAWN_DBG (5)
-					if (src && src.reagents && M && M.reagents)
+					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
 
 			playsound(M.loc,"sound/items/drink.ogg", rand(10,50), 1)

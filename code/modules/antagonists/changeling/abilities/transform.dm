@@ -10,7 +10,7 @@
 
 	onAttach(var/datum/abilityHolder/H)
 		..()
-		if (H && H.owner) //Wire note: Fix for Cannot read null.real_name
+		if (H?.owner) //Wire note: Fix for Cannot read null.real_name
 			last_used_name = H.owner.real_name
 
 	cast(atom/target)

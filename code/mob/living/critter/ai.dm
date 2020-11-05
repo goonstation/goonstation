@@ -332,7 +332,7 @@ var/list/ai_move_scheduled = list()
 
 	reset()
 		..()
-		if(subtasks && subtasks.len >= 1)
+		if(length(subtasks))
 			current_subtask = subtasks[1]
 			current_subtask.reset()
 		subtask_index = 1

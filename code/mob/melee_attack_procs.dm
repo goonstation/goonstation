@@ -196,10 +196,8 @@
 	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		S.buckle_in(src,src,1)
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src)
+		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src, src)
 		src.put_in_hand(G, src.hand)
-		G.affecting = src
-		src.grabbed_by += G
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		src.visible_message("<span class='alert'>[src] starts blocking!</span>")
@@ -223,9 +221,7 @@
 	if (!I)
 		src.grab_self()
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src)
-		G.affecting = src
-		src.grabbed_by += G
+		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src, src)
 		G.loc = I
 
 		I.chokehold = G
@@ -291,18 +287,12 @@
 			P.ongrab(target)
 
 	if (!grab_item)
-		var/obj/item/grab/G = new /obj/item/grab(src)
-		G.assailant = src
+		var/obj/item/grab/G = new /obj/item/grab(src, src, target)
 		src.put_in_hand(G, src.hand)
-		G.affecting = target
-		target.grabbed_by += G
 	else// special. return it too
 		if (!grab_item.special_grab)
 			return
-		var/obj/item/grab/G = new grab_item.special_grab(grab_item)
-		G.assailant = src
-		G.affecting = target
-		target.grabbed_by += G
+		var/obj/item/grab/G = new grab_item.special_grab(grab_item, src, target)
 		G.loc = grab_item
 		.= G
 
@@ -1206,7 +1196,7 @@
 	return null
 
 /mob/living/check_attack_resistance(var/obj/item/I)
-	if (reagents && reagents.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
+	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
 		return "<span class='alert'>You drunkenly shrug off the blow!</span>"
 	return null
 
@@ -1224,7 +1214,7 @@
 	return 0
 
 /mob/living/carbon/human/get_head_pierce_prot()
-	if (client && client.hellbanned)
+	if (client?.hellbanned)
 		return 0
 	if ((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD))
 		if (head && !wear_mask)
@@ -1239,7 +1229,7 @@
 	return 0
 
 /mob/living/carbon/human/get_chest_pierce_prot()
-	if (client && client.hellbanned)
+	if (client?.hellbanned)
 		return 0
 	if ((wear_suit && wear_suit.body_parts_covered & TORSO) || (w_uniform && w_uniform.body_parts_covered & TORSO))
 		if (wear_suit && !w_uniform)
@@ -1342,8 +1332,8 @@
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)
 	if (iswerewolf(src))
 		var/datum/abilityHolder/werewolf/W = src.get_ability_holder(/datum/abilityHolder/werewolf)
-		if (target && W && W.tainted_saliva_reservior.total_volume > 0)
-			W.tainted_saliva_reservior.trans_to(target,5, 2)
+		if (target && W?.tainted_saliva_reservoir.total_volume > 0)
+			W.tainted_saliva_reservoir.trans_to(target,5, 2)
 
 
 /*/mob/proc/energyclaws_attack(var/mob/living/target)

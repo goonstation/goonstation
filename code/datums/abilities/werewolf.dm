@@ -73,7 +73,7 @@
 
 			playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
 			SPAWN_DBG (5)
-				if (M && M.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
+				if (M?.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
 			M.visible_message("<span class='alert'><B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B></span>")
@@ -181,7 +181,7 @@
 
 				M.visible_message("<span class='alert'><B>[M] [pick("chomps on", "chews off a chunk of", "gnaws on")] [HH]'s [pick("right arm", "left arm", "head", "right leg", "left leg")]!</B></span>")
 
-			if (ismonkey(HH) || HH.bioHolder && HH.bioHolder.HasEffect("monkey"))
+			if (isnpcmonkey(HH))
 				boutput(M, __red("Monkey flesh just isn't the real deal..."))
 				healing /= 2
 			else if (isdead(HH))
@@ -348,13 +348,13 @@
 	tabName = "Werewolf"
 	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 	var/datum/objective/specialist/werewolf/feed/feed_objective = null
-	var/datum/reagents/tainted_saliva_reservior = null
+	var/datum/reagents/tainted_saliva_reservoir = null
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.
 
 	New()
 		..()
 		awaken_time = rand(5, 10)*100
-		src.tainted_saliva_reservior = new/datum/reagents(500)
+		src.tainted_saliva_reservoir = new/datum/reagents(500)
 
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()

@@ -181,8 +181,9 @@
 	var/datum/progress/designated = null
 
 	attack_self(var/mob/user)
-		if (!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/construction)))
+		if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
 			boutput(user, "<span class='alert'>You can only use this tool in construction mode.</span>")
+			return
 		var/datum/game_mode/construction/C = ticker.mode
 		var/list/pickable = list()
 		for (var/datum/progress/P in C.milestones)
@@ -459,7 +460,7 @@
 
 	attack_self(mob/user as mob)
 		// This seems to not actually stop anything from working so just axing it.
-		//if (!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/construction)))
+		//if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
 		//	boutput(user, "<span class='alert'>You can only use this tool in construction mode.</span>")
 
 		if (selecting)
