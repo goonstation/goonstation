@@ -68460,7 +68460,7 @@
 /area/station/mining/staff_room)
 "cTm" = (
 /obj/machinery/power/apc{
-	areastring = "Mining";
+	areastring = "Mining Staff Room";
 	dir = 8;
 	name = "Mining APC";
 	pixel_x = -24
