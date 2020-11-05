@@ -321,8 +321,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
 	// NOTE: adjust magic numbers here if we approach vpn checker api rate limits
-	//if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
-	if (isnull(is_vpn_address))
+	if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
 		var/list/data
 		try
 			data = apiHandler.queryAPI("vpncheck", list("ip" = src.address), 1)
