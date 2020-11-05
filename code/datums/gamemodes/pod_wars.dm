@@ -547,8 +547,8 @@ obj/screen/score_board
 		return turret
 
 /obj/deployable_turret/pod_wars
-	name = "Pod Defense Turret"
-	desc = "A pod defense turret."
+	name = "Ship Defense Turret"
+	desc = "A ship defense turret."
 	health = 250
 	max_health = 250
 	wait_time = 20 //wait if it can't find a target
@@ -617,13 +617,14 @@ obj/screen/score_board
 
 /obj/item/turret_deployer/pod_wars/nt
 	icon_tag = "nt"
-	turret_path = /obj/deployable_turret/pod_wars
+	turret_path = /obj/deployable_turret/pod_wars/nt
 
 /obj/deployable_turret/pod_wars/nt
 	deployer_path = /obj/deployable_turret/pod_wars/nt
 	projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT
 	current_projectile = new/datum/projectile/laser/blaster/pod_pilot/blue_NT
-	icon_tag = "nt"//st
+	icon_tag = "nt"
+
 	is_friend(var/mob/living/C)
 		var/obj/item/card/id/I = C.get_id()
 		if(!istype(I))
@@ -636,15 +637,29 @@ obj/screen/score_board
 			else
 				return 0
 
+	activated
+		anchored=1
+		active=1
+		north
+			dir=NORTH
+		south
+			dir=SOUTH
+		east
+			dir=EAST
+		west
+			dir=WEST
+
+
 /obj/item/turret_deployer/pod_wars/sy
 	icon_tag = "st"
-	turret_path = /obj/deployable_turret/pod_wars
+	turret_path = /obj/deployable_turret/pod_wars/sy
 
 /obj/deployable_turret/pod_wars/sy
 	deployer_path = /obj/deployable_turret/pod_wars/sy
 	projectile_type = /datum/projectile/laser/blaster/pod_pilot/red_SY
 	current_projectile = new/datum/projectile/laser/blaster/pod_pilot/red_SY
 	icon_tag = "st"
+
 	is_friend(var/mob/living/C)
 		var/obj/item/card/id/I = C.get_id()
 		if(!istype(I))
@@ -656,6 +671,17 @@ obj/screen/score_board
 				return 1
 			else
 				return 0
+	activated
+		anchored=1
+		active=1
+		north
+			dir=NORTH
+		south
+			dir=SOUTH
+		east
+			dir=EAST
+		west
+			dir=WEST
 
 /obj/item/shipcomponent/secondary_system/lock/pw_id
 	name = "ID Card Hatch Locking Unit"
