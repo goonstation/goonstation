@@ -1493,6 +1493,7 @@ var/global/list/soundCache = list(
  	"sound/weapons/scope.ogg" = 'sound/weapons/scope.ogg',\
  	"sound/weapons/shotgunpump.ogg" = 'sound/weapons/shotgunpump.ogg',\
  	"sound/weapons/shotgunshot.ogg" = 'sound/weapons/shotgunshot.ogg',\
+ 	"sound/weapons/smallcaliber.ogg" = 'sound/weapons/smallcaliber.ogg',\
  	"sound/weapons/smg_shot.ogg" = 'sound/weapons/smg_shot.ogg',\
  	"sound/weapons/snipershot.ogg" = 'sound/weapons/snipershot.ogg',\
  	"sound/weapons/Taser.ogg" = 'sound/weapons/Taser.ogg',\
