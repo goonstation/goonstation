@@ -1,4 +1,10 @@
 
+(t)thu nov 05 20
+(u)Tarmunora
+(p)2593
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Added Geiger Counters to mining and Radioactive Emergency Supplies Crate
+(*)Made radiation status effect hidden unless you have a health implant
 (t)wed nov 04 20
 (u)Chickenish
 (p)2576
