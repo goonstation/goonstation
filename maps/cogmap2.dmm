@@ -68462,7 +68462,7 @@
 /obj/machinery/power/apc{
 	areastring = "Mining Staff Room";
 	dir = 8;
-	name = "Mining APC";
+	name = "Mining Staff Room APC";
 	pixel_x = -24
 	},
 /obj/cable{
