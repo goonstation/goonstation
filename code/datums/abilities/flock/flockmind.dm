@@ -150,7 +150,7 @@
 /datum/targetable/flockmindAbility/splitDrone
 	name = "Diffract Drone"
 	desc = "Split a drone into flockbits, mindless automata that only convert whatever they find."
-	//icon_state = "quiet_drone"
+	icon_state = "diffract"
 
 /datum/targetable/flockmindAbility/splitDrone/cast(mob/living/critter/flock/drone/target)
 	if(..())
@@ -159,7 +159,7 @@
 		return 1
 	// sanity check: don't remove our last complex drone
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-	if(F && F.flock)
+	if(F?.flock)
 		if(F.flock.getComplexDroneCount() == 1)
 			boutput(holder.owner, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
 			return 1
@@ -214,7 +214,7 @@
 			// skip this one
 			continue
 		var/obj/item/device/radio/R = M.ears
-		if(R && R.listening)
+		if(R?.listening)
 			// your headset's on, you're fair game!!
 			targets += M
 	if(targets.len >= 1)
@@ -305,3 +305,23 @@
 		return 1
 	panel.Subscribe(user)
 
+////////////////////////////////
+
+/datum/targetable/flockmindAbility/createStructure
+	name = "Fabricate Structure"
+	desc = "Create a structure tealprint for your drones to construct onto."
+	icon_state = "fabstructure"
+	cooldown = 4
+	targeted = 0
+
+/datum/targetable/flockmindAbility/createStructure/cast()
+	var/resourcecost = null
+	var/structurewantedtype = null
+	var/structurewanted = input("Select which structure you would like to create", "Tealprint Selection", "cancel") as null|anything in list("Collector")
+	switch(structurewanted)
+		if("Collector")
+			structurewantedtype = /obj/flock_structure/collector
+			resourcecost = 200
+	if(structurewantedtype)
+		var/mob/living/intangible/flock/F = holder.owner
+		F.createstructure(structurewantedtype, resourcecost)

@@ -1248,8 +1248,8 @@
 	New(var/mob/M)
 		cell = new/obj/item/ammo/power_cell/self_charging/lawbringer
 		current_projectile = new/datum/projectile/energy_bolt/aoe
-		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
-		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
+		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38/lb, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
+		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
 		asign_name(M)
@@ -1406,7 +1406,7 @@
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (current_projectile.type == /datum/projectile/bullet/revolver_38)			//execute - cyan
+			else if (current_projectile.type == /datum/projectile/bullet/revolver_38/lb)			//execute - cyan
 				indicator_display.color = "#00FFFF"
 				muzzle_flash = "muzzle_flash"
 			else if (current_projectile.type == /datum/projectile/bullet/smoke)			//smokeshot - dark-blue

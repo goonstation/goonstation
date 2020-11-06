@@ -794,7 +794,7 @@ var/mutable_appearance/fluid_ma
 			if (!current_reagent) continue
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
-		if (reacted_ids && reacted_ids.len)
+		if (length(reacted_ids))
 			src.update_icon()
 		*/
 
@@ -805,7 +805,7 @@ var/mutable_appearance/fluid_ma
 	//SLIPPING
 	//only slip if edge tile
 	var/turf/T = get_turf(oldloc)
-	if (T && T.active_liquid)
+	if (T?.active_liquid)
 		entered_group = 0
 
 	//BLOODSTAINS

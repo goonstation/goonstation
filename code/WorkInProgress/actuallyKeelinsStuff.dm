@@ -648,7 +648,7 @@ Returns:
 			if(count <= 5)
 				continue
 
-			if(A && A.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
+			if(A?.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
 				areas.Add(A)
 
 	while(areas.len >= 2)
@@ -884,7 +884,7 @@ Returns:
 
 	proc/start(var/mob/source_mob, var/remove, var/freeze)
 		if(source_mob == src) return
-		if(source_mob && source_mob.client)
+		if(source_mob?.client)
 			source = source_mob
 			remove_source = remove
 			freeze_source = freeze
@@ -1293,14 +1293,14 @@ Returns:
 	var/datum/material/head = null
 	var/image/shaftImg = null
 	var/image/headImg = null
+	var/prefix = null
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	hit_type = DAMAGE_STAB
 
 	New()
-		setShaftMaterial(getMaterial("bohrum"))
 		setHeadMaterial(getMaterial("telecrystal"))
+		setShaftMaterial(getMaterial("bohrum"))
 		buildOverlays()
-		setName()
 
 		..()
 
@@ -1321,23 +1321,32 @@ Returns:
 
 	proc/setShaftMaterial(var/datum/material/M)
 		shaft = M
+		SetPrefix()
 		if(shaft)
 			src.color = shaft.color
 			src.alpha = shaft.alpha
-		setName()
 		return
 
 	proc/setHeadMaterial(var/datum/material/M)
 		head = M
-		setMaterial(M)
+		SetPrefix()
+		setMaterial(M, setname = 0)
 		if(shaft)
 			src.color = shaft.color
 			src.alpha = shaft.alpha
 		if(src.material && src.material.hasProperty("hard"))
 			src.force = round(src.material.getProperty("hard") / 5)
 			src.throwforce = round(src.material.getProperty("hard") / 3)
-		setName()
 		return
+
+	proc/SetPrefix()
+		src.remove_prefixes(prefix)
+		prefix = ""
+		if(head)
+			prefix += "[head.name]-tipped[shaft?" ":""]"
+		if (shaft)
+			prefix += "[shaft.name]"
+		src.name_prefix(prefix)
 
 	proc/buildOverlays()
 		overlays.Cut()
@@ -1355,17 +1364,6 @@ Returns:
 			imgHead.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgHead
 			headImg = imgHead
-		return
-
-	proc/setName()
-		if(shaft && head)
-			name = "[head.name]-tipped [shaft.name] Spear"
-		else if (shaft && !head)
-			name = "[shaft.name] Spear"
-		else if (!shaft && head)
-			name = "[head.name]-tipped Spear"
-		else
-			name = "Spear"
 		return
 
 	getAffectedTiles(var/mob/user, var/atom/target, var/direction)
@@ -3222,7 +3220,7 @@ Returns:
 	event_handler_flags = USE_CANPASS
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (mover && mover.throwing)
+		if (mover?.throwing)
 			return 1
 		return ..()
 
@@ -4009,17 +4007,17 @@ var/list/lag_list = new/list()
 	var/blocking = 0
 
 	MouseEntered(location,control,params)
-		if(usr && usr.client)
+		if(usr?.client)
 			usr.client.show_popup_menus = 0
 		return ..()
 
 	MouseExited(location,control,params)
-		if(usr && usr.client)
+		if(usr?.client)
 			usr.client.show_popup_menus = 1
 		return ..()
 
 	MouseDrop_T()
-		if(usr && usr.client && blocking)
+		if(usr?.client && blocking)
 			usr.client.show_popup_menus = 0
 		return ..()
 

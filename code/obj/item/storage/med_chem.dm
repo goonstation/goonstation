@@ -13,7 +13,7 @@
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
-			if (kit_styles && kit_styles.len)
+			if (length(kit_styles))
 				icon_state = pick(kit_styles)
 				item_state = icon_state
 #if ASS_JAM
@@ -40,6 +40,9 @@
 		/obj/item/reagent_containers/pill/salicylic_acid,\
 		/obj/item/device/analyzer/healthanalyzer/borg,\
 		/obj/item/reagent_containers/emergency_injector/epinephrine)
+
+	empty
+		spawn_contents = list()
 
 
 /obj/item/storage/firstaid/brute

@@ -82,7 +82,7 @@
 	New()
 		..()
 		SPAWN_DBG(0)
-			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				src.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 				ticker.mode:agent_number++
 			else
@@ -149,7 +149,7 @@
 
 	var/action_delay = 0
 	delStatus("resting")
-	if(hud && hud.master) hud.update_resting()
+	if(hud?.master) hud.update_resting()
 
 	if (isdead(src))
 		ai_set_active(0)
@@ -315,6 +315,7 @@
 				ai_state = AI_PASSIVE
 				walk_towards(src,null)
 
+			var/area/A = get_area(src)
 			if(iscarbon(ai_target))
 				var/mob/living/carbon/carbon_target = ai_target
 
@@ -342,8 +343,7 @@
 							suit:set_loc(carbon_target:loc)
 							suit:dropped(carbon_target)
 							suit:layer = initial(suit:layer)
-
-				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && (istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()))
+				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && (istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot() && !A?.sanctuary))
 					//I can attack someone! =D
 					ai_target_old.Cut()
 					var/obj/item/gun/W = src.r_hand
@@ -355,12 +355,12 @@
 							if(2)
 								src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
 
-				if((prob(33) || ai_throw) && distance > 1 && ai_validpath() && src.r_hand && !(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()))
+				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.r_hand && !(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot() && !A?.sanctuary))
 					//I can attack someone! =D
 					ai_target_old.Cut()
 					src.throw_item(ai_target, list("npc_throw"))
 
-			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck())
+			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck() && !(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot() && A?.sanctuary))
 				//I can attack someone! =D
 				ai_target_old.Cut()
 				if(src.bioHolder.HasEffect("coprolalia") && prob(10)) //Combat Trash Talk

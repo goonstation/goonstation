@@ -98,7 +98,7 @@ var/global/derelict_mode = 0
 		src.breakdown()
 
 	bullet_act(var/obj/projectile/P)
-		if (P && P.proj_data.ks_ratio > 0)
+		if (P?.proj_data.ks_ratio > 0)
 			src.breakdown()
 
 	proc/eaten(var/mob/living/carbon/human/that_asshole)
@@ -155,7 +155,7 @@ var/global/derelict_mode = 0
 			sleep(1 SECOND)
 			boutput(world, "<tt>BUG: CPU0 on fire!</tt>")
 			logTheThing("diary", null, null, "The server would have restarted, if I hadn't removed the line of code that does that. Instead, we play through.", "game")
-			
+
 			SPAWN_DBG(5 SECONDS)
 				for (var/client/C in clients)
 					cinematic.remove_client(C)

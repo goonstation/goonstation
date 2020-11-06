@@ -91,10 +91,10 @@
 	icon_state = "miniputt"
 	capacity = 1
 	var/armor_score_multiplier = 0.5
-	health = 150
-	maxhealth = 150
+	health = 125
+	maxhealth = 125
 	weapon_class = 1
-	speed = 0.8
+	speed = 0.9
 	var/image/damaged = null
 	var/busted = 0
 
@@ -161,6 +161,8 @@ obj/machinery/vehicle/miniputt/pilot
 	name = "MagicPutt-"
 	desc = "The standard solo vehicle of the Space Wizard Federation."
 	icon_state = "putt_wizard" //slick
+	health = 200
+	maxhealth = 200
 
 	New()
 		..()
@@ -218,10 +220,10 @@ obj/machinery/vehicle/miniputt/pilot
 /obj/machinery/vehicle/miniputt/nanoputt
 	name = "NanoPutt-"
 	icon_state = "nanoputt"
-	health = 200
-	maxhealth = 200
+	health = 250
+	maxhealth = 250
 	armor_score_multiplier = 0.7
-	speed = 0.9
+	speed = 0.8
 
 ////////soviet putt
 /obj/machinery/vehicle/miniputt/soviputt
@@ -249,9 +251,9 @@ obj/machinery/vehicle/miniputt/pilot
 	name = "IndyPutt-"
 	icon_state = "indyputt"
 	armor_score_multiplier = 0.8
-	health = 200
-	maxhealth = 200
-	speed = 1.4
+	health = 275
+	maxhealth = 275
+	speed = 1.3
 	desc = "A smaller version of the I-class industrial pod, the IndyPutt is useful for emergency repair work and small-scale mining operations."
 
 	armed
@@ -278,8 +280,6 @@ obj/machinery/vehicle/miniputt/pilot
 /obj/machinery/vehicle/miniputt/gold
 	name = "PyriPutt-"
 	icon_state = "putt_gold"
-	health = 300
-	maxhealth = 300
 	armor_score_multiplier = 0.6
 	speed = 0.2
 	desc = "A light, high-speed MiniPutt with a gold-plated armor installed. Who the hell has this kind of money and this little sense?"
@@ -849,20 +849,21 @@ obj/machinery/vehicle/miniputt/pilot
 	var/armor_score_multiplier = 0.2
 	capacity = 2
 	weapon_class = 1
-	health = 150
-	maxhealth = 150
+	health = 250
+	maxhealth = 250
 	bound_width = 64
 	bound_height = 64
 	view_offset_x = 16
 	view_offset_y = 16
 	//luminosity = 5 // will help with space exploration
+	var/maxboom = 0
 
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
 			src.maxhealth = max(75, src.material.getProperty("density") * 5)
 			src.health = maxhealth
-			src.speed = max(0.75,min(5, (100 - src.material.getProperty("electrical")) / 40))
+			src.speed = clamp((src.material.getProperty("electrical")) / 30, 0.75, 1.5)
 		return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -954,24 +955,28 @@ obj/machinery/vehicle/miniputt/pilot
 					P.mob_shooter = user
 					P.pixel_x = H * 5
 					P.pixel_y = V * 5
+	ex_act(severity)
+		if(!maxboom)
+			SPAWN_DBG(1)
+				..()
+				maxboom = 0
+		maxboom = max(severity, maxboom)
+
 
 
 /obj/machinery/vehicle/pod_smooth/light // standard civilian pods
 	name = "Pod C-"
 	desc = "A civilian-class vehicle pod, often used for exploration and trading."
 	icon_state = "pod_civ"
-	health = 200
-	maxhealth = 200
-	speed = 0
+	health = 250
+	maxhealth = 250
 
 /obj/machinery/vehicle/pod_smooth/gold // blingee
 	name = "Pod G-"
 	desc = "A light, high-speed vehicle pod often used by underground pod racing clubs and people with more money than sense."
 	icon_state = "pod_gold"
 	armor_score_multiplier = 0.4
-	health = 400
-	maxhealth = 400
-	speed = 0.2
+	speed = 0.3
 
 /obj/machinery/vehicle/pod_smooth/heavy // pods made with reinforced armor
 	name = "Pod T-"
@@ -980,7 +985,7 @@ obj/machinery/vehicle/miniputt/pilot
 	icon_state = "pod_mil"
 	health = 500
 	maxhealth = 500
-	speed = 0.3
+	speed = 0.9
 
 	/*prearmed // this doesn't seem to work yet, dangit
 		New()
@@ -997,7 +1002,7 @@ obj/machinery/vehicle/miniputt/pilot
 	icon_state = "pod_synd"
 	health = 500
 	maxhealth = 500
-	speed = 0.3
+	speed = 0.9
 
 	/*prearmed
 		New()
@@ -1029,25 +1034,26 @@ obj/machinery/vehicle/miniputt/pilot
 	desc = "????"
 	armor_score_multiplier = 1.5
 	icon_state = "pod_black"
-	health = 800
-	maxhealth = 800
+	health = 700
+	maxhealth = 700
 
 /obj/machinery/vehicle/pod_smooth/iridium
 	name = "Pod Y-"
 	desc = "It appears to be an experimental vehicle based on the Syndicate's IRIDIUM project."
 	armor_score_multiplier = 1.25
 	icon_state = "pod_pre"
-	health = 700
-	maxhealth = 700
+	health = 800
+	maxhealth = 800
+	speed = 1.2
 
 /obj/machinery/vehicle/pod_smooth/industrial
 	name = "Pod I-"
 	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accomodate up to four passengers."
 	armor_score_multiplier = 1.25
 	icon_state = "pod_industrial"
-	health = 700
-	maxhealth = 700
-	speed = 0.6
+	health = 550
+	maxhealth = 550
+	speed = 1.5
 	capacity = 4
 
 /obj/machinery/vehicle/pod_smooth/setup_ion_trail()
@@ -1724,7 +1730,7 @@ obj/machinery/vehicle/miniputt/pilot
 
 /obj/machinery/vehicle/escape_pod
 	name = "Escape Pod E-"
-	desc = "A small one-person pod for escaping the station in emergencies.<br>It looks sort of rickety..."
+	desc = "A small one-person pod that scans for the emergency shuttle's engine signature and warps to it mid-transit. These are notorious for lacking any safety checks. <br>It looks sort of rickety..."
 	icon_state = "escape"
 	capacity = 1
 	health = 60

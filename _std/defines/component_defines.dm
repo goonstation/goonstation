@@ -55,6 +55,9 @@
 /// just before a datum's disposing()
 #define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
 
+// ---- atom signals ----
+/// when an atom is collided by a projectile (/obj/projectile)
+#define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
 
 // ---- atom/movable signals ----
 
@@ -83,6 +86,12 @@
 /// When an item is used in-hand
 #define COMSIG_ITEM_ATTACK_SELF "itm_atk_self"
 
+// ---- implant signals ----
+/// When implanted
+#define COMSIG_IMPLANT_IMPLANTED "implant_implanted"
+/// When removed
+#define COMSIG_IMPLANT_REMOVED "implant_removed"
+
 // ---- tooltip signals ----
 
 /// Append to the end of the blocking section of tooltip (list/tooltip)
@@ -101,9 +110,6 @@
 
 // ---- human signals ----
 
-/// When a human Life tick occurs
-#define COMSIG_HUMAN_LIFE_TICK "human_life_tick"
-
 // ---- mob signals ----
 
 /// At the beginning of when an attackresults datum is being set up
@@ -116,10 +122,13 @@
 #define COMSIG_MOB_DROPPED "mob_drop"
 
 #define COMSIG_MOB_CLICK "mob_click"
-
+/// sent when radiation status ticks on mob (stage)
+#define COMSIG_MOB_GEIGER_TICK "mob_geiger"
 // ---- mob/living signals ----
-
+/// when start sprinting
 #define COMSIG_LIVING_SPRINT_START "living_sprint_start"
+/// When a Life tick occurs
+#define COMSIG_LIVING_LIFE_TICK "human_life_tick"
 
 // ---- attack_X signals ----
 

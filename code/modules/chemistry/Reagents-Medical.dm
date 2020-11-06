@@ -399,7 +399,7 @@ datum
 							repair_bleeding_damage(H, 80, 2)
 
 					var/silent = 0
-					if (paramslist && paramslist.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 					if (!silent)
@@ -1012,7 +1012,7 @@ datum
 					M.HealDamage("All", 0, volume_passed)
 
 					var/silent = 0
-					if (paramslist && paramslist.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 					if (!silent)
@@ -1041,7 +1041,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.bioHolder && M.bioHolder.effects && M.bioHolder.effects.len) //One per cycle. We're having superpowered hellbastards and this is their kryptonite.
 					var/datum/bioEffect/B = M.bioHolder.effects[pick(M.bioHolder.effects)]
-					if (B && B.curable_by_mutadone)
+					if (B?.curable_by_mutadone)
 						M.bioHolder.RemoveEffect(B.id)
 				..()
 				return
@@ -1257,7 +1257,7 @@ datum
 						//H.bleeding = min(H.bleeding, rand(0,5))
 
 					var/silent = 0
-					if (paramslist && paramslist.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 

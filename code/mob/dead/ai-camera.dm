@@ -346,7 +346,7 @@
 		var/area/A = get_area(src)
 		if(istype(A, /area/station/))
 			var/obj/machinery/power/apc/P = A.area_apc
-			if(P && P.operating)
+			if(P?.operating)
 				P.attack_ai(src)
 				return
 
@@ -478,7 +478,7 @@
 	.=..()
 	if(istype(usr,/mob/dead/aieye))//todo, make this a var for cheapernesseress?
 		if(aiImage)
-			usr.client.show_popup_menus = (cameras && cameras.len)
+			usr.client.show_popup_menus = (length(cameras))
 */
 
 //---TURF---//
@@ -579,10 +579,12 @@ var/list/camImages = list()
 var/aiDirty = 2
 world/proc/updateCameraVisibility()
 	if(!aiDirty) return
+
 #if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
 	// I don't wanna wait for this camera setup shit just GO
 	return
 #endif
+
 	if(aiDirty == 2)
 		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
 		ma.plane = PLANE_HUD
@@ -604,10 +606,7 @@ world/proc/updateCameraVisibility()
 			cam_candidates += t
 
 
-		for(var/turf/t as() in cam_candidates)//ugh
-			//if( t.z != 1 ) continue
-			//t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
-
+		for(var/turf/t as() in cam_candidates) //ugh
 			t.aiImage = new
 			t.aiImage.appearance = ma
 			t.aiImage.dir = pick(alldirs)
@@ -629,7 +628,6 @@ world/proc/updateCameraVisibility()
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
 			LAGCHECK(LAG_HIGH)
 			if (!t.aiImage) continue
-			//var/dist = get_dist(t, C)
 			if (t.cameras && t.cameras.len)
 				t.aiImage.loc = null
 			else

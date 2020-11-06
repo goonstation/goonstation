@@ -1,5 +1,5 @@
 "a" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})
-"b" = (/turf/variableTurf/clear,/area)
+"b" = (/turf/variableTurf/clear,/area/space)
 "c" = (/turf/simulated/floor/plating/scorched,/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor/plating/damaged2,/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})
 "d" = (/turf/simulated/floor/plating/scorched,/turf/simulated/floor/plating/damaged2,/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})
 "e" = (/turf/variableTurf/clear,/obj/machinery/drainage,/obj/item/clothing/suit/space/engineer/april_fools,/obj/item/clothing/head/helmet/space/engineer/april_fools,/turf/simulated/floor/plating/damaged2,/area/evilreaver/storage/engineering{name = "GLOMAR Salvager"})

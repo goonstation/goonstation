@@ -89,7 +89,7 @@ datum/shuttle_controller
 
 					else if (timeleft <= 0)
 						location = SHUTTLE_LOC_STATION
-						if (ticker && ticker.mode)
+						if (ticker?.mode)
 							if (ticker.mode.shuttle_available == 0)
 								command_alert("CentCom has received reports of unusual activity on the station. The shuttle has been returned to base as a precaution, and will not be usable.");
 								online = 0
@@ -152,7 +152,7 @@ datum/shuttle_controller
 						start_location.move_contents_to(end_location, centcom_turf)
 						for (var/turf/P in end_location)
 							if (istype(P, centcom_turf))
-								P.ReplaceWith(map_turf, force=1)
+								P.ReplaceWith(map_turf, keep_old_material = 0, force=1)
 
 						settimeleft(SHUTTLELEAVETIME)
 
@@ -231,7 +231,7 @@ datum/shuttle_controller
 									var/bonus_stun = 0
 									if (ishuman(M))
 										var/mob/living/carbon/human/H = M
-										bonus_stun = (H && H.buckled && H.on_chair)
+										bonus_stun = (H?.buckled && H.on_chair)
 										//DEBUG_MESSAGE("[M] is human and bonus_stun is [bonus_stun]")
 									if (!M.buckled || bonus_stun)
 										M.changeStatus("stunned", 2 SECONDS)
@@ -263,7 +263,7 @@ datum/shuttle_controller
 						start_location.move_contents_to(end_location, map_turf)
 						for (var/turf/O in end_location)
 							if (istype(O, map_turf))
-								O.ReplaceWith(transit_turf, force=1)
+								O.ReplaceWith(transit_turf, keep_old_material = 0, force=1)
 						DEBUG_MESSAGE("Done moving shuttle!")
 						settimeleft(SHUTTLETRANSITTIME)
 						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
@@ -293,7 +293,7 @@ datum/shuttle_controller
 						start_location.move_contents_to(end_location, transit_turf)
 						for (var/turf/G in end_location)
 							if (istype(G, transit_turf))
-								G.ReplaceWith(centcom_turf, force=1)
+								G.ReplaceWith(centcom_turf, keep_old_material = 0, force=1)
 						boutput(world, "<B>The Emergency Shuttle has arrived at CentCom!")
 						world << csound("sound/misc/shuttle_centcom.ogg")
 						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
@@ -316,7 +316,7 @@ datum/shuttle_controller
 						start_location.move_contents_to(end_location, map_turf)
 						for (var/turf/O in end_location)
 							if (istype(O, transit_turf))
-								O.ReplaceWith(centcom_turf, force=1)
+								O.ReplaceWith(centcom_turf, keep_old_material = 0, force=1)
 						boutput(world, "<B>The Emergency Shuttle has arrived at CentCom!")
 						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
 						online = 0

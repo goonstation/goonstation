@@ -1,16 +1,16 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/space/no_replace,
-/area)
+/area/space)
 "ac" = (
 /turf/cordon,
 /area/cordon)
 "ad" = (
 /turf/space/dense,
-/area)
+/area/space)
 "ae" = (
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/staffhall)
@@ -28,7 +28,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "ah" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -56,18 +56,18 @@
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/space)
 "al" = (
 /obj/machinery/light/runway_light/delay4,
 /turf/unsimulated/floor/airless,
-/area)
+/area/space)
 "am" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/space)
 "an" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
 	icon_state = "rwindow";
@@ -139,41 +139,41 @@
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/space)
 "aw" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "ax" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "ay" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "az" = (
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/area)
+/area/space)
 "aA" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "aB" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
@@ -212,7 +212,7 @@
 	icon_state = "rwindow";
 	dir = 6
 	},
-/area)
+/area/space)
 "aI" = (
 /turf/unsimulated/floor/orangeblack,
 /area/owlery/staffhall)
@@ -309,7 +309,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "aU" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -398,11 +398,11 @@
 /area/owlery/staffhall)
 "bi" = (
 /turf/unsimulated/wall/auto/reinforced,
-/area)
+/area/space)
 "bj" = (
 /obj/item/scrap,
 /turf/space,
-/area)
+/area/space)
 "bk" = (
 /turf/space,
 /area/owlery/staffhall)
@@ -442,7 +442,7 @@
 	dir = 10;
 	layer = 2
 	},
-/area)
+/area/space)
 "bp" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -452,7 +452,7 @@
 	dir = 4;
 	intact = 0
 	},
-/area)
+/area/space)
 "bq" = (
 /obj/item/storage/wall/medical{
 	dir = 1;
@@ -479,7 +479,7 @@
 	icon_state = "catwalk_cross";
 	layer = 2
 	},
-/area)
+/area/space)
 "bs" = (
 /obj/window{
 	icon_state = "rwindow";
@@ -521,7 +521,7 @@
 	dir = 6;
 	layer = 2
 	},
-/area)
+/area/space)
 "bx" = (
 /obj/machinery/door/airlock/pyro/alt{
 	icon_state = "generic2_closed";
@@ -542,14 +542,14 @@
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/space)
 "bA" = (
 /obj/item/raw_material/scrap_metal{
 	desc = "Broken pieces of shuttle docking equipment. Someone must have taken off in a real hurry.";
 	name = "broken dock parts"
 	},
 /turf/space,
-/area)
+/area/space)
 "bB" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -570,7 +570,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "bC" = (
 /obj/item/cable_coil/cut{
 	color = "#DD0000";
@@ -585,7 +585,7 @@
 	name = "docking clamp"
 	},
 /turf/space,
-/area)
+/area/space)
 "bD" = (
 /obj/item/scrap,
 /obj/decal/fakeobjects/pipe{
@@ -595,7 +595,7 @@
 	name = "docking clamp"
 	},
 /turf/space,
-/area)
+/area/space)
 "bE" = (
 /obj/item/scrap,
 /obj/decal/fakeobjects{
@@ -611,7 +611,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "bF" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for securing docked spacecraft.";
@@ -737,18 +737,18 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "bW" = (
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "bX" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/space)
 "bY" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -1078,8 +1078,7 @@
 "cK" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -1149,8 +1148,7 @@
 "cU" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor/blackwhite{
 	icon_state = "darkwhite";
@@ -1160,8 +1158,7 @@
 "cV" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor/blackwhite{
@@ -1215,8 +1212,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/random_item_spawner/desk_stuff,
 /turf/unsimulated/floor/blackwhite{
@@ -1228,7 +1224,7 @@
 /obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/space)
 "dc" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff,
@@ -1240,8 +1236,7 @@
 "dd" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff,
@@ -1509,8 +1504,7 @@
 "dM" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor/greenwhite{
 	icon_state = "greenwhite";
@@ -3135,7 +3129,7 @@
 "hx" = (
 /obj/machinery/light/runway_light/delay5,
 /turf/unsimulated/floor/airless,
-/area)
+/area/space)
 "hy" = (
 /obj/storage/closet/electrical_supply,
 /turf/unsimulated/floor/redblack/corner{
@@ -3487,7 +3481,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "ij" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -4023,7 +4017,7 @@
 	dir = 4
 	},
 /turf/space/no_replace,
-/area)
+/area/space)
 "jq" = (
 /obj/securearea{
 	name = "VACUUM AREA";
@@ -5086,7 +5080,7 @@
 	name = "docking clamp"
 	},
 /turf/space,
-/area)
+/area/space)
 "lQ" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
@@ -6457,7 +6451,7 @@
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/space)
 "pa" = (
 /obj/submachine/chef_sink/chem_sink{
 	layer = 3;
@@ -6689,7 +6683,7 @@
 	name = "docking clamp"
 	},
 /turf/space,
-/area)
+/area/space)
 "pC" = (
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/Owlmait)
@@ -7397,7 +7391,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/space,
-/area)
+/area/space)
 "ro" = (
 /obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
 /turf/unsimulated/grass,
@@ -7521,14 +7515,14 @@
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/space)
 "rz" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/space)
 "rA" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
 	icon_state = "rwindow";
@@ -7911,8 +7905,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/table/reinforced/bar/auto,
 /obj/window{
@@ -7929,8 +7922,7 @@
 "st" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/table/reinforced/bar/auto,
 /obj/window{
@@ -9709,7 +9701,7 @@
 	name = "table"
 	},
 /obj/item/device/radio/intercom/adventure/syndcommand{
-	
+
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)

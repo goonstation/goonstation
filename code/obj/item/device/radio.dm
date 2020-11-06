@@ -346,7 +346,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 		// hi it's me cirr here to shoehorn in another thing
 		// flockdrones and flockmind should hear all channels, but with terrible corruption
-		if(flocks && flocks.len)
+		if(length(flocks))
 			for(var/F in flocks)
 				var/datum/flock/flock = flocks[F]
 				if(flock)
@@ -728,7 +728,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		if (src == M.back)
 			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
 			logTheThing("signalers", usr, M, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
-			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
 					ticker.mode:remove_revolutionary(M.mind)
 

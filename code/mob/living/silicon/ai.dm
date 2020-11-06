@@ -96,6 +96,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/mob/dead/aieye/eyecam = null
 
 	var/deployed_to_eyecam = 0
+	var/list/holograms
+	var/const/max_holograms = 8
 
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
@@ -180,6 +182,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	hud = new(src)
 	src.attach_hud(hud)
 	src.eyecam.attach_hud(hud)
+
+	holograms = list()
 
 #if ASS_JAM
 	var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
@@ -699,9 +703,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	if (O)
 		if (printalerts)
-			if (C && C.camera_status)
+			if (C?.camera_status)
 				src.show_text("--- [class] alarm detected in [A.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[C]\">[C.c_tag]</A> )")
-			else if (CL && CL.len)
+			else if (length(CL))
 				var/foo = 0
 				var/dat2 = ""
 				for (var/obj/machinery/camera/I in CL)
@@ -1248,6 +1252,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (src.glitchy_speak)
 		text = voidSpeak(text)
 	var/ending = copytext(text, length(text))
+
+	if (singing)
+		return singify_text(text)
 
 	if (ending == "?")
 		return "queries, \"[text]\"";
@@ -1992,7 +1999,7 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 
 	var/good_camera = 0 //Can't track a person out of range of a functioning camera
 	for(var/obj/machinery/camera/C in range(M))
-		if ( C && C.camera_status )
+		if ( C?.camera_status )
 			good_camera = 1
 			break
 	if(!good_camera)

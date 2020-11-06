@@ -1166,7 +1166,7 @@
 			boutput(O, "Use say \":s to speak to fellow cyborgs and the AI through binary.")
 
 			if (src.emagged || src.syndicate)
-				if ((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && O.mind)
+				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && O.mind)
 					ticker.mode:revolutionaries += O.mind
 					ticker.mode:update_rev_icons_added(O.mind)
 				if (src.emagged)
@@ -1183,7 +1183,7 @@
 			O.job = "Cyborg"
 
 		// final check to guarantee the icon shows up for everyone
-		if(O.mind && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)))
+		if(O.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
 			if ((O.mind in ticker.mode:revolutionaries) || (O.mind in ticker.mode:head_revolutionaries))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 		O.update_appearance()

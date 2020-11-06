@@ -396,6 +396,15 @@
 						sleep(clamp(., 0, 30) SECONDS)
 						continue
 
+					if ("unset")
+						if (!length(command_list))
+							scriptvars = list()
+							continue
+						for (var/V in command_list)
+							if (lowertext(ckeyEx(V)) in scriptvars)
+								scriptvars -= lowertext(ckeyEx(V))
+						continue
+
 					if ("help", "man")
 						var/datum/computer/file/record/helpRec = signal_program(1, list("command"=DWAINE_COMMAND_CONFGET,"fname"=setup_helprec_name))
 						if (istype(helpRec))
@@ -586,7 +595,7 @@
 		script_evaluate2(var/list/command_stream, return_bool)
 
 			stack.len = 0
-			while (command_stream && command_stream.len)
+			while (length(command_stream))
 				var/current_command = command_stream[1]
 				//boutput(world, "current_command = \[[current_command]]")
 				command_stream.Cut(1,2)
@@ -606,7 +615,7 @@
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
-							result = stack[stack.len] + stack[stack.len-1]
+							result = text2num(stack[stack.len]) + text2num(stack[stack.len-1])
 							stack[--stack.len] = script_clampvalue( result )
 
 						else

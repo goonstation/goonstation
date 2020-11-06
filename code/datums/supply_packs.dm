@@ -497,7 +497,7 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 					/obj/machinery/bot/cleanbot,
 					/obj/machinery/bot/medbot,
 					/obj/machinery/bot/firebot)
-	cost = 2000
+	cost = 7500
 	containertype = /obj/storage/crate
 	containername = "Robotics Crate"
 
@@ -905,7 +905,8 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 	contains = list(/obj/item/clothing/suit/rad = 4,
 					/obj/item/clothing/head/rad_hood = 4,
 					/obj/item/storage/pill_bottle/antirad = 2,
-					/obj/item/reagent_containers/emergency_injector/anti_rad = 4)
+					/obj/item/reagent_containers/emergency_injector/anti_rad = 4,
+					/obj/item/device/geiger = 2)
 	cost = 2000
 	containertype = /obj/storage/crate/wooden
 	containername = "Radiation Emergency Supplies"

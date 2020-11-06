@@ -36,10 +36,10 @@ datum
 				for (var/turf/T in covered_turf)
 					message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)].")
 					var/context = "???"
-					if(holder && holder.my_atom) // Erik: Fix for Cannot read null.fingerprintshidden
+					if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprintshidden
 						var/list/fh = holder.my_atom.fingerprintshidden
 
-						if (fh && fh.len) //Wire: Fix for: bad text or out of bounds
+						if (length(fh)) //Wire: Fix for: bad text or out of bounds
 							context = "Fingerprints: [jointext(fh, "")]"
 
 					logTheThing("combat", usr, null, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)]. Context: [context].")
@@ -719,7 +719,7 @@ datum
 				var/turf/simulated/T = target
 				var/volume_mult = 1
 
-				if (covered && covered.len)
+				if (length(covered))
 					if (volume/covered.len < 2) //reduce time based on dilution
 						volume_mult = min(volume / 9, 1)
 
@@ -961,7 +961,7 @@ datum
 					return
 
 				var/silent = 0
-				if (paramslist && paramslist.len)
+				if (length(paramslist))
 					if ("silent" in paramslist)
 						silent = 1
 
@@ -2374,7 +2374,7 @@ datum
 					var/list/mob/nerds = list()
 					for (var/mob/living/some_idiot in oviewers(M, 7))
 						nerds.Add(some_idiot)
-					if (nerds && nerds.len)
+					if (length(nerds))
 						var/mob/some_idiot = pick(nerds)
 						if (prob(50))
 							M.visible_message("<span class='emote'><B>[M]</B> flips off [some_idiot.name]!</span>")
@@ -3662,12 +3662,14 @@ datum
 			on_add()
 				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf))
 					return
-				holder.my_atom.Scale(4,1.5)
+				holder.my_atom.SafeScale(4,1.5)
+
 
 			on_remove()
 				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf))
 					return
-				holder.my_atom.Scale(1/4,1/1.5)
+				holder.my_atom.SafeScale(1/4,1/1.5)
+
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -3710,7 +3712,7 @@ datum
 				if (M.bioHolder && M.bioHolder.HasEffect("toxic_farts"))
 					return
 
-				if (M && M.reagents)
+				if (M?.reagents)
 					if (prob(25))
 						boutput(M, "<span class='alert'>Oh god! The <i>smell</i>!!!</span>")
 					M.reagents.add_reagent("jenkem",0.1 * volume_passed)

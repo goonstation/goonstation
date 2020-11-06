@@ -241,7 +241,7 @@
 
 		if (pen.uses_handwriting)
 			custom_font = "Dancing Script"
-			if (user && user.mind && user.mind.handwriting)
+			if (user?.mind?.handwriting)
 				custom_font = user.mind.handwriting
 			if (islist(src.fonts) && !src.fonts[custom_font])
 				src.fonts[custom_font] = 1
@@ -259,6 +259,8 @@
 		//t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 		t = copytext(html_encode(t), 1, 2*MAX_MESSAGE_LEN)
+		t = replacetext(t, "\[center\]", "<CENTER>")
+		t = replacetext(t, "\[/center\]", "</CENTER>")
 		t = replacetext(t, "\n", "<BR>")
 		t = replacetext(t, "\[b\]", "<B>")
 		t = replacetext(t, "\[/b\]", "</B>")
@@ -317,7 +319,7 @@
 
 		else if (istype(P, /obj/item/paper) && !istype(P, /obj/item/paper/manufacturer_blueprint))
 			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
-			if (S && S.ammo)
+			if (S?.ammo)
 				var/obj/item/paper_booklet/B = new
 				B.set_loc(src.loc)
 				user.drop_item()
@@ -340,7 +342,7 @@
 /obj/item/paper/proc/sign_name(var/t as text, mob/user as mob)
 	var/writing_style = "Dancing Script"
 	if (findtext(t, "\[sign\]") || findtext(t, "\[signature\]"))
-		if (user && user.mind && user.mind.handwriting)
+		if (user?.mind?.handwriting)
 			writing_style = user.mind.handwriting
 		if (islist(src.fonts) && !src.fonts[writing_style])
 			src.fonts[writing_style] = 1
@@ -386,6 +388,7 @@
 	stampable = 0
 	icon_state = "thermal_paper"
 	sealed = 1
+	item_function_flags = SMOKELESS
 
 /obj/item/paper/alchemy/
 	name = "'Chemistry Information'"
