@@ -130,6 +130,15 @@
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
 
+/obj/item/shipcomponent/mainweapon/phaser/short
+	name = "Mk 1.45 Light Phaser"
+	desc = "A basic, light weight phaser designed for close quarters space fights..."
+	weapon_score = 0.2
+	appearanceString = "pod_weapon_ltlaser"
+	current_projectile = new/datum/projectile/laser/light
+	icon_state = "class-a"
+	muzzle_flash = "muzzle_flash_phaser"
+
 /obj/item/shipcomponent/mainweapon/laser
 	name = "Mk.2 Scout Laser"
 	desc = "An upgraded variant of the stock MK 1.5 phaser. Due to the concentration of energy, a higher quality engine might be neccesary."

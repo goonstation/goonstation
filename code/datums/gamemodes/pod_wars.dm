@@ -748,11 +748,13 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	health = 140
 	maxhealth = 140
 	anchored = 0
+	var/weapon_type = /obj/item/shipcomponent/mainweapon/phaser/short
 
 	New()
 		..()
-		//Cargo hold
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon/bad_mining( src )
+		/obj/item/shipcomponent/mainweapon/phaser/short
+
+		src.m_w_system = new weapon_type( src )
 		src.m_w_system.ship = src
 
 		src.sec_system = new /obj/item/shipcomponent/secondary_system/orescoop( src )
@@ -767,6 +769,14 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		name = "NT Mining Dingy"
 		icon_state = "putt_pre"
 
+		mining
+			name = "NT Mining Dingy"
+			weapon_type = /obj/item/shipcomponent/mainweapon/bad_mining
+
 	syndicate
 		name = "Syndicate Mining Dingy"
 		icon_state = "syndiputt"
+
+		mining
+			name = "Syndicate Mining Dingy"
+			weapon_type = /obj/item/shipcomponent/mainweapon/bad_mining

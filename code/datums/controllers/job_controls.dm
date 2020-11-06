@@ -25,6 +25,10 @@ var/datum/job_controller/job_controls
 			new /datum/job/civilian/barman (),
 			new /datum/job/civilian/chaplain ())
 
+		else if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			src.staple_jobs = list(new /datum/job/pod_wars/nanotrasen {limit = -1;name = "NanoTrasen Pilot";} (),
+			new /datum/job/pod_wars/nanotrasen {limit = -1; name = "Syndicate Pilot";} ())
+
 		else
 			for (var/A in typesof(/datum/job/command)) src.staple_jobs += new A(src)
 			for (var/A in typesof(/datum/job/security)) src.staple_jobs += new A(src)
