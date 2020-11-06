@@ -1722,7 +1722,6 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	rigged = 0
 	},
 /turf/simulated/floor,
 /area/russian)
@@ -1750,7 +1749,6 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	rigged = 0
 	},
 /obj/cable{
 	d1 = 4;
@@ -2299,7 +2297,6 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	rigged = 0
 	},
 /obj/item/storage/box/diskbox,
 /turf/simulated/floor/white,
@@ -2314,7 +2311,6 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	rigged = 0
 	},
 /obj/cable{
 	d1 = 1;
@@ -20745,7 +20741,6 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	rigged = 0
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -31788,7 +31783,6 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	rigged = 0
 	},
 /turf/simulated/floor,
 /area/station/security/armory)
@@ -32131,7 +32125,6 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	rigged = 0
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -32599,7 +32592,6 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	rigged = 0
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -32963,7 +32955,6 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	rigged = 0
 	},
 /obj/cable{
 	d1 = 4;
@@ -33019,7 +33010,6 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	rigged = 0
 	},
 /obj/cable{
 	d1 = 2;
@@ -33303,7 +33293,6 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	rigged = 0
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -33610,7 +33599,8 @@
 	},
 /obj/item/device/radio/intercom{
 	dir = 4;
-	name = "Prison Intercom (Prison)" frequency = 1357
+	name = "Prison Intercom (Prison)"
+	frequency = 1357
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -34013,7 +34003,8 @@
 /area/station/security/hos)
 "byQ" = (
 /obj/item/device/radio/intercom{
-	name = "Prison Intercom (Prison)" frequency = 1357
+	name = "Prison Intercom (Prison)"
+	frequency = 1357
 	},
 /obj/cable{
 	icon_state = "4-8"
