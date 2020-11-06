@@ -73,6 +73,8 @@
 #define HALLOWEEN 1
 #elif (BUILD_TIME_MONTH == 12)
 #define XMAS 1
+#elif (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 1)
+#define CANADADAY 1
 #endif
 
 // other toggles
