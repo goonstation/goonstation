@@ -17,11 +17,11 @@
 // you might be asking "why in seconds?" the answer is that shuttle code uses seconds as a base unit and I'm too tired to refactor it
 
 
-#define SHUTTLE_COGMAP   "cogmap"
-#define SHUTTLE_COGMAP2  "cogmap2"
-#define SHUTTLE_DONUT2   "donut2"
+#define SHUTTLE_SOUTH    "cogmap"
+#define SHUTTLE_EAST  	 "cogmap"
+#define SHUTTLE_WEST   	 "donut2"
 #define SHUTTLE_DONUT3   "donut3"
 #define SHUTTLE_OSHAN    "oshan"
 #define SHUTTLE_MANTA    "manta"
-#define SHUTTLE_DESTINY  "destiny"
+#define SHUTTLE_NORTH    "destiny"
 #define SHUTTLE_NODEF    "nodef"
