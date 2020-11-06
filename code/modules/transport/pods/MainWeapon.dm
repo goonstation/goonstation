@@ -361,7 +361,7 @@
 	name = "Syndicate Purge System"
 	desc = "An unfinished pod weapon, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base."
 	current_projectile = new/datum/projectile/laser/drill/cutter
-	firerate = 30
+	firerate = 100
 	var/increment
 	var/pod_is_large = false
 	var/core_inserted = false
