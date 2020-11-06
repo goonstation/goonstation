@@ -51425,6 +51425,7 @@
 "cjR" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/computer3/terminal/zeta{
@@ -51434,6 +51435,7 @@
 /area/station/storage/tech)
 "cjS" = (
 /obj/cable{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -51443,6 +51445,7 @@
 "cjT" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/computer3/generic/radio,
@@ -51453,6 +51456,8 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/machinery/light/small{
@@ -51466,6 +51471,8 @@
 	pixel_y = 24
 	},
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
@@ -51474,6 +51481,7 @@
 /obj/machinery/bot/guardbot/bootleg,
 /obj/machinery/power/data_terminal,
 /obj/cable{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/guardbot_dock,
@@ -51486,11 +51494,17 @@
 /area/station/storage/tech)
 "cjY" = (
 /obj/table/auto,
-/obj/item/storage/box/diskbox,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/meson{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/storage/box/diskbox{
+	pixel_x = 8;
+	pixel_y = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cjZ" = (
@@ -52181,6 +52195,8 @@
 /area/station/maintenance/solar/south)
 "clu" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/machinery/light/small{
@@ -52190,25 +52206,35 @@
 /area/station/storage/tech)
 "clv" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/stool,
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "clw" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "clx" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/firealarm{
@@ -52696,42 +52722,81 @@
 /area/station/hallway/secondary/exit)
 "cmI" = (
 /obj/table/auto,
-/obj/item/peripheral/network/powernet_card,
-/obj/item/peripheral/network/radio/locked,
+/obj/item/peripheral/network/radio/locked{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/peripheral/network/powernet_card{
+	pixel_x = -3;
+	pixel_y = 9
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cmJ" = (
 /obj/table/auto,
-/obj/item/peripheral/drive,
-/obj/item/peripheral/drive/cart_reader,
+/obj/item/peripheral/drive/cart_reader{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/peripheral/drive{
+	pixel_x = -3;
+	pixel_y = 9
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cmK" = (
 /obj/table/auto,
-/obj/item/screwdriver,
-/obj/item/disk/data/fixed_disk,
-/obj/item/disk/data/floppy/computer3boot,
-/obj/item/disk/data/floppy/read_only/network_progs,
-/obj/item/disk/data/floppy/read_only/security_progs,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/item/disk/data/floppy/read_only/medical_progs,
-/obj/item/disk/data/floppy/read_only/terminal_os,
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/disk/data/floppy/computer3boot{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/disk/data/floppy/read_only/terminal_os{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/obj/item/disk/data/floppy/read_only/medical_progs{
+	pixel_x = -2;
+	pixel_y = 7
+	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/disk/data/floppy/read_only/security_progs{
+	pixel_x = 10;
+	pixel_y = 7
+	},
+/obj/item/device/flash{
+	pixel_x = 11;
+	pixel_y = -7
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cmL" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cmM" = (
 /obj/cable{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_south,
@@ -52739,21 +52804,32 @@
 /area/station/storage/tech)
 "cmN" = (
 /obj/table/auto,
-/obj/item/disk/data/cartridge/diagnostics{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/disk/data/cartridge/atmos{
-	pixel_x = -6;
-	pixel_y = 4
+/obj/item/device/audio_log{
+	pixel_x = -9;
+	pixel_y = 13
 	},
 /obj/item/disk/data/cartridge{
 	desc = "A programmable data cartridge for portable microcomputers.";
-	name = "EEPROM Cart"
+	name = "EEPROM Cart";
+	pixel_x = 8;
+	pixel_y = 16
 	},
-/obj/item/device/audio_log,
-/obj/item/peripheral/card_scanner,
-/obj/item/peripheral/card_scanner,
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 8;
+	pixel_y = 13
+	},
+/obj/item/peripheral/card_scanner{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/peripheral/card_scanner{
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/obj/item/disk/data/cartridge/atmos{
+	pixel_x = 8;
+	pixel_y = 10
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cmO" = (
@@ -53175,24 +53251,53 @@
 /area/station/storage/tech)
 "cnM" = (
 /obj/table/auto,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/peripheral/printer{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/obj/item/screwdriver{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/disk/data/fixed_disk{
+	pixel_y = -2
+	},
 /obj/machinery/light/small{
 	dir = 8
-	},
-/obj/item/peripheral/printer,
-/obj/item/device/flash,
-/obj/cable{
-	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cnN" = (
 /obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/barcode_qm,
-/obj/item/circuitboard/barcode,
+/obj/item/circuitboard/barcode_qm{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/circuitboard/robot_module_rewriter{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/circuitboard/barcode{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/circuitboard/card{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/circuitboard/cloning{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/circuitboard/teleporter{
+	pixel_x = 5;
+	pixel_y = -5
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cnO" = (
@@ -58240,9 +58345,13 @@
 /area/station/medical/robotics)
 "cyz" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
+	d1 = 1;
+	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/landmark/gps_waypoint,
@@ -59603,11 +59712,22 @@
 /area/station/medical/research)
 "cCc" = (
 /obj/rack,
-/obj/item/circuitboard/arcade,
-/obj/item/circuitboard/powermonitor,
-/obj/item/circuitboard/powermonitor_smes,
-/obj/item/circuitboard/operating,
-/obj/item/circuitboard/genetics,
+/obj/item/circuitboard/powermonitor{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/circuitboard/powermonitor_smes{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/circuitboard/operating{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/circuitboard/arcade{
+	pixel_x = 5;
+	pixel_y = -5
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cCd" = (
@@ -59807,8 +59927,14 @@
 /area/station/medical/robotics)
 "cCL" = (
 /obj/table/auto,
-/obj/item/peripheral/sound_card,
-/obj/item/peripheral/printer,
+/obj/item/peripheral/printer{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/peripheral/sound_card{
+	pixel_x = -3;
+	pixel_y = 9
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cCM" = (
