@@ -119,5 +119,4 @@
 				src.stamina_crit_chance = 35
 
 		if (holder)
-			boutput(holder, "Switched to [omni_mode]")
 			holder.update_inhands()
