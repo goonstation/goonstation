@@ -73,6 +73,12 @@
 //#define XMAS 1
 //#define CANADADAY 1
 
+#if (BUILD_TIME_MONTH == 10)
+#define HALLOWEEN 1
+#elif (BUILD_TIME_MONTH == 12)
+#define XMAS 1
+#endif
+
 // other toggles
 
 #define FOOTBALL_MODE 1
