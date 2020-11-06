@@ -58141,17 +58141,32 @@
 /area/station/science/chemistry)
 "cwu" = (
 /obj/table/auto,
-/obj/item/storage/box/lightbox/tubes,
-/obj/item/storage/box/lightbox/bulbs,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/radio,
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/machinery/light_switch{
 	name = "N light switch";
 	pixel_y = 24
+	},
+/obj/item/storage/box/lightbox/tubes{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/device/radio{
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/obj/item/storage/box/lightbox/bulbs{
+	pixel_x = -1;
+	pixel_y = 11
+	},
+/obj/item/device/light/glowstick{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/device/light/glowstick{
+	pixel_x = 1;
+	pixel_y = -1
 	},
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -58487,14 +58502,35 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "cwX" = (
-/obj/item/storage/toolbox/emergency,
-/obj/item/storage/box/mousetraps,
-/obj/item/sponge,
-/obj/item/spraybottle/cleaner,
-/obj/item/mop,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/chem_grenade/cleaner,
 /obj/storage/crate,
+/obj/item/sponge{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/storage/box/mousetraps{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 7;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/glass/bucket{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/mop{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/chem_grenade/cleaner{
+	pixel_x = 12;
+	pixel_y = 7
+	},
+/obj/item/spraybottle/cleaner{
+	pixel_x = 5;
+	pixel_y = -3
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -61121,6 +61157,17 @@
 /obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"ebu" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "eln" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -61132,19 +61179,6 @@
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
-"err" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/science/bot_storage)
 "ezG" = (
 /obj/window/reinforced{
 	dir = 4
@@ -61491,17 +61525,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
-"hDp" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "iix" = (
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external{
@@ -61514,14 +61537,14 @@
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/delivery,
 /area/station/engine/hotloop)
-"iso" = (
+"ixB" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
-/area/station/science/bot_storage)
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "iQv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/wingrille_spawn/auto,
@@ -61538,12 +61561,6 @@
 "jbi" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering/ce)
-"jsn" = (
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/science/bot_storage)
 "jtM" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -61618,14 +61635,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
-"kKk" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "kRC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -61672,6 +61681,14 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"lEO" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "lNm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -61942,6 +61959,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"pWv" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "qoa" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -62315,6 +62345,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
+"wID" = (
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/science/bot_storage)
 "wKE" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -89794,7 +89830,7 @@ bTP
 bTP
 bWs
 bXv
-kKk
+ixB
 cam
 bHW
 ccQ
@@ -90096,7 +90132,7 @@ bTQ
 bVf
 bTR
 bTR
-kKk
+ixB
 can
 bHW
 ccR
@@ -91002,7 +91038,7 @@ bTT
 bVh
 bWt
 bXx
-hDp
+ebu
 cap
 bHW
 ccU
@@ -96136,7 +96172,7 @@ bUc
 bVj
 bWF
 bWH
-iso
+lEO
 caA
 cbL
 cdb
@@ -96743,7 +96779,7 @@ bXK
 bZj
 caC
 cbN
-jsn
+wID
 cem
 cfA
 cgS
@@ -97042,7 +97078,7 @@ bUf
 bVj
 bWI
 bXL
-err
+pWv
 caD
 cbO
 bWD
