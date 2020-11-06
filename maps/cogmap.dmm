@@ -32299,16 +32299,17 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/item/stamp,
-/obj/item/stamp,
-/obj/item/pen/marker,
-/obj/item/pen/marker/red,
-/obj/item/pen/marker/blue,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
 	},
-/obj/machinery/phone,
+/obj/machinery/phone{
+	pixel_x = -4
+	},
+/obj/item/wirecutters{
+	pixel_x = 8;
+	pixel_y = 2
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/supplylobby)
 "bts" = (
@@ -37616,9 +37617,17 @@
 /area/station/quartermaster/office)
 "bEI" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/hand_labeler,
-/obj/item/hand_labeler,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 8
+	},
+/obj/item/hand_labeler{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/hand_labeler{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /turf/simulated/floor/bot,
 /area/station/quartermaster/office)
 "bEJ" = (
@@ -40169,9 +40178,18 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/wrench,
-/obj/machinery/recharger,
-/obj/item/cargotele,
+/obj/machinery/recharger{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/cargotele{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/wrench{
+	pixel_x = 5;
+	pixel_y = -1
+	},
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "bJI" = (
@@ -42360,14 +42378,37 @@
 /area/station/quartermaster/office)
 "bNZ" = (
 /obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/extinguisher,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/extinguisher{
+	pixel_x = 14;
+	pixel_y = -3
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bOa" = (
@@ -43102,8 +43143,14 @@
 /area/station/quartermaster/office)
 "bPn" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/minerals{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -4;
+	pixel_y = 8
+	},
 /turf/simulated/floor/neutral/side,
 /area/station/quartermaster/office)
 "bPo" = (
@@ -43847,6 +43894,8 @@
 /area/station/quartermaster/office)
 "bQH" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light_switch{
@@ -43854,11 +43903,22 @@
 	pixel_x = -24
 	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/under/rank/mechanic,
-/obj/item/clothing/under/rank/mechanic,
-/obj/item/crowbar,
-/obj/item/clothing/gloves/yellow/unsulated,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/clothing/under/rank/mechanic{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/clothing/under/rank/mechanic{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/item/weldingtool{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/clothing/gloves/yellow/unsulated{
+	pixel_x = -9;
+	pixel_y = 1
+	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bQI" = (
@@ -44638,33 +44698,74 @@
 	req_access_txt = null
 	},
 /obj/machinery/cashreg,
+/obj/item/pen/marker/blue{
+	pixel_x = 14;
+	pixel_y = 10
+	},
+/obj/item/pen/marker/red{
+	pixel_x = 11;
+	pixel_y = 7
+	},
+/obj/item/stamp{
+	pixel_x = -8;
+	pixel_y = 9
+	},
+/obj/item/stamp{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/pen/marker{
+	pixel_x = 8;
+	pixel_y = 4
+	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/supplylobby)
 "bSh" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/item/wrapping_paper,
-/obj/item/wirecutters,
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/wrapping_paper{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_x = -6;
+	pixel_y = 1
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/supplylobby)
 "bSi" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/auto,
-/obj/item/sheet/glass/reinforced{
-	amount = 50
-	},
-/obj/item/storage/toolbox/electrical,
-/obj/item/hand_labeler,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/hand_labeler{
+	pixel_x = -7;
+	pixel_y = -9
 	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
@@ -45357,18 +45458,26 @@
 	pixel_y = -24
 	},
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
+	d1 = 1;
+	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel{
-	amount = 10
+	amount = 10;
+	pixel_x = 1;
+	pixel_y = -1
 	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/weldingtool,
-/obj/item/shipcomponent/mainweapon/phaser,
+/obj/item/sheet/glass/reinforced{
+	amount = 50;
+	pixel_x = -2;
+	pixel_y = 2
+	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bTF" = (
@@ -45386,17 +45495,34 @@
 	},
 /obj/machinery/light/small,
 /obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 12;
+	pixel_y = 1
+	},
+/obj/item/crowbar{
+	pixel_x = -1;
+	pixel_y = 6
+	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bTH" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/shoes/magnetic,
+/obj/item/shipcomponent/mainweapon/phaser{
+	pixel_x = 16;
+	pixel_y = 3
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = -5;
+	pixel_y = -2
+	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bTI" = (
 /obj/table/reinforced/auto,
-/obj/item/shipcomponent/sensor/mining,
+/obj/item/shipcomponent/sensor/mining{
+	pixel_x = 7;
+	pixel_y = 2
+	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bTL" = (
@@ -59485,8 +59611,14 @@
 /area/space)
 "cyY" = (
 /obj/table/reinforced/auto,
-/obj/item/shipcomponent/secondary_system/orescoop,
-/obj/item/shipcomponent/communications/mining,
+/obj/item/shipcomponent/communications/mining{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/shipcomponent/secondary_system/orescoop{
+	pixel_x = 7;
+	pixel_y = 1
+	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "cyZ" = (
@@ -61290,6 +61422,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"eCS" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "eFW" = (
 /obj/lattice{
 	dir = 1;
@@ -61558,14 +61698,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/grime,
 /area/station/engine/gas)
-"gZK" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/science/bot_storage)
 "hgc" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
@@ -61640,6 +61772,14 @@
 "jbi" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering/ce)
+"jlC" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "jtM" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -61685,14 +61825,12 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/station/security/brig)
-"ksq" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+"ktP" = (
+/obj/item/sheet/steel{
+	amount = 50
 	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
+/turf/simulated/wall/auto/supernorn,
+/area/station/science/bot_storage)
 "kvk" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/wingrille_spawn/auto,
@@ -61735,19 +61873,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
-"lnR" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/science/bot_storage)
 "ltD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -61828,17 +61953,6 @@
 	},
 /turf/space,
 /area/space)
-"muU" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "myy" = (
 /obj/lattice,
 /obj/machinery/turret,
@@ -62012,12 +62126,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"pBv" = (
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/science/bot_storage)
 "pDV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62157,6 +62265,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"sGz" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "sGB" = (
 /obj/machinery/atmospherics/binary/volume_pump{
 	dir = 1;
@@ -62352,6 +62473,17 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
+"vqd" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "vqC" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/table/auto,
@@ -89920,7 +90052,7 @@ bTP
 bTP
 bWs
 bXv
-ksq
+jlC
 cam
 bHW
 ccQ
@@ -90222,7 +90354,7 @@ bTQ
 bVf
 bTR
 bTR
-ksq
+jlC
 can
 bHW
 ccR
@@ -91128,7 +91260,7 @@ bTT
 bVh
 bWt
 bXx
-muU
+vqd
 cap
 bHW
 ccU
@@ -96262,7 +96394,7 @@ bUc
 bVj
 bWF
 bWH
-gZK
+eCS
 caA
 cbL
 cdb
@@ -96869,7 +97001,7 @@ bXK
 bZj
 caC
 cbN
-pBv
+ktP
 cem
 cfA
 cgS
@@ -97168,7 +97300,7 @@ bUf
 bVj
 bWI
 bXL
-lnR
+sGz
 caD
 cbO
 bWD
