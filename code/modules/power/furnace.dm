@@ -25,6 +25,8 @@
 			if(!src.fuel)
 				src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down!</span>")
 				src.active = 0
+		else
+			on_inactive()
 
 		//src.overlays = null
 		//if (src.active) src.overlays += image('icons/obj/power.dmi', "furn-burn")
@@ -36,6 +38,8 @@
 
 	proc/on_burn()
 		add_avail(src.genrate)
+
+	proc/on_inactive()
 
 	proc/update_icon()
 		if(active != last_active)

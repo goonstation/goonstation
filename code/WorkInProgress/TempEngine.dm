@@ -37,6 +37,7 @@
 	var/circulator_flags = BACKFLOW_PROTECTION
 	var/fan_efficiency = 10 // 0.9 ideal, but I don't want everyone to suffer... yet.
 	var/min_circ_pressure = 10
+	var/serial_num = "CIRC-FEEDDEADBEEF"
 
 	anchored = 1.0
 	density = 1
@@ -46,8 +47,10 @@
 		create_reagents(20)
 		reagents.add_reagent("oil", 15)
 
-	proc/generate_variant()
-		// Azrun TODO Do Maths
+	proc/assign_variant(partial_serial_num, varient_a, varient_b=null)
+		src.serial_num = "CIRC-[partial_serial_num][varient_a][rand(100,999)]"
+		src.serial_num += src.side==1? "L":"R"
+		if(varient_b) src.serial_num += "-[varient_b]"
 
 	disposing()
 		switch (side)
@@ -59,6 +62,8 @@
 		..()
 
 	get_desc(dist, mob/user)
+		if(dist <= 2)
+			. += "<br><span class='notice'>Serial Number: [serial_num].</span>"
 		if(dist <= 5)
 			. += "<br><span class='notice'>The maintenance panel is [flags & OPENCONTAINER ? "open" : "closed"].</span>"
 		if(dist <= 2 && reagents && (src.flags & OPENCONTAINER) )
@@ -109,7 +114,6 @@
 			gas_input = air2
 			gas_output = air1
 
-		// Azrun TODO -- Evalute transfer of small ratio of GAS when not circulating
 		pressure_delta *= lube_boost
 
 		if(fan_power_draw)
@@ -118,22 +122,19 @@
 				return null
 			else src.use_power(fan_power_draw)
 
+		// Calculate and perform gas transfer from in to out
 		var/transfer_moles = abs(pressure_delta)*gas_output.volume/max(gas_input.temperature * R_IDEAL_GAS_EQUATION, 1) //Stop annoying runtime errors
 		src.last_pressure_delta = pressure_delta
-
-		//Actually transfer the gas
 		var/datum/gas_mixture/removed = gas_input.remove(transfer_moles)
 
+		// Leaks gas varient
 		if((circulator_flags & LEAKS_GAS ) && prob(5))
 			var/datum/gas_mixture/leaked = gas_input.remove_ratio(rand(2,8)*0.01)
 			src.audible_message("<span class='alert'>[src] makes a hissing sound.</span>")
 			if(leaked) loc.assume_air(leaked)
 
-		if(src.network1)
-			src.network1.update = 1
-
-		if(src.network2)
-			src.network2.update = 1
+		if(src.network1) src.network1.update = 1
+		if(src.network2) src.network2.update = 1
 
 		return removed
 
@@ -149,24 +150,22 @@
 			gas_input = air2
 			gas_output = air1
 
-		if(gas)
-			gas_output.merge(gas)
+		if(gas) gas_output.merge(gas)
 
 		if(!is_circulator_active() && !(circulator_flags & BACKFLOW_PROTECTION))
-			equalize_gases(list(gas_input,gas_output))
+			gas_input.share(gas_output)
 
 		if(is_circulator_active())
 			if(prob(5))
 				switch(src.lube_boost)
 					if(0.0 to 0.8)
 						src.audible_message("<span class='alert'>[src] makes an unsettling grinding sound!</span>")
-					if(0.81 to 1.0)
+					if(0.8 to 0.9)
 						src.audible_message("<span class='alert'>[src] makes an unsettling buzzing sound!</span>")
 
 
 	proc/lube_loss_check()
-		if(reagents?.total_volume == 0)
-			return
+		if(reagents?.total_volume == 0) return
 
 		if( circulator_flags & LUBE_DRAIN_OPEN )
 			var/datum/reagents/leaked = src.reagents.remove_any_to(reagents.maximum_volume * 0.25)
@@ -176,8 +175,7 @@
 			return
 
 		// Skip off cycle consumption checks
-		if(src.lube_cycle-- > 0)
-			return
+		if(src.lube_cycle-- > 0) return
 
 		if(lube_cycle <= 0)
 			src.lube_cycle = LUBE_CHECK_RATE
@@ -254,13 +252,14 @@
 	var/spam_limiter = 0  // stop the lights and icon updates from spazzing out as much at the threshold between power tiers
 	var/efficiency_controller = 52 // cogwerks - debugging/testing var
 	var/datum/light/light
+	var/varient_a = null
+	var/varient_b = null
 
 
 	var/boost = 0
 	var/generator_flags = 0
 
 	var/grump = 0 // best var 2013
-	var/grumping = 0 // is the engine currently doing grumpy things
 
 	var/list/grump_prefix = list("an upsetting", "an unsettling",
 	"a scary", "a loud", "a sassy", "a grouchy", "a grumpy",
@@ -281,6 +280,15 @@
 	var/list/history = list()
 	var/const/history_max = 50
 
+	proc/generate_variants()
+		src.varient_a = rand(10,99)
+		var/prepend_serial_num = "[pick(consonants_upper)][pick(consonants_upper)]"
+		if(prob(20)) src.varient_b = pick(consonants_upper)
+
+		src.circ1?.assign_variant(prepend_serial_num, src.varient_a, src.varient_b)
+		src.circ2?.assign_variant(prepend_serial_num, src.varient_a, src.varient_b)
+
+
 	New()
 		..()
 
@@ -297,6 +305,7 @@
 			src.circ1?.side = LEFT_CIRCULATOR
 			src.circ2?.generator = src
 			src.circ2?.side = RIGHT_CIRCULATOR
+			src.generate_variants()
 
 			updateicon()
 
@@ -400,11 +409,8 @@
 			hot_air = cold_air
 			cold_air = swapTmp
 
-		if(hot_air)
-			src.circ1.air2.merge(hot_air)
-
-		if(cold_air)
-			src.circ2.air2.merge(cold_air)
+		if(hot_air) src.circ1.circulate_gas(hot_air)
+		if(cold_air) src.circ2.circulate_gas(cold_air)
 
 		desc = "Current Output: [engineering_notation(lastgen)]W"
 		var/genlev = max(0, min(round(26*lastgen / 4000000), 26)) // raised 2MW toplevel to 3MW, dudes were hitting 2mw way too easily
@@ -420,18 +426,22 @@
 			SPAWN_DBG(0.5 SECONDS)
 				spam_limiter = 0
 
-// engine looping sounds and hazards
+	proc/process_grump()
 		if (lastgenlev > 0)
-			if(grump < 0) // grumpcode
-				grump = 0 // no negative grump plz
+			if(grump < 0) grump = 0 // no negative grump plz
 			grump++ // get grump'd
-			if(grump >= 100 && prob(5))
-				playsound(src.loc, pick(sounds_enginegrump), 70, 0)
-				src.visible_message("<span class='alert'>[src] makes [pick(grump_prefix)] [pick(grump_suffix)]!</span>")
-				grump -= 5
+
+		classic_grump()
+
+	// engine looping sounds and hazards
+	proc/classic_grump()
+		if(grump >= 100 && prob(5))
+			playsound(src.loc, pick(sounds_enginegrump), 70, 0)
+			src.visible_message("<span class='alert'>[src] makes [pick(grump_prefix)] [pick(grump_suffix)]!</span>")
+			grump -= 5
+
 		switch (lastgenlev)
-			if(0)
-				return
+			if(0) return
 			if(1 to 2)
 				playsound(src.loc, sound_engine1, 60, 0)
 				if(prob(5))
@@ -443,7 +453,7 @@
 			if(16 to 18)
 				playsound(src.loc, sound_bellalert, 60, 0)
 				if (prob(5))
-					elecflash(src,power = 3)
+					elecflash(src, power = 3)
 			if(19 to 21)
 				playsound(src.loc, sound_warningbuzzer, 50, 0)
 				if (prob(5))
@@ -452,12 +462,10 @@
 					smoke.attach(src)
 					smoke.start()
 					src.visible_message("<span class='alert'>[src] starts smoking!</span>")
-				if (!grumping && grump >= 100 && prob(5))
-					grumping = 1
+				if (grump >= 100 && prob(5))
 					playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 0)
 					src.visible_message("<span class='alert'>[src] erupts in flame!</span>")
 					fireflash(src, 1)
-					grumping = 0
 					grump -= 10
 			if(22 to 23)
 				playsound(src.loc, sound_engine_alert1, 55, 0)
@@ -468,12 +476,10 @@
 					smoke.attach(src)
 					smoke.start()
 					src.visible_message("<span class='alert'>[src] starts smoking!</span>")
-				if (!grumping && grump >= 100 && prob(5))
-					grumping = 1
+				if (grump >= 100 && prob(5))
 					playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 0)
 					src.visible_message("<span class='alert'>[src] erupts in flame!</span>")
 					fireflash(src, rand(1,3))
-					grumping = 0
 					grump -= 30
 
 			if(24 to 25)
@@ -486,8 +492,7 @@
 					smoke.attach(src)
 					smoke.start()
 					src.visible_message("<span class='alert'>[src] starts smoking!</span>")
-				if (!grumping && grump >= 100 && prob(10)) // probably not good if this happens several times in a row
-					grumping = 1
+				if (grump >= 100 && prob(10)) // probably not good if this happens several times in a row
 					playsound(src.loc, "sound/weapons/rocket.ogg", 50, 0)
 					src.visible_message("<span class='alert'>[src] explodes in flame!</span>")
 					var/firesize = rand(1,4)
@@ -502,13 +507,11 @@
 						else if (prob(15)) // cut down the number of other junk things that get blown around
 							var/atom/targetTurf = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 							M.throw_at(targetTurf, 200, 4)
-					grumping = 0
 					grump -= 30
 
 			if(26 to INFINITY)
 				playsound(src.loc, sound_engine_alert3, 55, 0)
-				if(!grumping && grump >= 100 && prob(6))
-					grumping = 1
+				if(grump >= 100 && prob(6))
 					src.visible_message("<span class='alert'><b>[src] [pick("resonates", "shakes", "rumbles", "grumbles", "vibrates", "roars")] [pick("dangerously", "strangely", "ominously", "frighteningly", "grumpily")]!</b></span>")
 					playsound(src.loc, "sound/effects/explosionfar.ogg", 65, 1)
 					for (var/obj/window/W in range(6, src.loc)) // smash nearby windows
@@ -525,7 +528,6 @@
 						if (istype(A, /turf/simulated))
 							A.pixel_x = rand(-1,1)
 							A.pixel_y = rand(-1,1)
-					grumping = 0
 					grump -= 30
 
 					if(src.lastgen >= 10000000)
@@ -694,7 +696,7 @@
 
 	New()
 		..()
-		//heat_filter.init(5)
+		heat_filter.init_basic(0.25)
 		get_connector()
 
 	process()
@@ -727,6 +729,11 @@
 	*/
 */
 	on_burn()
+		var/datum/gas_mixture/environment = src.loc?.return_air()
+		var/ambient_temp = T20C
+		if(environment)
+			ambient_temp = environment.temperature
+
 
 		// -(1.2x - 1)^2 + 1 expands to 2.4x-1.44x^2
 		// -0.48x*(3x-5)
@@ -736,11 +743,13 @@
 		// charcoal actual high temp is 2500C
 		var/additional_heat = fuel_burn_scale * (3000)
 
-
-		heat_filter.init(0.25)
-		f_connector.current_temperature = T20C + 200 + additional_heat
-		var/filtered_heat = heat_filter.process(T20C + 200 + additional_heat)
+		src.f_connector.current_temperature = heat_filter.process(ambient_temp + 200 + additional_heat)
 		f_connector.heat()
+
+	on_inactive()
+		var/datum/gas_mixture/environment = src.loc?.return_air()
+		if(environment)
+			heat_filter.process(environment.temperature)
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
