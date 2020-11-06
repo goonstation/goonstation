@@ -452,7 +452,7 @@
 
 		LAGCHECK(LAG_HIGH)
 
-		if (src.last_contained_amt == src.contained_amt && src.members.len == src.last_members_amt && !force)
+		if (src.last_contained_amt == src.contained_amt && length(src.members) == src.last_members_amt && !force)
 			src.updating = 0
 			return 1
 
@@ -473,7 +473,7 @@
 			color_dif = abs(average_color.r - last_color.r) + abs(average_color.g - last_color.g) + abs(average_color.b - last_color.b)
 		var/color_changed = (color_dif > 10)
 
-		if (my_depth_level == last_depth_level && !color_changed && src.members.len == src.last_members_amt) //saves cycles for stuff like an ocean flooding into a pretty-much-aready-filled room
+		if (my_depth_level == last_depth_level && !color_changed && length(src.members) == src.last_members_amt) //saves cycles for stuff like an ocean flooding into a pretty-much-aready-filled room
 			src.updating = 0
 			return 1
 
