@@ -130,7 +130,7 @@ datum/shuttle_controller
 							if (T.x > eastBound) eastBound = T.x
 
 						// hey you, get out of the way!
-						var/shuttle_dir = map_settings ? map_settings.escape_dir : SHUTTLE_NODEF
+						var/shuttle_dir = map_settings ? map_settings.escape_def : SHUTTLE_NODEF
 						for (var/turf/T in dstturfs)
 							// find the turf to move things to
 							var/turf/D = locate(shuttle_dir == EAST ? eastBound + 1 : T.x, // X
@@ -254,7 +254,7 @@ datum/shuttle_controller
 						if (particle_spawn)
 							particle_spawn.start_particles()
 
-						var/escape_def = map_settings ? map_settings.escape_dir : SHUTTLE_NODEF
+						var/escape_def = map_settings ? map_settings.escape_def : SHUTTLE_NODEF
 						for (var/turf/T in landmarks[LANDMARK_ESCAPE_POD_SUCCESS])
 							if (landmarks[LANDMARK_ESCAPE_POD_SUCCESS][T] != escape_def)
 								landmarks[LANDMARK_ESCAPE_POD_SUCCESS] -= T //leave behind only landmarks for the map's escape shuttle

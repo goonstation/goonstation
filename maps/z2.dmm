@@ -68817,7 +68817,7 @@
 /area/shuttle/escape/transit/destiny)
 "dkP" = (
 /obj/landmark/escape_pod_succ{
-	shuttle = SHUTTLE_COGMAP
+	shuttle = SHUTTLE_SOUTH
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space)
@@ -68838,7 +68838,7 @@
 "dkT" = (
 /obj/landmark/escape_pod_succ{
 	dir = 8;
-	shuttle = SHUTTLE_DONUT2
+	shuttle = SHUTTLE_WEST
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/east)
@@ -68851,7 +68851,7 @@
 "dkW" = (
 /obj/landmark/escape_pod_succ{
 	dir = 1;
-	shuttle = SHUTTLE_DESTINY
+	shuttle = SHUTTLE_NORTH
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/south)
@@ -85414,7 +85414,7 @@
 "qDq" = (
 /obj/landmark/escape_pod_succ{
 	dir = 4;
-	shuttle = SHUTTLE_COGMAP2
+	shuttle = SHUTTLE_EAST
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)

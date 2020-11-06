@@ -1786,7 +1786,7 @@ obj/machinery/vehicle/miniputt/pilot
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
 			P.target = T
-			src.dir = map_settings ? map_escape_pod_dirs[map_settings.escape_dir] : map_escape_pod_dirs[SHUTTLE_NODEF]
+			src.dir = map_settings ? map_escape_pod_dirs[map_settings.escape_def] : map_escape_pod_dirs[SHUTTLE_NODEF]
 			src.set_loc(T)
 			logTheThing("station", src, null, "creates an escape portal at [log_loc(src)].")
 
