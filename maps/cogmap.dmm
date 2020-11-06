@@ -51723,8 +51723,14 @@
 /area/station/hangar/science)
 "cjb" = (
 /obj/storage/crate,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 6;
+	pixel_y = 2
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "cjc" = (
@@ -51765,16 +51771,30 @@
 /area/station/science/gen_storage)
 "cjf" = (
 /obj/rack,
-/obj/machinery/shieldgenerator/meteorshield,
-/obj/machinery/shieldgenerator/meteorshield,
-/obj/item/extinguisher,
+/obj/item/storage/box/lightbox/tubes{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/clothing/suit/fire{
+	pixel_x = -7
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -2;
+	pixel_y = -10
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/extinguisher{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/device/light/glowstick{
+	pixel_x = 8;
+	pixel_y = 1
+	},
 /obj/item/wrench,
-/obj/item/storage/toolbox/emergency,
-/obj/item/storage/box/lightbox/tubes,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/device/light/glowstick,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -53098,8 +53118,14 @@
 /area/station/science/artifact)
 "clT" = (
 /obj/table/auto,
-/obj/item/storage/box/tapebox,
-/obj/item/device/audio_log,
+/obj/item/storage/box/tapebox{
+	pixel_x = -12;
+	pixel_y = 7
+	},
+/obj/item/device/audio_log{
+	pixel_x = 3;
+	pixel_y = 2
+	},
 /turf/simulated/floor,
 /area/station/science/artifact)
 "clU" = (
@@ -54131,12 +54157,22 @@
 /area/station/science/testchamber)
 "coe" = (
 /obj/table/auto,
-/obj/item/wrench,
-/obj/item/screwdriver{
-	pixel_y = 10
+/obj/item/extinguisher{
+	pixel_x = 10;
+	pixel_y = 6
 	},
-/obj/item/extinguisher,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/fire{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/wrench{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/screwdriver{
+	pixel_x = -2;
+	pixel_y = 8
+	},
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "cof" = (
@@ -56894,8 +56930,12 @@
 /area/station/crew_quarters/info)
 "ctO" = (
 /obj/table/reinforced/auto,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/gas/emergency,
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_y = -7
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_y = 3
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -57878,9 +57918,17 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/pen,
-/obj/item/storage/box/syringes,
-/obj/item/pen/marker/blue,
+/obj/item/pen/marker/red{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/pen/marker/blue{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -2
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -57893,9 +57941,18 @@
 /area/station/science/testchamber)
 "cvQ" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/reagent_containers/dropper,
-/obj/item/pen/marker/red,
+/obj/item/reagent_containers/dropper{
+	pixel_x = -9;
+	pixel_y = -3
+	},
+/obj/item/storage/box/syringes{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = 5;
+	pixel_y = 8
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -61157,17 +61214,6 @@
 /obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
-"ebu" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "eln" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -61281,6 +61327,14 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/securityexternal)
+"fjV" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "foS" = (
 /obj/rack,
 /obj/item/clothing/suit/armor/heavy,
@@ -61468,6 +61522,12 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
+"gQM" = (
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/science/bot_storage)
 "gVk" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -61537,14 +61597,6 @@
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/delivery,
 /area/station/engine/hotloop)
-"ixB" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "iQv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/wingrille_spawn/auto,
@@ -61681,14 +61733,17 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
-"lEO" = (
+"lIw" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
-/area/station/science/bot_storage)
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "lNm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -61853,6 +61908,14 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
+"oiM" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "opf" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -61897,6 +61960,19 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/securityexternal)
+"oRk" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "oZz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -61959,19 +62035,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
-"pWv" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/science/bot_storage)
 "qoa" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -62345,12 +62408,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
-"wID" = (
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/science/bot_storage)
 "wKE" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -89830,7 +89887,7 @@ bTP
 bTP
 bWs
 bXv
-ixB
+fjV
 cam
 bHW
 ccQ
@@ -90132,7 +90189,7 @@ bTQ
 bVf
 bTR
 bTR
-ixB
+fjV
 can
 bHW
 ccR
@@ -91038,7 +91095,7 @@ bTT
 bVh
 bWt
 bXx
-ebu
+lIw
 cap
 bHW
 ccU
@@ -96172,7 +96229,7 @@ bUc
 bVj
 bWF
 bWH
-lEO
+oiM
 caA
 cbL
 cdb
@@ -96779,7 +96836,7 @@ bXK
 bZj
 caC
 cbN
-wID
+gQM
 cem
 cfA
 cgS
@@ -97078,7 +97135,7 @@ bUf
 bVj
 bWI
 bXL
-pWv
+oRk
 caD
 cbO
 bWD
