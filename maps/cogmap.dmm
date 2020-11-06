@@ -30255,8 +30255,14 @@
 /area/station/maintenance/east)
 "bpo" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/emergency,
-/obj/item/aiModule/removeCrew,
+/obj/item/aiModule/removeCrew{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/aiModule/emergency{
+	pixel_x = -1;
+	pixel_y = 8
+	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "bpp" = (
@@ -32644,8 +32650,14 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/device/infra_sensor,
-/obj/item/clothing/glasses/meson,
+/obj/item/device/infra_sensor{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_x = 1;
+	pixel_y = -7
+	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "buj" = (
@@ -32926,11 +32938,17 @@
 /area/station/crew_quarters/market)
 "buR" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/notHuman,
-/obj/item/aiModule/freeform,
+/obj/item/aiModule/freeform{
+	pixel_x = 3;
+	pixel_y = -2
+	},
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
+	},
+/obj/item/aiModule/notHuman{
+	pixel_x = -1;
+	pixel_y = 8
 	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
@@ -32963,8 +32981,11 @@
 /area/station/turret_protected/ai_upload)
 "buW" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
+/obj/machinery/computer/aiupload{
+	dir = 8
+	},
 /obj/cable{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/light{
@@ -60355,12 +60376,18 @@
 /turf/simulated/floor,
 /area/station/janitor/supply)
 "cCq" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/oneHuman{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/aiModule/makeCaptain{
+	pixel_x = -1;
+	pixel_y = 8
+	},
 /obj/window/reinforced{
 	dir = 1
 	},
-/obj/table/reinforced/auto,
-/obj/item/aiModule/oneHuman,
-/obj/item/aiModule/makeCaptain,
 /obj/random_item_spawner/ai_experimental,
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
