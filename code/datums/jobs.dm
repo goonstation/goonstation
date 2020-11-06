@@ -2556,9 +2556,70 @@
 	name = "Battler"
 	limit = -1
 
-/datum/job/pod_pilot
-	name = "Pod Pilot"
+ABSTRACT_TYPE(/datum/job/pod_wars)
+/datum/job/pod_wars
 	limit = -1
+	allow_traitors = 0
+	cant_spawn_as_rev = 1
+	New()
+		..()
+		src.access = get_access("Captain")
+		return
+
+	proc/set_headset_freq(var/obj/item/device/radio/headset/headset, var/freq)
+		if (istype(headset))
+			headset.set_secure_frequency("g",mode.team_NT.comms_frequency)
+			headset.secure_classes["g"] = RADIOCL_SYNDICATE
+
+	nanotrasen
+		name = "NT Pod Pilot"
+		slot_back = /obj/item/storage/backpack/NT
+		slot_belt = /obj/item/gun/energy/blaster_pod_wars/nanotrasen
+		slot_jump = /obj/item/clothing/under/misc/turds
+		slot_head = /obj/item/clothing/head/helmet/space/ntso
+		slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot
+		slot_foot = /obj/item/clothing/shoes/swat
+		slot_card = /obj/item/card/id/pod_wars/nanotrasen
+		slot_ears = /obj/item/device/radio/headset
+		slot_mask = /obj/item/clothing/mask/breath
+		slot_glov = /obj/item/clothing/gloves/swat/NT
+		slot_poc1 = /obj/item/tank/emergency_oxygen
+		slot_poc2 = null
+
+		//get the pod wars mode, get the teams comms frequency
+		special_setup(var/mob/living/carbon/human/M)
+			..()
+			if (!M)
+				return
+			if (istype(ticker.mode, /datum/game_mode/pod_wars))
+				var/datum/game_mode/pod_wars/mode = ticker.mode
+				M.mind.special_role = mode.team_NT?.name
+				set_headset_freq(M.ears, mode.team_NT?.comms_frequency)
+
+	syndicate
+		name = "Syndicate Pod Pilot"
+		slot_back = /obj/item/storage/backpack/syndie
+		slot_belt = /obj/item/gun/energy/blaster_pod_wars/syndicate
+		slot_jump = /obj/item/clothing/under/misc/syndicate
+		slot_head = /obj/item/clothing/head/helmet/space/syndicate/specialist
+		slot_suit = /obj/item/clothing/suit/space/syndicate
+		slot_foot = /obj/item/clothing/shoes/swat
+		slot_card = /obj/item/card/id/pod_wars/syndicate
+		slot_ears = /obj/item/device/radio/headset
+		slot_mask = /obj/item/clothing/mask/breath
+		slot_glov = /obj/item/clothing/gloves/swat
+		slot_poc1 = /obj/item/tank/emergency_oxygen
+		slot_poc2 = null
+
+		special_setup(var/mob/living/carbon/human/M)
+			..()
+			if (!M)
+				return
+			if (istype(ticker.mode, /datum/game_mode/pod_wars))
+				var/datum/game_mode/pod_wars/mode = ticker.mode
+				M.mind.special_role = mode.team_SY?.name
+				set_headset_freq(M.ears, mode.team_SY?.comms_frequency)
+
 
 /datum/job/football
 	name = "Football Player"
@@ -2568,3 +2629,4 @@
 
 /datum/job/created
 	name = "Special Job"
+

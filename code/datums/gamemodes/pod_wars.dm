@@ -235,7 +235,7 @@
 		if (istype(M, /mob/new_player))
 			var/mob/new_player/N = M
 			N.mind.assigned_role = name
-			H = N.create_character(new /datum/job/pod_pilot)
+			// H = N.create_character(new /datum/job/pod_wars)	//should use this, but I wrote the stuff here first and lazy...
 
 		if (!ishuman(H))
 			boutput(H, "something went wrong. Horribly wrong.")
@@ -245,17 +245,10 @@
 
 		H.mind.special_role = name
 
-		var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare(H) // for whatever reason, this is neccessary
-		I.registered = "[H.name]"
-		I.icon = 'icons/obj/items/card.dmi'
-		I.desc = "An ID card to help open doors, lock pods, and identify your body."
-		I.cant_self_remove = 1
-		I.cant_other_remove = 1
-
 		var/obj/item/device/radio/headset/headset = new /obj/item/device/radio/headset(H)
 
 		if (team_num == TEAM_NANOTRASEN)
-
+			var/obj/item/card/id/pod_wars/nanotrasen/I = new/obj/item/card/id/pod_wars/nanotrasen(H)
 			//commanders get a couple extra things...
 			if (H.mind == commander)
 				H.mind.special_role = "NanoTrasen Commander"
@@ -264,12 +257,11 @@
 				H.equip_if_possible(new /obj/item/clothing/head/NTberet/commander(H), H.slot_head)
 				H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot/commander(H), H.slot_wear_suit)
 			else
-				I.name = "NT Pilot"
-				I.assignment = "NT Pilot"
 				H.equip_if_possible(new /obj/item/clothing/head/helmet/space/ntso(H), H.slot_head)
 				H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot(H), H.slot_wear_suit)
+	
+			H.equip_if_possible(I, H.slot_wear_id)
 
-			I.icon_state = "polaris"
 			H.equip_if_possible(headset, H.slot_ears)
 			H.equip_if_possible(new /obj/item/storage/backpack/NT(H), H.slot_back)
 			H.equip_if_possible(new /obj/item/clothing/under/misc/turds(H), H.slot_w_uniform)
@@ -280,6 +272,7 @@
 
 
 		else if (team_num == TEAM_SYNDICATE)
+			var/obj/item/card/id/pod_wars/syndicate/I = new/obj/item/card/id/pod_wars/syndicate(H)
 			if (H.mind == commander)
 				H.mind.special_role = "Syndicate Commander"
 				I.name = "Syndicate Commander"
@@ -291,12 +284,10 @@
 				H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(H), H.slot_wear_suit)
 
 			else
-				I.name = "Syndicate Pilot"
-				I.assignment = "Syndicate Pilot"
 				H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/specialist(H), H.slot_head)
 				H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate(H), H.slot_wear_suit)
 
-			I.icon_state = "id_syndie"
+			H.equip_if_possible(I, H.slot_wear_id)
 			H.equip_if_possible(headset, H.slot_ears)
 			H.equip_if_possible(new /obj/item/storage/backpack/syndie(H), H.slot_back)
 			H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), H.slot_w_uniform)
@@ -306,13 +297,12 @@
 
 
 		if (headset)
-			headset.set_secure_frequency("g",comms_frequency)
+			headset.set_secure_frequency("g",src.comms_frequency)
 			headset.secure_classes["g"] = RADIOCL_SYNDICATE
 			boutput(H, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
 
 		H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), H.slot_shoes)
 
-		H.equip_if_possible(I, H.slot_wear_id)
 		H.set_clothing_icon_dirty()
 		// H.set_loc(pick(pod_pilot_spawns[team_num]))
 		boutput(H, "You're in the [name] faction!")

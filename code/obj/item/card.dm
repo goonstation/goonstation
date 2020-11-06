@@ -147,6 +147,25 @@ GAUNTLET CARDS
 		access = get_access("Captain")
 		..()
 
+ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
+/obj/item/card/id/pod_wars
+	desc = "An ID card to help open doors, lock pods, and identify your body."
+	cant_self_remove = 1
+	cant_other_remove = 1
+	New()
+		access = get_access("Captain")
+		..()
+
+	nanotrasen
+		name = "NanoTrasen Pilot"
+		icon_state = "polaris"
+		assignment = "NanoTrasen Pilot"
+	syndicate
+		name = "Syndicate Pilot"
+		icon_state = "id_syndie"
+		assignment = "Syndicate Pilot"
+
+
 /obj/item/card/id/dabbing_license
 	name = "Dabbing License"
 	icon_state = "id_dab"
