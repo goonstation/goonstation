@@ -69,7 +69,6 @@
 
 // holiday toggles!
 
-//#define CANADADAY 1
 #if (BUILD_TIME_MONTH == 10)
 #define HALLOWEEN 1
 #elif (BUILD_TIME_MONTH == 12)
