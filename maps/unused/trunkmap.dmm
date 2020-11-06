@@ -957,7 +957,7 @@
 /area/space)
 "ace" = (
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
