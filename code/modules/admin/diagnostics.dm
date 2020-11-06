@@ -400,8 +400,7 @@ proc/debug_color_of(var/thing)
 				else
 
 					var/pressure = MIXTURE_PRESSURE(air)
-					img.app.desc = ""
-
+					img.app.desc = "Group \ref[group]<br>[MOLES_REPORT(air)]Temperature=[air.temperature]<br/>"
 
 					var/breath_pressure = ((TOTAL_MOLES(air) * R_IDEAL_GAS_EQUATION * air.temperature) * BREATH_PERCENTAGE) / BREATH_VOLUME
 					//Partial pressure of the O2 in our breath
@@ -562,6 +561,7 @@ proc/debug_color_of(var/thing)
 						if(TOTAL_MOLES(air) > ATMOS_EPSILON)
 							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(TOTAL_MOLES(air), 0.1)]<br>[round(MIXTURE_PRESSURE(air), 0.1)]</span>"
 							pipe_image.maptext_x = -3
+							img.app.desc = "[MOLES_REPORT(air)]"
 						else if(TOTAL_MOLES(air) > 0)
 							pipe_image.maptext = "<span class='pixel r ol'>&gt;0</span>"
 							pipe_image.maptext_x = -3
