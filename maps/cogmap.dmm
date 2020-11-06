@@ -39693,6 +39693,7 @@
 /area/station/science/teleporter)
 "bIR" = (
 /obj/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
@@ -39700,9 +39701,11 @@
 /area/station/science/teleporter)
 "bIS" = (
 /obj/cable{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
@@ -39710,9 +39713,11 @@
 /area/station/science/teleporter)
 "bIT" = (
 /obj/cable{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto,
@@ -40309,33 +40314,62 @@
 /turf/simulated/floor/bot,
 /area/station/science/teleporter)
 "bKd" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
 /obj/storage/crate{
 	desc = "Only distantly related to the Adventure Closet.";
 	name = "Adventure Crate"
 	},
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
+/obj/item/paper/book/critter_compendium{
+	pixel_x = 10;
+	pixel_y = 5
+	},
 /obj/item/paper{
 	desc = "Aw dang, mooom";
 	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
+	name = "note from mom";
+	pixel_x = 10;
+	pixel_y = 5
 	},
-/obj/item/paper/book/critter_compendium,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
+/obj/item/device/light/flashlight{
+	pixel_x = -7;
+	pixel_y = 9
 	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 9
+/obj/item/device/light/flashlight{
+	pixel_x = -7;
+	pixel_y = 5
 	},
-/turf/simulated/floor,
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = 4;
+	pixel_y = 13
+	},
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/obj/item/camera_test{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/device/audio_log{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/food/snacks/sandwich/pb{
+	pixel_y = -3
+	},
+/turf/simulated/floor/caution/north{
+	dir = 8
+	},
 /area/station/science/teleporter)
 "bKe" = (
 /obj/rack,
@@ -40398,6 +40432,8 @@
 "bKg" = (
 /obj/storage/closet/emergency,
 /obj/cable{
+	d1 = 2;
+	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/bot,
@@ -40979,6 +41015,8 @@
 /area/station/science/teleporter)
 "bLs" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
@@ -41660,6 +41698,7 @@
 "bML" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/networked/storage/tape_drive{
@@ -41673,6 +41712,8 @@
 /area/station/crew_quarters/hor)
 "bMM" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/item/reagent_containers/food/snacks/beefood{
@@ -41685,9 +41726,13 @@
 /area/station/crew_quarters/hor)
 "bMN" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
+	d1 = 2;
+	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/critter/domestic_bee/heisenbee,
@@ -41714,19 +41759,36 @@
 /area/station/crew_quarters/hor)
 "bMR" = (
 /obj/table/wood/auto,
-/obj/item/disk/data/tape/master/readonly,
+/obj/item/disk/data/tape/master/readonly{
+	pixel_x = 7;
+	pixel_y = 7
+	},
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/item/reagent_containers/hypospray,
-/obj/item/reagent_containers/food/drinks/rum_spaced,
+/obj/item/reagent_containers/food/drinks/rum_spaced{
+	pixel_x = -5;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = -8;
+	pixel_y = -3
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bMS" = (
 /obj/cable{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto,
@@ -42366,12 +42428,29 @@
 /area/station/science/lab)
 "bOh" = (
 /obj/table/auto,
-/obj/item/device/transfer_valve,
-/obj/item/device/transfer_valve,
-/obj/item/device/transfer_valve,
-/obj/item/device/transfer_valve,
-/obj/item/device/transfer_valve,
-/obj/item/hand_labeler,
+/obj/item/device/transfer_valve{
+	pixel_x = -11;
+	pixel_y = 10
+	},
+/obj/item/device/transfer_valve{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/device/transfer_valve{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/device/transfer_valve{
+	pixel_x = 13;
+	pixel_y = 10
+	},
+/obj/item/device/transfer_valve{
+	pixel_x = -7
+	},
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = -3
+	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bOi" = (
@@ -42393,24 +42472,42 @@
 /area/station/science/lab)
 "bOl" = (
 /obj/table/wood/auto,
-/obj/item/stamp,
-/obj/item/device/audio_log,
-/obj/item/remote/porter/port_a_sci,
-/obj/item/stamp/rd,
+/obj/item/stamp{
+	pixel_x = -8;
+	pixel_y = 5
+	},
 /obj/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/item/stamp/rd{
+	pixel_x = 4;
+	pixel_y = 12
+	},
+/obj/item/device/audio_log{
+	pixel_x = 5
+	},
+/obj/item/remote/porter/port_a_sci{
+	pixel_x = -6;
+	pixel_y = -11
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bOm" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
+	d1 = 2;
+	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
+	d1 = 2;
+	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/carpet{
@@ -42438,6 +42535,8 @@
 	dir = 4
 	},
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet{
@@ -42448,11 +42547,11 @@
 "bOq" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
-/obj/item/reagent_containers/food/drinks/tea,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bOr" = (
@@ -42473,57 +42572,107 @@
 /area/station/science/teleporter)
 "bOt" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 6;
+/obj/item/paper_bin{
+	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/paper_bin{
-	pixel_x = -5
+/obj/item/storage/firstaid/regular{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/pen{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = 9
+	},
+/obj/item/camera_test{
+	pixel_x = -7;
+	pixel_y = -4
 	},
 /obj/item/device/radio/headset/multifreq{
 	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/item/pen{
-	pixel_x = 4
+	pixel_y = 5
 	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "bOu" = (
 /obj/table/auto,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit2{
+	pixel_y = 15
+	},
+/obj/item/device/gps{
+	pixel_x = -12;
+	pixel_y = 4
+	},
+/obj/item/device/audio_log{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/device/gps{
+	pixel_x = -11;
+	pixel_y = -2
+	},
+/obj/item/device/gps{
+	pixel_x = -10;
+	pixel_y = -7
+	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "bOv" = (
 /obj/table/auto,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/head/emerg,
 /obj/machinery/light_switch{
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/clothing/head/helmet/camera,
 /obj/item/device/camera_viewer{
-	network = "Zeta"
+	network = "Zeta";
+	pixel_x = -14;
+	pixel_y = 16
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 12;
+	pixel_y = -1
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 13;
+	pixel_y = -2
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 12;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 13;
+	pixel_y = -1
+	},
+/obj/item/clothing/head/helmet/camera{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/device/light/glowstick{
+	pixel_x = -12;
+	pixel_y = 1
+	},
+/obj/item/device/light/glowstick{
+	pixel_x = -7;
+	pixel_y = -2
 	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "bOw" = (
 /obj/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/machinery/power/apc/autoname_south,
@@ -43044,23 +43193,49 @@
 /area/station/science/lab)
 "bPC" = (
 /obj/table/auto,
-/obj/item/device/analyzer/atmospheric,
-/obj/item/device/analyzer/atmospheric,
-/obj/item/device/analyzer/atmospheric,
-/obj/item/device/igniter,
-/obj/item/device/igniter,
-/obj/item/device/igniter,
-/obj/item/device/timer,
-/obj/item/device/timer,
-/obj/item/device/timer,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = -9;
+	pixel_y = 12
+	},
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = -9
+	},
+/obj/item/device/timer{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/device/timer{
+	pixel_x = -2;
+	pixel_y = 7
+	},
+/obj/item/device/timer{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/device/igniter{
+	pixel_x = 9;
+	pixel_y = 14
+	},
+/obj/item/device/igniter{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/item/device/igniter{
+	pixel_x = 9
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bPD" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/item/paper{
@@ -43077,9 +43252,13 @@
 /area/station/crew_quarters/hor)
 "bPE" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
+	d1 = 2;
+	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/carpet{
@@ -44524,6 +44703,8 @@
 	dir = 8
 	},
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grime,
@@ -44554,18 +44735,26 @@
 /area/station/science/lab)
 "bSt" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
+	d1 = 1;
+	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bSu" = (
 /obj/cable{
+	d1 = 2;
+	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/white,
@@ -44576,6 +44765,7 @@
 	bank_id = "Mixer"
 	},
 /obj/cable{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/white,
@@ -45239,32 +45429,41 @@
 /area/station/science/lab)
 "bTS" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bTT" = (
 /obj/table/auto,
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 2;
-	pixel_y = -8
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/assembly/time_ignite,
-/obj/item/assembly/time_ignite,
-/obj/item/assembly/time_ignite,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/item/assembly/time_ignite{
+	pixel_x = 13;
+	pixel_y = 13
+	},
+/obj/item/assembly/time_ignite{
+	pixel_x = 1;
+	pixel_y = 14
+	},
+/obj/item/assembly/time_ignite{
+	pixel_x = -11;
+	pixel_y = 15
+	},
+/obj/item/device/prox_sensor{
+	pixel_x = -12
+	},
+/obj/item/device/prox_sensor{
+	pixel_y = -1
+	},
+/obj/item/device/prox_sensor{
+	pixel_x = 12;
+	pixel_y = -2
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -45721,6 +45920,8 @@
 /area/station/science/lab)
 "bVg" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/landmark/start{
@@ -45733,15 +45934,25 @@
 /area/station/science/lab)
 "bVh" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/vr{
-	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
-	network = "bombtest"
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -9;
+	pixel_y = 14
 	},
 /obj/item/clothing/glasses/vr{
 	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
 	network = "bombtest";
-	pixel_x = 2;
-	pixel_y = 5
+	pixel_x = 6;
+	pixel_y = 15
+	},
+/obj/item/clothing/glasses/vr{
+	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
+	network = "bombtest";
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/device/audio_log{
+	pixel_x = -8;
+	pixel_y = -1
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -45749,8 +45960,6 @@
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
 	},
-/obj/item/device/audio_log,
-/obj/item/chem_grenade/firefighting,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bVi" = (
@@ -46755,6 +46964,7 @@
 	pixel_x = 24
 	},
 /obj/cable{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -46857,9 +47067,13 @@
 /area/station/science/bot_storage)
 "bXJ" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -47392,6 +47606,7 @@
 /area/station/science/storage)
 "bYV" = (
 /obj/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -47405,6 +47620,8 @@
 	req_access_txt = null
 	},
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/access_spawn/tox_storage,
@@ -47420,6 +47637,8 @@
 "bYY" = (
 /obj/machinery/atmospherics/valve,
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/white,
@@ -47483,9 +47702,17 @@
 /area/station/science/lobby)
 "bZg" = (
 /obj/table/auto,
-/obj/item/paper_bin,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/research,
+/obj/item/paper_bin{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/device/radio/headset/research{
+	pixel_x = -1
+	},
+/obj/item/device/radio/headset/research{
+	pixel_x = -5;
+	pixel_y = 7
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bZh" = (
@@ -47495,6 +47722,7 @@
 "bZi" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/guardbot_dock,
@@ -48032,6 +48260,7 @@
 "caz" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/guardbot_dock,
@@ -48042,6 +48271,8 @@
 /area/station/science/bot_storage)
 "caA" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/transport{
@@ -48051,12 +48282,18 @@
 /area/station/science/bot_storage)
 "caB" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/transport{
@@ -48066,6 +48303,8 @@
 /area/station/science/bot_storage)
 "caC" = (
 /obj/cable{
+	d1 = 2;
+	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment/transport{
@@ -48075,6 +48314,8 @@
 /area/station/science/bot_storage)
 "caD" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/transport{
@@ -48511,14 +48752,30 @@
 /area/station/science/storage)
 "cbG" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/wrench,
-/obj/item/screwdriver{
-	pixel_y = 10
+/obj/item/extinguisher{
+	pixel_x = -5;
+	pixel_y = 18
 	},
-/obj/item/extinguisher,
-/obj/item/extinguisher,
-/obj/item/clothing/mask/gas/emergency,
+/obj/item/extinguisher{
+	pixel_x = 5;
+	pixel_y = 18
+	},
+/obj/item/wrench{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/obj/item/screwdriver{
+	pixel_x = 11;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -3
+	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "cbH" = (
@@ -48540,31 +48797,28 @@
 /area/station/science/lobby)
 "cbK" = (
 /obj/table/auto,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/clothing/suit/robuddy,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/guardbot_guide{
+	pixel_x = -12;
+	pixel_y = 7
+	},
+/obj/item/clothing/suit/robuddy{
+	pixel_x = -2;
+	pixel_y = 11
+	},
 /obj/item/device/multitool{
-	pixel_x = -7;
-	pixel_y = 1
+	pixel_x = 11;
+	pixel_y = 10
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 3
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = -2
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "cbL" = (
 /obj/table/auto,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler{
-	pixel_x = -3;
-	pixel_y = 4
-	},
-/obj/item/device/radio/signaler{
-	pixel_x = 7;
-	pixel_y = 6
-	},
-/obj/item/device/radio/signaler{
-	pixel_x = -6;
-	pixel_y = -3
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -48572,6 +48826,21 @@
 	tag = ""
 	},
 /obj/machinery/light,
+/obj/item/device/radio/signaler{
+	pixel_x = -11;
+	pixel_y = 14
+	},
+/obj/item/device/radio/signaler{
+	pixel_y = 14
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = 8;
+	pixel_y = 3
+	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "cbM" = (
@@ -48594,22 +48863,33 @@
 /obj/storage/crate{
 	name = "Spare Parts"
 	},
-/obj/item/guardbot_frame,
+/obj/item/guardbot_frame{
+	pixel_x = -9;
+	pixel_y = 7
+	},
 /obj/item/device/guardbot_tool/taser{
-	pixel_x = -8;
-	pixel_y = -4
+	pixel_x = 7;
+	pixel_y = 6
 	},
 /obj/item/device/guardbot_tool/smoker{
+	pixel_x = 7
+	},
+/obj/item/device/guardbot_tool/medicator{
 	pixel_x = 7;
-	pixel_y = 4
+	pixel_y = -6
 	},
-/obj/item/guardbot_core,
-/obj/item/device/guardbot_tool/medicator,
-/obj/item/sheet/steel{
-	amount = 50
+/obj/item/guardbot_core{
+	pixel_x = -5;
+	pixel_y = -6
 	},
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/right{
+	pixel_x = -12;
+	pixel_y = 6
+	},
+/obj/item/parts/robot_parts/arm/right{
+	pixel_x = -7;
+	pixel_y = 6
+	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "cbP" = (
@@ -52393,9 +52673,13 @@
 /area/station/medical/robotics)
 "ckV" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/landmark/gps_waypoint,
@@ -60848,6 +61132,19 @@
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
+"err" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "ezG" = (
 /obj/window/reinforced{
 	dir = 4
@@ -61194,6 +61491,17 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
+"hDp" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "iix" = (
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external{
@@ -61206,6 +61514,14 @@
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/delivery,
 /area/station/engine/hotloop)
+"iso" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "iQv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/wingrille_spawn/auto,
@@ -61222,6 +61538,12 @@
 "jbi" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering/ce)
+"jsn" = (
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/science/bot_storage)
 "jtM" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -61296,6 +61618,14 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
+"kKk" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "kRC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -89464,7 +89794,7 @@ bTP
 bTP
 bWs
 bXv
-bYX
+kKk
 cam
 bHW
 ccQ
@@ -89766,7 +90096,7 @@ bTQ
 bVf
 bTR
 bTR
-bYX
+kKk
 can
 bHW
 ccR
@@ -90672,7 +91002,7 @@ bTT
 bVh
 bWt
 bXx
-bZc
+hDp
 cap
 bHW
 ccU
@@ -95806,7 +96136,7 @@ bUc
 bVj
 bWF
 bWH
-bWH
+iso
 caA
 cbL
 cdb
@@ -96413,7 +96743,7 @@ bXK
 bZj
 caC
 cbN
-bWD
+jsn
 cem
 cfA
 cgS
@@ -96712,7 +97042,7 @@ bUf
 bVj
 bWI
 bXL
-bXL
+err
 caD
 cbO
 bWD
