@@ -821,6 +821,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\materials\Mat_Recipes.dm"
 #include "code\modules\medical\blood_system.dm"
 #include "code\modules\medical\bone_system.dm"
+#include "code\modules\medical\surgery_omnitool.dm"
 #include "code\modules\medical\surgery_procs.dm"
 #include "code\modules\medical\surgery_tools.dm"
 #include "code\modules\medical\disabilities\badvision.dm"
