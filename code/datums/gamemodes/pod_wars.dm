@@ -175,10 +175,10 @@
 		src.team_num = team
 		if (team_num == TEAM_NANOTRASEN)
 			name = "NanoTrasen Crew"
-			// base_area = /area/podmode/team1 //area south crew
+			base_area = /area/podmode/team1 //area north, NT crew
 		else if (team_num == TEAM_SYNDICATE)
 			name = "Syndicate Crew"
-			// base_area = /area/podmode/team2 //area north crew
+			base_area = /area/podmode/team2 //area south, Syndicate crew
 
 		set_comms(mode)
 
@@ -323,9 +323,9 @@
 		..()
 		if (ticker.mode == /datum/game_mode/pod_wars)
 			var/datum/game_mode/pod_wars/mode = ticker.mode
-			if (get_area(src) == mode.team_NT.base_area)
+			if (istype(get_area(src), mode.team_NT.base_area))
 				team = mode.team_NT
-			else if (get_area(src) == mode.team_SY.base_area)
+			else if (istype(get_area(src), mode.team_SY.base_area))
 				team = mode.team_SY
 
 
@@ -393,9 +393,9 @@
 	proc/get_team_from_area()
 		if (ticker.mode == /datum/game_mode/pod_wars)
 			var/datum/game_mode/pod_wars/mode = ticker.mode
-			if (get_area(src) == mode.team_NT.base_area)
+			if (istype(get_area(src), mode.team_NT.base_area))
 				team = mode.team_NT
-			else if (get_area(src) == mode.team_SY.base_area)
+			else if (istype(get_area(src), mode.team_SY.base_area))
 				team = mode.team_SY
 
 //////////////special clone pod///////////////
@@ -720,3 +720,50 @@ obj/screen/score_board
 			if("Syndicate Pilot")
 				return TEAM_SYNDICATE
 		return -1
+
+//emergency Fabs
+
+ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
+/obj/machinery/macrofab/pod_wars
+	name = "Emergency Pod Fabricator"
+	desc = "A sophisticated machine that fabricates short-range emergency pods from a nearby reserve of supplies."
+	createdObject = /obj/machinery/vehicle/arrival_pod
+	itemName = "emergency pod"
+
+	nanotrasen
+		createdObject = /obj/machinery/vehicle/pod_wars_dingy/nanotrasen
+
+	syndicate
+		createdObject = /obj/machinery/vehicle/pod_wars_dingy/syndicate
+
+ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
+/obj/machinery/vehicle/pod_wars_dingy
+	name = "Pod"
+	icon = 'icons/obj/ship.dmi'
+	icon_state = "pod"
+	capacity = 1
+	health = 140
+	maxhealth = 140
+	anchored = 0
+
+	New()
+		..()
+		//Cargo hold
+		src.m_w_system = new /obj/item/shipcomponent/mainweapon/bad_mining( src )
+		src.m_w_system.ship = src
+
+		src.sec_system = new /obj/item/shipcomponent/secondary_system/orescoop( src )
+		src.sec_system.ship = src
+		src.components += src.sec_system
+
+		myhud.update_systems()
+		myhud.update_states()
+		return
+
+	nanotrasen
+		name = "NT Mining Dingy"
+		icon_state = "putt_pre"
+
+	syndicate
+		name = "Syndicate Mining Dingy"
+		icon_state = "syndiputt"

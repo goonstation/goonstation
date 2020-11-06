@@ -2568,7 +2568,7 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 
 	proc/set_headset_freq(var/obj/item/device/radio/headset/headset, var/freq)
 		if (istype(headset))
-			headset.set_secure_frequency("g",mode.team_NT.comms_frequency)
+			headset.set_secure_frequency("g",freq)
 			headset.secure_classes["g"] = RADIOCL_SYNDICATE
 
 	nanotrasen
