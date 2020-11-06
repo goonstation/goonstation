@@ -496,7 +496,7 @@
 "zX" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/plating,/area/podmode/team2/Bar)
 "Ab" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/plating,/area/podmode/team2/Cloning)
 "Ai" = (/obj/grille/catwalk{dir = 10; icon_state = "catwalk_cross"},/turf/simulated/floor/airless/plating/catwalk{dir = 10},/area/podmode/spacejunk/Restaurant/landingpads)
-"Aj" = (/obj/landmark/map,/turf/space,/area)
+"Aj" = (/obj/landmark/map{name = "pod_wars"},/turf/space,/area)
 "An" = (/obj/machinery/light{dir = 4},/turf/simulated/floor,/area/podmode/team2/Mining)
 "Ao" = (/obj/lattice{dir = 9; icon_state = "lattice-dir"},/turf/space,/area)
 "Ap" = (/obj/lattice{dir = 9; icon_state = "lattice-dir-b"},/obj/cable{icon_state = "1-4"},/turf/space,/area/podmode/spacejunk/uvb67/central)
