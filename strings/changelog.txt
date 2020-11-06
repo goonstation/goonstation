@@ -1,5 +1,9 @@
 
 (t)thu nov 05 20
+(u)Azrun
+(p)2601
+(e)🐛|bug
+(+)Should now be able to vent combustion chambers.  Spaced areas of the station should now spread.
 (u)Tarmunora
 (p)2593
 (e)⚖🆕🎨|balance, feature, sprites
