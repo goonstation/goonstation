@@ -2572,7 +2572,9 @@
 "agp" = (
 /obj/table/glass/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged{
+	pixel_x = 2
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "agq" = (
@@ -3368,7 +3370,9 @@
 	},
 /obj/table/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged{
+	pixel_x = 2
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "aid" = (
@@ -10376,9 +10380,11 @@
 /area/station/medical/medbooth)
 "ayb" = (
 /obj/cable{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
@@ -12414,6 +12420,8 @@
 /area/station/maintenance/solar/west)
 "aCv" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
@@ -12432,7 +12440,9 @@
 "aCy" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged{
+	pixel_x = 2
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aCz" = (
@@ -35598,12 +35608,22 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/device/radio,
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/item/device/radio{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged{
+	pixel_x = 2
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
@@ -47461,11 +47481,21 @@
 /area/station/science/bot_storage)
 "bZj" = (
 /obj/table/reinforced/auto,
+/obj/item/cell/supercell/charged{
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/obj/item/cell/supercell/charged{
+	pixel_y = 11
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 7;
+	pixel_y = 11
+	},
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged{
+	pixel_x = 2
+	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "bZk" = (
@@ -55430,6 +55460,8 @@
 /area/station/science/chemistry)
 "cry" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/external{
@@ -55502,17 +55534,38 @@
 	},
 /area/station/medical/medbay)
 "crG" = (
+/obj/table/auto,
+/obj/item/device/radio/headset/medical{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/device/radio/headset/medical{
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = -7;
+	pixel_y = 7
+	},
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/table/auto,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/device/light/flashlight/penlight,
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_x = 12;
+	pixel_y = 11
+	},
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_x = 11;
+	pixel_y = 5
+	},
+/obj/item/device/light/flashlight/penlight{
+	pixel_x = 6;
+	pixel_y = -3
+	},
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
@@ -55531,28 +55584,62 @@
 	},
 /area/station/medical/medbay/surgery)
 "crJ" = (
+/obj/table/auto,
+/obj/item/clothing/suit/straight_jacket{
+	pixel_x = -10;
+	pixel_y = 7
+	},
+/obj/item/clothing/suit/straight_jacket{
+	pixel_x = -8;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/iv_drip/saline{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_x = 1;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/blindfold{
+	pixel_y = -4
+	},
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/reagent_containers/syringe/haloperidol,
-/obj/item/reagent_containers/syringe/haloperidol,
-/obj/item/reagent_containers/syringe/haloperidol,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/item/clothing/glasses/blindfold,
 /turf/simulated/floor/redwhite{
 	dir = 5
 	},
 /area/station/medical/medbay/surgery)
 "crK" = (
 /obj/rack,
-/obj/item/storage/box/stma_kit,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/storage/belt/medical,
-/obj/item/storage/belt/medical,
+/obj/item/storage/box/stma_kit{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = -3;
+	pixel_y = -1
+	},
+/obj/item/storage/belt/medical{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/storage/belt/medical{
+	pixel_x = 4;
+	pixel_y = -1
+	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "crM" = (
@@ -55667,6 +55754,8 @@
 /area/station/hangar/engine)
 "crX" = (
 /obj/cable{
+	d1 = 2;
+	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
@@ -55724,14 +55813,18 @@
 /obj/table/auto,
 /obj/machinery/cell_charger,
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/cell/supercell/charged,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 2
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
@@ -56403,6 +56496,8 @@
 /area/station/medical/research)
 "ctF" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/machinery/power/solar_control/east{
@@ -56418,6 +56513,7 @@
 	dir = 4
 	},
 /obj/cable{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
@@ -57171,10 +57267,21 @@
 /area/station/crew_quarters/info)
 "cvh" = (
 /obj/table/auto,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/surgical_shield,
-/obj/item/clothing/mask/surgical_shield,
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_x = 9
+	},
+/obj/item/clothing/mask/surgical_shield{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/surgical_shield{
+	pixel_x = -5;
+	pixel_y = 8
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -57905,9 +58012,18 @@
 	},
 /obj/machinery/light,
 /obj/table/auto,
-/obj/item/weldingtool,
-/obj/item/wrench,
-/obj/item/paper/cryo,
+/obj/item/weldingtool{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/wrench{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/item/paper/cryo{
+	pixel_x = -13;
+	pixel_y = 4
+	},
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "cwK" = (
@@ -57952,25 +58068,68 @@
 /area/station/medical/medbay/lobby)
 "cwO" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/oxygen,
-/obj/item/reagent_containers/glass/beaker/large/antitox,
-/obj/item/reagent_containers/glass/beaker/large/epinephrine,
-/obj/item/reagent_containers/glass/beaker/large/burn,
-/obj/item/reagent_containers/glass/beaker/large/brute,
-/obj/item/clothing/glasses/healthgoggles,
+/obj/item/reagent_containers/glass/beaker/large/antitox{
+	pixel_x = -10;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/glass/beaker/large/epinephrine{
+	pixel_x = -7;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/glass/beaker/large/burn{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/glass/beaker/large/brute{
+	pixel_x = -1;
+	pixel_y = 12
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_x = -11;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
 /area/station/medical/medbay/surgery)
 "cwP" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/regular,
-/obj/item/clothing/gloves/latex,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/device/reagentscanner,
-/obj/item/reagent_containers/glass/bottle/epinephrine,
-/obj/item/reagent_containers/dropper,
-/obj/item/clothing/mask/surgical,
+/obj/item/clothing/gloves/latex{
+	pixel_x = -12;
+	pixel_y = -4
+	},
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/surgical{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = 13;
+	pixel_y = 11
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/device/reagentscanner{
+	pixel_x = -15;
+	pixel_y = 10
+	},
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "cwQ" = (
@@ -60354,14 +60513,27 @@
 "cCS" = (
 /obj/surgery_tray,
 /obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
+	pixel_y = 11
 	},
-/obj/item/scalpel,
-/obj/item/staple_gun,
-/obj/item/suture,
-/obj/item/hemostat,
-/obj/item/scissors/surgical_scissors,
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -60470,25 +60642,49 @@
 	pixel_y = -24
 	},
 /obj/table/auto,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -6;
+	pixel_y = 1
+	},
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "cDp" = (
 /obj/table/auto,
-/obj/item/storage/box/stma_kit,
-/obj/item/storage/toolbox/emergency,
-/obj/machinery/light,
+/obj/item/storage/box/stma_kit{
+	pixel_x = -9;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 5;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/hand_labeler{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	dir = 1;
 	frequency = 1445;
 	name = "Medical Intercom"
 	},
-/obj/item/reagent_containers/hypospray,
-/obj/item/reagent_containers/hypospray,
-/obj/item/hand_labeler,
+/obj/machinery/light,
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "cDv" = (
