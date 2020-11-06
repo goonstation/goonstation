@@ -3035,17 +3035,8 @@
 		// added log - cirr
 		logTheThing("combat", src, src.chest_item, "takes damage from farting out [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
 		// Make copy of item on ground
-#if ASS_JAM
-		if (istype(src.chest_item,/mob/))
-			var/mob/outChestMob = src.chest_item
-			outChestMob.set_loc(get_turf(src))
-		else
-			var/obj/item/outChestItem = src.chest_item
-			outChestItem.set_loc(get_turf(src))
-#else
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
-#endif
 		src.chest_item = null
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
