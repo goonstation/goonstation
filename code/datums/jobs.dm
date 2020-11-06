@@ -2572,7 +2572,7 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 			headset.secure_classes["g"] = RADIOCL_SYNDICATE
 
 	nanotrasen
-		name = "NT Pod Pilot"
+		name = "NanoTrasen Pod Pilot"
 		slot_back = /obj/item/storage/backpack/NT
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/nanotrasen
 		slot_jump = /obj/item/clothing/under/misc/turds

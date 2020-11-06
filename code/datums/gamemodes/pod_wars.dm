@@ -71,13 +71,6 @@
 
 
 /datum/game_mode/pod_wars/post_setup()
-	for (var/i in world)
-		if (istype(i, /obj/machinery/clonepod/automatic))
-			var/obj/machinery/clonepod/automatic/cloner = i
-			cloner.get_team_from_area()
-		else if (istype(i, /obj/pod_base_critical_system))
-			var/obj/pod_base_critical_system/system = i
-			system.get_team_from_area()
 	return 1
 
 //for testing, can remove when sure this works - Kyle
@@ -127,11 +120,9 @@
 		team_NT.change_points(1)
 
 
-/datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/obj/pod_base_critical_system/CS)
-	if (!istype(CS))
-		return 0
+/datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_name, var/obj/pod_base_critical_system/CS)
 
-	world << ("<h2><span class='alert'>[CS?.team?.name]'s [CS] has been destroyed!!</span></h2>")
+	world << ("<h2><span class='alert'>[team_name]'s [CS] has been destroyed!!</span></h2>")
 
 
 
@@ -234,7 +225,10 @@
 
 		if (istype(M, /mob/new_player))
 			var/mob/new_player/N = M
-			N.mind.assigned_role = name
+			if (team_num == TEAM_NANOTRASEN)
+				N.mind.assigned_role = "NanoTrasen Pod Pilot"
+			else if (team_num == TEAM_SYNDICATE)
+				N.mind.assigned_role = "Syndicate Pod Pilot"
 			// H = N.create_character(new /datum/job/pod_wars)	//should use this, but I wrote the stuff here first and lazy...
 
 		if (!ishuman(H))
@@ -259,7 +253,7 @@
 			else
 				H.equip_if_possible(new /obj/item/clothing/head/helmet/space/ntso(H), H.slot_head)
 				H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot(H), H.slot_wear_suit)
-	
+
 			H.equip_if_possible(I, H.slot_wear_id)
 
 			H.equip_if_possible(headset, H.slot_ears)
@@ -311,32 +305,34 @@
 
 /obj/pod_base_critical_system
 	name = "Critical System"
-	icon = 'icons/mob/hivebot.dmi'
-	icon_state = "def_radar"
+	icon = 'icons/obj/64x64.dmi'
+	icon_state = "critical_system"
 	anchored = 1
 	density = 1
+	bound_width = 64
+	bound_height = 64
 
-	var/datum/pod_wars_team/team = null	//must set this in map editor or else it goes by area. 1 for NT, 2 for SYNDICATE
 	var/health = 1000
+	var/team_num		//used for getting the team datum, this is set to 1 or 2 in the map editor. 1 = NT, 2 = Syndicate
 
 	New()
 		..()
-		if (ticker.mode == /datum/game_mode/pod_wars)
-			var/datum/game_mode/pod_wars/mode = ticker.mode
-			if (istype(get_area(src), mode.team_NT.base_area))
-				team = mode.team_NT
-			else if (istype(get_area(src), mode.team_SY.base_area))
-				team = mode.team_SY
-
 
 	disposing()
 		..()
 
 		if (ticker.mode == /datum/game_mode/pod_wars)
-			if (istype(team))
-				team.change_points(-25)
+			//get the team datum from its team number right when we allocate points.
 			var/datum/game_mode/pod_wars/mode = ticker.mode
-			mode.announce_critical_system_destruction(src)
+			var/name
+			if (team_num == TEAM_NANOTRASEN)
+				name = "NanoTrasen"
+				mode?.team_NT.change_points(-25)
+			else if (team_num == TEAM_SYNDICATE)
+				name = "The Syndicate"
+				mode?.team_SY.change_points(-25)
+
+			mode.announce_critical_system_destruction(name, src)
 
 
 	ex_act(severity)
@@ -389,32 +385,28 @@
 		if (health <= 0)
 			qdel(src)
 
-	//bad, copied from clone pod. Should be set by mapper I guess, but idk.
-	proc/get_team_from_area()
-		if (ticker.mode == /datum/game_mode/pod_wars)
-			var/datum/game_mode/pod_wars/mode = ticker.mode
-			if (istype(get_area(src), mode.team_NT.base_area))
-				team = mode.team_NT
-			else if (istype(get_area(src), mode.team_SY.base_area))
-				team = mode.team_SY
-
 //////////////special clone pod///////////////
 
-/obj/machinery/clonepod/automatic
+/obj/machinery/clonepod/pod_wars
 	name = "Cloning Pod Deluxe"
 	meat_level = 1.#INF
 	var/last_check = 0
 	var/check_delay = 10 SECONDS
+	var/team_num		//used for getting the team datum, this is set to 1 or 2 in the map editor. 1 = NT, 2 = Syndicate
 	var/datum/pod_wars_team/team
 
 	process()
 
 		if(!src.attempting)
 			if (world.time - last_check >= check_delay)
-				if (!team)
-					get_team_from_area()
+				if (!team && istype(ticker.mode, /datum/game_mode/pod_wars))
+					var/datum/game_mode/pod_wars/mode = ticker.mode
+					if (team_num == TEAM_NANOTRASEN)
+						team = mode.team_NT
+					else if (team_num == TEAM_SYNDICATE)
+						team = mode.team_SY
 				last_check = world.time
-				INVOKE_ASYNC(src, /obj/machinery/clonepod/automatic.proc/growclone_a_ghost)
+				INVOKE_ASYNC(src, /obj/machinery/clonepod/pod_wars.proc/growclone_a_ghost)
 		return..()
 
 	New()
@@ -428,27 +420,12 @@
 		..()
 		UnsubscribeProcess()
 
-	proc/get_team_from_area()
-		if (ticker.mode == /datum/game_mode/pod_wars)
-			var/datum/game_mode/pod_wars/mode = ticker.mode
-			if (get_area(src) == mode.team_NT.base_area)
-				team = mode.team_NT
-			else if (get_area(src) == mode.team_SY.base_area)
-				team = mode.team_SY
-
 	proc/growclone_a_ghost()
 		var/list/to_search
-
-		if (isnull(team))
-			to_search = mobs
-
-		//so we only clone the right crew members on the right ship
-		else if (ticker.mode == /datum/game_mode/pod_wars)
-			var/datum/game_mode/pod_wars/mode = ticker.mode
-			if (team == mode.team_NT)
-				to_search = mode.team_NT.members
-			else if (team == mode.team_SY)
-				to_search = mode.team_SY.members
+		if (istype(team))
+			to_search = team.members
+		else
+			return
 
 		for(var/mob/dead/observer/ghost in to_search)
 			var/datum/mind/ghost_mind = ghost.mind

@@ -775,9 +775,11 @@
 
 
 	New()
-		cell = new/obj/item/ammo/power_cell/self_charging/
-		cell.max_charge = 200
-		cell.charge = 200
+		var/obj/item/ammo/power_cell/self_charging/PC = new/obj/item/ammo/power_cell/self_charging/
+		PC.max_charge = 200
+		PC.charge = 200
+		PC.recharge_rate = 15	//default speed is 5
+		cell = PC
 		current_projectile = new initial_proj
 		projectiles = list(current_projectile)
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
