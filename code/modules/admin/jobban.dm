@@ -2,6 +2,9 @@
 
 /proc/jobban_fullban(M, rank, akey)
 	if (!M || !akey) return
+	if(ismob(M)) //Correct to ckey if provided a mob.
+		var/mob/keysource = M
+		M = keysource.ckey
 	var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "Roleplay", "Main", "Roleplay Overflow", "Main Overflow")
 	var/server = null //heehoo copy pasta
 	switch (server_nice)
