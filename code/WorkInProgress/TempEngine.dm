@@ -438,7 +438,7 @@
 		process_grump()
 
 	proc/process_grump()
-		/var/stoked_sum = 0
+		var/stoked_sum = 0
 		if(lastgenlev > 0)
 			if(grump < 0) grump = 0 // no negative grump plz
 			grump++ // get grump'd
