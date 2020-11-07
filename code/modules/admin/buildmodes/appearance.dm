@@ -7,6 +7,7 @@ Right Mouse Button on mob/obj/turf = Copy Appearance<br>
 ***********************************************************"}
 	icon_state = "buildappearance"
 	var/mutable_appearance/MA = null
+	var/datum/appearanceHolder/AH = null
 
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
@@ -15,11 +16,27 @@ Right Mouse Button on mob/obj/turf = Copy Appearance<br>
 				boutput(usr, "You cannot use this feature on human mobs!")
 				return
 			object.appearance = initial(object.appearance)
+		else if (AH && ishuman(object))
+			var/mob/living/carbon/human/H = object
+			if (!H.bioHolder) return
+			H.real_name = MA.name
+			H.name = MA.name
+			if(AH.mutant_race)
+				H.set_mutantrace(AH.mutant_race)
+			else
+				H.set_mutantrace(null)
+			H.bioHolder.mobAppearance.CopyOther(AH)
+			H.bioHolder.mobAppearance.UpdateMob()
 		else
 			object.appearance = MA
 		blink(get_turf(object))
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
+		if (ishuman(object))
+			var/mob/living/carbon/human/H = object
+			AH = H.bioHolder?.mobAppearance
+		else
+			AH = null
 		MA = object.appearance
 		blink(get_turf(object))
 		update_button_text(object.name)
