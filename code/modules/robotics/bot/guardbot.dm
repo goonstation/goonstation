@@ -1935,6 +1935,40 @@
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
 			if (..()) return
 
+	//pie launcher module
+	pielauncher
+		name = "Shoddy Pie Launcher"
+		desc = "This pie launcher seems shoddily made, and doesn't have a handle. Why would anyone make this?"
+		icon_state = "tool_generic"// add pie launcher sprite?
+		tool_id = "PIE"
+		is_gun = 1
+		is_stun = 1
+		var/datum/projectile/current_projectile = new /datum/projectile/pie
+		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
+			if (..()) return
+
+
+			if (ranged)
+				var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+				if (!P)
+					return
+
+
+				user.visible_message("<span class='alert'><b>[master] throws a pie at [target]!</b></span>")
+
+			else
+				var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+				if (!P)
+					return
+
+				user.visible_message("<span class='alert'><b>[master] slaps [target] in the face with a pie!</b></span>")
+				P.was_pointblank = 1
+				hit_with_existing_projectile(P, target)
+
+			src.last_use = world.time
+			return
+
+
 	//A syringe gun module. Mercy sakes.
 	medicator
 		name = "Medicator tool module"
