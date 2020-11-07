@@ -348,6 +348,8 @@
 
 /obj/storage/secure/closet/medical/medkit
 	name = "medkit storage locker"
+	icon_closed = "medical_medkit"
+	icon_state = "medical_medkit"
 	spawn_contents = list()
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -378,6 +380,8 @@
 
 /obj/storage/secure/closet/medical/anesthetic
 	name = "anesthetic storage locker"
+	icon_closed = "medical_anesthetic"
+	icon_state = "medical_anesthetic"
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/morphine = 2,
 	/obj/item/storage/box/syringes,
 	/obj/item/tank/anesthetic = 5,
@@ -385,6 +389,8 @@
 
 /obj/storage/secure/closet/medical/uniforms
 	name = "medical uniform locker"
+	icon_closed = "medical_clothes"
+	icon_state = "medical_clothes"
 	spawn_contents = list(/obj/item/storage/backpack/medic,
 	/obj/item/storage/backpack/satchel/medic,
 	/obj/item/storage/box/clothing/medical,
@@ -398,6 +404,8 @@
 
 /obj/storage/secure/closet/medical/chemical
 	name = "restricted medical locker"
+	icon_closed = "medical_restricted"
+	icon_state = "medical_restricted"
 	spawn_contents = list()
 	req_access_txt = "53"
 	make_my_stuff()
@@ -560,7 +568,8 @@
 	/obj/item/ore_scoop,
 	/obj/item/mining_tool/power_pick,
 	/obj/item/clothing/glasses/meson,
-	/obj/item/storage/belt/mining)
+	/obj/item/storage/belt/mining,
+	/obj/item/device/geiger)
 
 /obj/storage/secure/closet/engineering/cargo
 	name = "\improper Quartermaster's locker"

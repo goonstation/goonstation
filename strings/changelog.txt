@@ -1,4 +1,36 @@
 
+(t)thu nov 05 20
+(u)Azrun
+(p)2601
+(e)🐛|bug
+(+)Should now be able to vent combustion chambers.  Spaced areas of the station should now spread.
+(u)Tarmunora
+(p)2593
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Added Geiger Counters to mining and Radioactive Emergency Supplies Crate
+(*)Made radiation status effect hidden unless you have a health implant
+(t)wed nov 04 20
+(u)Chickenish
+(p)2576
+(e)|
+(+)It is now possible to wet a sponge in a mop bucket.
+(u)Carbadox
+(p)2598
+(e)⚖|balance
+(+)Corrected Rathens Secret delimb chance back to a fairer 30%, compared to the previous 100%
+(u)BatElite
+(p)2554
+(e)🆕🎨|feature, sprites
+(+)Medbay's lockers now look mostly different from one another!
+(u)DisturbHerb
+(p)2546
+(e)|
+(+)Adds the ability to center writen text on paper by enclosing it between [center] and [/center].
+(u)Tarmunora
+(p)2558
+(e)⚖|balance
+(*)Tweak pod health and speed values - notably industrial pods are slower, gold pods are much faster
+(+)Buff podseekers (vs pods)
 (t)mon nov 02 20
 (u)Chickenish
 (p)2575

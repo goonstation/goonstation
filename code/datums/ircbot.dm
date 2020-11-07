@@ -118,7 +118,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			//args["api_key"] = (src.apikey ? src.apikey : null)
 			//WHY WAS THAT A THING?
 
-			if (config && config.server_name)
+			if (config?.server_name)
 				args["server_name"] = replacetext(config.server_name, "#", "")
 				args["server"] = replacetext(config.server_name, "#", "") //TEMP FOR BACKWARD COMPAT WITH SHITFORMANT
 

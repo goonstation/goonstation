@@ -159,7 +159,7 @@
 		return 1
 	// sanity check: don't remove our last complex drone
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-	if(F && F.flock)
+	if(F?.flock)
 		if(F.flock.getComplexDroneCount() == 1)
 			boutput(holder.owner, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
 			return 1
@@ -214,7 +214,7 @@
 			// skip this one
 			continue
 		var/obj/item/device/radio/R = M.ears
-		if(R && R.listening)
+		if(R?.listening)
 			// your headset's on, you're fair game!!
 			targets += M
 	if(targets.len >= 1)

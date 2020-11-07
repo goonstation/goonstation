@@ -530,10 +530,10 @@
 							ret["rad"] = T.moles
 
 			else
-				if(G && G.ARCHIVED(oxygen)) ret["o2"] = G.ARCHIVED(oxygen)
-				if(G && G.ARCHIVED(toxins)) ret["toxins"] = G.ARCHIVED(toxins)
-				if(G && G.ARCHIVED(carbon_dioxide)) ret["co2"] = G.ARCHIVED(carbon_dioxide)
-				if(G && G.ARCHIVED(nitrogen)) ret["n2"] = G.ARCHIVED(nitrogen)
+				if(G?.ARCHIVED(oxygen)) ret["o2"] = G.ARCHIVED(oxygen)
+				if(G?.ARCHIVED(toxins)) ret["toxins"] = G.ARCHIVED(toxins)
+				if(G?.ARCHIVED(carbon_dioxide)) ret["co2"] = G.ARCHIVED(carbon_dioxide)
+				if(G?.ARCHIVED(nitrogen)) ret["n2"] = G.ARCHIVED(nitrogen)
 
 				if (G) //sorry, this was still somehow causing runtimes????
 					ret["pressure"] = MIXTURE_PRESSURE(G)

@@ -1790,7 +1790,7 @@ obj/item/clothing/gloves/concussive
 						user.drop_item()
 
 						// Yes, please (Convair880).
-						if (src && src.hacked)
+						if (src?.hacked)
 							logTheThing("combat", user, null, "attaches a hacked [src] to [target] at [log_loc(target)].")
 
 						user.dir = get_dir(user, target)
@@ -2067,7 +2067,7 @@ obj/item/clothing/gloves/concussive
 	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,AREA_LAYER+1)
 	user << O
 	SPAWN_DBG(2 MINUTES)
-		if (user && user.client)
+		if (user?.client)
 			user.client.images -= O
 			user.client.screen -= O
 		qdel (O)

@@ -310,7 +310,7 @@
 			F["[profileNum]_radio_sounds"] << src.radio_music_volume
 
 		// Global pref validation
-		if (user && user.is_mentor())
+		if (user?.is_mentor())
 			if (isnull(src.see_mentor_pms))
 				src.see_mentor_pms = 1
 			if (src.see_mentor_pms == 0)

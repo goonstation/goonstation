@@ -13,7 +13,7 @@ datum/pipeline
 			network.member_disposing(src)
 		network = null
 
-		if(air && air.volume)
+		if(air?.volume)
 			temporarily_store_air()
 			pool(air)
 		air = null
@@ -34,9 +34,9 @@ datum/pipeline
 		if (!air) // null air? oh god!
 			/*
 			var/obj/machinery/atmospherics/member = null
-			if (members && members.len > 0)
+			if (length(members))
 				member = members[0]
-			else if (edges && edges.len > 0)
+			else if (length(edges))
 				member = edges[0]
 			*/
 			//logTheThing("debug", null, null, "null air in pipeline([member ? "([showCoords(member.x, member.y, member.z)])" : "detached" ])")

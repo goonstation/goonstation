@@ -354,7 +354,7 @@
 		if (istype(W, /obj/item/grab))
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
 		user.drop_item()
-		if(W && W.loc && !(W.cant_drop || W.cant_self_remove))	W.set_loc(src.loc)
+		if(W?.loc && !(W.cant_drop || W.cant_self_remove))	W.set_loc(src.loc)
 	else if (istype(W, /obj/item/card/id))
 		if(src.broken)
 			boutput(user, "<span class='alert'>It appears to be broken.</span>")
@@ -1088,7 +1088,7 @@
 			else
 				boutput(user, "The locker is too small to stuff [W] into!")
 		user.drop_item()
-		if(W && W.loc && !(W.cant_drop || W.cant_self_remove))	W.set_loc(src.loc)
+		if(W?.loc && !(W.cant_drop || W.cant_self_remove))	W.set_loc(src.loc)
 		return
 	else if(src.broken)
 		boutput(user, "<span class='alert'>It appears to be broken.</span>")

@@ -127,9 +127,10 @@ toxic - poisons
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
 	cost = 10
-	power = 15
+	power = 17.5
 	dissipation_delay = 1
 	dissipation_rate = 2
+	max_range = 6
 	icon_state = "spark"
 
 //////////// VUVUZELA

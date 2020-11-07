@@ -226,7 +226,7 @@
 
 /obj/item/clothing/head/apprentice
 	proc/fantasia()
-		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/wizard))
+		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/wizard))
 			for (var/obj/item/mop/M in orange(5,src))
 				src.visible_message("<span class='alert'>[src] begins to twitch and move!</span>")
 				var/moveto = locate(M.x + rand(-1,1),M.y + rand(-1, 1),src.z)

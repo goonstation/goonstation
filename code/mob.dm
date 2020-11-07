@@ -710,7 +710,7 @@
 			hud.add_client(src.client)
 
 /mob/proc/detach_hud(datum/hud/hud)
-	if (src && src.huds) //Wire note: Fix for runtime error: bad list
+	if (src?.huds) //Wire note: Fix for runtime error: bad list
 		huds -= hud
 
 	hud.mobs -= src
@@ -883,7 +883,7 @@
 
 /mob/proc/unequip_all(var/delete_stuff=0)
 	var/list/obj/item/to_unequip = src.get_unequippable()
-	if(to_unequip && to_unequip.len)
+	if(length(to_unequip))
 		for (var/obj/item/W in to_unequip)
 			src.remove_item(W)
 			if (W)
@@ -895,7 +895,7 @@
 
 /mob/proc/unequip_random(var/delete_stuff=0)
 	var/list/obj/item/to_unequip = get_unequippable()
-	if(to_unequip && to_unequip.len)
+	if(length(to_unequip))
 		var/obj/item/I = pick(to_unequip)
 		src.remove_item(I)
 		if (I)
@@ -2063,7 +2063,7 @@
 		return 0
 
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (length(L))
 		for (var/obj/B in L)
 			if (B.type == A || (accept_subtypes && istype(B, A)))
 				return 1
@@ -2075,7 +2075,7 @@
 
 	var/tally = 0
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (length(L))
 		for (var/obj/B in L)
 			if (B.type == A || (accept_subtypes && istype(B, A)))
 				tally++
@@ -2091,7 +2091,7 @@
 		return
 
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (length(L))
 		var/list/OL = list() // Sorted output list. Could definitely be improved, but is functional enough.
 		var/list/O_names = list()
 		var/list/O_namecount = list()
@@ -2571,7 +2571,7 @@
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					var/datum/data/record/B = FindBankAccountByName(src.real_name)
-					if (B && B.fields["name"])
+					if (B?.fields["name"])
 						B.fields["name"] = newname
 					for (var/obj/item/card/id/ID in src.contents)
 						ID.registered = newname
@@ -2613,7 +2613,7 @@
 
 /mob/OnMove(source = null)
 	..()
-	if(client && client.player && client.player.shamecubed)
+	if(client?.player?.shamecubed)
 		loc = client.player.shamecubed
 		return
 
@@ -2880,3 +2880,6 @@
 /mob/proc/add_karma(how_much)
 	src.mind?.add_karma(how_much)
 	// TODO add NPC karma
+
+/mob/proc/can_eat(var/atom/A)
+	return 1
