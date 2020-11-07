@@ -30,7 +30,7 @@
 
 	var/side = null // 1=left 2=right
 	var/last_pressure_delta = 0
-	var/static/list/circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"super_lube"=1.12)
+	var/static/list/circulator_preferred_reagents
 	var/lube_cycle = LUBE_CHECK_RATE //rate at which reagents are adjusted
 	var/reagents_consumed = 0.5 //amount of reagents consumed
 	var/lube_boost = 1.0
@@ -44,6 +44,7 @@
 
 	New()
 		. = ..()
+		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"super_lube"=1.12)
 		create_reagents(20)
 		reagents.add_reagent("oil", 15)
 
@@ -244,6 +245,7 @@
 
 	var/obj/machinery/atmospherics/binary/circulatorTemp/circ1
 	var/obj/machinery/atmospherics/binary/circulatorTemp/right/circ2
+	var/list/obj/machinery/power/furnace/furnaces
 
 	var/lastgen = 0
 	var/lastgenlev = -1
@@ -255,17 +257,12 @@
 	var/varient_a = null
 	var/varient_b = null
 
-
 	var/boost = 0
 	var/generator_flags = 0
 
 	var/grump = 0 // best var 2013
-
-	var/list/grump_prefix = list("an upsetting", "an unsettling",
-	"a scary", "a loud", "a sassy", "a grouchy", "a grumpy",
-	"an awful", "a horrible", "a despicable", "a pretty rad", "a godawful")
-
-	var/list/grump_suffix = list("noise", "racket", "ruckus", "sound", "clatter", "fracas", "hubbub")
+	var/static/list/grump_prefix
+	var/static/list/grump_suffix
 
 	var/sound_engine1 = 'sound/machines/tractor_running.ogg'
 	var/sound_engine2 = 'sound/machines/engine_highpower.ogg'
@@ -277,7 +274,7 @@
 	var/sound_bellalert = 'sound/machines/bellalert.ogg'
 	var/sound_warningbuzzer = 'sound/machines/warning-buzzer.ogg'
 
-	var/list/history = list()
+	var/list/history
 	var/const/history_max = 50
 
 	proc/generate_variants()
@@ -292,6 +289,13 @@
 	New()
 		..()
 
+		//List init
+		history = list()
+		furnaces = list()
+		grump_prefix = list("an upsetting", "an unsettling", "a scary", "a loud", "a sassy", "a grouchy", "a grumpy",
+												"an awful", "a horrible", "a despicable", "a pretty rad", "a godawful")
+		grump_suffix = list("noise", "racket", "ruckus", "sound", "clatter", "fracas", "hubbub")
+
 		light = new /datum/light/point
 		light.attach(src)
 
@@ -305,6 +309,11 @@
 			src.circ1?.side = LEFT_CIRCULATOR
 			src.circ2?.generator = src
 			src.circ2?.side = RIGHT_CIRCULATOR
+
+			//furnaces
+			for(var/obj/machinery/power/furnace/F in orange(15, src.loc))
+				src.furnaces += F
+
 			src.generate_variants()
 
 			updateicon()
@@ -426,10 +435,20 @@
 			SPAWN_DBG(0.5 SECONDS)
 				spam_limiter = 0
 
+		process_grump()
+
 	proc/process_grump()
-		if (lastgenlev > 0)
+		/var/stoked_sum = 0
+		if(lastgenlev > 0)
 			if(grump < 0) grump = 0 // no negative grump plz
 			grump++ // get grump'd
+
+		for(var/obj/machinery/power/furnace/F as() in src.furnaces)
+			if( F.active ) stoked_sum += F.stoked
+
+		if(stoked_sum > 10)
+			if(prob(50)) grump--
+			if(prob(5)) grump -= min(stoked_sum/10, 15)
 
 		classic_grump()
 
@@ -437,7 +456,7 @@
 	proc/classic_grump()
 		if(grump >= 100 && prob(5))
 			playsound(src.loc, pick(sounds_enginegrump), 70, 0)
-			src.visible_message("<span class='alert'>[src] makes [pick(grump_prefix)] [pick(grump_suffix)]!</span>")
+			src.audible_message("<span class='alert'>[src] makes [pick(grump_prefix)] [pick(grump_suffix)]!</span>")
 			grump -= 5
 
 		switch (lastgenlev)
@@ -512,7 +531,7 @@
 			if(26 to INFINITY)
 				playsound(src.loc, sound_engine_alert3, 55, 0)
 				if(grump >= 100 && prob(6))
-					src.visible_message("<span class='alert'><b>[src] [pick("resonates", "shakes", "rumbles", "grumbles", "vibrates", "roars")] [pick("dangerously", "strangely", "ominously", "frighteningly", "grumpily")]!</b></span>")
+					src.audible_message("<span class='alert'><b>[src] [pick("resonates", "shakes", "rumbles", "grumbles", "vibrates", "roars")] [pick("dangerously", "strangely", "ominously", "frighteningly", "grumpily")]!</b></span>")
 					playsound(src.loc, "sound/effects/explosionfar.ogg", 65, 1)
 					for (var/obj/window/W in range(6, src.loc)) // smash nearby windows
 						if (W.health_max >= 80) // plasma glass or better, no break please and thank you
@@ -542,7 +561,7 @@
 				if (prob(33)) // lowered because all the DEL procs related to zap are stacking up in the profiler
 					zapStuff()
 				if(prob(5))
-					src.visible_message("<span class='alert'>[src] [pick("rumbles", "groans", "shudders", "grustles", "hums", "thrums")] [pick("ominously", "oddly", "strangely", "oddly", "worringly", "softly", "loudly")]!</span>")
+					src.audible_message("<span class='alert'>[src] [pick("rumbles", "groans", "shudders", "grustles", "hums", "thrums")] [pick("ominously", "oddly", "strangely", "oddly", "worringly", "softly", "loudly")]!</span>")
 				else if (prob(2))
 					src.visible_message("<span class='alert'><b>[src] hungers!</b></span>")
 				// todo: sorta run happily at this extreme level as long as it gets a steady influx of corpses OR WEED into the furnaces
@@ -774,13 +793,17 @@
 
 	name = "Pump control computer"
 
-	var/list/pump_infos = new/list()
+	var/list/pump_infos
 
 	var/last_change = 0
 	var/message_delay = 1 MINUTE
 
 	var/frequency = 1225
 	var/datum/radio_frequency/radio_connection
+
+	New()
+		. = ..()
+		pump_infos = new/list()
 
 	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))
