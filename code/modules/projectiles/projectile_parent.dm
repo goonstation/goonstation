@@ -17,7 +17,7 @@
 	//var/obj/o_shooter = null
 	var/list/targets = list()
 	var/power = 20 // temp var to store what the current power of the projectile should be when it hits something
-	var/max_range = 0 //max range
+	var/max_range = PROJ_INFINITE_RANGE //max range
 	var/initial_power = 20 // local copy of power for determining power when hitting things
 	var/implanted = null
 	var/forensic_ID = null
@@ -538,7 +538,7 @@ datum/projectile
 		override_color = 0
 		power = 20               // How much of a punch this has
 		cost = 1                 // How much ammo this costs
-		max_range = 0            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
+		max_range = PROJ_INFINITE_RANGE            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
 		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
 		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
@@ -971,13 +971,10 @@ datum/projectile/snowball
 	P.xo = xo
 	P.yo = yo
 
-	if(!DATA.max_range)
-		if(DATA.dissipation_rate <= 0)
-			P.max_range = PROJ_INFINITE_RANGE
-		else
-			P.max_range = DATA.dissipation_delay + round(P.power / DATA.dissipation_rate)
+	if(DATA.dissipation_rate <= 0)
+		P.max_range = PROJ_INFINITE_RANGE
 	else
-		P.max_range = DATA.max_range
+		P.max_range = min(DATA.dissipation_delay + round(P.power / DATA.dissipation_rate), DATA.max_range)
 
 	return P
 
