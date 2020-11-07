@@ -565,6 +565,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\toggles.dm"
 #include "code\modules\admin\buildmodes\adventure.dm"
 #include "code\modules\admin\buildmodes\animate.dm"
+#include "code\modules\admin\buildmodes\appearance.dm"
 #include "code\modules\admin\buildmodes\arcflash.dm"
 #include "code\modules\admin\buildmodes\clipboard.dm"
 #include "code\modules\admin\buildmodes\clipboard_wide.dm"
