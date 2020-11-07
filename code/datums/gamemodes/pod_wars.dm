@@ -120,10 +120,27 @@
 		team_NT.change_points(1)
 
 
-/datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_name, var/obj/pod_base_critical_system/CS)
+/datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_num, var/obj/pod_base_critical_system/CS)
+	var/name
+	if (team_num == TEAM_NANOTRASEN)
+		name = "NanoTrasen"
+		src.team_NT.change_points(-25)
+	else if (team_num == TEAM_SYNDICATE)
+		name = "The Syndicate"
+		src.team_SY.change_points(-25)
 
-	world << ("<h2><span class='alert'>[team_name]'s [CS] has been destroyed!!</span></h2>")
+	world << ("<h2><span class='alert'>[name]'s [CS] has been destroyed!!</span></h2>")
 
+/datum/game_mode/pod_wars/proc/announce_critical_system_damage(var/team_num, var/obj/pod_base_critical_system/CS)
+	var/datum/pod_wars_team/team
+	if (team_num == TEAM_NANOTRASEN)
+		team = team_NT
+	else if (team_num == TEAM_SYNDICATE)
+		team = team_SY
+
+	for (var/datum/mind/M in team.members)
+		if (M.current)
+			M.current << ("<h3><span class='alert'>Your team's [CS] is under attack!</span></h3>")
 
 
 
@@ -314,6 +331,7 @@
 
 	var/health = 1000
 	var/team_num		//used for getting the team datum, this is set to 1 or 2 in the map editor. 1 = NT, 2 = Syndicate
+	var/suppress_damage_message = 0
 
 	New()
 		..()
@@ -324,15 +342,8 @@
 		if (ticker.mode == /datum/game_mode/pod_wars)
 			//get the team datum from its team number right when we allocate points.
 			var/datum/game_mode/pod_wars/mode = ticker.mode
-			var/name
-			if (team_num == TEAM_NANOTRASEN)
-				name = "NanoTrasen"
-				mode?.team_NT.change_points(-25)
-			else if (team_num == TEAM_SYNDICATE)
-				name = "The Syndicate"
-				mode?.team_SY.change_points(-25)
 
-			mode.announce_critical_system_destruction(name, src)
+			mode.announce_critical_system_destruction(team_num, src)
 
 
 	ex_act(severity)
@@ -381,6 +392,16 @@
 	proc/take_damage(var/damage)
 		if (damage > 0)
 			src.health -= damage
+
+			if (!suppress_damage_message && ticker.mode == /datum/game_mode/pod_wars)
+				//get the team datum from its team number right when we allocate points.
+				var/datum/game_mode/pod_wars/mode = ticker.mode
+
+				mode.announce_critical_system_damage(name, src)
+				suppress_damage_message = 1
+				SPAWN_DBG(1 MINUTES)
+					suppress_damage_message = 0
+
 
 		if (health <= 0)
 			qdel(src)
@@ -536,6 +557,7 @@ obj/screen/score_board
 		src.alpha = 30
 		sleep(2 MINUTES)
 		src.alpha = 255
+		health = initial(health)
 		active = 1
 
 	spawn_deployer()
