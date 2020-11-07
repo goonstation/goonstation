@@ -28605,6 +28605,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/sponge,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
@@ -29273,7 +29274,6 @@
 	dir = 8;
 	nostick = 1
 	},
-/obj/item/sponge,
 /obj/item/caution,
 /obj/item/caution,
 /obj/item/caution,
