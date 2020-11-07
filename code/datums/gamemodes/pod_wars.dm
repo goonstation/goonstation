@@ -555,7 +555,7 @@ obj/screen/score_board
 		playsound(src.loc, "sound/effects/robogib.ogg", 50, 1)
 		new /obj/decal/cleanable/robot_debris(src.loc)
 		src.alpha = 30
-		sleep(2 MINUTES)
+		sleep(5 MINUTES)
 		src.alpha = 255
 		health = initial(health)
 		active = 1
