@@ -522,13 +522,21 @@ obj/screen/score_board
 	range = 8 // tiles
 	burst_size = 2 // number of shots to fire. Keep in mind the bullet's shot_count
 	fire_rate = 2 // rate of fire in shots per second
-	angle_arc_size = 120
+	angle_arc_size = 180
 	quick_deploy_fuel = 2
 	var/deployer_path = /obj/deployable_turret/pod_wars
 
 	New(var/direction)
 		..(direction=direction)
 
+	//just "deactivates"
+	die()
+		playsound(src.loc, "sound/effects/robogib.ogg", 50, 1)
+		new /obj/decal/cleanable/robot_debris(src.loc)
+		src.alpha = 30
+		sleep(2 MINUTES)
+		src.alpha = 255
+		active = 1
 
 	spawn_deployer()
 		var/obj/item/turret_deployer/deployer = new deployer_path(src.loc)
