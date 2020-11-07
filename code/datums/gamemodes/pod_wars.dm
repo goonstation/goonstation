@@ -733,6 +733,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 		src.m_w_system = new weapon_type( src )
 		src.m_w_system.ship = src
+		src.components += src.m_w_system
 
 		src.sec_system = new /obj/item/shipcomponent/secondary_system/orescoop( src )
 		src.sec_system.ship = src
