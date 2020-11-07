@@ -1,5 +1,9 @@
 
 (t)sat nov 07 20
+(u)virvatuli
+(p)2594
+(e)|
+(+)New Clock gunfire audio, sounds less like someone whacking two sticks together
 (u)UrsulaMajor
 (p)2612
 (e)|
