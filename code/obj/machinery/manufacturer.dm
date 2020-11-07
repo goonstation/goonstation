@@ -2198,7 +2198,8 @@
 
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,
-	/datum/manufacture/RCDammolarge)
+	/datum/manufacture/RCDammolarge,
+	/datum/manufacture/sds)
 
 /obj/machinery/manufacturer/hangar
 	name = "Ship Component Fabricator"

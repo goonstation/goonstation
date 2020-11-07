@@ -694,6 +694,16 @@
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/sds
+	name = "Syndicate Destruction System"
+	item_paths = list("MET-3","DEN-1","CON-1")
+	item_names = list("Heavy Metal","Conductive Material","High Density Crystalline Material")
+	item_amounts = list(16,12,8)
+	item_outputs = list(/obj/item/syndicate_destruction_system)
+	time = 90 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/jumpsuit
 	name = "Grey Jumpsuit"
 	item_paths = list("FAB-1")
@@ -2436,7 +2446,7 @@
 	item_names = list("Sturdy Metal","Conductive Material","Crystal")
 	item_amounts = list(8,12,16)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/syndicate_purge_system)
-	time = 20 SECONDS
+	time = 90 SECONDS
 	create = 1
 	category = "Tool"
 
@@ -2446,7 +2456,7 @@
 	item_names = list("Sturdy Metal","Conductive Material","Crystal")
 	item_amounts = list(16,12,8)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/syndicate_rewind_system)
-	time = 20 SECONDS
+	time = 90 SECONDS
 	create = 1
 	category = "Tool"
 
