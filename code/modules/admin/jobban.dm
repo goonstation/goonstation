@@ -31,7 +31,7 @@
 		var/datum/player/player = make_player(M2.ckey) //Get the player so we can use their bancache.
 		if(player.cached_jobbans == null)//Shit they aren't cached.
 			player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)[M2.ckey]
-			cache = player.cached_jobbans
+		cache = player.cached_jobbans
 	else if(islist(M))
 		cache = M
 	else //If we aren't a string this is going to explode.
