@@ -826,7 +826,7 @@
 	},
 /area/podmode/spacejunk/Dorgun)
 "fF" = (
-/turf/simulated/wall/asteroid/comet,
+/turf/simulated/wall/asteroid/pod_wars,
 /area/podmode/spacejunk/uvb67/central)
 "fG" = (
 /obj/grille/catwalk{
@@ -3638,7 +3638,7 @@
 /turf/space,
 /area)
 "AN" = (
-/turf/simulated/wall/asteroid/comet,
+/turf/simulated/wall/asteroid/pod_wars,
 /area/podmode/spacejunk/greatwreck)
 "AP" = (
 /obj/machinery/light,
@@ -5588,7 +5588,7 @@
 	},
 /area/podmode/spacejunk/uvb67/central)
 "Pw" = (
-/turf/simulated/wall/asteroid/comet,
+/turf/simulated/wall/asteroid/pod_wars,
 /area)
 "Px" = (
 /obj/cable{
