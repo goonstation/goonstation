@@ -973,6 +973,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\projectiles\owl.dm"
 #include "code\modules\projectiles\phaser.dm"
 #include "code\modules\projectiles\pickpocket.dm"
+#include "code\modules\projectiles\pie_projectile.dm"
 #include "code\modules\projectiles\projectile_parent.dm"
 #include "code\modules\projectiles\radbolt.dm"
 #include "code\modules\projectiles\shrink_beam.dm"
