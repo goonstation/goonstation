@@ -1,6 +1,10 @@
 
 (t)sun nov 08 20
 (u)Luxizzle
+(p)2625
+(e)🐛|bug
+(+)Examining brains to see if they are still warm now only requires medical training.
+(u)Luxizzle
 (p)2615
 (e)🐛|bug
 (+)Fixed cyborg legs not showing up on humans.
