@@ -779,6 +779,7 @@
 	slot = "l_leg"
 	icon_state_base = "l_leg"
 	icon_state = "l_leg-generic"
+	handlistPart = "legL-generic"
 	step_image_state = "footprintsL"
 	movement_modifier = /datum/movement_modifier/robotleg_left
 
@@ -786,6 +787,7 @@
 	name = "light cyborg left leg"
 	appearanceString = "light"
 	icon_state = "l_leg-light"
+	handlistPart = "legL-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 
@@ -795,6 +797,7 @@
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
+	handlistPart = "legL-treads"
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksL"
@@ -806,6 +809,7 @@
 	slot = "r_leg"
 	icon_state_base = "r_leg"
 	icon_state = "r_leg-generic"
+	handlistPart = "legR-generic"
 	step_image_state = "footprintsR"
 	movement_modifier = /datum/movement_modifier/robotleg_right
 
@@ -813,6 +817,7 @@
 	name = "light cyborg right leg"
 	appearanceString = "light"
 	icon_state = "r_leg-light"
+	handlistPart = "legR-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 
@@ -821,6 +826,7 @@
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
+	handlistPart = "legR-treads"
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksR"
