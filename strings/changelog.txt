@@ -1,5 +1,9 @@
 
 (t)sun nov 08 20
+(u)TTerc
+(p)2614
+(e)🗺|mapping
+(+)JaniTech vendor added to Donut 3 and Manta.
 (u)Luxizzle
 (p)2625
 (e)🐛|bug
