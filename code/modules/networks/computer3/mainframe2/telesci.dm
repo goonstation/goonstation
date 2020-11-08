@@ -28,8 +28,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			if(IN_RANGE(F, T, F.range))
 				return 0
 
-	for (var/X in by_type[/obj/blob/nucleus])
-		var/obj/blob/nucleus/N = X
+	for_by_tcl(N, /obj/blob/nucleus)
 		if(IN_RANGE(N, T, 3))
 			return 0
 

@@ -81,7 +81,6 @@
 		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
 
-		show_message("")
 		var/hookup_error = FALSE
 		if (isnull(src.scanner))
 			hookup_error = TRUE
@@ -178,10 +177,10 @@
 // message = message you want to pass to the noticebox
 // status = warning/success/danger/info which changes the color of the noticebox on the frontend
 
-/obj/machinery/computer/cloning/proc/show_message(message, status)
+/obj/machinery/computer/cloning/proc/show_message(message = "", status = "info")
 	src.currentStatusMessage["text"] = message
 	src.currentStatusMessage["status"] = status
-	tgui_process.update_uis(src)
+	tgui_process?.update_uis(src)
 	//prevents us from overwriting the wrong message
 	currentMessageNumber += 1
 	var/messageNumber = currentMessageNumber
@@ -189,7 +188,7 @@
 	if(src.currentMessageNumber == messageNumber)
 		src.currentStatusMessage["text"] = ""
 		src.currentStatusMessage["status"] = ""
-		tgui_process.update_uis(src)
+		tgui_process?.update_uis(src)
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
 	if ((isnull(subject)) || (!ishuman(subject)))
@@ -714,7 +713,11 @@ proc/find_ghost_by_key(var/find_key)
 			var/datum/computer/file/clone/cloneFile = new
 			cloneFile.name = "CloneRecord-[ckey(selected_record["fields"]["name"])]"
 			cloneFile.fields = selected_record["fields"]
-			show_message(src.diskette.root.add_file(cloneFile) ? "Save successful." : "Save error.", src.diskette.root.add_file(cloneFile) ? "info" : "warning")
+			if((src.diskette.file_used + cloneFile.size) > src.diskette.file_amount)
+				show_message("Disk is full.", "danger")
+				return TRUE
+			var/saved_status = src.diskette.root.add_file(cloneFile)
+			show_message( saved_status ? "Save successful." : "Save error.", saved_status ? "info" : "warning")
 			. = TRUE
 
 		if("eject")
@@ -766,7 +769,7 @@ proc/find_ghost_by_key(var/find_key)
 	var/list/recordsTemp = list()
 	data["allowedToDelete"] = src.allowed(user)
 	data["scannerGone"] = isnull(src.scanner)
-	data["occupantScanned"] = false
+	data["occupantScanned"] = FALSE
 	data["podGone"] = isnull(src.pod1)
 	if(!isnull(src.pod1))
 		data["mindWipe"] = pod1.mindwipe
@@ -789,14 +792,15 @@ proc/find_ghost_by_key(var/find_key)
 
 
 	for (var/r in records)
-		var/saved = false
+		var/saved = FALSE
 		var/obj/item/implant/health/H = locate(r["fields"]["imp"])
 		var/currentHealth = ""
-		if ((H) && (istype(H)))
+		if ((H) && istype(H))
 			currentHealth = H.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
-				saved = (F.fields["ckey"] == r["fields"]["ckey"]) ? true : false
+				if(F.fields["ckey"] == r["fields"]["ckey"])
+					saved = TRUE
 
 		recordsTemp.Add(list(list(
 			name = r["fields"]["name"],

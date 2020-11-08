@@ -35,8 +35,7 @@ datum/controller/process/fMove
 
 	doWork()
 		//space first :)
-		for(var/A in spacePushList)
-			var/atom/movable/M = A
+		for (var/atom/movable/M as() in spacePushList)
 			if(!M)
 				continue
 
@@ -146,8 +145,7 @@ datum/controller/process/fMove
 		//now manta!
 		debugPushList = mantaPushList
 		if(mantaMoving == 1)
-			for(var/A in mantaPushList)
-				var/atom/movable/M = A
+			for (var/atom/movable/M as() in mantaPushList)
 				if(!M)
 					continue
 
@@ -176,6 +174,9 @@ datum/controller/process/fMove
 								var/obj/item/tank/jetpack/J = H.back
 								if(J.allow_thrust(0.01, H))
 									continue
+
+					if (isghostdrone(B) && MagneticTether)
+						continue
 
 					M.setStatus("slowed", 20, 20)
 

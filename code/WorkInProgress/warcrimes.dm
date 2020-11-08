@@ -204,7 +204,7 @@ var/fartcount = 0
 			if(prob(15))
 				snacktime()
 			var/area/A = get_area(src)
-			if(prob(talk_prob) || A.john_talk)
+			if(prob(talk_prob) || A?.john_talk)
 				src.speak()
 
 	proc/snacktime()
@@ -654,7 +654,7 @@ var/bombini_saved = 0
 
 	johnbus_active = 0
 
-	for(var/obj/machinery/computer/shuttle_bus/C in machine_registry[MACHINES_TURRETS])
+	for(var/obj/machinery/computer/shuttle_bus/C in machine_registry[MACHINES_SHUTTLECOMPS])
 
 		C.visible_message("<span class='alert'>John's Juicin' Bus has Moved!</span>")
 

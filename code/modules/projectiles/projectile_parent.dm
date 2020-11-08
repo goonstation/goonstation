@@ -479,6 +479,8 @@
 				else
 					set_loc(Dest) //set loc so we can cross walls etc properly
 					collide_with_applicable_in_tile(Dest)
+				if (disposed || pooled)
+					return
 
 				incidence = get_dir(curr_turf, Dest)
 				if (!(incidence in cardinal))
@@ -933,17 +935,25 @@ datum/projectile/snowball
 		return
 
 	P.set_loc(S)
+	P.orig_turf = get_turf(S)
+	P.shooter = shooter
+	P.power = DATA.power
+
 	P.proj_data = DATA
 	if(!isnull(alter_proj))
 		alter_proj.Invoke(P)
-	DATA = P.proj_data //could have been changed by alter_projectile
+
+
+	if(P.proj_data == DATA)
+		P.initial_power = P.power //allows us to set projectile power in callback without needing a new projectile datum
+	else
+		DATA = P.proj_data //could have been changed by alter_projectile
+		P.initial_power = DATA.power
+
 	P.set_icon()
-	P.shooter = shooter
 	P.name = DATA.name
 	P.setMaterial(DATA.material)
-	P.power = DATA.power
-	P.initial_power = DATA.power
-	P.orig_turf = S
+
 
 	if (DATA.implanted)
 		P.implanted = DATA.implanted
@@ -972,7 +982,7 @@ datum/projectile/snowball
 
 	if(!DATA.max_range)
 		if(DATA.dissipation_rate <= 0)
-			P.max_range = 500
+			P.max_range = PROJ_INFINITE_RANGE
 		else
 			P.max_range = DATA.dissipation_delay + round(P.power / DATA.dissipation_rate)
 	else

@@ -368,7 +368,7 @@
 			if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
 				//Has the immigrant trait - they're hiding in a random locker
 				var/list/obj/storage/SL = list()
-				for(var/obj/storage/S in by_type[/obj/storage])
+				for_by_tcl(S, /obj/storage)
 					// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post
 					if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost))
 						var/turf/simulated/T = S.loc
@@ -417,7 +417,7 @@
 
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
-				for (var/obj/machinery/computer/announcement/A in machine_registry[MACHINES_ANNOUNCEMENTS])
+				for (var/obj/machinery/computer/announcement/A as() in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)
 						if (src.mind.assigned_role == "MODE") //ZeWaka: Fix for alien invasion dudes. Possibly not needed now.
 							return
@@ -622,7 +622,7 @@
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
 		C.access = JOB.access.Copy()
 
-		if(src.bioHolder && src.bioHolder.HasEffect("fat"))
+		if((src.bioHolder && src.bioHolder.HasEffect("fat")) || (src.mutantrace && !src.mutantrace.uses_human_clothes))
 			src.equip_if_possible(C, slot_in_backpack)
 		else
 			src.equip_if_possible(C, slot_wear_id)

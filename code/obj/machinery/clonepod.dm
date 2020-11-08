@@ -1143,6 +1143,17 @@
 			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (grinder.auto_strip && !grinder.emagged)
 			target.unequip_all()
+			if (length(target.implant))
+				for (var/obj/item/implant/I in target.implant)
+					if (istype(I,/obj/item/implant/projectile))
+						continue
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc)
+					newcase.imp = I
+					I.on_remove(target)
+					target.implant.Remove(I)
+					I.set_loc(newcase)
+					newcase.icon_state = "implantcase-b"
+
 		target.set_loc(grinder)
 		grinder.occupant = target
 		qdel(grab)
@@ -1152,3 +1163,33 @@
 #undef DEFAULT_MEAT_USED_PER_TICK
 #undef DEFAULT_SPEED_BONUS
 #undef MEAT_LOW_LEVEL
+
+/obj/machinery/clonepod/automatic
+	name = "Cloning Pod Deluxe"
+	meat_level = 1.#INF
+	var/last_check = 0
+	var/check_delay = 10 SECONDS
+
+/obj/machinery/clonepod/automatic/process()
+	if(!src.attempting)
+		if (world.time - last_check >= check_delay)
+			last_check = world.time
+			INVOKE_ASYNC(src, /obj/machinery/clonepod/automatic.proc/growclone_a_ghost)
+	return..()
+
+/obj/machinery/clonepod/automatic/New()
+	..()
+	animate_rainbow_glow(src) // rgb shit cause it looks cool
+	SubscribeToProcess()
+	last_check = world.time
+
+/obj/machinery/clonepod/automatic/disposing()
+	..()
+	UnsubscribeProcess()
+
+/obj/machinery/clonepod/automatic/proc/growclone_a_ghost()
+	for(var/mob/dead/observer/ghost in mobs)
+		var/datum/mind/ghost_mind = ghost.mind
+		if(ghost.client && !ghost_mind.dnr)
+			growclone(ghost, ghost.real_name, ghost_mind)
+			break

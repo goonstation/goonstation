@@ -61,10 +61,10 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_shame_cube,
 		/client/proc/removeSelf,
 		/client/proc/toggle_station_name_changing,
-		/client/proc/cmd_admin_remove_label_from,
+		/client/proc/cmd_admin_remove_all_labels,
 		/client/proc/cmd_admin_antag_popups,
 		/client/proc/retreat_to_office,
-		
+
 		),
 
 
@@ -263,6 +263,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
+		/datum/admins/proc/demonically_spawn_obj,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
@@ -317,6 +318,7 @@ var/list/admin_verbs = list(
 		/client/proc/sharkban,
 		/client/proc/toggle_literal_disarm,
 		/client/proc/implant_all,
+		/client/proc/cmd_crusher_walls,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -1825,10 +1827,9 @@ var/list/fun_images = list()
 		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
-		var/list/atoms = list(clicked_turf)
-		for(var/thing in clicked_turf)
-			var/atom/atom = thing
-			atoms += atom
+		var/list/atom/atoms = list(clicked_turf)
+		for(var/atom/thing as() in clicked_turf)
+			atoms += thing
 		if (atoms.len)
 			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms
 			if (isnull(A)) return

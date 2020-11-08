@@ -73,6 +73,8 @@
 	New()
 		..()
 		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
+		if(ismob(src.loc))
+			light_dir.light_target = src.loc
 		light_dir.update(0)
 
 	attack_self(mob/user)
@@ -367,6 +369,8 @@
 	New()
 		..()
 		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
+		if(ismob(src.loc))
+			light_dir.light_target = src.loc
 		light_dir.update(0)
 
 	attack_self(mob/user)

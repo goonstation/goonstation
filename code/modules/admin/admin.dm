@@ -1105,9 +1105,6 @@ var/global/noir = 0
 					if("Kudzuman")
 						H.set_mutantrace(/datum/mutantrace/kudzu)
 						. = 1
-					if("reliquary soldier-Don't use yet please")
-						H.set_mutantrace(/datum/mutantrace/reliquary_soldier)
-						. = 1
 					if("Ghostdrone")
 						droneize(H, 0)
 					if("Flubber")
@@ -1585,7 +1582,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				var/ab_to_add = input("Which holder?", "Ability", null) as anything in childrentypesof(/datum/abilityHolder)
+				var/ab_to_add = input("Which holder?", "Ability", null) as() in childrentypesof(/datum/abilityHolder)
 				M.add_ability_holder(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] created abilityHolder [ab_to_add] for [key_name(M)].")
@@ -2546,7 +2543,7 @@ var/global/noir = 0
 								alert("No ability holder detected. Create a holder first!")
 								return
 
-							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as anything in childrentypesof(/datum/targetable)
+							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as() in childrentypesof(/datum/targetable)
 							if (adding)
 								M.abilityHolder.addAbility(ab_to_do)
 							else
@@ -3012,7 +3009,7 @@ var/global/noir = 0
 							input2 = zalgoify(input, rand(0,3), rand(0, 3), rand(0, 3))
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg"
@@ -3032,7 +3029,7 @@ var/global/noir = 0
 							var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/ambience/spooky/Void_Calls.ogg"
@@ -3177,17 +3174,6 @@ var/global/noir = 0
 				var/ok = 0
 
 				switch(href_list["type"])
-	/*
-					if("clear_bombs")
-						for(var/obj/item/assembly/radio_bomb/O in world)
-							qdel(O)
-						for(var/obj/item/assembly/proximity_bomb/O in world)
-							qdel(O)
-						for(var/obj/item/assembly/time_bomb/O in world)
-							qdel(O)
-						ok = 1
-	*/
-
 					if("check_antagonist")
 						if (ticker && ticker.mode && current_state >= GAME_STATE_PLAYING)
 							var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
@@ -3417,7 +3403,10 @@ var/global/noir = 0
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=fingerprints;size=440x410")
-					else
+#ifdef SECRETS_ENABLED
+					if ("ideas")
+						usr.Browse(grabResource("+secret/strings/admin_ideas.html"), "window=admin_ideas;size=700x450;title=Admin Ideas")
+#endif
 				if (usr)
 					logTheThing("admin", usr, null, "used secret [href_list["secretsadmin"]]")
 					logTheThing("diary", usr, null, "used secret [href_list["secretsadmin"]]", "admin")
@@ -4041,7 +4030,9 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=unelectrify_all'>De-electrify all Airlocks</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
-				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A>
+				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Ideas</A>
+
 			"}
 
 	dat += "</div>"
@@ -4670,6 +4661,27 @@ var/global/noir = 0
 		if (chosen)
 			var/turf/T = get_turf(usr)
 			new/obj/effect/supplymarker/safe(T, preDropTime, chosen)
+			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
+
+	else
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return
+
+/datum/admins/proc/demonically_spawn_obj(var/obj/object as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc="(object path) Spawn an object. But all fancy-like"
+	set name="Spawn-Demonically"
+	if(!object)
+		return
+	if (usr.client.holder.level >= LEVEL_PA)
+		var/chosen = get_one_match(object)
+
+		if (chosen)
+			var/obj/A = new chosen()
+			var/turf/T = get_turf(usr)
+			A.set_loc(T)
+			demonic_spawn(A)
 			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 

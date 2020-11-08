@@ -28,6 +28,7 @@
 				M.req_access += src.req_access
 			//todo : autoname doors	here too. var editing is illegal!
 
+#define SPECIAL "#ffa135"
 #define MEDICAL "#3daff7"
 #define SECURITY "#f73d3d"
 #define MORGUE_BLACK "#002135"
@@ -37,6 +38,22 @@
 #define CARGO "#f7e43d"
 #define MAINTENANCE "#e5ff32"
 #define COMMAND "#00783c"
+
+/obj/access_spawn/admin_override //special admin override access spawner
+	name = "admin override access spawn"
+	color = SPECIAL
+
+	setup()
+		for (var/obj/O in src.loc)
+			O.admin_access_override = TRUE
+
+/obj/access_spawn/public
+	name = "public access spawn"
+	color = SPECIAL
+
+	setup()
+		for (var/obj/O in src.loc)
+			O.req_access = null
 
 /obj/access_spawn/security
 	name = "security access spawn"
@@ -97,6 +114,11 @@
 	name = "emergency storage access spawn"
 	req_access = list(access_emergency_storage)
 	color = MAINTENANCE
+
+/obj/access_spawn/centcom
+	name = "centcom access spawn"
+	req_access = list(access_centcom)
+	color = COMMAND
 
 /obj/access_spawn/ai_upload
 	name = "ai upload access spawn"

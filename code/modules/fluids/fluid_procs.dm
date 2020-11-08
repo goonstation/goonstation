@@ -11,8 +11,10 @@
 		return 0
 	for( var/A in contents )
 		var/atom/thing = A
-		if (!A) continue
-		if(IS_SOLID_TO_FLUID(thing) && thing.density) return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
+		if (!A)
+			continue
+		if(IS_SOLID_TO_FLUID(thing) && thing.density)
+			return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
 	return 1
 
 turf/simulated/floor/plating/airless/ocean_canpass()

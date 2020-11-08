@@ -157,7 +157,7 @@
 		if (prob(40))
 			src.emote("scream")
 		var/pals = 0
-		for (var/mob/living/carbon/human/npc/monkey/pal in by_type[/mob/living/carbon/human/npc/monkey])
+		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
 			if (get_dist(src, pal) > 7)
 				continue
 			if (pals >= 5)
@@ -255,6 +255,32 @@
 		src.a_intent = INTENT_DISARM
 		theft_target.attack_hand(src)
 		src.a_intent = src.ai_default_intent
+
+	hear_talk(mob/M as mob, messages, heardname, lang_id)
+		if (isalive(src) && messages)
+			if (M.singing)
+				if (M.singing & (BAD_SINGING | LOUD_SINGING))
+					if (prob(20))
+						// monkey is angered by singing
+						spawn(0.5 SECONDS)
+							was_harmed(M)
+							var/singing_modifier = (M.singing & BAD_SINGING) ? "bad" : "loud"
+							src.visible_message("<B>[name]</B> becomes furious at [M] for their [singing_modifier] singing!", 1)
+							src.say(pick("Must take revenge for insult to music!", "I now attack you like your singing attacked my ears!"))
+					else
+						spawn(0.5 SECONDS)
+							src.visible_message(pick("<B>[name]</B> doesn't seem to like [M]'s singing", \
+							"<B>[name]</B> puts their hands over their ears", \
+							), 1)
+						// monkey merely doesn't like the singing
+							src.say(pick("You human sing worse than a baboon!", \
+							"Me know gorillas with better vocal pitch than you!", \
+							"Monkeys ears too sensitive for this cacophony!", \
+							"You sound like you singing in two keys at same time!", \
+							"Monkey no like atonal music!")) // monkeys don't know grammar but naturally know concepts like "atonal" and "cacophony"
+							if (prob(40))
+								src.emote("scream")
+		..()
 
 /datum/action/bar/icon/filthyPickpocket
 	id = "pickpocket"

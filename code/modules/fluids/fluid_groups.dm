@@ -10,8 +10,7 @@
 	covered_turf()
 		.= list()
 		if (my_group)
-			for (var/fluid in my_group.members)
-				var/obj/fluid/F = fluid
+			for (var/obj/fluid/F as() in my_group.members)
 				.+= F.loc
 
 	clear_reagents()
@@ -159,6 +158,7 @@
 		last_drain = 0
 		master_reagent_id = 0
 		drains_floor = 1
+		waitforit = 0
 		..()
 
 	New()
@@ -180,8 +180,7 @@
 			last_add_time = world.time
 			return
 
-		for (var/fluid in src.members)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in src.members)
 			if (!F) continue
 			if (F.pooled) continue
 			src.remove(F,0,1,1)
@@ -491,8 +490,7 @@
 		var/depth_changed = 0 //force icon update later in the proc if fluid member depth changed
 		var/last_icon = 0
 
-		for(var/fluid in src.members)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in src.members)
 			LAGCHECK(LAG_HIGH)
 			if (!F || F.pooled || src.qdeled) continue
 
@@ -531,8 +529,7 @@
 		fluid_ma.color = targetcolor
 		fluid_ma.alpha = targetalpha
 
-		for(var/fluid in src.members)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in src.members)
 			if (!F || F.pooled || src.qdeled) continue
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//Same shit here with update_icon
@@ -600,8 +597,7 @@
 			if (F.blocked_dirs < 4) //skip that update if we were blocked (not an edge tile)
 				amt_per_tile = contained_amt / (members.len + created)
 
-				for(var/fluid in F.update())
-					var/obj/fluid/C = fluid
+				for (var/obj/fluid/C as() in F.update())
 					LAGCHECK(LAG_HIGH)
 					if (!C || C.pooled) continue
 					var/turf/T = C.loc
@@ -631,7 +627,7 @@
 
 			if (created >= fluids_to_create)
 				break
-			src.waitforit = 0
+		src.waitforit = 0
 
 	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0, var/remove_reagent = 1) //basically a reverse spread with drain_source as the center
 		if (!drain_source || drain_source.group != src) return
@@ -684,8 +680,7 @@
 			src.reagents.remove_any(src.amt_per_tile * removed_len)
 			src.contained_amt = src.reagents.total_volume
 
-		for (var/fluid in fluids_removed)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in fluids_removed)
 			src.remove(F,0,src.updating)
 			LAGCHECK(LAG_HIGH)
 
@@ -698,8 +693,7 @@
 
 		join_with.qdeled = 1 //hacky but stop updating
 
-		for (var/fluid in join_with.members)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in join_with.members)
 			LAGCHECK(LAG_HIGH)
 			if (!F) continue
 			F.group = src
@@ -748,8 +742,7 @@
 		var/datum/fluid_group/FG = new group_type
 		FG.can_update = 0
 		//add members to FG, remove them from src
-		for (var/fluid in connected)
-			var/obj/fluid/F = fluid
+		for (var/obj/fluid/F as() in connected)
 			if (!FG) return 0
 			FG.members += F
 			F.group = FG

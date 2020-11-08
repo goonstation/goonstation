@@ -198,8 +198,7 @@
 
 			if (istype(W, /obj/item/remote/syndicate_teleporter))
 				for(var/obj/submachine/syndicate_teleporter/S in get_turf(src)) //sender
-					for(var/X in by_type[/obj/submachine/syndicate_teleporter]) // receiver
-						var/obj/submachine/syndicate_teleporter/R = X
+					for_by_tcl(R, /obj/submachine/syndicate_teleporter) // receiver
 						if(R.id == S.id && S != R)
 							if(S.recharging == 1)
 								return
@@ -378,7 +377,7 @@
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "unanchornuke"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/nuclearbomb/the_bomb = null
 

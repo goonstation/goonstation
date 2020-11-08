@@ -280,7 +280,7 @@
 		if (ishuman(owner))
 			//carpenter people can fiddle with railings faster!
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 		if (The_Interaction)
 			interaction = The_Interaction

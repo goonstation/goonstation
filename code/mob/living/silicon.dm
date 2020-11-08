@@ -708,3 +708,11 @@ var/global/list/module_editors = list()
 		src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
 
 	. = 'sound/impact_sounds/Metal_Clang_3.ogg'
+
+/mob/living/silicon/proc/singify_text(var/text)
+	var/adverb = pick("robotically", "synthetically", "electronically")
+	var/speech_verb = pick("sings", pick("croons", "intones", "warbles"))
+	var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px;\" src=\"[resource("images/radio_icons/noterobot.png")]\">"
+	if (src.singing & LOUD_SINGING)
+		note_img = "[note_img][note_img]"
+	return "[adverb] [speech_verb],[note_img]<span style=\"font-style: italic; color: lightcyan;\">[text]</span>[note_img]"

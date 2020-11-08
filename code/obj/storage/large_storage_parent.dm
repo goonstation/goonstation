@@ -303,7 +303,7 @@
 			return
 
 		if (isitem(O) && (O:cant_drop || (issilicon(user) && O.loc == user))) //For borg held items
-			user.show_text("You can't put that in [src] when it's attached to you!", "red")
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
 
 		src.add_fingerprint(user)
@@ -543,7 +543,7 @@
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
-				for (var/obj/storage/O in by_type[/obj/storage])
+				for_by_tcl(O, /obj/storage)
 					if (O.z != src.z || O.open || !O.can_open())
 						continue
 					myPals.Add(O)
@@ -755,7 +755,7 @@
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()

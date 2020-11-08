@@ -1356,11 +1356,11 @@
 
 /datum/manufacture/secbot
 	name = "Security Drone"
-	item_paths = list("MET-1","CON-1","ALL")
-	item_names = list("Metal","Conductive Material","Any Material")
-	item_amounts = list(10,5,5)
+	item_paths = list("MET-2","CON-2","POW-1")
+	item_names = list("Sturdy Metal","High Energy Conductor","Power Source")
+	item_amounts = list(30,20,20)
 	item_outputs = list(/obj/machinery/bot/secbot)
-	time = 60 SECONDS
+	time = 120 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -1368,7 +1368,7 @@
 	name = "Construction Drone"
 	item_paths = list("MET-1","CON-1","ALL")
 	item_names = list("Metal","Conductive Material","Any Material")
-	item_amounts = list(10,5,5)
+	item_amounts = list(15,10,5)
 	item_outputs = list(/obj/machinery/bot/floorbot)
 	time = 60 SECONDS
 	create = 1
@@ -1376,11 +1376,11 @@
 
 /datum/manufacture/medbot
 	name = "Medical Drone"
-	item_paths = list("MET-1","CON-1","ALL")
-	item_names = list("Metal","Conductive Material","Any Material")
-	item_amounts = list(10,5,5)
+	item_paths = list("MET-1","CON-1","POW-1")
+	item_names = list("Metal","Conductive Material","Power Source")
+	item_amounts = list(20,15,5)
 	item_outputs = list(/obj/machinery/bot/medbot)
-	time = 60 SECONDS
+	time = 90 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -1388,7 +1388,7 @@
 	name = "Firefighting Drone"
 	item_paths = list("MET-1","CON-1","ALL")
 	item_names = list("Metal","Conductive Material","Any Material")
-	item_amounts = list(10,5,5)
+	item_amounts = list(15,10,5)
 	item_outputs = list(/obj/machinery/bot/firebot)
 	time = 60 SECONDS
 	create = 1
@@ -1398,7 +1398,7 @@
 	name = "Sanitation Drone"
 	item_paths = list("MET-1","CON-1","ALL")
 	item_names = list("Metal","Conductive Material","Any Material")
-	item_amounts = list(10,5,5)
+	item_amounts = list(15,10,5)
 	item_outputs = list(/obj/machinery/bot/cleanbot)
 	time = 60 SECONDS
 	create = 1
@@ -1408,9 +1408,9 @@
 	name = "Mining Drone"
 	item_paths = list("MET-1","MET-2","CON-1","ALL")
 	item_names = list("Metal","Sturdy Metal","Conductive Material","Any Material")
-	item_amounts = list(10,2,10,5)
+	item_amounts = list(15,5,10,5)
 	item_outputs = list(/obj/machinery/bot/mining)
-	time = 60 SECONDS
+	time = 0 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -2026,6 +2026,16 @@
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/hat_ltophat
+	name = "Large Top Hat"
+	item_paths = list("FAB-1")
+	item_names = list("Fabric")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/clothing/head/longtophat)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/jumpsuit_white
 	name = "White Jumpsuit"
 	item_paths = list("FAB-1")
@@ -2556,3 +2566,251 @@
 	time = 30 SECONDS
 	create = 1
 	category = "Tool"
+
+//////////////////////UBER-EXTREME SURVIVAL////////////////////////////////
+/datum/manufacture/armor_vest	//
+	name = "Armor Vest"
+	item_paths = list("MET-3")
+	item_names = list("Dense Metal")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/clothing/suit/armor/vest)
+	time = 30 SECONDS
+	create = 1
+	category = "Weapon"
+
+/datum/manufacture/saa	//
+	name = "Colt SAA"
+	item_paths = list("MET-2")
+	item_names = list("Sturdy Metal")
+	item_amounts = list(7)
+	item_outputs = list(/obj/item/gun/kinetic/colt_saa)
+	time = 30 SECONDS
+	create = 1
+	category = "Weapon"
+/datum/manufacture/saa_ammo	//
+	name = "Colt Ammo"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/ammo/bullets/c_45)
+	time = 7 SECONDS
+	create = 1
+	category = "ammo"
+/datum/manufacture/clock	//
+	name = "Clock 188"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(10)
+	item_outputs = list(/obj/item/gun/kinetic/clock_188)
+	time = 10 SECONDS
+	create = 1
+	category = "Weapon"
+/datum/manufacture/clock_ammo	//
+	name = "Clock ammo"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(3)
+	item_outputs = list(/obj/item/ammo/bullets/nine_mm_NATO)
+	time = 7 SECONDS
+	create = 1
+	category = "ammo"
+
+/datum/manufacture/riot_launcher	//
+	name = "Riot Launcher"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(12)
+	item_outputs = list(/obj/item/gun/kinetic/riot40mm)
+	time = 10 SECONDS
+	create = 1
+	category = "Weapon"
+/datum/manufacture/riot_launcher_ammo_pbr	//
+	name = "Launcher PBR Ammo"
+	item_paths = list("MET-1", "CON-1", "CRY-1")
+	item_names = list("Metal", "Conductive Material", "Crystal")
+	item_amounts = list(2,4,1)
+	item_outputs = list(/obj/item/ammo/bullets/pbr)
+	time = 10 SECONDS
+	create = 1
+	category = "ammo"
+/datum/manufacture/riot_launcher_ammo_flashbang	//
+	name = "Launcher Flashbang Box"
+	item_paths = list("MET-1", "CON-1")
+	item_names = list("Metal", "Conductive Material")
+	item_amounts = list(2,3)
+	item_outputs = list(/obj/item/storage/box/flashbang_kit)
+	time = 10 SECONDS
+	create = 1
+	category = "ammo"
+/datum/manufacture/riot_launcher_ammo_tactical	//
+	name = "Launcher Tactical Box"
+	item_paths = list("MET-2", "CON-1", "CRY-1")
+	item_names = list("Metal", "Conductive Material", "Crystal")
+	item_amounts = list(5, 5, 3)
+	item_outputs = list(/obj/item/storage/box/tactical_kit)
+	time = 10 SECONDS
+	create = 1
+	category = "ammo"
+
+/datum/manufacture/sniper	//
+	name = "Sniper"
+	item_paths = list("DEN-1","MET-3","CON-1","CRY-1")
+	item_names = list("High Density Crystalline Matter","Dense Metal","Conductive Material","Crystal")
+	item_amounts = list(2, 15, 4, 3)
+	item_outputs = list(/obj/item/gun/kinetic/sniper)
+	time = 25 SECONDS
+	create = 1
+	category = "Weapon"
+/datum/manufacture/sniper_ammo	//
+	name = "Sniper Ammo"
+	item_paths = list("MET-3")
+	item_names = list("Dense Metal")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/ammo/bullets/rifle_762_NATO)
+	time = 10 SECONDS
+	create = 1
+	category = "ammo"
+/datum/manufacture/tac_shotgun	//
+	name = "Tactical Shotgun"
+	item_paths = list("MET-3", "CON-1")
+	item_names = list("Dense Metal", "Conductive Material")
+	item_amounts = list(15, 5)
+	item_outputs = list(/obj/item/gun/kinetic/tactical_shotgun)
+	time = 20 SECONDS
+	create = 1
+	category = "Weapon"
+/datum/manufacture/tac_shotgun_ammo	//
+	name = "Tactical Shotgun Ammo"
+	item_paths = list("MET-3")
+	item_names = list("Dense Metal")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/ammo/bullets/buckshot_burst)
+	time = 7 SECONDS
+	create = 1
+	category = "ammo"
+/datum/manufacture/gyrojet	//
+	name = "Gyrojet"
+	item_paths = list("DEN-1","MET-3","CON-2")
+	item_names = list("High Density Crystalline Matter","Dense Metal","High Energy Conductor")
+	item_amounts = list(5, 10, 6)
+	item_outputs = list(/obj/item/gun/kinetic/gyrojet)
+	time = 30 SECONDS
+	create = 1
+	category = "Weapon"
+/datum/manufacture/gyrojet_ammo	//
+	name = "Gyrojet Ammo"
+	item_paths = list("MET-3", "CON-2")
+	item_names = list("Dense Metal", "High Energy Conductor")
+	item_amounts = list(5,2)
+	item_outputs = list(/obj/item/ammo/bullets/gyrojet)
+	time = 7 SECONDS
+	create = 1
+	category = "Ammo"
+/datum/manufacture/plank	//
+	name = "Plank/Barricade"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/plank)
+	time = 5 SECONDS
+	create = 1
+	category = "Medicine"
+/datum/manufacture/brute_kit	//
+	name = "Brute Kit"
+	item_paths = list("MET-1", "CON-1")
+	item_names = list("Metal", "Conductive Material")
+	item_amounts = list(2, 2)
+	item_outputs = list(/obj/item/storage/firstaid/brute)
+	time = 10 SECONDS
+	create = 1
+	category = "Medicine"
+/datum/manufacture/burn_kit	//
+	name = "Burn Kit"
+	item_paths = list("MET-1", "CON-1")
+	item_names = list("Metal", "Conductive Material")
+	item_amounts = list(2, 2)
+	item_outputs = list(/obj/item/storage/firstaid/fire)
+	time = 10 SECONDS
+	create = 1
+	category = "Medicine"
+/datum/manufacture/crit_kit //
+	name = "Crit Kit"
+	item_paths = list("MET-1", "CON-1")
+	item_names = list("Metal", "Conductive Material")
+	item_amounts = list(2, 2)
+	item_outputs = list(/obj/item/storage/firstaid/crit)
+	time = 9 SECONDS
+	create = 1
+	category = "Medicine"
+/datum/manufacture/empty_kit
+	name = "Empty First Aid Kit"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/storage/firstaid/regular/empty)
+	time = 4 SECONDS
+	create = 1
+	category = "Medicine"
+/datum/manufacture/spacecillin	//
+	name = "Spacecillin"
+	item_paths = list("MET-1", "CON-1")
+	item_names = list("Metal", "Conductive Material")
+	item_amounts = list(3, 3)
+	item_outputs = list(/obj/item/reagent_containers/syringe/antiviral)
+	time = 10 SECONDS
+	create = 1
+	category = "Medicine"
+/datum/manufacture/bat	//
+	name = "Baseball Bat"
+	item_paths = list("MET-2")
+	item_names = list("Strudy Metal")
+	item_amounts = list(15)
+	item_outputs = list(/obj/item/bat)
+	time = 20 SECONDS
+	create = 1
+	category = "Miscellaneous"
+/datum/manufacture/quarterstaff	//
+	name = "Quarterstaff"
+	item_paths = list("MET-2")
+	item_names = list("Strudy Metal")
+	item_amounts = list(10)
+	item_outputs = list(/obj/item/quarterstaff)
+	time = 10 SECONDS
+	create = 1
+	category = "Miscellaneous"
+/datum/manufacture/cleaver	//
+	name = "Cleaver"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(20)
+	item_outputs = list(/obj/item/kitchen/utensil/knife/cleaver)
+	time = 16 SECONDS
+	create = 1
+	category = "Miscellaneous"
+/datum/manufacture/dsaber	//
+	name = "D-Saber"
+	item_paths = list("MET-2", "CON-1")
+	item_names = list("Sturdy Metal", "Conductive Material")
+	item_amounts = list(20, 10)
+	item_outputs = list(/obj/item/sword/discount)
+	time = 20 SECONDS
+	create = 1
+	category = "Miscellaneous"
+/datum/manufacture/fireaxe	//
+	name = "Fireaxe"
+	item_paths = list("MET-3", "CON-2")
+	item_names = list("Metal", "Conductive Material")
+	item_amounts = list(20, 5)
+	item_outputs = list(/obj/item/fireaxe)
+	time = 20 SECONDS
+	create = 1
+	category = "Miscellaneous"
+/datum/manufacture/shovel	//
+	name = "Shovel"
+	item_paths = list("MET-3", "CON-2")
+	item_names = list("Dense Metal","High Energy Conductor")
+	item_amounts = list(25, 5)
+	item_outputs = list(/obj/item/shovel)	//this is powerful)
+	time = 40 SECONDS
+	create = 1
+	category = "Miscellaneous"

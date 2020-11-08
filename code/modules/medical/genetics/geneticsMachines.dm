@@ -754,7 +754,7 @@
 		var/booth_effect_desc = input(usr, "Please enter a product description.", "$$$", "") as null|text
 		booth_effect_desc = strip_html(booth_effect_desc,280)
 
-		for (var/obj/machinery/genetics_booth/GB in by_type[/obj/machinery/genetics_booth])
+		for_by_tcl(GB, /obj/machinery/genetics_booth)
 			var/already_has = 0
 			for (var/datum/geneboothproduct/P in GB.offered_genes)
 				if (P.id == E.id)
@@ -1125,7 +1125,7 @@
 
 		src.log_me(subject, "mutation activated", E)
 
-		if (subject.bioHolder.ActivatePoolEffect(E) && !ismonkey(subject) && subject.client)
+		if (subject.bioHolder.ActivatePoolEffect(E) && !isnpcmonkey(subject) && subject.client)
 			activated_bonus(usr)
 		usr << link("byond://?src=\ref[src];menu=mutations")
 		//send them to the mutations page.

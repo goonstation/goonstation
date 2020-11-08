@@ -155,7 +155,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "guncharge"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/gun/ownerGun
 	var/pox

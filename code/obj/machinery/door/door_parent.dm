@@ -204,6 +204,9 @@
 	src.visible_message("<span class='alert'>[user] is attempting to pry open [src].</span>")
 	user.show_text("You have to stand still...", "red")
 
+#ifdef HALLOWEEN
+	user.emote("scream")
+#endif
 	if (do_after(user, 100) && !(user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
 		var/success = 0
 		SPAWN_DBG (6)

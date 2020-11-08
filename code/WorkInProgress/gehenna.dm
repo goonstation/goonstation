@@ -39,6 +39,9 @@
 	if(vistarget)
 		vistarget.overlays.Cut()
 		vistarget.vis_contents = src
+		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
+		if(L)
+			vistarget.vis_contents -= L
 
 // No mor vis shit
 // Gehenna shit tho

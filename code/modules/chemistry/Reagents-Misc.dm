@@ -841,8 +841,7 @@ datum
 					if (!target)
 						return
 
-				for(var/atom in target)
-					var/atom/A = atom
+				for (var/atom/A as() in target)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							target.visible_message("<span class='alert'><b>[A]</b> dissolves completely!</span>")
@@ -3663,12 +3662,14 @@ datum
 			on_add()
 				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf))
 					return
-				holder.my_atom.Scale(4,1.5)
+				holder.my_atom.SafeScale(4,1.5)
+
 
 			on_remove()
 				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf))
 					return
-				holder.my_atom.Scale(1/4,1/1.5)
+				holder.my_atom.SafeScale(1/4,1/1.5)
+
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)

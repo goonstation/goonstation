@@ -2,9 +2,8 @@
 #define OVERRIDE_ARM_R 2
 #define OVERRIDE_LEG_R 4
 #define OVERRIDE_LEG_L 8
-// mutant races: cheap way to add new "types" of mobs
-// without copy/pasting the human code a million times.
-// Now a robust object-oriented version!!!!
+
+/// mutant races: cheap way to add new "types" of mobs
 /datum/mutantrace
 	var/name = null				// used for identification in diseases, clothing, etc
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
@@ -21,21 +20,29 @@
 								// but they must explicitly specify if they're overriding via this var
 	var/override_language = null // set to a language ID to replace the language of the human
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
-	var/allow_fat = 0			// whether fat icons/disabilities are used
+	/// whether fat icons/disabilities are used
+	var/allow_fat = 0
 	var/uses_special_head = 0	// unused
-	var/human_compatible = 1	// if 1, allows human diseases and dna injectors to affect this mutantrace
-	var/uses_human_clothes = 1	// if 0, can only wear clothes listed in an item's compatible_species var
-	var/clothing_icon_override = null // set to an icon to have human.update_clothing() look through its icon_states for matching things
-	var/exclusive_language = 0	// if 1, only understood by others of this mutantrace
-	var/voice_message = null	// overrides normal voice message if defined (and others don't understand us, ofc)
+	/// if 1, allows human diseases and dna injectors to affect this mutantrace
+	var/human_compatible = 1
+	/// if 0, can only wear clothes listed in an item's compatible_species var
+	var/uses_human_clothes = 1
+	/// set to an icon to have human.update_clothing() look through its icon_states for matching things
+	var/clothing_icon_override = null
+	/// if 1, only understood by others of this mutantrace
+	var/exclusive_language = 0
+	/// overrides normal voice message if defined (and others don't understand us, ofc)
+	var/voice_message = null
 	var/voice_name = "human"
-	var/jerk = 0				// Should robots arrest these by default?
+	/// Should robots arrest these by default?
+	var/jerk = 0
 
 	var/icon = 'icons/effects/genetics.dmi'
 	var/icon_state = "psyche"
 	var/icon_head = null
 	var/icon_beard = null
-	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
+	/// does this look different enough from a default human to warrant a static icon of its own?
+	var/icon_override_static = 0
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -52,12 +59,15 @@
 	var/l_robolimb_arm_type_mutantrace = null
 	var/r_robolimb_leg_type_mutantrace = null
 	var/l_robolimb_leg_type_mutantrace = null
-	var/ignore_missing_limbs = 0 // Replace both arms regardless of mob status (new and dispose).
+
+	/// Replace both arms regardless of mob status (new and dispose).
+	var/ignore_missing_limbs = 0
 
 	var/firevuln = 1 //Scales damage, just like critters.
 	var/brutevuln = 1
 	var/toxvuln = 1
-	var/aquatic = 0 //ignores suffocation from being underwater + moves at full speed underwater
+	/// ignores suffocation from being underwater + moves at full speed underwater
+	var/aquatic = 0
 	var/needs_oxy = 1
 
 	var/voice_override = 0
@@ -97,7 +107,8 @@
 	proc/onLife(var/mult = 1)	//Called every Life cycle of our mob
 		return
 
-	proc/onDeath() //Called when our mob dies.  Returning a true value will short circuit the normal death proc right before deathgasp/headspider/etc
+	/// Called when our mob dies.  Returning a true value will short circuit the normal death proc right before deathgasp/headspider/etc
+	proc/onDeath()
 		return
 
 	New(var/mob/living/carbon/human/M)
@@ -229,14 +240,14 @@
 		return
 
 	disposing()
-		if(mob)
+		if (mob)
 			mob.mutantrace = null
 			mob.set_face_icon_dirty()
 			mob.set_body_icon_dirty()
 
 			if (movement_modifier)
 				REMOVE_MOVEMENT_MODIFIER(mob, movement_modifier, src.type)
-			if(needs_oxy)
+			if (needs_oxy)
 				REMOVE_MOB_PROPERTY(mob, PROP_BREATHLESS, src.type)
 
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
@@ -556,17 +567,69 @@
 	override_hair = 0
 	override_beard = 0
 	override_detail = 0
+	override_attack = 0
+	allow_fat = 1
 	jerk = 1
 	movement_modifier = /datum/movement_modifier/zombie
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
+	var/strain = 0
 
+	//this is terrible, but I do anyway.
+	can_infect/bubs
+		strain = 1
+
+	can_infect/spitter
+		strain = 2
+
+	can_infect/normal
+		strain = -1
 
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(mob))
 			src.add_ability(mob)
+			mob.is_zombie = 1
+		M.max_health += 100
 
-		M.add_stam_mod_max("zombie", -100)
-		M.add_stam_mod_regen("zombie", 15)
+		if (strain == 1)
+			make_bubs(M)
+		else if (strain == 2)
+			make_spitter(M)
+		else if (strain == 0 && prob(30))	//chance to be one or the other
+			strain = rand(1,2)
+			if(strain == 1) //Bubs
+				make_bubs(M)
+			if(strain == 2) // spitter ranged zombie
+				make_spitter(M)
+
+		M.add_stam_mod_max("zombie", 100)
+		M.add_stam_mod_regen("zombie", -5)
+
+	proc/make_bubs(var/mob/living/carbon/human/M)
+		M.bioHolder.AddEffect("fat")
+		M.bioHolder.AddEffect("strong")
+		M.bioHolder.AddEffect("mattereater")
+		M.Scale(1.15, 1.15) //Fat bioeffect wont work, so they're just bigger now.
+		M.max_health += 150
+		M.health = max(M.max_health, M.health)
+
+	proc/make_spitter(var/mob/living/carbon/human/M)
+		M.max_health -= 45
+		M.health = max(M.max_health, M.health)
+		M.Scale(1, 0.9)
+		M.add_sm_light("glowy", list(94, 209, 31, 175))
+		M.bioHolder.AddEffect("shoot_limb")
+		M.bioHolder.AddEffect("acid_bigpuke")
+
+	onLife(var/mult = 1)
+		..()
+
+		mob.HealDamage("All", 2*mult, 2*mult)
+		if (strain == 1)
+			mob.HealDamage("All", 1*mult, 1*mult)
+		else if (strain == 2 && prob(5))//spitter, then regrow their arms possibly
+			mob.limbs.mend(1)
 
 	disposing()
 		if (ishuman(mob))
@@ -656,9 +719,9 @@
 /datum/mutantrace/zombie/can_infect
 
 	add_ability(var/mob/living/carbon/human/H)
-		H.abilityHolder = new /datum/abilityHolder/critter(src) //lol
-		H.abilityHolder.owner = H
-		H.abilityHolder.addAbility(/datum/targetable/critter/zombify)
+		var/datum/abilityHolder/critter/C = H.add_ability_holder(/datum/abilityHolder/critter) //lol
+		C.transferOwnership(H)
+		C.addAbility(/datum/targetable/critter/zombify)
 
 	disposing()
 		if (ishuman(mob))
@@ -1029,7 +1092,7 @@
 	hand_offset = -5
 	body_offset = -7
 	//	uses_human_clothes = 0 // Guess they can keep that ability for now (Convair880).
-	human_compatible = 0
+	human_compatible = TRUE
 	exclusive_language = 1
 	voice_message = "chimpers"
 	voice_name = "monkey"
@@ -1386,6 +1449,10 @@
 		if(ishuman(mob))
 			if(!isnull(original_blood_color))
 				mob.blood_color = original_blood_color
+				mob.bioHolder.RemoveEffect("mattereater")
+				mob.bioHolder.RemoveEffect("jumpy")
+				mob.bioHolder.RemoveEffect("vowelitis")
+				mob.bioHolder.RemoveEffect("accent_chav")
 		original_blood_color = null
 		..()
 
@@ -1470,11 +1537,11 @@
 	New(var/mob/living/carbon/human/H)
 		..(H)
 		SPAWN_DBG(0)	//ugh
-			H.max_health -= 50
-			H.health = max(H.max_health, H.health)
+			H.setStatus("maxhealth-", null, -50)
 			H.add_stam_mod_max("kudzu", -100)
 			H.add_stam_mod_regen("kudzu", -5)
 			if(ishuman(mob))
+				H.bioHolder.AddEffect("xray", magical=1)
 				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
 				H.abilityHolder.owner = H
 				H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)
@@ -1499,15 +1566,14 @@
 			H.remove_stam_mod_max("kudzu")
 			H.remove_stam_mod_regen("kudzu")
 		return ..()
-
+/* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead
 	// vision modifier (see_mobs, etc i guess)
 	sight_modifier()
 		mob.sight |= SEE_TURFS
 		mob.sight |= SEE_MOBS
 		mob.sight |= SEE_OBJS
 		mob.see_in_dark = SEE_DARK_FULL
-		return
-
+*/
 	//Should figure out what I'm doing with this and the onLife in the abilityHolder one day. I'm thinking, maybe move it all to the abilityholder, but idk, composites are weird.
 	onLife(var/mult = 1)
 		if (!mob.abilityHolder)
@@ -1524,6 +1590,10 @@
 				//at max points, so heal
 				mob.take_toxin_damage(-round_mult)
 				mob.HealDamage("All", round_mult, round_mult)
+				if (prob(7) && mob.find_ailment_by_type(/datum/ailment/malady/flatline))
+					mob.cure_disease_by_path(/datum/ailment/malady/heartfailure)
+					mob.cure_disease_by_path(/datum/ailment/malady/flatline)
+
 		else
 			//nutrients for a bit of grace period
 			if (KAH.points > 0)
@@ -1537,97 +1607,6 @@
 					mob.changeStatus("weakened", 3 SECONDS)
 
 		return
-
-/datum/mutantrace/reliquary_soldier
-	name = "reliquary_soldier"
-	override_eyes = 1
-	override_hair = 1
-	override_beard = 1
-	override_detail = 1
-	override_skintone = 1
-	override_attack = 0
-
-	override_language = null
-	understood_languages = list("english")
-	uses_special_head = 0	// unused
-	human_compatible = 0
-	uses_human_clothes = 0
-	clothing_icon_override = null
-	jerk = 1
-
-	icon_state = "blank_c"
-
-	r_robolimb_arm_type_mutantrace = /obj/item/parts/robot_parts/arm/right/reliquary
-	l_robolimb_arm_type_mutantrace = /obj/item/parts/robot_parts/arm/left/reliquary
-	r_robolimb_leg_type_mutantrace = /obj/item/parts/robot_parts/leg/right/reliquary
-	l_robolimb_leg_type_mutantrace = /obj/item/parts/robot_parts/leg/left/reliquary
-	ignore_missing_limbs = 1
-
-	firevuln = 0.5
-	brutevuln = 0.75
-	toxvuln = 0
-	needs_oxy = 0
-	voice_override = "reliquary"
-
-	New(var/mob/living/carbon/human/M)
-		SPAWN_DBG(0)
-			M.uses_damage_overlays = 0
-			M.add_stam_mod_max("rel_footsoldier", 50)
-			M.blood_id = "reliquary_blood"
-			//M.reagents.maximum_volume = 0
-			M.add_stam_mod_regen("rel_footsoldier", 10)
-			M.blood_color = "#0b1f8f"
-			M.bioHolder.Uid = "--conductive_substance--"
-			M.metabolizes = 0
-			M.speechverb_say = "states"
-			M.speechverb_gasp = "states"
-			M.speechverb_stammer = "states"
-			M.speechverb_exclaim = "declares"
-			M.speechverb_ask = "queries"
-			M.robot_talk_understand = 1
-			M.see_infrared = 1
-			M.mob_flags |= IS_RELIQUARY | IS_RELIQUARY_SOLDIER
-
-
-			//Limb & Organ stuff//
-			return ..(M)
-
-	disposing()
-		if(mob)
-			mob.remove_stam_mod_max("rel_footsoldier")
-			mob.remove_stam_mod_regen("rel_footsoldier")
-		..()
-		return ..()
-
-
-	say_filter(var/message)
-		return message
-
-	emote(var/act)
-		return null
-
-	custom_attack(atom/target)
-		return target.attack_hand(mob)
-
-	sight_modifier()
-		mob.sight |= SEE_MOBS
-		mob.sight |= SEE_OBJS
-		mob.see_in_dark = SEE_DARK_FULL
-		return
-
-	onLife(var/mult = 1)	//Called every Life cycle of our mob
-		return
-
-	onDeath() //Called when our mob dies.  Returning a true value will short circuit the normal death proc right before deathgasp/headspider/etc
-		return
-
-/mob/living/carbon/human/reliquarytest
-
-	New()
-		..()
-		SPAWN_DBG(0)
-			src.real_name = "RELIQUARY TEST - DO NOT USE"
-			src.set_mutantrace(/datum/mutantrace/reliquary_soldier)
 
 /datum/mutantrace/cow
 	name = "cow"
