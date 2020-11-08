@@ -200,7 +200,7 @@
 		if (next_shot_at > ticker.round_elapsed_ticks)
 			return
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
-		arcFlashTurf(user, get_turf(target), 15000)
+		arcFlashTurf(user, get_turf(target), wattage)
 
 /datum/limb/gun
 	var/datum/projectile/proj = null
