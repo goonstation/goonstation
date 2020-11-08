@@ -56,7 +56,7 @@
 		var/length = length(readied_minds)
 		shuffle_list(readied_minds)
 		if (length < 2)
-			if (prob(100))
+			if (prob(100))	//change to 50 - KYLE
 				team_NT.accept_players(readied_minds)
 			else
 				team_SY.accept_players(readied_minds)
@@ -71,13 +71,24 @@
 
 
 /datum/game_mode/pod_wars/post_setup()
-	
+	SPAWN_DBG(-1)
+		setup_asteroid_ores()
+
+/datum/game_mode/pod_wars/proc/setup_asteroid_ores()
+
+	var/list/types = list("mauxite", "pharosium", "molitz", "char", "ice", "cobryl", "bohrum", "claretine", "viscerite", "koshmarite", "syreline", "gold", "plasmastone", "cerenkite", "miraclium", "nanite cluster", "erebite", "starstone")
+	var/list/weights = list(100, 100, 100, 125, 55, 55, 25, 25, 55, 40, 20, 20, 15, 20, 10, 3, 15, 3)
+
 	for(var/turf/T in world)
-		if (T.z != 1 || !istype(T, /turf/simulated/wall/asteroid)) continue
+		if (T.z != 1 || !istype(T, /turf/simulated/wall/asteroid/pod_wars)) continue
 
+		//half chance for nothing in an asteroid, just skip.
+		if (prob(50)) continue
 
+		var/turf/simulated/wall/asteroid/pod_wars/AST = T
+		//Do the ore_picking
+		AST.randomize_ore(weightedprob(types, weights))
 
-	Turfspawn_Asteroid_SeedSpecificOre
 	return 1
 
 //for testing, can remove when sure this works - Kyle
@@ -136,7 +147,7 @@
 		name = "The Syndicate"
 		src.team_SY.change_points(-25)
 
-	world << ("<h2><span class='alert'>[name]'s [CS] has been destroyed!!</span></h2>")
+	boutput(world, "<h2><span class='alert'>[name]'s [CS] has been destroyed!!</span></h2>")
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_damage(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
@@ -147,12 +158,13 @@
 
 	for (var/datum/mind/M in team.members)
 		if (M.current)
-			M.current << ("<h3><span class='alert'>Your team's [CS] is under attack!</span></h3>")
+			boutput(M.current, "<h3><span class='alert'>Your team's [CS] is under attack!</span></h3>")
 
 
 
 /datum/game_mode/pod_wars/check_finished()
-
+	if (team_NT.points < 0 || team_SY.points < 0)
+		return 1
 
  return 0
 
@@ -337,6 +349,7 @@
 	bound_height = 64
 
 	var/health = 1000
+	var/health_max = 1000
 	var/team_num		//used for getting the team datum, this is set to 1 or 2 in the map editor. 1 = NT, 2 = Syndicate
 	var/suppress_damage_message = 0
 
@@ -344,13 +357,12 @@
 		..()
 
 	disposing()
-		..()
-
 		if (ticker.mode == /datum/game_mode/pod_wars)
 			//get the team datum from its team number right when we allocate points.
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 
 			mode.announce_critical_system_destruction(team_num, src)
+		..()
 
 
 	ex_act(severity)
@@ -395,12 +407,16 @@
 	attackby(var/obj/item/W, var/mob/user)
 		..()
 		take_damage(W.force)
+		user.lastattacked = src
+
+	get_desc()
+		. = "<br><span class='notice'>It looks like it has [health] left out of [health_max]. You can just tell.</span>"
 
 	proc/take_damage(var/damage)
 		if (damage > 0)
 			src.health -= damage
 
-			if (!suppress_damage_message && ticker.mode == /datum/game_mode/pod_wars)
+			if (!suppress_damage_message && istype(ticker.mode, /datum/game_mode/pod_wars))
 				//get the team datum from its team number right when we allocate points.
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 
@@ -442,7 +458,6 @@
 		animate_rainbow_glow(src) // rgb shit cause it looks cool
 		SubscribeToProcess()
 		last_check = world.time
-
 
 	disposing()
 		..()
@@ -533,6 +548,11 @@ obj/screen/score_board
 	quick_deploy_fuel = 2
 	var/turret_path = /obj/deployable_turret/pod_wars
 
+	//this is a band aid cause this is broke, delete this override when merged properly and fixed.
+	attackby(obj/item/W, mob/user)
+		..()
+		user.lastattacked = src
+
 	spawn_turret(var/direct)
 		var/obj/deployable_turret/turret = new turret_path(src.loc,direction=direct)
 		turret.health = src.health
@@ -559,7 +579,7 @@ obj/screen/score_board
 
 	//just "deactivates"
 	die()
-		playsound(get_turf(src), "sound/effects/robogib.ogg", 50, 1)
+		// playsound(get_turf(src), "sound/effects/robogib.ogg", 50, 1)
 		new /obj/decal/cleanable/robot_debris(src.loc)
 		src.alpha = 30
 		sleep(5 MINUTES)
@@ -627,23 +647,23 @@ obj/screen/score_board
 	icon_tag = "nt"
 
 	is_friend(var/mob/living/C)
-		if (C?.mind.assigned_role == "NanoTrasen Pod Pilot")
+		if (C.mind?.assigned_role == "NanoTrasen Pod Pilot")
 			return 1
-		else 
+		else
 			return 0
 
-	ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/nt/activated)
-	activated
-		anchored=1
-		active=1
-		north
-			dir=NORTH
-		south
-			dir=SOUTH
-		east
-			dir=EAST
-		west
-			dir=WEST
+ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/nt/activated)
+/obj/deployable_turret/pod_wars/nt/activated
+	anchored=1
+	active=1
+	north
+		dir=NORTH
+	south
+		dir=SOUTH
+	east
+		dir=EAST
+	west
+		dir=WEST
 
 
 /obj/item/turret_deployer/pod_wars/sy
@@ -657,23 +677,23 @@ obj/screen/score_board
 	icon_tag = "st"
 
 	is_friend(var/mob/living/C)
-		if (C?.mind.assigned_role == "Syndicate Pod Pilot")
+		if (C.mind?.assigned_role == "Syndicate Pod Pilot")
 			return 1
-		else 
+		else
 			return 0
 
-	ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/sy/activated)
-	activated
-		anchored=1
-		active=1
-		north
-			dir=NORTH
-		south
-			dir=SOUTH
-		east
-			dir=EAST
-		west
-			dir=WEST
+ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/sy/activated)
+/obj/deployable_turret/pod_wars/sy/activated
+	anchored=1
+	active=1
+	north
+		dir=NORTH
+	south
+		dir=SOUTH
+	east
+		dir=EAST
+	west
+		dir=WEST
 
 /obj/item/shipcomponent/secondary_system/lock/pw_id
 	name = "ID Card Hatch Locking Unit"
@@ -757,13 +777,22 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		src.m_w_system.ship = src
 		src.components += src.m_w_system
 
-		src.sec_system = new /obj/item/shipcomponent/secondary_system/orescoop( src )
-		src.sec_system.ship = src
-		src.components += src.sec_system
 
 		myhud.update_systems()
 		myhud.update_states()
 		return
+
+
+
+	proc/equip_mining()
+		src.sensors = new /obj/item/shipcomponent/sensor/mining( src )
+		src.sensors.ship = src
+		src.components += src.sensors
+
+		src.sec_system = new /obj/item/shipcomponent/secondary_system/orescoop( src )
+		src.sec_system.ship = src
+		src.components += src.sec_system
+
 
 	nanotrasen
 		name = "NT Mining Dingy"
@@ -773,6 +802,10 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			name = "NT Mining Dingy"
 			weapon_type = /obj/item/shipcomponent/mainweapon/bad_mining
 
+			New()
+				..()
+				equip_mining()
+
 	syndicate
 		name = "Syndicate Mining Dingy"
 		icon_state = "syndiputt"
@@ -781,6 +814,9 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			name = "Syndicate Mining Dingy"
 			weapon_type = /obj/item/shipcomponent/mainweapon/bad_mining
 
+			New()
+				equip_mining()
+				..()
 
 //////////////////
 ///////////////pod_wars asteroids
@@ -790,71 +826,51 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	fullbright = 1
 	name = "asteroid"
 	desc = "It's asteroid material."
-	stone_color = "#95A1AF"
-	icon_state = "comet"
 	hardness = 1
 	default_ore = /obj/item/raw_material/rock
 
 	// varied layers
 
-	ice
-		name = "comet ice"
-		icon_state = "comet_ice"
-		stone_color = "#D1E6FF"
-		default_ore = /obj/item/raw_material/ice
-		hardness = 2
+	New()
+		..()
 
-	ice_dense
-		name = "dense ice"
-		desc = "A compressed layer of comet ice."
-		icon_state = "comet_ice_dense"
-		stone_color = "#2070CC"
-		default_ore = /obj/item/raw_material/ice
-		hardness = 5
-		quality = 15
-		amount = 6
+	//Don't think this can go in new.
+	proc/randomize_ore(var/ore_name as text)
+		//stolen from Turfspawn_Asteroid_SeedSpecificOre
+		var/datum/ore/O = mining_controls?.get_ore_from_string(ore_name)
+		src.ore = O
+		src.hardness += O.hardness_mod
+		src.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
+		var/image/ore_overlay = image('icons/turf/asteroid.dmi',O.name)
+		ore_overlay.transform = turn(ore_overlay.transform, pick(0,90,180,-90))
+		ore_overlay.pixel_x += rand(-6,6)
+		ore_overlay.pixel_y += rand(-6,6)
+		src.overlays += ore_overlay
 
-	ice_char
-		name = "dark regolith"
-		icon_state = "comet_char"
-		desc = "An inky-black assortment of carbon-rich dust and ice."
-		stone_color = "#111111"
-		default_ore = /obj/item/raw_material/char
 
-	glassy
-		name = "blasted regolith"
-		desc = "This stuff has been blasted and fused by stellar radiation and impacts."
-		icon_state = "comet_glassy"
-		stone_color = "#111111"
-		default_ore = /obj/item/raw_material/molitz
-		hardness = 4
+//////////survival_machete//////////////
+/obj/item/survival_machete
+	name = "pilot survival machete"
+	desc = "This peculularly shaped design was used by the Soviets nearly a century ago. It's also useful in space."
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "surv_machete_nt"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapon.dmi'
+	item_state = "knife"
+	force = 10.0
+	throwforce = 15.0
+	throw_range = 5
+	hit_type = DAMAGE_STAB
+	w_class = 2.0
+	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	tool_flags = TOOL_CUTTING
+	burn_type = 1
+	stamina_damage = 25
+	stamina_cost = 10
+	stamina_crit_chance = 40
+	pickup_sfx = "sound/items/blade_pull.ogg"
 
-	copper
-		name = "metallic rock"
-		desc = "Rich in soft metals."
-		icon_state = "comet_copper"
-		stone_color = "#553333"
-		default_ore = /obj/item/raw_material/pharosium
-
-	iron
-		name = "ferrous rock"
-		desc = "Dense metallic rock."
-		icon_state = "comet_iron"
-		stone_color = "#333333"
-		default_ore = /obj/item/raw_material/mauxite
-		hardness = 8
-
-	plasma
-		name = "plasma ice"
-		desc = "Concentrated plasma trapped in dense ice."
-		icon_state = "comet_plasma"
-		default_ore = /obj/item/raw_material/plasmastone
-		hardness = 5
-
-	radioactive
-		name = "radioactive metal"
-		desc = "There's a hazardous amount of radioactive material in this metallic layer."
-		icon_state = "comet_radioactive"
-		stone_color = "#114444"
-		default_ore = /obj/item/raw_material/cerenkite
-		hardness = 10
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_KNIFE)
+	syndicate
+		icon_state = "surv_machete_st"
