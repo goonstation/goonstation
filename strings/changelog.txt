@@ -1,5 +1,9 @@
 
 (t)sun nov 08 20
+(u)Arahimine
+(p)2501
+(e)🆕|feature
+(+)Cyborgs can now state their laws via the 'State Laws' and 'State Standard Laws' verbs, in the Robot Commands tab.
 (u)TTerc
 (p)2614
 (e)🗺|mapping
