@@ -336,7 +336,6 @@ toxic - poisons
 	icon_state = "modproj"
 	name = "blaster bolt"
 	sname = "blaster"
-	damage_type = D_BURNING
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	dissipation_delay = 6
 	dissipation_rate = 5
@@ -370,6 +369,7 @@ toxic - poisons
 	color_blue = 0
 	override_color = 0
 	icon_state = "bolt"
+	damage_type = D_ENERGY
 
 	blue_NT
 		name = "blue blaster bolt"
