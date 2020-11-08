@@ -156,9 +156,10 @@
 	else if (team_num == TEAM_SYNDICATE)
 		team = team_SY
 
-	for (var/datum/mind/M in team.members)
-		if (M.current)
-			boutput(M.current, "<h3><span class='alert'>Your team's [CS] is under attack!</span></h3>")
+	// for (var/datum/mind/M in team.members)
+	// 	if (M.current)
+	// 		boutput(M.current, "<h3><span class='alert'>Your team's [CS] is under attack!</span></h3>")
+	boutput(world, "<h3><span class='alert'>[team.name]'s [CS] is under attack!</span></h3>")
 
 
 
@@ -184,7 +185,7 @@
 
 
 /datum/pod_wars_team
-	var/name = "NanoTrasen Crew"
+	var/name = "NanoTrasen"
 	var/comms_frequency = 0
 	var/area/base_area = null		//base ship area
 	var/datum/mind/commander = null
@@ -201,10 +202,10 @@
 		src.mode = mode
 		src.team_num = team
 		if (team_num == TEAM_NANOTRASEN)
-			name = "NanoTrasen Crew"
+			name = "NanoTrasen"
 			base_area = /area/podmode/team1 //area north, NT crew
 		else if (team_num == TEAM_SYNDICATE)
-			name = "Syndicate Crew"
+			name = "The Syndicate"
 			base_area = /area/podmode/team2 //area south, Syndicate crew
 
 		set_comms(mode)
@@ -298,6 +299,8 @@
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat/NT(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
 			H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/nanotrasen(H), H.slot_belt)
+			H.equip_if_possible(new /obj/item/survival_machete(H), H.slot_r_store)
+
 
 
 
@@ -324,6 +327,7 @@
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
 			H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/syndicate(H), H.slot_belt)
+			H.equip_if_possible(new /obj/item/survival_machete/syndicate(H), H.slot_r_store)
 
 
 		if (headset)
@@ -785,9 +789,9 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 
 	proc/equip_mining()
-		src.sensors = new /obj/item/shipcomponent/sensor/mining( src )
-		src.sensors.ship = src
-		src.components += src.sensors
+		// src.sensors = new /obj/item/shipcomponent/sensor/mining( src )
+		// src.sensors.ship = src
+		// src.components += src.sensors
 
 		src.sec_system = new /obj/item/shipcomponent/secondary_system/orescoop( src )
 		src.sec_system.ship = src
@@ -854,8 +858,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	desc = "This peculularly shaped design was used by the Soviets nearly a century ago. It's also useful in space."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "surv_machete_nt"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapon.dmi'
-	item_state = "knife"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "surv_machete"
 	force = 10.0
 	throwforce = 15.0
 	throw_range = 5
