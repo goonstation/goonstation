@@ -1542,7 +1542,9 @@
 /turf/simulated/floor,
 /area/podmode/team1/mining)
 "ld" = (
-/obj/machinery/clonepod/pod_wars,
+/obj/machinery/clonepod/pod_wars{
+	team_num = 1
+	},
 /turf/simulated/floor/white,
 /area/podmode/team1/medbay)
 "le" = (
@@ -1849,7 +1851,9 @@
 /turf/simulated/floor,
 /area/podmode/team2/Mining)
 "nF" = (
-/obj/machinery/clonepod/pod_wars,
+/obj/machinery/clonepod/pod_wars{
+	team_num = 2
+	},
 /turf/simulated/floor/white,
 /area/podmode/team2/Cloning)
 "nM" = (
