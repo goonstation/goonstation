@@ -81,7 +81,7 @@
 
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
-			user.visible_message("<span class='notice'><b>[user]</b> hugs Gnome Chompski!</span>","<span class='notice'>You hug Gnome Chompski!</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> hugs [src]!</span>","<span class='notice'>You hug [src]!</span>")
 			playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
 			last_laugh = world.time
 
