@@ -373,7 +373,7 @@ toxic - poisons
 
 	blue_NT
 		name = "blue blaster bolt"
-		color_icon = "#0a4882"
+		color_icon = "#3d9cff"
 		color_red = 0.05
 		color_green = 0.28
 		color_blue = 0.51
