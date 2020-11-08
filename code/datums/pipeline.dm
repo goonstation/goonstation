@@ -220,7 +220,7 @@ datum/pipeline
 					delta_temperature = src.air.temperature - modeled_location.temperature
 
 					heat = thermal_conductivity * delta_temperature * \
-						(partial_heat_capacity * modeled_location.heat_capacity/(partial_heat_capacity+modeled_location.heat_capacity))
+						(partial_heat_capacity * modeled_location.heat_capacity/(partial_heat_capacity + modeled_location.heat_capacity))
 
 					src.air.temperature -= heat/total_heat_capacity
 					modeled_location.temperature += heat/modeled_location.heat_capacity
@@ -241,7 +241,7 @@ datum/pipeline
 
 				if((sharer_heat_capacity>0) && (partial_heat_capacity>0))
 					heat = thermal_conductivity * delta_temperature * \
-						(partial_heat_capacity * sharer_heat_capacity/(partial_heat_capacity+sharer_heat_capacity))
+						(partial_heat_capacity * sharer_heat_capacity/(partial_heat_capacity + sharer_heat_capacity))
 
 					self_temperature_delta = -heat/total_heat_capacity
 					sharer_temperature_delta = heat/sharer_heat_capacity
