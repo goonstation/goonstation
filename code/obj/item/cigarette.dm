@@ -851,6 +851,8 @@
 
 	New()
 		..()
+		src.create_reagents(1)
+		reagents.add_reagent("phosphorus", 1)
 		light = new /datum/light/point
 		light.set_brightness(0.4)
 		light.set_color(0.94, 0.69, 0.27)
@@ -970,6 +972,13 @@
 				user.visible_message("<b>[user]</b> lights [src] with the flame from [target].",\
 				"You light [src] with the flame from [target].")
 				src.light(user)
+				return
+			else if (istype (target, /obj/item/reagent_containers/)) // copied from cigarettes
+				user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] in the [target].</span>",\
+				"<span class='notice'>You crush up the [src] in the [target].</span>")
+				if(src.reagents)
+					src.reagents.trans_to(target, 1)
+				qdel (src)
 				return
 			else
 				if (prob(10))
