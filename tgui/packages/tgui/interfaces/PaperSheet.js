@@ -17,6 +17,7 @@ import { useBackend } from '../backend';
 import { Box, Flex, Tabs, TextArea, Button } from '../components';
 import { Window } from '../layouts';
 import { createLogger } from '../logging';
+import { clamp } from 'common/math';
 
 const logger = createLogger('Paper');
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
@@ -218,13 +219,13 @@ const Stamp = (props, context) => {
   const stamp_transform = {
     'left': image.x + 'px',
     'top': image.y + 'px',
-    'transform': 'rotate(' + image.rotate + 'deg)',
+    'transform': 'rotate(' + image.rotate + 'turn)',
     'opacity': opacity || 1.0,
   };
   const stamp_text_transform = {
     'left': image.x + 'px',
     'top': image.y + 20 + 'px',
-    'transform': 'rotate(' + image.rotate + 'deg)',
+    'transform': 'rotate(' + image.rotate + 'turn)',
     'opacity': opacity || 1.0,
   };
   return (
@@ -333,25 +334,43 @@ class PaperSheetStamper extends Component {
 
 
   findStampPosition(e) {
+    const windowRef = document.querySelector('.Layout__content');
     if (e.shiftKey) {
       if (!this.state.rotating) {
         const rotating = { rotating: true };
         this.setState(() => rotating);
-        const heldX = { heldX: e.pageX + this.state.rotate };
+
+        const heldX = { heldX: e.pageX };
+
         this.setState(() => heldX);
       }
-      const rotate = { rotate: (this.state.heldX - e.pageX) };
+
+      const rad = (e.pageX / 360) + this.state.rotate;
+      const circularMath = ((Math.round(rad * 10) / 10) >= 2.0) ? 0 : rad;
+      logger.log(circularMath);
+
+      // const rotate = { rotate: (this.state.heldX - (e.pageX / 360)) };
+      const rotate = { rotate: circularMath };
       this.setState(() => rotate);
-      logger.log(this.state.rotate);
-      // logger.log(this.state.heldX - e.pageX);
+
       return;
     }
+    const borderOffset = {
+      x: 55,
+      y: 55,
+    };
+    const angulo = ((this.state.rotate > Math.PI * 0.5 && this.state.rotate < Math.PI * 1) || (this.state.rotate > Math.PI * 1.5 && this.state.rotate < Math.PI * 2))? Math.PI - this.state.rotate : this.state.rotate;
+    const yThing = Math.sin(angulo) * borderOffset["y"] + Math.cos(angulo) * borderOffset["y"];
+    const xThing = Math.sin(angulo) * borderOffset["x"] + Math.cos(angulo) * borderOffset["x"];
+    // logger.log(xThing);
+    // logger.log(clamp(e.pageY + windowRef.scrollTop, borderOffset["y"], (windowRef.clientHeight - borderOffset["y"])));
+    // logger.log(clamp(e.pageX, borderOffset["x"], (windowRef.clientWidth - borderOffset["x"])));
+    // logger.log(e.pageX);
     const rotating = { rotating: false };
     this.setState(() => rotating);
-    const windowRef = document.querySelector('.Layout__content');
     const pos = [
-      e.pageX,
-      e.pageY + windowRef.scrollTop,
+      clamp(e.pageX, borderOffset["x"], (windowRef.clientWidth - borderOffset["x"])),
+      clamp(e.pageY + windowRef.scrollTop, borderOffset["y"], (windowRef.clientHeight - borderOffset["y"])),
     ];
     const centerOffset = vecScale([121, 120], 0.5);
     const center = vecSubtract(pos, centerOffset);
