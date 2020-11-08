@@ -1936,7 +1936,7 @@
 			if (..()) return
 
 	//pie launcher module
-	pielauncher
+	pie_launcher
 		name = "Shoddy Pie Launcher"
 		desc = "This pie launcher seems shoddily made, and doesn't have a handle. Why would anyone make this?"
 		icon_state = "tool_generic"// add pie launcher sprite?
