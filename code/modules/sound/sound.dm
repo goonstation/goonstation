@@ -72,9 +72,9 @@ var/global/list/falloff_cache = list()
 /client/proc/getVolumeDescriptions()
 	return list("Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.")
 
-/// Returns the volume to scale /sound/var/volume for the given channel(so 0-1)
+/// Returns the volume to set /sound/var/volume to for the given channel(so 0-100)
 /client/proc/getVolume(id)
-	return volumes[id + 1] * volumes[1]
+	return volumes[id + 1] * volumes[1] * 100
 
 /// Returns the master volume (0-1)
 /client/proc/getMasterVolume()
