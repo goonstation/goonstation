@@ -150,8 +150,6 @@ GAUNTLET CARDS
 ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
 	desc = "An ID card to help open doors, lock pods, and identify your body."
-	cant_self_remove = 1
-	cant_other_remove = 1
 	New()
 		access = get_access("Captain")
 		..()

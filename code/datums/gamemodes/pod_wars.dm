@@ -616,9 +616,6 @@ obj/screen/score_board
 		if (ismob(V.pilot))
 			return is_friend(V.pilot)
 
-
-
-
 /obj/item/turret_deployer/pod_wars/nt
 	icon_tag = "nt"
 	turret_path = /obj/deployable_turret/pod_wars/nt
