@@ -1,4 +1,9 @@
 
+(t)sun nov 08 20
+(u)Luxizzle
+(p)2615
+(e)🐛|bug
+(+)Fixed cyborg legs not showing up on humans.
 (t)sat nov 07 20
 (u)UrsulaMajor
 (p)2620
