@@ -7,6 +7,7 @@ assignees: ''
 
 ---
 <!-- To automatically tag this issue, add the uppercase label(s) surrounded by brackets below, for example: [LABEL] -->
+<!-- Please make sure that what you are reporting is not something such as -but not limited to- duplication bugs, code-injection vulnerabilities etc. Those should instead be reported on our Exploits Subforum. -->
 [BUG]
 
 **Describe the bug**
