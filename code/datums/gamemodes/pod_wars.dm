@@ -71,6 +71,13 @@
 
 
 /datum/game_mode/pod_wars/post_setup()
+	
+	for(var/turf/T in world)
+		if (T.z != 1 || !istype(T, /turf/simulated/wall/asteroid)) continue
+
+
+
+	Turfspawn_Asteroid_SeedSpecificOre
 	return 1
 
 //for testing, can remove when sure this works - Kyle
@@ -552,7 +559,7 @@ obj/screen/score_board
 
 	//just "deactivates"
 	die()
-		playsound(src.loc, "sound/effects/robogib.ogg", 50, 1)
+		playsound(get_turf(src), "sound/effects/robogib.ogg", 50, 1)
 		new /obj/decal/cleanable/robot_debris(src.loc)
 		src.alpha = 30
 		sleep(5 MINUTES)
@@ -623,16 +630,10 @@ obj/screen/score_board
 	icon_tag = "nt"
 
 	is_friend(var/mob/living/C)
-		var/obj/item/card/id/I = C.get_id()
-		if(!istype(I))
+		if (C?.mind.assigned_role == "NanoTrasen Pod Pilot")
+			return 1
+		else 
 			return 0
-		switch(I.assignment)
-			if("NT Commander")
-				return 1
-			if("NT Pilot")
-				return 1
-			else
-				return 0
 
 	ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/nt/activated)
 	activated
@@ -659,16 +660,10 @@ obj/screen/score_board
 	icon_tag = "st"
 
 	is_friend(var/mob/living/C)
-		var/obj/item/card/id/I = C.get_id()
-		if(!istype(I))
+		if (C?.mind.assigned_role == "Syndicate Pod Pilot")
+			return 1
+		else 
 			return 0
-		switch(I.assignment)
-			if("Syndicate Commander")
-				return 1
-			if("Syndicate Pilot")
-				return 1
-			else
-				return 0
 
 	ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/sy/activated)
 	activated
@@ -788,3 +783,81 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		mining
 			name = "Syndicate Mining Dingy"
 			weapon_type = /obj/item/shipcomponent/mainweapon/bad_mining
+
+
+//////////////////
+///////////////pod_wars asteroids
+
+
+/turf/simulated/wall/asteroid/pod_wars
+	fullbright = 1
+	name = "asteroid"
+	desc = "It's asteroid material."
+	stone_color = "#95A1AF"
+	icon_state = "comet"
+	hardness = 1
+	default_ore = /obj/item/raw_material/rock
+
+	// varied layers
+
+	ice
+		name = "comet ice"
+		icon_state = "comet_ice"
+		stone_color = "#D1E6FF"
+		default_ore = /obj/item/raw_material/ice
+		hardness = 2
+
+	ice_dense
+		name = "dense ice"
+		desc = "A compressed layer of comet ice."
+		icon_state = "comet_ice_dense"
+		stone_color = "#2070CC"
+		default_ore = /obj/item/raw_material/ice
+		hardness = 5
+		quality = 15
+		amount = 6
+
+	ice_char
+		name = "dark regolith"
+		icon_state = "comet_char"
+		desc = "An inky-black assortment of carbon-rich dust and ice."
+		stone_color = "#111111"
+		default_ore = /obj/item/raw_material/char
+
+	glassy
+		name = "blasted regolith"
+		desc = "This stuff has been blasted and fused by stellar radiation and impacts."
+		icon_state = "comet_glassy"
+		stone_color = "#111111"
+		default_ore = /obj/item/raw_material/molitz
+		hardness = 4
+
+	copper
+		name = "metallic rock"
+		desc = "Rich in soft metals."
+		icon_state = "comet_copper"
+		stone_color = "#553333"
+		default_ore = /obj/item/raw_material/pharosium
+
+	iron
+		name = "ferrous rock"
+		desc = "Dense metallic rock."
+		icon_state = "comet_iron"
+		stone_color = "#333333"
+		default_ore = /obj/item/raw_material/mauxite
+		hardness = 8
+
+	plasma
+		name = "plasma ice"
+		desc = "Concentrated plasma trapped in dense ice."
+		icon_state = "comet_plasma"
+		default_ore = /obj/item/raw_material/plasmastone
+		hardness = 5
+
+	radioactive
+		name = "radioactive metal"
+		desc = "There's a hazardous amount of radioactive material in this metallic layer."
+		icon_state = "comet_radioactive"
+		stone_color = "#114444"
+		default_ore = /obj/item/raw_material/cerenkite
+		hardness = 10
