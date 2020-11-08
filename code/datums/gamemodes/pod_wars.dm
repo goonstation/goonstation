@@ -299,7 +299,7 @@
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat/NT(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
 			H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/nanotrasen(H), H.slot_belt)
-			H.equip_if_possible(new /obj/item/survival_machete(H), H.slot_r_store)
+			H.equip_if_possible(new /obj/item/survival_machete(H), H.slot_l_store)
 
 
 
@@ -327,7 +327,7 @@
 			H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
 			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
 			H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/syndicate(H), H.slot_belt)
-			H.equip_if_possible(new /obj/item/survival_machete/syndicate(H), H.slot_r_store)
+			H.equip_if_possible(new /obj/item/survival_machete/syndicate(H), H.slot_l_store)
 
 
 		if (headset)
@@ -424,9 +424,9 @@
 				//get the team datum from its team number right when we allocate points.
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 
-				mode.announce_critical_system_damage(name, src)
+				mode.announce_critical_system_damage(team_num, src)
 				suppress_damage_message = 1
-				SPAWN_DBG(1 MINUTES)
+				SPAWN_DBG(2 MINUTES)
 					suppress_damage_message = 0
 
 
@@ -474,10 +474,10 @@
 		else
 			return
 
-		for(var/mob/dead/observer/ghost in to_search)
-			var/datum/mind/ghost_mind = ghost.mind
-			if(ghost.client && !ghost_mind.dnr)
-				var/success = growclone(ghost, ghost.real_name, ghost_mind)
+		for(var/datum/mind/mind in to_search)
+			var/mob/dead/observer/ghost = mind.current
+			if(istype(ghost) && ghost.client && !mind.dnr)
+				var/success = growclone(ghost, ghost.real_name, mind)
 				if (success && team)
 					SPAWN_DBG(1)
 						team.equip_player(src.occupant)
