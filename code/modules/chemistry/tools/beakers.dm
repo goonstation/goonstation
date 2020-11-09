@@ -205,6 +205,7 @@
 		src.update_icon()
 
 	proc/update_icon() //updates icon based on fluids inside
+		src.underlays = null
 		if (src.reagents && src.reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
 			var/datum/color/average = reagents.get_average_color()
@@ -215,10 +216,9 @@
 			else
 				src.fluid_image.icon_state = "fluid-[src.icon_style][fluid_state]"
 			src.fluid_image.color = average_rgb
-			src.UpdateOverlays(src.fluid_image, "fluid")
+			src.underlays += fluid_image
 		else
 			src.icon_state = src.icon_style
-			src.UpdateOverlays(null, "fluid")
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
