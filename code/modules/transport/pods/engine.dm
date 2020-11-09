@@ -84,10 +84,8 @@
 	var/list/beacons = list()
 	//Kinda bad here, but lazy again. This is for
 #ifdef MAP_OVERRIDE_POD_WARS
-	if (istype(ticker.mode, /datum/game_mode/pod_wars))
-		var/datum/game_mode/pod_wars/mode = ticker.mode
-		var/team = ship?.pilot?.mind?.special_role
-
+	var/team = ship?.pilot?.mind?.special_role
+		
 	for(var/obj/warp_beacon/W in warp_beacons)
 		if (W.name == "NSV Pytheas" && team != "NanoTrasen Crew") continue
 		else if (W.name == "Lodbrok" && team != "Syndicate Crew") continue
