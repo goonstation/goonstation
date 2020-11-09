@@ -1097,11 +1097,11 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 	icon_state = "handcuff"
 	var/obj/machinery/bot/secbot/master
 	var/list/voice_lines = list(
-		  'sound/voice/bgod.ogg'
+			'sound/voice/bgod.ogg'
 		, 'sound/voice/biamthelaw.ogg'
 		, 'sound/voice/bsecureday.ogg'
 		, 'sound/voice/bradio.ogg'
-	//, 'sound/voice/binsult.ogg'
+		//, 'sound/voice/binsult.ogg'
 		, 'sound/voice/bcreep.ogg'
 		)
 
