@@ -204,11 +204,14 @@
 		src.team_num = team
 		if (team_num == TEAM_NANOTRASEN)
 			name = "NanoTrasen"
+#ifdef MAP_OVERRIDE_POD_WARS
 			base_area = /area/podmode/team1 //area north, NT crew
+#endif
 		else if (team_num == TEAM_SYNDICATE)
 			name = "The Syndicate"
+#ifdef MAP_OVERRIDE_POD_WARS
 			base_area = /area/podmode/team2 //area south, Syndicate crew
-
+#endif
 		set_comms(mode)
 
 	proc/change_points(var/amt)
