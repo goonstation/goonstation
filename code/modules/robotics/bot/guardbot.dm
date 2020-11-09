@@ -350,6 +350,16 @@
 		desc = "The PR-6MS Shockbuddy was remarketed under the Guardbuddy line following the establishment of stricter electroconvulsive therapy regulations."
 		setup_default_tool_path = /obj/item/device/guardbot_tool/tesla
 
+	pie
+		name = "Clownbuddy"
+		desc = "This guardbuddy doesn't look quite right..."
+		setup_default_tool_path = /obj/item/device/guardbot_tool/pie_launcher
+
+		New()
+			..()
+			src.costume_icon = image(src.icon, "bcostume-clown", , FLY_LAYER)
+			src.update_icon()
+
 	bodyguard
 		setup_charge_percentage = 98
 		setup_default_startup_task = /datum/computer/file/guardbot_task/bodyguard
