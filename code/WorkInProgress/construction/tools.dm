@@ -452,7 +452,7 @@
 
 	var/selecting = 0
 	var/mode = "floors"
-	var/icons = list("floors" = 'icons/turf/conworker_floors.dmi', "walls" = 'icons/turf/conworker_walls.dmi')
+	var/icons = list("floors" = 'icons/turf/floorplanner_floors.dmi', "walls" = 'icons/turf/floorplanner_walls.dmi')
 	var/marker_class = list("floors" = /obj/plan_marker/floor, "walls" = /obj/plan_marker/wall)
 	var/selected = "floor"
 	// var/pod_turf = 0
