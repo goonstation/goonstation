@@ -2565,6 +2565,10 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		..()
 		src.access = get_access("Captain")
 		return
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (src.slot_card)
+			M.equip_new_if_possible(src.slot_card, slot_card)
 
 	proc/set_headset_freq(var/obj/item/device/radio/headset/headset, var/freq)
 		if (istype(headset))
@@ -2573,6 +2577,7 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"
+		linkcolor = "#3348ff"
 		slot_back = /obj/item/storage/backpack/NT
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/nanotrasen
 		slot_jump = /obj/item/clothing/under/misc/turds
@@ -2596,8 +2601,16 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 				M.mind.special_role = mode.team_NT?.name
 				set_headset_freq(M.ears, mode.team_NT?.comms_frequency)
 
+		commander
+			name = "NanoTrasen Commander"
+			slot_head = /obj/item/clothing/head/NTberet/commander
+			slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot/commander
+			slot_card = /obj/item/card/id/pod_wars/nanotrasen/commander
+
 	syndicate
 		name = "Syndicate Pod Pilot"
+		linkcolor = "#FF0000"
+
 		slot_back = /obj/item/storage/backpack/syndie
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/syndicate
 		slot_jump = /obj/item/clothing/under/misc/syndicate
@@ -2620,6 +2633,11 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 				M.mind.special_role = mode.team_SY?.name
 				set_headset_freq(M.ears, mode.team_SY?.comms_frequency)
 
+		commander
+			name = "Syndicate Commander"
+			slot_head = /obj/item/clothing/head/helmet/space/syndicate/commissar_cap
+			slot_suit = /obj/item/clothing/suit/space/syndicate/commissar_greatcoat
+			slot_card = /obj/item/card/id/pod_wars/syndicate/commander
 
 /datum/job/football
 	name = "Football Player"

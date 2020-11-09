@@ -33,8 +33,9 @@
 	if (!setup_teams())
 		return 0
 
-	handle_point_change(team_NT)	//HAX. am
-	handle_point_change(team_SY)	//HAX. am
+	//just to move the bar to the right place.
+	handle_point_change(team_NT, team_NT.points)	//HAX. am
+	handle_point_change(team_SY, team_SY.points)	//HAX. am
 
 	return 1
 
@@ -159,7 +160,7 @@
 	// for (var/datum/mind/M in team.members)
 	// 	if (M.current)
 	// 		boutput(M.current, "<h3><span class='alert'>Your team's [CS] is under attack!</span></h3>")
-	boutput(world, "<h3><span class='alert'>[team.name]'s [CS] is under attack!</span></h3>")
+	boutput(world, "<h3><span class='alert'>[team.name]'s <b>[CS]<b> is under attack!</span></h3>")
 
 
 
@@ -192,8 +193,8 @@
 	var/list/members = list()
 	var/team_num = 0
 
-	var/points = 50
-	var/max_points = 100
+	var/points = 100
+	var/max_points = 200
 	var/list/mcguffins = list()		//Should have 4 AND ONLY 4
 	var/datum/game_mode/pod_wars/mode
 
@@ -238,7 +239,7 @@
 			return 0
 
 		commander = pick(possible_commanders)
-		commander.special_role = "commander"
+		// commander.special_role = "commander"
 		return 1
 
 //Really stolen from gang, But this basically just picks everyone who is ready and not hellbanned or jobbanned from Command or Captain
@@ -249,6 +250,8 @@
 			if (!istype(M)) continue
 			if (ishellbanned(M)) continue
 			if(jobban_isbanned(M, "Captain")) continue //If you can't captain a Space Station, you probably can't command a starship either...
+			if(jobban_isbanned(M, "NanoTrasen Commander") || "NanoTrasen Commander" in M.client.preferences.jobs_unwanted) continue
+			if(jobban_isbanned(M, "Syndicate Commander") || "Syndicate Commander" in M.client.preferences.jobs_unwanted) continue
 			if ((M.ready) && !candidates.Find(M.mind))
 				candidates += M.mind
 
@@ -259,88 +262,116 @@
 
 	proc/equip_player(var/mob/M)
 		var/mob/living/carbon/human/H = M
+		var/datum/job/pod_wars/JOB
+
+		if (team_num == TEAM_NANOTRASEN)
+			if (M.mind == commander)
+				JOB = new /datum/job/pod_wars/nanotrasen/commander
+			else
+				JOB = new /datum/job/pod_wars/nanotrasen
+		else if (team_num == TEAM_SYNDICATE)
+			if (M.mind == commander)
+				JOB = new /datum/job/pod_wars/syndicate/commander
+			else
+				JOB = new /datum/job/pod_wars/syndicate
 
 		if (istype(M, /mob/new_player))
 			var/mob/new_player/N = M
 			if (team_num == TEAM_NANOTRASEN)
-				N.mind.assigned_role = "NanoTrasen Pod Pilot"
+				if (M.mind == commander)
+					H = N.create_character(JOB)
+					H.mind.assigned_role = "NanoTrasen Commander"
+				else
+					H = N.create_character(JOB)
+					H.mind.assigned_role = "NanoTrasen Pod Pilot"
+				H.mind.special_role = "NanoTrasen"
+
 			else if (team_num == TEAM_SYNDICATE)
-				N.mind.assigned_role = "Syndicate Pod Pilot"
-			// H = N.create_character(new /datum/job/pod_wars)	//should use this, but I wrote the stuff here first and lazy...
+				if (M.mind == commander)
+					H = N.create_character(JOB)
+					H.mind.assigned_role = "Syndicate Commander"
+				else
+					H = N.create_character(JOB)
+					H.mind.assigned_role = "Syndicate Pod Pilot"
+				H.mind.special_role = "Syndicate"
+
+		else if (istype(H))
+			H.Equip_Job_Slots(JOB)
 
 		if (!ishuman(H))
 			boutput(H, "something went wrong. Horribly wrong.")
 			return
 
-		// SHOW_TIPS(H)
-
-		H.mind.special_role = name
-
-		var/obj/item/device/radio/headset/headset = new /obj/item/device/radio/headset(H)
-
-		if (team_num == TEAM_NANOTRASEN)
-			var/obj/item/card/id/pod_wars/nanotrasen/I = new/obj/item/card/id/pod_wars/nanotrasen(H)
-			//commanders get a couple extra things...
-			if (H.mind == commander)
-				H.mind.special_role = "NanoTrasen Commander"
-				I.name = "NT Commander"
-				I.assignment = "NT Commander"
-				H.equip_if_possible(new /obj/item/clothing/head/NTberet/commander(H), H.slot_head)
-				H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot/commander(H), H.slot_wear_suit)
-			else
-				H.equip_if_possible(new /obj/item/clothing/head/helmet/space/ntso(H), H.slot_head)
-				H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot(H), H.slot_wear_suit)
-
-			H.equip_if_possible(I, H.slot_wear_id)
-
-			H.equip_if_possible(headset, H.slot_ears)
-			H.equip_if_possible(new /obj/item/storage/backpack/NT(H), H.slot_back)
-			H.equip_if_possible(new /obj/item/clothing/under/misc/turds(H), H.slot_w_uniform)
-			H.equip_if_possible(new /obj/item/clothing/gloves/swat/NT(H), H.slot_gloves)
-			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
-			H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/nanotrasen(H), H.slot_belt)
-			H.equip_if_possible(new /obj/item/survival_machete(H), H.slot_l_store)
-
-
-
-
-		else if (team_num == TEAM_SYNDICATE)
-			var/obj/item/card/id/pod_wars/syndicate/I = new/obj/item/card/id/pod_wars/syndicate(H)
-			if (H.mind == commander)
-				H.mind.special_role = "Syndicate Commander"
-				I.name = "Syndicate Commander"
-				I.assignment = "Syndicate Commander"
-				if (prob(10))
-					H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_l_store)
-				else
-					H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(H), H.slot_l_store)
-				H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(H), H.slot_wear_suit)
-
-			else
-				H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/specialist(H), H.slot_head)
-				H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate(H), H.slot_wear_suit)
-
-			H.equip_if_possible(I, H.slot_wear_id)
-			H.equip_if_possible(headset, H.slot_ears)
-			H.equip_if_possible(new /obj/item/storage/backpack/syndie(H), H.slot_back)
-			H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), H.slot_w_uniform)
-			H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
-			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
-			H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/syndicate(H), H.slot_belt)
-			H.equip_if_possible(new /obj/item/survival_machete/syndicate(H), H.slot_l_store)
-
-
-		if (headset)
-			headset.set_secure_frequency("g",src.comms_frequency)
-			headset.secure_classes["g"] = RADIOCL_SYNDICATE
-			boutput(H, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
-
-		H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), H.slot_shoes)
-
 		H.set_clothing_icon_dirty()
 		// H.set_loc(pick(pod_pilot_spawns[team_num]))
 		boutput(H, "You're in the [name] faction!")
 		H.client.screen += mode.board
+
+
+		// SHOW_TIPS(H)
+
+
+		// var/obj/item/device/radio/headset/headset = new /obj/item/device/radio/headset(H)
+
+		// if (team_num == TEAM_NANOTRASEN)
+		// 	var/obj/item/card/id/pod_wars/nanotrasen/I = new/obj/item/card/id/pod_wars/nanotrasen(H)
+		// 	//commanders get a couple extra things...
+		// 	if (H.mind == commander)
+		// 		H.mind.special_role = "NanoTrasen Commander"
+		// 		I.name = "NanoTrasen Commander"
+		// 		I.assignment = "NanoTrasen Commander"
+		// 		H.equip_if_possible(new /obj/item/clothing/head/NTberet/commander(H), H.slot_head)
+		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot/commander(H), H.slot_wear_suit)
+		// 	else
+		// 		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/ntso(H), H.slot_head)
+		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot(H), H.slot_wear_suit)
+
+		// 	H.equip_if_possible(I, H.slot_wear_id)
+
+		// 	H.equip_if_possible(headset, H.slot_ears)
+		// 	H.equip_if_possible(new /obj/item/storage/backpack/NT(H), H.slot_back)
+		// 	H.equip_if_possible(new /obj/item/clothing/under/misc/turds(H), H.slot_w_uniform)
+		// 	H.equip_if_possible(new /obj/item/clothing/gloves/swat/NT(H), H.slot_gloves)
+		// 	H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
+		// 	H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/nanotrasen(H), H.slot_belt)
+		// 	H.equip_if_possible(new /obj/item/survival_machete(H), H.slot_l_store)
+
+
+
+
+		// else if (team_num == TEAM_SYNDICATE)
+		// 	var/obj/item/card/id/pod_wars/syndicate/I = new/obj/item/card/id/pod_wars/syndicate(H)
+		// 	if (H.mind == commander)
+		// 		H.mind.special_role = "Syndicate Commander"
+		// 		I.name = "Syndicate Commander"
+		// 		I.assignment = "Syndicate Commander"
+		// 		if (prob(10))
+		// 			H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_l_store)
+		// 		else
+		// 			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(H), H.slot_l_store)
+		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(H), H.slot_wear_suit)
+
+		// 	else
+		// 		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/specialist(H), H.slot_head)
+		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate(H), H.slot_wear_suit)
+
+		// 	H.equip_if_possible(I, H.slot_wear_id)
+		// 	H.equip_if_possible(headset, H.slot_ears)
+		// 	H.equip_if_possible(new /obj/item/storage/backpack/syndie(H), H.slot_back)
+		// 	H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), H.slot_w_uniform)
+		// 	H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
+		// 	H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
+		// 	H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/syndicate(H), H.slot_belt)
+		// 	H.equip_if_possible(new /obj/item/survival_machete/syndicate(H), H.slot_l_store)
+
+
+		// if (headset)
+		// 	headset.set_secure_frequency("g",src.comms_frequency)
+		// 	headset.secure_classes["g"] = RADIOCL_SYNDICATE
+		// 	boutput(H, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
+
+		// H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), H.slot_shoes)
+
 
 
 /obj/pod_base_critical_system
@@ -361,7 +392,7 @@
 		..()
 
 	disposing()
-		if (ticker.mode == /datum/game_mode/pod_wars)
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			//get the team datum from its team number right when we allocate points.
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 
@@ -572,8 +603,8 @@ obj/screen/score_board
 	max_health = 250
 	wait_time = 20 //wait if it can't find a target
 	range = 8 // tiles
-	burst_size = 2 // number of shots to fire. Keep in mind the bullet's shot_count
-	fire_rate = 2 // rate of fire in shots per second
+	burst_size = 3 // number of shots to fire. Keep in mind the bullet's shot_count
+	fire_rate = 3 // rate of fire in shots per second
 	angle_arc_size = 180
 	quick_deploy_fuel = 2
 	var/deployer_path = /obj/deployable_turret/pod_wars
@@ -651,7 +682,7 @@ obj/screen/score_board
 	icon_tag = "nt"
 
 	is_friend(var/mob/living/C)
-		if (C.mind?.assigned_role == "NanoTrasen Pod Pilot")
+		if (C.mind?.special_role == "NanoTrasen")
 			return 1
 		else
 			return 0
@@ -681,7 +712,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/nt/activated)
 	icon_tag = "st"
 
 	is_friend(var/mob/living/C)
-		if (C.mind?.assigned_role == "Syndicate Pod Pilot")
+		if (C.mind?.special_role == "Syndicate")
 			return 1
 		else
 			return 0
@@ -708,7 +739,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/sy/activated)
 	icon_state = "lock"
 	code = ""
 	configure_mode = 0 //If true, entering a valid code sets that as the code.
-	var/team = 0 //TEAM_SYNDICATE
+	var/team_num = 0
 	var/obj/item/card/id/assigned_id = null
 
 	// Use(mob/user as mob)
@@ -724,12 +755,12 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/sy/activated)
 					boutput(usr, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
 					playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
 					assigned_id = I
-					team = get_team(I)
+					team_num = get_team(I)
 					ship.locked = 0
 					return
 
 			if (istype(I))
-				if (I == assigned_id || get_team(I) == team)
+				if (I == assigned_id || get_team(I) == team_num)
 					ship.locked = !ship.locked
 					boutput(usr, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
 
@@ -781,6 +812,9 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		src.m_w_system.ship = src
 		src.components += src.m_w_system
 
+		src.lock = new /obj/item/shipcomponent/secondary_system/lock/pw_id( src )
+		src.lock.ship = src
+		src.components += src.lock
 
 		myhud.update_systems()
 		myhud.update_states()
@@ -799,7 +833,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 
 	nanotrasen
-		name = "NT Mining Dingy"
+		name = "NT Combat Dingy"
 		icon_state = "putt_pre"
 
 		mining
@@ -811,7 +845,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				equip_mining()
 
 	syndicate
-		name = "Syndicate Mining Dingy"
+		name = "Syndicate Combat Dingy"
 		icon_state = "syndiputt"
 
 		mining

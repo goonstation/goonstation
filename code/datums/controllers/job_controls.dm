@@ -50,8 +50,11 @@ var/datum/job_controller/job_controls
 
 //pod wars mode/map only has these jobs
 #ifdef MAP_OVERRIDE_POD_WARS
-		src.staple_jobs = list(new /datum/job/pod_wars/nanotrasen {limit = -1;} (),
-		new /datum/job/pod_wars/nanotrasen {limit = -1;} ())
+		src.staple_jobs = list(new /datum/job/pod_wars/nanotrasen/commander {limit = 1;} (),
+		new /datum/job/pod_wars/nanotrasen {limit = -1;} (),
+		new /datum/job/pod_wars/syndicate/commander {limit = 1;} (),
+		new /datum/job/pod_wars/syndicate {limit = -1;} (),
+		)
 		src.special_jobs = list()
 #endif
 
