@@ -1939,7 +1939,7 @@
 	pie_launcher
 		name = "Shoddy Pie Launcher"
 		desc = "This pie launcher seems shoddily made, and doesn't have a handle. Why would anyone make this?"
-		icon_state = "tool_generic"// add pie launcher sprite?
+		icon_state = "tool_pie"
 		tool_id = "PIE"
 		is_gun = 1
 		is_stun = 1
