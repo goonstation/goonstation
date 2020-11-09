@@ -158,11 +158,19 @@ ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 		name = "NanoTrasen Pilot"
 		icon_state = "polaris"
 		assignment = "NanoTrasen Pilot"
+
+		commander
+			name = "NanoTrasen Commander"
+			assignment = "NanoTrasen Commander"
+
 	syndicate
 		name = "Syndicate Pilot"
 		icon_state = "id_syndie"
 		assignment = "Syndicate Pilot"
 
+		commander
+			name = "Syndicate Commander"
+			assignment = "Syndicate Commander"
 
 /obj/item/card/id/dabbing_license
 	name = "Dabbing License"
