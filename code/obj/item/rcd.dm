@@ -435,12 +435,8 @@ Broken RCD + Effects
 
 /obj/item/rcd/construction
 	name = "rapid construction device deluxe"
-	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors. The deluxe edition features a much higher matter capacity and enhanced feature set."
-	max_matter = 15000
-
-	matter_remove_door = 3
-	matter_remove_wall = 2
-	matter_remove_floor = 2
+	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors. The deluxe edition features a bit higher matter capacity and enhanced feature set."
+	max_matter = 100
 
 	var/static/hangar_id_number = 1 //static isnt a real thing in byond????? why does this compile???
 	var/hangar_id = null

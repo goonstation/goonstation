@@ -653,24 +653,12 @@
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/storage/belt/utility/prepared
 	slot_jump = /obj/item/clothing/under/rank/orangeoveralls
-	slot_foot = /obj/item/clothing/shoes/magnetic
+	slot_foot = /obj/item/clothing/shoes/black
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_ears = /obj/item/device/radio/headset/engineer
-	slot_rhan = /obj/item/tank/jetpack
 	slot_eyes = /obj/item/clothing/glasses/construction
-#ifdef UNDERWATER_MAP
-	slot_suit = /obj/item/clothing/suit/space/diving/engineering
-	slot_head = /obj/item/clothing/head/helmet/space/engineer/diving
-#else
-	slot_suit = /obj/item/clothing/suit/space/engineer
-	slot_head = /obj/item/clothing/head/helmet/space/engineer
-#endif
-	slot_mask = /obj/item/clothing/mask/breath
-
-	slot_poc1 = /obj/item/material_shaper
-	slot_poc2 = /obj/item/room_planner
-
-	items_in_backpack = list(/obj/item/rcd/construction/safe, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/caution, /obj/item/lamp_manufacturer/organic)
+	slot_poc1 = /obj/item/device/pda2/engine
+	items_in_backpack = list(/obj/item/room_planner, /obj/item/rcd/construction/safe, /obj/item/rcd_ammo/big, /obj/item/caution, /obj/item/lamp_manufacturer/organic)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
