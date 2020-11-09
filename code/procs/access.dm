@@ -315,7 +315,7 @@
 			return list(access_maint_tunnels, access_cargo, access_supply_console, access_hangar)
 		if("Construction Worker")
 			return list(access_engineering,access_maint_tunnels,access_external_airlocks,
-						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power,access_engineering_mechanic)
+						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power,access_engineering_mechanic,access_engineering_eva)
 
 		///////////////////////////// Civilian
 		if("Chaplain")
