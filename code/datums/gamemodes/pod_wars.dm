@@ -632,7 +632,7 @@ obj/screen/score_board
 			if(!src)
 				break
 
-			if (src.target_valid(C))
+			if (!isnull(C) && src.target_valid(C))
 				src.target_list += C
 				var/distance = get_dist(C.loc,src.loc)
 				src.target_list[C] = distance
@@ -666,6 +666,8 @@ obj/screen/score_board
 
 		if (ismob(V.pilot))
 			return is_friend(V.pilot)
+		else
+			return 0
 
 /obj/item/turret_deployer/pod_wars/nt
 	icon_tag = "nt"
