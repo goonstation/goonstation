@@ -4789,7 +4789,7 @@
 /area/podmode/spacejunk/Restaurant/landingpads)
 "Aj" = (
 /obj/landmark/map{
-	name = "pod_wars"
+	name = "POD_WARS"
 	},
 /turf/space,
 /area/space)
