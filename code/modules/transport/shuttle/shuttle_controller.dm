@@ -130,7 +130,7 @@ datum/shuttle_controller
 							if (T.x > eastBound) eastBound = T.x
 
 						// hey you, get out of the way!
-						var/shuttle_dir = map_settings ? map_settings.escape_def : SHUTTLE_NODEF
+						var/shuttle_dir = map_settings ? map_settings.escape_dir : SOUTH
 						for (var/turf/T in dstturfs)
 							// find the turf to move things to
 							var/turf/D = locate(shuttle_dir == EAST ? eastBound + 1 : T.x, // X
