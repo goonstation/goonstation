@@ -13,7 +13,7 @@
 	},
 /obj/deployable_turret/pod_wars/nt/activated/north,
 /turf/space,
-/area)
+/area/space)
 "ac" = (
 /obj/cable{
 	d1 = 1;
@@ -24,7 +24,7 @@
 /area/podmode/spacejunk/fstation/medbay)
 "ad" = (
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "ae" = (
 /turf/space,
 /area/podmode/spacejunk/greatwreck)
@@ -46,7 +46,7 @@
 	team_num = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "aj" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -334,7 +334,7 @@
 	name = "Cheesy Chuck's Premium Eatery"
 	},
 /turf/space,
-/area)
+/area/space)
 "bL" = (
 /obj/machinery/macrofab/pod_wars/syndicate{
 	dir = 8
@@ -454,7 +454,7 @@
 "co" = (
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "cp" = (
 /obj/machinery/light{
 	dir = 1
@@ -470,11 +470,11 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
-/area)
+/area/space)
 "cr" = (
 /obj/machinery/r_door_control/podbay/t2d2/new_walls/east,
 /turf/space,
-/area)
+/area/space)
 "cs" = (
 /obj/landmark/start,
 /obj/landmark/start/latejoin,
@@ -737,7 +737,7 @@
 	},
 /obj/deployable_turret/pod_wars/nt/activated/west,
 /turf/space,
-/area)
+/area/space)
 "dR" = (
 /turf/simulated/floor/yellow/side,
 /area/podmode/team1/starboardhall)
@@ -856,18 +856,18 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area)
+/area/space)
 "eA" = (
 /obj/machinery/r_door_control/podbay/t1d4/new_walls/east,
 /turf/space,
-/area)
+/area/space)
 "eB" = (
 /obj/lattice{
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "eC" = (
 /turf/simulated/floor/red/side{
 	dir = 10
@@ -892,7 +892,7 @@
 "eF" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/space)
 "eG" = (
 /turf/simulated/floor/green/side{
 	dir = 9
@@ -981,7 +981,7 @@
 	},
 /obj/deployable_turret/pod_wars/nt/activated/east,
 /turf/space,
-/area)
+/area/space)
 "eW" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -1003,7 +1003,7 @@
 /obj/lattice,
 /obj/deployable_turret/pod_wars/nt/activated/north,
 /turf/space,
-/area)
+/area/space)
 "fc" = (
 /obj/machinery/light,
 /turf/simulated/floor/yellow/side{
@@ -1216,7 +1216,7 @@
 	tag = "icon-lattice-dir (EAST)"
 	},
 /turf/space,
-/area)
+/area/space)
 "gh" = (
 /turf/simulated/floor/caution/corner/sw,
 /area/podmode/team1/hangar)
@@ -1229,7 +1229,7 @@
 	name = "Fortuna Maintenance  Dock"
 	},
 /turf/space,
-/area)
+/area/space)
 "gj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/spacejunk/fstation/lounge)
@@ -1354,7 +1354,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area)
+/area/space)
 "hd" = (
 /obj/machinery/power/solar/diner,
 /obj/cable{
@@ -1558,7 +1558,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "ie" = (
 /turf/simulated/floor/blue/corner{
 	dir = 4
@@ -1591,7 +1591,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "in" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -1645,7 +1645,7 @@
 "iA" = (
 /obj/item/organ/eye,
 /turf/simulated/wall/asteroid/pod_wars,
-/area)
+/area/space)
 "iE" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -1803,7 +1803,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "jA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1849,7 +1849,7 @@
 "jL" = (
 /obj/machinery/r_door_control/podbay/t1d3/new_walls/east,
 /turf/space,
-/area)
+/area/space)
 "jN" = (
 /obj/table/auto,
 /obj/machinery/microwave,
@@ -1883,7 +1883,7 @@
 "jU" = (
 /obj/machinery/r_door_control/podbay/t1d2/new_walls/west,
 /turf/space,
-/area)
+/area/space)
 "jW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1916,11 +1916,11 @@
 "kc" = (
 /obj/machinery/r_door_control/podbay/t1d2/new_walls/east,
 /turf/space,
-/area)
+/area/space)
 "ke" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "kf" = (
 /obj/machinery/light{
 	dir = 8
@@ -2007,7 +2007,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "kF" = (
 /obj/machinery/light{
 	dir = 1
@@ -2306,7 +2306,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/catwalk,
-/area)
+/area/space)
 "mu" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -2314,7 +2314,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area)
+/area/space)
 "mv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2348,7 +2348,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area)
+/area/space)
 "mB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2407,7 +2407,7 @@
 /obj/lattice,
 /obj/deployable_turret/pod_wars/sy/activated/west,
 /turf/space,
-/area)
+/area/space)
 "mT" = (
 /turf/simulated/shuttle/wall{
 	dir = 4
@@ -2837,7 +2837,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "pp" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -3128,7 +3128,7 @@
 	team_num = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "qO" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/t2d4_horizontal,
@@ -3141,7 +3141,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "qR" = (
 /obj/machinery/power/solar/diner,
 /obj/cable,
@@ -3159,7 +3159,7 @@
 /area/podmode/spacejunk/uvb67/power)
 "qT" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area)
+/area/space)
 "qU" = (
 /turf/simulated/floor/white,
 /area/podmode/team2/Cloning)
@@ -3170,7 +3170,7 @@
 	team_num = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "rb" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools/one,
@@ -3295,7 +3295,7 @@
 	team_num = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "rR" = (
 /obj/lattice{
 	dir = 9;
@@ -3392,7 +3392,7 @@
 	team_num = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "ss" = (
 /turf/simulated/floor/engine{
 	dir = 6;
@@ -4180,7 +4180,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area)
+/area/space)
 "wy" = (
 /obj/machinery/light,
 /turf/simulated/floor/yellow,
@@ -4202,7 +4202,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "wK" = (
 /obj/cable{
 	d2 = 2;
@@ -4321,7 +4321,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
-/area)
+/area/space)
 "xu" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -4397,7 +4397,7 @@
 	},
 /obj/machinery/communications_dish,
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "xR" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -4596,7 +4596,7 @@
 /obj/lattice,
 /obj/deployable_turret/pod_wars/nt/activated/south,
 /turf/space,
-/area)
+/area/space)
 "zc" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -4625,7 +4625,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/space)
 "zm" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -4639,7 +4639,7 @@
 	},
 /obj/deployable_turret/pod_wars/sy/activated/east,
 /turf/space,
-/area)
+/area/space)
 "zp" = (
 /obj/storage/crate/furnacefuel,
 /obj/machinery/light,
@@ -4763,7 +4763,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "zT" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/spacejunk/miningoutpost/crewquarters)
@@ -4792,7 +4792,7 @@
 	name = "pod_wars"
 	},
 /turf/space,
-/area)
+/area/space)
 "Ak" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4815,7 +4815,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "Ap" = (
 /obj/lattice{
 	dir = 9;
@@ -4829,7 +4829,7 @@
 "Ar" = (
 /obj/machinery/r_door_control/podbay/t2d4/new_walls/west,
 /turf/space,
-/area)
+/area/space)
 "At" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/black,
@@ -5003,7 +5003,7 @@
 	dir = 8;
 	tag = "icon-catwalk (WEST)"
 	},
-/area)
+/area/space)
 "Br" = (
 /obj/grille/catwalk{
 	dir = 1;
@@ -5051,7 +5051,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/space)
 "BB" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -5286,7 +5286,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area)
+/area/space)
 "CG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5301,7 +5301,7 @@
 	},
 /obj/deployable_turret/pod_wars/nt/activated/south,
 /turf/space,
-/area)
+/area/space)
 "CM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -5395,7 +5395,7 @@
 "Dj" = (
 /obj/machinery/r_door_control/podbay/t2d1/new_walls/west,
 /turf/space,
-/area)
+/area/space)
 "Dk" = (
 /obj/machinery/light{
 	dir = 1
@@ -5559,7 +5559,7 @@
 	team_num = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "Eg" = (
 /obj/machinery/light,
 /turf/simulated/floor/red/side{
@@ -5682,7 +5682,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/space)
 "EQ" = (
 /obj/machinery/r_door_control/podbay/t2d4/new_walls/north{
 	pixel_w = 0;
@@ -5713,7 +5713,7 @@
 "EX" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "EY" = (
 /turf/simulated/floor/yellow/side{
 	dir = 6
@@ -5774,7 +5774,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "Fn" = (
 /turf/simulated/floor/carpet/grime,
 /area/podmode/spacejunk/Nancy)
@@ -5874,7 +5874,7 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area)
+/area/space)
 "FS" = (
 /obj/machinery/power/smes/magical,
 /turf/simulated/floor/white,
@@ -5957,7 +5957,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "Gi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5987,7 +5987,7 @@
 "Gs" = (
 /obj/machinery/r_door_control/podbay/t1d4/new_walls/west,
 /turf/space,
-/area)
+/area/space)
 "Gu" = (
 /obj/machinery/light,
 /turf/simulated/floor/yellow/side{
@@ -6090,7 +6090,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area)
+/area/space)
 "Ha" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6133,7 +6133,7 @@
 	team_num = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "Hs" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -6238,7 +6238,7 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/area)
+/area/space)
 "HV" = (
 /obj/machinery/light,
 /turf/simulated/floor/caution/westeast,
@@ -6357,7 +6357,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area)
+/area/space)
 "IB" = (
 /turf/simulated/floor/green/corner{
 	dir = 8
@@ -6474,7 +6474,7 @@
 "Ja" = (
 /obj/machinery/r_door_control/podbay/t2d2/new_walls/west,
 /turf/space,
-/area)
+/area/space)
 "Jb" = (
 /turf/simulated/floor/airless/plating,
 /area/podmode/spacejunk/Nancy/warehouse)
@@ -6642,7 +6642,7 @@
 /area/podmode/spacejunk/uvb67/power)
 "JW" = (
 /turf/space,
-/area)
+/area/space)
 "JZ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -6891,7 +6891,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "Ly" = (
 /obj/machinery/light{
 	dir = 8
@@ -6993,7 +6993,7 @@
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "Mr" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -7102,7 +7102,7 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area)
+/area/space)
 "MU" = (
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -7130,7 +7130,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/space)
 "Nf" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -7482,7 +7482,7 @@
 "Pb" = (
 /obj/machinery/r_door_control/podbay/t2d4/new_walls/east,
 /turf/space,
-/area)
+/area/space)
 "Pd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7503,7 +7503,7 @@
 /obj/lattice,
 /obj/deployable_turret/pod_wars/sy/activated/east,
 /turf/space,
-/area)
+/area/space)
 "Pn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7526,7 +7526,7 @@
 	dir = 8;
 	tag = "icon-catwalk (WEST)"
 	},
-/area)
+/area/space)
 "Ps" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -7549,10 +7549,10 @@
 "Pu" = (
 /obj/machinery/r_door_control/podbay/t1d3/new_walls/west,
 /turf/space,
-/area)
+/area/space)
 "Pw" = (
 /turf/simulated/wall/asteroid/pod_wars,
-/area)
+/area/space)
 "Px" = (
 /obj/cable{
 	d1 = 2;
@@ -7611,7 +7611,7 @@
 	name = "Fortuna Security Dock"
 	},
 /turf/space,
-/area)
+/area/space)
 "PG" = (
 /obj/grille/catwalk{
 	dir = 1;
@@ -7675,14 +7675,14 @@
 "PW" = (
 /obj/machinery/r_door_control/podbay/t1d1/new_walls/east,
 /turf/space,
-/area)
+/area/space)
 "PX" = (
 /obj/deployable_turret/pod_wars/sy/activated/north,
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/space)
 "PZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7750,7 +7750,7 @@
 "Qw" = (
 /obj/machinery/r_door_control/podbay/t1d1/new_walls/west,
 /turf/space,
-/area)
+/area/space)
 "Qx" = (
 /obj/machinery/macrofab/pod_wars/syndicate{
 	dir = 4
@@ -7800,7 +7800,7 @@
 /obj/lattice,
 /obj/deployable_turret/pod_wars/sy/activated/north,
 /turf/space,
-/area)
+/area/space)
 "QI" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -7813,7 +7813,7 @@
 	},
 /obj/deployable_turret/pod_wars/sy/activated/north,
 /turf/space,
-/area)
+/area/space)
 "QR" = (
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -7881,7 +7881,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area)
+/area/space)
 "Rj" = (
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -7915,7 +7915,7 @@
 /obj/lattice,
 /obj/deployable_turret/pod_wars/sy/activated/south,
 /turf/space,
-/area)
+/area/space)
 "Rr" = (
 /obj/cable{
 	d1 = 1;
@@ -7955,7 +7955,7 @@
 	name = "Fortuna Primary Dock"
 	},
 /turf/space,
-/area)
+/area/space)
 "RC" = (
 /turf/simulated/floor/yellow/side,
 /area/podmode/spacejunk/Restaurant)
@@ -8193,7 +8193,7 @@
 	},
 /obj/deployable_turret/pod_wars/sy/activated/west,
 /turf/space,
-/area)
+/area/space)
 "SH" = (
 /obj/deployable_turret/pod_wars/sy/activated/east,
 /turf/simulated/floor,
@@ -8234,7 +8234,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/space)
 "SU" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/purple,
@@ -8276,7 +8276,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "Tb" = (
 /obj/cable{
 	d1 = 1;
@@ -8335,7 +8335,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "Ts" = (
 /turf/simulated/floor/caution/north,
 /area/podmode/team2/CentralHallway)
@@ -8446,14 +8446,14 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area)
+/area/space)
 "TV" = (
 /obj/lattice,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/space,
-/area)
+/area/space)
 "TX" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white,
@@ -8580,7 +8580,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "UK" = (
 /obj/pod_base_critical_system{
 	dir = 4;
@@ -8588,7 +8588,7 @@
 	team_num = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "UL" = (
 /obj/grille/catwalk{
 	dir = 8
@@ -8653,7 +8653,7 @@
 /obj/lattice,
 /obj/deployable_turret/pod_wars/nt/activated/west,
 /turf/space,
-/area)
+/area/space)
 "Vh" = (
 /turf/simulated/floor/yellow/side,
 /area/podmode/spacejunk/fstation)
@@ -8727,7 +8727,7 @@
 "VF" = (
 /obj/machinery/r_door_control/podbay/t2d1/new_walls/east,
 /turf/space,
-/area)
+/area/space)
 "VG" = (
 /turf/simulated/floor,
 /area/podmode/spacejunk/Snackstand)
@@ -8800,7 +8800,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area)
+/area/space)
 "VZ" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -8876,7 +8876,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/space)
 "Wo" = (
 /obj/machinery/light{
 	dir = 4
@@ -8957,7 +8957,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/airless/plating,
-/area)
+/area/space)
 "WT" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/team2/Mining)
@@ -8973,7 +8973,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area)
+/area/space)
 "WX" = (
 /turf/simulated/floor/yellow/side,
 /area/podmode/team1/mining)
@@ -8982,7 +8982,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/space)
 "Xa" = (
 /obj/stool/chair{
 	dir = 4
@@ -9059,7 +9059,7 @@
 "XA" = (
 /obj/machinery/r_door_control/podbay/t2d3/new_walls/west,
 /turf/space,
-/area)
+/area/space)
 "XB" = (
 /obj/machinery/light{
 	dir = 8;
@@ -9162,7 +9162,7 @@
 "XT" = (
 /obj/machinery/r_door_control/podbay/t2d3/new_walls/east,
 /turf/space,
-/area)
+/area/space)
 "XU" = (
 /obj/machinery/light{
 	dir = 1
@@ -9238,7 +9238,7 @@
 /obj/lattice,
 /obj/deployable_turret/pod_wars/nt/activated/east,
 /turf/space,
-/area)
+/area/space)
 "Yp" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 8
@@ -9265,7 +9265,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "Yz" = (
 /obj/lattice,
 /turf/space,
@@ -9516,7 +9516,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
-/area)
+/area/space)
 "ZQ" = (
 /obj/stool/bed,
 /obj/window/cubicle{
