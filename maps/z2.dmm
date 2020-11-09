@@ -39710,8 +39710,7 @@
 	name = "Wall"
 	},
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bTZ" = (
 /obj/grille/catwalk{
@@ -39912,14 +39911,12 @@
 "bUz" = (
 /turf/unsimulated/bombvr,
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bUA" = (
 /turf/unsimulated/wall/bombvr,
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bUB" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
@@ -40674,8 +40671,7 @@
 	},
 /turf/unsimulated/bombvr,
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bWG" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
@@ -41271,8 +41267,7 @@
 	},
 /turf/unsimulated/bombvr,
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bYl" = (
 /obj/landmark{
@@ -41280,8 +41275,7 @@
 	},
 /turf/unsimulated/bombvr,
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bYm" = (
 /obj/grille/steel,
@@ -83050,6 +83044,15 @@
 	dir = 1
 	},
 /area/ship_interior/cruisertest)
+"gkM" = (
+/obj/forcefield/energyshield/perma{
+	dir = 8
+	},
+/turf/unsimulated/floor/stairs{
+	dir = 4;
+	icon_state = "Stairs2_wide"
+	},
+/area/centcom)
 "gtU" = (
 /obj/machinery/light{
 	dir = 1
@@ -85388,6 +85391,15 @@
 /turf/space,
 /turf/simulated/floor,
 /area/ship_interior/cruisertest)
+"qAl" = (
+/obj/forcefield/energyshield/perma{
+	dir = 8
+	},
+/turf/unsimulated/floor/stairs{
+	dir = 4;
+	icon_state = "stairs_middle"
+	},
+/area/centcom)
 "qBZ" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor{
@@ -86079,6 +86091,15 @@
 	icon_state = "diagonalWall3"
 	},
 /area/diner/tug)
+"toQ" = (
+/obj/forcefield/energyshield/perma{
+	dir = 8
+	},
+/turf/unsimulated/floor/stairs{
+	dir = 4;
+	icon_state = "Stairs_wide"
+	},
+/area/centcom)
 "ttX" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
@@ -145319,10 +145340,10 @@ dmJ
 dkK
 dsd
 dnZ
-dmX
-dmY
-dmY
-dmZ
+toQ
+qAl
+qAl
+gkM
 dnJ
 dkK
 dkK
@@ -148943,10 +148964,10 @@ dmJ
 dkK
 dts
 dnZ
-dmX
-dmY
-dmY
-dmZ
+toQ
+qAl
+qAl
+gkM
 dnJ
 dkK
 dkK
