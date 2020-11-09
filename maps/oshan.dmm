@@ -43097,7 +43097,6 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bYt" = (
-/obj/table/reinforced/industrial,
 /obj/machinery/recharger/wall{
 	pixel_y = -24
 	},
@@ -43105,6 +43104,7 @@
 	pixel_y = 4;
 	rand_pos = 0
 	},
+/obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -47553,12 +47553,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
-"cJo" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
 "cSE" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	req_access_txt = "1"
@@ -47582,28 +47576,9 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
-"giY" = (
-/obj/rack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/turf/simulated/floor/redblack/corner{
-	dir = 1
-	},
-/area/station/ai_monitored/armory)
-"ikb" = (
+"iGY" = (
 /obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
-"iJK" = (
-/obj/cable{
-	icon_state = "2-4"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
@@ -47613,6 +47588,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"iMg" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "iPV" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/west,
@@ -47641,6 +47622,12 @@
 	},
 /turf/space/fluid,
 /area/space)
+"kWM" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "lbK" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating/random,
@@ -47666,6 +47653,12 @@
 "nhW" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"nlQ" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "nDS" = (
 /obj/table/auto,
 /obj/item/coin{
@@ -47702,13 +47695,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"orE" = (
-/obj/table/reinforced/industrial,
-/obj/item/kitchen/food_box/donut_box,
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/station/ai_monitored/armory)
 "pIo" = (
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
@@ -47742,6 +47728,29 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"ryf" = (
+/obj/rack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
+"slW" = (
+/obj/item/kitchen/food_box/donut_box{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -47803,12 +47812,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"xJz" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
 "xVc" = (
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
@@ -91232,8 +91235,8 @@ bTR
 bXu
 bTR
 bTR
-ikb
-cJo
+kWM
+nlQ
 bLr
 bOR
 aqn
@@ -92439,7 +92442,7 @@ bXw
 bXx
 bVX
 bVX
-orE
+slW
 bTR
 bRU
 bLr
@@ -92741,7 +92744,7 @@ bVZ
 bWH
 bwE
 bVb
-giY
+ryf
 bTR
 bRU
 bLr
@@ -93346,8 +93349,8 @@ bWK
 bXA
 bVc
 bTR
-iJK
-xJz
+iMg
+iGY
 bLr
 bVo
 aqn
