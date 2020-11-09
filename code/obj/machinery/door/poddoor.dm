@@ -309,6 +309,14 @@
 			vertical
 				dir = EAST
 
+		t1condoor_horizontal
+			name = "pod bay (team1 construction door)"
+			id = "hangar_t1condoor"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
 		t2d1_horizontal
 			name = "pod bay (team2door1)"
 			id = "hangar_t2d1"
@@ -336,6 +344,14 @@
 		t2d4_horizontal
 			name = "pod bay (team2door4)"
 			id = "hangar_t2d4"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t2condoor_horizontal
+			name = "pod bay (team2 construction door)"
+			id = "hangar_t2condoor"
 			dir = NORTH
 
 			vertical
@@ -775,7 +791,7 @@
 			name = "pod bay (team1door1)"
 			id = "hangar_t1d1"
 			dir = NORTH
- 
+
 			vertical
 				dir = EAST
 			single_horizontal
@@ -786,12 +802,12 @@
 				dir = EAST
 				icon_state = "bdoorsingle1"
 				doordir = "single"
- 
+
 		t1d2_horizontal
 			name = "pod bay (team1door2)"
 			id = "hangar_t1d2"
 			dir = NORTH
- 
+
 			vertical
 				dir = EAST
 			single_horizontal
@@ -802,12 +818,12 @@
 				dir = EAST
 				icon_state = "bdoorsingle1"
 				doordir = "single"
- 
+
 		t1d3_horizontal
 			name = "pod bay (team1door3)"
 			id = "hangar_t1d3"
 			dir = NORTH
- 
+
 			vertical
 				dir = EAST
 			single_horizontal
@@ -818,12 +834,12 @@
 				dir = EAST
 				icon_state = "bdoorsingle1"
 				doordir = "single"
- 
+
 		t1d4_horizontal
 			name = "pod bay (team1door4)"
 			id = "hangar_t1d4"
 			dir = NORTH
- 
+
 			vertical
 				dir = EAST
 			single_horizontal
@@ -834,12 +850,28 @@
 				dir = EAST
 				icon_state = "bdoorsingle1"
 				doordir = "single"
- 
+
+		t1condoor_horizontal
+			name = "pod bay (team1 construction door)"
+			id = "hangar_t1condoor"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
 		t2d1_horizontal
 			name = "pod bay (team2door1)"
 			id = "hangar_t2d1"
 			dir = NORTH
- 
+
 			vertical
 				dir = EAST
 			single_horizontal
@@ -850,12 +882,12 @@
 				dir = EAST
 				icon_state = "bdoorsingle1"
 				doordir = "single"
- 
+
 		t2d2_horizontal
 			name = "pod bay (team2door2)"
 			id = "hangar_t2d2"
 			dir = NORTH
- 
+
 			vertical
 				dir = EAST
 			single_horizontal
@@ -866,12 +898,12 @@
 				dir = EAST
 				icon_state = "bdoorsingle1"
 				doordir = "single"
- 
+
 		t2d3_horizontal
 			name = "pod bay (team2door3)"
 			id = "hangar_t2d3"
 			dir = NORTH
- 
+
 			vertical
 				dir = EAST
 			single_horizontal
@@ -882,12 +914,28 @@
 				dir = EAST
 				icon_state = "bdoorsingle1"
 				doordir = "single"
- 
+
 		t2d4_horizontal
 			name = "pod bay (team2door4)"
 			id = "hangar_t2d4"
 			dir = NORTH
- 
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t2condoor_horizontal
+			name = "pod bay (team2 construction door)"
+			id = "hangar_t2condoor"
+			dir = NORTH
+
 			vertical
 				dir = EAST
 			single_horizontal

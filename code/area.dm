@@ -4861,199 +4861,203 @@ area/station/security/visitation
 /area/podmode/team1/hangar
 	name = "NSV Pytheas Hangar"
 	icon_state = "purple"
- 
+
 /area/podmode/team1/mining
 	name = "NSV Pytheas Mining"
 	icon_state = "yellow"
- 
+
 /area/podmode/team1/manufacturing
 	name = "NSV Pytheas Manufacturing"
 	icon_state = "blue"
- 
+
 /area/podmode/team1/medbay
 	name = "NSV Pytheas Medbay"
 	icon_state = "medbay"
- 
+
 /area/podmode/team1/bar
 	name = "NSV Pytheas Bar"
 	icon_state = "blue"
- 
+
 /area/podmode/team1/powergen
 	name = "NSV Pytheas Power Station"
 	icon_state = "engine_monitoring"
- 
+
 /area/podmode/team1/bridge
 	name = "NSV Pytheas Bridge"
 	icon_state = "reds"
- 
+
 /area/podmode/team1/porthall
 	name = "NSV Pytheas Port Hallway"
 	icon_state = "green"
- 
+
 /area/podmode/team1/starboardhall
 	name = "NSV Pytheas Starboard Hallway"
 	icon_state = "green"
- 
+
 /area/podmode/team1/magnet
 	name = "NSV Pytheas Mineral Magnet"
 	icon_state = "purple"
- 
+
 /area/podmode/team2/Bridge
 	name = "Lodbrok Bridge"
 	icon_state = "red"
- 
+
 /area/podmode/team2/Medbay
 	name = "Lodbrok Medical Storage"
 	icon_state = "medbay"
- 
+
 /area/podmode/team2/Cloning
 	name = "Lodbrok Medical Suite"
 	icon_state = "cloner"
- 
+
 /area/podmode/team2/Mining
 	name = "Lodbrok Mining"
 	icon_state = "orange"
- 
+
 /area/podmode/team2/CentralHallway
 	name = "Lodbrok Central Hallway"
 	icon_state = "green"
- 
+
 /area/podmode/team2/Bar
 	name = "Lodbrok Bar"
 	icon_state = "red"
- 
+
 /area/podmode/team2/Power
 	name = "Lodbrok Power Station"
 	icon_state = "engine_monitoring"
- 
+
 /area/podmode/team2/Hangar
 	name = "Lodbrok Hangar"
 	icon_state = "yellow"
- 
+
 /area/podmode/team2/Storage
 	name = "Lodbrok Storage"
 	icon_state = "purple"
- 
+
 /area/podmode/team2/magnet
 	name = "Lodbrok Mineral Magnet"
 	icon_state = "purple"
- 
+
 /area/podmode/spacejunk/Restaurant
 	name = "Cheesy Chuck's Premium Eatery"
 	icon_state = "yellow"
- 
+
 /area/podmode/spacejunk/Restaurant/solars
 	name = "Cheesy Chuck's Premium Solar Array"
 	icon_state = "red"
- 
+
 /area/podmode/spacejunk/Restaurant/landingpads
 	name = "Cheesy Chuck's Premium Landing Pads"
 	icon_state = "green"
- 
+
 /area/podmode/spacejunk/Reliant
 	name = "NSV Reliant"
 	icon_state = "yellow"
- 
+
 /area/podmode/spacejunk/Relant/landingpads
 	name = "NSV Reliant Landing Pads"
 	icon_state = "red"
- 
+
 /area/podmode/spacejunk/Dorgun
 	name = "DORGUN'S GREAT SHIP 10/10"
 	icon_state = "yellow"
- 
+
 /area/podmode/spacejunk/Brighwell
 	name = "LS Brightwell"
 	icon_state = "yellow"
- 
+
 /area/podmode/spacejunk/fstation/
 	name = "Fortuna Main Hall"
 	icon_state = "blue"
- 
+
 /area/podmode/spacejunk/fstation/primary
 	name = "Fortuna Primary Dock"
 	icon_state = "red"
- 
+
 /area/podmode/spacejunk/fstation/secdock
 	name = "Fortuna Security Dock"
 	icon_state = "security"
- 
+
 /area/podmode/spacejunk/fstation/maintdock
 	name = "Fortuna Maintenence Dock"
 	icon_state = "red"
- 
+
 /area/podmode/spacejunk/fstation/lounge
 	name = "Fortuna Lounge"
 	icon_state = "green"
- 
+
 /area/podmode/spacejunk/fstation/crewquarters
 	name = "Fortuna Crew Quarters"
 	icon_state = "yellow"
- 
+
 /area/podmode/spacejunk/fstation/mess
 	name = "Fortuna Mess Hall"
 	icon_state = "purple"
- 
+
 /area/podmode/spacejunk/fstation/power
 	name = "Fortuna Engineering"
 	icon_state = "engine_monitoring"
- 
+
 /area/podmode/spacejunk/fstation/medbay
 	name = "Fortuna Medical Bay"
 	icon_state = "medbay"
- 
+
 /area/podmode/spacejunk/fstation/observatory
 	name = "Fortuna Observatory"
 	icon_state = "yellow"
- 
+
+/area/podmode/spacejunk/fstation/command
+	name = "Fortuna Command"
+	icon_state = "purple"
+
 /area/podmode/spacejunk/fstation/landingpads
 	name = "Fortuna Landing Pads"
 	icon_state = "green"
- 
+
 /area/podmode/spacejunk/uvb67/power
 	name = "UVB-67 Power Station"
 	icon_state = "yellow"
- 
+
 /area/podmode/spacejunk/uvb67/crew
 	name = "UVB-67 Crew Habitat"
 	icon_state = "Yellow"
- 
+
 /area/podmode/spacejunk/uvb67/central
 	name = "UVB-67 Defensive Zone"
 	icon_state = "red"
- 
+
 /area/podmode/spacejunk/uvb67/solars
 	name = "UVB-67 Solar Array"
 	icon_state = "Purple"
- 
+
 /area/podmode/spacejunk/greatwreck
 	name = "Wreckage of LS Greater Things Await You"
 	icon_state = "yellow"
- 
+
 /area/podmode/spacejunk/Nancy
 	name = "Nancy's Pristine Goods"
 	icon_state = "red"
- 
+
 /area/podmode/spacejunk/Nancy/landingpad
 	name = "Nancy's Pristine Goods Landing Pad"
 	icon_state = "yellow"
- 
+
 /area/podmode/spacejunk/Nancy/warehouse
 	name = "Nancy's Warehouse"
 	icon_state = "green"
- 
+
 /area/podmode/spacejunk/Nancy/powergen
 	name = "Nancy's Power Generator"
 	icon_state = "engine_montioring"
- 
+
 /area/podmode/spacejunk/Snackstand
 	name = "Snack Shack"
 	icon_state = "yellow"
- 
+
 /area/podmode/spacejunk/miningoutpost
 	name = "Abandoned Mining Outpost"
 	icon_state = "yellow"
- 
+
 /area/podmode/spacejunk/miningoutpost/crewquarters
 	name = "Abandoned Mining Outpost Crew Quarters"
 	icon_state = "green"
