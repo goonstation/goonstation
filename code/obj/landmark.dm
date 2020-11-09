@@ -62,6 +62,7 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_ESCAPE_POD_SUCCESS
 	icon_state = "xp"
 	var/shuttle = SHUTTLE_NODEF
+	
 	New()
 		src.data = src.shuttle// save dir
 		..()
