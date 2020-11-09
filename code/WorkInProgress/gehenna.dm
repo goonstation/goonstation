@@ -14,7 +14,7 @@
 	New()
 		var/turf/greasedupFrenchman = loc
 		greasedupFrenchman.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
-		greasedupFrenchman.vistarget.warptarget = greasedupFrenchman
+		greasedupFrenchman.vistarget?.warptarget = greasedupFrenchman
 		greasedupFrenchman.updateVis()
 		..()
 
